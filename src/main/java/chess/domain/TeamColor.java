@@ -22,4 +22,12 @@ public enum TeamColor {
         }
         return startingRank + 1;
     }
+
+    public TeamColor transfer() {
+        if (this == TeamColor.WHITE) {
+            return TeamColor.BLACK;
+        }
+        return TeamColor.WHITE;
+    }
+
 }

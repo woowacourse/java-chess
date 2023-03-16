@@ -23,6 +23,8 @@ public class ChessBoard {
     private static final String OBSTACLE_IN_PATH_ERROR_MESSAGE = "경로에 다른 말이 있어서 이동할 수 없습니다.";
     private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때만 대각선으로 이동할 수 있습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
+    private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
+    private static final String WRONG_ATTACK_TARGET_ERROR_MESSAGE = "상대 팀의 말만 공격할 수 있습니다.";
 
     private final Map<Position, Piece> piecesByPosition = new HashMap<>();
 
@@ -49,18 +51,17 @@ public class ChessBoard {
                         new Pawn(color)));
     }
 
-    public void move(List<Integer> sourcePosition, List<Integer> destPosition) {
+    public void move(List<Integer> sourcePosition, List<Integer> destPosition, final TeamColor teamColor) {
+        // TODO List<integer>를 받아서 Position 으로 변환하는 정적 팩터리 메서드 정의
         Position source = new Position(sourcePosition.get(POSITION_RANK_INDEX),
                 sourcePosition.get(POSITION_FILE_INDEX));
         Position dest = new Position(destPosition.get(POSITION_RANK_INDEX), destPosition.get(POSITION_FILE_INDEX));
 
-        validateSourcePosition(source);
-
-        Piece piece = piecesByPosition.get(source);
+        Piece piece = findPieceInStartPosition(source, teamColor);
         List<Path> movablePaths = piece.findMovablePaths(source);
 
         for (Path path : movablePaths) {
-            if (moveWhenPossible(source, dest, piece, path)) {
+            if (moveWhenPossible(source, dest, piece, path, teamColor)) {
                 return;
             }
         }
@@ -68,12 +69,29 @@ public class ChessBoard {
         throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
     }
 
-    private boolean moveWhenPossible(final Position source, final Position dest, final Piece piece, final Path path) {
+    private Piece findPieceInStartPosition(final Position start, final TeamColor color) {
+        if (piecesByPosition.containsKey(start)) {
+            Piece piece = piecesByPosition.get(start);
+            validatePieceColor(color, piece);
+            return piece;
+        }
+        throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
+    }
+
+    private void validatePieceColor(final TeamColor color, final Piece piece) {
+        if (piece.isSameColor(color)) {
+            return;
+        }
+        throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
+    }
+
+    private boolean moveWhenPossible(final Position source, final Position dest, final Piece piece, final Path path,
+                                     final TeamColor color) {
         if (path.hasPosition(dest)) {
             checkObstacleInPath(dest, path);
             validatePawnAttack(piece, source, dest);
+            validateObstacleInDestination(dest, color);
 
-            // TODO: 2023/03/16 도착지에 자신의 팀의 말이 있다면 예외
             piecesByPosition.put(dest, piece);
             piecesByPosition.remove(source);
             return true;
@@ -81,12 +99,21 @@ public class ChessBoard {
         return false;
     }
 
+    private void validateObstacleInDestination(final Position dest, final TeamColor color) {
+        if (!piecesByPosition.containsKey(dest)) {
+            return;
+        }
+        if (piecesByPosition.get(dest).isSameColor(color)) {
+            throw new IllegalArgumentException(WRONG_ATTACK_TARGET_ERROR_MESSAGE);
+        }
+    }
+
     private void validatePawnAttack(final Piece piece, final Position source, final Position dest) {
         if (!piece.isPawn()) {
             return;
         }
         Pawn pawn = (Pawn) piece;
-        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) { // TODO: 2023/03/16 공격 대상이 상대팀 말이어야 한다
+        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
             throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
         }
     }
@@ -106,13 +133,6 @@ public class ChessBoard {
         if (piecesByPosition.containsKey(positions.get(index))) {
             throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
         }
-    }
-
-    private void validateSourcePosition(final Position source) {
-        if (piecesByPosition.containsKey(source)) { // TODO: 2023/03/16 시작 위치의 말이, 상대팀의 말이라면 예외
-            return;
-        }
-        throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
     }
 
     public Map<Position, Piece> piecesByPosition() {

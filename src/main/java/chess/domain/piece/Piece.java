@@ -21,6 +21,10 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public boolean isSameColor(TeamColor color) {
+        return this.color == color;
+    }
+
     public String getName() {
         return name.getName(color);
     }

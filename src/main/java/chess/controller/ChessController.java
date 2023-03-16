@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.TeamColor;
 import chess.dto.CommandRequest;
 import chess.util.BoardConverter;
 import chess.view.Command;
@@ -11,6 +12,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private TeamColor currentColor;
 
     public ChessController() {
         this.inputView = new InputView();
@@ -19,21 +21,23 @@ public class ChessController {
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
+        currentColor = TeamColor.WHITE;
 
         outputView.printStartMessage();
         boolean isContinue = true;
         while (isContinue) {
-            isContinue = play(chessBoard);
+            isContinue = play(chessBoard, currentColor);
         }
     }
 
-    private boolean play(final ChessBoard chessBoard) {
+    private boolean play(final ChessBoard chessBoard, final TeamColor color) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
             return false;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            chessBoard.move(commandRequest.getSource(), commandRequest.getDestination());
+            chessBoard.move(commandRequest.getSource(), commandRequest.getDestination(), color);
+            currentColor = currentColor.transfer();
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return true;
