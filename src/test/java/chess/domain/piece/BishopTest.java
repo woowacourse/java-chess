@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.File.C;
@@ -48,7 +47,7 @@ class BishopTest {
     void moveTest() {
         final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
 
-        final Piece movedBishop = originalBishop.move(new Position(D, SIX), Optional.empty());
+        final Piece movedBishop = originalBishop.move(new Position(D, SIX), new BlankPiece(D, SIX));
 
         assertThat(movedBishop.getPosition()).isEqualTo(new Position(D, SIX));
     }
@@ -57,9 +56,9 @@ class BishopTest {
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void throws_exception_if_there_is_same_color_piece_in_target_position() {
         final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
-        final Optional<Piece> sameColorPieceOptional = Optional.of(new Pawn(D, SIX, BLACK));
+        final Piece sameColorPiece = new Pawn(D, SIX, BLACK);
 
-        assertThatThrownBy(() -> originalBishop.move(new Position(D, SIX), sameColorPieceOptional))
+        assertThatThrownBy(() -> originalBishop.move(new Position(D, SIX), sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }

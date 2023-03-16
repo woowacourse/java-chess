@@ -7,7 +7,6 @@ import chess.domain.Rank;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -29,7 +28,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
         return null;
     }
 

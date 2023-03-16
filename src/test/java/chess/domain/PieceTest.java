@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
-import java.util.Optional;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.File.A;
@@ -28,7 +27,7 @@ class PieceTest {
         }
 
         @Override
-        public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+        public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
             return null;
         }
 

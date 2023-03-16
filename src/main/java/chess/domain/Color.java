@@ -2,7 +2,8 @@ package chess.domain;
 
 public enum Color {
     BLACK,
-    WHITE;
+    WHITE,
+    BLANK;
 
     public boolean isBlack() {
         return this == BLACK;

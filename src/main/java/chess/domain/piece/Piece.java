@@ -6,7 +6,6 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Piece {
 
@@ -43,9 +42,9 @@ public abstract class Piece {
 
     protected abstract boolean canMove(final Position targetPosition);
 
-    public abstract Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition);
+    public abstract Piece move(final Position targetPosition, final Piece pieceInTargetPosition);
 
-    protected final void validateCachingSameColor(final Piece pieceInTargetPosition) {
+    protected final void validateCatchingSameColor(final Piece pieceInTargetPosition) {
         if (pieceInTargetPosition.isSameColor(color)) {
             throw new IllegalArgumentException(INVALID_MOVING_CAUSE_OF_CATCHING);
         }

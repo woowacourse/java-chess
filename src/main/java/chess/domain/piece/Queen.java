@@ -6,7 +6,6 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Queen extends Piece {
 
@@ -20,8 +19,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
-        pieceContainerOfTargetPosition.ifPresent(this::validateCachingSameColor);
+    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
+        validateCatchingSameColor(pieceInTargetPosition);
         return new Queen(targetPosition.getFile(), targetPosition.getRank(), color);
     }
 

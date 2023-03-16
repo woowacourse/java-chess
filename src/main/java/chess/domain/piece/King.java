@@ -6,7 +6,6 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
-import java.util.Optional;
 
 public class King extends Piece {
 
@@ -21,7 +20,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
         return null;
     }
 
