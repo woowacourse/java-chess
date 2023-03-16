@@ -1,5 +1,7 @@
 package domain.chessboard;
 
+import domain.coordinate.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,12 @@ public class ChessBoard {
 
     public List<Rank> getChessBoard() {
         return new ArrayList<>(chessBoard);
+    }
+
+    public Square findSquare(Position position) {
+        return chessBoard.get(position.getY())
+                .getRank()
+                .get(position.getX());
     }
 
 }

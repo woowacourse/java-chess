@@ -51,6 +51,14 @@ public class Position {
         return Position.of(x + moveX, y + moveY);
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
