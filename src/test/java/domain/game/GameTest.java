@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.piece.Piece;
 import domain.piece.Position;
