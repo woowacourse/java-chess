@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -21,24 +20,11 @@ public class Rook extends Piece {
 
     @Override
     public List<Position> findPath(Position source, Position target) {
-        int rankDiff = source.rankDiff(target);
-        int fileDiff = source.fileDiff(target);
-
-        int count = Math.abs(fileDiff + rankDiff);
-        int rankUnit = rankDiff / count;
-        int fileUnit = fileDiff / count;
-
-        return makePath(count, rankUnit, fileUnit, source);
+        return findPathTemplate(source, target, this::calculateCount);
     }
 
-    private List<Position> makePath(int count, int rankUnit, int fileUnit, Position current) {
-        List<Position> path = new ArrayList<>();
-
-        for(int i = 0; i < count; i++) {
-            current = current.moveBy(rankUnit, fileUnit);
-            path.add(current);
-        }
-
-        return path;
+    @Override
+    protected int calculateCount(int fileDiff, int rankDiff) {
+        return Math.abs(fileDiff + rankDiff);
     }
 }

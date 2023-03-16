@@ -22,4 +22,9 @@ public class Knight extends Piece {
     public List<Position> findPath(Position source, Position target) {
         return List.of(target);
     }
+
+    @Override
+    protected int calculateCount(int fileDiff, int rankDiff) {
+        throw new UnsupportedOperationException();
+    }
 }

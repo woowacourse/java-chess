@@ -20,6 +20,11 @@ public class King extends Piece {
 
     @Override
     public List<Position> findPath(Position source, Position target) {
-        return List.of(target);
+        return findPathTemplate(source, target, this::calculateCount);
+    }
+
+    @Override
+    protected int calculateCount(int fileDiff, int rankDiff) {
+        return Math.abs(fileDiff);
     }
 }
