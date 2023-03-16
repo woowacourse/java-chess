@@ -22,19 +22,36 @@ public class ChessGame {
     private boolean canMove(Square source, Square target) {
         Piece sourcePiece = chessboard.getPieceAt(source);
         Piece targetPiece = chessboard.getPieceAt(target);
+
         // 1차 검증 - soruce == target 같은가 ? : 다르다 -> 2차 검증
+        if(source.equals(target)){
+            return false;
+        }
+
         // 2차 검증 - 해당 piece가 target까지 갈 수 있는가 ? (Piece.canMove()) : true -> 3차 검증
-        // 3차 검증 - 해당 경로에 장애물이 있는가 ? : 없다 -> 4차 검증 (이때, knight는 해당 검증 제외)
-        // 4차 검증 - target에 아군이 있는가 ? : 없다 -> chessboard.swapPiece
-        //todo: 폰 대각선 적있을시 이동 가능 및 전방에 적 있을 시 이동 불가능 로직 구현
         if (sourcePiece.canMove(source, target)) {
             if (sourcePiece.getPieceType() == PieceType.KNIGHT) {
+                // 4차 검증 - target에 아군이 있는가 ? : 없다 -> chessboard.swapPiece
                 if (sourcePiece.isNotSameCamp(targetPiece)) {
                     return true;
                 }
                 return false;
             }
+            // 추가 검증 - pawn인 경우
+            if(sourcePiece.getPieceType() == PieceType.PAWN){
+                // pawn이면, 1. target에 다른 piece가 존재하면 이동 불가 (경로는 이미 검증)
+                //          2.
+                if(source.isSameFile(target)){
+                    return chessboard.isEmptyInRoute(source,target)&&
+                            chessboard.getPieceAt(target).getPieceType() == PieceType.EMPTY;
+                }
+
+                // 대각선 일 때 자신과 다른 색상이여야함
+                return sourcePiece.isOpposite(targetPiece);
+            }
+            // 3차 검증 - 해당 경로에 장애물이 있는가 ? : 없다 -> 4차 검증 (이때, knight는 해당 검증 제외)
             if (chessboard.isEmptyInRoute(source, target)) {
+                // 4차 검증 - target에 아군이 있는가 ? : 없다 -> chessboard.swapPiece
                 return sourcePiece.isNotSameCamp(targetPiece);
             }
         }

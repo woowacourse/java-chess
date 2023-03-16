@@ -7,7 +7,7 @@ public class Pawn extends Piece {
     private static final int WHITE_MAX_MOVABLE_RANK = 2;
     private static final int WHITE_MIN_MOVABLE_RANK = 1;
     private static final int BLACK_MAX_MOVABLE_RANK = -2;
-    private static final int BACK_MIN_MOVABLE_RANK = -1;
+    private static final int BLACK_MIN_MOVABLE_RANK = -1;
     private static final int MIN_MOVABLE_FILE = 1;
 
     public Pawn(Camp camp) {
@@ -21,33 +21,45 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Square source, Square target) {
+
+        if (isWhite()) {
+            return canMoveWhite(source, target);
+        }
+
+        return canMoveBlack(source, target);
+    }
+
+    private boolean canMoveBlack(Square source, Square target) {
         int rankDifference = source.calculateRankDifference(target);
         int fileDistance = source.calculateFileDistance(target);
 
-        if (isWhite()) {
-            return canMoveWhite(rankDifference, fileDistance);
+        //뒤로 가는거 + 옆으로 가는거 검증
+        if (rankDifference >= 0) {
+            return false;
+        }
+        //시작 위치
+        if (source.isRankSeven()) {
+            return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == 0 ||
+                    rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == 1;
         }
 
-        return canMoveBlack(rankDifference, fileDistance);
+        return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= 1;
     }
 
-    private boolean canMoveBlack(int rankDifference, int fileDistance) {
-        if (rankDifference < BLACK_MAX_MOVABLE_RANK || rankDifference > BACK_MIN_MOVABLE_RANK) {
-            return false;
-        }
-        if (fileDistance > MIN_MOVABLE_FILE) {
-            return false;
-        }
-        return true;
-    }
+    private boolean canMoveWhite(Square source, Square target) {
+        int rankDifference = source.calculateRankDifference(target);
+        int fileDistance = source.calculateFileDistance(target);
 
-    private boolean canMoveWhite(int rankDifference, int fileDistance) {
-        if (rankDifference > WHITE_MAX_MOVABLE_RANK || rankDifference < WHITE_MIN_MOVABLE_RANK) {
+        //뒤로 가는거 + 옆으로 가는거 검증
+        if (rankDifference <= 0) {
             return false;
         }
-        if (fileDistance > MIN_MOVABLE_FILE) {
-            return false;
+        //시작 위치
+        if (source.isRankTwo()) {
+            return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == 0 ||
+                    rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == 1;
         }
-        return true;
+
+        return rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance <= 1;
     }
 }

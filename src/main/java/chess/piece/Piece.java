@@ -20,4 +20,9 @@ public abstract class Piece {
     public boolean isNotSameCamp(Piece otherPiece) {
         return camp != otherPiece.camp;
     }
+
+    public boolean isOpposite(Piece otherPiece){
+        return camp.isOpposite(otherPiece.camp);
+    }
+
 }

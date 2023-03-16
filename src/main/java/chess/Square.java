@@ -71,4 +71,10 @@ public class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public boolean isRankSeven(){return rank == Rank.SEVEN;}
+
+    public boolean isRankTwo(){
+        return rank == Rank.TWO;
+    }
 }
