@@ -20,19 +20,19 @@ public class ChessBoard {
     }
 
     public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {
-        final Piece from = get(source);
-        validateCorrectTurn(turn, from);
-        validateNonBlock(destination, from);
-        moveOrKill(destination, from);
+        final Piece from = findByPosition(source);
+        validateMissMatchSelect(turn, from);
+        validateNonBlock(from, destination);
+        moveOrKill(from, destination);
     }
 
-    private void validateCorrectTurn(final Turn turn, final Piece from) {
-        if (turn.incorrect(from.color())) {
-            throw new IllegalArgumentException("상대 말 선택하셨습니다.");
+    private void validateMissMatchSelect(final Turn turn, final Piece from) {
+        if (turn.missMatch(from.color())) {
+            throw new IllegalArgumentException("상대 말을 선택하셨습니다.");
         }
     }
 
-    private void validateNonBlock(final PiecePosition destination, final Piece from) {
+    private void validateNonBlock(final Piece from, final PiecePosition destination) {
         final Waypoints wayPoints = from.waypoints(destination);
         if (isBlocking(wayPoints)) {
             throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
@@ -45,14 +45,18 @@ public class ChessBoard {
                 .anyMatch(this::existByPosition);
     }
 
-    private void moveOrKill(final PiecePosition destination, final Piece from) {
+    private void moveOrKill(final Piece from, final PiecePosition destination) {
         if (existByPosition(destination)) {
-            final Piece to = get(destination);
-            from.moveAndKill(to);
-            pieces.remove(to);
+            kill(from, destination);
             return;
         }
         from.move(destination);
+    }
+
+    private void kill(final Piece from, final PiecePosition destination) {
+        final Piece to = findByPosition(destination);
+        from.moveToKill(to);
+        pieces.remove(to);
     }
 
     private boolean existByPosition(final PiecePosition piecePosition) {
@@ -60,7 +64,7 @@ public class ChessBoard {
                 .anyMatch(piece -> piece.existIn(piecePosition));
     }
 
-    public Piece get(final PiecePosition piecePosition) {
+    public Piece findByPosition(final PiecePosition piecePosition) {
         return pieces.stream()
                 .filter(piece -> piece.existIn(piecePosition))
                 .findAny()

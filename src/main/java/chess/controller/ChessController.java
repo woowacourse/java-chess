@@ -22,11 +22,11 @@ public class ChessController {
 
     private void run(final ChessBoard chessBoard, ChessState state) {
         while (state.runnable()) {
-            state = chessState(chessBoard, state);
+            state = command(chessBoard, state);
         }
     }
 
-    private ChessState chessState(final ChessBoard chessBoard, ChessState state) {
+    private ChessState command(final ChessBoard chessBoard, ChessState state) {
         try {
             final List<String> command = InputView.readCommand();
             state = state.command(Command.parse(new ArrayList<>(command)));

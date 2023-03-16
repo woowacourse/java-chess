@@ -5,6 +5,7 @@ import chess.domain.piece.Color;
 import java.util.Objects;
 
 public class Turn {
+
     private static final Turn whiteTurn = new Turn(Color.WHITE);
     private static final Turn blackTurn = new Turn(Color.BLACK);
 
@@ -21,6 +22,10 @@ public class Turn {
         return whiteTurn;
     }
 
+    public boolean missMatch(final Color color) {
+        return turn != color;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -32,9 +37,5 @@ public class Turn {
     @Override
     public int hashCode() {
         return Objects.hash(turn);
-    }
-
-    public boolean incorrect(final Color color) {
-        return turn != color;
     }
 }

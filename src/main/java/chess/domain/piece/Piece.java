@@ -27,21 +27,21 @@ public abstract class Piece implements Cloneable {
 
     protected abstract Waypoints waypointsPerType(final Path path);
 
-    public boolean isEnemy(final Piece enemy) {
-        return color != enemy.color;
+    public boolean isAlly(final Piece enemy) {
+        return color == enemy.color;
     }
 
     public void move(final PiecePosition destination) {
         this.piecePosition = destination;
     }
 
-    public void moveAndKill(final Piece enemy) {
+    public void moveToKill(final Piece enemy) {
         validateKill(enemy);
         this.piecePosition = enemy.piecePosition;
     }
 
     private void validateKill(final Piece enemy) {
-        if (!isEnemy(enemy)) {
+        if (isAlly(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
     }

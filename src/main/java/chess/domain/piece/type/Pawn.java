@@ -72,7 +72,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void moveAndKill(final Piece enemy) {
+    public void moveToKill(final Piece enemy) {
         if (!Path.of(piecePosition, enemy.piecePosition()).isDiagonal()) {
             throw new IllegalArgumentException("폰은 대각선 위치에 있는 적만 죽일 수 있습니다.");
         }

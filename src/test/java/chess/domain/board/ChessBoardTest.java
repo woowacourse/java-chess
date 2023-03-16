@@ -70,7 +70,7 @@ class ChessBoardTest {
     }
 
     private static void assertPiece(final ChessBoard chessBoard, final int rank, final char file, final Color color, final Class<?> type) {
-        final Piece piece = chessBoard.get(of(rank, file));
+        final Piece piece = chessBoard.findByPosition(of(rank, file));
         assertThat(piece.color()).isEqualTo(color);
         assertThat(piece).isExactlyInstanceOf(type);
     }
