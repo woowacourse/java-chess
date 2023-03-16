@@ -46,6 +46,14 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     public int getFileIndex() {
         return file.index();
     }
