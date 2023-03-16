@@ -16,10 +16,10 @@ public class Knight extends Piece {
 
     @Override
     protected void validateMovable(final Path path) {
-        if (Math.abs(path.fileDistance()) == 1 && Math.abs(path.rankDistance()) == 2) {
+        if (Math.abs(path.fileDisplacement()) == 1 && Math.abs(path.rankDisplacement()) == 2) {
             return;
         }
-        if (Math.abs(path.fileDistance()) == 2 && Math.abs(path.rankDistance()) == 1) {
+        if (Math.abs(path.fileDisplacement()) == 2 && Math.abs(path.rankDisplacement()) == 1) {
             return;
         }
         throw new IllegalArgumentException("나이트는 그렇게 움직일 수 없습니다.");

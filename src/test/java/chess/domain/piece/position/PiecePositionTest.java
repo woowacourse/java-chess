@@ -61,7 +61,7 @@ class PiecePositionTest {
         final PiecePosition dest = of(2, destination);
 
         // when & then
-        assertThat(from.fileDistance(dest)).isEqualTo(distance);
+        assertThat(from.fileDisplacement(dest)).isEqualTo(distance);
     }
 
     @Test

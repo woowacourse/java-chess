@@ -24,12 +24,12 @@ public enum Direction {
 
     public static Direction byDisplacement(final int fileDisplacement, final int rankDisplacement) {
         return Arrays.stream(Direction.values())
-                .filter(it -> match(rankDisplacement, fileDisplacement, it))
+                .filter(it -> match(fileDisplacement, rankDisplacement, it))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 변위에 대응대는 방위가 없습니다."));
     }
 
-    private static boolean match(final int fileDisplacement, final int rankDisplacement, final Direction standard) {
+    private static boolean match(final int rankDisplacement, final int fileDisplacement, final Direction standard) {
         return standard.rankUnit == unitization(rankDisplacement)
                 && standard.fileUnit == unitization(fileDisplacement);
     }

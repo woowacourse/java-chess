@@ -38,10 +38,10 @@ public class Pawn extends Piece {
     }
 
     private boolean isPawnSpecialDestination(final Path path) {
-        if (Math.abs(path.rankDistance()) != 2) {
+        if (Math.abs(path.rankDisplacement()) != 2) {
             return false;
         }
-        return Math.abs(path.fileDistance()) == 0;
+        return Math.abs(path.fileDisplacement()) == 0;
     }
 
     @Override

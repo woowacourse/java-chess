@@ -24,34 +24,34 @@ public class Path {
         return new Path(source, destination);
     }
 
-    public int fileDistance() {
-        return source.fileDistance(destination);
+    public int fileDisplacement() {
+        return source.fileDisplacement(destination);
     }
 
-    public int rankDistance() {
-        return source.rankDistance(destination);
+    public int rankDisplacement() {
+        return source.rankDisplacement(destination);
     }
 
     public boolean isDestinationRelativelySouth() {
-        return source.rankDistance(destination) < 0;
+        return source.rankDisplacement(destination) < 0;
     }
 
     public boolean isDestinationRelativelyNorth() {
-        return source.rankDistance(destination) > 0;
+        return source.rankDisplacement(destination) > 0;
     }
 
     public boolean isStraight() {
-        return !(Math.abs(source.rankDistance(destination)) > 0
-                && Math.abs(source.fileDistance(destination)) > 0);
+        return !(Math.abs(source.rankDisplacement(destination)) > 0
+                && Math.abs(source.fileDisplacement(destination)) > 0);
     }
 
     public boolean isDiagonal() {
-        return Math.abs(source.rankDistance(destination)) == Math.abs(source.fileDistance(destination));
+        return Math.abs(source.rankDisplacement(destination)) == Math.abs(source.fileDisplacement(destination));
     }
 
     public boolean isUnitDistance() {
-        return Math.abs(source.rankDistance(destination)) <= 1
-                && Math.abs(source.fileDistance(destination)) <= 1;
+        return Math.abs(source.rankDisplacement(destination)) <= 1
+                && Math.abs(source.fileDisplacement(destination)) <= 1;
     }
 
     public List<PiecePosition> wayPoints() {

@@ -34,7 +34,7 @@ class PathTest {
         final Path path = Path.of(source, destination);
 
         // when & then
-        assertThat(path.fileDistance()).isEqualTo(-2);
+        assertThat(path.fileDisplacement()).isEqualTo(-2);
     }
 
     @Test
@@ -45,7 +45,7 @@ class PathTest {
         final Path path = Path.of(source, destination);
 
         // when & then
-        assertThat(path.rankDistance()).isEqualTo(1);
+        assertThat(path.rankDisplacement()).isEqualTo(1);
     }
 
     @Test

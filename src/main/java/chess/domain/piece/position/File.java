@@ -17,7 +17,7 @@ public class File {
     private void validate(final char file) {
         if (file < MIN || file > MAX) {
             throw new IllegalArgumentException(
-                    String.format("%c 에서 %c 사이의 문자만 들어올 수 있습니다.", MAX, MAX)
+                    String.format("%c 에서 %c 사이의 문자만 들어올 수 있습니다.", MIN, MAX)
             );
         }
     }
