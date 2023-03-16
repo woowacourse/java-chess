@@ -114,7 +114,7 @@ public class PawnTest {
     void shouldHasNoPositionWhenGetPathWhitePawn() {
         Pawn pawn = Pawn.createOfWhite();
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "3"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("White 진영의 Pawn이 위로 두 칸 이동할 때 경로를 반환한다.")
@@ -130,7 +130,7 @@ public class PawnTest {
     void shouldReturnPathWhenWhitePawnMoveRightUpward() {
         Pawn pawn = Pawn.createOfWhite();
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "3"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("White 진영의 Pawn이 왼쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
@@ -138,7 +138,7 @@ public class PawnTest {
     void shouldReturnPathWhenWhitePawnMoveLeftUpward() {
         Pawn pawn = Pawn.createOfWhite();
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "1"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("Black 진영의 Pawn이 아래로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
@@ -146,7 +146,7 @@ public class PawnTest {
     void shouldHasNoPositionWhenGetPathBlackPawn() {
         Pawn pawn = Pawn.createOfBlack();
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "6"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("Black 진영의 Pawn이 아래로 두 칸 이동할 때 경로를 반환한다.")
@@ -162,7 +162,7 @@ public class PawnTest {
     void shouldReturnPathWhenBLackPawnMoveRightDownward() {
         Pawn pawn = Pawn.createOfBlack();
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("c", "6"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("Black 진영의 Pawn이 왼쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
@@ -170,6 +170,6 @@ public class PawnTest {
     void shouldReturnPathWhenBlackPawnMoveLeftDownward() {
         Pawn pawn = Pawn.createOfBlack();
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("a", "6"));
-        assertThat(path).hasSize(0);
+        assertThat(path).isEmpty();
     }
 }
