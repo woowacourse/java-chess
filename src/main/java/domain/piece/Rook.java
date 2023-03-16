@@ -13,4 +13,9 @@ public class Rook extends Piece {
     public Route findRoute(final Position source, final Position target) {
         return null;
     }
+
+    @Override
+    protected boolean isMovable(final Position source, final Position target) {
+        return false;
+    }
 }

@@ -19,16 +19,10 @@ public class Knight extends Piece {
         return new Route(Collections.emptyList());
     }
 
-    private void validateMovable(final Position source, final Position target) {
-        if (isMovable(source, target)) {
-            return;
-        }
-        throw new IllegalStateException("잘못된 도착 지점입니다.");
-    }
-
-    private boolean isMovable(final Position startPoint, final Position endPoint) {
-        int diffY = Math.abs(endPoint.diffY(startPoint));
-        int diffX = Math.abs(endPoint.diffX(startPoint));
+    @Override
+    protected boolean isMovable(final Position source, final Position target) {
+        int diffY = Math.abs(target.diffY(source));
+        int diffX = Math.abs(target.diffX(source));
 
         Set<Integer> set = new HashSet<>();
         set.add(diffX);
