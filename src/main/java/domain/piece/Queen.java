@@ -33,4 +33,9 @@ public class Queen extends Piece {
         }
         return sourcePosition.getPath(targetPosition);
     }
+
+    @Override
+    public boolean isEmptyPiece() {
+        return false;
+    }
 }

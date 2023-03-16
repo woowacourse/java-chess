@@ -29,4 +29,9 @@ public class King extends Piece {
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean isEmptyPiece() {
+        return false;
+    }
 }

@@ -35,6 +35,11 @@ public final class Pawn extends Piece {
         return isMovableForBlack(targetPiece, movement, sourcePosition);
     }
 
+    @Override
+    public boolean isEmptyPiece() {
+        return false;
+    }
+
     private boolean isWhite() {
         return super.side.equals(Side.WHITE);
     }
@@ -110,17 +115,4 @@ public final class Pawn extends Piece {
                 movement.isPerpendicular() &&
                 movement.isDownward();
     }
-
-
-//    private boolean isAttackMoving(domain.piece.Movement movement, domain.piece.Pawn targetPiece) {
-//        if (side == 아래) {
-//            return movement.isPawnAttackMoving && targetPiece.side == this.side;
-//        }
-//        return movement.isPawnBlackAttackMoving && targetPiece.side == this.side;
-//    }
-//
-//    private boolean isAttack(domain.piece.Pawn targetPiece) {
-//        return targetPiece.side == this.side;
-
-//    }
 }
