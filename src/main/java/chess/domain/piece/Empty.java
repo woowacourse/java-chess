@@ -8,7 +8,7 @@ public class Empty extends Piece {
     public static final Empty INSTANCE = new Empty();
 
     private Empty() {
-        super(Role.EMPTY, Team.EMPTY);
+        super(Role.EMPTY, Team.NONE);
     }
 
     @Override
