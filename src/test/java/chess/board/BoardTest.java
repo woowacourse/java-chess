@@ -1,26 +1,57 @@
 package chess.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import chess.piece.King;
-import chess.piece.Piece;
 import chess.piece.Pieces;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    @Test
-    @DisplayName("입력받은 위치에 존재하는 기물을 반환한다.")
-    void findPieceByPosition() {
-        // given
-        Board board = new Board(new Pieces());
-        Position position = new Position(File.E, Rank.ONE);
+    private Board board;
 
-        // when
-        final Piece findPiece = board.findPieceByPosition(position);
-
-        // then
-        assertThat(findPiece).isInstanceOf(King.class);
+    @BeforeEach
+    void init() {
+        board = new Board(new Pieces());
     }
+
+    @Test
+    @DisplayName("기물이 해당 위치로 갈 수 없으면 예외를 던진다.")
+    void movePiece_throws() {
+        // given
+        final Position sourcePosition = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.B, Rank.FIVE);
+
+        // when, then
+        Assertions.assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 기물은 대상 위치로 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("타겟 위치까지의 경로에 말이 존재하는 경우 예외를 던진다.")
+    void movePiece_pieceExistOnPath_throws() {
+        // given
+        final Position sourcePosition = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.A, Rank.FOUR);
+
+        // when, then
+        Assertions.assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 타겟 위치까지의 경로에 말이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("타겟 위치에 아군 말이 존재하는 경우 예외를 던진다.")
+    void movePiece_sameSidePieceExistOnTarget_throws() {
+        // given
+        final Position sourcePosition = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.A, Rank.TWO);
+
+        // when, then
+        Assertions.assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
+    }
+
 }
