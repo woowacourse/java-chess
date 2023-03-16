@@ -1,10 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
+import chess.domain.Position;
 import chess.domain.Side;
 import chess.domain.Type;
 import chess.domain.movepattern.KingMovePattern;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.RookMovePattern;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +24,33 @@ public class King extends Piece {
     protected void validate(final Type type, final Side side) {
         validateType(type);
         validateSide(side);
+    }
+
+    @Override
+    public List<Position> findMovablePositions(final Position source, final Board board) {
+        final List<Position> movablePositions = new ArrayList<>();
+        final List<MovePattern> movePatterns = getMovePatterns();
+        for (MovePattern movePattern : movePatterns) {
+            Position nextPosition = source;
+            if (isRangeValid(nextPosition, movePattern)) {
+                nextPosition = nextPosition.move(movePattern);
+                checkSide(movablePositions, nextPosition, board);
+            }
+        }
+        return movablePositions;
+    }
+
+    private void checkSide(final List<Position> movablePositions, final Position nextPosition, final Board board) {
+        final Side nextSide = board.findSideByPosition(nextPosition);
+        if (nextSide != this.side) {
+            movablePositions.add(nextPosition);
+        }
+    }
+
+    private boolean isRangeValid(final Position position, final MovePattern movePattern) {
+        final int nextRank = position.getRank() + movePattern.getRankVector();
+        final int nextFile = position.getFile() + movePattern.getFileVector();
+        return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 
     @Override
