@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class Position {
@@ -12,15 +14,29 @@ public final class Position {
     }
 
     public int calculateRankGap(Position other) {
-        Rank otherRank = other.rank;
-
-        return rank.subtractOrder(otherRank);
+        return rank.subtractOrder(other.rank);
     }
 
     public int calculateFileGap(Position other) {
-        File otherFile = other.file;
+        return file.subtractOrder(other.file);
+    }
 
-        return file.subtractOrder(otherFile);
+    public List<Position> getBetweenPositions(Position other) {
+        int fileGap = this.calculateFileGap(other);
+        int rankGap = this.calculateRankGap(other);
+
+        int distance = Math.max(Math.abs(fileGap), Math.abs(rankGap));
+
+        int i1 = fileGap / distance;
+        int i2 = rankGap / distance;
+
+        List<Position> between = new ArrayList<>();
+        for (int i = 1; i < distance; i++) {
+            other = other.move(i1, i2);
+            between.add(other);
+        }
+
+        return between;
     }
 
     @Override
@@ -38,5 +54,11 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public Position move(int fileStep, int rankStep) {
+        File newFile = file.move(fileStep);
+        Rank newRank = rank.move(rankStep);
+        return new Position(newFile, newRank);
     }
 }

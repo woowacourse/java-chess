@@ -1,5 +1,8 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 public enum File {
     A(1),
     B(2),
@@ -15,6 +18,13 @@ public enum File {
 
     File(int order) {
         this.order = order;
+    }
+
+    public File move(int step) {
+        return Arrays.stream(File.values())
+                .filter(it -> it.order == this.order + step)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public int subtractOrder(File other) {
