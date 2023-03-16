@@ -50,4 +50,8 @@ public final class Pawn extends Piece {
     private boolean isCatchable(final Square from, final Square to, final Piece piece) {
         return this.isOppositeSide(piece) && from.inPawnsCatchableRange(to, side);
     }
+
+    public void move() {
+        atInitialPosition = false;
+    }
 }

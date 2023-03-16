@@ -25,4 +25,8 @@ public abstract class Piece {
     }
 
     abstract boolean isMovable(Square from, Square to, Piece piece);
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
 }

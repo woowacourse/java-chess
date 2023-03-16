@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public enum Rank {
@@ -22,6 +23,13 @@ public enum Rank {
     Rank(final int position, final String symbol) {
         this.position = position;
         this.symbol = symbol;
+    }
+
+    public static Rank from(final String symbol) {
+        return Arrays.stream(values())
+                     .filter(rank -> Objects.equals(symbol, rank.symbol))
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
     }
 
     public static List<Rank> ranksBetween(final Rank from, final Rank to) {

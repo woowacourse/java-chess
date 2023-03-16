@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public enum File {
@@ -21,6 +22,13 @@ public enum File {
     File(final int position, final String symbol) {
         this.position = position;
         this.symbol = symbol;
+    }
+
+    public static File from(final String symbol) {
+        return Arrays.stream(values())
+                     .filter(file -> Objects.equals(symbol, file.symbol))
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
     }
 
     public static List<File> filesBetween(final File from, final File to) {
