@@ -72,11 +72,15 @@ public final class ChessController {
 
     private void playGameUntilEnd() {
         List<String> command = inputView.inputCommand();
+        while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
+            cannotStartDuringPlaying(command);
+            command = playGame(command);
+        }
+    }
+
+    private void cannotStartDuringPlaying(final List<String> command) {
         if (Command.from(command.get(COMMAND_INDEX)) == Command.START) {
             throw new IllegalArgumentException("게임을 시작한 후 시작 명령어를 입력할 수 없습니다.");
-        }
-        while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
-            command = playGame(command);
         }
     }
 
