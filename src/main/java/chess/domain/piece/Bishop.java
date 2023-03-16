@@ -6,12 +6,8 @@ import java.util.Set;
 
 public class Bishop extends InfinitePiece {
 
-    private Bishop(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
-    }
-
-    public static Bishop from(boolean isWhite) {
-        return new Bishop(isWhite, copyMoves(setUpMoves()));
+    public Bishop(boolean isWhite) {
+        super(isWhite, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {

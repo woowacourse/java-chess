@@ -14,16 +14,26 @@ import org.junit.jupiter.api.Test;
 
 public class QuadrantPieceTest extends AbstractTestFixture {
 
+    static class QuadrantPieceImplement extends QuadrantPiece {
+
+        public QuadrantPieceImplement(boolean isWhite, Set<Move> moves) {
+            super(isWhite, moves);
+        }
+
+        @Override
+        public PieceType getType() {
+            return null;
+        }
+    }
+
     @DisplayName("1사분면의 수으로 모든 사분면의 수을 만든다")
     @Test
     void copyMoves() {
-        Set<Move> copiedMoves = QuadrantPiece.copyMoves(Set.of(createMove(UP, RIGHT)));
+        Piece piece = new QuadrantPieceImplement(false, Set.of(createMove(UP, RIGHT)));
 
-        assertThat(copiedMoves)
-                .containsExactlyInAnyOrder(
-                        createMove(UP, RIGHT),
-                        createMove(UP, LEFT),
-                        createMove(DOWN, LEFT),
-                        createMove(DOWN, RIGHT));
+        assertThat(piece.hasMove(createMove(UP, RIGHT))).isTrue();
+        assertThat(piece.hasMove(createMove(UP, LEFT))).isTrue();
+        assertThat(piece.hasMove(createMove(DOWN, LEFT))).isTrue();
+        assertThat(piece.hasMove(createMove(DOWN, RIGHT))).isTrue();
     }
 }

@@ -15,7 +15,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("백은 처음에 1칸 혹은 2칸 위로 움직일 수 있다.")
     @Test
     void whiteMoveUp_onceOrTwice_onFirstMove() {
-        Piece pawn = Pawn.from(true);
+        Piece pawn = new Pawn(true);
 
         assertThat(pawn.hasMove(createMove(UP, UP))).isTrue();
         assertThat(pawn.hasMove(createMove(UP))).isTrue();
@@ -24,7 +24,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("흑은 처음에 1칸 혹은 2칸 아래로 움직일 수 있다.")
     @Test
     void blackMoveDown_onceOrTwice_onFirstMove() {
-        Piece pawn = Pawn.from(false);
+        Piece pawn = new Pawn(false);
 
         assertThat(pawn.hasMove(createMove(DOWN, DOWN))).isTrue();
         assertThat(pawn.hasMove(createMove(DOWN))).isTrue();
@@ -33,7 +33,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("백은 아래로 움직일 수 없다")
     @Test
     void whiteCannotMoveDown() {
-        Piece pawn = Pawn.from(true);
+        Piece pawn = new Pawn(true);
 
         assertThat(pawn.hasMove(createMove(DOWN, DOWN))).isFalse();
         assertThat(pawn.hasMove(createMove(DOWN))).isFalse();
@@ -42,7 +42,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("흑은 위로 움직일 수 없다")
     @Test
     void blackCannotMoveUp() {
-        Piece pawn = Pawn.from(false);
+        Piece pawn = new Pawn(false);
 
         assertThat(pawn.hasMove(createMove(UP, UP))).isFalse();
         assertThat(pawn.hasMove(createMove(UP))).isFalse();
@@ -51,7 +51,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
     @Test
     void moveOnceAfterTouch() {
-        Piece touchedPawn = Pawn.from(true).touch();
+        Piece touchedPawn = new Pawn(true).touch();
 
         assertThat(touchedPawn.hasMove(createMove(UP))).isTrue();
         assertThat(touchedPawn.hasMove(createMove(UP, UP))).isFalse();
@@ -60,7 +60,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("백은 윗 대각선으로 공격할 수 있다")
     @Test
     void white_hasAttackMove_UpDiagonal() {
-        Piece piece = Pawn.from(true);
+        Piece piece = new Pawn(true);
 
         assertThat(piece.hasAttackMove(createMove(RIGHT, UP))).isTrue();
         assertThat(piece.hasAttackMove(createMove(LEFT, UP))).isTrue();
@@ -69,7 +69,7 @@ public class PawnTest extends AbstractTestFixture {
     @DisplayName("흑은 아래 대각선으로 공격할 수 있다")
     @Test
     void black_hasAttackMove_DownDiagonal() {
-        Piece piece = Pawn.from(false);
+        Piece piece = new Pawn(false);
 
         assertThat(piece.hasAttackMove(createMove(RIGHT, DOWN))).isTrue();
         assertThat(piece.hasAttackMove(createMove(LEFT, DOWN))).isTrue();

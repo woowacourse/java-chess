@@ -6,12 +6,8 @@ import java.util.Set;
 
 public class King extends QuadrantPiece {
 
-    private King(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
-    }
-
-    public static King from(boolean isWhite) {
-        return new King(isWhite, copyMoves(setUpMoves()));
+    public King(boolean isWhite) {
+        super(isWhite, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {

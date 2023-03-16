@@ -11,17 +11,20 @@ public class Pawn extends Piece {
     private static final Move WHITE_UNIT_MOVE = new Move(List.of(Direction.UP));
     private static final int UNTOUCHED_MOVE_SIZE = 2;
 
+    public Pawn(boolean isWhite) {
+        super(isWhite, setUpMoves(isWhite));
+    }
+
     private Pawn(boolean isWhite, Set<Move> moves) {
         super(isWhite, moves);
     }
 
-    public static Pawn from(boolean isWhite) {
+    private static Set<Move> setUpMoves(boolean isWhite) {
         Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE, WHITE_UNIT_MOVE.repeat(2));
         if (isWhite) {
-            return new Pawn(true, whiteMoves);
+            return whiteMoves;
         }
-        Set<Move> blackMoves = convertColor(whiteMoves);
-        return new Pawn(false, blackMoves);
+        return convertColor(whiteMoves);
     }
 
     private static Set<Move> convertColor(Set<Move> moves) {

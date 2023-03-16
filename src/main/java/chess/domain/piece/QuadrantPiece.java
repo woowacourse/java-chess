@@ -8,10 +8,10 @@ import java.util.stream.Stream;
 public abstract class QuadrantPiece extends Piece {
 
     public QuadrantPiece(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
+        super(isWhite, copyMoves(moves));
     }
 
-    protected static Set<Move> copyMoves(Set<Move> moves) {
+    private static Set<Move> copyMoves(Set<Move> moves) {
         return moves.stream()
                 .flatMap(QuadrantPiece::flip)
                 .collect(Collectors.toSet());

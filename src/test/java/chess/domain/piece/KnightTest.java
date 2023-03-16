@@ -16,7 +16,7 @@ public class KnightTest extends AbstractTestFixture {
     @DisplayName("한 방향으로 한 칸, 그리고 그 방향의 양 대각선 방향 중 한 방향으로 움직일 수 있다")
     @Test
     void canMove() {
-        Knight knight = Knight.from(true);
+        Knight knight = new Knight(true);
 
         assertThat(knight.hasMove(createMove(LEFT, LEFT, UP))).isTrue();
         assertThat(knight.hasMove(createMove(LEFT, UP, UP))).isTrue();
@@ -31,7 +31,7 @@ public class KnightTest extends AbstractTestFixture {
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
     @Test
     void canNotMove() {
-        Knight knight = Knight.from(true);
+        Knight knight = new Knight(true);
 
         assertThat(knight.hasMove(createMove(LEFT, LEFT, LEFT))).isFalse();
         assertThat(knight.hasMove(createMove(RIGHT, RIGHT))).isFalse();
@@ -46,7 +46,7 @@ public class KnightTest extends AbstractTestFixture {
     @DisplayName("한 단위 이상 움직일 수 없다")
     @Test
     void canNotMove_MoreThanOneUnit() {
-        Knight knight = Knight.from(true);
+        Knight knight = new Knight(true);
 
         assertThat(knight.hasMove(createMove(LEFT, LEFT, LEFT, LEFT, UP, UP))).isFalse();
     }

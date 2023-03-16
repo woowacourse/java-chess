@@ -27,21 +27,21 @@ public class BoardFactory {
 
     private static Map<File, Piece> createFirstLine(boolean isWhite) {
         return new HashMap<>() {{
-            put(File.A, Rook.from(isWhite));
-            put(File.B, Knight.from(isWhite));
-            put(File.C, Bishop.from(isWhite));
-            put(File.D, Queen.from(isWhite));
-            put(File.E, King.from(isWhite));
-            put(File.F, Bishop.from(isWhite));
-            put(File.G, Knight.from(isWhite));
-            put(File.H, Rook.from(isWhite));
+            put(File.A, new Rook(isWhite));
+            put(File.B, new Knight(isWhite));
+            put(File.C, new Bishop(isWhite));
+            put(File.D, new Queen(isWhite));
+            put(File.E, new King(isWhite));
+            put(File.F, new Bishop(isWhite));
+            put(File.G, new Knight(isWhite));
+            put(File.H, new Rook(isWhite));
         }};
     }
 
     private static Map<File, Piece> createSecondLine(boolean isWhite) {
         Map<File, Piece> secondLine = new HashMap<>();
         for (File file : File.values()) {
-            secondLine.put(file, Pawn.from(isWhite));
+            secondLine.put(file, new Pawn(isWhite));
         }
         return secondLine;
     }
