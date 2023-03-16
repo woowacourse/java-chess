@@ -13,6 +13,8 @@ public class Position {
     }
 
     public Movement convertMovement(Position from) {
+        // TODO: 둘 다 0인 경우는 예외 처리하자! Arit~~ 조심
+
         int rankGap = rank.value() - from.rank.value();
         int fileGap = file.value() - from.file.value();
 
@@ -24,10 +26,9 @@ public class Position {
 
     private int findGreatestCommonDivisor(int num1, int num2) {
         if (num2 == 0) {
-            return num1;
-        } else {
-            return findGreatestCommonDivisor(num2, num1 % num2);
+            return Math.abs(num1);
         }
+        return findGreatestCommonDivisor(num2, num1 % num2);
     }
 
     public Position moveBy(Movement movement) {

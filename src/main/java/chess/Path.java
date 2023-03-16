@@ -12,6 +12,10 @@ public class Path {
         this.positions = List.of(positions);
     }
 
+    public Path(final List<Position> positions) {
+        this.positions = positions;
+    }
+
     public void validateObstacle(final Set<Position> keySet) {
         final List<Position> positions = new ArrayList<>(this.positions);
         positions.retainAll(keySet);
