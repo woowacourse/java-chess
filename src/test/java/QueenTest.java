@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,5 +57,41 @@ class QueenTest {
         boolean movable = whiteQueen.isMovable(Pawn.createOfBlack(), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isTrue();
+    }
+
+    @DisplayName("Queen이 오른쪽 위로 이동하면 해당 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenQueenMoveRightUpward() {
+        Queen whiteQueen = Queen.createOfWhite();
+        List<Position> path = whiteQueen.collectPath(Position.of("c", "2"), Position.of("g", "6"));
+
+        assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "4"), Position.of("f", "5"));
+    }
+
+    @DisplayName("Queen이 왼쪽 아래로 이동하면 해당 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenQueenMoveLeftDownward() {
+        Queen whiteQueen = Queen.createOfWhite();
+        List<Position> path = whiteQueen.collectPath(Position.of("g", "6"), Position.of("c", "2"));
+
+        assertThat(path).containsExactlyInAnyOrder(Position.of("f", "5"), Position.of("e", "4"), Position.of("d", "3"));
+    }
+
+    @DisplayName("Queen이 수직 위로 이동하면 해당 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenQueenMoveUpwardPerpendicular() {
+        Queen whiteQueen = Queen.createOfWhite();
+        List<Position> path = whiteQueen.collectPath(Position.of("c", "4"), Position.of("c", "8"));
+
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("c", "6"), Position.of("c", "7"));
+    }
+
+    @DisplayName("Queen이 수평 왼쪽으로 이동하면 해당 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenQueenMoveLeftPerpendicular() {
+        Queen whiteQueen = Queen.createOfWhite();
+        List<Position> path = whiteQueen.collectPath(Position.of("d", "5"), Position.of("a", "5"));
+
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("b", "5"));
     }
 }
