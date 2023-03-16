@@ -21,6 +21,12 @@ public class Move {
                 .collect(Collectors.toList());
     }
 
+    public static Move of(Position source, Position target) {
+        int deltaFile = target.getFileIndex() - source.getFileIndex();
+        int deltaRank = target.getRankIndex() - source.getRankIndex();
+        return new Move(Direction.from(deltaFile, deltaRank));
+    }
+
     private void validate(List<Direction> directions) {
         validateNotEmpty(directions);
         validateNotBidirectional(directions);

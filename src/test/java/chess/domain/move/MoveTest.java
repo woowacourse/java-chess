@@ -109,4 +109,14 @@ public class MoveTest extends AbstractTestFixture {
         Move expectedMove = createMove(RIGHT, RIGHT, UP, RIGHT, RIGHT, UP, RIGHT, RIGHT, UP);
         assertThat(createMove(RIGHT, RIGHT, UP).repeat(3)).isEqualTo(expectedMove);
     }
+
+    @DisplayName("시작위치, 도착위치로 수를 만들 수 있다")
+    @Test
+    void createMoveFrom_sourceAndTargetPositions() {
+        Position source = createPosition("G,ONE");
+        Position target = createPosition("E,TWO");
+
+        assertThat(Move.of(source, target)).isEqualTo(createMove(LEFT, LEFT, UP));
+
+    }
 }

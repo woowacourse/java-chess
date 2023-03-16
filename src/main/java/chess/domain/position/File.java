@@ -45,4 +45,8 @@ public enum File {
         }
         return this;
     }
+
+    public int getIndex() {
+        return index;
+    }
 }

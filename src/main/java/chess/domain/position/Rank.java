@@ -21,7 +21,7 @@ public enum Rank {
         this.index = index;
     }
 
-    public Rank up() {
+    public Rank up() { //TODO: private
         return indexOf(this.index + 1)
                 .orElseThrow(UnsupportedOperationException::new);
     }
@@ -45,5 +45,9 @@ public enum Rank {
             return down();
         }
         return this;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

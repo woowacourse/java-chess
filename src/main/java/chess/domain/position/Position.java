@@ -19,6 +19,14 @@ public class Position {
         return new Position(newFile, newRank);
     }
 
+    public int getFileIndex() {
+        return file.getIndex();
+    }
+
+    public int getRankIndex() {
+        return rank.getIndex();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
