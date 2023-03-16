@@ -1,4 +1,5 @@
 package chess.domain;
+
 public enum Team {
 
     BLACK,
@@ -6,5 +7,12 @@ public enum Team {
 
     public boolean isSameTeam(Team team) {
         return this == team;
+    }
+
+    public Team reverse() {
+        if (Team.WHITE == this) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
     }
 }
