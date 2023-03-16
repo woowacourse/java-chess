@@ -1,6 +1,4 @@
-package chess;
-
-import chess.domain.PiecesPosition;
+package chess.domain;
 
 public class ChessGame {
     private final PiecesPosition piecesPosition;
@@ -8,5 +6,7 @@ public class ChessGame {
     public ChessGame(PiecesPosition piecesPosition) {
         this.piecesPosition = piecesPosition;
     }
+
+
 }
 

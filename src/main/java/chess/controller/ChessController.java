@@ -1,9 +1,12 @@
 package chess.controller;
 
-import chess.ChessGame;
+import chess.domain.ChessGame;
 import chess.domain.PiecesPosition;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.ViewFile;
+import chess.view.ViewRank;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -55,6 +58,18 @@ public class ChessController {
     }
 
     private void move(ChessGame chessGame, String from, String to) {
+        Position fromPosition = getPosition(from);
+        Position toPosition = getPosition(to);
+        System.out.println(fromPosition);
+        System.out.println(toPosition);
+//        chessGame.move(fromPosition, toPosition);
+    }
+
+    private Position getPosition(String positionInput) {
+        String fileInput = String.valueOf(positionInput.charAt(0));
+        String rankInput = String.valueOf(positionInput.charAt(1));
+
+        return new Position(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
     public void printBoard(PiecesPosition piecesPosition) {
