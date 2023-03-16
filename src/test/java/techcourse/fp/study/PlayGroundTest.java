@@ -46,6 +46,13 @@ class PlayGroundTest {
     }
 
     @Test
+    void test() {
+
+        final ArrayList<Integer> integers = new ArrayList<>();
+        System.out.println(integers.stream().noneMatch(a -> a == 1));
+    }
+
+    @Test
     public void ForEach를_활용하여_콜론을_추가하는_문자열_작성() {
         StringBuilder stringBuilder = new StringBuilder();
 
