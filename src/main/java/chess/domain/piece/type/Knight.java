@@ -26,7 +26,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected Waypoints waypointsPerType(final Path path) {
+    public Waypoints waypoints(final PiecePosition destination) {
+        validateMovable(Path.of(piecePosition, destination));
         return Waypoints.from(Collections.emptyList());
     }
 }

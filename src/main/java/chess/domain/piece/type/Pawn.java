@@ -4,9 +4,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
-
-import java.util.Collections;
 
 public class Pawn extends Piece {
 
@@ -42,14 +39,6 @@ public class Pawn extends Piece {
             return false;
         }
         return Math.abs(path.fileDisplacement()) == 0;
-    }
-
-    @Override
-    protected Waypoints waypointsPerType(final Path path) {
-        if (!isMoved && isPawnSpecialDestination(path)) {
-            return Waypoints.from(path.wayPoints());
-        }
-        return Waypoints.from(Collections.emptyList());
     }
 
     @Override

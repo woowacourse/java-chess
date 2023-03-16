@@ -14,22 +14,13 @@ public abstract class Piece implements Cloneable {
         this.piecePosition = piecePosition;
     }
 
-    public boolean existIn(final PiecePosition piecePosition) {
-        return this.piecePosition.equals(piecePosition);
-    }
-
     public Waypoints waypoints(final PiecePosition destination) {
-        validateMovable(Path.of(piecePosition, destination));
-        return waypointsPerType(Path.of(piecePosition, destination));
+        final Path path = Path.of(piecePosition, destination);
+        validateMovable(path);
+        return Waypoints.from(path.wayPoints());
     }
 
     protected abstract void validateMovable(final Path path);
-
-    protected abstract Waypoints waypointsPerType(final Path path);
-
-    public boolean isAlly(final Piece enemy) {
-        return color == enemy.color;
-    }
 
     public void move(final PiecePosition destination) {
         this.piecePosition = destination;
@@ -44,6 +35,14 @@ public abstract class Piece implements Cloneable {
         if (isAlly(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
+    }
+
+    public boolean isAlly(final Piece enemy) {
+        return color == enemy.color;
+    }
+
+    public boolean existIn(final PiecePosition piecePosition) {
+        return this.piecePosition.equals(piecePosition);
     }
 
     @Override

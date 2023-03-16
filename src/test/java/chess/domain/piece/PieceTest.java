@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,11 +23,7 @@ class PieceTest {
         assertDoesNotThrow(() -> new Piece(Color.WHITE, of(1, 'a')) {
 
             @Override
-            protected void validateMovable(final Path path) {}
-
-            @Override
-            protected Waypoints waypointsPerType(final Path path) {
-                return null;
+            protected void validateMovable(final Path path) {
             }
         });
     }
@@ -51,11 +46,7 @@ class PieceTest {
         }
 
         @Override
-        protected void validateMovable(final Path path) {}
-
-        @Override
-        protected Waypoints waypointsPerType(final Path path) {
-            return null;
+        protected void validateMovable(final Path path) {
         }
     }
 
@@ -75,11 +66,6 @@ class PieceTest {
             @Override
             protected void validateMovable(final Path path) {
                 throw new IllegalArgumentException("도달 불가");
-            }
-
-            @Override
-            protected Waypoints waypointsPerType(final Path path) {
-                return null;
             }
         };
 
