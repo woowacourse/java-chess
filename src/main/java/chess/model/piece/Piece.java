@@ -9,7 +9,7 @@ public abstract class Piece implements InitialPiece {
     final Color color;
     final Type type;
 
-    public Piece(final Color color, final Type type) {
+    Piece(final Color color, final Type type) {
         this.color = color;
         this.type = type;
     }

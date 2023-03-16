@@ -1,7 +1,7 @@
 package chess.model.piece;
 
 import chess.model.Color;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -10,7 +10,7 @@ public final class PieceFactory {
     private static final Map<PieceType, Function<Color, Piece>> factories;
 
     static {
-        factories = new HashMap<>();
+        factories = new EnumMap<>(PieceType.class);
         factories.put(PieceType.PAWN, PieceFactory::initialPawn);
         factories.put(PieceType.ROOK, Rook::new);
         factories.put(PieceType.KNIGHT, Knight::new);
