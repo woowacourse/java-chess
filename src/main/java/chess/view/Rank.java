@@ -24,11 +24,11 @@ public enum Rank {
     }
 
     public static int findByIndex(String index) {
-        Rank foundRank = Arrays.stream(values())
-                .filter(rank -> rank.index.equalsIgnoreCase(index))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(WRONG_RANK_ERROR_MESSAGE));
-        return foundRank.address;
+        return Arrays.stream(values())
+            .filter(rank -> rank.index.equalsIgnoreCase(index))
+            .findAny()
+            .map(rank -> rank.address)
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_RANK_ERROR_MESSAGE));
     }
 
 }

@@ -25,11 +25,11 @@ public enum PieceName {
     }
 
     public static String findNameByPiece(final Piece piece) {
-        PieceName foundName = Arrays.stream(values())
-                .filter(pieceName -> pieceName.type == piece.getType())
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
-        return foundName.getName(piece.getColor());
+        return Arrays.stream(values())
+            .filter(pieceName -> pieceName.type == piece.getType())
+            .findAny()
+            .map(foundName -> foundName.getName(piece.getColor()))
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
     }
 
     public String getName(TeamColor color) {

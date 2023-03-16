@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.dto.CommandRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,7 +28,7 @@ public class InputView {
         }
         validateMoveCommandRequest(request);
         return CommandRequest.fromMoveCommand(parsePosition(request[SOURCE_POSITION_INDEX]),
-                parsePosition(request[DESTINATION_POSITION_INDEX]));
+            parsePosition(request[DESTINATION_POSITION_INDEX]));
     }
 
     private String[] readRequest() {
@@ -44,10 +43,8 @@ public class InputView {
     }
 
     private List<Integer> parsePosition(String word) {
-        List<Integer> position = new ArrayList<>();
-        position.add(File.findByIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
-        position.add(Rank.findByIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
-        return position;
+        return List.of(File.findByIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))),
+            Rank.findByIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
     }
 
 }
