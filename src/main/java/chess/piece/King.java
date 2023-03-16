@@ -29,6 +29,14 @@ public class King extends Piece {
 
     @Override
     public List<Position> getPaths(Position targetPosition) {
-        return null;
+        List<Position> paths = new ArrayList<>();
+        final Direction direction = position.getDirectionTo(targetPosition);
+        final int moveCountBeforeArrivalPosition = position.getMoveCount(targetPosition, direction) - 1;
+        Position nextPosition = this.position;
+        for (int next = 0; next < moveCountBeforeArrivalPosition; next++) {
+            nextPosition = nextPosition.getNextPosition(direction);
+            paths.add(nextPosition);
+        }
+        return paths;
     }
 }
