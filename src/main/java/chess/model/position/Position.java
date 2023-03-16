@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Position implements IndexConvertable {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
     public Position(final File file, final Rank rank) {
-        this.rank = rank;
         this.file = file;
+        this.rank = rank;
     }
 
     public Distance differ(final Position other) {

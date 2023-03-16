@@ -1,5 +1,7 @@
 package chess.model.position;
 
+import java.util.Arrays;
+
 public enum File {
 
     A(1),
@@ -16,6 +18,13 @@ public enum File {
     File(final int value) {
         this.value = value;
     }
+
+    public static File findFile(final String value) {
+        return Arrays.stream(values())
+                .filter(file -> file.toString().equalsIgnoreCase(value)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+    }
+
 
     public int differ(final File other) {
         return this.value - other.value;

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum GameCommand {
 
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String command;
 
@@ -20,6 +21,6 @@ public enum GameCommand {
     }
 
     private boolean match(final String input) {
-        return this.command.equals(input);
+        return this.command.equalsIgnoreCase(input);
     }
 }
