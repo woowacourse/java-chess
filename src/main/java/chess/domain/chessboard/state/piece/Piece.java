@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Piece implements PieceState {
 
-    private final Team team;
+    protected final Team team;
 
     protected Piece(final Team team) {
         this.team = team;

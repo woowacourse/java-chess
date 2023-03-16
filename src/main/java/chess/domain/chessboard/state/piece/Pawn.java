@@ -45,15 +45,15 @@ public final class Pawn extends Piece {
     }
 
     private boolean checkMoveDiagonal(final int fileDistance, final int rankDistance) {
-        return Math.abs(fileDistance) == 1 && rankDistance == 1;
+        return Math.abs(fileDistance) == 1 && rankDistance == this.team.getPawnDirection();
     }
 
     private boolean checkMoveFrontOneStep(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == 1;
+        return fileDistance == 0 && rankDistance == this.team.getPawnDirection();
     }
 
     private boolean checkMoveFrontFirst(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == 2 && !isMoved;
+        return fileDistance == 0 && rankDistance == 2 * this.team.getPawnDirection() && !isMoved;
     }
 
     @Override
