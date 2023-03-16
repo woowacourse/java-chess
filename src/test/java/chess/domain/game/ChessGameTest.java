@@ -30,20 +30,25 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 public class ChessGameTest {
 
+    private static List<PieceType> generateResult(final ChessGame chessGame) {
+        final List<Rank> ranks = Arrays.stream(Rank.values())
+                .collect(toList());
+        Collections.reverse(ranks);
+        final Map<Position, Piece> board = chessGame.getBoard();
+        return ranks.stream()
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
+                .map(board::get)
+                .map(Piece::type)
+                .collect(toList());
+    }
+
     @Test
     void 체스_게임을_생성한다() {
         // given
         final ChessGame chessGame = ChessGame.initialize();
 
-        // when
-        final Map<Position, Piece> board = chessGame.getBoard();
-
-        // then
-        final List<PieceType> result = Arrays.stream(Rank.values())
-                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
-                .map(board::get)
-                .map(Piece::type)
-                .collect(toList());
+        // expect
+        final List<PieceType> result = generateResult(chessGame);
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
@@ -85,15 +90,7 @@ public class ChessGameTest {
         chessGame.move("d7", "d6");
 
         // then
-        final List<Rank> ranks = Arrays.stream(Rank.values())
-                .collect(toList());
-        Collections.reverse(ranks);
-        final Map<Position, Piece> board = chessGame.getBoard();
-        final List<PieceType> result = ranks.stream()
-                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
-                .map(board::get)
-                .map(Piece::type)
-                .collect(toList());
+        final List<PieceType> result = generateResult(chessGame);
         assertThat(result).containsExactly(
                 ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
