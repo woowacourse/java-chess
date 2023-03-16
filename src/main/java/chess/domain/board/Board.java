@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.maker.PiecesGenerator;
 import chess.domain.piece.BlankPiece;
@@ -60,6 +61,10 @@ public class Board {
         pieces.remove(pieceToMove);
         pieces.remove(pieceInTargetPosition);
         pieces.add(movedPiece);
+    }
+
+    public boolean isSameColor(final Position position, final Color otherColor) {
+        return findPieceToMoveIn(position).isSameColor(otherColor);
     }
 
     public List<Piece> getPieces() {

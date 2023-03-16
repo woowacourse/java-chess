@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.TestPiecesGenerator;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.maker.PiecesGenerator;
 import chess.domain.piece.Pawn;
@@ -9,6 +10,8 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -139,5 +142,19 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, SEVEN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource({"BLACK, true", "WHITE, false"})
+    @DisplayName("같은 색인지 확인한다")
+    void isSameColorTest(final Color color, final boolean expected) {
+        final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
+                new Queen(D, EIGHT, BLACK)
+        ));
+        final Board board = Board.createBoardWith(piecesGenerator);
+
+        final boolean actual = board.isSameColor(new Position(D, EIGHT), color);
+
+        assertThat(actual).isEqualTo(expected);
     }
 }
