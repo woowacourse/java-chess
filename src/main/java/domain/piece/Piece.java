@@ -26,7 +26,6 @@ public abstract class Piece {
     public abstract PieceCategory getCategory();
 
     public abstract Score getScore();
-    
 
     public boolean isSameSideWith(Piece targetPiece) {
         return this.side == targetPiece.side;
