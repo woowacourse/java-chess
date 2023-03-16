@@ -6,7 +6,7 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
-### 기능 목록
+## 기능 목록
 
 ### 체스 규칙
 
@@ -28,6 +28,35 @@
     - 앞뒤양옆, 대각선으로 1칸만 이동 가능하다.
 - 퀸
     - 앞뒤양옆, 대각선으로 장애물이 없을 때까지 원하는 만큼 이동 가능하다.
+
+### 시퀀스 다이어그램
+
+도메인 기능 시퀀스 다이어그램
+
+```mermaid
+sequenceDiagram
+
+	Controller ->> ChessBoard: 출발지 위치 (2,2), 도착지 위치 (2,3) 전달
+
+  ChessBoard ->> Piece: 출발지에 위치한 말 확인
+
+	ChessBoard ->> Piece: 확인한 말에 출발지와 이동 방향을 전달
+
+	Piece ->> Path: 출발지에서 이동 가능한 모든 Path 요청
+
+	Path ->> Position: 특정 방향으로 다음 위치 요청
+	Position -->> Path: 특정 방향으로 한 칸 이동한 새로운 Position 반환
+
+	Path -->> Piece: 출발지에서 이동 가능한 모든 Path 반환 
+
+	Piece -->> ChessBoard: 출발지에서 말이 이동 가능한 모든 Path 반환
+
+	ChessBoard ->> ChessBoard: 도착지가 포함된 Path가 있는지 확인
+	ChessBoard ->> ChessBoard: 도착지로 이동 가능한지 장애물 확인, 잡을 수 있는 말 있는지 확인
+	ChessBoard ->> ChessBoard: 다른 말들의 위치를 고려해 체스판에 이동 결과 반영
+
+	ChessBoard -->> Controller: 이동 결과를 반영한 체스판 정보 반환 
+```
 
 ### 도메인 기능
 
