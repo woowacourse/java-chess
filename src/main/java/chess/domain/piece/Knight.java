@@ -12,12 +12,12 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        int absX = Math.abs(source.getX() - target.getX());
-        int absY = Math.abs(source.getY() - target.getY());
-        return isInKnightRange(absX, absY);
+        int xDistance = source.getXDistanceTo(target);
+        int yDistance = source.getYDistanceTo(target);
+        return isInKnightRange(xDistance, yDistance);
     }
 
-    private static boolean isInKnightRange(int absX, int absY) {
-        return (absX == 2 && absY == 1) || (absX == 1 && absY == 2);
+    private static boolean isInKnightRange(int xDistance, int yDistance) {
+        return (xDistance == 2 && yDistance == 1) || (xDistance == 1 && yDistance == 2);
     }
 }
