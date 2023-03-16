@@ -27,4 +27,27 @@ class DirectionTest {
         assertThat(upDirection.getNextYPoint(2)).isEqualTo(3);
     }
 
+    @Test
+    @DisplayName("수평으로 이동하는지 여부를 반환한다.")
+    void isHorizontalMovable() {
+        // given
+        final Direction rightDirection = Direction.RIGHT;
+        final Direction upDirection = Direction.UP;
+
+        // when, then
+        assertThat(rightDirection.isHorizontalMovable()).isTrue();
+        assertThat(upDirection.isHorizontalMovable()).isFalse();
+    }
+
+    @Test
+    @DisplayName("수직으로 이동하는지 여부를 반환한다.")
+    void isVerticalMovable() {
+        // given
+        final Direction rightDirection = Direction.RIGHT;
+        final Direction upDirection = Direction.UP;
+
+        // when, then
+        assertThat(rightDirection.isVerticalMovable()).isFalse();
+        assertThat(upDirection.isVerticalMovable()).isTrue();
+    }
 }
