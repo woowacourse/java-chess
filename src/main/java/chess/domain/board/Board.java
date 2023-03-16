@@ -1,7 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.direction.Direction;
+import chess.domain.pieces.Knight;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Place;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -32,20 +35,34 @@ public class Board {
 
     private void validateMove(final String start, final String end) {
         Piece piece = findPiece(start);
-        piece.canMove(start, end);
         validateMoveSamePosition(start, end);
+        if (!(piece instanceof Knight)) {
+            validateObstacle(start, end);
+        }
+        piece.canMove(start, end);
         validateMoveMyTeam(start, end);
     }
 
     private void validateMoveMyTeam(final String start, final String end) {
-        if ((findPiece(start).isNameLowerCase() == findPiece(end).isNameLowerCase()) && !findPiece(end).getName().equals(".")) {
+        if ((findPiece(start).isNameLowerCase() == findPiece(end).isNameLowerCase()) && !findPiece(end).getName()
+                .equals(".")) {
             throw new IllegalArgumentException("우리팀 말에게 이동할 수 없습니다.");
         }
     }
 
     private void validateMoveSamePosition(final String start, final String end) {
-        if(start.equals(end)) {
+        if (start.equals(end)) {
             throw new IllegalArgumentException("같은 위치로 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateObstacle(final String start, final String end) {
+        List<String> routes = Direction.getRoute(start, end);
+        for (String route : routes) {
+            Piece piece = findPiece(route);
+            if (!(piece instanceof Place)) {
+                throw new IllegalArgumentException("장애물이 존재합니다.");
+            }
         }
     }
 }
