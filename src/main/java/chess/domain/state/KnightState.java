@@ -15,10 +15,10 @@ public class KnightState implements MoveState {
 
     @Override
     public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return isValidVariance(x, y) && ColorCompareResult.SAME_COLOR != colorCompareResult;
+        return validMoveRequest(x, y) && ColorCompareResult.SAME_COLOR != colorCompareResult;
     }
 
-    private boolean isValidVariance(int x, int y) {
+    private boolean validMoveRequest(int x, int y) {
         if (Math.abs(x) == 2 && Math.abs(y) == 1) {
             return true;
         }

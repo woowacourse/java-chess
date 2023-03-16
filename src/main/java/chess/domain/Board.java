@@ -36,13 +36,17 @@ public class Board {
     }
 
     private void makePiecesExceptPawns(Color color, Rank rank) {
-        List<PieceType> highPieceOrder = List.of(
-                PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
-                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
+        List<PieceType> highPieceOrder = orderedPiece();
         for (int i = 0; i < RANK_SIZE; i++) {
             piecePosition.put(Position.of(File.from(i), rank),
                     new Piece(highPieceOrder.get(i), color));
         }
+    }
+
+    private List<PieceType> orderedPiece() {
+        return List.of(
+                PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
     }
 
     private void makePawns(Color color, Rank rank) {
@@ -54,9 +58,9 @@ public class Board {
     public void movePiece(Position origin, Position destination) {
         validateMoveRequest(origin, destination);
         Piece targetPiece = piecePosition.get(origin);
-        int rankDifference = origin.getRankDifference(destination);
-        int fileDifference = origin.getFileDifference(destination);
-        targetPiece.move(fileDifference, rankDifference, piecePosition.get(destination));
+        targetPiece.move(origin.getFileDifference(destination),
+                origin.getRankDifference(destination),
+                piecePosition.get(destination));
         piecePosition.put(destination, targetPiece);
         piecePosition.put(origin, Piece.empty());
     }
