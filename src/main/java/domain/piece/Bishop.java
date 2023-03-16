@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public final class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override
@@ -21,10 +22,7 @@ public final class Bishop extends Piece {
 
     @Override
     protected boolean isMovable(final Position source, final Position target) {
-        final int diffX = Math.abs(source.diffX(target));
-        final int diffY = Math.abs(source.diffY(target));
-
-        return (diffX != 0 || diffY != 0) && (diffX == diffY);
+        return source.isDiagonally(target);
     }
 
     private List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
@@ -51,5 +49,10 @@ public final class Bishop extends Piece {
         }
 
         return 1;
+    }
+
+    @Override
+    public Type getType() {
+        return pieceType;
     }
 }

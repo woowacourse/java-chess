@@ -51,6 +51,20 @@ public class Position {
         return Position.of(x + moveX, y + moveY);
     }
 
+    public boolean isDiagonally(Position otherPosition) {
+        final int diffX = Math.abs(this.diffX(otherPosition));
+        final int diffY = Math.abs(this.diffY(otherPosition));
+
+        return (diffX != 0 || diffY != 0) && (diffX == diffY);
+    }
+
+    public boolean isStraight(Position otherPosition) {
+        int diffX = Math.abs(this.diffX(otherPosition));
+        int diffY = Math.abs(this.diffY(otherPosition));
+
+        return (diffX != 0 || diffY != 0) && (diffX == 0 || diffY == 0);
+    }
+
     public int getX() {
         return x;
     }

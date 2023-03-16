@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public final class Queen extends Piece {
 
     public Queen(final Color color) {
-        super(color);
+        super(color, PieceType.QUEEN);
     }
 
     @Override
@@ -55,5 +56,10 @@ public final class Queen extends Piece {
             position = position.move(moveX, moveY);
         }
         return positions;
+    }
+
+    @Override
+    public Type getType() {
+        return pieceType;
     }
 }

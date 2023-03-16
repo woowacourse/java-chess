@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -8,7 +9,7 @@ import java.util.Collections;
 public class Pawn extends Piece {
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override
@@ -33,5 +34,10 @@ public class Pawn extends Piece {
             return -1;
         }
         return 1;
+    }
+
+    @Override
+    public Type getType() {
+        return pieceType;
     }
 }

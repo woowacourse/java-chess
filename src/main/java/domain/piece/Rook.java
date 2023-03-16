@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public final class Rook extends Piece {
 
     public Rook(final Color color) {
-        super(color);
+        super(color, PieceType.ROOK);
     }
 
     @Override
@@ -24,10 +25,7 @@ public final class Rook extends Piece {
 
     @Override
     protected boolean isMovable(final Position source, final Position target) {
-        int diffX = Math.abs(target.diffX(source));
-        int diffY = Math.abs(target.diffY(source));
-
-        return (diffX != 0 || diffY != 0) && (diffX == 0 || diffY == 0);
+        return source.isStraight(target);
     }
 
 
@@ -46,4 +44,8 @@ public final class Rook extends Piece {
         return positions;
     }
 
+    @Override
+    public Type getType() {
+        return pieceType;
+    }
 }

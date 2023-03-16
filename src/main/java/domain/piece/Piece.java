@@ -8,8 +8,11 @@ public abstract class Piece implements SquareStatus {
 
     protected final Color color;
 
-    public Piece(final Color color) {
+    protected PieceType pieceType;
+
+    public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     public abstract Route findRoute(final Position source, final Position target);
@@ -19,6 +22,14 @@ public abstract class Piece implements SquareStatus {
             return;
         }
         throw new IllegalStateException("잘못된 도착 지점입니다.");
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     protected abstract boolean isMovable(final Position source, final Position target);
