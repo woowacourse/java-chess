@@ -21,9 +21,22 @@ public class BoardTest extends AbstractTestFixture {
         var source = createPosition("C,THREE");
         var target = createPosition("D,TWO");
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 기물이 없습니다");
+    }
+
+
+    @DisplayName("현재 턴에 일치하는 말만 움직일 수 있다")
+    @Test
+    void moveInOthersTurn_throws() {
+        var board = BoardFactory.createBoard();
+        var source = createPosition("B,SEVEN");
+        var target = createPosition("B,SIX");
+
+        assertThatThrownBy(() -> board.move(source, target, true))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("자신의 기물만 움직일 수 있습니다");
     }
 
     @DisplayName("목표 위치에 같은 색상의 말이 있으면 예외를 던진다")
@@ -33,7 +46,7 @@ public class BoardTest extends AbstractTestFixture {
         var source = createPosition("C,ONE");
         var target = createPosition("D,TWO");
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목표 위치에 같은 색 말이 있습니다");
     }
@@ -45,7 +58,7 @@ public class BoardTest extends AbstractTestFixture {
         var source = createPosition("C,TWO");
         var target = createPosition("B,THREE");
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 이동할 수 없는 수입니다");
     }
@@ -57,10 +70,10 @@ public class BoardTest extends AbstractTestFixture {
         var source = createPosition("D,ONE");
         var target = createPosition("A,FOUR");
 
-        board.move(createPosition("C,TWO"), createPosition("C,THREE"));
-        board.move(createPosition("B,TWO"), createPosition("B,THREE"));
+        board.move(createPosition("C,TWO"), createPosition("C,THREE"), true);
+        board.move(createPosition("B,TWO"), createPosition("B,THREE"), true);
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 기물을 지나칠 수 없습니다");
     }
@@ -72,7 +85,7 @@ public class BoardTest extends AbstractTestFixture {
         var source = createPosition("D,TWO");
         var target = createPosition("D,THREE");
 
-        board.move(source, target);
+        board.move(source, target, true);
 
         Map<Position, Piece> pieces = board.getPieces();
         assertThat(pieces.get(source))
@@ -91,9 +104,9 @@ public class BoardTest extends AbstractTestFixture {
         var target2 = createPosition("G,FIVE");
         var target3 = createPosition("F,SEVEN");
 
-        board.move(source, target);
-        board.move(target, target2);
-        board.move(target2, target3);
+        board.move(source, target, true);
+        board.move(target, target2, true);
+        board.move(target2, target3, true);
 
         Map<Position, Piece> pieces = board.getPieces();
         assertThat(pieces.get(source))

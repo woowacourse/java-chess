@@ -14,8 +14,9 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public void move(Position source, Position target) {
+    public void move(Position source, Position target, boolean isWhiteTurn) {
         Piece sourcePiece = findSourcePiece(source);
+        checkTurn(isWhiteTurn, sourcePiece);
         boolean isAttack = checkIsAttack(sourcePiece, target);
         Move move = Move.of(source, target);
 
@@ -27,6 +28,12 @@ public class Board {
         }
         pieces.remove(source);
         pieces.put(target, sourcePiece.touch());
+    }
+
+    private void checkTurn(boolean isWhiteTurn, Piece sourcePiece) {
+        if (!sourcePiece.hasColor(isWhiteTurn)) {
+            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
+        }
     }
 
     private Piece findSourcePiece(Position source) {
