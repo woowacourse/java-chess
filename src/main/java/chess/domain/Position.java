@@ -23,9 +23,9 @@ public class Position {
         return new Position(file, rank);
     }
 
-    public static Position from(List<Integer> fileRank) {
-        return new Position(fileRank.get(POSITION_FILE_INDEX),
-                fileRank.get(POSITION_RANK_INDEX));
+    public static Position from(List<Integer> coordinate) {
+        return new Position(coordinate.get(POSITION_FILE_INDEX),
+                coordinate.get(POSITION_RANK_INDEX));
     }
 
     private void validate(int file, int rank) {
@@ -52,7 +52,7 @@ public class Position {
     }
 
     public boolean isOneStepForwardDiagonal(Position other) {
-        return (other.file - file == 1) && (Math.abs(other.rank - rank) == 1);
+        return ((other.file - file) == 1) && (Math.abs(other.rank - rank) == 1);
     }
 
     public boolean isInExpectedRank(int rank) {

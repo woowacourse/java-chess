@@ -34,92 +34,100 @@ public class ChessBoard {
         insertPiecesByColor(TeamColor.BLACK);
     }
 
-    private void insertPiecesByColor(TeamColor color) {
-        piecesByPosition.put(Position.of(2, color.startingRank()), new Knight(color));
-        piecesByPosition.put(Position.of(1, color.startingRank()), new Rook(color));
-        piecesByPosition.put(Position.of(3, color.startingRank()), new Bishop(color));
-        piecesByPosition.put(Position.of(4, color.startingRank()), new King(color));
-        piecesByPosition.put(Position.of(5, color.startingRank()), new Queen(color));
-        piecesByPosition.put(Position.of(6, color.startingRank()), new Bishop(color));
-        piecesByPosition.put(Position.of(7, color.startingRank()), new Knight(color));
-        piecesByPosition.put(Position.of(8, color.startingRank()), new Rook(color));
+    private void insertPiecesByColor(TeamColor teamColor) {
+        piecesByPosition.put(Position.of(2, teamColor.startingRank()), new Knight(teamColor));
+        piecesByPosition.put(Position.of(1, teamColor.startingRank()), new Rook(teamColor));
+        piecesByPosition.put(Position.of(3, teamColor.startingRank()), new Bishop(teamColor));
+        piecesByPosition.put(Position.of(4, teamColor.startingRank()), new King(teamColor));
+        piecesByPosition.put(Position.of(5, teamColor.startingRank()), new Queen(teamColor));
+        piecesByPosition.put(Position.of(6, teamColor.startingRank()), new Bishop(teamColor));
+        piecesByPosition.put(Position.of(7, teamColor.startingRank()), new Knight(teamColor));
+        piecesByPosition.put(Position.of(8, teamColor.startingRank()), new Rook(teamColor));
         IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
-                .forEach(file -> piecesByPosition.put(Position.of(file, color.startingPawnRank()),
-                        new Pawn(color)));
+                .forEach(file -> piecesByPosition.put(Position.of(file, teamColor.startingPawnRank()),
+                        new Pawn(teamColor)));
     }
 
-    public void move(List<Integer> sourcePosition, List<Integer> destPosition, final TeamColor teamColor) {
-        Position source = Position.from(sourcePosition);
-        Position dest = Position.from(destPosition);
+    public void move(List<Integer> sourceCoords, List<Integer> destinationCoords, final TeamColor teamColor) {
+        Position source = Position.from(sourceCoords);
+        Position destination = Position.from(destinationCoords);
 
-        Piece piece = findPieceInStartPosition(source, teamColor);
-        List<Path> movablePaths = piece.findMovablePaths(source);
-
-        for (Path path : movablePaths) {
-            if (moveWhenPossible(source, dest, piece, path, teamColor)) {
+        Piece piece = findPieceAtSourcePosition(source, teamColor);
+        List<Path> allPaths = piece.findAllPaths(source);
+        for (Path path : allPaths) {
+            if (moveWhenPossible(path, source, destination, piece, teamColor)) {
                 return;
             }
         }
-
         throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
     }
 
-    private Piece findPieceInStartPosition(final Position start, final TeamColor color) {
+    private Piece findPieceAtSourcePosition(final Position source, final TeamColor teamColor) {
+        validatePieceAtSourcePosition(source);
+        Piece piece = piecesByPosition.get(source);
+        validatePieceColor(piece, teamColor);
+        return piece;
+    }
+
+    private void validatePieceAtSourcePosition(final Position start) {
         if (piecesByPosition.containsKey(start)) {
-            Piece piece = piecesByPosition.get(start);
-            validatePieceColor(color, piece);
-            return piece;
+            return;
         }
         throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
     }
 
-    private void validatePieceColor(final TeamColor color, final Piece piece) {
-        if (piece.isSameColor(color)) {
+    private void validatePieceColor(final Piece piece, final TeamColor teamColor) {
+        if (piece.isSameColor(teamColor)) {
             return;
         }
         throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
 
-    private boolean moveWhenPossible(final Position source, final Position dest, final Piece piece, final Path path,
-                                     final TeamColor color) {
-        if (path.hasPosition(dest)) {
-            checkObstacleInPath(dest, path);
-            validatePawnAttack(piece, source, dest);
-            validateObstacleInDestination(dest, color);
-
-            piecesByPosition.put(dest, piece);
+    private boolean moveWhenPossible(final Path path, final Position source, final Position destination,
+                                     final Piece movingPiece, final TeamColor teamColor) {
+        if (path.hasPosition(destination)) {
+            validatePath(path, source, destination, movingPiece, teamColor);
+            piecesByPosition.put(destination, movingPiece);
             piecesByPosition.remove(source);
             return true;
         }
         return false;
     }
 
-    private void validateObstacleInDestination(final Position dest, final TeamColor color) {
-        if (!piecesByPosition.containsKey(dest)) {
+    private void validatePath(final Path path, final Position source, final Position destination,
+                              final Piece movingPeace, final TeamColor teamColor) {
+        checkObstacleInPath(path, destination);
+        checkPawnAttack(source, destination, movingPeace);
+        checkObstacleInDestination(destination, teamColor);
+    }
+
+    private void checkObstacleInDestination(final Position destination, final TeamColor teamColor) {
+        if (!piecesByPosition.containsKey(destination)) {
             return;
         }
-        if (piecesByPosition.get(dest).isSameColor(color)) {
+        Piece pieceAtDestination = piecesByPosition.get(destination);
+        if (pieceAtDestination.isSameColor(teamColor)) {
             throw new IllegalArgumentException(WRONG_ATTACK_TARGET_ERROR_MESSAGE);
         }
     }
 
-    private void validatePawnAttack(final Piece piece, final Position source, final Position dest) {
-        if (!piece.isPawn()) {
+    private void checkPawnAttack(final Position source, final Position destination, final Piece movingPiece) {
+        if (!movingPiece.isPawn()) {
             return;
         }
-        Pawn pawn = (Pawn) piece;
-        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
+        Pawn pawn = (Pawn) movingPiece;
+        if (pawn.isAttack(source, destination) && isEmptyPosition(destination)) {
             throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
         }
     }
 
-    private boolean isOtherPieceInDestination(final Position dest) {
-        return piecesByPosition.containsKey(dest);
+    private boolean isEmptyPosition(final Position destination) {
+        return !piecesByPosition.containsKey(destination);
     }
 
-    private void checkObstacleInPath(final Position dest, final Path path) {
+    private void checkObstacleInPath(final Path path, final Position destination) {
         List<Position> positions = path.positions();
-        for (int index = 0; index < path.findPositionIndex(dest); index++) {
+        for (int index = 0; index < path.findPositionIndex(destination); index++) {
             checkObstacleAtIndex(positions, index);
         }
     }

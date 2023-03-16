@@ -16,7 +16,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract List<Path> findMovablePaths(Position position);
+    public abstract List<Path> findAllPaths(Position position);
 
     public abstract boolean isPawn();
 

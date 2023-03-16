@@ -7,13 +7,14 @@ import java.util.List;
 public class CommandRequest {
 
     private final Command command;
-    private final List<Integer> source;
-    private final List<Integer> destination;
+    private final List<Integer> sourceCoordinate;
+    private final List<Integer> destinationCoordinate;
 
-    private CommandRequest(final Command command, final List<Integer> source, final List<Integer> destination) {
+    private CommandRequest(final Command command, final List<Integer> sourceCoordinate,
+                           final List<Integer> destinationCoordinate) {
         this.command = command;
-        this.source = source;
-        this.destination = destination;
+        this.sourceCoordinate = sourceCoordinate;
+        this.destinationCoordinate = destinationCoordinate;
     }
 
     public static CommandRequest fromMoveCommand(final List<Integer> source,
@@ -29,11 +30,11 @@ public class CommandRequest {
         return command;
     }
 
-    public List<Integer> getSource() {
-        return source;
+    public List<Integer> getSourceCoordinate() {
+        return sourceCoordinate;
     }
 
-    public List<Integer> getDestination() {
-        return destination;
+    public List<Integer> getDestinationCoordinate() {
+        return destinationCoordinate;
     }
 }

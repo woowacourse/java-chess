@@ -45,8 +45,8 @@ public class InputView {
 
     private List<Integer> parsePosition(String word) {
         List<Integer> position = new ArrayList<>();
-        position.add(File.findByIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
-        position.add(Rank.findByIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
+        position.add(File.findByUserIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
+        position.add(Rank.findByUserIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
         return position;
     }
 

@@ -36,7 +36,7 @@ public class ChessController {
             return false;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            chessBoard.move(commandRequest.getSource(), commandRequest.getDestination(), color);
+            chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate(), color);
             currentColor = currentColor.transfer();
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));

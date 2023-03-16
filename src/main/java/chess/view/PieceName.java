@@ -7,21 +7,21 @@ import java.util.Arrays;
 
 public enum PieceName {
 
-    ROOK("R", PieceType.ROOK),
-    KNIGHT("N", PieceType.KNIGHT),
-    BISHOP("B", PieceType.BISHOP),
-    QUEEN("Q", PieceType.QUEEN),
-    KING("K", PieceType.KING),
-    PAWN("P", PieceType.PAWN);
+    ROOK(PieceType.ROOK, "R"),
+    KNIGHT(PieceType.KNIGHT, "N"),
+    BISHOP(PieceType.BISHOP, "B"),
+    QUEEN(PieceType.QUEEN, "Q"),
+    KING(PieceType.KING, "K"),
+    PAWN(PieceType.PAWN, "P");
 
     private static final String WRONG_TYPE_ERROR_MESSAGE = "존재하지 않는 말 타입입니다.";
 
-    private final String name;
     private final PieceType type;
+    private final String name;
 
-    PieceName(final String name, final PieceType type) {
-        this.name = name;
+    PieceName(final PieceType type, final String name) {
         this.type = type;
+        this.name = name;
     }
 
     public static String findNameByPiece(final Piece piece) {

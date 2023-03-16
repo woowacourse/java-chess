@@ -4,31 +4,31 @@ import java.util.Arrays;
 
 public enum File {
 
-    A(1, "a"),
-    B(2, "b"),
-    C(3, "c"),
-    D(4, "d"),
-    E(5, "e"),
-    F(6, "f"),
-    G(7, "g"),
-    H(8, "h");
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
     private static final String WRONG_FILE_ERROR_MESSAGE = "잘못된 file 입니다.";
 
-    private final int address;
-    private final String index;
+    private final String userIndex;
+    private final int coordinateIndex;
 
-    File(final int address, final String index) {
-        this.address = address;
-        this.index = index;
+    File(final String userIndex, final int coordinateIndex) {
+        this.userIndex = userIndex;
+        this.coordinateIndex = coordinateIndex;
     }
 
-    public static int findByIndex(String index) {
+    public static int findByUserIndex(String searchIndex) {
         File foundFile = Arrays.stream(values())
-                .filter(file -> file.index.equalsIgnoreCase(index))
+                .filter(file -> file.userIndex.equalsIgnoreCase(searchIndex))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_ERROR_MESSAGE));
-        return foundFile.address;
+        return foundFile.coordinateIndex;
     }
 
 }

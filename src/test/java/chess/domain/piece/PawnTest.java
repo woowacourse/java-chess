@@ -21,7 +21,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            List<Path> movePaths = pawn.findMovablePaths(Position.of(2, 2));
+            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 2));
 
             assertThat(movePaths.size()).isEqualTo(4);
         }
@@ -31,7 +31,7 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            List<Path> movePaths = pawn.findMovablePaths(Position.of(2, 3));
+            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 3));
 
             assertThat(movePaths.size()).isEqualTo(3);
         }
@@ -46,7 +46,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            List<Path> movePaths = pawn.findMovablePaths(Position.of(2, 7));
+            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 7));
 
             assertThat(movePaths.size()).isEqualTo(4);
         }
@@ -56,7 +56,7 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            List<Path> movePaths = pawn.findMovablePaths(Position.of(2, 3));
+            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 3));
 
             assertThat(movePaths.size()).isEqualTo(3);
         }

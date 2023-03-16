@@ -20,7 +20,7 @@ class KingTest {
     void 이동_범위_확인() {
         King king = new King(TeamColor.WHITE);
 
-        List<Path> movablePaths = king.findMovablePaths(Position.of(1, 1));
+        List<Path> movablePaths = king.findAllPaths(Position.of(1, 1));
 
         int totalPositionCount = 0;
 

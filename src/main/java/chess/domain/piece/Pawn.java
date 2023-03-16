@@ -27,7 +27,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Path> findMovablePaths(final Position current) {
+    public List<Path> findAllPaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : directions) {
             paths.add(Path.ofSinglePath(current, direction));

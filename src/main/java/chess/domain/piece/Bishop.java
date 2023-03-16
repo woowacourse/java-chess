@@ -20,7 +20,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Path> findMovablePaths(final Position current) {
+    public List<Path> findAllPaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : directions) {
             paths.add(Path.ofMultiPath(current, direction));

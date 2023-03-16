@@ -16,7 +16,7 @@ public class BishopTest {
     void 이동_범위_확인() {
         Bishop bishop = new Bishop(TeamColor.WHITE);
 
-        List<Path> movablePaths = bishop.findMovablePaths(Position.of(2, 2));
+        List<Path> movablePaths = bishop.findAllPaths(Position.of(2, 2));
 
         int totalPositionCount = 0;
 

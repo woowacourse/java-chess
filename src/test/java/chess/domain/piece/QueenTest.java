@@ -16,7 +16,7 @@ public class QueenTest {
     void 이동_범위_확인() {
         Queen queen = new Queen(TeamColor.WHITE);
 
-        List<Path> movablePaths = queen.findMovablePaths(Position.of(2, 2));
+        List<Path> movablePaths = queen.findAllPaths(Position.of(2, 2));
 
         int totalPositionCount = 0;
 
