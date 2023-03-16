@@ -130,7 +130,7 @@ classDiagram
 
 ### Score
 - [x] 더한 점수를 반환한다.
-- 
+
 ### ChessBoardGenerator
 - [x] 체스 판과 규칙에 맞는 초기 말들을 생성한다.
 - [x] 어느 방향으로도 움직이지 않으면 예외가 발생한다.
