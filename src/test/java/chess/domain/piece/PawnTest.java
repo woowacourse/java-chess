@@ -22,23 +22,41 @@ class PawnTest {
             final List<Position> expectedResult
     ) {
         // given
-        final Piece pawn = new Pawn(Color.WHITE);
+        final Piece pawn = Pawn.from(Color.WHITE);
         // when
         List<Position> result = pawn.findPositions(source, target);
         // then
-        assertThat(result).isEqualTo(expectedResult);
+        assertThat(result).containsExactlyInAnyOrderElementsOf(expectedResult);
     }
 
     static Stream<Arguments> PawnMovableSuccessTestDummy() {
         return Stream.of(
+                // 2칸 앞으로 전진
                 Arguments.arguments(
-                        new Position(1, 6),
-                        new Position(1, 5),
+                        Position.of(1, 6),
+                        Position.of(1, 4),
                         List.of(
-                                new Position(0, 5),
-                                new Position(1, 5),
-                                new Position(2, 5),
-                                new Position(1, 4)
+                                Position.of(0, 5),
+                                Position.of(2, 5),
+                                Position.of(1, 4)
+                        )
+                ),
+                // 1칸 앞으로 전진
+                Arguments.arguments(
+                        Position.of(1, 6),
+                        Position.of(1, 5),
+                        List.of(
+                                Position.of(1, 5)
+                        )
+                ),
+                // 대각선 왼쪽으로 한칸 전진
+                Arguments.arguments(
+                        Position.of(1, 6),
+                        Position.of(2, 5),
+                        List.of(
+                                Position.of(2, 5),
+                                Position.of(0, 5),
+                                Position.of(1, 4)
                         )
                 )
         );
