@@ -12,6 +12,7 @@ public enum File {
     G(7),
     H(8);
 
+    private static final int NEAR_INDEX = 1;
     private final int value;
 
     File(final int value) {
@@ -22,23 +23,23 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
     public File plus() {
-        int filePlused = this.value + 1;
+        int filePlused = this.value + NEAR_INDEX;
         return Arrays.stream(File.values())
                 .filter(file -> file.value == filePlused)
                 .findAny()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
     public File minus() {
-        int fileMinused = this.value - 1;
+        int fileMinused = this.value - NEAR_INDEX;
         return Arrays.stream(File.values())
                 .filter(file -> file.value == fileMinused)
                 .findAny()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
     public boolean isOver(final File file) {

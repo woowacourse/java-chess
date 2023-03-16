@@ -15,7 +15,7 @@ public final class Knight extends Piece {
         if (source.canKnightJump(target)) {
             return Set.of(target);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
     }
 
     @Override

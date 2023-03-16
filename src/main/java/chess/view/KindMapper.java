@@ -38,7 +38,7 @@ public enum KindMapper {
                 .filter(kindMapper -> kindMapper.kind == kind && kindMapper.color == color)
                 .map(kindMapper -> kindMapper.pieceView)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("매핑 정보가 잘못되었습니다."));
     }
 
     public static List<String> mapToStrings(List<Piece> pieces) {

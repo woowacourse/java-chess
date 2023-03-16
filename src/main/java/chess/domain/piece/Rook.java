@@ -21,7 +21,7 @@ public final class Rook extends Piece {
         if (source.isRankEquals(target)) {
             return getRankPath(source, target);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
     }
 
     private Set<Position> getRankPath(final Position source, final Position target) {

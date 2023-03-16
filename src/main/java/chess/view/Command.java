@@ -7,15 +7,15 @@ public enum Command {
     END("end"),
     MOVE("move");
 
-    private final String command;
+    private final String name;
 
-    Command(final String command) {
-        this.command = command;
+    Command(final String name) {
+        this.name = name;
     }
 
     public static Command from(final String input) {
         return Arrays.stream(Command.values())
-                .filter(it -> it.command.equals(input))
+                .filter(command -> command.name.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어입니다."));
     }

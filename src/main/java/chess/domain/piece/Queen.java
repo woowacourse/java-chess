@@ -22,19 +22,16 @@ public final class Queen extends Piece {
         if (inclination == POSITIVE_ONE) {
             return getPositiveOneInclinationPath(source, target);
         }
-
         if (inclination == NEGATIVE_ONE) {
             return getNegativeOneInclinationPath(source, target);
         }
-
         if (source.isFileEquals(target)) {
             return getFilePath(source, target);
         }
         if (source.isRankEquals(target)) {
             return getRankPath(source, target);
         }
-
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
     }
 
     private Set<Position> getNegativeOneInclinationPath(final Position source, final Position target) {

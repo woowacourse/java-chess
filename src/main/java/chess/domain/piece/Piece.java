@@ -18,16 +18,16 @@ public abstract class Piece {
 
     protected void validateSamePosition(Position source, Position target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
         }
     }
 
     public boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
-        HashMap<Position, Boolean> defensiveCopied = new HashMap<>(isEmptyPosition);
-        defensiveCopied.remove(target);
-        return defensiveCopied.keySet()
+        isEmptyPosition = new HashMap<>(isEmptyPosition);
+        isEmptyPosition.remove(target);
+        return isEmptyPosition.keySet()
                 .stream()
-                .allMatch(defensiveCopied::get);
+                .allMatch(isEmptyPosition::get);
     }
 
     public boolean isEmpty() {

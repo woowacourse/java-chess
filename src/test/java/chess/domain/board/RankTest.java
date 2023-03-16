@@ -30,14 +30,14 @@ class RankTest {
     @DisplayName("범위를 벗어난 랭크로 이동하면 예외가 발생한다")
     void rankMinusExceptionTest() {
         assertThatThrownBy(ONE::minus)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("범위를 벗어난 랭크로 이동하면 예외가 발생한다")
     void rankPlusExceptionTest() {
         assertThatThrownBy(EIGHT::plus)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
 }

@@ -13,12 +13,12 @@ public final class Empty extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("수행할 수 없는 명령입니다.");
     }
 
     @Override
     public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("수행할 수 없는 명령입니다.");
     }
 
     @Override

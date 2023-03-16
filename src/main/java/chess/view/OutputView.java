@@ -1,9 +1,10 @@
 package chess.view;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class OutputView {
+
+    private static final String DELIMITER = "";
 
     public void startMessage() {
         System.out.println("체스 게임을 시작합니다.");
@@ -14,8 +15,7 @@ public final class OutputView {
     }
 
     public void printRank(List<String> pieceViews) {
-        String format = pieceViews.stream()
-                .collect(Collectors.joining(""));
+        String format = String.join(DELIMITER, pieceViews);
 
         System.out.println(format);
     }
@@ -23,7 +23,6 @@ public final class OutputView {
     public void printErrorMesage(RuntimeException e) {
         System.out.println(e.getMessage());
     }
-
 
     public void printGuideMessage() {
         System.out.println("명령어를 다시 입력하세요");

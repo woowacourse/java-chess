@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public final class Squares {
 
+    private static final int SQUARES_SIZE = 8;
     private final List<Square> squares;
 
     public Squares(List<Square> squares) {
@@ -29,7 +30,7 @@ public final class Squares {
 
     public static Squares initPawns(Color color) {
         final var pawns = new ArrayList<Square>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < SQUARES_SIZE; i++) {
             pawns.add(new Square(new Pawn(color)));
         }
         return new Squares(pawns);
@@ -37,7 +38,7 @@ public final class Squares {
 
     public static Squares initEmpty() {
         final var list = new ArrayList<Square>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < SQUARES_SIZE; i++) {
             list.add(new Square(new Empty()));
         }
         return new Squares(list);

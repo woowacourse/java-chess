@@ -30,14 +30,14 @@ class FileTest {
     @DisplayName("범위를 벗어난 파일로 이동하면 예외가 발생한다")
     void filePlusExceptionTest() {
         assertThatThrownBy(H::plus)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("범위를 벗어난 파일로 이동하면 예외가 발생한다")
     void fileMinusExceptionTest() {
         assertThatThrownBy(A::minus)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
 }

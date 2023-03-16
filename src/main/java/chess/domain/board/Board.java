@@ -23,24 +23,33 @@ public final class Board {
         board.add(Squares.initPieces(Color.BLACK));
     }
 
-    public void move(Position source, Position target, Color color) {
+    public void play(Position source, Position target, Color color) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
         validateLegalSourceColor(sourceSquare, color);
         validateLegalTargetColor(sourceSquare, targetSquare);
-        Set<Position> movablePath = sourceSquare.computePath(source, target);
 
+        Set<Position> movablePath = sourceSquare.computePath(source, target);
         Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
 
-        if (sourceSquare.canMovePiece(isEmptySquare, source, target)) {
-            targetSquare.changePiece(sourceSquare);
-            sourceSquare.makeEmpty();
+        validateMove(source, target, sourceSquare, isEmptySquare);
+        move(sourceSquare, targetSquare);
+    }
+
+    private void move(final Square sourceSquare, final Square targetSquare) {
+        targetSquare.changePiece(sourceSquare);
+        sourceSquare.makeEmpty();
+    }
+
+    private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
+        if (!sourceSquare.canMovePiece(isEmptySquare, source, target)) {
+            throw new IllegalArgumentException("유효한 움직임이 아닙니다.");
         }
     }
 
     private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
         if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(color.name() + "의 턴이 아닙니다.");
         }
     }
 

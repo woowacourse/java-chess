@@ -22,7 +22,7 @@ public final class King extends Piece {
             return path;
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
     }
 
     @Override
