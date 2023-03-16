@@ -15,12 +15,6 @@ public enum Direction {
     }
 
     public Rank move(Rank rank, int distance) {
-//        if (direction * distance < 0) {
-//            return rank.move(0);
-//        }
-//        if (direction * distance > 7) {
-//            return rank.move(7);
-//        }
         return rank.move(this.direction * distance);
     }
 

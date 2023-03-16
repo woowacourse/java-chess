@@ -56,7 +56,7 @@ public class Position {
         }
         return false;
     }
-    
+
     public List<Position> getRoute(Position other) {
         Direction rankDirection = rank.getDirection(other.rank);
         Direction fileDirection = file.getDirection(other.file);
