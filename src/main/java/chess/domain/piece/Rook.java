@@ -22,4 +22,9 @@ public class Rook extends InfinitePiece {
         moves.add(new Move(List.of(Direction.RIGHT)));
         return moves;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.ROOK;
+    }
 }

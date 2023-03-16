@@ -68,4 +68,9 @@ public class Pawn extends Piece {
         }
         return convertColor(whiteAttackMoves);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.PAWN;
+    }
 }

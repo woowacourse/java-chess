@@ -21,4 +21,9 @@ public class Bishop extends InfinitePiece {
         moves.add(new Move(List.of(Direction.UP, Direction.RIGHT)));
         return moves;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.BISHOP;
+    }
 }

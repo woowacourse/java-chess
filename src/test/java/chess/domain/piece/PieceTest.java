@@ -18,6 +18,11 @@ public class PieceTest extends AbstractTestFixture {
         public PieceImplement(boolean isWhite, Set<Move> moves) {
             super(isWhite, moves);
         }
+
+        @Override
+        public PieceType getType() {
+            return null;
+        }
     }
 
     @DisplayName("색을 구별할 수 있다")

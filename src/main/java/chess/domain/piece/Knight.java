@@ -22,4 +22,9 @@ public class Knight extends QuadrantPiece {
         moves.add(new Move(List.of(Direction.RIGHT, Direction.UP, Direction.UP)));
         return moves;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KNIGHT;
+    }
 }

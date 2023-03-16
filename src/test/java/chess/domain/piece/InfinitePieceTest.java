@@ -17,6 +17,11 @@ public class InfinitePieceTest extends AbstractTestFixture {
         public InfinitePieceImplement(boolean isWhite, Set<Move> moves) {
             super(isWhite, moves);
         }
+
+        @Override
+        public PieceType getType() {
+            return null;
+        }
     }
 
     @DisplayName("가능한 수인지 판단한다(무한)")
