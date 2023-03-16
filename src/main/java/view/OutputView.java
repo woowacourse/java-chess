@@ -1,6 +1,6 @@
 package view;
 
-import domain.ChessBoard;
+import domain.ChessGame;
 import domain.ChessColumn;
 import domain.Rank;
 import domain.Square;
@@ -26,11 +26,11 @@ public class OutputView {
         }
     }
 
-    public void printChessBoard(ChessBoard chessBoard) {
+    public void printChessBoard(ChessGame chessGame) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Square square : squares) {
-            stringBuilder.append(PieceConverter.of(chessBoard.find(square)));
+            stringBuilder.append(PieceConverter.of(chessGame.find(square)));
         }
         System.out.print(separateByNewLine(stringBuilder.toString()) + "\n");
     }

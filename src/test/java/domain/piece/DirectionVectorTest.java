@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PositionVectorTest {
+class DirectionVectorTest {
 
     static Stream<Arguments> parametersProvider1() {
         return Stream.of(

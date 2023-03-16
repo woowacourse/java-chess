@@ -1,4 +1,4 @@
-import domain.ChessBoard;
+import domain.ChessGame;
 import domain.Square;
 import java.util.function.Supplier;
 import view.Command;
@@ -28,34 +28,34 @@ public class MainController {
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessGame chessGame = new ChessGame();
         inputView.printStartMessage();
         Command command = repeat(inputView::readCommand);
         if (command instanceof Start) {
-            printChessBoard(chessBoard);
+            printChessBoard(chessGame);
             do {
                 command = repeat(inputView::readCommand);
-                executeMoveCommand(chessBoard, command);
+                executeMoveCommand(chessGame, command);
             } while (!(command instanceof End));
         }
     }
 
-    private void executeMoveCommand(ChessBoard chessBoard, Command command) {
+    private void executeMoveCommand(ChessGame chessGame, Command command) {
         if (command instanceof Move) {
             try {
                 Square source = ((Move) command).getSource();
                 Square target = ((Move) command).getTarget();
-                chessBoard.move(source, target);
-                printChessBoard(chessBoard);
+                chessGame.move(source, target);
+                printChessBoard(chessGame);
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 command = repeat(inputView::readCommand);
-                executeMoveCommand(chessBoard, command);
+                executeMoveCommand(chessGame, command);
             }
         }
     }
 
-    private void printChessBoard(ChessBoard chessBoard) {
-        outputView.printChessBoard(chessBoard);
+    private void printChessBoard(ChessGame chessGame) {
+        outputView.printChessBoard(chessGame);
     }
 }
