@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.movepattern.MovePattern;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,5 +44,13 @@ public class Position {
         final Rank nextRank = Rank.getRank(nextRankIndex);
 
         return Position.of(nextFile, nextRank);
+    }
+
+    public int getFile() {
+        return file.index();
+    }
+
+    public int getRank() {
+        return rank.index();
     }
 }
