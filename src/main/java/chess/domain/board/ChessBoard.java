@@ -59,7 +59,7 @@ public final class ChessBoard {
         }
 
         final Piece targetPiece = board.get(target);
-        return targetPiece == null || !targetPiece.isSameCamp(piece);
+        return targetPiece == null || !targetPiece.compareCamp(piece);
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {
