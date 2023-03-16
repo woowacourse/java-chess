@@ -10,7 +10,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Route findRoute(final Position startPoint, final Position endPoint) {
+    public Route findRoute(final Position source, final Position target) {
         return null;
     }
 }

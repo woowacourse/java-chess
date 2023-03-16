@@ -12,5 +12,5 @@ public abstract class Piece implements SquareStatus {
         this.color = color;
     }
 
-    public abstract Route findRoute(Position startPoint, Position endPoint);
+    public abstract Route findRoute(final Position source, final Position target);
 }

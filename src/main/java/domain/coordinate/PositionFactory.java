@@ -14,6 +14,9 @@ public enum PositionFactory {
     SIX('g', '7', 6),
     SEVEN('h', '8', 7);
 
+    private static final int INDEX_X = 0;
+    private static final int INDEX_Y = 1;
+
     private final char x;
     private final char y;
     private final int value;
@@ -29,18 +32,18 @@ public enum PositionFactory {
     }
 
     private static int findCoordinateX(String command) {
-        final char c = command.charAt(0);
-        return PositionFactory.from(c, v -> v.x).value;
+        final char coordinate = command.charAt(INDEX_X);
+        return PositionFactory.from(coordinate, value -> value.x).value;
     }
 
     private static int findCoordinateY(String command) {
-        final char c = command.charAt(1);
-        return PositionFactory.from(c, v -> v.y).value;
+        final char coordinate = command.charAt(INDEX_Y);
+        return PositionFactory.from(coordinate, value -> value.y).value;
     }
 
-    private static PositionFactory from(char q, Function<PositionFactory, Character> f) {
+    private static PositionFactory from(char coordinate, Function<PositionFactory, Character> findCoordinate) {
         return Arrays.stream(values())
-                .filter(value -> f.apply(value) == q)
+                .filter(value -> findCoordinate.apply(value) == coordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("범위 내의 값만 입력해주세요."));
     }
