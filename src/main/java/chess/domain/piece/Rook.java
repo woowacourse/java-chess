@@ -19,7 +19,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
+    public Piece move(final Piece pieceInTargetPosition) {
         return null;
     }
 

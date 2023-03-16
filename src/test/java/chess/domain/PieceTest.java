@@ -27,7 +27,7 @@ class PieceTest {
         }
 
         @Override
-        public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
+        public Piece move(final Piece pieceInTargetPosition) {
             return null;
         }
 

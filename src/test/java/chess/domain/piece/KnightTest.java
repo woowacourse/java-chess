@@ -11,10 +11,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.File.B;
 import static chess.domain.File.C;
 import static chess.domain.Rank.EIGHT;
 import static chess.domain.Rank.FIVE;
+import static chess.domain.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -39,5 +41,26 @@ class KnightTest {
         assertThatThrownBy(() -> knight.getPassingPositions(new Position(B, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("말을 이동시킨다.")
+    void moveTest() {
+        final Piece originalKnight = new Knight(B, EIGHT, BLACK);
+
+        final Piece movedKnight = originalKnight.move(new BlankPiece(C, SIX));
+
+        assertThat(movedKnight.getPosition()).isEqualTo(new Position(C, SIX));
+    }
+
+    @Test
+    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
+    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+        final Piece originalKnight = new Knight(B, EIGHT, BLACK);
+        final Piece sameColorPiece = new Pawn(C, SIX, BLACK);
+
+        assertThatThrownBy(() -> originalKnight.move(sameColorPiece))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
 }

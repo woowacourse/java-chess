@@ -19,7 +19,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
+    public Piece move(final Piece pieceInTargetPosition) {
+        final Position targetPosition = pieceInTargetPosition.getPosition();
+        validateDestination(targetPosition);
         validateCatchingSameColor(pieceInTargetPosition);
         return new Queen(targetPosition.getFile(), targetPosition.getRank(), color);
     }

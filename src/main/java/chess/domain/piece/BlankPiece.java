@@ -21,7 +21,7 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    public Piece move(final Position targetPosition, final Piece pieceInTargetPosition) {
+    public Piece move(final Piece pieceInTargetPosition) {
         throw new IllegalStateException(BLANK_PIECE_EXCEPTION_MESSAGE);
     }
 

@@ -42,7 +42,7 @@ public abstract class Piece {
 
     protected abstract boolean canMove(final Position targetPosition);
 
-    public abstract Piece move(final Position targetPosition, final Piece pieceInTargetPosition);
+    public abstract Piece move(final Piece pieceInTargetPosition);
 
     protected final void validateCatchingSameColor(final Piece pieceInTargetPosition) {
         if (pieceInTargetPosition.isSameColor(color)) {

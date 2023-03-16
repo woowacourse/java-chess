@@ -47,7 +47,7 @@ class BishopTest {
     void moveTest() {
         final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
 
-        final Piece movedBishop = originalBishop.move(new Position(D, SIX), new BlankPiece(D, SIX));
+        final Piece movedBishop = originalBishop.move(new BlankPiece(D, SIX));
 
         assertThat(movedBishop.getPosition()).isEqualTo(new Position(D, SIX));
     }
@@ -58,7 +58,7 @@ class BishopTest {
         final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(D, SIX, BLACK);
 
-        assertThatThrownBy(() -> originalBishop.move(new Position(D, SIX), sameColorPiece))
+        assertThatThrownBy(() -> originalBishop.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }

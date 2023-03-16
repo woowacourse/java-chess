@@ -47,7 +47,7 @@ class QueenTest {
     void moveTest() {
         final Piece originalQueen = new Queen(D, EIGHT, BLACK);
 
-        final Piece movedQueen = originalQueen.move(new Position(D, SIX), new BlankPiece(D, SIX));
+        final Piece movedQueen = originalQueen.move(new BlankPiece(D, SIX));
 
         assertThat(movedQueen.getPosition()).isEqualTo(new Position(D, SIX));
     }
@@ -58,7 +58,7 @@ class QueenTest {
         final Piece originalQueen = new Queen(D, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(D, SIX, BLACK);
 
-        assertThatThrownBy(() -> originalQueen.move(new Position(D, SIX), sameColorPiece))
+        assertThatThrownBy(() -> originalQueen.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
