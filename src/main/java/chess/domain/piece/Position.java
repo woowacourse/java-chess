@@ -11,6 +11,10 @@ public final class Position {
         this.file = file;
     }
 
+    public static Position copy(final Position other) {
+        return new Position(other.rank, other.file);
+    }
+
     public Position calculate(final int rankMove, final int fileMove) {
         return new Position(this.rank + rankMove, this.file + fileMove);
     }

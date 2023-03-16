@@ -10,6 +10,20 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class PositionTest {
 
     @Test
+    @DisplayName("입력받은 위치를 복사한 새로운 위치를 반환한다.")
+    void copy() {
+        // given
+        final Position position = new Position(0, 0);
+
+        // when
+        final Position copyPosition = Position.copy(position);
+
+        // then
+        assertThat(position)
+                .isEqualTo(copyPosition);
+    }
+
+    @Test
     @DisplayName("이동 거리와 방향을 주었을 때 목표 지점의 위치를 반환한다.")
     void calculate() {
         // given
