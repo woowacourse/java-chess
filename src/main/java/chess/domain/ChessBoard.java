@@ -47,42 +47,31 @@ public class ChessBoard {
 
     private void progressMove(final TeamColor teamColor, final Position source, final Position dest,
         final Piece piece) {
-        List<Path> movablePaths = piece.findMovablePaths(source);
-        for (Path path : movablePaths) {
-            if (isMoveSuccess(teamColor, source, dest, piece, path)) {
-                return;
-            }
+        MovablePaths movablePaths = piece.findMovablePaths(source);
+        Path path = movablePaths.findPathContainingPosition(dest);
+
+        if (isMoveSuccess(teamColor, source, dest, piece, path)) {
+            return;
         }
         throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
     }
 
     private boolean isMoveSuccess(final TeamColor teamColor, final Position source,
         final Position dest, Piece piece, final Path path) {
-        if (isPossibleToMove(source, dest, piece, path, teamColor)) {
-            movePieceToDestination(source, dest, piece);
-            return true;
-        }
-        return false;
+        validateMovePossibility(source, dest, piece, path, teamColor);
+        movePieceToDestination(source, dest, piece);
+        return true;
     }
 
-    private boolean isPossibleToMove(final Position source, final Position dest, final Piece piece,
+    private void validateMovePossibility(final Position source, final Position dest,
+        final Piece piece,
         final Path path, final TeamColor color) {
-        if (path.hasPosition(dest)) {
-            checkObstacleInPath(dest, path);
-            validatePawnAttack(piece, source, dest);
-            validateObstacleInDestination(dest, color);
-            return true;
-        }
-        return false;
+        validateObstacleInPath(dest, path);
+        validatePawnAttack(piece, source, dest);
+        validateObstacleInDestination(dest, color);
     }
 
-    private void movePieceToDestination(final Position source, final Position dest,
-        final Piece piece) {
-        piecesByPosition.put(dest, piece);
-        piecesByPosition.remove(source);
-    }
-
-    private void checkObstacleInPath(final Position dest, final Path path) {
+    private void validateObstacleInPath(final Position dest, final Path path) {
         for (int index = 0; index < path.findIndexByPosition(dest); index++) {
             checkObstacleAtIndex(path, index);
         }
@@ -94,6 +83,23 @@ public class ChessBoard {
         }
     }
 
+    private void validatePawnAttack(final Piece piece, final Position source, final Position dest) {
+        if (!piece.isPawn()) {
+            return;
+        }
+        Pawn pawn = (Pawn) piece;
+        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
+            throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
+        }
+        if (!pawn.isAttack(source, dest) && isOtherPieceInDestination(dest)) {
+            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isOtherPieceInDestination(final Position dest) {
+        return piecesByPosition.containsKey(dest);
+    }
+
     private void validateObstacleInDestination(final Position dest, final TeamColor color) {
         if (!piecesByPosition.containsKey(dest)) {
             return;
@@ -103,21 +109,10 @@ public class ChessBoard {
         }
     }
 
-    private void validatePawnAttack(final Piece piece, final Position source, final Position dest) {
-        if (!piece.isPawn()) {
-            return;
-        }
-        Pawn pawn = (Pawn) piece;
-        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
-            throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
-        }
-        if (! pawn.isAttack(source, dest) && isOtherPieceInDestination(dest)) {
-            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
-        }
-    }
-
-    private boolean isOtherPieceInDestination(final Position dest) {
-        return piecesByPosition.containsKey(dest);
+    private void movePieceToDestination(final Position source, final Position dest,
+        final Piece piece) {
+        piecesByPosition.put(dest, piece);
+        piecesByPosition.remove(source);
     }
 
     public Map<Position, Piece> piecesByPosition() {

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
+import chess.domain.MovablePaths;
 import chess.domain.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
@@ -22,12 +23,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Path> findMovablePaths(final Position current) {
+    public MovablePaths findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : DIRECTIONS) {
             paths.add(Path.ofSinglePath(current, direction));
         }
-        return paths;
+        return new MovablePaths(paths);
     }
 
     @Override

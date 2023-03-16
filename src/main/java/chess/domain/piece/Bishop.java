@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
+import chess.domain.MovablePaths;
 import chess.domain.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
@@ -12,7 +13,8 @@ public class Bishop extends Piece {
     private static final List<Direction> DIRECTIONS;
 
     static {
-        DIRECTIONS = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        DIRECTIONS = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
+            Direction.SOUTH_WEST);
     }
 
     public Bishop(final TeamColor color) {
@@ -20,12 +22,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Path> findMovablePaths(final Position current) {
+    public MovablePaths findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : DIRECTIONS) {
             paths.add(Path.ofMultiPath(current, direction));
         }
-        return paths;
+        return new MovablePaths(paths);
     }
 
     @Override

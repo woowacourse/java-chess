@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.MovablePaths;
 import chess.domain.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
@@ -20,15 +21,9 @@ class KingTest {
     void 이동_범위_확인() {
         King king = new King(TeamColor.WHITE);
 
-        List<Path> movablePaths = king.findMovablePaths(Position.of(1, 1));
+        MovablePaths paths = king.findMovablePaths(Position.of(1, 1));
 
-        int totalPositionCount = 0;
-
-        for (Path path : movablePaths) {
-            totalPositionCount += path.size();
-        }
-
-        assertThat(totalPositionCount).isEqualTo(3);
+        assertThat(paths.getTotalPositionCount()).isEqualTo(3);
     }
 
 }

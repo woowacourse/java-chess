@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Path;
+import chess.domain.MovablePaths;
 import chess.domain.Position;
 import chess.domain.TeamColor;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,7 +15,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract List<Path> findMovablePaths(Position position);
+    public abstract MovablePaths findMovablePaths(Position position);
 
     public abstract boolean isPawn();
 
