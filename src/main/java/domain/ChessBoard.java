@@ -64,7 +64,15 @@ public class ChessBoard {
     }
 
     public Piece find(Square square) {
-        return locationInfo.get(square);
+        Piece piece = locationInfo.get(square);
+        validateNotExist(piece);
+        return piece;
+    }
+
+    private void validateNotExist(Piece piece) {
+        if (piece == null) {
+            throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+        }
     }
 
     public void update(Square source, Square target) {
