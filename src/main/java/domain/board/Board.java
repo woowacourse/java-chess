@@ -30,12 +30,17 @@ public final class Board {
 
     public void move(Position source, Position destination) {
         validateSourceExistence(source);
-
-        final Piece piece = board.get(source);
-        validatePieceMovable(source, destination, piece);
-        validatePieceExistenceOnDestination(destination, piece);
         validatePieceExistenceInRoute(source, destination);
+        Piece piece = board.get(source);
+        validatePieceExistenceOnDestination(destination, piece);
 
+        if (board.containsKey(destination)) {
+            validatePieceEatable(source, destination, piece);
+            board.put(destination, board.remove(source));
+            return;
+        }
+
+        validatePieceMovable(source, destination, piece);
         board.put(destination, board.remove(source));
     }
 
@@ -47,6 +52,12 @@ public final class Board {
 
     private void validatePieceMovable(final Position source, final Position destination, final Piece piece) {
         if (!piece.isMovable(source, destination)) {
+            throw new IllegalArgumentException("해당 위치로 말을 이동할 수 없습니다.");
+        }
+    }
+
+    private void validatePieceEatable(final Position source, final Position destination, final Piece piece) {
+        if (!piece.isEatable(source, destination)) {
             throw new IllegalArgumentException("해당 위치로 말을 이동할 수 없습니다.");
         }
     }

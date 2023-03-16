@@ -33,11 +33,11 @@ public final class Positions {
     }
 
     public static Position from(final String position) {
-        if (positions.containsKey(position)) {
-            return positions.get(position);
+        if (positions.containsKey(position.toUpperCase())) {
+            return positions.get(position.toUpperCase());
         }
 
-        throw new IllegalArgumentException(INVALID_POSITION);
+        return new Position(File.NOTHING, Rank.NOTHING);
     }
 
     public static List<Position> between(final Position source, final Position destination) {

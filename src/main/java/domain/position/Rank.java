@@ -8,7 +8,8 @@ public enum Rank {
     FOUR("4"),
     THREE("3"),
     TWO("2"),
-    ONE("1");
+    ONE("1"),
+    NOTHING("");
 
     private String name;
 

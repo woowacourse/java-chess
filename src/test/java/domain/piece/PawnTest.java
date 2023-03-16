@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.Position;
 import domain.position.Positions;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,22 +25,33 @@ class PawnTest {
         assertThat(black.isMovable(source, blackDestination)).isTrue();
         assertThat(white.isMovable(source, whiteDestination)).isTrue();
     }
-
-    @DisplayName("폰은 전진이 아니면 갈 수 없다")
+    
+    @DisplayName("폰은 두 칸 초과해서 갈 수 없다.")
     @Test
     void cannotGo() {
         //given
-        final Pawn black = new Pawn(Team.BLACK);
-        final Pawn white = new Pawn(Team.WHITE);
+        final Pawn pawn = new Pawn(Team.BLACK);
         final Position source = Positions.from("D4");
-        final Position blackDestination = Positions.from("C4");
-        final Position whiteDestination = Positions.from("E4");
+        final List<Position> cannotGo = Positions.of("D1", "B2", "F6");
 
         //when
 
         //then
-        assertThat(black.isMovable(source, blackDestination)).isFalse();
-        assertThat(white.isMovable(source, whiteDestination)).isFalse();
+        assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
+    }
+
+    @DisplayName("폰은 후진할 수 없다.")
+    @Test
+    void cannotGo2() {
+        //given
+        final Pawn pawn = new Pawn(Team.BLACK);
+        final Position source = Positions.from("D4");
+        final List<Position> cannotGo = Positions.of("D5", "C5", "E6");
+
+        //when
+
+        //then
+        assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
     }
 
     @DisplayName("폰은 처음에 두 칸 또는 한 칸 갈 수 있다")

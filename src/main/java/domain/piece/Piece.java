@@ -14,6 +14,10 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Position source, Position destination);
 
+    public boolean isEatable(Position source, Position destination) {
+        return isMovable(source, destination);
+    }
+
     public boolean isBlack() {
         return team.equals(Team.BLACK);
     }

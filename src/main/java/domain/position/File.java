@@ -9,7 +9,7 @@ public enum File {
     F("F"),
     G("G"),
     H("H"),
-    ;
+    NOTHING("");
 
     private final String name;
 

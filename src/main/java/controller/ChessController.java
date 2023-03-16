@@ -2,31 +2,37 @@ package controller;
 
 import domain.board.Board;
 import domain.board.InitialChessAlignment;
-import domain.piece.Piece;
 import domain.position.Position;
-import java.util.Map;
+import domain.position.Positions;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
 public final class ChessController {
 
+    private static final int COMMAND_INDEX = 0;
+
     public void run() {
-        try {
-            final Board board = Board.create(new InitialChessAlignment());
-            play(board.getPieces());
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
+        final Board board = Board.create(new InitialChessAlignment());
+        if (Command.START.equals(Command.from(InputView.readStartGameOption()))) {
+            OutputView.printBoard(board.getPieces());
+            play(board);
         }
     }
 
-    private void play(final Map<Position, Piece> pieces) {
-        final Command gameOption = Command.from(InputView.readGameOption());
-
-        if (Command.END.equals(gameOption)) {
+    private void play(final Board board) {
+        final List<String> gameOption = InputView.readPlayGameOption();
+        final Command command = Command.from(gameOption.get(COMMAND_INDEX));
+        if (Command.END.equals(command)) {
             return;
         }
 
-        OutputView.printBoard(pieces);
-        play(pieces);
+        final Position from = Positions.from(gameOption.get(1));
+        final Position to = Positions.from(gameOption.get(2));
+
+        board.move(from, to);
+        OutputView.printBoard(board.getPieces());
+
+        play(board);
     }
 }

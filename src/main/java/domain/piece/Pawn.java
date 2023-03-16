@@ -16,15 +16,28 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        if (super.isBlack() && source.getRank() == BLACK_INITIAL_RANK) {
-            return source.moveDown(source, PAWN_FIRST_MOVABLE_DISTANCE).equals(destination);
+        if (isBlack() && source.getRank() == BLACK_INITIAL_RANK) {
+            return source.moveDown(PAWN_FIRST_MOVABLE_DISTANCE).equals(destination) ||
+                    source.moveDown(PAWN_MOVABLE_DISTANCE).equals(destination);
         }
-        if (!super.isBlack() && source.getRank() == WHITE_INITIAL_RANK) {
-            return source.moveUp(source, PAWN_FIRST_MOVABLE_DISTANCE).equals(destination);
+        if (!isBlack() && source.getRank() == WHITE_INITIAL_RANK) {
+            return source.moveUp(PAWN_FIRST_MOVABLE_DISTANCE).equals(destination) ||
+                    source.moveUp(PAWN_MOVABLE_DISTANCE).equals(destination);
         }
-        if (super.isBlack()) {
-            return source.moveDown(source, PAWN_MOVABLE_DISTANCE).equals(destination);
+        if (isBlack()) {
+            return source.moveDown(PAWN_MOVABLE_DISTANCE).equals(destination);
         }
-        return source.moveUp(source, PAWN_MOVABLE_DISTANCE).equals(destination);
+        return source.moveUp(PAWN_MOVABLE_DISTANCE).equals(destination);
+    }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        if (isBlack() &&
+                source.move(-1, -1).equals(destination) || source.move(-1, 1).equals(destination)) {
+            return true;
+        }
+
+        return !isBlack() &&
+                source.move(1, -1).equals(destination) || source.move(1, 1).equals(destination);
     }
 }
