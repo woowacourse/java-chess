@@ -34,6 +34,9 @@ public class Position {
     }
 
     public static Position from(final String position) {
+        if (!CACHE.containsKey(position)) {
+            throw new IllegalArgumentException("잘못된 위치값입니다.");
+        }
         return CACHE.get(position.toUpperCase());
     }
 
