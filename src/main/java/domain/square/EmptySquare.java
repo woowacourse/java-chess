@@ -3,7 +3,7 @@ package domain.square;
 import domain.piece.Coordinate;
 import domain.piece.Piece;
 
-public class EmptySquare implements Square {
+public class EmptySquare extends Square {
 
     @Override
     public Boolean canReap() {

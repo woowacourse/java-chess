@@ -1,9 +1,11 @@
 package domain.square;
 
 import domain.piece.Coordinate;
+import domain.piece.Pawn;
 import domain.piece.Piece;
+import domain.piece.PieceType;
 
-public class ConcreteSquare implements Square {
+public class ConcreteSquare extends Square {
 
     private final Piece piece;
     private final Camp camp;
@@ -25,6 +27,10 @@ public class ConcreteSquare implements Square {
 
     @Override
     public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (super.isFirstMove() && piece.isSameTypeWith(PieceType.PAWN)) {
+            Pawn pawn = (Pawn) piece;
+            return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
+        }
         return piece.isReachableByRule(startCoordinate, endCoordinate);
     }
 

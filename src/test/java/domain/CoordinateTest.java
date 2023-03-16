@@ -50,7 +50,7 @@ class CoordinateTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(1, 1);
 
-        assertThat(startCoordinate.hasDistanceOfOne(endCoordinate)).isTrue();
+        assertThat(startCoordinate.hasDistanceLessThanOne(endCoordinate)).isTrue();
     }
 
     @Test
