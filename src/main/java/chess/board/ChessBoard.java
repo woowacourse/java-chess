@@ -68,16 +68,23 @@ public class ChessBoard {
             if (from.getFile() == to.getFile()) {
                 validateRookByRank(from, to, fromPiece);
             }
+            move(from, to);
+        }
 
+        if (fromPiece.isBishop() && fromPiece.isMovable(from, to, toPiece)) {
+            validateBishop(from, to);
+            move(from, to);
+        }
+
+        if (fromPiece.isQueen() && fromPiece.isMovable(from, to, toPiece)) {
+            
             move(from, to);
         }
 
         if (fromPiece.isKing() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
         }
-
-        if (fromPiece.isBishop() && fromPiece.isMovable(from, to, toPiece)) {
-            validateBishop(from, to);
+        if (fromPiece.isKnight() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
         }
     }
