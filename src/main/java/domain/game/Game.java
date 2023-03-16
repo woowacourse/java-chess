@@ -168,4 +168,3 @@ public class Game {
         throw new IllegalStateException("서버 내부 에러 - Pawn은 White 또는 Black 진영이어야 합니다.");
     }
 }
-

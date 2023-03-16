@@ -1,14 +1,11 @@
 package domain.piece;
 
-<<<<<<< HEAD
 import static domain.game.Side.BLACK;
 import static domain.game.Side.WHITE;
 
 import domain.game.Position;
 import domain.game.Score;
 import domain.game.Side;
-=======
->>>>>>> 3ad1dbf (refactor: 패키지 분리)
 import java.util.List;
 
 public abstract class Piece {
@@ -20,7 +17,6 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition);
 
-<<<<<<< HEAD
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         return sourcePosition.getPath(targetPosition);
     }
@@ -30,18 +26,13 @@ public abstract class Piece {
     public abstract PieceCategory getCategory();
 
     public abstract Score getScore();
-=======
-    public abstract List<Position> collectPath(Position sourcePosition, Position targetPosition);
->>>>>>> 3ad1dbf (refactor: 패키지 분리)
-
-    public abstract boolean isEmptyPiece();
+    
 
     public boolean isSameSideWith(Piece targetPiece) {
         return this.side == targetPiece.side;
     }
 
     public boolean isOpponentSideWith(Piece targetPiece) {
-<<<<<<< HEAD
         return this.side.isOpponentWith(targetPiece.side);
     }
 
@@ -63,11 +54,5 @@ public abstract class Piece {
             return side.equals(BLACK);
         }
         throw new IllegalStateException("서버 내부 에러 - Neutral한 Piece는 상대편을 확인할 수 없습니다.");
-=======
-        if (this.side.equals(Side.WHITE)) {
-            return targetPiece.side.equals(Side.BLACK);
-        }
-        return targetPiece.side.equals(Side.WHITE);
->>>>>>> 3ad1dbf (refactor: 패키지 분리)
     }
 }

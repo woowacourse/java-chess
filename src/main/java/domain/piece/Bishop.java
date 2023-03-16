@@ -1,6 +1,5 @@
 package domain.piece;
 
-<<<<<<< HEAD
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Score;
@@ -9,12 +8,6 @@ import domain.game.Side;
 public class Bishop extends Piece {
     private static final Score SCORE = new Score(3);
 
-=======
-import java.util.Collections;
-import java.util.List;
-
-public class Bishop extends Piece {
->>>>>>> 3ad1dbf (refactor: 패키지 분리)
     private Bishop(Side side) {
         super(side);
     }
@@ -37,7 +30,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-<<<<<<< HEAD
     public boolean isEmptyPiece() {
         return false;
     }
@@ -49,23 +41,9 @@ public class Bishop extends Piece {
         }
         return PieceCategory.BLACK_BISHOP;
     }
-    
+
     @Override
     public Score getScore() {
         return SCORE;
-=======
-    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        Movement movement = sourcePosition.calculateMovement(targetPosition);
-        if (movement.isOneStep()) {
-            return Collections.emptyList();
-        }
-        return sourcePosition.getPath(targetPosition);
->>>>>>> 3ad1dbf (refactor: 패키지 분리)
     }
-
-    @Override
-    public boolean isEmptyPiece() {
-        return false;
-    }
-
 }
