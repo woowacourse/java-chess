@@ -8,7 +8,7 @@ class RankTest {
 
     @Test
     @DisplayName("랭크의 차이를 구한다.")
-    void calculateGapTest() {
+    void subtractOrderTest() {
         Rank rank = Rank.FIVE;
         Rank other = Rank.ONE;
 
