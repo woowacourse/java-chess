@@ -18,11 +18,17 @@ public class ChessGame {
 
     public void move(Square src, Square dest) {
         Piece piece = chessBoard.find(src);
-
+        validateNotExist(piece);
         List<Square> routes = piece.findRoutes(src, dest);
 
         checkPawn(src, dest, piece);
         go(src, dest, piece, routes);
+    }
+
+    private void validateNotExist(Piece piece) {
+        if (piece == null) {
+            throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+        }
     }
 
     private void checkPawn(Square src, Square dest, Piece piece) {
