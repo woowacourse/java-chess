@@ -19,6 +19,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -66,5 +67,42 @@ public class ChessGameTest {
         // then
         final Map<Position, Piece> board = chessGame.getBoard();
         assertThat(board.get(E4)).isEqualTo(Pawn.from(Color.WHITE));
+    }
+
+    @Test
+    void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
+        // given
+        final ChessGame chessGame = ChessGame.initialize();
+
+        // when
+        chessGame.move("e2", "e4");
+        chessGame.move("e7", "e5");
+        chessGame.move("g1", "f3");
+        chessGame.move("b8", "c6");
+        chessGame.move("f1", "b5");
+        chessGame.move("a7", "a6");
+        chessGame.move("b5", "a4");
+        chessGame.move("d7", "d6");
+
+        // then
+        final List<Rank> ranks = Arrays.stream(Rank.values())
+                .collect(toList());
+        Collections.reverse(ranks);
+        final Map<Position, Piece> board = chessGame.getBoard();
+        final List<PieceType> result = ranks.stream()
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
+                .map(board::get)
+                .map(Piece::type)
+                .collect(toList());
+        assertThat(result).containsExactly(
+                ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
+                EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
+                PAWN, EMPTY, KNIGHT, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+                BISHOP, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KNIGHT, EMPTY, EMPTY,
+                PAWN, PAWN, PAWN, PAWN, EMPTY, PAWN, PAWN, PAWN,
+                ROOK, KNIGHT, BISHOP, QUEEN, KING, EMPTY, EMPTY, ROOK
+        );
     }
 }
