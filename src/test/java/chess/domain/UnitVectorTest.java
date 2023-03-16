@@ -18,8 +18,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_up() {
-        Position current = new Position(5, 1);
-        Position target = new Position(4, 1);
+        var current = new Position(5, 1);
+        var target = new Position(4, 1);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(UP);
     }
@@ -27,8 +27,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_down() {
-        Position current = new Position(0, 0);
-        Position target = new Position(1, 0);
+        var current = new Position(0, 0);
+        var target = new Position(1, 0);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(DOWN);
     }
@@ -36,8 +36,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_left() {
-        Position current = new Position(0, 1);
-        Position target = new Position(0, 0);
+        var current = new Position(0, 1);
+        var target = new Position(0, 0);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(LEFT);
     }
@@ -45,8 +45,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_right() {
-        Position current = new Position(0, 0);
-        Position target = new Position(0, 1);
+        var current = new Position(0, 0);
+        var target = new Position(0, 1);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(RIGHT);
     }
@@ -54,8 +54,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_upRight() {
-        Position current = new Position(1, 0);
-        Position target = new Position(0, 1);
+        var current = new Position(1, 0);
+        var target = new Position(0, 1);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(UP_RIGHT);
     }
@@ -63,8 +63,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_downRight() {
-        Position current = new Position(0, 0);
-        Position target = new Position(1, 1);
+        var current = new Position(0, 0);
+        var target = new Position(1, 1);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(DOWN_RIGHT);
     }
@@ -72,8 +72,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_downLeft() {
-        Position current = new Position(0, 1);
-        Position target = new Position(1, 0);
+        var current = new Position(0, 1);
+        var target = new Position(1, 0);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(DOWN_LEFT);
     }
@@ -81,8 +81,8 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_upLeft() {
-        Position current = new Position(1, 1);
-        Position target = new Position(0, 0);
+        var current = new Position(1, 1);
+        var target = new Position(0, 0);
 
         assertThat(UnitVector.of(current, target)).isEqualTo(UP_LEFT);
     }
