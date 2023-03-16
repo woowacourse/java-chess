@@ -1,7 +1,7 @@
 package chess.domain;
 
 public enum Mobility {
-	ONCE,
-	INFINITE,
-	EMPTY
+    ONCE,
+    INFINITE,
+    EMPTY
 }

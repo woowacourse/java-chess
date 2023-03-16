@@ -2,13 +2,13 @@ package chess.domain;
 
 public enum Team {
 
-	BLACK, WHITE, EMPTY;
+    BLACK, WHITE, EMPTY;
 
-	public boolean isBlack(){
-		return this.equals(BLACK);
-	}
+    public boolean isBlack() {
+        return this.equals(BLACK);
+    }
 
-	public boolean isWhite(){
-		return this.equals(WHITE);
-	}
+    public boolean isWhite() {
+        return this.equals(WHITE);
+    }
 }
