@@ -17,6 +17,16 @@ public enum Color {
         return Color.EMPTY;
     }
 
+    public boolean isOpposite(Color color) {
+        if (this == BLACK) {
+            return color == WHITE;
+        }
+        if (this == WHITE) {
+            return color == BLACK;
+        }
+        return false;
+    }
+
     public int getDirection() {
         if (this == BLACK) {
             return -1;

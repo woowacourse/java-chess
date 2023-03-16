@@ -19,4 +19,10 @@ class ColorTest {
     void 행의_위치에_따라_Color를_생성한다(RankCoordinate rankCoordinate, Color expect) {
         assertThat(of(rankCoordinate)).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"EMPTY:false", "WHITE:true", "BLACK:false"}, delimiter = ':')
+    void 반대_진영인지_확인한다(Color color, boolean expect) {
+        assertThat(Color.BLACK.isOpposite(color)).isEqualTo(expect);
+    }
 }
