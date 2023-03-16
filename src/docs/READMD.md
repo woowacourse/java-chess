@@ -1,3 +1,77 @@
+
+## 클래스 다이어그램
+
+### 주요 클래스 구조
+
+```mermaid
+classDiagram
+  class ChessBoard {
+    -List~Piece~ pieces
+  }
+  
+  class Piece
+  <<Abstract>> Piece
+  
+  class Color
+  <<Enumeration>> Color
+  
+  class Direction
+  <<Enumeration>> Direction
+  
+  ChessController ..> ChessBoard
+  ChessController ..> ChessState
+  
+  ChessBoard --> Piece
+  ChessBoard ..> PiecePosition
+  ChessBoard ..> WayPoints
+  ChessBoard ..> Turn
+  
+  Piece --> Color
+  Piece --> PiecePosition
+  Piece ..> Path
+는
+  
+  Path --> PiecePosition
+  WayPoints --> PiecePosition
+  
+  PiecePosition --> Rank
+  PiecePosition --> File
+  PiecePosition ..> Direction
+```
+
+### Piece 추상 클래스
+```mermaid
+classDiagram
+  class Piece
+  <<Abstract>> Piece
+  
+  Piece <|-- King
+  Piece <|-- Queen
+  Piece <|-- Bishop
+  Piece <|-- Rook
+  Piece <|-- Knight
+  Piece <|-- Pawn
+```
+
+### 상태 패턴
+```mermaid
+classDiagram
+  class ChessState
+  <<Interface>> ChessState
+  
+  class AbstractChessState
+  <<Abstract>> AbstractChessState
+  
+  ChessState ..> Command
+  ChessState <|.. AbstractChessState
+  AbstractChessState <|-- Initialize
+  AbstractChessState <|-- Running
+  AbstractChessState <|-- End
+  Command --> Type
+```
+
+---
+
 ## 1단계 기능 요구 사항
 
 - [x] 게임 시작 메세지 출력
