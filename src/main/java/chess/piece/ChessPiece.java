@@ -1,7 +1,10 @@
 package chess.piece;
 
+import chess.ChessBoard;
+import chess.Position;
 import chess.Side;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class ChessPiece {
@@ -10,6 +13,12 @@ public abstract class ChessPiece {
 
     public ChessPiece(Side side) {
         this.side = side;
+    }
+
+    abstract List<Position> getMovablePosition(ChessBoard chessBoard, Position sourcePosition);
+
+    public String getSide() {
+        return side.getSide();
     }
 
     @Override

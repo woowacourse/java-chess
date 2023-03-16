@@ -36,6 +36,25 @@ public class Position {
         return convertCommand;
     }
 
+    public List<Integer> getPosition() {
+        return position;
+    }
+
+    public int getXPosition() {
+        return position.get(0);
+    }
+
+    public int getYPosition() {
+        return position.get(1);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "position=" + position +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

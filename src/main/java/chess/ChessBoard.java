@@ -3,6 +3,7 @@ package chess;
 import chess.piece.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -65,7 +66,7 @@ public class ChessBoard {
     }
 
     private static void initEmptySpace(Map<Position, ChessPiece> chessBoard) {
-        for (int horizontal = 3; horizontal <= 8; horizontal++) {
+        for (int horizontal = 1; horizontal <= 8; horizontal++) {
             circuitVertical(chessBoard, horizontal);
         }
     }
@@ -78,6 +79,10 @@ public class ChessBoard {
 
     public ChessPiece getChessPieceByPosition(Position position) {
         return chessBoard.get(position);
+    }
+
+    public ChessPiece getChessPieceByLocate(int x, int y) {
+        return chessBoard.get(List.of(x, y));
     }
 
     public Map<Position, ChessPiece> getChessBoard() {

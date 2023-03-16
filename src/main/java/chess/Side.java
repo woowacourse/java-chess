@@ -11,4 +11,8 @@ public enum Side {
     Side(String side) {
         this.side = side;
     }
+
+    public String getSide() {
+        return side;
+    }
 }

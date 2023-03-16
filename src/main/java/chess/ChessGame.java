@@ -3,6 +3,8 @@ package chess;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
 
+import java.util.List;
+
 public class ChessGame {
 
     private final ChessBoard chessBoard;
@@ -17,7 +19,6 @@ public class ChessGame {
         removeChessPiece(sourcePosition);
     }
 
-
     public ChessPiece findChessPiece(Position sourcePosition) {
         return chessBoard.getChessPieceByPosition(sourcePosition);
     }
@@ -28,5 +29,12 @@ public class ChessGame {
 
     public void removeChessPiece(Position sourcePosition) {
         chessBoard.getChessBoard().put(sourcePosition, new Empty(Side.BLANK));
+    }
+
+    public void validateMovablePosition(Position targetPosition, List<Position> movablePosition) {
+        movablePosition.stream()
+                .filter(position -> position.equals(targetPosition))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치로는 이동할 수 없습니다."));
     }
 }

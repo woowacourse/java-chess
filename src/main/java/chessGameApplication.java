@@ -43,6 +43,9 @@ public class chessGameApplication {
     private static void move(ChessGame chessGame, List<String> moveCommand) {
         Position sourcePosition = Position.of(moveCommand.get(1));
         Position targetPosition = Position.of(moveCommand.get(2));
+//        ChessPiece chessPiece = chessGame.findChessPiece(sourcePosition);
+//        List<Position> movablePosition = chessGame.findMovablePosition(chessPiece);
+//        chessGame.validateMovablePosition(targetPosition, movablePosition);
         chessGame.moveChessPiece(sourcePosition, targetPosition);
     }
 }
