@@ -25,4 +25,8 @@ public abstract class Piece {
         return camp.isOpposite(otherPiece.camp);
     }
 
+    public boolean isOpposite(Camp otherCamp) {
+        return camp.isOpposite(otherCamp);
+    }
+
 }
