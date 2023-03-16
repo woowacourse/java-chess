@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Role;
 import chess.domain.Side;
 
 import java.util.List;
@@ -13,9 +14,15 @@ public abstract class MovablePiece extends Piece {
     protected static final List<Direction> DIAGONAL_DIRECTIONS = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
 
     protected final Side side;
+    protected final Role role;
 
-    public MovablePiece(final Side side) {
+    public MovablePiece(final Side side, final Role role) {
         this.side = side;
+        this.role = role;
+    }
+
+    public boolean isSameSide(final Side side) {
+        return this.side.equals(side);
     }
 
     protected boolean isOpponentSide(final MovablePiece targetPiece) {

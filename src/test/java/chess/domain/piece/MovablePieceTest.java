@@ -44,9 +44,9 @@ class MovablePieceTest {
         Side sourceSide = Side.from(Color.WHITE);
         Side sameSide = Side.from(Color.WHITE);
         Side opponenetSide = Side.from(Color.BLACK);
-        MovablePiece sourcePiece = new Pawn(sourceSide);
-        MovablePiece targetPiece = new King(sameSide);
-        MovablePiece opponentPiece = new Queen(opponenetSide);
+        MovablePiece sourcePiece = new Pawn(sourceSide, Role.PAWN);
+        MovablePiece targetPiece = new King(sameSide, Role.KING);
+        MovablePiece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
 
         assertThat(sourcePiece.isOpponentSide(targetPiece)).isFalse();
         assertThat(sourcePiece.isOpponentSide(opponentPiece)).isTrue();

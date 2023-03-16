@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Role;
 import chess.domain.Side;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public class Knight extends MovablePiece {
             SOUTH_SOUTH_EAST, SOUTH_EAST_EAST, SOUTH_SOUTH_WEST, SOUTH_WEST_WEST);
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public Knight(final Side side) {
-        super(side);
+    public Knight(final Side side, final Role role) {
+        super(side, role);
     }
 
     @Override

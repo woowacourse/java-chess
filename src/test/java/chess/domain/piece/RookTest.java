@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Role;
 import chess.domain.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,6 @@ import java.util.stream.Stream;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static chess.domain.piece.Direction.*;
-import static chess.domain.piece.Direction.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
@@ -21,7 +21,7 @@ class RookTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK));
+        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
 
         // expected
         assertThat(rook.canMove(direction, distance)).isTrue();
@@ -32,7 +32,7 @@ class RookTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK));
+        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
 
         // expected
         assertThat(rook.canMove(direction, distance)).isFalse();
@@ -43,8 +43,8 @@ class RookTest {
     @DisplayName("공격할 수 있는지 확인한다.")
     void canAttack(final Direction direction, final int distance)  {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK));
-        Pawn opponentPiece = new Pawn(Side.from(WHITE));
+        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
+        Pawn opponentPiece = new Pawn(Side.from(WHITE), Role.PAWN);
 
         // expected
         assertThat(rook.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -55,8 +55,8 @@ class RookTest {
     @DisplayName("공격할 수 없는지 확인한다.")
     void canNotAttack(final Direction direction, final int distance)  {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK));
-        Pawn opponentPiece = new Pawn(Side.from(BLACK));
+        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
+        Pawn opponentPiece = new Pawn(Side.from(BLACK), Role.PAWN);
 
         // expected
         assertThat(rook.canAttack(direction, distance, opponentPiece)).isFalse();

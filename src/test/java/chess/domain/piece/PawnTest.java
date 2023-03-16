@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Role;
 import chess.domain.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ class PawnTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable() {
         // when
-        Pawn blackPawn = new Pawn(Side.from(Color.BLACK));
-        Pawn whitePawn = new Pawn(Side.from(Color.WHITE));
+        Pawn blackPawn = new Pawn(Side.from(Color.BLACK), Role.PAWN);
+        Pawn whitePawn = new Pawn(Side.from(Color.WHITE), Role.PAWN);
 
         // expected
         assertThat(blackPawn.canMove(SOUTH, 1)).isTrue();
@@ -32,8 +33,8 @@ class PawnTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void canNotMove() {
         // when
-        Pawn blackPawn = new Pawn(Side.from(Color.BLACK));
-        Pawn whitePawn = new Pawn(Side.from(Color.WHITE));
+        Pawn blackPawn = new Pawn(Side.from(Color.BLACK), Role.PAWN);
+        Pawn whitePawn = new Pawn(Side.from(Color.WHITE), Role.PAWN);
 
         // expected
         assertThat(blackPawn.canMove(NORTH, 1)).isFalse();
@@ -45,8 +46,8 @@ class PawnTest {
     @DisplayName("공격할 수 있는지 확인한다.")
     void canAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
         // when
-        Pawn pawn = new Pawn(side);
-        Pawn opponentPiece = new Pawn(opponentSide);
+        Pawn pawn = new Pawn(side, Role.PAWN);
+        Pawn opponentPiece = new Pawn(opponentSide, Role.PAWN);
 
         // expected
         assertThat(pawn.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -66,8 +67,8 @@ class PawnTest {
     @DisplayName("공격할 수 없는지 확인한다.")
     void canNotAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
         // when
-        Pawn pawn = new Pawn(side);
-        Pawn opponentPiece = new Pawn(opponentSide);
+        Pawn pawn = new Pawn(side, Role.PAWN);
+        Pawn opponentPiece = new Pawn(opponentSide, Role.PAWN);
         // expected
         assertThat(pawn.canAttack(direction, distance, opponentPiece)).isFalse();
     }

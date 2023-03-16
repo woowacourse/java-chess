@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Role;
 import chess.domain.Side;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class Pawn extends MovablePiece {
     protected static final List<Direction> BLACK_ATTACK_DIRECTION = List.of(SOUTH_EAST, SOUTH_WEST);
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public Pawn(final Side side) {
-        super(side);
+    public Pawn(final Side side, final Role role) {
+        super(side, role);
     }
 
     @Override

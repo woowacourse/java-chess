@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Role;
 import chess.domain.Side;
 
 public class Queen extends MovablePiece {
-    public Queen(final Side side) {
-        super(side);
+    public Queen(final Side side, final Role role) {
+        super(side, role);
     }
 
     @Override

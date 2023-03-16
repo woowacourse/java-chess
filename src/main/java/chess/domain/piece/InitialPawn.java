@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Role;
 import chess.domain.Side;
 
 public class InitialPawn extends Pawn{
     private static final int MOVE_DISTANCE = 2;
 
-    public InitialPawn(final Side side) {
-        super(side);
+    public InitialPawn(final Side side, final Role role) {
+        super(side, role);
     }
 
     @Override
@@ -27,6 +28,6 @@ public class InitialPawn extends Pawn{
     }
 
     public Pawn changeState() {
-        return new Pawn(side);
+        return new Pawn(side, role);
     }
 }

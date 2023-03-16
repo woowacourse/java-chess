@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.*;
 
-import java.util.function.Function;
-
 public enum Role {
     PAWN(Pawn::new),
     INITIAL_PAWN(InitialPawn::new),
@@ -13,13 +11,18 @@ public enum Role {
     QUEEN(Queen::new),
     KING(King::new);
 
-    private final Function<Side, MovablePiece> createPiece;
+    private final Constructor<Side, Role, MovablePiece> createPiece;
 
-    Role(final Function<Side, MovablePiece> createPiece) {
+    Role(final Constructor<Side, Role, MovablePiece> createPiece) {
         this.createPiece = createPiece;
     }
 
     public MovablePiece create(Side side) {
-        return createPiece.apply(side);
+        return createPiece.construct(side, this);
+    }
+
+    @FunctionalInterface
+    interface Constructor<T1, T2, R> {
+        R construct(T1 t1, T2 t2);
     }
 }
