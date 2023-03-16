@@ -13,7 +13,7 @@ public class InputView {
 
     public CommandDto readCommand() {
         List<String> parsedCommandInput = Arrays.asList(scanner.nextLine()
-                                                               .split(" "));
+                .split(" "));
         validate(parsedCommandInput);
         return CommandDto.from(parsedCommandInput);
     }
@@ -24,8 +24,8 @@ public class InputView {
         }
         if (parsedCommandInput.size() == 3 &&
                 (parsedCommandInput.get(1)
-                                   .length() != 2 || parsedCommandInput.get(2)
-                                                                       .length() != 2)) {
+                        .length() != 2 || parsedCommandInput.get(2)
+                        .length() != 2)) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
         }
         if ((Objects.equals(parsedCommandInput.get(0), "start") || Objects.equals(parsedCommandInput.get(0), "end")) &&

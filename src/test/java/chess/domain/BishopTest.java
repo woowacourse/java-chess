@@ -31,13 +31,13 @@ public class BishopTest {
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
             Bishop whiteBishop = Bishop.of(Side.WHITE)
-                                       .get(0);
+                    .get(0);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.ONE, File.G);
             Square movableSquare2 = Square.of(Rank.SIX, File.B);
             Square unable = Square.of(Rank.THREE, File.B);
             Bishop whiteBishop2 = Bishop.of(Side.WHITE)
-                                        .get(1);
+                    .get(1);
             Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test

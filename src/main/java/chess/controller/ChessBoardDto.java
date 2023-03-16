@@ -24,7 +24,7 @@ public class ChessBoardDto {
             final int row = getRowIndex(square);
             final int column = getColumnIndex(file);
             chessBoard.get(row)
-                      .set(column, PieceDto.from(pieces.get(square)));
+                    .set(column, PieceDto.from(pieces.get(square)));
         }
         return new ChessBoardDto(chessBoard);
     }

@@ -27,17 +27,17 @@ public enum Rank {
 
     public static Rank from(final String symbol) {
         return Arrays.stream(values())
-                     .filter(rank -> Objects.equals(symbol, rank.symbol))
-                     .findAny()
-                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
+                .filter(rank -> Objects.equals(symbol, rank.symbol))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
     }
 
     public static List<Rank> ranksBetween(final Rank from, final Rank to) {
         final int min = Math.min(from.position, to.position);
         final int max = Math.max(from.position, to.position);
         List<Rank> ranks = Arrays.stream(values())
-                                 .filter(rank -> rank.position > min && rank.position < max)
-                                 .collect(Collectors.toList());
+                .filter(rank -> rank.position > min && rank.position < max)
+                .collect(Collectors.toList());
 
         if (from.position == max) {
             Collections.reverse(ranks);

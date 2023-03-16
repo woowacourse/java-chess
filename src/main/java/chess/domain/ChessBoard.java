@@ -27,7 +27,7 @@ public class ChessBoard {
         return false;
     }
 
-    private static void validateEmptySquare(Piece target) {
+    private void validateEmptySquare(Piece target) {
         if (target == EmptyPiece.getInstance()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다");
         }
@@ -46,15 +46,15 @@ public class ChessBoard {
         pieces.put(to, target);
         pieces.put(from, EmptyPiece.getInstance());
         if (target.isPawn()) {
-            Pawn.class.cast(target)
+            ((Pawn) target)
                     .move();
         }
     }
 
     private boolean hasObstacleAlongPath(final Square from, final Square to) {
         return from.squaresOfPath(to)
-                   .stream()
-                   .anyMatch(square -> pieces.get(square) != EmptyPiece.getInstance());
+                .stream()
+                .anyMatch(square -> pieces.get(square) != EmptyPiece.getInstance());
     }
 
     public Map<Square, Piece> getPieces() {

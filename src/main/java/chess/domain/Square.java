@@ -98,7 +98,7 @@ public class Square {
         if (inDiagonal(to)) {
             return squaresOfDiagonal(to);
         }
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     private List<Square> squaresOfLine(final Square to) {
@@ -107,14 +107,14 @@ public class Square {
         }
         if (to.rank == this.rank) {
             return File.filesBetween(this.file, to.file)
-                       .stream()
-                       .map(foundFile -> Square.of(rank, foundFile))
-                       .collect(Collectors.toUnmodifiableList());
+                    .stream()
+                    .map(foundFile -> Square.of(rank, foundFile))
+                    .collect(Collectors.toUnmodifiableList());
         }
         return Rank.ranksBetween(this.rank, to.rank)
-                   .stream()
-                   .map(foundRank -> Square.of(foundRank, file))
-                   .collect(Collectors.toUnmodifiableList());
+                .stream()
+                .map(foundRank -> Square.of(foundRank, file))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private List<Square> squaresOfDiagonal(final Square to) {

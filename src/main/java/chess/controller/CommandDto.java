@@ -27,13 +27,13 @@ public class CommandDto {
         }
         return new CommandDto(commands.get(0),
                 String.valueOf(commands.get(1)
-                                       .charAt(0)),
+                        .charAt(0)),
                 String.valueOf(commands.get(1)
-                                       .charAt(1)),
+                        .charAt(1)),
                 String.valueOf(commands.get(2)
-                                       .charAt(0)),
+                        .charAt(0)),
                 String.valueOf(commands.get(2)
-                                       .charAt(1)));
+                        .charAt(1)));
     }
 
     public String getCommand() {

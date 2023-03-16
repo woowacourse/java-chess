@@ -31,7 +31,7 @@ class PawnTest {
         @DisplayName("초기 위치의 Pawn이 주어지면")
         class given_initialized_pawn {
             Pawn initializedWhitePawn = Pawn.of(Side.WHITE)
-                                            .get(0);
+                    .get(0);
             Square initialFrom = Square.of(Rank.TWO, File.A);
             Queen blackQueen = Queen.of(Side.BLACK);
             Queen whiteQueen = Queen.of(Side.WHITE);
@@ -91,7 +91,7 @@ class PawnTest {
     @DisplayName("이동한 적 있는 Pawn이 주어지면")
     class given_has_moved_pawn {
         Pawn movedWhitePawn = Pawn.of(Side.WHITE)
-                                  .get(0);
+                .get(0);
         Square movedFrom = Square.of(Rank.THREE, File.B);
         Queen blackQueen = Queen.of(Side.BLACK);
         Queen whiteQueen = Queen.of(Side.WHITE);

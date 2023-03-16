@@ -26,17 +26,17 @@ public enum File {
 
     public static File from(final String symbol) {
         return Arrays.stream(values())
-                     .filter(file -> Objects.equals(symbol, file.symbol))
-                     .findAny()
-                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
+                .filter(file -> Objects.equals(symbol, file.symbol))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
     }
 
     public static List<File> filesBetween(final File from, final File to) {
         final int min = Math.min(from.position, to.position);
         final int max = Math.max(from.position, to.position);
         List<File> files = Arrays.stream(values())
-                                 .filter(file -> file.position > min && file.position < max)
-                                 .collect(Collectors.toList());
+                .filter(file -> file.position > min && file.position < max)
+                .collect(Collectors.toList());
 
         if (from.position == max) {
             Collections.reverse(files);

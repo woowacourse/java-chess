@@ -31,13 +31,13 @@ public class KnightTest {
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
             Knight whiteKnight = Knight.of(Side.WHITE)
-                                       .get(0);
+                    .get(0);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.TWO, File.C);
             Square movableSquare2 = Square.of(Rank.FIVE, File.F);
             Square unable = Square.of(Rank.TWO, File.B);
             Knight whiteKnight2 = Knight.of(Side.WHITE)
-                                        .get(1);
+                    .get(1);
             Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
