@@ -22,8 +22,8 @@ public final class King extends Piece {
 
     @Override
     boolean isPeaceRule(Position from, Position to) {
-        int fileGap = from.calculateFileGap(to);
-        int rankGap = from.calculateRankGap(to);
+        int fileGap = to.calculateFileGap(from);
+        int rankGap = to.calculateRankGap(from);
 
         return (Math.abs(rankGap) == 0 && Math.abs(fileGap) == 1)
                 || (Math.abs(rankGap) == 1 && Math.abs(fileGap) == 0)

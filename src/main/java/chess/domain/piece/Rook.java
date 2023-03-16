@@ -22,8 +22,8 @@ public final class Rook extends Piece {
 
     @Override
     boolean isPeaceRule(Position from, Position to) {
-        int rankGap = from.calculateFileGap(to);
-        int fileGap = from.calculateRankGap(to);
+        int fileGap = to.calculateFileGap(from);
+        int rankGap = to.calculateRankGap(from);
 
         return Math.abs(rankGap) == 0
                 || Math.abs(fileGap) == 0;

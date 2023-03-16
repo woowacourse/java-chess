@@ -22,8 +22,8 @@ public final class Bishop extends Piece {
 
     @Override
     boolean isPeaceRule(Position from, Position to) {
-        int fileGap = from.calculateFileGap(to);
-        int rankGap = from.calculateRankGap(to);
+        int fileGap = to.calculateFileGap(from);
+        int rankGap = to.calculateRankGap(from);
 
         return Math.abs(fileGap) == Math.abs(rankGap);
     }

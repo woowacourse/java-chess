@@ -17,6 +17,7 @@ public abstract class Piece {
     public boolean isBlack() {
         return camp == Camp.BLACK;
     }
+
     public boolean isEmpty() {
         return false;
     }

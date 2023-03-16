@@ -23,8 +23,8 @@ public final class Knight extends Piece {
 
     @Override
     boolean isPeaceRule(Position from, Position to) {
-        int rankGap = from.calculateFileGap(to);
-        int fileGap = from.calculateRankGap(to);
+        int fileGap = to.calculateFileGap(from);
+        int rankGap = to.calculateRankGap(from);
 
         return (Math.abs(rankGap) == 1 && Math.abs(fileGap) == 2)
                 || (Math.abs(rankGap) == 2 && Math.abs(fileGap) == 1);
