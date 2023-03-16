@@ -14,6 +14,7 @@ public class Application {
 
         Command command = null;
 
+        outputView.printStartMessage();
         ChessGame chessGame = new ReadyChessGame();
         do {
             List<String> inputCommand = inputView.inputCommand();
