@@ -8,6 +8,7 @@ public class OutputView {
     private static final String GAME_COMMAND_MOVE_DESCRIPTION = "move source위치 target위치 - 예. move b2 b3";
     private static final String GAME_COMMAND_REQUEST = String.format("> 게임 시작: %s\n> 게임 종료: %s\n> 게임 이동: %s\n",
             Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION);
+    private static final String ERROR_MESSAGE_FORMAT = "[입력 오류] %s" + System.lineSeparator();
 
     public void printStartMessage() {
         System.out.println(GAME_START);
@@ -29,4 +30,7 @@ public class OutputView {
         }
     }
 
+    public void printInputErrorMessage(final String message) {
+        System.out.printf(ERROR_MESSAGE_FORMAT, message);
+    }
 }

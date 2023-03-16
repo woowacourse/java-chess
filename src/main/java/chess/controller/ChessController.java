@@ -26,11 +26,11 @@ public class ChessController {
         outputView.printStartMessage();
         boolean isContinue = true;
         while (isContinue) {
-            isContinue = play(chessBoard, currentTurnCamp);
+            isContinue = retryCampPlayIfCommandIllegal(chessBoard, currentTurnCamp);
         }
     }
 
-    private boolean play(final ChessBoard chessBoard, final Camp camp) {
+    private boolean executeCampPlay(final ChessBoard chessBoard, final Camp camp) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
             return false;
@@ -41,5 +41,15 @@ public class ChessController {
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return true;
+    }
+
+    private boolean retryCampPlayIfCommandIllegal(ChessBoard chessBoard, Camp camp) {
+        while (true) {
+            try {
+                return executeCampPlay(chessBoard, camp);
+            } catch (final IllegalArgumentException exception) {
+                outputView.printInputErrorMessage(exception.getMessage());
+            }
+        }
     }
 }
