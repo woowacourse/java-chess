@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Camp;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
-import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +15,8 @@ public class Rook extends Piece {
         directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
     }
 
-    public Rook(final TeamColor color) {
-        super(color, PieceType.ROOK);
+    public Rook(final Camp camp) {
+        super(camp, PieceType.ROOK);
     }
 
     @Override

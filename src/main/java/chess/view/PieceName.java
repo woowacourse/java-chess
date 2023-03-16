@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.TeamColor;
+import chess.domain.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
@@ -32,8 +32,8 @@ public enum PieceName {
         return foundName.getName(piece.getColor());
     }
 
-    public String getName(TeamColor color) {
-        if (color == TeamColor.WHITE) {
+    public String getName(Camp camp) {
+        if (camp == Camp.WHITE) {
             return name.toLowerCase();
         }
         return name.toUpperCase();

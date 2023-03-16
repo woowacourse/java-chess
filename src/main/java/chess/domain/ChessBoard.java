@@ -30,42 +30,42 @@ public class ChessBoard {
     }
 
     private void initializeBoard() {
-        insertPiecesByColor(TeamColor.WHITE);
-        insertPiecesByColor(TeamColor.BLACK);
+        insertPiecesByColor(Camp.WHITE);
+        insertPiecesByColor(Camp.BLACK);
     }
 
-    private void insertPiecesByColor(TeamColor teamColor) {
-        piecesByPosition.put(Position.of(2, teamColor.startingRank()), new Knight(teamColor));
-        piecesByPosition.put(Position.of(1, teamColor.startingRank()), new Rook(teamColor));
-        piecesByPosition.put(Position.of(3, teamColor.startingRank()), new Bishop(teamColor));
-        piecesByPosition.put(Position.of(4, teamColor.startingRank()), new King(teamColor));
-        piecesByPosition.put(Position.of(5, teamColor.startingRank()), new Queen(teamColor));
-        piecesByPosition.put(Position.of(6, teamColor.startingRank()), new Bishop(teamColor));
-        piecesByPosition.put(Position.of(7, teamColor.startingRank()), new Knight(teamColor));
-        piecesByPosition.put(Position.of(8, teamColor.startingRank()), new Rook(teamColor));
+    private void insertPiecesByColor(Camp camp) {
+        piecesByPosition.put(Position.of(2, camp.startingRank()), new Knight(camp));
+        piecesByPosition.put(Position.of(1, camp.startingRank()), new Rook(camp));
+        piecesByPosition.put(Position.of(3, camp.startingRank()), new Bishop(camp));
+        piecesByPosition.put(Position.of(4, camp.startingRank()), new King(camp));
+        piecesByPosition.put(Position.of(5, camp.startingRank()), new Queen(camp));
+        piecesByPosition.put(Position.of(6, camp.startingRank()), new Bishop(camp));
+        piecesByPosition.put(Position.of(7, camp.startingRank()), new Knight(camp));
+        piecesByPosition.put(Position.of(8, camp.startingRank()), new Rook(camp));
         IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
-                .forEach(file -> piecesByPosition.put(Position.of(file, teamColor.startingPawnRank()),
-                        new Pawn(teamColor)));
+                .forEach(file -> piecesByPosition.put(Position.of(file, camp.startingPawnRank()),
+                        new Pawn(camp)));
     }
 
-    public void move(List<Integer> sourceCoords, List<Integer> destinationCoords, final TeamColor teamColor) {
+    public void move(List<Integer> sourceCoords, List<Integer> destinationCoords, final Camp camp) {
         Position source = Position.from(sourceCoords);
         Position destination = Position.from(destinationCoords);
 
-        Piece piece = findPieceAtSourcePosition(source, teamColor);
+        Piece piece = findPieceAtSourcePosition(source, camp);
         List<Path> allPaths = piece.findAllPaths(source);
         for (Path path : allPaths) {
-            if (moveWhenPossible(path, source, destination, piece, teamColor)) {
+            if (moveWhenPossible(path, source, destination, piece, camp)) {
                 return;
             }
         }
         throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
     }
 
-    private Piece findPieceAtSourcePosition(final Position source, final TeamColor teamColor) {
+    private Piece findPieceAtSourcePosition(final Position source, final Camp camp) {
         validatePieceAtSourcePosition(source);
         Piece piece = piecesByPosition.get(source);
-        validatePieceColor(piece, teamColor);
+        validatePieceColor(piece, camp);
         return piece;
     }
 
@@ -76,17 +76,17 @@ public class ChessBoard {
         throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
     }
 
-    private void validatePieceColor(final Piece piece, final TeamColor teamColor) {
-        if (piece.isSameColor(teamColor)) {
+    private void validatePieceColor(final Piece piece, final Camp camp) {
+        if (piece.isSameColor(camp)) {
             return;
         }
         throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
 
     private boolean moveWhenPossible(final Path path, final Position source, final Position destination,
-                                     final Piece movingPiece, final TeamColor teamColor) {
+                                     final Piece movingPiece, final Camp camp) {
         if (path.hasPosition(destination)) {
-            validatePath(path, source, destination, movingPiece, teamColor);
+            validatePath(path, source, destination, movingPiece, camp);
             piecesByPosition.put(destination, movingPiece);
             piecesByPosition.remove(source);
             return true;
@@ -95,18 +95,18 @@ public class ChessBoard {
     }
 
     private void validatePath(final Path path, final Position source, final Position destination,
-                              final Piece movingPeace, final TeamColor teamColor) {
+                              final Piece movingPeace, final Camp camp) {
         checkObstacleInPath(path, destination);
         checkPawnAttack(source, destination, movingPeace);
-        checkObstacleInDestination(destination, teamColor);
+        checkObstacleInDestination(destination, camp);
     }
 
-    private void checkObstacleInDestination(final Position destination, final TeamColor teamColor) {
+    private void checkObstacleInDestination(final Position destination, final Camp camp) {
         if (!piecesByPosition.containsKey(destination)) {
             return;
         }
         Piece pieceAtDestination = piecesByPosition.get(destination);
-        if (pieceAtDestination.isSameColor(teamColor)) {
+        if (pieceAtDestination.isSameColor(camp)) {
             throw new IllegalArgumentException(WRONG_ATTACK_TARGET_ERROR_MESSAGE);
         }
     }

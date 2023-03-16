@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Camp;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
-import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +15,8 @@ public class Bishop extends Piece {
         directions = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
-    public Bishop(final TeamColor color) {
-        super(color, PieceType.BISHOP);
+    public Bishop(final Camp camp) {
+        super(camp, PieceType.BISHOP);
     }
 
     @Override

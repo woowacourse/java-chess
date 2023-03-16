@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Camp;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
-import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +16,8 @@ public class Knight extends Piece {
                 Direction.WEST_DOWN, Direction.WEST_UP, Direction.NORTH_LEFT, Direction.NORTH_RIGHT);
     }
 
-    public Knight(final TeamColor color) {
-        super(color, PieceType.KNIGHT);
+    public Knight(final Camp camp) {
+        super(camp, PieceType.KNIGHT);
     }
 
     @Override

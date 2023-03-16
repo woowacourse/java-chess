@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Camp;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
-import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +14,13 @@ public class Pawn extends Piece {
 
     private final List<Direction> directions;
 
-    public Pawn(TeamColor color) {
-        super(color, PieceType.PAWN);
+    public Pawn(Camp camp) {
+        super(camp, PieceType.PAWN);
         this.directions = getDirectionsByColor();
     }
 
     private List<Direction> getDirectionsByColor() {
-        if (color == TeamColor.BLACK) {
+        if (camp == Camp.BLACK) {
             return List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
         }
         return List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
@@ -49,14 +49,14 @@ public class Pawn extends Piece {
     }
 
     private boolean isStartRank(final Position current) {
-        if (color == TeamColor.WHITE) {
+        if (camp == Camp.WHITE) {
             return current.isInExpectedRank(WHITE_START_RANK);
         }
         return current.isInExpectedRank(BLACK_START_RANK);
     }
 
     private Direction getForwardDirectionByColor() {
-        if (color == TeamColor.WHITE) {
+        if (camp == Camp.WHITE) {
             return Direction.NORTH;
         }
         return Direction.SOUTH;

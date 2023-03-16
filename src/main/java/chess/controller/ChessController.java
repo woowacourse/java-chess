@@ -1,7 +1,7 @@
 package chess.controller;
 
+import chess.domain.Camp;
 import chess.domain.ChessBoard;
-import chess.domain.TeamColor;
 import chess.dto.CommandRequest;
 import chess.util.BoardConverter;
 import chess.view.Command;
@@ -12,7 +12,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private TeamColor currentColor;
+    private Camp currentTurnCamp;
 
     public ChessController() {
         this.inputView = new InputView();
@@ -21,23 +21,23 @@ public class ChessController {
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
-        currentColor = TeamColor.WHITE;
+        currentTurnCamp = Camp.WHITE;
 
         outputView.printStartMessage();
         boolean isContinue = true;
         while (isContinue) {
-            isContinue = play(chessBoard, currentColor);
+            isContinue = play(chessBoard, currentTurnCamp);
         }
     }
 
-    private boolean play(final ChessBoard chessBoard, final TeamColor color) {
+    private boolean play(final ChessBoard chessBoard, final Camp camp) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
             return false;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate(), color);
-            currentColor = currentColor.transfer();
+            chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate(), camp);
+            currentTurnCamp = currentTurnCamp.transfer();
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return true;

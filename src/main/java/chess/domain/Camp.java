@@ -1,13 +1,13 @@
 package chess.domain;
 
-public enum TeamColor {
+public enum Camp {
 
     BLACK(8),
     WHITE(1);
 
     private final int startingRank;
 
-    TeamColor(final int startingRank) {
+    Camp(final int startingRank) {
         this.startingRank = startingRank;
     }
 
@@ -23,11 +23,11 @@ public enum TeamColor {
         return startingRank + 1;
     }
 
-    public TeamColor transfer() {
-        if (this == TeamColor.WHITE) {
-            return TeamColor.BLACK;
+    public Camp transfer() {
+        if (this == Camp.WHITE) {
+            return Camp.BLACK;
         }
-        return TeamColor.WHITE;
+        return Camp.WHITE;
     }
 
 }
