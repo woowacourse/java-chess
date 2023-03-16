@@ -3,18 +3,18 @@ package chess.domain;
 import chess.domain.dto.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
+    private static final int RANK_SIZE = 8;
 
     private final Map<Position, Piece> piecePosition = new HashMap<>();
 
     public Board() {
         makeBlackPiece();
         makeWhitePiece();
+        makeEmptyPiece();
     }
 
     private void makeBlackPiece() {
@@ -22,19 +22,26 @@ public class Board {
         makePawns(Color.BLACK, Rank.SEVEN);
     }
 
+    private void makeEmptyPiece() {
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                piecePosition.computeIfPresent(Position.of(file, rank), (ignored, ignored2) -> Piece.empty());
+            }
+        }
+    }
+
     private void makeWhitePiece() {
         makePiecesExceptPawns(Color.WHITE, Rank.ONE);
         makePawns(Color.WHITE, Rank.TWO);
     }
 
-
     private void makePiecesExceptPawns(Color color, Rank rank) {
         List<PieceType> highPieceOrder = List.of(
                 PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
                 PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
-        int i = 0;
-        for (File file : File.values()) {
-            piecePosition.put(Position.of(file, rank), new Piece(highPieceOrder.get(i++), color));
+        for (int i = 0; i < RANK_SIZE; i++) {
+            piecePosition.put(Position.of(File.from(i), rank),
+                    new Piece(highPieceOrder.get(i), color));
         }
     }
 
@@ -49,9 +56,9 @@ public class Board {
         Piece targetPiece = piecePosition.get(origin);
         int rankDifference = origin.getRankDifference(destination);
         int fileDifference = origin.getFileDifference(destination);
-        targetPiece.move(fileDifference, rankDifference, piecePosition.getOrDefault(destination, Piece.empty()));
+        targetPiece.move(fileDifference, rankDifference, piecePosition.get(destination));
         piecePosition.put(destination, targetPiece);
-        piecePosition.remove(origin);
+        piecePosition.put(origin, Piece.empty());
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
@@ -75,10 +82,11 @@ public class Board {
     public List<List<PieceResponse>> getPiecePosition() {
         List<List<PieceResponse>> response = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            List<PieceResponse> pieceResponses = new ArrayList<>();
-            for (File file : File.values()) {
-                pieceResponses.add(PieceResponse.from(piecePosition.getOrDefault(Position.of(file, rank), Piece.empty())));
-            }
+            List<PieceResponse> pieceResponses = Arrays.stream(File.values())
+                    .map(file -> Position.of(file, rank))
+                    .map(piecePosition::get)
+                    .map(PieceResponse::from)
+                    .collect(Collectors.toList());
             response.add(pieceResponses);
         }
         return response;
