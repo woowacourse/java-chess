@@ -13,6 +13,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -93,5 +94,13 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
     
+    @Test
+    @DisplayName("목적지에 같은 색깔의 피스가 있습니다.")
+    void same_color_piece_in_destination() {
+        Board board = Board.create();
+        board.initialize();
+        Assertions.assertThatThrownBy(() -> board.checkColor(Position.from("a2"), Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
     
 }

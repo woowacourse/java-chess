@@ -19,6 +19,7 @@ public class Board {
     public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
     public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
     public static final String OTHER_PIECE_IN_ROUTE = "경로에 다른 피스가 존재합니다. 이동할 수 없습니다.";
+    public static final String SAME_COLOR_PIECE_IN_DESTINATION_ERROR_MESSAGE = "목적지에 같은 색깔의 피스가 있습니다.";
     private final Map<Position, Piece> board;
     
     private Board(final Map<Position, Piece> board) {
@@ -96,6 +97,12 @@ public class Board {
             if (!board.get(move).isEmpty()) {
                 throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
             }
+        }
+    }
+    
+    public void checkColor(final Position destination, Color color) {
+        if (board.get(destination).isSameColor(color)) {
+            throw new IllegalArgumentException(SAME_COLOR_PIECE_IN_DESTINATION_ERROR_MESSAGE);
         }
     }
 }
