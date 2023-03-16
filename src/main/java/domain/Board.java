@@ -67,13 +67,13 @@ public class Board {
         return pathValidator.validateSpecial(start, end);
     }
 
-    private List<Square> getSquaresInPath(Location start, Location end) {
+    private List<Square> getSquaresInPath(final Location start, final Location end) {
         final Square square = findSquare(start);
         final List<Location> paths = square.searchPath(start, end);
         return paths.stream().map(this::findSquare).collect(Collectors.toList());
     }
 
-    public Square findSquare(Location location) {
+    public Square findSquare(final Location location) {
         return lines.get(location.getRow()).getByCol(location.getCol());
     }
 

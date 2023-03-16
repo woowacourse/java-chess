@@ -48,7 +48,7 @@ public class ChessController {
     }
 
     private void move(final List<String> command) {
-        List<Location> locations = makeLocations(command);
+        final List<Location> locations = makeLocations(command);
         chessGame.move(locations.get(0), locations.get(1));
     }
 

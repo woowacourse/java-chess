@@ -15,7 +15,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    abstract public List<Location> searchPath(Location start, Location end);
+    abstract public List<Location> searchPath(final Location start, final Location end);
 
     public boolean isSameType(final PieceType pieceType) {
         return this.pieceType.equals(pieceType);
