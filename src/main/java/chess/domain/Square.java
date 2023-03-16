@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,11 +45,25 @@ public class Square {
         return squares;
     }
 
-    private int calculateRankDifference(final Square target) {
+    public int calculateDistance(final Square target) {
+        BigInteger fileDifference = BigInteger.valueOf(calculateFileDifference(target));
+        BigInteger rankDifference = BigInteger.valueOf(calculateRankDifference(target));
+        return fileDifference.gcd(rankDifference).intValue();
+    }
+
+    public int calculateRankDifference(final Square target) {
         return rank.calculateDifference(target.rank);
     }
 
-    private int calculateFileDifference(final Square target) {
+    public int calculateFileDifference(final Square target) {
         return file.calculateDifference(target.file);
+    }
+
+    public Square next(final Direction direction) {
+        int fileUnit = direction.getFileUnit();
+        int rankUnit = direction.getRankUnit();
+        File nextFile = file.getNextFile(fileUnit);
+        Rank nextRank = rank.getNextRank(rankUnit);
+        return of(nextFile, nextRank);
     }
 }

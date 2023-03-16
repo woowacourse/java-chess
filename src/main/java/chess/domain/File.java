@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum File {
     A(1),
     B(2),
@@ -16,8 +18,23 @@ public enum File {
         this.position = position;
     }
 
+    public static File from(final int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.position == value)
+                .findFirst()
+                .orElseThrow(
+                        () -> {
+                            throw new IllegalArgumentException("해당 값의 파일이 없습니다.");
+                        }
+                );
+    }
+
     public int calculateDifference(final File target) {
         return target.position - this.position;
     }
 
+    public File getNextFile(final int fileDifference) {
+        int nextPosition = this.position + fileDifference;
+        return File.from(nextPosition);
+    }
 }
