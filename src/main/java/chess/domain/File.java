@@ -18,11 +18,11 @@ public enum File {
 
     public static final int SKIP_FIRST = 1;
     private final String fileName;
-    private final int fileOrder;
+    private final int order;
 
-    File(String fileName, int fileOrder) {
+    File(String fileName, int order) {
         this.fileName = fileName;
-        this.fileOrder = fileOrder;
+        this.order = order;
     }
 
     public static File from(String fileName) {
@@ -34,21 +34,21 @@ public enum File {
 
     public static File from(int fileOrder) {
         return Arrays.stream(File.values())
-                .filter(it -> it.fileOrder == fileOrder)
+                .filter(it -> it.order == fileOrder)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
 
     public int getDifference(File other) {
-        return other.fileOrder - fileOrder;
+        return other.order - order;
     }
 
     public List<File> createPath(File other) {
-        List<File> files = IntStream.range(Math.min(fileOrder, other.fileOrder), Math.max(fileOrder, other.fileOrder))
+        List<File> files = IntStream.range(Math.min(order, other.order), Math.max(order, other.order))
                 .skip(SKIP_FIRST)
                 .mapToObj(File::from)
                 .collect(Collectors.toList());
-        if (fileOrder > other.fileOrder) {
+        if (order > other.order) {
             Collections.reverse(files);
         }
         return files;

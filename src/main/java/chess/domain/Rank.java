@@ -18,11 +18,11 @@ public enum Rank {
     private static final int SKIP_FIRST = 1;
 
     private final String rankName;
-    private final int rankOrder;
+    private final int order;
 
-    Rank(String rankName, int rankOrder) {
+    Rank(String rankName, int order) {
         this.rankName = rankName;
-        this.rankOrder = rankOrder;
+        this.order = order;
     }
 
     public static Rank from(String rankName) {
@@ -34,21 +34,21 @@ public enum Rank {
 
     public static Rank from(int rankOrder) {
         return Arrays.stream(Rank.values())
-                .filter(it -> it.rankOrder == rankOrder)
+                .filter(it -> it.order == rankOrder)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
 
     public int getDifference(Rank other) {
-        return other.rankOrder - rankOrder;
+        return other.order - order;
     }
 
     public List<Rank> createPath(Rank other) {
-        List<Rank> ranks = IntStream.range(Math.min(rankOrder, other.rankOrder), Math.max(rankOrder, other.rankOrder))
+        List<Rank> ranks = IntStream.range(Math.min(order, other.order), Math.max(order, other.order))
                 .skip(SKIP_FIRST)
                 .mapToObj(Rank::from)
                 .collect(Collectors.toList());
-        if (rankOrder > other.rankOrder) {
+        if (order > other.order) {
             Collections.reverse(ranks);
         }
         return ranks;
