@@ -55,6 +55,10 @@ public final class PiecesPosition {
         }
     }
 
+    public Piece choicePiece(Position position) {
+        return piecesPosition.get(position);
+    }
+
     public Map<Position, Piece> getPiecesPosition() {
         return piecesPosition;
     }
