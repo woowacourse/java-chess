@@ -18,6 +18,13 @@ public class Position {
         return Direction.from(fileValuePoint, rankValuePoint);
     }
 
+    public double getSlope(Position targetPosition) {
+        final int fileValueDiff = file.getValueDiff(targetPosition.file);
+        final int rankValueDiff = rank.getValueDiff(targetPosition.rank);
+        return Math.abs((double) fileValueDiff / rankValueDiff);
+        // TODO: 2023/03/15 분모가 0이 되는 상황 예외처리
+    }
+
     public int getFile() {
         return file.getValue();
     }
