@@ -2,6 +2,7 @@ package chess.domain;
 
 public class Position {
 
+	private static final String INVALID_COORDINATE_ERROR_MESSAGE = "유효하지 않은 위치입니다.";
 	private static final int MIN_COORDINATE = 0;
 	private static final int MAX_COORDINATE = 7;
 
@@ -16,7 +17,7 @@ public class Position {
 
 	private void validate(final int column, final int row){
 		if(isInvalidColum(column) || isInvalidRow(row)){
-			throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+			throw new IllegalArgumentException(INVALID_COORDINATE_ERROR_MESSAGE);
 		}
 	}
 

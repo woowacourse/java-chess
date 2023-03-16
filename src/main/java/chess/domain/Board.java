@@ -16,8 +16,11 @@ import chess.domain.piece.Rook;
 
 public class Board {
 
-	private final Map<Position, Piece> board;
+	private static final String EMPTY_PIECE_IN_SOURCE_ERROR_MESSAGE = "source 위치에 조작할 수 있는 말이 없습니다.";
+	private static final String SAME_TEAM_IN_TARGET_ERROR_MESSAGE = "같은 팀의 말의 위치로 이동할 수 없습니다.";
+	private static final String CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE = "말이 해당 위치로 이동할 수 없습니다.";
 
+	private final Map<Position, Piece> board;
 	private Board(Map<Position, Piece> board) {
 		this.board = board;
 	}
@@ -55,21 +58,21 @@ public class Board {
 
 	public void movePiece(Position source, Position target) {
 		if (isEmpty(source)) {
-			throw new IllegalArgumentException("source 위치에 조작할 수 있는 말이 없습니다.");
+			throw new IllegalArgumentException(EMPTY_PIECE_IN_SOURCE_ERROR_MESSAGE);
 		}
 		if (hasSameTeam(source, target)) {
-			throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.1");
+			throw new IllegalArgumentException(SAME_TEAM_IN_TARGET_ERROR_MESSAGE);
 		}
 		if (isInvalidDirection(source, target)) {
-			throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.2");
+			throw new IllegalArgumentException(CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE);
 		}
 		Piece piece = board.get(source);
 		if (!piece.isKnight() && hasObstacle(source, target)) {
-			throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.3");
+			throw new IllegalArgumentException(CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE);
 		}
 		RelativePosition relativePosition = RelativePosition.of(source, target);
 		if (piece.isPawn() && relativePosition.isDiagonal() && isEmpty(target)) {
-			throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.4");
+			throw new IllegalArgumentException(CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE);
 		}
 		board.put(target, piece);
 		board.put(source, new Empty());
