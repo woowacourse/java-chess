@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class Move {
+public final class Move {
     private static final int BOARD_SIZE = 8;
 
     Set<Position> getAllPositions(final Position source, final List<Direction> allDirections, final int moveCount) {

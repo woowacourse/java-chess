@@ -4,7 +4,7 @@ import chess.domain.camp.CampType;
 
 import java.util.Objects;
 
-public final class Piece {
+public abstract class Piece {
     private final PieceType pieceType;
     private final CampType campType;
 
@@ -29,9 +29,7 @@ public final class Piece {
         return campType == diffType;
     }
 
-    public boolean canMove(final Position source, final Position target) {
-        return pieceType.canMove(source, target);
-    }
+    public abstract boolean canMove(final Position source, final Position target);
 
     @Override
     public boolean equals(final Object o) {

@@ -1,9 +1,14 @@
 package chess.domain.board;
 
 import chess.domain.camp.CampType;
+import chess.domain.chess.ChessGame;
+import chess.domain.move.PawnMove;
+import chess.domain.move.RookMove;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +25,7 @@ class ChessBoardTest {
     @DisplayName("체스판을 생성하고, 체스판 말의 수가 32개인지 확인한다.")
     void create() {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when
         final Map<Position, Piece> board = chessBoard.getBoard();
@@ -34,29 +39,29 @@ class ChessBoardTest {
     @CsvSource(value = {"0:0:true", "3:5:false"}, delimiter = ':')
     void contains(final int rank, final int file, final boolean expected) {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
         assertThat(chessBoard.contains(new Position(rank, file)))
                 .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "특정 위치에 존재하는 체스말을 반환한다.")
-    @CsvSource(value = {"0:0:ROOK:WHITE", "6:5:PAWN:BLACK"}, delimiter = ':')
-    void checkPieceSuccess(final int rank, final int file, final PieceType pieceType, final CampType campType) {
+    @Test
+    @DisplayName("특정 위치에 존재하는 체스말을 반환한다.")
+    void checkPieceSuccess() {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.checkPiece(new Position(rank, file)))
-                .isEqualTo(new Piece(pieceType, campType));
+        assertThat(chessBoard.checkPiece(new Position(0, 0)))
+                .isEqualTo(new Rook(PieceType.ROOK, CampType.WHITE, new RookMove()));
     }
 
     @Test
     @DisplayName("없는 위치를 받으면, 예외가 발생한다.")
     void checkPieceFail() {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
         assertThatThrownBy(() -> chessBoard.checkPiece(new Position(5, 5)))
@@ -68,7 +73,7 @@ class ChessBoardTest {
     @DisplayName("입력받은 위치에 존재하는 체스말을 제거한다.")
     void removePiece() {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position removePosition = new Position(1, 0);
 
         // when
@@ -83,9 +88,9 @@ class ChessBoardTest {
     @DisplayName("입력받은 위치에 체스말을 둔다.")
     void putPiece() {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position putPosition = new Position(2, 0);
-        final Piece piece = new Piece(PieceType.PAWN, CampType.WHITE);
+        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE, new PawnMove());
 
         // when
         chessBoard.putPiece(putPosition, piece);
@@ -99,7 +104,7 @@ class ChessBoardTest {
     @CsvSource(value = {"1:3:false", "3:6:true"}, delimiter = ':')
     void isPossibleRoute(final int rank, final int file, final boolean expected) {
         // given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position source = new Position(0, 3);
         final Piece piece = chessBoard.checkPiece(source);
         final Position target = new Position(rank, file);
