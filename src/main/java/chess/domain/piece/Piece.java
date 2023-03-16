@@ -13,8 +13,20 @@ public final class Piece {
         this.campType = campType;
     }
 
-    public boolean isWhiteCamp() {
-        return campType == CampType.WHITE;
+    public boolean isSameCamp(final Piece other) {
+        return campType == other.campType;
+    }
+
+    public boolean isBlackCamp() {
+        return campType == CampType.BLACK;
+    }
+
+    public boolean isPawn() {
+        return pieceType == PieceType.PAWN;
+    }
+
+    public boolean isKnight() {
+        return pieceType == PieceType.KNIGHT;
     }
 
     @Override

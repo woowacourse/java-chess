@@ -29,9 +29,9 @@ public enum PieceName {
     }
 
     public static Character findMessage(final Piece piece) {
-        if (piece.isWhiteCamp()) {
-            return Character.toLowerCase(CACHE.get(piece.getPieceType()));
+        if (piece.isBlackCamp()) {
+            return CACHE.get(piece.getPieceType());
         }
-        return CACHE.get(piece.getPieceType());
+        return Character.toLowerCase(CACHE.get(piece.getPieceType()));
     }
 }
