@@ -20,6 +20,7 @@ public class ChessController {
     public void run() {
         Board board = new Board();
         Command command = Command.START;
+        inputView.printGameStartMessage();
         while (command.isContinue()) {
             List<String> commands = inputView.readCommand();
             command = Command.of(commands);
