@@ -22,22 +22,38 @@ public final class Rook extends Piece {
         return horizontalRoute(from, to);
     }
 
-    private static List<Coordinate> horizontalRoute(final Coordinate from, final Coordinate to) {
-        final List<Coordinate> route = new ArrayList<>();
+    private List<Coordinate> horizontalRoute(final Coordinate from, final Coordinate to) {
         final int distance = from.calculateFileDistance(to);
 
-        for (int i = 1; i <= distance; i++) {
-            route.add(from.horizontalMove(i));
+        if (distance < 0) {
+            return horizontalRouteBySign(from, distance, -1);
+        }
+
+        return horizontalRouteBySign(from, distance, 1);
+    }
+
+    private List<Coordinate> horizontalRouteBySign(final Coordinate from, final int distance, int sign) {
+        final List<Coordinate> route = new ArrayList<>();
+        for (int i = 1; i <= sign * distance; i++) {
+            route.add(from.horizontalMove(sign * i));
         }
         return route;
     }
 
-    private static List<Coordinate> verticalRoute(final Coordinate from, final Coordinate to) {
-        final List<Coordinate> route = new ArrayList<>();
+    private List<Coordinate> verticalRoute(final Coordinate from, final Coordinate to) {
         final int distance = from.calculateRankDistance(to);
 
-        for (int i = 1; i <= distance; i++) {
-            route.add(from.verticalMove(i));
+        if (distance < 0) {
+            return verticalRouteBySign(from, distance, -1);
+        }
+
+        return verticalRouteBySign(from, distance, 1);
+    }
+
+    private List<Coordinate> verticalRouteBySign(final Coordinate from, final int distance, int sign) {
+        final List<Coordinate> route = new ArrayList<>();
+        for (int i = 1; i <= sign * distance; i++) {
+            route.add(from.verticalMove(sign * i));
         }
         return route;
     }
@@ -53,17 +69,17 @@ public final class Rook extends Piece {
 
         final int lastIndex = routeSquares.size() - 1;
         final Square lastSquare = routeSquares.get(lastIndex);
-        if(lastSquare.isSameTeam(this)){
+        if (lastSquare.isSameTeam(this)) {
             throwCanNotMoveException();
         }
 
-        for(Square curSquare : routeSquares.subList(0, lastIndex)){
+        for (Square curSquare : routeSquares.subList(0, lastIndex)) {
             checkSquareEmpty(curSquare);
         }
     }
 
     private void checkSquareEmpty(final Square curSquare) {
-        if(!curSquare.isEmpty()){
+        if (!curSquare.isEmpty()) {
             throwCanNotMoveException();
         }
     }
