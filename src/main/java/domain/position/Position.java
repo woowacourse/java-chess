@@ -38,13 +38,21 @@ public final class Position {
     }
 
     public List<Position> getPathTo(Position end) {
-        int rowGap = end.row - this.row;
-        int columnGap = end.column - this.column;
+        int rowGap = calculateRowGap(end);
+        int columnGap = calculateColumnGap(end);
 
         if (isStraightOfEightDirections(rowGap, columnGap)) {
             return calculatePath(rowGap, columnGap);
         }
         return new ArrayList<>(List.of(end));
+    }
+
+    public int calculateRowGap(Position other) {
+        return other.row - this.row;
+    }
+
+    public int calculateColumnGap(Position other) {
+        return other.column - this.column;
     }
 
     private List<Position> calculatePath(int rowGap, int columnGap) {

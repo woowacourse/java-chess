@@ -225,6 +225,34 @@ class PositionTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("다른 Position과의 행 좌표값 차이를 구할 수 있다.")
+    void calculateRowGapTest() {
+        // given
+        Position start = Position.of(2,2);
+        Position end = Position.of(5,7);
+
+        // when
+        int rowGap = start.calculateRowGap(end);
+
+        // then
+        assertThat(rowGap).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("다른 Position과의 열 좌표값 차이를 구할 수 있다.")
+    void calculateColumnGapTest() {
+        // given
+        Position start = Position.of(2,2);
+        Position end = Position.of(5,7);
+
+        // when
+        int columnGap = start.calculateColumnGap(end);
+
+        // then
+        assertThat(columnGap).isEqualTo(5);
+    }
+
     static Stream<Arguments> getPathToTestCase() {
         return Stream.of(
                 Arguments.arguments(Position.of(3,3), Position.of(5, 3), List.of(Position.of(4, 3), Position.of(5, 3))),
