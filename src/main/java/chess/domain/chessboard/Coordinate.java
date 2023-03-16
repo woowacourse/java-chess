@@ -74,4 +74,12 @@ public final class Coordinate {
     private String subtractIndex(final char index, final int step) {
         return Character.toString(index - step);
     }
+
+    public int calculateRankDistance(final Coordinate other){
+        return other.rankIndex - this.rankIndex;
+    }
+
+    public int calculateFileDistance(final Coordinate other){
+        return other.fileIndex - this.fileIndex;
+    }
 }
