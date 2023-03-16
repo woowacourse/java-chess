@@ -27,19 +27,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InitPieces {
+public class Pieces {
     private final Map<Square, Piece> pieces = new HashMap<>();
 
-    private InitPieces() {
-        init();
+    private Pieces() {
+        generatePieces();
     }
 
-    public static Map<Square, Piece> initPieces() {
-        InitPieces initPieces = new InitPieces();
-        return new HashMap<>(initPieces.pieces);
+    public static Map<Square, Piece> init() {
+        Pieces pieces = new Pieces();
+        return new HashMap<>(pieces.pieces);
     }
 
-    private void init() {
+    private void generatePieces() {
         initPieceExceptPawn(ONE, WHITE);
         initPawn(SEVEN, BLACK);
         initPieceExceptPawn(EIGHT, BLACK);
