@@ -10,8 +10,10 @@ import chess.domain.piece.PieceType;
 import java.util.Arrays;
 
 public class OutputView {
+    private static final String ERROR = "[ERROR] : %s";
 
     public void printChessBoard(Chessboard chessboard) {
+        System.out.println();
         for (Rank rank : Rank.values()) {
             printRankAt(chessboard, rank);
         }
@@ -24,6 +26,10 @@ public class OutputView {
             stringBuilder.append(PieceRenderer.getPieceName(piece));
         }
         System.out.println(stringBuilder);
+    }
+
+    public void printError(String message) {
+        System.out.println(String.format(ERROR, message));
     }
 
     private enum PieceRenderer {

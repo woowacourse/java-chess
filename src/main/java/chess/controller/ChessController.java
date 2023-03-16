@@ -10,6 +10,7 @@ import chess.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ChessController {
     private final InputView inputView;
@@ -21,24 +22,68 @@ public class ChessController {
     }
 
     public void run() {
-        inputView.printStartChess();
         ChessGame chessGame = new ChessGame();
-        Chessboard chessboard = chessGame.getChessboard();
-        if (Command.renderToCommand(inputView.requestCommend().get(0)) != Command.START) {
-            return;
+
+        inputView.printStartChess();
+
+        if (isStartCommand()) {
+            extracted(chessGame);
         }
+    }
+
+    private void extracted(ChessGame chessGame) {
+        Command command;
+        do {
+            printChessBoard(chessGame.getChessboard());
+            command = retryOnInvalidUserInput(() -> play(chessGame));
+        } while (command != Command.END);
+    }
+
+    private boolean isStartCommand() {
+        Command userCommand = Command.renderToCommand(requestCommand().get(0));
+
+        return userCommand == Command.START;
+    }
+
+    private Command play(ChessGame chessGame) {
+        List<String> command = requestCommand();
+
+        if (Command.renderToCommand(command.get(0)) == Command.END) {
+            return Command.END;
+        }
+
+        movePiece(chessGame, command);
+
+        return Command.MOVE;
+    }
+
+    private void movePiece(ChessGame chessGame, List<String> command) {
+        Square source = makeSquare(command.get(1));
+        Square target = makeSquare(command.get(2));
+
+        chessGame.move(source, target);
+    }
+
+    private void printChessBoard(Chessboard chessboard) {
         outputView.printChessBoard(chessboard);
-        List<String> commend = inputView.requestCommend();
-        while (Command.renderToCommand(commend.get(0)) != Command.END) {
-            chessGame.move(makeSquare(commend.get(1)),makeSquare(commend.get(2)));
-            outputView.printChessBoard(chessboard);
-            commend = inputView.requestCommend();
+    }
+
+    private List<String> requestCommand() {
+        return retryOnInvalidUserInput(inputView::requestCommand);
+    }
+
+    private <T> T retryOnInvalidUserInput(Supplier<T> request) {
+        try {
+            return request.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return retryOnInvalidUserInput(request);
         }
     }
 
     private Square makeSquare(String command) {
-        File file = FileRenderer.renderString(String.valueOf(command.charAt(0)));
-        Rank rank = RankRenderer.renderString(String.valueOf(command.charAt(1)));
+        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(0)));
+        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(1)));
 
         return new Square(file, rank);
     }
@@ -71,20 +116,21 @@ public class ChessController {
         F("f", File.F),
         G("g", File.G),
         H("h", File.H);
-        private final String input;
-        private final File output;
 
-        FileRenderer(String input, File output) {
-            this.input = input;
-            this.output = output;
+        private final String command;
+        private final File file;
+
+        FileRenderer(String command, File rank) {
+            this.command = command;
+            this.file = rank;
         }
 
-        static private File renderString(String input) {
+        static private File renderToFile(String input) {
             return Arrays.stream(values())
-                    .filter(value -> value.input.equals(input))
+                    .filter(value -> value.command.equals(input))
                     .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException())
-                    .output;
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."))
+                    .file;
         }
     }
 
@@ -97,20 +143,21 @@ public class ChessController {
         THREE("3", Rank.THREE),
         TWO("2", Rank.TWO),
         ONE("1", Rank.ONE);
-        private final String input;
-        private final Rank output;
 
-        RankRenderer(String input, Rank output) {
-            this.input = input;
-            this.output = output;
+        private final String command;
+        private final Rank rank;
+
+        RankRenderer(String command, Rank rank) {
+            this.command = command;
+            this.rank = rank;
         }
 
-        static private Rank renderString(String input) {
+        static private Rank renderToRank(String input) {
             return Arrays.stream(values())
-                    .filter(value -> value.input.equals(input))
+                    .filter(value -> value.command.equals(input))
                     .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException())
-                    .output;
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
+                    .rank;
         }
     }
 }
