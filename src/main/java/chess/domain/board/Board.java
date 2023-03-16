@@ -63,4 +63,8 @@ public final class Board {
         Squares squares = board.get(rank);
         return squares.get(file);
     }
+
+    public List<Squares> getSquares() {
+        return new ArrayList<>(board);
+    }
 }

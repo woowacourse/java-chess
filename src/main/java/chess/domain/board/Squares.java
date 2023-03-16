@@ -4,6 +4,7 @@ import chess.domain.piece.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Squares {
 
@@ -44,5 +45,11 @@ public final class Squares {
 
     public Square get(final int file) {
         return squares.get(file);
+    }
+
+    public List<Piece> getPieces() {
+        return squares.stream()
+                .map(Square::getPiece)
+                .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,10 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Squares;
 import chess.domain.piece.Color;
+
+import java.util.List;
 
 public final class ChessGame {
 
@@ -28,5 +31,9 @@ public final class ChessGame {
 
     public Color getTurn() {
         return turn;
+    }
+
+    public List<Squares> getBoard() {
+        return board.getSquares();
     }
 }
