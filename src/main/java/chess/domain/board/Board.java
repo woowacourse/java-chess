@@ -73,4 +73,28 @@ public class Board {
     private boolean isSameColor(final Square source, final Square lastSquare) {
         return board.containsKey(lastSquare) && !(board.get(source).isBlack() ^ board.get(lastSquare).isBlack());
     }
+
+    public boolean canMovePawn(final Square source, final List<Square> routes) {
+        final boolean isInitialMove = isInitialMove(source, routes);
+        final boolean isDiagonalMovable = isDiagonalMovable(source, routes.get(0));
+        return isInitialMove && isDiagonalMovable;
+    }
+
+    private boolean isInitialMove(final Square source, final List<Square> routes) {
+        final Piece piece = board.get(source);
+        final Square destination = routes.get(0);
+        final int distanceY = Math.abs(destination.calculateDistanceY(source));
+        return (distanceY == 2 && source.isInitPawnPosition(piece.isBlack())) || distanceY == 1;
+    }
+
+    private boolean isDiagonalMovable(final Square source, final Square destination) {
+        return (isDiagonalUnit(source, destination) && isSameColor(source, destination))
+                || (!isDiagonalUnit(source, destination) && !board.containsKey(destination));
+    }
+
+    private boolean isDiagonalUnit(final Square source, final Square destination) {
+        final int distanceX = destination.calculateDistanceX(source);
+        final int distanceY = destination.calculateDistanceY(source);
+        return Math.abs(distanceX) == Math.abs(distanceY) && Math.abs(distanceX) == 1;
+    }
 }

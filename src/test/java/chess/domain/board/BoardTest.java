@@ -148,4 +148,35 @@ class BoardTest {
             }
         }
     }
+
+    @Nested
+    class canMovePawn_메서드는 {
+
+        @Test
+        void 폰이_초기_위치일_때_두칸_갈_수_있다() {
+            final Board board = Board.generate();
+            final Square source = new Square(File.A, Rank.TWO);
+            final List<Square> routes = List.of(new Square(File.A, Rank.FOUR));
+
+            assertThat(board.canMovePawn(source, routes)).isTrue();
+        }
+
+        @Test
+        void 폰이_초기_위치일_때_한칸_갈_수_있다() {
+            final Board board = Board.generate();
+            final Square source = new Square(File.B, Rank.TWO);
+            final List<Square> routes = List.of(new Square(File.B, Rank.THREE));
+
+            assertThat(board.canMovePawn(source, routes)).isTrue();
+        }
+
+        @Test
+        void 폰이_초기_위치일_때_대각선으로_갈_수_없다() {
+            final Board board = Board.generate();
+            final Square source = new Square(File.C, Rank.TWO);
+            final List<Square> routes = List.of(new Square(File.D, Rank.THREE));
+
+            assertThat(board.canMovePawn(source, routes)).isFalse();
+        }
+    }
 }

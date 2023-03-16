@@ -41,4 +41,11 @@ public class Square {
     public Square next(final DirectionVector direction) {
         return new Square(direction.next(file), direction.next(rank));
     }
+
+    public boolean isInitPawnPosition(final boolean isBlack) {
+        if (isBlack) {
+            return rank == Rank.SEVEN;
+        }
+        return rank == Rank.TWO;
+    }
 }
