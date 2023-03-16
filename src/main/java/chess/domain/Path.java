@@ -52,4 +52,5 @@ public class Path {
     public List<Position> positions() {
         return new ArrayList<>(positions);
     }
+
 }

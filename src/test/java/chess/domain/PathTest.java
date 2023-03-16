@@ -3,11 +3,8 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PathTest {
 
     @DisplayName("출발지와 방향을 전달받아 단일 칸 이동 경로를 만들 수 있다. (경로를 이루는 칸이 하나 뿐이다.)")

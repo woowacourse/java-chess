@@ -27,4 +27,5 @@ public enum Command {
     public String getAnswer() {
         return answer;
     }
+
 }

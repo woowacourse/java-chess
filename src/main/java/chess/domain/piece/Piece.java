@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Path;
-import chess.domain.TeamColor;
 import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,4 +48,5 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, type);
     }
+
 }
