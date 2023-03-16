@@ -36,7 +36,7 @@ public enum Shape {
                 .orElse(BLANK.name);
     }
 
-    private String getName() {
+    public String getName() {
         return name;
     }
 }

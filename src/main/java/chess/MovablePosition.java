@@ -1,5 +1,7 @@
 package chess;
 
+import chess.piece.ChessPiece;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,45 @@ public class MovablePosition {
     private static List<Position> blackPawnVector = List.of(Position.initPosition(0,-1), Position.initPosition(0,-2));
     private static List<Position> whitePawnVector = List.of(Position.initPosition(0,1), Position.initPosition(0,2));
 
-    private List<Position> movablePosition;
+    private List<Position> movablePosition = new ArrayList<>();
 
     public MovablePosition() {
-        this.movablePosition = new ArrayList<>();
+        this.movablePosition = movablePosition;
     }
+
+    public List<Position> findByShape(ChessBoard chessBoard, Position sourcePosition) {
+        ChessPiece chessPiece = chessBoard.getChessPieceByPosition(sourcePosition);
+        String pieceShape = Shape.getNameByClass(chessPiece);
+//        System.out.println("pieceShape = " + pieceShape);
+        if (pieceShape.equals(Shape.WHITE_PAWN.getName())) {
+            addWhitePawnPosition(chessBoard, sourcePosition);
+        }
+
+        if (pieceShape.equals(Shape.BLACK_PAWN.getName())) {
+            addBlackPawnPosition(chessBoard, sourcePosition);
+        }
+
+        if (pieceShape.equals(Shape.WHITE_KNIGHT.getName()) || pieceShape.equals(Shape.BLACK_KNIGHT.getName())) {
+            addKnightPosition(chessBoard, sourcePosition);
+        }
+        if (pieceShape.equals(Shape.WHITE_BISHOP.getName()) || pieceShape.equals(Shape.BLACK_BISHOP.getName())) {
+            addDiagonalPosition(chessBoard, sourcePosition, true);
+        }
+        if (pieceShape.equals(Shape.WHITE_ROOK.getName()) || pieceShape.equals(Shape.BLACK_ROOK.getName())) {
+            addCrossPosition(chessBoard, sourcePosition, true);
+        }
+        if (pieceShape.equals(Shape.WHITE_QUEEN.getName()) || pieceShape.equals(Shape.BLACK_QUEEN.getName())) {
+            addCrossPosition(chessBoard, sourcePosition, true);
+            addDiagonalPosition(chessBoard, sourcePosition, true);
+        }
+        if (pieceShape.equals(Shape.WHITE_KING.getName()) || pieceShape.equals(Shape.BLACK_KING.getName())) {
+            addCrossPosition(chessBoard, sourcePosition, false);
+            addDiagonalPosition(chessBoard, sourcePosition, false);
+        }
+
+        return movablePosition;
+    }
+
 
     public void addCrossPosition(ChessBoard chessBoard, Position sourcePosition, boolean isInfinite) {
         int limit = 1;

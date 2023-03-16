@@ -31,10 +31,11 @@ public class ChessGame {
         chessBoard.getChessBoard().put(sourcePosition, new Empty(Side.BLANK));
     }
 
-    public void validateMovablePosition(Position targetPosition, List<Position> movablePosition) {
-        movablePosition.stream()
-                .filter(position -> position.equals(targetPosition))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치로는 이동할 수 없습니다."));
+    public boolean validateMovablePosition(Position targetPosition, List<Position> movablePosition) {
+        if (movablePosition.stream()
+                .anyMatch(position -> position.equals(targetPosition))) {
+            return true;
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 위치로 움직일 수 없습니다.");
     }
 }
