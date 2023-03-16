@@ -42,6 +42,10 @@ public class Position {
         return new Position(nextRank, nextFile);
     }
 
+    public boolean isOneStepForwardDiagonal(Position other) {
+        return other.x - x == 1 && Math.abs(other.y - y) == 1;
+    }
+
     public int getX() {
         return x;
     }

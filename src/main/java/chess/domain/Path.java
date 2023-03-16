@@ -39,6 +39,17 @@ public class Path {
         return new Path(positions);
     }
 
+    public boolean hasPosition(Position position) {
+        return positions.contains(position);
+    }
+
+    public int findPositionIndex(Position position) {
+        if (positions.contains(position)) {
+            return positions.indexOf(position);
+        }
+        throw new IllegalArgumentException("경로에 존재하지 않는 위치입니다.");
+    }
+
     public List<Position> positions() {
         return new ArrayList<>(positions);
     }

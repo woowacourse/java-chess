@@ -21,7 +21,6 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard();
 
         outputView.printStartMessage();
-        CommandRequest commandRequest;
         boolean isContinue = true;
         while (isContinue) {
             isContinue = play(chessBoard);
@@ -29,13 +28,12 @@ public class ChessController {
     }
 
     private boolean play(final ChessBoard chessBoard) {
-        CommandRequest commandRequest;
-        commandRequest = inputView.requestGameCommand();
+        CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
             return false;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            // TODO move
+            chessBoard.move(commandRequest.getSource(), commandRequest.getDestination());
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return true;
