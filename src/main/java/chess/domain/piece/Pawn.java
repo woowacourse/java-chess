@@ -50,9 +50,9 @@ public class Pawn extends Piece {
 
     private boolean isStartRank(final Position current) {
         if (color == TeamColor.WHITE) {
-            return current.getY() == WHITE_START_RANK;
+            return current.isInExpectedRank(WHITE_START_RANK);
         }
-        return current.getY() == BLACK_START_RANK;
+        return current.isInExpectedRank(BLACK_START_RANK);
     }
 
     private Direction getForwardDirectionByColor() {

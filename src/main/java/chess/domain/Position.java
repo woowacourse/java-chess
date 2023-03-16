@@ -57,8 +57,8 @@ public class Position {
         return other.x - x == 1 && Math.abs(other.y - y) == 1;
     }
 
-    public int getY() {
-        return y;
+    public boolean isInExpectedRank(int rank) {
+        return y == rank;
     }
 
     @Override
