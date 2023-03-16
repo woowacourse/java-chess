@@ -5,7 +5,6 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -21,32 +20,44 @@ public class ChessBoard {
     }
 
     public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {
-        final Piece piece = get(source);
-        if (turn.incorrect(piece.color())) {
-            throw new IllegalArgumentException("상대 말 선택");
-        }
-
-        final WayPoints wayPoints = piece.wayPointsWithCondition(destination);
-
-        if (wayPoints.wayPoints().stream().anyMatch(it -> optGet(it).isPresent())) {
-            throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
-        }
-        final Optional<Piece> to = optGet(destination);
-        if (to.isPresent()) {
-            final Piece piece2 = to.get();
-            piece.moveAndKill(piece2);
-            pieces.remove(piece2);
-        } else {
-            piece.move(destination);
-        }
-
-        turn.change();
+        final Piece from = get(source);
+        validateCorrectTurn(turn, from);
+        validateNonBlock(destination, from);
+        moveOrKill(destination, from);
     }
 
-    private Optional<Piece> optGet(final PiecePosition piecePosition) {
+    private void validateCorrectTurn(final Turn turn, final Piece from) {
+        if (turn.incorrect(from.color())) {
+            throw new IllegalArgumentException("상대 말 선택");
+        }
+    }
+
+    private void validateNonBlock(final PiecePosition destination, final Piece from) {
+        final WayPoints wayPoints = from.wayPointsWithCondition(destination);
+        if (isBlocking(wayPoints)) {
+            throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean isBlocking(final WayPoints wayPoints) {
+        return wayPoints.wayPoints()
+                .stream()
+                .anyMatch(this::existByPosition);
+    }
+
+    private void moveOrKill(final PiecePosition destination, final Piece from) {
+        if (existByPosition(destination)) {
+            final Piece to = get(destination);
+            from.moveAndKill(to);
+            pieces.remove(to);
+            return;
+        }
+        from.move(destination);
+    }
+
+    private boolean existByPosition(final PiecePosition piecePosition) {
         return pieces.stream()
-                .filter(piece -> piece.existIn(piecePosition))
-                .findAny();
+                .anyMatch(piece -> piece.existIn(piecePosition));
     }
 
     public Piece get(final PiecePosition piecePosition) {
