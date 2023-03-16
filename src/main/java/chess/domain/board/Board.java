@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
