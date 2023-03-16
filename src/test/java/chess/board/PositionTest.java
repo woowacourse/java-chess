@@ -126,4 +126,49 @@ public class PositionTest {
         // when, then
         assertThat(position.getSlope(targetPosition)).isEqualTo(2.0);
     }
+
+    @Test
+    @DisplayName("이동할 횟수를 반환한다. - 수평")
+    void getMoveCount_Horizontal() {
+        // given
+        final Position sourcePosition = new Position(File.D, Rank.FOUR);
+        final Position targetPosition = new Position(File.F, Rank.FOUR);
+        final Direction rightDirection = Direction.RIGHT;
+
+        // when
+        int moveCount = sourcePosition.getMoveCount(targetPosition, rightDirection);
+
+        // then
+        assertThat(moveCount).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("이동할 횟수를 반환한다. - 수직")
+    void getMoveCount_Vertical() {
+        // given
+        final Position sourcePosition = new Position(File.D, Rank.FOUR);
+        final Position targetPosition = new Position(File.D, Rank.TWO);
+        final Direction rightDirection = Direction.DOWN;
+
+        // when
+        int moveCount = sourcePosition.getMoveCount(targetPosition, rightDirection);
+
+        // then
+        assertThat(moveCount).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("이동할 횟수를 반환한다. - 대각선")
+    void getMoveCount_Diagonal() {
+        // given
+        final Position sourcePosition = new Position(File.D, Rank.FOUR);
+        final Position targetPosition = new Position(File.F, Rank.SIX);
+        final Direction rightDirection = Direction.UP_RIGHT;
+
+        // when
+        int moveCount = sourcePosition.getMoveCount(targetPosition, rightDirection);
+
+        // then
+        assertThat(moveCount).isEqualTo(2);
+    }
 }
