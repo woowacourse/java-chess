@@ -63,4 +63,12 @@ public final class Square {
     public boolean isRankSeven() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
 }
