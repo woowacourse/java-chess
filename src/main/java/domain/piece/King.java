@@ -29,7 +29,7 @@ public class King extends Piece {
 
     private void validateStepSize(Vectorr vector) {
         if (vector.getMaxLength() != STEP_SIZE) {
-            throw new IllegalArgumentException("움직일 수  있는 범위를 초과합니다.");
+            throw new IllegalArgumentException("움직일 수 있는 범위를 초과합니다.");
         }
     }
 }
