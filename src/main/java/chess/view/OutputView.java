@@ -10,7 +10,6 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,8 +38,8 @@ public class OutputView {
         mappingChessBoard(boardMap, chessBoard);
 
         chessBoard.stream()
-                  .map(board -> String.join("", board))
-                  .forEach(System.out::println);
+                .map(board -> String.join("", board))
+                .forEach(System.out::println);
     }
 
     private static void mappingChessBoard(final Map<Position, Piece> boardMap, final List<List<String>> chessBoard) {
@@ -59,14 +58,14 @@ public class OutputView {
 
     private static List<List<String>> initalizeBoard() {
         return IntStream.range(0, 8)
-                        .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, ".")))
-                        .collect(Collectors.toList());
+                .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, ".")))
+                .collect(Collectors.toList());
     }
 
     private static String formatPieceDisplay(final Piece piece) {
         String pieceDisplay = PIECE_VALUE_MAP.get(piece.getClass());
 
-        if(piece.isBlack()){
+        if (piece.isBlack()) {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;

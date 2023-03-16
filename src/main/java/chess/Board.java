@@ -21,11 +21,8 @@ public class Board {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
         Path path = board.get(from)
-                .searchPathTo(to, Optional.ofNullable(board.get(to)));
-        //패스에 기물이 있는지 확인하는 기능 추가
+                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
         path.validateObstacle(board.keySet());
-
-        // 패스에 기물이 없으니 이동
         Piece piece = board.remove(from);
         board.put(to, piece);
     }

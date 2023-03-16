@@ -7,16 +7,14 @@ import java.util.Optional;
 public abstract class Piece {
 
     protected final Color color;
-    protected final Position position;
 
-    public Piece(final Color color, final Position position) {
+    public Piece(final Color color) {
         this.color = color;
-        this.position = position;
     }
 
     public boolean isBlack() {
         return color == Color.BLACK;
     }
 
-    public abstract Path searchPathTo(Position to, Optional<Piece> destination);
+    public abstract Path searchPathTo(Position from, Position to, Optional<Piece> destination);
 }

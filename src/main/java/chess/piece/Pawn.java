@@ -14,34 +14,34 @@ import java.util.Optional;
 
 public class Pawn extends Piece {
 
-    public Pawn(final Color color, final Position position) {
-        super(color, position);
+    public Pawn(final Color color) {
+        super(color);
     }
 
-    public Path searchPathTo(Position to, Optional<Piece> destination) {
-        Movement movement = to.convertMovement(position);
+    public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
+        Movement movement = to.convertMovement(from);
 
         if (destination.isEmpty() && (movement == U || movement == D)) {
 
-            if (color.isWhite() && position.rank().value() == 2
-                    && rankDifference(to) == 2) {
-                Position wayPoint = new Position(position.file().value(), position.rank().value() + 1);
+            if (color.isWhite() && from.rank().value() == 2
+                    && rankDifference(to, from) == 2) {
+                Position wayPoint = new Position(from.file().value(), from.rank().value() + 1);
 
                 return new Path(wayPoint);
             }
 
-            if (color.isBlack() && position.rank().value() == 7
-                    && rankDifference(to) == -2) {
-                Position wayPoint = new Position(position.file().value(), position.rank().value() - 1);
+            if (color.isBlack() && from.rank().value() == 7
+                    && rankDifference(to, from) == -2) {
+                Position wayPoint = new Position(from.file().value(), from.rank().value() - 1);
 
                 return new Path(wayPoint);
             }
 
-            if (color.isWhite() && rankDifference(to) == 1) {
+            if (color.isWhite() && rankDifference(to, from) == 1) {
                 return new Path();
             }
 
-            if (color.isBlack() && rankDifference(to) == -1) {
+            if (color.isBlack() && rankDifference(to, from) == -1) {
                 return new Path();
             }
             throw new IllegalStateException();
@@ -62,7 +62,7 @@ public class Pawn extends Piece {
         throw new IllegalStateException();
     }
 
-    private int rankDifference(final Position to) {
-        return to.rank().value() - position.rank().value();
+    private int rankDifference(final Position to, final Position from) {
+        return to.rank().value() - from.rank().value();
     }
 }

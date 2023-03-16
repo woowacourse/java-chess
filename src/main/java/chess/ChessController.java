@@ -3,7 +3,6 @@ package chess;
 import chess.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.Map;
 
 public class ChessController {

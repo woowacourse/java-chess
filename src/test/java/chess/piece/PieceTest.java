@@ -15,15 +15,15 @@ class PieceTest {
     @DisplayName("isBlack() : 피스가 검정색인지 확인할 수 있다.")
     void test_isBlack() throws Exception {
         //given
-        Piece blackPiece = new Piece(Color.BLACK, new Position(1, 1)) {
+        Piece blackPiece = new Piece(Color.BLACK) {
             @Override
-            public Path searchPathTo(final Position to, final Optional<Piece> destination) {
+            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
                 return null;
             }
         };
-        Piece whitePiece = new Piece(Color.WHITE, new Position(2, 1)) {
+        Piece whitePiece = new Piece(Color.WHITE) {
             @Override
-            public Path searchPathTo(final Position to, final Optional<Piece> destination) {
+            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
                 return null;
             }
         };
