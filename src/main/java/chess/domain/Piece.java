@@ -26,6 +26,14 @@ public abstract class Piece {
 
     abstract boolean isMovable(Square from, Square to, Piece piece);
 
+    public boolean isWhite() {
+        return side == Side.WHITE;
+    }
+
+    public boolean isBlack() {
+        return side == Side.BLACK;
+    }
+
     public boolean isPawn() {
         return this instanceof Pawn;
     }
