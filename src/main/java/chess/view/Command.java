@@ -17,13 +17,6 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(it -> it.command.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
-    }
-
-    public static void validate(final String input) {
-        Arrays.stream(Command.values())
-                .filter(it -> it.command.equals(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어입니다."));
     }
 }

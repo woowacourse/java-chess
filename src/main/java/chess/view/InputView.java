@@ -18,7 +18,6 @@ public final class InputView {
         List<String> split = Arrays.stream(input.split(" "))
                 .map(String::strip)
                 .collect(Collectors.toList());
-        Command.validate(split.get(0));
         return split;
     }
 }

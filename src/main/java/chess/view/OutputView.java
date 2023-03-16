@@ -20,5 +20,9 @@ public final class OutputView {
         System.out.println(format);
     }
 
+    public void printErrorMesage(RuntimeException e) {
+        System.out.println(e.getMessage());
+    }
+
 
 }

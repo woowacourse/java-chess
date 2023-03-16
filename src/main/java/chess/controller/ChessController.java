@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 public final class ChessController {
 
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
     private final ChessGame chessGame;
@@ -25,21 +29,30 @@ public final class ChessController {
 
     public void play() {
         outputView.startMessage();
+        repeatReadStart();
+        try {
+            playGameUntilEnd(List.of(""));
+        } catch (RuntimeException e) {
+
+        }
+    }
+
+    private void repeatReadStart() {
+        try {
+            startByCommand();
+        } catch (RuntimeException e) {
+            outputView.printErrorMesage(e);
+            repeatReadStart();
+        }
+    }
+
+    private void startByCommand() {
         List<String> command = inputView.inputStartCommand();
-        System.out.println(command);
-        System.out.println(Command.from(command.get(0)));
-        if (Command.from(command.get(0)) == Command.START) {
-            List<Squares> board = chessGame.getBoard();
-            printBoard(board);
+        if (Command.from(command.get(COMMAND_INDEX)) != Command.START) {
+            throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
         }
-        while (Command.from(command.get(0)) != Command.END) {
-            if (Command.from(command.get(0)) == Command.MOVE) {
-                chessGame.playTurn(PositionParser.parse(command.get(1)), PositionParser.parse(command.get(2)));
-                List<Squares> board = chessGame.getBoard();
-                printBoard(board);
-            }
-            command = inputView.inputStartCommand();
-        }
+        List<Squares> board = chessGame.getBoard();
+        printBoard(board);
     }
 
     private void printBoard(final List<Squares> board) {
@@ -51,5 +64,21 @@ public final class ChessController {
         Collections.reverse(collect);
 
         collect.forEach(outputView::printRank);
+    }
+
+    private void playGameUntilEnd(List<String> command) {
+        while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
+            command = playGame(command);
+        }
+    }
+
+    private List<String> playGame(List<String> command) {
+        if (Command.from(command.get(COMMAND_INDEX)) == Command.MOVE) {
+            chessGame.playTurn(PositionParser.parse(command.get(SOURCE_INDEX)), PositionParser.parse(command.get(TARGET_INDEX)));
+            List<Squares> board = chessGame.getBoard();
+            printBoard(board);
+        }
+        command = inputView.inputStartCommand();
+        return command;
     }
 }
