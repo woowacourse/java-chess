@@ -23,13 +23,13 @@ public class Piece {
     }
 
     public void move(int x, int y, Piece piece) {
-        if (!moveState.canMove(x, color.colorDirection(y), piece.isSameColor(color))) {
+        if (!moveState.canMove(x, color.colorDirection(y), piece.compareColor(color))) {
             throw new IllegalPieceMoveException();
         }
         moveState = moveState.getNextState();
     }
 
-    private ColorCompareResult isSameColor(Color color) {
+    private ColorCompareResult compareColor(Color color) {
         return ColorCompareResult.of(this.color, color);
     }
 

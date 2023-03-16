@@ -33,7 +33,7 @@ public enum PieceType {
         return Arrays.stream(values())
                 .filter(it -> it.state.contains(moveState))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다" + moveState));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
     }
 
     public String getType() {
@@ -42,9 +42,5 @@ public enum PieceType {
 
     public MoveState getState() {
         return state.get(INITIAL_STATE);
-    }
-
-    public MoveState getState(int index) {
-        return state.get(index);
     }
 }

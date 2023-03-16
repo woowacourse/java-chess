@@ -32,9 +32,9 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
     }
 
-    public static File from(int fileOrder) {
+    public static File from(int order) {
         return Arrays.stream(File.values())
-                .filter(it -> it.order == fileOrder)
+                .filter(it -> it.order == order)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
