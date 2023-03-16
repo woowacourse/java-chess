@@ -16,7 +16,7 @@ class BoardTest {
     private static final Location BLACK_PAWN_END = Location.of(1, 5);
 
     @Test
-    @DisplayName("체스판을 생성한다")
+    @DisplayName("초기 상태의 체스판을 생성한다.")
     public void testCreate() {
         //given
         //when
@@ -38,10 +38,10 @@ class BoardTest {
     }
 
     @Nested
-    @DisplayName("잘못된 진영의 돌을 움직인다.")
+    @DisplayName("순서가 아닌 진영의 돌을 움직일 시 오류를 던진다.")
     class TestMoveInvalidLocation {
 
-        @DisplayName("검은 진영 오류")
+        @DisplayName("흰 진영 순서일 때 검은 진영을 움직인다.")
         @Test
         public void testMoveFailBlack() {
             final Board board = new Board(new PathValidator());
@@ -51,7 +51,7 @@ class BoardTest {
             ).isInstanceOf(IllegalArgumentException.class);
         }
 
-        @DisplayName("흰 진영 오류")
+        @DisplayName("검은 진영 순서일 때 흰 진영을 움직인다.")
         @Test
         public void testMoveFailWhite() {
             final Board board = new Board(new PathValidator());
@@ -63,11 +63,11 @@ class BoardTest {
     }
 
     @Nested
-    @DisplayName("올바른 진영의 돌을 움직인다.")
+    @DisplayName("순서인 진영의 돌을 움직인다.")
     class TestMoveValidateLocation {
 
         @Test
-        @DisplayName("흰색 진영의 돌을 움직인다.")
+        @DisplayName("흰생 진영의 순서일 때 흰색 진영의 돌을 움직인다.")
         public void testMoveWhite() {
             //given
             final Board board = new Board(new PathValidator());
@@ -81,7 +81,7 @@ class BoardTest {
         }
 
         @Test
-        @DisplayName("검은색 진영의 돌을 움직인다.")
+        @DisplayName("검은색 진영의 순서일 때 검은색 진영의 돌을 움직인다.")
         public void testMoveBlack() {
             //given
             final Board board = new Board(new PathValidator());
@@ -94,5 +94,4 @@ class BoardTest {
             assertThat(board.findSquare(BLACK_PAWN_END).getPiece()).isEqualTo(Pawn.makeBlack());
         }
     }
-
 }

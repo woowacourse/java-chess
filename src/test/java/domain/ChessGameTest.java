@@ -24,7 +24,7 @@ class ChessGameTest {
     public Stream<DynamicTest> testMoveSuccess() {
         final ChessGame chessGame = new ChessGame();
         return Stream.of(
-            DynamicTest.dynamicTest("흰색 진영의 폰을 한칸 전진한다.", () -> {
+            DynamicTest.dynamicTest("첫 순서에 흰색 진영의 폰을 한칸 전진한다.", () -> {
                     assertDoesNotThrow(
                         () -> chessGame.move(WHITE_PAWN_START, WHITE_PAWN_END)
                     );
@@ -33,7 +33,7 @@ class ChessGameTest {
                     assertThat(board.findSquare(WHITE_PAWN_END).getPiece()).isEqualTo(Pawn.makeWhite());
                 }
             ),
-            DynamicTest.dynamicTest("검은색 진영의 폰을 한칸 전진한다.", () -> {
+            DynamicTest.dynamicTest("두번째 순서에 검은색 진영의 폰을 한칸 전진한다.", () -> {
                     assertDoesNotThrow(
                         () -> chessGame.move(BLACK_PAWN_START, BLACK_PAWN_END)
                     );
@@ -45,11 +45,11 @@ class ChessGameTest {
         );
     }
 
-    @DisplayName("순서가 올바르지 않은 진영의 체스말을 움직인다.")
+    @DisplayName("순서가 아닌 진영의 체스말을 움직인다.")
     @Nested
     class TestMoveFail {
 
-        @DisplayName("검은 진영 오류")
+        @DisplayName("흰색 진영의 순서일 때 검은 진영의 체스말을 움직이면 오류를 던진다.")
         @Test
         public void testMoveFailBlack() {
             final ChessGame chessGame = new ChessGame();
@@ -59,7 +59,7 @@ class ChessGameTest {
             ).isInstanceOf(IllegalArgumentException.class);
         }
 
-        @DisplayName("흰 진영 오류")
+        @DisplayName("검은색 진영의 순서일 때 흰색 진영의 체스말을 움직이면 오류를 던진다.")
         @Test
         public void testMoveFailWhite() {
             final ChessGame chessGame = new ChessGame();

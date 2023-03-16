@@ -16,14 +16,14 @@ class BishopTest {
     Stream<DynamicTest> testIsMovable() {
         final Bishop bishop = Bishop.makeBlack();
         return Stream.of(
-            DynamicTest.dynamicTest("오른쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
+            DynamicTest.dynamicTest("오른쪽 위 대각선 방향 경로 반환.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(2, 2);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
                     Location.of(2, 2)
                 );
             }),
-            DynamicTest.dynamicTest("오른쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
+            DynamicTest.dynamicTest("오른쪽 아래 대각선 방향 경로 반환.", () -> {
                 final Location start = Location.of(1, 8);
                 final Location end = Location.of(3, 6);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
@@ -31,7 +31,7 @@ class BishopTest {
                     Location.of(3, 6)
                 );
             }),
-            DynamicTest.dynamicTest("왼쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
+            DynamicTest.dynamicTest("왼쪽 위 대각선 방향 경로 반환.", () -> {
                 final Location start = Location.of(7, 5);
                 final Location end = Location.of(4, 8);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
@@ -40,7 +40,7 @@ class BishopTest {
                     Location.of(4, 8)
                 );
             }),
-            DynamicTest.dynamicTest("왼쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
+            DynamicTest.dynamicTest("왼쪽 아래 대각선 방향 경로 반환.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(3, 3);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
@@ -53,30 +53,30 @@ class BishopTest {
         );
     }
 
-    @DisplayName("비숍이 이동 불가능한 경로일 때 False를 반환한다.")
+    @DisplayName("비숍이 이동 불가능한 경로일 때 오류를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsNotMovable() {
         final Bishop bishop = Bishop.makeBlack();
         return Stream.of(
-            DynamicTest.dynamicTest("위로 움직일 수 없다.", () -> {
+            DynamicTest.dynamicTest("위로 움직일 경우 오류를 반환.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(1, 2);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
-            DynamicTest.dynamicTest("아래로 움직일 수 없다.", () -> {
+            DynamicTest.dynamicTest("아래로 움직일 경우 오류를 반환.", () -> {
                 final Location start = Location.of(1, 8);
                 final Location end = Location.of(1, 1);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
-            DynamicTest.dynamicTest("왼쪽으로 움직일 수 없다.", () -> {
+            DynamicTest.dynamicTest("왼쪽으로 움직일 경우 오류를 반환.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(6, 7);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
-            DynamicTest.dynamicTest("오른쪽으로 움직일 수 없다.", () -> {
+            DynamicTest.dynamicTest("오른쪽으로 움직일 경우 오류를 반환.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(8, 7);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))

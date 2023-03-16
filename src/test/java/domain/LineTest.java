@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class LineTest {
 
-    private static final List<Square> BLACK_BACK_SQUARE = List.of(
+    private static final List<Square> BLACK_BACK_LINE_SQUARE_ORDER = List.of(
         new Square(Rook.makeBlack()),
         new Square(Knight.makeBlack()),
         new Square(Bishop.makeBlack()),
@@ -25,7 +25,7 @@ class LineTest {
         new Square(Knight.makeBlack()),
         new Square(Rook.makeBlack())
     );
-    private static final List<Square> WHITE_BACK_SQUARE = List.of(
+    private static final List<Square> WHITE_BACK_LINE_SQUARE_ORDER = List.of(
         new Square(Rook.makeWhite()),
         new Square(Knight.makeWhite()),
         new Square(Bishop.makeWhite()),
@@ -37,7 +37,7 @@ class LineTest {
     );
 
     @Test
-    @DisplayName("검은색 진영의 앞줄을 생성한다(폰 8개)")
+    @DisplayName("검은색 진영의 앞줄을 생성한다. (폰 8개)")
     public void testBlackFront() {
         //given
         //when
@@ -51,7 +51,7 @@ class LineTest {
     }
 
     @Test
-    @DisplayName("흰색 진영의 앞줄을 생성한다(폰 8개)")
+    @DisplayName("흰색 진영의 앞줄을 생성한다. (폰 8개)")
     public void testWhiteFront() {
         //given
         //when
@@ -65,7 +65,7 @@ class LineTest {
     }
 
     @Test
-    @DisplayName("검은색 진영의 뒷줄을 생성한다")
+    @DisplayName("검은색 진영의 뒷줄을 생성한다.")
     public void testBlackBack() {
         //given
         //when
@@ -74,11 +74,11 @@ class LineTest {
         //then
         assertThat(line).extracting("squares")
             .asList()
-            .containsExactlyElementsOf(BLACK_BACK_SQUARE);
+            .containsExactlyElementsOf(BLACK_BACK_LINE_SQUARE_ORDER);
     }
 
     @Test
-    @DisplayName("하얀색 진영의 뒷줄을 생성한다")
+    @DisplayName("하얀색 진영의 뒷줄을 생성한다.")
     public void testWhiteBack() {
         //given
         //when
@@ -87,11 +87,11 @@ class LineTest {
         //then
         assertThat(line).extracting("squares")
             .asList()
-            .containsExactlyElementsOf(WHITE_BACK_SQUARE);
+            .containsExactlyElementsOf(WHITE_BACK_LINE_SQUARE_ORDER);
     }
 
     @Test
-    @DisplayName("빈 라인을 생성한다")
+    @DisplayName("빈 라인을 생성한다.")
     public void testEmpty() {
         //given
         //when
