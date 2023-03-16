@@ -30,10 +30,6 @@
   - [x] 갈 수 있다면 그 사이에 방해물이 없는지 확인
   - [x] 방해물이 없다면 말 이동
 
-### Square
-- [ ] 말이 있는지 확인
-- [ ] 말을 움직일 수 있는지 확인
-
 ### Piece
 
 - [X] 말은 Pawn, Bishop, Knight, Rook, Queen, King 으로 구성

@@ -14,6 +14,7 @@ public class OutputView {
 
 	public static void printBoard(BoardDto boardDto) {
 		boardDto.getBoard().forEach(line -> System.out.println(printLine(line)));
+		System.out.println();
 	}
 
 	private static String printLine(List<String> line) {
