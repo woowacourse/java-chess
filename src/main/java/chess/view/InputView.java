@@ -1,25 +1,23 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public boolean readStartCommend() {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+    public List<String> readGameCommand() {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .collect(Collectors.toList());
+    }
+
+    public boolean readStartCommand() {
         String input = scanner.nextLine();
-        return isStart(input);
-    }
-
-    private boolean isStart(String input) {
-        if ("start".equalsIgnoreCase(input)) {
-            return true;
+        if (!"start".equalsIgnoreCase(input)) {
+            throw new IllegalArgumentException("게임을 시작해주세요");
         }
-        if ("end".equalsIgnoreCase(input)) {
-            return false;
-        }
-        throw new IllegalArgumentException("올바른 명령어를 입력해주세요.");
+        return true;
     }
-
 }

@@ -1,33 +1,87 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.PositionMapper;
+import java.util.List;
 
 public class ChessController {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessGame chessGame;
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
+        this.chessGame = new ChessGame(BoardFactory.createBoard());
     }
 
     public void run() {
-        if (isStart()) {
-            Board board = BoardFactory.createBoard();
-            outputView.printBoard(board);
+        outputView.printStart();
+        if (isReadStartCommand()) {
+            outputView.printBoard(chessGame.getBoard());
+            play();
         }
     }
 
-    private boolean isStart() {
+    private boolean isReadStartCommand() {
         try {
-            return inputView.readStartCommend();
+            return inputView.readStartCommand();
         } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]: " + e.getMessage());
-            return isStart();
+            outputView.printError(e.getMessage());
+            return isReadStartCommand();
+        }
+    }
+
+    private void play() {
+        boolean isPlaying = true;
+        while (isPlaying) {
+            isPlaying = move();
+            outputView.printBoard(chessGame.getBoard());
+        }
+    }
+
+    private boolean move() {
+        try {
+            List<String> input = readInput();
+            GameCommand gameCommand = GameCommand.of(input.get(0));
+            if (gameCommand == GameCommand.END) {
+                return false;
+            }
+            Position sourcePosition = PositionMapper.from(input.get(1));
+            Position targetPosition = PositionMapper.from(input.get(2));
+            chessGame.movePiece(sourcePosition, targetPosition);
+            return true;
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return move();
+        }
+    }
+
+    private List<String> readInput() {
+        try {
+            List<String> input = inputView.readGameCommand();
+            GameCommand.of(input.get(0));
+            PositionMapper.from(input.get(1));
+            PositionMapper.from(input.get(2));
+            return input;
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return readInput();
+        }
+    }
+
+    private GameCommand getGameCommand() {
+        try {
+            List<String> input = inputView.readGameCommand();
+            return GameCommand.of(input.get(0));
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return getGameCommand();
         }
     }
 }

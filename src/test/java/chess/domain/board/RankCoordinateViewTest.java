@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class RankCoordinateTest {
+class RankCoordinateViewTest {
 
     @ParameterizedTest
     @CsvSource(value = {"ONE:true", "TWO:true", "THREE:false", "EIGHT:false"}, delimiter = ':')

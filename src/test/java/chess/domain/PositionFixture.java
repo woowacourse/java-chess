@@ -30,5 +30,6 @@ public class PositionFixture {
     public static final Position B_1 = new Position(B, ONE);
     public static final Position B_2 = new Position(B, TWO);
     public static final Position B_3 = new Position(B, THREE);
+    public static final Position B_7 = new Position(B, SEVEN);
     public static final Position C_2 = new Position(C, TWO);
 }

@@ -18,13 +18,17 @@ public enum Color {
     }
 
     public boolean isOpposite(Color color) {
+        return this.getReverseColor() == color;
+    }
+
+    public Color getReverseColor() {
         if (this == BLACK) {
-            return color == WHITE;
+            return WHITE;
         }
         if (this == WHITE) {
-            return color == BLACK;
+            return BLACK;
         }
-        return false;
+        return EMPTY;
     }
 
     public int getDirection() {
