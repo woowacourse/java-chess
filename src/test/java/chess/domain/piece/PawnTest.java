@@ -1,0 +1,87 @@
+package chess.domain.piece;
+
+import chess.domain.Color;
+import chess.domain.Side;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Direction.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class PawnTest {
+    @Test
+    @DisplayName("이동할 수 있는지 확인한다.")
+    void isMovable() {
+        // when
+        Pawn blackPawn = new Pawn(Side.from(Color.BLACK));
+        Pawn whitePawn = new Pawn(Side.from(Color.WHITE));
+
+        // expected
+        assertThat(blackPawn.canMove(SOUTH, 1)).isTrue();
+        assertThat(whitePawn.canMove(NORTH, 1)).isTrue();
+    }
+
+    @Test
+    @DisplayName("이동할 수 없는지 확인한다.")
+    void canNotMove() {
+        // when
+        Pawn blackPawn = new Pawn(Side.from(Color.BLACK));
+        Pawn whitePawn = new Pawn(Side.from(Color.WHITE));
+
+        // expected
+        assertThat(blackPawn.canMove(NORTH, 1)).isFalse();
+        assertThat(whitePawn.canMove(SOUTH, 1)).isFalse();
+    }
+
+    @ParameterizedTest
+    @MethodSource("canAttackDummy")
+    @DisplayName("공격할 수 있는지 확인한다.")
+    void canAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
+        // when
+        Pawn pawn = new Pawn(side);
+        Pawn opponentPiece = new Pawn(opponentSide);
+
+        // expected
+        assertThat(pawn.canAttack(direction, distance, opponentPiece)).isTrue();
+    }
+
+    static Stream<Arguments> canAttackDummy() {
+        return Stream.of(
+                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(BLACK))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("canNotAttackDummy")
+    @DisplayName("공격할 수 없는지 확인한다.")
+    void canNotAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
+        // when
+        Pawn pawn = new Pawn(side);
+        Pawn opponentPiece = new Pawn(opponentSide);
+        // expected
+        assertThat(pawn.canAttack(direction, distance, opponentPiece)).isFalse();
+    }
+
+    static Stream<Arguments> canNotAttackDummy() {
+        return Stream.of(
+                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(BLACK)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(BLACK)),
+                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(WHITE)),
+                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(WHITE)),
+                Arguments.of(SOUTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(NORTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(NORTH_EAST, 1, Side.from(BLACK), Side.from(WHITE))
+        );
+    }
+}

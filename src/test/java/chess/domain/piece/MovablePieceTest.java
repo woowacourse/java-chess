@@ -48,7 +48,7 @@ class MovablePieceTest {
         MovablePiece targetPiece = new King(sameSide);
         MovablePiece opponentPiece = new Queen(opponenetSide);
 
-        assertThat(sourcePiece.isSameSide(targetPiece)).isTrue();
-        assertThat(sourcePiece.isSameSide(opponentPiece)).isFalse();
+        assertThat(sourcePiece.isOpponentSide(targetPiece)).isFalse();
+        assertThat(sourcePiece.isOpponentSide(opponentPiece)).isTrue();
     }
 }
