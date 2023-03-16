@@ -62,7 +62,7 @@ public final class Board {
 
     private void validateLegalTargetColor(final Square sourceSquare, final Square targetSquare) {
         if (sourceSquare.equalsColor(targetSquare)) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("자신의 기물이 있는 곳으로 이동할 수 없습니다.");
         }
     }
 
