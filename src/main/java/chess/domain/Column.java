@@ -10,8 +10,7 @@ public enum Column {
     COLUMN_4("4", 4),
     COLUMN_3("3", 5),
     COLUMN_2("2", 6),
-    COLUMN_1("1", 7),
-    ;
+    COLUMN_1("1", 7);
 
     private final String type;
     private final int index;
