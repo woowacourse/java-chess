@@ -21,7 +21,7 @@ class BoardTest {
     @Test
     void createTest() {
         //given
-        Board board = Board.create();
+        Board board = Board.create(new InitialChessAlignment());
         final List<Position> rooksPosition = Positions.of("A1", "A8", "H1", "H8");
         final List<Position> knightsPosition = Positions.of("B1", "B8", "G1", "G8");
         final List<Position> bishopsPosition = Positions.of("C1", "C8", "F1", "F8");
@@ -40,5 +40,15 @@ class BoardTest {
         assertThat(pawnsPosition).map(pieces::get).allSatisfy(piece -> assertThat(piece).isInstanceOf(Pawn.class));
         assertThat(kingsPosition).map(pieces::get).allSatisfy(piece -> assertThat(piece).isInstanceOf(King.class));
         assertThat(queensPosition).map(pieces::get).allSatisfy(piece -> assertThat(piece).isInstanceOf(Queen.class));
+    }
+
+    @DisplayName("킹은 움직일 수 있다.")
+    @Test
+    void kingMove() {
+        //given
+        Board.create(new InitialChessAlignment());
+
+        //when
+        //then
     }
 }
