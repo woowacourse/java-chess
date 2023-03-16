@@ -1,15 +1,25 @@
 package chess.domain.board;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Position {
 
     private static final int STRAIGHT_GAP = 0;
+    private static final Map<String, Position> CACHE;
+
+    static {
+        CACHE = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> Map.entry(file.command() + rank.command(), new Position(file, rank))))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
     private final File file;
     private final Rank rank;
@@ -20,7 +30,11 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        return new Position(file, rank);
+        return CACHE.get(file.command() + rank.command());
+    }
+
+    public static Position from(final String position) {
+        return CACHE.get(position.toUpperCase());
     }
 
     public int calculateFileGap(final Position target) {
@@ -71,23 +85,6 @@ public class Position {
 
     public boolean isSameRank(final Rank rank) {
         return this.rank == rank;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
     }
 
     @Override

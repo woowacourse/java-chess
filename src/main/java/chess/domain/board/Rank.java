@@ -58,4 +58,8 @@ public enum Rank {
     public int calculateGap(final Rank target) {
         return position - target.position;
     }
+
+    public String command() {
+        return command;
+    }
 }

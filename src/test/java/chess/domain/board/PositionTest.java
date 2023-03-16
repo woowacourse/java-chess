@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static chess.domain.board.Position.from;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A2;
 import static chess.fixture.PositionFixture.A3;
@@ -43,6 +44,7 @@ import static chess.fixture.PositionFixture.H2;
 import static chess.fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,6 +65,23 @@ public class PositionTest {
     void Rank_와_File_을_받아_정상적으로_생성된다() {
         // expect
         assertThatNoException().isThrownBy(() -> Position.of(File.A, Rank.ONE));
+    }
+
+    @Test
+    void command_를_입력받아_Position_을_반환한다() {
+        // given
+        final Position position = from("a2");
+
+        // expect
+        assertThat(position).isEqualTo(Position.of(File.A, Rank.TWO));
+    }
+
+    @Test
+    void 잘못된_커맨드를_입력받으면_예외를_던진다() {
+        // expect
+        assertThatThrownBy(() -> from("a0"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 위치값입니다.");
     }
 
     @Test

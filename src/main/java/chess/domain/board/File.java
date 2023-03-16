@@ -58,4 +58,8 @@ public enum File {
     public int calculateGap(final File target) {
         return position - target.position;
     }
+
+    public String command() {
+        return command;
+    }
 }
