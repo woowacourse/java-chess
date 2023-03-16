@@ -1,14 +1,15 @@
 package chess.domain;
 
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.Rank.ONE;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.square.File.A;
+import static chess.domain.square.File.B;
+import static chess.domain.square.Rank.ONE;
+import static chess.domain.square.Rank.THREE;
+import static chess.domain.square.Rank.TWO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

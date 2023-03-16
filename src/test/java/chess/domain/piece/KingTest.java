@@ -3,12 +3,13 @@ package chess.domain.piece;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chess.domain.Team;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class KingTest {
 
-    King king = new King(Color.BLACK);
+    King king = new King(Team.BLACK);
 
     @ParameterizedTest
     @CsvSource({"1,2"})

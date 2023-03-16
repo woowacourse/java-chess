@@ -3,9 +3,11 @@ package chess.domain;
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import java.util.Map;
 
 public class Board {
@@ -15,9 +17,9 @@ public class Board {
         this.pieces = Pieces.init();
     }
 
-    public boolean isSameColor(Square src, Color color) {
+    public boolean isSameColor(Square src, Team team) {
         Piece piece = findPieceBy(src);
-        return piece.getColor() == color;
+        return piece.getColor() == team;
     }
 
     public void move(Square src, Square dst) {

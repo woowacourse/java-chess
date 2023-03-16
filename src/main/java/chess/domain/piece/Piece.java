@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public abstract class Piece {
-    private final Color color;
+    private final Team team;
     private final PieceType pieceType;
 
-    protected Piece(final Color color, final PieceType pieceType) {
-        this.color = color;
+    protected Piece(final Team team, final PieceType pieceType) {
+        this.team = team;
         this.pieceType = pieceType;
     }
 
@@ -18,8 +19,8 @@ public abstract class Piece {
         }
     }
 
-    public Color getColor() {
-        return color;
+    public Team getColor() {
+        return team;
     }
 
     public String getPieceTypeName() {

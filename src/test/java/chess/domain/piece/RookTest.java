@@ -3,11 +3,12 @@ package chess.domain.piece;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chess.domain.Team;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
-    Rook rook = new Rook(Color.BLACK);
+    Rook rook = new Rook(Team.BLACK);
 
     @ParameterizedTest
     @CsvSource({"1,2"})

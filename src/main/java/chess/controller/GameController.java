@@ -6,10 +6,10 @@ import static chess.domain.Command.START;
 
 import chess.domain.Board;
 import chess.domain.Command;
-import chess.domain.File;
-import chess.domain.Rank;
-import chess.domain.Square;
-import chess.domain.piece.Color;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -33,13 +33,11 @@ public class GameController {
         List<String> gameCommand = inputView.readGameCommand();
         Command command = Command.from(gameCommand.get(0));
 
-        if (command == MOVE) {
-            throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
-        }
+        checkMoveCommand(command);
 
         if (command == START) {
             Board board = new Board();
-            Color color = Color.WHITE;
+            Team team = Team.WHITE;
             Map<Square, Piece> pieces = board.getPieces();
             outputView.printChessBoard(pieces);
 
@@ -51,13 +49,8 @@ public class GameController {
                     break;
                 }
 
-                if (command == START) {
-                    throw new IllegalArgumentException("move 또는 end를 입력해주세요.");
-                }
-
-                if (gameCommand.size() != 3) {
-                    throw new IllegalArgumentException("move source위치 target위치 형태로 입력해주세요.");
-                }
+                checkStartCommand(command);
+                validatePositionCommand(gameCommand);
 
                 List<String> srcPosition = Arrays.asList(gameCommand.get(1).split(""));
                 List<String> dstPosition = Arrays.asList(gameCommand.get(2).split(""));
@@ -69,14 +62,32 @@ public class GameController {
                 Square src = Square.of(File.findFileBy(srcPosition.get(0)), Rank.findRankBy(srcPosition.get(1)));
                 Square dst = Square.of(File.findFileBy(dstPosition.get(0)), Rank.findRankBy(dstPosition.get(1)));
 
-                if (!board.isSameColor(src, color)) {
+                if (!board.isSameColor(src, team)) {
                     throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
                 }
                 board.move(src, dst);
                 outputView.printChessBoard(pieces);
-                color = Color.change(color);
+                team = Team.change(team);
             }
 
+        }
+    }
+
+    private void checkMoveCommand(final Command command) {
+        if (command == MOVE) {
+            throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
+        }
+    }
+
+    private void checkStartCommand(final Command command) {
+        if (command == START) {
+            throw new IllegalArgumentException("move 또는 end를 입력해주세요.");
+        }
+    }
+
+    private void validatePositionCommand(final List<String> gameCommand) {
+        if (gameCommand.size() != 3) {
+            throw new IllegalArgumentException("move source위치 target위치 형태로 입력해주세요.");
         }
     }
 }

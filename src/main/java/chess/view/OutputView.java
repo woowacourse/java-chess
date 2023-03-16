@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.Square;
-import chess.domain.Squares;
-import chess.domain.piece.Color;
+import chess.domain.square.Square;
+import chess.domain.square.Squares;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class OutputView {
                 Piece piece = pieces.get(square);
 
                 String name = piece.getPieceTypeName();
-                if (piece.getColor() == Color.BLACK) {
+                if (piece.getColor() == Team.BLACK) {
                     name = name.toUpperCase();
                 }
                 System.out.print(name);

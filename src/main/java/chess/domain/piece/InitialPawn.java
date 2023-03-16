@@ -1,15 +1,16 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 
+import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public class InitialPawn extends Piece {
 
-    public InitialPawn(final Color color) {
-        super(color, INITIAL_PAWN);
+    public InitialPawn(final Team team) {
+        super(team, INITIAL_PAWN);
     }
 
     @Override
