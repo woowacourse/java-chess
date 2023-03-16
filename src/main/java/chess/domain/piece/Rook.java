@@ -20,7 +20,10 @@ public class Rook extends Piece {
 
     @Override
     public Piece move(final Piece pieceInTargetPosition) {
-        return null;
+        final Position targetPosition = pieceInTargetPosition.getPosition();
+        validateDestination(targetPosition);
+        validateCatchingSameColor(pieceInTargetPosition);
+        return new Rook(targetPosition.getFile(), targetPosition.getRank(), color);
     }
 
     @Override
