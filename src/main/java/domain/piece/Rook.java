@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class Rook extends Piece {
 
     private Rook(final Color color) {
-        super(color);
+        super(color, PieceType.ROOK);
     }
 
     public static Rook makeBlack() {

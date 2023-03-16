@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class Bishop extends Piece {
 
     private Bishop(final Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     public static Bishop makeBlack() {

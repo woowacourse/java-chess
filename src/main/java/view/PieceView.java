@@ -1,38 +1,31 @@
 package view;
 
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.PieceType;
 import java.util.Arrays;
 
 public enum PieceView {
 
-    ROOK("R", "r", Rook.class),
-    KNIGHT("N", "n", Knight.class),
-    BISHOP("B", "b", Bishop.class),
-    QUEEN("Q", "q", Queen.class),
-    KING("K", "k", King.class),
-    PAWN("P", "p", Pawn.class);
+    ROOK("R", "r", PieceType.ROOK),
+    KNIGHT("N", "n", PieceType.KNIGHT),
+    BISHOP("B", "b", PieceType.BISHOP),
+    QUEEN("Q", "q", PieceType.QUEEN),
+    KING("K", "k", PieceType.KING),
+    PAWN("P", "p", PieceType.PAWN);
 
     private final String blackSign;
     private final String whiteSign;
-    private final Class<? extends Piece> piece;
+    private final PieceType pieceType;
 
-    PieceView(final String blackSign, final String whiteSign, final Class<? extends Piece> piece) {
+    PieceView(final String blackSign, final String whiteSign, final PieceType pieceType) {
         this.blackSign = blackSign;
         this.whiteSign = whiteSign;
-        this.piece = piece;
+        this.pieceType = pieceType;
     }
 
     public static String findSign(final Piece piece) {
-        final PieceView pieceView = Arrays.stream(PieceView.values())
-            .filter(view -> view.piece.equals(piece.getClass()))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+        final PieceView pieceView = Arrays.stream(PieceView.values()).filter(view -> piece.isSameType(view.pieceType))
+            .findAny().orElseThrow(IllegalArgumentException::new);
         if (piece.isBlack()) {
             return pieceView.blackSign;
         }

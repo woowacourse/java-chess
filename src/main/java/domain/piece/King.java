@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class King extends Piece {
 
     private King(final Color color) {
-        super(color);
+        super(color, PieceType.KING);
     }
 
     public static King makeBlack() {

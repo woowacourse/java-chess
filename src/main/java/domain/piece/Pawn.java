@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class Pawn extends Piece {
 
     private Pawn(final Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     public static Pawn makeBlack() {
@@ -19,6 +19,22 @@ public class Pawn extends Piece {
 
     public static Pawn makeWhite() {
         return new Pawn(Color.WHITE);
+    }
+
+    @Override
+    public List<Location> searchPath(final Location start, final Location end) {
+        if (isNotMovable(start, end)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        final Direction direction = Direction.find(start, end);
+        final int totalCount = Math.max(
+            Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
+        return IntStream.range(1, totalCount + 1)
+            .mapToObj(
+                count -> Location.of(
+                    start.getCol() + (direction.getColDiff() * count),
+                    start.getRow() + (direction.getRowDiff()) * count))
+            .collect(Collectors.toList());
     }
 
     private boolean isNotMovable(final Location start, final Location end) {
@@ -62,21 +78,5 @@ public class Pawn extends Piece {
                 || start.getRow() - end.getRow() == -1;
         }
         return start.getRow() - end.getRow() == -1;
-    }
-
-    @Override
-    public List<Location> searchPath(final Location start, final Location end) {
-        if (isNotMovable(start, end)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-        final Direction direction = Direction.find(start, end);
-        final int totalCount = Math.max(
-            Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
-        return IntStream.range(1, totalCount + 1)
-            .mapToObj(
-                count -> Location.of(
-                    start.getCol() + (direction.getColDiff() * count),
-                    start.getRow() + (direction.getRowDiff()) * count))
-            .collect(Collectors.toList());
     }
 }

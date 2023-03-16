@@ -7,7 +7,7 @@ import java.util.List;
 public class Knight extends Piece {
 
     private Knight(final Color color) {
-        super(color);
+        super(color, PieceType.KNIGHT);
     }
 
     public static Knight makeBlack() {

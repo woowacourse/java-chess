@@ -9,18 +9,31 @@ public abstract class Piece {
 
     //TODO : 부정형 수정
     protected final Color color;
+    protected final PieceType pieceType;
 
-    public Piece(final Color color) {
+    public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     abstract public List<Location> searchPath(Location start, Location end);
+
+    public boolean isSameType(final PieceType pieceType) {
+        return this.pieceType.equals(pieceType);
+    }
 
     public boolean isSameColor(final Piece piece) {
         if (piece == null) {
             return false;
         }
         return this.color.equals(piece.color);
+    }
+
+    public boolean isDifferentColor(final Piece piece) {
+        if (piece == null) {
+            return true;
+        }
+        return !this.color.equals(piece.color);
     }
 
     public boolean isWhite() {

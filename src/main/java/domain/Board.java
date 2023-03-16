@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 public class Board {
 
+    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private final PathValidator pathValidator;
     private final List<Line> lines;
 
@@ -20,9 +21,7 @@ public class Board {
         final List<Line> lines = new ArrayList<>();
         lines.add(Line.whiteBack());
         lines.add(Line.whiteFront());
-        IntStream.range(0, 4)
-            .mapToObj(count -> Line.empty())
-            .forEach(lines::add);
+        IntStream.range(0, 4).mapToObj(count -> Line.empty()).forEach(lines::add);
         lines.add(Line.blackFront());
         lines.add(Line.blackBack());
         return lines;
@@ -49,14 +48,29 @@ public class Board {
         findSquare(start).moveTo(findSquare(end));
     }
 
-    private void validatePath(Location start, Location end) {
-        List<Square> squares = getSquaresInPath(start, end);
-        pathValidator.validate(findSquare(start), squares);
+    private void validatePath(final Location startLocation, final Location endLocation) {
+        final Square startSquare = findSquare(startLocation);
+        final Square endSquare = findSquare(endLocation);
+        final SpecialValidateDto start = SpecialValidateDto.of(startLocation, startSquare.getPiece());
+        final SpecialValidateDto end = SpecialValidateDto.of(endLocation, endSquare.getPiece());
+        final List<Square> squares = getSquaresInPath(startLocation, endLocation);
+        if (isSpecialPath(start, end) || isNormalPath(startSquare, squares)) {
+            return;
+        }
+        throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
+    }
+
+    private boolean isNormalPath(final Square startSquare, final List<Square> squares) {
+        return pathValidator.validateNormal(startSquare, squares);
+    }
+
+    private boolean isSpecialPath(final SpecialValidateDto start, final SpecialValidateDto end) {
+        return pathValidator.validateSpecial(start, end);
     }
 
     private List<Square> getSquaresInPath(Location start, Location end) {
-        Square square = findSquare(start);
-        List<Location> paths = square.searchPath(start, end);
+        final Square square = findSquare(start);
+        final List<Location> paths = square.searchPath(start, end);
         return paths.stream().map(this::findSquare).collect(Collectors.toList());
     }
 
