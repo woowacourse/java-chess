@@ -22,4 +22,8 @@ public class OutputView {
         stringBuilder.append(System.lineSeparator());
         return stringBuilder;
     }
+
+    public void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 }

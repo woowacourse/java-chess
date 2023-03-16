@@ -22,6 +22,14 @@ public class ChessController {
     }
 
     public void run() {
+        try {
+            startChessGame();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+        }
+    }
+
+    private void startChessGame() {
         Board board = new Board();
         Command command = Command.START;
         inputView.printGameStartMessage();
@@ -33,7 +41,7 @@ public class ChessController {
         }
     }
 
-    public void carryOutByCommand(Board board, List<String> commands, Command command) {
+    private void carryOutByCommand(Board board, List<String> commands, Command command) {
         if (command.isStart()) {
             board.initialize();
             return;
