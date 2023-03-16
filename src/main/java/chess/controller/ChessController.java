@@ -17,29 +17,34 @@ public class ChessController {
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.currentColor = TeamColor.WHITE;
     }
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
-        currentColor = TeamColor.WHITE;
 
         outputView.printStartMessage();
         boolean isContinue = true;
         while (isContinue) {
-            isContinue = play(chessBoard, currentColor);
+            isContinue = play(chessBoard);
         }
     }
 
-    private boolean play(final ChessBoard chessBoard, final TeamColor color) {
+    private boolean play(final ChessBoard chessBoard) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
             return false;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            chessBoard.move(commandRequest.getSource(), commandRequest.getDestination(), color);
-            currentColor = currentColor.transfer();
+            progressMove(chessBoard, commandRequest);
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return true;
     }
+
+    private void progressMove(ChessBoard chessBoard, CommandRequest commandRequest) {
+        chessBoard.move(commandRequest.getSource(), commandRequest.getDestination(), currentColor);
+        currentColor = currentColor.transfer();
+    }
+
 }
