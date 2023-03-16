@@ -19,23 +19,23 @@ public final class Board {
         }
     }
 
-    public boolean move(final Position source, final Position target) {
+    public void move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece.color);
-        if (canMoveToTheTarget(path)) {
-            board.put(target, sourcePiece);
-            board.put(source, new Empty());
-            return true;
+
+        if (cannotMoveToTheTarget(path)) {
+            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
         }
 
-        return false;
+        board.put(target, sourcePiece);
+        board.put(source, new Empty());
     }
 
     //TODO: target 빼고 path를 받도록 수정
-    private boolean canMoveToTheTarget(final List<Position> path) {
-        return path.stream()
+    private boolean cannotMoveToTheTarget(final List<Position> path) {
+        return !path.stream()
                 .limit(path.size() - 1)
                 .allMatch(position -> board.get(position).isEmpty());
     }

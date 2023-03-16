@@ -1,6 +1,6 @@
 package techcourse.fp.chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static techcourse.fp.chess.domain.PositionFixtures.A1;
 import static techcourse.fp.chess.domain.PositionFixtures.A2;
@@ -40,10 +40,8 @@ class BoardTest {
             rawBoard.put(givenPosition, new Rook(Color.WHITE));
 
             final Board board = new Board(rawBoard);
-            //when
-            final boolean actual = board.move(givenPosition, A3);
-            //then
-            assertThat(actual).isTrue();
+            //when && then
+            assertThatNoException().isThrownBy(() -> board.move(givenPosition, A3));
         }
 
         @DisplayName("행마법상 이동 불가능하다면 예외가 발생한다.")
@@ -91,10 +89,10 @@ class BoardTest {
             rawBoard.put(givenPathPosition, new Rook(Color.WHITE));
 
             final Board board = new Board(rawBoard);
-            //when
-            final boolean actual = board.move(givenPosition, A3);
-            //then
-            assertThat(actual).isFalse();
+            //when && then
+            assertThatThrownBy(() -> board.move(givenPosition, A3))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동하려는 경로에 기물이 존재합니다.");
         }
     }
 

@@ -5,6 +5,8 @@ import techcourse.fp.chess.dto.PieceDto;
 
 public class OutputView {
 
+    public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -21,5 +23,13 @@ public class OutputView {
                 System.out.println();
             }
         }
+    }
+
+    public void printEndMessage() {
+        System.out.println("체스 게임을 종료합니다.");
+    }
+
+    public void printErrorMessage(final String exceptionMessage) {
+        System.out.println(ERROR_MESSAGE_PREFIX + exceptionMessage);
     }
 }

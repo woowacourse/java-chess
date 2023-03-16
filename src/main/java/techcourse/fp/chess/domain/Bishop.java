@@ -23,15 +23,15 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Position> findPath(final Position sourcePosition, final Position targetPosition,
+    public List<Position> findPath(final Position source, final Position target,
                                    final Color targetColor) {
-        final MovingStrategy movingStrategy = strategies.findStrategy(sourcePosition, targetPosition);
+        final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
 
         if (targetColor.isSameColor(this.color)) {
             throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
 
-        return createPath(sourcePosition, targetPosition, movingStrategy);
+        return createPath(source, target, movingStrategy);
     }
 
     private List<Position> createPath(final Position sourcePosition, final Position targetPosition,

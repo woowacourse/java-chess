@@ -9,8 +9,7 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public List<Position> findPath(final Position sourcePosition, final Position targetPosition,
-                                   final Color targetColor) {
-        throw new UnsupportedOperationException();
+    public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
+        throw new IllegalStateException("시작점에 기물이 존재하지 않습니다.");
     }
 }

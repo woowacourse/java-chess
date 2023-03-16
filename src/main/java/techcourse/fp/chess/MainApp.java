@@ -12,7 +12,7 @@ public class MainApp {
             final ChessController chessController = new ChessController(new InputView(scanner), new OutputView());
             chessController.run();
         } catch (Exception exception) {
-            System.out.println("치명적인 에러");
+            exception.printStackTrace();
         }
     }
 }

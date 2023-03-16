@@ -22,7 +22,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.order == order)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("File의 범위를 초과하였습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 file값을 입력하셨습니다."));
     }
 
     public int getOrder() {

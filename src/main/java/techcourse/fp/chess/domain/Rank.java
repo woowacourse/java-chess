@@ -22,7 +22,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.order == order)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Rank의 범위를 초과하였습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값을 입력하셨습니다."));
     }
 
     public int getOrder() {

@@ -18,7 +18,7 @@ public abstract class Piece {
         this.strategies = strategies;
     }
 
-    public abstract List<Position> findPath(final Position sourcePosition, final Position targetPosition, final Color targetColor);
+    public abstract List<Position> findPath(final Position source, final Position target, final Color targetColor);
 
     public boolean isEmpty() {
         return color.isEmpty();
