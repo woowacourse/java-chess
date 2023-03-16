@@ -1,11 +1,12 @@
 package chess.board;
 
 import chess.piece.Direction;
+import java.util.Objects;
 
 public class Position {
 
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
     public Position(final File file, final Rank rank) {
         this.file = file;
@@ -42,5 +43,32 @@ public class Position {
 
     public int getRank() {
         return rank.getValue();
+    }
+
+    public Position getNextPosition(final Direction direction) {
+        final int nextXPoint = direction.getNextXPoint(file.getValue());
+        final int nextYPoint = direction.getNextYPoint(rank.getValue());
+
+        final File nextFile = File.findByValue(nextXPoint);
+        final Rank nextRank = Rank.findByValue(nextYPoint);
+
+        return new Position(nextFile, nextRank);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }
