@@ -20,10 +20,6 @@ public class ChessController {
         this.outputView = new OutputView();
     }
 
-    public void initialize() {
-
-    }
-
     public void run() {
         ChessGame chessGame = new ChessGame();
         Chessboard chessboard = chessGame.getChessboard();
