@@ -17,7 +17,7 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(a -> a.equalsByQuery(query))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start 혹은 end 혹은 move를 입력해야합니다." + "!" + query));
+                .orElseThrow(() -> new IllegalArgumentException("start 혹은 end 혹은 move 를 입력해야합니다."));
     }
 
     private boolean equalsByQuery(final String query) {

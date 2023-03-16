@@ -8,15 +8,17 @@ import java.util.stream.Collectors;
 
 public final class InputView {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String DELIMITER = " ";
+    public static final int COMMAND_INDEX = 0;
     private static List<String> buffer;
 
     private InputView() {
     }
 
     public static Command readCommand() {
-        final List<String> inputs = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
-        final Command command = Command.from(inputs.remove(0));
+        final List<String> inputs = Arrays.stream(SCANNER.nextLine().split(DELIMITER)).collect(Collectors.toList());
+        final Command command = Command.from(inputs.remove(COMMAND_INDEX));
 
         buffer = inputs;
         return command;
