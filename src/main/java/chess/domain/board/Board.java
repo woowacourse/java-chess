@@ -79,9 +79,21 @@ public class Board {
     }
 
     private void move(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+        if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있을 수 없습니다.");
+        }
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.create());
         turn = turn.nextTurn();
+    }
+
+    private boolean isPieceExistsBetweenPosition(final Position sourcePosition, final Position targetPosition) {
+        return sourcePosition.between(targetPosition).stream()
+                .anyMatch(this::isPieceExists);
+    }
+
+    private boolean isPieceExists(final Position position) {
+        return !board.get(position).equals(Empty.create());
     }
 
     public Map<Position, Piece> getBoard() {

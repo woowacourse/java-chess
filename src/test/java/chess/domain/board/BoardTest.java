@@ -87,4 +87,15 @@ public class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대방의 기물을 움직일 수 없습니다.");
     }
+
+    @Test
+    void 이동_경로에_기물이_있는_경우_예외를_던진다() {
+        // given
+        final Board board = Board.initialize();
+
+        // expect
+        assertThatThrownBy(() -> board.move("d1", "d4"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로에 다른 기물이 있을 수 없습니다.");
+    }
 }

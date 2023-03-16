@@ -4,12 +4,14 @@ import chess.domain.board.Position;
 
 public class Empty extends Piece {
 
+    private static final Empty EMPTY = new Empty();
+
     private Empty() {
         super(Color.EMPTY, PieceType.EMPTY);
     }
 
     public static Empty create() {
-        return new Empty();
+        return EMPTY;
     }
 
     @Override
