@@ -2,7 +2,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Bishop extends Piece {
-    protected Bishop(Side side) {
+    private Bishop(Side side) {
         super(side);
     }
 
