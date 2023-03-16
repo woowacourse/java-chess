@@ -27,6 +27,17 @@ public class Bishop extends Piece {
         return (diffX != 0 || diffY != 0) && (diffX == diffY);
     }
 
+    private List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
+        List<Position> positions = new ArrayList<>();
+        Position position = source.move(moveX, moveY);
+
+        while (position != target) {
+            positions.add(position);
+            position = position.move(moveX, moveY);
+        }
+        return positions;
+    }
+
     private List<Position> getPositions(final Position source, final Position target) {
         int moveX = getMoveCoordinate(target.diffX(source));
         int moveY = getMoveCoordinate(target.diffY(source));
@@ -40,16 +51,5 @@ public class Bishop extends Piece {
         }
 
         return 1;
-    }
-
-    private List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
-        List<Position> positions = new ArrayList<>();
-        Position position = source.move(moveX, moveY);
-
-        while (position != target) {
-            positions.add(position);
-            position = position.move(moveX, moveY);
-        }
-        return positions;
     }
 }
