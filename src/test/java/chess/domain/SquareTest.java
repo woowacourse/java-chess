@@ -1,10 +1,18 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import static chess.domain.File.*;
+import static chess.domain.Rank.*;
+import static chess.domain.piece.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SquareTest {
@@ -31,5 +39,59 @@ class SquareTest {
 
         // expected
         assertThat(square).isSameAs(sameSquare);
+    }
+
+    @ParameterizedTest
+    @MethodSource("distanceDummy")
+    @DisplayName("다른 칸과의 거리를 계산한다.")
+    void calculateDistance(final Square targetSquare, final int expectedDistance) {
+        // given
+        Square sourceSquare = Square.of(C, THREE);
+
+        // expected
+        assertThat(sourceSquare.calculateDistance(targetSquare)).isEqualTo(expectedDistance);
+    }
+
+    static Stream<Arguments> distanceDummy() {
+        return Stream.of(
+                Arguments.of(Square.of(H, EIGHT), 5),
+                Arguments.of(Square.of(C, EIGHT), 5),
+                Arguments.of(Square.of(H, THREE), 5),
+                Arguments.of(Square.of(D, FIVE), 1),
+                Arguments.of(Square.of(A, ONE), 2)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("directionDummy")
+    @DisplayName("방향에 따라 다음 칸을 반환한다.")
+    void next(final Direction direction, final Square expectedSquare) {
+        // given
+        Square sourceSquare = Square.of(C, THREE);
+
+        // expected
+        assertThat(sourceSquare.next(direction)).isEqualTo(expectedSquare);
+
+    }
+
+    static Stream<Arguments> directionDummy() {
+        return Stream.of(
+                Arguments.of(NORTH, Square.of(C, FOUR)),
+                Arguments.of(NORTH_EAST, Square.of(D, FOUR)),
+                Arguments.of(EAST, Square.of(D, THREE)),
+                Arguments.of(SOUTH_EAST, Square.of(D, TWO)),
+                Arguments.of(SOUTH, Square.of(C, TWO)),
+                Arguments.of(SOUTH_WEST, Square.of(B, TWO)),
+                Arguments.of(WEST, Square.of(B, THREE)),
+                Arguments.of(NORTH_WEST, Square.of(B, FOUR)),
+                Arguments.of(NORTH_NORTH_EAST, Square.of(D, FIVE)),
+                Arguments.of(NORTH_EAST_EAST, Square.of(E, FOUR)),
+                Arguments.of(SOUTH_EAST_EAST, Square.of(E, TWO)),
+                Arguments.of(SOUTH_SOUTH_EAST, Square.of(D, ONE)),
+                Arguments.of(SOUTH_SOUTH_WEST, Square.of(B, ONE)),
+                Arguments.of(SOUTH_WEST_WEST, Square.of(A, TWO)),
+                Arguments.of(NORTH_WEST_WEST, Square.of(A, FOUR)),
+                Arguments.of(NORTH_NORTH_WEST, Square.of(B, FIVE))
+        );
     }
 }
