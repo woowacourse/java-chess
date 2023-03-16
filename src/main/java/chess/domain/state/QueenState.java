@@ -3,6 +3,15 @@ package chess.domain.state;
 import chess.domain.ColorCompareResult;
 
 public class QueenState implements MoveState {
+    private static final QueenState instance = new QueenState();
+
+    private QueenState() {
+    }
+
+    public static QueenState getInstance() {
+        return instance;
+    }
+
     private boolean validMoveRequest(int x, int y) {
         if (x == 0 || y == 0) {
             return straightMove(x, y);

@@ -48,7 +48,7 @@ public class Board {
         Piece targetPiece = piecePosition.get(origin);
         int rankDifference = origin.getRankDifference(destination);
         int fileDifference = origin.getFileDifference(destination);
-        targetPiece.move(fileDifference, rankDifference, piecePosition.getOrDefault(destination, new Piece()));
+        targetPiece.move(fileDifference, rankDifference, piecePosition.getOrDefault(destination, Piece.empty()));
         piecePosition.put(destination, targetPiece);
         piecePosition.remove(origin);
     }
@@ -77,7 +77,7 @@ public class Board {
         for (Rank rank : Rank.values()) {
             List<PieceResponse> pieceResponses = new ArrayList<>();
             for (File file : File.values()) {
-                pieceResponses.add(PieceResponse.from(piecePosition.getOrDefault(Position.of(file, rank), new Piece())));
+                pieceResponses.add(PieceResponse.from(piecePosition.getOrDefault(Position.of(file, rank), Piece.empty())));
             }
             response.add(pieceResponses);
         }

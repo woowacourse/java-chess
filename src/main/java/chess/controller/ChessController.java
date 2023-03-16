@@ -55,7 +55,7 @@ public class ChessController {
         List<String> command = Arrays.asList(input.split(" "));
         try {
             board.movePiece(Position.of(command.get(1).substring(0, 1), command.get(1).substring(1, 2)), Position.of(command.get(2).substring(0, 1), command.get(2).substring(1, 2)));
-        } catch (IllegalPieceMoveException e) {
+        } catch (IllegalPieceMoveException | IllegalArgumentException e) {
             outputView.printError(e);
         }
         printBoard();

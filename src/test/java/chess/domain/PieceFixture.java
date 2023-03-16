@@ -7,5 +7,5 @@ public class PieceFixture {
     public static final Piece bishop = new Piece("b", Color.BLACK);
     public static final Piece queen = new Piece("q", Color.BLACK);
     public static final Piece king = new Piece("k", Color.BLACK);
-    public static final Piece empty = new Piece();
+    public static final Piece empty = Piece.empty();
 }

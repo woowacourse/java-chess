@@ -4,12 +4,12 @@ import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.state.MoveState;
 
 public class Piece {
-    private final PieceType type;
+    private static final Piece empty = new Piece(PieceType.EMPTY, Color.NONE);
+
     private final Color color;
     private MoveState moveState;
 
     public Piece(PieceType pieceType, Color color) {
-        type = pieceType;
         this.color = color;
         moveState = pieceType.getState();
     }
@@ -18,8 +18,8 @@ public class Piece {
         this(PieceType.from(type), color);
     }
 
-    public Piece() {
-        this(PieceType.EMPTY, Color.NONE);
+    public static Piece empty() {
+        return empty;
     }
 
     public void move(int x, int y, Piece piece) {
@@ -38,7 +38,7 @@ public class Piece {
     }
 
     public PieceType getType() {
-        return type;
+        return PieceType.getType(moveState);
     }
 
     public Color getColor() {

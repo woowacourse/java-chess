@@ -1,15 +1,15 @@
 package chess.domain.state;
 
 import chess.domain.ColorCompareResult;
-import chess.domain.exception.IllegalPieceMoveException;
 
 public class MovedPawnState implements MoveState {
+    private static final MovedPawnState instance = new MovedPawnState();
 
-    private void straightMove(int y, ColorCompareResult colorCompareResult) {
-        if ((y == 1) && colorCompareResult == ColorCompareResult.EMPTY) {
-            return;
-        }
-        throw new IllegalPieceMoveException();
+    private MovedPawnState() {
+    }
+
+    public static MovedPawnState getInstance() {
+        return instance;
     }
 
     @Override

@@ -4,6 +4,15 @@ import chess.domain.ColorCompareResult;
 
 public class RookState implements MoveState {
 
+    private static final RookState instance = new RookState();
+
+    private RookState() {
+    }
+
+    public static RookState getInstance() {
+        return instance;
+    }
+
     private boolean validMoveRequest(int x, int y) {
         if (x != 0 && y == 0) {
             return true;

@@ -29,7 +29,7 @@ public class PieceTest {
     void 폰일_경우_처음에_2칸을_움직일_수_있다(Color color, int yChange) {
         //given
         Piece piece = new Piece(PieceType.PAWN, color);
-        Piece empty = new Piece();
+        Piece empty = Piece.empty();
 
         //expect
         assertDoesNotThrow(() -> piece.move(0, yChange, empty));

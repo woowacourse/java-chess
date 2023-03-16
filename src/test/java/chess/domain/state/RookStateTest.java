@@ -13,23 +13,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class RookStateTest {
 
+    public static final RookState rookState = RookState.getInstance();
+
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "3, 0", "-5, 0", "0, -7", "0, -5"})
     void 룩은_직선으로_움직일_수_있다(int xChange, int yChange) {
-        //given
-        RookState RookState = new RookState();
-
         //expect
-        assertTrue(() -> RookState.canMove(xChange, yChange, DIFFERENT_COLOR));
+        assertTrue(() -> rookState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"1, 3", "3, 2", "-5, -6", " 3, -7", "2, -5"})
     void 비숍이_직선이_아닌_방향으로_움직일_수_없다(int xChange, int yChange) {
-        //given
-        RookState RookState = new RookState();
-
         //expect
-        assertFalse(() -> RookState.canMove(xChange, yChange, DIFFERENT_COLOR));
+        assertFalse(() -> rookState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 }

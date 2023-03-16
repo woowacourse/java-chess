@@ -3,6 +3,14 @@ package chess.domain.state;
 import chess.domain.ColorCompareResult;
 
 public class KingState implements MoveState {
+    private static final KingState instance = new KingState();
+
+    private KingState() {
+    }
+
+    public static KingState getInstance() {
+        return instance;
+    }
 
     private boolean validMoveRequest(int x, int y) {
         if (x == 0 && y == 0) {

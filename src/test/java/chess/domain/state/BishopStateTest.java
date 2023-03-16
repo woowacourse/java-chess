@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BishopStateTest {
+
+    private static final BishopState bishopState = BishopState.getInstance();
+
     @ParameterizedTest
     @CsvSource(value = {"1, 1", "3, 3", "-5, -5", " 7, -7", "5, -5"})
     void 비숍이_대각선으로_움직일_수_있다(int xChange, int yChange) {
-        //given
-        BishopState bishopState = new BishopState();
-
         //expect
         assertTrue(() -> bishopState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
@@ -25,9 +25,6 @@ class BishopStateTest {
     @ParameterizedTest
     @CsvSource(value = {"1, 3", "3, 2", "-5, -6", " 3, -7", "2, -5"})
     void 비숍이_대각선이_아닌_방향으로_움직일_수_없다(int xChange, int yChange) {
-        //given
-        BishopState bishopState = new BishopState();
-
         //expect
         assertFalse(() -> bishopState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }

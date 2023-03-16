@@ -3,19 +3,21 @@ package chess.domain;
 import chess.domain.state.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum PieceType {
-    ROOK("r", new RookState()),
-    KNIGHT("n", new KnightState()),
-    BISHOP("b", new BishopState()),
-    QUEEN("q", new QueenState()),
-    KING("k", new KingState()),
-    PAWN("p", new InitialPawnState()),
-    EMPTY(".", new EmptyState());
+    ROOK("r", List.of(RookState.getInstance())),
+    KNIGHT("n", List.of(KnightState.getInstance())),
+    BISHOP("b", List.of(BishopState.getInstance())),
+    QUEEN("q", List.of(QueenState.getInstance())),
+    KING("k", List.of(KingState.getInstance())),
+    PAWN("p", List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
+    EMPTY(".", List.of(EmptyState.getInstance()));
+    public static final int INITIAL_STATE = 0;
     private final String type;
-    private final MoveState state;
+    private final List<MoveState> state;
 
-    PieceType(String type, MoveState state) {
+    PieceType(String type, List<MoveState> state) {
         this.type = type;
         this.state = state;
     }
@@ -27,11 +29,22 @@ public enum PieceType {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
     }
 
+    public static PieceType getType(MoveState moveState) {
+        return Arrays.stream(values())
+                .filter(it -> it.state.contains(moveState))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다" + moveState));
+    }
+
     public String getType() {
         return type;
     }
 
     public MoveState getState() {
-        return state;
+        return state.get(INITIAL_STATE);
+    }
+
+    public MoveState getState(int index) {
+        return state.get(index);
     }
 }

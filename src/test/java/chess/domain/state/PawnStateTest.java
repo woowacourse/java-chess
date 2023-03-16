@@ -15,57 +15,44 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class PawnStateTest {
 
+    public static final InitialPawnState initialPawnState = InitialPawnState.getInstance();
+
     @Test
     void 폰은_초기상태에_앞으로_두칸_갈_수_있다() {
-        //given
-        InitialPawnState initialPawnState = new InitialPawnState();
-
-        //when, then
+        //expect
         assertTrue(() -> initialPawnState.canMove(0, 2, ColorCompareResult.EMPTY));
     }
 
     @Test
     void 폰은_딱_한번_앞으로_두_칸_전진할_수_있다() {
-        //given
-        MoveState pawnState = new InitialPawnState();
-
-        //when
-        boolean movable = pawnState.canMove(0, 2, ColorCompareResult.EMPTY);
-        if (movable) {
-            pawnState = pawnState.getNextState();
-        }
+        // given
+        // when
+        boolean firstMove = initialPawnState.canMove(0, 2, ColorCompareResult.EMPTY);
+        MoveState finalState = initialPawnState.getNextState();
+        boolean secondResult = finalState.canMove(0, 2, ColorCompareResult.EMPTY);
 
         // then
-        MoveState finalState = pawnState;
-        assertFalse(() -> finalState.canMove(0, 2, ColorCompareResult.EMPTY));
+        assertTrue(firstMove);
+        assertFalse(secondResult);
     }
 
     @Test
     void 폰_대각선_움직임_테스트() {
-        //given
-        MoveState pawnState = new InitialPawnState();
-
-        //when, then
-        assertTrue(() -> pawnState.canMove(1, 1, ColorCompareResult.DIFFERENT_COLOR));
+        //expect
+        assertTrue(() -> initialPawnState.canMove(1, 1, ColorCompareResult.DIFFERENT_COLOR));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"EMPTY", "SAME_COLOR"})
     void 폰_대각선_움직임_색_예외_테스트(ColorCompareResult colorCompareResult) {
-        //given
-        MoveState pawnState = new InitialPawnState();
-
-        //when, then
-        assertFalse(() -> pawnState.canMove(1, 1, colorCompareResult));
+        //expect
+        assertFalse(() -> initialPawnState.canMove(1, 1, colorCompareResult));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "1, 2", "2, 1"})
     void 폰_대각선_움직임_좌표_예외_테스트(int xChange, int yChange) {
-        //given
-        MoveState pawnState = new InitialPawnState();
-
-        //when, then
-        assertFalse(() -> pawnState.canMove(xChange, yChange, ColorCompareResult.DIFFERENT_COLOR));
+        //expect
+        assertFalse(() -> initialPawnState.canMove(xChange, yChange, ColorCompareResult.DIFFERENT_COLOR));
     }
 }
