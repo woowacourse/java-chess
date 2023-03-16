@@ -27,6 +27,7 @@ public class Rank {
 
     public void replacePiece(int col, Square newSquare) {
         squares.set(col, newSquare);
+        squares.get(col).checkMoved();
     }
 
     public boolean isMovableAt(int col, Coordinate startCoordinate, Coordinate endCoordinate) {
