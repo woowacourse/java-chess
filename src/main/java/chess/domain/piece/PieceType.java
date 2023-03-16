@@ -2,6 +2,6 @@ package chess.domain.piece;
 
 public enum PieceType {
 
-    PAWN, KING, QUEEN, KNIGHT, BISHOP, ROOK
+    ROOK, KNIGHT, BISHOP, QUEEN, KING, PAWN
 
 }
