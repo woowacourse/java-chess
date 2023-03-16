@@ -10,7 +10,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(final Position from, final Position to);
+    public abstract boolean isMovable(final Position from, final Position to, final Piece piece);
 
     public boolean isPawn() {
         return false;

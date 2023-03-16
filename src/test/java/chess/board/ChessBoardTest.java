@@ -1,22 +1,76 @@
 package chess.board;
 
 import chess.piece.Bishop;
+import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.piece.Team;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessBoardTest {
+
+    private Map<Position, Piece> piecePosition;
+
+    @BeforeEach
+    void setUp() {
+        piecePosition = new HashMap<>();
+        for (final File file : File.values()) {
+            for (final Rank rank : Rank.values()) {
+                piecePosition.put(new Position(file, rank), new EmptyPiece());
+            }
+        }
+    }
+
+    @Nested
+    class 룩은_이동경로에_말이_있으면_예외 {
+
+        @Test
+        void 같은_팀의_말이면_예외() {
+            //given
+            Position A_ONE = new Position(File.A, Rank.ONE);
+            Position F_ONE = new Position(File.F, Rank.ONE);
+
+            piecePosition.put(A_ONE, new Rook(Team.WHITE));
+            piecePosition.put(new Position(File.D, Rank.ONE), new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, F_ONE))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+        }
+
+        @Test
+        void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
+            //given
+            Position A_ONE = new Position(File.A, Rank.ONE);
+            Position F_ONE = new Position(File.F, Rank.ONE);
+
+            piecePosition.put(A_ONE, new Rook(Team.WHITE));
+            piecePosition.put(F_ONE, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_ONE));
+        }
+
+
+    }
 
     @Test
     void 체스판은_64개의_칸을_가진다() {
@@ -187,4 +241,6 @@ class ChessBoardTest {
                     .isInstanceOf(King.class);
         }
     }
+
+
 }

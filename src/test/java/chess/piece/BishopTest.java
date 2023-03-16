@@ -23,7 +23,7 @@ class BishopTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(bishop.isMovable(from, to)).isTrue();
+            assertThat(bishop.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -36,7 +36,7 @@ class BishopTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> bishop.isMovable(from, to))
+            assertThatThrownBy(() -> bishop.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Bishop이 이동할 수 없는 경로입니다.");
         }

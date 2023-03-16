@@ -24,7 +24,7 @@ class KnightTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(knight.isMovable(from, to)).isTrue();
+            assertThat(knight.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -37,7 +37,7 @@ class KnightTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> knight.isMovable(from, to))
+            assertThatThrownBy(() -> knight.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Knight가 이동할 수 없는 경로입니다.");
         }

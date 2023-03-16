@@ -23,7 +23,7 @@ class QueenTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(queen.isMovable(from, to)).isTrue();
+            assertThat(queen.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -36,7 +36,7 @@ class QueenTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(queen.isMovable(from, to)).isTrue();
+            assertThat(queen.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -49,7 +49,7 @@ class QueenTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> queen.isMovable(from, to))
+            assertThatThrownBy(() -> queen.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Queen이 이동할 수 없는 경로입니다.");
         }
@@ -64,7 +64,7 @@ class QueenTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> queen.isMovable(from, to))
+            assertThatThrownBy(() -> queen.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Queen이 이동할 수 없는 경로입니다.");
         }

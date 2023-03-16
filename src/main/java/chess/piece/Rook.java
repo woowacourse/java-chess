@@ -9,9 +9,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to) {
+    public boolean isMovable(final Position from, final Position to, final Piece toPiece) {
         if (from.equals(to)) {
-            return false;
+            throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
+        }
+        if (this.team == toPiece.team) {
+            throw new IllegalArgumentException("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
         if (from.getRank() == to.getRank()) {
             return true;
@@ -19,6 +22,7 @@ public class Rook extends Piece {
         if (from.getFile() == to.getFile()) {
             return true;
         }
+
         throw new IllegalArgumentException("Rook이 이동할 수 없는 경로입니다.");
     }
 

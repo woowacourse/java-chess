@@ -23,7 +23,7 @@ class RookTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(rook.isMovable(from, to)).isTrue();
+            assertThat(rook.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -36,7 +36,7 @@ class RookTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> rook.isMovable(from, to))
+            assertThatThrownBy(() -> rook.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Rook이 이동할 수 없는 경로입니다.");
         }

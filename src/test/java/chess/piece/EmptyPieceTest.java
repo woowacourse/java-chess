@@ -16,7 +16,7 @@ class EmptyPieceTest {
         Position from = new Position(File.A, Rank.ONE);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> emptyPiece.isMovable(from, to))
+        Assertions.assertThatThrownBy(() -> emptyPiece.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("빈 말은 움직일 수 없습니다.");
     }

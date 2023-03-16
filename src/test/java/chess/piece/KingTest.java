@@ -23,7 +23,7 @@ class KingTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThat(king.isMovable(from, to)).isTrue();
+            assertThat(king.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -35,7 +35,7 @@ class KingTest {
             Position from = new Position(File.A, Rank.ONE);
 
             //then
-            assertThatThrownBy(() -> king.isMovable(from, to))
+            assertThatThrownBy(() -> king.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("King이 이동할 수 없는 경로입니다.");
         }

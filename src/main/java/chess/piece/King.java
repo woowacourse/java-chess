@@ -9,7 +9,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to) {
+    public boolean isMovable(final Position from, final Position to, final Piece piece) {
         if (from.equals(to)) {
             return false;
         }

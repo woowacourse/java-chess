@@ -23,7 +23,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -36,7 +36,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -49,7 +49,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -62,7 +62,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThatThrownBy(() -> pawn.isMovable(from, to))
+            assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Pawn이 이동할 수 없는 경로입니다.");
         }
@@ -80,7 +80,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.FIVE);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -93,7 +93,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.SEVEN);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -106,7 +106,7 @@ class PawnTest {
             Position from = new Position(File.C, Rank.SEVEN);
 
             //then
-            assertThat(pawn.isMovable(from, to)).isTrue();
+            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
         @Test
@@ -119,7 +119,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThatThrownBy(() -> pawn.isMovable(from, to))
+            assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Pawn이 이동할 수 없는 경로입니다.");
         }

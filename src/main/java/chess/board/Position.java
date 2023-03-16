@@ -2,6 +2,7 @@ package chess.board;
 
 import java.util.Objects;
 
+// TODO : 캐싱 적용한다.
 public class Position {
 
     private final File file;

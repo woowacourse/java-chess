@@ -13,6 +13,10 @@ import chess.piece.Team;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO : 킹, 룩 이동 못하는거 검증 구현 완료 했으니..
+// TODO : 나머지 말들이 이동 못하는거 검증 구현하고 테스트 만들기.
+// TODO : 말들이 Piece를 인자로 받아서 동일한 색깔이면 false 반환하는건?
+
 public class ChessBoard {
 
     private final Map<Position, Piece> piecePosition;
@@ -33,8 +37,12 @@ public class ChessBoard {
         return new ChessBoard(piecePosition);
     }
 
-    static ChessBoard createBoardByRule(Map<Position, Piece> piecePosition) {
+    static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
         return new ChessBoard(piecePosition);
+    }
+
+    private ChessBoard(final Map<Position, Piece> piecePosition) {
+        this.piecePosition = piecePosition;
     }
 
     private static void initPosition(final Map<Position, Piece> piecePosition) {
@@ -46,18 +54,28 @@ public class ChessBoard {
     }
 
     public void movePiece(Position from, Position to) {
-        Piece piece = piecePosition.get(from);
+        Piece fromPiece = piecePosition.get(from);
+        Piece toPiece = piecePosition.get(to);
 
-        if (piece.isRook() && piece.isMovable(from, to)) {
+        if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
             if (from.getRank() == to.getRank()) {
-                validateRookByFile(from, to);
+                validateRookByFile(from, to, fromPiece);
             }
             if (from.getFile() == to.getFile()) {
-                validateRookByRank(from, to);
+                validateRookByRank(from, to, fromPiece);
             }
 
             move(from, to);
         }
+
+        if (fromPiece.isKing() && fromPiece.isMovable(from, to, toPiece)) {
+            Piece validationPiece = piecePosition.get(new Position(to.getFile(), to.getRank()));
+            if (isSameTeam(fromPiece, validationPiece)) {
+                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
+            }
+        }
+
+
     }
 
     private void move(final Position from, final Position to) {
@@ -66,36 +84,36 @@ public class ChessBoard {
         piecePosition.put(to, piece);
     }
 
-    private void validateRookByFile(final Position from, final Position to) {
+    // T 00P00 F
+    // F 00Q00 T
+    private void validateRookByFile(final Position from, final Position to, final Piece fromPiece) {
         File fromFile = from.getFile();
         File toFile = to.getFile();
-        int min = Math.min(fromFile.getIndex(), toFile.getIndex());
-        int max = Math.max(fromFile.getIndex(), toFile.getIndex());
+        int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
+        int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i < max; i++) {
             Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
+
             if (!validationPiece.isEmpty()) {
                 throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
             }
         }
     }
 
-    private void validateRookByRank(final Position from, final Position to) {
+    private void validateRookByRank(final Position from, final Position to, final Piece piece) {
         Rank fromRank = from.getRank();
         Rank toRank = to.getRank();
-        int min = Math.min(fromRank.getIndex(), toRank.getIndex());
-        int max = Math.max(fromRank.getIndex(), toRank.getIndex());
+        int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
+        int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i < max; i++) {
             Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
+
             if (!validationPiece.isEmpty()) {
                 throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
             }
         }
-    }
-
-    private ChessBoard(final Map<Position, Piece> piecePosition) {
-        this.piecePosition = piecePosition;
     }
 
     // === createBoard ===
@@ -157,6 +175,11 @@ public class ChessBoard {
         } else {
             piecePosition.put(new Position(File.E, Rank.EIGHT), new King(team));
         }
+    }
+
+    private boolean isSameTeam(final Piece originPiece, final Piece validatePiece) {
+        return (originPiece.isBlack() && validatePiece.isBlack()) ||
+                (originPiece.isWhite() && validatePiece.isWhite());
     }
 
     public Map<Position, Piece> getPiecePosition() {

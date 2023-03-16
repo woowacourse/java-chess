@@ -9,7 +9,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to) {
+    public boolean isMovable(final Position from, final Position to, final Piece piece) {
         throw new IllegalArgumentException("빈 말은 움직일 수 없습니다.");
     }
 
