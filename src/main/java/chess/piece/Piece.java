@@ -1,6 +1,8 @@
 package chess.piece;
 
+import chess.Path;
 import chess.Position;
+import java.util.Optional;
 
 public abstract class Piece {
 
@@ -15,4 +17,6 @@ public abstract class Piece {
     public boolean isBlack() {
         return color == Color.BLACK;
     }
+
+    public abstract Path searchPathTo(Position to, Optional<Piece> destination);
 }
