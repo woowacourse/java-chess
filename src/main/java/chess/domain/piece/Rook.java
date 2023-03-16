@@ -32,7 +32,6 @@ public class Rook extends Piece {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치로 이동할 수 없습니다."));
     }
 
-
     private List<Square> generateRoute(final DirectionVector direction, final Square source, final Square destination) {
         final List<Square> route = new ArrayList<>();
         Square currentSquare = source;

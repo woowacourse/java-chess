@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Square;
+import java.util.List;
+
 public abstract class Piece {
 
     protected final Color color;
@@ -11,4 +14,6 @@ public abstract class Piece {
     public boolean isBlack() {
         return color.isBlack();
     }
+
+    public abstract List<Square> findRoute(final Square source, final Square destination);
 }
