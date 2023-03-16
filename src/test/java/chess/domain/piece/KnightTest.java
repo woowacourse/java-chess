@@ -23,7 +23,7 @@ class KnightTest {
             final List<Position> expectedResult
     ) {
         // given
-        final Piece knight = new Knight(Color.WHITE);
+        final Piece knight = Knight.from(Color.WHITE);
         // when
         List<Position> result = knight.findPositions(source, target);
         // then
@@ -33,15 +33,15 @@ class KnightTest {
     static Stream<Arguments> knightMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        new Position(1, 1),
-                        new Position(3, 2),
+                        Position.of(1, 1),
+                        Position.of(3, 2),
                         List.of(
-                                new Position(3, 2)
+                                Position.of(3, 2)
                         )
                 ),
                 Arguments.arguments(
-                        new Position(4, 4),
-                        new Position(0, 4),
+                        Position.of(4, 4),
+                        Position.of(0, 4),
                         Collections.emptyList()
                 )
         );
