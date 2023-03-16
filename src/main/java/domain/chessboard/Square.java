@@ -24,8 +24,7 @@ public class Square {
     }
 
     public Route findRoute(final Position source, final Position target) {
-        final Piece piece = (Piece) squareStatus;
-        return piece.findRoute(source, target);
+        return squareStatus.findRoute(source, target);
     }
 
     public SquareStatus getSquareStatus() {
@@ -33,9 +32,7 @@ public class Square {
     }
 
     public Color getColor() {
-        final Piece piece = (Piece) squareStatus;
-
-        return piece.getColor();
+        return squareStatus.getColor();
     }
 
     public Type getType() {
