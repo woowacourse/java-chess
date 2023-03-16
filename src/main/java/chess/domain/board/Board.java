@@ -23,9 +23,11 @@ import java.util.stream.IntStream;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Color turn;
 
     private Board(final Map<Position, Piece> board) {
         this.board = board;
+        turn = Color.WHITE;
     }
 
     public static Board initialize() {
@@ -60,6 +62,26 @@ public class Board {
         return ranks.stream()
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
                 .collect(toMap(Function.identity(), ignore -> Empty.create()));
+    }
+
+    public void move(final String source, final String target) {
+        final Position sourcePosition = Position.from(source);
+        final Position targetPosition = Position.from(target);
+        final Piece piece = board.get(sourcePosition);
+        if (turn != piece.color()) {
+            throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
+        }
+        if (piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
+            move(sourcePosition, targetPosition, piece);
+            return;
+        }
+        throw new IllegalArgumentException("해당 기물을 움직일 수 없습니다.");
+    }
+
+    private void move(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+        board.put(targetPosition, piece);
+        board.put(sourcePosition, Empty.create());
+        turn = turn.nextTurn();
     }
 
     public Map<Position, Piece> getBoard() {

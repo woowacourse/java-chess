@@ -12,4 +12,11 @@ public enum Color {
         }
         return this != color;
     }
+
+    public Color nextTurn() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

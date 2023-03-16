@@ -18,4 +18,10 @@ public class ColorTest {
         // expect
         assertThat(BLACK.isOpponent(color)).isEqualTo(result);
     }
+
+    @ParameterizedTest(name = "다음 턴을 반한한다 현재: {0}, 결과: {1}")
+    @CsvSource({"WHITE, BLACK", "BLACK, WHITE"})
+    void 다음_턴을_반환한다(final Color current, final Color next) {
+        assertThat(current.nextTurn()).isEqualTo(next);
+    }
 }
