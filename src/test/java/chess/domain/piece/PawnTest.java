@@ -6,6 +6,8 @@ import chess.domain.Position;
 import chess.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
 
@@ -61,13 +63,14 @@ class PawnTest {
                 .isFalse();
     }
 
-    @Test
-    @DisplayName("source의 y값과 target의 y값이 같은 경우 false가 반환된다.")
-    void canMove_WithSameRow() {
+    @ParameterizedTest
+    @ValueSource(ints = {2, 4})
+    @DisplayName("폰은 옆으로 이동 할 수 없다.")
+    void canMove_WithSameRow(int x) {
         // given
         Piece piece = new Pawn(Team.BLACK);
-        Position sourcePosition = Position.of(1, 6);
-        Position targetPosition = Position.of(0, 6);
+        Position sourcePosition = Position.of(3, 3);
+        Position targetPosition = Position.of(x, 3);
 
         // expect
         assertThat(piece.canMove(sourcePosition, targetPosition))
@@ -100,26 +103,28 @@ class PawnTest {
                 .isTrue();
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3})
     @DisplayName("화이트 폰이 대각선 위 방향으로 1칸 가려고 할 때 true가 반환된다.")
-    void canMove_SuccessCornerWhite() {
+    void canMove_SuccessCornerWhite(int x) {
         // given
         Piece piece = new Pawn(Team.WHITE);
         Position sourcePosition = Position.of(2, 3);
-        Position targetPosition = Position.of(3, 4);
+        Position targetPosition = Position.of(x, 4);
 
         // expect
         assertThat(piece.canMove(sourcePosition, targetPosition))
                 .isTrue();
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3})
     @DisplayName("블랙 폰이 대각선 밑 방향으로 1칸 가려고 할 때 true가 반환된다.")
-    void canMove_SuccessCornerBlack() {
+    void canMove_SuccessCornerBlack(int x) {
         // given
         Piece piece = new Pawn(Team.BLACK);
         Position sourcePosition = Position.of(2, 4);
-        Position targetPosition = Position.of(3, 3);
+        Position targetPosition = Position.of(x, 3);
 
         // expect
         assertThat(piece.canMove(sourcePosition, targetPosition))
