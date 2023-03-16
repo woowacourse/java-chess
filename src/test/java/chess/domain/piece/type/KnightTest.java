@@ -48,7 +48,6 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        // when & then
         final Waypoints waypoints = knight.waypoints(destination);
         assertThat(waypoints.wayPoints()).isEmpty();
     }

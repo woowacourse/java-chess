@@ -24,9 +24,7 @@ class PieceTest {
         assertDoesNotThrow(() -> new Piece(Color.WHITE, of(1, 'a')) {
 
             @Override
-            protected void validateMovable(final Path path) {
-
-            }
+            protected void validateMovable(final Path path) {}
 
             @Override
             protected Waypoints waypointsPerType(final Path path) {
@@ -53,9 +51,7 @@ class PieceTest {
         }
 
         @Override
-        protected void validateMovable(final Path path) {
-
-        }
+        protected void validateMovable(final Path path) {}
 
         @Override
         protected Waypoints waypointsPerType(final Path path) {
