@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.piece.Piece;
 import domain.position.Position;
+import domain.position.Positions;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,20 +28,38 @@ public final class Board {
         return new Board(board);
     }
 
-
     public void move(Position source, Position destination) {
+        validateSourceExistence(source);
+
+        final Piece piece = board.get(source);
+        validatePieceMovable(source, destination, piece);
+        validatePieceExistenceOnDestination(destination, piece);
+        validatePieceExistenceInRoute(source, destination);
+
+        board.put(destination, board.remove(source));
+    }
+
+    private void validateSourceExistence(final Position source) {
         if (!board.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }
+    }
 
-        final Piece piece = board.get(source);
+    private void validatePieceMovable(final Position source, final Position destination, final Piece piece) {
         if (!piece.isMovable(source, destination)) {
             throw new IllegalArgumentException("해당 위치로 말을 이동할 수 없습니다.");
         }
+    }
 
-        //todo: 중간에 말이 있는 경우 예외 던지기
-        if (source.isStraight(destination)) {
-//            for
+    private void validatePieceExistenceOnDestination(final Position destination, final Piece piece) {
+        if (board.containsKey(destination) && piece.isBlack() == board.get(destination).isBlack()) {
+            throw new IllegalArgumentException("해당 위치로 말을 이동할 수 없습니다.");
+        }
+    }
+
+    private void validatePieceExistenceInRoute(final Position source, final Position destination) {
+        if (Positions.between(source, destination).stream().anyMatch(board::containsKey)) {
+            throw new IllegalArgumentException("해당 위치로 말을 이동할 수 없습니다.");
         }
     }
 

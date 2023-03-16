@@ -60,11 +60,18 @@ public final class Position {
         return Positions.from(String.valueOf((char) source.getFile()) + movedRank);
     }
 
+    public Position move(int rankDifference, int fileDifference) {
+        final int rank = this.getRank() + rankDifference;
+        final int file = this.getFile() + fileDifference;
+
+        return Positions.from(String.valueOf((char) file) + rank);
+    }
+
     public String getName() {
         return file.getName() + rank.getName();
     }
 
-    private int getFile() {
+    public int getFile() {
         return this.getName().charAt(FILE_OFFSET);
     }
 
