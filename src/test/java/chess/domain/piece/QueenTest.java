@@ -22,7 +22,7 @@ class QueenTest {
             final List<Position> expectedResult
     ) {
         // given
-        final Piece queen = new Queen(Color.WHITE);
+        final Piece queen = Queen.from(Color.WHITE);
         // when
         List<Position> result = queen.findPositions(source, target);
         // then
@@ -33,61 +33,61 @@ class QueenTest {
         return Stream.of(
                 // 가로 세로
                 Arguments.arguments(
-                        new Position(1, 1),
-                        new Position(1, 4),
+                        Position.of(1, 1),
+                        Position.of(1, 4),
                         List.of(
-                                new Position(1, 2),
-                                new Position(1, 3),
-                                new Position(1, 4),
-                                new Position(1, 5),
-                                new Position(1, 6),
-                                new Position(1, 7),
-                                new Position(1, 8),
-                                new Position(1, 9)
+                                Position.of(1, 2),
+                                Position.of(1, 3),
+                                Position.of(1, 4),
+                                Position.of(1, 5),
+                                Position.of(1, 6),
+                                Position.of(1, 7),
+                                Position.of(1, 8),
+                                Position.of(1, 9)
                         )
                 ),
                 Arguments.arguments(
-                        new Position(4, 4),
-                        new Position(0, 4),
+                        Position.of(4, 4),
+                        Position.of(0, 4),
                         List.of(
-                                new Position(3, 4),
-                                new Position(2, 4),
-                                new Position(1, 4),
-                                new Position(0, 4),
-                                new Position(-1, 4),
-                                new Position(-2, 4),
-                                new Position(-3, 4),
-                                new Position(-4, 4)
+                                Position.of(3, 4),
+                                Position.of(2, 4),
+                                Position.of(1, 4),
+                                Position.of(0, 4),
+                                Position.of(-1, 4),
+                                Position.of(-2, 4),
+                                Position.of(-3, 4),
+                                Position.of(-4, 4)
                         )
                 ),
                 // 대각선
                 Arguments.arguments(
-                        new Position(1, 1),
-                        new Position(4, 4),
+                        Position.of(1, 1),
+                        Position.of(4, 4),
                         List.of(
-                                new Position(2, 2),
-                                new Position(3, 3),
-                                new Position(4, 4),
-                                new Position(5, 5),
-                                new Position(6, 6),
-                                new Position(7, 7),
-                                new Position(8, 8),
-                                new Position(9, 9)
+                                Position.of(2, 2),
+                                Position.of(3, 3),
+                                Position.of(4, 4),
+                                Position.of(5, 5),
+                                Position.of(6, 6),
+                                Position.of(7, 7),
+                                Position.of(8, 8),
+                                Position.of(9, 9)
 
                         )
                 ),
                 Arguments.arguments(
-                        new Position(4, 4),
-                        new Position(0, 0),
+                        Position.of(4, 4),
+                        Position.of(0, 0),
                         List.of(
-                                new Position(3, 3),
-                                new Position(2, 2),
-                                new Position(1, 1),
-                                new Position(0, 0),
-                                new Position(-1, -1),
-                                new Position(-2, -2),
-                                new Position(-3, -3),
-                                new Position(-4, -4)
+                                Position.of(3, 3),
+                                Position.of(2, 2),
+                                Position.of(1, 1),
+                                Position.of(0, 0),
+                                Position.of(-1, -1),
+                                Position.of(-2, -2),
+                                Position.of(-3, -3),
+                                Position.of(-4, -4)
                         )
                 )
         );
