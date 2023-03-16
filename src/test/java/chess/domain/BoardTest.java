@@ -74,7 +74,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("폰이 대각선으로 이동할 경우, target 위치에 상대팀 기물이 없으면 예외가 발생한다.")
+    @DisplayName("폰이 일직선으로 이동할 경우, target 위치에 기물이 있으면 예외가 발생한다.")
     void validatePawnMoveStraightWhenThereIsSomethingInTarget() {
         Position knightFirstSource = new Position(8, 2);
         Position knightFirstTarget = new Position(6, 3);
@@ -87,6 +87,6 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(pawnSource, pawnTarget))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 대각선으로만 공격할 수 있습니다.");
+                .hasMessage("[ERROR] 폰은 기물이 있는 곳으로 직진할 수 없습니다.");
     }
 }
