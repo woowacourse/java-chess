@@ -3,6 +3,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class KnightTest {
     @DisplayName("source position이 수직으로 2칸 이동하고, 수평으로 1칸 이동하면 true를 반환한다.")
     @ParameterizedTest
@@ -52,5 +56,15 @@ class KnightTest {
         boolean movable = blackKnight.isMovable(Pawn.createOfWhite(), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         Assertions.assertThat(movable).isTrue();
+    }
+
+    @DisplayName("Knight는 모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
+    @ParameterizedTest
+    @CsvSource(value = {"b,2", "d,2", "b,6", "d,6", "a,3", "a,5", "e,3", "e,5"})
+    void shouldReturnEmptyPathWhenMovementCorrectly(String targetFile, String targetRank) {
+        Knight whiteKnight = Knight.createOfWhite();
+        List<Position> path = whiteKnight.collectPath(Position.of("c", "4"), Position.of(targetFile, targetRank));
+
+        assertThat(path).isEmpty();
     }
 }
