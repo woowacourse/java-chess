@@ -1,19 +1,21 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public String readGameCommand() {
+    public List<String> readGameCommand() {
         String gameCommand = scanner.nextLine();
         validateNull(gameCommand);
-        return gameCommand;
+        return Arrays.asList(gameCommand.split(" "));
     }
 
     private void validateNull(String input) {
-        if (input.isBlank() || input == null) {
+        if (input.isBlank()) {
             throw new IllegalArgumentException("공백이 아니여야 합니다.");
         }
     }
