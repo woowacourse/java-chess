@@ -7,12 +7,15 @@ import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 import static chess.domain.piece.PieceType.QUEEN;
 import static chess.domain.piece.PieceType.ROOK;
+import static chess.fixture.PositionFixture.E4;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
@@ -24,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class GameTest {
+public class ChessGameTest {
 
     @Test
     void 체스_게임을_생성한다() {
@@ -50,5 +53,18 @@ public class GameTest {
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
         );
+    }
+
+    @Test
+    void 기물을_움직인다() {
+        // given
+        final ChessGame chessGame = ChessGame.initialize();
+
+        // when
+        chessGame.move("e2", "e4");
+
+        // then
+        final Map<Position, Piece> board = chessGame.getBoard();
+        assertThat(board.get(E4)).isEqualTo(Pawn.from(Color.WHITE));
     }
 }

@@ -17,6 +17,10 @@ public class ChessGame {
         return new ChessGame(Board.initialize());
     }
 
+    public void move(final String source, final String target) {
+        board.move(source, target);
+    }
+
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
