@@ -20,20 +20,36 @@ public class ChessController {
         this.outputView = new OutputView();
     }
 
+    public void initialize() {
+
+    }
+
     public void run() {
-        inputView.printStartChess();
         ChessGame chessGame = new ChessGame();
         Chessboard chessboard = chessGame.getChessboard();
+
+        inputView.printStartChess();
         if (Command.renderToCommand(inputView.requestCommend().get(0)) != Command.START) {
             return;
         }
         outputView.printChessBoard(chessboard);
+
         List<String> commend = inputView.requestCommend();
         while (Command.renderToCommand(commend.get(0)) != Command.END) {
-            chessGame.move(makeSquare(commend.get(1)),makeSquare(commend.get(2)));
-            outputView.printChessBoard(chessboard);
-            commend = inputView.requestCommend();
+            commend = catchException(chessGame,commend);
         }
+    }
+
+    private List<String> catchException(ChessGame chessGame, List<String> commend) {
+        try {
+            chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));
+            outputView.printChessBoard(chessGame.getChessboard());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            outputView.printChessBoard(chessGame.getChessboard());
+            return inputView.requestCommend();
+        }
+        return inputView.requestCommend();
     }
 
     private Square makeSquare(String command) {
