@@ -1,3 +1,5 @@
+package domain.piece;
+
 import java.util.List;
 
 public class EmptyPiece extends Piece {

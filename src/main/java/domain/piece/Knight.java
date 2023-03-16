@@ -1,17 +1,19 @@
+package domain.piece;
+
 import java.util.Collections;
 import java.util.List;
 
-public class Rook extends Piece {
-    private Rook(Side side) {
+public class Knight extends Piece {
+    private Knight(Side side) {
         super(side);
     }
 
-    public static Rook createOfWhite() {
-        return new Rook(Side.WHITE);
+    public static Knight createOfWhite() {
+        return new Knight(Side.WHITE);
     }
 
-    public static Rook createOfBlack() {
-        return new Rook(Side.BLACK);
+    public static Knight createOfBlack() {
+        return new Knight(Side.BLACK);
     }
 
     @Override
@@ -20,15 +22,11 @@ public class Rook extends Piece {
         if (this.isSameSideWith(targetPiece)) {
             return false;
         }
-        return movement.isPerpendicular();
+        return movement.isCorrectForKnight();
     }
 
     @Override
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        Movement movement = sourcePosition.calculateMovement(targetPosition);
-        if (movement.isOneStep()) {
-            return Collections.emptyList();
-        }
-        return sourcePosition.getPath(targetPosition);
+        return Collections.emptyList();
     }
 }

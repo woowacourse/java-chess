@@ -1,3 +1,5 @@
+package domain.piece;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -6,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RankTest {
 
-    @DisplayName("text에 맞는 Rank 인스턴스를 반환한다.")
+    @DisplayName("text에 맞는 domain.piece.Rank 인스턴스를 반환한다.")
     @Test
     void shouldReturnAppropriateFileWhenIncomeText() {
         Rank rank = Rank.from("1");
         assertThat(rank).isEqualTo(Rank.ONE);
     }
 
-    @DisplayName("유효하지 않은 Rank 텍스트 입력 시 예외가 발생한다.")
+    @DisplayName("유효하지 않은 domain.piece.Rank 텍스트 입력 시 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenInvalidRankText() {
         assertThatThrownBy(() -> Rank.from("0"))

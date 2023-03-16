@@ -1,17 +1,19 @@
+package domain.piece;
+
 import java.util.Collections;
 import java.util.List;
 
-public class Knight extends Piece {
-    private Knight(Side side) {
+public class King extends Piece {
+    private King(Side side) {
         super(side);
     }
 
-    public static Knight createOfWhite() {
-        return new Knight(Side.WHITE);
+    public static King createOfWhite() {
+        return new King(Side.WHITE);
     }
 
-    public static Knight createOfBlack() {
-        return new Knight(Side.BLACK);
+    public static King createOfBlack() {
+        return new King(Side.BLACK);
     }
 
     @Override
@@ -20,7 +22,7 @@ public class Knight extends Piece {
         if (this.isSameSideWith(targetPiece)) {
             return false;
         }
-        return movement.isCorrectForKnight();
+        return movement.isOneStep();
     }
 
     @Override

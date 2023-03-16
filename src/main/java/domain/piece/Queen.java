@@ -1,17 +1,19 @@
+package domain.piece;
+
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop extends Piece {
-    private Bishop(Side side) {
+public class Queen extends Piece {
+    private Queen(Side side) {
         super(side);
     }
 
-    public static Bishop createOfWhite() {
-        return new Bishop(Side.WHITE);
+    public static Queen createOfWhite() {
+        return new Queen(Side.WHITE);
     }
 
-    public static Bishop createOfBlack() {
-        return new Bishop(Side.BLACK);
+    public static Queen createOfBlack() {
+        return new Queen(Side.BLACK);
     }
 
     @Override
@@ -20,7 +22,7 @@ public class Bishop extends Piece {
         if (this.isSameSideWith(targetPiece)) {
             return false;
         }
-        return movement.isDiagonal();
+        return movement.isDiagonal() || movement.isPerpendicular();
     }
 
     @Override

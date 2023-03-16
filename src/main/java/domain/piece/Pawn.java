@@ -1,3 +1,5 @@
+package domain.piece;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -110,14 +112,14 @@ public final class Pawn extends Piece {
     }
 
 
-//    private boolean isAttackMoving(Movement movement, Pawn targetPiece) {
+//    private boolean isAttackMoving(domain.piece.Movement movement, domain.piece.Pawn targetPiece) {
 //        if (side == 아래) {
 //            return movement.isPawnAttackMoving && targetPiece.side == this.side;
 //        }
 //        return movement.isPawnBlackAttackMoving && targetPiece.side == this.side;
 //    }
 //
-//    private boolean isAttack(Pawn targetPiece) {
+//    private boolean isAttack(domain.piece.Pawn targetPiece) {
 //        return targetPiece.side == this.side;
 
 //    }

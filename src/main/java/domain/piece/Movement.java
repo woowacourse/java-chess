@@ -1,3 +1,5 @@
+package domain.piece;
+
 import java.util.Objects;
 
 public class Movement {
