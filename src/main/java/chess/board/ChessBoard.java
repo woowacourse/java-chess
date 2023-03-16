@@ -69,13 +69,19 @@ public class ChessBoard {
         }
 
         if (fromPiece.isKing() && fromPiece.isMovable(from, to, toPiece)) {
-            Piece validationPiece = piecePosition.get(new Position(to.getFile(), to.getRank()));
-            if (isSameTeam(fromPiece, validationPiece)) {
-                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
-            }
+            move(from, to);
         }
 
+        if (fromPiece.isBishop() && fromPiece.isMovable(from, to, toPiece)) {
+            if (from.getRank() == to.getRank()) {
+                validateRookByFile(from, to, fromPiece);
+            }
+            if (from.getFile() == to.getFile()) {
+                validateRookByRank(from, to, fromPiece);
+            }
 
+            move(from, to);
+        }
     }
 
     private void move(final Position from, final Position to) {
@@ -84,8 +90,6 @@ public class ChessBoard {
         piecePosition.put(to, piece);
     }
 
-    // T 00P00 F
-    // F 00Q00 T
     private void validateRookByFile(final Position from, final Position to, final Piece fromPiece) {
         File fromFile = from.getFile();
         File toFile = to.getFile();
