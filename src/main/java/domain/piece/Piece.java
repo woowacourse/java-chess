@@ -16,4 +16,8 @@ public abstract class Piece {
     }
 
     public abstract List<Square> findRoutes(Square src, Square dest);
+
+    public boolean isDifferentTeam(Piece piece) {
+        return teamColor != piece.teamColor;
+    }
 }
