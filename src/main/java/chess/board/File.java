@@ -33,6 +33,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 파일 값이 존재하지 않습니다."));
     }
 
+    public int getValueDiff(File targetFile) {
+        return targetFile.value - this.value;
+    }
+
     public static int length() {
         return values().length;
     }
