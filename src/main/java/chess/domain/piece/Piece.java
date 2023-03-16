@@ -22,6 +22,14 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isSameCamp(Piece other) {
+        if (other.camp == Camp.NEUTRAL) {
+            return false;
+        }
+
+        return camp == other.camp;
+    }
+
     public abstract PieceMove getMovement(Position from, Position to);
 
     abstract boolean isPeaceRule(Position from, Position to);
