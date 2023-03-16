@@ -2,9 +2,11 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.MovablePiece;
 import chess.domain.piece.Piece;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,12 +14,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
-    static Board board;
+    private Board board;
 
-    @BeforeAll
-    static void setup() {
+    @BeforeEach
+    void setup() {
         board = BoardFactory.create();
     }
 
@@ -70,6 +73,89 @@ class BoardTest {
                 Arguments.arguments(File.F, Rank.EIGHT, Role.BISHOP, Side.from(Color.BLACK)),
                 Arguments.arguments(File.G, Rank.EIGHT, Role.KNIGHT, Side.from(Color.BLACK)),
                 Arguments.arguments(File.H, Rank.EIGHT, Role.ROOK, Side.from(Color.BLACK))
+        );
+    }
+
+    @Test
+    @DisplayName("내 말이 아닌 경우 예외를 발생한다.")
+    void moveExceptionWhenIsNotTurn() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.SEVEN);
+        Square targetSquare = Square.of(File.A, Rank.FIVE);
+
+        // expected
+        assertThatThrownBy(() -> board.makeMove(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("같은 위치로 이동할 경우 예외가 발생한다.")
+    void moveExceptionWhenSameSquare() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.TWO);
+        Square targetSquare = Square.of(File.A, Rank.TWO);
+
+        // expected
+        assertThatThrownBy(() -> board.makeMove(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("이동하려는 말이 없을 경우 예외가 발생한다.")
+    void moveExceptionWhenEmptySquare() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.FIVE);
+        Square targetSquare = Square.of(File.A, Rank.SEVEN);
+
+        // expected
+        assertThatThrownBy(() -> board.makeMove(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("막혀있는 경우 예외가 발생한다.")
+    void moveExceptionWhenIsNotEmptyPath() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.ONE);
+        Square targetSquare = Square.of(File.A, Rank.FIVE);
+
+        // expected
+        assertThatThrownBy(() -> board.makeMove(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("이동하려는 위치에 같은 진영 말이 있을 경우 예외가 발생한다.")
+    void moveExceptionWhenIsSameSide() {
+        // given
+        Square sourceSquare = Square.of(File.C, Rank.ONE);
+        Square targetSquare = Square.of(File.B, Rank.TWO);
+
+        // expected
+        assertThatThrownBy(() -> board.makeMove(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("squareDummy")
+    @DisplayName("체스판의 말을 움직인다.")
+    void move(final File sourceFile, final Rank sourceRank,
+              final File targetFile, final Rank targetRank,
+              final Role expectedRole) {
+        Square sourceSquare = Square.of(sourceFile, sourceRank);
+        Square targetSquare = Square.of(targetFile, targetRank);
+
+        board.makeMove(sourceSquare, targetSquare);
+
+        MovablePiece piece = (MovablePiece) board.findPiece(targetFile, targetRank);
+
+        assertThat(piece.getRole()).isEqualTo(expectedRole);
+    }
+
+    static Stream<Arguments> squareDummy() {
+        return Stream.of(
+                Arguments.of(File.A, Rank.TWO, File.A, Rank.FOUR, Role.PAWN),
+                Arguments.of(File.B, Rank.ONE, File.C, Rank.THREE, Role.KNIGHT)
         );
     }
 }
