@@ -14,7 +14,7 @@ class QueenTest {
     @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 대각")
     void isMovable_true() {
         // given
-        final Queen queen = new Queen(new Position(File.A, Rank.FOUR), Side.WHITE);
+        final Queen queen = new Queen(new Position(File.D, Rank.ONE), Side.WHITE);
         final Position diagonalPosition = new Position(File.D, Rank.SIX);
 
         // when, then
@@ -25,9 +25,9 @@ class QueenTest {
     @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 수평 & 수직")
     void isMovable_false() {
         // given
-        final Queen queen = new Queen(new Position(File.A, Rank.FOUR), Side.WHITE);
-        final Position verticalPosition = new Position(File.A, Rank.SIX);
-        final Position horizontalPosition = new Position(File.F, Rank.FOUR);
+        final Queen queen = new Queen(new Position(File.D, Rank.ONE), Side.WHITE);
+        final Position verticalPosition = new Position(File.D, Rank.SIX);
+        final Position horizontalPosition = new Position(File.F, Rank.ONE);
 
         // when, then
         assertThat(queen.isMovable(verticalPosition)).isTrue();
@@ -38,12 +38,12 @@ class QueenTest {
     @DisplayName("대상 Position까지 가는 경로들을 반환한다.")
     void getPaths() {
         // given
-        final Queen queen = new Queen(new Position(File.A, Rank.FOUR), Side.WHITE);
-        final Position targetPosition = new Position(File.E, Rank.EIGHT);
+        final Queen queen = new Queen(new Position(File.D, Rank.ONE), Side.WHITE);
+        final Position targetPosition = new Position(File.H, Rank.FIVE);
         List<Position> expectedPaths = List.of(
-                new Position(File.B, Rank.FIVE),
-                new Position(File.C, Rank.SIX),
-                new Position(File.D, Rank.SEVEN)
+                new Position(File.E, Rank.TWO),
+                new Position(File.F, Rank.THREE),
+                new Position(File.G, Rank.FOUR)
         );
 
         // when
