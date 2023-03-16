@@ -6,23 +6,26 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
+// TODO: 2023-03-16 조건문 분리
 public class ChessGame {
     private final Chessboard chessboard;
     private Camp turn;
 
     public ChessGame() {
+        turn = Camp.WHITE;
         chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
-        turn = Camp.WHITE;
     }
 
     public void move(Square source, Square target) {
         validateTurn(source);
+
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
             turn = turn.getOpposite();
             return;
         }
+
         throw new IllegalArgumentException("이동할 수 없는 위치입니다");
     }
 

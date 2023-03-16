@@ -15,23 +15,23 @@ public class Square {
     }
 
     public boolean isSameRank(Square targetSquare) {
-        return this.rank == targetSquare.rank;
+        return rank == targetSquare.rank;
     }
 
     public boolean isSameFile(Square targetSquare) {
-        return this.file == targetSquare.file;
+        return file == targetSquare.file;
     }
 
     public int calculateRankDistance(Square targetSquare) {
-        return this.rank.calculateDistance(targetSquare.rank);
+        return rank.calculateDistance(targetSquare.rank);
     }
 
     public int calculateFileDistance(Square targetSquare) {
-        return this.file.calculateDistance(targetSquare.file);
+        return file.calculateDistance(targetSquare.file);
     }
 
     public int calculateRankDifference(Square targetSquare) {
-        return this.rank.calculateDifference(targetSquare.rank);
+        return rank.calculateDifference(targetSquare.rank);
     }
 
     public List<Square> getSquaresInSameRank(Square square) {
@@ -56,7 +56,16 @@ public class Square {
         for (int i = 0, end = files.size(); i < end; i++) {
             squares.add(new Square(files.get(i), ranks.get(i)));
         }
+
         return squares;
+    }
+
+    public boolean isRankSeven() {
+        return rank == Rank.SEVEN;
+    }
+
+    public boolean isRankTwo() {
+        return rank == Rank.TWO;
     }
 
     @Override
@@ -70,13 +79,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public boolean isRankSeven() {
-        return rank == Rank.SEVEN;
-    }
-
-    public boolean isRankTwo() {
-        return rank == Rank.TWO;
     }
 }

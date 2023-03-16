@@ -99,5 +99,4 @@ public class InputView {
             this.value = value;
         }
     }
-
 }

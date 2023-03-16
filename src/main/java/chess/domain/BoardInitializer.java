@@ -30,14 +30,14 @@ public class BoardInitializer {
         setBlackPieces(chessboard);
     }
 
-    private static void setBlackPieces(Chessboard chessboard) {
-        chessboard.putPiece(Rank.EIGHT, initializeWithoutPawn(Camp.BLACK));
-        chessboard.putPiece(Rank.SEVEN, initializePawn(Camp.BLACK));
-    }
-
     private static void setWhitePieces(Chessboard chessboard) {
         chessboard.putPiece(Rank.TWO, initializePawn(Camp.WHITE));
         chessboard.putPiece(Rank.ONE, initializeWithoutPawn(Camp.WHITE));
+    }
+
+    private static void setBlackPieces(Chessboard chessboard) {
+        chessboard.putPiece(Rank.EIGHT, initializeWithoutPawn(Camp.BLACK));
+        chessboard.putPiece(Rank.SEVEN, initializePawn(Camp.BLACK));
     }
 
     private static List<Piece> initializeWithoutPawn(Camp camp) {
@@ -48,10 +48,12 @@ public class BoardInitializer {
 
     private static List<Piece> initializePawn(Camp camp) {
         List<Piece> pieces = new ArrayList<>();
+
         for (int i = 0; i < 8; i++) {
             Piece pawn = PieceType.PAWN.createPiece(camp);
             pieces.add(pawn);
         }
+
         return pieces;
     }
 }

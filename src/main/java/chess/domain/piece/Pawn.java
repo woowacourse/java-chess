@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Square;
 
+// TODO: 2023-03-16 매직넘버 제거 및 조건문 분리
 public class Pawn extends Piece {
 
     private static final int WHITE_MAX_MOVABLE_RANK = 2;
@@ -29,23 +30,6 @@ public class Pawn extends Piece {
         return canMoveBlack(source, target);
     }
 
-    private boolean canMoveBlack(Square source, Square target) {
-        int rankDifference = source.calculateRankDifference(target);
-        int fileDistance = source.calculateFileDistance(target);
-
-        //뒤로 가는거 + 옆으로 가는거 검증
-        if (rankDifference >= 0) {
-            return false;
-        }
-        //시작 위치
-        if (source.isRankSeven()) {
-            return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == 0 ||
-                    rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == 1;
-        }
-
-        return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= 1;
-    }
-
     private boolean canMoveWhite(Square source, Square target) {
         int rankDifference = source.calculateRankDifference(target);
         int fileDistance = source.calculateFileDistance(target);
@@ -61,5 +45,22 @@ public class Pawn extends Piece {
         }
 
         return rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance <= 1;
+    }
+
+    private boolean canMoveBlack(Square source, Square target) {
+        int rankDifference = source.calculateRankDifference(target);
+        int fileDistance = source.calculateFileDistance(target);
+
+        //뒤로 가는거 + 옆으로 가는거 검증
+        if (rankDifference >= 0) {
+            return false;
+        }
+        //시작 위치
+        if (source.isRankSeven()) {
+            return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == 0 ||
+                    rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == 1;
+        }
+
+        return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= 1;
     }
 }

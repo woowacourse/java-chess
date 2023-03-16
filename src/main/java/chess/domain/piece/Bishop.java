@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class Bishop extends Piece {
+
     public Bishop(Camp camp) {
         super(camp);
     }

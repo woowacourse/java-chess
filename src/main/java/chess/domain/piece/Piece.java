@@ -9,10 +9,6 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    abstract public PieceType getPieceType();
-
-    abstract public boolean canMove(Square source, Square target);
-
     public boolean isWhite() {
         return this.camp == Camp.WHITE;
     }
@@ -29,4 +25,7 @@ public abstract class Piece {
         return camp.isOpposite(otherCamp);
     }
 
+    abstract public PieceType getPieceType();
+
+    abstract public boolean canMove(Square source, Square target);
 }

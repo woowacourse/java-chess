@@ -36,5 +36,4 @@ public enum Rank {
                 .filter(file -> file.value > min && file.value < max)
                 .collect(Collectors.toList());
     }
-
 }
