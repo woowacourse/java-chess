@@ -26,6 +26,16 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 더한 랭크 값이 존재하지 않습니다."));
     }
 
+    public int getValuePoint(Rank targetRank) {
+        if (targetRank.value - this.value == 0) {
+            return 0;
+        }
+        if (targetRank.value - this.value > 0) {
+            return 1;
+        }
+        return -1;
+    }
+
     public int getValueDiff(Rank targetRank) {
         return targetRank.value - this.value;
     }
