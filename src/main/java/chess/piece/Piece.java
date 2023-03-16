@@ -15,7 +15,15 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Position targetPosition);
 
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
     public abstract List<Position> getPaths(Position targetPosition);
+
+    public boolean isSameSide(Piece piece) {
+        return this.side == piece.side;
+    }
 
     public int getFile() {
         return position.getFile();
