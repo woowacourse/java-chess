@@ -48,11 +48,12 @@ public class ChessBoard {
         RowPieces rowPiecesContainsSourcePiece = findRowPiecesByRow(sourceCoordinate.get(ROW_INDEX));
         RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByRow(destinationCoordinate.get(ROW_INDEX));
         
+        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByColumnKnight(parseColumn(splitedSourceCoordinate));
         boolean isMovablePiece = rowPiecesContainsSourcePiece
                 .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        
         boolean isMovableRoute = isMovableRoute(0, sourceCoordinate, destinationCoordinate);
-        return isMovablePiece && isMovableRoute;
+        
+        return isMovablePiece && (isMovableRoute || isSourcePieceKnight);
     }
     
     private List<Integer> parseCoordinate(List<String> splitedSourceCoordinate) {
@@ -71,7 +72,7 @@ public class ChessBoard {
         boolean isReachedAtDestination = isReachedAtDestination(researchCoordinate, destinationCoordinate);
         RowPieces rowPiecesContainsResearchPiece = findRowPiecesByRow(researchCoordinate.get(ROW_INDEX));
         boolean isPieceByColumnNotEmpty = rowPiecesContainsResearchPiece.isPieceByColumnNotEmpty(researchColumn);
-    
+        
         if (isReachedAtDestination) {
             return true;
         }

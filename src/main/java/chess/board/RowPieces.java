@@ -105,6 +105,10 @@ public class RowPieces implements Comparable<RowPieces> {
         return splitedSourceCoordinate.get(ROW_INDEX);
     }
     
+    public boolean isPieceByColumnKnight(char column) {
+        return findPieceByColumn(this, column).isKnight();
+    }
+    
     public List<Piece> pieces() {
         return pieces;
     }

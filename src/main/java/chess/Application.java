@@ -19,12 +19,18 @@ public class Application {
     
         ChessBoard chessBoard = ChessBoard.create();
         OutputView.printChessBoard(chessBoard.chessBoard());
-    
+        chessBoard.move("b1", "c3");
+        OutputView.printChessBoard(chessBoard.chessBoard());
+        chessBoard.move("a1", "a3");
+        OutputView.printChessBoard(chessBoard.chessBoard());
+        
         chessBoard.move("a2", "a4");
         OutputView.printChessBoard(chessBoard.chessBoard());
         chessBoard.move("a1", "a3");
         OutputView.printChessBoard(chessBoard.chessBoard());
         chessBoard.move("a3", "b3");
+        OutputView.printChessBoard(chessBoard.chessBoard());
+        chessBoard.move("b3", "c3");
         OutputView.printChessBoard(chessBoard.chessBoard());
         chessBoard.move("b3", "b7");
         OutputView.printChessBoard(chessBoard.chessBoard());

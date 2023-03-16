@@ -34,4 +34,9 @@ public class Knight extends Piece {
     private boolean isNotContainsOneAndTwo(int rowDistance, int columnDistance) {
         return !((rowDistance == 1 && columnDistance == 2) || (rowDistance == 2 && columnDistance == 1));
     }
+    
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
 }

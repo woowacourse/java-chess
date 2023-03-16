@@ -81,6 +81,10 @@ public abstract class Piece {
         return (char)(int) splitedSourceCoordinate.get(COLUMN_INDEX);
     }
     
+    public boolean isKnight() {
+        return false;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
