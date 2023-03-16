@@ -64,11 +64,68 @@ class PieceTest {
     }
 
     @Test
-    void 경로탐색시_같은_위치면_예외() {
+    void 경유지탐색_시_같은_위치면_예외() {
         // given
         Piece myPiece = new MyPiece(Color.BLACK, of(1, 'a'));
         // when & then
         assertThatThrownBy(() -> myPiece.waypoints(of(1, 'a')))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 경유지탐색_시_도달불가능하면_오류() {
+        // given
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a')) {
+            @Override
+            protected void validateMovable(final Path path) {
+                throw new IllegalArgumentException("도달 불가");
+            }
+
+            @Override
+            protected Waypoints waypointsPerType(final Path path) {
+                return null;
+            }
+        };
+
+        // when & then
+        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'b')))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도달 불가");
+    }
+
+    @Test
+    void 단순_이동할_수_있다() {
+        // given
+        final Piece pawn = new MyPiece(Color.BLACK, PiecePosition.of("b6"));
+
+        // when
+        pawn.move(PiecePosition.of("b5"));
+
+        // then
+        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b5"));
+    }
+
+    @Test
+    void 죽이기_위해_이동할_수_있따() {
+        // given
+        final Piece pawn = new MyPiece(Color.BLACK, PiecePosition.of("b6"));
+        final Piece enemy = new MyPiece(Color.WHITE, PiecePosition.of("b7"));
+
+        // when
+        pawn.moveToKill(enemy);
+
+        // then
+        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b7"));
+    }
+
+    @Test
+    void 아군은_죽일_수_없다() {
+        // given
+        final Piece pawn = new MyPiece(Color.BLACK, PiecePosition.of("b6"));
+        final Piece ally = new MyPiece(Color.BLACK, PiecePosition.of("b7"));
+
+        // when & then
+        assertThatThrownBy(() -> pawn.moveToKill(ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

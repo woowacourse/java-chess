@@ -147,7 +147,7 @@ class ChessBoardTest {
     }
 
     @Test
-    void 폰이_일직선으로_움직이는_경우_적군_말이_있으면_오류() {
+    void 폰이_일직선으로_한칸_움직이는_경우_적군_말이_있으면_오류() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
@@ -156,6 +156,19 @@ class ChessBoardTest {
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(4, 'b'), PiecePosition.of(5, 'b'))
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 폰이_일직선으로_두칸_움직이는_경우_적군_말이_있으면_오류() {
+        // given
+        final ChessBoard chessBoard = ChessBoardFactory.create();
+        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'b'), PiecePosition.of(5, 'b'));
+        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(5, 'b'), PiecePosition.of(4, 'b'));
+
+        // when & then
+        assertThatThrownBy(() ->
+                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

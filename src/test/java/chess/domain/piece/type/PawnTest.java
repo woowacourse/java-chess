@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -45,33 +46,28 @@ class PawnTest {
 
         Stream<Arguments> noneMovePawnDestinations() {
             return Stream.of(
-                    Arguments.of("b3", Named.of("b3", piecePositions("b3"))),
-                    Arguments.of("b4", Named.of("b3, b4", piecePositions("b3", "b4"))),
+                    Arguments.of("b3", Named.of("X", Collections.emptyList())),
+                    Arguments.of("b4", Named.of("b3", piecePositions("b3"))),
                     Arguments.of("a3", Named.of("X", Collections.emptyList())),
                     Arguments.of("c3", Named.of("X", Collections.emptyList()))
             );
         }
 
         @ParameterizedTest(name = "움직인 경우 북쪽을 향해 직진 혹은 대각선으로 한 칸 이동이 가능하다. " +
-                "예를 들어 [b2] 에서 [{0}]로 이동이 가능하며, 이때 다음 경로에 피스가 존재하면 안된다. [{1}]")
-        @MethodSource("movedPawnDestinations")
-        void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
+                "예를 들어 [b2] 에서 [{0}]로 이동이 가능하다.")
+        @CsvSource({
+                "b5",
+                "a5",
+                "c5",
+        })
+        void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
             pawn.move(PiecePosition.of(4, 'b'));
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints())
-                    .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
-        }
-
-        Stream<Arguments> movedPawnDestinations() {
-            return Stream.of(
-                    Arguments.of("b5", Named.of("b3", piecePositions("b5"))),
-                    Arguments.of("a5", Named.of("X", Collections.emptyList())),
-                    Arguments.of("c5", Named.of("X", Collections.emptyList()))
-            );
+            assertThat(pawn.waypoints(destination).wayPoints()).isEmpty();
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b2] 에서 [{0}] 으로는 이동이 불가능하다. ")
@@ -129,33 +125,28 @@ class PawnTest {
 
         Stream<Arguments> noneMovePawnDestinations() {
             return Stream.of(
-                    Arguments.of("b6", Named.of("b6", piecePositions("b6"))),
-                    Arguments.of("b5", Named.of("b6, b5", piecePositions("b6", "b5"))),
+                    Arguments.of("b6", Named.of("X", Collections.emptyList())),
+                    Arguments.of("b5", Named.of("b6", piecePositions("b6"))),
                     Arguments.of("a6", Named.of("X", Collections.emptyList())),
                     Arguments.of("c6", Named.of("X", Collections.emptyList()))
             );
         }
 
         @ParameterizedTest(name = "움직인 경우 남쪽을 향해 직진 혹은 대각선으로 한 칸 이동이 가능하다. " +
-                "예를 들어 [b5] 에서 [{0}]로 이동이 가능하며, 이때 다음 경로에 피스가 존재하면 안된다. [{1}]")
-        @MethodSource("movedPawnDestinations")
-        void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
+                "예를 들어 [b5] 에서 [{0}]로 이동이 가능하다.")
+        @CsvSource({
+                "b4",
+                "a4",
+                "c4",
+        })
+        void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
             pawn.move(PiecePosition.of(5, 'b'));
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints())
-                    .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
-        }
-
-        Stream<Arguments> movedPawnDestinations() {
-            return Stream.of(
-                    Arguments.of("b4", Named.of("b4", piecePositions("b4"))),
-                    Arguments.of("a4", Named.of("X", Collections.emptyList())),
-                    Arguments.of("c4", Named.of("X", Collections.emptyList()))
-            );
+            assertThat(pawn.waypoints(destination).wayPoints()).isEmpty();
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b7] 에서 [{0}] 으로는 이동이 불가능하다. ")
@@ -193,5 +184,66 @@ class PawnTest {
             assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
+    }
+
+    @Test
+    void 단순_이동_시_직진만_가능하다() {
+        // given
+        final PiecePosition currentPosition = PiecePosition.of(7, 'b');
+        final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+
+        // when
+        pawn.move(PiecePosition.of(6, 'b'));
+
+        // then
+        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of(6, 'b'));
+    }
+
+    @Test
+    void 단순_이동_시_대각선으로_이동하면_오류() {
+        // given
+        final PiecePosition currentPosition = PiecePosition.of(7, 'b');
+        final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+
+        // when & then
+        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'c')))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'd')))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 아군을_죽일_수_없다() {
+        // given
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
+        final Pawn ally = new Pawn(Color.BLACK, PiecePosition.of("c5"));
+
+        // when & then
+        assertThatThrownBy(() -> pawn.moveToKill(ally))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 상대방이_대각선_위치에_있다면_죽일_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
+        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("c5"));
+
+        // when
+        pawn.moveToKill(enemy);
+
+        // then
+        assertThat(pawn.piecePosition()).isEqualTo(enemy.piecePosition());
+    }
+
+    @Test
+    void 상대방이_대각선_위치에_없다면_죽일_수_없다() {
+        // given
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
+        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("b5"));
+
+        // when & then
+        assertThatThrownBy(() -> pawn.moveToKill(enemy))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

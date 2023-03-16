@@ -40,7 +40,7 @@ public abstract class Piece implements Cloneable {
         this.piecePosition = enemy.piecePosition;
     }
 
-    private void validateKill(final Piece enemy) {
+    protected void validateKill(final Piece enemy) {
         if (isAlly(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }

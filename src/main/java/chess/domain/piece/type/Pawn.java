@@ -7,7 +7,6 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Waypoints;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -48,18 +47,9 @@ public class Pawn extends Piece {
     @Override
     protected Waypoints waypointsPerType(final Path path) {
         if (!isMoved && isPawnSpecialDestination(path)) {
-            final List<PiecePosition> wayPoints = path.wayPoints();
-            wayPoints.add(path.destination());
-            return Waypoints.from(wayPoints);
+            return Waypoints.from(path.wayPoints());
         }
-        return defaultMove(path);
-    }
-
-    private Waypoints defaultMove(final Path path) {
-        if (path.isDiagonal()) {
-            return Waypoints.from(Collections.emptyList());
-        }
-        return Waypoints.from(List.of(path.destination()));
+        return Waypoints.from(Collections.emptyList());
     }
 
     @Override
@@ -73,10 +63,16 @@ public class Pawn extends Piece {
 
     @Override
     public void moveToKill(final Piece enemy) {
+        validateKill(enemy);
+        this.piecePosition = enemy.piecePosition();
+        this.isMoved = true;
+    }
+
+    @Override
+    protected void validateKill(final Piece enemy) {
+        super.validateKill(enemy);
         if (!Path.of(piecePosition, enemy.piecePosition()).isDiagonal()) {
             throw new IllegalArgumentException("폰은 대각선 위치에 있는 적만 죽일 수 있습니다.");
         }
-        this.piecePosition = enemy.piecePosition();
-        this.isMoved = true;
     }
 }
