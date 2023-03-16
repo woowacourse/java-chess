@@ -4,7 +4,6 @@ import domain.piece.Piece;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public final class Board {
@@ -19,62 +18,65 @@ public final class Board {
     }
 
     public static Board create(ChessAlignment chessStrategy) {
-        final HashMap<Position, Piece> board = new HashMap<>();
-
-        chessStrategy.addInitialPawns(board);
-        chessStrategy.addInitialKings(board);
-        chessStrategy.addInitialBishops(board);
-        chessStrategy.addInitialKnights(board);
-        chessStrategy.addInitialQueens(board);
-        chessStrategy.addInitialRooks(board);
-
-        return new Board(board);
+        return new Board(chessStrategy.init());
     }
 
     public void move(Position source, Position destination) {
-        validateSourceExistence(source);
-        validatePieceExistenceInRoute(source, destination);
-        Piece piece = board.get(source);
-        validatePieceExistenceOnDestination(destination, piece);
+        Piece piece = getPiece(source);
+        validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {
-            validatePieceEatable(source, destination, piece);
+            killDestination(source, destination, piece);
+        }
+        if (!board.containsKey(destination)) {
+            moveDestination(source, destination, piece);
+        }
+    }
+
+    private Piece getPiece(final Position source) {
+        if (!board.containsKey(source)) {
+            throw new IllegalArgumentException(NOT_EXIST_SOURCE);
+        }
+
+        return board.get(source);
+    }
+
+    private void validateRoute(final Position source, final Position destination, final Piece piece) {
+        if (pieceInRoute(source, destination)) {
+            throw new IllegalArgumentException(INVALID_MOVEMENT);
+        }
+
+        if (teamOnDestination(destination, piece)) {
+            throw new IllegalArgumentException(INVALID_MOVEMENT);
+        }
+    }
+
+    private boolean pieceInRoute(final Position source, final Position destination) {
+        return Positions.between(source, destination).stream()
+                .anyMatch(board::containsKey);
+    }
+
+    private boolean teamOnDestination(final Position destination, final Piece piece) {
+        return board.containsKey(destination) &&
+                piece.isBlack() == board.get(destination).isBlack();
+    }
+
+    private void killDestination(final Position source, final Position destination, final Piece piece) {
+        if (piece.isEatable(source, destination)) {
             board.put(destination, board.remove(source));
             return;
         }
 
-        validatePieceMovable(source, destination, piece);
-        board.put(destination, board.remove(source));
+        throw new IllegalArgumentException(INVALID_MOVEMENT);
     }
 
-    private void validateSourceExistence(final Position source) {
-        if (!board.containsKey(source)) {
-            throw new IllegalArgumentException(NOT_EXIST_SOURCE);
+    private void moveDestination(final Position source, final Position destination, final Piece piece) {
+        if (piece.isMovable(source, destination)) {
+            board.put(destination, board.remove(source));
+            return;
         }
-    }
 
-    private void validatePieceMovable(final Position source, final Position destination, final Piece piece) {
-        if (!piece.isMovable(source, destination)) {
-            throw new IllegalArgumentException(INVALID_MOVEMENT);
-        }
-    }
-
-    private void validatePieceEatable(final Position source, final Position destination, final Piece piece) {
-        if (!piece.isEatable(source, destination)) {
-            throw new IllegalArgumentException(INVALID_MOVEMENT);
-        }
-    }
-
-    private void validatePieceExistenceOnDestination(final Position destination, final Piece piece) {
-        if (board.containsKey(destination) && piece.isBlack() == board.get(destination).isBlack()) {
-            throw new IllegalArgumentException(INVALID_MOVEMENT);
-        }
-    }
-
-    private void validatePieceExistenceInRoute(final Position source, final Position destination) {
-        if (Positions.between(source, destination).stream().anyMatch(board::containsKey)) {
-            throw new IllegalArgumentException(INVALID_MOVEMENT);
-        }
+        throw new IllegalArgumentException(INVALID_MOVEMENT);
     }
 
     public Map<Position, Piece> getPieces() {
