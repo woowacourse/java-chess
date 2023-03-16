@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.movepattern;
+
+import java.util.List;
 
 public interface MovePattern {
 
