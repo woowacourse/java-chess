@@ -2,6 +2,10 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rock;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,20 +18,20 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(
                         new Square(File.A, Rank.ONE),
-                        new Piece(Role.ROCK, Camp.WHITE)
+                        new Rock(Camp.WHITE)
                 ),
                 Arguments.of(
                         new Square(File.E, Rank.ONE),
-                        new Piece(Role.KING, Camp.WHITE)
+                        new King(Camp.WHITE)
                 ),
                 Arguments.of(
                         new Square(File.C, Rank.SEVEN),
-                        new Piece(Role.PAWN, Camp.BLACK)
+                        new Pawn(Camp.BLACK)
 
                 ),
                 Arguments.of(
                         new Square(File.E, Rank.EIGHT),
-                        new Piece(Role.KING, Camp.BLACK)
+                        new King(Camp.BLACK)
                 )
         );
     }
@@ -48,8 +52,9 @@ class BoardTest {
         final Board board = new Board();
         final Square source = new Square(File.A, Rank.TWO);
         final Square target = new Square(File.A, Rank.THREE);
+        final Move move = Move.UP;
 
-        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+        final boolean isMovable = board.isPathBlocked(source, target, move);
 
         assertThat(isMovable).isTrue();
     }
@@ -60,8 +65,9 @@ class BoardTest {
         final Board board = new Board();
         final Square source = new Square(File.A, Rank.ONE);
         final Square target = new Square(File.A, Rank.TWO);
+        final Move move = Move.UP;
 
-        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+        final boolean isMovable = board.isPathBlocked(source, target, move);
 
         assertThat(isMovable).isFalse();
     }
@@ -72,8 +78,9 @@ class BoardTest {
         final Board board = new Board();
         final Square source = new Square(File.A, Rank.TWO);
         final Square target = new Square(File.A, Rank.SEVEN);
+        final Move move = Move.DOWN;
 
-        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+        final boolean isMovable = board.isPathBlocked(source, target, move);
 
         assertThat(isMovable).isTrue();
     }

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.Move;
+import chess.domain.Role;
 import chess.domain.Square;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ public class Pawn extends Piece {
     private final boolean isMoved;
 
     public Pawn(final Camp camp) {
-        super(camp);
+        super(camp, Role.PAWN);
         this.possibleMoves = makePossibleMove();
         this.isMoved = false;
     }
 
     public Pawn(final Camp camp, final boolean isMoved) {
-        super(camp);
+        super(camp, Role.PAWN);
         this.possibleMoves = makePossibleMove();
         this.isMoved = isMoved;
     }

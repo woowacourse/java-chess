@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.Move;
+import chess.domain.Role;
 import chess.domain.Square;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class King extends Piece {
     private static final List<Move> possibleMoves = makePossibleMove();
 
     public King(final Camp camp) {
-        super(camp);
+        super(camp, Role.KING);
     }
 
     private static List<Move> makePossibleMove() {

@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.Camp;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import java.util.List;
 
 public class OutputView {
@@ -14,8 +14,8 @@ public class OutputView {
 
     public void printChessBoard(final List<Piece> pieces) {
         for (int i = 1; i < pieces.size() + 1; i++) {
-            String pieceRole = pieces.get(i - 1).getRole();
-            if (pieces.get(i - 1).getCamp().equals(Camp.WHITE)) {
+            String pieceRole = pieces.get(i - 1).role().getInitial();
+            if (pieces.get(i - 1).camp().equals(Camp.WHITE)) {
                 pieceRole = pieceRole.toLowerCase();
             }
             System.out.print(pieceRole);

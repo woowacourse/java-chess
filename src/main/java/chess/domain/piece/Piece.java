@@ -2,14 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.Move;
+import chess.domain.Role;
 import chess.domain.Square;
 import java.util.Objects;
 
 public abstract class Piece {
     protected final Camp camp;
+    protected final Role role;
 
-    public Piece(final Camp camp) {
+    public Piece(final Camp camp, final Role role) {
         this.camp = camp;
+        this.role = role;
     }
 
     public boolean isMovable(final Square source, final Square target, final Move move) {
@@ -18,6 +21,22 @@ public abstract class Piece {
 
     public boolean isMovable(final Square source, final Square target, final KnightMove move) {
         throw new UnsupportedOperationException();
+    }
+
+    public boolean isSameRole(final Role role) {
+        return this.role == role;
+    }
+
+    public boolean isSameCamp(final Camp camp) {
+        return this.camp == camp;
+    }
+
+    public Camp camp() {
+        return camp;
+    }
+
+    public Role role() {
+        return role;
     }
 
     @Override
@@ -29,11 +48,11 @@ public abstract class Piece {
             return false;
         }
         final Piece piece = (Piece) o;
-        return camp == piece.camp;
+        return camp == piece.camp && role == piece.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp);
+        return Objects.hash(camp, role);
     }
 }
