@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ChessGame {
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
+    private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
 
     private final PiecesPosition piecesPosition;
 
@@ -32,7 +33,7 @@ public class ChessGame {
 
     private void validateEmpty(Piece fromPiece) {
         if (fromPiece.isEmpty()) {
-            throw new IllegalArgumentException("빈 칸은 선택할 수 없습니다.");
+            throw new IllegalArgumentException(EMPTY_CHOICE);
         }
     }
 

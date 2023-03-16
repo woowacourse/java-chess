@@ -14,6 +14,8 @@ public class ChessController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;
 
     private final OutputView outputView;
@@ -63,18 +65,26 @@ public class ChessController {
     private void move(ChessGame chessGame, List<String> commands) {
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
+        validateEqualPosition(fromInput, toInput);
+
 
         chessGame.move(toPosition(fromInput), toPosition(toInput));
     }
 
+    private void validateEqualPosition(String fromInput, String toInput) {
+        if (fromInput.equals(toInput)) {
+            throw new IllegalArgumentException("출발 지점과 도착 지점은 동일할 수 없습니다");
+        }
+    }
+
     private Position toPosition(String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(0));
-        String rankInput = String.valueOf(positionInput.charAt(FROM_POSITION_INDEX));
+        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
+        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
 
         return new Position(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
-    public void printBoard(PiecesPosition piecesPosition) {
+    private void printBoard(PiecesPosition piecesPosition) {
         outputView.printChessState(piecesPosition.getPiecesPosition());
     }
 
