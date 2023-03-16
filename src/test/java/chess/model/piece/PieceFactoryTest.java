@@ -17,7 +17,7 @@ class PieceFactoryTest {
 
     private static Stream<Arguments> initializePieceType() {
         return Stream.of(
-                Arguments.of(PieceType.PAWN, Pawn.class),
+                Arguments.of(PieceType.PAWN, InitialPawn.class),
                 Arguments.of(PieceType.KING, King.class),
                 Arguments.of(PieceType.QUEEN, Queen.class),
                 Arguments.of(PieceType.ROOK, Rook.class),

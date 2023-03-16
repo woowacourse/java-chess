@@ -11,7 +11,7 @@ public final class PieceFactory {
 
     static {
         factories = new HashMap<>();
-        factories.put(PieceType.PAWN, Pawn::new);
+        factories.put(PieceType.PAWN, PieceFactory::initialPawn);
         factories.put(PieceType.ROOK, Rook::new);
         factories.put(PieceType.KNIGHT, Knight::new);
         factories.put(PieceType.BISHOP, Bishop::new);
@@ -20,6 +20,12 @@ public final class PieceFactory {
     }
 
     private PieceFactory() {
+    }
+
+    private static Piece initialPawn(final Color color) {
+        final Piece pawn = new Pawn(color);
+
+        return new InitialPawn(pawn);
     }
 
     public static Piece create(final Color color, final PieceType type) {

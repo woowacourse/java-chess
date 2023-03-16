@@ -6,17 +6,10 @@ import static chess.model.board.PositionFixture.D5;
 import static chess.model.board.PositionFixture.E2;
 import static chess.model.board.PositionFixture.F1;
 import static chess.model.board.PositionFixture.F2;
-import static chess.model.board.PositionFixture.F3;
 import static chess.model.board.PositionFixture.G2;
-import static chess.model.board.PositionFixture.G5;
-import static chess.model.board.PositionFixture.H1;
-import static chess.model.board.PositionFixture.H2;
 import static chess.model.board.PositionFixture.H3;
-import static chess.model.board.PositionFixture.H4;
-import static chess.model.board.PositionFixture.H5;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
-import static chess.model.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -61,7 +54,7 @@ public class BoardBishopMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(BISHOP)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(BISHOP)
         );
     }
 
@@ -95,7 +88,7 @@ public class BoardBishopMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(BISHOP)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(BISHOP)
         );
     }
 

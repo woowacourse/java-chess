@@ -127,7 +127,7 @@ public class Board {
         updateSquare(sourceIndex, emptySquare);
 
         final Square targetSquare = squares.get(targetIndex);
-        final Square resultSquare = targetSquare.receivePiece(sourceSquare.piece());
+        final Square resultSquare = targetSquare.receivePiece(sourceSquare.pick());
         updateSquare(targetIndex, resultSquare);
     }
 

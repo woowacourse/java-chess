@@ -40,7 +40,7 @@ public class EmptySquare extends AbstractSquare {
     }
 
     @Override
-    public Piece piece() {
+    public Piece pick() {
         throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 

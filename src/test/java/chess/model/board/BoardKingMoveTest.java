@@ -1,9 +1,5 @@
 package chess.model.board;
 
-import static chess.model.board.PositionFixture.D1;
-import static chess.model.board.PositionFixture.D2;
-import static chess.model.board.PositionFixture.D3;
-import static chess.model.board.PositionFixture.D4;
 import static chess.model.board.PositionFixture.D5;
 import static chess.model.board.PositionFixture.E1;
 import static chess.model.board.PositionFixture.E2;
@@ -14,7 +10,6 @@ import static chess.model.board.PositionFixture.F5;
 import static chess.model.board.PositionFixture.G4;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.KING;
-import static chess.model.piece.PieceType.QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -52,7 +47,7 @@ public class BoardKingMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(KING)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(KING)
         );
     }
 

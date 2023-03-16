@@ -1,12 +1,6 @@
 package chess.model.board;
 
-import static chess.model.board.PositionFixture.B1;
-import static chess.model.board.PositionFixture.C3;
-import static chess.model.board.PositionFixture.C4;
-import static chess.model.board.PositionFixture.E2;
 import static chess.model.board.PositionFixture.F3;
-import static chess.model.board.PositionFixture.G1;
-import static chess.model.board.PositionFixture.G2;
 import static chess.model.board.PositionFixture.G5;
 import static chess.model.board.PositionFixture.H1;
 import static chess.model.board.PositionFixture.H2;
@@ -14,24 +8,15 @@ import static chess.model.board.PositionFixture.H3;
 import static chess.model.board.PositionFixture.H4;
 import static chess.model.board.PositionFixture.H5;
 import static chess.model.piece.PieceColor.WHITE;
-import static chess.model.piece.PieceType.KNIGHT;
-import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.model.position.File;
-import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class BoardRookMoveTest {
 
@@ -68,7 +53,7 @@ public class BoardRookMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(ROOK)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(ROOK)
         );
     }
 
@@ -102,7 +87,7 @@ public class BoardRookMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(ROOK)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(ROOK)
         );
     }
 

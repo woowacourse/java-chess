@@ -4,7 +4,7 @@ import chess.model.Color;
 import chess.model.Type;
 import chess.model.position.Distance;
 
-public abstract class Piece {
+public abstract class Piece implements InitialPiece {
 
     final Color color;
     final Type type;
@@ -30,5 +30,10 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return type.isPawn();
+    }
+
+    @Override
+    public Piece pick() {
+        return this;
     }
 }

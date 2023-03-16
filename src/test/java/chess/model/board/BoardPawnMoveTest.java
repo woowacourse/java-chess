@@ -1,7 +1,10 @@
 package chess.model.board;
 
+import static chess.model.board.PositionFixture.A2;
+import static chess.model.board.PositionFixture.A3;
 import static chess.model.board.PositionFixture.A4;
 import static chess.model.board.PositionFixture.A5;
+import static chess.model.board.PositionFixture.A6;
 import static chess.model.board.PositionFixture.B4;
 import static chess.model.board.PositionFixture.B5;
 import static chess.model.board.PositionFixture.C4;
@@ -10,7 +13,6 @@ import static chess.model.board.PositionFixture.H2;
 import static chess.model.board.PositionFixture.H3;
 import static chess.model.piece.PieceColor.BLACK;
 import static chess.model.piece.PieceColor.WHITE;
-import static chess.model.piece.PieceType.KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,9 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
-import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,7 +68,7 @@ public class BoardPawnMoveTest {
             final Square targetSquare = squares.get(targetIndex);
 
             assertThat(targetSquare.isEmpty()).isFalse();
-            assertThat(targetSquare.piece().getType()).isEqualTo(PieceType.PAWN);
+            assertThat(targetSquare.pick().getType()).isEqualTo(PieceType.PAWN);
         }
 
     }
@@ -123,5 +123,32 @@ public class BoardPawnMoveTest {
                 Arguments.of(B4, B5, WHITE),
                 Arguments.of(B5, B4, BLACK)
         );
+    }
+
+    @Test
+    @DisplayName("dfad")
+    void adsf() {
+        board.move(A2, A3, WHITE);
+
+        // when
+        assertThatThrownBy(() -> board.move(A3, A5, WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("asdf")
+    void asdf() {
+        // 이동 가능
+        try {
+            board.move(A2, A5, WHITE); // exception, 이동 안함
+        } catch (Exception e) {
+            System.out.println("can't move");
+        }
+
+        board.move(A2, A4, WHITE); // 이동 가능
+
+        assertThatThrownBy(() -> board.move(A4, A6, WHITE))
+                .isInstanceOf(IllegalArgumentException.class);// 이동 불가능
+
     }
 }

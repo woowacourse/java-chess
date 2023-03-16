@@ -11,9 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +42,7 @@ public class BoardKnightMoveTest {
 
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(KNIGHT)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(KNIGHT)
         );
     }
 

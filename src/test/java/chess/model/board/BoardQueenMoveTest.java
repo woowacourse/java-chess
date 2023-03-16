@@ -53,7 +53,7 @@ public class BoardQueenMoveTest {
         assertAll(
                 () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).piece().getType()).isEqualTo(QUEEN)
+                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(QUEEN)
         );
     }
 

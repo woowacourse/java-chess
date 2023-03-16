@@ -2,7 +2,6 @@ package chess.model.board;
 
 import chess.model.Color;
 import chess.model.Type;
-import chess.model.piece.Direction;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.position.Distance;
@@ -43,8 +42,8 @@ public class PieceSquare extends AbstractSquare {
     }
 
     @Override
-    public Piece piece() {
-        return piece;
+    public Piece pick() {
+        return piece.pick();
     }
 
     @Override

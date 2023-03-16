@@ -13,7 +13,7 @@ public interface Square {
 
     Color getColor();
 
-    Piece piece();
+    Piece pick();
 
     Square receivePiece(final Piece piece);
 

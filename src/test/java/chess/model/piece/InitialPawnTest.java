@@ -6,7 +6,7 @@ import chess.model.position.Distance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PawnTest {
+class InitialPawnTest {
 
     @ParameterizedTest(name = "Pawn이 {0} 팀일 때 ({1}, {2})만큼 이동하려고 하면 {3}을 반환한다")
     @CsvSource({
@@ -21,11 +21,15 @@ class PawnTest {
             final int rank,
             final boolean result
     ) {
+        // given
         final Pawn pawn = new Pawn(pieceColor);
+        final InitialPawn initialPawn = new InitialPawn(pawn);
         final Distance distance = new Distance(file, rank);
 
-        final boolean movable = pawn.movable(distance);
+        // when
+        final boolean movable = initialPawn.movable(distance);
 
+        // then
         assertThat(movable).isEqualTo(result);
     }
 }
