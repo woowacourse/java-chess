@@ -15,7 +15,7 @@ class ChessBoardTest {
 
     private static final String WRONG_START_ERROR_MESSAGE = "시작 위치에 말이 없습니다.";
     private static final String OBSTACLE_IN_PATH_ERROR_MESSAGE = "경로에 다른 말이 있어서 이동할 수 없습니다.";
-    private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때만 대각선으로 이동할 수 있습니다.";
+    private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때는 대각선으로만, 아닐 떄는 직진으로만 이동할 수 있습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
     private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
     private static final String WRONG_ATTACK_TARGET_ERROR_MESSAGE = "상대 팀의 말만 공격할 수 있습니다.";
@@ -58,6 +58,19 @@ class ChessBoardTest {
     @Test
     void 폰_공격_대상없음_예외() {
         assertThatThrownBy(() -> chessBoard.move(List.of(1, 2), List.of(2, 3), CURRENT_CAMP))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(WRONG_PAWN_PATH_ERROR_MESSAGE);
+    }
+
+
+    @DisplayName("폰은 직진 도착지에 상대 팀의 말이 있을 때 공격할 수 없다.")
+    @Test
+    void 폰_공격_직진_예외() {
+        chessBoard.move(List.of(1, 2), List.of(1, 4), CURRENT_CAMP);
+        chessBoard.move(List.of(1, 4), List.of(1, 5), CURRENT_CAMP);
+        chessBoard.move(List.of(1, 5), List.of(1, 6), CURRENT_CAMP);
+
+        assertThatThrownBy(() -> chessBoard.move(List.of(1, 6), List.of(1, 7), CURRENT_CAMP))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(WRONG_PAWN_PATH_ERROR_MESSAGE);
     }

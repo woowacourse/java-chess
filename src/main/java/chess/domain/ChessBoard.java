@@ -18,7 +18,7 @@ public class ChessBoard {
     private static final int RANK_SIZE = 8;
     private static final String WRONG_START_ERROR_MESSAGE = "시작 위치에 말이 없습니다.";
     private static final String OBSTACLE_IN_PATH_ERROR_MESSAGE = "경로에 다른 말이 있어서 이동할 수 없습니다.";
-    private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때만 대각선으로 이동할 수 있습니다.";
+    private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때는 대각선으로만, 아닐 떄는 직진으로만 이동할 수 있습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
     private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
     private static final String WRONG_ATTACK_TARGET_ERROR_MESSAGE = "상대 팀의 말만 공격할 수 있습니다.";
@@ -117,6 +117,9 @@ public class ChessBoard {
         }
         Pawn pawn = (Pawn) movingPiece;
         if (pawn.isAttack(source, destination) && isEmptyPosition(destination)) {
+            throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
+        }
+        if (!pawn.isAttack(source, destination) && !isEmptyPosition(destination)) {
             throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
         }
     }
