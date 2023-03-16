@@ -17,10 +17,12 @@ public enum Rank {
     EIGHT("8", 7);
 
     private static final Map<Integer, Rank> RANK_BY_INDEX = new HashMap<>();
+    private static final Map<String, Rank> RANK_BY_VALUE = new HashMap<>();
 
     static {
         for (Rank rank : values()) {
             RANK_BY_INDEX.put(rank.index, rank);
+            RANK_BY_VALUE.put(rank.value, rank);
         }
     }
 
@@ -30,6 +32,10 @@ public enum Rank {
     Rank(final String value, final int index) {
         this.value = value;
         this.index = index;
+    }
+
+    public static Rank findByValue(final String value) {
+        return RANK_BY_VALUE.get(value);
     }
 
     public int calculateDistance(final Rank otherRank) {

@@ -17,10 +17,12 @@ public enum File {
     H("h", 7);
 
     private static final Map<Integer, File> FILE_BY_INDEX = new HashMap<>();
+    private static final Map<String, File> FILE_BY_VALUE = new HashMap<>();
 
     static {
         for (File file : values()) {
             FILE_BY_INDEX.put(file.index, file);
+            FILE_BY_VALUE.put(file.value, file);
         }
     }
 
@@ -30,6 +32,10 @@ public enum File {
     File(final String value, final int index) {
         this.value = value;
         this.index = index;
+    }
+
+    public static File findByValue(final String value) {
+        return FILE_BY_VALUE.get(value);
     }
 
     public int calculateDistance(final File otherFile) {
