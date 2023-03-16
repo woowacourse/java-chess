@@ -48,16 +48,6 @@ public class Coordinate {
         return col == 0;
     }
 
-    @Deprecated
-    public boolean isSameRow(Coordinate otherCoordinate) {
-        return getInclination(otherCoordinate) == 0;
-    }
-
-    @Deprecated
-    public boolean isSameCol(Coordinate otherCoordinate) {
-        return Double.isInfinite(getInclination(otherCoordinate));
-    }
-
     public double getInclination(Coordinate otherCoordinate) {
         return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
