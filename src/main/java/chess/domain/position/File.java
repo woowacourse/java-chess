@@ -5,14 +5,14 @@ import chess.domain.Direction;
 import java.util.Arrays;
 
 public enum File {
-    FILE_A(1),
-    FILE_B(2),
-    FILE_C(3),
-    FILE_D(4),
-    FILE_E(5),
-    FILE_F(6),
-    FILE_G(7),
-    FILE_H(8);
+    FILE_A(0),
+    FILE_B(1),
+    FILE_C(2),
+    FILE_D(3),
+    FILE_E(4),
+    FILE_F(5),
+    FILE_G(6),
+    FILE_H(7);
 
     private final int number;
 
@@ -27,6 +27,10 @@ public enum File {
 
     public int distance(File other) {
         return Math.abs(this.number - other.number);
+    }
+
+    public File move(int distance) {
+        return File.of(this.number + distance);
     }
 
     public Direction getDirection(File other) {
@@ -55,6 +59,10 @@ public enum File {
 
     public File prev() {
         return File.of(this.number - 1);
+    }
+
+    public int getFileIndex(){
+        return number;
     }
 
     @Override

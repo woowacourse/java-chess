@@ -5,14 +5,14 @@ import chess.domain.Direction;
 import java.util.Arrays;
 
 public enum Rank {
-    RANK1(1),
-    RANK2(2),
-    RANK3(3),
-    RANK4(4),
-    RANK5(5),
-    RANK6(6),
-    RANK7(7),
-    RANK8(8);
+    RANK1(0),
+    RANK2(1),
+    RANK3(2),
+    RANK4(3),
+    RANK5(4),
+    RANK6(5),
+    RANK7(6),
+    RANK8(7);
 
     private final int number;
 
@@ -53,8 +53,20 @@ public enum Rank {
         return Rank.of(this.number + 1);
     }
 
+    public Rank move(int distance) {
+        return Rank.of(this.number + distance);
+    }
+
     public Rank prev() {
         return Rank.of(this.number - 1);
+    }
+
+//    public Rank moveForward(Direction direction){
+//        return Rank.of(direction.goToDirection(number));
+//    }
+
+    public int getRankIndex(){
+        return 7- number;
     }
 
     @Override
