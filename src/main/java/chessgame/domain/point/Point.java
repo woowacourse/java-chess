@@ -60,17 +60,23 @@ public class Point {
     }
 
     public boolean isPawnMove(Point target, char name) {
-        int distanceRule = 1;
-        if ((Character.isUpperCase(name) && rank.distance(Rank.SEVEN) == 0) || (Character.isLowerCase(name)
-            && rank.distance(Rank.TWO) == 0)) {
-            distanceRule = 2;
+        if(Character.isUpperCase(name) && file.distance(target.file) == 0){
+            if(rank.distance(Rank.SEVEN)==0 && (rank.distance(target.rank) == 1 || rank.distance(target.rank) == 2)){
+                return true;
+            }
+            if(rank.distance(target.rank) == 1){
+                return true;
+            }
         }
-
-        if (Character.isUpperCase(name) && rank.distance(target.rank) == distanceRule) {
-            return true;
+        if(Character.isLowerCase(name) && file.distance(target.file) == 0){
+            if(rank.distance(Rank.TWO)==0 && (rank.distance(target.rank) == -1 || rank.distance(target.rank) == -2)){
+                return true;
+            }
+            if(rank.distance(target.rank) == -1){
+                return true;
+            }
         }
-
-        return Character.isLowerCase(name) && rank.distance(target.rank) == -distanceRule;
+        return false;
     }
 
     public boolean isPawnAttack(Point target, char name) {
@@ -91,6 +97,18 @@ public class Point {
             }
         }
         return false;
+    }
+
+    public Point move(int fileMove, int rankMove) {
+        return Point.of(file.move(fileMove).get(), rank.move(rankMove).get());
+    }
+
+    public int makeFileDifference(Point target) {
+        return this.file.distance(target.file);
+    }
+
+    public int makeRankDifference(Point target) {
+        return this.rank.distance(target.rank);
     }
 
     @Override

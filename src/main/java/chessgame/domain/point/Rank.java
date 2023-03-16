@@ -1,5 +1,8 @@
 package chessgame.domain.point;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum Rank {
     EIGHT(8),
     SEVEN(7),
@@ -16,7 +19,19 @@ public enum Rank {
         this.value = value;
     }
 
+    public static Optional<Rank> findRank(int result) {
+        return Arrays.stream(Rank.values())
+            .filter(rank -> rank.value == result)
+            .findFirst();
+    }
+
     public int distance(Rank target) {
         return this.value - target.value;
+    }
+
+    public Optional<Rank> move(int rankMove) {
+        int result = value + rankMove;
+
+        return findRank(result);
     }
 }

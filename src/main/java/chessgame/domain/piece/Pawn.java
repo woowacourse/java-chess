@@ -16,9 +16,13 @@ public class Pawn implements Piece {
         return new Pawn(team.calculate(ORIGINAL_NAME));
     }
 
+    public boolean isAttack(Point source, Point target){
+        return source.isPawnAttack(target, name.charAt(0));
+    }
+
     @Override
     public boolean isMovable(Point source, Point target) {
-        return source.isPawnMove(target, name.charAt(0)) || source.isPawnAttack(target, name.charAt(0));
+        return source.isPawnMove(target, name.charAt(0));
     }
 
     @Override
