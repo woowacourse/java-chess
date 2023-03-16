@@ -20,14 +20,14 @@ public enum Command {
         this.value = value;
     }
 
-    public static Command createStart(String inputCommand) {
+    public static Command createStart(final String inputCommand) {
         if (START.value.equalsIgnoreCase(inputCommand)) {
             return START;
         }
         throw new IllegalArgumentException("START를 입력해주세요.");
     }
 
-    public static Command createPlayOrEnd(String inputCommand) {
+    public static Command createPlayOrEnd(final String inputCommand) {
         return Arrays.stream(values())
                 .filter(command -> command == MOVE || command == END)
                 .filter(command -> command.value.equalsIgnoreCase(inputCommand))
