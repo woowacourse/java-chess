@@ -5,7 +5,7 @@ public enum Role {
     QUEEN("Q"),
     BISHOP("B"),
     KNIGHT("N"),
-    ROCK("R"),
+    ROOK("R"),
     PAWN("P"),
     EMPTY(".");
 

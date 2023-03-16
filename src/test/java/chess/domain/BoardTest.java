@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rock;
+import chess.domain.piece.Rook;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(
                         new Square(File.A, Rank.ONE),
-                        new Rock(Camp.WHITE)
+                        new Rook(Camp.WHITE)
                 ),
                 Arguments.of(
                         new Square(File.E, Rank.ONE),

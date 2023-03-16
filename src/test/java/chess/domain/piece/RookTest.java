@@ -13,8 +13,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class RockTest {
-    private static Stream<Arguments> possibleRockTestProvider() {
+class RookTest {
+    private static Stream<Arguments> possibleRookTestProvider() {
         return Stream.of(
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
@@ -41,10 +41,10 @@ class RockTest {
 
     @DisplayName("사방으로 거리 제한 없이 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
-    @MethodSource("possibleRockTestProvider")
-    void Should_Success_When_RockMove(final Square source, final Square target, final Move move) {
-        final Rock rock = new Rock(Camp.WHITE);
+    @MethodSource("possibleRookTestProvider")
+    void Should_Success_When_RookMove(final Square source, final Square target, final Move move) {
+        final Rook rook = new Rook(Camp.WHITE);
 
-        assertThat(rock.isMovable(source, target, move)).isTrue();
+        assertThat(rook.isMovable(source, target, move)).isTrue();
     }
 }

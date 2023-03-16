@@ -8,7 +8,7 @@ import chess.domain.piece.KnightMove;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.domain.piece.Rock;
+import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -53,14 +53,14 @@ public class Board {
     private List<Piece> generateFirstLine(final Camp camp) {
         final List<Piece> pieces = new ArrayList<>();
 
-        pieces.add(new Rock(camp));
+        pieces.add(new Rook(camp));
         pieces.add(new Knight(camp));
         pieces.add(new Bishop(camp));
         pieces.add(new Queen(camp));
         pieces.add(new King(camp));
         pieces.add(new Bishop(camp));
         pieces.add(new Knight(camp));
-        pieces.add(new Rock(camp));
+        pieces.add(new Rook(camp));
 
         return pieces;
     }

@@ -7,11 +7,11 @@ import chess.domain.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rock extends Piece {
+public class Rook extends Piece {
     private static final List<Move> possibleMoves = makePossibleMove();
 
-    public Rock(final Camp camp) {
-        super(camp, Role.ROCK);
+    public Rook(final Camp camp) {
+        super(camp, Role.ROOK);
     }
 
     private static List<Move> makePossibleMove() {
