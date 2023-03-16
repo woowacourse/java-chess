@@ -10,4 +10,11 @@ public enum CampType {
         }
         return BLACK;
     }
+
+    public CampType changeTurn() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }
