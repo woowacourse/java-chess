@@ -17,7 +17,7 @@ public class KnightTest {
         @DisplayName("진영이 주어지면")
         class given_team {
             @Test
-            @DisplayName("해당 진영의 Knight를 8개 생성한다")
+            @DisplayName("해당 진영의 Knight를 2개 생성한다")
             void it_returns_knights() {
                 assertThat(Knight.of(Side.BLACK)).hasSize(2);
             }
