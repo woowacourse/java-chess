@@ -14,7 +14,7 @@ class QueenTest {
     @Test
     void test_searchPathTo() {
 
-        Queen queen = new Queen(Color.WHITE);
+        Piece queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
         Path path = queen.searchPathTo(initialPosition, new Position(5, 8), Optional.empty());
@@ -66,7 +66,7 @@ class QueenTest {
         assertThatThrownBy(
                 () -> queen.searchPathTo(initialPosition,
                         new Position(5, 1),
-                        Optional.of(new Queen(Color.WHITE))))
+                        Optional.of(new King(Color.WHITE))))
                 .isInstanceOf(IllegalStateException.class);
     }
 }
