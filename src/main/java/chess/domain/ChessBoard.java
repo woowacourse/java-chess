@@ -25,17 +25,8 @@ public class ChessBoard {
         final TeamColor teamColor) {
         Position source = Position.from(sourcePosition);
         Position dest = Position.from(destPosition);
-
         Piece piece = findPieceInStartPosition(source, teamColor);
-        List<Path> movablePaths = piece.findMovablePaths(source);
-
-        for (Path path : movablePaths) {
-            if (moveWhenPossible(source, dest, piece, path, teamColor)) {
-                return;
-            }
-        }
-
-        throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
+        progressMove(teamColor, source, dest, piece);
     }
 
     private Piece findPieceInStartPosition(final Position start, final TeamColor color) {
@@ -54,19 +45,53 @@ public class ChessBoard {
         throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
 
-    private boolean moveWhenPossible(final Position source, final Position dest, final Piece piece,
-        final Path path,
-        final TeamColor color) {
+    private void progressMove(final TeamColor teamColor, final Position source, final Position dest,
+        final Piece piece) {
+        List<Path> movablePaths = piece.findMovablePaths(source);
+        for (Path path : movablePaths) {
+            if (isMoveSuccess(teamColor, source, dest, piece, path)) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
+    }
+
+    private boolean isMoveSuccess(final TeamColor teamColor, final Position source,
+        final Position dest, Piece piece, final Path path) {
+        if (isPossibleToMove(source, dest, piece, path, teamColor)) {
+            movePieceToDestination(source, dest, piece);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPossibleToMove(final Position source, final Position dest, final Piece piece,
+        final Path path, final TeamColor color) {
         if (path.hasPosition(dest)) {
             checkObstacleInPath(dest, path);
             validatePawnAttack(piece, source, dest);
             validateObstacleInDestination(dest, color);
-
-            piecesByPosition.put(dest, piece);
-            piecesByPosition.remove(source);
             return true;
         }
         return false;
+    }
+
+    private void movePieceToDestination(final Position source, final Position dest,
+        final Piece piece) {
+        piecesByPosition.put(dest, piece);
+        piecesByPosition.remove(source);
+    }
+
+    private void checkObstacleInPath(final Position dest, final Path path) {
+        for (int index = 0; index < path.findIndexByPosition(dest); index++) {
+            checkObstacleAtIndex(path, index);
+        }
+    }
+
+    private void checkObstacleAtIndex(final Path path, final int index) {
+        if (piecesByPosition.containsKey(path.findPositionByIndex(index))) {
+            throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
+        }
     }
 
     private void validateObstacleInDestination(final Position dest, final TeamColor color) {
@@ -86,23 +111,13 @@ public class ChessBoard {
         if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
             throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
         }
+        if (! pawn.isAttack(source, dest) && isOtherPieceInDestination(dest)) {
+            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
+        }
     }
 
     private boolean isOtherPieceInDestination(final Position dest) {
         return piecesByPosition.containsKey(dest);
-    }
-
-    private void checkObstacleInPath(final Position dest, final Path path) {
-        List<Position> positions = path.positions();
-        for (int index = 0; index < path.findPositionIndex(dest); index++) {
-            checkObstacleAtIndex(positions, index);
-        }
-    }
-
-    private void checkObstacleAtIndex(final List<Position> positions, final int index) {
-        if (piecesByPosition.containsKey(positions.get(index))) {
-            throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
-        }
     }
 
     public Map<Position, Piece> piecesByPosition() {

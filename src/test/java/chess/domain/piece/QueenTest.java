@@ -21,7 +21,7 @@ public class QueenTest {
         int totalPositionCount = 0;
 
         for (Path path : movablePaths) {
-            totalPositionCount += path.positions().size();
+            totalPositionCount += path.size();
         }
 
         assertThat(totalPositionCount).isEqualTo(23);

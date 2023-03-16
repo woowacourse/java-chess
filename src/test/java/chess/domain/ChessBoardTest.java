@@ -20,6 +20,7 @@ class ChessBoardTest {
     private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
     private static final String WRONG_ATTACK_TARGET_ERROR_MESSAGE = "상대 팀의 말만 공격할 수 있습니다.";
     private static final TeamColor currentTeamColor = TeamColor.WHITE;
+    private static final TeamColor otherTeamColor = TeamColor.BLACK;
 
     private ChessBoard chessBoard;
 
@@ -114,4 +115,16 @@ class ChessBoardTest {
         assertThat(piecesByPosition.get(Position.of(1, 4)))
                 .isEqualTo(new Pawn(TeamColor.WHITE));
     }
+
+    @DisplayName("폰은 대각선이 아닌 도착지에 말이 있다면 예외를 던진다.")
+    @Test
+    void 폰_잘못된_공격() {
+        chessBoard.move(List.of(1, 2), List.of(1, 4), currentTeamColor);
+        chessBoard.move(List.of(1, 4), List.of(1, 5), currentTeamColor);
+        chessBoard.move(List.of(1, 7), List.of(1, 6), otherTeamColor);
+
+        assertThatThrownBy(() -> chessBoard.move(List.of(1, 5), List.of(1, 6), currentTeamColor))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }

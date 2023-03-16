@@ -6,6 +6,7 @@ import java.util.List;
 public class Path {
 
     public static final int PAWN_START_PATH_COUNT = 2;
+    private static final String POSITION_NOT_IN_PATH_ERROR_MESSAGE = "경로에 존재하지 않는 위치입니다.";
     private final List<Position> positions;
 
     public Path(final List<Position> positions) {
@@ -42,15 +43,23 @@ public class Path {
         return positions.contains(position);
     }
 
-    public int findPositionIndex(Position position) {
+    public Position findPositionByIndex(int index) {
+        return positions.get(index);
+    }
+
+    public int findIndexByPosition(Position position) {
         if (positions.contains(position)) {
             return positions.indexOf(position);
         }
-        throw new IllegalArgumentException("경로에 존재하지 않는 위치입니다.");
+        throw new IllegalArgumentException(POSITION_NOT_IN_PATH_ERROR_MESSAGE);
     }
 
     public List<Position> positions() {
         return new ArrayList<>(positions);
+    }
+
+    public int size() {
+        return positions.size();
     }
 
 }
