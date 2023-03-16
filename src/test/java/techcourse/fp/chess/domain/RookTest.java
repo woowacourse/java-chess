@@ -16,7 +16,7 @@ import techcourse.fp.chess.domain.piece.Rook;
 
 class RookTest {
 
-    private final Rook rook = new Rook(Color.BLACK);
+    private final Rook rook = Rook.create(Color.BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다.")
     @Test

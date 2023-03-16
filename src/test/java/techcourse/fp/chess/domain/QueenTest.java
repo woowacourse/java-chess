@@ -26,7 +26,7 @@ import techcourse.fp.chess.domain.piece.Queen;
 
 class QueenTest {
 
-    private final Queen queen = new Queen(Color.BLACK);
+    private final Queen queen = Queen.create(Color.BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우상향으로 이동하는 경우")
     @Test

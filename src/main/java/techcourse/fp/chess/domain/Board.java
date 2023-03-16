@@ -7,7 +7,7 @@ import techcourse.fp.chess.domain.piece.UnMovablePiece;
 
 public final class Board {
 
-    public static final int BOARD_SIZE = 8;
+    private static final int BOARD_SIZE = 8;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -32,7 +32,7 @@ public final class Board {
         }
 
         board.put(target, sourcePiece);
-        board.put(source, new UnMovablePiece());
+        board.put(source, UnMovablePiece.create());
     }
 
     private boolean cannotMoveToTheTarget(final List<Position> path) {

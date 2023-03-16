@@ -5,17 +5,10 @@ import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 
-/**
- * piece -> movablePiece -> Emoty
- */
 public abstract class Piece {
 
     protected final Color color;
-    protected MovingStrategies strategies;
-
-    public Piece(final Color color) {
-        this.color = color;
-    }
+    protected final MovingStrategies strategies;
 
     public Piece(final Color color, final MovingStrategies strategies) {
         this.color = color;

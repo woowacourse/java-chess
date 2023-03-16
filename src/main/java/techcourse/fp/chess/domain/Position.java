@@ -16,6 +16,21 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public boolean isOnDiagonal(final Position target) {
+        return Math.abs(getFileOrder() - target.getFileOrder()) == 1
+                && Math.abs(getRankOrder() - target.getRankOrder()) == 1;
+    }
+
+    public boolean isUpDown(final Position target) {
+        return getFileOrder() == target.getFileOrder() &&
+                Math.abs(getRankOrder() - target.getRankOrder()) == 1;
+    }
+
+    public boolean isUpDownTwo(final Position target) {
+        return getFileOrder() == target.getFileOrder() &&
+                Math.abs(getRankOrder() - target.getRankOrder()) == 2;
+    }
+
     public File getFile() {
         return file;
     }
@@ -30,21 +45,6 @@ public final class Position {
 
     public int getRankOrder() {
         return rank.getOrder();
-    }
-
-    public boolean isOnDiagonal(final Position target) {
-        return Math.abs(getFileOrder() - target.getFileOrder()) == 1
-                && Math.abs(getRankOrder() - target.getRankOrder()) == 1;
-    }
-
-    public boolean isUpDown(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == 1;
-    }
-
-    public boolean isUpDownTwo(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == 2;
     }
 
     @Override

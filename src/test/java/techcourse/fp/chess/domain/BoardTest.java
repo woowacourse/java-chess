@@ -41,7 +41,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenPosition = A1;
-            rawBoard.put(givenPosition, new Rook(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
 
             final Board board = new Board(rawBoard);
             //when && then
@@ -54,7 +54,7 @@ class BoardTest {
             //given
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenPosition = A1;
-            rawBoard.put(givenPosition, new Rook(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
             final Board board = new Board(rawBoard);
             //when && then
             assertThatThrownBy(() -> board.move(givenPosition, B2))
@@ -68,10 +68,10 @@ class BoardTest {
             //given
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenSourcePosition = A1;
-            rawBoard.put(givenSourcePosition, new Rook(Color.WHITE));
+            rawBoard.put(givenSourcePosition, Rook.create(Color.WHITE));
 
             final Position givenTargetPosition = A2;
-            rawBoard.put(givenTargetPosition, new Rook(Color.WHITE));
+            rawBoard.put(givenTargetPosition, Rook.create(Color.WHITE));
 
             final Board board = new Board(rawBoard);
             //when && then
@@ -87,10 +87,10 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenPosition = A1;
-            rawBoard.put(givenPosition, new Rook(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
 
             final Position givenPathPosition = A2;
-            rawBoard.put(givenPathPosition, new Rook(Color.WHITE));
+            rawBoard.put(givenPathPosition, Rook.create(Color.WHITE));
 
             final Board board = new Board(rawBoard);
             //when && then
@@ -164,7 +164,7 @@ class BoardTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), new UnMovablePiece());
+                board.put(Position.of(file, rank), UnMovablePiece.create());
             }
         }
 

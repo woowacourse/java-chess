@@ -15,8 +15,8 @@ import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public final class Pawn extends MovablePiece {
 
-    public static final int INITIAL_WHITE_RANK = 2;
-    public static final int INITIAL_BLACK_RANK = 7;
+    private static final int INITIAL_WHITE_RANK = 2;
+    private static final int INITIAL_BLACK_RANK = 7;
 
     private Pawn(final Color color, final MovingStrategies strategies) {
         super(color, strategies);

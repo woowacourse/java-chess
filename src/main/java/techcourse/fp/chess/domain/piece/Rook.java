@@ -13,17 +13,17 @@ import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public final class Rook extends MovablePiece {
 
-    {
+    private Rook(final Color color, final MovingStrategies strategies) {
+        super(color, strategies);
+    }
+
+    public static Rook create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(new UpStrategy(), new DownStrategy(),
                 new LeftStrategy(), new RightStrategy());
-        strategies = new MovingStrategies(rawStrategies);
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
+
+        return new Rook(color, strategies);
     }
-
-    public Rook(final Color color) {
-        super(color);
-    }
-
-
 
     @Override
     public List<Position> findPath(final Position source, final Position target,

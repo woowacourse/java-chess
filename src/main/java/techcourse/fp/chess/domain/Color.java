@@ -1,7 +1,9 @@
 package techcourse.fp.chess.domain;
 
 public enum Color {
-    BLACK, WHITE, EMPTY;
+    BLACK,
+    WHITE,
+    EMPTY;
 
     public boolean isSameColor(final Color color) {
         return this == color;

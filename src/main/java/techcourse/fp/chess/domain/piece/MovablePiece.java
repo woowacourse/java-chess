@@ -5,10 +5,6 @@ import techcourse.fp.chess.movingStrategy.MovingStrategies;
 
 public abstract class MovablePiece extends Piece {
 
-    public MovablePiece(final Color color) {
-        super(color);
-    }
-
     public MovablePiece(final Color color, final MovingStrategies strategies) {
         super(color, strategies);
 

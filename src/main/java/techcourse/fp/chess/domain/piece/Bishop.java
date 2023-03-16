@@ -13,14 +13,17 @@ import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 
 public final class Bishop extends MovablePiece {
 
-    {
-        final List<MovingStrategy> rawStrategies = List.of(new RightUpStrategy(), new RightDownStrategy(),
-                new LeftDownStrategy(), new LeftUpStrategy());
-        strategies = new MovingStrategies(rawStrategies);
+    private Bishop(final Color color, final MovingStrategies strategies) {
+        super(color, strategies);
     }
 
-    public Bishop(final Color color) {
-        super(color);
+    public static Bishop create(final Color color) {
+        final List<MovingStrategy> rawStrategies = List.of(
+                new RightUpStrategy(), new RightDownStrategy(),
+                new LeftDownStrategy(), new LeftUpStrategy());
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
+
+        return new Bishop(color, strategies);
     }
 
     @Override
@@ -47,5 +50,4 @@ public final class Bishop extends MovablePiece {
 
         return path;
     }
-
 }

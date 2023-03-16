@@ -17,17 +17,19 @@ import techcourse.fp.chess.movingStrategy.UpTwoRightStrategy;
 
 public final class Knight extends MovablePiece {
 
-    {
+    private Knight(final Color color, final MovingStrategies strategies) {
+        super(color, strategies);
+    }
+
+    public static Knight create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
                 UpTwoRightStrategy.create(), UpTwoLeftStrategy.create(),
                 RightTwoUpStrategy.create(), RightTwoDownStrategy.create(),
                 DownTwoRight.create(), DownTwoLeft.create(),
                 LeftTwoDownStrategy.create(), LeftTwoUpStrategy.create());
-        strategies = new MovingStrategies(rawStrategies);
-    }
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
-    public Knight(final Color color) {
-        super(color);
+        return new Knight(color, strategies);
     }
 
     @Override
