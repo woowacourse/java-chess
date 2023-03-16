@@ -22,16 +22,28 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final Map<Class<?>, String> stauntonFormat = new HashMap<>();
+    private static final Map<Color, Map<Class<?>, String>> colorIconMapping = new HashMap<>();
+    private static final Map<Class<?>, String> whitePieceIcons = new HashMap<>();
+    private static final Map<Class<?>, String> blackPieceIcons = new HashMap<>();
     private static final String EMPTY_PIECE_ICON = ".";
 
     static {
-        stauntonFormat.put(Rook.class, "r");
-        stauntonFormat.put(Pawn.class, "p");
-        stauntonFormat.put(Bishop.class, "b");
-        stauntonFormat.put(King.class, "k");
-        stauntonFormat.put(Knight.class, "n");
-        stauntonFormat.put(Queen.class, "q");
+        whitePieceIcons.put(Rook.class, "♜");
+        whitePieceIcons.put(Pawn.class, "♟");
+        whitePieceIcons.put(Bishop.class, "♝");
+        whitePieceIcons.put(King.class, "♚");
+        whitePieceIcons.put(Knight.class, "♞");
+        whitePieceIcons.put(Queen.class, "♛");
+
+        blackPieceIcons.put(Rook.class, "♖");
+        blackPieceIcons.put(Pawn.class, "♙");
+        blackPieceIcons.put(Bishop.class, "♗");
+        blackPieceIcons.put(King.class, "♔");
+        blackPieceIcons.put(Knight.class, "♘");
+        blackPieceIcons.put(Queen.class, "♕");
+
+        colorIconMapping.put(Color.WHITE, whitePieceIcons);
+        colorIconMapping.put(Color.BLACK, blackPieceIcons);
     }
 
     public static void showBoard(final List<Piece> chessBoard) {
@@ -56,11 +68,7 @@ public class OutputView {
     }
 
     private static String convertCaseAccordingToColor(final Piece piece) {
-        String format = stauntonFormat.get(piece.getClass());
-        if (piece.color() == Color.BLACK) {
-            format = format.toUpperCase();
-        }
-        return format;
+        return colorIconMapping.get(piece.color()).get(piece.getClass());
     }
 
     public static void printStartMessage() {
