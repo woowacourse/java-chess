@@ -6,22 +6,22 @@
 
 ```mermaid
 classDiagram
-    Game --> Piece
-    Game --> Position
-    Rank <-- Position
-    File <-- Position
+  Game --> Piece
+  Game --> Position
+  Rank <-- Position
+  File <-- Position
 
-    <<enumeration>> Rank
-    <<enumeration>> File
+  <<enumeration>> Rank
+  <<enumeration>> File
 
-    class Position {
-        Rank rank
-        File file
-    }
+  class Position{
+    Rank rank
+    File file
+  }
 
-    class Game {
-        Map(Position, Piece) chessBoard
-    }
+  class Game {
+    Map(Position, Piece) chessBoard
+  }
 ```
 
 ### 체스 말들의 상속 관계
@@ -109,35 +109,6 @@ classDiagram
 - [x] 기물의 종류를 반환한다.
 - [x] 상대 진영의 기물인지 확인하면 예외가 발생한다.
 - [x] 점수를 요청하면 예외가 발생한다.
-
-### King
-
-- [x] 이동할 수 있는지 확인한다.
-    - [x] 한 칸이면, 모든 방향으로 움직일 수 있다.
-    - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
-- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
-
-### Queen
-
-- [x] 이동할 수 있는지 확인한다.
-    - [x] 대각선, 수직, 수평으로 움직일 수 있다.
-    - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
-- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
-
-### Rook
-
-- [x] 이동할 수 있는지 확인한다.
-    - [x] 수직 방향으로만 움직일 수 있다.
-    - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
-- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
-
-### Knight
-
-- [x] 이동할 수 있는지 확인한다.
-    - [x] 수직 2칸 + 수평 1칸 또는 수직 1칸 + 수평 2칸으로 움직일 수 있다.
-    - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
-- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
-    - [x] Knight는 아군 말을 뛰어 넘을 수 있기 때문에 빈 경로를 반환한다.
 
 ### Game
 - [x] 각각의 Rank와 File을 표현하도록 체스판을 초기화한다.

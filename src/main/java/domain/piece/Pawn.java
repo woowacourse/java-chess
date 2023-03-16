@@ -1,15 +1,21 @@
 package domain.piece;
 
+<<<<<<< HEAD
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Rank;
 import domain.game.Score;
 import domain.game.Side;
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
 import java.util.Collections;
 import java.util.List;
 
 public final class Pawn extends Piece {
+<<<<<<< HEAD
     private static final Score SCORE = new Score(1);
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
 
     private Pawn(Side side) {
         super(side);
@@ -41,17 +47,24 @@ public final class Pawn extends Piece {
         return isMovableForBlack(targetPiece, movement, sourcePosition);
     }
 
+<<<<<<< HEAD
     @Override
     public boolean isEmptyPiece() {
         return false;
     }
 
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
     private boolean isWhite() {
         return super.side.equals(Side.WHITE);
     }
 
     private boolean isMovableForWhite(Piece targetPiece, Movement movement, Position sourcePosition) {
+<<<<<<< HEAD
         if (!targetPiece.isEmptyPiece()) {
+=======
+        if (targetPiece.side != Side.NEUTRAL) {
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
             return isPossibleToAttackForWhite(targetPiece, movement);
         }
         if (isFirstMovement(sourcePosition)) {
@@ -61,7 +74,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isMovableForBlack(Piece targetPiece, Movement movement, Position sourcePosition) {
+<<<<<<< HEAD
         if (!targetPiece.isEmptyPiece()) {
+=======
+        if (targetPiece.side != Side.NEUTRAL) {
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
             return isPossibleToAttackForBlack(targetPiece, movement);
         }
         if (isFirstMovement(sourcePosition)) {
@@ -104,6 +121,10 @@ public final class Pawn extends Piece {
     }
 
     private static boolean isOneStepUpward(Movement movement) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
         return movement.isOneStep() &&
                 movement.isPerpendicular() &&
                 movement.isUpward();
@@ -121,6 +142,7 @@ public final class Pawn extends Piece {
                 movement.isDownward();
     }
 
+<<<<<<< HEAD
     @Override
     public PieceCategory getCategory() {
         if (side == Side.WHITE) {
@@ -133,4 +155,18 @@ public final class Pawn extends Piece {
     public Score getScore() {
         return SCORE;
     }
+=======
+
+//    private boolean isAttackMoving(domain.piece.Movement movement, domain.piece.Pawn targetPiece) {
+//        if (side == 아래) {
+//            return movement.isPawnAttackMoving && targetPiece.side == this.side;
+//        }
+//        return movement.isPawnBlackAttackMoving && targetPiece.side == this.side;
+//    }
+//
+//    private boolean isAttack(domain.piece.Pawn targetPiece) {
+//        return targetPiece.side == this.side;
+
+//    }
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
 }

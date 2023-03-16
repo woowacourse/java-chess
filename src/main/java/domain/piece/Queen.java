@@ -1,5 +1,6 @@
 package domain.piece;
 
+<<<<<<< HEAD
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Score;
@@ -8,6 +9,12 @@ import domain.game.Side;
 public class Queen extends Piece {
     private static final Score SCORE = new Score(9);
 
+=======
+import java.util.Collections;
+import java.util.List;
+
+public class Queen extends Piece {
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
     private Queen(Side side) {
         super(side);
     }
@@ -30,6 +37,7 @@ public class Queen extends Piece {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean isEmptyPiece() {
         return false;
     }
@@ -45,5 +53,13 @@ public class Queen extends Piece {
     @Override
     public Score getScore() {
         return SCORE;
+=======
+    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+        if (movement.isOneStep()) {
+            return Collections.emptyList();
+        }
+        return sourcePosition.getPath(targetPosition);
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
     }
 }

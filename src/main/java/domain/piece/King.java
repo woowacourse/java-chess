@@ -1,15 +1,21 @@
 package domain.piece;
 
+<<<<<<< HEAD
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Score;
 import domain.game.Side;
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
 import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
+<<<<<<< HEAD
     private static final Score SCORE = new Score(0);
 
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
     private King(Side side) {
         super(side);
     }
@@ -35,6 +41,7 @@ public class King extends Piece {
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         return Collections.emptyList();
     }
+<<<<<<< HEAD
 
     @Override
     public boolean isEmptyPiece() {
@@ -53,4 +60,6 @@ public class King extends Piece {
     public Score getScore() {
         return SCORE;
     }
+=======
+>>>>>>> 3ad1dbf (refactor: 패키지 분리)
 }
