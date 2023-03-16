@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.King;
 import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.info.Team;
@@ -27,10 +28,6 @@ public class Square {
         return this.position.equals(position);
     }
 
-    boolean isSamePiece(final Class<Piece> pieceType) {
-        return piece.getClass() == pieceType;
-    }
-
     boolean isEmpty() {
         return piece.getClass() == NoPiece.class;
     }
@@ -51,5 +48,9 @@ public class Square {
         piece.addTrace(turn, position);
         destination.changePiece(piece);
         changePiece(NoPiece.getInstance());
+    }
+
+    public boolean isKing() {
+        return piece.getClass() == King.class;
     }
 }

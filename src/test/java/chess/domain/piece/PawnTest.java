@@ -3,10 +3,10 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Turn;
+import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.piece.info.Team;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -64,7 +64,7 @@ class PawnTest {
         Position startPosition = Position.of(Rank.C, File.TWO);
         Position endPosition = Position.of(Rank.C, File.FOUR);
         Pawn pawn = new Pawn(Team.WHITE);
-        pawn.addTrace(new Turn(1), startPosition);
+        pawn.addTrace(new Turn(), startPosition);
 
         //when
         boolean actual = pawn.canMove(startPosition, endPosition);

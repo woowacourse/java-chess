@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ChessBoard {
 
+    private static final int NUMBER_OF_PLAYER = 2;
     private final List<Square> squares;
     private Turn turn;
 
@@ -41,8 +42,8 @@ public class ChessBoard {
             executeMove(startPosition, endPosition);
             return;
         }
-        if(validateMove(startPosition, endPosition)){
-            executeMove(startPosition,endPosition);
+        if (validateMove(startPosition, endPosition)) {
+            executeMove(startPosition, endPosition);
             return;
         }
         throw new IllegalArgumentException("해당 위치는 기물의 이동 범위 밖입니다.");
@@ -55,7 +56,7 @@ public class ChessBoard {
     }
 
     private void validateAllyPiece(final Position startPosition) {
-        if(findSquareByPosition(startPosition).isSameTeam(turn.whoseTurn().enemy())){
+        if (findSquareByPosition(startPosition).isSameTeam(turn.whoseTurn().enemy())) {
             throw new IllegalArgumentException("상대방의 기물은 이동시킬 수 없습니다.");
         }
     }
@@ -89,8 +90,8 @@ public class ChessBoard {
         BigInteger gcd = BigInteger.valueOf(diffFile).gcd(BigInteger.valueOf(diffRank));
         int fileDirection = diffFile / gcd.intValue();
         int rankDirection = diffRank / gcd.intValue();
-        Position tempPosition = startPosition.move(rankDirection,fileDirection);
-        while (!tempPosition.equals(endPosition)){
+        Position tempPosition = startPosition.move(rankDirection, fileDirection);
+        while (!tempPosition.equals(endPosition)) {
             validateIsEmpty(tempPosition);
             tempPosition = tempPosition.move(rankDirection, fileDirection);
         }
@@ -100,5 +101,11 @@ public class ChessBoard {
         if (!isEmptyAt(tempPosition)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
+    }
+
+    public boolean isKingDead() {
+        return squares.stream()
+                .filter(Square::isKing)
+                .count() < NUMBER_OF_PLAYER;
     }
 }

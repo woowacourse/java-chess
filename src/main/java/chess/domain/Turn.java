@@ -4,13 +4,14 @@ import chess.domain.piece.info.Team;
 import java.util.Objects;
 
 public class Turn {
+
     private final int turn;
 
     public Turn() {
         this.turn = 0;
     }
 
-    public Turn(int turn) {
+    private Turn(int turn) {
         this.turn = turn;
     }
 

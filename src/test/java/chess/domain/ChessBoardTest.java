@@ -53,34 +53,34 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 이동불가{
+    class 이동불가 {
         @Test
-        void should_체스_기물을_이동시키지못한다_when_장애물이_있는_상황일때 () {
-        //given
-        Position startPosition = Position.of(Rank.A, File.ONE);
-        Position endPosition = Position.of(Rank.A, File.FOUR);
+        void should_체스_기물을_이동시키지못한다_when_장애물이_있는_상황일때() {
+            //given
+            Position startPosition = Position.of(Rank.A, File.ONE);
+            Position endPosition = Position.of(Rank.A, File.FOUR);
 
-        //when
+            //when
 
-        //then
-        assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 기물이 있습니다.");
-    }
+            //then
+            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동 경로에 다른 기물이 있습니다.");
+        }
 
         @Test
-        void should_체스_기물을_이동시키지못한다_when_도착지에_내_기물이_있는_상황일때 () {
-        //given
-        Position startPosition = Position.of(Rank.A, File.ONE);
-        Position endPosition = Position.of(Rank.A, File.TWO);
+        void should_체스_기물을_이동시키지못한다_when_도착지에_내_기물이_있는_상황일때() {
+            //given
+            Position startPosition = Position.of(Rank.A, File.ONE);
+            Position endPosition = Position.of(Rank.A, File.TWO);
 
-        //when
+            //when
 
-        //then
-        assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도착지에 아군 기물이 있습니다.");
-    }
+            //then
+            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("도착지에 아군 기물이 있습니다.");
+        }
 
         @Test
         void should_체스_기물을_이동시키지못한다_when_상대방의_기물을_이동시키려고_할_때() {
@@ -98,7 +98,7 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 공격가능{
+    class 공격가능 {
 
         @Test
         void should_폰을_이동시킨다_when_폰이_공격가능할때() {
@@ -135,12 +135,38 @@ class ChessBoardTest {
             chessBoard.move(pawnMiddle, enemyPawnEnd);
             chessBoard.move(enemyKnightStart, enemyKnightEnd);
 
-
             //when
             final Executable executable = () -> chessBoard.move(queenStart, queenEnd);
 
             //then
             assertDoesNotThrow(executable);
+        }
+
+        @Test
+        void should_true반환_when_킹이죽었을시() {
+            //given
+            Position pawnStart = Position.of(Rank.D, File.TWO);
+            Position pawnMiddle = Position.of(Rank.D, File.FOUR);
+            Position enemyPawnStart = Position.of(Rank.C, File.SEVEN);
+            Position enemyPawnEnd = Position.of(Rank.C, File.FIVE);
+            Position knightStart = Position.of(Rank.G, File.ONE);
+            Position knightEnd = Position.of(Rank.H, File.THREE);
+            Position enemyQueenStart = Position.of(Rank.D, File.EIGHT);
+            Position enemyQueenMiddle = Position.of(Rank.A, File.FIVE);
+            Position enemyQueenEnd = Position.of(Rank.E, File.ONE);
+
+            chessBoard.move(pawnStart, pawnMiddle);
+            chessBoard.move(enemyPawnStart, enemyPawnEnd);
+            chessBoard.move(knightStart, knightEnd);
+            chessBoard.move(enemyQueenStart, enemyQueenMiddle);
+            chessBoard.move(knightEnd, knightStart);
+            chessBoard.move(enemyQueenMiddle, enemyQueenEnd);
+
+            //when
+            final boolean actual = chessBoard.isKingDead();
+
+            //then
+            assertThat(actual).isTrue();
         }
 
     }
