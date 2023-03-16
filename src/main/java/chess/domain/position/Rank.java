@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum Rank {
 
-    A(1, "a"),
-    B(2, "b"),
-    C(3, "c"),
-    D(4, "d"),
-    E(5, "e"),
-    F(6, "f"),
-    G(7, "g"),
-    H(8, "h");
+    A(1, "1"),
+    B(2, "2"),
+    C(3, "3"),
+    D(4, "4"),
+    E(5, "5"),
+    F(6, "6"),
+    G(7, "7"),
+    H(8, "8");
 
     private static final String WRONG_RANK_ERROR_MESSAGE = "잘못된 rank 입니다.";
 

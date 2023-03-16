@@ -16,7 +16,7 @@ class PathTest {
     void 단일_칸_이동경로_생성() {
         Path path = Path.ofSinglePath(Position.of(1, 1), Direction.NORTH);
 
-        assertThat(path.positions()).containsExactlyInAnyOrder(Position.of(2, 1));
+        assertThat(path.positions()).containsExactlyInAnyOrder(Position.of(1, 2));
     }
 
     @DisplayName("출발지와 방향을 전달받아 다중 칸 이동 경로를 만들 수 있다. (경로를 이루는 칸이 여러가지일 수 있다.)")
@@ -25,16 +25,16 @@ class PathTest {
         Path path = Path.ofMultiPath(Position.of(1, 1), Direction.NORTH);
 
         assertThat(path.positions()).containsExactly(
-                Position.of(2, 1), Position.of(3, 1), Position.of(4, 1), Position.of(5, 1), Position.of(6, 1),
-                Position.of(7, 1), Position.of(8, 1));
+                Position.of(1, 2), Position.of(1, 3), Position.of(1, 4), Position.of(1, 5), Position.of(1, 6),
+                Position.of(1, 7), Position.of(1, 8));
     }
 
     @DisplayName("폰의 경우, 첫 이동 시 2칸을 이동하는 이동 경로를 만들 수 있다.")
     @Test
     void 폰_시작_이동경로_생성() {
-        Path path = Path.ofPawnStartPath(Position.of(2, 1), Direction.NORTH);
+        Path path = Path.ofPawnStartPath(Position.of(1, 2), Direction.NORTH);
 
-        assertThat(path.positions()).containsExactly(Position.of(3, 1), Position.of(4, 1));
+        assertThat(path.positions()).containsExactly(Position.of(1, 3), Position.of(1, 4));
     }
 
 }

@@ -9,8 +9,8 @@ public class Position {
     public static final String EXCEPTION_MESSAGE_OUT_OF_BOUNDS = "말의 위치 범위를 벗어났습니다.";
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 8;
-    private static final int POSITION_RANK_INDEX = 0;
-    private static final int POSITION_FILE_INDEX = 1;
+    private static final int POSITION_FILE_INDEX = 0;
+    private static final int POSITION_RANK_INDEX = 1;
     private final int x;
     private final int y;
 
@@ -25,8 +25,8 @@ public class Position {
     }
 
     public static Position from(List<Integer> rankFile) {
-        return new Position(rankFile.get(POSITION_RANK_INDEX),
-                rankFile.get(POSITION_FILE_INDEX));
+        return new Position(rankFile.get(POSITION_FILE_INDEX),
+                rankFile.get(POSITION_RANK_INDEX));
     }
 
     private void validate(int x, int y) {
@@ -44,24 +44,23 @@ public class Position {
     }
 
     public Position findNextPosition(final Direction direction) {
-        int nextRank = x + direction.getRankChange();
-        int nextFile = y + direction.getFileChange();
+        int nextFile = x + direction.getFileChange();
+        int nextRank = y + direction.getRankChange();
 
-        if (isNotInRange(nextRank, nextFile)) {
+        if (isNotInRange(nextFile, nextRank)) {
             return null;
         }
 
-        return Position.of(nextRank, nextFile);
+        return Position.of(nextFile, nextRank);
     }
 
     public boolean isOneStepForwardDiagonal(Position other) {
         return other.x - x == 1 && Math.abs(other.y - y) == 1;
     }
 
-    public int getX() {
-        return x;
+    public int getY() {
+        return y;
     }
-
 
     @Override
     public boolean equals(final Object o) {

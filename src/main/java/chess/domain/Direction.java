@@ -2,31 +2,31 @@ package chess.domain;
 
 public enum Direction {
 
-    EAST(0, 1),
-    WEST(0, -1),
-    SOUTH(-1, 0),
-    NORTH(1, 0),
+    EAST(1, 0),
+    WEST(-1, 0),
+    SOUTH(0, -1),
+    NORTH(0, 1),
 
-    SOUTH_EAST(-1, 1),
+    SOUTH_EAST(1, -1),
     NORTH_EAST(1, 1),
-    NORTH_WEST(1, -1),
+    NORTH_WEST(-1, 1),
     SOUTH_WEST(-1, -1),
 
-    EAST_UP(1, 2),
-    EAST_DOWN(-1, 2),
-    WEST_UP(1, -2),
-    WEST_DOWN(-1, -2),
-    NORTH_RIGHT(2, 1),
-    NORTH_LEFT(2, -1),
-    SOUTH_RIGHT(-2, 1),
-    SOUTH_LEFT(-2, -1);
+    EAST_UP(2, 1),
+    EAST_DOWN(2, -1),
+    WEST_UP(-2, 1),
+    WEST_DOWN(-2, -1),
+    NORTH_RIGHT(1, 2),
+    NORTH_LEFT(-1, 2),
+    SOUTH_RIGHT(1, -2),
+    SOUTH_LEFT(-1, -2);
 
-    private final int rankChange;
     private final int fileChange;
+    private final int rankChange;
 
-    Direction(final int rankChange, final int fileChange) {
-        this.rankChange = rankChange;
+    Direction(final int fileChange, final int rankChange) {
         this.fileChange = fileChange;
+        this.rankChange = rankChange;
     }
 
     public int getRankChange() {

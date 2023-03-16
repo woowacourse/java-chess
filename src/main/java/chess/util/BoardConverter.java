@@ -30,15 +30,15 @@ public class BoardConverter {
                                    final Map<Position, Piece> piecesByPosition) {
         List<String> rank = new ArrayList<>();
         for (int fileIndex = FIRST_INDEX; fileIndex <= FILE_SIZE; fileIndex++) {
-            insertSquare(rank, rankIndex, fileIndex, piecesByPosition);
+            insertSquare(rank, fileIndex, rankIndex, piecesByPosition);
         }
         board.add(rank);
     }
 
-    private static void insertSquare(final List<String> rank, final int rankIndex, final int fileIndex,
+    private static void insertSquare(final List<String> rank, final int fileIndex, final int rankIndex,
                                      final Map<Position, Piece> piecesByPosition) {
-        if (piecesByPosition.containsKey(Position.of(rankIndex, fileIndex))) {
-            rank.add(PieceName.findNameByPiece(piecesByPosition.get(Position.of(rankIndex, fileIndex))));
+        if (piecesByPosition.containsKey(Position.of(fileIndex, rankIndex))) {
+            rank.add(PieceName.findNameByPiece(piecesByPosition.get(Position.of(fileIndex, rankIndex))));
             return;
         }
         rank.add(EMPTY_SQUARE);

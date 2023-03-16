@@ -36,16 +36,16 @@ public class ChessBoard {
     }
 
     private void insertPiecesByColor(TeamColor color) {
-        piecesByPosition.put(Position.of(color.startingRank(), 2), new Knight(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 1), new Rook(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 3), new Bishop(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 4), new King(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 5), new Queen(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 6), new Bishop(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 7), new Knight(color));
-        piecesByPosition.put(Position.of(color.startingRank(), 8), new Rook(color));
+        piecesByPosition.put(Position.of(2, color.startingRank()), new Knight(color));
+        piecesByPosition.put(Position.of(1, color.startingRank()), new Rook(color));
+        piecesByPosition.put(Position.of(3, color.startingRank()), new Bishop(color));
+        piecesByPosition.put(Position.of(4, color.startingRank()), new King(color));
+        piecesByPosition.put(Position.of(5, color.startingRank()), new Queen(color));
+        piecesByPosition.put(Position.of(6, color.startingRank()), new Bishop(color));
+        piecesByPosition.put(Position.of(7, color.startingRank()), new Knight(color));
+        piecesByPosition.put(Position.of(8, color.startingRank()), new Rook(color));
         IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
-                .forEach(file -> piecesByPosition.put(Position.of(color.startingPawnRank(), file),
+                .forEach(file -> piecesByPosition.put(Position.of(file, color.startingPawnRank()),
                         new Pawn(color)));
     }
 

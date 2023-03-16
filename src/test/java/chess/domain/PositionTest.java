@@ -43,7 +43,7 @@ public class PositionTest {
     @Test
     @DisplayName("전달 받은 방향에 따른 다음 위치가 범위 밖이라면, null 이 반환된다.")
     void 다음_이동_불가() {
-        Position current = Position.of(1, 8);
+        Position current = Position.of(8, 1);
 
         Position next = current.findNextPosition(Direction.EAST);
 
