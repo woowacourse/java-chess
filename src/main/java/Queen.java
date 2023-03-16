@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -24,6 +25,10 @@ public class Queen extends Piece {
 
     @Override
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        return null;
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+        if (movement.isOneStep()) {
+            return Collections.emptyList();
+        }
+        return sourcePosition.getPath(targetPosition);
     }
 }
