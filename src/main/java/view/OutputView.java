@@ -3,6 +3,7 @@ package view;
 import domain.piece.Piece;
 import domain.piece.Position;
 import domain.piece.Rank;
+import domain.piece.Side;
 
 import java.util.Map;
 
@@ -30,5 +31,9 @@ public class OutputView {
     public void printErrorMessage(String message) {
         System.out.println(message);
         System.out.println();
+    }
+
+    public void printSide(Side side) {
+        System.out.println("현재 차례: " + side + " 진영");
     }
 }
