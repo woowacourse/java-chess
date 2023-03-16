@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.board.Position;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -59,10 +60,12 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> getPaths(final Position targetPosition) {
-        return null;
+        final Direction direction = position.getDirectionTo(targetPosition);
+        final int moveCount = position.getMoveCount(targetPosition, direction);
+
+        if (isStartPosition() && moveCount == 2) {
+            return List.of(position.getNextPosition(direction));
+        }
+        return Collections.emptyList();
     }
-
-    // TODO: 2023/03/14 시작 위치 체크
-
-    // TODO: 2023/03/14 타겟위치로 이동 가능한지 체크
 }
