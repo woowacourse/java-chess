@@ -9,10 +9,10 @@ import java.util.List;
 
 public class King extends Piece {
 
-    private static final List<Direction> directions;
+    private static final List<Direction> DIRECTIONS;
 
     static {
-        directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.NORTH_EAST,
+        DIRECTIONS = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.NORTH_EAST,
                 Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
@@ -24,7 +24,7 @@ public class King extends Piece {
     @Override
     public List<Path> findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
-        for (Direction direction : directions) {
+        for (Direction direction : DIRECTIONS) {
             paths.add(Path.ofSinglePath(current, direction));
         }
         return paths;

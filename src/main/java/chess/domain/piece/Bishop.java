@@ -9,10 +9,10 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    private static final List<Direction> directions;
+    private static final List<Direction> DIRECTIONS;
 
     static {
-        directions = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        DIRECTIONS = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
     public Bishop(final TeamColor color) {
@@ -22,7 +22,7 @@ public class Bishop extends Piece {
     @Override
     public List<Path> findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
-        for (Direction direction : directions) {
+        for (Direction direction : DIRECTIONS) {
             paths.add(Path.ofMultiPath(current, direction));
         }
         return paths;
