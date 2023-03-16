@@ -4,10 +4,15 @@ import chess.domain.Color;
 import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static chess.domain.File.C;
 import static chess.domain.File.D;
 import static chess.domain.File.E;
@@ -42,14 +47,22 @@ class BishopTest {
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
-    void moveTest() {
-        final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
+    void moveTest(final Piece pieceInTargetPosition) {
+        final Piece originalBishop = new Bishop(C, EIGHT, BLACK);
 
-        final Piece movedBishop = originalBishop.move(new BlankPiece(D, SIX));
+        final Piece movedBishop = originalBishop.move(pieceInTargetPosition);
 
-        assertThat(movedBishop.getPosition()).isEqualTo(new Position(D, SIX));
+        assertThat(movedBishop.getPosition()).isEqualTo(pieceInTargetPosition.getPosition());
+    }
+
+    private static Stream<Arguments> providePieceInTargetPosition() {
+        return Stream.of(
+                Arguments.of(new BlankPiece(F, FIVE)),
+                Arguments.of(new Pawn(F, FIVE, WHITE))
+        );
     }
 
     @Test
