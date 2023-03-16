@@ -20,14 +20,25 @@ public enum Rank {
         this.index = index;
     }
 
-    public static int calculate(String src, String dst) {
-        return findRankBy(src).index - findRankBy(dst).index;
+    public static int calculate(Rank src, Rank dst) {
+        return src.index - dst.index;
     }
 
-    private static Rank findRankBy(final String rankInput) {
+    public Rank next(final int direction) {
+        return findRankBy(this.index + direction);
+    }
+
+    public static Rank findRankBy(final String rankInput) {
         return Arrays.stream(Rank.values())
                 .filter(value -> value.rank.equals(rankInput))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank을 입력했습니다."));
+    }
+
+    private Rank findRankBy(final int rankInput) {
+        return Arrays.stream(Rank.values())
+                .filter(value -> value.index == rankInput)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank Index를 입력했습니다."));
     }
 }

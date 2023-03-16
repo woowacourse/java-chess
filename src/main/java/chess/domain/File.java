@@ -20,14 +20,25 @@ public enum File {
         this.index = index;
     }
 
-    public static int calculate(String src, String dst) {
-        return findFileBy(src).index - findFileBy(dst).index;
+    public static int calculate(File src, File dst) {
+        return src.index - dst.index;
     }
 
-    private static File findFileBy(final String fileInput) {
+    public File next(final int direction) {
+        return findFileBy(this.index + direction);
+    }
+
+    public static File findFileBy(final String fileInput) {
         return Arrays.stream(File.values())
                 .filter(value -> value.file.equals(fileInput))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File을 입력했습니다."));
+    }
+
+    private File findFileBy(final int fileInput) {
+        return Arrays.stream(File.values())
+                .filter(value -> value.index ==fileInput)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 File index를 입력했습니다."));
     }
 }
