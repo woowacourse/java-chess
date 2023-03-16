@@ -17,6 +17,28 @@ import static chess.domain.piece.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
+    static Stream<Arguments> canAttackDummy() {
+        return Stream.of(
+                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(BLACK))
+        );
+    }
+
+    static Stream<Arguments> canNotAttackDummy() {
+        return Stream.of(
+                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(BLACK)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(BLACK)),
+                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(WHITE)),
+                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(WHITE)),
+                Arguments.of(SOUTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(SOUTH_EAST, 1, Side.from(WHITE), Side.from(BLACK)),
+                Arguments.of(NORTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
+                Arguments.of(NORTH_EAST, 1, Side.from(BLACK), Side.from(WHITE))
+        );
+    }
+
     @Test
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable() {
@@ -44,7 +66,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("canAttackDummy")
     @DisplayName("공격할 수 있는지 확인한다.")
-    void canAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
+    void canAttack(final Direction direction, final int distance, final Side side, final Side opponentSide) {
         // when
         Pawn pawn = new Pawn(side, Role.PAWN);
         Pawn opponentPiece = new Pawn(opponentSide, Role.PAWN);
@@ -53,36 +75,14 @@ class PawnTest {
         assertThat(pawn.canAttack(direction, distance, opponentPiece)).isTrue();
     }
 
-    static Stream<Arguments> canAttackDummy() {
-        return Stream.of(
-                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
-                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(WHITE)),
-                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
-                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(BLACK))
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("canNotAttackDummy")
     @DisplayName("공격할 수 없는지 확인한다.")
-    void canNotAttack(final Direction direction, final int distance, final Side side, final Side opponentSide)  {
+    void canNotAttack(final Direction direction, final int distance, final Side side, final Side opponentSide) {
         // when
         Pawn pawn = new Pawn(side, Role.PAWN);
         Pawn opponentPiece = new Pawn(opponentSide, Role.PAWN);
         // expected
         assertThat(pawn.canAttack(direction, distance, opponentPiece)).isFalse();
-    }
-
-    static Stream<Arguments> canNotAttackDummy() {
-        return Stream.of(
-                Arguments.of(SOUTH_WEST, 1, Side.from(BLACK), Side.from(BLACK)),
-                Arguments.of(SOUTH_EAST, 1, Side.from(BLACK), Side.from(BLACK)),
-                Arguments.of(NORTH_WEST, 1, Side.from(WHITE), Side.from(WHITE)),
-                Arguments.of(NORTH_EAST, 1, Side.from(WHITE), Side.from(WHITE)),
-                Arguments.of(SOUTH_WEST, 1, Side.from(WHITE), Side.from(BLACK)),
-                Arguments.of(SOUTH_EAST, 1, Side.from(WHITE), Side.from(BLACK)),
-                Arguments.of(NORTH_WEST, 1, Side.from(BLACK), Side.from(WHITE)),
-                Arguments.of(NORTH_EAST, 1, Side.from(BLACK), Side.from(WHITE))
-        );
     }
 }

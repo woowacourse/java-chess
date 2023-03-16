@@ -25,31 +25,31 @@ public class OutputView {
     }
 
     private String convertPiece(final Piece piece) {
-        if(piece instanceof Pawn) {
+        if (piece instanceof Pawn) {
             return convertSide((MovablePiece) piece, "p");
         }
-        if(piece instanceof Rook) {
+        if (piece instanceof Rook) {
             return convertSide((MovablePiece) piece, "r");
         }
-        if(piece instanceof Knight) {
+        if (piece instanceof Knight) {
             return convertSide((MovablePiece) piece, "n");
         }
-        if(piece instanceof Bishop) {
+        if (piece instanceof Bishop) {
             return convertSide((MovablePiece) piece, "b");
         }
-        if(piece instanceof Queen) {
+        if (piece instanceof Queen) {
             return convertSide((MovablePiece) piece, "q");
         }
-        if(piece instanceof King) {
+        if (piece instanceof King) {
             return convertSide((MovablePiece) piece, "k");
         }
         return ".";
     }
 
     private String convertSide(final MovablePiece piece, final String convertedPiece) {
-         if(piece.getColor().equals(Color.BLACK)) {
-             return convertedPiece.toUpperCase();
-         }
-         return convertedPiece.toLowerCase();
+        if (piece.getColor().equals(Color.BLACK)) {
+            return convertedPiece.toUpperCase();
+        }
+        return convertedPiece.toLowerCase();
     }
 }

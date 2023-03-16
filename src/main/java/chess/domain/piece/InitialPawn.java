@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.Role;
 import chess.domain.Side;
 
-public class InitialPawn extends Pawn{
+public class InitialPawn extends Pawn {
     private static final int MOVE_DISTANCE = 2;
 
     public InitialPawn(final Side side, final Role role) {
@@ -16,7 +16,7 @@ public class InitialPawn extends Pawn{
         if (distance > MOVE_DISTANCE) {
             return false;
         }
-        if(this.side == Side.from(Color.WHITE)) {
+        if (this.side == Side.from(Color.WHITE)) {
             return WHITE_FORWARD_DIRECTION == direction;
         }
         return BLACK_FORWARD_DIRECTION == direction;

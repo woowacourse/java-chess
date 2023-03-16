@@ -11,18 +11,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static chess.domain.piece.Direction.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
-    @ParameterizedTest
-    @MethodSource("directionDummy")
-    @DisplayName("두 Square에 대한 방향을 구한다.")
-    void of(Square sourceSquare, Square targetSquare, Direction expectedDirection) {
-        // expected
-        assertThat(Direction.of(sourceSquare, targetSquare)).isEqualTo(expectedDirection);
-    }
-
-     static Stream<Arguments> directionDummy() {
+    static Stream<Arguments> directionDummy() {
         return Stream.of(
                 //동서남북
                 Arguments.of(Square.of(File.A, Rank.ONE), Square.of(File.A, Rank.TWO), NORTH),
@@ -43,6 +35,14 @@ class DirectionTest {
                 Arguments.of(Square.of(File.C, Rank.THREE), Square.of(File.A, Rank.FOUR), NORTH_WEST_WEST),
                 Arguments.of(Square.of(File.C, Rank.THREE), Square.of(File.B, Rank.FIVE), NORTH_NORTH_WEST)
         );
-     }
+    }
+
+    @ParameterizedTest
+    @MethodSource("directionDummy")
+    @DisplayName("두 Square에 대한 방향을 구한다.")
+    void of(Square sourceSquare, Square targetSquare, Direction expectedDirection) {
+        // expected
+        assertThat(Direction.of(sourceSquare, targetSquare)).isEqualTo(expectedDirection);
+    }
 
 }

@@ -15,6 +15,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MovablePieceTest {
 
+    static Stream<Arguments> pieceDummy() {
+        return Stream.of(
+                Arguments.arguments(Role.PAWN, Pawn.class),
+                Arguments.arguments(Role.ROOK, Rook.class),
+                Arguments.arguments(Role.KNIGHT, Knight.class),
+                Arguments.arguments(Role.BISHOP, Bishop.class),
+                Arguments.arguments(Role.QUEEN, Queen.class),
+                Arguments.arguments(Role.KING, King.class)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("pieceDummy")
     @DisplayName("역할에 따른 기물이 생성된다.")
@@ -25,17 +36,6 @@ class MovablePieceTest {
         Piece piece = role.create(side);
         //expected
         assertThat(piece).isInstanceOf(expectedPieceType);
-    }
-
-    static Stream<Arguments> pieceDummy() {
-        return Stream.of(
-                Arguments.arguments(Role.PAWN, Pawn.class),
-                Arguments.arguments(Role.ROOK, Rook.class),
-                Arguments.arguments(Role.KNIGHT, Knight.class),
-                Arguments.arguments(Role.BISHOP, Bishop.class),
-                Arguments.arguments(Role.QUEEN, Queen.class),
-                Arguments.arguments(Role.KING, King.class)
-        );
     }
 
     @Test

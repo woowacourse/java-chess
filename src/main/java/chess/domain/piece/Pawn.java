@@ -24,7 +24,7 @@ public class Pawn extends MovablePiece {
         if (distance > MAX_MOVE_DISTANCE) {
             return false;
         }
-        if(this.side == Side.from(Color.WHITE)) {
+        if (this.side == Side.from(Color.WHITE)) {
             return WHITE_FORWARD_DIRECTION == direction;
         }
         return BLACK_FORWARD_DIRECTION == direction;
@@ -32,10 +32,10 @@ public class Pawn extends MovablePiece {
 
     @Override
     public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
-        if(!isOpponentSide(target)) {
+        if (!isOpponentSide(target)) {
             return false;
         }
-        if(this.side == Side.from(Color.WHITE)) {
+        if (this.side == Side.from(Color.WHITE)) {
             return WHITE_ATTACK_DIRECTION.contains(direction) && distance == MAX_MOVE_DISTANCE;
         }
         return BLACK_ATTACK_DIRECTION.contains(direction) && distance == MAX_MOVE_DISTANCE;

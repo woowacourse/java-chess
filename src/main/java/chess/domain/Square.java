@@ -11,14 +11,19 @@ import java.util.Map;
 public class Square {
     private static final Map<File, Map<Rank, Square>> CACHE;
 
-    private final File file;
-    private final Rank rank;
-
     static {
         CACHE = new LinkedHashMap<>();
         for (File file : File.values()) {
             CACHE.put(file, createFile(file));
         }
+    }
+
+    private final File file;
+    private final Rank rank;
+
+    private Square(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     private static Map<Rank, Square> createFile(final File file) {
@@ -27,11 +32,6 @@ public class Square {
             ranks.put(rank, new Square(file, rank));
         }
         return ranks;
-    }
-
-    private Square(final File file, final Rank rank) {
-        this.file = file;
-        this.rank = rank;
     }
 
     public static Square of(final File file, final Rank rank) {

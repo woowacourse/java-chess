@@ -7,7 +7,6 @@ import chess.domain.Side;
 import java.util.List;
 
 import static chess.domain.piece.Direction.*;
-import static chess.domain.piece.Direction.SOUTH_WEST;
 
 public abstract class MovablePiece extends Piece {
     protected static final List<Direction> STRAIGHT_DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);

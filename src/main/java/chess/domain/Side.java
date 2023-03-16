@@ -7,13 +7,13 @@ import java.util.Objects;
 public class Side {
     private static final Map<Color, Side> CACHE;
 
-    private final Color color;
-
     static {
         CACHE = new HashMap<>();
         CACHE.put(Color.BLACK, new Side(Color.BLACK));
         CACHE.put(Color.WHITE, new Side(Color.WHITE));
     }
+
+    private final Color color;
 
     private Side(final Color color) {
         this.color = color;
