@@ -8,6 +8,13 @@ import java.util.List;
 
 public class ChessGameController {
 
+    private static final String END_COMMAND = "end";
+    private static final int COMMAND_INDEX = 0;
+    private static final String MOVE_COMMAND = "move";
+    private static final int SELECTED_PIECE = 1;
+    private static final int DESTINATION = 2;
+    private static final String START_COMMAND = "start";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -41,17 +48,17 @@ public class ChessGameController {
     }
 
     private boolean isNotEnd(final List<String> inputCommand) {
-        return !inputCommand.get(0).equals("end");
+        return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
     }
 
     private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(0).startsWith("move")) {
-            chessGame.move(inputCommand.get(1), inputCommand.get(2));
+        if (inputCommand.get(COMMAND_INDEX).startsWith(MOVE_COMMAND)) {
+            chessGame.move(inputCommand.get(SELECTED_PIECE), inputCommand.get(DESTINATION));
         }
     }
 
     private ChessGame createNewChessGame(ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(0).equals("start")) {
+        if (inputCommand.get(COMMAND_INDEX).equals(START_COMMAND)) {
             chessGame = new ChessGame(BoardFactory.createBoard());
         }
         return chessGame;
