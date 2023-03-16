@@ -11,8 +11,8 @@ public final class Coordinate {
 
     private static final Map<String, Coordinate> cache = new HashMap<>();
 
-    private final int fileIndex;
-    private final int rankIndex;
+    private final char fileIndex;
+    private final char rankIndex;
 
     private Coordinate(final String alphanumeric) {
         validateAlphanumeric(alphanumeric);
@@ -21,7 +21,7 @@ public final class Coordinate {
     }
 
     public static Coordinate of(final String alphanumeric) {
-        if(!cache.containsKey(alphanumeric)){
+        if (!cache.containsKey(alphanumeric)) {
             cache.put(alphanumeric, new Coordinate(alphanumeric));
         }
 
@@ -34,11 +34,36 @@ public final class Coordinate {
         }
     }
 
-    private int parsingFileIndex(final String alphanumeric) {
-        return alphanumeric.charAt(FILE_PARSE_INDEX) - 97;
+    private char parsingFileIndex(final String alphanumeric) {
+        return alphanumeric.charAt(FILE_PARSE_INDEX);
     }
 
-    private int parsingRankIndex(final String alphanumeric) {
-        return alphanumeric.charAt(RANK_PARSE_INDEX) - 49;
+    private char parsingRankIndex(final String alphanumeric) {
+        return alphanumeric.charAt(RANK_PARSE_INDEX);
+    }
+
+    public Coordinate verticalMove(final int step) {
+        return Coordinate.of(fileIndex + addIndex(rankIndex, step));
+    }
+
+
+    public Coordinate horizontalMove(final int step) {
+        return Coordinate.of(addIndex(fileIndex, step) + rankIndex);
+    }
+
+    public Coordinate positiveDiagonalMove(final int step) {
+        return Coordinate.of(addIndex(fileIndex, step) + addIndex(rankIndex, step));
+    }
+
+    public Coordinate negativeDiagonalMove(final int step) {
+        return Coordinate.of(subtractIndex(fileIndex, step) + addIndex(rankIndex, step));
+    }
+
+    private String addIndex(final char index, final int step) {
+        return Character.toString(index + step);
+    }
+
+    private String subtractIndex(final char index, final int step) {
+        return Character.toString(index - step);
     }
 }
