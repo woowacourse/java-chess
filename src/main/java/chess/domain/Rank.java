@@ -1,8 +1,10 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum Rank {
     ONE("1", 1),
@@ -13,6 +15,7 @@ public enum Rank {
     SIX("6", 6),
     SEVEN("7", 7),
     EIGHT("8", 8);
+    private static final int SKIP_FIRST = 1;
 
     private final String rankName;
     private final int rankOrder;
@@ -29,9 +32,9 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
 
-    public Rank from(int difference) {
+    public static Rank from(int rankOrder) {
         return Arrays.stream(Rank.values())
-                .filter(it -> it.rankOrder == rankOrder + difference)
+                .filter(it -> it.rankOrder == rankOrder)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
@@ -48,18 +51,13 @@ public enum Rank {
     }
 
     public List<Rank> createPath(Rank other) {
-        int rankDifference = getDifference(other);
-        if (rankDifference == 0) {
-            return new ArrayList<>();
+        List<Rank> ranks = IntStream.range(Math.min(rankOrder, other.rankOrder), Math.max(rankOrder, other.rankOrder))
+                .skip(SKIP_FIRST)
+                .mapToObj(Rank::from)
+                .collect(Collectors.toList());
+        if (rankOrder > other.rankOrder) {
+            Collections.reverse(ranks);
         }
-        int unit = rankDifference / Math.abs(rankDifference);
-        List<Rank> result = new ArrayList<>();
-        int current = unit;
-        while (current != rankDifference) {
-            Rank rank = from(current);
-            result.add(rank);
-            current += unit;
-        }
-        return result;
+        return ranks;
     }
 }
