@@ -4,8 +4,6 @@ import domain.coordinate.Position;
 import domain.coordinate.Route;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Knight extends Piece {
 
@@ -24,11 +22,7 @@ public class Knight extends Piece {
         int diffY = Math.abs(target.diffY(source));
         int diffX = Math.abs(target.diffX(source));
 
-        Set<Integer> set = new HashSet<>();
-        set.add(diffX);
-        set.add(diffY);
-
-        return set.contains(1) && set.contains(2);
+        return (diffX == 1 && diffY == 2) || (diffX == 2 && diffY == 1);
     }
 
 }
