@@ -153,10 +153,25 @@ class PositionTest {
 
     @ParameterizedTest
     @MethodSource("getPathToTestCase")
-    @DisplayName("목적지 Position까지의 경로를 반환할 수 있다.")
-    void getPathToTest(Position start, Position end, List<Position> path) {
+    @DisplayName("목적지가 8방향 직선 상에 있을 경우 목적지 Position까지의 경로를 반환할 수 있다.")
+    void getPathToTest_EightDirections(Position start, Position end, List<Position> path) {
         assertThat(start.getPathTo(end)).containsAll(path);
     }
+
+    @Test
+    @DisplayName("목적지가 8방향 직선 상에 없을 경우 목적지 Position만 경로에 넣어준다.")
+    void getPathToTest_NonEightDirections() {
+        // given
+        Position start = Position.of(3, 3);
+        Position end = Position.of(6, 8);
+
+        // when
+        List<Position> path = start.getPathTo(end);
+
+        // then
+        assertThat(path).containsExactly(end);
+    }
+
 
     @Test
     @DisplayName("black pawn의 초기 위치이면 true를 반환한다.")

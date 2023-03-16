@@ -29,6 +29,7 @@ public final class Position {
     }
 
     public static Position of(int row, int column) {
+        // TODO: 존재하지 않는 좌표 입력 시 예외처리
         return cache.get(Objects.hash(row, column));
     }
 
@@ -40,7 +41,10 @@ public final class Position {
         int rowGap = end.row - this.row;
         int columnGap = end.column - this.column;
 
-        return calculatePath(rowGap, columnGap);
+        if (isStraightOfEightDirections(rowGap, columnGap)) {
+            return calculatePath(rowGap, columnGap);
+        }
+        return new ArrayList<>(List.of(end));
     }
 
     private List<Position> calculatePath(int rowGap, int columnGap) {
@@ -52,6 +56,10 @@ public final class Position {
             path.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
         }
         return path;
+    }
+
+    private boolean isStraightOfEightDirections(int rowGap, int columnGap) {
+        return rowGap == 0 || columnGap == 0 || Math.abs(rowGap) == Math.abs(columnGap);
     }
 
     public Position moveUp() {
