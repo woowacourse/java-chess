@@ -3,8 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Path;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +21,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            List<Path> movePaths = pawn.findMovablePaths(new Position(2, 2));
+            List<Path> movePaths = pawn.findMovablePaths(Position.of(2, 2));
 
             assertThat(movePaths.size()).isEqualTo(4);
         }
@@ -31,7 +31,7 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            List<Path> movePaths = pawn.findMovablePaths(new Position(3, 2));
+            List<Path> movePaths = pawn.findMovablePaths(Position.of(3, 2));
 
             assertThat(movePaths.size()).isEqualTo(3);
         }
@@ -46,7 +46,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            List<Path> movePaths = pawn.findMovablePaths(new Position(7, 2));
+            List<Path> movePaths = pawn.findMovablePaths(Position.of(7, 2));
 
             assertThat(movePaths.size()).isEqualTo(4);
         }
@@ -56,7 +56,7 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            List<Path> movePaths = pawn.findMovablePaths(new Position(3, 2));
+            List<Path> movePaths = pawn.findMovablePaths(Position.of(3, 2));
 
             assertThat(movePaths.size()).isEqualTo(3);
         }

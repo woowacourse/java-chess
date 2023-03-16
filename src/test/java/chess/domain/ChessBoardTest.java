@@ -102,7 +102,7 @@ class ChessBoardTest {
 
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
 
-        assertThat(piecesByPosition.get(new Position(7, 2)))
+        assertThat(piecesByPosition.get(Position.of(7, 2)))
                 .isEqualTo(new Pawn(TeamColor.WHITE));
     }
 
@@ -113,9 +113,9 @@ class ChessBoardTest {
 
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
 
-        assertThat(piecesByPosition.containsKey(new Position(2, 1)))
+        assertThat(piecesByPosition.containsKey(Position.of(2, 1)))
                 .isFalse();
-        assertThat(piecesByPosition.get(new Position(4, 1)))
+        assertThat(piecesByPosition.get(Position.of(4, 1)))
                 .isEqualTo(new Pawn(TeamColor.WHITE));
     }
 }

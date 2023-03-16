@@ -3,18 +3,17 @@ package chess.domain.piece;
 import chess.domain.Path;
 import chess.domain.TeamColor;
 import chess.domain.position.Position;
-import chess.view.PieceName;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
 
     protected TeamColor color;
-    protected PieceName name;
+    protected PieceType type;
 
-    public Piece(final TeamColor color, final PieceName name) {
+    public Piece(final TeamColor color, final PieceType type) {
         this.color = color;
-        this.name = name;
+        this.type = type;
     }
 
     public abstract List<Path> findMovablePaths(Position position);
@@ -25,8 +24,12 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public String getName() {
-        return name.getName(color);
+    public TeamColor getColor() {
+        return color;
+    }
+
+    public PieceType getType() {
+        return type;
     }
 
     @Override
@@ -38,11 +41,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color && name == piece.name;
+        return color == piece.color && type == piece.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, name);
+        return Objects.hash(color, type);
     }
 }

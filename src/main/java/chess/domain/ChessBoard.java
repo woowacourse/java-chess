@@ -17,8 +17,6 @@ public class ChessBoard {
 
     private static final int FIRST_INDEX = 1;
     private static final int RANK_SIZE = 8;
-    private static final int POSITION_RANK_INDEX = 0;
-    private static final int POSITION_FILE_INDEX = 1;
     private static final String WRONG_START_ERROR_MESSAGE = "시작 위치에 말이 없습니다.";
     private static final String OBSTACLE_IN_PATH_ERROR_MESSAGE = "경로에 다른 말이 있어서 이동할 수 없습니다.";
     private static final String WRONG_PAWN_PATH_ERROR_MESSAGE = "폰은 공격 할 때만 대각선으로 이동할 수 있습니다.";
@@ -38,24 +36,22 @@ public class ChessBoard {
     }
 
     private void insertPiecesByColor(TeamColor color) {
-        piecesByPosition.put(new Position(color.startingRank(), 1), new Rook(color));
-        piecesByPosition.put(new Position(color.startingRank(), 2), new Knight(color));
-        piecesByPosition.put(new Position(color.startingRank(), 3), new Bishop(color));
-        piecesByPosition.put(new Position(color.startingRank(), 4), new King(color));
-        piecesByPosition.put(new Position(color.startingRank(), 5), new Queen(color));
-        piecesByPosition.put(new Position(color.startingRank(), 6), new Bishop(color));
-        piecesByPosition.put(new Position(color.startingRank(), 7), new Knight(color));
-        piecesByPosition.put(new Position(color.startingRank(), 8), new Rook(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 2), new Knight(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 1), new Rook(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 3), new Bishop(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 4), new King(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 5), new Queen(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 6), new Bishop(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 7), new Knight(color));
+        piecesByPosition.put(Position.of(color.startingRank(), 8), new Rook(color));
         IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
-                .forEach(file -> piecesByPosition.put(new Position(color.startingPawnRank(), file),
+                .forEach(file -> piecesByPosition.put(Position.of(color.startingPawnRank(), file),
                         new Pawn(color)));
     }
 
     public void move(List<Integer> sourcePosition, List<Integer> destPosition, final TeamColor teamColor) {
-        // TODO List<integer>를 받아서 Position 으로 변환하는 정적 팩터리 메서드 정의
-        Position source = new Position(sourcePosition.get(POSITION_RANK_INDEX),
-                sourcePosition.get(POSITION_FILE_INDEX));
-        Position dest = new Position(destPosition.get(POSITION_RANK_INDEX), destPosition.get(POSITION_FILE_INDEX));
+        Position source = Position.from(sourcePosition);
+        Position dest = Position.from(destPosition);
 
         Piece piece = findPieceInStartPosition(source, teamColor);
         List<Path> movablePaths = piece.findMovablePaths(source);

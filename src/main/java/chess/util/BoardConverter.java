@@ -1,7 +1,8 @@
 package chess.util;
 
-import chess.domain.position.Position;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,8 @@ public class BoardConverter {
 
     private static void insertSquare(final List<String> rank, final int rankIndex, final int fileIndex,
                                      final Map<Position, Piece> piecesByPosition) {
-        if (piecesByPosition.containsKey(new Position(rankIndex, fileIndex))) {
-            rank.add(piecesByPosition.get(new Position(rankIndex, fileIndex)).getName());
+        if (piecesByPosition.containsKey(Position.of(rankIndex, fileIndex))) {
+            rank.add(PieceName.findNameByPiece(piecesByPosition.get(Position.of(rankIndex, fileIndex))));
             return;
         }
         rank.add(EMPTY_SQUARE);

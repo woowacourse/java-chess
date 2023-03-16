@@ -15,10 +15,12 @@ public class OutputView {
     }
 
     public void printBoard(List<List<String>> board) {
+        System.out.println();
         for (List<String> rank : board) {
             printRank(rank);
             System.out.println();
         }
+        System.out.println();
     }
 
     private void printRank(final List<String> rank) {

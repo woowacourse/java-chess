@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -8,13 +9,24 @@ public class Position {
     public static final String EXCEPTION_MESSAGE_OUT_OF_BOUNDS = "말의 위치 범위를 벗어났습니다.";
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 8;
+    private static final int POSITION_RANK_INDEX = 0;
+    private static final int POSITION_FILE_INDEX = 1;
     private final int x;
     private final int y;
 
-    public Position(final int x, final int y) {
+    private Position(final int x, final int y) {
         validate(x, y);
         this.x = x;
         this.y = y;
+    }
+
+    public static Position of(final int x, final int y) {
+        return new Position(x, y);
+    }
+
+    public static Position from(List<Integer> rankFile) {
+        return new Position(rankFile.get(POSITION_RANK_INDEX),
+                rankFile.get(POSITION_FILE_INDEX));
     }
 
     private void validate(int x, int y) {
@@ -39,7 +51,7 @@ public class Position {
             return null;
         }
 
-        return new Position(nextRank, nextFile);
+        return Position.of(nextRank, nextFile);
     }
 
     public boolean isOneStepForwardDiagonal(Position other) {

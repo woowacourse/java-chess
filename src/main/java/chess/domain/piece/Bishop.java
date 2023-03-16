@@ -4,7 +4,6 @@ import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.TeamColor;
 import chess.domain.position.Position;
-import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Bishop extends Piece {
     }
 
     public Bishop(final TeamColor color) {
-        super(color, PieceName.BISHOP);
+        super(color, PieceType.BISHOP);
     }
 
     @Override

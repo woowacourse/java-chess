@@ -3,8 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Path;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -20,7 +20,7 @@ class KingTest {
     void 이동_범위_확인() {
         King king = new King(TeamColor.WHITE);
 
-        List<Path> movablePaths = king.findMovablePaths(new Position(1, 1));
+        List<Path> movablePaths = king.findMovablePaths(Position.of(1, 1));
 
         int totalPositionCount = 0;
 

@@ -4,7 +4,6 @@ import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.TeamColor;
 import chess.domain.position.Position;
-import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Knight extends Piece {
     }
 
     public Knight(final TeamColor color) {
-        super(color, PieceName.KNIGHT);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
