@@ -1,33 +1,32 @@
 package view;
 
-import domain.chessboard.Empty;
-import domain.chessboard.SquareStatus;
-import domain.piece.*;
+import domain.chessboard.EmptyType;
+import domain.chessboard.Type;
+import domain.piece.PieceType;
 
 import java.util.Arrays;
 
 public enum ChessBoardElement {
 
-    KING(King.class, "k"),
-    QUEEN(Queen.class, "q"),
-    KNIGHT(Knight.class, "n"),
-    BISHOP(Bishop.class, "b"),
-    ROOK(Rook.class, "r"),
-    PAWN(Pawn.class, "p"),
-    EMPTY(Empty.class, "."),
-    ;
+    KING(PieceType.KING, "k"),
+    QUEEN(PieceType.QUEEN, "q"),
+    KNIGHT(PieceType.KNIGHT, "n"),
+    BISHOP(PieceType.BISHOP, "b"),
+    ROOK(PieceType.ROOK, "r"),
+    PAWN(PieceType.PAWN, "p"),
+    EMPTY(EmptyType.EMPTY, ".");
 
-    private final Class squareStatusClass;
+    private final Type type;
     private final String elementName;
 
-    ChessBoardElement(final Class squareStatusClass, final String elementName) {
-        this.squareStatusClass = squareStatusClass;
+    ChessBoardElement(final Type type, final String elementName) {
+        this.type = type;
         this.elementName = elementName;
     }
 
-    public static ChessBoardElement from(SquareStatus squareStatus) {
+    public static ChessBoardElement from(Type type) {
         return Arrays.stream(values())
-                .filter(value -> value.squareStatusClass == squareStatus.getClass())
+                .filter(value -> value.type == type)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
