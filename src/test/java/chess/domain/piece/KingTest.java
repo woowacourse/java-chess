@@ -24,7 +24,7 @@ class KingTest {
 	}
 
 	@ParameterizedTest
-	@DisplayName("킹은 팀과 관계 없이 어떤 방향으로든 1칸 이상 이동할 수 있다.")
+	@DisplayName("킹은 팀과 관계 없이 어떤 방향으로든 1칸 초과하여 이동할 수 없다.")
 	@CsvSource({"0,1","1,1","1,0","1,-1","0,-1","-1,-1","-1,0","-1,1"})
 	void kingCannotMoveMoreThan1Test(int x, int y) {
 		int multiplier = 2;
