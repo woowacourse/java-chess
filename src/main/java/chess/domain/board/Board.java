@@ -19,10 +19,11 @@ public class Board {
     }
 
     public Piece findPiece(final File file, final Rank rank) {
-        if (!board.containsKey(Square.of(file, rank))) {
+        Square piece = Square.of(file, rank);
+        if (!board.containsKey(piece)) {
             return new VacantPiece();
         }
-        return board.get(Square.of(file, rank));
+        return board.get(piece);
     }
 
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
@@ -64,14 +65,14 @@ public class Board {
     }
 
     private void validateCanNotMove(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
-        boolean possible = isPossible(targetSquare, direction, sourcePiece, distance);
+        boolean possible = isPossibleMove(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
             throw new IllegalArgumentException("상대 기물이나 빈 공간으로만 이동할 수 있습니다.");
         }
     }
 
-    private boolean isPossible(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
+    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
         if (board.containsKey(targetSquare)) {
             return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
         }
