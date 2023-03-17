@@ -14,10 +14,14 @@ public class MovablePosition {
     private static final int MAX_CHESS_BOUNDARY = 8;
     private static final String BLANK = "blank";
 
-    private static final List<Position> crossVector = List.of(Position.initPosition(1, 0), Position.initPosition(0, 1), Position.initPosition(-1, 0), Position.initPosition(0, -1));
-    private static final List<Position> diagonalVector = List.of(Position.initPosition(1, 1), Position.initPosition(1, -1), Position.initPosition(-1, 1), Position.initPosition(-1, -1));
-    private static final List<Position> knightMoveVector = List.of(Position.initPosition(1, 2), Position.initPosition(-1, 2), Position.initPosition(1, -2), Position.initPosition(-1, -2),
-            Position.initPosition(2, 1), Position.initPosition(-2, 1), Position.initPosition(2, -1), Position.initPosition(-2, -1));
+    private static final List<Position> crossVector = List.of(Position.initPosition(1, 0), Position.initPosition(0, 1),
+            Position.initPosition(-1, 0), Position.initPosition(0, -1));
+    private static final List<Position> diagonalVector = List.of(Position.initPosition(1, 1),
+            Position.initPosition(1, -1), Position.initPosition(-1, 1), Position.initPosition(-1, -1));
+    private static final List<Position> knightMoveVector = List.of(Position.initPosition(1, 2),
+            Position.initPosition(-1, 2), Position.initPosition(1, -2), Position.initPosition(-1, -2),
+            Position.initPosition(2, 1), Position.initPosition(-2, 1), Position.initPosition(2, -1),
+            Position.initPosition(-2, -1));
     private static final List<Position> blackPawnVector = List.of(Position.initPosition(0, -1));
     private static final List<Position> whitePawnVector = List.of(Position.initPosition(0, 1));
 
@@ -29,73 +33,47 @@ public class MovablePosition {
     public List<Position> findByShape(ChessBoard chessBoard, Position sourcePosition) {
         ChessPiece chessPiece = chessBoard.getChessPieceByPosition(sourcePosition);
         String pieceShape = Shape.getNameByClass(chessPiece);
-        makePawnRoute(chessBoard, sourcePosition, pieceShape);
-        makeKnightRoute(chessBoard, sourcePosition, pieceShape);
-        makeBishopRoute(chessBoard, sourcePosition, pieceShape);
-        makeRookRoute(chessBoard, sourcePosition, pieceShape);
-        makeQueenRoute(chessBoard, sourcePosition, pieceShape);
-        makeKingRoute(chessBoard, sourcePosition, pieceShape);
+        makeRoute(chessBoard, sourcePosition, pieceShape);
         return movablePosition;
     }
 
-    private void makePawnRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
+    private void makeRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_PAWN.getName())) {
             addPawnPosition(chessBoard, sourcePosition, whitePawnVector, 2);
         }
         if (pieceShape.equals(Shape.BLACK_PAWN.getName())) {
             addPawnPosition(chessBoard, sourcePosition, blackPawnVector, 7);
         }
-    }
-
-    private void makeBishopRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
-        if (pieceShape.equals(Shape.WHITE_BISHOP.getName()) || pieceShape.equals(Shape.BLACK_BISHOP.getName())) {
-            addDiagonalPosition(chessBoard, sourcePosition, true);
-        }
-    }
-
-    private void makeRookRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_ROOK.getName()) || pieceShape.equals(Shape.BLACK_ROOK.getName())) {
-            addCrossPosition(chessBoard, sourcePosition, true);
+            addCrossOrDiagonalPosition(chessBoard, sourcePosition, diagonalVector, true);
         }
-    }
-
-    private void makeKnightRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
+        if (pieceShape.equals(Shape.WHITE_BISHOP.getName()) || pieceShape.equals(Shape.BLACK_BISHOP.getName())) {
+            addCrossOrDiagonalPosition(chessBoard, sourcePosition, crossVector, true);
+        }
         if (pieceShape.equals(Shape.WHITE_KNIGHT.getName()) || pieceShape.equals(Shape.BLACK_KNIGHT.getName())) {
             addKnightPosition(chessBoard, sourcePosition);
         }
-    }
-
-    private void makeQueenRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_QUEEN.getName()) || pieceShape.equals(Shape.BLACK_QUEEN.getName())) {
-            addCrossPosition(chessBoard, sourcePosition, true);
-            addDiagonalPosition(chessBoard, sourcePosition, true);
+            addRoyalPostion(chessBoard, sourcePosition, true);
         }
-    }
-
-    private void makeKingRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_KING.getName()) || pieceShape.equals(Shape.BLACK_KING.getName())) {
-            addCrossPosition(chessBoard, sourcePosition, false);
-            addDiagonalPosition(chessBoard, sourcePosition, false);
+            addRoyalPostion(chessBoard, sourcePosition, false);
         }
     }
 
-    public void addCrossPosition(ChessBoard chessBoard, Position sourcePosition, boolean isInfinite) {
+    private void addRoyalPostion(ChessBoard chessBoard, Position sourcePosition, boolean isInfinite) {
+        addCrossOrDiagonalPosition(chessBoard, sourcePosition, crossVector, false);
+        addCrossOrDiagonalPosition(chessBoard, sourcePosition, diagonalVector, false);
+    }
+
+    public void addCrossOrDiagonalPosition(ChessBoard chessBoard, Position sourcePosition, List<Position> moveVector,
+                                           boolean isInfinite) {
         int limit = ONE_STEP_MOVEMENT;
         if (isInfinite) {
             limit = UNLIMIT_STEP_MOVEMENT;
         }
-        for (Position crossPosition : crossVector) {
-            findRoute(chessBoard, crossPosition, sourcePosition, limit);
-        }
-    }
-
-    public void addDiagonalPosition(ChessBoard chessBoard, Position sourcePosition, boolean isInfinite) {
-        int limit = ONE_STEP_MOVEMENT;
-        if (isInfinite) {
-            limit = UNLIMIT_STEP_MOVEMENT;
-        }
-        for (Position diagonalPosition : diagonalVector) {
-            findRoute(chessBoard, diagonalPosition, sourcePosition, limit);
+        for (Position position : moveVector) {
+            findRoute(chessBoard, position, sourcePosition, limit);
         }
     }
 
@@ -112,7 +90,7 @@ public class MovablePosition {
     }
 
     private void findPawnRouteByRow(ChessBoard chessBoard, Position sourcePosition, int startY, Position pawnPosition) {
-        if(sourcePosition.getYPosition() == startY) {
+        if (sourcePosition.getYPosition() == startY) {
             findRoute(chessBoard, pawnPosition, sourcePosition, TWO_STEP_MOVEMENT);
             return;
         }
@@ -123,7 +101,8 @@ public class MovablePosition {
         for (int step = ONE_STEP_MOVEMENT; step <= limit; step++) {
             int newX = sourcePosition.getXPosition() + movingPosition.getXPosition() * step;
             int newY = sourcePosition.getYPosition() + movingPosition.getYPosition() * step;
-            if ((newX >= MIN_CHESS_BOUNDARY && newX <= MAX_CHESS_BOUNDARY) && (newY >= MIN_CHESS_BOUNDARY && newY <= MAX_CHESS_BOUNDARY)) {
+            if ((newX >= MIN_CHESS_BOUNDARY && newX <= MAX_CHESS_BOUNDARY) && (newY >= MIN_CHESS_BOUNDARY
+                    && newY <= MAX_CHESS_BOUNDARY)) {
                 if (chessBoard.getChessPieceByPosition(Position.initPosition(newX, newY)).getSide().equals(BLANK)) {
                     movablePosition.add(Position.initPosition(newX, newY));
                     continue;
@@ -131,7 +110,7 @@ public class MovablePosition {
                 if (checkPieceSideInPosition(chessBoard, sourcePosition, Position.initPosition(newX, newY))) {
                     break;
                 }
-                if(chessBoard.getChessPieceByPosition(sourcePosition).getClass().equals(Pawn.class)){
+                if (chessBoard.getChessPieceByPosition(sourcePosition).getClass().equals(Pawn.class)) {
                     break;
                 }
                 movablePosition.add(Position.initPosition(newX, newY));
