@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,7 @@ public class StreamStudy {
 
         words.stream()
                 .filter(word -> word.length() > 12)
+                .sorted(Comparator.comparing(String::length).reversed())
                 .limit(100)
                 .distinct()
                 .forEach(word -> System.out.println(word.toLowerCase()));

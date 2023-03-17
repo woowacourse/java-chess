@@ -58,6 +58,11 @@ public class ChessController {
         }
     }
 
+    private void initializeBoard() {
+        board = BoardFactory.create();
+        showBoard();
+    }
+
     private void validateMoveCommand(final String[] commands) {
         if (commands.length != 3) {
             throw new IllegalArgumentException("이동할 기물과 이동할 위치를 입력해주세요.");
@@ -81,11 +86,6 @@ public class ChessController {
 
     private void showStartMessage() {
         outputView.printStartMessage();
-    }
-
-    private void initializeBoard() {
-        board = BoardFactory.create();
-        showBoard();
     }
 
     private void showBoard() {
