@@ -23,7 +23,7 @@ class BoardTest {
         assertThat(board.getBoard().size()).isEqualTo(64);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} to {1} is not move")
     @CsvSource(value = {"c3, c3", "c7,c7"})
     @DisplayName("같은 위치로 이동하는 경우 예외가 발생한다.")
     void throws_exception_when_not_move(final String start, final String end) {
@@ -39,7 +39,7 @@ class BoardTest {
                 .hasMessage(PieceMessage.NOT_MOVE.getMessage());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} to {1} is moving to team")
     @CsvSource(value = {"c2,b2", "c7,b7"})
     @DisplayName("같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
     void throws_exception_when_move_to_team(final String start, final String end) {

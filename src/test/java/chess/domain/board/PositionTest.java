@@ -25,7 +25,7 @@ public class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Column {0} is invalid")
     @ValueSource(strings = {"m1", "z2", "x6"})
     @DisplayName("잘못된 Column이면 예외를 발생시킨다.")
     void throws_exception_when_case_column_is_invalid(final String input) {
@@ -35,7 +35,7 @@ public class PositionTest {
                 .hasMessage(PositionMessage.INVALID_COLUMN.getMessage());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Row {0} is invalid")
     @ValueSource(strings = {"a0", "c9", "d0"})
     @DisplayName("잘못된 Row면 예외를 발생시킨다.")
     void throws_exception_when_case_row_is_invalid(final String input) {
