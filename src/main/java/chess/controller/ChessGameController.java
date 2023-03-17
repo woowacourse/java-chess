@@ -1,6 +1,6 @@
 package chess.controller;
 
-import static chess.controller.IllegalArgumentExceptionHandler.handleExceptionByRepeating;
+import static chess.controller.IllegalArgumentExceptionHandler.repeat;
 
 import chess.controller.dto.PieceResponse;
 import chess.domain.game.Game;
@@ -28,10 +28,14 @@ public class ChessGameController {
 
     public void start() {
         outputView.printStartMessage();
-        handleExceptionByRepeating(this::ready);
+        ready();
     }
 
     private void ready() {
+        repeat(this::askToStart);
+    }
+
+    private void askToStart() {
         Request request = inputView.askCommand();
         CommandType commandType = request.getCommandType();
         if (commandType == CommandType.START) {
@@ -44,7 +48,7 @@ public class ChessGameController {
 
     private void play(Game game) {
         outputView.printPieces(createResponses(game.getPieces()));
-        while (handleExceptionByRepeating(() -> playOnce(game)) != CommandType.END) {
+        while (repeat(() -> playOnce(game)) != CommandType.END) {
             outputView.printPieces(createResponses(game.getPieces()));
         }
     }
