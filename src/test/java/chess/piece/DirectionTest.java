@@ -50,4 +50,23 @@ class DirectionTest {
         assertThat(rightDirection.isVerticalMovable()).isFalse();
         assertThat(upDirection.isVerticalMovable()).isTrue();
     }
+
+    @Test
+    @DisplayName("대각선으로 이동하는지 여부를 반환한다.")
+    void isDiagonalMovable() {
+        // given
+        final Direction upRightDirection = Direction.UP_RIGHT;
+        final Direction upLeftDirection = Direction.UP_LEFT;
+        final Direction downLeftDirection = Direction.DOWN_LEFT;
+        final Direction downRightDirection = Direction.DOWN_RIGHT;
+        final Direction upDirection = Direction.UP;
+
+
+        // when, then
+        assertThat(upRightDirection.isDiagonalMovable()).isTrue();
+        assertThat(upLeftDirection.isDiagonalMovable()).isTrue();
+        assertThat(downLeftDirection.isDiagonalMovable()).isTrue();
+        assertThat(downRightDirection.isDiagonalMovable()).isTrue();
+        assertThat(upDirection.isDiagonalMovable()).isFalse();
+    }
 }
