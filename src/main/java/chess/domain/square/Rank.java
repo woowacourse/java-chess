@@ -1,5 +1,7 @@
 package chess.domain.square;
 
+import chess.domain.square.exception.InvalidSquareIndexException;
+
 import java.util.Arrays;
 
 public enum Rank {
@@ -26,12 +28,15 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
     }
 
-    public boolean canMoveDown() {
-        return !this.equals(Rank.ONE);
+    public static char getLastValue() {
+        return EIGHT.value;
     }
 
-    public boolean canMoveUp() {
-        return !this.equals(Rank.EIGHT);
+    public static Rank getRankByIndex(final int index) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.value == index + ONE.value)
+                .findFirst()
+                .orElseThrow(InvalidSquareIndexException::new);
     }
 
     public boolean isBiggerThan(final Rank rank) {

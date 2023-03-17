@@ -5,10 +5,10 @@ import chess.domain.square.Square;
 
 abstract public class Piece {
 
-    private String name;
+    private char name;
     protected Color color;
 
-    protected Piece(final Color color, final String name) {
+    protected Piece(final Color color, final char name) {
         this.name = name;
         this.color = color;
     }
@@ -22,6 +22,10 @@ abstract public class Piece {
         return this instanceof Pawn;
     }
 
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
+
     public abstract Direction findDirection(final Square current, final Square destination);
 
     @Override
@@ -31,11 +35,7 @@ abstract public class Piece {
                 '}';
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public String getName() {
+    public char getName() {
         return name;
     }
 }

@@ -1,5 +1,7 @@
 package chess.domain.square;
 
+import chess.domain.square.exception.InvalidSquareIndexException;
+
 import java.util.Arrays;
 
 public enum File {
@@ -26,12 +28,11 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
     }
 
-    public boolean canMoveRight() {
-        return !this.equals(File.H);
-    }
-
-    public boolean canMoveLeft() {
-        return !this.equals(File.A);
+    public static File getFileByIndex(final int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == index + A.value)
+                .findFirst()
+                .orElseThrow(InvalidSquareIndexException::new);
     }
 
     public File move(int difference) {

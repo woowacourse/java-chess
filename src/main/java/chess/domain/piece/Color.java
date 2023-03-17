@@ -2,6 +2,6 @@ package chess.domain.piece;
 
 public enum Color {
 
-    WHITE(),
+    WHITE,
     BLACK
 }
