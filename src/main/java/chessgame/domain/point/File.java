@@ -1,10 +1,7 @@
 package chessgame.domain.point;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum File {
     A('a'),
@@ -16,8 +13,13 @@ public enum File {
     G('g'),
     H('h');
 
-    private static final Map<Character, File> FILE_MAP = Collections.unmodifiableMap(Stream.of(values()).collect(
-        Collectors.toMap(File::getValue, Function.identity())));
+    private static final Map<Character, File> FILE_MAP = new HashMap<>();
+
+    static {
+        for (File file : values()) {
+            FILE_MAP.put(file.value, file);
+        }
+    }
 
     private final char value;
 
@@ -40,9 +42,5 @@ public enum File {
         char result = (char)(value + fileMove);
 
         return find(result);
-    }
-
-    private char getValue() {
-        return value;
     }
 }

@@ -39,7 +39,7 @@ public class ChessController {
 
     private void movePiece(Game game, Command command) {
         try {
-            game.movePiece(command.makePoints());
+            game.movePiece(command.points());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
             eachTurn(game);

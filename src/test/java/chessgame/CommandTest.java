@@ -33,8 +33,8 @@ public class CommandTest {
 
         List<Point> points = List.of(A1, A2);
 
-        Assertions.assertThat(command.makePoints()).containsAll(points);
-        Assertions.assertThat(command.makePoints().size()).isEqualTo(points.size());
+        Assertions.assertThat(command.points()).containsAll(points);
+        Assertions.assertThat(command.points().size()).isEqualTo(points.size());
     }
 
     @ParameterizedTest(name = "name : {0}일 경우 생성 실패 한다.")

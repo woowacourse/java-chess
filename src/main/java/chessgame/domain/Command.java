@@ -1,6 +1,7 @@
 package chessgame.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import chessgame.domain.point.File;
@@ -14,8 +15,11 @@ public class Command {
 
     private final String command;
 
-    private Command(String command) {
+    private final List<Point> points;
+
+    private Command(String command, List<Point> points) {
         this.command = command;
+        this.points = points;
     }
 
     public static Command of(String command) {
@@ -27,7 +31,7 @@ public class Command {
             throw new IllegalArgumentException("빈값을 입력하면 안됩니다.");
         }
         if (START.equals(command) || END.equals(command)) {
-            return new Command(command);
+            return new Command(command, Collections.emptyList());
         }
         return validateMove(command);
     }
@@ -35,8 +39,9 @@ public class Command {
     private static Command validateMove(String command) {
         String[] moveCommand = command.split(" ");
         if (moveCommand.length == 3 && MOVE.equals(moveCommand[0])) {
-            validatePoint(moveCommand[1], moveCommand[2]);
-            return new Command(command);
+            List<String> points = List.of(moveCommand[1], moveCommand[2]);
+            validatePoint(points);
+            return new Command(moveCommand[0], makePoint(points));
         }
         if (MOVE.equals(moveCommand[0])) {
             throw new IllegalArgumentException("move source target을 정확히 입력해주세요");
@@ -44,32 +49,35 @@ public class Command {
         throw new IllegalArgumentException("start, move, end만 입력 가능합니다.");
     }
 
-    private static void validatePoint(String source, String target) {
-        String pattern = "[a-h]{1}[1-8]{1}";
-        if (!(source.matches(pattern) && target.matches(pattern))) {
-            throw new IllegalArgumentException("이동 좌표는 a-h 1-8 로 입력하여야합니다.");
+    private static void validatePoint(List<String> points) {
+        boolean isPoint = points.stream().anyMatch(point -> point.length() !=2);
+        if(isPoint){
+            throw new IllegalArgumentException("좌표를 정확하게 입력하세요");
         }
     }
 
+    private static List<Point> makePoint(List<String> inputs) {
+        List<Point> points = new ArrayList<>();
+        points.add(Point.of(File.find(inputs.get(0).charAt(0)),
+            Rank.find(Integer.parseInt(inputs.get(0).substring(1)))));
+        points.add(Point.of(File.find(inputs.get(1).charAt(0)),
+            Rank.find(Integer.parseInt(inputs.get(1).substring(1)))));
+        return points;
+    }
+
+    public List<Point> points() {
+        return Collections.unmodifiableList(points);
+    }
+
     public boolean isMove() {
-        return "move".equals(command.split(" ")[0]);
+        return MOVE.equals(command);
     }
 
     public boolean isStart() {
-        return "start".equals(command);
+        return START.equals(command);
     }
 
     public boolean isEnd() {
-        return "end".equals(command);
-    }
-
-    public List<Point> makePoints() {
-        List<Point> points = new ArrayList<>();
-        String[] moveCommand = command.split(" ");
-        points.add(Point.of(File.find(moveCommand[1].charAt(0)),
-            Rank.findRank(Integer.parseInt(moveCommand[1].substring(1, 2)))));
-        points.add(Point.of(File.find(moveCommand[2].charAt(0)),
-            Rank.findRank(Integer.parseInt(moveCommand[2].substring(1, 2)))));
-        return points;
+        return END.equals(command);
     }
 }
