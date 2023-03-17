@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ChessController {
-    private static final String END_COMMAND = "end";
-    private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final int MOVE_COMMAND_SIZE = 3;
 
@@ -23,40 +21,22 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        while (true) {
-            if (gameLoop() == GameStatus.EXIT) {
-                break;
-            }
+        GameCommand gameCommand = repeat(InputView::readGameCommand);
+        if (gameCommand == GameCommand.START) {
+            OutputView.printBoard(chessGame.getBoard());
+            while (gameLoop() == GameStatus.CONTINUE);
         }
     }
 
     private GameStatus gameLoop() {
-        List<String> commands = repeat(InputView::readCommand);
+        List<String> commands = repeat(InputView::readMoveCommand);
         String command = commands.get(0);
-        if (command.equals(END_COMMAND)) {
-            return GameStatus.EXIT;
-        }
-        if (command.equals(START_COMMAND)) {
-            createBoard();
-        }
+
         if (command.equals(MOVE_COMMAND)) {
             execute(() -> move(commands));
+            return GameStatus.CONTINUE;
         }
-        return GameStatus.CONTINUE;
-    }
-
-    public <T> T repeat(Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return repeat(supplier);
-        }
-    }
-
-    private void createBoard() {
-        chessGame.create();
-        OutputView.printBoard(chessGame.getBoard());
+        return GameStatus.EXIT;
     }
 
     public void execute(Runnable runnable) {
@@ -78,6 +58,15 @@ public class ChessController {
     private void validateMoveCommand(List<String> command) {
         if (command.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("[ERROR] move (source) (target) 형식으로 입력해주세요.");
+        }
+    }
+
+    public <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return repeat(supplier);
         }
     }
 }

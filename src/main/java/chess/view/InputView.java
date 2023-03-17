@@ -1,10 +1,12 @@
 package chess.view;
 
+import chess.controller.GameCommand;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final List<String> ALLOW_COMMANDS = List.of("start", "end", "move");
+    private static final List<String> ALLOW_COMMANDS = List.of("end", "move");
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
@@ -12,17 +14,21 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> readCommand() {
+    public static GameCommand readGameCommand() {
+        String inputCommand = scanner.nextLine();
+        return GameCommand.of(inputCommand);
+    }
+
+    public static List<String> readMoveCommand() {
         String input = scanner.nextLine();
-        try {
-            List<String> commands = List.of(input.split(DELIMITER));
-            validateBlank(commands);
-            validateAllowCommand(commands.get(COMMAND_INDEX));
-            return commands;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readCommand();
-        }
+        List<String> commands = List.of(input.split(DELIMITER));
+        validate(commands);
+        return commands;
+    }
+
+    private static void validate(List<String> commands) {
+        validateBlank(commands);
+        validateAllowCommand(commands.get(COMMAND_INDEX));
     }
 
     private static void validateBlank(List<String> commands) {
