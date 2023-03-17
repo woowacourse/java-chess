@@ -20,4 +20,8 @@ public abstract class Piece {
     public boolean isDifferentTeam(Piece piece) {
         return teamColor != piece.teamColor;
     }
+
+    public boolean isSameColor(TeamColor color) {
+        return teamColor == color;
+    }
 }
