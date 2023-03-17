@@ -21,8 +21,6 @@ public class PlayingChessGame implements ChessGame {
         return board.move(currentPosition, nextPosition);
     }
 
-    // b1 -> Position(B, 1)
-
     @Override
     public ChessGame start() {
         throw new IllegalArgumentException("이미 플레이중인 게임입니다.");
