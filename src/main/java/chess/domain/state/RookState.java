@@ -24,14 +24,4 @@ public class RookState implements MoveState {
         }
         return x == 0 && y != 0;
     }
-
-    @Override
-    public MoveState getNextState() {
-        return this;
-    }
-
-    @Override
-    public boolean canJump() {
-        return false;
-    }
 }

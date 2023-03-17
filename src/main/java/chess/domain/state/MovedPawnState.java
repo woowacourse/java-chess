@@ -3,6 +3,7 @@ package chess.domain.state;
 import chess.domain.ColorCompareResult;
 
 public class MovedPawnState implements MoveState {
+
     private static final MovedPawnState instance = new MovedPawnState();
 
     private MovedPawnState() {
@@ -29,15 +30,5 @@ public class MovedPawnState implements MoveState {
 
     private boolean isOneDiagonalMove(int x, int y) {
         return Math.abs(x) == 1 && y == 1;
-    }
-
-    @Override
-    public MoveState getNextState() {
-        return this;
-    }
-
-    @Override
-    public boolean canJump() {
-        return false;
     }
 }

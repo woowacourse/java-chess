@@ -3,6 +3,7 @@ package chess.domain.state;
 import chess.domain.ColorCompareResult;
 
 public class QueenState implements MoveState {
+
     private static final QueenState instance = new QueenState();
 
     private QueenState() {
@@ -30,15 +31,4 @@ public class QueenState implements MoveState {
         }
         return x != 0 && y == 0;
     }
-
-    @Override
-    public MoveState getNextState() {
-        return this;
-    }
-
-    @Override
-    public boolean canJump() {
-        return false;
-    }
-
 }

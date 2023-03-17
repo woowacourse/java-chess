@@ -1,13 +1,15 @@
 package chess.domain.state;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import chess.domain.ColorCompareResult;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -28,5 +30,11 @@ public class KnightStateTest {
     void 나이트_이동_예외_테스트(int xChange, int yChange) {
         //expect
         assertFalse(() -> knightState.canMove(xChange, yChange, ColorCompareResult.DIFFERENT_COLOR));
+    }
+
+    @Test
+    void 나이트의_다음_상태는_처음과_같다() {
+        //expect
+        assertSame(knightState, knightState.getNextState());
     }
 }

@@ -36,9 +36,4 @@ public class InitialPawnState implements MoveState {
     public MoveState getNextState() {
         return MovedPawnState.getInstance();
     }
-
-    @Override
-    public boolean canJump() {
-        return false;
-    }
 }

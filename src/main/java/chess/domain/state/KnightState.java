@@ -26,11 +26,6 @@ public class KnightState implements MoveState {
     }
 
     @Override
-    public MoveState getNextState() {
-        return this;
-    }
-
-    @Override
     public boolean canJump() {
         return true;
     }
