@@ -16,12 +16,14 @@ public class MainController {
 
     public void run() {
         OutputView.printGameStartInfo();
+        boolean isStart = false;
 
         GameCommand command = GameCommand.from(InputView.readCommand());
         while (command != GameCommand.END) {
-            subControllers.get(command).run();
+            subControllers.get(command).run(isStart);
             OutputView.printBoard(board.getBoard());
             command = GameCommand.from(InputView.readCommand());
+            isStart = true;
         }
     }
 }

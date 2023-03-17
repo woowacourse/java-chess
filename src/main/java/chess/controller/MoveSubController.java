@@ -15,11 +15,17 @@ public class MoveSubController implements SubController {
         this.board = board;
     }
 
-    @Override
-    public void run() {
+    public void run(boolean isStart) {
+        validateIsGameStart(isStart);
         final List<Position> positions = readPositions();
         board.move(positions.get(0), positions.get(1), turn);
         turn = turn.opposite();
+    }
+
+    private static void validateIsGameStart(final boolean isStart) {
+        if (!isStart) {
+            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
+        }
     }
 
     private List<Position> readPositions() {

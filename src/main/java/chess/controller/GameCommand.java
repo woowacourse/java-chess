@@ -16,9 +16,9 @@ public enum GameCommand {
         this.value = value;
     }
 
-    public static GameCommand from(final String co) {
+    public static GameCommand from(final String commandString) {
         return Arrays.stream(GameCommand.values())
-                .filter(command -> command.value.equals(co))
+                .filter(command -> command.value.equals(commandString))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND_MESSAGE));
     }
