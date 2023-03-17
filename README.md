@@ -18,7 +18,13 @@ C --> F[rank];
 
 H[player] --> D;
 I[players] --> H;
-G[outputView]
+
+B --> J[PieceStrategy]
+K[PawnStrategy] --> J
+L[BishopStrategy] --> J
+M[KingStrategy] --> J
+N[QueenStrategy] --> J
+O[RookStrategy] --> J
 ```
 
 ## View
