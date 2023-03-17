@@ -41,8 +41,8 @@ public class Position {
         final int nextXPoint = direction.getNextXPoint(file.getValue());
         final int nextYPoint = direction.getNextYPoint(rank.getValue());
 
-        final File nextFile = File.findByValue(nextXPoint);
-        final Rank nextRank = Rank.findByValue(nextYPoint);
+        final File nextFile = File.of(nextXPoint);
+        final Rank nextRank = Rank.of(nextYPoint);
 
         return new Position(nextFile, nextRank);
     }

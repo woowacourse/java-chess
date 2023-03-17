@@ -18,7 +18,7 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Rank findByValue(int value) {
+    public static Rank of(int value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findAny()

@@ -39,13 +39,13 @@ public class Pieces {
 
     private void generateRankTwoPieces(final List<Piece> pieces) {
         for (int fileIndex = FILE_START_INDEX; fileIndex <= FILE_END_INDEX; fileIndex++) {
-            pieces.add(new Pawn(new Position(File.findByValue(fileIndex), Rank.TWO), Side.WHITE));
+            pieces.add(new Pawn(new Position(File.of(fileIndex), Rank.TWO), Side.WHITE));
         }
     }
 
     private void generateRankSevenPieces(final List<Piece> pieces) {
         for (int fileIndex = FILE_START_INDEX; fileIndex <= FILE_END_INDEX; fileIndex++) {
-            pieces.add(new Pawn(new Position(File.findByValue(fileIndex), Rank.SEVEN), Side.BLACK));
+            pieces.add(new Pawn(new Position(File.of(fileIndex), Rank.SEVEN), Side.BLACK));
         }
     }
 
