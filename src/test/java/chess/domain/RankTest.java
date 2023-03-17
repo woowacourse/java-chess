@@ -11,11 +11,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class RankTest {
 
-        @ParameterizedTest
-        @ValueSource(ints = {0, 9})
-        void 잘못된_위치인_경우_예외를_던진다(int index) {
-                Assertions.assertThatThrownBy(() -> Rank.getRank(index))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("잘못된 위치입니다.");
-        }
+    @ParameterizedTest
+    @ValueSource(ints = {0, 9})
+    void 잘못된_위치인_경우_예외를_던진다(int index) {
+        Assertions.assertThatThrownBy(() -> Rank.getRank(index))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 위치입니다.");
+    }
 }
