@@ -22,8 +22,10 @@ public class Position {
     public double getSlope(Position targetPosition) {
         final int fileValueDiff = file.getValueDiff(targetPosition.file);
         final int rankValueDiff = rank.getValueDiff(targetPosition.rank);
+        if (fileValueDiff == 0 || rankValueDiff == 0) {
+            return 0;
+        }
         return Math.abs((double) fileValueDiff / rankValueDiff);
-        // TODO: 2023/03/15 분모가 0이 되는 상황 예외처리
     }
 
     public int getMoveCount(final Position targetPosition, final Direction direction) {
