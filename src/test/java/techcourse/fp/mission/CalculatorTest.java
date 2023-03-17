@@ -18,13 +18,13 @@ class CalculatorTest {
 
     @Test
     public void sumAllEven() {
-        int sum = Calculator.sumAllEven(numbers);
+        int sum = Calculator.sumAll(numbers, x -> x % 2 == 0);
         assertThat(sum).isEqualTo(12);
     }
 
     @Test
     public void sumAllOverThree() {
-        int sum = Calculator.sumAllOverThree(numbers);
+        int sum = Calculator.sumAll(numbers, x -> x > 3);
         assertThat(sum).isEqualTo(15);
     }
 }
