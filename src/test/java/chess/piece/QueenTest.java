@@ -1,72 +1,84 @@
 package chess.piece;
 
+import chess.Path;
+import chess.Position;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.Path;
-import chess.Position;
-import java.util.Optional;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Test;
-
 class QueenTest {
 
-    @Test
-    void test_searchPathTo() {
+    @ParameterizedTest
+    @MethodSource("searchPathTo")
+    @DisplayName("searchPathTo() : Queen이 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
+    void test_searchPathTo(final Position from, final Position to,
+                           final Optional<Piece> destination, final List<Position> possiblePositions) {
 
-        Piece queen = new Queen(Color.WHITE);
+        //given
+        final Queen queen = new Queen(Color.WHITE);
 
-        Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 8), Optional.empty());
+        //when
+        Path path = queen.searchPathTo(from, to, destination);
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(
-                        new Position(5, 2), new Position(5, 3),
-                        new Position(5, 4), new Position(5, 5),
-                        new Position(5, 6), new Position(5, 7));
+        //then
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                        .containsExactlyElementsOf(possiblePositions);
+    }
+
+    static Stream<Arguments> searchPathTo() {
+
+        final Position from1 = new Position(5, 1);
+        final Position to1 = new Position(5, 8);
+        final Optional<Piece> destination1 = Optional.empty();
+
+        final List<Position> path1 = List.of(new Position(5, 2), new Position(5, 3),
+                                             new Position(5, 4), new Position(5, 5),
+                                             new Position(5, 6), new Position(5, 7));
+
+        final Position from2 = new Position(5, 1);
+        final Position to2 = new Position(8, 4);
+        final Optional<Piece> destination2 = Optional.empty();
+
+        final List<Position> path2 = List.of(new Position(6, 2), new Position(7, 3));
+
+        final Position from3 = new Position(5, 5);
+        final Position to3 = new Position(5, 1);
+        final Optional<Piece> destination3 = Optional.empty();
+
+        final List<Position> path3 = List.of(new Position(5, 4),
+                                             new Position(5, 3),
+                                             new Position(5, 2));
+
+        return Stream.of(
+                Arguments.of(from1, to1, destination1, path1),
+                Arguments.of(from2, to2, destination2, path2),
+                Arguments.of(from3, to3, destination3, path3)
+        );
     }
 
     @Test
-    void test_searchPathTo2() {
+    @DisplayName("searchPathTo() : King이 움직일 수 없는 경로일 때, IllegalStateException을 반환한다.")
+    void test_searchPathTo_impossible_movement_IllegalStateException() {
 
-        Queen queen = new Queen(Color.WHITE);
+        //given
+        final Queen queen = new Queen(Color.WHITE);
 
-        Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(8, 4), Optional.empty());
+        //when
+        Position from = new Position(5, 5);
+        final Position to = new Position(5, 1);
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(new Position(6, 2), new Position(7, 3));
-    }
-
-    @Test
-    void test_searchPathTo3() {
-
-        Queen queen = new Queen(Color.WHITE);
-
-        Position initialPosition = new Position(5, 5);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 1), Optional.empty());
-
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(
-                        new Position(5, 4),
-                        new Position(5, 3),
-                        new Position(5, 2));
-    }
-
-    @Test
-    void test_searchPathTo4() {
-
-        Queen queen = new Queen(Color.WHITE);
-
-        Position initialPosition = new Position(5, 5);
-
-        assertThatThrownBy(
-                () -> queen.searchPathTo(initialPosition,
-                        new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+        //then
+        assertThatThrownBy(() -> queen.searchPathTo(from, to, Optional.of(new King(Color.WHITE))))
                 .isInstanceOf(IllegalStateException.class);
     }
 }
