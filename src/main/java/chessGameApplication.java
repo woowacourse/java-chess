@@ -1,7 +1,9 @@
 import chess.ChessBoard;
 import chess.ChessGame;
+import chess.Side;
 import chess.position.MovablePosition;
 import chess.position.Position;
+import java.util.Objects;
 import view.InputView;
 import view.OutputView;
 
@@ -17,7 +19,14 @@ public class chessGameApplication {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         startPhase(chessBoard);
-        while (commandPhase(chessGame, chessBoard));
+        while (true) {
+            if (!commandPhase(chessGame, chessBoard, Side.WHITE)) {
+                break;
+            }
+            if (!commandPhase(chessGame, chessBoard, Side.BLACK)) {
+                break;
+            }
+        }
     }
 
     private static void startPhase(ChessBoard chessBoard) {
@@ -30,24 +39,27 @@ public class chessGameApplication {
         }
     }
 
-    private static boolean commandPhase(ChessGame chessGame, ChessBoard chessBoard) {
+    private static boolean commandPhase(ChessGame chessGame, ChessBoard chessBoard, Side side) {
         try {
             List<String> command = InputView.readPlayGameCommand();
             if (command.size() == MOVE_COMMAND_SIZE) {
-                move(chessGame, chessBoard, command);
+                move(chessGame, chessBoard, command, side);
                 OutputView.printChessBoard(chessBoard.getChessBoard());
                 return true;
             }
             return false;
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            commandPhase(chessGame, chessBoard);
+            commandPhase(chessGame, chessBoard, side);
             return true;
         }
     }
 
-    private static void move(ChessGame chessGame, ChessBoard chessBoard, List<String> moveCommand) {
+    private static void move(ChessGame chessGame, ChessBoard chessBoard, List<String> moveCommand, Side side) {
         Position sourcePosition = Position.of(moveCommand.get(SOURCE_POSITION_INDEX));
+        if (!Objects.equals(chessBoard.getChessPieceByPosition(sourcePosition).getSide(), side.getSide())) {
+            throw new IllegalArgumentException("[ERROR] " + side.getSide() + "편의 기물을 움직여 주세요");
+        }
         Position targetPosition = Position.of(moveCommand.get(TARGET_POSITION_INDEX));
         MovablePosition movablePosition = new MovablePosition();
         List<Position> movableRoute = movablePosition.findByShape(chessBoard, sourcePosition);
