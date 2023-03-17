@@ -14,4 +14,14 @@ public enum Camp {
     public int calculateDirection(final int weight) {
         return expression.apply(weight);
     }
+
+    public Camp nextTurn(final Camp turn) {
+        if (turn.equals(WHITE)) {
+            return BLACK;
+        }
+        if (turn.equals(BLACK)) {
+            return WHITE;
+        }
+        return EMPTY;
+    }
 }

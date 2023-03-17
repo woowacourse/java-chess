@@ -122,8 +122,8 @@ public class Board {
                 return false;
             }
             if ((move == Move.RIGHT_UP || move == Move.RIGHT_DOWN || move == Move.LEFT_UP || move == Move.LEFT_DOWN)
-                    && !board.get(source).isSameCamp(board.get(target).camp())
-                    && !board.get(target).isSameCamp(Camp.EMPTY)) {
+                    && (board.get(source).isSameCamp(board.get(target).camp())
+                    || board.get(target).isSameCamp(Camp.EMPTY))) {
                 return false;
             }
         }
@@ -135,7 +135,7 @@ public class Board {
             final Piece piece = board.get(source);
             return piece.isSameRole(Role.KNIGHT);
         }
-        return isBlocked(source, target, move) || isSameCamp(source, target);
+        return isBlocked(source, target, move) || isMyTurn(source, target);
     }
 
     private boolean isBlocked(final Square source, final Square target, final Move move) {
@@ -151,11 +151,15 @@ public class Board {
         return true;
     }
 
-    private boolean isSameCamp(final Square source, final Square target) {
+    private boolean isMyTurn(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
         final Camp targetCamp = board.get(target).camp();
 
         return sourcePiece.isSameCamp(targetCamp);
+    }
+
+    public boolean isMyTurn(final Square source, final Camp turn) {
+        return board.get(source).isSameCamp(turn);
     }
 
     public Piece getPiece(final Square square) {
