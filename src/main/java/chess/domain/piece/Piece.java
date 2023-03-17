@@ -25,7 +25,7 @@ public abstract class Piece {
         return camp.isOpposite(otherCamp);
     }
 
-    abstract public PieceType getPieceType();
-
     abstract public boolean canMove(Square source, Square target);
+
+    abstract public PieceType getPieceType();
 }

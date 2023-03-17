@@ -12,11 +12,6 @@ public class Knight extends Piece {
         super(camp);
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return PieceType.KNIGHT;
-    }
-
     public static Knight getInstanceOf(Camp camp) {
         if (camp == Camp.WHITE) {
             return WHITE_KNIGHT;
@@ -34,5 +29,11 @@ public class Knight extends Piece {
 
         return source.calculateRankDistance(target) == MOVABLE_SIDE_DISTANCE
                 && source.calculateFileDistance(target) == MOVABLE_STRAIGHT_DISTANCE;
+    }
+
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
     }
 }

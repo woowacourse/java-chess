@@ -26,11 +26,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.PAWN;
-    }
-
-    @Override
     public boolean canMove(Square source, Square target) {
 
         if (isWhite()) {
@@ -70,5 +65,10 @@ public class Pawn extends Piece {
         }
 
         return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= MAX_MOVABLE_FILE;
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
     }
 }
