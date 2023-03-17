@@ -3,6 +3,7 @@ package domain.board;
 import domain.piece.Piece;
 import domain.position.Position;
 import domain.position.Positions;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -17,12 +18,12 @@ public final class Board {
         this.board = board;
     }
 
-    public static Board create(ChessAlignment chessStrategy) {
+    public static Board create(final ChessAlignment chessStrategy) {
         return new Board(chessStrategy.init());
     }
 
-    public void move(Position source, Position destination) {
-        Piece piece = getPiece(source);
+    public void move(final Position source, final Position destination) {
+        final Piece piece = getPiece(source);
         validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {

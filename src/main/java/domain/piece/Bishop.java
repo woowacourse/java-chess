@@ -7,7 +7,7 @@ public final class Bishop extends Piece {
 
     private static final String NAME = "B";
 
-    public Bishop(Team team) {
+    public Bishop(final Team team) {
         super(NAME, team);
     }
 

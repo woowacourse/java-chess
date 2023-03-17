@@ -16,7 +16,7 @@ public final class Position {
         this.rank = rank;
     }
 
-    public boolean isDiagonal(Position other) {
+    public boolean isDiagonal(final Position other) {
         if (this.equals(other)) {
             return false;
         }
@@ -32,7 +32,7 @@ public final class Position {
         return Math.abs(this.getRank() - other.getRank());
     }
 
-    public boolean isStraight(Position other) {
+    public boolean isStraight(final Position other) {
         if (this.equals(other) || isDiagonal(other)) {
             return false;
         }
@@ -40,35 +40,35 @@ public final class Position {
         return other.getRank() == this.getRank() || other.getFile() == this.getFile();
     }
 
-    public int getDistance(Position other) {
+    public int getDistance(final Position other) {
         return getFileDifference(other) + getRankDifference(other);
     }
 
-    public Position moveUpRight(int distance) {
+    public Position moveUpRight(final int distance) {
         return move(distance, distance);
     }
 
-    public Position moveUpLeft(int distance) {
+    public Position moveUpLeft(final int distance) {
         return move(distance, -distance);
     }
 
-    public Position moveDownRight(int distance) {
+    public Position moveDownRight(final int distance) {
         return move(-distance, distance);
     }
 
-    public Position moveDownLeft(int distance) {
+    public Position moveDownLeft(final int distance) {
         return move(-distance, -distance);
     }
 
-    public Position moveUp(int distance) {
+    public Position moveUp(final int distance) {
         return move(distance, FILE_STAY);
     }
 
-    public Position moveDown(int distance) {
+    public Position moveDown(final int distance) {
         return move(-distance, FILE_STAY);
     }
 
-    public Position move(int rankDifference, int fileDifference) {
+    public Position move(final int rankDifference, final int fileDifference) {
         final int rank = this.getRank() + rankDifference;
         final int file = this.getFile() + fileDifference;
 

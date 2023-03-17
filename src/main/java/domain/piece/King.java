@@ -8,7 +8,7 @@ public final class King extends Piece {
     private static final int DIAGONAL_ONE_STEP = 2;
     private static final int ONE_STEP = 1;
 
-    public King(Team team) {
+    public King(final Team team) {
         super(NAME, team);
     }
 

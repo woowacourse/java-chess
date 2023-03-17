@@ -12,9 +12,9 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Position source, Position destination);
+    public abstract boolean isMovable(final Position source, final Position destination);
 
-    public boolean isCapturable(Position source, Position destination) {
+    public boolean isCapturable(final Position source, final Position destination) {
         return isMovable(source, destination);
     }
 

@@ -1,15 +1,9 @@
 package domain.board;
 
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.Team;
+import domain.piece.*;
 import domain.position.Position;
 import domain.position.Positions;
+
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +42,7 @@ public final class InitialChessAlignment implements ChessAlignment {
     }
 
     @Override
-    public void addInitialPawns(Map<Position, Piece> board) {
+    public void addInitialPawns(final Map<Position, Piece> board) {
         final List<Position> black = Positions.of("A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7");
         final List<Position> white = Positions.of("A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2");
 
@@ -57,7 +51,7 @@ public final class InitialChessAlignment implements ChessAlignment {
     }
 
     @Override
-    public void addInitialKings(Map<Position, Piece> board) {
+    public void addInitialKings(final Map<Position, Piece> board) {
         board.put(Positions.from("E8"), new King(Team.BLACK));
         board.put(Positions.from("E1"), new King(Team.WHITE));
     }

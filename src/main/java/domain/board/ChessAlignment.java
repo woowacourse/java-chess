@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 interface ChessAlignment {
-    default Map<Position, Piece> init(){
+    default Map<Position, Piece> init() {
         final Map<Position, Piece> board = new HashMap<>();
         addInitialPawns(board);
         addInitialKings(board);
@@ -19,15 +19,15 @@ interface ChessAlignment {
         return board;
     }
 
-    void addInitialPawns(Map<Position, Piece> board);
+    void addInitialPawns(final Map<Position, Piece> board);
 
-    void addInitialKings(Map<Position, Piece> board);
+    void addInitialKings(final Map<Position, Piece> board);
 
-    void addInitialQueens(Map<Position, Piece> board);
+    void addInitialQueens(final Map<Position, Piece> board);
 
-    void addInitialBishops(Map<Position, Piece> board);
+    void addInitialBishops(final Map<Position, Piece> board);
 
-    void addInitialKnights(Map<Position, Piece> board);
+    void addInitialKnights(final Map<Position, Piece> board);
 
-    void addInitialRooks(Map<Position, Piece> board);
+    void addInitialRooks(final Map<Position, Piece> board);
 }

@@ -10,7 +10,7 @@ public final class Pawn extends Piece {
     private static final char INITIAL_RANK_BLACK = '7';
     private static final char INITIAL_RANK_WHITE = '2';
 
-    public Pawn(Team team) {
+    public Pawn(final Team team) {
         super(NAME, team);
     }
 

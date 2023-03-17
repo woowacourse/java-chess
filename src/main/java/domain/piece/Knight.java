@@ -7,7 +7,7 @@ public final class Knight extends Piece {
     private static final String NAME = "N";
     private static final int ONE_STEP_OF_KNIGHT = 3;
 
-    public Knight(Team team) {
+    public Knight(final Team team) {
         super(NAME, team);
     }
 

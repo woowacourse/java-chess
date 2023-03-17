@@ -5,15 +5,16 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Positions;
 import domain.position.Rank;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class BoardView {
+final class BoardView {
 
     private static final String EMPTY_SPACE = ".";
 
-    public void printBoard(Map<Position, Piece> board) {
+    public void printBoard(final Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
                 .filter(rank -> !Rank.NOTHING.equals(rank))
                 .map(rank -> makeAnRankView(board, rank))
@@ -37,7 +38,7 @@ public final class BoardView {
         return EMPTY_SPACE;
     }
 
-    private String convertCaseByTeam(Piece piece) {
+    private String convertCaseByTeam(final Piece piece) {
         if (piece.isBlack()) {
             return piece.getName();
         }

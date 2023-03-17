@@ -6,7 +6,7 @@ public final class Queen extends Piece {
 
     private static final String NAME = "Q";
 
-    public Queen(Team team) {
+    public Queen(final Team team) {
         super(NAME, team);
     }
 
