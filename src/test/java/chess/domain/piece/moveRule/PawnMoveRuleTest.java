@@ -18,10 +18,10 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PawnMoveRuleTest {
-    private Piece blackPiece;
-    private Piece whitePiece;
     private final MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
     private final MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
+    private Piece blackPiece;
+    private Piece whitePiece;
     private Map<Position, Piece> board;
 
     @BeforeAll

@@ -19,9 +19,9 @@ import org.junit.jupiter.api.TestInstance;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QueenMoveRuleTest {
 
+    private final MoveRule moveRule = QueenMoveRule.getInstance();
     private Piece blackPiece;
     private Piece whitePiece;
-    private final MoveRule moveRule = QueenMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll

@@ -3,7 +3,6 @@ package techcourse.fp.mission;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
->>>>>>>5007451f2bd69138d02baa596277b3c794899817
 
 public class Calculator {
 
@@ -26,19 +25,8 @@ public class Calculator {
     }
 
     public static int sumAllOverThree(List<Integer> numbers) {
-<<<<<<<HEAD
         int total = 0;
 
-        //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
-        IntPredicate overThree = (number) -> number > 3;
-        for (int number : numbers) {
-            if (overThree.test(number)) {
-                total += number;
-            }
-        }
-        return total;
-=======
-        return sumWhen(numbers, num -> (num > 3));
->>>>>>>5007451f 2 bd69138d02baa596277b3c794899817
+        return 0;
     }
 }

@@ -18,9 +18,9 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RookMoveRuleTest {
+    private final MoveRule moveRule = RookMoveRule.getInstance();
     private Piece blackPiece;
     private Piece whitePiece;
-    private final MoveRule moveRule = RookMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll

@@ -16,9 +16,9 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KnightMoveRuleTest {
+    private final MoveRule moveRule = KnightMoveRule.getInstance();
     private Piece blackPiece;
     private Piece whitePiece;
-    private final MoveRule moveRule = KnightMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll
