@@ -75,17 +75,16 @@ public final class ChessController {
     private void playGameUntilEnd() {
         List<String> command = inputView.inputCommand();
         while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
-            command = playGame(command);
+            playGame(command);
+            command = inputView.inputCommand();
         }
     }
 
-    private List<String> playGame(List<String> command) {
+    private void playGame(List<String> command) {
         if (Command.from(command.get(COMMAND_INDEX)) == Command.MOVE) {
             chessGame.playTurn(PositionParser.parse(command.get(SOURCE_INDEX)), PositionParser.parse(command.get(TARGET_INDEX)));
             List<Squares> board = chessGame.getBoard();
             printBoard(board);
         }
-        command = inputView.inputCommand();
-        return command;
     }
 }
