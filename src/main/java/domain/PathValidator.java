@@ -6,17 +6,16 @@ import java.util.stream.IntStream;
 
 public class PathValidator {
 
-    public boolean validateNormal(final Square start, final List<Square> paths) {
-        if (isBlocked(paths)) {
+    public boolean isValid(final ValidateDto start, final ValidateDto end,
+        final List<Square> path) {
+        if (isBlocked(path)) {
             return false;
         }
-        final Square end = paths.get(paths.size() - 1);
-        //폰일때 아무도 없는 곳으로 대각선을 가는 경우에 대한 처리가 필요
-        return start.haveDifferentColor(end);
-    }
-
-    public boolean validateSpecial(final SpecialValidateDto start, final SpecialValidateDto end) {
-        return SpecialRule.containRuleBy(start, end);
+        SpecialRule specialRule = SpecialRule.getRuleBy(start, end);
+        if (!specialRule.equals(SpecialRule.NOT_EXIST)) {
+            return specialRule.judge(start, end);
+        }
+        return start.getPiece().isDifferentColor(end.getPiece());
     }
 
     private boolean isBlocked(final List<Square> paths) {

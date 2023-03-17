@@ -53,25 +53,13 @@ public class Board {
     private void validatePath(final Location startLocation, final Location endLocation) {
         final Square startSquare = findSquare(startLocation);
         final Square endSquare = findSquare(endLocation);
-        final SpecialValidateDto start = SpecialValidateDto.of(startLocation, startSquare);
-        final SpecialValidateDto end = SpecialValidateDto.of(endLocation, endSquare);
-        final List<Square> squares = getSquaresInPath(startLocation, endLocation);
-        if (isSpecialPath(start, end)) {
-            return;
-        }
-        //폰일때 아무도 없는 곳으로 대각선을 가는 경우에 대한 처리가 필요 ( 방향을 알아야 함 )
-        if (isNormalPath(startSquare, squares)) {
+        final ValidateDto start = ValidateDto.of(startLocation, startSquare);
+        final ValidateDto end = ValidateDto.of(endLocation, endSquare);
+        final List<Square> path = getSquaresInPath(startLocation, endLocation);
+        if (pathValidator.isValid(start, end, path)) {
             return;
         }
         throw new IllegalArgumentException(PieceView.findSign(start.getPiece()) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
-    }
-
-    private boolean isNormalPath(final Square startSquare, final List<Square> squares) {
-        return pathValidator.validateNormal(startSquare, squares);
-    }
-
-    private boolean isSpecialPath(final SpecialValidateDto start, final SpecialValidateDto end) {
-        return pathValidator.validateSpecial(start, end);
     }
 
     private List<Square> getSquaresInPath(final Location start, final Location end) {

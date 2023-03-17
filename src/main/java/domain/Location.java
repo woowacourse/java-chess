@@ -1,5 +1,6 @@
 package domain;
 
+import domain.type.Direction;
 import java.util.Objects;
 
 public class Location {
@@ -69,6 +70,10 @@ public class Location {
         return row;
     }
 
+    public Location addDirectionOnce(final Direction direction) {
+        return Location.of(col + direction.getColDiff(), row + direction.getRowDiff());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -84,5 +89,13 @@ public class Location {
     @Override
     public int hashCode() {
         return Objects.hash(getCol(), getRow());
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+            "col=" + col +
+            ", row=" + row +
+            '}';
     }
 }
