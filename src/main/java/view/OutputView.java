@@ -17,6 +17,10 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public static void printErrorMessage(String message) {
+        System.out.printf("[ERROR] : %s", message);
+    }
+
     public static void printChessBoard(ChessBoard chessBoard) {
         List<Rank> ranks = chessBoard.getChessBoard();
 

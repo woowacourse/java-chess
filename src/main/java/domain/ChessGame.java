@@ -93,4 +93,8 @@ public class ChessGame {
         endPoint.bePiece(startPoint);
         startPoint.beEmpty();
     }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
 }
