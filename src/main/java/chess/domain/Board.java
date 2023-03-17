@@ -4,6 +4,7 @@ import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.team.Team;
 import chess.initial.BoardFactory;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class Board {
 
         validateMovable(piece, unit);
         validatePath(source, target, unit, piece);
+
+        movePiece(source, target, piece);
     }
 
     private void validateDifferentPosition(final Position source, final Position target) {
@@ -109,5 +112,10 @@ public class Board {
         if (!piece.movableByCount(pathSize)) {
             throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다.");
         }
+    }
+
+    private void movePiece(final Position source, final Position target, final Piece piece) {
+        board.put(target, piece);
+        board.put(source, new Empty(Team.NONE));
     }
 }

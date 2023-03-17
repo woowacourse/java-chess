@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Empty;
+import chess.domain.piece.Knight;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -91,5 +93,17 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("한 칸만 움직일 수 있는 체스말입니다.");
+    }
+
+    @Test
+    @DisplayName("체스말이 성공적으로 이동하는지 확인하는 테스트")
+    void movePiece(){
+        final Position source = Position.from("b1");
+        final Position target = Position.from("c3");
+
+        board.move(source, target);
+
+        assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class);
+        assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class);
     }
 }
