@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.direction.Direction;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Place;
+import chess.exception.PieceMessage;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class Board {
 
     private void validateMoveSamePosition(final Position start, final Position end) {
         if (start.equals(end)) {
-            throw new IllegalArgumentException("같은 위치로 움직일 수 없습니다.");
+            throw new IllegalArgumentException(PieceMessage.NOT_MOVE.getMessage());
         }
     }
 
@@ -53,7 +54,7 @@ public class Board {
                 .anyMatch(piece -> !(piece.isPlace()));
 
         if (isObstacleExist) {
-            throw new IllegalArgumentException("장애물이 존재합니다.");
+            throw new IllegalArgumentException(PieceMessage.MOVE_NOT_TO_OBSTACLE.getMessage());
         }
     }
 
@@ -81,14 +82,14 @@ public class Board {
     private void validateLowercasePawnAttack(final Position end) {
         Piece upperEnemy = findPieceFromPosition(end);
         if (upperEnemy.isNameLowerCase() || upperEnemy.isPlace()) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
+            throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
 
     private void validateLowercasePawnMoveForward(final Position end) {
         Piece destination = findPieceFromPosition(end);
         if (!(destination.isPlace())) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
+            throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
 
@@ -104,7 +105,7 @@ public class Board {
         Piece selectedPiece = findPieceFromPosition(start);
         Piece destinationPiece = findPieceFromPosition(end);
         if (isSameTeam(selectedPiece, destinationPiece) && !destinationPiece.isPlace()) {
-            throw new IllegalArgumentException("우리팀 말에게 이동할 수 없습니다.");
+            throw new IllegalArgumentException(PieceMessage.MOVE_NOT_TO_TEAM.getMessage());
         }
     }
 
@@ -115,14 +116,14 @@ public class Board {
     private void validateUppercasePawnAttack(final Position end) {
         Piece lowerEnemy = findPieceFromPosition(end);
         if (lowerEnemy.isNameUpperCase() || lowerEnemy.isPlace()) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
+            throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
 
     private void validateUppercasePawnMoveForward(final Position end) {
         Piece destination = findPieceFromPosition(end);
         if (!(destination.isPlace())) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
+            throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
 }

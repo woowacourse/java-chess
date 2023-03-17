@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.exception.PieceMessage;
 import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,9 @@ class BoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"c3, c3", "c2, b2", "c7,b7", "c7,c7"})
-    @DisplayName("같은 위치 혹은 같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
-    void throws_exception_when_move_invalid(final String start, final String end) {
+    @CsvSource(value = {"c3, c3", "c7,c7"})
+    @DisplayName("같은 위치로 이동하는 경우 예외가 발생한다.")
+    void throws_exception_when_not_move(final String start, final String end) {
         // given
         Board board = BoardFactory.createBoard();
         Position startPosition = Position.from(start);
@@ -33,8 +34,24 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(
-                () -> board.switchPosition(startPosition, endPosition)
-        ).isInstanceOf(IllegalArgumentException.class);
+                () -> board.switchPosition(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.NOT_MOVE.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"c2,b2", "c7,b7"})
+    @DisplayName("같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
+    void throws_exception_when_move_to_team(final String start, final String end) {
+        // given
+        Board board = BoardFactory.createBoard();
+        Position startPosition = Position.from(start);
+        Position endPosition = Position.from(end);
+
+        // when & then
+        assertThatThrownBy(
+                () -> board.switchPosition(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -84,7 +101,8 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition(Position.from("a2"), Position.from("b3")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 
     @Test
@@ -96,7 +114,8 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition(Position.from("a7"), Position.from("b6")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 
     @Test
@@ -109,7 +128,8 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition(Position.from("a4"), Position.from("a5")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 
     @Test
@@ -123,6 +143,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition(Position.from("a5"), Position.from("a4")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 }
