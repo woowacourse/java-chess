@@ -13,25 +13,22 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class InitialBoardStrategy implements BoardStrategy {
-
-    private final static List<Column> initialColumnsOfPawn = Column.getOrderedColumns();
-    private final static List<Column> initialColumnsOfRook = List.of(Column.A, Column.H);
-    private final static List<Column> initialColumnsOfKnight = List.of(Column.B, Column.G);
-    private final static List<Column> initialColumnsOfBishop = List.of(Column.C, Column.F);
-    private final static List<Column> initialColumnsOfQueen = List.of(Column.D);
-    private final static List<Column> initialColumnsOfKing = List.of(Column.E);
     private Map<Position, Piece> board = new HashMap<>();
 
     @Override
     public Map<Position, Piece> generate() {
         initEmptyPieces();
-        initPiecesByColor(Rank.EIGHT, Rank.SEVEN, Color.BLACK);
-        initPiecesByColor(Rank.ONE, Rank.TWO, Color.WHITE);
+        initFirstRow(Rank.EIGHT, Color.BLACK);
+        initSecondRow(Rank.SEVEN, Color.BLACK);
+        initFirstRow(Rank.ONE, Color.WHITE);
+        initSecondRow(Rank.TWO, Color.WHITE);
 
         return new HashMap<>(board);
     }
@@ -44,48 +41,21 @@ public class InitialBoardStrategy implements BoardStrategy {
         }
     }
 
-    private void initPiecesByColor(Rank firstRow, Rank secondRow, Color color) {
-        initPawn(secondRow, color);
-        initRook(firstRow, color);
-        initKnight(firstRow, color);
-        initBishop(firstRow, color);
-        initQueen(firstRow, color);
-        initKing(firstRow, color);
+    private void initFirstRow(Rank rank, Color color) {
+        List<Piece> firstRowPieces = List.of(new Rook(color), new Knight(color), new Bishop(color), new Queen(color),
+                new King(color), new Bishop(color), new Knight(color), new Rook(color));
+
+        IntStream.range(0, firstRowPieces.size())
+                .forEach(i -> board.replace(new Position(Column.findColumnByIndex(i+1), rank),
+                        firstRowPieces.get(i))
+                );
+
     }
 
-    private void initPawn(Rank secondRow, Color color) {
-        for (Column column : initialColumnsOfPawn) {
-            board.replace(new Position(column, secondRow), new Pawn(color));
-        }
-    }
-
-    private void initRook(Rank firstRow, Color color) {
-        for (Column column : initialColumnsOfRook) {
-            board.replace(new Position(column, firstRow), new Rook(color));
-        }
-    }
-
-    private void initKnight(Rank firstRow, Color color) {
-        for (Column column : initialColumnsOfKnight) {
-            board.replace(new Position(column, firstRow), new Knight(color));
-        }
-    }
-
-    private void initBishop(Rank firstRow, Color color) {
-        for (Column column : initialColumnsOfBishop) {
-            board.replace(new Position(column, firstRow), new Bishop(color));
-        }
-    }
-
-    private void initQueen(Rank firstRow, Color color) {
-        for (Column column : initialColumnsOfQueen) {
-            board.replace(new Position(column, firstRow), new Queen(color));
-        }
-    }
-
-    private void initKing(Rank firstRow, Color color) {
-        for (Column column : initialColumnsOfKing) {
-            board.replace(new Position(column, firstRow), new King(color));
-        }
+    private void initSecondRow(Rank rank, Color color) {
+        Arrays.stream(Column.values())
+                .forEach(column -> board.replace(new Position(column, rank),
+                        new Pawn(color))
+                );
     }
 }
