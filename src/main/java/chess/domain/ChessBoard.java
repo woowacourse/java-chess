@@ -60,17 +60,11 @@ public class ChessBoard {
 
     private boolean isMoveSuccess(final TeamColor teamColor, final Position source,
         final Position dest, Piece piece, final Path path) {
-        validateMovePossibility(source, dest, piece, path, teamColor);
-        movePieceToDestination(source, dest, piece);
-        return true;
-    }
-
-    private void validateMovePossibility(final Position source, final Position dest,
-        final Piece piece,
-        final Path path, final TeamColor color) {
         validateObstacleInPath(dest, path);
         validatePawnAttack(piece, source, dest);
-        validateObstacleInDestination(dest, color);
+        validateObstacleInDestination(dest, teamColor);
+        movePieceToDestination(source, dest, piece);
+        return true;
     }
 
     private void validateObstacleInPath(final Position dest, final Path path) {
