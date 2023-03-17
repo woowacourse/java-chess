@@ -1,9 +1,11 @@
 package chess.domain;
 
-import java.util.List;
-import java.util.Map;
 import chess.domain.piece.Piece;
 import chess.domain.piece.UnMovablePiece;
+
+import java.util.List;
+import java.util.Map;
+
 
 public final class Board {
 

@@ -1,8 +1,8 @@
 package chess.movingStrategy;
 
-import java.util.List;
-
 import chess.domain.Position;
+
+import java.util.List;
 
 public final class MovingStrategies {
 

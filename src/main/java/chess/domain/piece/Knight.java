@@ -1,19 +1,19 @@
 package chess.domain.piece;
 
-import java.util.Collections;
-import java.util.List;
-
 import chess.domain.Position;
-import chess.movingStrategy.MoveDownTwoRight;
-import chess.movingStrategy.MoveLeftTwoUp;
-import chess.movingStrategy.MoveUpTwoLeft;
 import chess.movingStrategy.MoveDownTwoLeft;
+import chess.movingStrategy.MoveDownTwoRight;
 import chess.movingStrategy.MoveLeftTwoDown;
+import chess.movingStrategy.MoveLeftTwoUp;
 import chess.movingStrategy.MoveRightTwoDown;
 import chess.movingStrategy.MoveRightTwoUp;
+import chess.movingStrategy.MoveUpTwoLeft;
 import chess.movingStrategy.MoveUpTwoRight;
 import chess.movingStrategy.MovingStrategies;
 import chess.movingStrategy.MovingStrategy;
+
+import java.util.Collections;
+import java.util.List;
 
 public final class Knight extends MovablePiece {
 

@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import java.util.Collections;
-import java.util.List;
-
 import chess.domain.Position;
 import chess.movingStrategy.MovingStrategies;
+
+import java.util.Collections;
+import java.util.List;
 
 public final class UnMovablePiece extends Piece {
 

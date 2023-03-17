@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import chess.domain.Position;
 import chess.movingStrategy.MoveDown;
 import chess.movingStrategy.MoveLeft;
@@ -10,6 +7,9 @@ import chess.movingStrategy.MoveRight;
 import chess.movingStrategy.MoveUp;
 import chess.movingStrategy.MovingStrategies;
 import chess.movingStrategy.MovingStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Rook extends MovablePiece {
 

@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import java.util.Collections;
-import java.util.List;
-
 import chess.domain.Position;
 import chess.movingStrategy.MoveDown;
 import chess.movingStrategy.MoveLeftDown;
@@ -12,6 +9,9 @@ import chess.movingStrategy.MoveRightUp;
 import chess.movingStrategy.MoveUp;
 import chess.movingStrategy.MovingStrategies;
 import chess.movingStrategy.MovingStrategy;
+
+import java.util.Collections;
+import java.util.List;
 
 public final class Pawn extends MovablePiece {
 

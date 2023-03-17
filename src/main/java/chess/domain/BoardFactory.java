@@ -1,7 +1,5 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -11,6 +9,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.UnMovablePiece;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class BoardFactory {
 

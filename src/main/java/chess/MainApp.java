@@ -1,10 +1,10 @@
 package chess;
 
-import java.util.Scanner;
-
+import chess.controller.ChessController;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.controller.ChessController;
+
+import java.util.Scanner;
 
 public final class MainApp {
 

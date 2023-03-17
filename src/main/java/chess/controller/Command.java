@@ -2,6 +2,7 @@ package chess.controller;
 
 import java.util.Arrays;
 
+
 public enum Command {
     START("start"),
     END("end"),
@@ -11,18 +12,6 @@ public enum Command {
 
     Command(final String command) {
         this.command = command;
-    }
-
-    public boolean isStart() {
-        return this == START;
-    }
-
-    public boolean isEnd() {
-        return this == END;
-    }
-
-    public boolean isMove() {
-        return this == MOVE;
     }
 
     public static Command createInitMessage(String rawCommand) {
@@ -46,5 +35,17 @@ public enum Command {
         }
 
         throw new IllegalArgumentException("잘못된 커맨드를 입력하였습니다.");
+    }
+
+    public boolean isStart() {
+        return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
     }
 }

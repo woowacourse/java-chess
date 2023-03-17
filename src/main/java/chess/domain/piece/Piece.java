@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import java.util.List;
-
 import chess.domain.Position;
 import chess.movingStrategy.MovingStrategies;
+
+import java.util.List;
 
 public abstract class Piece {
 

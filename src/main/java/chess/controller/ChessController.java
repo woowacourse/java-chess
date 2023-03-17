@@ -1,7 +1,5 @@
 package chess.controller;
 
-import java.util.List;
-
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.File;
@@ -10,6 +8,8 @@ import chess.domain.Rank;
 import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public final class ChessController {
 

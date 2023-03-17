@@ -1,14 +1,14 @@
 package chess.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.view.PieceRender;
 import chess.domain.piece.Piece;
+import chess.view.PieceRender;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public final class BoardDto {
 
