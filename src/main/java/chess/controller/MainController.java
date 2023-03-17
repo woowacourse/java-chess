@@ -5,7 +5,6 @@ import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class MainController {
 
@@ -14,14 +13,14 @@ public class MainController {
             GameCommand.START, new StartSubController(),
             GameCommand.MOVE, new MoveSubController(board)
     );
+    private Boolean isStart = false;
 
     public void run() {
         OutputView.printGameStartInfo();
-        boolean isStart = false;
-        repeat(this::play, isStart);
+        repeat(this::play);
     }
 
-    private void play(boolean isStart) {
+    private void play() {
         GameCommand command = GameCommand.from(InputView.readCommand());
         while (command != GameCommand.END) {
             subControllers.get(command).run(isStart);
@@ -31,12 +30,12 @@ public class MainController {
         }
     }
 
-    private void repeat(final Consumer<Boolean> consumer, boolean isStart) {
+    private void repeat(final Runnable runnable) {
         try {
-            consumer.accept(isStart);
+            runnable.run();
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
-            repeat(consumer, isStart);
+            repeat(runnable);
         }
     }
 }
