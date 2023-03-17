@@ -14,8 +14,6 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean canMove(Position source, Position target);
-
     protected boolean canMoveDiagonal(Position source, Position target) {
         int xDistance = source.getXDistanceTo(target);
         int yDistance = source.getYDistanceTo(target);
@@ -41,6 +39,8 @@ public abstract class Piece {
     public Team getTeam() {
         return team;
     }
+
+    public abstract boolean canMove(Position source, Position target);
 
     @Override
     public boolean equals(Object o) {
