@@ -1,41 +1,46 @@
 package chess.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-
 import chess.Path;
 import chess.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
 
     @Test
+    @DisplayName("searchPathTo() : King이 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
     void test_searchPathTo() {
 
-        Piece piece = new Knight(Color.WHITE);
+        //given
+        final Piece piece = new Knight(Color.WHITE);
+        final Position from = new Position(2, 1);
+        final Position to = new Position(3, 3);
 
-        Position initialPosition = new Position(2, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(3, 3), Optional.empty());
+        //when
+        final Path path = piece.searchPathTo(from, to, Optional.empty());
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly();
+        //then
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                        .containsExactly();
     }
 
     @Test
+    @DisplayName("searchPathTo() : Knight가 움직일 수 없는 경로일 때, IllegalStateException을 반환한다.")
     void test_searchPathTo2() {
 
-        Piece piece = new Knight(Color.WHITE);
+        //given
+        final Piece piece = new Knight(Color.WHITE);
+        final Position from = new Position(2, 1);
+        final Position to = new Position(4, 5);
 
-        Position initialPosition = new Position(2, 1);
-
-        assertThatThrownBy(() ->
-                piece.searchPathTo(initialPosition,
-                        new Position(4, 5),
-                        Optional.empty()))
+        //when & then
+        assertThatThrownBy(() -> piece.searchPathTo(from, to, Optional.empty()))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

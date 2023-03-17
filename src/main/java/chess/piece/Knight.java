@@ -17,6 +17,8 @@ import java.util.Optional;
 
 public class Knight extends Piece {
 
+    private static final int MANHATTAN_DISTANCE = 3;
+
     private static final List<Movement> CAN_MOVE_DESTINATION =
             List.of(
                     UUR, UUL, RRU, RRD,
@@ -33,17 +35,21 @@ public class Knight extends Piece {
 
         Movement movement = to.convertMovement(from);
 
-        int rankDifference = Math.abs(to.calculateRankBetween(from));
-        int fileDifference = Math.abs(to.calculateFileBetween(from));
-
-        if (rankDifference + fileDifference != 3) {
-            throw new IllegalStateException();
+        if (calculateManhattanDistanceBetween(from, to) != MANHATTAN_DISTANCE) {
+            throw new IllegalStateException(this.getClass().getSimpleName() + "은 한 칸 직진, 한 칸 대각선으로만 이동할 수 있습니다.");
         }
 
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
         }
 
         return new Path();
+    }
+
+    private int calculateManhattanDistanceBetween(Position from, Position to) {
+        final int rankDifference = Math.abs(to.calculateRankBetween(from));
+        final int fileDifference = Math.abs(to.calculateFileBetween(from));
+
+        return rankDifference + fileDifference;
     }
 }
