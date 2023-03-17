@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,7 @@ public final class BoardFactory {
 
     private static void fill(final Map<Position, Piece> board, final Rank rank) {
         for (final File file : File.values()) {
-            board.put(Position.of(file.value(), rank.value()), new Empty(true));
+            board.put(Position.of(file.value(), rank.value()), new Empty(Team.NONE));
         }
     }
 }

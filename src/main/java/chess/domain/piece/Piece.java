@@ -1,22 +1,27 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.team.Team;
 
 public abstract class Piece {
 
-    private final boolean isWhite;
+    private final Team team;
 
-    protected Piece(final boolean isWhite) {
-        this.isWhite = isWhite;
+    protected Piece(final Team team) {
+        this.team = team;
     }
 
     public abstract String name();
 
-    public abstract boolean movable(Direction direction);
+    public abstract boolean movable(final Direction direction);
 
-    public abstract boolean movableByCount(int count);
+    public abstract boolean movableByCount(final int count);
 
-    protected boolean isWhite() {
-        return isWhite;
+    public boolean isSameTeam(final Team team) {
+        return this.team.equals(team);
+    }
+
+    public Team team() {
+        return team;
     }
 }

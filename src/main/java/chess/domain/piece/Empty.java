@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.team.Team;
 
 public final class Empty extends Piece {
 
-    public Empty(final boolean isWhite) {
-        super(isWhite);
+    public Empty(final Team team) {
+        super(team);
     }
 
     @Override

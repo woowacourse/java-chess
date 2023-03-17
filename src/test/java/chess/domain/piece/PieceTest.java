@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class PieceTest {
     @DisplayName("체스말을 이름을 갖고 있다")
     void name() {
         // given
-        final var piece = new TestPiece(false);
+        final var piece = new TestPiece(Team.BLACK);
         final var expected = "R";
 
         // when
@@ -25,8 +26,8 @@ class PieceTest {
 
 final class TestPiece extends Piece {
 
-    public TestPiece(final boolean isWhite) {
-        super(isWhite);
+    public TestPiece(final Team team) {
+        super(team);
     }
 
     @Override

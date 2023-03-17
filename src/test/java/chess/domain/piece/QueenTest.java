@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class QueenTest {
     @DisplayName("퀸이 이동할 수 있으면 true를 반환한다")
     void movable() {
         // given
-        final Queen queen = new Queen(true);
+        final Queen queen = new Queen(Team.WHITE);
 
         // then
         assertTrue(queen.movable(Direction.LEFT_DOWN));
@@ -22,7 +23,7 @@ class QueenTest {
     @DisplayName("퀸이 이동할 수 없으면 false를 반환한다")
     void notMovable() {
         // given
-        final Queen queen = new Queen(true);
+        final Queen queen = new Queen(Team.WHITE);
 
         // then
         assertFalse(queen.movable(Direction.KNIGHT_LEFT_UP));
@@ -32,7 +33,7 @@ class QueenTest {
     @DisplayName("퀸은 끝까지 이동할 수 있다")
     void movableByCount() {
         // given
-        final Queen queen = new Queen(true);
+        final Queen queen = new Queen(Team.WHITE);
 
         // then
         assertTrue(queen.movableByCount(5));

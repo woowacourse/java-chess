@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.team.Team;
 
 import java.util.Set;
 
@@ -10,13 +11,13 @@ public final class Knight extends Piece {
 
     private static final Set<Direction> directions = Set.of(KNIGHT_DOWN_LEFT, KNIGHT_DOWN_RIGHT, KNIGHT_UP_LEFT, KNIGHT_UP_RIGHT, KNIGHT_LEFT_UP, KNIGHT_LEFT_DOWN);
 
-    public Knight(final boolean isWhite) {
-        super(isWhite);
+    public Knight(final Team team) {
+        super(team);
     }
 
     @Override
     public String name() {
-        if (super.isWhite()) {
+        if (super.team().equals(Team.WHITE)) {
             return "n";
         }
         return "N";
