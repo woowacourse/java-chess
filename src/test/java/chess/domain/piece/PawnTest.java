@@ -9,6 +9,7 @@ import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -21,6 +22,7 @@ class PawnTest {
             "C:TWO:false"}, delimiter = ':')
     void 하얀_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
@@ -29,6 +31,7 @@ class PawnTest {
             "C:TWO:false"}, delimiter = ':')
     void 검은_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.BLACK);
+
         assertThat(pawn.canMove(B_7, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
@@ -36,6 +39,7 @@ class PawnTest {
     @CsvSource(value = {"A:TWO:true", "C:TWO:true"}, delimiter = ':')
     void 폰은_대각선에_적이_있으면_그_방향으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.BLACK)).isEqualTo(expect);
     }
 
@@ -43,6 +47,14 @@ class PawnTest {
     @CsvSource(value = {"A:TWO:false", "C:TWO:false"}, delimiter = ':')
     void 폰은_대각선에_적이_없다면_그_방향으로_이동할_수_없다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.WHITE)).isEqualTo(expect);
+    }
+
+    @Test
+    void 폰은_Empty가_아니다() {
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        assertThat(pawn.isEmpty()).isEqualTo(false);
     }
 }

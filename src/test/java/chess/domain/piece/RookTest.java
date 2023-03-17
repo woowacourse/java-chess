@@ -8,6 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -21,5 +22,12 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
 
         assertThat(rook.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+    }
+
+    @Test
+    void 룩은_Empty가_아니다() {
+        Rook rook = new Rook(Color.WHITE);
+        
+        assertThat(rook.isEmpty()).isEqualTo(false);
     }
 }

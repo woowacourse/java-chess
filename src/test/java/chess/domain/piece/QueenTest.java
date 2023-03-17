@@ -8,6 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -20,6 +21,14 @@ class QueenTest {
             "C:SIX:true"}, delimiter = ':')
     void 퀸이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Queen queen = new Queen(Color.WHITE);
+
         assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+    }
+
+    @Test
+    void 퀸은_Empty가_아니다() {
+        Queen queen = new Queen(Color.WHITE);
+
+        assertThat(queen.isEmpty()).isEqualTo(false);
     }
 }

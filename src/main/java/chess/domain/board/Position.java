@@ -85,7 +85,6 @@ public class Position {
         return 1;
     }
 
-
     public FileCoordinate getFileCoordinate() {
         return fileCoordinate;
     }

@@ -8,6 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -21,5 +22,12 @@ class KingTest {
         King king = new King(Color.WHITE);
 
         assertThat(king.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+    }
+
+    @Test
+    void 킹은_Empty가_아니다() {
+        King king = new King(Color.WHITE);
+
+        assertThat(king.isEmpty()).isEqualTo(false);
     }
 }

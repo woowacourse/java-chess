@@ -20,10 +20,6 @@ public class Board {
         throw new IllegalArgumentException("잘못된 위치를 입력했습니다");
     }
 
-    public Map<Position, Piece> getBoards() {
-        return boards;
-    }
-
     public boolean isEmptyPosition(List<Position> paths) {
         return paths.stream()
                 .map(boards::get)
@@ -31,9 +27,35 @@ public class Board {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
+        validateMove(sourcePosition, targetPosition);
         Piece sourcePiece = boards.get(sourcePosition);
         Piece movedPiece = sourcePiece.move();
         boards.put(targetPosition, movedPiece);
         boards.put(sourcePosition, Empty.create());
+    }
+
+    private void validateMove(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = findPiece(sourcePosition);
+        Piece targetPiece = findPiece(targetPosition);
+        validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
+        List<Position> path = sourcePosition.findPath(targetPosition);
+        validatePath(path);
+    }
+
+    private void validatePath(List<Position> path) {
+        if (!isEmptyPosition(path)) {
+            throw new IllegalArgumentException("경로가 없습니다.");
+        }
+    }
+
+    private void validateCanMove(Position sourcePosition, Position targetPosition,
+                                 Piece sourcePiece, Piece targetPiece) {
+        if (!sourcePiece.canMove(sourcePosition, targetPosition, targetPiece.getColor())) {
+            throw new IllegalArgumentException("잘못된 위치를 지정하셨습니다.");
+        }
+    }
+
+    public Map<Position, Piece> getBoards() {
+        return boards;
     }
 }

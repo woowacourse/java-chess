@@ -10,12 +10,13 @@
 graph TD
     ChessController --> OutputView
     ChessController --> InputView
-    ChessController --> Board
+    ChessController --> ChessGame
+
+    ChessGame --> Board
+    ChessGame --> Color
 
     Board --> Piece
     Board --> Position
-
-    Piece --> Color
 
     Piece --> Rook
     Piece --> King

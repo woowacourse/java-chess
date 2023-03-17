@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.List;
 
 public class ChessGame {
 
@@ -17,17 +16,8 @@ public class ChessGame {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        validateMove(sourcePosition, targetPosition);
+        validateColor(color, sourcePosition);
         move(sourcePosition, targetPosition);
-    }
-
-    private void validateMove(Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = board.findPiece(sourcePosition);
-        Piece targetPiece = board.findPiece(targetPosition);
-        validateColor(color, sourcePiece);
-        validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
-        List<Position> path = sourcePosition.findPath(targetPosition);
-        validatePath(path);
     }
 
     private void move(Position sourcePosition, Position targetPosition) {
@@ -36,22 +26,10 @@ public class ChessGame {
     }
 
 
-    private void validateColor(Color color, Piece sourcePiece) {
+    private void validateColor(Color color, Position sourcePosition) {
+        Piece sourcePiece = board.findPiece(sourcePosition);
         if (!sourcePiece.isSameTeam(color)) {
             throw new IllegalArgumentException("상대 팀의 말을 옮길 수 없습니다.");
-        }
-    }
-
-    private void validatePath(List<Position> path) {
-        if (!board.isEmptyPosition(path)) {
-            throw new IllegalArgumentException("경로가 없습니다.");
-        }
-    }
-
-    private void validateCanMove(Position sourcePosition, Position targetPosition, Piece sourcePiece,
-                                 Piece targetPiece) {
-        if (!sourcePiece.canMove(sourcePosition, targetPosition, targetPiece.getColor())) {
-            throw new IllegalArgumentException("잘못된 위치를 지정하셨습니다.");
         }
     }
 
