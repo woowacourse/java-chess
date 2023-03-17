@@ -1,5 +1,6 @@
 package domain;
 
+import chess.domain.Column;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class ColumnTest {
         String value = "z";
 
         //then
-        assertThatThrownBy(() -> Column.validateValue(value))
+        assertThatThrownBy(() -> Column.findColumnByValue(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("존재하지 않는 Column입니다");
     }
@@ -40,6 +41,6 @@ class ColumnTest {
         String value = "a";
 
         //then
-        assertDoesNotThrow(() -> Column.validateValue(value));
+        assertDoesNotThrow(() -> Column.findColumnByValue(value));
     }
 }
