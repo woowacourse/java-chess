@@ -8,16 +8,23 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String START_CHESS_GAME_MESSSAGE = "> 체스 게임을 시작합니다.";
+    private static final String INTRODUCE_GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
+    private static final String INTRODUCE_GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
+    private static final String INTRODUCE_GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String INVALID_INPUT_ERROR_MESSAGE = "입력이 잘못 되었습니다. 다시 입력해 주세요.";
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final String COMMAND_INPUT_DELIMITER = " ";
     private static final String START = "start";
     private static final String END = "end";
+    private static final String MOVE = "move";
+    private static final int COMMAND_INDEX = 0;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public boolean getEndIntent() {
-        System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
-        System.out.println("> 게임 종료 : end");
-        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println(START_CHESS_GAME_MESSSAGE);
+        System.out.println(INTRODUCE_GAME_START_COMMAND_MESSAGE);
+        System.out.println(INTRODUCE_GAME_END_COMMAND_MESSAGE);
+        System.out.println(INTRODUCE_GAME_MOVE_COMMAND_MESSAGE);
         final String order = ExecuteContext.workWithExecuteStrategy(() -> {
             final String input = scanner.nextLine();
             checkExpectedInput(input, START, END);
@@ -27,8 +34,9 @@ public class InputView {
     }
 
     public List<String> getCommand() {
-        final String[] inputs = scanner.nextLine().split(" ");
-        checkExpectedInput(inputs[0], "move", "start", "end");
+        final String[] inputs = scanner.nextLine().split(COMMAND_INPUT_DELIMITER);
+        final String command = inputs[COMMAND_INDEX];
+        checkExpectedInput(command, MOVE, START, END);
         return Arrays.stream(inputs).collect(Collectors.toList());
     }
 
