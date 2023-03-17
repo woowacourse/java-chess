@@ -25,4 +25,6 @@ public abstract class Piece {
     }
 
     abstract public boolean isMovableAtOnce(int abs, int abs1);
+
+    abstract public boolean isMovableDirection(Direction direction);
 }
