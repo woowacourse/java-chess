@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import java.util.Arrays;
 
-public enum Col {
+public enum Column {
     A('a'),
     B('b'),
     C('c'),
@@ -14,21 +14,21 @@ public enum Col {
 
     private final char column;
 
-    Col(final char column) {
+    Column(final char column) {
         this.column = column;
     }
 
-    public static Col fromByInput(final char input) {
-        return Arrays.stream(Col.values())
+    public static Column fromByInput(final char input) {
+        return Arrays.stream(Column.values())
                 .filter(col -> col.column == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
     }
 
     public static int subPositionFromArrivePosition(final char start, final char end) {
-        Col startCol = fromByInput(start);
-        Col endCol = fromByInput(end);
-        return endCol.column - startCol.column;
+        Column startColumn = fromByInput(start);
+        Column endColumn = fromByInput(end);
+        return endColumn.column - startColumn.column;
     }
 
     public char getIndexOfCol() {

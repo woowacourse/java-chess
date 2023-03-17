@@ -9,21 +9,21 @@ public class Position {
     private static final char LOWER_PAWN_INDEX = '2';
     private static final char UPPER_PAWN_INDEX = '7';
     private final Row row;
-    private final Col col;
+    private final Column column;
 
-    private Position(final Row row, final Col col) {
+    private Position(final Row row, final Column column) {
         this.row = row;
-        this.col = col;
+        this.column = column;
     }
 
     public static Position from(final String input) {
         Row row = Row.fromByInput(input.charAt(1));
-        Col col = Col.fromByInput(input.charAt(0));
-        return new Position(row, col);
+        Column column = Column.fromByInput(input.charAt(0));
+        return new Position(row, column);
     }
 
-    public static Position of(final Row row, final Col col) {
-        return new Position(row, col);
+    public static Position of(final Row row, final Column column) {
+        return new Position(row, column);
     }
 
     public boolean isPlacePositionAtFirst() {
@@ -39,7 +39,7 @@ public class Position {
     }
 
     public char getCol() {
-        return col.getIndexOfCol();
+        return column.getIndexOfCol();
     }
 
     public char getRow() {
@@ -55,11 +55,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return row == position.row && col == position.col;
+        return row == position.row && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(row, column);
     }
 }

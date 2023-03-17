@@ -1,7 +1,7 @@
 package chess.factory;
 
 import chess.domain.board.Board;
-import chess.domain.board.Col;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.pieces.Bishop;
@@ -31,7 +31,7 @@ public class BoardFactory {
     }
 
     private static List<Position> makePosition() {
-        List<Position> positions = Arrays.stream(Col.values())
+        List<Position> positions = Arrays.stream(Column.values())
                 .flatMap(col -> Arrays.stream(Row.values())
                         .map(row -> Position.of(row, col)))
                 .collect(Collectors.toList());
@@ -57,25 +57,25 @@ public class BoardFactory {
     }
 
     private static void fillUpperOtherPositionPieces(final Map<Position, Piece> chessBoard) {
-        chessBoard.put(Position.of(Row.EIGHT, Col.A), new Rook(new Name("R")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.B), new Knight(new Name("N")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.C), new Bishop(new Name("B")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.D), new Queen(new Name("Q")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.E), new King(new Name("K")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.F), new Bishop(new Name("B")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.G), new Knight(new Name("N")));
-        chessBoard.put(Position.of(Row.EIGHT, Col.H), new Rook(new Name("R")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.A), new Rook(new Name("R")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.B), new Knight(new Name("N")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.C), new Bishop(new Name("B")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.D), new Queen(new Name("Q")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.E), new King(new Name("K")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.F), new Bishop(new Name("B")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.G), new Knight(new Name("N")));
+        chessBoard.put(Position.of(Row.EIGHT, Column.H), new Rook(new Name("R")));
     }
 
     private static void fillLowerOtherPositionPieces(final Map<Position, Piece> chessBoard) {
-        chessBoard.put(Position.of(Row.ONE, Col.A), new Rook(new Name("r")));
-        chessBoard.put(Position.of(Row.ONE, Col.B), new Knight(new Name("n")));
-        chessBoard.put(Position.of(Row.ONE, Col.C), new Bishop(new Name("b")));
-        chessBoard.put(Position.of(Row.ONE, Col.D), new Queen(new Name("q")));
-        chessBoard.put(Position.of(Row.ONE, Col.E), new King(new Name("k")));
-        chessBoard.put(Position.of(Row.ONE, Col.F), new Bishop(new Name("b")));
-        chessBoard.put(Position.of(Row.ONE, Col.G), new Knight(new Name("n")));
-        chessBoard.put(Position.of(Row.ONE, Col.H), new Rook(new Name("r")));
+        chessBoard.put(Position.of(Row.ONE, Column.A), new Rook(new Name("r")));
+        chessBoard.put(Position.of(Row.ONE, Column.B), new Knight(new Name("n")));
+        chessBoard.put(Position.of(Row.ONE, Column.C), new Bishop(new Name("b")));
+        chessBoard.put(Position.of(Row.ONE, Column.D), new Queen(new Name("q")));
+        chessBoard.put(Position.of(Row.ONE, Column.E), new King(new Name("k")));
+        chessBoard.put(Position.of(Row.ONE, Column.F), new Bishop(new Name("b")));
+        chessBoard.put(Position.of(Row.ONE, Column.G), new Knight(new Name("n")));
+        chessBoard.put(Position.of(Row.ONE, Column.H), new Rook(new Name("r")));
     }
 
 
