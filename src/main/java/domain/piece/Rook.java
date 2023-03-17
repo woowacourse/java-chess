@@ -24,10 +24,10 @@ public class Rook extends Piece {
 
     @Override
     public List<Location> searchPath(final Location start, final Location end) {
-        if (isNotMovable(start, end)) {
+        final Direction direction = Direction.find(start, end);
+        if (direction.equals(Direction.ELSE) || isNotMovable(start, end)) {
             throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
-        final Direction direction = Direction.find(start, end);
         final int totalCount = Math.max(
             Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
         return IntStream.range(1, totalCount + 1)

@@ -13,9 +13,9 @@ public enum Direction {
     RIGHT(1, 0, Direction::isRight),
     LEFT(-1, 0, Direction::isLeft),
     DOWN(0, -1, Direction::isDown),
-    UP(0, 1, Direction::isUp);
+    UP(0, 1, Direction::isUp),
+    ELSE(0, 0, (start, end) -> false);
 
-    private static final String NOT_MOVABLE_ERROR_MESSAGE = "DIRECTION::이동할 수 없는 위치입니다.";
     private final int colDiff;
 
     private final int rowDiff;
@@ -71,7 +71,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.condition.test(start, end))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_MOVABLE_ERROR_MESSAGE));
+            .orElse(ELSE);
     }
 
     public int getColDiff() {

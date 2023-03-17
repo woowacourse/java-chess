@@ -24,10 +24,10 @@ public class Pawn extends Piece {
 
     @Override
     public List<Location> searchPath(final Location start, final Location end) {
-        if (isNotMovable(start, end)) {
+        final Direction direction = Direction.find(start, end);
+        if (direction.equals(Direction.ELSE) || isNotMovable(start, end)) {
             throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
-        final Direction direction = Direction.find(start, end);
         final int totalCount = Math.max(
             Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
         return IntStream.range(1, totalCount + 1)
@@ -39,45 +39,6 @@ public class Pawn extends Piece {
     }
 
     private boolean isNotMovable(final Location start, final Location end) {
-        if (color.equals(Color.BLACK)) {
-            return !isPossibleBlack(start, end);
-        }
-        return !isPossibleWhite(start, end);
-    }
-
-    private boolean isPossibleBlack(final Location start, final Location end) {
-        if (start.isSameCol(end)) {
-            return isFirstBlackMove(start, end);
-        }
-        if (start.isDiagonal(end)) {
-            return start.getRow() - end.getRow() == 1;
-        }
-        return false;
-    }
-
-    private static boolean isFirstBlackMove(final Location start, final Location end) {
-        if (start.getRow() == 6) {
-            return start.getRow() - end.getRow() == 2
-                || start.getRow() - end.getRow() == 1;
-        }
-        return start.getRow() - end.getRow() == 1;
-    }
-
-    private boolean isPossibleWhite(final Location start, final Location end) {
-        if (start.isSameCol(end)) {
-            return isFirstWhiteMove(start, end);
-        }
-        if (start.isDiagonal(end)) {
-            return start.getRow() - end.getRow() == -1;
-        }
-        return false;
-    }
-
-    private static boolean isFirstWhiteMove(final Location start, final Location end) {
-        if (start.getRow() == 1) {
-            return start.getRow() - end.getRow() == -2
-                || start.getRow() - end.getRow() == -1;
-        }
-        return start.getRow() - end.getRow() == -1;
+        return Math.abs(start.getRow() - end.getRow()) > 2;
     }
 }
