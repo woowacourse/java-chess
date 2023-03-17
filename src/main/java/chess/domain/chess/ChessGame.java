@@ -23,90 +23,61 @@ public final class ChessGame {
     public void play(final Position source, final Position target) {
         final Piece piece = chessBoard.checkPiece(source);
         validateCamp(piece);
-        if (piece.isPawn()) {
-            movePawn(source, target, piece);
+        validateTargetSameCamp(target);
+        validateObstacle(source, target, piece);
+        if (validateAttack(source, target, piece)) {
             return;
         }
-        if (piece.isKnight() && piece.canMove(source, target)) {
-            movePiece(source, target, piece);
+        if (checkPawnMove(source, target, piece)) {
             return;
         }
-        validatePossibleRoute(source, target, piece);
         movePiece(source, target, piece);
+    }
+
+    private void validateObstacle(final Position source, final Position target, final Piece piece) {
+        boolean isPossibleRoute = chessBoard.isPossibleRoute(source, target, piece);
+        if (!piece.isPossibleRoute(source, target, isPossibleRoute)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
     }
 
     private void validateCamp(final Piece piece) {
         if (!piece.isSameCamp(currentCamp)) {
-            throw new IllegalArgumentException("현재 차례가 아닙니다.");
+            throw new IllegalArgumentException("현재 차례가 아닙니다. 현재 차례 = " + currentCamp.name());
         }
     }
 
-    /**
-     * 시작에서 목표 지점까지 이동이 가능한지, 그리고 그 사이에 장애물이 존재하지 않는지 체크한다.
-     *
-     * @param source 시작 지점
-     * @param target 도착 지점
-     * @param piece  체스 말
-     */
-    private void validatePossibleRoute(final Position source, final Position target, final Piece piece) {
-        if (!piece.canMove(source, target) && !chessBoard.isPossibleRoute(source, target, piece)) {
-            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+    private void validateTargetSameCamp(final Position target) {
+        if (chessBoard.contains(target) && chessBoard.checkPiece(target).isSameCamp(currentCamp)) {
+            throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
     }
 
-    /**
-     * 폰의 이동 규칙을 관리한다.
-     * 1) 첫 시도 - 대각선 위치에 다른 편의 기물 있음 : 공격
-     * 2) 첫 시도 - 대각선 위치에 기물 없음 : 최대 2칸까지 이동 가능, 가능한 위치면 이동
-     * 3) 그 외 - 대각선 위치에 기물 있음 : 공격
-     * 4) 그 외 - 대각선 위치에 기물 없음 : 앞으로 1칸 이동
-     *
-     * @param source 시작 위치
-     * @param target 종료 위치
-     * @param piece  체스 말
-     *                                                         TODO : 여기서 책임을 가지는 건 무의미한 것 같은데, 어떻게 분리하지?
-     */
-    private void movePawn(final Position source, final Position target, final Piece piece) {
+    private boolean validateAttack(final Position source, final Position target, final Piece piece) {
+        if (piece.canAttack(source, target) && chessBoard.contains(target)) {
+            movePiece(source, target, piece);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkPawnMove(final Position source, final Position target, final Piece piece) {
+        if (piece.isPawn() && piece.canMove(source, target)) {
+            validatePawnMove(source, target, piece);
+            return true;
+        }
+        return false;
+    }
+
+    private void validatePawnMove(final Position source, final Position target, final Piece piece) {
         if ((piece.isSameCamp(CampType.WHITE) && source.getRank() == 1) || (piece.isSameCamp(CampType.BLACK) && source.getRank() == 6)) {
-            attackOrMove(source, target, piece);
-            return;
-        }
-        if (canAttack(source, target)) {
             movePiece(source, target, piece);
             return;
         }
-        validatePawnOneMove(source, target);
+        if (Math.abs(source.getRank() - target.getRank()) != 1) {
+            throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
+        }
         movePiece(source, target, piece);
-    }
-
-    private void attackOrMove(final Position source, final Position target, final Piece piece) {
-        if (canAttack(source, target)) {
-            movePiece(source, target, piece);
-            return;
-        }
-        validatePawnMoveCondition(source, target, piece);
-        movePiece(source, target, piece);
-    }
-
-    private void validatePawnOneMove(final Position source, final Position target) {
-        if (Math.abs(target.getRank() - source.getRank()) != 1 || chessBoard.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-    }
-
-    private boolean canAttack(final Position source, final Position target) {
-        if (Math.abs(target.getRank() - source.getRank()) == 1 && Math.abs(target.getFile() - source.getFile()) == 1) {
-            if (!chessBoard.contains(target) || chessBoard.checkPiece(target).isSameCamp(currentCamp)) {
-                throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-            }
-        }
-        return true;
-    }
-
-    private void validatePawnMoveCondition(final Position source, final Position target, final Piece piece) {
-        if (!piece.canMove(source, target) || chessBoard.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
     }
 
     private void movePiece(final Position source, final Position target, final Piece piece) {
