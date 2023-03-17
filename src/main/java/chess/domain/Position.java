@@ -10,6 +10,7 @@ public class Position {
     private static final int MAXIMUM = 8;
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
+    
     private final int file;
     private final int rank;
 
