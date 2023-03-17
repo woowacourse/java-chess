@@ -16,9 +16,6 @@ public class KnightMove implements ValidateMove {
             setNext(new PawnMove());
             return next.validate(validateDto);
         }
-        if (validateDto.getSourcePiece().isNotSameCamp(validateDto.getTargetPiece())) {
-            return true;
-        }
-        return false;
+        return validateDto.getSourcePiece().isNotSameCamp(validateDto.getTargetPiece());
     }
 }

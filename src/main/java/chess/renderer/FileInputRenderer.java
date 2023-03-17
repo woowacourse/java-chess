@@ -25,7 +25,7 @@ public enum FileInputRenderer {
         return Arrays.stream(values())
                 .filter(value -> value.input.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException())
+                .orElseThrow(IllegalArgumentException::new)
                 .output;
     }
 }

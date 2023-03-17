@@ -58,6 +58,7 @@ public class Pawn extends Piece {
     private static boolean canWhiteFirstMove(Square source, Square target) {
         int rankDifference = source.calculateRankDifference(target);
         int fileDistance = source.calculateFileDistance(target);
+
         if (source.isRankTwo()) {
             return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == 0 ||
                     rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == 1;
