@@ -1,12 +1,13 @@
 package controller;
 
+import static controller.Command.END;
+import static controller.Command.MOVE;
+
 import domain.board.Board;
 import domain.board.InitialChessAlignment;
 import domain.position.Position;
 import domain.position.Positions;
-
 import java.util.List;
-
 import view.InputView;
 import view.OutputView;
 
@@ -29,10 +30,10 @@ public final class ChessController {
     private boolean isStart() {
         final Command command = Command.from(InputView.readStartGameOption());
 
-        if (Command.END.equals(command)) {
+        if (END.equals(command)) {
             return false;
         }
-        if (Command.MOVE.equals(command)) {
+        if (MOVE.equals(command)) {
             throw new IllegalArgumentException(NOT_STARTED);
         }
         return true;
@@ -42,7 +43,7 @@ public final class ChessController {
         final List<String> gameOption = InputView.readPlayGameOption();
         final Command command = Command.from(gameOption.get(COMMAND));
 
-        if (Command.END.equals(command)) {
+        if (END.equals(command)) {
             return;
         }
 
