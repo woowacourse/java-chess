@@ -29,7 +29,7 @@ class RankTest {
         String value = "9";
 
         //then
-        assertThatThrownBy(() -> Rank.validateValue(value))
+        assertThatThrownBy(() -> Rank.findRankByValue(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("존재하지 않는 Rank입니다");
     }
@@ -40,6 +40,6 @@ class RankTest {
         String value = "1";
 
         //then
-        assertDoesNotThrow(() -> Rank.validateValue(value));
+        assertDoesNotThrow(() -> Rank.findRankByValue(value));
     }
 }
