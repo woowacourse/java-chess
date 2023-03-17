@@ -60,6 +60,13 @@ public class Pieces {
         pieces.add(new Rook(new Position(File.H, Rank.EIGHT), Side.BLACK));
     }
 
+    public Piece findPieceByPosition(final Position position) {
+        return pieces.stream()
+                .filter(piece -> piece.isSamePosition(position))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 존재하는 기물이 없습니다."));
+    }
+
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
