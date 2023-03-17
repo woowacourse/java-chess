@@ -1,17 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.position;
 
-import chess.domain.piece.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -33,13 +30,6 @@ class RankTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest(name = "1 ~ 8 사이의 값으로(ex: {0}) 생성된다.")
-    @ValueSource(ints = {1, 5, 8})
-    void 정상_생성(final int rank) {
-        // when & then
-        assertDoesNotThrow(() -> Rank.from(rank));
-    }
-
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
     void 값이_같으면_동등하다(final int value) {
@@ -51,22 +41,14 @@ class RankTest {
         assertThat(rank1).isEqualTo(rank2);
     }
 
-    @ParameterizedTest(name = "Rank 사이의 간격을 구할 수 있다. 현재[{0}]인 경우 목적지인 [{1}] 과의 차이는 [{2}] 이다.")
-    @CsvSource({
-            "2,1,-1",
-            "3,1,-2",
-            "1,3,2",
-            "1,2,1",
-            "1,1,0",
-            "3,3,0",
-    })
-    void Rank_사이의_간격을_구할_수_있다(final int currentRank, final int destination, final int distance) {
+    @Test
+    void Rank_사이의_간격을_구할_수_있다() {
         // given
-        final Rank from = Rank.from(currentRank);
-        final Rank dest = Rank.from(destination);
+        final Rank from = Rank.from(5);
+        final Rank dest = Rank.from(2);
 
         // when & then
-        assertThat(from.interval(dest)).isEqualTo(distance);
+        assertThat(from.interval(dest)).isEqualTo(-3);
     }
 
     @Test

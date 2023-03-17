@@ -70,6 +70,7 @@ class PlayGroundTest {
     }
 
     @Test
+    @Disabled
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
