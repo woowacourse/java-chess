@@ -89,7 +89,7 @@ public class ChessController {
         final Position source = moveRequest.getSource();
         final Position target = moveRequest.getTarget();
 
-        board.move(source, target, turn.getTurn());
+        board.move(source, target, turn.findNextPlayer());
 
         printChessBoard(board);
     }
