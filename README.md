@@ -49,10 +49,10 @@ classDiagram
 
 ### Position
 
-- [x] domain.piece.File, Rank로 위치 정보를 생성한다.
+- [x] File, Rank로 위치 정보를 생성한다.
     - [x] col정보는 File인스턴스로 나타낸다.
     - [x] row정보는 Rank인스턴스로 나타낸다.
-- [x] domain.piece.File, Rank의 증분을 계산한다.
+- [x] File, Rank의 증분을 계산한다.
 - [x] Target position까지의 이동 경로를 반환한다.
     - [x] 요청받은 movement를 기준으로 해당 방향으로 한 칸 움직인다.
 

@@ -30,8 +30,7 @@ public abstract class Piece {
         return targetPiece.side.equals(Side.WHITE);
     }
 
-    //TODO getter 제거
-    public Side getSide() {
-        return side;
+    public boolean isSideOf(Side side) {
+        return this.side.equals(side);
     }
 }
