@@ -30,6 +30,6 @@ class ChessStartCommandTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> ChessStartCommand.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .withMessage("start를 입력해야 게임이 시작됩니다.");
+                .withMessage("start나 end 중 입력해야 합니다.");
     }
 }

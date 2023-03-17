@@ -16,14 +16,34 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        final ChessStartCommand chessStartCommand = ChessStartCommand.from(inputView.readChessExecuteCommand());
-        if (chessStartCommand == START) {
+        if (readChessStartCommand() == START) {
             outputView.printChessBoard(ChessBoardDto.from(chessGame));
             playChessGame();
         }
     }
 
+    private ChessStartCommand readChessStartCommand() {
+        while (true) {
+            try {
+                return ChessStartCommand.from(inputView.readChessExecuteCommand());
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
     private void playChessGame() {
+        while (true) {
+            try {
+                repeatMove();
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private void repeatMove() {
         ChessGameCommand chessGameCommand = ChessGameCommand.from(inputView.readChessGameCommand());
         while (chessGameCommand.getChessExecuteCommand() == ChessExecuteCommand.MOVE) {
             chessGame.move(chessGameCommand.getSource(), chessGameCommand.getDestination());

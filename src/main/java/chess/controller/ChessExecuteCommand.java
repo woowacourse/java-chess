@@ -7,7 +7,7 @@ import java.util.Arrays;
 public enum ChessExecuteCommand {
 
     MOVE("move"),
-    END("end");
+    STOP("end");
 
     private final String input;
 
@@ -24,6 +24,6 @@ public enum ChessExecuteCommand {
         return Arrays.stream(ChessExecuteCommand.values())
                 .filter(chessExecuteCommand -> chessExecuteCommand.input.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(format("%s나 %s 중 입력하세요.", MOVE, END)));
+                .orElseThrow(() -> new IllegalArgumentException(format("%s나 %s 중 입력해야 합니다.", MOVE, STOP)));
     }
 }

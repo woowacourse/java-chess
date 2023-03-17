@@ -58,8 +58,11 @@ public class Board {
 
     public boolean canMove(final Square source, final List<Square> routes) {
         final boolean isExistHurdle = isExistHurdle(routes.subList(0, routes.size() - 1));
-        final Square lastSquare = routes.get(routes.size() - 1);
-        return !isExistHurdle && !isSameColor(source, lastSquare);
+        final Square destination = routes.get(routes.size() - 1);
+        if (!board.containsKey(destination)) {
+            return !isExistHurdle;
+        }
+        return isAttackable(source, destination);
     }
 
     private boolean isExistHurdle(final List<Square> squares) {
@@ -67,32 +70,33 @@ public class Board {
                 .anyMatch(square -> board.containsKey(square));
     }
 
-    private boolean isSameColor(final Square source, final Square lastSquare) {
-        return board.containsKey(lastSquare) && !(board.get(source).isBlack() ^ board.get(lastSquare).isBlack());
+    private boolean isAttackable(final Square source, final Square destination) {
+        return board.containsKey(destination) && !isSameColor(source, destination);
+    }
+
+    private boolean isSameColor(final Square source, final Square destination) {
+        return board.get(source).isBlack() == board.get(destination).isBlack();
     }
 
     public boolean canMovePawn(final Square source, final List<Square> routes) {
-        final boolean isInitialMove = isInitialMove(source, routes);
-        final boolean isDiagonalMovable = isDiagonalMovable(source, routes.get(0));
-        return isInitialMove && isDiagonalMovable;
-    }
-
-    private boolean isInitialMove(final Square source, final List<Square> routes) {
-        final Piece piece = board.get(source);
-        final Square destination = routes.get(0);
-        final int distanceY = Math.abs(destination.calculateDistanceY(source));
-        return (distanceY == 2 && source.isInitPawnPosition(piece.isBlack())) || distanceY == 1;
-    }
-
-    private boolean isDiagonalMovable(final Square source, final Square destination) {
-        return (isDiagonalUnit(source, destination) && isSameColor(source, destination))
-                || (!isDiagonalUnit(source, destination) && !board.containsKey(destination));
+        if (isDiagonalUnit(source, routes.get(0))) {
+            return isAttackable(source, routes.get(0));
+        }
+        return canMoveStraight(source, routes);
     }
 
     private boolean isDiagonalUnit(final Square source, final Square destination) {
         final int distanceX = destination.calculateDistanceX(source);
         final int distanceY = destination.calculateDistanceY(source);
         return Math.abs(distanceX) == Math.abs(distanceY) && Math.abs(distanceX) == 1;
+    }
+
+    private boolean canMoveStraight(final Square source, final List<Square> routes) {
+        final Piece piece = board.get(source);
+        final Square destination = routes.get(0);
+        final int distanceY = Math.abs(destination.calculateDistanceY(source));
+        return (distanceY == 2 && source.isInitPawnPosition(piece.isBlack()))
+                || (distanceY == 1 && !board.containsKey(destination));
     }
 
     public void move(final Square source, final Square destination) {

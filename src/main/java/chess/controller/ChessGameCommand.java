@@ -23,10 +23,14 @@ public class ChessGameCommand {
         this.destination = destination;
     }
 
+    public static ChessGameCommand initMove() {
+        return new ChessGameCommand(ChessExecuteCommand.MOVE);
+    }
+
     public static ChessGameCommand from(final List<String> inputs) {
         validateEmpty(inputs);
         final ChessExecuteCommand chessExecuteCommand = ChessExecuteCommand.from(inputs.get(0));
-        if (chessExecuteCommand == ChessExecuteCommand.END) {
+        if (chessExecuteCommand == ChessExecuteCommand.STOP) {
             return getEndCommand(inputs, chessExecuteCommand);
         }
         return getMoveCommand(inputs, chessExecuteCommand);

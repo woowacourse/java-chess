@@ -16,4 +16,8 @@ public class OutputView {
             System.out.println(line);
         }
     }
+
+    public void printErrorMessage(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

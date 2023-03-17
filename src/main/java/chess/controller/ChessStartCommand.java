@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 public enum ChessStartCommand {
 
-    START("start");
+    START("start"),
+    END("end");
 
     private final String input;
 
@@ -23,6 +24,6 @@ public enum ChessStartCommand {
         return Arrays.stream(ChessStartCommand.values())
                 .filter(chessStartCommand -> chessStartCommand.input.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(format("%s를 입력해야 게임이 시작됩니다.", START)));
+                .orElseThrow(() -> new IllegalArgumentException(format("%s나 %s 중 입력해야 합니다.", START, END)));
     }
 }

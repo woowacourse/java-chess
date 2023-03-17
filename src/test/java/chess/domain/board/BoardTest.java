@@ -126,7 +126,7 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = Board.generate();
-                //Bishop
+                //Queen
                 final Square source = new Square(File.D, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.C, Rank.TWO), new Square(File.B, Rank.THREE));
 
@@ -140,7 +140,7 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = Board.generate();
-                //Bishop
+                //King
                 final Square source = new Square(File.E, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.F, Rank.TWO));
 
