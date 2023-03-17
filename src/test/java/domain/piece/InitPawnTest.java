@@ -40,8 +40,6 @@ class InitPawnTest {
             final Position target = PositionFactory.createPosition(targetCommand);
             final InitPawn initPawn = new InitPawn(Color.BLACK);
 
-            System.out.println(initPawn.findRoute(source, target).getRoute());
-
             //when&then
             assertThat(initPawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
         }

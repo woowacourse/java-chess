@@ -12,8 +12,8 @@ public class Rank {
         this.rank = rank;
     }
 
-    public static Rank initRankToRank(final InitRank initRank) {
-        return new Rank(initRank.getSquareStatus()
+    public static Rank initRankToRank(final RankFactory rankFactory) {
+        return new Rank(rankFactory.getSquareStatus()
                 .stream()
                 .map(Square::new)
                 .collect(Collectors.toList()));

@@ -5,7 +5,7 @@ import domain.piece.*;
 import java.util.Arrays;
 import java.util.List;
 
-public enum InitRank {
+public enum RankFactory {
 
     OTHERS_BLACK(List.of(new Rook(Color.BLACK), new Knight(Color.BLACK), new Bishop(Color.BLACK), new Queen(Color.BLACK), new King(Color.BLACK), new Bishop(Color.BLACK), new Knight(Color.BLACK), new Rook(Color.BLACK))),
     PAWN_BLACK(List.of(new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK), new InitPawn(Color.BLACK))),
@@ -15,13 +15,13 @@ public enum InitRank {
 
     private final List<SquareStatus> squareStatus;
 
-    InitRank(final List<SquareStatus> squareStatus) {
+    RankFactory(final List<SquareStatus> squareStatus) {
         this.squareStatus = squareStatus;
     }
 
-    public static InitRank from(InitRank initRank) {
+    public static RankFactory from(RankFactory rankFactory) {
         return Arrays.stream(values())
-                .filter(value -> value == initRank)
+                .filter(value -> value == rankFactory)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }

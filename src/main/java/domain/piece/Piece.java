@@ -8,8 +8,7 @@ import domain.coordinate.Route;
 public abstract class Piece implements SquareStatus {
 
     protected final Color color;
-
-    protected PieceType pieceType;
+    protected final PieceType pieceType;
 
     public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
