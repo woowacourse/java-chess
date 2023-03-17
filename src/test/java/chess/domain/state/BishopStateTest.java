@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BishopStateTest {
 
-    private static final BishopState bishopState = BishopState.getInstance();
+    private BishopState bishopState;
+
+    @BeforeEach
+    void setting() {
+        bishopState = new BishopState();
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"1, 1", "3, 3", "-5, -5", " 7, -7", "5, -5"})

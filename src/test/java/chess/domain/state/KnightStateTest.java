@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ColorCompareResult;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class KnightStateTest {
 
-    public static final KnightState knightState = KnightState.getInstance();
+    private KnightState knightState;
+
+    @BeforeEach
+    void setting() {
+        knightState = new KnightState();
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"2, 1", "2, -1", "1, 2", "-1, 2"})

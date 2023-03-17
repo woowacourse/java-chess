@@ -7,7 +7,7 @@ public class Piece {
     private static final Piece empty = new Piece(PieceType.EMPTY, Color.NONE);
 
     private final Color color;
-    private MoveState moveState;
+    private final MoveState moveState;
 
     public Piece(PieceType pieceType, Color color) {
         this.color = color;
@@ -26,7 +26,6 @@ public class Piece {
         if (!moveState.canMove(x, color.colorDirection(y), piece.compareColor(color))) {
             throw new IllegalPieceMoveException();
         }
-        moveState = moveState.getNextState();
     }
 
     private ColorCompareResult compareColor(Color color) {

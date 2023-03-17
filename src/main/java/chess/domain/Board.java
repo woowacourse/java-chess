@@ -7,7 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final Piece EMPTY_PIECE = Piece.empty();
     private static final int RANK_SIZE = 8;
     private final Map<Position, Piece> piecePosition = new HashMap<>();
 
@@ -67,7 +66,7 @@ public class Board {
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
-        if (piecePosition.get(origin) == null) {
+        if (piecePosition.get(origin) == Piece.empty()) {
             throw new IllegalPieceMoveException();
         }
         if (!piecePosition.get(origin).canJump()) {
@@ -78,7 +77,7 @@ public class Board {
     private void checkPath(Position origin, Position destination) {
         List<Position> straightPath = origin.createStraightPath(destination);
         for (Position position : straightPath) {
-            if (piecePosition.get(position) != null) {
+            if (piecePosition.get(position) != Piece.empty()) {
                 throw new IllegalPieceMoveException();
             }
         }

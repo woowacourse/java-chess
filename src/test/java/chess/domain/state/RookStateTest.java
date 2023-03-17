@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class RookStateTest {
 
-    public static final RookState rookState = RookState.getInstance();
+    private RookState rookState;
+
+    @BeforeEach
+    void setting() {
+        rookState = new RookState();
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "3, 0", "-5, 0", "0, -7", "0, -5"})

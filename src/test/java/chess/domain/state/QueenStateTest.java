@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class QueenStateTest {
 
-    public static final QueenState queenState = QueenState.getInstance();
+    private QueenState queenState;
+
+    @BeforeEach
+    void setting() {
+        queenState = new QueenState();
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"1, 1", "3, 0", "-5, -5", " 0, -7", "5, -5"})

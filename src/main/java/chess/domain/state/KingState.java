@@ -3,14 +3,6 @@ package chess.domain.state;
 import chess.domain.ColorCompareResult;
 
 public class KingState implements MoveState {
-    private static final KingState instance = new KingState();
-
-    private KingState() {
-    }
-
-    public static KingState getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
@@ -22,11 +14,6 @@ public class KingState implements MoveState {
             return false;
         }
         return Math.abs(x) <= 1 && Math.abs(y) <= 1;
-    }
-
-    @Override
-    public MoveState getNextState() {
-        return this;
     }
 
     @Override
