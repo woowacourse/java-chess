@@ -32,8 +32,17 @@ public class InitialPawn extends Piece {
 
     private boolean isUnAvailableDistance(final Distance distance) {
         final int rank = Math.abs(distance.rank());
+        final Direction direction = distance.findDirection();
 
+        return isDiagonalAndMoveMaximumSize(rank, direction) || isInvalidMoveSize(rank);
+    }
+
+    private boolean isInvalidMoveSize(final int rank) {
         return rank < MINIMUM_DISTANCE || MAXIMUM_DISTANCE < rank;
+    }
+
+    private boolean isDiagonalAndMoveMaximumSize(final int rank, final Direction direction) {
+        return Direction.isDiagonal(direction) && rank == MAXIMUM_DISTANCE;
     }
 
     private boolean checkMovableByColor(final Distance distance) {
