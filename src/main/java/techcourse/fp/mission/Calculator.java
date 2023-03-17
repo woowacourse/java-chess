@@ -4,10 +4,12 @@ import java.util.List;
 
 public class Calculator {
 
-    public static int sumAll(List<Integer> numbers) {
+    public static int sumAll(List<Integer> numbers, Conditional conditional) {
         int total = 0;
         for (int number : numbers) {
-            total += number;
+            if (conditional.satisfy(number)) {
+                total += number;
+            }
         }
         return total;
     }
