@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.Position;
-import chess.board.Board;
-import chess.board.BoardFactory;
-import chess.piece.Color;
-import chess.piece.Piece;
+import chess.domain.board.position.Position;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -20,28 +20,29 @@ public class ChessController {
         final Board board = new Board(boardFactory);
         final Map<Position, Piece> boardMap = board.board();
 
-        String command = InputView.readStartCommand();
+        final String command = InputView.readStartCommand();
 
         if (!command.equals(START_COMMAND)) {
             return;
         }
 
         Color turn = Color.WHITE;
+
         while (true) {
             OutputView.printBoard(boardMap);
             List<String> moveCommand = InputView.readMoveCommand();
 
-            String from = moveCommand.get(0);
-            String to = moveCommand.get(1);
+            final String from = moveCommand.get(0);
+            final String to = moveCommand.get(1);
 
-            int fromFile = from.charAt(0) - 'a' + 1;
-            int fromRank = from.charAt(1) - '0';
+            final int fromFile = from.charAt(0) - 'a' + 1;
+            final int fromRank = from.charAt(1) - '0';
 
-            int toFile = to.charAt(0) - 'a' + 1;
-            int toRank = to.charAt(1) - '0';
+            final int toFile = to.charAt(0) - 'a' + 1;
+            final int toRank = to.charAt(1) - '0';
 
-            Position fromPosition = new Position(fromFile, fromRank);
-            Position toPosition = new Position(toFile, toRank);
+            final Position fromPosition = new Position(fromFile, fromRank);
+            final Position toPosition = new Position(toFile, toRank);
 
             board.move(fromPosition, toPosition, turn);
 
