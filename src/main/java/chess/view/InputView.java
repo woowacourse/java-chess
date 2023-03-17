@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.view.dto.CommandType;
 import chess.view.dto.Request;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -19,7 +18,7 @@ public class InputView {
         String[] inputs = input.split(" ");
         validateHasLength(inputs);
         CommandType commandType = CommandType.from(inputs[0]);
-        if (List.of(CommandType.START, CommandType.END).contains(commandType)) {
+        if (commandType.isSingleCommandType()) {
             validateSingleCommand(inputs);
             return Request.createSingleCommand(commandType);
         }
