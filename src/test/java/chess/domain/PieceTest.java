@@ -3,6 +3,8 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,12 @@ class PieceTest {
     static class ChildPiece extends Piece {
         
         ChildPiece(Color color) {
-            super(color, PieceType.EMPTY);
+            super(color, PieceType.EMPTY, List.of());
+        }
+        
+        @Override
+        public void canMove(final Position start, final Position end) {
+        
         }
     }
     
@@ -24,5 +31,4 @@ class PieceTest {
         ChildPiece white = new ChildPiece(Color.WHITE);
         Assertions.assertThat(white.isWhite()).isTrue();
     }
-    
 }
