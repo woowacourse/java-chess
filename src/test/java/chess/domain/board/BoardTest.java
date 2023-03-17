@@ -97,9 +97,6 @@ class BoardTest {
         Assertions.assertThat(board.getBoard().get(5).getRank().get(4).getPiece()).isInstanceOf(King.class);
         board.movePiece(new Position(5,4), new Position(5,3));
         Assertions.assertThat(board.getBoard().get(5).getRank().get(3).getPiece()).isInstanceOf(King.class);
-        assertThatThrownBy(
-                () -> board.movePiece(new Position(5,3), new Position(4,2))
-        );
 
         assertThatThrownBy(
                 () -> board.movePiece(new Position(5,3), new Position(3,3))

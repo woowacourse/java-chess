@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
-import chess.domain.Pattern;
 import chess.domain.Team;
+import chess.domain.math.Direction;
 
 public final class EmptyPiece extends Piece {
 
@@ -20,7 +20,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean hasPattern(final Pattern pattern) {
+    public boolean hasDirection(final Direction direction) {
         return false;
     }
 }

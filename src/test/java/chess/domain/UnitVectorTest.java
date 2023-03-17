@@ -1,15 +1,16 @@
 package chess.domain;
 
-import static chess.domain.UnitVector.DOWN;
-import static chess.domain.UnitVector.DOWN_LEFT;
-import static chess.domain.UnitVector.DOWN_RIGHT;
-import static chess.domain.UnitVector.LEFT;
-import static chess.domain.UnitVector.RIGHT;
-import static chess.domain.UnitVector.UP;
-import static chess.domain.UnitVector.UP_LEFT;
-import static chess.domain.UnitVector.UP_RIGHT;
+import static chess.domain.math.UnitVector.DOWN;
+import static chess.domain.math.UnitVector.DOWN_LEFT;
+import static chess.domain.math.UnitVector.DOWN_RIGHT;
+import static chess.domain.math.UnitVector.LEFT;
+import static chess.domain.math.UnitVector.RIGHT;
+import static chess.domain.math.UnitVector.UP;
+import static chess.domain.math.UnitVector.UP_LEFT;
+import static chess.domain.math.UnitVector.UP_RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.math.UnitVector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

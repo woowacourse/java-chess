@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
-import chess.domain.Pattern;
 import chess.domain.Team;
+import chess.domain.math.Direction;
 
 public abstract class Piece {
 
@@ -13,13 +13,13 @@ public abstract class Piece {
         this.team = team;
     }
 
-    abstract public boolean hasPattern(final Pattern pattern);
-
     void validateTeam(final Team team) {
         if (team == Team.NEUTRALITY) {
             throw new IllegalArgumentException(INVALID_TEAM);
         }
     }
+
+    abstract public boolean hasDirection(final Direction direction);
 
     public Team getTeam() {
         return this.team;

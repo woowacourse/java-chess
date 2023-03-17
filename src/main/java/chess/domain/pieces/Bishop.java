@@ -1,14 +1,17 @@
 package chess.domain.pieces;
 
-import static chess.domain.Pattern.DIAGONAL;
+import static chess.domain.math.Direction.DOWN_LEFT;
+import static chess.domain.math.Direction.DOWN_RIGHT;
+import static chess.domain.math.Direction.UP_LEFT;
+import static chess.domain.math.Direction.UP_RIGHT;
 
-import chess.domain.Pattern;
 import chess.domain.Team;
+import chess.domain.math.Direction;
 import java.util.List;
 
 public class Bishop extends Piece {
 
-    private final List<Pattern> patterns = List.of(DIAGONAL);
+    private final List<Direction> directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 
     public Bishop(final Team team) {
         super(team);
@@ -16,7 +19,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean hasPattern(final Pattern pattern) {
-        return patterns.contains(pattern);
+    public boolean hasDirection(final Direction direction) {
+        return directions.contains(direction);
     }
 }

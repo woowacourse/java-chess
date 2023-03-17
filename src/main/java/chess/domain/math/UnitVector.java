@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.math;
 
+import chess.domain.Position;
 import java.util.Arrays;
 
 public enum UnitVector {

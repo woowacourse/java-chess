@@ -1,25 +1,22 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.toList;
+import static chess.domain.Team.NEUTRALITY;
 
 import chess.domain.Position;
 import chess.domain.Team;
+import chess.domain.math.Direction;
+import chess.domain.math.UnitVector;
 import chess.domain.pieces.Bishop;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Piece;
 import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rank;
 import chess.domain.pieces.Rook;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Board {
-
-    private static final int START_MIDDLE_ROW = 2;
-    private static final int END_MIDDLE_ROW = 5;
 
     private final List<Rank> board;
 
@@ -28,85 +25,136 @@ public class Board {
     }
 
     public static Board create() {
-        List<Rank> ranks = new ArrayList<>();
+        return new Board(BoardMaker.create());
+    }
 
-        ranks.add(createFirstRank());
-        ranks.add(createSecondRank());
-        for (int row = START_MIDDLE_ROW; row <= END_MIDDLE_ROW; row++) {
-            ranks.add(createMiddleRank(row));
+    public void movePiece(Position current, Position target) {
+        Piece currentPointPiece = findPiece(current);
+        Direction moveableDirection = Direction.findDirection(current, target);
+
+        if (currentPointPiece.hasDirection(moveableDirection)) {
+            runLogic(current, target, moveableDirection);
+            return;
         }
-        ranks.add(createSecondLastRank());
-        ranks.add(createLastRank());
-
-        return new Board(ranks);
+        throw new RuntimeException("[ERROR] 패턴에서 걸러진 예외");
     }
 
-    private static Rank createFirstRank() {
-        List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(0, 0), new Rook(Team.BLACK)),
-                new Square(new Position(0, 1), new Knight(Team.BLACK)),
-                new Square(new Position(0, 2), new Bishop(Team.BLACK)),
-                new Square(new Position(0, 3), new Queen(Team.BLACK)),
-                new Square(new Position(0, 4), new King(Team.BLACK)),
-                new Square(new Position(0, 5), new Bishop(Team.BLACK)),
-                new Square(new Position(0, 6), new Knight(Team.BLACK)),
-                new Square(new Position(0, 7), new Rook(Team.BLACK))
-        ));
+    private void runLogic(final Position current, final Position target, final Direction moveableDirection) {
+        Piece currentPointPiece = findPiece(current);
 
-        return new Rank(squares);
+        if (currentPointPiece instanceof Knight) {
+            validateSameTeam(current, target);
+        }
+
+        if (currentPointPiece instanceof King) {
+            if (calculateStep(current, target) != 1) {
+                throw new RuntimeException("킹은 1만");
+            }
+            validateSameTeam(current, target);
+        }
+
+        if (currentPointPiece instanceof Pawn) {
+            isValidDirection(currentPointPiece, moveableDirection); // 팀에 따라 유효한 방향인지 확인
+
+            Pawn pawn = (Pawn) currentPointPiece;
+            int targetStep = calculateStep(current, target);
+
+            if (!pawn.isMoved()) { // 처음 움직임
+                if ((0 < targetStep && targetStep <= 2) && isEmptyPiece(target)) {
+                    checkPieceOfPawn(current, target, currentPointPiece);
+                    pawn.move();
+                    move(current, target);
+                    return;
+                }
+                throw new RuntimeException("처음인데 2칸 이내 이동 x 또는 해당 위치 기물 존재");
+            }
+
+            if (targetStep == 1 && isEmptyPiece(target)) {
+                pawn.move();
+                move(current, target);
+                return;
+            }
+            throw new RuntimeException("폰은 첫 이동이 아니면 1칸만 가능 또는 해당 위치 기물 존재");
+        }
+
+        if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
+            checkExistPiece(current, target, UnitVector.of(current, target));
+            validateSameTeam(current, target);
+        }
+
+        move(current, target);
     }
 
-    private static Rank createSecondRank() {
-        List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(1, 0), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 1), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 2), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 3), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 4), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 5), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 6), new Pawn(Team.BLACK)),
-                new Square(new Position(1, 7), new Pawn(Team.BLACK))
-        ));
-
-        return new Rank(squares);
+    private void validateSameTeam(final Position current, final Position target) {
+        if (findPiece(current).getTeam() == findPiece(target).getTeam()) {
+            throw new RuntimeException("[ERROR] 같은 팀이 존재하므로 이동할 수 없습니다.");
+        }
     }
 
-    private static Rank createSecondLastRank() {
-        List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(1, 0), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 1), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 2), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 3), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 4), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 5), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 6), new Pawn(Team.WHITE)),
-                new Square(new Position(1, 7), new Pawn(Team.WHITE))
-        ));
+    private void isValidDirection(final Piece piece, final Direction moveableDirection) {
+        if (piece.getTeam() == Team.BLACK && moveableDirection == Direction.DOWN) {
+            return;
+        }
+        if (piece.getTeam() == Team.WHITE && moveableDirection == Direction.UP) {
+            return;
+        }
 
-        return new Rank(squares);
+        throw new RuntimeException("[ERROR] 폰은 앞으로만 이동할 수 있습니다.");
     }
 
-    private static Rank createLastRank() {
-        List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(0, 0), new Rook(Team.WHITE)),
-                new Square(new Position(0, 1), new Knight(Team.WHITE)),
-                new Square(new Position(0, 2), new Bishop(Team.WHITE)),
-                new Square(new Position(0, 3), new Queen(Team.WHITE)),
-                new Square(new Position(0, 4), new King(Team.WHITE)),
-                new Square(new Position(0, 5), new Bishop(Team.WHITE)),
-                new Square(new Position(0, 6), new Knight(Team.WHITE)),
-                new Square(new Position(0, 7), new Rook(Team.WHITE))
-        ));
-
-        return new Rank(squares);
+    // Pawn이 Black 팀이면 UnitVector.Down // White팀이면 UP으로 current부터 target - 1까지 기물이 존재하는지 확인하는 함수
+    private void checkPieceOfPawn(final Position current, final Position target, final Piece currentPointPiece) {
+        if (currentPointPiece.getTeam() == Team.BLACK) {
+            checkExistPiece(current, target, UnitVector.DOWN);
+            return;
+        }
+        checkExistPiece(current, target, UnitVector.UP);
     }
 
-    private static Rank createMiddleRank(int row) {
-        List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(row, col), new EmptyPiece()))
-                .collect(toList());
+    private boolean isEmptyPiece(final Position target) {
+        return findPiece(target) instanceof EmptyPiece;
+    }
 
-        return new Rank(squares);
+    // current -> target - 1까지 돌면서 기물이 존재하면 예외 터트리는 함수
+    private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
+        Position iterator = new Position(current.getRow(), current.getCol()).move(unitVector);
+
+        while (!iterator.equals(target)) {
+            Rank iteratorRank = board.get(iterator.getRow());
+
+            if (!iteratorRank.isEmptyPiece(iterator.getCol())) {
+                throw new RuntimeException("[ERROR] 가는 경로 도중에 다른 기물 존재");
+            }
+            iterator = iterator.move(unitVector);
+        }
+    }
+
+    private Piece findPiece(final Position position) {
+        Rank rank = board.get(position.getRow());
+        Square square = rank.findSquare(position.getCol());
+
+        return square.getPiece();
+    }
+
+    private void move(final Position current, final Position target) {
+        Piece currentPointPiece = board.get(current.getRow()).findPiece(current.getCol());
+        Rank targetRank = board.get(target.getRow());
+
+        Square replacedSquare = targetRank.replacePiece(target.getCol(), currentPointPiece);
+        targetRank.replaceSquare(target.getCol(), replacedSquare);
+
+        targetRank.replaceSquare(target.getCol(), replacedSquare);
+
+        Rank currentRank = board.get(current.getRow());
+        Square newCurrentSquare = currentRank.replacePiece(current.getCol(), new EmptyPiece(NEUTRALITY));
+        currentRank.replaceSquare(current.getCol(), newCurrentSquare);
+    }
+
+    private int calculateStep(final Position current, final Position target) {
+        int rowDifferent = Math.abs(current.getRow() - target.getRow());
+        int colDifferent = Math.abs(current.getCol() - target.getCol());
+
+        return Math.max(rowDifferent, colDifferent);
     }
 
     public List<Rank> getBoard() {

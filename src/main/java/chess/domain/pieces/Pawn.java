@@ -1,41 +1,46 @@
 package chess.domain.pieces;
 
-import static chess.domain.Pattern.DOWN_1;
-import static chess.domain.Pattern.PAWN_DOWN_2;
-import static chess.domain.Pattern.PAWN_UP_2;
-import static chess.domain.Pattern.UP_1;
 import static chess.domain.Team.BLACK;
+import static chess.domain.math.Direction.DOWN;
+import static chess.domain.math.Direction.DOWN_LEFT;
+import static chess.domain.math.Direction.DOWN_RIGHT;
+import static chess.domain.math.Direction.UP;
+import static chess.domain.math.Direction.UP_LEFT;
+import static chess.domain.math.Direction.UP_RIGHT;
 
-import chess.domain.Pattern;
 import chess.domain.Team;
+import chess.domain.math.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
 
-    private final List<Pattern> patterns;
+    private final List<Direction> directions;
+    private boolean isMoved = false;
 
     public Pawn(final Team team) {
         super(team);
         validateTeam(team);
-        this.patterns = initPatterns(team);
+        this.directions = initDirections(team);
     }
 
-    private List<Pattern> initPatterns(final Team team) {
+    private List<Direction> initDirections(final Team team) {
         if (team == BLACK) {
-            return new ArrayList<>(List.of(DOWN_1, PAWN_DOWN_2));
+            return new ArrayList<>(List.of(DOWN, DOWN_LEFT, DOWN_RIGHT));
         }
-        return new ArrayList<>(List.of(UP_1, PAWN_UP_2));
+        return new ArrayList<>(List.of(UP, UP_LEFT, UP_RIGHT));
     }
 
-    public void removePawn2Pattern() {
-        if (hasPattern(PAWN_DOWN_2)) {
-            patterns.remove(PAWN_DOWN_2);
-        }
+    public void move() {
+        this.isMoved = true;
+    }
+
+    public boolean isMoved() {
+        return this.isMoved;
     }
 
     @Override
-    public boolean hasPattern(final Pattern pattern) {
-        return this.patterns.contains(pattern);
+    public boolean hasDirection(final Direction direction) {
+        return directions.contains(direction);
     }
 }

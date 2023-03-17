@@ -1,12 +1,17 @@
 package chess.domain.pieces;
 
-import chess.domain.Pattern;
+import static chess.domain.math.Direction.DOWN;
+import static chess.domain.math.Direction.LEFT;
+import static chess.domain.math.Direction.RIGHT;
+import static chess.domain.math.Direction.UP;
+
 import chess.domain.Team;
+import chess.domain.math.Direction;
 import java.util.List;
 
 public class Rook extends Piece {
 
-    private final List<Pattern> patterns = List.of(Pattern.CROSS);
+    private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT);
 
     public Rook(final Team team) {
         super(team);
@@ -14,7 +19,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean hasPattern(Pattern pattern) {
-        return patterns.contains(pattern);
+    public boolean hasDirection(Direction direction) {
+        return directions.contains(direction);
     }
 }
