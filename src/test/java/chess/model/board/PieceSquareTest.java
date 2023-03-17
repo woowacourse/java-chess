@@ -24,7 +24,7 @@ class PieceSquareTest {
     }
 
     @Test
-    @DisplayName("기물이 있는 체스판 칸에 대한 객체를 생성한다")
+    @DisplayName("생성자는 기물이 있는 체스판 칸에 대한 객체를 생성한다")
     void constructor_givenPositionAndPiece_thenSuccess() {
         assertThat(pieceSquare).isExactlyInstanceOf(PieceSquare.class);
     }

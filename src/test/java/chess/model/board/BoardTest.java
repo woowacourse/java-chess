@@ -1,5 +1,12 @@
 package chess.model.board;
 
+import static chess.model.board.PositionFixture.A2;
+import static chess.model.board.PositionFixture.A3;
+import static chess.model.board.PositionFixture.A6;
+import static chess.model.board.PositionFixture.A7;
+import static chess.model.board.PositionFixture.F1;
+import static chess.model.board.PositionFixture.F5;
+import static chess.model.board.PositionFixture.H3;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
 import static chess.model.piece.PieceType.KING;
@@ -8,18 +15,17 @@ import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.QUEEN;
 import static chess.model.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Type;
-import chess.model.position.File;
-import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
@@ -31,93 +37,95 @@ class BoardTest {
         board = Board.create();
     }
 
-    @Test
-    @DisplayName("64개의 칸을 가지는 체스판을 생성한다.")
-    void constructor_whenCall_thenSuccess() {
-        assertAll(
-                () -> assertThat(board).isExactlyInstanceOf(Board.class),
-                () -> assertThat(board)
-                        .extracting("squares", InstanceOfAssertFactories.list(Square.class))
-                        .hasSize(64)
-        );
+    @Nested
+    @DisplayName("create() 테스트")
+    class CreateTest {
+
+        @Test
+        @DisplayName("64개의 칸을 가지는 체스판을 생성한다.")
+        void constructor_whenCall_thenSuccess() {
+            assertAll(
+                    () -> assertThat(board).isExactlyInstanceOf(Board.class),
+                    () -> assertThat(board)
+                            .extracting("squares", InstanceOfAssertFactories.list(Square.class))
+                            .hasSize(64)
+            );
+        }
+
+        /**
+         * rank = 8 RNBQKBNR
+         * rank = 7 PPPPPPPP
+         * rank = 2 pppppppp
+         * rank = 1 rnbqkbnr
+         */
+        @Test
+        @DisplayName("체스판에 정상적으로 기물이 생성 되었는지 확인한다.")
+        void constructor_whenCall_thenReturnPieces() {
+            //given
+            final List<Square> squares = board.getSquares();
+
+            //when
+            final List<Type> rank1 = getRank(squares, 0, 8);
+            final List<Type> rank2 = getRank(squares, 8, 16);
+            final List<Type> rank7 = getRank(squares, 48, 56);
+            final List<Type> rank8 = getRank(squares, 56, 64);
+
+            //then
+            assertAll(
+                    () -> assertThat(rank1).containsExactly(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP,
+                            KNIGHT, ROOK),
+                    () -> assertThat(rank2).containsExactly(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN),
+                    () -> assertThat(rank7).containsExactly(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN),
+                    () -> assertThat(rank8).containsExactly(ROOK, KNIGHT, BISHOP, QUEEN, KING,
+                            BISHOP, KNIGHT, ROOK)
+            );
+        }
+
+        private List<Type> getRank(final List<Square> squares, final int from, final int to) {
+            return squares.subList(from, to).stream()
+                    .map(Square::getType)
+                    .collect(Collectors.toList());
+        }
     }
 
-    /**
-     * rank = 8 RNBQKBNR
-     * rank = 7 PPPPPPPP
-     * rank = 2 pppppppp
-     * rank = 1 rnbqkbnr
-     */
-    @Test
-    @DisplayName("체스판에 정상적으로 기물이 생성 되었는지 확인한다.")
-    void constructor_whenCall_thenReturnPieces() {
-        //given
-        final List<Square> squares = board.getSquares();
+    @Nested
+    @DisplayName("move() 테스트")
+    class MoveTest {
 
-        //when
-        final List<Type> rankOne = getRank(squares, 0, 8);
-        final List<Type> rankTwo = getRank(squares, 8, 16);
-        final List<Type> rankSeven = getRank(squares, 48, 56);
-        final List<Type> rankEight = getRank(squares, 56, 64);
+        @Test
+        @DisplayName("유효한 체스 판의 칸을 입력하면 정상적으로 기물을 이동시킨다")
+        void move_givenValidSourceAndTarget_thenSuccess() {
+            // when, then
+            assertThatCode(() -> board.move(A2, A3, WHITE))
+                    .doesNotThrowAnyException();
+        }
 
-        //then
-        assertAll(
-                () -> assertThat(rankOne).containsExactly(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP,
-                        KNIGHT, ROOK),
-                () -> assertThat(rankTwo).containsExactly(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
-                        PAWN),
-                () -> assertThat(rankSeven).containsExactly(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
-                        PAWN,
-                        PAWN),
-                () -> assertThat(rankEight).containsExactly(ROOK, KNIGHT, BISHOP, QUEEN, KING,
-                        BISHOP,
-                        KNIGHT, ROOK)
-        );
-    }
+        @Test
+        @DisplayName("source로 빈 칸을 선택하면 예외가 발생한다.")
+        void move_givenEmptySource_thenFail() {
+            // when, then
+            assertThatThrownBy(() -> board.move(F5, H3, WHITE))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 위치에 기물이 없습니다.");
+        }
 
-    private List<Type> getRank(final List<Square> squares, final int from, final int to) {
-        return squares.subList(from, to).stream()
-                .map(Square::getType)
-                .collect(Collectors.toList());
-    }
+        @Test
+        @DisplayName("source로 상대방의 기물이 있는 칸을 선택하면 예외가 발생한다.")
+        void move_givenEnemySource_thenFail() {
+            // when, then
+            assertThatThrownBy(() -> board.move(A7, A6, WHITE))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("자신의 기물이 아닙니다.");
+        }
 
-    @Test
-    @DisplayName("빈 Square를 선택하면 예외가 발생한다.")
-    void move_givenEmptySource_thenFail() {
-        // given
-        final Position emptySource = new Position(File.F, Rank.FIFTH);
-        final Position target = new Position(File.H, Rank.THIRD);
-
-        // when, then
-        assertThatThrownBy(() -> board.move(emptySource, target, WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 기물이 없습니다.");
-    }
-
-    @Test
-    @DisplayName("상대방의 기물이 있는 Square를 선택하면 예외가 발생한다.")
-    void move_givenEnemySource_thenFail() {
-        // given
-        final Position enemySource = new Position(File.F, Rank.EIGHTH);
-        final Position target = new Position(File.H, Rank.THIRD);
-
-        // when, then
-        assertThatThrownBy(() -> board.move(enemySource, target, WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("자신의 기물이 아닙니다.");
-    }
-
-    @Test
-    @DisplayName("이동 중에 기물이 존재하는 칸을 만나면 예외가 발생한다.")
-    void move_givenInvalidSourceAndTarget_thenFail() {
-        // given
-        final Position source = new Position(File.F, Rank.FIRST);
-        final Position target = new Position(File.H, Rank.THIRD);
-
-        // when, then
-        assertThatThrownBy(() -> board.move(source, target, WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+        @Test
+        @DisplayName("source와 target 사이의 칸 중 기물이 존재하는 칸을 만나면 예외가 발생한다.")
+        void move_givenInvalidSourceAndTarget_thenFail() {
+            // when, then
+            assertThatThrownBy(() -> board.move(F1, H3, WHITE))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 경로로 이동할 수 없습니다");
+        }
     }
 
 }

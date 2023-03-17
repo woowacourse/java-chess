@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class PositionTest {
 
     @Test
-    @DisplayName("체스 판의 위치를 관리하는 객체를 생성한다.")
+    @DisplayName("생성자는 체스 판의 위치를 관리하는 객체를 생성한다.")
     void constructor_givenRankAndFile_thenSuccess() {
         final Position position = assertDoesNotThrow(() -> new Position(File.A, Rank.FIRST));
 

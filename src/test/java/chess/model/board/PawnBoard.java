@@ -65,7 +65,7 @@ public class PawnBoard {
      * ........
      * ........
      */
-    private Board pawnBoard;
+    private final Board pawnBoard;
 
     private PawnBoard() {
         pawnBoard = Board.create();

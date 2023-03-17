@@ -23,7 +23,7 @@ class EmptySquareTest {
     }
 
     @Test
-    @DisplayName("비어 있는 체스판 칸에 대한 객체를 생성한다")
+    @DisplayName("생성자는 비어 있는 체스판 칸에 대한 객체를 생성한다")
     void constructor_givenPosition_thenSuccess() {
         assertThat(emptySquare).isExactlyInstanceOf(EmptySquare.class);
     }

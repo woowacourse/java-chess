@@ -4,7 +4,10 @@ import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
 
-public class PositionFixture {
+public final class PositionFixture {
+
+    private PositionFixture() {
+    }
 
     public static final Position A1 = new Position(File.A, Rank.FIRST);
     public static final Position B1 = new Position(File.B, Rank.FIRST);
@@ -68,6 +71,4 @@ public class PositionFixture {
     public static final Position F7 = new Position(File.F, Rank.SEVENTH);
     public static final Position G7 = new Position(File.G, Rank.SEVENTH);
     public static final Position H7 = new Position(File.H, Rank.SEVENTH);
-
-
 }

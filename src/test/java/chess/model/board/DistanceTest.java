@@ -28,7 +28,7 @@ class DistanceTest {
         assertThat(distance.convertToIndex()).isEqualTo(result);
     }
 
-    @ParameterizedTest(name = "rank = {0}, file = {1}일 때 Direction.{2}를 반환한다")
+    @ParameterizedTest(name = "findDirection()은 rank = {0}, file = {1}일 때 Direction.{2}를 반환한다")
     @CsvSource({
             "0,1,NORTH",
             "1,0,EAST",
