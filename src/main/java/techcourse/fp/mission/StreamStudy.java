@@ -5,52 +5,54 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StreamStudy {
 
     public static long countWords() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
+        return words.stream()
+                .filter(s -> s.length() > 12)
+                .count();
 
-        long count = 0;
-        for (String w : words) {
-            if (w.length() > 12) count++;
-        }
-        return count;
     }
 
     public static List<Integer> doubleNumbers(List<Integer> numbers) {
         List<Integer> result = new ArrayList<>();
-        for (Integer number : numbers) {
-            result.add(2 * number);
-        }
-
+        numbers.stream()
+                .map(s -> result.add(s * 2));
         return result;
     }
 
     public static long sumAll(List<Integer> numbers) {
-        int result = 0;
+        return numbers.stream()
+                .reduce(Integer::sum)
+                .orElseThrow(() -> new IllegalArgumentException("에러"));
 
-        for (Integer number : numbers) {
-            result += number;
-        }
-
-        return result;
     }
 
     public static long sumOverThreeAndDouble(List<Integer> numbers) {
-        return 0L; // TODO: 이 부분을 구현한다.
+        return numbers.stream()
+                .filter(s -> s > 3)
+                .mapToLong(s -> s * 2)
+                .reduce((a, b) -> a + b)
+                .orElseThrow();
     }
 
     public static void printLongestWordTop100() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/fp/war-and-peace.txt"));
-        List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
-
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
+        List<String> words = Arrays.asList(contents.split("[\\P{L}]+")).stream()
+                .filter(s -> s.length() > 12)
+                .sorted(Comparator.comparing(String::length).reversed())
+                .distinct()
+                .map(s -> s.toLowerCase())
+                .collect(Collectors.toList());
         System.out.println(words);
         System.out.println(words.size());
-        // TODO 이 부분에 구현한다.
     }
 }
