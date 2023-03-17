@@ -42,7 +42,7 @@ public class BoardInitialImage {
                 .collect(Collectors.toList());
     }
 
-    private static List<Square> makeFrontRank(Camp camp) {
+    private static List<Square> makeFrontRank(final Camp camp) {
         List<Piece> frontPieces = List.of(
                 new Rook(), new Knight(), new Bishop(),
                 new Queen(), new King(), new Bishop(),
@@ -72,7 +72,7 @@ public class BoardInitialImage {
                 .collect(Collectors.toList());
     }
 
-    public static Square getPieceByCoordinate(int row, int col) {
+    public static Square getPieceByCoordinate(final int row, final int col) {
         return boardImage.get(row)
                 .get(col);
     }

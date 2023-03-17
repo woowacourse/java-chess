@@ -10,7 +10,7 @@ public class Rank {
 
     private final List<Square> squares;
 
-    public Rank(int row, int totalColCount) {
+    public Rank(final int row, final int totalColCount) {
         squares = initialize(row, totalColCount);
     }
 
@@ -22,20 +22,20 @@ public class Rank {
         return squares;
     }
 
-    public Square findPiece(int col) {
+    public Square findPiece(final int col) {
         return squares.get(col);
     }
 
-    public boolean isExistPiece(int col) {
+    public boolean isExistPiece(final int col) {
         return squares.get(col).isExist();
     }
 
-    public void replacePiece(int col, Square newSquare) {
+    public void replacePiece(final int col, final Square newSquare) {
         squares.set(col, newSquare);
         squares.get(col).checkMoved();
     }
 
-    public boolean isMovableAt(int col, Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isMovableAt(final int col, final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Square targetSquare = squares.get(col);
         return targetSquare.isMovable(startCoordinate, endCoordinate);
     }

@@ -11,7 +11,7 @@ public class OutputView {
             "> 게임 종료 : end" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
 
-    public void printBoard(Board board) {
+    public void printBoard(final Board board) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Rank rank : board.getRanks()) {
             stringBuilder.insert(0, makeRank(rank));
@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private StringBuilder makeRank(Rank rank) {
+    private StringBuilder makeRank(final Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Square square : rank.getPieces()) {
             stringBuilder.append(PieceTypeMapper.getTarget(square));
@@ -32,7 +32,7 @@ public class OutputView {
         System.out.println(GAME_START_MESSAGE);
     }
 
-    public void printExceptionMessage(String message) {
+    public void printExceptionMessage(final String message) {
         System.out.println(message);
     }
 }

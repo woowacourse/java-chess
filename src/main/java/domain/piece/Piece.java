@@ -2,7 +2,7 @@ package domain.piece;
 
 public interface Piece {
 
-    boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate);
+    boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
     boolean canReap();
-    boolean isSameTypeWith(PieceType otherType);
+    boolean isSameTypeWith(final PieceType otherType);
 }

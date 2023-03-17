@@ -8,49 +8,49 @@ public enum DirectionVector {
 
     N(new Coordinate(1, 0)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.isColZero();
         }
     },
     NE(new Coordinate(1, 1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.hasPositiveColValue();
         }
     },
     E(new Coordinate(0, 1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.isRowZero() && coordinate.hasPositiveColValue();
         }
     },
     SE(new Coordinate(-1, 1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.hasPositiveColValue();
         }
     },
     S(new Coordinate(-1, 0)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.isColZero();
         }
     },
     SW(new Coordinate(-1, -1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.hasNegativeColValue();
         }
     },
     W(new Coordinate(0, -1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.isRowZero() && coordinate.hasNegativeColValue();
         }
     },
     NW(new Coordinate(1, -1)) {
         @Override
-        boolean isExist(Coordinate coordinate) {
+        boolean isExist(final Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.hasNegativeColValue();
         }
     };
@@ -61,7 +61,7 @@ public enum DirectionVector {
         this.directionVector = directionVector;
     }
 
-    public static Coordinate calculate(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public static Coordinate calculate(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Coordinate minusCoordinate = startCoordinate.minus(endCoordinate);
 
         return Arrays.stream(DirectionVector.values())
@@ -71,5 +71,5 @@ public enum DirectionVector {
                 .directionVector;
     }
 
-    abstract boolean isExist(Coordinate coordinate);
+    abstract boolean isExist(final Coordinate coordinate);
 }

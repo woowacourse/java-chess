@@ -32,7 +32,7 @@ public class ChessController {
     private void startChessGame() {
         Board board = new Board();
         Command command = Command.START;
-        inputView.printGameStartMessage();
+        outputView.printGameStartMessage();
         while (command.isContinue()) {
             List<String> commands = inputView.readCommand();
             command = Command.of(commands);
@@ -41,7 +41,7 @@ public class ChessController {
         }
     }
 
-    private void carryOutByCommand(Board board, List<String> commands, Command command) {
+    private void carryOutByCommand(final Board board, final List<String> commands, final Command command) {
         if (command.isStart()) {
             board.initialize();
             return;

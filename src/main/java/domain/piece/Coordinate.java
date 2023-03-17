@@ -12,15 +12,15 @@ public class Coordinate {
         this.col = col;
     }
 
-    public Coordinate add(Coordinate otherCoordinate) {
+    public Coordinate add(final Coordinate otherCoordinate) {
         return new Coordinate(this.row + otherCoordinate.row, this.col + otherCoordinate.col);
     }
 
-    public Coordinate minus(Coordinate otherCoordinate) {
+    public Coordinate minus(final Coordinate otherCoordinate) {
         return new Coordinate(otherCoordinate.row - this.row, otherCoordinate.col - this.col);
     }
 
-    public Coordinate minusWithAbsoluteValue(Coordinate otherCoordinate) {
+    public Coordinate minusWithAbsoluteValue(final Coordinate otherCoordinate) {
         return new Coordinate(Math.abs(otherCoordinate.row - this.row), Math.abs(otherCoordinate.col - this.col));
     }
 
@@ -48,17 +48,17 @@ public class Coordinate {
         return col == 0;
     }
 
-    public double getInclination(Coordinate otherCoordinate) {
+    public double getInclination(final Coordinate otherCoordinate) {
         return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
 
-    public boolean hasDistanceLessThanOne(Coordinate otherCoordinate) {
+    public boolean hasDistanceLessThanOne(final Coordinate otherCoordinate) {
         double x = otherCoordinate.col - this.col;
         double y = otherCoordinate.row - this.row;
         return Math.abs(x) <= 1.0 && Math.abs(y) <= 1.0;
     }
 
-    public boolean hasDistanceLessThanTwo(Coordinate otherCoordinate) {
+    public boolean hasDistanceLessThanTwo(final Coordinate otherCoordinate) {
         double x = otherCoordinate.col - this.col;
         double y = otherCoordinate.row - this.row;
         return Math.abs(x) <= 2.0 && Math.abs(y) <= 2.0;

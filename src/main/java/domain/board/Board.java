@@ -27,7 +27,7 @@ public class Board {
         return ranks;
     }
 
-    public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
             int startRow = startCoordinate.getRow();
             int startCol = startCoordinate.getCol();
@@ -46,18 +46,18 @@ public class Board {
                 isNotBlocked(startCoordinate, endCoordinate);
     }
 
-    private boolean isMovableByRule(Coordinate startCoordinate, Coordinate endCoordinate) {
+    private boolean isMovableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         int row = startCoordinate.getRow();
         int col = startCoordinate.getCol();
 
         return ranks.get(row).isMovableAt(col, startCoordinate, endCoordinate);
     }
 
-    private boolean isPieceExistsAtEnd(Coordinate endCoordinate) {
+    private boolean isPieceExistsAtEnd(final Coordinate endCoordinate) {
         return ranks.get(endCoordinate.getRow()).isExistPiece(endCoordinate.getCol());
     }
 
-    private boolean isNotBlocked(Coordinate startCoordinate, Coordinate endCoordinate) {
+    private boolean isNotBlocked(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Square square = ranks.get(startCoordinate.getRow()).findPiece(startCoordinate.getCol());
 
         if (square.canReap()) {

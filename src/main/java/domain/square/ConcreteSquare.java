@@ -10,7 +10,7 @@ public class ConcreteSquare extends Square {
     private final Piece piece;
     private final Camp camp;
 
-    public ConcreteSquare(Piece piece, Camp camp) {
+    public ConcreteSquare(final Piece piece, final Camp camp) {
         this.piece = piece;
         this.camp = camp;
     }

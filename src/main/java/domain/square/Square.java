@@ -13,7 +13,7 @@ public abstract class Square {
 
     public abstract Piece getPieceType();
     public abstract Camp getCamp();
-    public abstract Boolean isMovable(Coordinate startCoordinate, Coordinate endCoordinate);
+    public abstract Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
     public abstract Boolean isExist();
     public abstract Boolean canReap();
 
