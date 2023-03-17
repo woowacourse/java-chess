@@ -27,7 +27,7 @@ public class Board {
 
         checkPieceReachable(sourcePiece, moveType, move);
         checkNotCrossOtherPiece(source, target, move);
-        
+
         pieces.remove(source);
         pieces.put(target, sourcePiece.touch());
     }
@@ -67,7 +67,7 @@ public class Board {
     }
 
     private void checkEmpty(Position position) {
-        if (isNotEmpty(position)) {
+        if (!isEmpty(position)) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
     }
@@ -77,11 +77,7 @@ public class Board {
     }
 
     private boolean isEmpty(Position position) {
-        return !isNotEmpty(position);
-    }
-
-    private boolean isNotEmpty(Position position) {
-        return pieces.get(position) != null;
+        return pieces.get(position) == null;
     }
 
     public Map<Position, Piece> getPieces() {
