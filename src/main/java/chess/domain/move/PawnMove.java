@@ -3,13 +3,11 @@ package chess.domain.move;
 import chess.domain.piece.Position;
 
 import java.util.List;
-import java.util.Set;
 
 import static chess.domain.move.Move.PAWN_MAX_MOVE_COUNT;
 
 public class PawnMove implements Movable {
     private static final int ATTACK_INDEX = 1;
-    private static final Move move = new Move();
 
     /**
      * 폰의 이동 과정
@@ -25,12 +23,12 @@ public class PawnMove implements Movable {
     public boolean canMove(final Position source, final Position target) {
         // UP
         if (source.getRank() < target.getRank()) {
-            final Set<Position> allPositions = move.getAllPositions(source,
+            final Location allPositions = Move.getAllPositions(source,
                     List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT), PAWN_MAX_MOVE_COUNT);
             return allPositions.contains(target);
         }
         // DOWN
-        final Set<Position> allPositions = move.getAllPositions(source,
+        final Location allPositions = Move.getAllPositions(source,
                 List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT), PAWN_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }

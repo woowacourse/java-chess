@@ -2,17 +2,13 @@ package chess.domain.move;
 
 import chess.domain.piece.Position;
 
-import java.util.Set;
-
 import static chess.domain.move.Move.MAX_MOVE_COUNT;
 
 public class BishopMove implements Movable {
-
-    private static final Move move = new Move();
-
+    
     @Override
     public boolean canMove(final Position source, final Position target) {
-        final Set<Position> allPositions = move.getAllPositions(source, Direction.getDiagonalDirections(), MAX_MOVE_COUNT);
+        final Location allPositions = Move.getAllPositions(source, Direction.getDiagonalDirections(), MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
 

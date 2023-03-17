@@ -12,30 +12,31 @@ public final class Move {
     static final int PAWN_MAX_MOVE_COUNT = 2;
     static final int MAX_MOVE_COUNT = 8;
 
-    Set<Position> getAllPositions(final Position source, final List<Direction> allDirections, final int moveCount) {
-        final Set<Position> positions = new HashSet<>();
+    static Location getAllPositions(final Position source, final List<Direction> allDirections, final int moveCount) {
+        final Location location = new Location();
         for (Direction direction : allDirections) {
-            addByEachDirection(moveCount, positions, direction, source);
+            location.add(addByEachDirection(moveCount, direction, source));
         }
-        return positions;
+        return location;
     }
 
-    private void addByEachDirection(final int moveCount, final Set<Position> positions,
-                                    final Direction direction, final Position source) {
+    private static Set<Position> addByEachDirection(final int moveCount, final Direction direction, final Position source) {
+        final Set<Position> positions = new HashSet<>();
         Position possiblePosition = source;
         for (int i = 0; i < moveCount; i++) {
             possiblePosition = move(possiblePosition, direction);
             addIfNotOver(positions, possiblePosition);
         }
+        return positions;
     }
 
-    private void addIfNotOver(final Set<Position> positions, Position possiblePosition) {
+    private static void addIfNotOver(final Set<Position> positions, final Position possiblePosition) {
         if (!possiblePosition.isOver(BOARD_SIZE)) {
             positions.add(possiblePosition);
         }
     }
 
-    private Position move(final Position before, final Direction direction) {
+    private static Position move(final Position before, final Direction direction) {
         return direction.calculate(before);
     }
 }
