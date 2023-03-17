@@ -1,10 +1,6 @@
 package chess.controller;
 
 import chess.game.action.Action;
-import chess.game.action.ExitAction;
-import chess.game.GameStatus;
-import chess.game.action.MoveAction;
-import chess.game.action.StartAction;
 import chess.game.GameCommand;
 import chess.domain.Position;
 import chess.dto.PositionRequest;
@@ -25,12 +21,13 @@ public class ChessController {
 
     public ChessController(ChessGame chessGame) {
         this.chessGame = chessGame;
-        actionMap.put(START_COMMAND, new StartAction(this::createBoard));
-        actionMap.put(MOVE_COMMAND, new MoveAction(this::move));
-        actionMap.put(END_COMMAND, new ExitAction());
+        actionMap.put(START_COMMAND, new Action(ignore -> createBoard()));
+        actionMap.put(MOVE_COMMAND, new Action(this::move));
+        actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
     }
 
     private void createBoard() {
+        chessGame.start();
         OutputView.printBoard(chessGame.getBoard());
     }
 
@@ -51,15 +48,20 @@ public class ChessController {
         }
     }
 
+    private void endGame() {
+        chessGame.end();
+    }
+
     public void run() {
         OutputView.printStartMessage();
-        while (gameLoop() == GameStatus.CONTINUE) {
+        while (!chessGame.isEnd()) {
+            gameLoop();
         }
     }
 
-    private GameStatus gameLoop() {
+    private void gameLoop() {
         GameCommand command = printErrorAndRetry(InputView::readCommand);
-        return actionMap.get(command.getCommand()).execute(command);
+        actionMap.get(command.getCommand()).execute(command);
     }
 
     private <T> T printErrorAndRetry(Supplier<T> supplier) {
