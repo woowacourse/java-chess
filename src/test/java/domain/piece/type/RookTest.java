@@ -22,6 +22,19 @@ class RookTest {
     }
 
     @Test
+    @DisplayName("rook이 이동할 수 있는 칸의 좌표를 반환한다.")
+    void kingMoveTestNegative() {
+        Rook rook = new Rook(Camp.WHITE);
+        assertThat(rook.fetchMovePath(new Square(5, 5), new Square(0,5))).contains(
+                new Square(4,5),
+                new Square(3,5),
+                new Square(2,5),
+                new Square(1,5),
+                new Square(0,5)
+        );
+    }
+
+    @Test
     @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
     void bishopMoveFailTest() {
         Rook rook = new Rook(Camp.WHITE);
