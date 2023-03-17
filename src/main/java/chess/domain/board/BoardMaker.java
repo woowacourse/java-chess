@@ -1,11 +1,17 @@
-package chess.domain.pieces;
+package chess.domain.board;
 
+import static chess.domain.Team.NEUTRALITY;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
+import chess.domain.pieces.Bishop;
+import chess.domain.pieces.EmptyPiece;
+import chess.domain.pieces.King;
+import chess.domain.pieces.Knight;
+import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Queen;
+import chess.domain.pieces.Rook;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -56,7 +62,7 @@ public class BoardMaker {
 
     private static Rank createMiddleRank(int row) {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(row, col), new EmptyPiece()))
+                .mapToObj(col -> new Square(new Position(row, col), new EmptyPiece(NEUTRALITY)))
                 .collect(toList());
 
         return new Rank(squares);
