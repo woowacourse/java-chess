@@ -25,6 +25,10 @@ public class Board {
 		this.board = board;
 	}
 
+	public static Board empty() {
+		return new Board(new HashMap<>());
+	}
+
 	public static Board create() {
 		HashMap<Position, Piece> board = new HashMap<>();
 		List<Piece> whitePieces = new ArrayList<>(
