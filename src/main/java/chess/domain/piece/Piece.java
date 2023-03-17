@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.practiceMove.Direction;
 
 public abstract class Piece {
 
@@ -17,5 +18,9 @@ public abstract class Piece {
             return name.toLowerCase();
         }
         return name.toUpperCase();
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return this.color == piece.color;
     }
 }
