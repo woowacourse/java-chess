@@ -23,7 +23,7 @@ class ChessGameTest {
     void 사용자가_말을_움직였을때_말의_위치를_이동할_수_있다() {
         Board board = BoardFactory.createBoard();
         ChessGame chessGame = new ChessGame(board);
-        chessGame.movePiece(C_2, C_4);
+        chessGame.movePieceTo(C_2, C_4);
 
         assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
@@ -34,7 +34,7 @@ class ChessGameTest {
         Board board = BoardFactory.createBoard();
         ChessGame chessGame = new ChessGame(board);
 
-        assertThatThrownBy(() -> chessGame.movePiece(C_7, C_6))
+        assertThatThrownBy(() -> chessGame.movePieceTo(C_7, C_6))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대 팀의 말을 옮길 수 없습니다.");
     }

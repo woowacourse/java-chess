@@ -22,18 +22,18 @@ public class ChessController {
 
     public void run() {
         outputView.printStart();
-        if (isReadStartCommand()) {
+        if (isStartCommand()) {
             outputView.printBoard(chessGame.getBoard());
             play();
         }
     }
 
-    private boolean isReadStartCommand() {
+    private boolean isStartCommand() {
         try {
             return inputView.readStartCommand();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return isReadStartCommand();
+            return isStartCommand();
         }
     }
 
@@ -47,31 +47,17 @@ public class ChessController {
 
     private boolean move() {
         try {
-            List<String> input = readInput();
+            List<String> input = inputView.readGameCommand();
             GameCommand gameCommand = GameCommand.of(input.get(0));
             if (gameCommand == GameCommand.END) {
                 return false;
             }
-            Position sourcePosition = PositionMapper.from(input.get(1));
-            Position targetPosition = PositionMapper.from(input.get(2));
-            chessGame.movePiece(sourcePosition, targetPosition);
+            List<Position> positions = PositionMapper.from(input);
+            chessGame.movePieceTo(positions.get(0), positions.get(1));
             return true;
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return move();
-        }
-    }
-
-    private List<String> readInput() {
-        try {
-            List<String> input = inputView.readGameCommand();
-            GameCommand.of(input.get(0));
-            PositionMapper.from(input.get(1));
-            PositionMapper.from(input.get(2));
-            return input;
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return readInput();
         }
     }
 }
