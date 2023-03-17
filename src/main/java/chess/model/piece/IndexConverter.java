@@ -33,7 +33,7 @@ public enum IndexConverter {
         if (offset == 0) {
             return offset;
         }
-        return totalDistance / offset;
+        return Math.abs(totalDistance / offset);
     }
 
     private static int findOffsetByDirection(final Direction direction) {
