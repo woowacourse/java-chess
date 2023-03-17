@@ -6,10 +6,10 @@ import domain.coordinate.Route;
 import java.util.Collections;
 import java.util.List;
 
-public class InitPawn extends Piece {
+public class InitPawn extends PawnFeature {
 
     public InitPawn(final Color color) {
-        super(color, PieceType.PAWN);
+        super(color);
     }
 
     @Override
@@ -19,14 +19,6 @@ public class InitPawn extends Piece {
         return new Route(getRoute(source, target));
     }
 
-    private List<Position> getRoute(final Position source, final Position target) {
-        if (target.diffY(source) == chooseDirection()) {
-            return Collections.emptyList();
-        }
-
-        return List.of(source.move(0, chooseDirection()));
-    }
-
     @Override
     protected boolean isMovable(final Position source, final Position target) {
         int direction = chooseDirection();
@@ -34,19 +26,15 @@ public class InitPawn extends Piece {
         int diffY = target.diffY(source);
         int diffX = target.diffX(source);
 
-        return isPawnMovable(direction, diffY, diffX) || (diffY == direction * 2 && diffX == 0);
+        return isPawnMovable(direction, diffY, diffX) || diffY == direction * 2 && diffX == 0;
     }
 
-    private static boolean isPawnMovable(final int direction, final int diffY, final int diffX) {
-        return diffY == direction && (-1 <= diffX && diffX <= 1);
-    }
-
-    private int chooseDirection() {
-        if (color == Color.WHITE) {
-            return -1;
+    private List<Position> getRoute(final Position source, final Position target) {
+        if (target.diffY(source) == chooseDirection()) {
+            return Collections.emptyList();
         }
 
-        return 1;
+        return List.of(source.move(0, chooseDirection()));
     }
 
 }

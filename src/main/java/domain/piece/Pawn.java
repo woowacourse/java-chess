@@ -5,10 +5,10 @@ import domain.coordinate.Route;
 
 import java.util.Collections;
 
-public class Pawn extends Piece {
+public class Pawn extends PawnFeature {
 
     public Pawn(final Color color) {
-        super(color, PieceType.PAWN);
+        super(color);
     }
 
     @Override
@@ -25,14 +25,7 @@ public class Pawn extends Piece {
         int diffY = target.diffY(source);
         int diffX = target.diffX(source);
 
-        return diffY == direction && (-1 <= diffX && diffX <= 1);
-    }
-
-    private int chooseDirection() {
-        if (color == Color.WHITE) {
-            return -1;
-        }
-        return 1;
+        return isPawnMovable(direction, diffY, diffX);
     }
 
 }
