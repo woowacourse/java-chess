@@ -10,9 +10,11 @@ import static chess.domain.position.Movement.UR;
 import chess.domain.position.Movement;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Pawn extends Piece {
 
@@ -24,42 +26,39 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DR, DL),
             Color.WHITE, List.of(UR, UL)
     );
+    private static final Map<Color, Predicate<Rank>> CAN_MOVE_TWO = Map.of(
+            Color.WHITE, Rank.TWO::equals,
+            Color.BLACK, Rank.SEVEN::equals
+    );
 
     public Pawn(final Color color) {
         super(color);
     }
 
-    public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
-        Movement movement = to.convertMovement(from);
-
+    public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+        destination.ifPresent(super::validateSameColor);
+        final Movement movement = to.convertMovement(from);
         if (destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color)) {
-
-            if (color.isWhite() && from.rank().value() == 2
-                    && rankDifference(from, to) == 2) {
-                final Position wayPoint = from.moveBy(U);
-
-                return new Path(wayPoint);
-            }
-
-            if (color.isBlack() && from.rank().value() == 7
-                    && rankDifference(from, to) == -2) {
-                Position wayPoint = from.moveBy(D);
-
-                return new Path(wayPoint);
-            }
-
+            return searchPathIfDestinationEmpty(from, to, movement);
+        }
+        if (destination.isPresent() && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
             return new Path();
         }
-        // 상대 말인 경우
-        if (destination.isPresent()
-                && destination.get().color.isDifferentColor(color)
-                && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
+        throw new IllegalStateException();
+    }
+
+    private Path searchPathIfDestinationEmpty(final Position from, final Position to, final Movement movement) {
+        if (CAN_MOVE_TWO.get(color).test(from.rank()) && rankDifference(from, to) == 2) {
+            final Position wayPoint = from.moveBy(movement);
+            return new Path(wayPoint);
+        }
+        if (rankDifference(from, to) == 1) {
             return new Path();
         }
         throw new IllegalStateException();
     }
 
     private int rankDifference(final Position from, final Position to) {
-        return to.rankDifference(from);
+        return Math.abs(to.rankDifference(from));
     }
 }
