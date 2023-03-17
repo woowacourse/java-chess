@@ -7,18 +7,13 @@ import java.util.List;
 
 public final class Square {
     private PieceState pieceState;
-    private static final Square EMPTY_SQUARE = new Square();
 
-    private Square() {
+    public Square() {
         pieceState = new Empty();
     }
 
     public Square(final Piece piece) {
         pieceState = piece;
-    }
-
-    public static Square emptySquare() {
-        return EMPTY_SQUARE;
     }
 
     public boolean isEmpty() {

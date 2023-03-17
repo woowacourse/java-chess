@@ -78,7 +78,7 @@ class KingTest {
         //given
         final Team team = Team.BLACK;
         final King king = new King(team);
-        final List<Square> route = List.of(Square.emptySquare());
+        final List<Square> route = List.of(new Square());
 
         //when & then
         assertDoesNotThrow(() -> king.validateRoute(route));

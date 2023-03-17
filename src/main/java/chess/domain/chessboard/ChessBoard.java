@@ -74,7 +74,7 @@ public final class ChessBoard {
 
     private void createBlankRank(final char rank) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), Square.emptySquare());
+            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Square());
         }
     }
 
@@ -84,7 +84,7 @@ public final class ChessBoard {
         validateCanMove(from, to, departure);
 
         arrival.switchPieceState(departure);
-        departure.switchPieceState(Square.emptySquare());
+        departure.switchPieceState(new Square());
     }
 
     private void validateCanMove(final Coordinate from, final Coordinate to, final Square departure) {

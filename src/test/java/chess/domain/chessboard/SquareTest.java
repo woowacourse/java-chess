@@ -1,7 +1,7 @@
 package chess.domain.chessboard;
 
-import chess.domain.chessboard.state.Team;
-import chess.domain.chessboard.state.piece.Pawn;
+import chess.domain.piece.Team;
+import chess.domain.piece.state.Pawn;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,7 +13,7 @@ class SquareTest {
     @Test
     void 스퀘어는_비어있는_상태를_가질_수_있다() {
         //given
-        Square square = Square.emptySquare();
+        Square square = new Square();
 
         //when&then
         Assertions.assertThat(square.isEmpty()).isTrue();

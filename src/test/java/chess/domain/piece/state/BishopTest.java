@@ -53,7 +53,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<Square> route = List.of(Square.emptySquare(), Square.emptySquare(), new Square(new Pawn(team)));
+        final List<Square> route = List.of(new Square(), new Square(), new Square(new Pawn(team)));
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
@@ -65,7 +65,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<Square> route = List.of(Square.emptySquare(), new Square(new Pawn(team)), Square.emptySquare());
+        final List<Square> route = List.of(new Square(), new Square(new Pawn(team)), new Square());
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
@@ -77,7 +77,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<Square> route = List.of(Square.emptySquare(), Square.emptySquare(), Square.emptySquare());
+        final List<Square> route = List.of(new Square(), new Square(), new Square());
 
         //when & then
         assertDoesNotThrow(() -> bishop.validateRoute(route));
@@ -87,7 +87,7 @@ class BishopTest {
     void 비숍은_도착지에_다른팀의_기물이_있으면_예외가_발생하지_않는다() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        final List<Square> route = List.of(Square.emptySquare(), Square.emptySquare(),
+        final List<Square> route = List.of(new Square(), new Square(),
                 new Square(new Pawn(Team.WHITE)));
 
         //when & then

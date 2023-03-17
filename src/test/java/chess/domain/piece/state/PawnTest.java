@@ -35,7 +35,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate c2 = Coordinate.of("c2");
-        final List<Square> route = List.of(Square.emptySquare());
+        final List<Square> route = List.of(new Square());
         pawn.findRoute(c1, c2);
 
         //when & then
@@ -49,7 +49,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate b2 = Coordinate.of("b2");
-        final List<Square> route = List.of(Square.emptySquare());
+        final List<Square> route = List.of(new Square());
         pawn.findRoute(c1, b2);
 
         //when & then
@@ -77,10 +77,10 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate b1 = Coordinate.of("b1");
         final Coordinate b2 = Coordinate.of("b2");
-        final List<Square> route1 = List.of(Square.emptySquare());
+        final List<Square> route1 = List.of(new Square());
 
         final Coordinate b4 = Coordinate.of("b4");
-        final List<Square> route2 = List.of(Square.emptySquare(), Square.emptySquare());
+        final List<Square> route2 = List.of(new Square(), new Square());
 
         //when
         pawn.findRoute(b1, b2);
@@ -108,7 +108,7 @@ class PawnTest {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final List<Square> route = List.of(Square.emptySquare());
+        final List<Square> route = List.of(new Square());
 
         //when & then
         assertDoesNotThrow(() -> pawn.validateRoute(route));

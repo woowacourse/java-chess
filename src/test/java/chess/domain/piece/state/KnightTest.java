@@ -60,7 +60,7 @@ class KnightTest {
         //given
         final Team team = Team.BLACK;
         final Knight knight = new Knight(team);
-        final List<Square> route = List.of(Square.emptySquare());
+        final List<Square> route = List.of(new Square());
 
         //when & then
         assertDoesNotThrow(() -> knight.validateRoute(route));
