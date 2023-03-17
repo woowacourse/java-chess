@@ -31,7 +31,7 @@ public class Knight extends Piece {
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
 
-        Movement movement = to.convertMovement(from);
+        final Movement movement = to.convertMovement(from);
 
         int rankDifference = Math.abs(to.rankDifference(from));
         int fileDifference = Math.abs(to.fileDifference(from));

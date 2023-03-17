@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.position.Movement;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class Piece {
@@ -24,6 +27,19 @@ public abstract class Piece {
 
     final public boolean isSameColor(final Color color) {
         return this.color.equals(color);
+    }
+
+    final protected Path generatePathFromTo(final Position from, final Position to, final Movement movement) {
+        Position next = from;
+        final List<Position> positions = new ArrayList<>();
+        while (true) {
+            next = next.moveBy(movement);
+            if (next.equals(to)) {
+                break;
+            }
+            positions.add(next);
+        }
+        return new Path(positions);
     }
 
     public abstract Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination);
