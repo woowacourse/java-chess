@@ -68,4 +68,16 @@ class BoardQueenMoveTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 경로로 이동할 수 없습니다");
     }
+
+    @Test
+    @DisplayName("퀸이 움질일 때 중간에 기물이 있으면 예외가 발생한다.")
+    void move_queen_givenInValidRoute_thenFail() {
+        // given
+        board.move(D2, D3, WHITE);
+
+        // when, then
+        assertThatThrownBy(() -> board.move(D1, D5, WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 경로로 이동할 수 없습니다");
+    }
 }

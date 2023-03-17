@@ -1,12 +1,17 @@
 package chess.model.move;
 
 import static chess.model.board.PositionFixture.B5;
+import static chess.model.board.PositionFixture.C1;
 import static chess.model.board.PositionFixture.C4;
+import static chess.model.board.PositionFixture.D2;
+import static chess.model.board.PositionFixture.D3;
 import static chess.model.board.PositionFixture.D5;
 import static chess.model.board.PositionFixture.E2;
+import static chess.model.board.PositionFixture.E3;
 import static chess.model.board.PositionFixture.F1;
 import static chess.model.board.PositionFixture.F2;
 import static chess.model.board.PositionFixture.G2;
+import static chess.model.board.PositionFixture.G5;
 import static chess.model.board.PositionFixture.H3;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
@@ -99,6 +104,19 @@ class BoardBishopMoveTest {
     void move_bishop_givenMyPieceTarget_thenFail() {
         // when
         assertThatThrownBy(() -> board.move(F1, E2, WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 경로로 이동할 수 없습니다");
+    }
+
+    @Test
+    @DisplayName("비숍이 움질일 때 중간에 기물이 있으면 예외가 발생한다.")
+    void move_bishop_givenInValidRoute_thenFail() {
+        // given
+        board.move(D2, D3, WHITE);
+        board.move(E2, E3, WHITE);
+
+        // when, then
+        assertThatThrownBy(() -> board.move(C1, G5, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 경로로 이동할 수 없습니다");
     }

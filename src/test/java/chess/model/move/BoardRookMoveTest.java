@@ -7,6 +7,7 @@ import static chess.model.board.PositionFixture.H2;
 import static chess.model.board.PositionFixture.H3;
 import static chess.model.board.PositionFixture.H4;
 import static chess.model.board.PositionFixture.H5;
+import static chess.model.board.PositionFixture.H6;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -99,6 +100,18 @@ class BoardRookMoveTest {
     void move_rook_givenInValidTarget_thenFail() {
         // when
         assertThatThrownBy(() -> board.move(H1, H2, WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 경로로 이동할 수 없습니다");
+    }
+
+    @Test
+    @DisplayName("룩이 움질일 때 중간의 기물이 있으면 예외가 발생한다.")
+    void move_rook_givenInValidRoute_thenFail() {
+        // given
+        board.move(H2, H3, WHITE);
+
+        // when, then
+        assertThatThrownBy(() -> board.move(H1, H6, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 경로로 이동할 수 없습니다");
     }
