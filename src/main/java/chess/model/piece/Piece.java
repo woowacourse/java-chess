@@ -14,26 +14,26 @@ public abstract class Piece implements InitialPiece {
         this.type = type;
     }
 
+    @Override
+    public Piece pick() {
+        return this;
+    }
+
+    public abstract boolean movable(final Distance distance);
+
+    public boolean isSameTeam(final Color color) {
+        return this.color.equals(color);
+    }
+
+    public boolean isPawn() {
+        return type.isPawn();
+    }
+
     public Type getType() {
         return type;
     }
 
     public Color getColor() {
         return color;
-    }
-
-    public boolean isSameTeam(final Color color) {
-        return this.color.equals(color);
-    }
-
-    public abstract boolean movable(final Distance distance);
-
-    public boolean isPawn() {
-        return type.isPawn();
-    }
-
-    @Override
-    public Piece pick() {
-        return this;
     }
 }
