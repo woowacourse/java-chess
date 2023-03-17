@@ -13,44 +13,72 @@ import java.util.List;
 
 public final class ChessController {
 
+    public static final int RANK_SIZE = 8;
+    public static final int FROM_INDEX = 0;
+    public static final int TO_INDEX = 1;
+    private ChessBoard chessBoard;
+    private GameState state = GameState.READY;
+
     public void run() {
         startGame();
+        if (state == GameState.RUNNING) {
+            playGame();
+        }
     }
 
     private void startGame() {
         OutputView.printWelcomeMessage();
-        ChessBoard chessBoard = null;
-        Command command = requestCommand();
-        do {
-            if (command == Command.START) {
-                chessBoard = new ChessBoard();
-                OutputView.printChessBoard(getChessBoardMark(chessBoard));
-            }
+        if (getCommand() == Command.START) {
+            state = GameState.RUNNING;
+            chessBoard = new ChessBoard();
+            OutputView.printChessBoard(getChessBoardMark(chessBoard));
+            return;
+        }
+        state = GameState.END;
+    }
 
-            if (command == Command.MOVE) {
-                final List<String> coordinates = InputView.getCoordinates();
-                final Coordinate from = Coordinate.of(coordinates.get(0));
-                final Coordinate to = Coordinate.of(coordinates.get(1));
-                chessBoard.move(from, to);
-                OutputView.printChessBoard(getChessBoardMark(chessBoard));
-            }
-
-            command = requestCommand();
-
-        } while (command != Command.END);
+    private Command getCommand() {
+        return Retryable.retryWhenException(this::requestCommand);
     }
 
     private Command requestCommand() {
-        return Retryable.retryWhenException(InputView::readCommand);
+        final Command command = InputView.readCommand();
+        if (state == GameState.READY && command == Command.MOVE) {
+            throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
+        }
+
+        if (state == GameState.RUNNING && command == Command.START) {
+            throw new IllegalArgumentException("게임을 진행 중에는 새로운 게임을 시작할 수 없습니다.");
+        }
+
+        return command;
+    }
+
+    private void playGame() {
+        while (getCommand() != Command.END) {
+            movePiece();
+        }
+        state = GameState.END;
+    }
+
+    private void movePiece() {
+        final List<String> coordinates = InputView.getCoordinates();
+        try {
+            final Coordinate from = Coordinate.of(coordinates.get(FROM_INDEX));
+            final Coordinate to = Coordinate.of(coordinates.get(TO_INDEX));
+            chessBoard.move(from, to);
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+        OutputView.printChessBoard(getChessBoardMark(chessBoard));
     }
 
     private List<List<String>> getChessBoardMark(final ChessBoard chessBoard) {
-        List<List<String>> currentChessBoardMark = new ArrayList<>();
+        final List<List<String>> currentChessBoardMark = new ArrayList<>();
+        final List<Square> squares = chessBoard.getSquares();
 
-        List<Square> squares = chessBoard.getSquares();
-
-        for (int rank = 0; rank < squares.size(); rank += 8) {
-            currentChessBoardMark.add(getRankMark(squares.subList(rank, rank + 8)));
+        for (int rank = 0; rank < squares.size(); rank += RANK_SIZE) {
+            currentChessBoardMark.add(getRankMark(squares.subList(rank, rank + RANK_SIZE)));
         }
 
         Collections.reverse(currentChessBoardMark);

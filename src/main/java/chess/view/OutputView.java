@@ -30,6 +30,6 @@ public final class OutputView {
     }
 
     public static void printErrorMessage(final String errorMessage) {
-        System.out.println("[ERROR] " + errorMessage+System.lineSeparator());
+        System.out.println("[ERROR] " + errorMessage + System.lineSeparator());
     }
 }
