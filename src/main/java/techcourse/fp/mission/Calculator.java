@@ -1,6 +1,8 @@
 package techcourse.fp.mission;
 
 import java.util.List;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 public class Calculator {
 
@@ -26,7 +28,12 @@ public class Calculator {
         int total = 0;
 
         //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
-
+        IntPredicate overThree = (number) -> number > 3;
+        for(int number : numbers){
+            if(overThree.test(number)){
+                total += number;
+            }
+        }
         return total;
     }
 }
