@@ -14,7 +14,6 @@ import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class Pawn extends Piece {
 
@@ -26,9 +25,9 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DR, DL),
             Color.WHITE, List.of(UR, UL)
     );
-    private static final Map<Color, Predicate<Rank>> CAN_MOVE_TWO = Map.of(
-            Color.WHITE, Rank.TWO::equals,
-            Color.BLACK, Rank.SEVEN::equals
+    private static final Map<Color, Rank> CAN_MOVE_TWO_BLOCK_RANK = Map.of(
+            Color.WHITE, Rank.TWO,
+            Color.BLACK, Rank.SEVEN
     );
 
     public Pawn(final Color color) {
@@ -48,7 +47,8 @@ public class Pawn extends Piece {
     }
 
     private Path searchPathIfDestinationEmpty(final Position from, final Position to, final Movement movement) {
-        if (CAN_MOVE_TWO.get(color).test(from.rank()) && rankDifference(from, to) == 2) {
+        if (from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color))
+                && rankDifference(from, to) == 2) {
             final Position wayPoint = from.moveBy(movement);
             return new Path(wayPoint);
         }

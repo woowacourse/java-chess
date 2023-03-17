@@ -13,8 +13,6 @@ public class Position {
     }
 
     public Movement convertMovement(Position from) {
-        // TODO: 둘 다 0인 경우는 예외 처리하자! Arit~~ 조심
-
         int rankGap = rank.value() - from.rank.value();
         int fileGap = file.value() - from.file.value();
 
@@ -41,6 +39,10 @@ public class Position {
 
     public int fileDifference(final Position from) {
         return this.file.value() - from.file.value();
+    }
+
+    public boolean isEqualRank(final Rank rank) {
+        return rank == this.rank;
     }
 
     @Override
