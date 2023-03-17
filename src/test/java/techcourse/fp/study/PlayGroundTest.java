@@ -1,9 +1,11 @@
 package techcourse.fp.study;
 
+import static java.lang.System.out;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -42,7 +44,7 @@ class PlayGroundTest {
             }
         }
 
-        System.out.println(stringBuilder);
+        out.println(stringBuilder);
     }
 
     @Test
@@ -57,7 +59,7 @@ class PlayGroundTest {
             stringBuilder.delete(stringBuilder.length() - 3, stringBuilder.length());
         }
 
-        System.out.println(stringBuilder);
+        out.println(stringBuilder);
     }
 
     @Test
@@ -66,14 +68,15 @@ class PlayGroundTest {
                 .map(String::valueOf)
                 .collect(joining(COLON_DELIMITER));
 
-        System.out.println(result);
+        out.println(result);
     }
 
     @Test
+    @Disabled
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
 
         words.collect(
                         groupingBy(word -> word.chars().sorted()
@@ -88,7 +91,7 @@ class PlayGroundTest {
 
     @Test
     public void ThreadPoolExecutor_실행_테스트() {
-        executorService.submit(() -> System.out.println("test"));
+        executorService.submit(() -> out.println("test"));
     }
 
     static ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -140,7 +143,7 @@ class PlayGroundTest {
     }
 
     private <T1, T2, T3> void println(T1 t1, T2 t2, T3 t3, TriFunction<T1, T2, T3, String> function) {
-        System.out.println(function.apply(t1, t2, t3));
+        out.println(function.apply(t1, t2, t3));
     }
 
     @Test
@@ -254,7 +257,7 @@ class PlayGroundTest {
             now.append(" - ").append(object.toString());
         }
 
-        System.out.println(now);
+        out.println(now);
 
         try {
             Thread.sleep(1);
@@ -266,15 +269,16 @@ class PlayGroundTest {
     @Test
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
-        stream.forEach(System.out::println);
+        stream.forEach(out::println);
 
-        stream.forEach(System.out::println);
+        assertThatThrownBy(() -> stream.forEach(out::println))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     @Disabled
     public void 무한_스트림_문제() {
         IntStream.iterate(0, i -> i + 1)
-                .forEach(System.out::println);
+                .forEach(out::println);
     }
 }
