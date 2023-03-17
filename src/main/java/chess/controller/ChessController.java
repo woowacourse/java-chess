@@ -65,8 +65,6 @@ public class ChessController {
         try {
             List<String> input = inputView.readGameCommand();
             validateCommand(input);
-            PositionMapper.from(input.get(1));
-            PositionMapper.from(input.get(2));
             return input;
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
@@ -75,6 +73,7 @@ public class ChessController {
     }
 
     private void validateCommand(List<String> input) {
-        GameCommand.validateGameCommand(input);
+        GameCommand.validate(input);
+        PositionMapper.validate(input);
     }
 }

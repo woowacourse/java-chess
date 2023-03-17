@@ -14,6 +14,8 @@ public enum FileCoordinateView {
     H("h", FileCoordinate.H),
     ;
 
+    public static final String INVALID_FILE_MESSAGE = "올바른 열 번호를 입력해주세요.";
+
     private final String columnView;
     private final FileCoordinate fileCoordinate;
 
@@ -27,6 +29,17 @@ public enum FileCoordinateView {
                 .filter(it -> it.columnView.equals(columnView))
                 .map(it -> it.fileCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_MESSAGE));
+    }
+
+    static void validate(String columnView) {
+        if (isNotContain(columnView)) {
+            throw new IllegalArgumentException(INVALID_FILE_MESSAGE);
+        }
+    }
+
+    private static boolean isNotContain(String columnView) {
+        return Arrays.stream(values())
+                .noneMatch(x -> x.columnView.equals(columnView));
     }
 }

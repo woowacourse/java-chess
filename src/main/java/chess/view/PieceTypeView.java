@@ -38,7 +38,7 @@ public enum PieceTypeView {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
-    public String getMessage(Color color) {
+    String getMessage(Color color) {
         if (color == Color.BLACK) {
             return this.blackTeamView;
         }

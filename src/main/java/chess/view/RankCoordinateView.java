@@ -14,6 +14,8 @@ public enum RankCoordinateView {
     ONE("1", RankCoordinate.ONE),
     ;
 
+    public static final String INVALID_RANK_MESSAGE = "올바른 행 번호를 입력해주세요.";
+
     private final String rowView;
     private final RankCoordinate rankCoordinate;
 
@@ -27,6 +29,17 @@ public enum RankCoordinateView {
                 .filter(it -> it.rowView.equals(rowView))
                 .map(it -> it.rankCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_MESSAGE));
+    }
+
+    static void validate(String rowView) {
+        if (isNotContain(rowView)) {
+            throw new IllegalArgumentException(INVALID_RANK_MESSAGE);
+        }
+    }
+
+    private static boolean isNotContain(String rowView) {
+        return Arrays.stream(values())
+                .noneMatch(x -> x.rowView.equals(rowView));
     }
 }

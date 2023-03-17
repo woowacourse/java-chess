@@ -16,7 +16,7 @@ public enum GameCommand {
         throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
     }
 
-    public static void validateGameCommand(List<String> input) {
+    public static void validate(List<String> input) {
         if (GameCommand.of(input.get(0)) == MOVE) {
             validateMoveCommand(input);
         }
