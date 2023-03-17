@@ -8,13 +8,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.strategy.DiagonalMoveStrategy;
-import chess.domain.piece.strategy.KingMoveStrategy;
-import chess.domain.piece.strategy.KnightMoveStrategy;
-import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.piece.strategy.PieceDirection;
-import chess.domain.piece.strategy.PawnMoveStrategy;
-import chess.domain.piece.strategy.StraightMoveStrategy;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -41,9 +34,8 @@ public class BoardMaker {
     private Map<Square, Piece> makePawn(final Color color) {
         Map<Square, Piece> pawns = new HashMap<>();
         Rank rank = getPawnRankByColor(color);
-        MoveStrategy moveStrategy = new PawnMoveStrategy(PieceDirection.pawnFrom(color));
         for (File file : File.values()) {
-            pawns.put(Square.of(file, rank), new Pawn(color, moveStrategy));
+            pawns.put(Square.of(file, rank), new Pawn(color));
         }
         return new HashMap<>(pawns);
     }
@@ -67,48 +59,42 @@ public class BoardMaker {
 
     private Map<Square, Piece> makeRooks() {
         Map<Square, Piece> rooks = new HashMap<>();
-        MoveStrategy moveStrategy = new StraightMoveStrategy();
-        rooks.put(Square.of(File.A, Rank.ONE), new Rook(Color.WHITE, moveStrategy));
-        rooks.put(Square.of(File.H, Rank.ONE), new Rook(Color.WHITE, moveStrategy));
-        rooks.put(Square.of(File.A, Rank.EIGHT), new Rook(Color.BLACK, moveStrategy));
-        rooks.put(Square.of(File.H, Rank.EIGHT), new Rook(Color.BLACK, moveStrategy));
+        rooks.put(Square.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+        rooks.put(Square.of(File.H, Rank.ONE), new Rook(Color.WHITE));
+        rooks.put(Square.of(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+        rooks.put(Square.of(File.H, Rank.EIGHT), new Rook(Color.BLACK));
         return new HashMap<>(rooks);
     }
 
     private Map<Square, Piece> makeKnights() {
         Map<Square, Piece> knights = new HashMap<>();
-        MoveStrategy moveStrategy = new KnightMoveStrategy();
-        knights.put(Square.of(File.B, Rank.ONE), new Knight(Color.WHITE, moveStrategy));
-        knights.put(Square.of(File.G, Rank.ONE), new Knight(Color.WHITE, moveStrategy));
-        knights.put(Square.of(File.B, Rank.EIGHT), new Knight(Color.BLACK, moveStrategy));
-        knights.put(Square.of(File.G, Rank.EIGHT), new Knight(Color.BLACK, moveStrategy));
+        knights.put(Square.of(File.B, Rank.ONE), new Knight(Color.WHITE));
+        knights.put(Square.of(File.G, Rank.ONE), new Knight(Color.WHITE));
+        knights.put(Square.of(File.B, Rank.EIGHT), new Knight(Color.BLACK));
+        knights.put(Square.of(File.G, Rank.EIGHT), new Knight(Color.BLACK));
         return new HashMap<>(knights);
     }
 
     private Map<Square, Piece> makeBishops() {
         Map<Square, Piece> bishops = new HashMap<>();
-        MoveStrategy moveStrategy = new DiagonalMoveStrategy();
-        bishops.put(Square.of(File.C, Rank.ONE), new Bishop(Color.WHITE, moveStrategy));
-        bishops.put(Square.of(File.F, Rank.ONE), new Bishop(Color.WHITE, moveStrategy));
-        bishops.put(Square.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK, moveStrategy));
-        bishops.put(Square.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK, moveStrategy));
+        bishops.put(Square.of(File.C, Rank.ONE), new Bishop(Color.WHITE));
+        bishops.put(Square.of(File.F, Rank.ONE), new Bishop(Color.WHITE));
+        bishops.put(Square.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
+        bishops.put(Square.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
         return new HashMap<>(bishops);
     }
 
     private Map<Square, Piece> makeQueens() {
         Map<Square, Piece> queens = new HashMap<>();
-        MoveStrategy moveStrategy = new StraightMoveStrategy();
-        MoveStrategy subMoveStrategy = new DiagonalMoveStrategy();
-        queens.put(Square.of(File.D, Rank.ONE), new Queen(Color.WHITE, moveStrategy, subMoveStrategy));
-        queens.put(Square.of(File.D, Rank.EIGHT), new Queen(Color.BLACK, moveStrategy, subMoveStrategy));
+        queens.put(Square.of(File.D, Rank.ONE), new Queen(Color.WHITE));
+        queens.put(Square.of(File.D, Rank.EIGHT), new Queen(Color.BLACK));
         return new HashMap<>(queens);
     }
 
     private Map<Square, Piece> makeKings() {
         Map<Square, Piece> kings = new HashMap<>();
-        MoveStrategy moveStrategy = new KingMoveStrategy();
-        kings.put(Square.of(File.E, Rank.ONE), new King(Color.WHITE, moveStrategy));
-        kings.put(Square.of(File.E, Rank.EIGHT), new King(Color.BLACK, moveStrategy));
+        kings.put(Square.of(File.E, Rank.ONE), new King(Color.WHITE));
+        kings.put(Square.of(File.E, Rank.EIGHT), new King(Color.BLACK));
         return new HashMap<>(kings);
     }
 }

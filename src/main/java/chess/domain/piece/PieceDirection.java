@@ -1,6 +1,5 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 
@@ -25,13 +24,7 @@ public enum PieceDirection {
         this.pieceDirections = pieceDirections;
     }
 
-    public static PieceDirection pawnFrom(final Color color) {
-        if (color.equals(Color.WHITE)) {
-            return WHITE_PAWN;
-        }
-        return BLACK_PAWN;
-    }
-
+    // TODO: 코드 개선 필요
     public Direction findDirection(final int fileDifference, final int rankDifference) {
         if (this == STRAIGHT) {
             return getAbsDirection(fileDifference, rankDifference);

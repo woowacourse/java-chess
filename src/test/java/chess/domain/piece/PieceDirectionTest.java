@@ -1,5 +1,6 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece;
 
+import chess.domain.piece.PieceDirection;
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import org.junit.jupiter.api.DisplayName;

@@ -23,11 +23,9 @@ public class Board {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
         validateRoute(current, destination, direction);
-
         if (!isEmptySquare(destination)) {
             checkEnemy(current, destination);
         }
-
         movePiece(current, destination);
     }
 

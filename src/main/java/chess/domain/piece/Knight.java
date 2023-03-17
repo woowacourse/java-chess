@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.piece.strategy.PieceDirection;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class Knight extends Piece {
 
-    public Knight(final Color color, final MoveStrategy moveStrategy) {
-        super(color, moveStrategy);
+    public Knight(final Color color) {
+        super(color);
     }
 
     @Override
