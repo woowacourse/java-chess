@@ -3,19 +3,14 @@ package chess.controller;
 import static chess.domain.Command.END;
 import static chess.domain.Command.MOVE;
 import static chess.domain.Command.START;
+import static chess.domain.Team.WHITE;
 
+import chess.ChessGame;
 import chess.domain.Board;
 import chess.domain.Command;
-import chess.domain.square.File;
-import chess.domain.square.Rank;
-import chess.domain.square.Square;
-import chess.domain.Team;
-import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
 
@@ -28,66 +23,49 @@ public class GameController {
     }
 
     public void run() {
-        outputView.printGameStart();
+        startGame();
+        ChessGame chessGame = new ChessGame(new Board(), WHITE);
+        Board board = chessGame.getBoard();
+        outputView.printChessBoard(board.getPieces());
+        progressGame(chessGame);
+    }
 
+    private void startGame() {
+        outputView.printGameStart();
         List<String> gameCommand = inputView.readGameCommand();
         Command command = Command.from(gameCommand.get(0));
+        try {
+            checkCorrectCommand(command, START);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            startGame();
+        }
+    }
 
-        checkMoveCommand(command);
-
-        if (command == START) {
-            Board board = new Board();
-            Team team = Team.WHITE;
-            Map<Square, Piece> pieces = board.getPieces();
-            outputView.printChessBoard(pieces);
-
-            while (true) {
-                gameCommand = inputView.readGameCommand();
-                command = Command.from(gameCommand.get(0));
-
-                if (command == END) {
-                    break;
-                }
-
-                checkStartCommand(command);
-                validatePositionCommand(gameCommand);
-
-                List<String> srcPosition = Arrays.asList(gameCommand.get(1).split(""));
-                List<String> dstPosition = Arrays.asList(gameCommand.get(2).split(""));
-
-                if (srcPosition.size() != 2 && dstPosition.size() != 2) {
-                    throw new IllegalArgumentException("source위치, target 위치는 알파벳(a~h)과 숫자(1~8)로 입력해주세요. 예) a1");
-                }
-
-                Square src = Square.of(File.findFileBy(srcPosition.get(0)), Rank.findRankBy(srcPosition.get(1)));
-                Square dst = Square.of(File.findFileBy(dstPosition.get(0)), Rank.findRankBy(dstPosition.get(1)));
-
-                if (!board.isSameColor(src, team)) {
-                    throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
-                }
-                board.move(src, dst);
-                outputView.printChessBoard(pieces);
-                team = Team.change(team);
+    private void progressGame(ChessGame chessGame) {
+        while (true) {
+            List<String> gameCommand = inputView.readGameCommand();
+            Command command = Command.from(gameCommand.get(0));
+            if (command == END) {
+                break;
             }
+            checkCorrectCommand(command, MOVE);
+            validateMoveCommandFormat(gameCommand);
 
+            chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
+            outputView.printChessBoard(chessGame.getBoard().getPieces());
         }
     }
 
-    private void checkMoveCommand(final Command command) {
-        if (command == MOVE) {
-            throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
+    private void checkCorrectCommand(final Command userCommand, final Command expected) {
+        if (userCommand != expected) {
+            throw new IllegalArgumentException("올바른 command를 입력해주세요. 게임 시작은 start로, 게임 진행은 move로, 게임 종료는 end로 할 수 있습니다.");
         }
     }
 
-    private void checkStartCommand(final Command command) {
-        if (command == START) {
-            throw new IllegalArgumentException("move 또는 end를 입력해주세요.");
-        }
-    }
-
-    private void validatePositionCommand(final List<String> gameCommand) {
+    private void validateMoveCommandFormat(final List<String> gameCommand) {
         if (gameCommand.size() != 3) {
-            throw new IllegalArgumentException("move source위치 target위치 형태로 입력해주세요.");
+            throw new IllegalArgumentException("move source위치 target위치 형태로 입력해주세요. 예) move a2 a3");
         }
     }
 }
