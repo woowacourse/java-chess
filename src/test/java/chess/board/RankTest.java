@@ -9,7 +9,6 @@ class RankTest {
 
     @Test
     @DisplayName("대상 Rank과의 값 차이를 반환한다.")
-        // TODO: 2023/03/15 테스트 케이스 추가(Parameterized Test)
     void getValueDiff() {
         // given
         Rank rank = Rank.ONE;

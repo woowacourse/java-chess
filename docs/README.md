@@ -54,3 +54,4 @@
   - 이렇게 당장의 설계상으로는 null이 되지 않는 경우에도 NPE를 방지해야 될지? NPE 방지의 범위와 기준이 잘 안 잡히는 것 같다.
 - [x] ChessController와 InputView가 같은 문자열이 있는데, 이는 같은 의미를 가지는 걸까?
 - [x] Calculator 주석 제거
+- [x] Position getSlope() 내에서 0으로 나눠지는 경우 예외 처리
