@@ -22,6 +22,7 @@ public class Knight extends Piece {
                     UP_UP_RIGHT, UP_UP_LEFT, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN,
                     DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, LEFT_LEFT_UP, LEFT_LEFT_DOWN
             );
+    private static final int POSITION_DIFFERENCE = 3;
 
     public Knight(final Color color) {
         super(color);
@@ -30,20 +31,25 @@ public class Knight extends Piece {
     @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
+        validateMovement(from, to);
+        validatePositionDifference(from, to);
 
+        return new Path();
+    }
+
+    private static void validateMovement(final Position from, final Position to) {
         Movement movement = to.convertMovement(from);
+        if (!CAN_MOVE_DESTINATION.contains(movement)) {
+            throw new IllegalStateException("Knight가 움직일 수 없는 방향임!");
+        }
+    }
 
+    private static void validatePositionDifference(final Position from, final Position to) {
         int rankDifference = Math.abs(to.rankDifference(from));
         int fileDifference = Math.abs(to.fileDifference(from));
 
-        if (rankDifference + fileDifference != 3) {
+        if (rankDifference + fileDifference != POSITION_DIFFERENCE) {
             throw new IllegalStateException();
         }
-
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
-        }
-
-        return new Path();
     }
 }
