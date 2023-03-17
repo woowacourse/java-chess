@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO: 2023-03-17 캐싱
 public class Square {
+    private static final int MAX_RANK_VALUE = 8;
     private static final List<Square> CASHED_SQUARES;
 
     static {
@@ -28,8 +28,9 @@ public class Square {
     public static Square getInstanceOf(File file, Rank rank) {
         int fileValue = file.getValue();
         int rankValue = rank.getValue();
+        int index = (MAX_RANK_VALUE - rankValue) * MAX_RANK_VALUE + fileValue;
 
-        return CASHED_SQUARES.get((8 - rankValue) * 8 + fileValue - 1);
+        return CASHED_SQUARES.get(index - 1);
     }
 
     public boolean isSameRank(Square targetSquare) {
