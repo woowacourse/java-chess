@@ -24,7 +24,7 @@ class ChessGameTest {
         Position source = Position.of(2, 2);
 
         // expect
-        assertThatThrownBy(() -> chessGame.move(target, source))
+        assertThatThrownBy(() -> chessGame.movePiece(target, source))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 대기중)");
     }
@@ -40,7 +40,7 @@ class ChessGameTest {
         chessGame.end();
 
         // expect
-        assertThatThrownBy(() -> chessGame.move(target, source))
+        assertThatThrownBy(() -> chessGame.movePiece(target, source))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)");
     }

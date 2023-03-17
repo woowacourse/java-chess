@@ -33,7 +33,7 @@ public class ChessGame {
         return gameState.isEnd();
     }
 
-    public void move(Position source, Position target) {
+    public void movePiece(Position source, Position target) {
         gameState.movePiece(() -> board.move(source, target));
     }
 

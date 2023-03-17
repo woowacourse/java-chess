@@ -21,21 +21,21 @@ public class ChessController {
 
     public ChessController(ChessGame chessGame) {
         this.chessGame = chessGame;
-        actionMap.put(START_COMMAND, new Action(ignore -> createBoard()));
-        actionMap.put(MOVE_COMMAND, new Action(this::move));
+        actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
+        actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
         actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
     }
 
-    private void createBoard() {
+    private void startGame() {
         chessGame.start();
         OutputView.printBoard(chessGame.getBoard());
     }
 
-    private void move(GameCommand gameCommand) {
+    private void movePiece(GameCommand gameCommand) {
         printError(() -> {
             PositionRequest source = PositionMapper.map(gameCommand.getParameter(0));
             PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
-            chessGame.move(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
+            chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
             OutputView.printBoard(chessGame.getBoard());
         });
     }
