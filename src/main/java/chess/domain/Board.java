@@ -35,7 +35,7 @@ public class Board {
         Piece piece = board.get(source);
 
         validateMovable(piece, unit);
-        validatePath(source, target, unit);
+        validatePath(source, target, unit, piece);
     }
 
     private void validateDifferentPosition(final Position source, final Position target) {
@@ -69,9 +69,10 @@ public class Board {
         }
     }
 
-    private void validatePath(final Position source, final Position target, final Direction unit) {
+    private void validatePath(final Position source, final Position target, final Direction unit, final Piece piece) {
         List<Position> path = calculatePath(source, target, unit);
         validatePathIsEmpty(path);
+        validateMovableByCount(piece, path.size());
     }
 
     private List<Position> calculatePath(Position source, Position target, Direction unit) {
@@ -101,6 +102,12 @@ public class Board {
     private void validatePositionIsEmpty(final Position position) {
         if (!isEmptyPosition(position)) {
             throw new IllegalArgumentException("이동할 경로에 체스말이 존재합니다.");
+        }
+    }
+
+    private void validateMovableByCount(final Piece piece, final int pathSize) {
+        if (!piece.movableByCount(pathSize)) {
+            throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다.");
         }
     }
 }

@@ -79,4 +79,17 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 경로에 체스말이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("한 칸만 움직일 수 있는 체스말이 여러 칸을 움직이려고 할 경우, 예외가 발생한다")
+    void throwExceptionWhenNotMovableByCount() {
+        board.move(Position.from("e2"), Position.from("e4"));
+
+        final Position source = Position.from("e1");
+        final Position target = Position.from("e3");
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("한 칸만 움직일 수 있는 체스말입니다.");
+    }
 }
