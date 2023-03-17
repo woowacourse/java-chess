@@ -45,7 +45,7 @@ class KingTest {
         Piece piece = new King(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(5, 2), Optional.of(new Queen(Color.WHITE)));
+        Path path = piece.searchPathTo(initialPosition, new Position(5, 2), Optional.of(new Queen(Color.BLACK)));
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))

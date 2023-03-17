@@ -8,12 +8,12 @@ public class Path {
 
     private List<Position> positions;
 
-    public Path(final Position... positions) {
-        this.positions = List.of(positions);
-    }
-
     public Path(final List<Position> positions) {
         this.positions = positions;
+    }
+
+    public Path(final Position... positions) {
+        this(List.of(positions));
     }
 
     public void validateObstacle(final Set<Position> keySet) {

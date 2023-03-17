@@ -24,6 +24,11 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DOWN_RIGHT, DOWN_LEFT),
             Color.WHITE, List.of(UP_RIGHT, UP_LEFT)
     );
+    private static final Map<Color, Integer> INITIAL_POSITION_RANK = Map.of(
+            Color.BLACK, 7,
+            Color.WHITE, 2
+    );
+
 
     public Pawn(final Color color) {
         super(color);

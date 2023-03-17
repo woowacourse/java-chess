@@ -18,10 +18,10 @@ public class Board {
     }
 
     public void move(Position from, Position to, final Color turn) {
+        validateIsFromEmpty(from);
         if (!board.get(from).isSameColor(turn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
-        validateIsFromEmpty(from);
         Path path = board.get(from)
                 .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
         path.validateObstacle(board.keySet());

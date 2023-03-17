@@ -43,6 +43,8 @@ public class Position {
         return this.file.value() - from.file.value();
     }
 
+
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
