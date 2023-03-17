@@ -43,19 +43,18 @@ public class Pawn extends Piece {
         if (destination.isPresent() && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
             return new Path();
         }
-        throw new IllegalStateException();
+        throw new IllegalArgumentException();
     }
 
     private Path searchPathIfDestinationEmpty(final Position from, final Position to, final Movement movement) {
-        if (from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color))
-                && rankDifference(from, to) == 2) {
+        if (from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color)) && rankDifference(from, to) == 2) {
             final Position wayPoint = from.moveBy(movement);
             return new Path(wayPoint);
         }
         if (rankDifference(from, to) == 1) {
             return new Path();
         }
-        throw new IllegalStateException();
+        throw new IllegalArgumentException();
     }
 
     private int rankDifference(final Position from, final Position to) {

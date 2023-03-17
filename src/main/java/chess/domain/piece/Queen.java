@@ -27,9 +27,7 @@ public class Queen extends Piece {
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
         Movement movement = to.convertMovement(from);
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
-        }
+        validateMovable(movement, CAN_MOVE_DESTINATION);
         return generatePathFromTo(from, to, movement);
     }
 }

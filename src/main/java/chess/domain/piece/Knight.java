@@ -37,12 +37,10 @@ public class Knight extends Piece {
         int fileDifference = Math.abs(to.fileDifference(from));
 
         if (rankDifference + fileDifference != 3) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
 
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
-        }
+        validateMovable(movement, CAN_MOVE_DESTINATION);
 
         return new Path();
     }

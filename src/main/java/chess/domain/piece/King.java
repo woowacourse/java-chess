@@ -26,15 +26,12 @@ public class King extends Piece {
     @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
-
         Movement movement = to.convertMovement(from);
 
-        if (!from.moveBy(movement).equals(to)) {
-            throw new IllegalStateException();
-        }
+        validateMovable(movement, CAN_MOVE_DESTINATION);
 
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
+        if (!from.moveBy(movement).equals(to)) {
+            throw new IllegalArgumentException();
         }
 
         return new Path();

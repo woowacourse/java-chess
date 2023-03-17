@@ -21,9 +21,7 @@ public class Bishop extends Piece {
 
         Movement movement = to.convertMovement(from);
 
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
-        }
+        validateMovable(movement, CAN_MOVE_DESTINATION);
 
         return generatePathFromTo(from, to, movement);
     }
