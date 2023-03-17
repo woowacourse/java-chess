@@ -134,7 +134,7 @@ public class Board {
             final Square square = squares.get(nowIndex);
 
             square.validatePassable();
-            nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
+            nowIndex = IndexConverter.findNextIndex(direction, nowIndex);
         }
     }
 
