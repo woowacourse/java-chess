@@ -12,20 +12,26 @@ public enum Rank {
     TWO(1),
     ONE(0);
 
+    public static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = '1';
+
     private final int y;
 
     Rank(final int y) {
         this.y = y;
     }
 
-    public int getY() {
-        return y;
+    public static Rank findRankByLetter(final char letter) {
+        return findRank(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
     }
 
-    public static Rank findRank(final int targetRank) {
+    public static Rank findRank(final int rankIndex) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getY() == targetRank)
+                .filter(rank -> rank.getY() == rankIndex)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public int getY() {
+        return y;
     }
 }

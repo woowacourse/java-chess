@@ -11,6 +11,28 @@ public class Square {
         this.rank = rank;
     }
 
+    public boolean isMovableToTarget(final Square target, final int fileWeight, final int rankWeight) {
+        final int targetFile = target.getFile();
+        final int targetRank = target.getRank();
+
+        return isMovableToTargetFile(targetFile, fileWeight) && isMovableToTargetRank(targetRank, rankWeight);
+    }
+
+    private boolean isMovableToTargetFile(final int targetFile, final int fileWeight) {
+        return getFile() + fileWeight == targetFile;
+    }
+
+    private boolean isMovableToTargetRank(final int targetRank, final int rankWeight) {
+        return getRank() + rankWeight == targetRank;
+    }
+
+    public Square nextSquare(final Square source, final int fileWeight, final int rankWeight) {
+        final int sourceFile = source.getFile() + fileWeight;
+        final int sourceRank = source.getRank() + rankWeight;
+
+        return new Square(File.findFile(sourceFile), Rank.findRank(sourceRank));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -34,27 +56,5 @@ public class Square {
 
     public int getRank() {
         return rank.getY();
-    }
-
-    public boolean isAble(final Square target, final int fileWeight, final int rankWeight) {
-        final int targetFile = target.getFile();
-        final int targetRank = target.getRank();
-
-        return isAbleFile(targetFile, fileWeight) && isAbleRank(targetRank, rankWeight);
-    }
-
-    private boolean isAbleFile(final int targetFile, final int fileWeight) {
-        return getFile() + fileWeight == targetFile;
-    }
-
-    private boolean isAbleRank(final int targetRank, final int rankWeight) {
-        return getRank() + rankWeight == targetRank;
-    }
-
-    public Square nextSquare(final Square source, final int fileWeight, final int rankWeight) {
-        final int sourceFile = source.getFile() + fileWeight;
-        final int sourceRank = source.getRank() + rankWeight;
-
-        return new Square(file.findFile(sourceFile), rank.findRank(sourceRank));
     }
 }

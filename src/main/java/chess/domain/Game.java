@@ -20,9 +20,10 @@ public class Game {
     }
 
     public void move(final Square source, final Square target) {
-        if (!board.isMyTurn(source, turn) || board.isEmptyPiece(source) || !board.move(source, target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
+        if (board.isNotMyTurn(source, turn) || board.isEmptyPiece(source)) {
+            throw new IllegalArgumentException("자신의 말만 이동할 수 있습니다.");
         }
+        board.move(source, target);
         turn = turn.nextTurn(turn);
     }
 }

@@ -18,13 +18,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    Map<Square, Piece> board;
+    private static final boolean IS_MOVED = true;
+    private static final int BOARD_LINE_SIZE = 8;
+
+    private final Map<Square, Piece> board;
 
     public Board() {
-        this.board = initializeBoard();
+        this.board = generateBoard();
     }
 
-    private LinkedHashMap<Square, Piece> initializeBoard() {
+    private LinkedHashMap<Square, Piece> generateBoard() {
         final LinkedHashMap<Square, Piece> board = new LinkedHashMap<>();
         final List<Piece> pieces = generatePieces();
         final List<Square> squares = generateSquares();
@@ -69,7 +72,7 @@ public class Board {
     private List<Piece> generateSecondLine(final Camp camp) {
         final List<Piece> pieces = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
             pieces.add(new Pawn(camp));
         }
 
@@ -79,7 +82,7 @@ public class Board {
     private List<Piece> generateEmptyLine() {
         final List<Piece> pieces = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
             pieces.add(new Empty());
         }
 
@@ -93,84 +96,96 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public boolean move(final Square source, final Square target) {
+    public void move(final Square source, final Square target) {
         if (isMovable(source, target)) {
-            if (board.get(source).isSameRole(Role.PAWN)) {
-                board.put(source, new Pawn(board.get(source).camp(), true));
-            }
+            moveIfPawn(source);
             board.put(target, board.get(source));
             board.put(source, new Empty());
-            return true;
+            return;
         }
-        return false;
+        throw new IllegalArgumentException("이동할 수 없습니다.");
+    }
+
+    private void moveIfPawn(final Square source) {
+        if (isSameRole(source, Role.PAWN)) {
+            board.put(source, new Pawn(board.get(source).getCamp(), IS_MOVED));
+        }
     }
 
     private boolean isMovable(final Square source, final Square target) {
-        final Piece piece = board.get(source);
+        final Piece sourcePiece = board.get(source);
         final Move move = Move.calculateDirection(source, target);
-        final boolean isPathBlocked = isPathBlocked(source, target, move);
 
-        if (piece.isSameRole(Role.KNIGHT)) {
-            final KnightMove knightMove = KnightMove.calculateDirection(source, target);
-            return piece.isMovable(source, target, knightMove);
+        if (isSameRole(source, Role.KNIGHT)) {
+            return isKnightMovable(source, target, sourcePiece);
         }
-        if (isPathBlocked) {
+        if (isPathBlocked(source, target, move)) {
             return false;
         }
-        if (piece.isSameRole(Role.PAWN)) {
-            if ((move == Move.UP || move == Move.DOWN) && !board.get(target).isSameRole(Role.EMPTY)) {
-                return false;
-            }
-            if ((move == Move.RIGHT_UP || move == Move.RIGHT_DOWN || move == Move.LEFT_UP || move == Move.LEFT_DOWN)
-                    && (board.get(source).isSameCamp(board.get(target).camp())
-                    || board.get(target).isSameCamp(Camp.EMPTY))) {
-                return false;
-            }
+        if (isSameRole(source, Role.PAWN)) {
+            return isPawnMovable(source, target, move);
         }
-        return piece.isMovable(source, target, move);
+        return sourcePiece.isMovable(source, target, move);
+    }
+
+    private boolean isKnightMovable(final Square source, final Square target, final Piece piece) {
+        final KnightMove knightMove = KnightMove.calculateDirection(source, target);
+        return piece.isMovable(source, target, knightMove);
+    }
+
+    private boolean isPawnMovable(final Square source, final Square target, final Move move) {
+        final boolean isTargetEmpty = board.get(target).equals(new Empty());
+
+        if (Move.isMoveForward(move) && !isTargetEmpty) {
+            return false;
+        }
+        if (Move.isMoveDiagonal(move) && (isSameCamp(source, target) || isTargetEmpty)) {
+            return false;
+        }
+        return board.get(source).isMovable(source, target, move);
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
         if (move.equals(Move.EMPTY)) {
-            final Piece piece = board.get(source);
-            return piece.isSameRole(Role.KNIGHT);
+            return isSameRole(source, Role.KNIGHT);
         }
-        return isBlocked(source, target, move) || isMyTurn(source, target);
+        return isBlocked(source, target, move) || isSameCamp(source, target);
     }
 
     private boolean isBlocked(final Square source, final Square target, final Move move) {
         final Square nextSquare = source.nextSquare(source, move.getFile(), move.getRank());
-        final boolean isNextSquareEmpty = board.get(nextSquare).equals(new Empty());
-        final boolean isNextSquareTarget = nextSquare.equals(target);
-        if (isNextSquareTarget) {
+
+        if (nextSquare.equals(target)) {
             return false;
         }
-        if (isNextSquareEmpty) {
+        if (isEmptyPiece(nextSquare)) {
             return isBlocked(nextSquare, target, move);
         }
         return true;
     }
 
-    private boolean isMyTurn(final Square source, final Square target) {
+    private boolean isSameCamp(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
-        final Camp targetCamp = board.get(target).camp();
+        final Camp targetCamp = board.get(target).getCamp();
 
         return sourcePiece.isSameCamp(targetCamp);
     }
 
-    public boolean isMyTurn(final Square source, final Camp turn) {
-        return board.get(source).isSameCamp(turn);
+    private boolean isSameRole(final Square source, final Role role) {
+        final Piece sourcePiece = board.get(source);
+
+        return sourcePiece.isSameRole(role);
     }
 
-    public Piece getPiece(final Square square) {
-        return board.get(square);
-    }
-
-    public List<Piece> getPieces() {
-        return new ArrayList<>(board.values());
+    public boolean isNotMyTurn(final Square source, final Camp turn) {
+        return board.get(source).isAnotherCamp(turn);
     }
 
     public boolean isEmptyPiece(final Square source) {
         return board.get(source).equals(new Empty());
+    }
+
+    public List<Piece> getPieces() {
+        return new ArrayList<>(board.values());
     }
 }

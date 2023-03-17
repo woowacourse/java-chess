@@ -31,14 +31,18 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(final Square source, final Square target, final Move move) {
         if (possibleMoves.contains(move)) {
-            if (move.equals(Move.UP) || move.equals(Move.DOWN)) {
-                if (!isMoved) {
-                    return source.isAble(target, move.getFile(), move.getRank()) || source.isAble(target,
-                            move.getFile(), move.getRank() + camp.calculateDirection(1));
-                }
-            }
-            return source.isAble(target, move.getFile(), move.getRank());
+            return isMovableContainPossibleMoves(source, target, move);
         }
         return false;
+    }
+
+    private boolean isMovableContainPossibleMoves(final Square source, final Square target, final Move move) {
+        final boolean isMovableOneStep = source.isMovableToTarget(target, move.getFile(), move.getRank());
+        final boolean isMovableTwoStep = source.isMovableToTarget(target, move.getFile(),
+                move.getRank() + camp.calculateDirection(1));
+        if (Move.isMoveForward(move) && !isMoved) {
+            return isMovableOneStep || isMovableTwoStep;
+        }
+        return isMovableOneStep;
     }
 }

@@ -1,13 +1,15 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Camp;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,21 +20,21 @@ class BoardTest {
     private static Stream<Arguments> boardTestProvider() {
         return Stream.of(
                 Arguments.of(
-                        new Square(File.A, Rank.ONE),
-                        new Rook(Camp.WHITE)
+                        0,
+                        new Rook(Camp.BLACK)
                 ),
                 Arguments.of(
-                        new Square(File.E, Rank.ONE),
-                        new King(Camp.WHITE)
+                        1,
+                        new Knight(Camp.BLACK)
                 ),
                 Arguments.of(
-                        new Square(File.C, Rank.SEVEN),
-                        new Pawn(Camp.BLACK)
+                        30,
+                        new Empty()
 
                 ),
                 Arguments.of(
-                        new Square(File.E, Rank.EIGHT),
-                        new King(Camp.BLACK)
+                        63,
+                        new Rook(Camp.WHITE)
                 )
         );
     }
@@ -40,11 +42,10 @@ class BoardTest {
     @DisplayName("체스 게임을 할 수 있는 체스판을 초기화한다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("boardTestProvider")
-    void Should_Create_When_Board(final Square square, final Piece piece) {
+    void Should_Create_When_Board(final int index, final Piece piece) {
         final Board board = new Board();
 
-        assertThat(board.getPiece(square))
-                .isEqualTo(piece);
+        assertThat(board.getPieces().get(index)).isEqualTo(piece);
     }
 
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")
@@ -54,9 +55,7 @@ class BoardTest {
         final Square source = new Square(File.A, Rank.TWO);
         final Square target = new Square(File.A, Rank.THREE);
 
-        final boolean isMovable = board.move(source, target);
-
-        assertThat(isMovable).isTrue();
+        Assertions.assertDoesNotThrow(() -> board.move(source, target));
     }
 
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 있을 경우 이동할 수 없다.")
@@ -66,21 +65,22 @@ class BoardTest {
         final Square source = new Square(File.A, Rank.ONE);
         final Square target = new Square(File.A, Rank.TWO);
 
-        final boolean isMovable = board.move(source, target);
-
-        assertThat(isMovable).isFalse();
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
     }
 
     @DisplayName("Target에 상대 피스가 있을 경우 이동할 수 있다.")
     @Test
     void Should_Move_When_OtherCampPieceOnTarget() {
         final Board board = new Board();
+        final Square source = new Square(File.B, Rank.SIX);
+        final Square target = new Square(File.A, Rank.SEVEN);
 
         board.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
         board.move(new Square(File.B, Rank.FOUR), new Square(File.B, Rank.FIVE));
+        board.move(new Square(File.B, Rank.FIVE), new Square(File.B, Rank.SIX));
 
-        final boolean isMovable = board.move(new Square(File.B, Rank.FIVE), new Square(File.A, Rank.SIX));
-
-        assertThat(isMovable).isTrue();
+        Assertions.assertDoesNotThrow(() -> board.move(source, target));
     }
 }

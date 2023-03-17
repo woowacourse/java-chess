@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final String SPLIT_DELIMITER = " ";
+
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readGameCommand() {

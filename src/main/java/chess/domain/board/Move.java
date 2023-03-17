@@ -30,10 +30,22 @@ public enum Move {
         }
 
         return Arrays.stream(Move.values())
-                .filter(move -> move.file == Integer.signum(directionFile) && move.rank == Integer.signum(
-                        directionRank))
+                .filter(move -> isSameDirection(directionFile, directionRank, move))
                 .findFirst()
                 .orElse(EMPTY);
+    }
+
+    private static boolean isSameDirection(final int directionFile, final int directionRank, final Move move) {
+        return move.file == Integer.signum(directionFile) && move.rank == Integer.signum(directionRank);
+    }
+
+    public static boolean isMoveForward(final Move move) {
+        return move == Move.UP || move == Move.DOWN;
+    }
+
+    public static boolean isMoveDiagonal(final Move move) {
+        return move == Move.RIGHT_UP || move == Move.RIGHT_DOWN || move == Move.LEFT_UP || move == Move.LEFT_DOWN;
+
     }
 
     public int getFile() {

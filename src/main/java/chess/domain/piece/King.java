@@ -19,7 +19,7 @@ public class King extends Piece {
     @Override
     public boolean isMovable(final Square source, final Square target, final Move move) {
         if (possibleMoves.contains(move)) {
-            return source.isAble(target, move.getFile(), move.getRank());
+            return source.isMovableToTarget(target, move.getFile(), move.getRank());
         }
         return false;
     }

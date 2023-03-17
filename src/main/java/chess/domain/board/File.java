@@ -12,6 +12,8 @@ public enum File {
     G(6),
     H(7);
 
+    private static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = 'a';
+
     private final int x;
 
     File(final int x) {
@@ -22,9 +24,13 @@ public enum File {
         return x;
     }
 
-    public static File findFile(final int targetFile) {
+    public static File findFileByLetter(final char letter) {
+        return findFile(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
+    }
+
+    public static File findFile(final int fileIndex) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getX() == targetFile)
+                .filter(file -> file.getX() == fileIndex)
                 .findFirst()
                 .orElseThrow();
     }

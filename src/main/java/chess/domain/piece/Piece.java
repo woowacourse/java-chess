@@ -30,11 +30,15 @@ public abstract class Piece {
         return this.camp == camp;
     }
 
-    public Camp camp() {
+    public boolean isAnotherCamp(final Camp camp) {
+        return this.camp != camp;
+    }
+
+    public Camp getCamp() {
         return camp;
     }
 
-    public Role role() {
+    public Role getRole() {
         return role;
     }
 
