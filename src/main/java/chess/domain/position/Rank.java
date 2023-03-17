@@ -5,15 +5,18 @@ import chess.domain.Direction;
 import java.util.Arrays;
 
 public enum Rank {
-    RANK1(0,'1'),
-    RANK2(1,'2'),
-    RANK3(2,'3'),
-    RANK4(3,'4'),
-    RANK5(4,'5'),
-    RANK6(5,'6'),
-    RANK7(6,'7'),
-    RANK8(7,'8');
+    RANK1(0, '1'),
+    RANK2(1, '2'),
+    RANK3(2, '3'),
+    RANK4(3, '4'),
+    RANK5(4, '5'),
+    RANK6(5, '6'),
+    RANK7(6, '7'),
+    RANK8(7, '8');
 
+    public static final int MIN_RANK = 0;
+    public static final int MAX_RANK = 7;
+    public static final int ONE_SQUARE = 1;
     private final int index;
     private final char symbol;
 
@@ -30,6 +33,16 @@ public enum Rank {
     public static Rank of(char symbol) {
         return Arrays.stream(values())
                 .filter(rank -> rank.symbol == symbol).findFirst().get();
+    }
+
+    public Rank move(int distance) {
+        if (this.index + distance < MIN_RANK) {
+            return Rank.of(MIN_RANK);
+        }
+        if (this.index + distance > MAX_RANK) {
+            return Rank.of(MAX_RANK);
+        }
+        return Rank.of(this.index + distance);
     }
 
     public int distance(Rank other) {
@@ -56,30 +69,16 @@ public enum Rank {
         return this;
     }
 
-    public Rank next() {
-        return Rank.of(this.index + 1);
+    public int getRankIndex() {
+        return MAX_RANK - index;
     }
 
-    public Rank move(int distance) {
-        if (this.index + distance < 0) {
-            return Rank.of(0);
-        }
-        if (this.index + distance > 7) {
-            return Rank.of(7);
-        }
-        return Rank.of(this.index + distance);
+    private Rank prev() {
+        return Rank.of(this.index - ONE_SQUARE);
     }
 
-    public Rank prev() {
-        return Rank.of(this.index - 1);
-    }
-
-//    public Rank moveForward(Direction direction){
-//        return Rank.of(direction.goToDirection(number));
-//    }
-
-    public int getRankIndex(){
-        return 7- index;
+    private Rank next() {
+        return Rank.of(this.index + ONE_SQUARE);
     }
 
     @Override

@@ -14,6 +14,7 @@ public enum File {
     FILE_G(6, 'g'),
     FILE_H(7, 'h');
 
+    public static final int ONE_SQUARE = 1;
     private final int index;
     private final char symbol;
 
@@ -32,12 +33,12 @@ public enum File {
                 .filter(file -> file.symbol == symbol).findFirst().get();
     }
 
-    public int distance(File other) {
-        return Math.abs(this.index - other.index);
-    }
-
     public File move(int distance) {
         return File.of(this.index + distance);
+    }
+
+    public int distance(File other) {
+        return Math.abs(this.index - other.index);
     }
 
     public Direction getDirection(File other) {
@@ -50,7 +51,7 @@ public enum File {
         return Direction.ZERO;
     }
 
-    public File moveToDirection(Direction direction) {
+    public File moveOnceToDirection(Direction direction) {
         if (direction.equals(Direction.PLUS)) {
             return next();
         }
@@ -60,16 +61,16 @@ public enum File {
         return this;
     }
 
-    public File next() {
-        return File.of(this.index + 1);
-    }
-
-    public File prev() {
-        return File.of(this.index - 1);
-    }
-
-    public int getFileIndex(){
+    public int getFileIndex() {
         return index;
+    }
+
+    private File next() {
+        return File.of(this.index + ONE_SQUARE);
+    }
+
+    private File prev() {
+        return File.of(this.index - ONE_SQUARE);
     }
 
     @Override

@@ -12,6 +12,10 @@ import static java.util.Objects.hash;
 public class Position {
 
     private static final Map<Integer, Position> cache;
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+    public static final int TWO_SQUARE = 2;
+    public static final int ONE_SQUARE = 1;
     private final File file;
     private final Rank rank;
 
@@ -33,9 +37,16 @@ public class Position {
     }
 
     public static Position of(String positionCommand) {
-        char fileCommand = positionCommand.charAt(0);
-        char rankCommand = positionCommand.charAt(1);
+        char fileCommand = positionCommand.charAt(FILE_INDEX);
+        char rankCommand = positionCommand.charAt(RANK_INDEX);
         return of(File.of(fileCommand), Rank.of(rankCommand));
+    }
+
+    public boolean isNear(Position other) {
+        if (getMaxDistance(other) <= ONE_SQUARE) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isStraightEqual(Position other) {
@@ -46,18 +57,11 @@ public class Position {
         return this.file.distance(other.file) == this.rank.distance(other.rank);
     }
 
-    public boolean isNear(Position other) {
-        if (getMaxDistance(other) <= 1) {
-            return true;
-        }
-        return false;
-    }
-
     public boolean isKnightPosition(Position other) {
-        if (file.distance(other.file) == 2 && rank.distance(other.rank) == 1) {
+        if (file.distance(other.file) == TWO_SQUARE && rank.distance(other.rank) == ONE_SQUARE) {
             return true;
         }
-        if (rank.distance(other.rank) == 2 && file.distance(other.file) == 1) {
+        if (rank.distance(other.rank) == TWO_SQUARE && file.distance(other.file) == ONE_SQUARE) {
             return true;
         }
         return false;
@@ -83,16 +87,12 @@ public class Position {
         File currentFile = file;
         for (int i = 0; i < distance - 1; i++) {
             Rank newRank = currentRank.moveToDirection(rankDirection);
-            File newFile = currentFile.moveToDirection(fileDirection);
+            File newFile = currentFile.moveOnceToDirection(fileDirection);
             route.add(Position.of(newFile, newRank));
             currentRank = newRank;
             currentFile = newFile;
         }
         return route;
-    }
-
-    public Position moveRank(Direction direction) {
-        return Position.of(file, direction.move(this.rank, 1));
     }
 
     public Position moveRank(Direction direction, int distance) {
@@ -101,6 +101,18 @@ public class Position {
 
     public Position move(Direction fileDirection, Direction rankDirection) {
         return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
+    }
+
+    public List<Integer> getCoordinate() {
+        List<Integer> coordinate = new ArrayList<>();
+
+        coordinate.add(rank.getRankIndex());
+        coordinate.add(file.getFileIndex());
+        return coordinate;
+    }
+
+    public boolean isSameRank(Rank other) {
+        return rank.equals(other);
     }
 
     @Override
@@ -122,17 +134,5 @@ public class Position {
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
-    }
-
-    public List<Integer> getCoordinate() {
-        List<Integer> coordinate = new ArrayList<>();
-
-        coordinate.add(rank.getRankIndex());
-        coordinate.add(file.getFileIndex());
-        return coordinate;
-    }
-
-    public boolean isSameRank(Rank other) {
-        return rank.equals(other);
     }
 }
