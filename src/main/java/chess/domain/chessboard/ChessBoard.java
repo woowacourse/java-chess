@@ -1,15 +1,21 @@
 package chess.domain.chessboard;
 
-import static chess.domain.chessboard.FileIndex.*;
-import static chess.domain.chessboard.RankIndex.*;
+import static chess.domain.chessboard.FileIndex.A;
+import static chess.domain.chessboard.FileIndex.H;
+import static chess.domain.chessboard.RankIndex.EIGHTH;
+import static chess.domain.chessboard.RankIndex.FIRST;
+import static chess.domain.chessboard.RankIndex.SECOND;
+import static chess.domain.chessboard.RankIndex.SEVENTH;
+import static chess.domain.chessboard.RankIndex.SIXTH;
+import static chess.domain.chessboard.RankIndex.THIRD;
 
-import chess.domain.chessboard.state.Team;
-import chess.domain.chessboard.state.piece.Bishop;
-import chess.domain.chessboard.state.piece.King;
-import chess.domain.chessboard.state.piece.Knight;
-import chess.domain.chessboard.state.piece.Pawn;
-import chess.domain.chessboard.state.piece.Queen;
-import chess.domain.chessboard.state.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.piece.state.Bishop;
+import chess.domain.piece.state.King;
+import chess.domain.piece.state.Knight;
+import chess.domain.piece.state.Pawn;
+import chess.domain.piece.state.Queen;
+import chess.domain.piece.state.Rook;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

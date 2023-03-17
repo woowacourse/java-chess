@@ -1,10 +1,10 @@
-package chess.domain.chessboard.state.piece;
+package chess.domain.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
-import chess.domain.chessboard.state.Team;
+import chess.domain.piece.Team;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

@@ -1,8 +1,7 @@
-package chess.domain.chessboard.state;
+package chess.domain.piece;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
-import chess.domain.chessboard.state.piece.Piece;
 import java.util.List;
 
 public interface PieceState {

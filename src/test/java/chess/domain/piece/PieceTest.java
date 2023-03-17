@@ -1,9 +1,11 @@
-package chess.domain.chessboard.state.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.chessboard.state.Team;
+import chess.domain.piece.state.Bishop;
+import chess.domain.piece.state.Pawn;
+import chess.domain.piece.state.Rook;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

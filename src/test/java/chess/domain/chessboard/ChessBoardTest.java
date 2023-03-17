@@ -2,7 +2,7 @@ package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.chessboard.state.piece.Rook;
+import chess.domain.piece.state.Rook;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

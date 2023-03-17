@@ -1,4 +1,4 @@
-package chess.domain.chessboard.state;
+package chess.domain.piece;
 
 public enum Team {
 

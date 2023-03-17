@@ -1,9 +1,7 @@
-package chess.domain.chessboard.state.piece;
+package chess.domain.piece;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
-import chess.domain.chessboard.state.PieceState;
-import chess.domain.chessboard.state.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -55,7 +53,8 @@ public abstract class Piece implements PieceState {
         return makeRouteCoordinates(distance, from::negativeDiagonalMove);
     }
 
-    private List<Coordinate> makeRouteCoordinates(final int distance, final IntFunction<Coordinate> coordinateFunction) {
+    private List<Coordinate> makeRouteCoordinates(final int distance,
+                                                  final IntFunction<Coordinate> coordinateFunction) {
         final List<Coordinate> route = new ArrayList<>();
         final int direction = directionByDistance(distance);
         for (int i = 1; i <= direction * distance; i++) {

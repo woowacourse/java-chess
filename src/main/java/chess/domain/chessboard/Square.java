@@ -1,8 +1,8 @@
 package chess.domain.chessboard;
 
-import chess.domain.chessboard.state.Empty;
-import chess.domain.chessboard.state.PieceState;
-import chess.domain.chessboard.state.piece.Piece;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceState;
 import java.util.List;
 
 public final class Square {

@@ -1,15 +1,15 @@
 package chess.controller;
 
 import chess.domain.chessboard.Square;
-import chess.domain.chessboard.state.Empty;
-import chess.domain.chessboard.state.PieceState;
-import chess.domain.chessboard.state.Team;
-import chess.domain.chessboard.state.piece.Bishop;
-import chess.domain.chessboard.state.piece.King;
-import chess.domain.chessboard.state.piece.Knight;
-import chess.domain.chessboard.state.piece.Pawn;
-import chess.domain.chessboard.state.piece.Queen;
-import chess.domain.chessboard.state.piece.Rook;
+import chess.domain.piece.Empty;
+import chess.domain.piece.PieceState;
+import chess.domain.piece.Team;
+import chess.domain.piece.state.Bishop;
+import chess.domain.piece.state.King;
+import chess.domain.piece.state.Knight;
+import chess.domain.piece.state.Pawn;
+import chess.domain.piece.state.Queen;
+import chess.domain.piece.state.Rook;
 import java.util.Arrays;
 
 public enum SquareMark {
