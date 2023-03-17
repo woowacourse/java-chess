@@ -15,7 +15,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected void validateMovable(final Path path) {
+    protected void validatePath(final Path path) {
         if (Math.abs(path.fileInterval()) == 1 && Math.abs(path.rankInterval()) == 2) {
             return;
         }
@@ -27,7 +27,7 @@ public class Knight extends Piece {
 
     @Override
     public List<PiecePosition> waypoints(final PiecePosition destination) {
-        validateMovable(Path.of(piecePosition, destination));
+        validatePath(Path.of(piecePosition, destination));
         return Collections.emptyList();
     }
 }

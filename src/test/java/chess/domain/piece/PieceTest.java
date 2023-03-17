@@ -22,7 +22,7 @@ class PieceTest {
         assertDoesNotThrow(() -> new Piece(Color.WHITE, PiecePosition.of(1, 'a')) {
 
             @Override
-            protected void validateMovable(final Path path) {
+            protected void validatePath(final Path path) {
             }
         });
     }
@@ -45,7 +45,7 @@ class PieceTest {
         }
 
         @Override
-        protected void validateMovable(final Path path) {
+        protected void validatePath(final Path path) {
         }
     }
 
@@ -63,7 +63,7 @@ class PieceTest {
         // given
         Piece myPiece = new Piece(Color.BLACK, PiecePosition.of(1, 'a')) {
             @Override
-            protected void validateMovable(final Path path) {
+            protected void validatePath(final Path path) {
                 throw new IllegalArgumentException("도달 불가");
             }
         };
