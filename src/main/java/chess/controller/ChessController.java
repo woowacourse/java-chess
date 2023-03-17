@@ -12,6 +12,7 @@ import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ChessController {
     private final InputView inputView;
@@ -97,11 +98,10 @@ public class ChessController {
         List<File> files = List.of(File.values());
         List<Rank> ranks = List.of(Rank.values());
         for (Rank rank : ranks) {
-            List<Piece> piecesByRank = new ArrayList<>();
-            for (File file : files) {
-                piecesByRank.add(board.findPiece(file, rank));
-            }
-            pieces.add(piecesByRank);
+            List<Piece> rankPieces = files.stream()
+                    .map(file -> board.findPiece(file, rank))
+                    .collect(Collectors.toList());
+            pieces.add(rankPieces);
         }
         return pieces;
     }
