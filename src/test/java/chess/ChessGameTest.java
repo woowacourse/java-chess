@@ -6,7 +6,6 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessGameTest {
     private ChessGame chessGame;
@@ -29,7 +31,7 @@ class ChessGameTest {
     @ParameterizedTest(name = "잘못된 위치 입력시 예외가 발생한다")
     @MethodSource("invalidSquareProvider")
     void moveToInvalidSquare(Square source, Square target) {
-        Assertions.assertThatThrownBy(() -> chessGame.move(source, target))
+        assertThatThrownBy(() -> chessGame.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -39,7 +41,7 @@ class ChessGameTest {
         Piece expectedPiece = chessboard.getPieceAt(source);
         chessGame.move(source, target);
 
-        Assertions.assertThat(chessboard.getPieceAt(target))
+        assertThat(chessboard.getPieceAt(target))
                 .isEqualTo(expectedPiece);
     }
 
@@ -53,7 +55,7 @@ class ChessGameTest {
         chessboard.swapPiece(Square.getInstanceOf(File.B, Rank.SEVEN), Square.getInstanceOf(File.B, Rank.THREE));
         chessGame.move(source, target);
 
-        Assertions.assertThat(chessboard.getPieceAt(target))
+        assertThat(chessboard.getPieceAt(target))
                 .isEqualTo(expectedPiece);
     }
 
@@ -66,7 +68,7 @@ class ChessGameTest {
 
         chessboard.swapPiece(source, movedSquare);
 
-        Assertions.assertThatThrownBy(() -> chessGame.move(movedSquare, target))
+        assertThatThrownBy(() -> chessGame.move(movedSquare, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,7 +81,7 @@ class ChessGameTest {
 
         chessboard.swapPiece(source, movedSquare);
 
-        Assertions.assertThatThrownBy(() -> chessGame.move(movedSquare, target))
+        assertThatThrownBy(() -> chessGame.move(movedSquare, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

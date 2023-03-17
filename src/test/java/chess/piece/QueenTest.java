@@ -6,9 +6,10 @@ import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
     private final Piece queen = PieceType.QUEEN.createPiece(Camp.WHITE);
@@ -19,7 +20,7 @@ class QueenTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.B, Rank.THREE);
 
-        Assertions.assertThat(queen.canMove(source, target))
+        assertThat(queen.canMove(source, target))
                 .isFalse();
     }
 
@@ -29,7 +30,7 @@ class QueenTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.H, Rank.EIGHT);
 
-        Assertions.assertThat(queen.canMove(source, target))
+        assertThat(queen.canMove(source, target))
                 .isTrue();
     }
 
@@ -39,7 +40,7 @@ class QueenTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
 
-        Assertions.assertThat(queen.canMove(source, target))
+        assertThat(queen.canMove(source, target))
                 .isTrue();
     }
 
@@ -49,7 +50,7 @@ class QueenTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.H, Rank.ONE);
 
-        Assertions.assertThat(queen.canMove(source, target))
+        assertThat(queen.canMove(source, target))
                 .isTrue();
     }
 }

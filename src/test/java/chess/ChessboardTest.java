@@ -6,11 +6,12 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class ChessboardTest {
@@ -25,7 +26,7 @@ class ChessboardTest {
     @DisplayName("체스판은 64개의 Square로 이루어진다.")
     @Test
     void createChessboardSuccessTest() {
-        Assertions.assertThat(new Chessboard())
+        assertThat(new Chessboard())
                 .extracting("board")
                 .asInstanceOf(InstanceOfAssertFactories.map(Square.class, Piece.class))
                 .hasSize(64);
@@ -37,7 +38,7 @@ class ChessboardTest {
         Square source = Square.getInstanceOf(File.A, Rank.TWO);
         Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
+        assertThat(chessboard.isEmptyInRoute(source, target))
                 .isFalse();
     }
 
@@ -47,7 +48,7 @@ class ChessboardTest {
         Square source = Square.getInstanceOf(File.A, Rank.TWO);
         Square target = Square.getInstanceOf(File.A, Rank.SEVEN);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
+        assertThat(chessboard.isEmptyInRoute(source, target))
                 .isTrue();
     }
 
@@ -57,7 +58,7 @@ class ChessboardTest {
         Square source = Square.getInstanceOf(File.A, Rank.TWO);
         Square target = Square.getInstanceOf(File.G, Rank.EIGHT);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
+        assertThat(chessboard.isEmptyInRoute(source, target))
                 .isFalse();
     }
 
@@ -67,7 +68,7 @@ class ChessboardTest {
         Square source = Square.getInstanceOf(File.A, Rank.TWO);
         Square target = Square.getInstanceOf(File.F, Rank.SEVEN);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
+        assertThat(chessboard.isEmptyInRoute(source, target))
                 .isTrue();
     }
 }

@@ -3,22 +3,22 @@ package chess;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 class SquareTest {
 
     @ParameterizedTest(name = "file과 rank에 해당하는 Sqaure를 생성할 수 있다.")
     @MethodSource("fileAndRankProvider")
     void createSquareSuccessTest(File file, Rank rank) {
-        Assertions.assertDoesNotThrow(() -> Square.getInstanceOf(file, rank));
+        assertDoesNotThrow(() -> Square.getInstanceOf(file, rank));
     }
 
-    // 코드 리팩토링 예정
     static Stream<Arguments> fileAndRankProvider() {
         return Stream.of(
                 Arguments.arguments(File.A, Rank.ONE),

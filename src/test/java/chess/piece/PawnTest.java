@@ -6,7 +6,6 @@ import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +14,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+// TODO: 2023-03-17   실패 테스트 구현
 class PawnTest {
+
     @DisplayName("폰은 가로로 이동할 수 없다")
     @Test
     void cantMoveJustAlongFile() {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
         Square source = Square.getInstanceOf(File.E, Rank.FOUR);
         Square target = Square.getInstanceOf(File.F, Rank.FOUR);
-        Assertions.assertThat(pawn.canMove(source, target))
+
+        assertThat(pawn.canMove(source, target))
                 .isFalse();
     }
 
@@ -32,7 +36,8 @@ class PawnTest {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
         Square source = Square.getInstanceOf(File.E, Rank.FOUR);
         Square target = Square.getInstanceOf(File.E, Rank.SEVEN);
-        Assertions.assertThat(pawn.canMove(source, target))
+
+        assertThat(pawn.canMove(source, target))
                 .isFalse();
     }
 
@@ -40,7 +45,9 @@ class PawnTest {
     @MethodSource("whitePawnMovableSquareProvider")
     void canMoveWhitePawnTest(Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
-        Assertions.assertThat(pawn.canMove(Square.getInstanceOf(File.E, Rank.TWO), target))
+        Square source = Square.getInstanceOf(File.E, Rank.TWO);
+
+        assertThat(pawn.canMove(source, target))
                 .isTrue();
     }
 
@@ -48,7 +55,9 @@ class PawnTest {
     @MethodSource("blackPawnMovableSquareProvider")
     void canMoveBlackPawnTest(Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.BLACK);
-        Assertions.assertThat(pawn.canMove(Square.getInstanceOf(File.E, Rank.SEVEN), target))
+        Square source = Square.getInstanceOf(File.E, Rank.SEVEN);
+
+        assertThat(pawn.canMove(source, target))
                 .isTrue();
     }
 
@@ -58,7 +67,6 @@ class PawnTest {
                 Arguments.arguments(Square.getInstanceOf(File.E, Rank.THREE)),
                 Arguments.arguments(Square.getInstanceOf(File.F, Rank.THREE)),
                 Arguments.arguments(Square.getInstanceOf(File.D, Rank.THREE))
-
         );
     }
 
@@ -68,7 +76,6 @@ class PawnTest {
                 Arguments.arguments(Square.getInstanceOf(File.E, Rank.SIX)),
                 Arguments.arguments(Square.getInstanceOf(File.F, Rank.SIX)),
                 Arguments.arguments(Square.getInstanceOf(File.D, Rank.SIX))
-
         );
     }
 }

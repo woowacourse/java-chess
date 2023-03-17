@@ -6,7 +6,6 @@ import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +13,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
     private static final Piece knight = PieceType.KNIGHT.createPiece(Camp.WHITE);
@@ -23,14 +24,14 @@ class KnightTest {
     @Test
     void cantMoveOverMovableDistance() {
         Square target = Square.getInstanceOf(File.E, Rank.ONE);
-        Assertions.assertThat(knight.canMove(source, target))
+        assertThat(knight.canMove(source, target))
                 .isFalse();
     }
 
     @ParameterizedTest(name = "나이트 이동조건인 경우, 이동할 수 있다")
     @MethodSource("squareProvider")
     void canMoveTestWithMovableRankDistance(Square target) {
-        Assertions.assertThat(knight.canMove(source, target))
+        assertThat(knight.canMove(source, target))
                 .isTrue();
     }
 

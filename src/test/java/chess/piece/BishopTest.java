@@ -6,9 +6,10 @@ import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
     private final Piece bishop = PieceType.BISHOP.createPiece(Camp.WHITE);
@@ -19,7 +20,7 @@ public class BishopTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.A, Rank.TWO);
 
-        Assertions.assertThat(bishop.canMove(source, target))
+        assertThat(bishop.canMove(source, target))
                 .isFalse();
     }
 
@@ -29,7 +30,7 @@ public class BishopTest {
         Square source = Square.getInstanceOf(File.A, Rank.ONE);
         Square target = Square.getInstanceOf(File.H, Rank.EIGHT);
 
-        Assertions.assertThat(bishop.canMove(source, target))
+        assertThat(bishop.canMove(source, target))
                 .isTrue();
     }
 }
