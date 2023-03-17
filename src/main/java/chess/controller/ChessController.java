@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.controller.gamestate.GameState;
+import chess.controller.gamestate.Ready;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.dto.CommandRequest;
@@ -17,37 +19,38 @@ public class ChessController {
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.currentTurnCamp = Camp.WHITE;
     }
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
-        currentTurnCamp = Camp.WHITE;
-
+        GameState state = new Ready();
         outputView.printStartMessage();
-        boolean isContinue = true;
-        while (isContinue) {
-            isContinue = retryCampPlayIfCommandIllegal(chessBoard, currentTurnCamp);
+        while (state.shouldRequestUserInput()) {
+            state = retryCampPlayIfCommandIllegal(chessBoard, state);
         }
     }
 
-    private boolean executeCampPlay(final ChessBoard chessBoard, final Camp camp) {
+    private GameState executeCampPlay(final ChessBoard chessBoard, final GameState state) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.END) {
-            return false;
+            return state.end();
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate(), camp);
+            GameState nextGameState = state.play(chessBoard, commandRequest, currentTurnCamp);
             currentTurnCamp = currentTurnCamp.transfer();
+            outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+            return nextGameState;
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-        return true;
+        return state.start();
     }
 
-    private boolean retryCampPlayIfCommandIllegal(ChessBoard chessBoard, Camp camp) {
+    private GameState retryCampPlayIfCommandIllegal(ChessBoard chessBoard, GameState state) {
         while (true) {
             try {
-                return executeCampPlay(chessBoard, camp);
-            } catch (final IllegalArgumentException exception) {
+                return executeCampPlay(chessBoard, state);
+            } catch (final IllegalStateException | IllegalArgumentException exception) {
                 outputView.printInputErrorMessage(exception.getMessage());
             }
         }
