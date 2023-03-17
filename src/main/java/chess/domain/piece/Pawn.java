@@ -51,13 +51,14 @@ public class Pawn extends Piece {
 
             return new Path();
         }
+
         // 상대 말인 경우
         if (destination.isPresent()
                 && destination.get().color.isDifferentColor(color)
                 && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
             return new Path();
         }
-        throw new IllegalStateException();
+        throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
     }
 
     private int rankDifference(final Position from, final Position to) {

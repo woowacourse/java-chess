@@ -3,10 +3,15 @@ package chess.domain.piece;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,62 +20,54 @@ class PawnTest {
 
     private static final Position INITIAL_POSITION = new Position(1, 2);
 
-    @Nested
-    class searchPathTo {
+    @ParameterizedTest
+    @MethodSource("searchPathTo")
+    @DisplayName("searchPathTo() : Pawn이 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
+    void test_searchPathTo() {
 
-        @Test
-        void test_searchPathTo() {
+        Pawn pawn = new Pawn(Color.WHITE);
 
-            Pawn pawn = new Pawn(Color.WHITE);
+        Path path = pawn.searchPathTo(INITIAL_POSITION, new Position(1, 3), Optional.empty());
 
-            Path path = pawn.searchPathTo(INITIAL_POSITION, new Position(1, 3), Optional.empty());
+        assertThat(path)
+                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                .containsExactly();
+    }
 
-            assertThat(path)
-                    .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                    .containsExactly();
-        }
+    static Stream<Arguments> searchPathTo() {
 
-        @Test
-        void test_searchPathTo2() {
+        final Position to1 = new Position(1, 3);
+        final Optional<Piece> destination1 = Optional.empty();
 
-            Pawn pawn = new Pawn(Color.WHITE);
+        final List<Position> path1 = List.of();
 
-            Path path = pawn.searchPathTo(INITIAL_POSITION, new Position(1, 4), Optional.empty());
+        final Position to2 = new Position(1, 4);
+        final Optional<Piece> destination2 = Optional.empty();
 
-            assertThat(path)
-                    .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                    .containsExactly(new Position(1, 3));
-        }
+        final List<Position> path2 = List.of(new Position(1, 3));
 
-        @Test
-        void test_searchPathTo3() {
-            Position to = new Position(2, 3);
-            Pawn pawn = new Pawn(Color.WHITE);
+        final Position to3 = new Position(2, 3);
+        final Optional<Piece> destination3 = Optional.of(new Pawn(Color.BLACK));
 
-            Path path = pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.BLACK)));
+        final List<Position> path3 = List.of();
 
-            assertThat(path)
-                    .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                    .containsExactly();
-        }
+        return Stream.of(
+                Arguments.of(to1, destination1, path1),
+                Arguments.of(to2, destination2, path2),
+                Arguments.of(to3, destination3, path3)
+        );
+    }
 
-        @Test
-        void test_searchPathTo4() {
-            Position to = new Position(2, 3);
-            Pawn pawn = new Pawn(Color.WHITE);
+    @Test
+    @DisplayName("searchPathTo() : Pawn 이 움직일 수 없는 경로일 때, IllegalStateException을 반환한다.")
+    void test_searchPathTo_impossible_movement_IllegalStateException() {
+        //given
+        final Position to = new Position(2, 3);
+        final Pawn pawn = new Pawn(Color.WHITE);
 
-            assertThatThrownBy(() ->
-                                       pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
-                    .isInstanceOf(IllegalStateException.class);
-        }
-
-        @Test
-        void test_searchPathTo5() {
-            Position from = new Position(2, 5);
-            Position to = new Position(3, 4);
-            Piece piece = new Pawn(Color.BLACK);
-
-            Path path = piece.searchPathTo(from, to, Optional.of(new Pawn(Color.WHITE)));
-        }
+        //when & then
+        assertThatThrownBy(() -> pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("이(가) 이동할 수 없는 경로입니다.");
     }
 }
