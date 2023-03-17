@@ -14,9 +14,13 @@ public class Column {
     }
     
     private void validateOutOfRange(char column) {
-        if (column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR) {
+        if (isColumnOutOfRange(column)) {
             throw new IllegalArgumentException("column는 a~h까지의 문자만 가능합니다.");
         }
+    }
+    
+    private boolean isColumnOutOfRange(char column) {
+        return column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR;
     }
     
     public int subtract(Column targetColumn) {

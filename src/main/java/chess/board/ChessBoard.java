@@ -11,6 +11,7 @@ public class ChessBoard {
     private static final int MAX_ROW_NUMBER = 8;
     private static final int ROW_INDEX = 1;
     private static final int COLUMN_INDEX = 0;
+    private static final int INIT_REPEAT_COUNT = 0;
     
     private final List<RowPieces> chessBoard;
     
@@ -30,34 +31,25 @@ public class ChessBoard {
     }
     
     public void move(String sourceCoordinate, String destinationCoordinate) {
-        List<String> splitedSourceCoordinate = splitedCoordinate(sourceCoordinate);
-        List<String> splitedDestinationCoordinate = splitedCoordinate(destinationCoordinate);
-        List<Integer> parsedSourceCoordinate = parseCoordinate(splitedSourceCoordinate);
-        List<Integer> parsedDestinationCoordinate = parseCoordinate(splitedDestinationCoordinate);
+        List<Integer> parsedSourceCoordinate = parseCoordinate(sourceCoordinate);
+        List<Integer> parsedDestinationCoordinate = parseCoordinate(destinationCoordinate);
         RowPieces rowPiecesContainsSourcePiece = findRowPiecesByRow(parsedSourceCoordinate.get(ROW_INDEX));
         RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByRow(parsedDestinationCoordinate.get(ROW_INDEX));
-        
-        if (isMovableSourcePiece(splitedSourceCoordinate, splitedDestinationCoordinate)) {
+    
+        boolean isMovableSourcePiece = isMovableSourcePiece(parsedSourceCoordinate, parsedDestinationCoordinate);
+        if (isMovableSourcePiece) {
             rowPiecesContainsSourcePiece.move(rowPiecesContainsDestinationPiece, parsedSourceCoordinate, parsedDestinationCoordinate);
         }
     }
     
-    private boolean isMovableSourcePiece(List<String> splitedSourceCoordinate, List<String> splitedDestinationCoordinate) {
-        List<Integer> sourceCoordinate = parseCoordinate(splitedSourceCoordinate);
-        List<Integer> destinationCoordinate = parseCoordinate(splitedDestinationCoordinate);
-        RowPieces rowPiecesContainsSourcePiece = findRowPiecesByRow(sourceCoordinate.get(ROW_INDEX));
-        RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByRow(destinationCoordinate.get(ROW_INDEX));
-        
-        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByColumnKnight(parseColumn(splitedSourceCoordinate));
-        boolean isMovablePiece = rowPiecesContainsSourcePiece
-                .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        boolean isMovableRoute = isMovableRoute(0, sourceCoordinate, destinationCoordinate);
-        
-        return isMovablePiece && (isMovableRoute || isSourcePieceKnight);
+    private List<Integer> parseCoordinate(String coordinate) {
+        List<String> parsedCoordinate = splitCoordinate(coordinate);
+        return List.of((int)parsedCoordinate.get(COLUMN_INDEX).charAt(0), Integer.parseInt(parsedCoordinate.get(ROW_INDEX)));
     }
     
-    private List<Integer> parseCoordinate(List<String> splitedSourceCoordinate) {
-        return List.of((int) parseColumn(splitedSourceCoordinate), parseRow(splitedSourceCoordinate));
+    private List<String> splitCoordinate(String coordinate) {
+        return Arrays.stream(coordinate.split(""))
+                .collect(Collectors.toUnmodifiableList());
     }
     
     private RowPieces findRowPiecesByRow(int row) {
@@ -67,65 +59,69 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당 Row는 존재하지 않습니다."));
     }
     
-    private boolean isMovableRoute(int count, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
-        int researchColumn = findCoordinateByRowOrColumnIndex(researchCoordinate, COLUMN_INDEX);
-        boolean isReachedAtDestination = isReachedAtDestination(researchCoordinate, destinationCoordinate);
+    private boolean isMovableSourcePiece(List<Integer> sourceCoordinate, List<Integer> destinationCoordinate) {
+        RowPieces rowPiecesContainsSourcePiece = findRowPiecesByRow(sourceCoordinate.get(ROW_INDEX));
+        RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByRow(destinationCoordinate.get(ROW_INDEX));
+    
+        boolean isMovablePiece = rowPiecesContainsSourcePiece
+                .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
+        boolean isMovableRoute = isMovableRoute(INIT_REPEAT_COUNT, sourceCoordinate, destinationCoordinate);
+        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByColumnKnight(parseColumn(sourceCoordinate));
+        
+        return isMovablePiece && (isMovableRoute || isSourcePieceKnight);
+    }
+    
+    private boolean isMovableRoute(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+        int researchColumn = researchCoordinate.get(COLUMN_INDEX);
         RowPieces rowPiecesContainsResearchPiece = findRowPiecesByRow(researchCoordinate.get(ROW_INDEX));
         boolean isPieceByColumnNotEmpty = rowPiecesContainsResearchPiece.isPieceByColumnNotEmpty(researchColumn);
         
-        if (isReachedAtDestination) {
+        if (isReachedAtDestination(researchCoordinate, destinationCoordinate)) {
             return true;
         }
-        if (isPieceByColumnNotEmpty && count > 0) {
+        if (isPieceByColumnNotEmpty && isRepeatCountNotZero(repeatCount)) {
             return false;
         }
-    
-        return repeatResearch(count, researchCoordinate, destinationCoordinate);
-    }
-    
-    private boolean repeatResearch(int count, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
-        int researchColumn = findCoordinateByRowOrColumnIndex(researchCoordinate, COLUMN_INDEX);
-        int destinationColumn = findCoordinateByRowOrColumnIndex(destinationCoordinate, COLUMN_INDEX);
-        int researchRow = findCoordinateByRowOrColumnIndex(researchCoordinate, ROW_INDEX);
-        int destinationRow = findCoordinateByRowOrColumnIndex(destinationCoordinate, ROW_INDEX);
-        
-        int directionNumberOfDestinationColumn = findDirectionNumber(researchColumn, destinationColumn);
-        int directionNumberOfDestinationRow = findDirectionNumber(researchRow, destinationRow);
-        return isMovableRoute(
-                count + 1,
-                List.of(researchColumn + directionNumberOfDestinationColumn, researchRow + directionNumberOfDestinationRow),
-                List.of(destinationColumn, destinationRow)
-        );
-    }
-    
-    private int findCoordinateByRowOrColumnIndex(List<Integer> coordinate, int rowOrColumnIndex) {
-        return coordinate.get(rowOrColumnIndex);
+        return repeatResearch(repeatCount, researchCoordinate, destinationCoordinate);
     }
     
     private boolean isReachedAtDestination(List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
-        int researchRow = findCoordinateByRowOrColumnIndex(researchCoordinate, ROW_INDEX);
-        int destinationRow = findCoordinateByRowOrColumnIndex(destinationCoordinate, ROW_INDEX);
-        int researchColumn = findCoordinateByRowOrColumnIndex(researchCoordinate, COLUMN_INDEX);
-        int destinationColumn = findCoordinateByRowOrColumnIndex(destinationCoordinate, COLUMN_INDEX);
-        
-        return researchRow == destinationRow && researchColumn == destinationColumn;
+        return researchCoordinate.equals(destinationCoordinate);
     }
     
-    private int parseRow(List<String> splitedSourceCoordinate) {
-        return Integer.parseInt(splitedSourceCoordinate.get(ROW_INDEX));
+    private boolean isRepeatCountNotZero(int repeatCount) {
+        return repeatCount > INIT_REPEAT_COUNT;
     }
     
-    private char parseColumn(List<String> splitedSourceCoordinate) {
-        return splitedSourceCoordinate.get(COLUMN_INDEX).charAt(0);
+    private boolean repeatResearch(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+        return isMovableRoute(
+                increaseRepeatCount(repeatCount),
+                moveForDestination(researchCoordinate, destinationCoordinate),
+                destinationCoordinate
+        );
     }
     
-    private int findDirectionNumber(int source, int destination) {
-        return Integer.compare(destination, source);
+    private int increaseRepeatCount(int repeatCount) {
+        return repeatCount + 1;
     }
     
-    private List<String> splitedCoordinate(String coordinate) {
-        return Arrays.stream(coordinate.split(""))
+    private List<Integer> moveForDestination(List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+        return IntStream.rangeClosed(COLUMN_INDEX, ROW_INDEX)
+                .mapToObj(coordinateIndex -> moveCoordinate(researchCoordinate, destinationCoordinate, coordinateIndex))
                 .collect(Collectors.toUnmodifiableList());
+    }
+    
+    private int moveCoordinate(List<Integer> researchCoordinate, List<Integer> destinationCoordinate, int coordinateIndex) {
+        return researchCoordinate.get(coordinateIndex) +
+                findDirectionNumber(researchCoordinate, destinationCoordinate, coordinateIndex);
+    }
+    
+    private int findDirectionNumber(List<Integer> researchCoordinate, List<Integer> destinationCoordinate, int coordinateIndex) {
+        return Integer.compare(destinationCoordinate.get(coordinateIndex), researchCoordinate.get(coordinateIndex));
+    }
+    
+    private char parseColumn(List<Integer> coordinate) {
+        return (char)(int) coordinate.get(COLUMN_INDEX);
     }
     
     public List<RowPieces> chessBoard() {

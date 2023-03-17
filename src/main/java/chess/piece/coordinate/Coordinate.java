@@ -20,14 +20,14 @@ public class Coordinate {
         return this.row.compareTo(otherCoordinate.row);
     }
     
-    public List<Integer> calculateCoordinateDistance(Coordinate targetCoordinate) {
-        int columnDistance = this.column.subtract(targetCoordinate.column);
-        int rowDistance = this.row.subtract(targetCoordinate.row);
+    public List<Integer> calculateCoordinateDistance(Coordinate otherCoordinate) {
+        int columnDistance = this.column.subtract(otherCoordinate.column);
+        int rowDistance = this.row.subtract(otherCoordinate.row);
         return List.of(columnDistance, rowDistance);
     }
     
-    public boolean isPawnStartRow(int startRow) {
-        return row.isPawnStartRow(startRow);
+    public boolean isPawnStartRow(int pawnStartRow) {
+        return row.isPawnStartRow(pawnStartRow);
     }
     
     public boolean isSameColumn(char otherColumn) {
