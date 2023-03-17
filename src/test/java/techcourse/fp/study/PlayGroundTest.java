@@ -87,7 +87,7 @@ class PlayGroundTest {
 
     @Test
     public void ThreadPoolExecutor_실행_테스트() {
-        executorService.submit(() -> System.out.println("test"));
+        executorService.submit(() -> System.out.println("study_modern_java"));
     }
 
     static ExecutorService executorService = Executors.newFixedThreadPool(10);
