@@ -23,4 +23,6 @@ public abstract class Piece {
     public boolean isSameColor(Piece piece) {
         return this.color == piece.color;
     }
+
+    abstract public boolean isMovableAtOnce(int abs, int abs1);
 }
