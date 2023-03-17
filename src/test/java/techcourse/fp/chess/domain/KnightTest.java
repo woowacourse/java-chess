@@ -3,8 +3,6 @@ package techcourse.fp.chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static techcourse.fp.chess.domain.Color.BLACK;
-import static techcourse.fp.chess.domain.Color.WHITE;
 import static techcourse.fp.chess.domain.PositionFixtures.A1;
 import static techcourse.fp.chess.domain.PositionFixtures.A3;
 import static techcourse.fp.chess.domain.PositionFixtures.B1;
@@ -16,6 +14,8 @@ import static techcourse.fp.chess.domain.PositionFixtures.D4;
 import static techcourse.fp.chess.domain.PositionFixtures.E1;
 import static techcourse.fp.chess.domain.PositionFixtures.E3;
 import static techcourse.fp.chess.domain.PositionFixtures.H8;
+import static techcourse.fp.chess.domain.piece.Color.BLACK;
+import static techcourse.fp.chess.domain.piece.Color.WHITE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

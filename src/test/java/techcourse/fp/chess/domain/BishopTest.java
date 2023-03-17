@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import techcourse.fp.chess.domain.piece.Bishop;
+import techcourse.fp.chess.domain.piece.Color;
 
 class BishopTest {
 

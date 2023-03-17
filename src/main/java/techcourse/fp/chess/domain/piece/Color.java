@@ -1,4 +1,4 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 public enum Color {
     BLACK,

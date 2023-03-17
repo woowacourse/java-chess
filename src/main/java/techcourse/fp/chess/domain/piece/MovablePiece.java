@@ -1,6 +1,5 @@
 package techcourse.fp.chess.domain.piece;
 
-import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 
 public abstract class MovablePiece extends Piece {

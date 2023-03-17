@@ -1,7 +1,7 @@
 package techcourse.fp.chess.view;
 
-import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.piece.Bishop;
+import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.King;
 import techcourse.fp.chess.domain.piece.Knight;
 import techcourse.fp.chess.domain.piece.Pawn;

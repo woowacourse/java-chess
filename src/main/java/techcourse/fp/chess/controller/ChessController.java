@@ -1,5 +1,6 @@
 package techcourse.fp.chess.controller;
 
+import java.util.List;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.File;
@@ -31,7 +32,6 @@ public final class ChessController {
         }
 
         outputView.printEndMessage();
-
     }
 
     private Command getInitCommand() {
@@ -46,10 +46,10 @@ public final class ChessController {
 
     private void move(final Board board) {
         try {
-            String[] commands = inputView.readCommand();
+            List<String> commands = inputView.readCommand();
 
-            while (!Command.createMoveOrEndMessage(commands[0]).isEnd()) {
-                board.move(parseToPosition(commands[1]), parseToPosition(commands[2]));
+            while (!Command.createMoveOrEndMessage(commands.get(0)).isEnd()) {
+                board.move(parseToPosition(commands.get(1)), parseToPosition(commands.get(2)));
                 outputView.printBoard(BoardDto.create(board.getBoard()));
                 commands = inputView.readCommand();
             }

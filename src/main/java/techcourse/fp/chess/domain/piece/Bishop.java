@@ -2,7 +2,6 @@ package techcourse.fp.chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.movingStrategy.MoveLeftDown;
 import techcourse.fp.chess.movingStrategy.MoveLeftUp;

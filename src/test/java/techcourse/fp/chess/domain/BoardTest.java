@@ -15,6 +15,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Pawn;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.Rook;

@@ -1,7 +1,6 @@
 package techcourse.fp.chess.domain.piece;
 
 import java.util.List;
-import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 

@@ -3,6 +3,7 @@ package techcourse.fp.chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 import techcourse.fp.chess.domain.piece.Bishop;
+import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.King;
 import techcourse.fp.chess.domain.piece.Knight;
 import techcourse.fp.chess.domain.piece.Pawn;
