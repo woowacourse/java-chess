@@ -8,7 +8,7 @@ public abstract class Piece {
 
     protected final Color color;
 
-    public Piece(final Color color) {
+    protected Piece(final Color color) {
         this.color = color;
     }
 
@@ -25,6 +25,6 @@ public abstract class Piece {
     }
 
     public boolean isSameColor(Color turn) {
-        return this.color == turn;
+        return color.isSameColor(turn);
     }
 }
