@@ -27,6 +27,11 @@ public class Queen implements Piece {
     }
 
     @Override
+    public String failMoveMsg() {
+        return "퀸은 상하좌우, 대각선으로만 이동 가능합니다.";
+    }
+
+    @Override
     public String toString() {
         return team.calculate(ORIGINAL_NAME);
     }

@@ -2,12 +2,12 @@ package chessgame.domain.piece;
 
 import chessgame.domain.Team;
 import chessgame.domain.point.Point;
-import chessgame.domain.point.Rank;
 
 public class Pawn implements Piece {
     private static final String ORIGINAL_NAME = "p";
-
     private final Team team;
+    int FIRST_MOVE_DISTANCE = 2;
+    int DISTANCE = 1;
 
     private Pawn(Team team) {
         this.team = team;
@@ -17,60 +17,45 @@ public class Pawn implements Piece {
         return new Pawn(team);
     }
 
-    public boolean isAttack(Point source, Point target) {
-        return isPawnAttack(source, target, team);
-    }
-
-    public boolean isPawnAttack(Point source, Point target, Team team) {
-        if (team == Team.BLACK) {
-            if (source.rankDistance(target) == 1 && source.fileDistance(target) == 1) {
-                return true;
-            }
-            if (source.rankDistance(target) == 1 && source.fileDistance(target) == -1) {
-                return true;
-            }
-        }
-        if (team == Team.WHITE) {
-            if (source.rankDistance(target) == -1 && source.fileDistance(target) == -1) {
-                return true;
-            }
-            if (source.rankDistance(target) == -1 && source.fileDistance(target) == 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean isMovable(Point source, Point target) {
-        return isPawnMove(source, target, team);
+        if (!source.isVertical(target)) {
+            return false;
+        }
+        if (isPawnStartMove(source, target, team)) {
+            return true;
+        }
+        return source.rankDistance(target) == teamDirection(DISTANCE);
     }
 
-    public boolean isPawnMove(Point source, Point target, Team team) {
-        if (team == Team.BLACK && source.fileDistance(target) == 0) {
-            if (source.isInitialPoint(Rank.SEVEN) && (source.rankDistance(target) == 1
-                || source.rankDistance(target) == 2)) {
-                return true;
-            }
-            if (source.rankDistance(target) == 1) {
-                return true;
-            }
+    private int teamDirection(int distance) {
+        return distance * team.direction();
+    }
+
+    public boolean isAttack(Point source, Point target) {
+        if (!source.isDiagonal(target)) {
+            return false;
         }
-        if (team == Team.WHITE && source.fileDistance(target) == 0) {
-            if (source.isInitialPoint(Rank.TWO) && (source.rankDistance(target) == -1
-                || source.rankDistance(target) == -2)) {
-                return true;
-            }
-            if (source.rankDistance(target) == -1) {
-                return true;
-            }
+        return source.rankDistance(target) == teamDirection(DISTANCE);
+    }
+
+    private boolean isPawnStartMove(Point source, Point target, Team team) {
+        if (source.isInitialPoint(team.startRank())
+            && source.rankDistance(target) == teamDirection(DISTANCE)) {
+            return true;
         }
-        return false;
+        return source.isInitialPoint(team.startRank())
+            && source.rankDistance(target) == teamDirection(FIRST_MOVE_DISTANCE);
     }
 
     @Override
     public Team team() {
         return team;
+    }
+
+    @Override
+    public String failMoveMsg() {
+        return "폰은 이동시 앞으로만 한칸 이동 가능하나, 처음은 두칸도 가능합니다. 공격시엔 앞방향 대각선으로 한칸 이동가능 합니다.";
     }
 
     @Override

@@ -30,4 +30,9 @@ public class Bishop implements Piece {
     public Team team() {
         return team;
     }
+
+    @Override
+    public String failMoveMsg() {
+        return "비숍은 대각선으로만 이동할 수 있습니다.";
+    }
 }

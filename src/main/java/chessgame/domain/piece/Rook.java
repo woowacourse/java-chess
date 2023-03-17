@@ -17,16 +17,21 @@ public class Rook implements Piece {
     }
 
     @Override
+    public boolean isMovable(Point source, Point target) {
+        return source.isHorizontal(target) || source.isVertical(target);
+    }
+
+    @Override
+    public String failMoveMsg() {
+        return "룩은 상하좌우로만 이동 가능합니다.";
+    }
+
+    @Override
     public Team team() {
         return team;
     }
 
     public String toString() {
         return team.calculate(ORIGINAL_NAME);
-    }
-
-    @Override
-    public boolean isMovable(Point source, Point target) {
-        return source.isHorizontal(target) || source.isVertical(target);
     }
 }

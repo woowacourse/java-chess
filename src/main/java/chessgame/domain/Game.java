@@ -19,7 +19,7 @@ public class Game {
     }
 
     public void setState(Command command) {
-        power.click(command);
+        power.changeState(command);
     }
 
     public void movePiece(List<Point> points) {
@@ -27,7 +27,9 @@ public class Game {
         if (power.isStart()) {
             isMoved = board.move(points.get(0), points.get(1), turn);
         }
-        turn = turn.changeTurn();
+        if (isMoved) {
+            turn = turn.changeTurn();
+        }
     }
 
     public boolean isStart() {

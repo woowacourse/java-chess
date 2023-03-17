@@ -27,21 +27,6 @@ public class Point {
         return Point.of(file.move(fileMove), rank.move(rankMove));
     }
 
-    public boolean isHorizontal(Point target) {
-        return file.distance(target.file) != 0 && rank.distance(target.rank) == 0;
-    }
-
-    public boolean isVertical(Point target) {
-        return file.distance(target.file) == 0 && rank.distance(target.rank) != 0;
-    }
-
-    public boolean isDiagonal(Point target) {
-        if (file.distance(target.file) == 0 || rank.distance(target.rank) == 0) {
-            return false;
-        }
-        return Math.abs(file.distance(target.file)) == Math.abs(rank.distance(target.rank));
-    }
-
     public int fileDistance(Point point) {
         return this.file.distance(point.file);
     }
@@ -50,8 +35,46 @@ public class Point {
         return this.rank.distance(point.rank);
     }
 
+    public boolean isHorizontal(Point target) {
+        return !isSameFileDistance(target, 0) && isSameRankDistance(target, 0);
+    }
+
+    public boolean isVertical(Point target) {
+        return isSameFileDistance(target, 0) && !isSameRankDistance(target, 0);
+    }
+
+    public boolean isDiagonal(Point target) {
+        if (isSameFileDistance(target, 0) || isSameRankDistance(target, 0)) {
+            return false;
+        }
+        return Math.abs(fileDistance(target)) == Math.abs(rankDistance(target));
+    }
+
     public boolean isInitialPoint(Rank initialRank) {
         return rank.distance(initialRank) == 0;
+    }
+
+    public boolean isSameFileDistance(Point target, int distance) {
+        return Math.abs(fileDistance(target)) == distance;
+    }
+
+    public boolean isSameRankDistance(Point target, int distance) {
+        return Math.abs(rankDistance(target)) == distance;
+    }
+
+    public int maxDistance(Point target) {
+        int fileDifference = Math.abs(fileDistance(target));
+        int rankDifference = Math.abs(rankDistance(target));
+
+        return Math.max(fileDifference, rankDifference);
+    }
+
+    public int fileMove(Point target, int distance) {
+        return fileDistance(target) / distance;
+    }
+
+    public int rankMove(Point target, int distance) {
+        return rankDistance(target) / distance;
     }
 
     @Override

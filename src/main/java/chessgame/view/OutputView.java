@@ -19,13 +19,16 @@ public class OutputView {
 
     public void printChessBoard(Board board) {
         Map<Point, Piece> chessBoard = board.getBoard();
-
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Point point = Point.of(file, rank);
-                printPoint(chessBoard, point);
-            }
+            printOneLine(chessBoard, rank);
             System.out.println();
+        }
+    }
+
+    private void printOneLine(Map<Point, Piece> chessBoard, Rank rank) {
+        for (File file : File.values()) {
+            Point point = Point.of(file, rank);
+            printPoint(chessBoard, point);
         }
     }
 

@@ -28,18 +28,22 @@ public class King implements Piece {
     }
 
     public boolean isKingMove(Point source, Point target) {
-        if (source.isHorizontal(target) && Math.abs(source.fileDistance(target)) == DISTANCE) {
+        if (source.isHorizontal(target) && source.isSameFileDistance(target, DISTANCE)) {
             return true;
         }
-        if (source.isVertical(target) && Math.abs(source.rankDistance(target)) == DISTANCE) {
+        if (source.isVertical(target) && source.isSameRankDistance(target, DISTANCE)) {
             return true;
         }
-        return source.isDiagonal(target) && Math.abs(source.fileDistance(target)) == DISTANCE
-            && Math.abs(source.rankDistance(target)) == DISTANCE;
+        return source.isDiagonal(target) && source.isSameFileDistance(target, DISTANCE);
     }
 
     @Override
     public Team team() {
         return team;
+    }
+
+    @Override
+    public String failMoveMsg() {
+        return "킹은 상하좌우, 대각선으로 1칸만 이동 가능합니다.";
     }
 }

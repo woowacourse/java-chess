@@ -21,14 +21,18 @@ public class ChessBoardFactory {
         Map<Point, Piece> initialBoard = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
-                if (initialPiece != null) {
-                    initialBoard.put(Point.of(file, rank), initialPiece);
-                }
-            }
+            createOneLine(initialBoard, rank);
         }
         return initialBoard;
+    }
+
+    private static void createOneLine(Map<Point, Piece> initialBoard, Rank rank) {
+        for (File file : File.values()) {
+            Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
+            if (initialPiece != null) {
+                initialBoard.put(Point.of(file, rank), initialPiece);
+            }
+        }
     }
 
     private static Piece generateInitialPiece(Rank rank, int idx) {
