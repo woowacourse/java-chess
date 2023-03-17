@@ -80,12 +80,18 @@ public class Board {
     }
 
     private void validatePawnMove(Position source, Position target) {
+        if (validatePawnAttack(source, target) || validatePawnForward(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean validatePawnAttack(Position source, Position target) {
         Piece targetPiece = squares.get(target);
-        if (source.isSameXAs(target) && !targetPiece.isRoleOf(Role.EMPTY)) {
-            throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
-        }
-        if (!source.isSameXAs(target) && targetPiece.isRoleOf(Role.EMPTY)) {
-            throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
-        }
+        return !source.isSameXAs(target) && targetPiece.isRoleOf(Role.EMPTY);
+    }
+
+    private boolean validatePawnForward(Position source, Position target) {
+        Piece targetPiece = squares.get(target);
+        return source.isSameXAs(target) && !targetPiece.isRoleOf(Role.EMPTY);
     }
 }
