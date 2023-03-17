@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import java.util.HashMap;
 import java.util.Map;

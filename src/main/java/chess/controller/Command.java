@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.controller;
 
+import chess.domain.game.ChessGame;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 

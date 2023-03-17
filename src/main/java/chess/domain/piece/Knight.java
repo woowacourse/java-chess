@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
-import chess.domain.Position;
-import chess.domain.Side;
-import chess.domain.Type;
+import chess.domain.board.Board;
+import chess.domain.position.Position;
 import chess.domain.movepattern.KnightMovePattern;
 import chess.domain.movepattern.MovePattern;
 import java.util.ArrayList;

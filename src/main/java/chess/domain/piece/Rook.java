@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Side;
-import chess.domain.Type;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.RookMovePattern;
 import java.util.Arrays;
