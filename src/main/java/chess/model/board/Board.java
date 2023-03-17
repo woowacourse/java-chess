@@ -96,18 +96,56 @@ public class Board {
     }
 
     public void move(final Position source, final Position target, final PieceColor pieceColor) {
-        validateSource(source, pieceColor);
-        validatePath(source, target, pieceColor);
-
-        movePiece(source, target, pieceColor);
+        validateMove(source, target, pieceColor);
 
         final int sourceIndex = source.convertToIndex();
         final int targetIndex = target.convertToIndex();
-
         updateBoard(sourceIndex, targetIndex);
     }
 
-    private void movePiece(final Position source, final Position target,
+    private void validateMove(final Position source, final Position target, final PieceColor pieceColor) {
+        validateSource(source, pieceColor);
+        validatePathSquare(source, target);
+        validateTarget(target, pieceColor);
+        validatePieceMovable(source, target, pieceColor);
+    }
+
+    private void validateSource(final Position source, final PieceColor pieceColor) {
+        final int sourceIndex = source.convertToIndex();
+        final Square sourceSquare = squares.get(sourceIndex);
+
+        sourceSquare.validateExistence(pieceColor);
+    }
+
+    private void validatePathSquare(final Position source, final Position target) {
+        final Distance distance = target.differ(source);
+        final Direction direction = distance.findDirection();
+        final int totalDistance = distance.convertToIndex();
+        final int sourceIndex = source.convertToIndex();
+        int count = IndexConverter.findCount(direction, totalDistance);
+
+        checkPathSquare(direction, count, sourceIndex);
+    }
+
+    private void checkPathSquare(final Direction direction, int count, final int sourceIndex) {
+        int nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
+
+        while (count-- > MINIMUM_TRY) {
+            final Square square = squares.get(nowIndex);
+
+            square.validatePassable();
+            nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
+        }
+    }
+
+    private void validateTarget(final Position target, final PieceColor pieceColor) {
+        final int targetIndex = target.convertToIndex();
+        final Square targetSquare = squares.get(targetIndex);
+
+        targetSquare.validateEnemyPiece(pieceColor);
+    }
+
+    private void validatePieceMovable(final Position source, final Position target,
             final PieceColor pieceColor) {
         final Square sourceSquare = squares.get(source.convertToIndex());
 
@@ -150,50 +188,6 @@ public class Board {
     private void updateSquare(final int index, final Square square) {
         squares.remove(index);
         squares.add(index, square);
-    }
-
-    private void validateSource(final Position source, final PieceColor pieceColor) {
-        final int sourceIndex = source.convertToIndex();
-        final Square sourceSquare = squares.get(sourceIndex);
-
-        sourceSquare.validateExistence(pieceColor);
-    }
-
-    private void validatePath(final Position source, final Position target,
-            final PieceColor pieceColor) {
-        final Distance distance = target.differ(source);
-        final Direction direction = distance.findDirection();
-        final int totalDistance = distance.convertToIndex();
-
-        validatePathSquare(source, direction, totalDistance);
-        validateTarget(target, pieceColor);
-    }
-
-    private void validatePathSquare(final Position source, final Direction direction,
-            final int totalDistance) {
-        int count = IndexConverter.findCount(direction, totalDistance);
-
-        final int sourceIndex = source.convertToIndex();
-
-        checkPathSquare(direction, count, sourceIndex);
-    }
-
-    private void checkPathSquare(final Direction direction, int count, final int sourceIndex) {
-        int nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
-
-        while (count-- > MINIMUM_TRY) {
-            final Square square = squares.get(nowIndex);
-
-            square.validatePassable();
-            nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
-        }
-    }
-
-    private void validateTarget(final Position target, final PieceColor pieceColor) {
-        final int targetIndex = target.convertToIndex();
-        final Square targetSquare = squares.get(targetIndex);
-
-        targetSquare.validateEnemyPiece(pieceColor);
     }
 
     public List<Square> getSquares() {
