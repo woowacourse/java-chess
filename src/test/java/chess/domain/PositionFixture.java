@@ -1,19 +1,9 @@
 package chess.domain;
 
-import static chess.domain.board.FileCoordinate.B;
-import static chess.domain.board.FileCoordinate.C;
-import static chess.domain.board.FileCoordinate.D;
-import static chess.domain.board.FileCoordinate.E;
-import static chess.domain.board.FileCoordinate.F;
-import static chess.domain.board.RankCoordinate.FIVE;
-import static chess.domain.board.RankCoordinate.FOUR;
-import static chess.domain.board.RankCoordinate.ONE;
-import static chess.domain.board.RankCoordinate.SEVEN;
-import static chess.domain.board.RankCoordinate.SIX;
-import static chess.domain.board.RankCoordinate.THREE;
-import static chess.domain.board.RankCoordinate.TWO;
-
 import chess.domain.board.Position;
+
+import static chess.domain.board.FileCoordinate.*;
+import static chess.domain.board.RankCoordinate.*;
 
 public class PositionFixture {
     public static final Position C_4 = new Position(C, FOUR);

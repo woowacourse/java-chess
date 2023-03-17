@@ -1,24 +1,11 @@
 package chess.domain.board;
 
-import static chess.domain.PositionFixture.B_1;
-import static chess.domain.PositionFixture.B_2;
-import static chess.domain.PositionFixture.B_3;
-import static chess.domain.PositionFixture.C_2;
-import static chess.domain.PositionFixture.C_4;
-import static chess.domain.PositionFixture.C_5;
-import static chess.domain.PositionFixture.C_6;
-import static chess.domain.PositionFixture.C_7;
-import static chess.domain.PositionFixture.D_4;
-import static chess.domain.PositionFixture.D_5;
-import static chess.domain.PositionFixture.D_6;
-import static chess.domain.PositionFixture.E_4;
-import static chess.domain.PositionFixture.E_6;
-import static chess.domain.PositionFixture.F_4;
-import static chess.domain.PositionFixture.F_7;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static chess.domain.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
 

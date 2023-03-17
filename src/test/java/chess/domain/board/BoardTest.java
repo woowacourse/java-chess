@@ -1,26 +1,16 @@
 package chess.domain.board;
 
-import static chess.domain.PositionFixture.B_1;
-import static chess.domain.PositionFixture.B_2;
-import static chess.domain.PositionFixture.B_3;
-import static chess.domain.PositionFixture.C_2;
-import static chess.domain.PositionFixture.C_4;
-import static chess.domain.PositionFixture.C_5;
-import static chess.domain.PositionFixture.D_4;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import java.util.List;
-import java.util.Map;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
+
+import static chess.domain.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")

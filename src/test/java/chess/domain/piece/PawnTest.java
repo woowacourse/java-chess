@@ -1,16 +1,17 @@
 package chess.domain.piece;
 
-import static chess.domain.PositionFixture.B_1;
-import static chess.domain.PositionFixture.B_7;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import static chess.domain.PositionFixture.B_1;
+import static chess.domain.PositionFixture.B_7;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -44,5 +45,11 @@ class PawnTest {
     void 폰은_대각선에_적이_없다면_그_방향으로_이동할_수_없다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.WHITE)).isEqualTo(expect);
+    }
+
+    @Test
+    void Empty인지_알_수_있다() {
+        final var piece = new Pawn(Color.WHITE);
+        assertThat(piece.isEmpty()).isFalse();
     }
 }

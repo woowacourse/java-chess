@@ -1,12 +1,5 @@
 package chess.domain;
 
-import static chess.domain.PositionFixture.C_2;
-import static chess.domain.PositionFixture.C_4;
-import static chess.domain.PositionFixture.C_6;
-import static chess.domain.PositionFixture.C_7;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
@@ -14,6 +7,10 @@ import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+
+import static chess.domain.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -36,6 +33,6 @@ class ChessGameTest {
 
         assertThatThrownBy(() -> chessGame.movePiece(C_7, C_6))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("상대 팀의 말을 옮길 수 없습니다.");
+                .hasMessage("본인의 말만 옮길 수 있습니다.");
     }
 }
