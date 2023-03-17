@@ -13,7 +13,7 @@ class SquareTest {
     @Test
     void 스퀘어는_비어있는_상태를_가질_수_있다() {
         //given
-        Square square = new Square();
+        Square square = Square.emptySquare();
 
         //when&then
         Assertions.assertThat(square.isEmpty()).isTrue();

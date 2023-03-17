@@ -25,7 +25,7 @@ class PawnTest {
         pawn.findRoute(c1, c2);
 
         //when & then
-        assertThatThrownBy(() -> pawn.canMove(route)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -35,11 +35,11 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate c2 = Coordinate.of("c2");
-        final List<Square> route = List.of(new Square());
+        final List<Square> route = List.of(Square.emptySquare());
         pawn.findRoute(c1, c2);
 
         //when & then
-        assertDoesNotThrow(() -> pawn.canMove(route));
+        assertDoesNotThrow(() -> pawn.validateRoute(route));
     }
 
     @Test
@@ -49,11 +49,11 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate b2 = Coordinate.of("b2");
-        final List<Square> route = List.of(new Square());
+        final List<Square> route = List.of(Square.emptySquare());
         pawn.findRoute(c1, b2);
 
         //when & then
-        assertThatThrownBy(() -> pawn.canMove(route)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -67,7 +67,7 @@ class PawnTest {
         pawn.findRoute(c1, b2);
 
         //when & then
-        assertDoesNotThrow(() -> pawn.canMove(route));
+        assertDoesNotThrow(() -> pawn.validateRoute(route));
     }
 
     @Test
@@ -77,14 +77,14 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final Coordinate b1 = Coordinate.of("b1");
         final Coordinate b2 = Coordinate.of("b2");
-        final List<Square> route1 = List.of(new Square());
+        final List<Square> route1 = List.of(Square.emptySquare());
 
         final Coordinate b4 = Coordinate.of("b4");
-        final List<Square> route2 = List.of(new Square(), new Square());
+        final List<Square> route2 = List.of(Square.emptySquare(), Square.emptySquare());
 
         //when
         pawn.findRoute(b1, b2);
-        pawn.canMove(route1);
+        pawn.validateRoute(route1);
 
         //then
         assertThatThrownBy(() -> pawn.findRoute(b2, b4)).isInstanceOf(IllegalArgumentException.class);
@@ -99,7 +99,7 @@ class PawnTest {
         final List<Square> route = List.of(new Square(new Pawn(team)));
 
         //when & then
-        assertThatThrownBy(() -> pawn.canMove(route))
+        assertThatThrownBy(() -> pawn.validateRoute(route))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -108,9 +108,9 @@ class PawnTest {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final List<Square> route = List.of(new Square());
+        final List<Square> route = List.of(Square.emptySquare());
 
         //when & then
-        assertDoesNotThrow(() -> pawn.canMove(route));
+        assertDoesNotThrow(() -> pawn.validateRoute(route));
     }
 }

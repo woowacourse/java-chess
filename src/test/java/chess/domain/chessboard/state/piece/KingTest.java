@@ -69,7 +69,7 @@ class KingTest {
         final List<Square> route = List.of(new Square(new Pawn(team)));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> king.canMove(route))
+        Assertions.assertThatThrownBy(() -> king.validateRoute(route))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -78,10 +78,10 @@ class KingTest {
         //given
         final Team team = Team.BLACK;
         final King king = new King(team);
-        final List<Square> route = List.of(new Square());
+        final List<Square> route = List.of(Square.emptySquare());
 
         //when & then
-        assertDoesNotThrow(() -> king.canMove(route));
+        assertDoesNotThrow(() -> king.validateRoute(route));
     }
 
     @Test
@@ -91,6 +91,6 @@ class KingTest {
         final List<Square> route = List.of(new Square(new Pawn(Team.WHITE)));
 
         //when & then
-        assertDoesNotThrow(() -> king.canMove(route));
+        assertDoesNotThrow(() -> king.validateRoute(route));
     }
 }
