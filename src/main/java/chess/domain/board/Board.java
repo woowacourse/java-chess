@@ -10,7 +10,7 @@ public class Board {
 
     private final Map<Position, Piece> pieces;
 
-    protected Board(Map<Position, Piece> pieces) {
+    Board(Map<Position, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
     }
 
