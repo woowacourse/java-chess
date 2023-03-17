@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import chess.domain.move.Direction;
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Rank {
 
@@ -21,12 +20,6 @@ public enum Rank {
         this.index = index;
     }
 
-    private static Optional<Rank> indexOf(int index) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.index == index)
-                .findFirst();
-    }
-
     public Rank move(Direction direction) {
         if (direction == Direction.UP) {
             return up();
@@ -38,12 +31,17 @@ public enum Rank {
     }
 
     private Rank up() {
-        return indexOf(this.index + 1)
-                .orElseThrow(UnsupportedOperationException::new);
+        return indexOf(this.index + 1);
     }
 
     private Rank down() {
-        return indexOf(this.index - 1)
+        return indexOf(this.index - 1);
+    }
+
+    private Rank indexOf(int index) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == index)
+                .findFirst()
                 .orElseThrow(UnsupportedOperationException::new);
     }
 
