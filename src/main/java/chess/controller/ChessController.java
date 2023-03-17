@@ -23,6 +23,7 @@ public class ChessController {
         final Board board = BoardFactory.generateBoard();
         final ChessGame chessGame = new ChessGame(board);
 
+        outputView.printStartMessage();
         while (chessGame.isRunnable()) {
             printChessBoard(chessGame);
             executeCommand(chessGame);
