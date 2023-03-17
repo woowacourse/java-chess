@@ -7,24 +7,23 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
+    private static final int FILE_SIZE = 8;
+    private static final int RANK_SIZE = 8;
     private static final String GAME_START_INFO_MESSAGE = "> 체스 게임을 시작합니다." + System.lineSeparator()
             + "> 게임 시작 : start" + System.lineSeparator()
             + "> 게임 종료 : end" + System.lineSeparator()
             + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final Map<Class<? extends Piece>, String> PIECE_VALUE_MAP = new HashMap<>();
+    public static final String EMPTY_POSITION = ".";
 
     static {
         PIECE_VALUE_MAP.put(King.class, "k");
@@ -53,20 +52,19 @@ public class OutputView {
         for (final Map.Entry<Position, Piece> positionPieceEntry : boardMap.entrySet()) {
             final Position position = positionPieceEntry.getKey();
             final Piece piece = positionPieceEntry.getValue();
-            final File file = position.file();
-            final Rank rank = position.rank();
-            final int column = file.value();
-            final int row = rank.value();
-
-            String pieceDisplay = formatPieceDisplay(piece);
-            chessBoard.get(8 - row).set(column - 1, pieceDisplay);
+            final int column = position.file().value();
+            final int row = position.rank().value();
+            final String pieceDisplay = formatPieceDisplay(piece);
+            chessBoard.get(RANK_SIZE - row).set(column - 1, pieceDisplay);
         }
     }
 
     private static List<List<String>> initializeBoard() {
-        return IntStream.range(0, 8)
-                .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, ".")))
-                .collect(Collectors.toList());
+        final List<List<String>> emptyBoard = new ArrayList<>();
+        for (int i = 0; i < RANK_SIZE; i++) {
+            emptyBoard.add(new ArrayList<>(Collections.nCopies(FILE_SIZE, EMPTY_POSITION)));
+        }
+        return emptyBoard;
     }
 
     private static String formatPieceDisplay(final Piece piece) {
