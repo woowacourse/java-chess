@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static chess.domain.Team.NEUTRALITY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
@@ -17,7 +18,7 @@ class SquareTest {
     @BeforeEach
     void setUp() {
         var position = new Position(1, 1);
-        var piece = new EmptyPiece();
+        var piece = new EmptyPiece(NEUTRALITY);
 
         square = new Square(position, piece);
     }
@@ -25,7 +26,7 @@ class SquareTest {
     @Test
     @DisplayName("포지션이 같으면 같은 Square이다.")
     void equalsTest() {
-        var newSquare = new Square(new Position(1, 1), new EmptyPiece());
+        var newSquare = new Square(new Position(1, 1), new EmptyPiece(NEUTRALITY));
 
         assertThat(square.equals(newSquare)).isTrue();
     }
