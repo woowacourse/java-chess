@@ -1,6 +1,6 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Knight extends Piece {
         List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
 
         int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.getRow(), end.getRow()));
-        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.getCol(), end.getCol()));
+        int absOfCol = Math.abs(Column.subPositionFromArrivePosition(start.getCol(), end.getCol()));
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         if (!possibleSubPosition.contains(newPosition)) {
