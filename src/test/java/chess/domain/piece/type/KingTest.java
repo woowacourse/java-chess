@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -34,8 +33,7 @@ class KingTest {
         final King king = new King(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints condition = king.waypoints(destination);
-        assertThat(condition.wayPoints()).isEmpty();
+        assertThat(king.waypoints(destination)).isEmpty();
     }
 
     @ParameterizedTest(name = "두 칸 이상은 이동할 수 없다. 예를 들어 [e4] 에서 [{0}] 로는 이동할 수 없다.")

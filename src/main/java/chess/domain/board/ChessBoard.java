@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +32,14 @@ public class ChessBoard {
     }
 
     private void validateNonBlock(final Piece from, final PiecePosition destination) {
-        final Waypoints wayPoints = from.waypoints(destination);
-        if (isBlocking(wayPoints)) {
+        final List<PiecePosition> waypoints = from.waypoints(destination);
+        if (isBlocking(waypoints)) {
             throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
         }
     }
 
-    private boolean isBlocking(final Waypoints wayPoints) {
-        return wayPoints.wayPoints()
-                .stream()
+    private boolean isBlocking(final List<PiecePosition> waypoints) {
+        return waypoints.stream()
                 .anyMatch(this::existByPosition);
     }
 

@@ -4,9 +4,9 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 
 import java.util.Collections;
+import java.util.List;
 
 public class Knight extends Piece {
 
@@ -26,8 +26,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Waypoints waypoints(final PiecePosition destination) {
+    public List<PiecePosition> waypoints(final PiecePosition destination) {
         validateMovable(Path.of(piecePosition, destination));
-        return Waypoints.from(Collections.emptyList());
+        return Collections.emptyList();
     }
 }

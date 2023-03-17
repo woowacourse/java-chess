@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -30,8 +29,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints waypoints = knight.waypoints(destination);
-        assertThat(waypoints.wayPoints()).isEmpty();
+        assertThat(knight.waypoints(destination)).isEmpty();
     }
 
     @ParameterizedTest(name = "Rank 한 칸, File 두 칸 이동 가능하다. 예를 들어 [e4] 에서 [{0}] 로 이동할 수 있다.")
@@ -48,8 +46,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints waypoints = knight.waypoints(destination);
-        assertThat(waypoints.wayPoints()).isEmpty();
+        assertThat(knight.waypoints(destination)).isEmpty();
     }
 
     @ParameterizedTest(name = "나머지 움직임은 불가능하다. 예를 들어 [e4] 에서 [{1}] 로는 이동할 수 없다.")

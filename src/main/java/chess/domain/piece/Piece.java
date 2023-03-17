@@ -2,7 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
+
+import java.util.List;
 
 public abstract class Piece implements Cloneable {
 
@@ -14,10 +15,10 @@ public abstract class Piece implements Cloneable {
         this.piecePosition = piecePosition;
     }
 
-    public Waypoints waypoints(final PiecePosition destination) {
+    public List<PiecePosition> waypoints(final PiecePosition destination) {
         final Path path = Path.of(piecePosition, destination);
         validateMovable(path);
-        return Waypoints.from(path.waypoints());
+        return path.waypoints();
     }
 
     protected abstract void validateMovable(final Path path);

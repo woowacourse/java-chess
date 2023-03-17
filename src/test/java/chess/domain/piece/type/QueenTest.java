@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -50,8 +49,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints waypoints = queen.waypoints(destination);
-        assertThat(waypoints.wayPoints())
+        assertThat(queen.waypoints(destination))
                 .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
     }
 
@@ -77,8 +75,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints waypoints = queen.waypoints(destination);
-        assertThat(waypoints.wayPoints())
+        assertThat(queen.waypoints(destination))
                 .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
     }
 

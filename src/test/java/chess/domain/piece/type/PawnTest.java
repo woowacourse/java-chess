@@ -40,7 +40,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints())
+            assertThat(pawn.waypoints(destination))
                     .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
         }
 
@@ -67,7 +67,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(4, 'b'));
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints()).isEmpty();
+            assertThat(pawn.waypoints(destination)).isEmpty();
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b2] 에서 [{0}] 으로는 이동이 불가능하다. ")
@@ -119,7 +119,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints())
+            assertThat(pawn.waypoints(destination))
                     .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
         }
 
@@ -146,7 +146,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(5, 'b'));
 
             // when & then
-            assertThat(pawn.waypoints(destination).wayPoints()).isEmpty();
+            assertThat(pawn.waypoints(destination)).isEmpty();
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b7] 에서 [{0}] 으로는 이동이 불가능하다. ")

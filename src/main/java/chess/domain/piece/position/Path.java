@@ -56,7 +56,6 @@ public class Path {
                 && Math.abs(source.fileInterval(destination)) <= 1;
     }
 
-    // 이곳에서 Waypoint 반환 VS 반환받은데서 Waypoint.from(반환) ??
     public List<PiecePosition> waypoints() {
         return iterate(source, current -> !current.equals(destination),
                 current -> current.move(current.direction(destination)))
