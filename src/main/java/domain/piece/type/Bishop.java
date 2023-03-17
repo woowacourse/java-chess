@@ -23,24 +23,32 @@ public class Bishop extends Piece {
 
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        List<Integer> currentCoordinate = currentSquare.toCoordinate();
-        Integer file = currentCoordinate.get(FILE);
-        Integer rank = currentCoordinate.get(RANK);
-
         for (Direction direction : movableDirection) {
-            ArrayList<Square> squares = new ArrayList<>();
-            for (int i = 1; i < 8; i++) {
-                int fileCoordinate = file + (i * direction.getFile());
-                int rankCoordinate = rank + (i * direction.getRank());
-                if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
-                    continue;
-                }
-                squares.add(new Square(fileCoordinate, rankCoordinate));
-            }
+            ArrayList<Square> squares = getAllPath(currentSquare, targetSquare, direction);
             if (squares.contains(targetSquare)) {
                 return squares;
             }
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    }
+
+    private ArrayList<Square> getAllPath(Square currentSquare, Square targetSquare, Direction direction) {
+        List<Integer> currentCoordinate = currentSquare.toCoordinate();
+        Integer file = currentCoordinate.get(FILE);
+        Integer rank = currentCoordinate.get(RANK);
+
+        ArrayList<Square> squares = new ArrayList<>();
+        for (int i = 1; i < 8; i++) {
+            int fileCoordinate = file + (i * direction.getFile());
+            int rankCoordinate = rank + (i * direction.getRank());
+            if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
+                Square pathSquare = new Square(fileCoordinate, rankCoordinate);
+                squares.add(pathSquare);
+                if (pathSquare.equals(targetSquare)) {
+                    return squares;
+                }
+            }
+        }
+        return squares;
     }
 }

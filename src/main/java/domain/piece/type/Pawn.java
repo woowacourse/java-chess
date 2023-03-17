@@ -36,6 +36,7 @@ public class Pawn extends Piece {
         checkMoveDirection(currentSquare, targetSquare);
         ArrayList<Square> movableCoordinate = getSquares(currentSquare);
         moveForward(currentSquare, movableCoordinate);
+        System.out.println(movableCoordinate.contains(targetSquare));
         if (movableCoordinate.contains(targetSquare)) {
             isFirstMove = false;
             return movableCoordinate;
@@ -67,9 +68,8 @@ public class Pawn extends Piece {
             int fileCoordinate = currentFileCoordinate + directionUnit * direction.getFile();
             int rankCoordinate = currentRankCoordinate + directionUnit * direction.getRank();
             if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
-                continue;
+                movableCoordinate.add(new Square(fileCoordinate, rankCoordinate));
             }
-            movableCoordinate.add(new Square(fileCoordinate, rankCoordinate));
         }
     }
 

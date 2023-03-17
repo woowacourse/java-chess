@@ -44,8 +44,8 @@ public abstract class Piece {
     }
 
     protected boolean isInCoordinateRange(int fileCoordinate, int rankCoordinate) {
-        return fileCoordinate < MIN_RANGE || fileCoordinate > MAX_RANGE || rankCoordinate < MIN_RANGE
-                || rankCoordinate > MAX_RANGE;
+        return fileCoordinate >= MIN_RANGE && fileCoordinate <= MAX_RANGE
+                && rankCoordinate >= MIN_RANGE && rankCoordinate <= MAX_RANGE;
     }
 
     protected boolean isDifferentCamp(Camp otherCamp) {

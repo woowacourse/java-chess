@@ -125,8 +125,9 @@ class PawnTest {
     @DisplayName("폰이 한칸 이동하는 경우, targetSquare에 기물이 없는경우 true 반환한다")
     void canMoveOneStep() {
         Pawn pawn = new Pawn(Camp.WHITE);
-        Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
+        Square currentSquare = new Square(7, 5);
+        Square targetSquare = new Square(7, 6);
+        pawn.fetchMovePath(currentSquare, targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.NONE);
 
