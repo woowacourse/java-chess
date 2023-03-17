@@ -22,8 +22,7 @@ class CarTest {
     @Test
     public void 이동_람다() {
         Car car = new Car("pobi", 0);
-        MoveStrategy moveStrategy = () -> true;
-        Car actual = car.move(moveStrategy);
+        Car actual = car.move(() -> true);
         assertThat(actual).isEqualTo(new Car("pobi", 1));
     }
 
@@ -43,8 +42,7 @@ class CarTest {
     @Test
     public void 정지_람다() {
         Car car = new Car("pobi", 0);
-        MoveStrategy stopStrategy = () -> false;
-        Car actual = car.move(stopStrategy);
+        Car actual = car.move(() -> false);
         assertThat(actual).isEqualTo(new Car("pobi", 0));
     }
 }
