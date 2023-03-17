@@ -23,10 +23,9 @@ public class Calculator {
     }
 
     public static int sumAllOverThree(List<Integer> numbers) {
-        int total = 0;
-
-        //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
-
-        return total;
+        return numbers.stream()
+                .filter(integer -> integer > 3)
+                .reduce(Integer::sum)
+                .orElseThrow();
     }
 }
