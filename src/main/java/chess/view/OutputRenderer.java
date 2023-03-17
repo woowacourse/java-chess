@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
@@ -65,7 +66,7 @@ public class OutputRenderer {
 
 	private static String stringifySign(final Piece piece) {
 		String sign = PIECE_TO_STRING.get(piece.getType());
-		if (piece.isWhite()) {
+		if (piece.isGivenTeam(Team.WHITE)) {
 			sign = sign.toLowerCase();
 		}
 		return sign;

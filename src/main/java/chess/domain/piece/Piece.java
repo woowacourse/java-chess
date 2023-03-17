@@ -14,16 +14,16 @@ public abstract class Piece {
 		this.movement = movement;
 	}
 
+	public static Piece empty() {
+		return new Empty();
+	}
+
 	public boolean isMobile(RelativePosition relativePosition) {
 		return movement.isMobile(relativePosition);
 	}
 
-	public boolean isBlack() {
-		return team.isBlack();
-	}
-
-	public boolean isWhite() {
-		return team.isWhite();
+	public boolean isGivenTeam(Team team) {
+		return this.team == team;
 	}
 
 	public boolean isEmpty() {
@@ -36,6 +36,10 @@ public abstract class Piece {
 
 	public boolean isPawn() {
 		return false;
+	}
+
+	public Team getTeam() {
+		return team;
 	}
 
 	public abstract PieceType getType();

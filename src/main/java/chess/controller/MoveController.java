@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.service.ChessService;
 import chess.domain.Position;
 import chess.view.CommandDto;
 import chess.view.OutputRenderer;
@@ -15,20 +15,20 @@ public class MoveController extends Controller {
 	}
 
 	@Override
-	public Board run(final CommandDto commandDto, final Board board) {
+	public ChessService run(final CommandDto commandDto, final ChessService service) {
 		if (controllerState == ControllerState.RUNNABLE) {
-			return move(commandDto, board);
+			return move(commandDto, service);
 		}
 		throw new IllegalStateException(CANNOT_MOVE_PIECE_ERROR_MESSAGE);
 	}
 
-	private Board move(final CommandDto commandDto, final Board board) {
+	private ChessService move(final CommandDto commandDto, final ChessService service) {
 		Position source = commandDto.getSourcePosition();
 		Position target = commandDto.getTargetPosition();
 		ExceptionHandler.tryCatchStrategy(() -> {
-			board.movePiece(source, target);
-			OutputView.printBoard(OutputRenderer.toBoardDto(board.getBoard()));
+			service.movePiece(source, target);
+			OutputView.printBoard(OutputRenderer.toBoardDto(service.getBoard()));
 		});
-		return board;
+		return service;
 	}
 }

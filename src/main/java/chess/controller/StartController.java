@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.service.ChessService;
 import chess.view.CommandDto;
 import chess.view.OutputRenderer;
 import chess.view.OutputView;
@@ -14,18 +14,18 @@ public class StartController extends Controller {
 	}
 
 	@Override
-	public Board run(final CommandDto commandDto, final Board board) {
+	public ChessService run(final CommandDto commandDto, final ChessService service) {
 		if (controllerState == ControllerState.RUNNABLE) {
 			controllerState = ControllerState.UNAVAILABLE;
-			Board newBoard = initBoard();
-			OutputView.printBoard(OutputRenderer.toBoardDto(newBoard.getBoard()));
-			return newBoard;
+			ChessService newService = initializeChess();
+			OutputView.printBoard(OutputRenderer.toBoardDto(newService.getBoard()));
+			return newService;
 		}
 		throw new IllegalStateException(CANNOT_INITIALIZE_GAME_ERROR_MESSAGE);
 	}
 
-	public Board initBoard() {
+	public ChessService initializeChess() {
 		mainController.enableMoveControllerState();
-		return Board.create();
+		return ChessService.create();
 	}
 }

@@ -2,7 +2,7 @@ package chess.controller;
 
 import java.util.Map;
 
-import chess.domain.Board;
+import chess.service.ChessService;
 import chess.view.Command;
 import chess.view.CommandDto;
 import chess.view.InputRenderer;
@@ -24,13 +24,13 @@ public class MainController {
 
 	public void run() {
 		OutputView.printInitialMessage();
-		Board board = Board.empty();
+		ChessService service = ChessService.temp();
 		do {
-			Board effectivelyFinalBoard = board;
-			board = ExceptionHandler.RetryIfThrowsException(() -> {
+			ChessService effectivelyFinalService = service;
+			service = ExceptionHandler.RetryIfThrowsException(() -> {
 				CommandDto commandDto = readCommand();
 				Controller currentController = controllers.get(commandDto.getCommand());
-				return currentController.run(commandDto, effectivelyFinalBoard);
+				return currentController.run(commandDto, effectivelyFinalService);
 			});
 		} while (controllerState == ControllerState.RUNNABLE);
 	}

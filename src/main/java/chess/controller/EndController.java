@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.service.ChessService;
 import chess.view.CommandDto;
 
 public class EndController extends Controller {
@@ -10,11 +10,11 @@ public class EndController extends Controller {
 	}
 
 	@Override
-	public Board run(final CommandDto commandDto, final Board board) {
+	public ChessService run(final CommandDto commandDto, final ChessService service) {
 		if (controllerState == ControllerState.RUNNABLE) {
 			controllerState = ControllerState.UNAVAILABLE;
 		}
 		mainController.disableState();
-		return board;
+		return service;
 	}
 }
