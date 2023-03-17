@@ -108,7 +108,7 @@ DTO 패키지
 - [x] gap 구하기
 - [x] gap의 abs 를 piece에 넣어서 한 번에 이동 가능한지 확인하기
     - [x] 폰(movableDistance 1), 킹(movableDistance 1), 나이트(movableDistance 1.2 / 2.1)
-    - [x] 나머지는 true 반환
+    - [x] 정나머지는 true 반환
 - [x] start -end = gap 으로 direction 정하기
 - [x] 기물이 해당 direction으로 이동할 수 있는지 구하기
 - [x] 현재 위치가 end가 될때까지, start에 direction의 단위 위치를 더하면서, 해당 포지션에 있는 기물이 존재하는지 확인한다
