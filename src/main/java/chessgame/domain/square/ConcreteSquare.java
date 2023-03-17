@@ -16,17 +16,17 @@ public class ConcreteSquare extends Square {
     }
 
     @Override
-    public Boolean canReap() {
+    public boolean canReap() {
         return piece.canReap();
     }
 
     @Override
-    public Boolean isExist() {
+    public boolean isExist() {
         return true;
     }
 
     @Override
-    public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (super.isFirstMove() && piece.isSameTypeWith(PieceType.PAWN)) {
             Pawn pawn = (Pawn) piece;
             return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
