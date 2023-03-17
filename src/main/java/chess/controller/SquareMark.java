@@ -51,7 +51,7 @@ public enum SquareMark {
                 .filter(squareMark -> pieceState.getClass() == squareMark.pieceClass)
                 .map(SquareMark::getMark)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 종류의 기물입니다."));
     }
 
     private String getMark() {
