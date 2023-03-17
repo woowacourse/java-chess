@@ -11,7 +11,7 @@ public class ChessBoard {
     private static final int MAX_ROW_NUMBER = 8;
     private static final int ROW_INDEX = 1;
     private static final int COLUMN_INDEX = 0;
-    private static final int INIT_REPEAT_COUNT = 0;
+    private static final boolean FIRST_TRY = false;
     
     private final List<RowPieces> chessBoard;
     
@@ -65,13 +65,13 @@ public class ChessBoard {
     
         boolean isMovablePiece = rowPiecesContainsSourcePiece
                 .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        boolean isEmptyRoute = isEmptyRoute(INIT_REPEAT_COUNT, sourceCoordinate, destinationCoordinate);
+        boolean isEmptyRoute = isEmptyRoute(FIRST_TRY, sourceCoordinate, destinationCoordinate);
         boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByColumnKnight(parseColumn(sourceCoordinate));
         
         return isMovablePiece && (isEmptyRoute || isSourcePieceKnight);
     }
     
-    private boolean isEmptyRoute(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+    private boolean isEmptyRoute(boolean isNotFirstTry, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
         int researchColumn = researchCoordinate.get(COLUMN_INDEX);
         RowPieces rowPiecesContainsResearchPiece = findRowPiecesByRow(researchCoordinate.get(ROW_INDEX));
         boolean isPieceByColumnNotEmpty = rowPiecesContainsResearchPiece.isPieceByColumnNotEmpty(researchColumn);
@@ -79,30 +79,22 @@ public class ChessBoard {
         if (isReachedAtDestination(researchCoordinate, destinationCoordinate)) {
             return true;
         }
-        if (isPieceByColumnNotEmpty && isRepeatCountNotZero(repeatCount)) {
+        if (isPieceByColumnNotEmpty && isNotFirstTry) {
             return false;
         }
-        return repeatResearch(repeatCount, researchCoordinate, destinationCoordinate);
+        return repeatResearch(researchCoordinate, destinationCoordinate);
     }
     
     private boolean isReachedAtDestination(List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
         return researchCoordinate.equals(destinationCoordinate);
     }
     
-    private boolean isRepeatCountNotZero(int repeatCount) {
-        return repeatCount > INIT_REPEAT_COUNT;
-    }
-    
-    private boolean repeatResearch(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+    private boolean repeatResearch(List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
         return isEmptyRoute(
-                increaseRepeatCount(repeatCount),
+                true,
                 moveForDestination(researchCoordinate, destinationCoordinate),
                 destinationCoordinate
         );
-    }
-    
-    private int increaseRepeatCount(int repeatCount) {
-        return repeatCount + 1;
     }
     
     private List<Integer> moveForDestination(List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
