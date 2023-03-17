@@ -19,9 +19,9 @@ public class Board {
         this.pieces = Pieces.init();
     }
 
-    public boolean isSameColor(final Square src, final Team team) {
+    public boolean isSameTeam(final Square src, final Team team) {
         Piece piece = findPieceBy(src);
-        return piece.getColor() == team;
+        return piece.getTeam() == team;
     }
 
     public void move(final Square src, final Square dst) {
@@ -31,7 +31,7 @@ public class Board {
 
         Piece piece = findPieceBy(src);
         if (piece.getPieceType() == INITIAL_PAWN) {
-            piece = new Pawn(piece.getColor());
+            piece = new Pawn(piece.getTeam());
         }
         pieces.put(dst, piece);
         pieces.remove(src);

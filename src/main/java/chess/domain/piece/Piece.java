@@ -21,7 +21,7 @@ public abstract class Piece {
         }
     }
 
-    public Team getColor() {
+    public Team getTeam() {
         return team;
     }
 
