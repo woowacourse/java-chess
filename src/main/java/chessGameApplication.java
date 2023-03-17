@@ -17,9 +17,7 @@ public class chessGameApplication {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         startPhase(chessBoard);
-        while (commandPhase(chessGame, chessBoard)) {
-            OutputView.printChessBoard(chessBoard.getChessBoard());
-        }
+        while (commandPhase(chessGame, chessBoard));
     }
 
     private static void startPhase(ChessBoard chessBoard) {
@@ -37,6 +35,7 @@ public class chessGameApplication {
             List<String> command = InputView.readPlayGameCommand();
             if (command.size() == MOVE_COMMAND_SIZE) {
                 move(chessGame, chessBoard, command);
+                OutputView.printChessBoard(chessBoard.getChessBoard());
                 return true;
             }
             return false;
