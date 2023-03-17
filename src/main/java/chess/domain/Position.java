@@ -57,11 +57,13 @@ public class Position {
     }
 
     public List<Position> getBetweenPositions(Position target) {
-        int xDistance = target.x - this.x;
-        int yDistance = target.y - this.y;
+        int deltaX = target.x - this.x;
+        int deltaY = target.y - this.y;
         int distance = getDistanceTo(target);
-        int xFactor = xDistance / distance;
-        int yFactor = yDistance / distance;
+        return calculateBetweenPositions(distance, deltaX / distance, deltaY / distance);
+    }
+
+    private List<Position> calculateBetweenPositions(int distance, int xFactor, int yFactor) {
         return IntStream.range(1, distance)
                 .mapToObj(value -> Position.of((this.x + xFactor * value), (this.y + yFactor * value)))
                 .collect(toList());
