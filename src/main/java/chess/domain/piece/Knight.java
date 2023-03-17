@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Knight extends QuadrantPiece {
 
-    public Knight(boolean isWhite) {
-        super(isWhite, setUpMoves());
+    public Knight(Color color) {
+        super(color, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {

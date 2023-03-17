@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -18,30 +19,30 @@ public class BoardFactory {
 
     public static Board createBoard() {
         Map<Position, Piece> initialArrangement = new HashMap<>();
-        initialArrangement.putAll(createLine(Rank.ONE, createFirstLine(true)));
-        initialArrangement.putAll(createLine(Rank.TWO, createSecondLine(true)));
-        initialArrangement.putAll(createLine(Rank.EIGHT, createFirstLine(false)));
-        initialArrangement.putAll(createLine(Rank.SEVEN, createSecondLine(false)));
+        initialArrangement.putAll(createLine(Rank.ONE, createFirstLine(Color.WHITE)));
+        initialArrangement.putAll(createLine(Rank.TWO, createSecondLine(Color.WHITE)));
+        initialArrangement.putAll(createLine(Rank.EIGHT, createFirstLine(Color.BLACK)));
+        initialArrangement.putAll(createLine(Rank.SEVEN, createSecondLine(Color.BLACK)));
         return new Board(initialArrangement);
     }
 
-    private static Map<File, Piece> createFirstLine(boolean isWhite) {
+    private static Map<File, Piece> createFirstLine(Color color) {
         return new HashMap<>() {{
-            put(File.A, new Rook(isWhite));
-            put(File.B, new Knight(isWhite));
-            put(File.C, new Bishop(isWhite));
-            put(File.D, new Queen(isWhite));
-            put(File.E, new King(isWhite));
-            put(File.F, new Bishop(isWhite));
-            put(File.G, new Knight(isWhite));
-            put(File.H, new Rook(isWhite));
+            put(File.A, new Rook(color));
+            put(File.B, new Knight(color));
+            put(File.C, new Bishop(color));
+            put(File.D, new Queen(color));
+            put(File.E, new King(color));
+            put(File.F, new Bishop(color));
+            put(File.G, new Knight(color));
+            put(File.H, new Rook(color));
         }};
     }
 
-    private static Map<File, Piece> createSecondLine(boolean isWhite) {
+    private static Map<File, Piece> createSecondLine(Color color) {
         Map<File, Piece> secondLine = new HashMap<>();
         for (File file : File.values()) {
-            secondLine.put(file, new Pawn(isWhite));
+            secondLine.put(file, new Pawn(color));
         }
         return secondLine;
     }

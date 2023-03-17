@@ -3,6 +3,8 @@ package chess.domain.piece;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.AbstractTestFixture;
@@ -15,8 +17,8 @@ public class PieceTest extends AbstractTestFixture {
 
     public static class PieceImplement extends Piece {
 
-        public PieceImplement(boolean isWhite, Set<Move> moves) {
-            super(isWhite, moves);
+        public PieceImplement(Color color, Set<Move> moves) {
+            super(color, moves);
         }
 
         @Override
@@ -28,8 +30,8 @@ public class PieceTest extends AbstractTestFixture {
     @DisplayName("색을 구별할 수 있다")
     @Test
     void isSameColor() {
-        Piece piece = createPiece(true);
-        Piece otherPiece = createPiece(false);
+        Piece piece = createPiece(WHITE);
+        Piece otherPiece = createPiece(BLACK);
 
         assertThat(piece.hasSameColor(otherPiece)).isFalse();
     }
@@ -40,7 +42,7 @@ public class PieceTest extends AbstractTestFixture {
         Move move = createMove(UP, UP, RIGHT);
         Move move2 = createMove(RIGHT, RIGHT, UP);
 
-        Piece piece = createPiece(true, move, move2);
+        Piece piece = createPiece(WHITE, move, move2);
         assertThat(piece.hasMove(move)).isTrue();
     }
 
@@ -49,7 +51,7 @@ public class PieceTest extends AbstractTestFixture {
     void isInvalidMoveFinite() {
         Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, move);
+        Piece piece = createPiece(WHITE, move);
         assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
     }
 
@@ -58,7 +60,7 @@ public class PieceTest extends AbstractTestFixture {
     void isInvalidMove() {
         Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, move);
+        Piece piece = createPiece(WHITE, move);
         assertThat(piece.hasMove(createMove(LEFT))).isFalse();
     }
 
@@ -67,19 +69,19 @@ public class PieceTest extends AbstractTestFixture {
     void hasMove_then_hasAttackMove() {
         Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, move);
+        Piece piece = createPiece(WHITE, move);
         assertThat(piece.hasAttackMove(move)).isTrue();
     }
 
     @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")
     @Test
     void touch_nothingHappens() {
-        Piece piece = createPiece(true);
+        Piece piece = createPiece(WHITE);
 
         assertThat(piece.touch()).isSameAs(piece);
     }
 
-    private Piece createPiece(boolean isWhite, Move... moves) {
-        return new PieceTest.PieceImplement(isWhite, Set.of(moves));
+    private Piece createPiece(Color color, Move... moves) {
+        return new PieceTest.PieceImplement(color, Set.of(moves));
     }
 }

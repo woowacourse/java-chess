@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.move.Move;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -14,9 +15,9 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public boolean checkTurn(Position position, boolean isWhiteTurn) {
+    public boolean checkTurn(Position position, Color turn) {
         Piece piece = findPieceToMove(position);
-        return piece.hasColor(isWhiteTurn);
+        return piece.hasColor(turn);
     }
 
     public void move(Position source, Position target) {

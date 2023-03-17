@@ -11,17 +11,17 @@ public class Pawn extends Piece {
     private static final Move WHITE_UNIT_MOVE = new Move(List.of(Direction.UP));
     private static final int UNTOUCHED_MOVE_SIZE = 2;
 
-    public Pawn(boolean isWhite) {
-        super(isWhite, setUpMoves(isWhite));
+    public Pawn(Color color) {
+        super(color, setUpMoves(color));
     }
 
-    private Pawn(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
+    private Pawn(Color color, Set<Move> moves) {
+        super(color, moves);
     }
 
-    private static Set<Move> setUpMoves(boolean isWhite) {
+    private static Set<Move> setUpMoves(Color color) {
         Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE, WHITE_UNIT_MOVE.repeat(2));
-        if (isWhite) {
+        if (color == Color.WHITE) {
             return whiteMoves;
         }
         return convertColor(whiteMoves);
@@ -47,10 +47,10 @@ public class Pawn extends Piece {
 
     private Pawn createTouchedPawn() {
         Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE);
-        if (isWhite) {
-            return new Pawn(true, whiteMoves);
+        if (color == Color.WHITE) {
+            return new Pawn(Color.WHITE, whiteMoves);
         }
-        return new Pawn(false, convertColor(whiteMoves));
+        return new Pawn(Color.BLACK, convertColor(whiteMoves));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Pawn extends Piece {
         Set<Move> whiteAttackMoves = Set.of(
                 new Move(Direction.UP, Direction.RIGHT),
                 new Move(Direction.UP, Direction.LEFT));
-        if (isWhite) {
+        if (color == Color.WHITE) {
             return whiteAttackMoves;
         }
         return convertColor(whiteAttackMoves);

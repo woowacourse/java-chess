@@ -5,8 +5,8 @@ import java.util.Set;
 
 public abstract class InfinitePiece extends QuadrantPiece {
 
-    public InfinitePiece(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
+    public InfinitePiece(Color color, Set<Move> moves) {
+        super(color, moves);
     }
 
     @Override

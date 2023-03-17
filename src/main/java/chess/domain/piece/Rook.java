@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Rook extends InfinitePiece {
 
-    public Rook(boolean isWhite) {
-        super(isWhite, setUpMoves());
+    public Rook(Color color) {
+        super(color, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {

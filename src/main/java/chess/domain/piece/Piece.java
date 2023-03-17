@@ -5,20 +5,20 @@ import java.util.Set;
 
 public abstract class Piece {
 
-    protected final boolean isWhite;
+    protected final Color color;
     protected final Set<Move> moves;
 
-    public Piece(boolean isWhite, Set<Move> moves) {
-        this.isWhite = isWhite;
+    public Piece(Color color, Set<Move> moves) {
+        this.color = color;
         this.moves = moves;
     }
 
     public boolean hasSameColor(Piece otherPiece) {
-        return isWhite == otherPiece.isWhite;
+        return color == otherPiece.color;
     }
 
-    public boolean hasColor(boolean isWhite) {
-        return this.isWhite == isWhite;
+    public boolean hasColor(Color color) {
+        return this.color == color;
     }
 
     public boolean hasMove(Move move) {
@@ -28,9 +28,7 @@ public abstract class Piece {
         }
         return hasMove;
     }
-
-    public abstract PieceType getType();
-
+    
     protected boolean compareMove(Move pieceMove, Move move) {
         return pieceMove.equals(move);
     }
@@ -41,5 +39,11 @@ public abstract class Piece {
 
     public Piece touch() {
         return this;
+    }
+
+    public abstract PieceType getType();
+
+    public Color getColor() {
+        return color;
     }
 }

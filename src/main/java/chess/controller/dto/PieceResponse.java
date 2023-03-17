@@ -7,22 +7,22 @@ public class PieceResponse {
 
     private final int fileIndex;
     private final int rankIndex;
-    private final boolean isWhite;
+    private final String Color;
     private final String type;
 
-    public PieceResponse(int fileIndex, int rankIndex, boolean isWhite, String type) {
+    public PieceResponse(int fileIndex, int rankIndex, String color, String type) {
         this.fileIndex = fileIndex;
         this.rankIndex = rankIndex;
-        this.isWhite = isWhite;
+        Color = color;
         this.type = type;
     }
 
     public static PieceResponse of(Position position, Piece piece) {
         int fileIndex = position.getFileIndex();
         int rankIndex = position.getRankIndex();
-        boolean isWhite = piece.hasColor(true);
+        String color = piece.getColor().name();
         String pieceType = piece.getType().name();
-        return new PieceResponse(fileIndex, rankIndex, isWhite, pieceType);
+        return new PieceResponse(fileIndex, rankIndex, color, pieceType);
     }
 
     public int getFileIndex() {
@@ -33,8 +33,8 @@ public class PieceResponse {
         return rankIndex;
     }
 
-    public boolean isWhite() {
-        return isWhite;
+    public String getColor() {
+        return Color;
     }
 
     public String getType() {

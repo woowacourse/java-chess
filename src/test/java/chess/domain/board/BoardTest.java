@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -19,7 +21,7 @@ public class BoardTest extends AbstractTestFixture {
     void checkTurn_true() {
         var board = BoardFactory.createBoard();
 
-        boolean isTurn = board.checkTurn(new Position("C2"), true);
+        boolean isTurn = board.checkTurn(new Position("C2"), WHITE);
 
         assertThat(isTurn).isTrue();
     }
@@ -29,7 +31,7 @@ public class BoardTest extends AbstractTestFixture {
     void checkTurn_false() {
         var board = BoardFactory.createBoard();
 
-        boolean isTurn = board.checkTurn(new Position("C7"), true);
+        boolean isTurn = board.checkTurn(new Position("C2"), BLACK);
 
         assertThat(isTurn).isFalse();
     }

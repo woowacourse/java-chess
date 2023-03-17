@@ -3,6 +3,7 @@ package chess.view;
 import chess.controller.dto.PieceResponse;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class OutputView {
 
@@ -31,12 +32,12 @@ public class OutputView {
         for (PieceResponse piece : pieces) {
             int y = piece.getRankIndex() - 1;
             int x = piece.getFileIndex() - 1;
-            board[y][x] = getPieceDisplay(piece.getType(), piece.isWhite());
+            board[y][x] = getPieceDisplay(piece.getType(), piece.getColor());
         }
     }
 
-    private char getPieceDisplay(String type, boolean isWhite) {
-        return PieceType.valueOf(type).getDisplayOf(isWhite);
+    private char getPieceDisplay(String type, String color) {
+        return PieceType.valueOf(type).getDisplayOf(color);
     }
 
     private void printBoard(char[][] board) {
@@ -61,8 +62,8 @@ public class OutputView {
             this.display = display;
         }
 
-        public char getDisplayOf(boolean isWhite) {
-            if (isWhite) {
+        public char getDisplayOf(String color) {
+            if (Objects.equals(color, "WHITE")) {
                 return Character.toLowerCase(display);
             }
             return display;

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.AbstractTestFixture;
@@ -14,8 +15,8 @@ public class InfinitePieceTest extends AbstractTestFixture {
 
     private static class InfinitePieceImplement extends InfinitePiece {
 
-        public InfinitePieceImplement(boolean isWhite, Set<Move> moves) {
-            super(isWhite, moves);
+        public InfinitePieceImplement(Color color, Set<Move> moves) {
+            super(color, moves);
         }
 
         @Override
@@ -34,6 +35,6 @@ public class InfinitePieceTest extends AbstractTestFixture {
     }
 
     private Piece createPiece(Move... moves) {
-        return new InfinitePieceImplement(true, Set.of(moves));
+        return new InfinitePieceImplement(WHITE, Set.of(moves));
     }
 }

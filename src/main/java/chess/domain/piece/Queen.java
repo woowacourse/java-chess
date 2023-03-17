@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Queen extends InfinitePiece {
 
-    public Queen(boolean isWhite) {
-        super(isWhite, setUpMoves());
+    public Queen(Color color) {
+        super(color, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {
