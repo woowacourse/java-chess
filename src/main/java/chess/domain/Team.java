@@ -10,9 +10,13 @@ public enum Team {
     }
 
     public Team reverse() {
-        if (Team.WHITE == this) {
-            return Team.BLACK;
+        if (WHITE == this) {
+            return BLACK;
         }
-        return Team.WHITE;
+        return WHITE;
+    }
+
+    public static Team getStartTeam() {
+        return WHITE;
     }
 }

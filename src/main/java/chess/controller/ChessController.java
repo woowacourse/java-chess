@@ -24,13 +24,7 @@ public class ChessController {
         outputView.printStartMessage();
         start();
         Board board = new Board();
-        boolean progress = true;
-        Team turn = Team.WHITE;
-        while (progress) {
-            outputView.printBoard(board);
-            progress = progress(board, turn);
-            turn = turn.reverse();
-        }
+리        progress(board);
     }
 
     private void start() {
@@ -42,7 +36,17 @@ public class ChessController {
         }
     }
 
-    private boolean progress(Board board, Team turn) {
+    private void progress(Board board) {
+        boolean isPlay = true;
+        Team turn = Team.getStartTeam();
+        while (isPlay) {
+            outputView.printBoard(board);
+            isPlay = play(board, turn);
+            turn = turn.reverse();
+        }
+    }
+
+    private boolean play(Board board, Team turn) {
         String command = inputCommand();
         if (command.equals(END)) {
             return false;
@@ -50,8 +54,9 @@ public class ChessController {
         Position source = convertToSourcePosition(command);
         Position target = convertToTargetPosition(command);
         if (isWrongInputTeam(board, turn, source)) {
-            return progress(board, turn);
+            return play(board, turn);
         }
+
         board.move(source, target);
         return true;
     }
