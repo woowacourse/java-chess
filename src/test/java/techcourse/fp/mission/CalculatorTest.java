@@ -12,20 +12,20 @@ class CalculatorTest {
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
 
     @Test
-    void sumAll() {
-        int sum = Calculator.sumAllByCondition(numbers, value -> true);
+    public void sumAll() {
+        int sum = Calculator.sumAll(numbers, number -> true);
         assertThat(sum).isEqualTo(21);
     }
 
     @Test
-    void sumAllEven() {
-        int sum = Calculator.sumAllByCondition(numbers, value -> value % 2 == 0);
+    public void sumAllEven() {
+        int sum = Calculator.sumAllEven(numbers, number -> number % 2 == 0);
         assertThat(sum).isEqualTo(12);
     }
 
     @Test
-    void sumAllOverThree() {
-        int sum = Calculator.sumAllByCondition(numbers, number -> number > 3);
+    public void sumAllOverThree() {
+        int sum = Calculator.sumAllOverThree(numbers, number -> number > 3);
         assertThat(sum).isEqualTo(15);
     }
 }
