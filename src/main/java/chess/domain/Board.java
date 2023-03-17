@@ -18,8 +18,9 @@ public class Board {
     
     public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
     public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
-    public static final String OTHER_PIECE_IN_ROUTE = "경로에 다른 피스가 존재합니다. 이동할 수 없습니다.";
-    public static final String SAME_COLOR_PIECE_IN_DESTINATION_ERROR_MESSAGE = "목적지에 같은 색깔의 피스가 있습니다.";
+    public static final String OTHER_PIECE_IN_ROUTE = "경로에 다른 피스가 존재합니다.";
+    public static final String PIECE_CANNOT_MOVE_SAME_COLOR = "목적지에 같은 색깔의 피스가 있습니다.";
+    public static final String PAWN_CANNOT_MOVE_EMPTY_DIAGONAL = "비어있기 때문에 대각선으로 이동할 수 없습니다.";
     private final Map<Position, Piece> board;
     
     private Board(final Map<Position, Piece> board) {
@@ -43,30 +44,25 @@ public class Board {
         List<Piece> whitePawns = PieceFactory.createWhitePawns();
         List<Piece> blackPawns = PieceFactory.createBlackPawns();
         List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
-        for (Position position : board.keySet()) {
+        for (Position position : this.board.keySet()) {
             if (position.isRank(0)) {
-                board.put(position, whiteGenerals.get(position.getFile().getIndex()));
+                this.board.put(position, whiteGenerals.get(position.getFile().getIndex()));
             }
             if (position.isRank(1)) {
-                board.put(position, whitePawns.get(position.getFile().getIndex()));
+                this.board.put(position, whitePawns.get(position.getFile().getIndex()));
             }
             if (position.isRank(6)) {
-                board.put(position, blackPawns.get(position.getFile().getIndex()));
+                this.board.put(position, blackPawns.get(position.getFile().getIndex()));
             }
             if (position.isRank(7)) {
-                board.put(position, blackGenerals.get(position.getFile().getIndex()));
+                this.board.put(position, blackGenerals.get(position.getFile().getIndex()));
             }
         }
         
     }
     
-    public Map<Position, Piece> getBoard() {
-        //TODO:얘를 그대로 남겨도 될까..
-        return this.board;
-    }
-    
     public void printList() {
-        List<Piece> piecesAt = getPiecesAt(Rank.EIGHT);
+        List<Piece> piecesAt = this.getPiecesAt(Rank.EIGHT);
         piecesAt.forEach(System.out::println);
     }
     
@@ -75,6 +71,17 @@ public class Board {
                 .filter(e -> e.getKey().isRank(rank.getIndex()))
                 .map(Entry::getValue)
                 .collect(Collectors.toList());
+    }
+    
+    public void checkBetweenRoute(final Position source, final Position destination) {
+        Direction direction = source.calculateDirection(destination);
+        Position move = source.addDirection(direction);
+        while (!destination.equals(move)) {
+            if (!this.board.get(move).isEmpty()) {
+                throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
+            }
+            move = move.addDirection(direction);
+        }
     }
     
     public Piece getPiece(final Position source, final Color color) {
@@ -89,25 +96,29 @@ public class Board {
         return piece;
     }
     
-    public void checkRoute(final Position source, final Position destination) {
+    public void checkRestrictionForPawn(final Position source, final Position destination, final Color color) {
         Direction direction = source.calculateDirection(destination);
-        Position move = source;
-        while (!destination.equals(move)) {
-            move = move.addDirection(direction);
-            if (!board.get(move).isEmpty()) {
+        if (direction == Direction.N || direction == Direction.S) {
+            if (!this.board.get(destination).isEmpty()) {
                 throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
             }
         }
+        if (List.of(Direction.NE, Direction.SE, Direction.NW, Direction.SW).contains(direction)) {
+            if (this.board.get(destination).isEmpty()) {
+                throw new IllegalArgumentException(PAWN_CANNOT_MOVE_EMPTY_DIAGONAL);
+            }
+            this.checkSameColor(destination, color);
+        }
     }
     
-    public void checkColor(final Position destination, Color color) {
-        if (board.get(destination).isSameColor(color)) {
-            throw new IllegalArgumentException(SAME_COLOR_PIECE_IN_DESTINATION_ERROR_MESSAGE);
+    public void checkSameColor(final Position destination, Color color) {
+        if (this.board.get(destination).isSameColor(color)) {
+            throw new IllegalArgumentException(PIECE_CANNOT_MOVE_SAME_COLOR);
         }
     }
     
     public void replace(final Position source, final Position destination) {
-        board.put(destination, board.get(source));
-        board.put(source, Empty.create());
+        this.board.put(destination, this.board.get(source));
+        this.board.put(source, Empty.create());
     }
 }
