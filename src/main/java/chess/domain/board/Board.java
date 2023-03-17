@@ -10,14 +10,10 @@ import java.util.Optional;
 
 public class Board {
 
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> chessBoard;
 
     public Board(final BoardFactory boardFactory) {
-        this.board = boardFactory.createInitialBoard();
-    }
-
-    public Map<Position, Piece> board() {
-        return board;
+        this.chessBoard = boardFactory.createInitialBoard();
     }
 
     public void move(Position from, Position to, final Color nextTurn) {
@@ -33,30 +29,34 @@ public class Board {
 
     private void validateTurn(final Position from, final Color nextTurn) {
         final Piece currentTurnPiece = findPieceFrom(from);
-        
+
         if (!currentTurnPiece.isSameColor(nextTurn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }
 
     private void validateMoveFromEmpty(final Position from) {
-        if (!board.containsKey(from)) {
+        if (!chessBoard.containsKey(from)) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
     }
 
     private void validateObstacle(final Path path) {
-        if (path.hasIntersection(board.keySet())) {
+        if (path.hasIntersection(chessBoard.keySet())) {
             throw new IllegalStateException("중간에 다른 기물이 존재합니다.");
         }
     }
 
     private void movePiece(Position from, Position to) {
-        final Piece movingPiece = board.remove(from);
-        board.put(to, movingPiece);
+        final Piece movingPiece = chessBoard.remove(from);
+        chessBoard.put(to, movingPiece);
     }
 
     private Piece findPieceFrom(Position position) {
-        return board.get(position);
+        return chessBoard.get(position);
+    }
+
+    public Map<Position, Piece> chessBoard() {
+        return chessBoard;
     }
 }

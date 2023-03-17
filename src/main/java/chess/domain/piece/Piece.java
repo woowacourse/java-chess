@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
+
 import java.util.Optional;
 
 public abstract class Piece {

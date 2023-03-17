@@ -1,5 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.position.Movement;
+import chess.domain.board.position.Path;
+import chess.domain.board.position.Position;
+
+import java.util.List;
+import java.util.Optional;
+
 import static chess.domain.board.position.Movement.DDL;
 import static chess.domain.board.position.Movement.DDR;
 import static chess.domain.board.position.Movement.LLD;
@@ -8,12 +15,6 @@ import static chess.domain.board.position.Movement.RRD;
 import static chess.domain.board.position.Movement.RRU;
 import static chess.domain.board.position.Movement.UUL;
 import static chess.domain.board.position.Movement.UUR;
-
-import chess.domain.board.position.Movement;
-import chess.domain.board.position.Path;
-import chess.domain.board.position.Position;
-import java.util.List;
-import java.util.Optional;
 
 public class Knight extends Piece {
 

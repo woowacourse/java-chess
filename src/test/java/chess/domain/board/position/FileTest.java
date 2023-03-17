@@ -1,6 +1,5 @@
 package chess.domain.board.position;
 
-import chess.domain.board.position.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,14 +8,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FileTest {
 
     @ParameterizedTest
     @CsvSource({
-            "1","2","3","4",
-            "5","6","7","8",
+            "1", "2", "3", "4",
+            "5", "6", "7", "8",
     })
     @DisplayName("from() : File 속에 value 가 있으면 File를 생성할 수 있다.")
     void test_from(final int value) throws Exception {

@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,13 +39,13 @@ class BoardTest {
         final Position from = new Position(1, 2);
         final Position to = new Position(1, 4);
 
-        assertTrue(board.board().containsKey(from));
-        assertFalse(board.board().containsKey(to));
+        assertTrue(board.chessBoard().containsKey(from));
+        assertFalse(board.chessBoard().containsKey(to));
 
         board.move(from, to, Color.WHITE);
 
-        assertFalse(board.board().containsKey(from));
-        assertTrue(board.board().containsKey(to));
+        assertFalse(board.chessBoard().containsKey(from));
+        assertTrue(board.chessBoard().containsKey(to));
     }
 
     @Test

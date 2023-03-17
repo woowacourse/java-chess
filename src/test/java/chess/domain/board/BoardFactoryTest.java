@@ -1,9 +1,5 @@
 package chess.domain.board;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import chess.domain.board.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -12,10 +8,14 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardFactoryTest {
 
@@ -30,13 +30,13 @@ class BoardFactoryTest {
 
         final Map<Class<? extends Piece>, Integer> result =
                 board.values()
-                        .stream()
-                        .collect(
-                                Collectors.groupingBy(Piece::getClass,
-                                        Collectors.summingInt(
-                                                value -> 1)
-                                )
-                        );
+                     .stream()
+                     .collect(
+                             Collectors.groupingBy(Piece::getClass,
+                                                   Collectors.summingInt(
+                                                           value -> 1)
+                             )
+                     );
 
         //then
         assertAll(

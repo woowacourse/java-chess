@@ -1,24 +1,24 @@
 package chess.controller;
 
-import chess.domain.board.position.Position;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 import java.util.Map;
 
 public class ChessController {
 
     private static final String START_COMMAND = "start";
+    private static final int STARTING_VALUE_OF_FILE = 1;
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
-
         final Board board = new Board(boardFactory);
-        final Map<Position, Piece> boardMap = board.board();
 
         final String command = InputView.readStartCommand();
 
@@ -26,27 +26,30 @@ public class ChessController {
             return;
         }
 
-        Color turn = Color.WHITE;
+        final Color turn = Color.WHITE;
+        startGame(board, turn);
+    }
 
+    private void startGame(final Board board, Color turn) {
+
+        final Map<Position, Piece> boardMap = board.chessBoard();
         while (true) {
             OutputView.printBoard(boardMap);
-            List<String> moveCommand = InputView.readMoveCommand();
+            final List<String> moveCommand = InputView.readMoveCommand();
 
-            final String from = moveCommand.get(0);
-            final String to = moveCommand.get(1);
-
-            final int fromFile = from.charAt(0) - 'a' + 1;
-            final int fromRank = from.charAt(1) - '0';
-
-            final int toFile = to.charAt(0) - 'a' + 1;
-            final int toRank = to.charAt(1) - '0';
-
-            final Position fromPosition = new Position(fromFile, fromRank);
-            final Position toPosition = new Position(toFile, toRank);
+            final Position fromPosition = convertPositionFrom(moveCommand.get(0));
+            final Position toPosition = convertPositionFrom(moveCommand.get(1));
 
             board.move(fromPosition, toPosition, turn);
 
             turn = turn.opposite();
         }
+    }
+
+    private Position convertPositionFrom(String position) {
+        final int file = position.charAt(0) - 'a' + STARTING_VALUE_OF_FILE;
+        final int rank = position.charAt(1) - '0';
+
+        return new Position(file, rank);
     }
 }

@@ -1,9 +1,5 @@
 package chess.domain.board.position;
 
-import chess.domain.board.position.File;
-import chess.domain.board.position.Movement;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

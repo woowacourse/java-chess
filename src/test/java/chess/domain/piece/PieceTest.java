@@ -1,16 +1,14 @@
 package chess.domain.piece;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
-import java.util.Optional;
-
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PieceTest {
 

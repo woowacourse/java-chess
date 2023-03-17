@@ -2,10 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

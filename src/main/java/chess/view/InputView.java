@@ -29,10 +29,10 @@ public class InputView {
     public static List<String> readMoveCommand() {
         String command = scanner.nextLine();
         List<String> commands = Arrays.stream(command.split(" "))
-                .collect(Collectors.toList());
+                                      .collect(Collectors.toList());
 
         if (!commands.get(0).equals("move")) {
-            throw new IllegalArgumentException("명령어 move 아님");
+            throw new IllegalArgumentException("move 단어가 아니면 움직일 수 없습니다.");
         }
 
         return List.of(commands.get(1), commands.get(2));

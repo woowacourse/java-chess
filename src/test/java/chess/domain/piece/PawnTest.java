@@ -1,18 +1,15 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
-import java.util.Optional;
-
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
@@ -63,7 +60,7 @@ class PawnTest {
             Pawn pawn = new Pawn(Color.WHITE);
 
             assertThatThrownBy(() ->
-                    pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
+                                       pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
                     .isInstanceOf(IllegalStateException.class);
         }
 
