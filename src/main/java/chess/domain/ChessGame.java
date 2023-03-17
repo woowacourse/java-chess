@@ -36,18 +36,30 @@ public class ChessGame {
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
-        
+    
+        this.checkPieceMove(source, destination);
+        this.board.replace(source, destination);
+        this.turn = Color.reverse(this.turn);
+    }
+    
+    private void checkPieceMove(final Position source, final Position destination) {
         Piece sourcePiece = this.board.getValidSourcePiece(source, this.turn);
         sourcePiece.canMove(source, destination);
         this.board.checkSameColor(destination, this.turn);
-        if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
-            this.board.checkBetweenRoute(source, destination);
-        }
+        this.checkRoute(source, destination, sourcePiece);
+        this.checkPawnMove(source, destination, sourcePiece);
+    }
+    
+    private void checkPawnMove(final Position source, final Position destination, final Piece sourcePiece) {
         if (sourcePiece.getType() == PieceType.PAWN) {
             this.board.checkRestrictionForPawn(source, destination, this.turn);
         }
-        this.board.replace(source, destination);
-        this.turn = Color.reverse(this.turn);
+    }
+    
+    private void checkRoute(final Position source, final Position destination, final Piece sourcePiece) {
+        if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
+            this.board.checkBetweenRoute(source, destination);
+        }
     }
     
     public void end() {

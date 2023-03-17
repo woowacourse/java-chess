@@ -24,5 +24,6 @@ public class OutputView {
     
     public void printError(final String message) {
         System.out.println(ERROR_PREFIX + message);
+        System.out.println();
     }
 }
