@@ -5,7 +5,7 @@ import chess.domain.movepattern.QueenMovePattern;
 import java.util.Arrays;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Queen extends LinearPiece {
 
     private final List<MovePattern> movePatterns;
 

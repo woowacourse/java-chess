@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.PawnMovePattern;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +80,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isDiagonal(Position source, Position nextPosition) {
-        return Math.abs((source.getRankIndex() - nextPosition.getRankIndex())) == Math.abs((source.getFileIndex() - nextPosition.getFileIndex()));
+        return Math.abs((source.getRankIndex() - nextPosition.getRankIndex())) == Math.abs(
+                (source.getFileIndex() - nextPosition.getFileIndex()));
     }
 
     private void checkFrontSide(final List<Position> movablePositions, final Position nextPosition,
@@ -95,12 +96,6 @@ public class Pawn extends Piece {
         if (nextSide != this.side && nextSide != Side.NEUTRALITY) {
             movablePositions.add(nextPosition);
         }
-    }
-
-    private boolean isRangeValid(final Position position, final MovePattern movePattern) {
-        final int nextRank = position.getRankIndex() + movePattern.getRankVector();
-        final int nextFile = position.getFileIndex() + movePattern.getFileVector();
-        return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 
     @Override

@@ -5,7 +5,7 @@ import chess.domain.movepattern.RookMovePattern;
 import java.util.Arrays;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends LinearPiece {
 
     private final List<MovePattern> movePatterns;
 

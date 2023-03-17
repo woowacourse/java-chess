@@ -5,7 +5,7 @@ import chess.domain.movepattern.MovePattern;
 import java.util.Arrays;
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Bishop extends LinearPiece {
 
     private final List<MovePattern> movePatterns;
 
