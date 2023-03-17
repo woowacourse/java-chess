@@ -2,9 +2,9 @@ package view;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.EmptyType;
-import domain.piece.Color;
-import domain.chessboard.Square;
 import domain.chessboard.Rank;
+import domain.chessboard.Square;
+import domain.piece.Color;
 
 import java.util.List;
 

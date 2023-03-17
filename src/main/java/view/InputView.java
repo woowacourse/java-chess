@@ -24,4 +24,5 @@ public class InputView {
             throw new IllegalStateException("안내된 명령어만 입력해주세요.");
         }
     }
+
 }

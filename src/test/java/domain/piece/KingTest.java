@@ -38,4 +38,5 @@ class KingTest {
         //when&then
         assertThat(king.findRoute(source, target).getRoute()).isEqualTo(Collections.EMPTY_LIST);
     }
+
 }

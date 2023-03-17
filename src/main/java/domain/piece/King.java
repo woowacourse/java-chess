@@ -24,4 +24,5 @@ public final class King extends Piece {
 
         return (diffY != 0 || diffX != 0) && (diffX < 2 && diffY < 2);
     }
+
 }

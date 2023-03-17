@@ -28,4 +28,5 @@ public class Empty implements SquareStatus {
     public Route findRoute(final Position source, final Position target) {
         throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
     }
+
 }

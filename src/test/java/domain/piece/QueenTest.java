@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
 
-
     @Test
     @DisplayName("잘못될 목적지 입력시 예외 발생")
     void givenWrongEndPoint_thenFail() {
@@ -37,4 +36,5 @@ class QueenTest {
         //when&then
         assertThat(queen.findRoute(source, target).getRoute()).hasSize(2);
     }
+
 }

@@ -47,4 +47,5 @@ public enum PositionFactory {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("범위 내의 값만 입력해주세요."));
     }
+
 }

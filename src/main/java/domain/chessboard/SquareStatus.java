@@ -11,4 +11,5 @@ public interface SquareStatus {
     Color getColor();
 
     Route findRoute(final Position source, final Position target);
+
 }

@@ -10,4 +10,5 @@ public enum PieceType implements Type {
     ROOK,
     QUEEN,
     KING
+
 }

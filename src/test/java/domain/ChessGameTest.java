@@ -88,7 +88,6 @@ class ChessGameTest {
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }
 
-    // 6. 우리팀 기물이 목적지에 있을 때 a1 -> a2
     @Test
     @DisplayName("목적지에 우리팀 기물이 있을 때 이동할 수 없다.")
     void whenPieceMove_thenFail() {
@@ -100,4 +99,5 @@ class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }
+
 }

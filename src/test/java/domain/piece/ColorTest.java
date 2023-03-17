@@ -19,4 +19,5 @@ class ColorTest {
         //then
         assertThat(reverse).isEqualTo(Color.WHITE);
     }
+
 }

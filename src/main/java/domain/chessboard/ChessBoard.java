@@ -15,7 +15,6 @@ public class ChessBoard {
         this.chessBoard = chessBoard;
     }
 
-
     public static ChessBoard generate() {
         final List<Rank> chessBoard = new ArrayList<>();
         chessBoard.add(Rank.initRankToRank(RankFactory.OTHERS_BLACK));
@@ -38,4 +37,5 @@ public class ChessBoard {
                 .getRank()
                 .get(position.getX());
     }
+
 }

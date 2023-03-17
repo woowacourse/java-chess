@@ -39,6 +39,7 @@ public class Position {
             CACHE.get(y).add(new Position(x, y));
         }
     }
+
     public int diffY(Position otherPosition) {
         return this.y - otherPosition.y;
     }
@@ -86,11 +87,4 @@ public class Position {
         return Objects.hash(x, y);
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }

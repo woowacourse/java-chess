@@ -56,4 +56,5 @@ public final class Queen extends Piece {
         }
         return positions;
     }
+
 }

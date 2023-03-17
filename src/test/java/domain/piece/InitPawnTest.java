@@ -97,4 +97,5 @@ class InitPawnTest {
             assertThat(initPawn.findRoute(source, target).getRoute()).hasSize(1);
         }
     }
+
 }

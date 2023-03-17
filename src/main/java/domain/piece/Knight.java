@@ -24,4 +24,5 @@ public final class Knight extends Piece {
 
         return (diffX == 1 && diffY == 2) || (diffX == 2 && diffY == 1);
     }
+
 }

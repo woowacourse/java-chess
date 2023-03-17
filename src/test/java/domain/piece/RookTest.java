@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
-
     @Test
     @DisplayName("잘못될 목적지 입력시 예외 발생")
     void givenWrongEndPoint_thenFail() {
@@ -37,4 +36,5 @@ class RookTest {
         //when&then
         assertThat(rook.findRoute(source, target).getRoute()).hasSize(2);
     }
+
 }

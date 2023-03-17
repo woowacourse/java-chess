@@ -8,7 +8,7 @@ import domain.piece.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SquareTest {
 
@@ -39,4 +39,5 @@ class SquareTest {
         assertThat(square.getSquareStatus().getClass())
                 .isEqualTo(King.class);
     }
+
 }

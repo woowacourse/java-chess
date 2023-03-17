@@ -37,5 +37,4 @@ public abstract class Piece implements SquareStatus {
 
     protected abstract boolean isMovable(final Position source, final Position target);
 
-
 }

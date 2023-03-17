@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
-
     @Nested
     @DisplayName("기물의 색깔이 검은색일 때")
     class BlackTest {
@@ -74,4 +73,5 @@ class PawnTest {
             assertThat(pawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
         }
     }
+
 }

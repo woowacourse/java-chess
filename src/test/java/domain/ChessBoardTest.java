@@ -23,4 +23,5 @@ public class ChessBoardTest {
 
         assertThat(sum).isEqualTo(64);
     }
+
 }

@@ -27,7 +27,6 @@ public final class Rook extends Piece {
         return source.isStraight(target);
     }
 
-
     public int getMoveCoordinate(final int diff) {
         return Integer.compare(diff, 0);
     }
@@ -42,4 +41,5 @@ public final class Rook extends Piece {
         }
         return positions;
     }
+
 }

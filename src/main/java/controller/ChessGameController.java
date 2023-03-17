@@ -63,4 +63,5 @@ public class ChessGameController {
     private void isEnd(final Command command) {
         isKeepGaming = command != Command.END;
     }
+
 }

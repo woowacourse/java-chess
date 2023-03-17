@@ -38,4 +38,5 @@ class KnightTest {
         //when&then
         assertThat(knight.findRoute(source, target).getRoute()).isEqualTo(Collections.EMPTY_LIST);
     }
+
 }

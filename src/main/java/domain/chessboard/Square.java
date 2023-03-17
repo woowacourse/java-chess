@@ -43,4 +43,5 @@ public class Square {
     public Type getType() {
         return squareStatus.getType();
     }
+
 }
