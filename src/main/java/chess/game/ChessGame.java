@@ -6,11 +6,11 @@ import chess.board.Position;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private boolean endStatus;
+    private boolean processStatus;
 
     public ChessGame() {
         this.chessBoard = ChessBoard.createBoard();
-        this.endStatus = false;
+        this.processStatus = false;
     }
 
     public void movePiece(final Position from, final Position to) {
@@ -19,15 +19,15 @@ public class ChessGame {
 
     public void receiveCommand(final Command command) {
         if (command == Command.START) {
-            this.endStatus = false;
+            this.processStatus = true;
         }
         if (command == Command.END) {
-            this.endStatus = true;
+            this.processStatus = false;
         }
     }
 
     public boolean isEnd() {
-        return endStatus;
+        return !processStatus;
     }
 
     public ChessBoard getChessBoard() {

@@ -35,10 +35,10 @@ public class ChessController {
         final Command firstCommand = repeat(this::readCommand);
         chessGame.receiveCommand(firstCommand);
 
-        final List<String> movePositions = new ArrayList<>();
-
         while (!chessGame.isEnd()) {
+            final List<String> movePositions = new ArrayList<>();
             renderChessBoard();
+
             final Command command = readMoveCommand(movePositions);
             if (command == Command.END) {
                 break;
@@ -53,6 +53,9 @@ public class ChessController {
         return repeat(() -> {
             final List<String> commands = inputView.readGameCommand();
             final Command result = Command.from(commands.get(0));
+            if (result != Command.MOVE) {
+                return result;
+            }
             movePositions.add(commands.get(1));
             movePositions.add(commands.get(2));
             return result;
