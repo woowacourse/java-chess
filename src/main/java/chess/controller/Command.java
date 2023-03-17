@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.controller.status.CommandType;
-
 import java.util.Arrays;
 import java.util.List;
 

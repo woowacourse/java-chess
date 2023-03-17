@@ -1,12 +1,12 @@
 package chess.domain.board;
 
-import chess.domain.camp.CampType;
+import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.piece.Rook;
+import chess.domain.piece.type.Pawn;
+import chess.domain.piece.type.Piece;
+import chess.domain.piece.type.PieceType;
+import chess.domain.piece.type.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

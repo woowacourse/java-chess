@@ -1,6 +1,5 @@
 package chess.domain.chess;
 
-import chess.domain.camp.CampType;
 import chess.domain.piece.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

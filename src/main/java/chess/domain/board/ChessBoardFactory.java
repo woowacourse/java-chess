@@ -1,26 +1,26 @@
 package chess.domain.board;
 
-import chess.domain.camp.CampType;
+import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.King;
+import chess.domain.piece.type.Knight;
+import chess.domain.piece.type.Pawn;
+import chess.domain.piece.type.Piece;
+import chess.domain.piece.type.Queen;
+import chess.domain.piece.type.Rook;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static chess.domain.piece.PieceType.BISHOP;
-import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
-import static chess.domain.piece.PieceType.QUEEN;
-import static chess.domain.piece.PieceType.ROOK;
+import static chess.domain.piece.type.PieceType.BISHOP;
+import static chess.domain.piece.type.PieceType.KING;
+import static chess.domain.piece.type.PieceType.KNIGHT;
+import static chess.domain.piece.type.PieceType.PAWN;
+import static chess.domain.piece.type.PieceType.QUEEN;
+import static chess.domain.piece.type.PieceType.ROOK;
 
 public final class ChessBoardFactory {
 

@@ -1,13 +1,13 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.type.Piece;
 
 import java.util.Map;
 
-import static chess.controller.status.CommandType.END;
-import static chess.controller.status.CommandType.MOVE;
-import static chess.controller.status.CommandType.START;
+import static chess.controller.CommandType.END;
+import static chess.controller.CommandType.MOVE;
+import static chess.controller.CommandType.START;
 
 public final class OutputView {
     private static final int BOARD_SIZE = 8;

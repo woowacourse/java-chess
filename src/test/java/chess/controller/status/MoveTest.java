@@ -1,7 +1,8 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.camp.CampType;
+import chess.controller.CommandType;
+import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.camp.CampType;
+import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 
 public final class Start implements Status {

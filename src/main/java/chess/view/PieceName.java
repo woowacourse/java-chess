@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.camp.CampType;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.domain.chess.CampType;
+import chess.domain.piece.type.Piece;
+import chess.domain.piece.type.PieceType;
 
 import java.util.Map;
 import java.util.stream.Collectors;
