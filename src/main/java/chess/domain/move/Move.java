@@ -8,6 +8,9 @@ import java.util.Set;
 
 public final class Move {
     private static final int BOARD_SIZE = 8;
+    static final int KING_MAX_MOVE_COUNT = 1;
+    static final int PAWN_MAX_MOVE_COUNT = 2;
+    static final int MAX_MOVE_COUNT = 8;
 
     Set<Position> getAllPositions(final Position source, final List<Direction> allDirections, final int moveCount) {
         final Set<Position> positions = new HashSet<>();
