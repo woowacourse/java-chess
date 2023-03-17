@@ -42,14 +42,8 @@ public class OutputView {
 
     private void printBoard(char[][] board) {
         for (int i = board.length - 1; i >= 0; i--) {
-            printLine(board[i]);
-            System.out.println();
-        }
-    }
-
-    private void printLine(char[] line) {
-        for (char square : line) {
-            System.out.print(square);
+            char[] line = board[i];
+            System.out.println(String.copyValueOf(line));
         }
     }
 
