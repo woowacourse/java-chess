@@ -22,11 +22,14 @@ public class Calculator {
         return total;
     }
 
-    public static int sumAllOverThree(List<Integer> numbers) {
+    public static int sumAllOverThree(List<Integer> numbers, Conditional conditional) {
         int total = 0;
 
-        //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
-
+        for (Integer number : numbers) {
+            if (conditional.test(number)) {
+                total += number;
+            }
+        }
         return total;
     }
 }
