@@ -9,7 +9,6 @@ public class ChessController {
 
     public void run() {
         OutputView.printChessInfo();
-
         play();
     }
 

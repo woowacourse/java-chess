@@ -23,7 +23,7 @@ public class Knight extends RestrictedPiece {
         Integer rankGapAbs = Math.abs(gaps.get(RANK));
         int gapsSum = fileGapAbs + rankGapAbs;
         int gapsSubtraction = Math.abs(fileGapAbs - rankGapAbs);
-        if(gapsSum != KNIGHT_GAP_SUM || gapsSubtraction != KNIGHT_GAP_SUBTRACTION) {
+        if (gapsSum != KNIGHT_GAP_SUM || gapsSubtraction != KNIGHT_GAP_SUBTRACTION) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
     }

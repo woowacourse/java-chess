@@ -20,7 +20,6 @@ public class ChessService {
 
     private boolean isOngoing;
 
-
     public void execute(String[] inputs) {
         if (commandIsStart(inputs)) {
             return;

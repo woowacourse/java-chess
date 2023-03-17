@@ -19,7 +19,7 @@ public class King extends RestrictedPiece {
     @Override
     protected void validateMovable(List<Integer> gaps) {
         Integer distance = calculateDistance(gaps);
-        if(distance != MOVE_DISTANCE_LIMIT) {
+        if (distance != MOVE_DISTANCE_LIMIT) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
     }

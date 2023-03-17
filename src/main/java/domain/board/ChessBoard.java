@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.Empty;
+import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
-import domain.piece.type.Pawn;
+import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;
 
