@@ -2,10 +2,10 @@ package chessgame.domain.state;
 
 import chessgame.domain.Command;
 
-public class Button {
+public class Power {
     private State state = new End();
 
-    public void click(Command command) {
+    public void changeState(Command command) {
         state.click(this, command);
     }
 

@@ -48,7 +48,7 @@ public class ChessController {
 
     private Command setButton(Game game, Command command) {
         try {
-            game.setButton(command);
+            game.setState(command);
             return command;
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
