@@ -5,6 +5,7 @@ import static chess.domain.move.Direction.UP;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.MoveType;
 import chess.domain.move.Move;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ public class InfinitePieceTest {
         Move move = new Move(UP, RIGHT);
 
         Piece piece = createPiece(move);
-        assertThat(piece.hasMove(new Move(UP, RIGHT, UP, RIGHT))).isTrue();
+        assertThat(piece.isValidMove(new Move(UP, RIGHT, UP, RIGHT), MoveType.MOVE)).isTrue();
     }
 
     private Piece createPiece(Move... moves) {

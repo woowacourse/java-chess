@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
@@ -18,10 +19,10 @@ public class RookTest {
     void canMove_HorizontalVertical_Infinite() {
         Rook rook = new Rook(WHITE);
 
-        assertThat(rook.hasMove(new Move(LEFT, LEFT, LEFT))).isTrue();
-        assertThat(rook.hasMove(new Move(RIGHT, RIGHT))).isTrue();
-        assertThat(rook.hasMove(new Move(UP, UP))).isTrue();
-        assertThat(rook.hasMove(new Move(DOWN))).isTrue();
+        assertThat(rook.isValidMove(new Move(LEFT, LEFT, LEFT), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(RIGHT, RIGHT), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(UP, UP), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(DOWN), MOVE)).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -29,8 +30,8 @@ public class RookTest {
     void canNotMove() {
         Rook rook = new Rook(WHITE);
 
-        assertThat(rook.hasMove(new Move(LEFT, LEFT, UP))).isFalse();
-        assertThat(rook.hasMove(new Move(LEFT, UP))).isFalse();
-        assertThat(rook.hasMove(new Move(RIGHT, RIGHT, DOWN, DOWN))).isFalse();
+        assertThat(rook.isValidMove(new Move(LEFT, LEFT, UP), MOVE)).isFalse();
+        assertThat(rook.isValidMove(new Move(LEFT, UP), MOVE)).isFalse();
+        assertThat(rook.isValidMove(new Move(RIGHT, RIGHT, DOWN, DOWN), MOVE)).isFalse();
     }
 }

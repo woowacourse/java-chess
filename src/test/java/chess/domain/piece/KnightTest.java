@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
@@ -19,14 +20,14 @@ public class KnightTest {
     void canMove() {
         Knight knight = new Knight(WHITE);
 
-        assertThat(knight.hasMove(new Move(LEFT, LEFT, UP))).isTrue();
-        assertThat(knight.hasMove(new Move(LEFT, UP, UP))).isTrue();
-        assertThat(knight.hasMove(new Move(RIGHT, RIGHT, UP))).isTrue();
-        assertThat(knight.hasMove(new Move(RIGHT, UP, UP))).isTrue();
-        assertThat(knight.hasMove(new Move(RIGHT, RIGHT, DOWN))).isTrue();
-        assertThat(knight.hasMove(new Move(RIGHT, DOWN, DOWN))).isTrue();
-        assertThat(knight.hasMove(new Move(LEFT, LEFT, DOWN))).isTrue();
-        assertThat(knight.hasMove(new Move(LEFT, DOWN, DOWN))).isTrue();
+        assertThat(knight.isValidMove(new Move(LEFT, LEFT, UP), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(LEFT, UP, UP), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(RIGHT, RIGHT, UP), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(RIGHT, UP, UP), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(RIGHT, RIGHT, DOWN), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(RIGHT, DOWN, DOWN), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(LEFT, LEFT, DOWN), MOVE)).isTrue();
+        assertThat(knight.isValidMove(new Move(LEFT, DOWN, DOWN), MOVE)).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -34,14 +35,14 @@ public class KnightTest {
     void canNotMove() {
         Knight knight = new Knight(WHITE);
 
-        assertThat(knight.hasMove(new Move(LEFT, LEFT, LEFT))).isFalse();
-        assertThat(knight.hasMove(new Move(RIGHT, RIGHT))).isFalse();
-        assertThat(knight.hasMove(new Move(UP, UP))).isFalse();
-        assertThat(knight.hasMove(new Move(DOWN))).isFalse();
-        assertThat(knight.hasMove(new Move(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isFalse();
-        assertThat(knight.hasMove(new Move(UP, LEFT))).isFalse();
-        assertThat(knight.hasMove(new Move(DOWN, RIGHT))).isFalse();
-        assertThat(knight.hasMove(new Move(DOWN, LEFT))).isFalse();
+        assertThat(knight.isValidMove(new Move(LEFT, LEFT, LEFT), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(RIGHT, RIGHT), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(UP, UP), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(DOWN), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(UP, RIGHT, UP, RIGHT, UP, RIGHT), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(UP, LEFT), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(DOWN, RIGHT), MOVE)).isFalse();
+        assertThat(knight.isValidMove(new Move(DOWN, LEFT), MOVE)).isFalse();
     }
 
     @DisplayName("한 단위 이상 움직일 수 없다")
@@ -49,6 +50,6 @@ public class KnightTest {
     void canNotMove_MoreThanOneUnit() {
         Knight knight = new Knight(WHITE);
 
-        assertThat(knight.hasMove(new Move(LEFT, LEFT, LEFT, LEFT, UP, UP))).isFalse();
+        assertThat(knight.isValidMove(new Move(LEFT, LEFT, LEFT, LEFT, UP, UP), MOVE)).isFalse();
     }
 }

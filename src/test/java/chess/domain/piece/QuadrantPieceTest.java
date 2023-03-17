@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
@@ -31,9 +32,9 @@ public class QuadrantPieceTest {
     void copyMoves() {
         Piece piece = new QuadrantPieceImplement(BLACK, Set.of(new Move(UP, RIGHT)));
 
-        assertThat(piece.hasMove(new Move(UP, RIGHT))).isTrue();
-        assertThat(piece.hasMove(new Move(UP, LEFT))).isTrue();
-        assertThat(piece.hasMove(new Move(DOWN, LEFT))).isTrue();
-        assertThat(piece.hasMove(new Move(DOWN, RIGHT))).isTrue();
+        assertThat(piece.isValidMove(new Move(UP, RIGHT), MOVE)).isTrue();
+        assertThat(piece.isValidMove(new Move(UP, LEFT), MOVE)).isTrue();
+        assertThat(piece.isValidMove(new Move(DOWN, LEFT), MOVE)).isTrue();
+        assertThat(piece.isValidMove(new Move(DOWN, RIGHT), MOVE)).isTrue();
     }
 }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.MoveType.ATTACK;
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
@@ -19,8 +21,8 @@ public class PawnTest {
     void whiteMoveUp_onceOrTwice_onFirstMove() {
         Piece pawn = new Pawn(WHITE);
 
-        assertThat(pawn.hasMove(new Move(UP, UP))).isTrue();
-        assertThat(pawn.hasMove(new Move(UP))).isTrue();
+        assertThat(pawn.isValidMove(new Move(UP, UP), MOVE)).isTrue();
+        assertThat(pawn.isValidMove(new Move(UP), MOVE)).isTrue();
     }
 
     @DisplayName("흑은 처음에 1칸 혹은 2칸 아래로 움직일 수 있다.")
@@ -28,8 +30,8 @@ public class PawnTest {
     void blackMoveDown_onceOrTwice_onFirstMove() {
         Piece pawn = new Pawn(BLACK);
 
-        assertThat(pawn.hasMove(new Move(DOWN, DOWN))).isTrue();
-        assertThat(pawn.hasMove(new Move(DOWN))).isTrue();
+        assertThat(pawn.isValidMove(new Move(DOWN, DOWN), MOVE)).isTrue();
+        assertThat(pawn.isValidMove(new Move(DOWN), MOVE)).isTrue();
     }
 
     @DisplayName("백은 아래로 움직일 수 없다")
@@ -37,8 +39,8 @@ public class PawnTest {
     void whiteCannotMoveDown() {
         Piece pawn = new Pawn(WHITE);
 
-        assertThat(pawn.hasMove(new Move(DOWN, DOWN))).isFalse();
-        assertThat(pawn.hasMove(new Move(DOWN))).isFalse();
+        assertThat(pawn.isValidMove(new Move(DOWN, DOWN), MOVE)).isFalse();
+        assertThat(pawn.isValidMove(new Move(DOWN), MOVE)).isFalse();
     }
 
     @DisplayName("흑은 위로 움직일 수 없다")
@@ -46,8 +48,8 @@ public class PawnTest {
     void blackCannotMoveUp() {
         Piece pawn = new Pawn(BLACK);
 
-        assertThat(pawn.hasMove(new Move(UP, UP))).isFalse();
-        assertThat(pawn.hasMove(new Move(UP))).isFalse();
+        assertThat(pawn.isValidMove(new Move(UP, UP), MOVE)).isFalse();
+        assertThat(pawn.isValidMove(new Move(UP), MOVE)).isFalse();
     }
 
     @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
@@ -55,8 +57,8 @@ public class PawnTest {
     void moveOnceAfterTouch() {
         Piece touchedPawn = new Pawn(WHITE).touch();
 
-        assertThat(touchedPawn.hasMove(new Move(UP))).isTrue();
-        assertThat(touchedPawn.hasMove(new Move(UP, UP))).isFalse();
+        assertThat(touchedPawn.isValidMove(new Move(UP), MOVE)).isTrue();
+        assertThat(touchedPawn.isValidMove(new Move(UP, UP), MOVE)).isFalse();
     }
 
     @DisplayName("백은 윗 대각선으로 공격할 수 있다")
@@ -64,8 +66,8 @@ public class PawnTest {
     void white_hasAttackMove_UpDiagonal() {
         Piece piece = new Pawn(WHITE);
 
-        assertThat(piece.hasAttackMove(new Move(RIGHT, UP))).isTrue();
-        assertThat(piece.hasAttackMove(new Move(LEFT, UP))).isTrue();
+        assertThat(piece.isValidMove(new Move(RIGHT, UP), ATTACK)).isTrue();
+        assertThat(piece.isValidMove(new Move(LEFT, UP), ATTACK)).isTrue();
     }
 
     @DisplayName("흑은 아래 대각선으로 공격할 수 있다")
@@ -73,7 +75,7 @@ public class PawnTest {
     void black_hasAttackMove_DownDiagonal() {
         Piece piece = new Pawn(BLACK);
 
-        assertThat(piece.hasAttackMove(new Move(RIGHT, DOWN))).isTrue();
-        assertThat(piece.hasAttackMove(new Move(LEFT, DOWN))).isTrue();
+        assertThat(piece.isValidMove(new Move(RIGHT, DOWN), ATTACK)).isTrue();
+        assertThat(piece.isValidMove(new Move(LEFT, DOWN), ATTACK)).isTrue();
     }
 }

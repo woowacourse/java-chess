@@ -22,15 +22,12 @@ public class Board {
 
     public void move(Position source, Position target) {
         Piece sourcePiece = findPieceToMove(source);
-        boolean isAttack = checkIsAttack(sourcePiece, target);
+        MoveType moveType = checkType(sourcePiece, target);
         Move move = Move.of(source, target);
 
-        checkPieceReachable(sourcePiece, isAttack, move);
+        checkPieceReachable(sourcePiece, moveType, move);
         checkNotCrossOtherPiece(source, target, move);
-
-        if (isAttack) {
-            pieces.remove(target);
-        }
+        
         pieces.remove(source);
         pieces.put(target, sourcePiece.touch());
     }
@@ -43,28 +40,21 @@ public class Board {
         return piece;
     }
 
-    private boolean checkIsAttack(Piece sourcePiece, Position target) {
+    private MoveType checkType(Piece sourcePiece, Position target) {
         Piece targetPiece = pieces.get(target);
         if (isEmpty(target)) {
-            return false;
+            return MoveType.MOVE;
         }
         if (!sourcePiece.isRightTarget(targetPiece)) {
             throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
         }
-        return true;
+        return MoveType.ATTACK;
     }
 
-    private void checkPieceReachable(Piece sourcePiece, boolean isAttack, Move move) {
-        if (!canMove(sourcePiece, move, isAttack)) {
+    private void checkPieceReachable(Piece sourcePiece, MoveType moveType, Move move) {
+        if (!sourcePiece.isValidMove(move, moveType)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
-    }
-
-    private boolean canMove(Piece piece, Move move, boolean isAttack) {
-        if (isAttack) {
-            return piece.hasAttackMove(move);
-        }
-        return piece.hasMove(move);
     }
 
     private void checkNotCrossOtherPiece(Position source, Position target, Move move) {

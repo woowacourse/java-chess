@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.MoveType;
 import chess.domain.move.Direction;
 import chess.domain.move.Move;
 import java.util.List;
@@ -54,12 +55,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean hasAttackMove(Move attackMove) {
-        boolean hasAttackMove = false;
-        for (Move pieceMove : getAttackMoves()) {
-            hasAttackMove = hasAttackMove || compareMove(pieceMove, attackMove);
+    public boolean isValidMove(Move move, MoveType moveType) {
+        Set<Move> validMoves = moves;
+        if (moveType == MoveType.ATTACK) {
+            validMoves = getAttackMoves();
         }
-        return hasAttackMove;
+        return super.checkContainment(validMoves, move);
     }
 
     private Set<Move> getAttackMoves() {

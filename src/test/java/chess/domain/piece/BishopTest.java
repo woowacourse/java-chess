@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
@@ -19,10 +20,10 @@ public class BishopTest {
     void canMove_Diagonal_Infinite() {
         Bishop bishop = new Bishop(WHITE);
 
-        assertThat(bishop.hasMove(new Move(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isTrue();
-        assertThat(bishop.hasMove(new Move(UP, LEFT))).isTrue();
-        assertThat(bishop.hasMove(new Move(DOWN, RIGHT))).isTrue();
-        assertThat(bishop.hasMove(new Move(DOWN, LEFT))).isTrue();
+        assertThat(bishop.isValidMove(new Move(UP, RIGHT, UP, RIGHT, UP, RIGHT), MOVE)).isTrue();
+        assertThat(bishop.isValidMove(new Move(UP, LEFT), MOVE)).isTrue();
+        assertThat(bishop.isValidMove(new Move(DOWN, RIGHT), MOVE)).isTrue();
+        assertThat(bishop.isValidMove(new Move(DOWN, LEFT), MOVE)).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -30,10 +31,10 @@ public class BishopTest {
     void canNotMove() {
         Bishop bishop = new Bishop(WHITE);
 
-        assertThat(bishop.hasMove(new Move(LEFT, LEFT, LEFT))).isFalse();
-        assertThat(bishop.hasMove(new Move(RIGHT, RIGHT))).isFalse();
-        assertThat(bishop.hasMove(new Move(UP, UP))).isFalse();
-        assertThat(bishop.hasMove(new Move(DOWN))).isFalse();
-        assertThat(bishop.hasMove(new Move(LEFT, LEFT, UP))).isFalse();
+        assertThat(bishop.isValidMove(new Move(LEFT, LEFT, LEFT), MOVE)).isFalse();
+        assertThat(bishop.isValidMove(new Move(RIGHT, RIGHT), MOVE)).isFalse();
+        assertThat(bishop.isValidMove(new Move(UP, UP), MOVE)).isFalse();
+        assertThat(bishop.isValidMove(new Move(DOWN), MOVE)).isFalse();
+        assertThat(bishop.isValidMove(new Move(LEFT, LEFT, UP), MOVE)).isFalse();
     }
 }

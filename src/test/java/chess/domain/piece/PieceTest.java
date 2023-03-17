@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.MoveType.ATTACK;
+import static chess.domain.board.MoveType.MOVE;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
@@ -51,7 +53,7 @@ public class PieceTest {
         Move move2 = new Move(RIGHT, RIGHT, UP);
 
         Piece piece = createPiece(WHITE, move, move2);
-        assertThat(piece.hasMove(move)).isTrue();
+        assertThat(piece.isValidMove(move, MOVE)).isTrue();
     }
 
     @DisplayName("이동 가능하지 않은 수인지 판단한다(기물:유한, 수:무한)")
@@ -60,7 +62,7 @@ public class PieceTest {
         Move move = new Move(UP, RIGHT);
 
         Piece piece = createPiece(WHITE, move);
-        assertThat(piece.hasMove(new Move(UP, RIGHT, UP, RIGHT))).isFalse();
+        assertThat(piece.isValidMove(new Move(UP, RIGHT, UP, RIGHT), MOVE)).isFalse();
     }
 
     @DisplayName("이동 가능하지 않은 수인지 판단한다")
@@ -69,7 +71,7 @@ public class PieceTest {
         Move move = new Move(UP, RIGHT);
 
         Piece piece = createPiece(WHITE, move);
-        assertThat(piece.hasMove(new Move(LEFT))).isFalse();
+        assertThat(piece.isValidMove(new Move(LEFT), MOVE)).isFalse();
     }
 
     @DisplayName("기본적으로 이동 가능한 수면, 공격 가능한 수이다")
@@ -78,7 +80,7 @@ public class PieceTest {
         Move move = new Move(UP, RIGHT);
 
         Piece piece = createPiece(WHITE, move);
-        assertThat(piece.hasAttackMove(move)).isTrue();
+        assertThat(piece.isValidMove(move, ATTACK)).isTrue();
     }
 
     @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")
