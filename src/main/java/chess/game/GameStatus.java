@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.game;
 
 public enum GameStatus {
     CONTINUE,
