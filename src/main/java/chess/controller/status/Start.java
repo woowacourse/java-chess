@@ -13,7 +13,7 @@ public final class Start implements Status {
     }
 
     @Override
-    public Status checkCommand(final Command command) {
+    public Status checkCommand(final Command command, final Runnable runnable) {
         if (command.isEnd()) {
             return new End();
         }
@@ -21,7 +21,7 @@ public final class Start implements Status {
         if (command.isMove()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-
+        runnable.run();
         return new Move(chessGame, CampType.WHITE);
     }
 

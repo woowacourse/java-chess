@@ -17,12 +17,13 @@ public final class Move implements Status {
         this.campType = campType;
     }
 
-    private Status move(final Command command) {
+    private Status move(final Command command, final Runnable runnable) {
         validateCommand(command);
         final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(1));
         final Position target = PositionConverter.convert(commands.get(2));
         chessGame.setUp(source, target, campType);
+        runnable.run();
         return new Move(chessGame, campType.changeTurn());
     }
 
@@ -33,14 +34,14 @@ public final class Move implements Status {
     }
 
     @Override
-    public Status checkCommand(final Command command) {
+    public Status checkCommand(final Command command, final Runnable runnable) {
         if (command.isStart()) {
             throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
         }
         if (command.isEnd()) {
             return new End();
         }
-        return move(command);
+        return move(command, runnable);
     }
 
     @Override

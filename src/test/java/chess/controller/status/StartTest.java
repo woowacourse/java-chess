@@ -21,7 +21,8 @@ class StartTest {
         final Command command = new Command(CommandType.MOVE, List.of("move a2"));
 
         // when, then
-        assertThatThrownBy(() -> start.checkCommand(command))
+        assertThatThrownBy(() -> start.checkCommand(command, () -> {
+        }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -34,7 +35,8 @@ class StartTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = start.checkCommand(command);
+        Status status = start.checkCommand(command, () -> {
+        });
 
         // then
         assertThat(status)

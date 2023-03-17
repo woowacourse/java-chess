@@ -20,7 +20,8 @@ class EndTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when, then
-        assertThatThrownBy(() -> end.checkCommand(command))
+        assertThatThrownBy(() -> end.checkCommand(command, () -> {
+        }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 끝났습니다.");
     }

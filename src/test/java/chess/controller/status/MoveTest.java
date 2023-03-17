@@ -25,7 +25,8 @@ class MoveTest {
         final Command command = new Command(CommandType.START, List.of("start"));
 
         // when, then
-        assertThatThrownBy(() -> move.checkCommand(command))
+        assertThatThrownBy(() -> move.checkCommand(command, () -> {
+        }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이미 시작이 완료되었습니다.");
     }
@@ -38,7 +39,8 @@ class MoveTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = move.checkCommand(command);
+        Status status = move.checkCommand(command, () -> {
+        });
 
         // then
         assertThat(status)
@@ -53,7 +55,8 @@ class MoveTest {
         final Command command = new Command(CommandType.MOVE, Arrays.asList(commands.split(" ")));
 
         // when, then
-        assertThatThrownBy(() -> move.checkCommand(command))
+        assertThatThrownBy(() -> move.checkCommand(command, () -> {
+        }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("'move source위치 target위치 - 예. move b2 b3'와 같은 형태로 입력해 주세요.");
     }

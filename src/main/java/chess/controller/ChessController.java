@@ -27,8 +27,7 @@ public final class ChessController {
         try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
-            gameStatus = gameStatus.checkCommand(command);
-            OutputView.printBoard(chessGame.getChessBoard());
+            gameStatus = gameStatus.checkCommand(command, () -> OutputView.printBoard(chessGame.getChessBoard()));
             return gameStatus;
         } catch (IllegalArgumentException e) {
             OutputView.print(e.getMessage());
