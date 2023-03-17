@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.service.ChessService;
 import chess.view.CommandDto;
 
 public abstract class Controller {
@@ -13,7 +13,7 @@ public abstract class Controller {
         this.controllerState = initialState;
     }
 
-    public abstract Board run(CommandDto commandDto, Board board);
+    public abstract ChessService run(final CommandDto commandDto, final ChessService service);
 
     public void enableState() {
         controllerState = ControllerState.RUNNABLE;

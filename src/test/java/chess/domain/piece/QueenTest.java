@@ -18,10 +18,9 @@ class QueenTest {
 	@CsvSource({"0,1","1,1","1,0","1,-1","0,-1","-1,-1","-1,0","-1,1"})
 	void queenCanMoveEveryDirectionTest(int x, int y) {
 		Random random = new Random();
-		int randomMultiplier = random.nextInt() % 9 + 1;
+		int randomMultiplier = random.nextInt(9) + 1;
 		Queen whiteQueen = new Queen(Team.WHITE);
 		Queen blackQueen = new Queen(Team.BLACK);
-		System.out.println("x = " + randomMultiplier * x + " y = " + randomMultiplier * y);
 		RelativePosition relativePosition = new RelativePosition(randomMultiplier * x, randomMultiplier * y);
 
 		assertTrue(whiteQueen.isMobile(relativePosition));
