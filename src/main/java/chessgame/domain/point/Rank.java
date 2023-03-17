@@ -1,6 +1,8 @@
 package chessgame.domain.point;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public enum Rank {
@@ -12,6 +14,13 @@ public enum Rank {
     THREE(3),
     TWO(2),
     ONE(1);
+    private static final Map<Integer, Rank> RANK_MAP = new HashMap<>();
+
+    static {
+        for (Rank rank : values()) {
+            RANK_MAP.put(rank.value, rank);
+        }
+    }
 
     private final int value;
 
@@ -19,17 +28,18 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Optional<Rank> findRank(int result) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == result)
-                .findFirst();
+    public static Rank findRank(int result) {
+        if (RANK_MAP.containsKey(result)) {
+            return RANK_MAP.get(result);
+        }
+        throw new IllegalArgumentException("file 좌표가 잘못되었습니다.");
     }
 
     public int distance(Rank target) {
         return this.value - target.value;
     }
 
-    public Optional<Rank> move(int rankMove) {
+    public Rank move(int rankMove) {
         int result = value + rankMove;
 
         return findRank(result);

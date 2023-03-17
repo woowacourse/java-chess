@@ -66,10 +66,10 @@ public class Command {
     public List<Point> makePoints() {
         List<Point> points = new ArrayList<>();
         String[] moveCommand = command.split(" ");
-        points.add(Point.of(File.findFile(moveCommand[1].charAt(0)).get(),
-                Rank.findRank(Integer.parseInt(moveCommand[1].substring(1, 2))).get()));
-        points.add(Point.of(File.findFile(moveCommand[2].charAt(0)).get(),
-                Rank.findRank(Integer.parseInt(moveCommand[2].substring(1, 2))).get()));
+        points.add(Point.of(File.findFile(moveCommand[1].charAt(0)),
+                Rank.findRank(Integer.parseInt(moveCommand[1].substring(1, 2)))));
+        points.add(Point.of(File.findFile(moveCommand[2].charAt(0)),
+                Rank.findRank(Integer.parseInt(moveCommand[2].substring(1, 2)))));
         return points;
     }
 }
