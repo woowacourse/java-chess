@@ -10,12 +10,12 @@ public class End extends AbstractChessState {
     }
 
     @Override
-    public ChessState command(final Command command) {
+    public ChessState execute(final Command command) {
         throw new IllegalStateException("게임이 종료되었습니다.");
     }
 
     @Override
-    public boolean runnable() {
+    public boolean executable() {
         return false;
     }
 }

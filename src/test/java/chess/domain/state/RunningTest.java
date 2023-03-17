@@ -24,20 +24,20 @@ class RunningTest {
     void 실행_가능하다() {
         // given
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
 
         // when & then
-        assertThat(running.runnable()).isTrue();
+        assertThat(running.executable()).isTrue();
     }
 
     @Test
     void start_명렁어를_받으면_예외() {
         // given
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
 
         // when & then
-        assertThatThrownBy(() -> running.command(parse(of("start"))))
+        assertThatThrownBy(() -> running.execute(parse(of("start"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -45,10 +45,10 @@ class RunningTest {
     void end_명령어를_받으면_End_상태로_바뀐다() {
         // given
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
 
         // when
-        final ChessState end = running.command(Command.parse(List.of("end")));
+        final ChessState end = running.execute(Command.parse(List.of("end")));
 
         // then
         assertThat(end).isInstanceOf(End.class);
@@ -59,13 +59,13 @@ class RunningTest {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
         final Initialize initialize = new Initialize(chessBoard);
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
 
         // when
-        final ChessState next = running.command(parse(of("move", "b2", "b3")));
+        final ChessState next = running.execute(parse(of("move", "b2", "b3")));
 
         // then
-        assertThatThrownBy(() -> next.command(parse(of("move", "b3", "b4"))))
+        assertThatThrownBy(() -> next.execute(parse(of("move", "b3", "b4"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

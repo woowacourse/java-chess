@@ -21,22 +21,22 @@ class EndTest {
     void 실행할_수_없다() {
         // given
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
-        final ChessState end = running.command(Command.parse(List.of("end")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
+        final ChessState end = running.execute(Command.parse(List.of("end")));
 
         // when & then
-        assertThat(end.runnable()).isFalse();
+        assertThat(end.executable()).isFalse();
     }
 
     @Test
     void 실행하면_오류이다() {
         // given
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
-        final ChessState running = initialize.command(Command.parse(List.of("start")));
-        final ChessState end = running.command(Command.parse(List.of("end")));
+        final ChessState running = initialize.execute(Command.parse(List.of("start")));
+        final ChessState end = running.execute(Command.parse(List.of("end")));
 
         // when & then
-        assertThatThrownBy(() -> end.command(Command.parse(List.of("end"))))
+        assertThatThrownBy(() -> end.execute(Command.parse(List.of("end"))))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -8,7 +8,6 @@ import chess.domain.state.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessController {
@@ -22,7 +21,7 @@ public class ChessController {
 
     private void run(final ChessBoard chessBoard, final ChessState state) {
         ChessState current = state;
-        while (current.runnable()) {
+        while (current.executable()) {
             current = execute(chessBoard, current);
         }
     }
@@ -31,7 +30,7 @@ public class ChessController {
         ChessState current = state;
         try {
             final List<String> command = InputView.readCommand();
-            current = state.command(Command.parse(new ArrayList<>(command)));
+            current = state.execute(Command.parse(command));
             OutputView.showBoard(chessBoard.pieces());
         } catch (final Exception e) {
             OutputView.error(e.getMessage());

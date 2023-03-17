@@ -12,7 +12,7 @@ public class Initialize extends AbstractChessState {
     }
 
     @Override
-    public ChessState command(final Command command) {
+    public ChessState execute(final Command command) {
         if (command.isStart()) {
             return new Running(chessBoard, new Turn(Color.WHITE));
         }
@@ -20,7 +20,7 @@ public class Initialize extends AbstractChessState {
     }
 
     @Override
-    public boolean runnable() {
+    public boolean executable() {
         return true;
     }
 }

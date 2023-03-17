@@ -1,7 +1,9 @@
 package chess.domain.piece.position;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Stream.iterate;
 
 public class Path {
 
@@ -56,13 +58,9 @@ public class Path {
 
     // 이곳에서 Waypoint 반환 VS 반환받은데서 Waypoint.from(반환) ??
     public List<PiecePosition> waypoints() {
-        final List<PiecePosition> waypoints = new ArrayList<>();
-        PiecePosition current = source;
-        while (!current.equals(destination)) {
-            current = current.move(current.direction(destination));
-            waypoints.add(current);
-        }
-        waypoints.remove(destination);
-        return waypoints;
+        return iterate(source, current -> !current.equals(destination),
+                current -> current.move(current.direction(destination)))
+                .skip(1)
+                .collect(Collectors.toList());
     }
 }

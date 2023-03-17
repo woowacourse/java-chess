@@ -22,7 +22,7 @@ class InitializeTest {
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
 
         // when & then
-        assertThat(initialize.runnable()).isTrue();
+        assertThat(initialize.executable()).isTrue();
     }
 
     @Test
@@ -31,7 +31,7 @@ class InitializeTest {
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
 
         // when & then
-        assertThatThrownBy(() -> initialize.command(parse(of("end"))))
+        assertThatThrownBy(() -> initialize.execute(parse(of("end"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +41,7 @@ class InitializeTest {
         final Initialize initialize = new Initialize(ChessBoardFactory.create());
 
         // when
-        final ChessState state = initialize.command(parse(of("start")));
+        final ChessState state = initialize.execute(parse(of("start")));
 
         // then
         assertThat(state).isInstanceOf(Running.class);

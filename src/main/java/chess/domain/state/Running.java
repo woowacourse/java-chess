@@ -20,7 +20,7 @@ public class Running extends AbstractChessState {
     }
 
     @Override
-    public ChessState command(final Command command) {
+    public ChessState execute(final Command command) {
         if (command.isStart()) {
             throw new IllegalArgumentException("이미 진행중입니다");
         }
@@ -46,7 +46,7 @@ public class Running extends AbstractChessState {
     }
 
     @Override
-    public boolean runnable() {
+    public boolean executable() {
         return true;
     }
 }

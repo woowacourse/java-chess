@@ -4,7 +4,7 @@ import chess.domain.state.command.Command;
 
 public interface ChessState {
 
-    ChessState command(final Command command);
+    ChessState execute(final Command command);
 
-    boolean runnable();
+    boolean executable();
 }

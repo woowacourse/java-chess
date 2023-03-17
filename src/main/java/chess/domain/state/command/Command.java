@@ -8,6 +8,7 @@ public class Command {
 
     public static final int FROM_POSITION_INDEX = 0;
     public static final int TO_POSITION_INDEX = 1;
+    private static final int COMMAND_TYPE_INDEX = 0;
 
     private final Type type;
     private final List<String> commands;
@@ -26,7 +27,7 @@ public class Command {
 
     public static Command parse(List<String> inputs) {
         inputs = new ArrayList<>(inputs);
-        final String typeInput = inputs.remove(0);
+        final String typeInput = inputs.remove(COMMAND_TYPE_INDEX);
         final Type type = Arrays.stream(Type.values())
                 .filter(it -> it.name().equalsIgnoreCase(typeInput))
                 .findAny()
