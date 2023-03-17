@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.MoveStrategy.KNIGHT;
+
 import chess.domain.Position;
 import chess.domain.Team;
 import java.util.List;
@@ -12,10 +14,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int fileDiff = Math.abs(source.fileDiff(target));
-        int rankDiff = Math.abs(source.rankDiff(target));
-
-        return  Math.abs(fileDiff * rankDiff) == 2;
+        return KNIGHT.isMovable(source, target);
     }
 
     @Override

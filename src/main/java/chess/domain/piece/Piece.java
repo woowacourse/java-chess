@@ -47,7 +47,7 @@ public abstract class Piece {
     private List<Position> makePath(int count, int rankUnit, int fileUnit, Position current) {
         List<Position> path = new ArrayList<>();
 
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             current = current.moveBy(rankUnit, fileUnit);
             path.add(current);
         }

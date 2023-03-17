@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import static chess.domain.MoveStrategy.*;
+
+import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
 
@@ -11,11 +14,7 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int fileDiff = source.fileDiff(target);
-        int rankDiff = source.rankDiff(target);
-
-        return (Math.abs(fileDiff) == Math.abs(rankDiff))
-                || (fileDiff == 0 || rankDiff == 0);
+        return QUEEN.isMovable(source, target);
     }
 
     @Override
