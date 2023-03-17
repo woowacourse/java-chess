@@ -4,6 +4,7 @@ import static chess.view.PieceView.*;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -19,6 +20,7 @@ public class OutputView {
     private static final int MAX_RANK = 8;
     private static final int MIN_FILE = 1;
     private static final int MAX_FILE = 8;
+    private static final String EMPTY_PIECE = ".";
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -45,7 +47,7 @@ public class OutputView {
 
     private void printBoardUnit(Map<Position, Piece> chessBoard, int rank, int file) {
         if (!chessBoard.containsKey(new Position(rank, file))) {
-            System.out.print(".");
+            System.out.print(EMPTY_PIECE);
         }
         if (chessBoard.containsKey(new Position(rank, file))) {
             Piece piece = chessBoard.get(new Position(rank, file));
@@ -54,24 +56,52 @@ public class OutputView {
     }
 
     private void printPiece(Piece piece) {
+        printIfKing(piece);
+        printIfQueen(piece);
+        printIfKnight(piece);
+        printIfBishop(piece);
+        printIfRook(piece);
+        printIfPawn(piece);
+    }
+
+    private void printIfKing(Piece piece) {
         if (piece.getClass() == King.class) {
             System.out.print(KING.getPieceView(piece.getTeam()));
         }
+    }
+
+    private void printIfQueen(Piece piece) {
         if (piece.getClass() == Queen.class) {
             System.out.print(QUEEN.getPieceView(piece.getTeam()));
         }
+    }
+
+    private void printIfKnight(Piece piece) {
         if (piece.getClass() == Knight.class) {
             System.out.print(KNIGHT.getPieceView(piece.getTeam()));
         }
+    }
+
+    private void printIfBishop(Piece piece) {
         if (piece.getClass() == Bishop.class) {
             System.out.print(BISHOP.getPieceView(piece.getTeam()));
         }
+    }
+
+    private void printIfRook(Piece piece) {
         if (piece.getClass() == Rook.class) {
             System.out.print(ROOK.getPieceView(piece.getTeam()));
         }
+    }
+
+    private void printIfPawn(Piece piece) {
         if (piece.getClass() == Pawn.class) {
             System.out.print(PAWN.getPieceView(piece.getTeam()));
         }
+    }
+
+    public void printWrongTurnMessage(Team turn) {
+        System.out.println("[ERROR] 지금은 " + turn + "차례입니다.");
     }
 
     public void printExceptionMessage(Exception exception) {
