@@ -1,4 +1,4 @@
-package chess;
+package chess.position;
 
 import java.util.ArrayList;
 import java.util.List;

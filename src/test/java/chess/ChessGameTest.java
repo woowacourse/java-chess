@@ -2,6 +2,7 @@ package chess;
 
 import chess.piece.Empty;
 import chess.piece.Knight;
+import chess.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

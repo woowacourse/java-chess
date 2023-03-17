@@ -1,7 +1,7 @@
 package chess.piece;
 
 import chess.ChessBoard;
-import chess.Position;
+import chess.position.Position;
 import chess.Side;
 
 import java.util.ArrayList;

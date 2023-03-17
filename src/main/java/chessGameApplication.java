@@ -1,7 +1,7 @@
 import chess.ChessBoard;
 import chess.ChessGame;
-import chess.MovablePosition;
-import chess.Position;
+import chess.position.MovablePosition;
+import chess.position.Position;
 import view.InputView;
 import view.OutputView;
 

@@ -3,6 +3,7 @@ package chess;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
 
+import chess.position.Position;
 import java.util.List;
 
 public class ChessGame {

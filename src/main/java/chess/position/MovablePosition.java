@@ -1,5 +1,7 @@
-package chess;
+package chess.position;
 
+import chess.ChessBoard;
+import chess.piece.Shape;
 import chess.piece.ChessPiece;
 
 import chess.piece.Pawn;

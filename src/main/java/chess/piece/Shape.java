@@ -1,6 +1,6 @@
-package chess;
+package chess.piece;
 
-import chess.piece.*;
+import chess.Side;
 
 import java.util.Arrays;
 

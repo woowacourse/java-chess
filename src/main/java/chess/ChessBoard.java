@@ -2,6 +2,7 @@ package chess;
 
 import chess.piece.*;
 
+import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 

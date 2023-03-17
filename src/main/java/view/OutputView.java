@@ -1,7 +1,7 @@
 package view;
 
-import chess.Position;
-import chess.Shape;
+import chess.position.Position;
+import chess.piece.Shape;
 import chess.piece.ChessPiece;
 
 import java.util.Map;
