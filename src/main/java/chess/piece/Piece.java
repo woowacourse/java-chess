@@ -25,6 +25,6 @@ public abstract class Piece {
     }
 
     public boolean isSameColor(Color turn) {
-        return this.color.equals(turn);
+        return this.color == turn;
     }
 }

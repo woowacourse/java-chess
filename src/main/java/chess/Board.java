@@ -18,21 +18,26 @@ public class Board {
         return board;
     }
 
-    public void move(Position from, Position to, final Color turn) {
-        if (!board.get(from).isSameColor(turn)) {
-            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
-        }
-        validateIsFromEmpty(from);
+    public void move(Position from, Position to, final Color nextTurn) {
+        validateMoveFromEmpty(from);
+        validateTurn(from, nextTurn);
 
-        Path path = board.get(from)
-                         .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
+        final Piece currentMovePiece = findPieceFrom(from);
+        Path path = currentMovePiece.searchPathTo(from, to, Optional.ofNullable(findPieceFrom(to)));
 
         validateObstacle(path);
-        Piece piece = board.remove(from);
-        board.put(to, piece);
+        movePiece(from, to);
     }
 
-    private void validateIsFromEmpty(final Position from) {
+    private void validateTurn(final Position from, final Color nextTurn) {
+        final Piece currentTurnPiece = findPieceFrom(from);
+        
+        if (!currentTurnPiece.isSameColor(nextTurn)) {
+            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
+        }
+    }
+
+    private void validateMoveFromEmpty(final Position from) {
         if (!board.containsKey(from)) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
@@ -42,5 +47,14 @@ public class Board {
         if (path.hasIntersection(board.keySet())) {
             throw new IllegalStateException("중간에 다른 기물이 존재합니다.");
         }
+    }
+
+    private void movePiece(Position from, Position to) {
+        final Piece movingPiece = board.remove(from);
+        board.put(to, movingPiece);
+    }
+
+    private Piece findPieceFrom(Position position) {
+        return board.get(position);
     }
 }

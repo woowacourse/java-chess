@@ -15,21 +15,31 @@ class PieceTest {
     @DisplayName("isBlack() : 피스가 검정색인지 확인할 수 있다.")
     void test_isBlack() throws Exception {
         //given
-        Piece blackPiece = new Piece(Color.BLACK) {
-            @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-                return null;
-            }
-        };
-        Piece whitePiece = new Piece(Color.WHITE) {
-            @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-                return null;
-            }
-        };
+        Piece blackPiece = createPiece(Color.BLACK);
+        Piece whitePiece = createPiece(Color.WHITE);
 
         //when & then
         assertTrue(blackPiece.isBlack());
         assertFalse(whitePiece.isBlack());
+    }
+
+    @Test
+    @DisplayName("isSameColor() : 두 피스가 같은 색인지 구별할 수 있다.")
+    void test_isSameColor() throws Exception {
+        //given
+        final Piece whitePiece = createPiece(Color.WHITE);
+
+        //when & then
+        assertTrue(whitePiece.isSameColor(Color.WHITE));
+        assertFalse(whitePiece.isSameColor(Color.BLACK));
+    }
+
+    private static Piece createPiece(Color color) {
+        return new Piece(color) {
+            @Override
+            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+                return null;
+            }
+        };
     }
 }
