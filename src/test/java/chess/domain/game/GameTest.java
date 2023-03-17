@@ -18,10 +18,10 @@ public class GameTest extends AbstractTestFixture {
     void movePiece() {
         Game game = new Game();
 
-        game.movePiece(createPosition("B,TWO"), createPosition("B,THREE"));
+        game.movePiece(new Position("B2"), new Position("B3"));
 
         Map<Position, Piece> pieces = game.getPieces();
-        assertThat(pieces.get(createPosition("B,THREE")))
+        assertThat(pieces.get(new Position("B3")))
                 .isNotNull()
                 .isInstanceOf(Pawn.class);
     }
@@ -31,7 +31,7 @@ public class GameTest extends AbstractTestFixture {
     void moveBlackFirst_throws() {
         Game game = new Game();
 
-        assertThatThrownBy(() -> game.movePiece(createPosition("B,SEVEN"), createPosition("B,SIX")))
+        assertThatThrownBy(() -> game.movePiece(new Position("B7"), new Position("B6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 움직일 수 있습니다");
     }
@@ -41,11 +41,11 @@ public class GameTest extends AbstractTestFixture {
     void moveBlackSecond() {
         Game game = new Game();
 
-        game.movePiece(createPosition("B,TWO"), createPosition("B,THREE"));
-        game.movePiece(createPosition("B,SEVEN"), createPosition("B,SIX"));
+        game.movePiece(new Position("B2"), new Position("B3"));
+        game.movePiece(new Position("B7"), new Position("B6"));
 
         Map<Position, Piece> pieces = game.getPieces();
-        assertThat(pieces.get(createPosition("B,SIX")))
+        assertThat(pieces.get(new Position("B6")))
                 .isNotNull()
                 .isInstanceOf(Pawn.class);
     }

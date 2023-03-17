@@ -71,9 +71,9 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void findDestination() {
         Move move = createMove(RIGHT, RIGHT, UP, UP, UP);
-        Position destination = move.findDestinationFrom(createPosition("A,ONE"));
+        Position destination = move.findDestinationFrom(new Position("A1"));
 
-        assertThat(destination).isEqualTo(createPosition("C,FOUR"));
+        assertThat(destination).isEqualTo(new Position("C4"));
     }
 
     @DisplayName("단위 수를 찾을 수 있다")
@@ -95,8 +95,8 @@ public class MoveTest extends AbstractTestFixture {
     @DisplayName("시작위치, 도착위치로 수를 만들 수 있다")
     @Test
     void createMoveFrom_sourceAndTargetPositions() {
-        Position source = createPosition("G,ONE");
-        Position target = createPosition("E,TWO");
+        Position source = new Position("G1");
+        Position target = new Position("E2");
 
         assertThat(Move.of(source, target)).isEqualTo(createMove(LEFT, LEFT, UP));
 

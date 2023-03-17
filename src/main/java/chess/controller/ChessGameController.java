@@ -5,14 +5,11 @@ import static chess.controller.IllegalArgumentExceptionHandler.handleExceptionBy
 import chess.controller.dto.PieceResponse;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.MoveRequest;
-import chess.view.dto.PositionRequest;
 import chess.view.dto.Request;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,16 +65,10 @@ public class ChessGameController {
         }
         if (command == Command.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();
-            Position source = createPosition(moveRequest.getSource());
-            Position target = createPosition(moveRequest.getTarget());
+            Position source = new Position(moveRequest.getSource());
+            Position target = new Position(moveRequest.getTarget());
             game.movePiece(source, target);
         }
         return command;
-    }
-
-    private Position createPosition(PositionRequest position) {
-        File file = File.valueOf(position.getFile());
-        Rank rank = Rank.valueOf(position.getRank());
-        return new Position(file, rank);
     }
 }

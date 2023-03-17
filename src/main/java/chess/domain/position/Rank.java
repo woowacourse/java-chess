@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import static chess.domain.position.Position.INVALID_POSITION;
+
 import chess.domain.move.Direction;
 import java.util.Arrays;
 
@@ -31,18 +33,18 @@ public enum Rank {
     }
 
     private Rank up() {
-        return indexOf(this.index + 1);
+        return Rank.from(this.index + 1);
     }
 
     private Rank down() {
-        return indexOf(this.index - 1);
+        return Rank.from(this.index - 1);
     }
 
-    private Rank indexOf(int index) {
+    public static Rank from(int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
-                .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_POSITION));
     }
 
     public int getIndex() {

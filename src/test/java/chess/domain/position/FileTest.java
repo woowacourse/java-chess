@@ -42,7 +42,8 @@ public class FileTest {
         File file = File.A;
 
         assertThatThrownBy(() -> file.move(Direction.LEFT))
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
     }
 
     @DisplayName("가장 오른쪽에서 오른쪽으로 더 이동할 수 없다")
@@ -51,6 +52,23 @@ public class FileTest {
         File file = File.H;
 
         assertThatThrownBy(() -> file.move(Direction.RIGHT))
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
+    }
+
+    @DisplayName("이름으로 File을 찾을 수 있다")
+    @Test
+    void from() {
+        File file = File.from("A");
+
+        assertThat(file).isSameAs(File.A);
+    }
+
+    @DisplayName("잘못된 이름으로 File을 찾으면 예외가 발생한다")
+    @Test
+    void from_throws() {
+        assertThatThrownBy(() -> File.from("I"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
     }
 }

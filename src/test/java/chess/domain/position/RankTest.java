@@ -42,7 +42,8 @@ public class RankTest {
         Rank rank = Rank.EIGHT;
 
         assertThatThrownBy(() -> rank.move(Direction.UP))
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
     }
 
     @DisplayName("가장 아래에서 아래로 더 이동할 수 없다")
@@ -51,6 +52,23 @@ public class RankTest {
         Rank rank = Rank.ONE;
 
         assertThatThrownBy(() -> rank.move(Direction.DOWN))
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
+    }
+
+    @DisplayName("인덱스로 Rank를 찾을 수 있다")
+    @Test
+    void from() {
+        Rank rank = Rank.from(1);
+
+        assertThat(rank).isSameAs(Rank.ONE);
+    }
+
+    @DisplayName("잘못된 인덱스로 Rank를 찾으면 얘외가 발생한다")
+    @Test
+    void from_throws() {
+        assertThatThrownBy(() -> Rank.from(9))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 포지션입니다.");
     }
 }

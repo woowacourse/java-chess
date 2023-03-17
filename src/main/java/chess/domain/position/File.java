@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import static chess.domain.position.Position.INVALID_POSITION;
+
 import chess.domain.move.Direction;
 import java.util.Arrays;
 
@@ -42,7 +44,15 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
                 .findFirst()
-                .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_POSITION));
+    }
+
+    public static File from(String name) {
+        try {
+            return File.valueOf(name);
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException(INVALID_POSITION);
+        }
     }
 
     public int getIndex() {

@@ -36,7 +36,7 @@ public class InputView {
     }
 
     private void validateParameter(String parameter) {
-        if (!parameter.matches("[A-H][1-8]")) {
+        if (!parameter.matches("[A-Z]\\d")) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
     }

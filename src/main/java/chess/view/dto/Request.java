@@ -17,7 +17,7 @@ public class Request {
     }
 
     public static Request createMoveCommand(String source, String target) {
-        return new Request(Command.MOVE, MoveRequest.of(source, target));
+        return new Request(Command.MOVE, new MoveRequest(source, target));
     }
 
     public Command getCommand() {

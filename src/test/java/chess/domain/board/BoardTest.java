@@ -18,8 +18,8 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void invalidSourcePosition_throws() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("C,THREE");
-        var target = createPosition("D,TWO");
+        var source = new Position("C3");
+        var target = new Position("D2");
 
         assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -31,8 +31,8 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void moveInOthersTurn_throws() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("B,SEVEN");
-        var target = createPosition("B,SIX");
+        var source = new Position("B7");
+        var target = new Position("B6");
 
         assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -43,8 +43,8 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void reachSameColor_throws() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("C,ONE");
-        var target = createPosition("D,TWO");
+        var source = new Position("C1");
+        var target = new Position("D2");
 
         assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -55,8 +55,8 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void pieceNotHasMove_throws() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("C,TWO");
-        var target = createPosition("B,THREE");
+        var source = new Position("C2");
+        var target = new Position("B3");
 
         assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -67,11 +67,11 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void canNotCrossOtherPiece_throws() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("D,ONE");
-        var target = createPosition("A,FOUR");
+        var source = new Position("D1");
+        var target = new Position("A4");
 
-        board.move(createPosition("C,TWO"), createPosition("C,THREE"), true);
-        board.move(createPosition("B,TWO"), createPosition("B,THREE"), true);
+        board.move(new Position("C2"), new Position("C3"), true);
+        board.move(new Position("B2"), new Position("B3"), true);
 
         assertThatThrownBy(() -> board.move(source, target, true))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -82,8 +82,8 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void putPiece_onMove() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("D,TWO");
-        var target = createPosition("D,THREE");
+        var source = new Position("D2");
+        var target = new Position("D3");
 
         board.move(source, target, true);
 
@@ -99,10 +99,10 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void replacePiece_onAttack() {
         var board = BoardFactory.createBoard();
-        var source = createPosition("G,ONE");
-        var target = createPosition("F,THREE");
-        var target2 = createPosition("G,FIVE");
-        var target3 = createPosition("F,SEVEN");
+        var source = new Position("G1");
+        var target = new Position("F3");
+        var target2 = new Position("G5");
+        var target3 = new Position("F7");
 
         board.move(source, target, true);
         board.move(target, target2, true);
