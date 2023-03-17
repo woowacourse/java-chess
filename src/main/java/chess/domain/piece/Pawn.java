@@ -54,4 +54,13 @@ public class Pawn extends Piece {
         return direction == Direction.TOP || direction == Direction.BOTTOM;
     }
 
+    public void checkMoveDiagonalByPawn(Direction direction, boolean isPositionToMoveEmpty) {
+        if (isDiagonalDirection(direction) && isPositionToMoveEmpty) {
+            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE);
+        }
+    }
+
+    private boolean isDiagonalDirection(Direction direction) {
+        return direction != Direction.TOP && direction != Direction.BOTTOM;
+    }
 }
