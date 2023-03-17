@@ -28,16 +28,16 @@ public class ChessController {
 
         while(!(gameStatus == GameStatus.END)) {
             final GameStatus finalGameStatus = gameStatus;
-            gameStatus = repeat(() -> handleCommand(finalGameStatus, board));
+            gameStatus = repeatUntilReturnValue(() -> handleCommand(finalGameStatus, board));
         }
     }
 
-    private <T> T repeat(Supplier<T> supplier) {
+    private <T> T repeatUntilReturnValue(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return repeat(supplier);
+            return repeatUntilReturnValue(supplier);
         }
     }
 
@@ -62,7 +62,7 @@ public class ChessController {
     }
 
     private List<String> inputGameCommand() {
-        return repeat(inputView::inputGameCommand);
+        return repeatUntilReturnValue(inputView::inputGameCommand);
     }
 
     private GameStatus handleStartCommand(GameStatus gameStatus, final Board board) {
