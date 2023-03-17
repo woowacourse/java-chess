@@ -4,6 +4,8 @@ import chess.domain.board.Position;
 
 public class King extends Piece {
 
+    public static final int BOUND = 1;
+
     public King(Team team) {
         super(team);
     }
@@ -15,14 +17,14 @@ public class King extends Piece {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
 
-        return isDifferenceUnder(sourceColumnNumber, targetColumnNumber, 1)
-                && isDifferenceUnder(sourceRankNumber, targetRankNumber, 1)
+        return isDifferenceUnderBound(sourceColumnNumber, targetColumnNumber)
+                && isDifferenceUnderBound(sourceRankNumber, targetRankNumber)
                 && isNotMyPosition(sourcePosition, targetPosition)
                 && isNotSameTeam(team);
     }
 
-    private boolean isDifferenceUnder(int source, int target, int bound) {
-        return Math.abs(source - target) <= bound;
+    private boolean isDifferenceUnderBound(int source, int target) {
+        return Math.abs(source - target) <= BOUND;
     }
 
     @Override
