@@ -11,10 +11,15 @@ public class Rank {
     private final List<Square> squares;
 
     public Rank(int row, int totalColCount) {
-        this.squares = new ArrayList<>();
+        squares = initialize(row, totalColCount);
+    }
+
+    private List<Square> initialize(final int row, final int totalColCount) {
+        final List<Square> squares = new ArrayList<>();
         for (int col = 0; col < totalColCount; col++) {
-            this.squares.add(BoardInitialImage.getPieceByCoordinate(row, col));
+            squares.add(BoardInitialImage.getPieceByCoordinate(row, col));
         }
+        return squares;
     }
 
     public Square findPiece(int col) {
