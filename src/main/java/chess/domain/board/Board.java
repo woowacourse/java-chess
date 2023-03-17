@@ -1,7 +1,9 @@
-package chess;
+package chess.domain.board;
 
-import chess.piece.Color;
-import chess.piece.Piece;
+import chess.domain.piece.Piece;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
+import chess.domain.piece.Color;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,16 +19,20 @@ public class Board {
         return board;
     }
 
-    public void move(Position from, Position to, final Color turn) {
+    public void move(final Position from, final Position to, final Color turn) {
+        validateColorTurn(from, turn);
+        validateIsFromEmpty(from);
+        final Path path = board.get(from)
+                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
+        path.validateObstacle(board.keySet());
+        final Piece piece = board.remove(from);
+        board.put(to, piece);
+    }
+
+    private void validateColorTurn(final Position from, final Color turn) {
         if (!board.get(from).isSameColor(turn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
-        validateIsFromEmpty(from);
-        Path path = board.get(from)
-                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
-        path.validateObstacle(board.keySet());
-        Piece piece = board.remove(from);
-        board.put(to, piece);
     }
 
     private void validateIsFromEmpty(final Position from) {

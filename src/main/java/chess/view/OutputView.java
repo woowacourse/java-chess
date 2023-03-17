@@ -1,15 +1,15 @@
 package chess.view;
 
-import chess.File;
-import chess.Position;
-import chess.Rank;
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final Map<Class<?>, String> PIECE_VALUE_MAP = new HashMap<>();
+    private static final Map<Class<? extends Piece>, String> PIECE_VALUE_MAP = new HashMap<>();
 
     static {
         PIECE_VALUE_MAP.put(King.class, "k");

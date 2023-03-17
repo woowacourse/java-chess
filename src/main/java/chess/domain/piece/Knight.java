@@ -1,25 +1,17 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.Movement.D;
-import static chess.Movement.DDL;
-import static chess.Movement.DDR;
-import static chess.Movement.DL;
-import static chess.Movement.DR;
-import static chess.Movement.L;
-import static chess.Movement.LLD;
-import static chess.Movement.LLU;
-import static chess.Movement.R;
-import static chess.Movement.RRD;
-import static chess.Movement.RRU;
-import static chess.Movement.U;
-import static chess.Movement.UL;
-import static chess.Movement.UR;
-import static chess.Movement.UUL;
-import static chess.Movement.UUR;
+import static chess.domain.position.Movement.DDL;
+import static chess.domain.position.Movement.DDR;
+import static chess.domain.position.Movement.LLD;
+import static chess.domain.position.Movement.LLU;
+import static chess.domain.position.Movement.RRD;
+import static chess.domain.position.Movement.RRU;
+import static chess.domain.position.Movement.UUL;
+import static chess.domain.position.Movement.UUR;
 
-import chess.Movement;
-import chess.Path;
-import chess.Position;
+import chess.domain.position.Movement;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.Optional;
 

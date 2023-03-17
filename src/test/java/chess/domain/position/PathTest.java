@@ -1,7 +1,9 @@
-package chess;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 

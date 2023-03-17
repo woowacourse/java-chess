@@ -1,7 +1,10 @@
 package chess;
 
-import chess.piece.Color;
-import chess.piece.Piece;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

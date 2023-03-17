@@ -1,22 +1,18 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.Movement.D;
-import static chess.Movement.L;
-import static chess.Movement.R;
-import static chess.Movement.U;
-
-import chess.Movement;
-import chess.Path;
-import chess.Position;
+import chess.domain.position.Movement;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Rook extends Piece {
+public class Bishop extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(
+            Movement.UR, Movement.UL, Movement.DR, Movement.DL);
 
-    public Rook(final Color color) {
+    public Bishop(final Color color) {
         super(color);
     }
 
@@ -32,6 +28,7 @@ public class Rook extends Piece {
 
         Position next = from;
         List<Position> positions = new ArrayList<>();
+
         while (true) {
             next = next.moveBy(movement);
             if (next.equals(to)) {
@@ -39,6 +36,7 @@ public class Rook extends Piece {
             }
             positions.add(next);
         }
+
         return new Path(positions);
     }
 }
