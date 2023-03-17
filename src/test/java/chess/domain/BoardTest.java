@@ -46,4 +46,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발점에 체스말이 존재하지 않습니다");
     }
+
+    @Test
+    @DisplayName("체스말이 같은 팀을 공격할 경우 예외가 발생한다")
+    void throwExceptionWhenAttackSameTeam() {
+        final Position source = Position.from("a1");
+        final Position target = Position.from("a2");
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 팀은 공격할 수 없습니다");
+    }
 }

@@ -26,6 +26,7 @@ public class Board {
     public void move(final Position source, final Position target) {
         validateDifferentPosition(source, target);
         validateSourceNotEmpty(source);
+        validateTargetNotSameColor(source, target);
     }
 
     private void validateDifferentPosition(final Position source, final Position target) {
@@ -42,5 +43,14 @@ public class Board {
 
     private boolean isEmptyPosition(final Position source) {
         return board.get(source).getClass().equals(Empty.class);
+    }
+
+    private void validateTargetNotSameColor(final Position source, final Position target) {
+        final Piece sourcePiece = board.get(source);
+        final Piece targetPiece = board.get(target);
+
+        if (sourcePiece.isSameTeam(targetPiece.team())) {
+            throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
+        }
     }
 }
