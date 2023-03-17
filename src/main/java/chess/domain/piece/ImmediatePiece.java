@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class ImmediatePiece extends Piece {
 
-
     public ImmediatePiece(final Type type, final Side side) {
         super(type, side);
     }

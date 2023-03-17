@@ -20,11 +20,6 @@ public class Queen extends LinearPiece {
         validateSide(side);
     }
 
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
-    }
-
     private void validateType(final Type type) {
         if (type != Type.QUEEN) {
             throw new IllegalArgumentException("퀸의 타입이 잘못되었습니다.");
@@ -35,5 +30,10 @@ public class Queen extends LinearPiece {
         if (side == Side.NEUTRALITY) {
             throw new IllegalArgumentException("퀸은 중립적인 기물이 아닙니다.");
         }
+    }
+
+    @Override
+    protected List<MovePattern> getMovePatterns() {
+        return movePatterns;
     }
 }

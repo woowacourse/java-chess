@@ -15,14 +15,6 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void start() {
-        this.state = State.START;
-    }
-
-    public void end() {
-        this.state = State.END;
-    }
-
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
         final Piece sourcePiece = board.getPiece(source.getFile(), source.getRank());
@@ -45,6 +37,14 @@ public class ChessGame {
         if (!movablePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
+    }
+
+    public void start() {
+        this.state = State.START;
+    }
+
+    public void end() {
+        this.state = State.END;
     }
 
     public boolean isRunnable() {

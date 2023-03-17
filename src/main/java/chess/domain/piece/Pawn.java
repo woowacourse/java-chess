@@ -39,6 +39,18 @@ public class Pawn extends Piece {
         validateSide(side);
     }
 
+    private void validateType(final Type type) {
+        if (type != Type.PAWN) {
+            throw new IllegalArgumentException("폰의 타입이 잘못되었습니다.");
+        }
+    }
+
+    private void validateSide(final Side side) {
+        if (side == Side.NEUTRALITY) {
+            throw new IllegalArgumentException("폰은 중립적인 기물이 아닙니다.");
+        }
+    }
+
     @Override
     public boolean isPawn() {
         return true;
@@ -83,13 +95,6 @@ public class Pawn extends Piece {
                 (source.getFileIndex() - nextPosition.getFileIndex()));
     }
 
-    private void checkFrontSide(final List<Position> movablePositions, final Position nextPosition,
-                                final Side nextSide) {
-        if (nextSide == Side.NEUTRALITY) {
-            movablePositions.add(nextPosition);
-        }
-    }
-
     private void checkDiagonalSide(final List<Position> movablePositions, final Position nextPosition,
                                    final Side nextSide) {
         if (nextSide != this.side && nextSide != Side.NEUTRALITY) {
@@ -97,20 +102,15 @@ public class Pawn extends Piece {
         }
     }
 
+    private void checkFrontSide(final List<Position> movablePositions, final Position nextPosition,
+                                final Side nextSide) {
+        if (nextSide == Side.NEUTRALITY) {
+            movablePositions.add(nextPosition);
+        }
+    }
+
     @Override
     protected List<MovePattern> getMovePatterns() {
         return movePatterns;
-    }
-
-    private void validateType(final Type type) {
-        if (type != Type.PAWN) {
-            throw new IllegalArgumentException("폰의 타입이 잘못되었습니다.");
-        }
-    }
-
-    private void validateSide(final Side side) {
-        if (side == Side.NEUTRALITY) {
-            throw new IllegalArgumentException("폰은 중립적인 기물이 아닙니다.");
-        }
     }
 }
