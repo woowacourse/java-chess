@@ -17,8 +17,15 @@ public class Game {
     }
 
     public void movePiece(Position source, Position target) {
-        board.move(source, target, isWhiteTurn);
+        checkTurn(source);
+        board.move(source, target);
         changeTurn();
+    }
+
+    private void checkTurn(Position position) {
+        if (!board.checkTurn(position, isWhiteTurn)) {
+            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
+        }
     }
 
     private void changeTurn() {
