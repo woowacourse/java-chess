@@ -48,7 +48,7 @@ public class OutputView {
         final String result = RANKS.stream()
                 .map(rank -> generatePieceSymbols(board, rank))
                 .collect(Collectors.joining(NEXT_LINE));
-        System.out.println(result);
+        System.out.println(result + NEXT_LINE);
     }
 
     private static String generatePieceSymbols(final Map<Position, Piece> board, final Rank rank) {
@@ -64,6 +64,10 @@ public class OutputView {
             return result.toLowerCase();
         }
         return result;
+    }
+
+    public static void printGameEnd() {
+        System.out.println("체스 게임을 종료합니다.");
     }
 
     public static void printException(final String message) {
