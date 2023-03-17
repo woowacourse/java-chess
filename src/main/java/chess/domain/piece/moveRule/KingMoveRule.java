@@ -21,18 +21,16 @@ public class KingMoveRule implements MoveRule {
 
     @Override
     public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+        validateNear(currentPosition, nextPosition);
+        validateDestination(currentPosition, nextPosition, board);
+
+        updatePiecePosition(currentPosition, nextPosition, board);
+    }
+
+    private void validateNear(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isNear(nextPosition)) {
             throw new IllegalArgumentException("킹은 인접한 칸으로만 이동할 수 있습니다.");
         }
-
-        Piece pieceOfCurrentPosition = board.get(currentPosition);
-        Piece pieceOfNextPosition = board.get(nextPosition);
-
-        if (board.containsKey(nextPosition) && !pieceOfCurrentPosition.isOpponent(pieceOfNextPosition)) {
-            throw new IllegalArgumentException("도착 지점에 아군 기물이 있어 움직일 수 없습니다.");
-        }
-        Piece movingPiece = board.remove(currentPosition);
-        board.put(nextPosition, movingPiece);
     }
 
     @Override

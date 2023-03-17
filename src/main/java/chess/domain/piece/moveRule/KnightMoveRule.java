@@ -20,18 +20,16 @@ public class KnightMoveRule implements MoveRule {
 
     @Override
     public void move(Position currentPosition, Position nextPosition,  Map<Position, Piece> board) {
+        validateKnightDirection(currentPosition, nextPosition);
+        validateDestination(currentPosition, nextPosition, board);
+
+        updatePiecePosition(currentPosition, nextPosition, board);
+    }
+
+    private void validateKnightDirection(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isKnightPosition(nextPosition)) {
             throw new IllegalArgumentException("나이트는 L 모양으로만 움직일 수 있습니다.");
         }
-
-        Piece pieceOfCurrentPosition = board.get(currentPosition);
-        Piece pieceOfNextPosition = board.get(nextPosition);
-
-        if(board.containsKey(nextPosition) && !pieceOfCurrentPosition.isOpponent(pieceOfNextPosition)){
-            throw new IllegalArgumentException("도착 지점에 아군 기물이 있어 움직일 수 없습니다.");
-        }
-        Piece movingPiece = board.remove(currentPosition);
-        board.put(nextPosition, movingPiece);
     }
 
     @Override
