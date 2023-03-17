@@ -1,8 +1,5 @@
 package chess.view;
 
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;
@@ -10,6 +7,9 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +30,6 @@ public class OutputView {
         PIECE_VALUE_MAP.put(Knight.class, "n");
         PIECE_VALUE_MAP.put(Pawn.class, "p");
     }
-
 
     public static void printBoard(final Map<Position, Piece> boardMap) {
         List<List<String>> chessBoard = initializeBoard();

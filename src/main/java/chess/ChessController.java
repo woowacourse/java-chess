@@ -51,8 +51,7 @@ public class ChessController {
         board.move(from, to, turn);
     }
 
-    private static Color changeTurn(Color turn) {
-        turn = turn.opposite();
-        return turn;
+    private static Color changeTurn(Color color) {
+        return color.opposite();
     }
 }
