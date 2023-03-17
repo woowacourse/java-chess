@@ -26,13 +26,22 @@ public class PieceTest {
         }
     }
 
-    @DisplayName("색을 구별할 수 있다")
+    @DisplayName("공격 가능한 상대인지 판단한다")
     @Test
-    void isSameColor() {
+    void isRightTarget() {
         Piece piece = createPiece(WHITE);
         Piece otherPiece = createPiece(BLACK);
 
-        assertThat(piece.hasSameColor(otherPiece)).isFalse();
+        assertThat(piece.isRightTarget(otherPiece)).isTrue();
+    }
+
+    @DisplayName("공격 불가능한 상대인지 판단한다")
+    @Test
+    void isNotRightTarget() {
+        Piece piece = createPiece(WHITE);
+        Piece otherPiece = createPiece(WHITE);
+
+        assertThat(piece.isRightTarget(otherPiece)).isFalse();
     }
 
     @DisplayName("이동 가능한 수인지 판단한다(유한)")

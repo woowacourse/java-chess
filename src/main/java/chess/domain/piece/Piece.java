@@ -13,8 +13,8 @@ public abstract class Piece {
         this.moves = moves;
     }
 
-    public boolean hasSameColor(Piece otherPiece) {
-        return color == otherPiece.color;
+    public boolean isRightTarget(Piece target) {
+        return color != target.color;
     }
 
     public boolean hasColor(Color color) {
@@ -28,7 +28,7 @@ public abstract class Piece {
         }
         return hasMove;
     }
-    
+
     protected boolean compareMove(Move pieceMove, Move move) {
         return pieceMove.equals(move);
     }

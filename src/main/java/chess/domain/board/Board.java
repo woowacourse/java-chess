@@ -48,7 +48,7 @@ public class Board {
         if (isEmpty(target)) {
             return false;
         }
-        if (sourcePiece.hasSameColor(targetPiece)) {
+        if (!sourcePiece.isRightTarget(targetPiece)) {
             throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
         }
         return true;
