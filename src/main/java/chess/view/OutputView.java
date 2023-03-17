@@ -4,6 +4,10 @@ public class OutputView {
 
     private static final String START_MESSAGE_PREFIX = "> ";
 
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public static void printStartMessage() {
         printEachStartPrefixMessage("체스 게임을 시작합니다.");
         printCommandMessage();
