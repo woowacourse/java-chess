@@ -1,13 +1,12 @@
 package domain.position;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public final class Positions {
     private static final int STAY = 0;
@@ -51,24 +50,29 @@ public final class Positions {
     }
 
     private static List<Position> getBetweenPositions(final Position source, final Position destination) {
-        int rankDifference = destination.getRank() - source.getRank();
-        int fileDifference = destination.getFile() - source.getFile();
-        final int count = getMaxDifference(rankDifference, fileDifference);
+        final int COUNT_BETWEEN = getMaxDifference(source, destination) - 1;
+        final int oneStepRank = getOneStep(getRankDifference(source, destination));
+        final int oneStepFile = getOneStep(getFileDifference(source, destination));
 
-//        final List<Position> result = new ArrayList<>();
-//        Position next = source;
-//        for (int i = 0; i < count - 1; i++) {
-//            next = next.move(getOneStep(rankDifference), getOneStep(fileDifference));
-//            result.add(next);
-//        }
-
-        return IntStream.range(1, count)
-                .mapToObj(distance -> source.move(distance*getOneStep(rankDifference), distance*getOneStep(fileDifference)))
-                .collect(Collectors.toList());
+        return Stream.iterate(source.move(oneStepRank, oneStepFile),
+                        (position) -> position.move(oneStepRank, oneStepFile))
+                .limit(COUNT_BETWEEN)
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    private static int getMaxDifference(final int rankDifference, final int fileDifference) {
+    private static int getMaxDifference(final Position source, final Position destination) {
+        final int rankDifference = getRankDifference(source, destination);
+        final int fileDifference = getFileDifference(source, destination);
+
         return Math.max(Math.abs(rankDifference), Math.abs(fileDifference));
+    }
+
+    private static int getRankDifference(final Position source, final Position destination) {
+        return destination.getRank() - source.getRank();
+    }
+
+    private static int getFileDifference(final Position source, final Position destination) {
+        return destination.getFile() - source.getFile();
     }
 
     private static int getOneStep(final int difference) {
