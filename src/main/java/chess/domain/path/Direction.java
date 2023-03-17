@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.path;
 
 public enum Direction {
 
@@ -29,12 +29,12 @@ public enum Direction {
         this.rankChange = rankChange;
     }
 
-    public int getRankChange() {
-        return rankChange;
+    public int moveFile(int origin) {
+        return origin +fileChange;
     }
 
-    public int getFileChange() {
-        return fileChange;
+    public int moveRank(int origin) {
+        return origin + rankChange;
     }
 
 }

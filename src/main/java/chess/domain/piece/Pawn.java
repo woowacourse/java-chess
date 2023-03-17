@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.MovablePaths;
-import chess.domain.Path;
+import chess.domain.path.Direction;
+import chess.domain.path.MovablePaths;
+import chess.domain.path.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.path.MovablePaths;
+import chess.domain.path.Path;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;

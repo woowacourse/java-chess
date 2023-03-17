@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.path.Direction;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,8 +44,8 @@ public class Position {
     }
 
     public Position findNextPosition(final Direction direction) {
-        int nextFile = x + direction.getFileChange();
-        int nextRank = y + direction.getRankChange();
+        int nextFile = direction.moveFile(x);
+        int nextRank = direction.moveRank(y);
 
         if (isNotInRange(nextFile, nextRank)) {
             return null;

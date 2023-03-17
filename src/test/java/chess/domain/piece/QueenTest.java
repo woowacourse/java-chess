@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.MovablePaths;
+import chess.domain.path.MovablePaths;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import org.junit.jupiter.api.DisplayName;

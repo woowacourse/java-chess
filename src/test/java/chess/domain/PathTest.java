@@ -2,6 +2,8 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.path.Direction;
+import chess.domain.path.Path;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
