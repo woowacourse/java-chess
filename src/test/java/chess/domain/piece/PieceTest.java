@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,23 +14,25 @@ class PieceTest {
 
     @Test
     @DisplayName("isBlack() : 피스가 검정색인지 확인할 수 있다.")
-    void test_isBlack() throws Exception {
-        //given
-        Piece blackPiece = new Piece(Color.BLACK) {
-            @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-                return null;
-            }
-        };
-        Piece whitePiece = new Piece(Color.WHITE) {
-            @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-                return null;
-            }
-        };
+    void test_isBlack() {
+        final Piece blackPiece = new TestPiece(Color.BLACK);
+        final Piece whitePiece = new TestPiece(Color.WHITE);
 
-        //when & then
-        assertTrue(blackPiece.isBlack());
-        assertFalse(whitePiece.isBlack());
+        assertAll(
+                () -> assertTrue(blackPiece.isBlack()),
+                () -> assertFalse(whitePiece.isBlack())
+        );
+    }
+
+    static class TestPiece extends Piece {
+
+        public TestPiece(final Color color) {
+            super(color);
+        }
+
+        @Override
+        public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+            throw new UnsupportedOperationException();
+        }
     }
 }
