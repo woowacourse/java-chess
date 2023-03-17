@@ -27,7 +27,7 @@ public class Rook extends Piece {
         Movement movement = to.convertMovement(from);
 
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
         }
 
         Position next = from;
