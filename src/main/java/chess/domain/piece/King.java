@@ -20,14 +20,14 @@ public class King extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.KING;
-    }
-
-    @Override
     public boolean canMove(Square source, Square target) {
         return (source.calculateRankDistance(target) == MOVABLE_DISTANCE) ||
                 (source.calculateFileDistance(target) == MOVABLE_DISTANCE);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
     }
 
 }

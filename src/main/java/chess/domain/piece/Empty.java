@@ -14,12 +14,12 @@ public class Empty extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.EMPTY;
+    public boolean canMove(Square source, Square target) {
+        return false;
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        return false;
+    public PieceType getPieceType() {
+        return PieceType.EMPTY;
     }
 }

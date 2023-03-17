@@ -19,13 +19,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.QUEEN;
+    public boolean canMove(Square source, Square target) {
+        return isStraight(source, target) || isDiagonal(source, target);
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        return isStraight(source, target) || isDiagonal(source, target);
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
     }
 
     private boolean isStraight(Square source, Square target) {
