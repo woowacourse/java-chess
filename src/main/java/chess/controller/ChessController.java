@@ -32,7 +32,7 @@ public class ChessController {
             state = state.command(Command.parse(new ArrayList<>(command)));
             OutputView.showBoard(chessBoard.pieces());
         } catch (final Exception e) {
-            Logger.error(e);
+            OutputView.error(e.getMessage());
         }
         return state;
     }

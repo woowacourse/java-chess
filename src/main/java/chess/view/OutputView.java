@@ -77,4 +77,8 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
     }
+
+    public static void error(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }
