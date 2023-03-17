@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     private static final Pawn BLACK = new Pawn(Color.BLACK);
     private static final Map<Color, Integer> GAP_LOWER_BOUND = Map.of(Color.WHITE, -1, Color.BLACK, 1);
     private static final Map<Color, Integer> GAP_UPPER_BOUND = Map.of(Color.WHITE, -2, Color.BLACK, 2);
-    private static final Map<Color, Rank> VALID_RANK = Map.of(Color.WHITE, Rank.TWO, Color.BLACK, Rank.SEVEN);
+    private static final Map<Color, Rank> INITIAL_RANK = Map.of(Color.WHITE, Rank.TWO, Color.BLACK, Rank.SEVEN);
     private static final int VALID_STRAIGHT_GAP = 0;
     private static final int VALID_DIAGONAL_GAP = 1;
 
@@ -53,7 +53,7 @@ public class Pawn extends Piece {
     }
 
     private static boolean canMoveStraightTwo(final Position start, final Color color, final int rankGap) {
-        return rankGap == GAP_UPPER_BOUND.get(color) && start.isSameRank(VALID_RANK.get(color));
+        return rankGap == GAP_UPPER_BOUND.get(color) && start.isSameRank(INITIAL_RANK.get(color));
     }
 
     @Override
