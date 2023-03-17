@@ -1,4 +1,4 @@
-package chess.domain.square.exception;
+package chess.domain.exception;
 
 public class InvalidSquareIndexException extends RuntimeException {
 

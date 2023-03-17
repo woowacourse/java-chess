@@ -1,6 +1,6 @@
 package chess.domain.square;
 
-import chess.domain.square.exception.InvalidSquareIndexException;
+import chess.domain.exception.InvalidSquareIndexException;
 
 import java.util.Arrays;
 

@@ -1,8 +1,9 @@
 package chess.domain;
 
+import chess.domain.exception.EmptySquareException;
+import chess.domain.exception.WrongDirectionException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
@@ -18,34 +19,51 @@ public class Board {
     }
 
     public static Board create() {
-        BoardFactory boardFactory = new BoardFactory();
+        final BoardFactory boardFactory = new BoardFactory();
         return new Board(boardFactory.make());
     }
 
-    // TODO: 코드 개선 시급
-    public void move(Square current, Square destination) {
-        Piece piece = getPiece(current);
-        Direction direction = piece.findDirection(current, destination);
+    public void move(final Square current, final Square destination) {
+        final Direction direction = getDirectionOfPiece(current, destination);
         validateRoute(current, destination, direction);
         if (!isEmptySquare(destination)) {
             checkEnemy(current, destination);
             return;
         }
-        if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
-            throw new WrongDirectionException();
-        }
+        validatePawnDiagonalMove(current, direction);
         movePiece(current, destination);
     }
 
-    private void validateRoute(Square current, Square destination, Direction direction) {
-        Square next = current.move(direction);
+    private Direction getDirectionOfPiece(final Square current, final Square destination) {
+        final Piece piece = getPiece(current);
+        return piece.findDirection(current, destination);
+    }
+
+    private Piece getPiece(final Square current) {
+        if (isEmptySquare(current)) {
+            throw new EmptySquareException();
+        }
+        return board.get(current);
+    }
+
+    private boolean isEmptySquare(final Square square) {
+        return !board.containsKey(square);
+    }
+
+    private void validateRoute(final Square current, final Square destination, final Direction direction) {
+        final Square next = current.move(direction);
         if (next.equals(destination)) {
             return;
         }
-        if (!isEmptySquare(next)) {
-            throw new WrongDirectionException();
-        }
+        validateNonBlocked(next);
         validateRoute(next, destination, direction);
+    }
+
+    private void validateNonBlocked(final Square square) {
+        if (isEmptySquare(square)) {
+            return;
+        }
+        throw new WrongDirectionException();
     }
 
     private void checkEnemy(Square current, Square destination) {
@@ -56,9 +74,9 @@ public class Board {
         throw new WrongDirectionException();
     }
 
-    private boolean isEnemy(Square current, Square destination) {
-        Piece currentPiece = getPiece(current);
-        Piece destinationPiece = getPiece(destination);
+    private boolean isEnemy(final Square current, final Square destination) {
+        final Piece currentPiece = getPiece(current);
+        final Piece destinationPiece = getPiece(destination);
         return currentPiece.isEnemy(destinationPiece);
     }
 
@@ -67,15 +85,10 @@ public class Board {
         movePiece(current, destination);
     }
 
-    private Piece getPiece(final Square current) {
-        if (isEmptySquare(current)) {
-            throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
+    private void validatePawnDiagonalMove(final Square current, final Direction direction) {
+        if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
+            throw new WrongDirectionException();
         }
-        return board.get(current);
-    }
-
-    private boolean isEmptySquare(final Square square) {
-        return !board.containsKey(square);
     }
 
     private void movePiece(final Square current, final Square destination) {

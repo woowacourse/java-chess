@@ -1,4 +1,4 @@
-package chess.domain.piece.exception;
+package chess.domain.exception;
 
 public class WrongDirectionException extends IllegalArgumentException {
 

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.exception.WrongDirectionException;
+import chess.domain.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
