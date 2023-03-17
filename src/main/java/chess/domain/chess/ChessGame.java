@@ -20,7 +20,7 @@ public final class ChessGame {
         play(source, target);
     }
 
-    public void play(final Position source, final Position target) {
+    private void play(final Position source, final Position target) {
         final Piece piece = chessBoard.checkPiece(source);
         validateCamp(piece);
         validateTargetSameCamp(target);
