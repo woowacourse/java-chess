@@ -35,4 +35,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발지와 도착지는 같을 수 없습니다");
     }
+
+    @Test
+    @DisplayName("출발점에 체스말이 존재하지 않으면 예외가 발생한다")
+    void throwExceptionWhenSourceNotEmpty() {
+        final Position source = Position.from("b3");
+        final Position target = Position.from("b4");
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("출발점에 체스말이 존재하지 않습니다");
+    }
 }
