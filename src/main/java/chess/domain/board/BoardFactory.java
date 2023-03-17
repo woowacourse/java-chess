@@ -27,11 +27,11 @@ public class BoardFactory {
         Map<Position, Piece> board = new HashMap<>();
         initEmpty(board);
 
-        initNonPawns(Rank.ONE, Side.BLACK, board);
-        initPawns(Rank.TWO, Side.BLACK, board);
+        initPawns(Rank.TWO, Side.WHITE, board);
+        initNonPawns(Rank.ONE, Side.WHITE, board);
 
-        initPawns(Rank.SEVEN, Side.WHITE, board);
-        initNonPawns(Rank.EIGHT, Side.WHITE, board);
+        initPawns(Rank.SEVEN, Side.BLACK, board);
+        initNonPawns(Rank.EIGHT, Side.BLACK, board);
 
         return board;
     }
