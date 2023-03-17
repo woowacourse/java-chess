@@ -1,23 +1,22 @@
-package domain.piece.type;
+package domain.piece.type.unrestricted;
 
 import java.util.List;
 
 import domain.piece.Camp;
-import domain.piece.Piece;
 
-public class Queen extends Piece {
-    public Queen(Camp camp) {
+public class Bishop extends UnrestrictedPiece {
+    public Bishop(Camp camp) {
         super(camp);
     }
 
     @Override
-    public boolean isQueen() {
+    public boolean isBishop() {
         return true;
     }
 
     @Override
     protected void validateMovable(List<Integer> gaps) {
-        if (isNotForward(gaps) && isNotDiagonal(gaps)) {
+        if (isNotDiagonal(gaps)) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
     }

@@ -1,6 +1,7 @@
 package domain.piece.type;
 
 import java.util.List;
+import java.util.Map;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -26,12 +27,11 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected void validateMovable(List<Integer> gaps) {
-
+    public boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare) {
+        throw new IllegalArgumentException("기물이 없습니다.");
     }
 
     @Override
-    public boolean isEmpty() {
-        return true;
+    protected void validateMovable(List<Integer> gaps) {
     }
 }

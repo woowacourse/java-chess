@@ -1,12 +1,10 @@
-package domain.piece.type;
+package domain.piece.type.restricted;
 
 import java.util.List;
 
-import domain.board.Square;
 import domain.piece.Camp;
-import domain.piece.Piece;
 
-public class King extends Piece {
+public class King extends RestrictedPiece {
     public static final int MOVE_DISTANCE_LIMIT = 1;
 
     public King(Camp camp) {
@@ -16,13 +14,6 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    @Override
-    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        List<Integer> gaps = calculateGap(currentSquare, targetSquare);
-        validateMovable(gaps);
-        return List.of(targetSquare);
     }
 
     @Override

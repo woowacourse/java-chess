@@ -1,11 +1,10 @@
-package domain.piece.type;
+package domain.piece.type.unrestricted;
 
 import java.util.List;
 
 import domain.piece.Camp;
-import domain.piece.Piece;
 
-public class Rook extends Piece {
+public class Rook extends UnrestrictedPiece {
     public Rook(Camp camp) {
         super(camp);
     }

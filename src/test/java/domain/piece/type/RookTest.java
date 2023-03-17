@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.type.unrestricted.Rook;
 
 class RookTest {
     @Test

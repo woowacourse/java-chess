@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.type.Bishop;
+import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.Empty;
-import domain.piece.type.King;
-import domain.piece.type.Knight;
+import domain.piece.type.restricted.King;
+import domain.piece.type.restricted.Knight;
 import domain.piece.type.Pawn;
-import domain.piece.type.Queen;
-import domain.piece.type.Rook;
+import domain.piece.type.unrestricted.Queen;
+import domain.piece.type.unrestricted.Rook;
 
 public class ChessBoard {
-    private Map<Square, Piece> board = new HashMap<>();
+    private final Map<Square, Piece> board = new HashMap<>();
 
     public ChessBoard() {
         for (File file : File.values()) {
@@ -122,8 +122,7 @@ public class ChessBoard {
     public void move(Square currentSquare, Square targetSquare) {
         Piece currentPiece = board.get(currentSquare);
         List<Square> path = currentPiece.fetchMovePath(currentSquare, targetSquare);
-        Map<Square, Camp> pathInfo = path.stream()
-                .collect(Collectors.toMap(Function.identity(), square -> board.get(square).getCamp()));
+        Map<Square, Camp> pathInfo = calculatePathInfo(path);
         if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
@@ -132,12 +131,13 @@ public class ChessBoard {
         throw new IllegalStateException("움직일 수 없는 경로입니다.");
     }
 
-    public Map<Square, Piece> getBoard() {
-        return board;
+    private Map<Square, Camp> calculatePathInfo(List<Square> path) {
+        return path.stream()
+                .collect(Collectors.toMap(Function.identity(), square -> board.get(square).getCamp()));
     }
 
-    public Square findSquare(String file, String rank) {
-        return new Square(File.findFile(file.charAt(0)), Rank.findRank(rank.charAt(0)));
+    public Map<Square, Piece> getBoard() {
+        return board;
     }
 
     public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {

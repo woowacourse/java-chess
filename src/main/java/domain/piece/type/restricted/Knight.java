@@ -1,12 +1,10 @@
-package domain.piece.type;
+package domain.piece.type.restricted;
 
 import java.util.List;
 
-import domain.board.Square;
 import domain.piece.Camp;
-import domain.piece.Piece;
 
-public class Knight extends Piece {
+public class Knight extends RestrictedPiece {
     public static final int KNIGHT_GAP_SUM = 3;
     public static final int KNIGHT_GAP_SUBTRACTION = 1;
 
@@ -17,13 +15,6 @@ public class Knight extends Piece {
     @Override
     public boolean isKnight() {
         return true;
-    }
-
-    @Override
-    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        List<Integer> gaps = calculateGap(currentSquare, targetSquare);
-        validateMovable(gaps);
-        return List.of(targetSquare);
     }
 
     @Override
