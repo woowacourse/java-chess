@@ -6,8 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
+import chess.piece.Side;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -61,5 +64,25 @@ class PiecesTest {
         // when, then
         assertThat(pieces.isPieceExistOnPosition(existPosition)).isTrue();
         assertThat(pieces.isPieceExistOnPosition(nonExistPosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("기물의 위치가 바뀌면 기물을 관리하는 리스트에도 반영된다.")
+    void synchronizeMovedPiece() {
+        // given
+        final Pieces pieces = new Pieces();
+        final List<Piece> beforeMovePieces = pieces.getPieces();
+        final Piece pieceBeforeMove = pieces.findPieceByPosition(new Position(File.B, Rank.TWO));
+        final Piece movedPiece = new Pawn(new Position(File.B, Rank.THREE), Side.WHITE);
+
+        final int pieceBeforeMoveIndex = beforeMovePieces.indexOf(pieceBeforeMove);
+
+        // when
+        pieces.synchronizeMovedPiece(pieceBeforeMove, movedPiece);
+        final List<Piece> afterMovePieces = pieces.getPieces();
+
+
+        // then
+        assertThat(afterMovePieces.get(pieceBeforeMoveIndex)).isEqualTo(movedPiece);
     }
 }
