@@ -29,6 +29,13 @@ public final class PieceFactory {
     }
 
     public static Piece create(final Color color, final PieceType type) {
+        if (cannotFoundPiece(type)) {
+            throw new IllegalStateException("존재하지 않는 기물입니다.");
+        }
         return factories.get(type).apply(color);
+    }
+
+    private static boolean cannotFoundPiece(final PieceType type) {
+        return !factories.containsKey(type);
     }
 }
