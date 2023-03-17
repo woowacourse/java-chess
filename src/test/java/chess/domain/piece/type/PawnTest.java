@@ -167,6 +167,8 @@ class PawnTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
+        // TODO 질문입니다 !!
+        // BlackPawnMovementStrategy Test가 있는데 필요한가?
         @ParameterizedTest(name = "어떠한 경우에도 남쪽이 아닌 방향으로 이동할 수 없다. 예를 들어 [b7] 에서 [{0}] 으로는 이동이 불가능하다.")
         @CsvSource({
                 "b8",
