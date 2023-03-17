@@ -6,8 +6,7 @@ public final class Position {
 
     private int rank;
     private char file;
-
-    private Position(final int rank, final char file) {
+     private Position(final int rank, final char file) {
         validatePosition(rank, file);
         this.rank = rank;
         this.file = file;
