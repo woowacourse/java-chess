@@ -23,6 +23,12 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
+        validateDifferentPosition(source, target);
+    }
 
+    private void validateDifferentPosition(final Position source, final Position target) {
+        if (source.file() == target.file() && source.rank() == target.rank()) {
+            throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
+        }
     }
 }
