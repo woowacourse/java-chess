@@ -1,9 +1,10 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.move.BlackPawnMoveStrategy;
-import chess.domain.piece.move.WhitePawnMoveStrategy;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.type.pawn.move.BlackPawnMoveStrategy;
+import chess.domain.piece.type.pawn.move.WhitePawnMoveStrategy;
+import chess.domain.piece.type.pawn.state.InitialPawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

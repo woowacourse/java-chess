@@ -7,9 +7,9 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.type.King;
 import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
+import chess.domain.piece.type.pawn.Pawn;
 
 import java.util.ArrayList;
 import java.util.List;

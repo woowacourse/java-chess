@@ -1,12 +1,12 @@
-package chess.domain.piece.type;
+package chess.domain.piece.type.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.move.PawnColorMoveStrategy;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.state.InitialPawn;
-import chess.domain.piece.state.PawnState;
+import chess.domain.piece.type.pawn.move.PawnColorMoveStrategy;
+import chess.domain.piece.type.pawn.state.InitialPawn;
+import chess.domain.piece.type.pawn.state.PawnState;
 
 public class Pawn extends Piece {
 

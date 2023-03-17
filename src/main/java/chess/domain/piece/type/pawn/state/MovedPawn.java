@@ -1,8 +1,8 @@
-package chess.domain.piece.state;
+package chess.domain.piece.type.pawn.state;
 
-import chess.domain.piece.move.PawnColorMoveStrategy;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.type.pawn.move.PawnColorMoveStrategy;
 
 public class MovedPawn extends PawnState {
 
