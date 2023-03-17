@@ -1,6 +1,7 @@
 package domain.chessGame;
 
 import domain.piece.Piece;
+import domain.position.Direction;
 import domain.position.Position;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public final class ChessBoard {
 
     private void checkMovableToDiagonal(Position startPosition, Position endPosition) {
         Piece startPiece = chessBoard.get(startPosition);
-        if (startPosition.isDiagonalDirection(endPosition) &&
+        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
                 (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
         }

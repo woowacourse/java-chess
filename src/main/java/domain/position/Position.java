@@ -46,11 +46,8 @@ public final class Position {
     }
 
     public List<Position> getPathTo(Position end) {
-        int rowGap = calculateRowGap(end);
-        int columnGap = calculateColumnGap(end);
-
-        if (isStraightOfEightDirections(rowGap, columnGap)) {
-            return calculatePath(rowGap, columnGap);
+        if (Direction.of(this, end) != Direction.OTHER) {
+            return calculatePath(calculateRowGap(end), calculateColumnGap(end));
         }
         return new ArrayList<>(List.of(end));
     }
@@ -72,24 +69,6 @@ public final class Position {
             path.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
         }
         return path;
-    }
-
-    private boolean isStraightOfEightDirections(int rowGap, int columnGap) {
-        return rowGap == 0 || columnGap == 0 || Math.abs(rowGap) == Math.abs(columnGap);
-    }
-
-    public boolean isCrossDirection (Position other) {
-        return moveDown().equals(other) ||
-                moveUp().equals(other) ||
-                moveRight().equals(other) ||
-                moveLeft().equals(other);
-    }
-
-    public boolean isDiagonalDirection (Position other) {
-        return moveUpRight().equals(other) ||
-                moveUpLeft().equals(other) ||
-                moveDownRight().equals(other) ||
-                moveDownLeft().equals(other);
     }
 
     public Position moveUp() {

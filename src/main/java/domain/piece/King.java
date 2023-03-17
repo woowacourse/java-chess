@@ -1,10 +1,13 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 import java.util.List;
 
 public final class King extends Piece {
+
+    public static final List<Direction> KING_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
 
     public King(Color color) {
         super(PieceName.KING, color);
@@ -18,7 +21,8 @@ public final class King extends Piece {
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
-        return start.isCrossDirection(nextPosition) || start.isDiagonalDirection(nextPosition);
+        Direction nextDirection = Direction.of(start, nextPosition);
+        return KING_MOVABLE_DIRECTIONS.contains(nextDirection);
     }
 
     @Override

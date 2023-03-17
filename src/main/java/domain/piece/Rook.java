@@ -1,10 +1,14 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 import java.util.List;
 
 public final class Rook extends Piece {
+
+    public static final List<Direction> ROOK_MOVABLE_DIRECTIONS = List.of(Direction.CROSS);
+
 
     public Rook(Color color) {
         super(PieceName.ROOK, color);
@@ -18,7 +22,8 @@ public final class Rook extends Piece {
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
-        return start.isCrossDirection(nextPosition);
+        Direction nextDirection = Direction.of(start, nextPosition);
+        return ROOK_MOVABLE_DIRECTIONS.contains(nextDirection);
     }
 
     @Override
