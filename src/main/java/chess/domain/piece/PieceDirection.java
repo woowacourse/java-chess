@@ -24,6 +24,10 @@ public enum PieceDirection {
         this.pieceDirections = pieceDirections;
     }
 
+    public boolean contains(Direction direction) {
+        return pieceDirections.contains(direction);
+    }
+
     // TODO: 코드 개선 필요
     public Direction findDirection(final int fileDifference, final int rankDifference) {
         if (this == STRAIGHT) {

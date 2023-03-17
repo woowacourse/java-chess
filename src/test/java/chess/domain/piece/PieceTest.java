@@ -22,4 +22,18 @@ class PieceTest {
         Piece secondWhitePiece = new Pawn(Color.WHITE);
         assertThat(firstWhitePiece.isEnemy(secondWhitePiece)).isFalse();
     }
+
+    @Test
+    @DisplayName("폰이면 true를 반환한다.")
+    void is_pawn_true() {
+        Piece pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.isPawn()).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰이 아니면 false를 반환한다.")
+    void is_pawn_false() {
+        Piece rook = new Rook(Color.WHITE);
+        assertThat(rook.isPawn()).isFalse();
+    }
 }

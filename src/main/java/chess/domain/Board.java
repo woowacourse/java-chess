@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceDirection;
+import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
@@ -19,12 +21,17 @@ public class Board {
         return new Board(boardMaker.make());
     }
 
+    // TODO: 코드 개선 시급
     public void move(Square current, Square destination) {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
         validateRoute(current, destination, direction);
         if (!isEmptySquare(destination)) {
             checkEnemy(current, destination);
+            return;
+        }
+        if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
+            throw new WrongDirectionException();
         }
         movePiece(current, destination);
     }

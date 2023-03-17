@@ -9,8 +9,6 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    // TODO: 적이 있는 경우에만 대각 이동 가능하게 하기
-    // TODO: 더블폰푸시 길막인 상태에서 불가하게 하기
     @Override
     public Direction findDirection(Square current, Square destination) {
         int fileDifference = current.getFileDifference(destination);

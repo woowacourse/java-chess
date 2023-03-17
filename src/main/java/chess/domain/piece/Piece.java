@@ -3,8 +3,6 @@ package chess.domain.piece;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
-import java.util.Objects;
-
 abstract public class Piece {
 
     protected Color color;
@@ -15,6 +13,11 @@ abstract public class Piece {
 
     public boolean isEnemy(final Piece piece) {
         return piece.color != color;
+    }
+
+    // TODO: override 할까? (Pawn만 true 반환)
+    public boolean isPawn() {
+        return this instanceof Pawn;
     }
 
     public abstract Direction findDirection(final Square current, final Square destination);

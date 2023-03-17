@@ -22,16 +22,41 @@ class BoardTest {
     }
 
     @Nested
-    @DisplayName("흰 폰")
-    class WhitePawn {
+    @DisplayName("폰")
+    class Pawn {
 
         @Test
-        @DisplayName("폰 한 칸 앞으로 이동")
-        void pawn_move_one_square() {
+        @DisplayName("흰 폰 한 칸 앞으로 이동")
+        void white_pawn_move_one_square() {
             Square current = Square.of(File.A, Rank.TWO);
             Square destination = Square.of(File.A, Rank.THREE);
             assertThatCode(() -> board.move(current, destination))
                     .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("검은 폰 한 칸 앞으로 이동")
+        void black_pawn_move_one_square() {
+            Square current = Square.of(File.A, Rank.SEVEN);
+            Square destination = Square.of(File.A, Rank.SIX);
+            assertThatCode(() -> board.move(current, destination))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적이 있는 경우에만 대각 이동 가능")
+        void pawn_can_move_diagonal_when_enemy_exist() {
+            board.move(Square.of(File.B, Rank.TWO), Square.of(File.B, Rank.FOUR));
+            board.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE));
+            assertThatCode(() -> board.move(Square.of(File.B, Rank.FOUR), Square.of(File.A, Rank.FIVE)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적이 없는 경우에만 대각 이동 불가능")
+        void pawn_cannot_move_diagonal_when_enemy_exist() {
+            assertThatThrownBy(() -> board.move(Square.of(File.B, Rank.TWO), Square.of(File.A, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
         }
 
         @Test
