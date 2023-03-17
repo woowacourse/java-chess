@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    public static final int FIRST_MOVE_TWO_SPACES = 2;
+
     private final List<Direction> directions;
     private String name = "p";
 
@@ -46,7 +48,7 @@ public class Pawn extends Piece {
         final Direction direction = position.getDirectionTo(targetPosition);
         final int moveCount = position.getMoveCount(targetPosition, direction);
 
-        if (isStartPosition() && moveCount == 2) {
+        if (isStartPosition() && moveCount == FIRST_MOVE_TWO_SPACES) {
             return direction == Direction.UP || direction == Direction.DOWN;
         }
 
@@ -67,7 +69,7 @@ public class Pawn extends Piece {
         final Direction direction = position.getDirectionTo(targetPosition);
         final int moveCount = position.getMoveCount(targetPosition, direction);
 
-        if (isStartPosition() && moveCount == 2) {
+        if (isStartPosition() && moveCount == FIRST_MOVE_TWO_SPACES) {
             return List.of(position.getNextPosition(direction));
         }
         return Collections.emptyList();
