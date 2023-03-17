@@ -37,7 +37,7 @@ public class ChessController {
                     chessGame.end();
                     break;
                 }
-                this.outputView.printBoard(BoardDto.create(chessGame));
+                this.outputView.printBoard(BoardDto.create(chessGame.getBoard()));
                 
             } catch (Exception e) {
                 System.out.println(e.getMessage());

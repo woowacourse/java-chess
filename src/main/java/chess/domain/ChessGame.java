@@ -5,8 +5,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
@@ -55,12 +53,8 @@ public class ChessGame {
         }
     }
     
-    public List<List<Piece>> getPieces() {
-        List<List<Piece>> pieces = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            pieces.add(this.board.getPiecesAt(rank));
-        }
-        return pieces;
+    public Board getBoard() {
+        return this.board;
     }
 }
 
