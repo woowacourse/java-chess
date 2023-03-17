@@ -9,6 +9,7 @@ import chess.domain.piece.type.Knight;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -41,11 +42,15 @@ class ChessBoardTest {
      * <p>
      * abcdefgh
      */
+    private ChessBoard chessBoard;
+
+    @BeforeEach
+    void setup() {
+        chessBoard = ChessBoardFactory.create();
+    }
+
     @Test
     void 기본_체스_규칙에_맞게_생성된다() {
-        // when
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // then
         assertPiece(chessBoard, 1, 'a', WHITE, Rook.class);
         assertPiece(chessBoard, 1, 'b', WHITE, Knight.class);
@@ -77,9 +82,6 @@ class ChessBoardTest {
 
     @Test
     void 위치를_받아_주어진_위치의_말을_이동시킨다() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when
         chessBoard.movePiece(new Turn(WHITE), of(2, 'b'), of(3, 'b'));
 
@@ -93,9 +95,6 @@ class ChessBoardTest {
 
     @Test
     void 상대_말을_움직이면_오류() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(BLACK), of(2, 'b'), of(3, 'b'))
@@ -104,9 +103,6 @@ class ChessBoardTest {
 
     @Test
     void 말이_없으면_오류() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(WHITE), of(5, 'b'), of(3, 'b'))
@@ -115,9 +111,6 @@ class ChessBoardTest {
 
     @Test
     void 움직일_수_없는_위치면_오류() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(BLACK), of(7, 'b'), of(4, 'b'))
@@ -126,9 +119,6 @@ class ChessBoardTest {
 
     @Test
     void 움직일_수_있으나_경로에_말이_존재하면_오류() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(BLACK), of(8, 'd'), of(6, 'b'))
@@ -137,9 +127,6 @@ class ChessBoardTest {
 
     @Test
     void 움직일_수_있으나_도착지에_아군_말이_존재하면_오류() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-
         // when & then
         assertThatThrownBy(() ->
                 chessBoard.movePiece(new Turn(BLACK), of(8, 'd'), of(7, 'c'))
@@ -149,7 +136,6 @@ class ChessBoardTest {
     @Test
     void 폰이_일직선으로_한칸_움직이는_경우_적군_말이_있으면_오류() {
         // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
         chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'b'), PiecePosition.of(5, 'b'));
 
@@ -162,7 +148,6 @@ class ChessBoardTest {
     @Test
     void 폰이_일직선으로_두칸_움직이는_경우_적군_말이_있으면_오류() {
         // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'b'), PiecePosition.of(5, 'b'));
         chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(5, 'b'), PiecePosition.of(4, 'b'));
 
@@ -175,7 +160,6 @@ class ChessBoardTest {
     @Test
     void 폰이_대각선으로_움직이는_경우_적군_말이_없으면_오류() {
         // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
 
         // when & then
@@ -187,7 +171,6 @@ class ChessBoardTest {
     @Test
     void 폰이_대각선으로_움직이려면_적군_말이_필요하다() {
         // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
         chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'c'), PiecePosition.of(5, 'c'));
 
@@ -201,7 +184,6 @@ class ChessBoardTest {
     @Test
     void 적군_말을_잡으면_해당_말은_사라진다() {
         // given
-        final ChessBoard chessBoard = ChessBoardFactory.create();
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'e'), PiecePosition.of(4, 'e'));
         chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(1, 'd'), PiecePosition.of(5, 'h'));
 
