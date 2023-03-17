@@ -2,8 +2,10 @@ package chess;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 public enum Movement {
+
     U(0, 1),
     D(0, -1),
     R(1, 0),
@@ -33,20 +35,16 @@ public enum Movement {
 
     public static Movement of(final int file, final int rank) {
         return Arrays.stream(Movement.values())
-                .filter(movement -> movement.file == file && movement.rank == rank)
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 방향입니다."));
+                     .filter(isEqualsMovementFrom(file, rank))
+                     .findAny()
+                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 방향입니다."));
+    }
+
+    private static Predicate<Movement> isEqualsMovementFrom(final int file, final int rank) {
+        return movement -> movement.file == file && movement.rank == rank;
     }
 
     public Position nextPosition(File file, Rank rank) {
         return new Position(file.value() + this.file, rank.value() + this.rank);
-    }
-
-    public int getFile() {
-        return file;
-    }
-
-    public int getRank() {
-        return rank;
     }
 }
