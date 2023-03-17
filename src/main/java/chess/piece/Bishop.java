@@ -25,11 +25,18 @@ public class Bishop extends Piece {
         destination.ifPresent(super::validateSameColor);
 
         Movement movement = to.convertMovement(from);
+        validateMovement(movement);
 
+        return trackPath(from, to, movement);
+    }
+
+    private static void validateMovement(final Movement movement) {
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Bishop이 이동할 수 없는 방향임!");
         }
+    }
 
+    private static Path trackPath(final Position from, final Position to, final Movement movement) {
         Position next = from;
         List<Position> positions = new ArrayList<>();
 
@@ -43,4 +50,5 @@ public class Bishop extends Piece {
 
         return new Path(positions);
     }
+
 }

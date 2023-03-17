@@ -31,14 +31,14 @@ public class Knight extends Piece {
     @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
-        validateMovement(from, to);
+        Movement movement = to.convertMovement(from);
+        validateMovement(movement);
         validatePositionDifference(from, to);
 
         return new Path();
     }
 
-    private static void validateMovement(final Position from, final Position to) {
-        Movement movement = to.convertMovement(from);
+    private static void validateMovement(final Movement movement) {
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
             throw new IllegalStateException("Knight가 움직일 수 없는 방향임!");
         }
@@ -48,8 +48,9 @@ public class Knight extends Piece {
         int rankDifference = Math.abs(to.rankDifference(from));
         int fileDifference = Math.abs(to.fileDifference(from));
 
-        if (rankDifference + fileDifference != POSITION_DIFFERENCE) {
-            throw new IllegalStateException();
+        boolean hasInvalidPositionDifference = rankDifference + fileDifference != POSITION_DIFFERENCE;
+        if (hasInvalidPositionDifference) {
+            throw new IllegalStateException("Knight가 이동할 수 없는 움직임임!");
         }
     }
 }

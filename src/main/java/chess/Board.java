@@ -23,12 +23,19 @@ public class Board {
     }
 
     private void validateCanMove(final Position from, final Position to, final Color turn) {
+        validateSamePosition(from, to);
         validateIsFromEmpty(from);
         validateIsDifferentColor(from, turn);
 
         Path path = board.get(from)
                 .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
         path.validateObstacle(board.keySet());
+    }
+
+    private static void validateSamePosition(final Position from, final Position to) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("말을 다른 곳으로 이동시켜 주세요");
+        }
     }
 
     private void validateIsDifferentColor(final Position from, final Color turn) {
