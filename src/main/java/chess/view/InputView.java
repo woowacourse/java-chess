@@ -19,4 +19,8 @@ public class InputView {
     public static String readSquare() {
         return scanner.next();
     }
+
+    public static String terminate() {
+        scanner.close();
+    }
 }
