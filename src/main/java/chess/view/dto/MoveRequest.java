@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class MoveRequest {
 
-    PositionRequest source;
-    PositionRequest target;
+    private final PositionRequest source;
+    private final PositionRequest target;
 
     private MoveRequest(PositionRequest source, PositionRequest target) {
         this.source = source;
