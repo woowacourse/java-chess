@@ -8,6 +8,7 @@ import java.util.List;
 
 public class MoveSubController implements SubController {
 
+    public static final String POSITION_LENGTH_VALIDATE = "올바른 체스 좌표를 입력해주십시오";
     private final Board board;
     private Color turn = Color.WHITE;
 
@@ -36,6 +37,9 @@ public class MoveSubController implements SubController {
     }
 
     private Position renderPosition(final String position) {
+        if (position.length() != 2) {
+            throw new IllegalArgumentException(POSITION_LENGTH_VALIDATE);
+        }
         final int file = position.charAt(0) - 'a' + 1;
         final int rank = position.charAt(1) - '0';
         return new Position(file, rank);
