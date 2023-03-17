@@ -17,6 +17,8 @@ public class InputView {
     private static final int SOURCE_COMMAND_INDEX = 1;
     private static final int TARGET_COMMAND_INDEX = 2;
     private static final Position DEFAULT_POSITION = new Position(File.A, Rank.FIRST);
+    private static final int COMMAND_INDEX = 0;
+    private static final int POSITION_INDEX = 1;
 
     private final Scanner scanner;
 
@@ -70,8 +72,8 @@ public class InputView {
     }
 
     private Position convertPosition(final String inputSquare) {
-        final String inputFile = inputSquare.substring(0, 1);
-        final String inputRank = inputSquare.substring(1);
+        final String inputFile = inputSquare.substring(COMMAND_INDEX, POSITION_INDEX);
+        final String inputRank = inputSquare.substring(POSITION_INDEX);
         final File file = File.findFile(inputFile);
         final int rankValue = mapToRankValue(inputRank);
         final Rank rank = Rank.findRank(rankValue);
