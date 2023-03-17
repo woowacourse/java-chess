@@ -1,5 +1,7 @@
 package chess.domain;
 
+import static chess.domain.MoveStrategy.*;
+
 import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
@@ -73,19 +75,13 @@ public class Board {
     }
 
     private void validatePawnMoving(Position source, Position target) {
-        if (!board.containsKey(target) && !isPawnStraight(source, target)) {
+        if (!board.containsKey(target) && !PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대 기물이 없을 경우, 대각선으로 움직일 수 없습니다.");
         }
 
-        if (board.containsKey(target) && isPawnStraight(source, target)) {
+        if (board.containsKey(target) && PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 기물이 있는 곳으로 직진할 수 없습니다.");
         }
-    }
-
-    private boolean isPawnStraight(Position source, Position target) {
-        int rankDiff = source.rankDiff(target);
-        int fileDiff = source.fileDiff(target);
-        return rankDiff == 0 || fileDiff == 0;
     }
 
     private void movePiece(Position source, Position target) {

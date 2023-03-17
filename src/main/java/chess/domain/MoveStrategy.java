@@ -13,7 +13,8 @@ public enum MoveStrategy {
     BLACK_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == -2),
     BLACK_PAWN((fileDiff, rankDiff) -> rankDiff == -1 && Math.abs(fileDiff) <= 1),
     WHITE_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == 2),
-    WHITE_PAWN((fileDiff, rankDiff) -> rankDiff == 1 && Math.abs(fileDiff) <= 1);
+    WHITE_PAWN((fileDiff, rankDiff) -> rankDiff == 1 && Math.abs(fileDiff) <= 1),
+    PAWN_STRAIGHT(ROOK.moveStrategy);
 
     private final BiFunction<Integer, Integer, Boolean> moveStrategy;
 
