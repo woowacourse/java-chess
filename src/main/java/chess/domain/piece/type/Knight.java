@@ -15,6 +15,12 @@ public class Knight extends Piece {
     }
 
     @Override
+    public List<PiecePosition> waypoints(final PiecePosition destination) {
+        validatePath(Path.of(piecePosition, destination));
+        return Collections.emptyList();
+    }
+
+    @Override
     protected void validatePath(final Path path) {
         if (Math.abs(path.fileInterval()) == 1 && Math.abs(path.rankInterval()) == 2) {
             return;
@@ -23,11 +29,5 @@ public class Knight extends Piece {
             return;
         }
         throw new IllegalArgumentException("나이트는 그렇게 움직일 수 없습니다.");
-    }
-
-    @Override
-    public List<PiecePosition> waypoints(final PiecePosition destination) {
-        validatePath(Path.of(piecePosition, destination));
-        return Collections.emptyList();
     }
 }

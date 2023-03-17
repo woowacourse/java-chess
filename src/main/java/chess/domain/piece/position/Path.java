@@ -57,7 +57,8 @@ public class Path {
     }
 
     public List<PiecePosition> waypoints() {
-        return iterate(source, current -> !current.equals(destination),
+        return iterate(source,
+                current -> !current.equals(destination),
                 current -> current.move(current.direction(destination)))
                 .skip(1)
                 .collect(Collectors.toList());

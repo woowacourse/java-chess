@@ -21,18 +21,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected void validatePath(final Path path) {
-        pawnColorMoveStrategy.validateMovementDirection(path);
-        pawnState.validateMovable(path);
-    }
-
-    @Override
     public void move(final PiecePosition destination) {
         final Path path = Path.of(piecePosition, destination);
         validatePath(path);
         validateMove(destination);
         piecePosition = destination;
         pawnState = pawnState.next(destination);
+    }
+
+    @Override
+    protected void validatePath(final Path path) {
+        pawnColorMoveStrategy.validateMovementDirection(path);
+        pawnState.validateMovable(path);
     }
 
     private void validateMove(final PiecePosition destination) {
