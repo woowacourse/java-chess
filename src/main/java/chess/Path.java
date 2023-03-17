@@ -16,11 +16,10 @@ public class Path {
         this.positions = positions;
     }
 
-    public void validateObstacle(final Set<Position> keySet) {
-        final List<Position> positions = new ArrayList<>(this.positions);
-        positions.retainAll(keySet);
-        if (positions.size() != 0) {
-            throw new IllegalStateException("중간에 다른 기물이 존재합니다.");
-        }
+    public boolean hasIntersection(final Set<Position> existedPositions) {
+        final List<Position> intersectionPositions = new ArrayList<>(positions);
+        intersectionPositions.retainAll(existedPositions);
+
+        return !intersectionPositions.isEmpty();
     }
 }

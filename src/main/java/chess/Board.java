@@ -2,6 +2,7 @@ package chess;
 
 import chess.piece.Color;
 import chess.piece.Piece;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,9 +23,11 @@ public class Board {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
         validateIsFromEmpty(from);
+
         Path path = board.get(from)
-                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
-        path.validateObstacle(board.keySet());
+                         .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
+
+        validateObstacle(path);
         Piece piece = board.remove(from);
         board.put(to, piece);
     }
@@ -32,6 +35,12 @@ public class Board {
     private void validateIsFromEmpty(final Position from) {
         if (!board.containsKey(from)) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
+        }
+    }
+
+    private void validateObstacle(final Path path) {
+        if (path.hasIntersection(board.keySet())) {
+            throw new IllegalStateException("중간에 다른 기물이 존재합니다.");
         }
     }
 }
