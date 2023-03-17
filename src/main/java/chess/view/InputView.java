@@ -14,15 +14,10 @@ public class InputView {
 
     public static List<String> readCommand() {
         String input = scanner.nextLine();
-        try {
-            List<String> commands = List.of(input.split(DELIMITER));
-            validateBlank(commands);
-            validateAllowCommand(commands.get(COMMAND_INDEX));
-            return commands;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readCommand();
-        }
+        List<String> commands = List.of(input.split(DELIMITER));
+        validateBlank(commands);
+        validateAllowCommand(commands.get(COMMAND_INDEX));
+        return commands;
     }
 
     private static void validateBlank(List<String> commands) {
