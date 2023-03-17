@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("InitialPawn 은")
 class InitialPawnTest {
 
-    // TODO 마찬가지로 PawnTest 에 있는데, 이곳에 테스트가 있어야 할까요?
+    // TODO 마찬가지로 PawnTest 에 이미 존재하는데, 이곳에 테스트가 굳이 있어야 할까요?
     @Nested
     class 흰색_폰_테스트 {
 
