@@ -5,7 +5,7 @@ import chess.controller.status.CommandType;
 import java.util.Arrays;
 import java.util.List;
 
-public class Command {
+public final class Command {
     private final CommandType type;
     private final List<String> commands;
 
@@ -26,6 +26,10 @@ public class Command {
 
     public boolean isStart() {
         return type == CommandType.START;
+    }
+
+    public boolean isMove() {
+        return type == CommandType.MOVE;
     }
 
     public boolean isEnd() {

@@ -8,7 +8,7 @@ import chess.domain.piece.PositionConverter;
 
 import java.util.List;
 
-public class Move implements Status {
+public final class Move implements Status {
     private final ChessGame chessGame;
     private final CampType campType;
 
@@ -22,7 +22,7 @@ public class Move implements Status {
         final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(1));
         final Position target = PositionConverter.convert(commands.get(2));
-        chessGame.play(source, target, campType);
+        chessGame.setUp(source, target, campType);
         return new Move(chessGame, campType.changeTurn());
     }
 
