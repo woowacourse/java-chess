@@ -26,34 +26,34 @@ public class Path {
         return new Path(source, destination);
     }
 
-    public int fileDisplacement() {
-        return source.fileDisplacement(destination);
+    public int fileInterval() {
+        return source.fileInterval(destination);
     }
 
-    public int rankDisplacement() {
-        return source.rankDisplacement(destination);
+    public int rankInterval() {
+        return source.rankInterval(destination);
     }
 
     public boolean isDestinationRelativelySouth() {
-        return source.rankDisplacement(destination) < 0;
+        return source.rankInterval(destination) < 0;
     }
 
     public boolean isDestinationRelativelyNorth() {
-        return source.rankDisplacement(destination) > 0;
+        return source.rankInterval(destination) > 0;
     }
 
     public boolean isStraight() {
-        return !(Math.abs(source.rankDisplacement(destination)) > 0
-                && Math.abs(source.fileDisplacement(destination)) > 0);
+        return !(Math.abs(source.rankInterval(destination)) > 0
+                && Math.abs(source.fileInterval(destination)) > 0);
     }
 
     public boolean isDiagonal() {
-        return Math.abs(source.rankDisplacement(destination)) == Math.abs(source.fileDisplacement(destination));
+        return Math.abs(source.rankInterval(destination)) == Math.abs(source.fileInterval(destination));
     }
 
     public boolean isUnitDistance() {
-        return Math.abs(source.rankDisplacement(destination)) <= 1
-                && Math.abs(source.fileDisplacement(destination)) <= 1;
+        return Math.abs(source.rankInterval(destination)) <= 1
+                && Math.abs(source.fileInterval(destination)) <= 1;
     }
 
     // 이곳에서 Waypoint 반환 VS 반환받은데서 Waypoint.from(반환) ??

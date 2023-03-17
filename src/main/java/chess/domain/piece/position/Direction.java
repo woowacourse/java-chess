@@ -22,9 +22,9 @@ public enum Direction {
         this.rankUnit = rankUnit;
     }
 
-    public static Direction byDisplacement(final int fileDisplacement, final int rankDisplacement) {
+    public static Direction byInterval(final int fileInterval, final int rankInterval) {
         return Arrays.stream(Direction.values())
-                .filter(it -> match(fileDisplacement, rankDisplacement, it))
+                .filter(it -> match(fileInterval, rankInterval, it))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 변위에 대응대는 방위가 없습니다."));
     }

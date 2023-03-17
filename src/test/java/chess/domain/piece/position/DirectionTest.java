@@ -26,7 +26,7 @@ class DirectionTest {
     })
     void 변위로_방위를_찾을_수_있다(final int fileDisplacement, final int rankDisplacement, final Direction expected) {
         // when
-        final Direction result = Direction.byDisplacement(rankDisplacement, fileDisplacement);
+        final Direction result = Direction.byInterval(rankDisplacement, fileDisplacement);
 
         // then
         assertThat(result).isEqualTo(expected);

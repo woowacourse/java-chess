@@ -36,11 +36,11 @@ public class PiecePosition {
         }
     }
 
-    public int fileDisplacement(final PiecePosition piecePosition) {
+    public int fileInterval(final PiecePosition piecePosition) {
         return file.interval(piecePosition.file);
     }
 
-    public int rankDisplacement(final PiecePosition piecePosition) {
+    public int rankInterval(final PiecePosition piecePosition) {
         return rank.interval(piecePosition.rank);
     }
 
@@ -49,7 +49,7 @@ public class PiecePosition {
     }
 
     public Direction direction(final PiecePosition destination) {
-        return Direction.byDisplacement(rankDisplacement(destination), fileDisplacement(destination));
+        return Direction.byInterval(rankInterval(destination), fileInterval(destination));
     }
 
     @Override
