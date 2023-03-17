@@ -1,17 +1,21 @@
 package chess.domain.pieces;
 
+import chess.domain.Pattern;
 import chess.domain.Team;
+import java.util.List;
 
-public class Knight implements Piece {
+public class Knight extends Piece {
 
-    private final Team team;
+    private final List<Pattern> patterns = List.of(Pattern.KNIGHT);
 
     public Knight(final Team team) {
-        this.team = team;
+        super(team);
+        validateTeam(team);
     }
 
     @Override
-    public Team getTeam() {
-        return team;
+    public boolean hasPattern(final Pattern pattern) {
+        return patterns.contains(pattern);
     }
+
 }

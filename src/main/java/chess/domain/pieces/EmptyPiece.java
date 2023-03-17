@@ -1,17 +1,26 @@
 package chess.domain.pieces;
 
+import chess.domain.Pattern;
 import chess.domain.Team;
 
-public class EmptyPiece implements Piece {
+public final class EmptyPiece extends Piece {
 
-    private final Team team;
+    static final String INVALID_TEAM = "[ERROR] EmptyPiece의 팀은 NOTHING 여야 합니다. 입력값: ";
 
-    public EmptyPiece() {
-        this.team = Team.WHITE;
+    public EmptyPiece(final Team team) {
+        super(team);
+        validateTeam(team);
     }
 
     @Override
-    public Team getTeam() {
-        return team;
+    protected void validateTeam(final Team team) {
+        if (team != Team.NEUTRALITY) {
+            throw new IllegalArgumentException(INVALID_TEAM + team);
+        }
+    }
+
+    @Override
+    public boolean hasPattern(final Pattern pattern) {
+        return false;
     }
 }

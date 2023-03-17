@@ -1,17 +1,20 @@
 package chess.domain.pieces;
 
+import chess.domain.Pattern;
 import chess.domain.Team;
+import java.util.List;
 
-public class Rook implements Piece {
+public class Rook extends Piece {
 
-    private final Team team;
+    private final List<Pattern> patterns = List.of(Pattern.CROSS);
 
     public Rook(final Team team) {
-        this.team = team;
+        super(team);
+        validateTeam(team);
     }
 
     @Override
-    public Team getTeam() {
-        return team;
+    public boolean hasPattern(Pattern pattern) {
+        return patterns.contains(pattern);
     }
 }
