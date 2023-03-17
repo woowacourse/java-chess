@@ -33,8 +33,8 @@ public enum Team {
 
     public int getDirection() {
         if (this == BLACK) {
-            return -1;
+            return Direction.DOWN.getDirection();
         }
-        return 1;
+        return Direction.UP.getDirection();
     }
 }

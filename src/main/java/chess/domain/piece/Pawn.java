@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 public class Pawn extends Piece {
 
-    private int moveCount;
+    private final int moveCount;
 
     public Pawn(Team team) {
         this(team, 0);
