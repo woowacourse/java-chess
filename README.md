@@ -14,7 +14,8 @@ graph TD
     ChessController --> OutputView
     ChessController --> Command
     ChessController --> ChessGame
-    
+
+    ChessGame --> State
     ChessGame --> Board
     
     BoardFactory --> Board
