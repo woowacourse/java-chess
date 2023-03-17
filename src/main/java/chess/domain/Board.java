@@ -81,10 +81,10 @@ public class Board {
 
     private void validatePawnMove(Position source, Position target) {
         Piece targetPiece = squares.get(target);
-        if (source.isSameXTo(target) && !targetPiece.isRoleOf(Role.EMPTY)) {
+        if (source.isSameXAs(target) && !targetPiece.isRoleOf(Role.EMPTY)) {
             throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
         }
-        if (!source.isSameXTo(target) && targetPiece.isRoleOf(Role.EMPTY)) {
+        if (!source.isSameXAs(target) && targetPiece.isRoleOf(Role.EMPTY)) {
             throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
         }
     }

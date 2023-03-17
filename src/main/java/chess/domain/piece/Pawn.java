@@ -16,7 +16,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        if (source.isSameYTo(target)) {
+        if (source.isSameYAs(target)) {
             return false;
         }
         if (isWhitePawnReverseDirection(source, target) || isBlackPawnReverseDirection(source, target)) {
@@ -30,11 +30,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isWhitePawnReverseDirection(Position source, Position target) {
-        return this.team == Team.WHITE && source.isOverThanYTo(target);
+        return this.team == Team.WHITE && source.isOverThanYAs(target);
     }
 
     private boolean isBlackPawnReverseDirection(Position source, Position target) {
-        return this.team == Team.BLACK && target.isOverThanYTo(source);
+        return this.team == Team.BLACK && target.isOverThanYAs(source);
     }
 
     private boolean canMoveSpecialDistance(Position source, int distance) {

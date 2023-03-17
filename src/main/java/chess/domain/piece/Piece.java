@@ -23,7 +23,7 @@ public abstract class Piece {
     }
 
     protected boolean canMoveCross(Position source, Position target) {
-        return source.isSameXTo(target) || source.isSameYTo(target);
+        return source.isSameXAs(target) || source.isSameYAs(target);
     }
 
     public boolean isSameTeamWith(Piece other) {
