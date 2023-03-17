@@ -11,6 +11,7 @@ public enum File {
     F("f", 5),
     G("g", 6),
     H("h", 7);
+    public static final String INVALID_FILE_ERROR_MESSAGE = "잘못된 좌표입니다.";
     private final String label;
     
     private final int index;
@@ -24,21 +25,21 @@ public enum File {
         return Arrays.stream(values())
                 .filter(value -> value.label.equals(label))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_ERROR_MESSAGE));
     }
     
     public static File findByIndex(final int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_ERROR_MESSAGE));
     }
     
     public String getLabel() {
-        return label;
+        return this.label;
     }
     
     public int getIndex() {
-        return index;
+        return this.index;
     }
 }

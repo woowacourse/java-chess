@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
-    //TODO : 캐싱?
     
     private final File file;
     private final Rank rank;

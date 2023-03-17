@@ -4,7 +4,6 @@ import chess.CommandLine;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessController {
     
@@ -36,8 +35,7 @@ public class ChessController {
     }
     
     private CommandLine getCommandLine() {
-        List<String> tokens = this.inputView.readCommand();
-        return new CommandLine(tokens);
+        return new CommandLine(this.inputView.readCommand());
     }
     
     private void handleCommandLine(final ChessGame chessGame, final CommandLine commandLine) {
