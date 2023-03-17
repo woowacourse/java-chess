@@ -22,9 +22,9 @@ public enum File {
 
     static File from(int value) {
         return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                     .filter(it -> it.value == value)
+                     .findAny()
+                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 File 방향입니다."));
     }
 
     public int value() {
