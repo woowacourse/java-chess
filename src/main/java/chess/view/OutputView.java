@@ -23,16 +23,20 @@ public class OutputView {
     }
 
     public static void printBoard(List<SquareResponse> responses) {
+        String[][] board = createBoard(responses);
+        for (String[] row : board) {
+            System.out.println(String.join(ROW_DELIMITER, row));
+        }
+    }
+
+    private static String[][] createBoard(List<SquareResponse> responses) {
         String[][] board = new String[BOARD_SIZE][BOARD_SIZE];
         for (SquareResponse response : responses) {
             int x = response.getX();
             int y = convertYPos(response.getY());
-            String symbol = response.getSymbol();
-            board[y][x] = symbol;
+            board[y][x] = response.getSymbol();
         }
-        for (String[] row : board) {
-            System.out.println(String.join(ROW_DELIMITER, row));
-        }
+        return board;
     }
 
     private static int convertYPos(int yPos) {
