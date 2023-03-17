@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.DownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftStrategy;
-import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
+import techcourse.fp.chess.movingStrategy.MoveDown;
+import techcourse.fp.chess.movingStrategy.MoveLeft;
+import techcourse.fp.chess.movingStrategy.MoveLeftDown;
+import techcourse.fp.chess.movingStrategy.MoveLeftUp;
+import techcourse.fp.chess.movingStrategy.MoveRight;
+import techcourse.fp.chess.movingStrategy.MoveRightDown;
+import techcourse.fp.chess.movingStrategy.MoveRightUp;
+import techcourse.fp.chess.movingStrategy.MoveUp;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightDownStrategy;
-import techcourse.fp.chess.movingStrategy.RightStrategy;
-import techcourse.fp.chess.movingStrategy.RightUpStrategy;
-import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public final class Queen extends MovablePiece {
 
@@ -23,10 +23,10 @@ public final class Queen extends MovablePiece {
 
     public static Queen create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                new RightUpStrategy(), new RightDownStrategy(),
-                new LeftDownStrategy(), new LeftUpStrategy(),
-                new UpStrategy(), new DownStrategy(),
-                new LeftStrategy(), new RightStrategy());
+                new MoveRightUp(), new MoveRightDown(),
+                new MoveLeftDown(), new MoveLeftUp(),
+                new MoveUp(), new MoveDown(),
+                new MoveLeft(), new MoveRight());
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
         return new Queen(color, strategies);

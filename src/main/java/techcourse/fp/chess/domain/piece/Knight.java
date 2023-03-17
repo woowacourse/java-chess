@@ -4,16 +4,16 @@ import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.DownTwoLeft;
-import techcourse.fp.chess.movingStrategy.DownTwoRight;
-import techcourse.fp.chess.movingStrategy.LeftTwoDownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftTwoUpStrategy;
+import techcourse.fp.chess.movingStrategy.MoveDownTwoLeft;
+import techcourse.fp.chess.movingStrategy.MoveDownTwoRight;
+import techcourse.fp.chess.movingStrategy.MoveLeftTwoDown;
+import techcourse.fp.chess.movingStrategy.MoveLeftTwoUp;
+import techcourse.fp.chess.movingStrategy.MoveRightTwoDown;
+import techcourse.fp.chess.movingStrategy.MoveRightTwoUp;
+import techcourse.fp.chess.movingStrategy.MoveUpTwoLeft;
+import techcourse.fp.chess.movingStrategy.MoveUpTwoRight;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightTwoDownStrategy;
-import techcourse.fp.chess.movingStrategy.RightTwoUpStrategy;
-import techcourse.fp.chess.movingStrategy.UpTwoLeftStrategy;
-import techcourse.fp.chess.movingStrategy.UpTwoRightStrategy;
 
 public final class Knight extends MovablePiece {
 
@@ -23,10 +23,10 @@ public final class Knight extends MovablePiece {
 
     public static Knight create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                UpTwoRightStrategy.create(), UpTwoLeftStrategy.create(),
-                RightTwoUpStrategy.create(), RightTwoDownStrategy.create(),
-                DownTwoRight.create(), DownTwoLeft.create(),
-                LeftTwoDownStrategy.create(), LeftTwoUpStrategy.create());
+                MoveUpTwoRight.create(), MoveUpTwoLeft.create(),
+                MoveRightTwoUp.create(), MoveRightTwoDown.create(),
+                MoveDownTwoRight.create(), MoveDownTwoLeft.create(),
+                MoveLeftTwoDown.create(), MoveLeftTwoUp.create());
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
         return new Knight(color, strategies);

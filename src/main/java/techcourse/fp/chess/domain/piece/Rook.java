@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.DownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftStrategy;
+import techcourse.fp.chess.movingStrategy.MoveDown;
+import techcourse.fp.chess.movingStrategy.MoveLeft;
+import techcourse.fp.chess.movingStrategy.MoveRight;
+import techcourse.fp.chess.movingStrategy.MoveUp;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightStrategy;
-import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public final class Rook extends MovablePiece {
 
@@ -18,8 +18,8 @@ public final class Rook extends MovablePiece {
     }
 
     public static Rook create(final Color color) {
-        final List<MovingStrategy> rawStrategies = List.of(new UpStrategy(), new DownStrategy(),
-                new LeftStrategy(), new RightStrategy());
+        final List<MovingStrategy> rawStrategies = List.of(new MoveUp(), new MoveDown(),
+                new MoveLeft(), new MoveRight());
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
         return new Rook(color, strategies);

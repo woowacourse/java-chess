@@ -4,14 +4,14 @@ import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.DownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
+import techcourse.fp.chess.movingStrategy.MoveDown;
+import techcourse.fp.chess.movingStrategy.MoveLeftDown;
+import techcourse.fp.chess.movingStrategy.MoveLeftUp;
+import techcourse.fp.chess.movingStrategy.MoveRightDown;
+import techcourse.fp.chess.movingStrategy.MoveRightUp;
+import techcourse.fp.chess.movingStrategy.MoveUp;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightDownStrategy;
-import techcourse.fp.chess.movingStrategy.RightUpStrategy;
-import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public final class Pawn extends MovablePiece {
 
@@ -35,14 +35,14 @@ public final class Pawn extends MovablePiece {
     }
 
     private static MovingStrategies initBlackPawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new DownStrategy(), new LeftDownStrategy(),
-                new RightDownStrategy());
+        final List<MovingStrategy> movingStrategies = List.of(new MoveDown(), new MoveLeftDown(),
+                new MoveRightDown());
         return new MovingStrategies(movingStrategies);
     }
 
     private static MovingStrategies initWhitePawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new UpStrategy(), new LeftUpStrategy(),
-                new RightUpStrategy());
+        final List<MovingStrategy> movingStrategies = List.of(new MoveUp(), new MoveLeftUp(),
+                new MoveRightUp());
         return new MovingStrategies(movingStrategies);
     }
 

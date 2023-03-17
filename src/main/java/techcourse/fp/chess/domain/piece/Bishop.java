@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import techcourse.fp.chess.domain.Color;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
+import techcourse.fp.chess.movingStrategy.MoveLeftDown;
+import techcourse.fp.chess.movingStrategy.MoveLeftUp;
+import techcourse.fp.chess.movingStrategy.MoveRightDown;
+import techcourse.fp.chess.movingStrategy.MoveRightUp;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightDownStrategy;
-import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 
 public final class Bishop extends MovablePiece {
 
@@ -19,8 +19,8 @@ public final class Bishop extends MovablePiece {
 
     public static Bishop create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                new RightUpStrategy(), new RightDownStrategy(),
-                new LeftDownStrategy(), new LeftUpStrategy());
+                new MoveRightUp(), new MoveRightDown(),
+                new MoveLeftDown(), new MoveLeftUp());
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
         return new Bishop(color, strategies);
