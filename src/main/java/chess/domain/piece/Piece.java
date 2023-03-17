@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.position.Position;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
