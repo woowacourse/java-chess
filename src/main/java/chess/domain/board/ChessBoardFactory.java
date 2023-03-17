@@ -26,7 +26,7 @@ public final class ChessBoardFactory {
 
     private static final Map<ChessGame, ChessBoardFactory> CACHE = new ConcurrentHashMap<>();
 
-    public ChessBoardFactory() {
+    private ChessBoardFactory() {
     }
 
     static ChessBoardFactory getInstance(final ChessGame chessGame) {

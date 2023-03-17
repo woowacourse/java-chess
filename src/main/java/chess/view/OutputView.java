@@ -29,8 +29,7 @@ public final class OutputView {
     public static void printBoard(final Map<Position, Piece> board) {
         final StringBuilder boardMessage = new StringBuilder();
         for (int rank = BOARD_SIZE - 1; rank >= 0; rank--) {
-            boardMessage.append(makeFileMessage(board, rank))
-                    .append(System.lineSeparator());
+            boardMessage.append(makeFileMessage(board, rank)).append(System.lineSeparator());
         }
         print(boardMessage.toString());
     }

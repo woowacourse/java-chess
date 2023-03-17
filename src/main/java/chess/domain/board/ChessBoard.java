@@ -23,10 +23,10 @@ public final class ChessBoard {
     }
 
     public Piece checkPiece(final Position source) {
-        if (contains(source)) {
-            return board.get(source);
+        if (!contains(source)) {
+            throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
         }
-        throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
+        return board.get(source);
     }
 
     public void removePiece(final Position position) {
@@ -41,7 +41,6 @@ public final class ChessBoard {
         final Position unitPosition = source.computeUnitPosition(target);
         Position currentPosition = Position.copy(source);
         currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
-
         if (isObstructed(target, unitPosition, currentPosition)) {
             return false;
         }
