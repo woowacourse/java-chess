@@ -30,3 +30,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### other ###
+/src/test/java/techcourse/fp/mission/
+/src/test/java/techcourse/fp/study/
+/src/main/java/techcourse/fp/study/
+/src/main/java/techcourse/fp/mission/
