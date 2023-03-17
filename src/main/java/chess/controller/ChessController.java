@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.TeamColor;
-import chess.dto.ChessBoardDto;
+import chess.controller.state.Start;
+import chess.controller.state.State;
 import chess.dto.CommandRequest;
 import chess.view.Command;
 import chess.view.InputView;
@@ -12,39 +11,49 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private TeamColor currentColor;
+    private State state;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.currentColor = TeamColor.WHITE;
+        this.state = new Start();
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
-
         outputView.printStartMessage();
-        boolean isContinue = true;
-        while (isContinue) {
-            isContinue = play(chessBoard);
+        play();
+    }
+
+    private void play() {
+        while (state.isNotEnd()) {
+            changeState(inputView.requestGameCommand());
         }
     }
 
-    private boolean play(final ChessBoard chessBoard) {
-        CommandRequest commandRequest = inputView.requestGameCommand();
-        if (commandRequest.getCommand() == Command.END) {
-            return false;
+    private void changeState(CommandRequest commandRequest) {
+        if (commandRequest.getCommand() == Command.START) {
+            start();
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            progressMove(chessBoard, commandRequest);
+            progress(commandRequest);
         }
-        outputView.printBoard(ChessBoardDto.from(chessBoard));
-        return true;
+        if (commandRequest.getCommand() == Command.END) {
+            end();
+        }
     }
 
-    private void progressMove(ChessBoard chessBoard, CommandRequest commandRequest) {
-        chessBoard.move(commandRequest.getSource(), commandRequest.getDestination(), currentColor);
-        currentColor = currentColor.transfer();
+    private void start() {
+        state = state.start();
+        outputView.printBoard(state.getBoard());
+    }
+
+    private void progress(CommandRequest commandRequest) {
+        state.move(commandRequest.getSource(), commandRequest.getDestination());
+        outputView.printBoard(state.getBoard());
+    }
+
+    private void end() {
+        state = state.end();
     }
 
 }
