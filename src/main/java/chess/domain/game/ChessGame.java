@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
+import chess.exception.PieceMessage;
 import java.util.Collections;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class ChessGame {
 
     private void validateTurn(final Position start) {
         if (board.findPieceFromPosition(start).isNameLowerCase() != isLowerTeamTurn) {
-            throw new IllegalArgumentException("상대편 말은 움직일 수 없습니다.");
+            throw new IllegalArgumentException(PieceMessage.ONLY_MOVE_MINE.getMessage());
         }
     }
 
