@@ -102,7 +102,6 @@ public class Board {
         throw new RuntimeException("[ERROR] 폰은 앞으로만 이동할 수 있습니다.");
     }
 
-    // Pawn이 Black 팀이면 UnitVector.Down // White팀이면 UP으로 current부터 target - 1까지 기물이 존재하는지 확인하는 함수
     private void checkPieceOfPawn(final Position current, final Position target, final Piece currentPointPiece) {
         if (currentPointPiece.getTeam() == Team.BLACK) {
             checkExistPiece(current, target, UnitVector.DOWN);

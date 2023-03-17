@@ -19,26 +19,33 @@ public class MainController {
     }
 
     public void run() {
+        OutputView.printGameStart();
+
         Command firstCommand = InputView.readCommand();
 
         if (firstCommand == START) {
             OutputView.printBoard(chessGame.getBoard());
 
-            while (true) {
-                List<String> input = InputView.readPositions();
-                if (Command.of(input.get(0)) == END) {
-                    break;
-                }
-
-                Position current = toPosition(input.get(1));
-                Position target = toPosition(input.get(2));
-                chessGame.movePiece(current, target);
-
-                OutputView.printBoard(chessGame.getBoard());
-            }
+            playChess();
         }
 
         OutputView.printFinishMessage();
+    }
+
+    private void playChess() {
+        while (true) {
+            List<String> input = InputView.readPositions();
+
+            if (Command.of(input.get(0)) == END) {
+                break;
+            }
+
+            Position current = toPosition(input.get(1));
+            Position target = toPosition(input.get(2));
+
+            chessGame.movePiece(current, target);
+            OutputView.printBoard(chessGame.getBoard());
+        }
     }
 
     private Position toPosition(final String input) {
