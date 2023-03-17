@@ -22,7 +22,7 @@ public class MoveSubController implements SubController {
         turn = turn.opposite();
     }
 
-    private static void validateIsGameStart(final boolean isStart) {
+    private void validateIsGameStart(final boolean isStart) {
         if (!isStart) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
         }
