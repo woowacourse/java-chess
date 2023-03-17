@@ -17,7 +17,6 @@ import static chess.path.InitialPositionFixtures.WHITE_QUEEN_POSITION;
 import static chess.path.InitialPositionFixtures.WHITE_ROOK_LEFT_POSITION;
 import static chess.path.InitialPositionFixtures.WHITE_ROOK_RIGHT_POSITION;
 
-import chess.position.Position;
 import chess.piece.Bishop;
 import chess.piece.Color;
 import chess.piece.King;
@@ -26,6 +25,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
