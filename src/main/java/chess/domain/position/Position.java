@@ -31,6 +31,9 @@ public class Position implements Comparable<Position> {
         return Arrays.stream(position.split("")).collect(Collectors.toList());
     }
     
+    public static Position from(File file, Rank rank) {
+        return new Position(file, rank);
+    }
     
     public boolean isRank(final int index) {
         Rank rank = Rank.findByIndex(index);

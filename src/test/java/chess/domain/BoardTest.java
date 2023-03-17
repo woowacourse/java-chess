@@ -62,7 +62,7 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e1");
             Color white = Color.WHITE;
-            Piece piece = board.getPiece(source, white);
+            Piece piece = board.getValidSourcePiece(source, white);
             assertThat(piece.getType()).isEqualTo(PieceType.KING);
             assertThat(piece.isSameColor(white)).isTrue();
         }
@@ -74,7 +74,8 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e4");
             Color white = Color.WHITE;
-            assertThatThrownBy(() -> board.getPiece(source, white)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> board.getValidSourcePiece(source, white)).isInstanceOf(
+                    IllegalArgumentException.class);
         }
         
         @Test
@@ -84,7 +85,8 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e1");
             Color black = Color.BLACK;
-            assertThatThrownBy(() -> board.getPiece(source, black)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> board.getValidSourcePiece(source, black)).isInstanceOf(
+                    IllegalArgumentException.class);
         }
         
         

@@ -37,7 +37,7 @@ public class ChessGame {
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
         
-        Piece sourcePiece = this.board.getPiece(source, this.turn);
+        Piece sourcePiece = this.board.getValidSourcePiece(source, this.turn);
         sourcePiece.canMove(source, destination);
         this.board.checkSameColor(destination, this.turn);
         if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
