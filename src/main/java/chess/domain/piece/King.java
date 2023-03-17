@@ -9,8 +9,16 @@ import static chess.domain.move.Direction.*;
 public final class King extends Piece {
     private static final Set<Direction> directions = Set.of(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);
 
-    public King(final String name) {
-        super(name);
+    public King(final boolean isWhite) {
+        super(isWhite);
+    }
+
+    @Override
+    public String name() {
+        if (super.isWhite()) {
+            return "k";
+        }
+        return "K";
     }
 
     @Override

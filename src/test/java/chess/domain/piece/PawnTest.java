@@ -13,7 +13,7 @@ class PawnTest {
     @DisplayName("폰이 검은말(대문자)이라면 아래로만 이동할 수 있다")
     void movableDownIfBlack() {
         // given
-        final Pawn pawn = new Pawn("P");
+        final Pawn pawn = new Pawn(false);
 
         // then
         assertTrue(pawn.movable(Direction.DOWN));
@@ -23,7 +23,7 @@ class PawnTest {
     @DisplayName("폰이 흰말(소문자)이라면 위로만 이동할 수 있다")
     void movableUpIfWhite() {
         // given
-        final Pawn pawn = new Pawn("p");
+        final Pawn pawn = new Pawn(true);
 
         // then
         assertTrue(pawn.movable(Direction.UP));
@@ -33,7 +33,7 @@ class PawnTest {
     @DisplayName("폰은 처음에 두 칸까지 이동할 수 있다.")
     void movableByCount_firstMove() {
         // given
-        final Pawn pawn = new Pawn("P");
+        final Pawn pawn = new Pawn(false);
 
         // then
         assertTrue(pawn.movableByCount(2));
@@ -43,7 +43,7 @@ class PawnTest {
     @DisplayName("폰은 두 번째 이동부터 두 칸 이상을 이동할 수 없다.")
     void notMovableByCount_secondMove() {
         // given
-        final Pawn pawn = new Pawn("P");
+        final Pawn pawn = new Pawn(false);
 
         // when
         pawn.movableByCount(2);
@@ -56,7 +56,7 @@ class PawnTest {
     @DisplayName("폰은 두 번째 이동부터 한 칸만 이동할 수 있다.")
     void movableByCount_secondMove() {
         // given
-        final Pawn pawn = new Pawn("P");
+        final Pawn pawn = new Pawn(false);
 
         // when
         pawn.movableByCount(2);

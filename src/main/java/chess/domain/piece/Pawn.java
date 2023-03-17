@@ -9,13 +9,21 @@ public final class Pawn extends Piece {
 
     private boolean isFirst = true;
 
-    public Pawn(final String name) {
-        super(name);
+    public Pawn(final boolean isWhite) {
+        super(isWhite);
+    }
+
+    @Override
+    public String name() {
+        if (super.isWhite()) {
+            return "p";
+        }
+        return "P";
     }
 
     @Override
     public boolean movable(final Direction direction) {
-        if (super.name().equals(super.name().toUpperCase())) {
+        if (name().equals(name().toUpperCase())) {
             return DOWN.equals(direction);
         }
         return UP.equals(direction);

@@ -12,21 +12,26 @@ class PieceTest {
     @DisplayName("체스말을 이름을 갖고 있다")
     void name() {
         // given
-        final var name = "R";
-        final var piece = new TestPiece(name);
+        final var piece = new TestPiece(false);
+        final var expected = "R";
 
         // when
         final var actual = piece.name();
 
         // then
-        assertThat(actual).isEqualTo(name);
+        assertThat(actual).isEqualTo(expected);
     }
 }
 
 final class TestPiece extends Piece {
 
-    public TestPiece(final String name) {
-        super(name);
+    public TestPiece(final boolean isWhite) {
+        super(isWhite);
+    }
+
+    @Override
+    public String name() {
+        return "R";
     }
 
     @Override

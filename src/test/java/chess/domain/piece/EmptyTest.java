@@ -12,7 +12,7 @@ class EmptyTest {
     @DisplayName("빈 공간은 이동할 수 없다")
     void notMovable() {
         // given
-        final Empty empty = new Empty(".");
+        final Empty empty = new Empty(true);
 
         // then
         assertFalse(empty.movable(Direction.LEFT_UP));
@@ -22,7 +22,7 @@ class EmptyTest {
     @DisplayName("빈 공간은 한 칸도 이동할 수 없다")
     void neverMovable() {
         // given
-        final Empty empty = new Empty(".");
+        final Empty empty = new Empty(true);
 
         // then
         assertFalse(empty.movableByCount(1));

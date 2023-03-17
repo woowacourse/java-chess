@@ -10,8 +10,16 @@ public final class Bishop extends Piece {
 
     private static final Set<Direction> directions = Set.of(LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);
 
-    public Bishop(final String name) {
-        super(name);
+    public Bishop(final boolean isWhite) {
+        super(isWhite);
+    }
+
+    @Override
+    public String name() {
+        if (super.isWhite()) {
+            return "b";
+        }
+        return "B";
     }
 
     @Override

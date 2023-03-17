@@ -13,7 +13,7 @@ class RookTest {
     @DisplayName("룩이 이동할 수 있으면 true를 반환한다")
     void movable() {
         // given
-        final Rook rook = new Rook("r");
+        final Rook rook = new Rook(true);
 
         // then
         assertTrue(rook.movable(Direction.LEFT));
@@ -23,7 +23,7 @@ class RookTest {
     @DisplayName("룩이 이동할 수 없으면 false를 반환한다")
     void notMovable() {
         // given
-        final Rook rook = new Rook("r");
+        final Rook rook = new Rook(true);
 
         // then
         assertFalse(rook.movable(Direction.LEFT_UP));
@@ -33,7 +33,7 @@ class RookTest {
     @DisplayName("룩은 끝까지 이동할 수 있다")
     void movableByCount() {
         // given
-        final Rook rook = new Rook("r");
+        final Rook rook = new Rook(true);
 
         // then
         assertTrue(rook.movableByCount(5));

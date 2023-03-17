@@ -23,31 +23,31 @@ public final class WhiteFactory {
     }
 
     private static void fillWhiteRook(final Map<Position, Piece> board) {
-        board.put(Position.of('a', 1), new Rook("r"));
-        board.put(Position.of('h', 1), new Rook("r"));
+        board.put(Position.from("a1"), new Rook(true));
+        board.put(Position.from("h1"), new Rook(true));
     }
 
     private static void fillWhiteKnight(final Map<Position, Piece> board) {
-        board.put(Position.of('g', 1), new Knight("n"));
-        board.put(Position.of('b', 1), new Knight("n"));
+        board.put(Position.from("g1"), new Knight(true));
+        board.put(Position.from("b1"), new Knight(true));
     }
 
     private static void fillWhiteBishop(final Map<Position, Piece> board) {
-        board.put(Position.of('c', 1), new Bishop("b"));
-        board.put(Position.of('f', 1), new Bishop("b"));
+        board.put(Position.from("c1"), new Bishop(true));
+        board.put(Position.from("f1"), new Bishop(true));
     }
 
     private static void fillWhiteQueen(final Map<Position, Piece> board) {
-        board.put(Position.of('d', 1), new Queen("q"));
+        board.put(Position.from("d1"), new Queen(true));
     }
 
     private static void fillWhiteKing(final Map<Position, Piece> board) {
-        board.put(Position.of('e', 1), new King("k"));
+        board.put(Position.from("e1"), new King(true));
     }
 
     private static void fillWhitePawn(final Map<Position, Piece> board) {
         for (final File file : File.values()) {
-            board.put(Position.of(file.value(), 2), new Pawn("p"));
+            board.put(Position.of(file.value(), 2), new Pawn(true));
         }
     }
 }

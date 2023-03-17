@@ -33,7 +33,7 @@ public final class BoardFactory {
 
     private static void fill(final Map<Position, Piece> board, final Rank rank) {
         for (final File file : File.values()) {
-            board.put(Position.of(file.value(), rank.value()), new Empty("."));
+            board.put(Position.of(file.value(), rank.value()), new Empty(true));
         }
     }
 }

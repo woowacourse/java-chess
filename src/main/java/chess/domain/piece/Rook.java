@@ -9,8 +9,15 @@ import static chess.domain.move.Direction.*;
 public final class Rook extends Piece {
     private static final Set<Direction> directions = Set.of(UP, DOWN, LEFT, RIGHT);
 
-    public Rook(final String name) {
-        super(name);
+    public Rook(final boolean isWhite) {
+        super(isWhite);
+    }
+    @Override
+    public String name() {
+        if (super.isWhite()) {
+            return "r";
+        }
+        return "R";
     }
 
     @Override
