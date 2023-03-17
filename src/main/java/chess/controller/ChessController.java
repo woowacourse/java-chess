@@ -1,5 +1,8 @@
-package chess;
+package chess.controller;
 
+import chess.Position;
+import chess.board.Board;
+import chess.board.BoardFactory;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.view.InputView;

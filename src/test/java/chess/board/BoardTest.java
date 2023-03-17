@@ -1,5 +1,8 @@
-package chess;
+package chess.board;
 
+import chess.Position;
+import chess.board.Board;
+import chess.board.BoardFactory;
 import chess.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

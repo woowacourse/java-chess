@@ -1,8 +1,10 @@
-package chess;
+package chess.board;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import chess.Position;
+import chess.board.BoardFactory;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;

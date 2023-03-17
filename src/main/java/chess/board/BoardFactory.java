@@ -1,5 +1,6 @@
-package chess;
+package chess.board;
 
+import chess.Position;
 import chess.piece.Bishop;
 import chess.piece.Color;
 import chess.piece.King;
