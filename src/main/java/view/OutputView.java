@@ -13,6 +13,9 @@ public final class OutputView {
             "> 게임 종료 : end \n" +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
 
+    private OutputView() {
+    }
+
     public static void printStartMessage() {
         System.out.println(START_MESSAGE);
     }
