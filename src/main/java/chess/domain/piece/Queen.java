@@ -15,4 +15,14 @@ public class Queen extends Piece {
     public boolean canMove(final Position source, final Position target) {
         return queenMove.canMove(source, target);
     }
+
+    @Override
+    public boolean canAttack(final Position source, final Position target) {
+        return queenMove.canAttack(source, target);
+    }
+
+    @Override
+    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
+        return queenMove.isPossibleRoute(source, target, isPossible);
+    }
 }

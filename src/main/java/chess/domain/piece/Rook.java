@@ -15,4 +15,14 @@ public class Rook extends Piece {
     public boolean canMove(final Position source, final Position target) {
         return rookMove.canMove(source, target);
     }
+
+    @Override
+    public boolean canAttack(final Position source, final Position target) {
+        return rookMove.canAttack(source, target);
+    }
+
+    @Override
+    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
+        return rookMove.isPossibleRoute(source, target, isPossible);
+    }
 }

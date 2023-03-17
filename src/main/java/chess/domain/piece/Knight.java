@@ -15,4 +15,14 @@ public class Knight extends Piece {
     public boolean canMove(final Position source, final Position target) {
         return knightMove.canMove(source, target);
     }
+
+    @Override
+    public boolean canAttack(final Position source, final Position target) {
+        return knightMove.canAttack(source, target);
+    }
+
+    @Override
+    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
+        return knightMove.isPossibleRoute(source, target, isPossible);
+    }
 }

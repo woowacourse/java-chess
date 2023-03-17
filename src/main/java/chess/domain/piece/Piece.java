@@ -20,16 +20,16 @@ public abstract class Piece {
     public boolean isPawn() {
         return pieceType == PieceType.PAWN;
     }
-
-    public boolean isKnight() {
-        return pieceType == PieceType.KNIGHT;
-    }
-
+    
     public boolean isSameCamp(final CampType diffType) {
         return campType == diffType;
     }
 
     public abstract boolean canMove(final Position source, final Position target);
+
+    public abstract boolean canAttack(final Position source, final Position target);
+
+    public abstract boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible);
 
     @Override
     public boolean equals(final Object o) {

@@ -15,4 +15,14 @@ public class Bishop extends Piece {
     public boolean canMove(final Position source, final Position target) {
         return bishopMove.canMove(source, target);
     }
+
+    @Override
+    public boolean canAttack(final Position source, final Position target) {
+        return bishopMove.canAttack(source, target);
+    }
+
+    @Override
+    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
+        return bishopMove.isPossibleRoute(source, target, isPossible);
+    }
 }

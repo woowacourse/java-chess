@@ -15,4 +15,14 @@ public class Pawn extends Piece {
     public boolean canMove(final Position source, final Position target) {
         return pawnMove.canMove(source, target);
     }
+
+    @Override
+    public boolean canAttack(final Position source, final Position target) {
+        return pawnMove.canAttack(source, target);
+    }
+
+    @Override
+    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
+        return pawnMove.isPossibleRoute(source, target, isPossible);
+    }
 }

@@ -40,18 +40,7 @@ class PieceTest {
         assertThat(piece.isPawn())
                 .isTrue();
     }
-
-    @Test
-    @DisplayName("체스말이 나이트면 true를 반환한다.")
-    void isKnight() {
-        // given
-        final Piece piece = new Knight(PieceType.KNIGHT, CampType.WHITE);
-
-        // when, then
-        assertThat(piece.isKnight())
-                .isTrue();
-    }
-
+    
     @ParameterizedTest(name = "체스말이 입력받은 체스말과 동일한 진영인지 판단한다.")
     @CsvSource(value = {"WHITE:true", "BLACK:false"}, delimiter = ':')
     void isSameCamp(final CampType campType, final boolean expected) {
