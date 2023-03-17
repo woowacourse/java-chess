@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO: 2023-03-17   실패 테스트 구현
 class PawnTest {
 
     @DisplayName("폰은 가로로 이동할 수 없다")
