@@ -1,20 +1,20 @@
 package techcourse.fp.movingStrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static techcourse.fp.chess.domain.PositionFixtures.A1;
-import static techcourse.fp.chess.domain.PositionFixtures.A8;
-import static techcourse.fp.chess.domain.PositionFixtures.B1;
-import static techcourse.fp.chess.domain.PositionFixtures.B2;
-import static techcourse.fp.chess.domain.PositionFixtures.B8;
-import static techcourse.fp.chess.domain.PositionFixtures.C1;
-import static techcourse.fp.chess.domain.PositionFixtures.H1;
-import static techcourse.fp.chess.domain.PositionFixtures.H8;
+import static chess.domain.PositionFixtures.A1;
+import static chess.domain.PositionFixtures.A8;
+import static chess.domain.PositionFixtures.B1;
+import static chess.domain.PositionFixtures.B2;
+import static chess.domain.PositionFixtures.B8;
+import static chess.domain.PositionFixtures.C1;
+import static chess.domain.PositionFixtures.H1;
+import static chess.domain.PositionFixtures.H8;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import techcourse.fp.chess.movingStrategy.MoveRight;
-import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import chess.movingStrategy.MoveRight;
+import chess.movingStrategy.MovingStrategy;
 
 class MoveRightTest {
 

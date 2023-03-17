@@ -2,22 +2,22 @@ package techcourse.fp.movingStrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static techcourse.fp.chess.domain.PositionFixtures.A2;
-import static techcourse.fp.chess.domain.PositionFixtures.B1;
-import static techcourse.fp.chess.domain.PositionFixtures.B2;
-import static techcourse.fp.chess.domain.PositionFixtures.B3;
-import static techcourse.fp.chess.domain.PositionFixtures.B4;
-import static techcourse.fp.chess.domain.PositionFixtures.C1;
-import static techcourse.fp.chess.domain.PositionFixtures.C2;
-import static techcourse.fp.chess.domain.PositionFixtures.C3;
-import static techcourse.fp.chess.domain.PositionFixtures.D1;
-import static techcourse.fp.chess.domain.PositionFixtures.D3;
+import static chess.domain.PositionFixtures.A2;
+import static chess.domain.PositionFixtures.B1;
+import static chess.domain.PositionFixtures.B2;
+import static chess.domain.PositionFixtures.B3;
+import static chess.domain.PositionFixtures.B4;
+import static chess.domain.PositionFixtures.C1;
+import static chess.domain.PositionFixtures.C2;
+import static chess.domain.PositionFixtures.C3;
+import static chess.domain.PositionFixtures.D1;
+import static chess.domain.PositionFixtures.D3;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import techcourse.fp.chess.movingStrategy.MoveUpTwoLeft;
-import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import chess.movingStrategy.MoveUpTwoLeft;
+import chess.movingStrategy.MovingStrategy;
 
 class UpTwoMoveLeftTest {
 
