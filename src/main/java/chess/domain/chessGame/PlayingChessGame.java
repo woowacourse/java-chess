@@ -36,7 +36,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> getBoard() {
-        return board.convertToPieceName();
+    public Map<Position, String> getPrintingBoard() {
+        return board.getPrintingBoard();
     }
 }

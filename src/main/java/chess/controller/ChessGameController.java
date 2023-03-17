@@ -35,7 +35,7 @@ public class ChessGameController {
         Command command = Command.parseCommand(inputCommand.get(COMMAND_HEAD_INDEX));
         if (command == Command.START) {
             chessGame = chessGame.start();
-            outputView.printBoard(chessGame.getBoard());
+            outputView.printBoard(chessGame.getPrintingBoard());
         }
         if (command == Command.MOVE) {
             Map<Position, String> board = chessGame.move(inputCommand.get(CURRENT_POSITION_INDEX), inputCommand.get(NEXT_POSITION_INDEX));

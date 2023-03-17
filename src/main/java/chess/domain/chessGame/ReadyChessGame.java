@@ -28,7 +28,7 @@ public class ReadyChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> getBoard() {
+    public Map<Position, String> getPrintingBoard() {
         return null;
     }
 }
