@@ -40,11 +40,11 @@ public final class ChessBoard {
     public boolean isPossibleRoute(final Position source, final Position target, final Piece piece) {
         final Position unitPosition = source.computeUnitPosition(target);
         Position currentPosition = Position.copy(source);
+        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
 
         if (isObstructed(target, unitPosition, currentPosition)) {
             return false;
         }
-
         final Piece targetPiece = board.get(target);
         return targetPiece == null || !targetPiece.compareCamp(piece);
     }
@@ -53,13 +53,12 @@ public final class ChessBoard {
         if (currentPosition.equals(target)) {
             return false;
         }
-        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
         if (board.containsKey(currentPosition)) {
             return true;
         }
-        return isObstructed(target, unitPosition, currentPosition);
+        final Position nextPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
+        return isObstructed(target, unitPosition, nextPosition);
     }
-
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
