@@ -31,7 +31,7 @@ public class ChessController {
     }
 
     private boolean isStartCommand() {
-        Command userCommand = Command.renderToCommand(requestCommand().get(0));
+        Command userCommand = Command.renderToCommand(requestCommand().get(Index.MAIN_COMMAND.value));
 
         return userCommand == Command.START;
     }
@@ -49,7 +49,7 @@ public class ChessController {
     private Command handleCommand(ChessGame chessGame) {
         List<String> command = requestCommand();
 
-        if (Command.renderToCommand(command.get(0)) == Command.END) {
+        if (Command.renderToCommand(command.get(Index.MAIN_COMMAND.value)) == Command.END) {
             return Command.END;
         }
 
@@ -59,15 +59,15 @@ public class ChessController {
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
-        Square source = makeSquare(command.get(1));
-        Square target = makeSquare(command.get(2));
+        Square source = makeSquare(command.get(Index.SOURCE_SQUARE.value));
+        Square target = makeSquare(command.get(Index.TARGET_SQUARE.value));
 
         chessGame.move(source, target);
     }
 
     private Square makeSquare(String command) {
-        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(0)));
-        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(1)));
+        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(Index.FILE.value)));
+        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(Index.RANK.value)));
 
         return new Square(file, rank);
     }
@@ -151,6 +151,20 @@ public class ChessController {
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
                     .rank;
+        }
+    }
+
+    private enum Index {
+        MAIN_COMMAND(0),
+        SOURCE_SQUARE(1),
+        TARGET_SQUARE(2),
+        FILE(0),
+        RANK(1);
+
+        private final int value;
+
+        Index(int value) {
+            this.value = value;
         }
     }
 }
