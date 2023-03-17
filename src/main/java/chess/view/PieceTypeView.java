@@ -31,8 +31,8 @@ public enum PieceTypeView {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 말을 입력했습니다."));
     }
 
-    String getMessage(Color color) {
-        if (color == Color.BLACK) {
+    String getMessage(Team team) {
+        if (team == Team.BLACK) {
             return this.blackTeamView;
         }
         return this.whiteTeamView;

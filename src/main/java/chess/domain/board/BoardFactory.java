@@ -12,34 +12,34 @@ public class BoardFactory {
     public static Board createBoard() {
         Map<Position, Piece> boards = new HashMap<>();
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
-            Color color = Color.of(rankCoordinate);
-            createRank(boards, rankCoordinate, color);
+            Team team = Team.of(rankCoordinate);
+            createRank(boards, rankCoordinate, team);
         }
         return new Board(boards);
     }
 
-    private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
+    private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
         RankType rankType = RankType.of(rankCoordinate);
         if (rankType.isSideRank()) {
-            createSidePieces(boards, rankCoordinate, color);
+            createSidePieces(boards, rankCoordinate, team);
         }
         if (rankType.isPawnRank()) {
-            createPiecesBy(boards, rankCoordinate, new Pawn(color));
+            createPiecesBy(boards, rankCoordinate, new Pawn(team));
         }
         if (rankType.isEmptyRank()) {
             createPiecesBy(boards, rankCoordinate, Empty.create());
         }
     }
 
-    private static void createSidePieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
-        boards.put(new Position(A, rankCoordinate), new Rook(color));
-        boards.put(new Position(B, rankCoordinate), new Knight(color));
-        boards.put(new Position(C, rankCoordinate), new Bishop(color));
-        boards.put(new Position(D, rankCoordinate), new Queen(color));
-        boards.put(new Position(E, rankCoordinate), new King(color));
-        boards.put(new Position(F, rankCoordinate), new Bishop(color));
-        boards.put(new Position(G, rankCoordinate), new Knight(color));
-        boards.put(new Position(H, rankCoordinate), new Rook(color));
+    private static void createSidePieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
+        boards.put(new Position(A, rankCoordinate), new Rook(team));
+        boards.put(new Position(B, rankCoordinate), new Knight(team));
+        boards.put(new Position(C, rankCoordinate), new Bishop(team));
+        boards.put(new Position(D, rankCoordinate), new Queen(team));
+        boards.put(new Position(E, rankCoordinate), new King(team));
+        boards.put(new Position(F, rankCoordinate), new Bishop(team));
+        boards.put(new Position(G, rankCoordinate), new Knight(team));
+        boards.put(new Position(H, rankCoordinate), new Rook(team));
     }
 
     private static void createPiecesBy(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Piece piece) {

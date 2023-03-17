@@ -4,12 +4,12 @@ import chess.domain.board.Position;
 
 public class King extends Piece {
 
-    public King(Color color) {
-        super(color);
+    public King(Team team) {
+        super(team);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
         int sourceColumnNumber = sourcePosition.getColumn();
         int targetColumnNumber = targetPosition.getColumn();
         int sourceRankNumber = sourcePosition.getRow();
@@ -18,7 +18,7 @@ public class King extends Piece {
         return isDifferenceUnder(sourceColumnNumber, targetColumnNumber, 1)
                 && isDifferenceUnder(sourceRankNumber, targetRankNumber, 1)
                 && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameColor(color);
+                && isNotSameTeam(team);
     }
 
     private boolean isDifferenceUnder(int source, int target, int bound) {
@@ -32,6 +32,6 @@ public class King extends Piece {
 
     @Override
     public Piece move() {
-        return new King(getColor());
+        return new King(getTeam());
     }
 }

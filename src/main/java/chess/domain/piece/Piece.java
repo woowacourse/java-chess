@@ -4,20 +4,32 @@ import chess.domain.board.Position;
 
 public abstract class Piece {
 
-    private final Color color;
+    private final Team team;
 
-    protected Piece(Color color) {
-        this.color = color;
+    protected Piece(Team team) {
+        this.team = team;
     }
 
-    public abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
+    public abstract boolean canMove(Position sourcePosition, Position targetPosition, Team team);
 
     public abstract boolean isEmpty();
 
     public abstract Piece move();
 
-    public boolean isSameTeam(Color color) {
-        return this.color == color;
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
+    public void validateCanMove(Position sourcePosition, Position targetPosition, Team team) {
+        if (!canMove(sourcePosition, targetPosition, team)) {
+            throw new IllegalArgumentException("잘못된 위치를 입력했습니다.");
+        }
+    }
+
+    public void validateTeam(Team team) {
+        if (!isSameTeam(team)) {
+            throw new IllegalArgumentException("본인의 말만 옮길 수 있습니다.");
+        }
     }
 
     protected boolean isNotMyPosition(Position sourcePosition, Position targetPosition) {
@@ -25,9 +37,9 @@ public abstract class Piece {
     }
 
     protected boolean isDiagonal(Position sourcePosition, Position targetPosition) {
-        int columnAbs = Math.abs(sourcePosition.getColumn() - targetPosition.getColumn());
-        int rowAbs = Math.abs(sourcePosition.getRow() - targetPosition.getRow());
-        return columnAbs == rowAbs;
+        int columnDifference = Math.abs(sourcePosition.getColumn() - targetPosition.getColumn());
+        int rowDifference = Math.abs(sourcePosition.getRow() - targetPosition.getRow());
+        return columnDifference == rowDifference;
     }
 
     protected boolean isStraight(Position sourcePosition, Position targetPosition) {
@@ -35,11 +47,11 @@ public abstract class Piece {
                 || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
     }
 
-    protected boolean isNotSameColor(Color color) {
-        return this.color != color;
+    protected boolean isNotSameTeam(Team team) {
+        return this.team != team;
     }
 
-    public Color getColor() {
-        return color;
+    public Team getTeam() {
+        return team;
     }
 }

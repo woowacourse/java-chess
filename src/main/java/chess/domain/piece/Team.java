@@ -2,26 +2,26 @@ package chess.domain.piece;
 
 import chess.domain.board.RankCoordinate;
 
-public enum Color {
+public enum Team {
     BLACK,
     WHITE,
     EMPTY;
 
-    public static Color of(RankCoordinate rankCoordinate) {
+    public static Team of(RankCoordinate rankCoordinate) {
         if (rankCoordinate.isWhiteRank()) {
-            return Color.WHITE;
+            return Team.WHITE;
         }
         if (rankCoordinate.isBlackRank()) {
-            return Color.BLACK;
+            return Team.BLACK;
         }
-        return Color.EMPTY;
+        return Team.EMPTY;
     }
 
-    public boolean isOpposite(Color color) {
-        return this.getReverseColor() == color;
+    public boolean isOpposite(Team team) {
+        return this.getReverseTeam() == team;
     }
 
-    public Color getReverseColor() {
+    public Team getReverseTeam() {
         if (this == BLACK) {
             return WHITE;
         }

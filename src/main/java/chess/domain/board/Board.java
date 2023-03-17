@@ -25,6 +25,12 @@ public class Board {
         return boards;
     }
 
+    public void validatePosition(List<Position> paths) {
+        if (!isEmptyPosition(paths)) {
+            throw new IllegalArgumentException("경로가 없습니다.");
+        }
+    }
+
     public boolean isEmptyPosition(List<Position> paths) {
         return paths.stream()
                 .map(boards::get)

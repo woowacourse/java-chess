@@ -4,14 +4,14 @@ import chess.domain.board.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop(Color color) {
-        super(color);
+    public Bishop(Team team) {
+        super(team);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
         return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameColor(color);
+                && isNotSameTeam(team);
     }
 
     @Override
@@ -21,6 +21,6 @@ public class Bishop extends Piece {
 
     @Override
     public Piece move() {
-        return new Bishop(getColor());
+        return new Bishop(getTeam());
     }
 }

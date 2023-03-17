@@ -6,12 +6,12 @@ public class Pawn extends Piece {
 
     private int moveCount;
 
-    public Pawn(Color color) {
-        super(color);
+    public Pawn(Team team) {
+        this(team, 0);
     }
 
-    public Pawn(Color color, int moveCount) {
-        super(color);
+    private Pawn(Team team, int moveCount) {
+        super(team);
         this.moveCount = moveCount;
     }
 
@@ -20,20 +20,20 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
-        int direction = this.getColor().getDirection();
+        int direction = this.getTeam().getDirection();
         int nextRankNumber = getNextRankNumber(sourceRankNumber, direction);
 
-        if (this.getColor() == Color.BLACK) {
+        if (this.getTeam() == Team.BLACK) {
             return (isSameFileCoordinate(sourcePosition, targetPosition)
                     && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
-                    || isDiagonalPath(sourcePosition, targetPosition, color);
+                    || isDiagonalPath(sourcePosition, targetPosition, team);
         }
         return (isSameFileCoordinate(sourcePosition, targetPosition)
                 && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
-                || isDiagonalPath(sourcePosition, targetPosition, color);
+                || isDiagonalPath(sourcePosition, targetPosition, team);
     }
 
     private int getNextRankNumber(int sourceRankNumber, int direction) {
@@ -47,16 +47,16 @@ public class Pawn extends Piece {
         return sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
     }
 
-    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Color color) {
-        if (!this.getColor().isOpposite(color)) {
+    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Team team) {
+        if (!this.getTeam().isOpposite(team)) {
             return false;
         }
 
-        int diagonalRankNumber = sourcePosition.getRow() + this.getColor().getDirection();
+        int diagonalRankNumber = sourcePosition.getRow() + this.getTeam().getDirection();
 
         return Math.abs(sourcePosition.getColumn() - targetPosition.getColumn()) == 1
                 && diagonalRankNumber == targetPosition.getRow()
-                && isNotSameColor(color);
+                && isNotSameTeam(team);
     }
 
     @Override
@@ -66,6 +66,6 @@ public class Pawn extends Piece {
 
     @Override
     public Piece move() {
-        return new Pawn(this.getColor(), moveCount + 1);
+        return new Pawn(this.getTeam(), moveCount + 1);
     }
 }

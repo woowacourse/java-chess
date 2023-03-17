@@ -4,16 +4,16 @@ import chess.domain.board.Position;
 
 public class Queen extends Piece {
 
-    public Queen(Color color) {
-        super(color);
+    public Queen(Team team) {
+        super(team);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
         return (isStraight(sourcePosition, targetPosition)
                 || isDiagonal(sourcePosition, targetPosition))
                 && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameColor(color);
+                && isNotSameTeam(team);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class Queen extends Piece {
 
     @Override
     public Piece move() {
-        return new Queen(getColor());
+        return new Queen(getTeam());
     }
 }

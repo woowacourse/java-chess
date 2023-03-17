@@ -14,7 +14,7 @@ public class OutputView {
         for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
             Position position = new Position(fileCoordinate, rankCoordinate);
             Piece piece = boards.get(position);
-            String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getColor());
+            String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getTeam());
             System.out.print(message);
         }
     }

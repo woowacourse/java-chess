@@ -19,14 +19,14 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource(value = {"B:SIX:true", "A:THREE:true", "E:SIX:false", "C:FOUR:false"}, delimiter = ':')
     void 나이트는_상하좌우로_움직인_뒤_대각선으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Knight knight = new Knight(Color.WHITE);
+        Knight knight = new Knight(Team.WHITE);
 
-        assertThat(knight.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+        assertThat(knight.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new Knight(Color.WHITE);
+        final var piece = new Knight(Team.WHITE);
         assertThat(piece.isEmpty()).isFalse();
     }
 }
