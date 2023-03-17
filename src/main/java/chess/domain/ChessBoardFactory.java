@@ -20,12 +20,12 @@ public class ChessBoardFactory {
     public static ChessBoard create() {
         List<Square> squares = new ArrayList<>();
         for (File file : File.values()) {
-            addSqaureOfEachFile(squares, file);
+            addSquareOfEachFile(squares, file);
         }
         return new ChessBoard(squares);
     }
 
-    private static void addSqaureOfEachFile(final List<Square> squares, final File file) {
+    private static void addSquareOfEachFile(final List<Square> squares, final File file) {
         for (Rank rank : Rank.values()) {
             squares.add(new Square(Position.of(rank, file), createPiece(rank, file)));
         }
