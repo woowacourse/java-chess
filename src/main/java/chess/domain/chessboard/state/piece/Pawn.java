@@ -64,9 +64,7 @@ public final class Pawn extends Piece {
             return;
         }
 
-        for (Square curSquare : routeSquares) {
-            checkSquareEmpty(curSquare);
-        }
+        checkSquaresEmpty(routeSquares);
         isMoved = true;
     }
 
