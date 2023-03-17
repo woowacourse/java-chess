@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
-    @ParameterizedTest(name = "KNIGHT가 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+    @ParameterizedTest(name = "movable()은 나이트가 ({0}, {1})로 이동할 때 {2}를 반환한다.")
     @CsvSource({
             "2,-1,true", "2,1,true", "-2,1,true", "-2,-1,true",
             "-1,2,true", "1,2,true", "1,-2,true", "-1,-2,true",

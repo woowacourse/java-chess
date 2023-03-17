@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class DirectionTest {
 
-    @ParameterizedTest(name = "Direction.{0}이고 rank={1}, file={2}이면 {3}이 반환된다.")
+    @ParameterizedTest(name = "match()는 Direction.{0}이고 rank={1}, file={2}이면 {3}을 반환한다.")
     @CsvSource({"SOUTH,0,-1,true", "NORTH_WEST,-3,3,true", "NORTH_WEST_WEST,-4,2,true"})
     void match_givenRankAndFile_thenReturnResult(
             final Direction direction,
@@ -18,7 +18,7 @@ class DirectionTest {
         assertThat(direction.match(rank, file)).isEqualTo(result);
     }
 
-    @ParameterizedTest(name = "rank = {0}, file = {1}일 때 Direction.{2}를 반환한다")
+    @ParameterizedTest(name = "findDirection()은 rank = {0}, file = {1}일 때 Direction.{2}를 반환한다.")
     @CsvSource({
             "0,1,NORTH",
             "1,0,EAST",

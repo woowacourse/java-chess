@@ -32,8 +32,8 @@ class BoardKingMoveTest {
     }
 
     @Test
-    @DisplayName("킹의 도착지가 적 기물이 있는 칸이라면 성공한다.")
-    void move_whenKingValidEnemyTarget_thenSuccess() {
+    @DisplayName("킹의 도착지가 적 기물이 있는 칸이라면 이동할 수 있다.")
+    void move_king_givenValidEnemyTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
         board.move(E4, D5, WHITE);
@@ -63,7 +63,7 @@ class BoardKingMoveTest {
 
     @Test
     @DisplayName("킹의 도착지가 자신의 기물이 있는 칸이라면 예외가 발생한다.")
-    void move_whenKingInValidTarget_thenFail() {
+    void move_king_givenInvalidMyPieceTarget_thenFail() {
         // when
         assertThatThrownBy(() -> board.move(E1, E2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -72,7 +72,7 @@ class BoardKingMoveTest {
 
     @Test
     @DisplayName("킹이 2칸 이상 움직이려고 하면 예외가 발생한다.")
-    void king_whenMoveTwoMore_thenFail() {
+    void move_king_givenTwoMoreDistance_thenFail() {
         // given
         final Board board = PawnBoard.create();
 

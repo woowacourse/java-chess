@@ -32,7 +32,7 @@ class BoardRookMoveTest {
 
     @Test
     @DisplayName("이동 중에 기물이 존재하는 칸을 만나면 예외가 발생한다.")
-    void move_givenInvalidSourceAndTarget_thenFail() {
+    void move_rook_givenInvalidSourceAndTarget_thenFail() {
         // when, then
         assertThatThrownBy(() -> board.move(H1, H3, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -40,8 +40,8 @@ class BoardRookMoveTest {
     }
 
     @Test
-    @DisplayName("룩이 움직일 수 있는 방향으로 움직이면 성공한다.")
-    void move_whenRookValidTarget_thenSuccess() {
+    @DisplayName("룩이 움직일 수 있는 방향으로 움직이면 이동할 수 있다.")
+    void move_rook_givenValidTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
 
@@ -62,7 +62,7 @@ class BoardRookMoveTest {
 
     @Test
     @DisplayName("룩이 움직일 수 없는 방향으로 움직이면 예외가 발생한다.")
-    void rook_givenInvalidDirection_thenFail() {
+    void move_rook_givenInvalidDirection_thenFail() {
         // given
         final Board board = PawnBoard.create();
 
@@ -73,8 +73,8 @@ class BoardRookMoveTest {
     }
 
     @Test
-    @DisplayName("룩의 도착지가 적 기물이 있는 칸이라면 성공한다.")
-    void move_whenRookValidEnemyTarget_thenSuccess() {
+    @DisplayName("룩의 도착지가 적 기물이 있는 칸이라면 이동할 수 있다.")
+    void move_rook_givenValidEnemyTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
         board.move(H4, G5, WHITE);
@@ -96,7 +96,7 @@ class BoardRookMoveTest {
 
     @Test
     @DisplayName("룩의 도착지가 자신의 기물이 있는 칸이라면 예외가 발생한다.")
-    void move_whenRookInValidTarget_thenFail() {
+    void move_rook_givenInValidTarget_thenFail() {
         // when
         assertThatThrownBy(() -> board.move(H1, H2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)

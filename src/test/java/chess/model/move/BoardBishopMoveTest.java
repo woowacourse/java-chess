@@ -33,7 +33,7 @@ class BoardBishopMoveTest {
 
     @Test
     @DisplayName("이동 중에 기물이 존재하는 칸을 만나면 예외가 발생한다.")
-    void move_givenInvalidSourceAndTarget_thenFail() {
+    void move_bishop_givenInvalidSourceAndTarget_thenFail() {
         // when, then
         assertThatThrownBy(() -> board.move(F1, G2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -41,8 +41,8 @@ class BoardBishopMoveTest {
     }
 
     @Test
-    @DisplayName("비숍이 움직일 수 있는 방향으로 움직이면 성공한다.")
-    void move_whenBishopValidTarget_thenSuccess() {
+    @DisplayName("비숍이 움직일 수 있는 방향으로 움직이면 이동할 수 있다.")
+    void move_bishop_givenValidSourceAndTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
 
@@ -63,7 +63,7 @@ class BoardBishopMoveTest {
 
     @Test
     @DisplayName("비숍이 움직일 수 없는 방향으로 움직이면 예외가 발생한다.")
-    void bishop_givenInvalidDirection_thenFail() {
+    void move_bishop_givenInvalidDirection_thenFail() {
         // given
         final Board board = PawnBoard.create();
 
@@ -74,8 +74,8 @@ class BoardBishopMoveTest {
     }
 
     @Test
-    @DisplayName("비숍의 도착지가 적 기물이 있는 칸이라면 성공한다.")
-    void move_whenBishopValidEnemyTarget_thenSuccess() {
+    @DisplayName("비숍의 도착지가 적 기물이 있는 칸이라면 이동할 수 있다.")
+    void move_bishop_givenValidEnemyTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
         board.move(C4, D5, WHITE);
@@ -89,7 +89,6 @@ class BoardBishopMoveTest {
         final int targetIndex = B5.convertToIndex();
 
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
                 () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
                 () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(BISHOP)
         );
@@ -97,7 +96,7 @@ class BoardBishopMoveTest {
 
     @Test
     @DisplayName("비숍의 도착지가 자신의 기물이 있는 칸이라면 예외가 발생한다.")
-    void move_whenBishopInValidTarget_thenFail() {
+    void move_bishop_givenMyPieceTarget_thenFail() {
         // when
         assertThatThrownBy(() -> board.move(F1, E2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)

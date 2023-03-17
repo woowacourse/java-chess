@@ -9,8 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class QueenTest {
 
-
-    @ParameterizedTest(name = "QUEEN이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+    @ParameterizedTest(name = "movable()은 퀸이 ({0}, {1})로 이동할 때 {2}를 나온다.")
     @CsvSource({"0,3,true", "3,0,true", "-4,-4,true", "6,-6,true", "3,3,true", "-3,3,true"})
     void queen_givenRankAndFile_thenReturnIfMovable(
             final int rank,

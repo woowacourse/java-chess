@@ -31,7 +31,7 @@ class BoardQueenMoveTest {
 
     @Test
     @DisplayName("이동 중에 기물이 존재하는 칸을 만나면 예외가 발생한다.")
-    void move_givenInvalidSourceAndTarget_thenFail() {
+    void move_queen_givenInvalidTarget_thenFail() {
         // when, then
         assertThatThrownBy(() -> board.move(D1, D3, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,8 +39,8 @@ class BoardQueenMoveTest {
     }
 
     @Test
-    @DisplayName("퀸의 도착지가 적 기물이 있는 칸이라면 성공한다.")
-    void move_whenQueenValidEnemyTarget_thenSuccess() {
+    @DisplayName("퀸의 도착지가 적 기물이 있는 칸이라면 이동할 수 있다.")
+    void move_queen_givenValidEnemyTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
         board.move(D4, E5, WHITE);

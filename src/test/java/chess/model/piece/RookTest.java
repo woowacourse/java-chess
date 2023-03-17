@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
 
-    @ParameterizedTest(name = "ROOK이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+    @ParameterizedTest(name = "movable()은 룩이 ({0}, {1})로 이동할 때 {2}를 반환한다.")
     @CsvSource({"0,3,true", "3,0,true", "0,-6,true", "-3,0,true", "1,3,false", "-1,3,false"})
     void rook_givenRankAndFile_thenReturnIfMovable(
             final int rank,

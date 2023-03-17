@@ -15,7 +15,7 @@ class KingTest {
     @DisplayName("movable() 테스트를 진행한다.")
     class MovableTest {
 
-        @ParameterizedTest(name = "KING이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+        @ParameterizedTest(name = "킹이 ({0}, {1})로 이동할 때 {2}를 반환한다.")
         @CsvSource({"0,1,true", "1,0,true", "-1,-1,true", "1,-1,true", "1,1,true", "-1,1,true"})
         void isRightDirection_givenRankAndFile_thenReturnIfMovable(
                 final int rank,
@@ -32,7 +32,7 @@ class KingTest {
             assertThat(movable).isEqualTo(result);
         }
 
-        @ParameterizedTest(name = "KING이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+        @ParameterizedTest(name = "킹이 ({0}, {1})로 이동할 때 {2}를 반환한다.")
         @CsvSource({"0,1,true", "1,0,true", "-1,-1,true", "1,-1,true", "1,1,true", "-1,1,true",
                 "0,2,false", "2,0,false", "-2,-2,false", "1,-2,false", "2,2,false", "-2,1,false",
         })

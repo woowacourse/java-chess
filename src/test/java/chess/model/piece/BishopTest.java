@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
 
-    @ParameterizedTest(name = "BISHOP이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+    @ParameterizedTest(name = "movable()은 비숍이 ({0}, {1})로 이동할 때 {2}를 반환한다.")
     @CsvSource({"0,3,false", "3,0,false", "-4,-4,true", "6,-6,true", "3,3,true", "-3,3,true"})
     void bishop_givenRankAndFile_thenReturnIfMovable(
             final int rank,

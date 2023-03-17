@@ -33,8 +33,8 @@ class BoardKnightMoveTest {
     }
 
     @Test
-    @DisplayName("나이트가 움직일 수 있는 방향으로 움직이면 성공한다.")
-    void move_whenKnightValidTarget_thenSuccess() {
+    @DisplayName("나이트가 움직일 수 있는 방향으로 움직이면 이동할 수 있다.")
+    void move_knight_givenValidTarget_thenSuccess() {
         // when
         board.move(B1, C3, WHITE);
 
@@ -50,7 +50,7 @@ class BoardKnightMoveTest {
 
     @ParameterizedTest(name = "나이트를 {0}에서 {1}로 이동하면 예외가 발생한다.")
     @MethodSource("initialWrongMoveKnight")
-    void move_whenKnightMoveInvalidTarget_thenFail(
+    void move_knight_givenInvalidTarget_thenFail(
             final Position source,
             final Position target,
             final Class<Exception> result
