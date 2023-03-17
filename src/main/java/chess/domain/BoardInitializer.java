@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import static chess.domain.piece.PieceType.*;
 
 public class BoardInitializer {
+    private static final int FILE_LENGTH = 8;
 
     private BoardInitializer() {
     }
@@ -49,7 +50,7 @@ public class BoardInitializer {
     private static List<Piece> initializePawn(Camp camp) {
         List<Piece> pieces = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < FILE_LENGTH; i++) {
             Piece pawn = PieceType.PAWN.createPiece(camp);
             pieces.add(pawn);
         }

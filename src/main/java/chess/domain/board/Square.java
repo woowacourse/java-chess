@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// TODO: 2023-03-17 캐싱
 public class Square {
     private final File file;
     private final Rank rank;
