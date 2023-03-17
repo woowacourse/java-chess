@@ -1,7 +1,5 @@
-package chess;
+package chess.domain;
 
-import chess.domain.Board;
-import chess.domain.Team;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
