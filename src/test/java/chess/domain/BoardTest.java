@@ -57,4 +57,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀은 공격할 수 없습니다");
     }
+
+    @Test
+    @DisplayName("체스말이 이동할 수 있는 방향이 아니면 예외가 발생한다")
+    void throwExceptionWhenNotMovable() {
+        final Position source = Position.from("b2");
+        final Position target = Position.from("c3");
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("체스말이 이동할 수 없는 위치입니다.");
+    }
 }

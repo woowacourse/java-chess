@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -27,6 +28,11 @@ public class Board {
         validateDifferentPosition(source, target);
         validateSourceNotEmpty(source);
         validateTargetNotSameColor(source, target);
+
+        Direction unit = Direction.calculateUnitDirection(source, target);
+        Piece piece = board.get(source);
+
+        validateMovable(piece, unit);
     }
 
     private void validateDifferentPosition(final Position source, final Position target) {
@@ -51,6 +57,12 @@ public class Board {
 
         if (sourcePiece.isSameTeam(targetPiece.team())) {
             throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
+        }
+    }
+
+    private void validateMovable(final Piece piece, final Direction unit) {
+        if (!piece.movable(unit)) {
+            throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }
 }
