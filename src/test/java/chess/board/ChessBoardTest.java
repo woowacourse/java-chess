@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.fixture.FixturePosition;
 import chess.piece.Bishop;
 import chess.piece.EmptyPiece;
 import chess.piece.King;
@@ -42,15 +43,17 @@ class ChessBoardTest {
         @Test
         void 같은_팀의_말이면_예외() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_ONE = new Position(File.F, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F1;
 
-            piecePosition.put(A_ONE, new Rook(Team.WHITE));
-            piecePosition.put(new Position(File.D, Rank.ONE), new Rook(Team.BLACK));
+            Position other = FixturePosition.D1;
+
+            piecePosition.put(from, new Rook(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, F_ONE))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -58,15 +61,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_ONE = new Position(File.F, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F1;
 
-            piecePosition.put(A_ONE, new Rook(Team.WHITE));
-            piecePosition.put(F_ONE, new Rook(Team.BLACK));
+            piecePosition.put(from, new Rook(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_ONE));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -76,15 +79,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position H_EIGHT = new Position(File.H, Rank.EIGHT);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.H8;
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
-            piecePosition.put(new Position(File.D, Rank.FOUR), new Rook(Team.WHITE));
+            Position other = FixturePosition.D4;
+
+            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, H_EIGHT))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -92,15 +97,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외2() {
             //given
-            Position H_ONE = new Position(File.H, Rank.ONE);
-            Position A_EIGHT = new Position(File.A, Rank.EIGHT);
+            Position from = FixturePosition.H1;
+            Position to = FixturePosition.A8;
 
-            piecePosition.put(H_ONE, new Bishop(Team.WHITE));
-            piecePosition.put(new Position(File.E, Rank.FOUR), new Rook(Team.WHITE));
+            Position other = FixturePosition.E4;
+
+            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(H_ONE, A_EIGHT))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -108,15 +115,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외3() {
             //given
-            Position D_FIVE = new Position(File.D, Rank.FIVE);
-            Position A_TWO = new Position(File.A, Rank.TWO);
+            Position from = FixturePosition.D5;
+            Position to = FixturePosition.A2;
 
-            piecePosition.put(D_FIVE, new Bishop(Team.WHITE));
-            piecePosition.put(new Position(File.B, Rank.THREE), new Rook(Team.WHITE));
+            Position other = FixturePosition.B3;
+
+            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(D_FIVE, A_TWO))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -124,15 +133,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외4() {
             //given
-            Position D_FIVE = new Position(File.D, Rank.FIVE);
-            Position H_ONE = new Position(File.H, Rank.ONE);
+            Position from = FixturePosition.D5;
+            Position to = FixturePosition.H1;
 
-            piecePosition.put(D_FIVE, new Bishop(Team.WHITE));
-            piecePosition.put(new Position(File.F, Rank.THREE), new Rook(Team.WHITE));
+            Position other = FixturePosition.F3;
+
+            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(D_FIVE, H_ONE))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -140,15 +151,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_SIX = new Position(File.F, Rank.SIX);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F6;
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
-            piecePosition.put(F_SIX, new Rook(Team.BLACK));
+            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_SIX));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -158,15 +169,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position H_EIGHT = new Position(File.H, Rank.EIGHT);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.H8;
 
-            piecePosition.put(A_ONE, new Queen(Team.WHITE));
-            piecePosition.put(new Position(File.D, Rank.FOUR), new Rook(Team.WHITE));
+            Position other = FixturePosition.D4;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, H_EIGHT))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -174,15 +187,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외2() {
             //given
-            Position H_ONE = new Position(File.H, Rank.ONE);
-            Position A_EIGHT = new Position(File.A, Rank.EIGHT);
+            Position from = FixturePosition.H1;
+            Position to = FixturePosition.A8;
 
-            piecePosition.put(H_ONE, new Queen(Team.WHITE));
-            piecePosition.put(new Position(File.E, Rank.FOUR), new Rook(Team.WHITE));
+            Position other = FixturePosition.E4;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(H_ONE, A_EIGHT))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -190,15 +205,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외3() {
             //given
-            Position D_FIVE = new Position(File.D, Rank.FIVE);
-            Position A_TWO = new Position(File.A, Rank.TWO);
+            Position from = FixturePosition.D5;
+            Position to = FixturePosition.A2;
 
-            piecePosition.put(D_FIVE, new Queen(Team.WHITE));
-            piecePosition.put(new Position(File.B, Rank.THREE), new Rook(Team.WHITE));
+            Position other = FixturePosition.B3;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(D_FIVE, A_TWO))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -206,15 +223,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외4() {
             //given
-            Position D_FIVE = new Position(File.D, Rank.FIVE);
-            Position H_ONE = new Position(File.H, Rank.ONE);
+            Position from = FixturePosition.D5;
+            Position to = FixturePosition.H1;
 
-            piecePosition.put(D_FIVE, new Queen(Team.WHITE));
-            piecePosition.put(new Position(File.F, Rank.THREE), new Rook(Team.WHITE));
+            Position other = FixturePosition.F3;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(D_FIVE, H_ONE))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -222,15 +241,17 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외5() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_ONE = new Position(File.F, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F1;
 
-            piecePosition.put(A_ONE, new Queen(Team.WHITE));
-            piecePosition.put(new Position(File.D, Rank.ONE), new Rook(Team.BLACK));
+            Position other = FixturePosition.D1;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, F_ONE))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -238,15 +259,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_ONE = new Position(File.F, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F1;
 
-            piecePosition.put(A_ONE, new Queen(Team.WHITE));
-            piecePosition.put(F_ONE, new Rook(Team.BLACK));
+            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_ONE));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -256,15 +277,15 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position A_TWO = new Position(File.A, Rank.TWO);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.A2;
 
-            piecePosition.put(A_ONE, new King(Team.WHITE));
-            piecePosition.put(new Position(File.A, Rank.TWO), new Rook(Team.WHITE));
+            piecePosition.put(from, new King(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, A_TWO))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
@@ -272,15 +293,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position A_TWO = new Position(File.A, Rank.TWO);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.A2;
 
-            piecePosition.put(A_ONE, new King(Team.WHITE));
-            piecePosition.put(new Position(File.A, Rank.TWO), new Rook(Team.BLACK));
+            piecePosition.put(from, new King(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, A_TWO));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -290,15 +311,15 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position C_TWO = new Position(File.C, Rank.TWO);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.C2;
 
-            piecePosition.put(A_ONE, new Knight(Team.WHITE));
-            piecePosition.put(new Position(File.C, Rank.TWO), new Rook(Team.WHITE));
+            piecePosition.put(from, new Knight(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, C_TWO))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
@@ -306,15 +327,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position A_ONE = new Position(File.A, Rank.ONE);
-            Position C_TWO = new Position(File.C, Rank.TWO);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.C2;
 
-            piecePosition.put(A_ONE, new Knight(Team.WHITE));
-            piecePosition.put(new Position(File.C, Rank.TWO), new Rook(Team.BLACK));
+            piecePosition.put(from, new Knight(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, C_TWO));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -324,15 +345,17 @@ class ChessBoardTest {
         @Test
         void 같은_팀의_말이_있으면_예외() {
             //given
-            Position B_TWO = new Position(File.B, Rank.TWO);
-            Position B_FOUR = new Position(File.B, Rank.FOUR);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.B4;
 
-            piecePosition.put(B_TWO, new Pawn(Team.WHITE));
-            piecePosition.put(new Position(File.B, Rank.THREE), new Rook(Team.WHITE));
+            Position other = FixturePosition.B3;
+
+            piecePosition.put(from, new Pawn(Team.WHITE));
+            piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertThatThrownBy(() -> chessBoard.movePiece(B_TWO, B_FOUR))
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
@@ -340,15 +363,15 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position D_FOUR = new Position(File.D, Rank.FOUR);
-            Position E_FIVE = new Position(File.E, Rank.FIVE);
+            Position from = FixturePosition.D4;
+            Position to = FixturePosition.E5;
 
-            piecePosition.put(D_FOUR, new Pawn(Team.WHITE));
-            piecePosition.put(new Position(File.E, Rank.FIVE), new Rook(Team.BLACK));
+            piecePosition.put(from, new Pawn(Team.WHITE));
+            piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(D_FOUR, E_FIVE));
+            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
     }
 
@@ -419,7 +442,7 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = new Position(File.D, Rank.ONE);
+            Position position = FixturePosition.D1;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -431,7 +454,7 @@ class ChessBoardTest {
         @Test
         void 킹의_초기_위치는_E1_이다() {
             //given
-            Position position = new Position(File.E, Rank.ONE);
+            Position position = FixturePosition.E1;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -500,7 +523,7 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = new Position(File.D, Rank.EIGHT);
+            Position position = FixturePosition.D8;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -510,9 +533,9 @@ class ChessBoardTest {
         }
 
         @Test
-        void 킹의_초기_위치는_E1_이다() {
+        void 킹의_초기_위치는_E8_이다() {
             //given
-            Position position = new Position(File.E, Rank.EIGHT);
+            Position position = FixturePosition.E8;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then

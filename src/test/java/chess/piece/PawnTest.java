@@ -1,8 +1,7 @@
 package chess.piece;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
+import chess.fixture.FixturePosition;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
-            //when
-            Position to = new Position(File.B, Rank.THREE);
-            Position from = new Position(File.B, Rank.TWO);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.B3;
 
-            //then
+            //when & then
             assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
@@ -31,9 +29,8 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
-            //when
-            Position to = new Position(File.B, Rank.FOUR);
-            Position from = new Position(File.B, Rank.TWO);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.B4;
 
             //then
             assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
@@ -44,11 +41,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
-            //when
-            Position to = new Position(File.C, Rank.THREE);
-            Position from = new Position(File.B, Rank.TWO);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.C3;
 
-            //then
+            //when & then
             assertThat(pawn.isMovable(from, to, new Pawn(Team.BLACK))).isTrue();
         }
 
@@ -57,11 +53,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
-            //when
-            Position to = new Position(File.C, Rank.FOUR);
-            Position from = new Position(File.B, Rank.TWO);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.C4;
 
-            //then
+            //when & then
             assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Pawn이 이동할 수 없는 경로입니다.");
@@ -75,11 +70,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
-            //when
-            Position to = new Position(File.B, Rank.FOUR);
-            Position from = new Position(File.B, Rank.FIVE);
+            Position from = FixturePosition.B5;
+            Position to = FixturePosition.B4;
 
-            //then
+            //when & then
             assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
@@ -88,11 +82,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
-            //when
-            Position to = new Position(File.B, Rank.FIVE);
-            Position from = new Position(File.B, Rank.SEVEN);
+            Position from = FixturePosition.B7;
+            Position to = FixturePosition.B5;
 
-            //then
+            //when & then
             assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
@@ -101,11 +94,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
-            //when
-            Position to = new Position(File.B, Rank.SIX);
-            Position from = new Position(File.C, Rank.SEVEN);
+            Position from = FixturePosition.C7;
+            Position to = FixturePosition.B6;
 
-            //then
+            //when & then
             assertThat(pawn.isMovable(from, to, new Pawn(Team.WHITE))).isTrue();
         }
 
@@ -114,11 +106,10 @@ class PawnTest {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
-            //when
-            Position to = new Position(File.C, Rank.FOUR);
-            Position from = new Position(File.B, Rank.TWO);
+            Position from = FixturePosition.B2;
+            Position to = FixturePosition.C4;
 
-            //then
+            //when & then
             assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Pawn이 이동할 수 없는 경로입니다.");

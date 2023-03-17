@@ -1,8 +1,7 @@
 package chess.piece;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
+import chess.fixture.FixturePosition;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,10 @@ class RookTest {
             //given
             Rook rook = new Rook(Team.WHITE);
 
-            //when
-            Position to = new Position(File.A, Rank.EIGHT);
-            Position from = new Position(File.A, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.A8;
 
-            //then
+            //when & then
             assertThat(rook.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
@@ -31,11 +29,10 @@ class RookTest {
             //given
             Rook rook = new Rook(Team.WHITE);
 
-            //when
-            Position to = new Position(File.B, Rank.EIGHT);
-            Position from = new Position(File.A, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.B8;
 
-            //then
+            //when & then
             assertThatThrownBy(() -> rook.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Rook이 이동할 수 없는 경로입니다.");

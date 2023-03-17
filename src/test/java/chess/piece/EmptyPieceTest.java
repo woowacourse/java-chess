@@ -1,8 +1,7 @@
 package chess.piece;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
+import chess.fixture.FixturePosition;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +11,9 @@ class EmptyPieceTest {
     void 빈_말에_대해_메소드를_수행하면_예외() {
         //given
         EmptyPiece emptyPiece = new EmptyPiece();
-        Position to = new Position(File.B, Rank.THREE);
-        Position from = new Position(File.A, Rank.ONE);
+
+        Position to = FixturePosition.B3;
+        Position from = FixturePosition.A1;
 
         //when & then
         Assertions.assertThatThrownBy(() -> emptyPiece.isMovable(from, to, PieceFixture.EMPTY_PIECE))

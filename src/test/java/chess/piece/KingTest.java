@@ -1,8 +1,7 @@
 package chess.piece;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
+import chess.fixture.FixturePosition;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,10 @@ class KingTest {
             //given
             King king = new King(Team.WHITE);
 
-            //when
-            Position to = new Position(File.B, Rank.TWO);
-            Position from = new Position(File.A, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.B2;
 
-            //then
+            //when & then
             assertThat(king.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
         }
 
@@ -30,11 +28,10 @@ class KingTest {
         void 상하좌우_대각선으로_한칸이_아니면_예외() {
             King king = new King(Team.WHITE);
 
-            //when
-            Position to = new Position(File.B, Rank.THREE);
-            Position from = new Position(File.A, Rank.ONE);
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.B3;
 
-            //then
+            //when & then
             assertThatThrownBy(() -> king.isMovable(from, to, PieceFixture.EMPTY_PIECE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("King이 이동할 수 없는 경로입니다.");
