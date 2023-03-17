@@ -68,8 +68,10 @@ public class Pieces {
     }
 
     public void synchronizeMovedPiece(final Piece pieceBeforeMove, final Piece movedPiece) {
-        final int pieceBeforeMoveIndex = pieces.indexOf(pieceBeforeMove);
-        pieces.set(pieceBeforeMoveIndex, movedPiece);
+        if (pieces.contains(pieceBeforeMove)) {
+            final int pieceBeforeMoveIndex = pieces.indexOf(pieceBeforeMove);
+            pieces.set(pieceBeforeMoveIndex, movedPiece);
+        }
     }
 
     public boolean isPieceExistOnPosition(final Position position) {

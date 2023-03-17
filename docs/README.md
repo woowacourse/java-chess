@@ -49,6 +49,7 @@
   - 사용한다면, 수정한 것처럼 주석을 통해 나타내도 괜찮을까?
 - [x] Pawn 매직 넘버 개선
 - [x] Piece.move()는 부모 클래스가 자식 클래스에 의존하는, 즉, DIP 위반 아닐까?
-- [ ] indexOf 메서드에 List에 존재하지 않는 값을 전달한다면?
+- [x] indexOf 메서드에 List에 존재하지 않는 값을 전달한다면?
+  - 현재 로직에선
 - [ ] ChessController와 InputView가 같은 문자열이 있는데, 이는 같은 의미를 가지는 걸까?
 - [ ] Calculator 주석 제거
