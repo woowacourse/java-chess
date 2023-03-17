@@ -9,6 +9,8 @@ import chess.view.OutputView;
 
 public class ChessController {
 
+    public static final int COMMAND_INDEX = 0;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -21,19 +23,23 @@ public class ChessController {
         final Board board = BoardFactory.generateBoard();
         final ChessGame chessGame = new ChessGame(board);
 
-        outputView.printStartMessage();
-        executeCommand(chessGame);
-
-        while (chessGame.isPlayable()) {
-            outputView.printBoard(chessGame.getBoard());
+        while (chessGame.isRunnable()) {
+            printChessBoard(chessGame);
             executeCommand(chessGame);
+        }
+    }
+
+    private void printChessBoard(final ChessGame chessGame) {
+        if (chessGame.isStart()) {
+            outputView.printBoard(chessGame.getBoard());
         }
     }
 
     private void executeCommand(final ChessGame chessGame) {
         try {
-            final Command command = Command.findByString(inputView.readCommand());
-            command.execute(chessGame);
+            final String[] splitCommand = inputView.readCommand().split(" ");
+            final Command command = Command.findByString(splitCommand[COMMAND_INDEX]);
+            command.execute(chessGame, splitCommand);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             executeCommand(chessGame);
