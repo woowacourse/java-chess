@@ -1,5 +1,7 @@
 package chess.board;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import chess.piece.Pieces;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,4 +56,14 @@ class BoardTest {
                 .hasMessage("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
     }
 
+    @Test
+    @DisplayName("나이트는 이동 경로에 말이 있어도 타겟 지점으로 이동할 수 있다.")
+    void movePiece_pieceOnKnightPath_success() {
+        // given
+        final Position knightPosition = new Position(File.B, Rank.ONE);
+        final Position targetPosition = new Position(File.C, Rank.THREE);
+
+        // when, then
+        assertDoesNotThrow(() -> board.movePiece(knightPosition, targetPosition));
+    }
 }
