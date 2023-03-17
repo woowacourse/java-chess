@@ -10,6 +10,7 @@ import chess.domain.Board;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -25,20 +26,18 @@ public class GameController {
 
     public void run() {
         outputView.printGameStart();
-        Command command = readUntilValidate(this::startGame);
+        Command command = repeatUntilValidate(this::inputCommand);
         if (command == END) {
             return;
         }
         ChessGame chessGame = new ChessGame(new Board(), WHITE);
-        Board board = chessGame.getBoard();
-        outputView.printChessBoard(board.getBoardResult());
-
+        outputView.printChessBoard(chessGame.getBoard().getBoardResult());
         do {
-            command = readUntilValidate(() -> progressGame(chessGame));
+            command = repeatUntilValidate(() -> progressGame(chessGame));
         } while (command != END);
     }
 
-    private Command startGame() {
+    private Command inputCommand() {
         List<String> gameCommand = inputView.readGameCommand();
         Command command = Command.from(gameCommand.get(0));
         checkWrongCommand(command, MOVE);
@@ -72,7 +71,7 @@ public class GameController {
         }
     }
 
-    private <T> T readUntilValidate(Supplier<T> supplier) {
+    private <T> T repeatUntilValidate(final Supplier<T> supplier) {
         T input;
         do {
             input = readUserInput(supplier);

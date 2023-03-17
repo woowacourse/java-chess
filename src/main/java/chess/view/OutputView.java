@@ -10,7 +10,7 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(Map<Integer, String> pieces) {
+    public void printChessBoard(final Map<Integer, String> pieces) {
         for (int i = 0; i < 64; i++) {
             if (i % 8 == 0) {
                 System.out.println();

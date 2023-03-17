@@ -15,7 +15,7 @@ public class Square {
         return new Square(file, rank);
     }
 
-    public Square next(int fileDirection, int rankDirection) {
+    public Square next(final int fileDirection, final int rankDirection) {
         File newFile = file.next(fileDirection);
         Rank newRank = rank.next(rankDirection);
         return Squares.getSquare(newFile, newRank);

@@ -16,7 +16,7 @@ public class ChessGame {
         this.team = team;
     }
 
-    public void movePiece(String source, String destination) {
+    public void movePiece(final String source, final String destination) {
         Square src = getSquare(source);
         Square dst = getSquare(destination);
 
@@ -32,7 +32,6 @@ public class ChessGame {
         }
         return Square.of(File.findFileBy(position.get(0)), Rank.findRankBy(position.get(1)));
     }
-
 
     private void validateSameTeam(final Square src) {
         if (!board.isSameColor(src, team)) {

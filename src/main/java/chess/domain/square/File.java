@@ -20,7 +20,7 @@ public enum File {
         this.index = index;
     }
 
-    public static int calculate(File src, File dst) {
+    public static int calculate(final File src, final File dst) {
         return src.index - dst.index;
     }
 

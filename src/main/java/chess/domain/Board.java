@@ -19,12 +19,12 @@ public class Board {
         this.pieces = Pieces.init();
     }
 
-    public boolean isSameColor(Square src, Team team) {
+    public boolean isSameColor(final Square src, final Team team) {
         Piece piece = findPieceBy(src);
         return piece.getColor() == team;
     }
 
-    public void move(Square src, Square dst) {
+    public void move(final Square src, final Square dst) {
         if (!canMove(src, dst)) {
             throw new IllegalArgumentException("이동할 수 없는 칸입니다.");
         }
@@ -37,7 +37,7 @@ public class Board {
         pieces.remove(src);
     }
 
-    private boolean canMove(Square src, Square dst) {
+    private boolean canMove(final Square src, final Square dst) {
         Piece piece = findPieceBy(src);
 
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
@@ -50,7 +50,7 @@ public class Board {
         return canMoveNextSquare(src, fileInterval, rankInterval);
     }
 
-    private Piece findPieceBy(Square square) {
+    private Piece findPieceBy(final Square square) {
         if (!pieces.containsKey(square)) {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }

@@ -14,7 +14,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public void validateMovement(int fileInterval, int rankInterval) {
+    public void validateMovement(final int fileInterval, final int rankInterval) {
         Movement movement = Movement.of(fileInterval, rankInterval);
         if (!pieceType.getMovements().contains(movement)) {
             throw new IllegalArgumentException("말이 이동할 수 없는 규칙입니다.");
