@@ -24,11 +24,11 @@ public abstract class Piece implements SquareStatus {
     }
 
     @Override
-    public Color getColor() {
+    public final Color getColor() {
         return color;
     }
 
-    protected void validateMovable(final Position source, final Position target) {
+    protected final void validateMovable(final Position source, final Position target) {
         if (isMovable(source, target)) {
             return;
         }
