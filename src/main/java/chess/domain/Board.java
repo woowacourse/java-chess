@@ -8,6 +8,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Board {
+    private static final String DUPLICATE_POSITION_EXCEPTION_MESSAGE = "[ERROR] 같은 위치로 움직일 수 없습니다.";
+    private static final String NO_EMPTY_ROUTE_EXCEPTION_MESSAGE = "[ERROR] 해당 경로에 말이 있습니다.";
+    private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
+    private static final String SAME_TEAM_EXCEPTION_MESSAGE = "[ERROR] 목적지에 아군 말이 존재합니다.";
+    private static final String MOVE_FAIL_EXCEPTION_MESSAGE = "[ERROR] 해당 목적지로 이동할 수 없습니다.";
+
     private final Map<Position, Piece> squares;
 
     public Board(Map<Position, Piece> squares) {
@@ -36,26 +42,26 @@ public class Board {
 
     private void validateDuplicate(Position source, Position target) {
         if (Objects.equals(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 같은 위치로 움직일 수 없습니다.");
+            throw new IllegalArgumentException(DUPLICATE_POSITION_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateEmptySquare(Piece sourcePiece) {
         if (sourcePiece.isRoleOf(Role.EMPTY)) {
-            throw new IllegalArgumentException("[ERROR] 빈 칸은 움직일 수 없습니다.");
+            throw new IllegalArgumentException(EMPTY_PIECE_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateSameTeam(Piece sourcePiece, Piece targetPiece) {
         if (sourcePiece.isSameTeamWith(targetPiece)) {
-            throw new IllegalArgumentException("[ERROR] 목적지에 아군 말이 존재합니다.");
+            throw new IllegalArgumentException(SAME_TEAM_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateMovement(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
         if (!sourcePiece.canMove(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(MOVE_FAIL_EXCEPTION_MESSAGE);
         }
     }
 
@@ -75,13 +81,13 @@ public class Board {
                 .map(squares::get)
                 .allMatch(piece -> piece.isRoleOf(Role.EMPTY));
         if (!isEmptyRoute) {
-            throw new IllegalArgumentException("[ERROR] 해당 경로에 말이 있습니다.");
+            throw new IllegalArgumentException(NO_EMPTY_ROUTE_EXCEPTION_MESSAGE);
         }
     }
 
     private void validatePawnMove(Position source, Position target) {
         if (validatePawnAttack(source, target) || validatePawnForward(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 해당 목적지로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(MOVE_FAIL_EXCEPTION_MESSAGE);
         }
     }
 

@@ -22,7 +22,6 @@ public class BoardFactory {
     private static final int BOARD_ROW_SIZE = 8;
 
     private BoardFactory() {
-
     }
 
     public static Map<Position, Piece> create() {
