@@ -23,7 +23,7 @@ class OrderTest {
     @DisplayName("명령어가 start가 아니면 예외가 발생한다")
     void ofStart_invalidInput() {
         // given
-        final String input = "woowa";
+        final String input = "end";
 
         // then
         assertThatThrownBy(() -> Order.ofStart(input))
@@ -59,7 +59,7 @@ class OrderTest {
     @DisplayName("명령어가 end 또는 move가 아니면 예외가 발생한다")
     void ofMoveOrEnd_invalidInput() {
         // given
-        final String input = "woowa";
+        final String input = "start";
 
         // when
         assertThatThrownBy(() -> Order.ofMoveOrEnd(input))
