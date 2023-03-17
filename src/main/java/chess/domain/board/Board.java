@@ -68,23 +68,21 @@ public class Board {
         final Position sourcePosition = Position.from(source);
         final Position targetPosition = Position.from(target);
         final Piece piece = board.get(sourcePosition);
+
+        validate(sourcePosition, targetPosition, piece);
+        movePiece(sourcePosition, targetPosition, piece);
+    }
+
+    private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {
         if (turn.isOpponent(piece.color())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
-            move(sourcePosition, targetPosition, piece);
-            return;
+        if (!piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
+            throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다.");
         }
-        throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다. 시작: " + source + " 도착: " + target);
-    }
-
-    private void move(final Position sourcePosition, final Position targetPosition, final Piece piece) {
         if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있을 수 없습니다.");
         }
-        board.put(targetPosition, piece);
-        board.put(sourcePosition, Empty.create());
-        turn = turn.nextTurn();
     }
 
     private boolean isPieceExistsBetweenPosition(final Position sourcePosition, final Position targetPosition) {
@@ -94,6 +92,12 @@ public class Board {
 
     private boolean isPieceExists(final Position position) {
         return !board.get(position).equals(Empty.create());
+    }
+
+    private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+        board.put(targetPosition, piece);
+        board.put(sourcePosition, Empty.create());
+        turn = turn.nextTurn();
     }
 
     public Map<Position, Piece> getBoard() {
