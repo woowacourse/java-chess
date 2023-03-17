@@ -3,9 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Optional;
@@ -38,6 +35,6 @@ class KnightTest {
                 piece.searchPathTo(initialPosition,
                         new Position(4, 5),
                         Optional.empty()))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

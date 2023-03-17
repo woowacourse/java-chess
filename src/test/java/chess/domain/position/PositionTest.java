@@ -2,8 +2,6 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.position.Movement;
-import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 class PositionTest {

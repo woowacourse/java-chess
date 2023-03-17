@@ -45,6 +45,14 @@ public class Position {
         return rank == this.rank;
     }
 
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -60,13 +68,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public File file() {
-        return file;
-    }
-
-    public Rank rank() {
-        return rank;
     }
 }

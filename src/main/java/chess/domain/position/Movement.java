@@ -1,9 +1,9 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public enum Movement {
+
     U(0, 1),
     D(0, -1),
     R(1, 0),
@@ -23,6 +23,9 @@ public enum Movement {
     LLU(-2, 1),
     LLD(-2, -1);
 
+    private static final String MOVEMENT_NOT_FOUND_MESSAGE = "이동할 수 없는 방법입니다.";
+
+
     private final int file;
     private final int rank;
 
@@ -35,10 +38,10 @@ public enum Movement {
         return Arrays.stream(Movement.values())
                 .filter(movement -> movement.file == file && movement.rank == rank)
                 .findAny()
-                .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MOVEMENT_NOT_FOUND_MESSAGE));
     }
 
-    public Position nextPosition(File file, Rank rank) {
+    public Position nextPosition(final File file, final Rank rank) {
         return new Position(file.value() + this.file, rank.value() + this.rank);
     }
 }

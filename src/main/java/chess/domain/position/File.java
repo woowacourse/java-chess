@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public enum File {
 
@@ -14,6 +13,8 @@ public enum File {
     G(7),
     H(8);
 
+    private static final String FILE_NOT_FOUND_EXCEPTION = "일치하는 File을 찾을 수 없습니다.";
+
     private final int value;
 
     File(final int value) {
@@ -24,7 +25,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(it -> it.value == value)
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new IllegalStateException(FILE_NOT_FOUND_EXCEPTION));
     }
 
     public int value() {

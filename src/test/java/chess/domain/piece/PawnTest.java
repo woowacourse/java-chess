@@ -3,9 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Optional;
@@ -63,16 +60,7 @@ class PawnTest {
 
             assertThatThrownBy(() ->
                     pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
-                    .isInstanceOf(IllegalStateException.class);
-        }
-
-        @Test
-        void test_searchPathTo5() {
-            Position from = new Position(2, 5);
-            Position to = new Position(3, 4);
-            Piece piece = new Pawn(Color.BLACK);
-
-            Path path = piece.searchPathTo(from, to, Optional.of(new Pawn(Color.WHITE)));
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

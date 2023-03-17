@@ -3,10 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Optional;
@@ -27,7 +23,7 @@ class KingTest {
                 () -> piece.searchPathTo(initialPosition,
                         new Position(8, 1),
                         Optional.of(new King(Color.BLACK))))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -45,14 +41,13 @@ class KingTest {
 
     @Test
     void test_searchPathTo3() {
-
         Piece piece = new King(Color.WHITE);
+        Optional<Piece> sameTeamPiece = Optional.of(new Queen(Color.WHITE));
 
         Position initialPosition = new Position(5, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(5, 2), Optional.of(new Queen(Color.WHITE)));
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly();
+        assertThatThrownBy(() -> piece.searchPathTo(initialPosition,
+                new Position(5, 2), sameTeamPiece))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

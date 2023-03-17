@@ -3,8 +3,6 @@ package chess.domain.piece;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Optional;

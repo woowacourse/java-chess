@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public enum Rank {
 
@@ -14,6 +13,8 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final String RANK_NOT_FOUND_MESSAGE = "일치하는 Rank를 찾을 수가 없습니다.";
+
     private final int value;
 
     Rank(final int value) {
@@ -24,7 +25,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(it -> it.value == value)
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new IllegalArgumentException(RANK_NOT_FOUND_MESSAGE));
     }
 
     public int value() {

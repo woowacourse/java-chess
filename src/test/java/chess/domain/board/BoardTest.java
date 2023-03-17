@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,12 +32,12 @@ class BoardTest {
         Position from = new Position(1, 2);
         Position to = new Position(1, 4);
 
-        assertTrue(board.board().containsKey(from));
-        assertFalse(board.board().containsKey(to));
+        assertTrue(board.getBoard().containsKey(from));
+        assertFalse(board.getBoard().containsKey(to));
 
         board.move(from, to, Color.WHITE);
 
-        assertFalse(board.board().containsKey(from));
-        assertTrue(board.board().containsKey(to));
+        assertFalse(board.getBoard().containsKey(from));
+        assertTrue(board.getBoard().containsKey(to));
     }
 }

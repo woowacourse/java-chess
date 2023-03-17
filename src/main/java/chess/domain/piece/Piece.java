@@ -9,27 +9,36 @@ import java.util.Optional;
 
 public abstract class Piece {
 
+    private static final String CANT_MOVE_FROM_TO_MESSAGE = "해당 위치로 이동할 수 없습니다.";
+    private static final String CANT_MOVE_TO_IS_SAME_TEAM_MESSAGE = "같은 색 말의 위치로 이동할 수 없습니다.";
+
     protected final Color color;
 
     public Piece(final Color color) {
         this.color = color;
     }
 
-    final void validateSameColor(final Piece other) {
+    protected final void validateSameColor(final Piece other) {
         if (color.isSameColor(other.color)) {
-            throw new IllegalStateException("같은 색 말의 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(CANT_MOVE_TO_IS_SAME_TEAM_MESSAGE);
         }
     }
 
-    final public boolean isBlack() {
+    protected final void validateMovable(final Movement movement, final List<Movement> canMovements) {
+        if (!canMovements.contains(movement)) {
+            throw new IllegalArgumentException(CANT_MOVE_FROM_TO_MESSAGE);
+        }
+    }
+
+    public final boolean isBlack() {
         return color == Color.BLACK;
     }
 
-    final public boolean isSameColor(final Color color) {
+    public final boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
 
-    final protected Path generatePathFromTo(final Position from, final Position to, final Movement movement) {
+    protected final Path generatePathFromTo(final Position from, final Position to, final Movement movement) {
         Position next = from;
         final List<Position> positions = new ArrayList<>();
         while (true) {

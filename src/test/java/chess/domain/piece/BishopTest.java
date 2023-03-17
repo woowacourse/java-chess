@@ -3,10 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Optional;
@@ -54,6 +50,6 @@ class BishopTest {
                 () -> bishop.searchPathTo(initialPosition,
                         new Position(5, 1),
                         Optional.of(new King(Color.WHITE))))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
