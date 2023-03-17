@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
 import java.util.List;
 
 public final class Empty implements PieceState {
@@ -29,7 +28,7 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public void validateRoute(final List<Square> routeSquares) {
+    public void validateRoute(final List<PieceState> pieceRoute) {
         throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }
 }

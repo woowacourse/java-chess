@@ -3,7 +3,8 @@ package chess.domain.piece.state;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
+import chess.domain.piece.Empty;
+import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -54,7 +55,7 @@ class RookTest {
         //given
         final Team team = Team.BLACK;
         final Rook rook = new Rook(team);
-        final List<Square> route = List.of(new Square(), new Square(), new Square(new Pawn(team)));
+        final List<PieceState> route = List.of(new Empty(), new Empty(), new Pawn(team));
 
         //when & then
         Assertions.assertThatThrownBy(() -> rook.validateRoute(route))
@@ -66,7 +67,7 @@ class RookTest {
         //given
         final Team team = Team.BLACK;
         final Rook rook = new Rook(team);
-        final List<Square> route = List.of(new Square(), new Square(new Pawn(team)), new Square());
+        final List<PieceState> route = List.of(new Empty(), new Pawn(team), new Empty());
 
         //when & then
         Assertions.assertThatThrownBy(() -> rook.validateRoute(route))
@@ -78,7 +79,7 @@ class RookTest {
         //given
         final Team team = Team.BLACK;
         final Rook rook = new Rook(team);
-        final List<Square> route = List.of(new Square(), new Square(), new Square());
+        final List<PieceState> route = List.of(new Empty(), new Empty(), new Empty());
 
         //when & then
         assertDoesNotThrow(() -> rook.validateRoute(route));
@@ -88,8 +89,8 @@ class RookTest {
     void 룩은_도착지에_다른팀의_기물이_있으면_예외가_발생하지_않는다() {
         //given
         final Rook rook = new Rook(Team.BLACK);
-        final List<Square> route = List.of(new Square(), new Square(),
-                new Square(new Pawn(Team.WHITE)));
+        final List<PieceState> route = List.of(new Empty(), new Empty(),
+                new Pawn(Team.WHITE));
 
         //when & then
         assertDoesNotThrow(() -> rook.validateRoute(route));

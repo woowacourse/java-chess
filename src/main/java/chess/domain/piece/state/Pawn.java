@@ -1,8 +1,8 @@
 package chess.domain.piece.state;
 
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import java.util.List;
 
@@ -58,18 +58,18 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void validateRoute(final List<Square> routeSquares) {
+    public void validateRoute(final List<PieceState> pieceRoute) {
         if (isEnemyOnDiagonal) {
-            validateMoveToDiagonal(routeSquares.get(0));
+            validateMoveToDiagonal(pieceRoute.get(0));
             isMoved = true;
             return;
         }
 
-        checkSquaresEmpty(routeSquares);
+        checkSquaresEmpty(pieceRoute);
         isMoved = true;
     }
 
-    private void validateMoveToDiagonal(final Square square) {
+    private void validateMoveToDiagonal(final PieceState square) {
         if (square.isSameTeam(this) || square.isEmpty()) {
             throwCanNotMoveException();
         }

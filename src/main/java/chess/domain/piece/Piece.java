@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -71,18 +70,18 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public void validateRoute(final List<Square> routeSquares) {
-        final int lastIndex = routeSquares.size() - 1;
-        final Square lastSquare = routeSquares.get(lastIndex);
-        if (lastSquare.isSameTeam(this)) {
+    public void validateRoute(final List<PieceState> pieceRoute) {
+        final int lastIndex = pieceRoute.size() - 1;
+        final PieceState lastPiece = pieceRoute.get(lastIndex);
+        if (lastPiece.isSameTeam(this)) {
             throwCanNotMoveException();
         }
 
-        checkSquaresEmpty(routeSquares.subList(0, lastIndex));
+        checkSquaresEmpty(pieceRoute.subList(0, lastIndex));
     }
 
-    protected final void checkSquaresEmpty(final List<Square> squares) {
-        final int notEmptyCount = (int) squares.stream()
+    protected final void checkSquaresEmpty(final List<PieceState> pieceRoute) {
+        final int notEmptyCount = (int) pieceRoute.stream()
                 .filter(square -> !square.isEmpty())
                 .count();
 
