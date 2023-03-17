@@ -26,7 +26,7 @@ public class GameController {
         startGame();
         ChessGame chessGame = new ChessGame(new Board(), WHITE);
         Board board = chessGame.getBoard();
-        outputView.printChessBoard(board.getPieces());
+        outputView.printChessBoard(board.getBoardResult());
         progressGame(chessGame);
     }
 
@@ -53,7 +53,7 @@ public class GameController {
             validateMoveCommandFormat(gameCommand);
 
             chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
-            outputView.printChessBoard(chessGame.getBoard().getPieces());
+            outputView.printChessBoard(chessGame.getBoard().getBoardResult());
         }
     }
 

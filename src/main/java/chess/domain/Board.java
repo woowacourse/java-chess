@@ -8,6 +8,8 @@ import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Board {
@@ -76,6 +78,14 @@ public class Board {
 
     private int getMoveInterval(final int fileInterval, final int rankInterval) {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
+    }
+
+    public Map<Integer, String> getBoardResult() {
+        Map<Integer, String> boardResult = new LinkedHashMap<>();
+        for (Square key : pieces.keySet()) {
+            boardResult.put(Squares.getIndex(key), pieces.get(key).getPieceTypeName());
+        }
+        return boardResult;
     }
 
     public Map<Square, Piece> getPieces() {

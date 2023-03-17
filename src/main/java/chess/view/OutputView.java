@@ -1,9 +1,5 @@
 package chess.view;
 
-import chess.domain.square.Square;
-import chess.domain.square.Squares;
-import chess.domain.Team;
-import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
@@ -14,25 +10,16 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(Map<Square, Piece> pieces) { // TODO: dto or 리팩토링
-        int count = 0;
-        for (Square square : Squares.getSquares()) {
-            if (count % 8 == 0) {
+    public void printChessBoard(Map<Integer, String> pieces) {
+        for (int i = 0; i < 64; i++) {
+            if (i % 8 == 0) {
                 System.out.println();
             }
-            count++;
-            if (pieces.containsKey(square)) {
-                Piece piece = pieces.get(square);
-
-                String name = piece.getPieceTypeName();
-                if (piece.getColor() == Team.BLACK) {
-                    name = name.toUpperCase();
-                }
-                System.out.print(name);
+            if (pieces.containsKey(i)) {
+                System.out.print(pieces.get(i));
                 continue;
             }
             System.out.print(".");
         }
-        System.out.println("\n");
     }
 }
