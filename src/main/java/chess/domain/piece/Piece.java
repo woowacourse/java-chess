@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Position;
 import chess.practiceMove.Direction;
 
 public abstract class Piece {
@@ -20,11 +21,17 @@ public abstract class Piece {
         return name.toUpperCase();
     }
 
-    public boolean isSameColor(Piece piece) {
-        return this.color == piece.color;
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
-    abstract public boolean isMovableAtOnce(int abs, int abs1);
+    public Direction findDirectionToMove(Position start, Position end) {
+        return Direction.findDirectionByGap(start, end, this);
+    }
 
-    abstract public boolean isMovableDirection(Direction direction);
+    abstract public boolean isMovable(Position start, Position end, Color colorOfDestination);
+
+    public Color getColor() {
+        return color;
+    }
 }

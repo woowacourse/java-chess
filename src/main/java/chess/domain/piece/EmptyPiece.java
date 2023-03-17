@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.practiceMove.Direction;
+import chess.domain.Position;
 
 public final class EmptyPiece extends Piece {
 
@@ -12,12 +12,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovableAtOnce(int abs, int abs1) {
-        return false;
-    }
-
-    @Override
-    public boolean isMovableDirection(Direction direction) {
+    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
         return false;
     }
 }

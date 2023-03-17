@@ -16,7 +16,6 @@ public enum Column {
     H(8, "h");
 
     private static final String NO_COLUMN_ERROR_GUIDE_MESSAGE = "존재하지 않는 Column입니다";
-    private static final int CHESS_SIZE = 8;
     private final int index;
     private final String value;
 
@@ -38,9 +37,6 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException(NO_COLUMN_ERROR_GUIDE_MESSAGE));
     }
 
-    public static int findSize() {
-        return CHESS_SIZE;
-    }
 
     public static Column findColumnByIndex(int index) {
         return Arrays.stream(values())
