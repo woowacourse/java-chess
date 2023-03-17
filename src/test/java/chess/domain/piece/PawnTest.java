@@ -3,9 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Camp;
-import chess.domain.Path;
+import chess.domain.CheckablePaths;
 import chess.domain.Position;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,9 +20,9 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(Camp.WHITE);
 
-            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 2));
+            CheckablePaths checkablePaths = pawn.findCheckablePaths(Position.of(2, 2));
 
-            assertThat(movePaths.size()).isEqualTo(4);
+            assertThat(checkablePaths.positionsSize()).isEqualTo(5);
         }
 
         @Test
@@ -31,9 +30,9 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(Camp.WHITE);
 
-            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 3));
+            CheckablePaths checkablePaths = pawn.findCheckablePaths(Position.of(2, 3));
 
-            assertThat(movePaths.size()).isEqualTo(3);
+            assertThat(checkablePaths.positionsSize()).isEqualTo(3);
         }
     }
 
@@ -46,9 +45,9 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(Camp.BLACK);
 
-            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 7));
+            CheckablePaths checkablePaths = pawn.findCheckablePaths(Position.of(2, 7));
 
-            assertThat(movePaths.size()).isEqualTo(4);
+            assertThat(checkablePaths.positionsSize()).isEqualTo(5);
         }
 
         @Test
@@ -56,9 +55,9 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(Camp.BLACK);
 
-            List<Path> movePaths = pawn.findAllPaths(Position.of(2, 3));
+            CheckablePaths checkablePaths = pawn.findCheckablePaths(Position.of(2, 3));
 
-            assertThat(movePaths.size()).isEqualTo(3);
+            assertThat(checkablePaths.positionsSize()).isEqualTo(3);
         }
     }
 

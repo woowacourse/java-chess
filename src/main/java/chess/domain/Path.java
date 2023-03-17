@@ -53,4 +53,8 @@ public class Path {
         return new ArrayList<>(positions);
     }
 
+    public int size() {
+        return positions.size();
+    }
+
 }

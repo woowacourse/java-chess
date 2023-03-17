@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.CheckablePaths;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
@@ -27,7 +28,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Path> findAllPaths(final Position current) {
+    public CheckablePaths findCheckablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : directions) {
             paths.add(Path.ofSinglePath(current, direction));
@@ -36,7 +37,7 @@ public class Pawn extends Piece {
         if (isStartRank(current)) {
             paths.add(Path.ofPawnStartPath(current, getForwardDirectionByColor()));
         }
-        return paths;
+        return new CheckablePaths(paths);
     }
 
     @Override

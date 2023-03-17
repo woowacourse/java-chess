@@ -3,9 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Camp;
-import chess.domain.Path;
+import chess.domain.CheckablePaths;
 import chess.domain.Position;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +15,8 @@ public class QueenTest {
     void 이동_범위_확인() {
         Queen queen = new Queen(Camp.WHITE);
 
-        List<Path> movablePaths = queen.findAllPaths(Position.of(2, 2));
+        CheckablePaths checkablePaths = queen.findCheckablePaths(Position.of(2, 2));
 
-        int totalPositionCount = 0;
-
-        for (Path path : movablePaths) {
-            totalPositionCount += path.positions().size();
-        }
-
-        assertThat(totalPositionCount).isEqualTo(23);
+        assertThat(checkablePaths.positionsSize()).isEqualTo(23);
     }
 }

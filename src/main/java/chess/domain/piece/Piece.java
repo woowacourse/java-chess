@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
-import chess.domain.Path;
+import chess.domain.CheckablePaths;
 import chess.domain.Position;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,7 +15,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract List<Path> findAllPaths(Position position);
+    public abstract CheckablePaths findCheckablePaths(Position current);
 
     public abstract boolean isPawn();
 
