@@ -23,7 +23,6 @@ public class ChessController {
     public void run() {
         outputView.printStart();
         if (isReadStartCommand()) {
-            outputView.printBoard(chessGame.getBoard());
             play();
         }
     }
@@ -40,8 +39,8 @@ public class ChessController {
     private void play() {
         boolean isPlaying = true;
         while (isPlaying) {
-            isPlaying = move();
             outputView.printBoard(chessGame.getBoard());
+            isPlaying = move();
         }
     }
 
@@ -65,7 +64,7 @@ public class ChessController {
     private List<String> readInput() {
         try {
             List<String> input = inputView.readGameCommand();
-            GameCommand.of(input.get(0));
+            validateCommand(input);
             PositionMapper.from(input.get(1));
             PositionMapper.from(input.get(2));
             return input;
@@ -73,5 +72,9 @@ public class ChessController {
             outputView.printError(e.getMessage());
             return readInput();
         }
+    }
+
+    private void validateCommand(List<String> input) {
+        GameCommand.validateGameCommand(input);
     }
 }
