@@ -35,11 +35,11 @@ public final class Pawn extends Piece {
         final int fileDistance = from.calculateFileDistance(to);
         final int rankDistance = from.calculateRankDistance(to);
 
-        final boolean isMoveFrontFirst = checkMoveFrontFirst(fileDistance, rankDistance);
-        final boolean isMoveFrontOneStep = checkMoveFrontOneStep(fileDistance, rankDistance);
         final boolean isMoveDiagonal = checkMoveDiagonal(fileDistance, rankDistance);
+        final boolean isMoveOneStep = checkMoveOneStep(fileDistance, rankDistance);
+        final boolean isMoveFirst = checkMoveFirst(fileDistance, rankDistance);
 
-        if (!isMoveFrontFirst && !isMoveFrontOneStep && !isMoveDiagonal) {
+        if (!isMoveDiagonal && !isMoveOneStep && !isMoveFirst) {
             throwCanNotMoveException();
         }
     }
@@ -48,16 +48,16 @@ public final class Pawn extends Piece {
         return Math.abs(fileDistance) == 1 && rankDistance == this.team.getPawnDirection();
     }
 
-    private boolean checkMoveFrontOneStep(final int fileDistance, final int rankDistance) {
+    private boolean checkMoveOneStep(final int fileDistance, final int rankDistance) {
         return fileDistance == 0 && rankDistance == this.team.getPawnDirection();
     }
 
-    private boolean checkMoveFrontFirst(final int fileDistance, final int rankDistance) {
+    private boolean checkMoveFirst(final int fileDistance, final int rankDistance) {
         return fileDistance == 0 && rankDistance == 2 * this.team.getPawnDirection() && !isMoved;
     }
 
     @Override
-    public void canMove(final List<Square> routeSquares) {
+    public void validateRoute(final List<Square> routeSquares) {
         if (isEnemyOnDiagonal) {
             validateMoveToDiagonal(routeSquares.get(0));
             isMoved = true;

@@ -17,6 +17,7 @@ public final class Rook extends Piece {
         if (from.isSameFile(to)) {
             return verticalRoute(from, to);
         }
+
         return horizontalRoute(from, to);
     }
 

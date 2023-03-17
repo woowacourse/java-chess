@@ -17,6 +17,10 @@ public final class Square {
         pieceState = piece;
     }
 
+    public static Square emptySquare() {
+        return EMPTY_SQUARE;
+    }
+
     public boolean isEmpty() {
         return pieceState.isEmpty();
     }
@@ -29,15 +33,15 @@ public final class Square {
         return pieceState.findRoute(from, to);
     }
 
-    public void canMove(final List<Square> routeSquares) {
-        pieceState.canMove(routeSquares);
-    }
-
-    public PieceState getPieceState() {
-        return pieceState;
+    public void validateRoute(final List<Square> routeSquares) {
+        pieceState.validateRoute(routeSquares);
     }
 
     public void switchPieceState(final Square other) {
         this.pieceState = other.pieceState;
+    }
+
+    public PieceState getPieceState() {
+        return pieceState;
     }
 }

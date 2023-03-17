@@ -11,9 +11,9 @@ public interface PieceState {
 
     boolean isSameTeam(final Piece piece);
 
+    Team getTeam();
+
     List<Coordinate> findRoute(final Coordinate from, final Coordinate to);
 
-    void canMove(final List<Square> routeSquares);
-
-    Team getTeam();
+    void validateRoute(final List<Square> routeSquares);
 }

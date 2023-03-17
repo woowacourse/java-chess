@@ -1,5 +1,8 @@
 package chess.domain.chessboard;
 
+import static chess.domain.chessboard.FileIndex.*;
+import static chess.domain.chessboard.RankIndex.*;
+
 import chess.domain.chessboard.state.Team;
 import chess.domain.chessboard.state.piece.Bishop;
 import chess.domain.chessboard.state.piece.King;
@@ -21,21 +24,19 @@ public final class ChessBoard {
     }
 
     private void initSquares() {
-
-        createSideRankByTeam('1', Team.WHITE);
-        createPawnRankByTeam('2', Team.WHITE);
+        createSideRankByTeam(FIRST.index, Team.WHITE);
+        createPawnRankByTeam(SECOND.index, Team.WHITE);
         createBlankRanks();
-        createPawnRankByTeam('7', Team.BLACK);
-        createSideRankByTeam('8', Team.BLACK);
+        createPawnRankByTeam(SEVENTH.index, Team.BLACK);
+        createSideRankByTeam(EIGHTH.index, Team.BLACK);
     }
 
     private void createSideRankByTeam(final char rank, final Team team) {
-        final List<Square> squares = createSideSquaresByTeam(team);
+        final List<Square> sideSquares = createSideSquaresByTeam(team);
 
-        char file = 'a';
-        for (Square square : squares) {
-            this.squares.put(Coordinate.of("" + (file) + rank), square);
-            file++;
+        char file = A.index;
+        for (Square square : sideSquares) {
+            this.squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), square);
         }
     }
 
@@ -51,9 +52,13 @@ public final class ChessBoard {
                 new Square(new Rook(team)));
     }
 
+    private String makeAlphanumeric(final char file, final char rank) {
+        return String.valueOf(file) + rank;
+    }
+
     private void createPawnRankByTeam(final char rank, final Team team) {
-        for (char file = 'a'; file <= 'h'; file++) {
-            squares.put(Coordinate.of("" + file + rank), createPawnSquareByTeam(team));
+        for (char file = A.index; file <= H.index; file++) {
+            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
         }
     }
 
@@ -62,33 +67,40 @@ public final class ChessBoard {
     }
 
     private void createBlankRanks() {
-        for (char rank = '3'; rank <= '6'; rank++) {
+        for (char rank = THIRD.index; rank <= SIXTH.index; rank++) {
             createBlankRank(rank);
         }
     }
 
     private void createBlankRank(final char rank) {
-        for (char file = 'a'; file <= 'h'; file++) {
-            squares.put(Coordinate.of("" + file + rank), new Square());
+        for (char file = A.index; file <= H.index; file++) {
+            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), Square.emptySquare());
         }
     }
 
     public void move(final Coordinate from, final Coordinate to) {
         final Square departure = squares.get(from);
         final Square arrival = squares.get(to);
+        validateCanMove(from, to, departure);
+
+        arrival.switchPieceState(departure);
+        departure.switchPieceState(Square.emptySquare());
+    }
+
+    private void validateCanMove(final Coordinate from, final Coordinate to, final Square departure) {
         final List<Coordinate> route = departure.findRoute(from, to);
+
         final List<Square> routeSquares = route.stream()
                 .map(squares::get)
                 .collect(Collectors.toUnmodifiableList());
 
-        departure.canMove(routeSquares);
-        arrival.switchPieceState(departure);
-        departure.switchPieceState(new Square());
+        departure.validateRoute(routeSquares);
     }
 
     public List<Square> getSquares() {
         return this.squares.keySet()
                 .stream()
-                .map(squares::get).collect(Collectors.toUnmodifiableList());
+                .map(squares::get)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

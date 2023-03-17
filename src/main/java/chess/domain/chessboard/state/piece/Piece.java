@@ -72,7 +72,7 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public void canMove(final List<Square> routeSquares) {
+    public void validateRoute(final List<Square> routeSquares) {
         final int lastIndex = routeSquares.size() - 1;
         final Square lastSquare = routeSquares.get(lastIndex);
         if (lastSquare.isSameTeam(this)) {

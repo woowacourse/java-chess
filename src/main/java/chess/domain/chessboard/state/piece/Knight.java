@@ -15,7 +15,6 @@ public final class Knight extends Piece {
     public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
         validatePossibleDestination(from, to);
         return List.of(to);
-
     }
 
     private void validatePossibleDestination(final Coordinate from, final Coordinate to) {
@@ -28,9 +27,10 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public void canMove(final List<Square> routeSquares) {
+    public void validateRoute(final List<Square> routeSquares) {
         final int lastIndex = routeSquares.size() - 1;
         final Square lastSquare = routeSquares.get(lastIndex);
+
         if (lastSquare.isSameTeam(this)) {
             throwCanNotMoveException();
         }

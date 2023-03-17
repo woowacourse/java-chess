@@ -15,13 +15,8 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
-    }
-
-    @Override
-    public void canMove(final List<Square> routeSquares) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+    public boolean isSameTeam(final Piece piece) {
+        return false;
     }
 
     @Override
@@ -30,7 +25,12 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public boolean isSameTeam(final Piece piece) {
-        return false;
+    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
+        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+    }
+
+    @Override
+    public void validateRoute(final List<Square> routeSquares) {
+        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }
 }
