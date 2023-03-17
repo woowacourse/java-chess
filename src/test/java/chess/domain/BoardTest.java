@@ -68,4 +68,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스말이 이동할 수 없는 위치입니다.");
     }
+
+    @Test
+    @DisplayName("이동 경로에 체스말이 존재하면 예외가 발생한다")
+    void pieceExistInPath() {
+        final Position source = Position.from("a1");
+        final Position target = Position.from("a3");
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 경로에 체스말이 존재합니다.");
+    }
 }

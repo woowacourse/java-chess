@@ -6,6 +6,8 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.initial.BoardFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -33,6 +35,7 @@ public class Board {
         Piece piece = board.get(source);
 
         validateMovable(piece, unit);
+        validatePath(source, target, unit);
     }
 
     private void validateDifferentPosition(final Position source, final Position target) {
@@ -63,6 +66,41 @@ public class Board {
     private void validateMovable(final Piece piece, final Direction unit) {
         if (!piece.movable(unit)) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private void validatePath(final Position source, final Position target, final Direction unit) {
+        List<Position> path = calculatePath(source, target, unit);
+        validatePathIsEmpty(path);
+    }
+
+    private List<Position> calculatePath(Position source, Position target, Direction unit) {
+        char file = source.file();
+        int rank = source.rank();
+        return searchPath(target, unit, file, rank);
+    }
+
+    private static List<Position> searchPath(final Position target, final Direction unit, char file, int rank) {
+        List<Position> path = new ArrayList<>();
+
+        while (file != target.file() || rank != target.rank()) {
+            file += unit.getDx();
+            rank += unit.getDy();
+            path.add(Position.of(file, rank));
+        }
+
+        return path;
+    }
+
+    private void validatePathIsEmpty(final List<Position> path) {
+        for (final Position position : path) {
+            validatePositionIsEmpty(position);
+        }
+    }
+
+    private void validatePositionIsEmpty(final Position position) {
+        if (!isEmptyPosition(position)) {
+            throw new IllegalArgumentException("이동할 경로에 체스말이 존재합니다.");
         }
     }
 }
