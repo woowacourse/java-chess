@@ -8,5 +8,5 @@ import java.util.Map;
 @FunctionalInterface
 public interface BoardGenerator {
 
-    public Map<Position, Piece> generate();
+    Map<Position, Piece> generate();
 }

@@ -67,8 +67,8 @@ public final class ChessBoard {
             path.stream()
                     .filter(chessBoard::containsKey)
                     .forEach(position -> {
-                throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
-            });
+                        throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+                    });
         }
     }
 
@@ -82,7 +82,6 @@ public final class ChessBoard {
     }
 
     private boolean isMovableEndPosition(Position endPosition, Piece startPiece) {
-        // 목표지점에 색이 같은 말이 있으면 false 반환 + 말이 없으면 true
         if (chessBoard.containsKey(endPosition)) {
             return !isSameColorPiece(startPiece, chessBoard.get(endPosition));
         }

@@ -1,9 +1,8 @@
 package domain.chessGame;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.Bishop;
 import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -12,7 +11,6 @@ import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.Map;
 

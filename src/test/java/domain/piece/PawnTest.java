@@ -1,7 +1,6 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +47,7 @@ class PawnTest {
     void isMovableInitialRowBlackPawnTest(List<Position> path) {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
-        Position start = Position.of(7,5);
+        Position start = Position.of(7, 5);
 
         // when
         boolean result = pawn.isMovablePath(start, path);
@@ -63,7 +62,7 @@ class PawnTest {
     void isMovableInitialRowWhitePawnTest(List<Position> path) {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
-        Position start = Position.of(2,5);
+        Position start = Position.of(2, 5);
 
         // when
         boolean result = pawn.isMovablePath(start, path);
@@ -74,19 +73,19 @@ class PawnTest {
 
     static Stream<Arguments> isMovableInitialRowBlackPawnTestCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(6,5))),
-                Arguments.of(List.of(Position.of(6,4))),
-                Arguments.of(List.of(Position.of(6,6))),
-                Arguments.of(List.of(Position.of(6, 5), Position.of(5,5)))
+                Arguments.of(List.of(Position.of(6, 5))),
+                Arguments.of(List.of(Position.of(6, 4))),
+                Arguments.of(List.of(Position.of(6, 6))),
+                Arguments.of(List.of(Position.of(6, 5), Position.of(5, 5)))
         );
     }
 
     static Stream<Arguments> isMovableInitialRowWhitePawnTestCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(3,5))),
-                Arguments.of(List.of(Position.of(3,4))),
-                Arguments.of(List.of(Position.of(3,6))),
-                Arguments.of(List.of(Position.of(3, 5), Position.of(4,5)))
+                Arguments.of(List.of(Position.of(3, 5))),
+                Arguments.of(List.of(Position.of(3, 4))),
+                Arguments.of(List.of(Position.of(3, 6))),
+                Arguments.of(List.of(Position.of(3, 5), Position.of(4, 5)))
         );
     }
 }

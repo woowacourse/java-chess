@@ -29,7 +29,7 @@ public final class OutputView {
     }
 
     private static void lineBreakByRow(int lineBreak) {
-        if(lineBreak % 8 == 0)
+        if (lineBreak % 8 == 0)
             System.out.println();
     }
 

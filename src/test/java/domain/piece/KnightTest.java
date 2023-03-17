@@ -1,7 +1,6 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +52,7 @@ class KnightTest {
         Knight knight = new Knight(Color.WHITE);
 
         // when
-        boolean result = knight.isMovablePath(Position.of(4,4), path);
+        boolean result = knight.isMovablePath(Position.of(4, 4), path);
 
         // then
         assertThat(result).isTrue();
@@ -64,10 +63,10 @@ class KnightTest {
     void isMovablePathTest_Fail() {
         // given
         Knight knight = new Knight(Color.WHITE);
-        List<Position> path = List.of(Position.of(5,5));
+        List<Position> path = List.of(Position.of(5, 5));
 
         // when
-        boolean result = knight.isMovablePath(Position.of(4,4), path);
+        boolean result = knight.isMovablePath(Position.of(4, 4), path);
 
         // then
         assertThat(result).isFalse();
@@ -75,14 +74,14 @@ class KnightTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(6,3))),
-                Arguments.of(List.of(Position.of(6,5))),
-                Arguments.of(List.of(Position.of(5,2))),
-                Arguments.of(List.of(Position.of(5,6))),
-                Arguments.of(List.of(Position.of(3,2))),
-                Arguments.of(List.of(Position.of(3,6))),
-                Arguments.of(List.of(Position.of(2,3))),
-                Arguments.of(List.of(Position.of(2,5)))
+                Arguments.of(List.of(Position.of(6, 3))),
+                Arguments.of(List.of(Position.of(6, 5))),
+                Arguments.of(List.of(Position.of(5, 2))),
+                Arguments.of(List.of(Position.of(5, 6))),
+                Arguments.of(List.of(Position.of(3, 2))),
+                Arguments.of(List.of(Position.of(3, 6))),
+                Arguments.of(List.of(Position.of(2, 3))),
+                Arguments.of(List.of(Position.of(2, 5)))
         );
     }
 }

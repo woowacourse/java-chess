@@ -1,7 +1,6 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +49,7 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
 
         // when
-        boolean result = rook.isMovablePath(Position.of(3,3), path);
+        boolean result = rook.isMovablePath(Position.of(3, 3), path);
 
         // then
         assertThat(result).isTrue();
@@ -64,7 +63,7 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
 
         // when
-        boolean result = rook.isMovablePath(Position.of(3,3), path);
+        boolean result = rook.isMovablePath(Position.of(3, 3), path);
 
         // then
         assertThat(result).isFalse();
@@ -72,19 +71,19 @@ class RookTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(4,3), Position.of(5,3))),
-                Arguments.of(List.of(Position.of(3,4), Position.of(3,5))),
-                Arguments.of(List.of(Position.of(2,3), Position.of(1,3))),
-                Arguments.of(List.of(Position.of(3,2), Position.of(3,1)))
+                Arguments.of(List.of(Position.of(4, 3), Position.of(5, 3))),
+                Arguments.of(List.of(Position.of(3, 4), Position.of(3, 5))),
+                Arguments.of(List.of(Position.of(2, 3), Position.of(1, 3))),
+                Arguments.of(List.of(Position.of(3, 2), Position.of(3, 1)))
         );
     }
 
     static Stream<Arguments> isMovablePathTest_FailCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(4,4), Position.of(5,5))),
-                Arguments.of(List.of(Position.of(2,4), Position.of(1,5))),
-                Arguments.of(List.of(Position.of(2,2), Position.of(1,1))),
-                Arguments.of(List.of(Position.of(4,2), Position.of(5,1)))
+                Arguments.of(List.of(Position.of(4, 4), Position.of(5, 5))),
+                Arguments.of(List.of(Position.of(2, 4), Position.of(1, 5))),
+                Arguments.of(List.of(Position.of(2, 2), Position.of(1, 1))),
+                Arguments.of(List.of(Position.of(4, 2), Position.of(5, 1)))
         );
     }
 }

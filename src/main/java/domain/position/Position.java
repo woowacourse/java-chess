@@ -2,7 +2,6 @@ package domain.position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +30,6 @@ public final class Position {
     }
 
     public static Position of(int row, int column) {
-        // TODO: 존재하지 않는 좌표 입력 시 예외처리
         return cache.get(Objects.hash(row, column));
     }
 

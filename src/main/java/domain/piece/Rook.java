@@ -9,13 +9,12 @@ public final class Rook extends Piece {
 
     public static final List<Direction> ROOK_MOVABLE_DIRECTIONS = List.of(Direction.CROSS);
 
-
     public Rook(Color color) {
         super(PieceName.ROOK, color);
     }
 
     @Override
-    public boolean isMovablePath (Position start, List<Position> path) {
+    public boolean isMovablePath(Position start, List<Position> path) {
         return isMovableDirection(start, path.get(0)) &&
                 isMovableDistance(path.size());
     }

@@ -22,7 +22,6 @@ public enum ColumnToNumber {
     }
 
     public static int of(char alphabet) {
-        System.out.println(alphabet);
         return Arrays.stream(values())
                 .filter(columnToNumber -> columnToNumber.getColumn() == alphabet)
                 .findFirst()

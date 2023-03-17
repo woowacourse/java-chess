@@ -1,6 +1,6 @@
 package domain.position;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -177,7 +177,7 @@ class PositionTest {
     @DisplayName("black pawn의 초기 위치이면 true를 반환한다.")
     void isBlackPawnInitialRowTest_True() {
         // given
-        Position start = Position.of(7,5);
+        Position start = Position.of(7, 5);
 
         // when
         boolean result = start.isBlackPawnInitialRow();
@@ -190,7 +190,7 @@ class PositionTest {
     @DisplayName("black pawn의 초기 위치가 아니면 false를 반환한다.")
     void isBlackPawnInitialRowTest_False() {
         // given
-        Position start = Position.of(3,5);
+        Position start = Position.of(3, 5);
 
         // when
         boolean result = start.isBlackPawnInitialRow();
@@ -203,7 +203,7 @@ class PositionTest {
     @DisplayName("white pawn의 초기 위치이면 true를 반환한다.")
     void isWhitePawnInitialRowTest_True() {
         // given
-        Position start = Position.of(2,5);
+        Position start = Position.of(2, 5);
 
         // when
         boolean result = start.isWhitePawnInitialRow();
@@ -216,7 +216,7 @@ class PositionTest {
     @DisplayName("white pawn의 초기 위치가 아니면 false를 반환한다.")
     void isWhitePawnInitialRowTest_False() {
         // given
-        Position start = Position.of(3,5);
+        Position start = Position.of(3, 5);
 
         // when
         boolean result = start.isWhitePawnInitialRow();
@@ -229,8 +229,8 @@ class PositionTest {
     @DisplayName("다른 Position과의 행 좌표값 차이를 구할 수 있다.")
     void calculateRowGapTest() {
         // given
-        Position start = Position.of(2,2);
-        Position end = Position.of(5,7);
+        Position start = Position.of(2, 2);
+        Position end = Position.of(5, 7);
 
         // when
         int rowGap = start.calculateRowGap(end);
@@ -243,8 +243,8 @@ class PositionTest {
     @DisplayName("다른 Position과의 열 좌표값 차이를 구할 수 있다.")
     void calculateColumnGapTest() {
         // given
-        Position start = Position.of(2,2);
-        Position end = Position.of(5,7);
+        Position start = Position.of(2, 2);
+        Position end = Position.of(5, 7);
 
         // when
         int columnGap = start.calculateColumnGap(end);
@@ -255,14 +255,14 @@ class PositionTest {
 
     static Stream<Arguments> getPathToTestCase() {
         return Stream.of(
-                Arguments.arguments(Position.of(3,3), Position.of(5, 3), List.of(Position.of(4, 3), Position.of(5, 3))),
-                Arguments.arguments(Position.of(3,3), Position.of(5, 5), List.of(Position.of(4, 4), Position.of(5, 5))),
-                Arguments.arguments(Position.of(3,3), Position.of(3, 5), List.of(Position.of(3, 4), Position.of(3, 5))),
-                Arguments.arguments(Position.of(3,3), Position.of(1, 5), List.of(Position.of(2, 4), Position.of(1, 5))),
-                Arguments.arguments(Position.of(3,3), Position.of(1, 3), List.of(Position.of(2, 3), Position.of(1, 3))),
-                Arguments.arguments(Position.of(3,3), Position.of(1, 1), List.of(Position.of(2, 2), Position.of(1, 1))),
-                Arguments.arguments(Position.of(3,3), Position.of(3, 1), List.of(Position.of(3, 2), Position.of(3, 1))),
-                Arguments.arguments(Position.of(3,3), Position.of(5, 1), List.of(Position.of(4, 2), Position.of(5, 1)))
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 3), List.of(Position.of(4, 3), Position.of(5, 3))),
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 5), List.of(Position.of(4, 4), Position.of(5, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(3, 5), List.of(Position.of(3, 4), Position.of(3, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 5), List.of(Position.of(2, 4), Position.of(1, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 3), List.of(Position.of(2, 3), Position.of(1, 3))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 1), List.of(Position.of(2, 2), Position.of(1, 1))),
+                Arguments.arguments(Position.of(3, 3), Position.of(3, 1), List.of(Position.of(3, 2), Position.of(3, 1))),
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 1), List.of(Position.of(4, 2), Position.of(5, 1)))
         );
     }
 }
