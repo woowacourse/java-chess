@@ -6,6 +6,7 @@ public final class Position {
 
     private static final int FILE_OFFSET = 0;
     private static final int RANK_OFFSET = 1;
+    private static final int FILE_STAY = 0;
 
     private final File file;
     private final Rank rank;
@@ -20,12 +21,15 @@ public final class Position {
             return false;
         }
 
-        final int otherFile = other.getFile();
-        final int otherRank = other.getRank();
-        final int thisFile = this.getFile();
-        final int thisRank = this.getRank();
+        return getFileDifference(other) == getRankDifference(other);
+    }
 
-        return Math.abs(thisFile - otherFile) == Math.abs(thisRank - otherRank);
+    private int getFileDifference(final Position other) {
+        return Math.abs(this.getFile() - other.getFile());
+    }
+
+    private int getRankDifference(final Position other) {
+        return Math.abs(this.getRank() - other.getRank());
     }
 
     public boolean isStraight(Position other) {
@@ -33,29 +37,35 @@ public final class Position {
             return false;
         }
 
-        final int otherFile = other.getFile();
-        final int otherRank = other.getRank();
-        final int thisFile = this.getFile();
-        final int thisRank = this.getRank();
-
-        return otherRank == thisRank || otherFile == thisFile;
+        return other.getRank() == this.getRank() || other.getFile() == this.getFile();
     }
 
     public int getDistance(Position other) {
-        final int otherFile = other.getFile();
-        final int otherRank = other.getRank();
-        final int thisFile = this.getFile();
-        final int thisRank = this.getRank();
-
-        return Math.abs(thisFile - otherFile) + Math.abs(thisRank - otherRank);
+        return getFileDifference(other) + getRankDifference(other);
     }
 
-    public Position moveDown(int distance) {
-        return move(-distance, 0);
+    public Position moveUpRight(int distance) {
+        return move(distance, distance);
+    }
+
+    public Position moveUpLeft(int distance) {
+        return move(distance, -distance);
+    }
+
+    public Position moveDownRight(int distance) {
+        return move(-distance, distance);
+    }
+
+    public Position moveDownLeft(int distance) {
+        return move(-distance, -distance);
     }
 
     public Position moveUp(int distance) {
-        return move(distance, 0);
+        return move(distance, FILE_STAY);
+    }
+
+    public Position moveDown(int distance) {
+        return move(-distance, FILE_STAY);
     }
 
     public Position move(int rankDifference, int fileDifference) {

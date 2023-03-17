@@ -16,7 +16,7 @@ class PositionsTest {
     @Test
     void createTest() {
         //given
-        final String position = "A1";
+        final String position = "a1";
 
         //when
 
@@ -40,7 +40,7 @@ class PositionsTest {
     @Test
     void createPositions() {
         //given
-        final List<String> positions = List.of("A3", "H2", "G5");
+        final List<String> positions = List.of("A3", "h2", "G5");
         final List<Position> expected = positions.stream()
                 .map(Positions::from)
                 .collect(Collectors.toList());

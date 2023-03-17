@@ -5,8 +5,8 @@ import domain.position.Position;
 public final class King extends Piece {
 
     private static final String NAME = "K";
-    private static final int DIAGONAL_DISTANCE = 2;
-    private static final int STRAIGHT_DISTANCE = 1;
+    private static final int DIAGONAL_ONE_STEP = 2;
+    private static final int ONE_STEP = 1;
 
     public King(Team team) {
         super(NAME, team);
@@ -14,10 +14,10 @@ public final class King extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        if (source.isDiagonal(destination) && source.getDistance(destination) == DIAGONAL_DISTANCE) {
+        if (source.isDiagonal(destination) && source.getDistance(destination) == DIAGONAL_ONE_STEP) {
             return true;
         }
 
-        return source.isStraight(destination) && source.getDistance(destination) == STRAIGHT_DISTANCE;
+        return source.isStraight(destination) && source.getDistance(destination) == ONE_STEP;
     }
 }

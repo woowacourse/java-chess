@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.board.InitialChessAlignment;
 import domain.position.Position;
 
 public final class Bishop extends Piece {
