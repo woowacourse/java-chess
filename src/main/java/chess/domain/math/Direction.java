@@ -77,8 +77,8 @@ public enum Direction {
     }
 
     private static boolean isKnight(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
+        int rowDifferent = Math.abs(current.getRow() - target.getRow());
+        int colDifferent = Math.abs(current.getCol() - target.getCol());
         return (rowDifferent == 2 && colDifferent == 1) || (rowDifferent == 1 && colDifferent == 2);
     }
 }
