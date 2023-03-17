@@ -15,6 +15,20 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Pieces;
+import chess.domain.Player;
+import chess.domain.Players;
+import chess.domain.Position;
+import chess.domain.dto.PositionDto;
+import chess.domain.dto.req.MoveRequest;
+import chess.domain.strategy.PieceStrategy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class PawnStrategyTest {
 
     PieceStrategy pawnStrategy;
@@ -48,11 +62,8 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(3, 'a'))
         );
 
-        // when
-        Position actualPosition = pawnStrategy.move(request);
-
-        // then
-        assertThat(actualPosition).isEqualTo(Position.from(3, 'a'));
+        // when, then
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -70,7 +81,7 @@ class PawnStrategyTest {
         );
 
         // when
-        pawnStrategy.move(request);
+        pawnStrategy.validateDirection(request);
 
         request = MoveRequest.from(
                 players.getAllPosition(),
@@ -78,8 +89,8 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(3, 'a')),
                 new PositionDto(Position.from(5, 'a')));
 
-        // when then
-        assertThatThrownBy(() -> pawnStrategy.move(request))
+        // when, then
+        assertThatThrownBy(() -> pawnStrategy.validateDirection(request))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -96,11 +107,8 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(1, 'a')),
                 new PositionDto(Position.from(3, 'a')));
 
-        // when
-        Position actualPosition = pawnStrategy.move(request);
-
-        // then
-        assertThat(actualPosition).isEqualTo(Position.from(3, 'a'));
+        // when, then
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -118,7 +126,7 @@ class PawnStrategyTest {
         );
 
         // when
-        pawnStrategy.move(request);
+        pawnStrategy.validateDirection(request);
 
         request = MoveRequest.from(
                 players.getAllPosition(),
@@ -127,7 +135,7 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(2, 'a')));
 
         // then
-        assertThatThrownBy(() -> pawnStrategy.move(request))
+        assertThatThrownBy(() -> pawnStrategy.validateDirection(request))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -146,10 +154,7 @@ class PawnStrategyTest {
         );
 
         // when
-        Position actualPosition = pawnStrategy.move(request);
-
-        // then
-        assertThat(actualPosition).isEqualTo(Position.from(4, 'a'));
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -166,8 +171,8 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(3, 'a'))
         );
 
-        // when then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> pawnStrategy.move(request));
+        // when, then
+        assertThrows(IllegalArgumentException.class, () -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -183,11 +188,8 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(7, 'a')),
                 new PositionDto(Position.from(6, 'a')));
 
-        // when
-        Position actualPosition = pawnStrategy.move(request);
-
-        // then
-        assertThat(actualPosition).isEqualTo(Position.from(6, 'a'));
+        // when, then
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -205,7 +207,7 @@ class PawnStrategyTest {
         );
 
         // when then
-        assertThatThrownBy(() -> pawnStrategy.move(request))
+        assertThatThrownBy(() -> pawnStrategy.validateDirection(request))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -239,9 +241,9 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(2, 'b')) // targetPosition
         );
 
-        pawnStrategy.move(blackMoveFront1);
-        pawnStrategy.move(blackMoveFront2);
-        pawnStrategy.move(blackMoveFront3);
+        pawnStrategy.validateDirection(blackMoveFront1);
+        pawnStrategy.validateDirection(blackMoveFront2);
+        pawnStrategy.validateDirection(blackMoveFront3);
 
         // when, then
         request = MoveRequest.from(
@@ -251,8 +253,7 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(3, 'b')) // targetPosition
         );
 
-        assertThat(pawnStrategy.move(request))
-                .isEqualTo(Position.from(3, 'b'));
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 
     @Test
@@ -285,9 +286,9 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(5, 'a')) // targetPosition
         );
 
-        pawnStrategy.move(whiteMoveFront1);
-        pawnStrategy.move(whiteMoveFront2);
-        pawnStrategy.move(whiteMoveFront3);
+        pawnStrategy.validateDirection(whiteMoveFront1);
+        pawnStrategy.validateDirection(whiteMoveFront2);
+        pawnStrategy.validateDirection(whiteMoveFront3);
 
         // when, then
         request = MoveRequest.from(
@@ -296,8 +297,6 @@ class PawnStrategyTest {
                 new PositionDto(Position.from(6, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(5, 'a')) // targetPosition
         );
-
-        assertThat(pawnStrategy.move(request))
-                .isEqualTo(Position.from(5, 'a'));
+        assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
 }

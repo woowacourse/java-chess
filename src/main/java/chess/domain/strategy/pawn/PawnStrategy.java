@@ -24,7 +24,7 @@ public class PawnStrategy implements PieceStrategy {
         throw new IllegalArgumentException("이동할 수 있는 위치가 아닙니다.");
     }
 
-    private Position canMoveFront(List<Position> positions, String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean canMoveFront(List<Position> positions, String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (isNotAlreadyExistFront(positions, targetPosition) && isSameFile(movablePiecePosition, targetPosition)) {
             if (isWhitePiece(movablePieceColor)) {
                 return getWhitePosition(movablePiecePosition, targetPosition);
@@ -60,7 +60,7 @@ public class PawnStrategy implements PieceStrategy {
             }
             throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
         }
-        return Position.from(targetPosition.getRank(), targetPosition.getFile());
+        return true;
     }
 
     private static void validateWhiteMoveBackWard(PositionDto movablePiecePosition, PositionDto targetPosition) {
@@ -69,7 +69,7 @@ public class PawnStrategy implements PieceStrategy {
         }
     }
 
-    private Position getBlackPosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean getBlackPosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
         validateBlackMoveBackWard(movablePiecePosition, targetPosition);
         if (targetPosition.getRank() - movablePiecePosition.getRank() == -2) {
             if (isBlackFirstStep(movablePiecePosition.getRank())) {
@@ -84,22 +84,6 @@ public class PawnStrategy implements PieceStrategy {
         if (targetPosition.getRank() - movablePiecePosition.getRank() > 0) {
             throw new IllegalArgumentException("폰은 뒤로 이동할 수 없습니다.");
         }
-    }
-
-    private Position moveDiagonal(
-            final PositionDto movablePiecePosition,
-            final PositionDto targetPosition
-    ) {
-        int movablePieceRank = movablePiecePosition.getRank();
-        char movablePieceFile = movablePiecePosition.getFile();
-
-        int targetRank = targetPosition.getRank();
-        char targetFile = targetPosition.getFile();
-
-        int rankDistance = targetRank - movablePieceRank;
-        int fileDistance = targetFile - movablePieceFile;
-
-        return Position.from(movablePieceRank + rankDistance, (char)(movablePieceFile + fileDistance));
     }
 
     private boolean isBlackFirstStep(int rank) {
