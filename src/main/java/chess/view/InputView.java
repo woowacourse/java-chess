@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.view.dto.CommandType;
 import chess.view.dto.Request;
 import java.util.List;
 import java.util.Scanner;
@@ -17,10 +18,10 @@ public class InputView {
         String input = scanner.nextLine().strip().toUpperCase();
         String[] inputs = input.split(" ");
         validateHasLength(inputs);
-        Command command = Command.from(inputs[0]);
-        if (List.of(Command.START, Command.END).contains(command)) {
+        CommandType commandType = CommandType.from(inputs[0]);
+        if (List.of(CommandType.START, CommandType.END).contains(commandType)) {
             validateSingleCommand(inputs);
-            return Request.createSingleCommand(command);
+            return Request.createSingleCommand(commandType);
         }
         validateParameters(inputs);
         return Request.createMoveCommand(inputs[1], inputs[2]);

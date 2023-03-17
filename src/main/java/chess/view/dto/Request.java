@@ -1,27 +1,25 @@
 package chess.view.dto;
 
-import chess.view.Command;
-
 public class Request {
 
-    private final Command command;
+    private final CommandType commandType;
     private final MoveRequest moveRequest;
 
-    private Request(Command command, MoveRequest moveRequest) {
-        this.command = command;
+    private Request(CommandType commandType, MoveRequest moveRequest) {
+        this.commandType = commandType;
         this.moveRequest = moveRequest;
     }
 
-    public static Request createSingleCommand(Command command) {
-        return new Request(command, null);
+    public static Request createSingleCommand(CommandType commandType) {
+        return new Request(commandType, null);
     }
 
     public static Request createMoveCommand(String source, String target) {
-        return new Request(Command.MOVE, new MoveRequest(source, target));
+        return new Request(CommandType.MOVE, new MoveRequest(source, target));
     }
 
-    public Command getCommand() {
-        return command;
+    public CommandType getCommandType() {
+        return commandType;
     }
 
     public MoveRequest getMoveRequest() {
