@@ -22,6 +22,13 @@ public class Position {
         return destination.column.getIndex() - column.getIndex();
     }
 
+    public Position moveDirection(Direction direction) {
+        Column newColumn = Column.findColumnByIndex(column.getIndex() + direction.getX());
+        Rank newRank = Rank.findRankByIndex(rank.getIndex() + direction.getY());
+
+        return new Position(newColumn, newRank);
+    }
+
     @Override
     public String toString() {
         return column.name() + rank.name();
