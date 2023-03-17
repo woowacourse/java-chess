@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum Direction {
     N(0, 1),
     E(1, 0),
@@ -8,7 +10,16 @@ public enum Direction {
     NE(1, 1),
     SE(1, -1),
     SW(-1, -1),
-    NW(-1, 1);
+    NW(-1, 1),
+    NNE(1, 2),
+    ENE(2, 1),
+    ESE(2, -1),
+    SSE(1, -2),
+    SSW(-1, -2),
+    WSW(-2, -1),
+    WNW(-2, 1),
+    NNW(-1, 2);
+    
     
     private final int x;
     private final int y;
@@ -18,11 +29,19 @@ public enum Direction {
         this.y = y;
     }
     
+    static Direction findByVector(int x, int y) {
+        return Arrays.stream(values())
+                .filter(value -> value.x == x)
+                .filter(value -> value.y == y)
+                .findAny()
+                .orElseThrow();
+    }
+    
     public int getX() {
-        return x;
+        return this.x;
     }
     
     public int getY() {
-        return y;
+        return this.y;
     }
 }

@@ -47,6 +47,11 @@ public class Position implements Comparable<Position> {
         int fileGap = destinationFIleIndex - sourceFIleIndex;
         int sourceGap = destinationRankIndex - sourceRankIndex;
         
+        try {
+            return Direction.findByVector(fileGap, sourceGap);
+        } catch (Exception ignored) {
+        }
+        
         if (fileGap > 0) {
             if (sourceGap > 0) {
                 return Direction.NE;
@@ -74,11 +79,11 @@ public class Position implements Comparable<Position> {
     }
     
     public File getFile() {
-        return file;
+        return this.file;
     }
     
     public Rank getRank() {
-        return rank;
+        return this.rank;
     }
     
     public Position addDirection(Direction direction) {
@@ -88,9 +93,21 @@ public class Position implements Comparable<Position> {
         return new Position(fileIndex + direction.getX(), rankIndex + direction.getY());
     }
     
+    public int calculateDistance(Position destination) {
+        int sourceFIleIndex = this.getFile().getIndex();
+        int sourceRankIndex = this.getRank().getIndex();
+        int destinationFIleIndex = destination.getFile().getIndex();
+        int destinationRankIndex = destination.getRank().getIndex();
+        
+        int fileGap = destinationFIleIndex - sourceFIleIndex;
+        int rankGap = destinationRankIndex - sourceRankIndex;
+        
+        return fileGap * fileGap + rankGap * rankGap;
+    }
+    
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(this.file, this.rank);
     }
     
     @Override
@@ -98,18 +115,18 @@ public class Position implements Comparable<Position> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
         final Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        return this.file == position.file && this.rank == position.rank;
     }
     
     @Override
     public String toString() {
         return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
+                "file=" + this.file +
+                ", rank=" + this.rank +
                 '}';
     }
     
