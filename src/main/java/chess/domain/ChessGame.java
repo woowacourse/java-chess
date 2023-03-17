@@ -17,21 +17,25 @@ public class ChessGame {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece fromPiece = piecesPosition.choicePiece(fromPosition);
-        validateEmpty(fromPiece);
         Piece toPiece = piecesPosition.choicePiece(toPosition);
+        validateEmpty(fromPiece);
+        validateSameCamp(fromPiece, toPiece);
 
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
 
         List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
         for (Position position : pathPositions) {
-            validateMovable(pieceMove, position);
+            validateMovableBetween(pieceMove, position);
         }
-        validateSameCamp(fromPiece, toPiece);
-//        if (pieceMove.isMovable(toPiece)) {
-//
-//        }
 
+        validateMovable(toPiece, pieceMove);
         piecesPosition.movePieceOn(fromPosition, toPosition);
+    }
+
+    private void validateMovable(Piece toPiece, PieceMove pieceMove) {
+        if (!pieceMove.isMovable(toPiece, true)) {
+            throw new IllegalArgumentException(UNABLE_TO_MOVE);
+        }
     }
 
     private void validateEmpty(Piece fromPiece) {
@@ -40,9 +44,9 @@ public class ChessGame {
         }
     }
 
-    private void validateMovable(PieceMove pieceMove, Position position) {
+    private void validateMovableBetween(PieceMove pieceMove, Position position) {
         Piece betweenPiece = piecesPosition.choicePiece(position);
-        if (!pieceMove.isMovable(betweenPiece)) {
+        if (!pieceMove.isMovable(betweenPiece, false)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
     }
