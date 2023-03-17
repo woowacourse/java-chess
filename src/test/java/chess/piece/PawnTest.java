@@ -20,8 +20,8 @@ class PawnTest {
     @Test
     void cantMoveJustAlongFile() {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
-        Square source = new Square(File.E, Rank.FOUR);
-        Square target = new Square(File.F, Rank.FOUR);
+        Square source = Square.getInstanceOf(File.E, Rank.FOUR);
+        Square target = Square.getInstanceOf(File.F, Rank.FOUR);
         Assertions.assertThat(pawn.canMove(source, target))
                 .isFalse();
     }
@@ -30,8 +30,8 @@ class PawnTest {
     @Test
     void cantMoveOverMovableRankDistance() {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
-        Square source = new Square(File.E, Rank.FOUR);
-        Square target = new Square(File.E, Rank.SEVEN);
+        Square source = Square.getInstanceOf(File.E, Rank.FOUR);
+        Square target = Square.getInstanceOf(File.E, Rank.SEVEN);
         Assertions.assertThat(pawn.canMove(source, target))
                 .isFalse();
     }
@@ -40,7 +40,7 @@ class PawnTest {
     @MethodSource("whitePawnMovableSquareProvider")
     void canMoveWhitePawnTest(Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
-        Assertions.assertThat(pawn.canMove(new Square(File.E, Rank.TWO), target))
+        Assertions.assertThat(pawn.canMove(Square.getInstanceOf(File.E, Rank.TWO), target))
                 .isTrue();
     }
 
@@ -48,26 +48,26 @@ class PawnTest {
     @MethodSource("blackPawnMovableSquareProvider")
     void canMoveBlackPawnTest(Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.BLACK);
-        Assertions.assertThat(pawn.canMove(new Square(File.E, Rank.SEVEN), target))
+        Assertions.assertThat(pawn.canMove(Square.getInstanceOf(File.E, Rank.SEVEN), target))
                 .isTrue();
     }
 
     static Stream<Arguments> whitePawnMovableSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.E, Rank.FOUR)),
-                Arguments.arguments(new Square(File.E, Rank.THREE)),
-                Arguments.arguments(new Square(File.F, Rank.THREE)),
-                Arguments.arguments(new Square(File.D, Rank.THREE))
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.F, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.D, Rank.THREE))
 
         );
     }
 
     static Stream<Arguments> blackPawnMovableSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.E, Rank.FIVE)),
-                Arguments.arguments(new Square(File.E, Rank.SIX)),
-                Arguments.arguments(new Square(File.F, Rank.SIX)),
-                Arguments.arguments(new Square(File.D, Rank.SIX))
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.FIVE)),
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.SIX)),
+                Arguments.arguments(Square.getInstanceOf(File.F, Rank.SIX)),
+                Arguments.arguments(Square.getInstanceOf(File.D, Rank.SIX))
 
         );
     }

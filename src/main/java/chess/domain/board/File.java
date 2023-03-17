@@ -32,4 +32,8 @@ public enum File {
                 .filter(file -> file.value > min && file.value < max)
                 .collect(Collectors.toList());
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -16,8 +16,8 @@ class RookTest {
     @DisplayName("시작 위치와 목적 위치가 일직선이 아닌 경우, 이동할 수 없다.")
     @Test
     void cantMoveTest() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.B, Rank.EIGHT);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.B, Rank.EIGHT);
 
         Assertions.assertThat(rook.canMove(source, target))
                 .isFalse();
@@ -26,8 +26,8 @@ class RookTest {
     @DisplayName("시작 위치와 목적 위치가 일직선인 경우, 이동할 수 있다.")
     @Test
     void canMoveTestWithSameFile() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.A, Rank.EIGHT);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
 
         Assertions.assertThat(rook.canMove(source, target))
                 .isTrue();
@@ -36,8 +36,8 @@ class RookTest {
     @DisplayName("시작 위치와 목적 위치가 일직선인 경우, 이동할 수 있다.")
     @Test
     void canMoveTestWithSameRank() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.H, Rank.ONE);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.H, Rank.ONE);
 
         Assertions.assertThat(rook.canMove(source, target))
                 .isTrue();

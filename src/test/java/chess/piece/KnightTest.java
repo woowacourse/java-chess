@@ -17,12 +17,12 @@ import java.util.stream.Stream;
 
 class KnightTest {
     private static final Piece knight = PieceType.KNIGHT.createPiece(Camp.WHITE);
-    private static final Square source = new Square(File.E, Rank.FOUR);
+    private static final Square source = Square.getInstanceOf(File.E, Rank.FOUR);
 
     @DisplayName("나이트 이동조건이 아닌 경우, 이동할 수 없다")
     @Test
     void cantMoveOverMovableDistance() {
-        Square target = new Square(File.E, Rank.ONE);
+        Square target = Square.getInstanceOf(File.E, Rank.ONE);
         Assertions.assertThat(knight.canMove(source, target))
                 .isFalse();
     }
@@ -36,14 +36,14 @@ class KnightTest {
 
     static Stream<Arguments> squareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.G, Rank.THREE)),
-                Arguments.arguments(new Square(File.G, Rank.FIVE)),
-                Arguments.arguments(new Square(File.F, Rank.TWO)),
-                Arguments.arguments(new Square(File.F, Rank.SIX)),
-                Arguments.arguments(new Square(File.D, Rank.TWO)),
-                Arguments.arguments(new Square(File.D, Rank.SIX)),
-                Arguments.arguments(new Square(File.C, Rank.THREE)),
-                Arguments.arguments(new Square(File.C, Rank.FIVE))
+                Arguments.arguments(Square.getInstanceOf(File.G, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.G, Rank.FIVE)),
+                Arguments.arguments(Square.getInstanceOf(File.F, Rank.TWO)),
+                Arguments.arguments(Square.getInstanceOf(File.F, Rank.SIX)),
+                Arguments.arguments(Square.getInstanceOf(File.D, Rank.TWO)),
+                Arguments.arguments(Square.getInstanceOf(File.D, Rank.SIX)),
+                Arguments.arguments(Square.getInstanceOf(File.C, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.C, Rank.FIVE))
         );
     }
 }

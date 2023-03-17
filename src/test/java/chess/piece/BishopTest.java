@@ -16,8 +16,8 @@ public class BishopTest {
     @DisplayName("대각선이 아닌 경우, 이동할 수 없다.")
     @Test
     void cantMoveNotDiagonal() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.A, Rank.TWO);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.A, Rank.TWO);
 
         Assertions.assertThat(bishop.canMove(source, target))
                 .isFalse();
@@ -26,8 +26,8 @@ public class BishopTest {
     @DisplayName("대각선일 경우, 이동할 수 있다.")
     @Test
     void canMoveDiagonal() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.H, Rank.EIGHT);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.H, Rank.EIGHT);
 
         Assertions.assertThat(bishop.canMove(source, target))
                 .isTrue();

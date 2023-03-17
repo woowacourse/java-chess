@@ -16,8 +16,8 @@ class KingTest {
     @DisplayName("이동 거리가 2 이상인 경우, 이동할 수 없다.")
     @Test
     void cantMoveOverMovableDistance() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.A, Rank.THREE);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.A, Rank.THREE);
 
         Assertions.assertThat(king.canMove(source, target))
                 .isFalse();
@@ -26,8 +26,8 @@ class KingTest {
     @DisplayName("이동 거리가 1인 경우, 이동할 수 있다.")
     @Test
     void canMoveTestWithMovableRankDistance() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.A, Rank.TWO);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.A, Rank.TWO);
 
         Assertions.assertThat(king.canMove(source, target))
                 .isTrue();
@@ -36,8 +36,8 @@ class KingTest {
     @DisplayName("이동 거리가 1인 경우, 이동할 수 있다.")
     @Test
     void canMoveTestWithMovableFileDistance() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.B, Rank.ONE);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.B, Rank.ONE);
 
         Assertions.assertThat(king.canMove(source, target))
                 .isTrue();
@@ -46,8 +46,8 @@ class KingTest {
     @DisplayName("이동 거리가 1인 경우, 이동할 수 있다.")
     @Test
     void canMoveTestWithMovableDiagonalDistance() {
-        Square source = new Square(File.A, Rank.ONE);
-        Square target = new Square(File.B, Rank.TWO);
+        Square source = Square.getInstanceOf(File.A, Rank.ONE);
+        Square target = Square.getInstanceOf(File.B, Rank.TWO);
 
         Assertions.assertThat(king.canMove(source, target))
                 .isTrue();

@@ -20,7 +20,7 @@ public class BoardInitializerTest {
         Chessboard chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
 
-        Assertions.assertThat(chessboard.getPieceAt(new Square(file, rank)).getPieceType())
+        Assertions.assertThat(chessboard.getPieceAt(Square.getInstanceOf(file, rank)).getPieceType())
                 .isEqualTo(piece.getPieceType());
     }
 

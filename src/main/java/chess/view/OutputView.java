@@ -22,7 +22,7 @@ public class OutputView {
     private void printRankAt(Chessboard chessboard, Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (File file : File.values()) {
-            Piece piece = chessboard.getPieceAt(new Square(file, rank));
+            Piece piece = chessboard.getPieceAt(Square.getInstanceOf(file, rank));
             stringBuilder.append(PieceRenderer.getPieceName(piece));
         }
         System.out.println(stringBuilder);

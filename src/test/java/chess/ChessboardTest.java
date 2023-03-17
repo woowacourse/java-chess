@@ -8,11 +8,20 @@ import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
 class ChessboardTest {
+    private Chessboard chessboard;
+
+    @BeforeEach
+    void setup() {
+        chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+    }
+
     @DisplayName("체스판은 64개의 Square로 이루어진다.")
     @Test
     void createChessboardSuccessTest() {
@@ -25,40 +34,40 @@ class ChessboardTest {
     @DisplayName("경로 사이에 기물이 있을 경우, false를 반환한다.")
     @Test
     void isExistPieceInRouteTest() {
-        Chessboard chessboard = new Chessboard();
-        BoardInitializer.initializeBoard(chessboard);
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.A, Rank.EIGHT)))
+        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
                 .isFalse();
     }
 
     @DisplayName("경로 사이가 비어있는 경우, false를 반환한다.")
     @Test
     void isEmptyInRouteTest() {
-        Chessboard chessboard = new Chessboard();
-        BoardInitializer.initializeBoard(chessboard);
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.A, Rank.SEVEN);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.A, Rank.SEVEN)))
+        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
                 .isTrue();
     }
 
     @DisplayName("대각선 경로 사이에 기물이 있을 경우, false를 반환한다.")
     @Test
     void isExistPieceInDiagonalRouteTest() {
-        Chessboard chessboard = new Chessboard();
-        BoardInitializer.initializeBoard(chessboard);
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.G, Rank.EIGHT);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.G, Rank.EIGHT)))
+        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
                 .isFalse();
     }
 
     @DisplayName("대각선 경로 사이가 비어있는 경우, true를 반환한다.")
     @Test
     void isEmptyInDiagonalRouteTest() {
-        Chessboard chessboard = new Chessboard();
-        BoardInitializer.initializeBoard(chessboard);
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.F, Rank.SEVEN);
 
-        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.F, Rank.SEVEN)))
+        Assertions.assertThat(chessboard.isEmptyInRoute(source, target))
                 .isTrue();
     }
 }

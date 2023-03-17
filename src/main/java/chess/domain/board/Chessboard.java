@@ -23,7 +23,7 @@ public class Chessboard {
 
     private void putFile(File file) {
         for (Rank rank : Rank.values()) {
-            board.put(new Square(file, rank), new Empty(Camp.NONE));
+            board.put(Square.getInstanceOf(file, rank), new Empty(Camp.NONE));
         }
     }
 
@@ -31,7 +31,7 @@ public class Chessboard {
         List<File> values = Arrays.asList(File.values());
 
         for (int i = 0, end = values.size(); i < end; i++) {
-            board.put(new Square(values.get(i), rank), pieces.get(i));
+            board.put(Square.getInstanceOf(values.get(i), rank), pieces.get(i));
         }
     }
 

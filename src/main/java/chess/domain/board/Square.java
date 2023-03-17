@@ -1,18 +1,35 @@
 package chess.domain.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 // TODO: 2023-03-17 캐싱
 public class Square {
+    private static final List<Square> squares;
+
+    static {
+        squares = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new Square(file, rank)))
+                .collect(Collectors.toList());
+    }
+
     private final File file;
     private final Rank rank;
 
-    public Square(File file, Rank rank) {
+    private Square(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Square getInstanceOf(File file, Rank rank) {
+        int fileValue = file.getValue();
+        int rankValue = rank.getValue();
+
+        return squares.get((8 - rankValue) * 8 + fileValue - 1);
     }
 
     public boolean isSameRank(Square targetSquare) {
@@ -38,14 +55,14 @@ public class Square {
     public List<Square> getSquaresInSameRank(Square square) {
         return file.getFilesInRange(square.file)
                 .stream()
-                .map(file -> new Square(file, rank))
+                .map(file -> Square.getInstanceOf(file, rank))
                 .collect(Collectors.toList());
     }
 
     public List<Square> getSquaresInSameFile(Square square) {
         return rank.getRanksInRange(square.rank)
                 .stream()
-                .map(rank -> new Square(file, rank))
+                .map(rank -> Square.getInstanceOf(file, rank))
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +72,7 @@ public class Square {
         List<Rank> ranks = rank.getRanksInRange(square.rank);
 
         for (int i = 0, end = files.size(); i < end; i++) {
-            squares.add(new Square(files.get(i), ranks.get(i)));
+            squares.add(Square.getInstanceOf(files.get(i), ranks.get(i)));
         }
 
         return squares;

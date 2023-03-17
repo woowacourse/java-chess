@@ -7,6 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,11 +17,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class ChessGameTest {
+    private ChessGame chessGame;
+    private Chessboard chessboard;
+
+    @BeforeEach
+    void setup() {
+        chessGame = new ChessGame();
+        chessboard = chessGame.getChessboard();
+    }
+
     @ParameterizedTest(name = "잘못된 위치 입력시 예외가 발생한다")
     @MethodSource("invalidSquareProvider")
     void moveToInvalidSquare(Square source, Square target) {
-        ChessGame chessGame = new ChessGame();
-
         Assertions.assertThatThrownBy(() -> chessGame.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -28,41 +36,33 @@ class ChessGameTest {
     @ParameterizedTest(name = "이동 가능한 위치 입력시 기물이 이동한다")
     @MethodSource("validSquareProvider")
     void moveToValidSquare(Square source, Square target) {
-        ChessGame chessGame = new ChessGame();
-        Chessboard chessboard = chessGame.getChessboard();
-        Piece expected = chessboard.getPieceAt(source);
+        Piece expectedPiece = chessboard.getPieceAt(source);
         chessGame.move(source, target);
 
-
         Assertions.assertThat(chessboard.getPieceAt(target))
-                .isEqualTo(expected);
+                .isEqualTo(expectedPiece);
     }
 
     @DisplayName("대각선에 상대 폰이 있을 경우, 이동할 수 있다.")
     @Test
     void movePawnIfPresentEnemyAtDiagonal() {
-        Square source = new Square(File.A, Rank.TWO);
-        Square target = new Square(File.B, Rank.THREE);
-        ChessGame chessGame = new ChessGame();
-        Chessboard chessboard = chessGame.getChessboard();
-        Piece expected = chessboard.getPieceAt(source);
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.B, Rank.THREE);
+        Piece expectedPiece = chessboard.getPieceAt(source);
 
-        chessboard.swapPiece(new Square(File.B, Rank.SEVEN), new Square(File.B, Rank.THREE));
+        chessboard.swapPiece(Square.getInstanceOf(File.B, Rank.SEVEN), Square.getInstanceOf(File.B, Rank.THREE));
         chessGame.move(source, target);
 
         Assertions.assertThat(chessboard.getPieceAt(target))
-                .isEqualTo(expected);
+                .isEqualTo(expectedPiece);
     }
 
     @DisplayName("Pawn의 시작 위치가 아닌 경우, 2칸을 이동할 수 없다.")
     @Test
     void moveTwoRankPawnIfNotStartSquareFailTest() {
-        Square source = new Square(File.A, Rank.TWO);
-        Square movedSquare = new Square(File.A, Rank.THREE);
-        Square target = new Square(File.A, Rank.FIVE);
-
-        ChessGame chessGame = new ChessGame();
-        Chessboard chessboard = chessGame.getChessboard();
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square movedSquare = Square.getInstanceOf(File.A, Rank.THREE);
+        Square target = Square.getInstanceOf(File.A, Rank.FIVE);
 
         chessboard.swapPiece(source, movedSquare);
 
@@ -73,12 +73,9 @@ class ChessGameTest {
     @DisplayName("Pawn 앞에 장애물(아군, 적 상관 x)이 있을 경우, 이동할 수 없다.")
     @Test
     void movePawnIfPresentPieceAtTargetSquareFailTest() {
-        Square source = new Square(File.A, Rank.TWO);
-        Square movedSquare = new Square(File.A, Rank.SIX);
-        Square target = new Square(File.A, Rank.SEVEN);
-
-        ChessGame chessGame = new ChessGame();
-        Chessboard chessboard = chessGame.getChessboard();
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square movedSquare = Square.getInstanceOf(File.A, Rank.SIX);
+        Square target = Square.getInstanceOf(File.A, Rank.SEVEN);
 
         chessboard.swapPiece(source, movedSquare);
 
@@ -88,19 +85,19 @@ class ChessGameTest {
 
     static Stream<Arguments> invalidSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.A, Rank.ONE), new Square(File.A, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FIVE)),
-                Arguments.arguments(new Square(File.A, Rank.THREE), new Square(File.A, Rank.FOUR)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.FOUR)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.TWO))
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FIVE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.THREE), Square.getInstanceOf(File.A, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.TWO))
         );
     }
 
     static Stream<Arguments> validSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR))
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FOUR))
         );
     }
 

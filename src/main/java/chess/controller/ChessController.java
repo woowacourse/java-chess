@@ -59,17 +59,17 @@ public class ChessController {
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
-        Square source = makeSquare(command.get(Index.SOURCE_SQUARE.value));
-        Square target = makeSquare(command.get(Index.TARGET_SQUARE.value));
+        Square source = getSquare(command.get(Index.SOURCE_SQUARE.value));
+        Square target = getSquare(command.get(Index.TARGET_SQUARE.value));
 
         chessGame.move(source, target);
     }
 
-    private Square makeSquare(String command) {
+    private Square getSquare(String command) {
         File file = FileRenderer.renderToFile(String.valueOf(command.charAt(Index.FILE.value)));
         Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(Index.RANK.value)));
 
-        return new Square(file, rank);
+        return Square.getInstanceOf(file, rank);
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
