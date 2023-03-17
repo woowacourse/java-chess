@@ -18,14 +18,11 @@ import org.junit.jupiter.api.Test;
 class BoardFactoryTest {
 
     @Test
-    @DisplayName("createInitialBoard() : 체스피스들의 위치를 초기화하는 Board를 생성할 수 있다.")
-    void test_createInitialBoard() throws Exception {
-        //given
+    @DisplayName("체스말들의 위치를 초기화하는 Board를 생성할 수 있다.")
+    void test_createInitialBoard() {
         final BoardFactory boardFactory = new BoardFactory();
 
-        //when
         final Map<Position, Piece> board = boardFactory.createInitialBoard();
-
         final Map<Class<? extends Piece>, Integer> result =
                 board.values()
                         .stream()
@@ -36,7 +33,6 @@ class BoardFactoryTest {
                                 )
                         );
 
-        //then
         assertAll(
                 () -> assertEquals(board.size(), 32),
                 () -> assertEquals(result.get(King.class), 2),

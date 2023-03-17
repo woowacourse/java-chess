@@ -7,10 +7,12 @@ import chess.Path;
 import chess.Position;
 import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
 
+    @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo() {
         Piece Rook = new Rook(Color.WHITE);
@@ -26,6 +28,7 @@ class RookTest {
                         new Position(5, 6), new Position(5, 7));
     }
 
+    @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo2() {
         Rook Rook = new Rook(Color.WHITE);
@@ -41,6 +44,7 @@ class RookTest {
                         new Position(5, 2));
     }
 
+    @DisplayName("비정상 경로를 받으면 예외 처리한다.")
     @Test
     void test_searchPathTo3() {
         Rook Rook = new Rook(Color.WHITE);

@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test;
 
 class PieceTest {
 
+    @DisplayName("말이 검정색인지 확인할 수 있다.")
     @Test
-    @DisplayName("isBlack() : 피스가 검정색인지 확인할 수 있다.")
-    void test_isBlack() throws Exception {
-        //given
+    void test_isBlack() {
         Piece blackPiece = new Piece(Color.BLACK) {
             @Override
             public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
@@ -28,7 +27,6 @@ class PieceTest {
             }
         };
 
-        //when & then
         assertTrue(blackPiece.isBlack());
         assertFalse(whitePiece.isBlack());
     }

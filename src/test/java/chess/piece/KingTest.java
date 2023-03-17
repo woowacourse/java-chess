@@ -1,5 +1,6 @@
 package chess.piece;
 
+import static chess.InitialPositionFixtures.WHITE_KING_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -7,11 +8,12 @@ import chess.Path;
 import chess.Position;
 import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class KingTest {
 
-
+    @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo() {
 
@@ -26,26 +28,26 @@ class KingTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
+    @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo2() {
 
         Piece piece = new King(Color.WHITE);
 
-        Position initialPosition = new Position(5, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(5, 2), Optional.empty());
+        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), Optional.empty());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
                 .containsExactly();
     }
 
+    @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo3() {
 
         Piece piece = new King(Color.WHITE);
 
-        Position initialPosition = new Position(5, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(5, 2), Optional.of(new Queen(Color.BLACK)));
+        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), Optional.of(new Queen(Color.BLACK)));
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))

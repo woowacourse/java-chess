@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.piece.Color;
-import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
@@ -18,6 +18,7 @@ class BoardTest {
         board = new Board(new BoardFactory());
     }
 
+    @DisplayName("빈 출발점을 선택하는 경우 예외 처리한다.")
     @Test
     void test_moveEmptyFrom() {
         Position emptyPosition = new Position(4, 4);
@@ -27,6 +28,7 @@ class BoardTest {
                 .hasMessage("출발점에 말이 없습니다.");
     }
 
+    @DisplayName("체스판은 말을 이동할 수 있다.")
     @Test
     void test_movePawn() {
         Position from = new Position(1, 2);
