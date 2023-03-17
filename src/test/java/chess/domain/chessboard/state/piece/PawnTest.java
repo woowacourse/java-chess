@@ -17,11 +17,11 @@ class PawnTest {
     @Test
     void 폰은_직진할_떄_다른팀이_있으면_예외가_발생한다() {
         // given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate c2 = Coordinate.of("c2");
-        final List<Square> route = List.of(new Square(new Pawn(Team.WHITE)));
+        final List<Square> route = List.of(new Square(new Pawn(Team.BLACK)));
         pawn.findRoute(c1, c2);
 
         //when & then
@@ -31,7 +31,7 @@ class PawnTest {
     @Test
     void 폰은_직진할_떄_다른팀이_없으면_예외가_발생하지않는다() {
         // given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate c2 = Coordinate.of("c2");
@@ -45,7 +45,7 @@ class PawnTest {
     @Test
     void 폰은_대각선으로갈_떄_다른팀이_없으면_예외가_발생한다() {
         // given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate b2 = Coordinate.of("b2");
@@ -59,11 +59,11 @@ class PawnTest {
     @Test
     void 폰은_대각선으로갈_떄_다른팀이_있으면_예외가_발생하지않는다() {
         // given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate b2 = Coordinate.of("b2");
-        final List<Square> route = List.of(new Square(new Pawn(Team.WHITE)));
+        final List<Square> route = List.of(new Square(new Pawn(Team.BLACK)));
         pawn.findRoute(c1, b2);
 
         //when & then
@@ -73,7 +73,7 @@ class PawnTest {
     @Test
     void 폰은_한번_움직인_후_두칸_직진하면_예외가_발생한다() {
         // given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final Coordinate b1 = Coordinate.of("b1");
         final Coordinate b2 = Coordinate.of("b2");
@@ -94,7 +94,7 @@ class PawnTest {
     @Test
     void 폰는_도착지_스퀘어에_같은_팀이_있으면_갈_수_없다는_예외가_발생() {
         //given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final List<Square> route = List.of(new Square(new Pawn(team)));
 
@@ -106,7 +106,7 @@ class PawnTest {
     @Test
     void 폰는_도착지가_비어있으면_예외가_발생하지_않는다() {
         //given
-        final Team team = Team.BLACK;
+        final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
         final List<Square> route = List.of(new Square());
 
