@@ -32,10 +32,17 @@ public abstract class Piece {
 
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> gaps = calculateGap(currentSquare, targetSquare);
-        Integer distance = Collections.max(gaps);
+        Integer distance = calculateDistance(gaps);
         validateMovable(gaps);
         List<Integer> direction = calculateDirection(gaps, distance);
         return calculatePath(currentSquare, distance, direction);
+    }
+
+    protected Integer calculateDistance(List<Integer> gaps) {
+        List<Integer> absGaps = gaps.stream()
+                .map(Math::abs)
+                .collect(Collectors.toList());
+        return Collections.max(absGaps);
     }
 
     protected abstract void validateMovable(List<Integer> gaps);

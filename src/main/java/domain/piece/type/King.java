@@ -1,6 +1,5 @@
 package domain.piece.type;
 
-import java.util.Collections;
 import java.util.List;
 
 import domain.board.Square;
@@ -28,7 +27,7 @@ public class King extends Piece {
 
     @Override
     protected void validateMovable(List<Integer> gaps) {
-        Integer distance = Collections.max(gaps);
+        Integer distance = calculateDistance(gaps);
         if(distance != MOVE_DISTANCE_LIMIT) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
