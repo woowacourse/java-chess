@@ -1,7 +1,7 @@
 package view;
 
 import domain.piece.Piece;
-import domain.piece.PieceType;
+import domain.type.PieceType;
 import java.util.Arrays;
 
 public enum PieceView {

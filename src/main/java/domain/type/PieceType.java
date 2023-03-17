@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.type;
 
 public enum PieceType {
     ROOK,
