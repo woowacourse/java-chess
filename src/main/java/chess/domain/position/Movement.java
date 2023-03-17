@@ -41,12 +41,4 @@ public enum Movement {
     public Position nextPosition(File file, Rank rank) {
         return new Position(file.value() + this.file, rank.value() + this.rank);
     }
-
-    public int getFile() {
-        return file;
-    }
-
-    public int getRank() {
-        return rank;
-    }
 }
