@@ -49,7 +49,7 @@ public final class Board {
 
     private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
         if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException(color.name() + "의 턴이 아닙니다.");
+            throw new IllegalArgumentException("움직일 수 있는 기물이 아닙니다.");
         }
     }
 
