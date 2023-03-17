@@ -49,4 +49,17 @@ class PiecesTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치에 존재하는 기물이 없습니다.");
     }
+
+    @Test
+    @DisplayName("해당 위치에 기물이 존재하는지 여부를 반환한다.")
+    void isPieceExistOnPosition() {
+        // given
+        final Pieces pieces = new Pieces();
+        final Position existPosition = new Position(File.A, Rank.ONE);
+        final Position nonExistPosition = new Position(File.C, Rank.FOUR);
+
+        // when, then
+        assertThat(pieces.isPieceExistOnPosition(existPosition)).isTrue();
+        assertThat(pieces.isPieceExistOnPosition(nonExistPosition)).isFalse();
+    }
 }
