@@ -12,7 +12,7 @@ import java.util.List;
 public class Pawn extends Piece {
 
     private final List<MovePattern> movePatterns;
-    private final boolean moved;
+    private boolean moved;
 
     public Pawn(final Type type, final Side side) {
         super(type, side);
@@ -41,6 +41,17 @@ public class Pawn extends Piece {
         validateType(type);
         validateSide(side);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public void changePawnMoved() {
+        moved = true;
+    }
+
 
     @Override
     public List<Position> findMovablePositions(final Position source, final Board board) {

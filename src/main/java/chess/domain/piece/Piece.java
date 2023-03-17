@@ -19,6 +19,14 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
+    public void changePawnMoved() {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
     public String getName() {
         return type.getSymbol(side);
     }

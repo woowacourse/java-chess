@@ -26,6 +26,9 @@ public class ChessGame {
         final List<Position> movablePositions = sourcePiece.findMovablePositions(source, board);
         checkMovable(movablePositions, target);
         board.move(source, target);
+        if (sourcePiece.isPawn()) {
+            sourcePiece.changePawnMoved();
+        }
     }
 
     private void checkMovable(final List<Position> movablePositions, final Position target) {

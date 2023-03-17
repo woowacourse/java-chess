@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.Type;
 import chess.domain.movepattern.MovePattern;
-import chess.domain.movepattern.PawnMovePattern;
 import chess.domain.movepattern.QueenMovePattern;
 import java.util.Arrays;
 import java.util.List;
