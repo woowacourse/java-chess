@@ -1,5 +1,22 @@
 package chess;
 
+import static chess.InitialPositionFixtures.BLACK_BISHOP_LEFT_POSITION;
+import static chess.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
+import static chess.InitialPositionFixtures.BLACK_KING_POSITION;
+import static chess.InitialPositionFixtures.BLACK_KNIGHT_LEFT_POSITION;
+import static chess.InitialPositionFixtures.BLACK_KNIGHT_RIGHT_POSITION;
+import static chess.InitialPositionFixtures.BLACK_QUEEN_POSITION;
+import static chess.InitialPositionFixtures.BLACK_ROOK_LEFT_POSITION;
+import static chess.InitialPositionFixtures.BLACK_ROOK_RIGHT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_BISHOP_RIGHT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_KING_POSITION;
+import static chess.InitialPositionFixtures.WHITE_KNIGHT_LEFT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_KNIGHT_RIGHT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_QUEEN_POSITION;
+import static chess.InitialPositionFixtures.WHITE_ROOK_LEFT_POSITION;
+import static chess.InitialPositionFixtures.WHITE_ROOK_RIGHT_POSITION;
+
 import chess.piece.Bishop;
 import chess.piece.Color;
 import chess.piece.King;
@@ -42,72 +59,43 @@ public class BoardFactory {
     private Map<Position, Piece> createKing() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whitePosition = new Position(5, 1);
-        pieceMap.put(whitePosition, new King(Color.WHITE));
-
-        final Position blackPosition = new Position(5, 8);
-        pieceMap.put(blackPosition, new King(Color.BLACK));
-
-        return pieceMap;
-    }
-
-    private Map<Position, Piece> createKnight() {
-        Map<Position, Piece> pieceMap = new HashMap<>();
-
-        final Position whiteLeftPosition = new Position(2, 1);
-        final Position whiteRightPosition = new Position(7, 1);
-        final Position blackLeftPosition = new Position(2, 8);
-        final Position blackRightPosition = new Position(7, 8);
-
-        pieceMap.put(whiteLeftPosition, new Knight(Color.WHITE));
-        pieceMap.put(whiteRightPosition, new Knight(Color.WHITE));
-        pieceMap.put(blackLeftPosition, new Knight(Color.BLACK));
-        pieceMap.put(blackRightPosition, new Knight(Color.BLACK));
-
-        return pieceMap;
-    }
-
-    private Map<Position, Piece> createBishop() {
-        Map<Position, Piece> pieceMap = new HashMap<>();
-
-        final Position whiteLeftPosition = new Position(3, 1);
-        final Position whiteRightPosition = new Position(6, 1);
-        final Position blackLeftPosition = new Position(3, 8);
-        final Position blackRightPosition = new Position(6, 8);
-
-        pieceMap.put(whiteLeftPosition, new Bishop(Color.WHITE));
-        pieceMap.put(whiteRightPosition, new Bishop(Color.WHITE));
-        pieceMap.put(blackLeftPosition, new Bishop(Color.BLACK));
-        pieceMap.put(blackRightPosition, new Bishop(Color.BLACK));
+        pieceMap.put(WHITE_KING_POSITION, new King(Color.WHITE));
+        pieceMap.put(BLACK_KING_POSITION, new King(Color.BLACK));
 
         return pieceMap;
     }
 
     private Map<Position, Piece> createQueen() {
-        Map<Position, Piece> pieceMap = new HashMap<>();
+        return Map.of(
+                WHITE_QUEEN_POSITION, new Queen(Color.WHITE),
+                BLACK_QUEEN_POSITION, new Queen(Color.BLACK)
+        );
+    }
 
-        final Position whitePosition = new Position(4, 1);
-        final Position blackPosition = new Position(4, 8);
+    private Map<Position, Piece> createKnight() {
+        return Map.of(
+                WHITE_KNIGHT_LEFT_POSITION, new Knight(Color.WHITE),
+                WHITE_KNIGHT_RIGHT_POSITION, new Knight(Color.WHITE),
+                BLACK_KNIGHT_LEFT_POSITION, new Knight(Color.BLACK),
+                BLACK_KNIGHT_RIGHT_POSITION, new Knight(Color.BLACK)
+        );
+    }
 
-        pieceMap.put(whitePosition, new Queen(Color.WHITE));
-        pieceMap.put(blackPosition, new Queen(Color.BLACK));
-
-        return pieceMap;
+    private Map<Position, Piece> createBishop() {
+        return Map.of(
+                WHITE_BISHOP_LEFT_POSITION, new Bishop(Color.WHITE),
+                WHITE_BISHOP_RIGHT_POSITION, new Bishop(Color.WHITE),
+                BLACK_BISHOP_LEFT_POSITION, new Bishop(Color.BLACK),
+                BLACK_BISHOP_RIGHT_POSITION, new Bishop(Color.BLACK)
+        );
     }
 
     private Map<Position, Piece> createRook() {
-        Map<Position, Piece> pieceMap = new HashMap<>();
-
-        final Position whiteLeftPosition = new Position(1, 1);
-        final Position whiteRightPosition = new Position(8, 1);
-        final Position blackLeftPosition = new Position(1, 8);
-        final Position blackRightPosition = new Position(8, 8);
-
-        pieceMap.put(whiteLeftPosition, new Rook(Color.WHITE));
-        pieceMap.put(whiteRightPosition, new Rook(Color.WHITE));
-        pieceMap.put(blackLeftPosition, new Rook(Color.BLACK));
-        pieceMap.put(blackRightPosition, new Rook(Color.BLACK));
-
-        return pieceMap;
+        return Map.of(
+                WHITE_ROOK_LEFT_POSITION, new Rook(Color.WHITE),
+                WHITE_ROOK_RIGHT_POSITION, new Rook(Color.WHITE),
+                BLACK_ROOK_LEFT_POSITION, new Rook(Color.BLACK),
+                BLACK_ROOK_RIGHT_POSITION, new Rook(Color.BLACK)
+        );
     }
 }
