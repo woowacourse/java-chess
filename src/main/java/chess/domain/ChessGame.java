@@ -13,11 +13,13 @@ public class ChessGame {
     public static final String GAME_CANNOT_EXECUTE_MESSAGE = "실행할 수 없는 명령입니다.";
     public static final String GAME_HAS_NOT_STARTED = "게임이 시작되지 않았습니다.";
     private final Board board;
+    private Color turn;
     private GameStatus status;
     
     public ChessGame() {
         this.status = GameStatus.START;
         this.board = Board.create();
+        this.turn = Color.WHITE;
     }
     
     public void start() {
@@ -28,29 +30,35 @@ public class ChessGame {
         this.status = GameStatus.MOVE;
     }
     
-    public void move(final List<String> arguments, Color color) {
+    public void move(final List<String> arguments) {
         if (this.status != GameStatus.MOVE) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
         
-        Piece sourcePiece = this.board.getPiece(source, color);
+        Piece sourcePiece = this.board.getPiece(source, this.turn);
         sourcePiece.canMove(source, destination);
-        this.board.checkSameColor(destination, color);
+        this.board.checkSameColor(destination, this.turn);
         if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
             this.board.checkBetweenRoute(source, destination);
         }
         if (sourcePiece.getType() == PieceType.PAWN) {
-            this.board.checkRestrictionForPawn(source, destination, color);
+            this.board.checkRestrictionForPawn(source, destination, this.turn);
         }
         this.board.replace(source, destination);
+        this.turn = Color.reverse(this.turn);
     }
     
     public void end() {
         if (this.status != GameStatus.MOVE) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
         }
+        this.status = GameStatus.END;
+    }
+    
+    public boolean isGameEnd() {
+        return this.status == GameStatus.END;
     }
     
     public Board getBoard() {

@@ -36,14 +36,26 @@ public class CommandLine {
         }
     }
     
-    public String getCommand() {
-        return this.tokens.get(0);
-    }
-    
     public List<String> getArguments() {
         if (this.tokens.size() != TWO_ARGUMENT_SIZE) {
             throw new IllegalStateException(NO_ARGUMENT_ERROR_MESSAGE);
         }
         return this.tokens.subList(SOURCE_INDEX, TARGET_INDEX);
+    }
+    
+    public boolean isStart() {
+        return START.equals(this.getCommand());
+    }
+    
+    public String getCommand() {
+        return this.tokens.get(0);
+    }
+    
+    public boolean isMove() {
+        return MOVE.equals(this.getCommand());
+    }
+    
+    public boolean isEnd() {
+        return END.endsWith(this.getCommand());
     }
 }
