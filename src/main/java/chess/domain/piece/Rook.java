@@ -12,6 +12,7 @@ public final class Rook extends Piece {
     public Rook(final boolean isWhite) {
         super(isWhite);
     }
+
     @Override
     public String name() {
         if (super.isWhite()) {

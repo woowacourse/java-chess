@@ -1,8 +1,8 @@
 package chess.initial;
 
+import chess.domain.piece.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.piece.*;
 
 import java.util.Map;
 

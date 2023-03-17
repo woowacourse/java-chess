@@ -9,9 +9,10 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public String name(){
+    public String name() {
         return ".";
     }
+
     @Override
     public boolean movable(final Direction direction) {
         return false;

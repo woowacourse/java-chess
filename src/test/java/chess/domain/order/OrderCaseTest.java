@@ -1,6 +1,5 @@
 package chess.domain.order;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +37,7 @@ class OrderCaseTest {
     void invalidCommand() {
         final String command = "test";
 
-        assertThatThrownBy(()->OrderCase.from(command))
+        assertThatThrownBy(() -> OrderCase.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력값은 start, end, move만 가능합니다.");
     }

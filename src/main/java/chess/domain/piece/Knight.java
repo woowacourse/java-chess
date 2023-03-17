@@ -21,6 +21,7 @@ public final class Knight extends Piece {
         }
         return "N";
     }
+
     @Override
     public boolean movable(final Direction direction) {
         return directions.contains(direction);
