@@ -9,8 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -283,6 +283,57 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.C, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("퀸")
+    class Queen {
+
+        private Square whiteQueen;
+
+        @BeforeEach
+        void setup() {
+            whiteQueen = Square.of(File.C, Rank.TWO);
+            board.move(Square.of(File.C, Rank.TWO), Square.of(File.C, Rank.FOUR));
+            board.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.FIVE));
+            board.move(Square.of(File.D, Rank.ONE), Square.of(File.C, Rank.TWO));
+            board.move(Square.of(File.D, Rank.FIVE), Square.of(File.C, Rank.FOUR));
+        }
+
+        @Test
+        @DisplayName("이동 성공")
+        void move_success() {
+            assertThatCode(() -> board.move(whiteQueen, Square.of(File.F, Rank.FIVE)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적 제거 성공")
+        void move_success_when_enemy_exists() {
+            assertThatCode(() -> board.move(whiteQueen, Square.of(File.C, Rank.FOUR)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("아군 위치로는 이동 실패")
+        void move_fail_when_ally_exists() {
+            assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.D, Rank.TWO)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("잘못된 위치로는 이동 실패")
+        void move_fail() {
+            assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.A, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("길막인 경우 이동 실패")
+        void move_fail_when_block() {
+            assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.C, Rank.SIX)))
                     .isInstanceOf(WrongDirectionException.class);
         }
     }
