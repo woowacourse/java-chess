@@ -44,6 +44,11 @@ public class Pawn extends Piece {
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 
+    @Override
+    protected void validateMovable(List<Integer> gaps) {
+
+    }
+
     private void moveForward(Square currentSquare, ArrayList<Square> movableCoordinate) {
         if (isGoingForward && isFirstMove) {
             movableCoordinate.add(fetchTwoStepForwardSquare(currentSquare));

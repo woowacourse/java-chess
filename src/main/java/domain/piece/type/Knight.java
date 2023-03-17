@@ -37,4 +37,8 @@ public class Knight extends Piece {
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
+
+    @Override
+    protected void validateMovable(List<Integer> gaps) {
+    }
 }

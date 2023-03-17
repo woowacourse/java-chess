@@ -32,13 +32,17 @@ public class King extends Piece {
             int fileCoordinate = file + direction.getFile();
             int rankCoordinate = rank + direction.getRank();
             if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
-                continue;
+                squares.add(new Square(fileCoordinate, rankCoordinate));
             }
-            squares.add(new Square(fileCoordinate, rankCoordinate));
             if (squares.contains(targetSquare)) {
                 return squares;
             }
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    }
+
+    @Override
+    protected void validateMovable(List<Integer> gaps) {
+
     }
 }

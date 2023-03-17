@@ -26,6 +26,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    protected void validateMovable(List<Integer> gaps) {
+
+    }
+
+    @Override
     public boolean isEmpty() {
         return true;
     }
