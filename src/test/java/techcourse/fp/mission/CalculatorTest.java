@@ -12,7 +12,12 @@ class CalculatorTest {
 
     @Test
     public void sumAll() {
-        int sum = Calculator.sumAll(numbers);
+        int sum = Calculator.sumAll(numbers, new Calculator.Conditional() {
+            @Override
+            public boolean test(Integer number) {
+                return true;
+            }
+        });
         assertThat(sum).isEqualTo(21);
     }
 
