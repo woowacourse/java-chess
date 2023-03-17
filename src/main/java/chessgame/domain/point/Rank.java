@@ -21,8 +21,8 @@ public enum Rank {
 
     public static Optional<Rank> findRank(int result) {
         return Arrays.stream(Rank.values())
-            .filter(rank -> rank.value == result)
-            .findFirst();
+                .filter(rank -> rank.value == result)
+                .findFirst();
     }
 
     public int distance(Rank target) {

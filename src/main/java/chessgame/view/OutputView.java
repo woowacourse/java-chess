@@ -1,12 +1,12 @@
 package chessgame.view;
 
-import java.util.Map;
-
 import chessgame.domain.Board;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
+
+import java.util.Map;
 
 public class OutputView {
 

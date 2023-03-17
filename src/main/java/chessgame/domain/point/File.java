@@ -21,8 +21,8 @@ public enum File {
 
     public static Optional<File> findFile(char result) {
         return Arrays.stream(File.values())
-            .filter(file -> file.value == result)
-            .findFirst();
+                .filter(file -> file.value == result)
+                .findFirst();
     }
 
     public int distance(File target) {
@@ -30,7 +30,7 @@ public enum File {
     }
 
     public Optional<File> move(int fileMove) {
-        char result = (char)(value + fileMove);
+        char result = (char) (value + fileMove);
 
         return findFile(result);
     }

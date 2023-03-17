@@ -54,13 +54,26 @@ public class Point {
         return rank.distance(initialRank) == 0;
     }
 
+    public int calculateDistance(Point point) {
+        return Math.max(Math.abs(fileDistance(point)), Math.abs(rankDistance(point)));
+    }
+
+    public int eachFileMove(Point point) {
+        return fileDistance(point) / calculateDistance(point);
+    }
+
+    public int eachRankMove(Point point) {
+        return rankDistance(point) / calculateDistance(point);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Point point = (Point)o;
+        Point point = (Point) o;
         return file == point.file && rank == point.rank;
     }
 
@@ -72,8 +85,8 @@ public class Point {
     @Override
     public String toString() {
         return "Point{" +
-            "rank=" + file +
-            ", file=" + rank +
-            '}';
+                "rank=" + file +
+                ", file=" + rank +
+                '}';
     }
 }

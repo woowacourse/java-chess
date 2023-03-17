@@ -1,20 +1,14 @@
 package chessgame.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import chessgame.domain.Team;
-import chessgame.domain.piece.Bishop;
-import chessgame.domain.piece.King;
-import chessgame.domain.piece.Knight;
-import chessgame.domain.piece.Pawn;
-import chessgame.domain.piece.Piece;
-import chessgame.domain.piece.Queen;
-import chessgame.domain.piece.Rook;
+import chessgame.domain.piece.*;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChessBoardFactory {
     public static Map<Point, Piece> create() {
@@ -49,12 +43,12 @@ public class ChessBoardFactory {
 
     private static List<Piece> getPieces(Team team) {
         return List.of(Rook.from(team),
-            Knight.from(team),
-            Bishop.from(team),
-            Queen.from(team),
-            King.from(team),
-            Bishop.from(team),
-            Knight.from(team),
-            Rook.from(team));
+                Knight.from(team),
+                Bishop.from(team),
+                Queen.from(team),
+                King.from(team),
+                Bishop.from(team),
+                Knight.from(team),
+                Rook.from(team));
     }
 }

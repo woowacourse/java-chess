@@ -1,11 +1,11 @@
 package chessgame.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Command {
     private static final String START = "start";
@@ -67,9 +67,9 @@ public class Command {
         List<Point> points = new ArrayList<>();
         String[] moveCommand = command.split(" ");
         points.add(Point.of(File.findFile(moveCommand[1].charAt(0)).get(),
-            Rank.findRank(Integer.parseInt(moveCommand[1].substring(1, 2))).get()));
+                Rank.findRank(Integer.parseInt(moveCommand[1].substring(1, 2))).get()));
         points.add(Point.of(File.findFile(moveCommand[2].charAt(0)).get(),
-            Rank.findRank(Integer.parseInt(moveCommand[2].substring(1, 2))).get()));
+                Rank.findRank(Integer.parseInt(moveCommand[2].substring(1, 2))).get()));
         return points;
     }
 }

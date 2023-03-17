@@ -35,7 +35,7 @@ public class King implements Piece {
             return true;
         }
         return source.isDiagonal(target) && Math.abs(source.fileDistance(target)) == DISTANCE
-            && Math.abs(source.rankDistance(target)) == DISTANCE;
+                && Math.abs(source.rankDistance(target)) == DISTANCE;
     }
 
     @Override

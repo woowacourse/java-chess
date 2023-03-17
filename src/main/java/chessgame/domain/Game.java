@@ -1,9 +1,9 @@
 package chessgame.domain;
 
-import java.util.List;
-
 import chessgame.domain.point.Point;
 import chessgame.domain.state.Button;
+
+import java.util.List;
 
 public class Game {
     private final Board board;
