@@ -3,7 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Movement;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,14 +41,12 @@ public abstract class Piece {
 
     protected final Path generatePathFromTo(final Position from, final Position to, final Movement movement) {
         Position next = from;
-        final List<Position> positions = new ArrayList<>();
-        while (true) {
+        final Deque<Position> positions = new LinkedList<>();
+        while (next.equals(to)) {
             next = next.moveBy(movement);
-            if (next.equals(to)) {
-                break;
-            }
             positions.add(next);
         }
+        positions.removeLast();
         return new Path(positions);
     }
 
