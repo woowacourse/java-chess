@@ -16,17 +16,26 @@ class CalculatorTest {
     public void sumAll() {
         int sum = Calculator.sumAll(numbers);
         assertThat(sum).isEqualTo(21);
+
+        final int test = Calculator.sumAllPredicate(numbers, number -> true);
+        assertThat(sum).isEqualTo(21);
     }
 
     @Test
     public void sumAllEven() {
         int sum = Calculator.sumAllEven(numbers);
         assertThat(sum).isEqualTo(12);
+
+        final int test = Calculator.sumAllPredicate(numbers, number -> number % 2 == 0);
+        assertThat(test).isEqualTo(12);
     }
 
     @Test
     public void sumAllOverThree() {
         int sum = Calculator.sumAllOverThree(numbers);
         assertThat(sum).isEqualTo(15);
+
+        final int test = Calculator.sumAllPredicate(numbers, number -> number > 3);
+        assertThat(test).isEqualTo(15);
     }
 }
