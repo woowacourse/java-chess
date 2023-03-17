@@ -27,12 +27,23 @@ graph TD
     Position --> Rank
     
     Piece --> Pawn
-    Piece --> Rook
-    Piece --> Knight
-    Piece --> Bishop
-    Piece --> Queen
-    Piece --> King
     Piece --> Empty
+    Piece --> ImmediatePiece
+    Piece --> LinearPiece
+
+    ImmediatePiece --> King
+    ImmediatePiece --> Knight
+    
+    LinearPiece --> Queen
+    LinearPiece --> Rook
+    LinearPiece --> Bishop
+    
+    MovePattern --> BishopMovePattern
+    MovePattern --> KingMovePattern
+    MovePattern --> KnightMovePattern
+    MovePattern --> PawnMovePattern
+    MovePattern --> QueenMovePattern
+    MovePattern --> RookMovePattern
 ```
 
 ## 도메인
