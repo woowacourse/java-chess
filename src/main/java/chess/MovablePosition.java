@@ -2,11 +2,13 @@ package chess;
 
 import chess.piece.ChessPiece;
 
+import chess.piece.Pawn;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovablePosition {
     private static final int ONE_STEP_MOVEMENT = 1;
+    private static final int TWO_STEP_MOVEMENT = 2;
     private static final int UNLIMIT_STEP_MOVEMENT = 8;
     private static final int MIN_CHESS_BOUNDARY = 1;
     private static final int MAX_CHESS_BOUNDARY = 8;
@@ -16,8 +18,8 @@ public class MovablePosition {
     private static final List<Position> diagonalVector = List.of(Position.initPosition(1, 1), Position.initPosition(1, -1), Position.initPosition(-1, 1), Position.initPosition(-1, -1));
     private static final List<Position> knightMoveVector = List.of(Position.initPosition(1, 2), Position.initPosition(-1, 2), Position.initPosition(1, -2), Position.initPosition(-1, -2),
             Position.initPosition(2, 1), Position.initPosition(-2, 1), Position.initPosition(2, -1), Position.initPosition(-2, -1));
-    private static final List<Position> blackPawnVector = List.of(Position.initPosition(0, -1), Position.initPosition(0, -2));
-    private static final List<Position> whitePawnVector = List.of(Position.initPosition(0, 1), Position.initPosition(0, 2));
+    private static final List<Position> blackPawnVector = List.of(Position.initPosition(0, -1));
+    private static final List<Position> whitePawnVector = List.of(Position.initPosition(0, 1));
 
     private final List<Position> movablePosition = new ArrayList<>();
 
@@ -38,10 +40,10 @@ public class MovablePosition {
 
     private void makePawnRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_PAWN.getName())) {
-            addWhitePawnPosition(chessBoard, sourcePosition);
+            addPawnPosition(chessBoard, sourcePosition, whitePawnVector, 2);
         }
         if (pieceShape.equals(Shape.BLACK_PAWN.getName())) {
-            addBlackPawnPosition(chessBoard, sourcePosition);
+            addPawnPosition(chessBoard, sourcePosition, blackPawnVector, 7);
         }
     }
 
@@ -103,16 +105,18 @@ public class MovablePosition {
         }
     }
 
-    public void addBlackPawnPosition(ChessBoard chessBoard, Position sourcePosition) {
-        for (Position blackPawnPosition : blackPawnVector) {
-            findRoute(chessBoard, blackPawnPosition, sourcePosition, ONE_STEP_MOVEMENT);
+    public void addPawnPosition(ChessBoard chessBoard, Position sourcePosition, List<Position> moveVector, int startY) {
+        for (Position pawnPosition : moveVector) {
+            findPawnRouteByRow(chessBoard, sourcePosition, startY, pawnPosition);
         }
     }
 
-    public void addWhitePawnPosition(ChessBoard chessBoard, Position sourcePosition) {
-        for (Position whitePawnPosition : whitePawnVector) {
-            findRoute(chessBoard, whitePawnPosition, sourcePosition, ONE_STEP_MOVEMENT);
+    private void findPawnRouteByRow(ChessBoard chessBoard, Position sourcePosition, int startY, Position pawnPosition) {
+        if(sourcePosition.getYPosition() == startY) {
+            findRoute(chessBoard, pawnPosition, sourcePosition, TWO_STEP_MOVEMENT);
+            return;
         }
+        findRoute(chessBoard, pawnPosition, sourcePosition, ONE_STEP_MOVEMENT);
     }
 
     private void findRoute(ChessBoard chessBoard, Position movingPosition, Position sourcePosition, int limit) {
@@ -125,6 +129,9 @@ public class MovablePosition {
                     continue;
                 }
                 if (checkPieceSideInPosition(chessBoard, sourcePosition, Position.initPosition(newX, newY))) {
+                    break;
+                }
+                if(chessBoard.getChessPieceByPosition(sourcePosition).getClass().equals(Pawn.class)){
                     break;
                 }
                 movablePosition.add(Position.initPosition(newX, newY));
