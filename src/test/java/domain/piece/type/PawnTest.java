@@ -20,7 +20,7 @@ class PawnTest {
     void fetchMovableCoordinate() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square currentSquare = new Square(2, 2);
-        Square targetSquare = new Square(2, 3);
+        Square targetSquare = new Square(2, 4);
 
         List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
 
@@ -42,7 +42,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("pawn이 대각선으로 움직이려하면, 대각선으로 갈수 있는 모든 경로를 반환하다.")
+    @DisplayName("pawn이 대각선으로 움직이려하면 target만 반환하다.")
     void fetchMovableCoordinateDiagonal() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square currentSquare = new Square(2, 2);
@@ -50,7 +50,7 @@ class PawnTest {
 
         List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
 
-        assertThat(squares).contains(new Square(1,3), new Square(3,3));
+        assertThat(squares).contains(new Square(3,3));
     }
 
     @Test
