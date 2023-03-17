@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.Location;
 import domain.type.Color;
+import domain.type.PieceType;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,10 @@ public abstract class Piece {
     protected Piece(final Color color, final PieceType pieceType) {
         this.color = color;
         this.pieceType = pieceType;
+    }
+
+    public static Piece getEmpty() {
+        return new EmptyPiece();
     }
 
     abstract public List<Location> searchPath(final Location start, final Location end);
