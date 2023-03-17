@@ -40,7 +40,7 @@ public class PawnTest {
         }
 
         @Test
-        @DisplayName("Pawn 이 하얀색 진영일 때는 북동, 북서 방향 대각선으로만 공격할 수 있다.")
+        @DisplayName("Pawn 이 하얀색 진영일 때는 북쪽 방향 대각선으로만 공격할 수 있다.")
         void 공격_방향확인() {
             Pawn pawn = new Pawn(Camp.WHITE);
 
@@ -79,7 +79,7 @@ public class PawnTest {
         }
 
         @Test
-        @DisplayName("Pawn 이 검정색 진영일 때는 북동, 북서 방향 대각선으로만 공격할 수 있다.")
+        @DisplayName("Pawn 이 검정색 진영일 때는 남쪽 방향 대각선으로만 공격할 수 있다.")
         void 공격_방향확인() {
             Pawn pawn = new Pawn(Camp.BLACK);
 
