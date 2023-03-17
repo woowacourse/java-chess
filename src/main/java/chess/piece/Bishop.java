@@ -1,9 +1,9 @@
 package chess.piece;
 
-import static chess.Movement.DL;
-import static chess.Movement.DR;
-import static chess.Movement.UL;
-import static chess.Movement.UR;
+import static chess.Movement.DOWN_LEFT;
+import static chess.Movement.DOWN_RIGHT;
+import static chess.Movement.UP_LEFT;
+import static chess.Movement.UP_RIGHT;
 
 import chess.Movement;
 import chess.Path;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class Bishop extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UR, UL, DR, DL);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
     public Bishop(final Color color) {
         super(color);

@@ -1,9 +1,9 @@
 package chess.piece;
 
-import static chess.Movement.D;
-import static chess.Movement.L;
-import static chess.Movement.R;
-import static chess.Movement.U;
+import static chess.Movement.DOWN;
+import static chess.Movement.LEFT;
+import static chess.Movement.RIGHT;
+import static chess.Movement.UP;
 
 import chess.Movement;
 import chess.Path;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class Rook extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP, DOWN, RIGHT, LEFT);
 
     public Rook(final Color color) {
         super(color);

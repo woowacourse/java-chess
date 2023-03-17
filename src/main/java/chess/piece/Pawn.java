@@ -1,11 +1,11 @@
 package chess.piece;
 
-import static chess.Movement.D;
-import static chess.Movement.DL;
-import static chess.Movement.DR;
-import static chess.Movement.U;
-import static chess.Movement.UL;
-import static chess.Movement.UR;
+import static chess.Movement.DOWN;
+import static chess.Movement.DOWN_LEFT;
+import static chess.Movement.DOWN_RIGHT;
+import static chess.Movement.UP;
+import static chess.Movement.UP_LEFT;
+import static chess.Movement.UP_RIGHT;
 
 import chess.Movement;
 import chess.Path;
@@ -17,12 +17,12 @@ import java.util.Optional;
 public class Pawn extends Piece {
 
     private static final Map<Color, Movement> CAN_MOVE_EMPTY_DESTINATION = Map.of(
-            Color.BLACK, D,
-            Color.WHITE, U
+            Color.BLACK, DOWN,
+            Color.WHITE, UP
     );
     private static final Map<Color, List<Movement>> CAN_MOVE_ENEMY_DESTINATION = Map.of(
-            Color.BLACK, List.of(DR, DL),
-            Color.WHITE, List.of(UR, UL)
+            Color.BLACK, List.of(DOWN_RIGHT, DOWN_LEFT),
+            Color.WHITE, List.of(UP_RIGHT, UP_LEFT)
     );
 
     public Pawn(final Color color) {
@@ -36,14 +36,14 @@ public class Pawn extends Piece {
 
             if (color.isWhite() && from.rank().value() == 2
                     && rankDifference(from, to) == 2) {
-                final Position wayPoint = from.moveBy(U);
+                final Position wayPoint = from.moveBy(UP);
 
                 return new Path(wayPoint);
             }
 
             if (color.isBlack() && from.rank().value() == 7
                     && rankDifference(from, to) == -2) {
-                Position wayPoint = from.moveBy(D);
+                Position wayPoint = from.moveBy(DOWN);
 
                 return new Path(wayPoint);
             }

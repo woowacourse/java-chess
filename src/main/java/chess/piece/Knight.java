@@ -1,21 +1,13 @@
 package chess.piece;
 
-import static chess.Movement.D;
-import static chess.Movement.DDL;
-import static chess.Movement.DDR;
-import static chess.Movement.DL;
-import static chess.Movement.DR;
-import static chess.Movement.L;
-import static chess.Movement.LLD;
-import static chess.Movement.LLU;
-import static chess.Movement.R;
-import static chess.Movement.RRD;
-import static chess.Movement.RRU;
-import static chess.Movement.U;
-import static chess.Movement.UL;
-import static chess.Movement.UR;
-import static chess.Movement.UUL;
-import static chess.Movement.UUR;
+import static chess.Movement.DOWN_DOWN_LEFT;
+import static chess.Movement.DOWN_DOWN_RIGHT;
+import static chess.Movement.LEFT_LEFT_DOWN;
+import static chess.Movement.LEFT_LEFT_UP;
+import static chess.Movement.RIGHT_RIGHT_DOWN;
+import static chess.Movement.RIGHT_RIGHT_UP;
+import static chess.Movement.UP_UP_LEFT;
+import static chess.Movement.UP_UP_RIGHT;
 
 import chess.Movement;
 import chess.Path;
@@ -27,8 +19,8 @@ public class Knight extends Piece {
 
     private static final List<Movement> CAN_MOVE_DESTINATION =
             List.of(
-                    UUR, UUL, RRU, RRD,
-                    DDR, DDL, LLU, LLD
+                    UP_UP_RIGHT, UP_UP_LEFT, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN,
+                    DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, LEFT_LEFT_UP, LEFT_LEFT_DOWN
             );
 
     public Knight(final Color color) {

@@ -14,7 +14,7 @@ class PositionTest {
 
         Movement movement = destination.convertMovement(from);
 
-        assertThat(movement).isEqualTo(Movement.UUR);
+        assertThat(movement).isEqualTo(Movement.UP_UP_RIGHT);
     }
 
     @Test
@@ -25,6 +25,6 @@ class PositionTest {
 
         Movement movement = destination.convertMovement(from);
 
-        assertThat(movement).isEqualTo(Movement.R);
+        assertThat(movement).isEqualTo(Movement.RIGHT);
     }
 }

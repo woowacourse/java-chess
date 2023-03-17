@@ -4,24 +4,24 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum Movement {
-    U(0, 1),
-    D(0, -1),
-    R(1, 0),
-    L(-1, 0),
+    UP(0, 1),
+    DOWN(0, -1),
+    RIGHT(1, 0),
+    LEFT(-1, 0),
 
-    UR(1, 1),
-    UL(-1, 1),
-    DR(1, -1),
-    DL(-1, -1),
+    UP_RIGHT(1, 1),
+    UP_LEFT(-1, 1),
+    DOWN_RIGHT(1, -1),
+    DOWN_LEFT(-1, -1),
 
-    UUR(1, 2),
-    UUL(-1, 2),
-    RRU(2, 1),
-    RRD(2, -1),
-    DDR(1, -2),
-    DDL(-1, -2),
-    LLU(-2, 1),
-    LLD(-2, -1);
+    UP_UP_RIGHT(1, 2),
+    UP_UP_LEFT(-1, 2),
+    RIGHT_RIGHT_UP(2, 1),
+    RIGHT_RIGHT_DOWN(2, -1),
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+    LEFT_LEFT_UP(-2, 1),
+    LEFT_LEFT_DOWN(-2, -1);
 
     private final int file;
     private final int rank;
@@ -40,13 +40,5 @@ public enum Movement {
 
     public Position nextPosition(File file, Rank rank) {
         return new Position(file.value() + this.file, rank.value() + this.rank);
-    }
-
-    public int getFile() {
-        return file;
-    }
-
-    public int getRank() {
-        return rank;
     }
 }
