@@ -101,13 +101,16 @@ public class ChessBoard {
         checkObstacleInDestination(destination, camp);
     }
 
-    private void checkObstacleInDestination(final Position destination, final Camp camp) {
-        if (!piecesByPosition.containsKey(destination)) {
-            return;
+    private void checkObstacleInPath(final Path path, final Position destination) {
+        List<Position> positions = path.positions();
+        for (int index = 0; index < path.findPositionIndex(destination); index++) {
+            checkObstacleAtIndex(positions, index);
         }
-        Piece pieceAtDestination = piecesByPosition.get(destination);
-        if (pieceAtDestination.isSameColor(camp)) {
-            throw new IllegalArgumentException(WRONG_ATTACK_TARGET_ERROR_MESSAGE);
+    }
+
+    private void checkObstacleAtIndex(final List<Position> positions, final int index) {
+        if (piecesByPosition.containsKey(positions.get(index))) {
+            throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
         }
     }
 
@@ -124,21 +127,18 @@ public class ChessBoard {
         }
     }
 
+    private void checkObstacleInDestination(final Position destination, final Camp camp) {
+        if (!piecesByPosition.containsKey(destination)) {
+            return;
+        }
+        Piece pieceAtDestination = piecesByPosition.get(destination);
+        if (pieceAtDestination.isSameColor(camp)) {
+            throw new IllegalArgumentException(WRONG_ATTACK_TARGET_ERROR_MESSAGE);
+        }
+    }
+
     private boolean isEmptyPosition(final Position destination) {
         return !piecesByPosition.containsKey(destination);
-    }
-
-    private void checkObstacleInPath(final Path path, final Position destination) {
-        List<Position> positions = path.positions();
-        for (int index = 0; index < path.findPositionIndex(destination); index++) {
-            checkObstacleAtIndex(positions, index);
-        }
-    }
-
-    private void checkObstacleAtIndex(final List<Position> positions, final int index) {
-        if (piecesByPosition.containsKey(positions.get(index))) {
-            throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
-        }
     }
 
     public Map<Position, Piece> piecesByPosition() {
