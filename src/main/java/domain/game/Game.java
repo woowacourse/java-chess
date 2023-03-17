@@ -21,8 +21,8 @@ public class Game {
 
     public void move(Side side, Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
-        //TODO 디미터의 법칙 지키기
-        if (!sourcePiece.getSide().equals(side)) {
+
+        if (sourcePiece.isIncorrectTurn(side)) {
             throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
         }
         validateMoving(sourcePosition, targetPosition, sourcePiece);

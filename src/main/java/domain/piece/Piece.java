@@ -30,8 +30,7 @@ public abstract class Piece {
         return targetPiece.side.equals(Side.WHITE);
     }
 
-    //TODO getter 제거
-    public Side getSide() {
-        return side;
+    public boolean isIncorrectTurn(Side currentTurn) {
+        return this.side != currentTurn;
     }
 }

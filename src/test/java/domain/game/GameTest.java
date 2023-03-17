@@ -44,9 +44,12 @@ class GameTest {
     @Test
     void shouldKillWhenMoveToOpponentPiece() {
         Piece sourcePiece = chessBoard.get(Position.of("b", "2"));
-        game.move(Side.WHITE, Position.of("b", "2"), Position.of("b", "4"));    // 1. White pawn을 위로 2칸 이동
-        game.move(Side.BLACK, Position.of("c", "7"), Position.of("c", "5"));    // 2. Black pawn을 아래로 2칸 이동
-        game.move(Side.WHITE, Position.of("b", "4"), Position.of("c", "5"));    // 3. 1에서 움직인 White pawn이 2의 Black pawn을 잡는다.
+        // 1. White pawn을 위로 2칸 이동
+        game.move(Side.WHITE, Position.of("b", "2"), Position.of("b", "4"));
+        // 2. Black pawn을 아래로 2칸 이동
+        game.move(Side.BLACK, Position.of("c", "7"), Position.of("c", "5"));
+        // 3. 1에서 움직인 White pawn이 2의 Black pawn을 잡는다.
+        game.move(Side.WHITE, Position.of("b", "4"), Position.of("c", "5"));
 
         assertAll(
                 () -> assertThat(chessBoard.get(Position.of("c", "5"))).isEqualTo(sourcePiece),
