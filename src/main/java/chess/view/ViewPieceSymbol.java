@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum ViewPieceSymbol {
-
     PAWN(PieceSymbol.PAWN, "p"),
     BISHOP(PieceSymbol.BISHOP, "b"),
     KING(PieceSymbol.KING, "k"),
@@ -40,5 +39,4 @@ public enum ViewPieceSymbol {
 
         return viewSymbol;
     }
-
 }

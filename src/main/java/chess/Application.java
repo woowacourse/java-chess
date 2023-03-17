@@ -9,8 +9,8 @@ public class Application {
         ChessController controller = new ChessController(new InputView(), new OutputView());
         try {
             controller.run();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            controller.printErrorMessage(exception);
         }
     }
 }

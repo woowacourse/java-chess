@@ -26,7 +26,6 @@ class KingTest {
         assertThat(result).isInstanceOf(BlockingMove.class);
     }
 
-
     @Test
     @DisplayName("킹은 한 칸만 움직일 수 있다.")
     void movableSizeTest() {

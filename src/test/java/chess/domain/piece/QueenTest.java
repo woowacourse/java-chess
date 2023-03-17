@@ -37,5 +37,4 @@ class QueenTest {
 
         assertThat(result).isInstanceOf(BlockingMove.class);
     }
-
 }

@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
 
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final int LINE_BREAK_INDEX = 1;
@@ -30,8 +30,12 @@ public class OutputView {
     }
 
     private static void checkLineBreak(StringBuilder chessBoardView) {
-        if (chessBoardView.length() % (CHESS_BOARD_WIDTH + LINE_BREAK_INDEX) ==  0){
-            chessBoardView.append("\n");
+        if (chessBoardView.length() % (CHESS_BOARD_WIDTH + LINE_BREAK_INDEX) == 0) {
+            chessBoardView.append(System.lineSeparator());
         }
+    }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
     }
 }

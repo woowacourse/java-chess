@@ -23,7 +23,6 @@ class ChessCommandTest {
     @ParameterizedTest(name = "유효하지 않은 입력인 경우 예외가 발생합니다. - {0}")
     @ValueSource(strings = {"Start", "END", "ada", "Hello"})
     void fromUserInputExceptionTest(String userInput) {
-
         assertThatThrownBy(() -> ChessCommand.from(userInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }

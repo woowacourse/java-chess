@@ -2,7 +2,7 @@ package chess.domain.position.move;
 
 import chess.domain.piece.Piece;
 
-public class BlockingMove implements PieceMove {
+public final class BlockingMove implements PieceMove {
 
     @Override
     public boolean isMovable(Piece piece,  boolean isLastPiece) {
@@ -11,6 +11,4 @@ public class BlockingMove implements PieceMove {
         }
         return piece.isEmpty();
     }
-
-
 }

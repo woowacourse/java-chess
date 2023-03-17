@@ -89,5 +89,4 @@ class PositionTest {
             assertThat(betweenPositions).contains(new Position(File.B, Rank.ONE), new Position(File.C, Rank.ONE));
         }
     }
-
 }

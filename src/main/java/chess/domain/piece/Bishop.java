@@ -27,5 +27,4 @@ public final class Bishop extends Piece {
 
         return Math.abs(fileGap) == Math.abs(rankGap);
     }
-
 }

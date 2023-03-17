@@ -10,7 +10,7 @@ import chess.view.ViewRank;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ChessController {
+public final class ChessController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
@@ -28,13 +28,17 @@ public class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-        ChessCommand chessCommand = retryOnInvalidUserInput(() -> {
+        requestStartCommand();
+
+        ChessGame chessGame = startChessGame();
+        play(chessGame);
+    }
+
+    private void requestStartCommand() {
+        retryOnInvalidUserInput(() -> {
             List<String> strings = inputView.readCommand();
             return ChessCommand.getStart(strings.get(COMMAND_INDEX));
         });
-
-        ChessGame chessGame = startChessGame();
-        play(chessGame, chessCommand);
     }
 
     private ChessGame startChessGame() {
@@ -44,7 +48,8 @@ public class ChessController {
         return new ChessGame(piecesPosition);
     }
 
-    private void play(ChessGame chessGame, ChessCommand command) {
+    private void play(ChessGame chessGame) {
+        ChessCommand command;
         do {
             command = retryOnInvalidUserInput(() -> playTurn(chessGame));
         } while (!command.isEnd());
@@ -67,7 +72,6 @@ public class ChessController {
         String toInput = commands.get(TO_POSITION_INDEX);
         validateEqualPosition(fromInput, toInput);
 
-
         chessGame.move(toPosition(fromInput), toPosition(toInput));
     }
 
@@ -88,11 +92,15 @@ public class ChessController {
         outputView.printChessState(piecesPosition.getPiecesPosition());
     }
 
+    public void printErrorMessage(Exception exception) {
+        outputView.printErrorMessage(exception.getMessage());
+    }
+
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
             return request.get();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return retryOnInvalidUserInput(request);
         }
     }

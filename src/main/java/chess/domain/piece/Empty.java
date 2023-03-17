@@ -20,7 +20,6 @@ public final class Empty extends Piece {
         return false;
     }
 
-
     @Override
     public boolean isEmpty() {
         return true;

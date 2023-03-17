@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Position {
+
     private final File file;
     private final Rank rank;
 
@@ -25,17 +26,19 @@ public final class Position {
         int fileGap = this.calculateFileGap(other);
         int rankGap = this.calculateRankGap(other);
 
-        int distance = Math.max(Math.abs(fileGap), Math.abs(rankGap));
+        return getBetweenPositions(other, fileGap, rankGap);
+    }
 
-        int i1 = fileGap / distance;
-        int i2 = rankGap / distance;
+    private List<Position> getBetweenPositions(Position other, int fileGap, int rankGap) {
+        int distance = Math.max(Math.abs(fileGap), Math.abs(rankGap));
+        int fileUnitGap = fileGap / distance;
+        int rankUnitGap = rankGap / distance;
 
         List<Position> between = new ArrayList<>();
         for (int i = 1; i < distance; i++) {
-            other = other.move(i1, i2);
+            other = other.move(fileUnitGap, rankUnitGap);
             between.add(other);
         }
-
         return between;
     }
 

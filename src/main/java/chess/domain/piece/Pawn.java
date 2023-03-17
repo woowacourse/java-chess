@@ -44,17 +44,21 @@ public final class Pawn extends Piece {
             return true;
         }
 
-        if ((isBlack() && rankGap == -1)
-            || (!isBlack() && rankGap == 1)) {
-            return true;
-        }
-
-        return (isBlack() && rankGap == -2 && !this.isMoved)
-                || (!isBlack() && rankGap == 2 && !this.isMoved);
+        return isForwardMove(rankGap);
     }
 
     private boolean isDiagonalMove(int rankGap, int fileGap) {
         return (isBlack() && rankGap == -1 && Math.abs(fileGap) == 1)
                 || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
+    }
+
+    private boolean isForwardMove(int rankGap) {
+        if ((isBlack() && rankGap == -1)
+                || (!isBlack() && rankGap == 1)) {
+            return true;
+        }
+
+        return (isBlack() && rankGap == -2 && !this.isMoved)
+                || (!isBlack() && rankGap == 2 && !this.isMoved);
     }
 }

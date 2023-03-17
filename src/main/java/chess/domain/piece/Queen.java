@@ -22,10 +22,10 @@ public final class Queen extends Piece {
 
     @Override
     boolean isPieceRule(Position from, Position to) {
-        int fileGap = to.calculateFileGap(from);
-        int rankGap = to.calculateRankGap(from);
+        int fileGap = Math.abs(to.calculateFileGap(from));
+        int rankGap = Math.abs(to.calculateRankGap(from));
 
-        return (Math.abs(rankGap) == Math.abs(fileGap))
-                || Math.abs(rankGap) == 0 || Math.abs(fileGap) == 0;
+        return (rankGap == fileGap)
+                || rankGap == 0 || fileGap == 0;
     }
 }

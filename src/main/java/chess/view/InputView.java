@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final String MOVE_DELIMITER = " ";

@@ -2,7 +2,7 @@ package chess.domain.position.move;
 
 import chess.domain.piece.Piece;
 
-public class PawnCatchMove implements PieceMove {
+public final class PawnCatchMove implements PieceMove {
 
     @Override
     public boolean isMovable(Piece piece, boolean isLastPiece) {
