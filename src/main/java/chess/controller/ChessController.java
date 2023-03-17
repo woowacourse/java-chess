@@ -12,7 +12,6 @@ public class ChessController {
 
     public void run() {
         Board board = Board.create(new HashMap<>());
-        Order order = null;
 
         startGame(board);
         playGame(board);
@@ -25,7 +24,7 @@ public class ChessController {
 
     private static void playGame(final Board board) {
         Order order = Order.ofMoveOrEnd(InputView.askNext());
-        if (order.isEnd()){
+        if (order.isEnd()) {
             return;
         }
         if (order.isMove()) {
