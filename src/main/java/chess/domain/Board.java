@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.initial.BoardFactory;
 
 import java.util.Map;

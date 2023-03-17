@@ -1,8 +1,8 @@
 package chess.initial;
 
-import chess.File;
-import chess.Rank;
-import chess.domain.Position;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
+import chess.domain.position.Position;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
