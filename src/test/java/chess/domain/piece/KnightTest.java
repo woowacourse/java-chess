@@ -17,8 +17,8 @@ class KnightTest {
     void isMovable() {
         Piece knight = new Knight(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.TWO);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.TWO);
 
         PieceMove result = knight.getMovement(from, to);
 

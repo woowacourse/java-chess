@@ -12,8 +12,8 @@ class PositionTest {
     @Test
     @DisplayName("포인트간의 랭크의 차이를 계산한다.")
     void calculateRankGap() {
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.FOUR);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.FOUR);
 
         int rankGap = from.calculateRankGap(to);
 
@@ -23,8 +23,8 @@ class PositionTest {
     @Test
     @DisplayName("포인트간의 파일의 차이를 계산한다.")
     void calculateFileGap() {
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.FOUR);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.FOUR);
 
         int fileGap = from.calculateFileGap(to);
 
@@ -37,56 +37,56 @@ class PositionTest {
         @Test
         @DisplayName("A1 -> C3")
         void A1ToC3PointsTest() {
-            Position from = new Position(File.A, Rank.ONE);
-            Position to = new Position(File.C, Rank.THREE);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.C, Rank.THREE);
 
             List<Position> betweenPositions = from.getBetweenPositions(to);
 
-            assertThat(betweenPositions).contains(new Position(File.B, Rank.TWO));
+            assertThat(betweenPositions).contains(Position.of(File.B, Rank.TWO));
         }
 
         @Test
         @DisplayName("C1 -> A3")
         void C1ToA3PointsTest() {
-            Position from = new Position(File.C, Rank.ONE);
-            Position to = new Position(File.A, Rank.THREE);
+            Position from = Position.of(File.C, Rank.ONE);
+            Position to = Position.of(File.A, Rank.THREE);
 
             List<Position> betweenPositions = from.getBetweenPositions(to);
 
-            assertThat(betweenPositions).contains(new Position(File.B, Rank.TWO));
+            assertThat(betweenPositions).contains(Position.of(File.B, Rank.TWO));
         }
 
         @Test
         @DisplayName("D4 -> A1")
         void D4ToA1PointsTest() {
-            Position from = new Position(File.D, Rank.FOUR);
-            Position to = new Position(File.A, Rank.ONE);
+            Position from = Position.of(File.D, Rank.FOUR);
+            Position to = Position.of(File.A, Rank.ONE);
 
             List<Position> betweenPositions = from.getBetweenPositions(to);
 
-            assertThat(betweenPositions).contains(new Position(File.B, Rank.TWO), new Position(File.C, Rank.THREE));
+            assertThat(betweenPositions).contains(Position.of(File.B, Rank.TWO), Position.of(File.C, Rank.THREE));
         }
 
         @Test
         @DisplayName("A1 -> A4")
         void A1ToA4PointsTest() {
-            Position from = new Position(File.A, Rank.ONE);
-            Position to = new Position(File.A, Rank.FOUR);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.A, Rank.FOUR);
 
             List<Position> betweenPositions = from.getBetweenPositions(to);
 
-            assertThat(betweenPositions).contains(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
+            assertThat(betweenPositions).contains(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE));
         }
 
         @Test
         @DisplayName("A1 -> D1")
         void A1ToD1PointsTest() {
-            Position from = new Position(File.A, Rank.ONE);
-            Position to = new Position(File.D, Rank.ONE);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.D, Rank.ONE);
 
             List<Position> betweenPositions = from.getBetweenPositions(to);
 
-            assertThat(betweenPositions).contains(new Position(File.B, Rank.ONE), new Position(File.C, Rank.ONE));
+            assertThat(betweenPositions).contains(Position.of(File.B, Rank.ONE), Position.of(File.C, Rank.ONE));
         }
     }
 }

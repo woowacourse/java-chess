@@ -18,8 +18,8 @@ class KingTest {
     void movableTest() {
         Piece king = new King(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.TWO);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.TWO);
 
         PieceMove result = king.getMovement(from, to);
 
@@ -31,8 +31,8 @@ class KingTest {
     void movableSizeTest() {
         Piece king = new King(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.THREE);
 
         PieceMove result = king.getMovement(from, to);
 

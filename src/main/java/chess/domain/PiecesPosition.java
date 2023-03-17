@@ -33,25 +33,25 @@ public final class PiecesPosition {
     }
 
     private void setUpNobilityPiece(Rank rank, Camp camp) {
-        piecesPosition.put(new Position(File.A, rank), new Rook(camp));
-        piecesPosition.put(new Position(File.B, rank), new Knight(camp));
-        piecesPosition.put(new Position(File.C, rank), new Bishop(camp));
-        piecesPosition.put(new Position(File.D, rank), new Queen(camp));
-        piecesPosition.put(new Position(File.E, rank), new King(camp));
-        piecesPosition.put(new Position(File.F, rank), new Bishop(camp));
-        piecesPosition.put(new Position(File.G, rank), new Knight(camp));
-        piecesPosition.put(new Position(File.H, rank), new Rook(camp));
+        piecesPosition.put(Position.of(File.A, rank), new Rook(camp));
+        piecesPosition.put(Position.of(File.B, rank), new Knight(camp));
+        piecesPosition.put(Position.of(File.C, rank), new Bishop(camp));
+        piecesPosition.put(Position.of(File.D, rank), new Queen(camp));
+        piecesPosition.put(Position.of(File.E, rank), new King(camp));
+        piecesPosition.put(Position.of(File.F, rank), new Bishop(camp));
+        piecesPosition.put(Position.of(File.G, rank), new Knight(camp));
+        piecesPosition.put(Position.of(File.H, rank), new Rook(camp));
     }
 
     private void setUpPawn(Rank rank, Camp camp) {
         for (File file : File.values()) {
-            piecesPosition.put(new Position(file, rank), new Pawn(camp));
+            piecesPosition.put(Position.of(file, rank), new Pawn(camp));
         }
     }
 
     private void setUpBlank(Rank rank) {
         for (File file : File.values()) {
-            piecesPosition.put(new Position(file, rank), new Empty());
+            piecesPosition.put(Position.of(file, rank), new Empty());
         }
     }
 

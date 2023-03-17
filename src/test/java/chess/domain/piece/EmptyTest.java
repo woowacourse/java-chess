@@ -16,8 +16,8 @@ class EmptyTest {
     @DisplayName("빈 공간 선택 시 항상 움직일 수 없다.")
     void movableUnsupportedExceptionTest() {
         Piece empty = new Empty();
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.THREE);
 
         PieceMove result = empty.getMovement(from, to);
 

@@ -17,8 +17,8 @@ class ChessGameTest {
         PiecesPosition piecesPosition = new PiecesPosition();
         ChessGame chessGame = new ChessGame(piecesPosition);
 
-        Position whiteRookPosition = new Position(File.A, Rank.ONE);
-        Position toPosition = new Position(File.A, Rank.THREE);
+        Position whiteRookPosition = Position.of(File.A, Rank.ONE);
+        Position toPosition = Position.of(File.A, Rank.THREE);
 
         assertThatThrownBy(() -> chessGame.move(whiteRookPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -30,8 +30,8 @@ class ChessGameTest {
         PiecesPosition piecesPosition = new PiecesPosition();
         ChessGame chessGame = new ChessGame(piecesPosition);
 
-        Position whiteKnightPosition = new Position(File.B, Rank.ONE);
-        Position toPosition = new Position(File.A, Rank.THREE);
+        Position whiteKnightPosition = Position.of(File.B, Rank.ONE);
+        Position toPosition = Position.of(File.A, Rank.THREE);
 
         assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition));
     }
@@ -42,8 +42,8 @@ class ChessGameTest {
         PiecesPosition piecesPosition = new PiecesPosition();
         ChessGame chessGame = new ChessGame(piecesPosition);
 
-        Position emptyPosition = new Position(File.A, Rank.THREE);
-        Position toPosition = new Position(File.A, Rank.FOUR);
+        Position emptyPosition = Position.of(File.A, Rank.THREE);
+        Position toPosition = Position.of(File.A, Rank.FOUR);
 
         assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);

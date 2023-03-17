@@ -18,8 +18,8 @@ class PawnTest {
     void isMovable1() {
         Piece pawn = new Pawn(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.TWO);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.TWO);
 
         PieceMove result = pawn.getMovement(from, to);
 
@@ -31,8 +31,8 @@ class PawnTest {
     void isMovable2() {
         Piece pawn = new Pawn(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.THREE);
 
         PieceMove result = pawn.getMovement(from, to);
 
@@ -44,8 +44,8 @@ class PawnTest {
     void isMovableDiagonal() {
         Piece pawn = new Pawn(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.B, Rank.TWO);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.B, Rank.TWO);
 
         PieceMove result = pawn.getMovement(from, to);
 

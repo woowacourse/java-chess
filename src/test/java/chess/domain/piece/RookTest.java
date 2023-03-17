@@ -17,8 +17,8 @@ class RookTest {
     @DisplayName("룩은 직선으로 움직일 수 있다.")
     void movableTest() {
         Piece rook = new Rook(Camp.WHITE);
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.THREE);
 
         PieceMove result = rook.getMovement(from, to);
 
@@ -30,8 +30,8 @@ class RookTest {
     void movableFailDiagonalTest() {
         Piece rook = new Rook(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.THREE);
 
         PieceMove result = rook.getMovement(from, to);
 

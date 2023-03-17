@@ -17,8 +17,8 @@ class BishopTest {
     @DisplayName("비숍은 대각선으로 움직일 수 있다.")
     void movableTest() {
         Bishop bishop = new Bishop(Camp.WHITE);
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.THREE);
 
         PieceMove result = bishop.getMovement(from, to);
 
@@ -29,8 +29,8 @@ class BishopTest {
     @DisplayName("비숍은 직선으로 움직일 수 없다.")
     void movableFailStraightTest() {
         Bishop bishop = new Bishop(Camp.WHITE);
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.THREE);
 
         PieceMove result = bishop.getMovement(from, to);
 

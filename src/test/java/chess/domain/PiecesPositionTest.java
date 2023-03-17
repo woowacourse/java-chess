@@ -51,14 +51,14 @@ class PiecesPositionTest {
 
         Stream<Arguments> initialBoardStateWhite() {
             return Stream.of(
-                    arguments(new Position(File.A, Rank.ONE), new Rook(Camp.WHITE)),
-                    arguments(new Position(File.B, Rank.ONE), new Knight(Camp.WHITE)),
-                    arguments(new Position(File.C, Rank.ONE), new Bishop(Camp.WHITE)),
-                    arguments(new Position(File.D, Rank.ONE), new Queen(Camp.WHITE)),
-                    arguments(new Position(File.E, Rank.ONE), new King(Camp.WHITE)),
-                    arguments(new Position(File.F, Rank.ONE), new Bishop(Camp.WHITE)),
-                    arguments(new Position(File.G, Rank.ONE), new Knight(Camp.WHITE)),
-                    arguments(new Position(File.H, Rank.ONE), new Rook(Camp.WHITE))
+                    arguments(Position.of(File.A, Rank.ONE), new Rook(Camp.WHITE)),
+                    arguments(Position.of(File.B, Rank.ONE), new Knight(Camp.WHITE)),
+                    arguments(Position.of(File.C, Rank.ONE), new Bishop(Camp.WHITE)),
+                    arguments(Position.of(File.D, Rank.ONE), new Queen(Camp.WHITE)),
+                    arguments(Position.of(File.E, Rank.ONE), new King(Camp.WHITE)),
+                    arguments(Position.of(File.F, Rank.ONE), new Bishop(Camp.WHITE)),
+                    arguments(Position.of(File.G, Rank.ONE), new Knight(Camp.WHITE)),
+                    arguments(Position.of(File.H, Rank.ONE), new Rook(Camp.WHITE))
             );
         }
 
@@ -74,14 +74,14 @@ class PiecesPositionTest {
 
         Stream<Arguments> initialBoardStateBlack() {
             return Stream.of(
-                    arguments(new Position(File.A, Rank.EIGHT), new Rook(Camp.BLACK)),
-                    arguments(new Position(File.B, Rank.EIGHT), new Knight(Camp.BLACK)),
-                    arguments(new Position(File.C, Rank.EIGHT), new Bishop(Camp.BLACK)),
-                    arguments(new Position(File.D, Rank.EIGHT), new Queen(Camp.BLACK)),
-                    arguments(new Position(File.E, Rank.EIGHT), new King(Camp.BLACK)),
-                    arguments(new Position(File.F, Rank.EIGHT), new Bishop(Camp.BLACK)),
-                    arguments(new Position(File.G, Rank.EIGHT), new Knight(Camp.BLACK)),
-                    arguments(new Position(File.H, Rank.EIGHT), new Rook(Camp.BLACK))
+                    arguments(Position.of(File.A, Rank.EIGHT), new Rook(Camp.BLACK)),
+                    arguments(Position.of(File.B, Rank.EIGHT), new Knight(Camp.BLACK)),
+                    arguments(Position.of(File.C, Rank.EIGHT), new Bishop(Camp.BLACK)),
+                    arguments(Position.of(File.D, Rank.EIGHT), new Queen(Camp.BLACK)),
+                    arguments(Position.of(File.E, Rank.EIGHT), new King(Camp.BLACK)),
+                    arguments(Position.of(File.F, Rank.EIGHT), new Bishop(Camp.BLACK)),
+                    arguments(Position.of(File.G, Rank.EIGHT), new Knight(Camp.BLACK)),
+                    arguments(Position.of(File.H, Rank.EIGHT), new Rook(Camp.BLACK))
             );
         }
     }
@@ -93,7 +93,7 @@ class PiecesPositionTest {
         PiecesPosition piecesPosition = new PiecesPosition();
 
         for (File file : File.values()) {
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             assertThat(piecesPosition.getPiecesPosition().get(position))
                     .isEqualTo(new Pawn(camp));
         }
@@ -105,7 +105,7 @@ class PiecesPositionTest {
         PiecesPosition piecesPosition = new PiecesPosition();
 
         for (File file : File.values()) {
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             assertThat(piecesPosition.getPiecesPosition().get(position))
                     .isEqualTo(new Empty());
         }
@@ -114,8 +114,8 @@ class PiecesPositionTest {
     @Test
     @DisplayName("위치로 기물을 이동할 수 있다.")
     void movePieceOn() {
-        Position whitePawnPosition = new Position(File.A, Rank.TWO);
-        Position emptyPosition = new Position(File.A, Rank.FOUR);
+        Position whitePawnPosition = Position.of(File.A, Rank.TWO);
+        Position emptyPosition = Position.of(File.A, Rank.FOUR);
 
         PiecesPosition piecesPosition = new PiecesPosition();
 

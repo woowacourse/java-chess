@@ -17,8 +17,8 @@ class QueenTest {
     void isMovableDiagonal() {
         Piece queen = new Queen(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.THREE);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.C, Rank.THREE);
 
         PieceMove result = queen.getMovement(from, to);
 
@@ -30,8 +30,8 @@ class QueenTest {
     void isMovable() {
         Piece queen = new Queen(Camp.WHITE);
 
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.EIGHT);
+        Position from = Position.of(File.A, Rank.ONE);
+        Position to = Position.of(File.A, Rank.EIGHT);
 
         PieceMove result = queen.getMovement(from, to);
 

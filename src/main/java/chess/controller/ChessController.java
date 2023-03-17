@@ -85,7 +85,7 @@ public final class ChessController {
         String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
         String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
 
-        return new Position(ViewFile.from(fileInput), ViewRank.from(rankInput));
+        return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
     private void printBoard(PiecesPosition piecesPosition) {
