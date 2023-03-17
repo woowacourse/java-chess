@@ -15,7 +15,7 @@ import chess.domain.square.Square;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardMaker {
+public class BoardFactory {
 
     public Map<Square, Piece> make() {
         Map<Square, Piece> board = new HashMap<>();

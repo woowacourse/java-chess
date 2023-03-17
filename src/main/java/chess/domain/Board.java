@@ -18,8 +18,8 @@ public class Board {
     }
 
     public static Board create() {
-        BoardMaker boardMaker = new BoardMaker();
-        return new Board(boardMaker.make());
+        BoardFactory boardFactory = new BoardFactory();
+        return new Board(boardFactory.make());
     }
 
     // TODO: 코드 개선 시급

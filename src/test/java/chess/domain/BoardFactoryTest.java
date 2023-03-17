@@ -17,13 +17,13 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BoardMakerTest {
+class BoardFactoryTest {
 
     @Test
     @DisplayName("생성 테스트")
     void create() {
-        BoardMaker boardMaker = new BoardMaker();
-        Map<Square, Piece> board = boardMaker.make();
+        BoardFactory boardFactory = new BoardFactory();
+        Map<Square, Piece> board = boardFactory.make();
         assertThat(board.get(Square.of(File.A, Rank.ONE))).isInstanceOf(Rook.class);
         assertThat(board.get(Square.of(File.B, Rank.ONE))).isInstanceOf(Knight.class);
         assertThat(board.get(Square.of(File.C, Rank.ONE))).isInstanceOf(Bishop.class);
