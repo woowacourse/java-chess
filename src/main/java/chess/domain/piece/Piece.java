@@ -10,6 +10,7 @@ public abstract class Piece {
 
     protected static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "갈 수 없는 위치입니다.";
 
+
     protected final Color color;
 
     public Piece(final Color color) {

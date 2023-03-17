@@ -7,6 +7,7 @@ public final class Position {
     private static final int NEAR_SQUARES = 1;
     private static final int TWO_SQUARES = 2;
     private static final int EQUAL_FILE = 0;
+
     private final File file;
     private final Rank rank;
 
