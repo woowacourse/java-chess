@@ -11,8 +11,8 @@ public class InitialPawn implements PawnState {
     }
 
     @Override
-    public void validateMovable(final Path path) {
-        if (isPawnSpecialDestination(path)) {
+    public void validatePath(final Path path) {
+        if (isStraightTwoPath(path)) {
             return;
         }
         if (!path.isUnitDistance()) {
@@ -20,7 +20,7 @@ public class InitialPawn implements PawnState {
         }
     }
 
-    private boolean isPawnSpecialDestination(final Path path) {
+    private boolean isStraightTwoPath(final Path path) {
         if (Math.abs(path.rankInterval()) != 2) {
             return false;
         }

@@ -35,7 +35,7 @@ class InitialPawnTest {
         final InitialPawn initialPawn = new InitialPawn();
 
         // when & then
-        assertDoesNotThrow(() -> initialPawn.validateMovable(Path.of(from, destination)));
+        assertDoesNotThrow(() -> initialPawn.validatePath(Path.of(from, destination)));
     }
 
     @ParameterizedTest(name = "직선인 경우 세칸부터는 이동할 수 없다. 예를 들어 [{0}] 에서 [{1}]로 이동이 가능하다")
@@ -49,7 +49,7 @@ class InitialPawnTest {
         final InitialPawn initialPawn = new InitialPawn();
 
         // when & then
-        assertThatThrownBy(() -> initialPawn.validateMovable(path))
+        assertThatThrownBy(() -> initialPawn.validatePath(path))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -66,7 +66,7 @@ class InitialPawnTest {
         final InitialPawn initialPawn = new InitialPawn();
 
         // when & then
-        assertThatThrownBy(() -> initialPawn.validateMovable(path))
+        assertThatThrownBy(() -> initialPawn.validatePath(path))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -7,5 +7,5 @@ public interface PawnState {
 
     PawnState next(final PiecePosition piecePosition);
 
-    void validateMovable(final Path path);
+    void validatePath(final Path path);
 }

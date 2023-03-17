@@ -32,7 +32,7 @@ public class Pawn extends Piece {
     @Override
     protected void validatePath(final Path path) {
         pawnColorMoveStrategy.validateMovementDirection(path);
-        pawnState.validateMovable(path);
+        pawnState.validatePath(path);
     }
 
     private void validateMove(final PiecePosition destination) {
