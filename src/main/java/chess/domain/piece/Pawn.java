@@ -30,11 +30,11 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovableAtOnce(int absGapOfColum, int absGapOfRank) {
-        return true;
+        return absGapOfColum <= movableDistance && absGapOfRank <= movableDistance;
     }
 
     @Override
     public boolean isMovableDirection(Direction direction) {
-        return true;
+        return movableDirection.contains(direction);
     }
 }
