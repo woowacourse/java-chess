@@ -10,8 +10,7 @@ public enum ColumnConverter {
     FIFTH(4, "e"),
     SIXTH(5, "f"),
     SEVENTH(6, "g"),
-    EIGHTH(7, "h"),
-    ;
+    EIGHTH(7, "h");
 
     private final int column;
     private final String sign;
@@ -21,11 +20,15 @@ public enum ColumnConverter {
         this.sign = sign;
     }
 
+    private static int convert(ColumnConverter findColumn) {
+        return findColumn.column;
+    }
+
     public static int findColumn(final String sign) {
-        final ColumnConverter columnConverter = Arrays.stream(ColumnConverter.values())
+        final ColumnConverter findColumn = Arrays.stream(values())
             .filter(view -> view.sign.equals(sign))
             .findAny()
             .orElseThrow(IllegalArgumentException::new);
-        return columnConverter.column;
+        return convert(findColumn);
     }
 }
