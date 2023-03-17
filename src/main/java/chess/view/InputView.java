@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String COMMANDS_DELIMITER = " ";
+
     private final Scanner scanner = new Scanner(System.in);
 
     public void readStart() {
@@ -23,7 +25,7 @@ public class InputView {
             return input;
         }
 
-        List<String> commands = Arrays.asList(input.split(" "));
+        List<String> commands = Arrays.asList(input.split(COMMANDS_DELIMITER));
         validateCommands(commands);
 
         return commands.get(1) + commands.get(2);
