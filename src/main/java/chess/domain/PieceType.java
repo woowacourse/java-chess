@@ -1,7 +1,14 @@
 package chess.domain;
 
-import chess.domain.state.*;
-
+import chess.domain.state.BishopState;
+import chess.domain.state.EmptyState;
+import chess.domain.state.InitialPawnState;
+import chess.domain.state.KingState;
+import chess.domain.state.KnightState;
+import chess.domain.state.MoveState;
+import chess.domain.state.MovedPawnState;
+import chess.domain.state.QueenState;
+import chess.domain.state.RookState;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +21,7 @@ public enum PieceType {
     PAWN("p", List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
     EMPTY(".", List.of(EmptyState.getInstance()));
     public static final int INITIAL_STATE = 0;
+
     private final String type;
     private final List<MoveState> state;
 

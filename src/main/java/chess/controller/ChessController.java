@@ -5,7 +5,6 @@ import chess.domain.Position;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
@@ -16,6 +15,7 @@ public class ChessController {
     public static final int RANK_INDEX = 1;
     public static final int ORIGIN_INDEX = 1;
     public static final int DEST_INDEX = 2;
+
     private final OutputView outputView;
     private final InputView inputView;
     private Board board;
@@ -85,6 +85,7 @@ public class ChessController {
     }
 
     private static class RequestInfo {
+
         private final GameCommand gameCommand;
         private final String input;
 

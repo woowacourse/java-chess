@@ -13,6 +13,7 @@ public class Board {
 
     public static final Piece EMPTY_PIECE = Piece.empty();
     private static final int RANK_SIZE = 8;
+
     private final Map<Position, Piece> piecePosition = new HashMap<>();
 
     public Board() {
@@ -29,7 +30,7 @@ public class Board {
     private void makeEmptyPiece() {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                piecePosition.computeIfAbsent(Position.of(file, rank), (ignored) -> Piece.empty());
+                piecePosition.computeIfAbsent(Position.of(file, rank), ignored -> Piece.empty());
             }
         }
     }

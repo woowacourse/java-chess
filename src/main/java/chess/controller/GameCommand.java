@@ -8,7 +8,6 @@ public enum GameCommand {
     END(Pattern.compile("^end$")),
     MOVE(Pattern.compile("^move [a-h][1-8] [a-h][1-8]$"));
 
-
     private final Pattern commandFormat;
 
     GameCommand(Pattern commandFormat) {
