@@ -11,30 +11,57 @@ public class Application {
     
     public static void main(String[] args) {
         OutputView.noticeGameStart();
-        run(ChessBoard.create());
+        runChessGame(ChessBoard.create());
     }
     
-    private static void run(ChessBoard chessBoard) {
+    private static void runChessGame(ChessBoard chessBoard) {
         String command = InputView.repeat(InputView::inputCommand);
         String[] splitedCommand = command.split(" ");
     
-        if ("move".equals(splitedCommand[COMMAND_INDEX])){
-            String sourceCoordinate = splitedCommand[SOURCE_COORDINATE_INDEX];
-            String destinationCoordinate = splitedCommand[DESTINATION_COORDINATE_INDEX];
-            
-            chessBoard.move(sourceCoordinate,destinationCoordinate);
-            OutputView.printChessBoard(chessBoard.chessBoard());
-            run(chessBoard);
-        }
-        
-        if ("end".equals(splitedCommand[COMMAND_INDEX])) {
+        commandMoveCase(chessBoard, splitedCommand);
+        if (isCommandEnd(splitedCommand)) {
             return;
         }
         
-        if ("start".equals(splitedCommand[COMMAND_INDEX])){
-            ChessBoard newChessBoard = ChessBoard.create();
-            OutputView.printChessBoard(newChessBoard.chessBoard());
-            run(newChessBoard);
+        commandStartCase(splitedCommand);
+    }
+    
+    private static void commandMoveCase(ChessBoard chessBoard, String[] splitedCommand) {
+        if (isCommandMove(splitedCommand)){
+            move(chessBoard, splitedCommand);
         }
+    }
+    
+    private static boolean isCommandMove(String[] splitedCommand) {
+        return "move".equals(splitedCommand[COMMAND_INDEX]);
+    }
+    
+    private static void move(ChessBoard chessBoard, String[] splitedCommand) {
+        String sourceCoordinate = splitedCommand[SOURCE_COORDINATE_INDEX];
+        String destinationCoordinate = splitedCommand[DESTINATION_COORDINATE_INDEX];
+        
+        chessBoard.move(sourceCoordinate,destinationCoordinate);
+        OutputView.printChessBoard(chessBoard.chessBoard());
+        runChessGame(chessBoard);
+    }
+    
+    private static boolean isCommandEnd(String[] splitedCommand) {
+        return "end".equals(splitedCommand[COMMAND_INDEX]);
+    }
+    
+    private static void commandStartCase(String[] splitedCommand) {
+        if (isCommandStart(splitedCommand)){
+            runNewChessGame();
+        }
+    }
+    
+    private static boolean isCommandStart(String[] splitedCommand) {
+        return "start".equals(splitedCommand[COMMAND_INDEX]);
+    }
+    
+    private static void runNewChessGame() {
+        ChessBoard newChessBoard = ChessBoard.create();
+        OutputView.printChessBoard(newChessBoard.chessBoard());
+        runChessGame(newChessBoard);
     }
 }
