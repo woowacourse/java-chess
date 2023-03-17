@@ -239,4 +239,51 @@ class BoardTest {
                     .isInstanceOf(WrongDirectionException.class);
         }
     }
+
+    @Nested
+    @DisplayName("킹")
+    class King {
+
+        private Square whiteKing;
+
+        @BeforeEach
+        void setup() {
+            whiteKing = Square.of(File.E, Rank.ONE);
+            board.move(Square.of(File.D, Rank.TWO), Square.of(File.D, Rank.FOUR));
+            board.move(Square.of(File.E, Rank.SEVEN), Square.of(File.E, Rank.FIVE));
+            board.move(Square.of(File.D, Rank.FOUR), Square.of(File.E, Rank.FIVE));
+            board.move(Square.of(File.F, Rank.EIGHT), Square.of(File.B, Rank.FOUR));
+        }
+
+        @Test
+        @DisplayName("이동 성공")
+        void move_success() {
+            assertThatCode(() -> board.move(whiteKing, Square.of(File.D, Rank.TWO)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적 제거 성공")
+        void move_success_when_enemy_exists() {
+            assertThatCode(() -> {
+                board.move(whiteKing, Square.of(File.D, Rank.TWO));
+                board.move(Square.of(File.B, Rank.FOUR), Square.of(File.C, Rank.THREE));
+                board.move(Square.of(File.D, Rank.TWO), Square.of(File.C, Rank.THREE));
+            }).doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("아군 위치로는 이동 실패")
+        void move_fail_when_ally_exists() {
+            assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.D, Rank.ONE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("잘못된 위치로는 이동 실패")
+        void move_fail() {
+            assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.C, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+    }
 }
