@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
@@ -7,9 +8,11 @@ import java.util.List;
 
 public class ChessGame {
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
+    private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
 
     private final PiecesPosition piecesPosition;
+    private Camp turnCamp = Camp.WHITE;
 
     public ChessGame(PiecesPosition piecesPosition) {
         this.piecesPosition = piecesPosition;
@@ -18,7 +21,7 @@ public class ChessGame {
     public void move(Position fromPosition, Position toPosition) {
         Piece fromPiece = piecesPosition.choicePiece(fromPosition);
         Piece toPiece = piecesPosition.choicePiece(toPosition);
-        validateEmpty(fromPiece);
+        validateFromPiece(fromPiece);
         validateSameCamp(fromPiece, toPiece);
 
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
@@ -30,6 +33,11 @@ public class ChessGame {
 
         validateMovable(toPiece, pieceMove);
         piecesPosition.movePieceOn(fromPosition, toPosition);
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        this.turnCamp = Camp.convert(turnCamp);
     }
 
     private void validateMovable(Piece toPiece, PieceMove pieceMove) {
@@ -38,7 +46,12 @@ public class ChessGame {
         }
     }
 
-    private void validateEmpty(Piece fromPiece) {
+    private void validateFromPiece(Piece fromPiece) {
+        if (fromPiece.isBlack() && turnCamp != Camp.BLACK
+                || !fromPiece.isBlack() && turnCamp == Camp.BLACK) {
+            throw new IllegalArgumentException(TURN_MISMATCHED);
+        }
+
         if (fromPiece.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CHOICE);
         }

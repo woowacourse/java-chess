@@ -6,4 +6,11 @@ public enum Camp {
     NEUTRAL,
     ;
 
+    public static Camp convert(Camp turnCamp) {
+        if (turnCamp == BLACK) {
+            return WHITE;
+        }
+
+        return BLACK;
+    }
 }
