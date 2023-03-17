@@ -1,6 +1,5 @@
 package domain;
 
-import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import java.util.List;
 import java.util.Objects;
@@ -14,20 +13,16 @@ public class Square {
     }
 
     public static Square empty() {
-        return new Square(EmptyPiece.make());
+        return new Square(Piece.getEmpty());
     }
 
     public List<Location> searchPath(Location start, Location end) {
         return piece.searchPath(start, end);
     }
 
-    public boolean isNotEmpty() {
-        return !piece.equals(EmptyPiece.make());
-    }
-
     public void moveTo(final Square square) {
         square.piece = this.piece;
-        this.piece = EmptyPiece.make();
+        this.piece = Piece.getEmpty();
     }
 
     public boolean isWhite() {
@@ -36,6 +31,14 @@ public class Square {
 
     public boolean isBlack() {
         return piece.isBlack();
+    }
+
+    public boolean isNotEmpty() {
+        return isWhite() || isBlack();
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 
     @Override
@@ -53,9 +56,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(piece);
-    }
-
-    public Piece getPiece() {
-        return piece;
     }
 }
