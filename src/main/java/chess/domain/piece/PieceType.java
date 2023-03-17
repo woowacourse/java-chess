@@ -3,13 +3,13 @@ package chess.domain.piece;
 import java.util.function.Function;
 
 public enum PieceType {
-    PAWN(Pawn::new),
-    ROOK(Rook::new),
-    KNIGHT(Knight::new),
-    BISHOP(Bishop::new),
-    QUEEN(Queen::new),
-    KING(King::new),
-    EMPTY(Empty::new);
+    PAWN(Pawn::getInstanceOf),
+    ROOK(Rook::getInstanceOf),
+    KNIGHT(Knight::getInstanceOf),
+    BISHOP(Bishop::getInstanceOf),
+    QUEEN(Queen::getInstanceOf),
+    KING(King::getInstanceOf),
+    EMPTY(Empty::getInstanceOf);
 
     private final Function<Camp, Piece> expression;
 

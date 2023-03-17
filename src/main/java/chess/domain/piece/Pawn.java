@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class Pawn extends Piece {
+    private static final Pawn WHITE_PAWN = new Pawn(Camp.WHITE);
+    private static final Pawn BLACK_PAWN = new Pawn(Camp.BLACK);
 
     private static final int WHITE_MAX_MOVABLE_RANK = 2;
     private static final int WHITE_MIN_MOVABLE_RANK = 1;
@@ -11,9 +13,16 @@ public class Pawn extends Piece {
     private static final int MIN_MOVABLE_FILE = 0;
     private static final int MAX_MOVABLE_FILE = 1;
 
-
-    public Pawn(Camp camp) {
+    private Pawn(Camp camp) {
         super(camp);
+    }
+
+    public static Pawn getInstanceOf(Camp camp) {
+        if (camp == Camp.WHITE) {
+            return WHITE_PAWN;
+        }
+
+        return BLACK_PAWN;
     }
 
     @Override

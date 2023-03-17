@@ -3,9 +3,14 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class Empty extends Piece {
+    private static final Empty EMPTY = new Empty(Camp.NONE);
 
-    public Empty(Camp camp) {
+    private Empty(Camp camp) {
         super(camp);
+    }
+
+    public static Empty getInstanceOf(Camp camp) {
+        return EMPTY;
     }
 
     @Override

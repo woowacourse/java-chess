@@ -5,7 +5,7 @@ import chess.domain.board.Square;
 public abstract class Piece {
     private final Camp camp;
 
-    public Piece(Camp camp) {
+    protected Piece(Camp camp) {
         this.camp = camp;
     }
 

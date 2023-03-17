@@ -19,13 +19,13 @@ public class PieceTest {
 
     static Stream<Arguments> pieceProvider() {
         return Stream.of(
-                Arguments.arguments(new Pawn(Camp.WHITE)),
-                Arguments.arguments(new Knight(Camp.WHITE)),
-                Arguments.arguments(new Bishop(Camp.WHITE)),
-                Arguments.arguments(new Rook(Camp.WHITE)),
-                Arguments.arguments(new Queen(Camp.WHITE)),
-                Arguments.arguments(new King(Camp.WHITE)),
-                Arguments.arguments(new Empty(Camp.NONE))
+                Arguments.arguments(Pawn.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(Knight.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(Bishop.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(Rook.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(Queen.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(King.getInstanceOf(Camp.WHITE)),
+                Arguments.arguments(Empty.getInstanceOf(Camp.NONE))
         );
     }
 }

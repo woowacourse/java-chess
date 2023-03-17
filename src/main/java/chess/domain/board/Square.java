@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 // TODO: 2023-03-17 캐싱
 public class Square {
-    private static final List<Square> squares;
+    private static final List<Square> CASHED_SQUARES;
 
     static {
-        squares = Arrays.stream(Rank.values())
+        CASHED_SQUARES = Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(File.values())
                         .map(file -> new Square(file, rank)))
                 .collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class Square {
         int fileValue = file.getValue();
         int rankValue = rank.getValue();
 
-        return squares.get((8 - rankValue) * 8 + fileValue - 1);
+        return CASHED_SQUARES.get((8 - rankValue) * 8 + fileValue - 1);
     }
 
     public boolean isSameRank(Square targetSquare) {

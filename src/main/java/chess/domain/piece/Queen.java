@@ -3,9 +3,19 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class Queen extends Piece {
+    private static final Queen WHITE_QUEEN = new Queen(Camp.WHITE);
+    private static final Queen BLACK_QUEEN = new Queen(Camp.BLACK);
 
-    public Queen(Camp camp) {
+    private Queen(Camp camp) {
         super(camp);
+    }
+
+    public static Queen getInstanceOf(Camp camp) {
+        if (camp == Camp.WHITE) {
+            return WHITE_QUEEN;
+        }
+
+        return BLACK_QUEEN;
     }
 
     @Override

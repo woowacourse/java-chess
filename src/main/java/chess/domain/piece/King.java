@@ -3,10 +3,20 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class King extends Piece {
+    private static final King WIHTE_KING = new King(Camp.WHITE);
+    private static final King BLACK_KING = new King(Camp.BLACK);
     private static final int MOVABLE_DISTANCE = 1;
 
-    public King(Camp camp) {
+    private King(Camp camp) {
         super(camp);
+    }
+
+    public static King getInstanceOf(Camp camp) {
+        if (camp == Camp.WHITE) {
+            return WIHTE_KING;
+        }
+
+        return BLACK_KING;
     }
 
     @Override
