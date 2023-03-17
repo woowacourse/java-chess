@@ -14,6 +14,14 @@ public class Position {
         this.rank = rank;
     }
 
+    public int findGapOfRank(Position destination) {
+        return destination.rank.getIndex() - rank.getIndex();
+    }
+
+    public int findGapOfColum(Position destination) {
+        return destination.column.getIndex() - column.getIndex();
+    }
+
     @Override
     public String toString() {
         return column.name() + rank.name();
