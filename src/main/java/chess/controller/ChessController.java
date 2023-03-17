@@ -20,20 +20,22 @@ public class ChessController {
         run(chessBoard, state);
     }
 
-    private void run(final ChessBoard chessBoard, ChessState state) {
-        while (state.runnable()) {
-            state = command(chessBoard, state);
+    private void run(final ChessBoard chessBoard, final ChessState state) {
+        ChessState current = state;
+        while (current.runnable()) {
+            current = execute(chessBoard, current);
         }
     }
 
-    private ChessState command(final ChessBoard chessBoard, ChessState state) {
+    private ChessState execute(final ChessBoard chessBoard, final ChessState state) {
+        ChessState current = state;
         try {
             final List<String> command = InputView.readCommand();
-            state = state.command(Command.parse(new ArrayList<>(command)));
+            current = state.command(Command.parse(new ArrayList<>(command)));
             OutputView.showBoard(chessBoard.pieces());
         } catch (final Exception e) {
             OutputView.error(e.getMessage());
         }
-        return state;
+        return current;
     }
 }
