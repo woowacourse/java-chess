@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 import java.util.List;
 
 public class King extends Piece {
@@ -25,7 +26,7 @@ public class King extends Piece {
         List<List<Integer>> possibleDirectionOfKing = List.of(List.of(1, 0), List.of(0, 1), List.of(1, 1));
 
         if (!possibleDirectionOfKing.contains(nextDirection)) {
-            throw new IllegalArgumentException("King의 이동 범위가 올바르지 않습니다.");
+            throw new IllegalArgumentException(PieceMessage.KING_INVALID_MOVE.getMessage());
         }
     }
 }

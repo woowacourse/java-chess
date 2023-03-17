@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 
 public class Bishop extends Piece {
 
@@ -17,7 +18,7 @@ public class Bishop extends Piece {
         int absSubCol = Math.abs(Column.subPositionFromArrivePosition(start.getCol(), end.getCol()));
 
         if (!(absSubCol == absSubRow)) {
-            throw new IllegalArgumentException("Bishop의 이동 범위가 올바르지 않습니다.");
+            throw new IllegalArgumentException(PieceMessage.BISHOP_INVALID_MOVE.getMessage());
         }
     }
 }

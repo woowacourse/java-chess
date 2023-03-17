@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Position;
+import chess.exception.PieceMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,8 +32,9 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-                () -> pawn.canMove(Position.from(start), Position.from(end))
-        ).isInstanceOf(IllegalArgumentException.class);
+                () -> pawn.canMove(Position.from(start), Position.from(end)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 
     @ParameterizedTest
@@ -55,8 +57,9 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-                () -> pawn.canMove(Position.from(start), Position.from(end))
-        ).isInstanceOf(IllegalArgumentException.class);
+                () -> pawn.canMove(Position.from(start), Position.from(end)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
 
     @Test
@@ -70,6 +73,7 @@ class PawnTest {
 
         // then
         assertThatThrownBy(() -> pawn.canMove(Position.from("a3"), Position.from("a5")))
-                .isInstanceOf(IllegalArgumentException.class);
-     }
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
+    }
 }

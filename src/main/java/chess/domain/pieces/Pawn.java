@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 
 public class Pawn extends Piece {
 
@@ -24,7 +25,7 @@ public class Pawn extends Piece {
     @Override
     public void canMove(final Position start, final Position end) {
         if (!validatePosition(start, end)) {
-            throw new IllegalArgumentException("Pawn의 움직임 범위가 올바르지 않습니다.");
+            throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
 

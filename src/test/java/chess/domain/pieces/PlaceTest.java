@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
+import chess.exception.PieceMessage;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,8 @@ class PlaceTest {
 
         // when & then
         Assertions.assertThatThrownBy(
-                () -> place.canMove(Position.from("c3"), Position.from("c4"))
-        ).isInstanceOf(IllegalArgumentException.class);
+                        () -> place.canMove(Position.from("c3"), Position.from("c4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.PLACE_INVALID_MOVE.getMessage());
     }
 }

@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.exception.PieceMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class KingTest {
 
@@ -30,8 +30,8 @@ class KingTest {
         King king = new King(new Name("k"));
 
         // when & then
-        assertThatThrownBy(
-                () -> king.canMove(Position.from(start), Position.from(end))
-        ).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> king.canMove(Position.from(start), Position.from(end)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.KING_INVALID_MOVE.getMessage());
     }
 }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.exception.PieceMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -45,7 +46,8 @@ class QueenTest {
 
         // when & then
         assertThatThrownBy(
-                () -> queen.canMove(Position.from(start), Position.from(end))
-        ).isInstanceOf(IllegalArgumentException.class);
+                () -> queen.canMove(Position.from(start), Position.from(end)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PieceMessage.QUEEN_INVALID_MOVE.getMessage());
     }
 }

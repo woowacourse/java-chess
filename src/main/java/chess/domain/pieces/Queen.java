@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 
 public class Queen extends Piece {
 
@@ -20,7 +21,7 @@ public class Queen extends Piece {
         int subCol = Column.subPositionFromArrivePosition(start.getCol(), end.getCol());
 
         if (!validateMoveLikeBishop(subRow, subCol) && !validateMoveLikeRook(subRow, subCol)) {
-            throw new IllegalArgumentException("Queen의 이동 범위가 올바르지 않습니다.");
+            throw new IllegalArgumentException(PieceMessage.QUEEN_INVALID_MOVE.getMessage());
         }
     }
 

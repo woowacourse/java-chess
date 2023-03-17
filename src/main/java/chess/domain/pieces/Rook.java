@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 
 public class Rook extends Piece {
 
@@ -20,7 +21,7 @@ public class Rook extends Piece {
         int subCol = Column.subPositionFromArrivePosition(start.getCol(), end.getCol());
 
         if (subRow != 0 && subCol != 0) {
-            throw new IllegalArgumentException("올바르지 않은 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(PieceMessage.ROOK_INVALID_MOVE.getMessage());
         }
     }
 }

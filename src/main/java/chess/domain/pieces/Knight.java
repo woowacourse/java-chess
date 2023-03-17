@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.exception.PieceMessage;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -20,7 +21,7 @@ public class Knight extends Piece {
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         if (!possibleSubPosition.contains(newPosition)) {
-            throw new IllegalArgumentException("Knight의 이동 범위가 올바르지 않습니다.");
+            throw new IllegalArgumentException(PieceMessage.KNIGHT_INVALID_MOVE.getMessage());
         }
     }
 }
