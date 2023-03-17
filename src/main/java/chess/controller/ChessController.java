@@ -40,7 +40,7 @@ public class ChessController {
             chessGame.executeCommand(commands);
             outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
             executeTurn(chessGame);
         }
