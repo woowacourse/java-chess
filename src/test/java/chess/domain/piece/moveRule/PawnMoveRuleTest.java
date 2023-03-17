@@ -2,48 +2,51 @@ package chess.domain.piece.moveRule;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.domain.piece.moveRule.TestFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PawnMoveRuleTest {
-    @Test
-    void 폰_대각선_움직임() {
-        Map<Position, Piece> board = new HashMap<>();
-        PawnMoveRule blackPawnMoveRule = PawnMoveRule.of(Color.BLACK);
+    private Piece blackPiece;
+    private Piece whitePiece;
+    private MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
+    private MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
+    private Map<Position, Piece> board;
 
-        Position currentPosition = Position.of(File.FILE_B, Rank.RANK2);
-        Piece blackPiece = new Piece(PawnMoveRule.of(Color.BLACK), Color.BLACK);
-        board.put(currentPosition, blackPiece);
+    @BeforeAll
+    void setUp() {
+        blackPiece = new Piece(blackMoveRule, Color.BLACK);
+        whitePiece = new Piece(whiteMoveRule, Color.WHITE);
+    }
 
-        Position nextPosition = Position.of(File.FILE_A, Rank.RANK1);
-        Piece whitePiece = new Piece(PawnMoveRule.of(Color.WHITE), Color.WHITE);
-        board.put(nextPosition, whitePiece);
-
-        blackPawnMoveRule.move(currentPosition, nextPosition, board);
-
-        assertThat(board.get(nextPosition)).isEqualTo(blackPiece);
+    @BeforeEach
+    void initBoard() {
+        board = new HashMap<>();
     }
 
     @Test
-    void 폰_움직임_성공_두칸이동(){
-        Map<Position, Piece> board = new HashMap<>();
-        PawnMoveRule blackPawnMoveRule = PawnMoveRule.of(Color.BLACK);
+    void 폰_대각선_움직임() {
+        board.put(B2, blackPiece);
+        board.put(A1, whitePiece);
 
-        Position currentPosition = Position.of(File.FILE_A, Rank.RANK7);
-        Piece blackPiece = new Piece(blackPawnMoveRule, Color.BLACK); // A7에 있는 블랙 폰
-        board.put(currentPosition, blackPiece);
+        blackMoveRule.move(B2, A1, board);
+        assertThat(board.get(A1)).isEqualTo(blackPiece);
+    }
 
-        Position nextPosition = Position.of(File.FILE_A, Rank.RANK5);
+    @Test
+    void 폰_움직임_성공_두칸이동() {
+        board.put(A7, blackPiece);
+        blackMoveRule.move(A7, A5, board);
 
-        blackPawnMoveRule.move(currentPosition, nextPosition, board);
-
-        assertThat(board.get(nextPosition)).isEqualTo(blackPiece);
+        assertThat(board.get(A5)).isEqualTo(blackPiece);
     }
 }

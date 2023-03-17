@@ -1,4 +1,4 @@
-package domain;
+package chess.domain;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -48,5 +48,4 @@ public class PositionTest {
         //then
         assertThat(isDiagonalSame).isFalse();
     }
-
 }
