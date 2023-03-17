@@ -38,7 +38,7 @@
 ## 1단계 리팩토링
 ### 1차 리뷰
 - [x] getValuePoint 메서드명 개선
-- [ ] initBoardSpaces for문 8의 의미는?
+- [x] initBoardSpaces for문 8의 의미는?
 - [ ] 각 말을 표시하는 방법은 어느 영역의 관심사일까?
 - [ ] 컨트롤러의 repeat 메서드명 개선
 - [ ] Knight getPaths가 사용하지 않음을 나타내자.

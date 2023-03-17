@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
+    private static final int BOARD_ROW_COLUMN_SIZE = 8;
+
     private final List<List<String>> nameBoard;
 
     public BoardDto(final Board board) {
@@ -16,7 +18,7 @@ public class BoardDto {
 
     private void initBoardSpaces() {
         final List<String> emptyNames = List.of(".", ".", ".", ".", ".", ".", ".", ".");
-        for (int rowIndex = 0; rowIndex < 8; rowIndex++) {
+        for (int rowIndex = 0; rowIndex < BOARD_ROW_COLUMN_SIZE; rowIndex++) {
             List<String> row = new ArrayList<>(emptyNames);
             nameBoard.add(row);
         }
