@@ -6,6 +6,8 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
+
 ### 프로그램 동작 순서
 
 1. 체스 게임 시작 문구를 출력한다
@@ -20,9 +22,9 @@
 ### 기능 목록 구현
 - [x] 위치
     - [x] file(열)과 rank(행)를 갖는다
-- [ ] 방향
-  - [ ] 상하좌우, 대각선, 나이트의 단위 이동 방향을 갖는다
-  - [ ] 단위 이동 방향을 구할 수 있다
+- [x] 방향
+  - [x] 상하좌우, 대각선, 나이트의 단위 이동 방향을 갖는다
+  - [x] 단위 이동 방향을 구할 수 있다
 - [x] 체스말
     - [x] 이름을 갖는다
     - [x] 체스말은 Rook, Knight, Bishop, King, Queen, Pawn을 갖는다
