@@ -24,7 +24,7 @@ public class Point {
     }
 
     public Point move(int fileMove, int rankMove) {
-        return Point.of(file.move(fileMove).get(), rank.move(rankMove).get());
+        return Point.of(file.move(fileMove), rank.move(rankMove));
     }
 
     public boolean isHorizontal(Point target) {
