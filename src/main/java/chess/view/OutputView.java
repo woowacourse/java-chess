@@ -1,8 +1,5 @@
 package chess.view;
 
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -10,6 +7,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -71,10 +71,13 @@ public class OutputView {
 
     private static String formatPieceDisplay(final Piece piece) {
         String pieceDisplay = PIECE_VALUE_MAP.get(piece.getClass());
-
         if (piece.isBlack()) {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;
+    }
+
+    public static void printExceptionMessage(final Exception e) {
+        System.out.println(e.getMessage());
     }
 }
