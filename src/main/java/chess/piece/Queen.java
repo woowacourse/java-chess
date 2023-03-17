@@ -29,6 +29,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public Queen move(final Position positionToMove) {
+        return new Queen(positionToMove, this.side);
+    }
+
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);

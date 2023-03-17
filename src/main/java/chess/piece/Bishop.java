@@ -33,6 +33,12 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public Bishop move(final Position positionToMove) {
+        return new Bishop(positionToMove, this.side);
+    }
+
+
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);

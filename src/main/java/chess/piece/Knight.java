@@ -23,6 +23,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public Knight move(final Position positionToMove) {
+        return new Knight(positionToMove, this.side);
+    }
+
+    @Override
     public List<Position> getPaths(final Position targetPosition) {
         /*
         Knight는 이동 경로에 존재하는 말을 뛰어 넘을 수 있기 때문에 도착 지점에 아군 말이 존재하는지만 검사한다.

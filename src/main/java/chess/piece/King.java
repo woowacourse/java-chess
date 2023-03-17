@@ -31,6 +31,11 @@ public class King extends Piece {
     }
 
     @Override
+    public King move(final Position positionToMove) {
+        return new King(positionToMove, this.side);
+    }
+
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);
