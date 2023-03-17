@@ -22,6 +22,7 @@ import java.util.stream.IntStream;
 public class OutputView {
 
     private static final Map<Class<?>, String> PIECE_VALUE_MAP = new HashMap<>();
+    private static final String EMPTY_PIECE = ".";
 
     static {
         PIECE_VALUE_MAP.put(King.class, "k");
@@ -58,7 +59,7 @@ public class OutputView {
 
     private static List<List<String>> initializeBoard() {
         return IntStream.range(0, 8)
-                        .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, ".")))
+                        .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, EMPTY_PIECE)))
                         .collect(Collectors.toList());
     }
 

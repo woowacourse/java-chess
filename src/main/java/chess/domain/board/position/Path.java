@@ -6,14 +6,14 @@ import java.util.Set;
 
 public class Path {
 
-    private List<Position> positions;
+    private final List<Position> positions;
 
     public Path(final Position... positions) {
         this.positions = List.of(positions);
     }
 
     public Path(final List<Position> positions) {
-        this.positions = positions;
+        this.positions = List.copyOf(positions);
     }
 
     public boolean hasIntersection(final Set<Position> existedPositions) {

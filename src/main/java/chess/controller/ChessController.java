@@ -15,6 +15,8 @@ public class ChessController {
 
     private static final String START_COMMAND = "start";
     private static final int STARTING_VALUE_OF_FILE = 1;
+    private static final char STARTING_CHARACTER_OF_FILE = 'a';
+    private static final char STARTING_VALUE_OF_RANK = '0';
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
@@ -22,7 +24,7 @@ public class ChessController {
 
         final String command = InputView.readStartCommand();
 
-        if (!command.equals(START_COMMAND)) {
+        if (canNotStart(command)) {
             return;
         }
 
@@ -33,10 +35,11 @@ public class ChessController {
     private void startGame(final Board board, Color turn) {
 
         final Map<Position, Piece> boardMap = board.chessBoard();
+
         while (true) {
             OutputView.printBoard(boardMap);
-            final List<String> moveCommand = InputView.readMoveCommand();
 
+            final List<String> moveCommand = InputView.readMoveCommand();
             final Position fromPosition = convertPositionFrom(moveCommand.get(0));
             final Position toPosition = convertPositionFrom(moveCommand.get(1));
 
@@ -47,9 +50,13 @@ public class ChessController {
     }
 
     private Position convertPositionFrom(String position) {
-        final int file = position.charAt(0) - 'a' + STARTING_VALUE_OF_FILE;
-        final int rank = position.charAt(1) - '0';
+        final int file = position.charAt(0) - STARTING_CHARACTER_OF_FILE + STARTING_VALUE_OF_FILE;
+        final int rank = position.charAt(1) - STARTING_VALUE_OF_RANK;
 
         return new Position(file, rank);
+    }
+
+    private static boolean canNotStart(final String command) {
+        return !command.equals(START_COMMAND);
     }
 }

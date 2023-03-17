@@ -10,6 +10,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
+    private static final String INPUT_COMMAND_DELIM = " ";
 
     public static String readStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -28,7 +29,7 @@ public class InputView {
 
     public static List<String> readMoveCommand() {
         String command = scanner.nextLine();
-        List<String> commands = Arrays.stream(command.split(" "))
+        List<String> commands = Arrays.stream(command.split(INPUT_COMMAND_DELIM))
                                       .collect(Collectors.toList());
 
         if (!commands.get(0).equals("move")) {

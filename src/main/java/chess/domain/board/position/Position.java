@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int GCD_LIMIT_MINIMUM = 0;
+
     private final File file;
     private final Rank rank;
 
@@ -23,7 +25,7 @@ public class Position {
     }
 
     private int calculateGCD(int max, int min) {
-        if (min == 0) {
+        if (min == GCD_LIMIT_MINIMUM) {
             return Math.abs(max);
         }
 
@@ -42,6 +44,18 @@ public class Position {
         return file.differenceBetween(from.file);
     }
 
+    public boolean isSameRank(int rank) {
+        return this.rank.value() == rank;
+    }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -57,13 +71,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public File file() {
-        return file;
-    }
-
-    public Rank rank() {
-        return rank;
     }
 }

@@ -25,6 +25,11 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DR, DL),
             Color.WHITE, List.of(UR, UL)
     );
+    
+    private static final int WHITE_PAWN_START_RANK = 2;
+    private static final int BLACK_PAWN_START_RANK = 7;
+    private static final int MAXIMUM_WHITE_PAWN_MANHATTAN_DISTANCE = 2;
+    private static final int MAXIMUM_BLACK_PAWN_MANHATTAN_DISTANCE = -2;
 
     public Pawn(final Color color) {
         super(color);
@@ -33,17 +38,15 @@ public class Pawn extends Piece {
     public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
         Movement movement = to.convertMovement(from);
 
-        if (destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color)) {
+        if (canMove(destination, movement)) {
 
-            if (color.isWhite() && from.rank().value() == 2
-                    && rankDifference(from, to) == 2) {
+            if (canMoveWhitePawn(from, to)) {
                 final Position wayPoint = from.moveBy(U);
 
                 return new Path(wayPoint);
             }
 
-            if (color.isBlack() && from.rank().value() == 7
-                    && rankDifference(from, to) == -2) {
+            if (canMoveBlackPawn(from, to)) {
                 Position wayPoint = from.moveBy(D);
 
                 return new Path(wayPoint);
@@ -53,12 +56,29 @@ public class Pawn extends Piece {
         }
 
         // 상대 말인 경우
-        if (destination.isPresent()
-                && destination.get().color.isDifferentColor(color)
-                && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
+        if (canMoveDiagonal(destination, movement)) {
             return new Path();
         }
         throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
+    }
+
+    private boolean canMove(final Optional<Piece> destination, final Movement movement) {
+        return destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color);
+    }
+
+    private boolean canMoveDiagonal(final Optional<Piece> destination, final Movement movement) {
+        return destination.isPresent() && destination.get().color.isDifferentColor(color)
+                && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement);
+    }
+
+    private boolean canMoveBlackPawn(final Position from, final Position to) {
+        return color.isBlack() && from.rank().value() == BLACK_PAWN_START_RANK
+                && rankDifference(from, to) == MAXIMUM_BLACK_PAWN_MANHATTAN_DISTANCE;
+    }
+
+    private boolean canMoveWhitePawn(final Position from, final Position to) {
+        return color.isWhite() && from.rank().value() == WHITE_PAWN_START_RANK
+                && rankDifference(from, to) == MAXIMUM_WHITE_PAWN_MANHATTAN_DISTANCE;
     }
 
     private int rankDifference(final Position from, final Position to) {

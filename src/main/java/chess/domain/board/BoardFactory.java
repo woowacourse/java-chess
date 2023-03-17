@@ -15,25 +15,28 @@ import java.util.Map;
 
 public class BoardFactory {
 
+    private static final int START_VALUE_OF_FILE = 1;
+    private static final int END_VALUE_OF_FILE = 8;
+
     public Map<Position, Piece> createInitialBoard() {
-        Map<Position, Piece> board = new HashMap<>();
+        Map<Position, Piece> chessBoard = new HashMap<>();
 
-        board.putAll(createPawn());
-        board.putAll(createKing());
-        board.putAll(createQueen());
-        board.putAll(createBishop());
-        board.putAll(createRook());
-        board.putAll(createKnight());
+        chessBoard.putAll(createPawn());
+        chessBoard.putAll(createKing());
+        chessBoard.putAll(createQueen());
+        chessBoard.putAll(createBishop());
+        chessBoard.putAll(createRook());
+        chessBoard.putAll(createKnight());
 
-        return board;
+        return chessBoard;
     }
 
     private Map<Position, Piece> createPawn() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        for (int file = 1; file <= 8; file++) {
-            final Position whitePosition = new Position(file, 2);
-            final Position blackPosition = new Position(file, 7);
+        for (int file = START_VALUE_OF_FILE; file <= END_VALUE_OF_FILE; file++) {
+            final Position whitePosition = new Position(file, White.PAWN_RANK.value());
+            final Position blackPosition = new Position(file, Black.PAWN_RANK.value());
             pieceMap.put(whitePosition, new Pawn(Color.WHITE));
             pieceMap.put(blackPosition, new Pawn(Color.BLACK));
         }
@@ -44,7 +47,7 @@ public class BoardFactory {
     private Map<Position, Piece> createKing() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whitePosition = new Position(5, 1);
+        final Position whitePosition = new Position(White.KING_FILE.value(), White.KING_RANK.value());
         pieceMap.put(whitePosition, new King(Color.WHITE));
 
         final Position blackPosition = new Position(5, 8);
@@ -56,10 +59,17 @@ public class BoardFactory {
     private Map<Position, Piece> createKnight() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whiteLeftPosition = new Position(2, 1);
-        final Position whiteRightPosition = new Position(7, 1);
-        final Position blackLeftPosition = new Position(2, 8);
-        final Position blackRightPosition = new Position(7, 8);
+        final Position whiteLeftPosition = new Position(White.LEFT_KNIGHT_FILE.value(),
+                                                        White.LEFT_KNIGHT_RANK.value());
+
+        final Position whiteRightPosition = new Position(White.RIGHT_KNIGHT_FILE.value(),
+                                                         White.RIGHT_KNIGHT_RANK.value());
+
+        final Position blackLeftPosition = new Position(Black.LEFT_KNIGHT_FILE.value(),
+                                                        Black.LEFT_KNIGHT_RANK.value());
+
+        final Position blackRightPosition = new Position(Black.RIGHT_KNIGHT_FILE.value(),
+                                                         Black.RIGHT_KNIGHT_RANK.value());
 
         pieceMap.put(whiteLeftPosition, new Knight(Color.WHITE));
         pieceMap.put(whiteRightPosition, new Knight(Color.WHITE));
@@ -72,10 +82,18 @@ public class BoardFactory {
     private Map<Position, Piece> createBishop() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whiteLeftPosition = new Position(3, 1);
-        final Position whiteRightPosition = new Position(6, 1);
-        final Position blackLeftPosition = new Position(3, 8);
-        final Position blackRightPosition = new Position(6, 8);
+        final Position whiteLeftPosition = new Position(White.LEFT_BISHOP_FILE.value(),
+                                                        White.LEFT_BISHOP_RANK.value());
+
+        final Position whiteRightPosition = new Position(White.RIGHT_BISHOP_FILE.value(),
+                                                         White.RIGHT_BISHOP_RANK.value());
+
+        final Position blackLeftPosition = new Position(Black.LEFT_BISHOP_FILE.value(),
+                                                        Black.LEFT_BISHOP_RANK.value());
+
+        final Position blackRightPosition = new Position(Black.RIGHT_BISHOP_FILE.value(),
+                                                         Black.RIGHT_BISHOP_RANK.value());
+
 
         pieceMap.put(whiteLeftPosition, new Bishop(Color.WHITE));
         pieceMap.put(whiteRightPosition, new Bishop(Color.WHITE));
@@ -88,8 +106,8 @@ public class BoardFactory {
     private Map<Position, Piece> createQueen() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whitePosition = new Position(4, 1);
-        final Position blackPosition = new Position(4, 8);
+        final Position whitePosition = new Position(White.QUEEN_FILE.value(), White.QUEEN_RANK.value());
+        final Position blackPosition = new Position(Black.QUEEN_FILE.value(), Black.QUEEN_RANK.value());
 
         pieceMap.put(whitePosition, new Queen(Color.WHITE));
         pieceMap.put(blackPosition, new Queen(Color.BLACK));
@@ -100,10 +118,10 @@ public class BoardFactory {
     private Map<Position, Piece> createRook() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whiteLeftPosition = new Position(1, 1);
-        final Position whiteRightPosition = new Position(8, 1);
-        final Position blackLeftPosition = new Position(1, 8);
-        final Position blackRightPosition = new Position(8, 8);
+        final Position whiteLeftPosition = new Position(White.LEFT_ROOK_FILE.value(), White.LEFT_ROOK_RANK.value());
+        final Position whiteRightPosition = new Position(White.RIGHT_ROOK_FILE.value(),White.RIGHT_ROOK_RANK.value());
+        final Position blackLeftPosition = new Position(Black.LEFT_ROOK_FILE.value(), Black.LEFT_ROOK_RANK.value());
+        final Position blackRightPosition = new Position(Black.RIGHT_ROOK_FILE.value(), Black.RIGHT_ROOK_RANK.value());
 
         pieceMap.put(whiteLeftPosition, new Rook(Color.WHITE));
         pieceMap.put(whiteRightPosition, new Rook(Color.WHITE));
