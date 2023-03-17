@@ -9,6 +9,7 @@ public class Pawn extends Piece {
         super(color);
     }
 
+    // TODO: 코드 개선 시급
     @Override
     public Direction findDirection(Square current, Square destination) {
         int fileDifference = current.getFileDifference(destination);

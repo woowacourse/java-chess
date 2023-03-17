@@ -21,6 +21,13 @@ class BoardTest {
         board = Board.create();
     }
 
+    @Test
+    @DisplayName("빈자리 이동 시켰을 때 예외를 발생시킨다.")
+    void empty_space_move_fail() {
+        assertThatThrownBy(() -> board.move(Square.of(File.A, Rank.THREE), Square.of(File.A, Rank.FOUR)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @Nested
     @DisplayName("폰")
     class Pawn {
@@ -88,26 +95,90 @@ class BoardTest {
             assertThatThrownBy(() -> board.move(current, destination))
                     .isInstanceOf(WrongDirectionException.class);
         }
-     }
-
-    @Test
-    @DisplayName("빈자리 이동 시켰을 때 예외를 발생시킨다.")
-    void test() {
-        assertThatThrownBy(() -> board.move(Square.of(File.A, Rank.THREE), Square.of(File.A, Rank.FOUR)))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("폰 이동 성공")
-    void test2() {
-        assertThatCode(() -> board.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR)))
-                .doesNotThrowAnyException();
+    @Nested
+    @DisplayName("나이트")
+    class Knight {
+
+        private Square whiteLeftKnight;
+
+        @BeforeEach
+        void setup() {
+            whiteLeftKnight = Square.of(File.B, Rank.ONE);
+        }
+
+        @Test
+        @DisplayName("이동 성공")
+        void move_success() {
+            assertThatCode(() -> board.move(whiteLeftKnight, Square.of(File.A, Rank.THREE)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적 제거 성공")
+        void move_success_when_enemy_exists() {
+            assertThatCode(() -> {
+                board.move(whiteLeftKnight, Square.of(File.A, Rank.THREE));
+                board.move(Square.of(File.B, Rank.SEVEN), Square.of(File.B, Rank.FIVE));
+                board.move(Square.of(File.A, Rank.THREE), Square.of(File.B, Rank.FIVE));
+            }).doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("아군 위치로는 이동 실패")
+        void move_fail_when_ally_exists() {
+            assertThatThrownBy(() -> board.move(whiteLeftKnight, Square.of(File.D, Rank.TWO)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("잘못된 위치로는 이동 실패")
+        void move_fail() {
+            assertThatThrownBy(() -> board.move(whiteLeftKnight, Square.of(File.B, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
     }
 
-    @Test
-    @DisplayName("나이트 이동 성공")
-    void test3() {
-        assertThatCode(() -> board.move(Square.of(File.B, Rank.ONE), Square.of(File.A, Rank.THREE)))
-                .doesNotThrowAnyException();
+    @Nested
+    @DisplayName("비숍")
+    class Bishop {
+
+        private Square whiteLeftBishop;
+
+        @BeforeEach
+        void setup() {
+            whiteLeftBishop = Square.of(File.C, Rank.ONE);
+            board.move(Square.of(File.D, Rank.TWO), Square.of(File.D, Rank.FOUR));
+            board.move(Square.of(File.H, Rank.SEVEN), Square.of(File.H, Rank.SIX));
+        }
+
+        @Test
+        @DisplayName("이동 성공")
+        void move_success() {
+            assertThatCode(() -> board.move(whiteLeftBishop, Square.of(File.F, Rank.FOUR)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적 제거 성공")
+        void move_success_when_enemy_exists() {
+            assertThatCode(() -> board.move(whiteLeftBishop, Square.of(File.H, Rank.SIX)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("아군 위치로는 이동 실패")
+        void move_fail_when_ally_exists() {
+            assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.B, Rank.TWO)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("잘못된 위치로는 이동 실패")
+        void move_fail() {
+            assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.D, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
     }
 }

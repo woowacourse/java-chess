@@ -42,7 +42,7 @@ public class Board {
             return;
         }
         if (!isEmptySquare(next)) {
-            throw new IllegalArgumentException("길막 중입니다.");
+            throw new WrongDirectionException();
         }
         validateRoute(next, destination, direction);
     }
@@ -52,7 +52,7 @@ public class Board {
             catchEnemy(current, destination);
             return;
         }
-        throw new IllegalArgumentException("길막 중입니다.");
+        throw new WrongDirectionException();
     }
 
     private boolean isEnemy(Square current, Square destination) {
