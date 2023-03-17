@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class GameStatusDto {
 
+    private static final int BOARD_WIDTH = 8;
+
     private final List<String> gameStatus;
 
     private GameStatusDto(List<String> gameStatus) {
@@ -23,10 +25,10 @@ public class GameStatusDto {
     public static GameStatusDto from(final Board board) {
         Map<Square, Piece> domainBoard = board.getBoard();
         List<String> gameStatus = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_WIDTH; i++) {
             char rank = (char) ('8' - i);
             StringBuilder row = new StringBuilder();
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < BOARD_WIDTH; j++) {
                 char file = (char) ('a' + j);
                 Square now = Square.of(File.from(file), Rank.from(rank));
                 if (domainBoard.containsKey(now)) {
