@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import java.util.List;
 
 public class Queen extends Piece {
 
@@ -17,11 +16,6 @@ public class Queen extends Piece {
 
         return (Math.abs(fileDiff) == Math.abs(rankDiff))
                 || (fileDiff == 0 || rankDiff == 0);
-    }
-
-    @Override
-    public List<Position> findPath(Position source, Position target) {
-        return findPathTemplate(source, target, this::calculateCount);
     }
 
     @Override

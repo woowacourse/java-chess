@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -41,11 +40,6 @@ public class Pawn extends Piece {
         }
         return source.isSameRank(WHITE_INIT_RANK)
                 && fileDiff == 0 && rankDiff == 2;
-    }
-
-    @Override
-    public List<Position> findPath(Position source, Position target) {
-        return findPathTemplate(source, target, this::calculateCount);
     }
 
     @Override

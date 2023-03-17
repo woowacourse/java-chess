@@ -4,7 +4,6 @@ import chess.domain.Position;
 import chess.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public abstract class Piece {
 
@@ -15,7 +14,7 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(Position source, Position target);
-    public abstract List<Position> findPath(Position source, Position target);
+
     protected abstract int calculateCount(int fileDiff, int rankDiff);
 
     public boolean isSameTeam(Piece otherPiece) {
@@ -34,11 +33,11 @@ public abstract class Piece {
         return team;
     }
 
-    public List<Position> findPathTemplate(Position source, Position target, BiFunction<Integer, Integer, Integer> calculateCount) {
+    public List<Position> findPath(Position source, Position target) {
         int rankDiff = source.rankDiff(target);
         int fileDiff = source.fileDiff(target);
 
-        int count = calculateCount.apply(rankDiff, fileDiff);
+        int count = calculateCount(rankDiff, fileDiff);
         int rankUnit = rankDiff / count;
         int fileUnit = fileDiff / count;
 

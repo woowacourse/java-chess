@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import java.util.List;
 
 public class Bishop extends Piece {
 
@@ -16,11 +15,6 @@ public class Bishop extends Piece {
         int rankDiff = source.rankDiff(target);
 
         return Math.abs(fileDiff) == Math.abs(rankDiff);
-    }
-
-    @Override
-    public List<Position> findPath(Position source, Position target) {
-        return findPathTemplate(source, target, this::calculateCount);
     }
 
     @Override
