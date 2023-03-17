@@ -11,6 +11,6 @@ public interface SquareValidator {
 
     void validateEnemyPiece(final PieceColor pieceColor);
 
-    void validatePassable();
+    void validateWaypoint();
 
 }

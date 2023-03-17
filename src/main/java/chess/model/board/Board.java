@@ -105,7 +105,7 @@ public class Board {
 
     private void validateMove(final Position source, final Position target, final PieceColor pieceColor) {
         validateSource(source, pieceColor);
-        validatePathSquare(source, target);
+        validateWaypoint(source, target);
         validateTarget(target, pieceColor);
         validatePieceMovable(source, target, pieceColor);
     }
@@ -117,23 +117,23 @@ public class Board {
         sourceSquare.validateExistence(pieceColor);
     }
 
-    private void validatePathSquare(final Position source, final Position target) {
+    private void validateWaypoint(final Position source, final Position target) {
         final Distance distance = target.differ(source);
         final Direction direction = distance.findDirection();
         final int totalDistance = distance.convertToIndex();
         final int sourceIndex = source.convertToIndex();
         int count = IndexConverter.findCount(direction, totalDistance);
 
-        checkPathSquare(direction, count, sourceIndex);
+        checkWaypointSquare(direction, count, sourceIndex);
     }
 
-    private void checkPathSquare(final Direction direction, int count, final int sourceIndex) {
+    private void checkWaypointSquare(final Direction direction, int count, final int sourceIndex) {
         int nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
 
         while (count-- > MINIMUM_TRY) {
             final Square square = squares.get(nowIndex);
 
-            square.validatePassable();
+            square.validateWaypoint();
             nowIndex = IndexConverter.findNextIndex(direction, nowIndex);
         }
     }
@@ -176,7 +176,7 @@ public class Board {
             return;
         }
 
-        targetSquare.validatePassable();
+        targetSquare.validateWaypoint();
     }
 
     private void validatePawnAttack(final PieceColor pieceColor, final Square targetSquare) {

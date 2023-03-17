@@ -46,7 +46,7 @@ public class PieceSquare extends AbstractSquare {
     }
 
     @Override
-    public void validatePassable() {
+    public void validateWaypoint() {
         throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
     }
 

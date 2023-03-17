@@ -32,7 +32,7 @@ public class EmptySquare extends AbstractSquare {
     }
 
     @Override
-    public void validatePassable() {
+    public void validateWaypoint() {
         // 체스 판에서 비어 있는 체스 칸이기 때문에 이동 경로에 기물이 있는지 검증할 필요가 없음
     }
 
