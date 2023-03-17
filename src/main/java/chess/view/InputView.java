@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.game.GameCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -7,9 +8,6 @@ import java.util.Scanner;
 public class InputView {
     private static final String GAME_COMMAND_DELIMITER = " ";
     private static final int GAME_COMMAND_INDEX = 0;
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
-    private static final String MOVE_COMMAND = "move";
     private static final int CORRECT_START_END_SPLIT_SIZE = 1;
     private static final int CORRECT_MOVE_SPLIT_SIZE = 3;
 
@@ -32,13 +30,14 @@ public class InputView {
 
     private void validateGameCommandInput(final String gameCommand) {
         if (isWrongGameCommand(gameCommand)) {
-            throw new IllegalArgumentException("[ERROR] \"start\", \"end\", \"move\"만 입력해주세요.");
+            throw new IllegalArgumentException(("[ERROR] \"start\", \"end\", \"move\"만 입력해주세요."));
         }
     }
 
     private boolean isWrongGameCommand(final String gameCommand) {
-        return !gameCommand.equals(START_COMMAND) && !gameCommand.equals(END_COMMAND) && !gameCommand.equals(
-                MOVE_COMMAND);
+        return !gameCommand.equals(GameCommand.START.getText()) &&
+                !gameCommand.equals(GameCommand.END.getText()) &&
+                !gameCommand.equals(GameCommand.MOVE.getText());
     }
 
     private void validateGameCommandFormat(final List<String> splitGameCommand) {
@@ -54,11 +53,11 @@ public class InputView {
     }
 
     private boolean isWrongStartOrEndCommandFormat(final int splitGameCommandSize, final String gameCommand) {
-        return (gameCommand.equals(START_COMMAND) || gameCommand.equals(END_COMMAND))
+        return (gameCommand.equals(GameCommand.START.getText()) || gameCommand.equals(GameCommand.END.getText()))
                 && splitGameCommandSize != CORRECT_START_END_SPLIT_SIZE;
     }
 
     private boolean isWrongMoveCommandFormat(final int splitGameCommandSize, final String gameCommand) {
-        return gameCommand.equals(MOVE_COMMAND) && splitGameCommandSize != CORRECT_MOVE_SPLIT_SIZE;
+        return gameCommand.equals(GameCommand.MOVE.getText()) && splitGameCommandSize != CORRECT_MOVE_SPLIT_SIZE;
     }
 }

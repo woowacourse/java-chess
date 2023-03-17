@@ -50,6 +50,7 @@
 - [x] Pawn 매직 넘버 개선
 - [x] Piece.move()는 부모 클래스가 자식 클래스에 의존하는, 즉, DIP 위반 아닐까?
 - [x] indexOf 메서드에 List에 존재하지 않는 값을 전달한다면?
-  - 현재 로직에선
-- [ ] ChessController와 InputView가 같은 문자열이 있는데, 이는 같은 의미를 가지는 걸까?
+  - 현재 로직에선 Board.movePiece()에서 null이 아닌 sourcePiece를 전달하도록 설계돼있다고 생각한다.
+  - 이런 경우에도 NPE를 방지해야 될지? NPE 방지의 범위와 기준이 잘 안 잡히는 것 같다.
+- [x] ChessController와 InputView가 같은 문자열이 있는데, 이는 같은 의미를 가지는 걸까?
 - [ ] Calculator 주석 제거

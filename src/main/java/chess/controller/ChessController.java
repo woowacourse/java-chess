@@ -5,6 +5,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import chess.board.dto.BoardDto;
+import chess.game.GameCommand;
 import chess.game.GameStatus;
 import chess.piece.Pieces;
 import chess.view.InputView;
@@ -50,12 +51,12 @@ public class ChessController {
 
     private GameStatus handleCommand(GameStatus gameStatus, final Board board) {
         final List<String> splitGameCommand = inputGameCommand();
-        final String gameCommand = splitGameCommand.get(0);
+        final GameCommand gameCommand = GameCommand.of(splitGameCommand.get(0));
 
-        if (gameCommand.equals("start")) {
+        if (GameCommand.START == gameCommand) {
             return handleStartCommand(gameStatus, board);
         }
-        if (gameCommand.equals("move")) {
+        if (GameCommand.MOVE == gameCommand) {
             return handleMoveCommand(gameStatus, board, splitGameCommand);
         }
         return GameStatus.END;
