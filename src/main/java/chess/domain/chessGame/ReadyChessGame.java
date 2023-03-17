@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.chessGame;
 
 import chess.domain.Board;
 import chess.domain.position.Position;
@@ -12,13 +12,13 @@ public class ReadyChessGame implements ChessGame {
     }
 
     @Override
-    public ChessGame start(){
+    public ChessGame start() {
         Board board = new Board();
         return new PlayingChessGame(board);
     }
 
     @Override
-    public void end(){
+    public void end() {
         throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
     }
 

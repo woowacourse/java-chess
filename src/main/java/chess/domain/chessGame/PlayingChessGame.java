@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.chessGame;
 
 import chess.domain.Board;
 import chess.domain.position.Position;
@@ -12,7 +12,6 @@ public class PlayingChessGame implements ChessGame {
     public PlayingChessGame(Board board) {
         this.board = board;
     }
-
 
     @Override
     public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) { //b1
@@ -29,7 +28,6 @@ public class PlayingChessGame implements ChessGame {
     @Override
     public void end() {
         isEnd = true;
-        return;
     }
 
     @Override

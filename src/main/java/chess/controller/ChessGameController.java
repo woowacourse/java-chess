@@ -1,12 +1,14 @@
 package chess.controller;
 
-import chess.ChessGame;
-import chess.ReadyChessGame;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.ReadyChessGame;
 import chess.domain.Command;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGameController {
     public static final int CURRENT_POSITION_INDEX = 1;
@@ -36,7 +38,8 @@ public class ChessGameController {
             outputView.printBoard(chessGame.getBoard());
         }
         if (command == Command.MOVE) {
-            outputView.printBoard(chessGame.move(inputCommand.get(CURRENT_POSITION_INDEX), inputCommand.get(NEXT_POSITION_INDEX)));
+            Map<Position, String> board = chessGame.move(inputCommand.get(CURRENT_POSITION_INDEX), inputCommand.get(NEXT_POSITION_INDEX));
+            outputView.printBoard(board);
         }
         if (command == Command.END) {
             chessGame.end();
