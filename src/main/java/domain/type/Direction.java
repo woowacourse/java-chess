@@ -17,7 +17,6 @@ public enum Direction {
     ELSE(0, 0, (start, end) -> false);
 
     private final int colDiff;
-
     private final int rowDiff;
     private final BiPredicate<Location, Location> condition;
 

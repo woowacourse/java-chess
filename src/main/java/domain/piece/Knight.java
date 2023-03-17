@@ -6,7 +6,7 @@ import domain.type.PieceType;
 import java.util.List;
 import view.PieceView;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     private Knight(final Color color) {
         super(color, PieceType.KNIGHT);

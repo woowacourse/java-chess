@@ -1,13 +1,9 @@
 package domain;
 
-public class ChessGame {
+public final class ChessGame {
 
     private Board board;
-    private boolean isWhite;
-
-    public ChessGame() {
-        this.isWhite = true;
-    }
+    private boolean isWhite = true;
 
     public void initialize() {
         this.board = new Board(new PathValidator());

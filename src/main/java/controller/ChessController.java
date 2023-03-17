@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import view.InputView;
 import view.OutputView;
 
-public class ChessController {
+public final class ChessController {
 
     private static final int START_LOCATION_INDEX = 0;
     private static final int END_LOCATION_INDEX = 1;
@@ -34,8 +34,10 @@ public class ChessController {
             return;
         }
         chessGame.initialize();
-        ExecuteContext.repeatWithDefaultAndRepeatableJudgeStrategy(this::printBoard,
-            () -> command(inputView.getCommand()));
+        ExecuteContext.repeatWithDefaultAndRepeatableJudgeStrategy(
+            this::printBoard,
+            () -> command(inputView.getCommand())
+        );
     }
 
     private Void printBoard() {
@@ -58,8 +60,8 @@ public class ChessController {
 
     private void move(final List<String> commands) {
         final List<Location> startAndEndLocation = makeStartAndEndLocationByCommands(commands);
-        Location start = startAndEndLocation.get(START_LOCATION_INDEX);
-        Location end = startAndEndLocation.get(END_LOCATION_INDEX);
+        final Location start = startAndEndLocation.get(START_LOCATION_INDEX);
+        final Location end = startAndEndLocation.get(END_LOCATION_INDEX);
         chessGame.move(start, end);
     }
 
@@ -74,11 +76,11 @@ public class ChessController {
     }
 
     private Location getLocationByInput(final String location) {
-        String columnInput = location.substring(0, 1);
-        String rowInput = location.substring(1);
+        final String columnInput = location.substring(0, 1);
+        final String rowInput = location.substring(1);
         try {
-            int col = ColumnConverter.findColumn(columnInput);
-            int row = Integer.parseInt(rowInput) - 1;
+            final int col = ColumnConverter.findColumn(columnInput);
+            final int row = Integer.parseInt(rowInput) - 1;
             return Location.of(col, row);
         } catch (Exception exception) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);

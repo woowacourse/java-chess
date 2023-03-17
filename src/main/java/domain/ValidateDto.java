@@ -2,7 +2,7 @@ package domain;
 
 import domain.piece.Piece;
 
-public class ValidateDto {
+public final class ValidateDto {
 
     private final Location location;
     private final Piece piece;

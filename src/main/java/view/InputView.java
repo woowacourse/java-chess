@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final String START_CHESS_GAME_MESSSAGE = "> 체스 게임을 시작합니다.";
     private static final String INTRODUCE_GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";

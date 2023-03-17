@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Line {
+public final class Line {
 
     private static final int LINE_MAX_COUNT = 8;
     private static final List<Piece> BLACK_PIECES = List.of(Rook.makeBlack(), Knight.makeBlack(), Bishop.makeBlack(),
@@ -22,7 +22,7 @@ public class Line {
         Queen.makeWhite(), King.makeWhite(), Bishop.makeWhite(), Knight.makeWhite(), Rook.makeWhite());
     private final List<Square> squares;
 
-    public Line(final List<Square> squares) {
+    private Line(final List<Square> squares) {
         this.squares = squares;
     }
 
@@ -61,6 +61,14 @@ public class Line {
         return new Line(squares);
     }
 
+    public Square getByCol(final int col) {
+        return squares.get(col);
+    }
+
+    public List<Square> getSquares() {
+        return Collections.unmodifiableList(squares);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -76,13 +84,5 @@ public class Line {
     @Override
     public int hashCode() {
         return Objects.hash(squares);
-    }
-
-    public Square getByCol(final int col) {
-        return squares.get(col);
-    }
-
-    public List<Square> getSquares() {
-        return Collections.unmodifiableList(squares);
     }
 }

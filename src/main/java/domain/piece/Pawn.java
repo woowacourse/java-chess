@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import view.PieceView;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     private Pawn(final Color color) {
         super(color, PieceType.PAWN);

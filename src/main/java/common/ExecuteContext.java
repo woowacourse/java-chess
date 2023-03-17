@@ -1,6 +1,6 @@
 package common;
 
-public class ExecuteContext {
+public final class ExecuteContext {
 
     public static <T> T workWithExecuteStrategy(final ExecuteStrategy<T> executeStrategy) {
         T result = null;

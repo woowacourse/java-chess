@@ -4,7 +4,7 @@ import domain.piece.Piece;
 import java.util.List;
 import java.util.Objects;
 
-public class Square {
+public final class Square {
 
     private Piece piece;
 
@@ -16,7 +16,7 @@ public class Square {
         return new Square(Piece.getEmpty());
     }
 
-    public List<Location> searchPath(Location start, Location end) {
+    public List<Location> searchPath(final Location start, final Location end) {
         return piece.searchPath(start, end);
     }
 

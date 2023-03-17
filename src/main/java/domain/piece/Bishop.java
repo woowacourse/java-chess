@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import view.PieceView;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     private Bishop(final Color color) {
         super(color, PieceType.BISHOP);

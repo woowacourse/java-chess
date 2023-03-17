@@ -20,7 +20,7 @@ public enum ColumnConverter {
         this.sign = sign;
     }
 
-    private static int convert(ColumnConverter findColumn) {
+    private static int convert(final ColumnConverter findColumn) {
         return findColumn.column;
     }
 

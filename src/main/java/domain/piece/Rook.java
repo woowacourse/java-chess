@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import view.PieceView;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     private Rook(final Color color) {
         super(color, PieceType.ROOK);

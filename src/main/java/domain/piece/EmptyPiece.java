@@ -5,7 +5,7 @@ import domain.type.Color;
 import domain.type.PieceType;
 import java.util.List;
 
-public class EmptyPiece extends Piece {
+public final class EmptyPiece extends Piece {
 
     private static final String EMPTY_PIECE_CAN_NOT_MOVE_ERROR_MESSAGE = "체스말이 없는 위치 입니다";
 
@@ -14,7 +14,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public List<Location> searchPath(Location start, Location end) {
+    public List<Location> searchPath(final Location start, final Location end) {
         throw new IllegalArgumentException(EMPTY_PIECE_CAN_NOT_MOVE_ERROR_MESSAGE);
     }
 }

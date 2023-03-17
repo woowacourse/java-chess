@@ -4,14 +4,14 @@ import domain.type.SpecialRule;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class PathValidator {
+public final class PathValidator {
 
     public boolean isValid(final ValidateDto start, final ValidateDto end,
         final List<Square> path) {
         if (isBlocked(path)) {
             return false;
         }
-        SpecialRule specialRule = SpecialRule.getRuleBy(start, end);
+        final SpecialRule specialRule = SpecialRule.getRuleBy(start, end);
         if (!specialRule.equals(SpecialRule.NOT_EXIST)) {
             return specialRule.judge(start, end);
         }

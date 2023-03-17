@@ -3,7 +3,7 @@ package domain;
 import domain.type.Direction;
 import java.util.Objects;
 
-public class Location {
+public final class Location {
 
     private static final int MAX_COL = 7;
     private static final int MIN_COL = 0;
@@ -49,16 +49,16 @@ public class Location {
     }
 
     public boolean isDiagonal(final Location location) {
-        int colDifference = Math.abs(col - location.getCol());
-        int rowDifference = Math.abs(row - location.getRow());
+        final int colDifference = Math.abs(col - location.getCol());
+        final int rowDifference = Math.abs(row - location.getRow());
         return colDifference == rowDifference;
     }
 
-    public boolean isHigherThan(Location location) {
+    public boolean isHigherThan(final Location location) {
         return this.row > location.getRow();
     }
 
-    public boolean isRightThan(Location location) {
+    public boolean isRightThan(final Location location) {
         return this.col > location.getCol();
     }
 
