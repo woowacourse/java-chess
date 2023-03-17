@@ -1,55 +1,79 @@
 package chess.piece;
 
+import chess.Path;
+import chess.Position;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.Path;
-import chess.Position;
-import java.util.Optional;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Test;
-
 class BishopTest {
 
-    @Test
-    void test_searchPathTo() {
+    @ParameterizedTest
+    @MethodSource("searchPathTo")
+    @DisplayName("searchPathTo() : Bishop이 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
+    void test_searchPathTo(final Position from, final Position to,
+                           final Optional<Piece> destination, final List<Position> possiblePositions) {
 
-        Piece bishop = new Bishop(Color.WHITE);
+        //given
+        final Piece bishop = new Bishop(Color.WHITE);
 
-        Position initialPosition = new Position(1, 1);
-        Path path = bishop.searchPathTo(initialPosition, new Position(5, 5), Optional.empty());
+        //when
+        final Path path = bishop.searchPathTo(from, to, destination);
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(
-                        new Position(2, 2), new Position(3, 3),
-                        new Position(4, 4));
+        //then
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                        .containsExactlyElementsOf(possiblePositions);
     }
 
     @Test
-    void test_searchPathTo2() {
+    @DisplayName("searchPathTo() : 목적지가 Bishop이 움직일 수 없는 경로일 때, IllegalStateException을 반환한다.")
+    void test_searchPathTo_IllegalStateException() {
 
-        Bishop bishop = new Bishop(Color.WHITE);
+        //given
+        final Bishop bishop = new Bishop(Color.WHITE);
 
-        Position initialPosition = new Position(5, 1);
-        Path path = bishop.searchPathTo(initialPosition, new Position(8, 4), Optional.empty());
+        //when
+        final Position from = new Position(5, 5);
+        final Position to = new Position(5, 1);
+        final Optional<Piece> destination = Optional.of(new King(Color.BLACK));
 
-        assertThat(path)
-                .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(new Position(6, 2), new Position(7, 3));
+
+        assertThatThrownBy(() -> bishop.searchPathTo(from, to, destination))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageStartingWith("Bishop");
     }
 
-    @Test
-    void test_searchPathTo4() {
+    static Stream<Arguments> searchPathTo() {
 
-        Bishop bishop = new Bishop(Color.WHITE);
+        final Position from1 = new Position(1, 1);
+        final Position to1 = new Position(5, 5);
+        final Optional<Piece> destination1 = Optional.empty();
 
-        Position initialPosition = new Position(5, 5);
+        final List<Position> path1 = List.of(
+                new Position(2, 2), new Position(3, 3),
+                new Position(4, 4)
+        );
 
-        assertThatThrownBy(
-                () -> bishop.searchPathTo(initialPosition,
-                        new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
-                .isInstanceOf(IllegalStateException.class);
+
+        final Position from2 = new Position(5, 1);
+        final Position to2 = new Position(8, 4);
+        final Optional<Piece> destination2 = Optional.empty();
+
+        final List<Position> path2 = List.of(new Position(6, 2), new Position(7, 3));
+
+        return Stream.of(
+                Arguments.of(from1, to1, destination1, path1),
+                Arguments.of(from2, to2, destination2, path2)
+        );
     }
 }
