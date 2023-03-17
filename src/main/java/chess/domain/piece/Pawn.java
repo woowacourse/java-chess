@@ -41,16 +41,16 @@ public class Pawn extends Piece {
         return this;
     }
 
+    private boolean isUntouched() {
+        return moves.size() == UNTOUCHED_MOVE_SIZE;
+    }
+
     private Pawn createTouchedPawn() {
         Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE);
         if (isWhite) {
             return new Pawn(true, whiteMoves);
         }
         return new Pawn(false, convertColor(whiteMoves));
-    }
-
-    private boolean isUntouched() {
-        return moves.size() == UNTOUCHED_MOVE_SIZE;
     }
 
     @Override
