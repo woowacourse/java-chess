@@ -46,4 +46,18 @@ class RookStrategyTest {
         assertDoesNotThrow(()-> rookStrategy.validateDirection(request));
     }
 
+    @Test
+    @DisplayName("타겟이 대각에 있으면 예외가 발생한다.")
+    void throwExceptionWhenTargetIsOnDiagonal() {
+        MoveRequest request = MoveRequest.from(
+                Collections.emptyList(), // 모든 포지션
+                "white", // 이동할 기물 진영
+                new PositionDto(Position.from(0, 'a')), // movablePiecePosition
+                new PositionDto(Position.from(1, 'b')) // targetPosition
+        );
+        // when, then
+        assertThatThrownBy(() -> rookStrategy.validateDirection(request))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
