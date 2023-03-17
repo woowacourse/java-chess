@@ -83,7 +83,7 @@ public class GameController {
         try {
             return supplier.get();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return null;
         }
     }
