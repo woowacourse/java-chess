@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.PositionMessage;
 import java.util.Arrays;
 
 public enum Row {
@@ -23,7 +24,7 @@ public enum Row {
         return Arrays.stream(Row.values())
                 .filter(row -> row.row == input)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PositionMessage.INVALID_ROW.getMessage()));
     }
 
     public static int subPositionFromArrivePosition(final char start, final char end) {
