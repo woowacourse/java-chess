@@ -1,12 +1,12 @@
 package chess.piece;
 
-import static chess.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
-import static chess.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
+import static chess.path.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
+import static chess.path.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.Path;
-import chess.Position;
+import chess.path.Path;
+import chess.position.Position;
 import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;

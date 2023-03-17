@@ -1,17 +1,17 @@
 package chess.piece;
 
-import static chess.Movement.DOWN_DOWN_LEFT;
-import static chess.Movement.DOWN_DOWN_RIGHT;
-import static chess.Movement.LEFT_LEFT_DOWN;
-import static chess.Movement.LEFT_LEFT_UP;
-import static chess.Movement.RIGHT_RIGHT_DOWN;
-import static chess.Movement.RIGHT_RIGHT_UP;
-import static chess.Movement.UP_UP_LEFT;
-import static chess.Movement.UP_UP_RIGHT;
+import static chess.path.Movement.DOWN_DOWN_LEFT;
+import static chess.path.Movement.DOWN_DOWN_RIGHT;
+import static chess.path.Movement.LEFT_LEFT_DOWN;
+import static chess.path.Movement.LEFT_LEFT_UP;
+import static chess.path.Movement.RIGHT_RIGHT_DOWN;
+import static chess.path.Movement.RIGHT_RIGHT_UP;
+import static chess.path.Movement.UP_UP_LEFT;
+import static chess.path.Movement.UP_UP_RIGHT;
 
-import chess.Movement;
-import chess.Path;
-import chess.Position;
+import chess.path.Movement;
+import chess.path.Path;
+import chess.position.Position;
 import java.util.List;
 import java.util.Optional;
 

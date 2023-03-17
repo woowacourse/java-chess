@@ -1,5 +1,6 @@
-package chess;
+package chess.position;
 
+import chess.path.Movement;
 import java.util.Objects;
 
 public class Position {

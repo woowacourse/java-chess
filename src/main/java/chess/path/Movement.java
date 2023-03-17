@@ -1,5 +1,8 @@
-package chess;
+package chess.path;
 
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 

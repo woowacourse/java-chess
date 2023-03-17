@@ -3,8 +3,8 @@ package chess.piece;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.Path;
-import chess.Position;
+import chess.path.Path;
+import chess.position.Position;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

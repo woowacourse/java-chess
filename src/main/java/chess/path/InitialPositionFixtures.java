@@ -1,4 +1,6 @@
-package chess;
+package chess.path;
+
+import chess.position.Position;
 
 public class InitialPositionFixtures {
     public static final Position WHITE_KING_POSITION = new Position(5, 1);

@@ -3,6 +3,7 @@ package chess;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import chess.board.BoardFactory;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;
@@ -10,6 +11,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.position.Position;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;

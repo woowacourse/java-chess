@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.File;
-import chess.Position;
-import chess.Rank;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;

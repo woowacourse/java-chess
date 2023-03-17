@@ -1,5 +1,6 @@
-package chess;
+package chess.path;
 
+import chess.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

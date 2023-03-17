@@ -1,5 +1,7 @@
-package chess;
+package chess.board;
 
+import chess.path.Path;
+import chess.position.Position;
 import chess.piece.Color;
 import chess.piece.Piece;
 import java.util.Map;

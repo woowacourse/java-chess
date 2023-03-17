@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.Path;
-import chess.Position;
+import chess.path.Path;
+import chess.position.Position;
 import java.util.Optional;
 
 public abstract class Piece {

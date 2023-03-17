@@ -1,11 +1,11 @@
 package chess.piece;
 
-import static chess.InitialPositionFixtures.WHITE_KING_POSITION;
+import static chess.path.InitialPositionFixtures.WHITE_KING_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.Path;
-import chess.Position;
+import chess.path.Path;
+import chess.position.Position;
 import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
