@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum Direction {
+enum Direction {
     UP(1),
     DOWN(-1),
     ;

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
@@ -41,25 +40,26 @@ public class ChessController {
         boolean isPlaying = true;
         while (isPlaying) {
             outputView.printBoard(chessGame.getBoard());
-            isPlaying = move();
+            isPlaying = executeCommand();
         }
     }
 
-    private boolean move() {
+    private boolean executeCommand() {
         try {
             List<String> input = readInput();
-            GameCommand gameCommand = GameCommand.of(input.get(0));
-            if (gameCommand == GameCommand.END) {
-                return false;
-            }
-            Position sourcePosition = PositionMapper.from(input.get(1));
-            Position targetPosition = PositionMapper.from(input.get(2));
-            chessGame.movePiece(sourcePosition, targetPosition);
-            return true;
+            return move(input);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return move();
+            return executeCommand();
         }
+    }
+
+    private boolean move(List<String> input) {
+        if (GameCommand.of(input.get(0)) == GameCommand.END) {
+            return false;
+        }
+        chessGame.movePiece(PositionMapper.from(input.get(1)), PositionMapper.from(input.get(2)));
+        return true;
     }
 
     private List<String> readInput() {

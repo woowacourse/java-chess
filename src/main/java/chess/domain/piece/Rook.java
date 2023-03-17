@@ -10,7 +10,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        return isStraight(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
+        return isStraight(sourcePosition, targetPosition)
+                && isNotMyPosition(sourcePosition, targetPosition)
                 && isNotSameColor(color);
     }
 

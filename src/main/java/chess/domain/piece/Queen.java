@@ -10,9 +10,10 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-
-        return (isStraight(sourcePosition, targetPosition) || isDiagonal(sourcePosition, targetPosition))
-                && isNotMyPosition(sourcePosition, targetPosition) && isNotSameColor(color);
+        return (isStraight(sourcePosition, targetPosition)
+                || isDiagonal(sourcePosition, targetPosition))
+                && isNotMyPosition(sourcePosition, targetPosition)
+                && isNotSameColor(color);
     }
 
     @Override

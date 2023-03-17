@@ -15,10 +15,14 @@ public class King extends Piece {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
 
-        return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
-                && Math.abs(sourceRankNumber - targetRankNumber) <= 1
+        return isDifferenceUnder(sourceColumnNumber, targetColumnNumber, 1)
+                && isDifferenceUnder(sourceRankNumber, targetRankNumber, 1)
                 && isNotMyPosition(sourcePosition, targetPosition)
                 && isNotSameColor(color);
+    }
+
+    private boolean isDifferenceUnder(int source, int target, int bound) {
+        return Math.abs(source - target) <= bound;
     }
 
     @Override

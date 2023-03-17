@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +20,7 @@ public class Position {
         int columnStep = getStep(this.getColumn(), targetPosition.getColumn());
         int rowStep = getStep(this.getRow(), targetPosition.getRow());
         int difference = getDifference(targetPosition);
+
         if (isNotStraight(targetPosition)) {
             return Collections.emptyList();
         }

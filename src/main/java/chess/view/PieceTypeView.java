@@ -28,7 +28,7 @@ public enum PieceTypeView {
         return Arrays.stream(values())
                 .filter(it -> it.piece.equals(piece))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 말을 입력했습니다."));
     }
 
     String getMessage(Color color) {

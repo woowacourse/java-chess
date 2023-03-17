@@ -21,36 +21,41 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        boolean isSameFileCoordinate = sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         int direction = this.getColor().getDirection();
-        int nextRankNumber = sourceRankNumber + direction;
+        int nextRankNumber = getNextRankNumber(sourceRankNumber, direction);
 
-        boolean diagonalPath = isDiagonalPath(sourcePosition, targetPosition, color);
-        if (isFirstMove()) {
-            nextRankNumber = sourceRankNumber + (2 * direction);
-        }
         if (this.getColor() == Color.BLACK) {
-            return (isSameFileCoordinate && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
-                    || diagonalPath;
+            return (isSameFileCoordinate(sourcePosition, targetPosition)
+                    && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
+                    || isDiagonalPath(sourcePosition, targetPosition, color);
         }
-        return (isSameFileCoordinate && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
-                || diagonalPath;
+        return (isSameFileCoordinate(sourcePosition, targetPosition)
+                && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
+                || isDiagonalPath(sourcePosition, targetPosition, color);
+    }
+
+    private int getNextRankNumber(int sourceRankNumber, int direction) {
+        if (isFirstMove()) {
+            return sourceRankNumber + (2 * direction);
+        }
+        return sourceRankNumber + direction;
+    }
+
+    private boolean isSameFileCoordinate(Position sourcePosition, Position targetPosition) {
+        return sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
     }
 
     private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Color color) {
         if (!this.getColor().isOpposite(color)) {
             return false;
         }
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-        int direction = this.getColor().getDirection();
-        int diagonalRankNumber = sourceRankNumber + direction;
-        int sourceFileNumber = sourcePosition.getColumn();
-        int targetFileNumber = targetPosition.getColumn();
 
-        return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber
+        int diagonalRankNumber = sourcePosition.getRow() + this.getColor().getDirection();
+
+        return Math.abs(sourcePosition.getColumn() - targetPosition.getColumn()) == 1
+                && diagonalRankNumber == targetPosition.getRow()
                 && isNotSameColor(color);
     }
 

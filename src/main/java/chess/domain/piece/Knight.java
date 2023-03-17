@@ -10,18 +10,22 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        int sourceColumnNumber = sourcePosition.getFileCoordinate().getColumnNumber();
-        int targetColumnNumber = targetPosition.getFileCoordinate().getColumnNumber();
-        int sourceRankNumber = sourcePosition.getRankCoordinate().getRowNumber();
-        int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
+        int sourceColumnNumber = sourcePosition.getColumn();
+        int targetColumnNumber = targetPosition.getColumn();
+        int sourceRankNumber = sourcePosition.getRow();
+        int targetRankNumber = targetPosition.getRow();
 
-        if (Math.abs(sourceColumnNumber - targetColumnNumber) == 2) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 1 && isNotSameColor(color);
+        if (isDifferenceWith(sourceColumnNumber, targetColumnNumber, 2)) {
+            return isDifferenceWith(sourceRankNumber, targetRankNumber, 1) && isNotSameColor(color);
         }
-        if (Math.abs(sourceColumnNumber - targetColumnNumber) == 1) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 2 && isNotSameColor(color);
+        if (isDifferenceWith(sourceColumnNumber, targetColumnNumber, 1)) {
+            return isDifferenceWith(sourceRankNumber, targetRankNumber, 2) && isNotSameColor(color);
         }
         return false;
+    }
+
+    private boolean isDifferenceWith(int sourceColumnNumber, int targetColumnNumber, int x) {
+        return Math.abs(sourceColumnNumber - targetColumnNumber) == x;
     }
 
     @Override

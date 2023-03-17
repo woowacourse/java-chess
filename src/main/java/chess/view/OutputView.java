@@ -20,13 +20,17 @@ public class OutputView {
     public void printBoard(Board board) {
         Map<Position, Piece> boards = board.getBoards();
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
-            for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
-                Position position = new Position(fileCoordinate, rankCoordinate);
-                Piece piece = boards.get(position);
-                String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getColor());
-                System.out.print(message);
-            }
+            printRank(boards, rankCoordinate);
             System.out.println();
+        }
+    }
+
+    private static void printRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate) {
+        for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
+            Position position = new Position(fileCoordinate, rankCoordinate);
+            Piece piece = boards.get(position);
+            String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getColor());
+            System.out.print(message);
         }
     }
 

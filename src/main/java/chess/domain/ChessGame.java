@@ -39,7 +39,7 @@ public class ChessGame {
 
     private void validateColor(Color color, Piece sourcePiece) {
         if (!sourcePiece.isSameTeam(color)) {
-            throw new IllegalArgumentException("상대 팀의 말을 옮길 수 없습니다.");
+            throw new IllegalArgumentException("본인의 말만 옮길 수 있습니다.");
         }
     }
 
@@ -52,7 +52,7 @@ public class ChessGame {
     private void validateCanMove(Position sourcePosition, Position targetPosition, Piece sourcePiece,
                                  Piece targetPiece) {
         if (!sourcePiece.canMove(sourcePosition, targetPosition, targetPiece.getColor())) {
-            throw new IllegalArgumentException("잘못된 위치를 지정하셨습니다.");
+            throw new IllegalArgumentException("잘못된 위치를 입력하셨습니다.");
         }
     }
 
