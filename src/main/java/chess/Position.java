@@ -13,34 +13,33 @@ public class Position {
     }
 
     public Movement convertMovement(Position from) {
-        // TODO: 둘 다 0인 경우는 예외 처리하자! Arit~~ 조심
 
-        int rankGap = rank.value() - from.rank.value();
-        int fileGap = file.value() - from.file.value();
+        int rankGap = calculateRankBetween(from);
+        int fileGap = calculateFileBetween(from);
 
-        int greatestCommonDivisor = findGreatestCommonDivisor(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
+        int gcd = calculateGCD(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
 
-        return Movement.of(fileGap / greatestCommonDivisor,
-                rankGap / greatestCommonDivisor);
+        return Movement.of(fileGap / gcd, rankGap / gcd);
     }
 
-    private int findGreatestCommonDivisor(int num1, int num2) {
-        if (num2 == 0) {
-            return Math.abs(num1);
+    private int calculateGCD(int max, int min) {
+        if (min == 0) {
+            return Math.abs(max);
         }
-        return findGreatestCommonDivisor(num2, num1 % num2);
+
+        return calculateGCD(min, max % min);
     }
 
     public Position moveBy(Movement movement) {
         return movement.nextPosition(file, rank);
     }
 
-    public int rankDifference(final Position from) {
-        return this.rank.value() - from.rank.value();
+    public int calculateRankBetween(final Position from) {
+        return rank.differenceBetween(from.rank);
     }
 
-    public int fileDifference(final Position from) {
-        return this.file.value() - from.file.value();
+    public int calculateFileBetween(final Position from) {
+        return file.differenceBetween(from.file);
     }
 
     @Override

@@ -1,19 +1,11 @@
 package chess.piece;
 
-import static chess.Movement.D;
 import static chess.Movement.DDL;
 import static chess.Movement.DDR;
-import static chess.Movement.DL;
-import static chess.Movement.DR;
-import static chess.Movement.L;
 import static chess.Movement.LLD;
 import static chess.Movement.LLU;
-import static chess.Movement.R;
 import static chess.Movement.RRD;
 import static chess.Movement.RRU;
-import static chess.Movement.U;
-import static chess.Movement.UL;
-import static chess.Movement.UR;
 import static chess.Movement.UUL;
 import static chess.Movement.UUR;
 
@@ -41,8 +33,8 @@ public class Knight extends Piece {
 
         Movement movement = to.convertMovement(from);
 
-        int rankDifference = Math.abs(to.rankDifference(from));
-        int fileDifference = Math.abs(to.fileDifference(from));
+        int rankDifference = Math.abs(to.calculateRankBetween(from));
+        int fileDifference = Math.abs(to.calculateFileBetween(from));
 
         if (rankDifference + fileDifference != 3) {
             throw new IllegalStateException();

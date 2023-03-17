@@ -27,6 +27,10 @@ public enum Rank {
                      .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 Rank 방향입니다."));
     }
 
+    int differenceBetween(Rank other) {
+        return value - other.value;
+    }
+
     public int value() {
         return value;
     }

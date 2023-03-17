@@ -60,6 +60,6 @@ public class Pawn extends Piece {
     }
 
     private int rankDifference(final Position from, final Position to) {
-        return to.rankDifference(from);
+        return to.calculateRankBetween(from);
     }
 }

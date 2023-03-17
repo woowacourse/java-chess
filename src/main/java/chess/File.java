@@ -27,6 +27,10 @@ public enum File {
                      .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 File 방향입니다."));
     }
 
+    public int differenceBetween(File other) {
+        return value - other.value;
+    }
+
     public int value() {
         return value;
     }
