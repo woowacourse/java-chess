@@ -3,10 +3,7 @@ package domain.piece;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public final class Queen extends Piece {
+public final class Queen extends Piece implements VariableMover {
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);
@@ -44,17 +41,6 @@ public final class Queen extends Piece {
 
     private int getMoveCoordinate(final int diff) {
         return Integer.compare(diff, 0);
-    }
-
-    private List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
-        List<Position> positions = new ArrayList<>();
-        Position position = source.move(moveX, moveY);
-
-        while (position != target) {
-            positions.add(position);
-            position = position.move(moveX, moveY);
-        }
-        return positions;
     }
 
 }

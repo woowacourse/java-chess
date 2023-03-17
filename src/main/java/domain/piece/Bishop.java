@@ -3,10 +3,9 @@ package domain.piece;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Bishop extends Piece {
+public final class Bishop extends Piece implements VariableMover {
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
@@ -22,17 +21,6 @@ public final class Bishop extends Piece {
     @Override
     protected boolean isMovable(final Position source, final Position target) {
         return source.isDiagonally(target);
-    }
-
-    private List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
-        List<Position> positions = new ArrayList<>();
-        Position position = source.move(moveX, moveY);
-
-        while (position != target) {
-            positions.add(position);
-            position = position.move(moveX, moveY);
-        }
-        return positions;
     }
 
     private List<Position> getPositions(final Position source, final Position target) {
