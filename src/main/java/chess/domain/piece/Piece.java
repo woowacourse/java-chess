@@ -16,7 +16,7 @@ public abstract class Piece implements Cloneable {
     }
 
     public List<PiecePosition> waypoints(final PiecePosition destination) {
-        final Path path = Path.of(piecePosition, destination);
+        final Path path = path(destination);
         validatePath(path);
         return path.waypoints();
     }
@@ -24,13 +24,13 @@ public abstract class Piece implements Cloneable {
     protected abstract void validatePath(final Path path);
 
     public void move(final PiecePosition destination) {
-        final Path path = Path.of(piecePosition, destination);
+        final Path path = path(destination);
         validatePath(path);
         this.piecePosition = destination;
     }
 
     public void moveToKill(final Piece enemy) {
-        final Path path = Path.of(piecePosition, enemy.piecePosition);
+        final Path path = path(enemy.piecePosition);
         validatePath(path);
         validateKill(enemy);
         this.piecePosition = enemy.piecePosition;
@@ -48,6 +48,10 @@ public abstract class Piece implements Cloneable {
 
     public boolean existIn(final PiecePosition piecePosition) {
         return this.piecePosition.equals(piecePosition);
+    }
+
+    protected Path path(final PiecePosition destination) {
+        return Path.of(piecePosition, destination);
     }
 
     @Override

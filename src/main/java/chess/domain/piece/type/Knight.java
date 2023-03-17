@@ -16,7 +16,7 @@ public class Knight extends Piece {
 
     @Override
     public List<PiecePosition> waypoints(final PiecePosition destination) {
-        validatePath(Path.of(piecePosition, destination));
+        validatePath(path(destination));
         return Collections.emptyList();
     }
 
