@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class ChessController {
 
     private static final String GAME_EXIT_COMMAND = "end";
-    
+
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
@@ -38,7 +38,7 @@ public class ChessController {
             gameCommand = repeatBySupplier(() -> moveByUserInput(game, currentSide));
             this.outputView.printChessBoard(game.getChessBoard());
             side = changeSide(side);
-        } while (!gameCommand.equals(GameCommand.END));
+        } while (gameCommand.equals(GameCommand.MOVE));
     }
 
     private GameCommand moveByUserInput(Game game, Side side) {

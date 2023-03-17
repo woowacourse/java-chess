@@ -21,18 +21,28 @@ public class Game {
 
     public void move(Side side, Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
-
-        if (sourcePiece.isIncorrectTurn(side)) {
-            throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
-        }
-        validateMoving(sourcePosition, targetPosition, sourcePiece);
+        validateMoving(sourcePosition, targetPosition, sourcePiece, side);
         movePiece(sourcePosition, targetPosition, sourcePiece);
     }
 
-    private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+    private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece, Side side) {
+        validateSourcePositionIsEmpty(sourcePosition, sourcePiece);
+        validateTurn(side, sourcePiece);
         validateExistPieceOnSourcePosition(sourcePiece);
         validateIsMovable(sourcePosition, targetPosition);
         validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece);
+    }
+
+    private void validateTurn(Side side, Piece sourcePiece) {
+        if (sourcePiece.isIncorrectTurn(side)) {
+            throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateSourcePositionIsEmpty(Position sourcePosition, Piece sourcePiece) {
+        if (sourcePiece.isEmptyPiece()) {
+            throw new IllegalArgumentException(sourcePosition + "에 움직일 수 있는 말이 없습니다.");
+        }
     }
 
     private void validatePathIncludeAnyPiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
