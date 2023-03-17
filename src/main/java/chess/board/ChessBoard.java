@@ -65,13 +65,13 @@ public class ChessBoard {
     
         boolean isMovablePiece = rowPiecesContainsSourcePiece
                 .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        boolean isMovableRoute = isMovableRoute(INIT_REPEAT_COUNT, sourceCoordinate, destinationCoordinate);
+        boolean isEmptyRoute = isEmptyRoute(INIT_REPEAT_COUNT, sourceCoordinate, destinationCoordinate);
         boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByColumnKnight(parseColumn(sourceCoordinate));
         
-        return isMovablePiece && (isMovableRoute || isSourcePieceKnight);
+        return isMovablePiece && (isEmptyRoute || isSourcePieceKnight);
     }
     
-    private boolean isMovableRoute(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
+    private boolean isEmptyRoute(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
         int researchColumn = researchCoordinate.get(COLUMN_INDEX);
         RowPieces rowPiecesContainsResearchPiece = findRowPiecesByRow(researchCoordinate.get(ROW_INDEX));
         boolean isPieceByColumnNotEmpty = rowPiecesContainsResearchPiece.isPieceByColumnNotEmpty(researchColumn);
@@ -94,7 +94,7 @@ public class ChessBoard {
     }
     
     private boolean repeatResearch(int repeatCount, List<Integer> researchCoordinate, List<Integer> destinationCoordinate) {
-        return isMovableRoute(
+        return isEmptyRoute(
                 increaseRepeatCount(repeatCount),
                 moveForDestination(researchCoordinate, destinationCoordinate),
                 destinationCoordinate
