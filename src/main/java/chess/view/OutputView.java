@@ -16,13 +16,13 @@ public class OutputView {
     }
 
     public void printChessBoard(final ChessBoardDto chessBoardDto) {
-        List<PieceDto> pieceDtos = chessBoardDto.getPieceDtos();
+        final List<PieceDto> pieceDtos = chessBoardDto.getPieceDtos();
 
         for (int i = 0; i < 64; i += 8) {
-            List<String> origin = pieceDtos.stream()
+            final List<String> origin = pieceDtos.stream()
                     .map(PieceDto::getView)
                     .collect(Collectors.toList());
-            List<String> strings = origin.subList(i, Math.min(i + 8, origin.size()));
+            final List<String> strings = origin.subList(i, Math.min(i + 8, origin.size()));
             strings.forEach(System.out::print);
             System.out.println();
         }

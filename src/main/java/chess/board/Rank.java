@@ -30,8 +30,8 @@ public enum Rank {
     }
 
     public static List<Rank> getBetween(final Rank from, final Rank to) {
-        int min = Math.min(from.index, to.index);
-        int max = Math.max(from.index, to.index);
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
                 .mapToObj(Rank::of)

@@ -17,20 +17,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// TODO : 킹, 룩 이동 못하는거 검증 구현 완료 했으니..
-// TODO : 나머지 말들이 이동 못하는거 검증 구현하고 테스트 만들기.
-// TODO : 말들이 Piece를 인자로 받아서 동일한 색깔이면 false 반환하는건?
-
 public class ChessBoard {
 
     private final Map<Position, Piece> piecePosition;
 
-    // TODO : EMPTY CHESSBOARD 반환하는 팩토리 메소드 만들기
-
     public static ChessBoard createBoard() {
         final Map<Position, Piece> piecePosition = new HashMap<>();
         initPosition(piecePosition);
-        for (Team team : Team.values()) {
+        for (final Team team : Team.values()) {
             createPawn(piecePosition, team);
             createRook(piecePosition, team);
             createKnight(piecePosition, team);
@@ -57,7 +51,7 @@ public class ChessBoard {
         }
     }
 
-    public void movePiece(Position from, Position to) {
+    public void movePiece(final Position from, final Position to) {
         Piece fromPiece = piecePosition.get(from);
         Piece toPiece = piecePosition.get(to);
 
@@ -85,6 +79,7 @@ public class ChessBoard {
         if (fromPiece.isKing() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
         }
+
         if (fromPiece.isKnight() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
         }
@@ -107,7 +102,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateBishop(Position from, Position to) {
+    private void validateBishop(final Position from, final Position to) {
         List<File> files = File.getBetween(from.getFile(), to.getFile());
         List<Rank> ranks = Rank.getBetween(from.getRank(), to.getRank());
 
@@ -131,61 +126,61 @@ public class ChessBoard {
             Collections.reverse(cutRanks);
         }
 
-        List<Position> collect = IntStream.range(0, cutFiles.size())
+        final List<Position> collect = IntStream.range(0, cutFiles.size())
                 .mapToObj(index -> new Position(cutFiles.get(index), cutRanks.get(index)))
                 .collect(Collectors.toList());
 
         for (final Position position : collect) {
-            if (!piecePosition.get(position).isEmpty()) {
-                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
-            }
+            validateRoute(piecePosition.get(position));
         }
     }
 
     private void move(final Position from, final Position to) {
-        Piece piece = piecePosition.get(from);
+        final Piece piece = piecePosition.get(from);
         piecePosition.put(from, new EmptyPiece());
         piecePosition.put(to, piece);
     }
 
     private void validateRookByFile(final Position from, final Position to) {
-        File fromFile = from.getFile();
-        File toFile = to.getFile();
-        int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
-        int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
+        final File fromFile = from.getFile();
+        final File toFile = to.getFile();
+        final int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
+        final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
             Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
-            if (!validationPiece.isEmpty()) {
-                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
-            }
+            validateRoute(validationPiece);
         }
     }
 
     private void validateRookByRank(final Position from, final Position to) {
-        Rank fromRank = from.getRank();
-        Rank toRank = to.getRank();
-        int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
-        int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
+        final Rank fromRank = from.getRank();
+        final Rank toRank = to.getRank();
+        final int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
+        final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
             Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
 
-            if (!validationPiece.isEmpty()) {
-                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
-            }
+            validateRoute(validationPiece);
+        }
+    }
+
+    private void validateRoute(final Piece validationPiece) {
+        if (!validationPiece.isEmpty()) {
+            throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
     }
 
     // === createBoard ===
     private static void createPawn(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
-            for (File file : File.values()) {
+            for (final File file : File.values()) {
                 piecePosition.put(new Position(file, Rank.TWO), new Pawn(team));
             }
         }
         if (team == Team.BLACK) {
-            for (File file : File.values()) {
+            for (final File file : File.values()) {
                 piecePosition.put(new Position(file, Rank.SEVEN), new Pawn(team));
             }
         }

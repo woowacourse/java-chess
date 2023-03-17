@@ -30,8 +30,8 @@ public enum File {
     }
 
     public static List<File> getBetween(final File from, final File to) {
-        int min = Math.min(from.index, to.index);
-        int max = Math.max(from.index, to.index);
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
                 .mapToObj(File::of)

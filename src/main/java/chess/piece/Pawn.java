@@ -16,30 +16,23 @@ public class Pawn extends Piece {
             throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
         }
 
-        int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
-
-        if (team == Team.BLACK) {
-
-            int rankInterval = from.getRank().getIndex() - to.getRank().getIndex();
-
-            if (rankInterval == 1 && fileInterval == 1 && toPiece.isWhite()) {
-                return true;
-            }
-            if (from.getRank() == Rank.SEVEN) {
-                if (from.getRank().getIndex() - to.getRank().getIndex() <= 2 && from.getFile() == to.getFile()) {
-                    return true;
-                }
-                throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
-            }
-
-            if (from.getRank().getIndex() - to.getRank().getIndex() == 1 && toPiece.isEmpty()) {
-                return true;
-            }
+        if (isBlackPawnMovable(from, to, toPiece)) {
+            return true;
         }
+
+        if (isWhitePawnMovable(from, to, toPiece)) {
+            return true;
+        }
+
+        throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
+    }
+
+    private boolean isWhitePawnMovable(final Position from, final Position to, final Piece toPiece) {
+        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
 
         if (team == Team.WHITE) {
 
-            int rankInterval = to.getRank().getIndex() - from.getRank().getIndex();
+            final int rankInterval = to.getRank().getIndex() - from.getRank().getIndex();
 
             if (rankInterval == 1 && fileInterval == 1 && toPiece.isBlack()) {
                 return true;
@@ -56,8 +49,30 @@ public class Pawn extends Piece {
                 return true;
             }
         }
+        return false;
+    }
 
-        throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
+    private boolean isBlackPawnMovable(final Position from, final Position to, final Piece toPiece) {
+        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+
+        if (team == Team.BLACK) {
+            final int rankInterval = from.getRank().getIndex() - to.getRank().getIndex();
+
+            if (rankInterval == 1 && fileInterval == 1 && toPiece.isWhite()) {
+                return true;
+            }
+            if (from.getRank() == Rank.SEVEN) {
+                if (from.getRank().getIndex() - to.getRank().getIndex() <= 2 && from.getFile() == to.getFile()) {
+                    return true;
+                }
+                throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
+            }
+
+            if (from.getRank().getIndex() - to.getRank().getIndex() == 1 && toPiece.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

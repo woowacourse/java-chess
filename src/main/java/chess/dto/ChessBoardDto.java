@@ -15,7 +15,7 @@ public class ChessBoardDto {
     private final List<PieceDto> pieceDtos;
 
     public static ChessBoardDto toView(final ChessBoard board) {
-        List<PieceDto> pieces = pieceToView(board.getPiecePosition());
+        final List<PieceDto> pieces = pieceToView(board.getPiecePosition());
         return new ChessBoardDto(pieces);
     }
 
@@ -24,11 +24,11 @@ public class ChessBoardDto {
     }
 
     private static List<PieceDto> pieceToView(final Map<Position, Piece> piecePosition) {
-        List<PieceDto> pieceDtoList = new LinkedList<>();
+        final List<PieceDto> pieceDtoList = new LinkedList<>();
 
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Piece piece = piecePosition.get(new Position(file, rank));
+        for (final Rank rank : Rank.values()) {
+            for (final File file : File.values()) {
+                final Piece piece = piecePosition.get(new Position(file, rank));
                 pieceDtoList.add(new PieceDto(piece));
             }
         }

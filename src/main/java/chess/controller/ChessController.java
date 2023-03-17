@@ -9,7 +9,10 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionConvertor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ChessController {
 
@@ -25,50 +28,62 @@ public class ChessController {
 
     public void run() {
         outputView.printInitGame();
-        repeatCommand();
+        processGame();
     }
 
-    private void repeatCommand() {
-        List<String> commands = inputView.readGameCommand();
-        Command firstCommand = Command.from(commands.get(0));
+    private void processGame() {
+        final Command firstCommand = repeat(this::readCommand);
+        chessGame.receiveCommand(firstCommand);
 
-        if (firstCommand == Command.START) {
+        final List<String> movePositions = new ArrayList<>();
+
+        while (!chessGame.isEnd()) {
             renderChessBoard();
-
-            while (true) {
-                List<String> inputs = inputView.readGameCommand();
-                if (Command.from(inputs.get(0)) == Command.END) {
-                    break;
-                }
-
-                Position from = PositionConvertor.convert(inputs.get(1));
-                Position to = PositionConvertor.convert(inputs.get(2));
-                chessGame.movePiece(from, to);
-                renderChessBoard();
+            final Command command = readMoveCommand(movePositions);
+            if (command == Command.END) {
+                break;
             }
+            final Position from = PositionConvertor.convert(movePositions.get(0));
+            final Position to = PositionConvertor.convert(movePositions.get(1));
+            chessGame.movePiece(from, to);
         }
     }
 
+    private Command readMoveCommand(final List<String> movePositions) {
+        return repeat(() -> {
+            final List<String> commands = inputView.readGameCommand();
+            final Command result = Command.from(commands.get(0));
+            movePositions.add(commands.get(1));
+            movePositions.add(commands.get(2));
+            return result;
+        });
+    }
+
+    private Command readCommand() {
+        final List<String> commands = inputView.readGameCommand();
+        return Command.from(commands.get(0));
+    }
+
     private void renderChessBoard() {
-        ChessBoard chessBoard = chessGame.getChessBoard();
-        ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
+        final ChessBoard chessBoard = chessGame.getChessBoard();
+        final ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
         outputView.printChessBoard(chessBoardDto);
     }
 
-//    private <T> T repeat(final Supplier<T> function) {
-//        Optional<T> input;
-//        do {
-//            input = a(function);
-//        } while (input.isEmpty());
-//        return input.get();
-//    }
-//
-//    private <T> Optional<T> a(final Supplier<T> function) {
-//        try {
-//            return Optional.of(function.get());
-//        } catch (IllegalArgumentException e) {
-//            System.out.println(e.getMessage());
-//            return Optional.empty();
-//        }
-//    }
+    private <T> T repeat(final Supplier<T> function) {
+        Optional<T> input;
+        do {
+            input = repeatByEx(function);
+        } while (input.isEmpty());
+        return input.get();
+    }
+
+    private <T> Optional<T> repeatByEx(final Supplier<T> function) {
+        try {
+            return Optional.of(function.get());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+    }
 }
