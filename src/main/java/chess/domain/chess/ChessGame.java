@@ -7,6 +7,10 @@ import chess.domain.piece.type.Piece;
 import java.util.Map;
 
 public final class ChessGame {
+    private static final int WHITE_PAWN_FIRST_MOVE = 1;
+    private static final int BLACK_PAWN_FIRST_MOVE = 6;
+    private static final int PAWN_FIRST_MOVE = 1;
+
     private final ChessBoard chessBoard;
     private CampType currentCamp;
 
@@ -69,11 +73,12 @@ public final class ChessGame {
     }
 
     private void validatePawnMove(final Position source, final Position target, final Piece piece) {
-        if ((piece.isSameCamp(CampType.WHITE) && source.getRank() == 1) || (piece.isSameCamp(CampType.BLACK) && source.getRank() == 6)) {
+        if ((piece.isSameCamp(CampType.WHITE) && source.isRankSame(WHITE_PAWN_FIRST_MOVE)) ||
+                (piece.isSameCamp(CampType.BLACK) && source.isRankSame(BLACK_PAWN_FIRST_MOVE))) {
             movePiece(source, target, piece);
             return;
         }
-        if (Math.abs(source.getRank() - target.getRank()) != 1) {
+        if (Math.abs(target.calculateRankGap(source)) != PAWN_FIRST_MOVE) {
             throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
         }
         movePiece(source, target, piece);

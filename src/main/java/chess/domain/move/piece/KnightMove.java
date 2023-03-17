@@ -7,8 +7,8 @@ public class KnightMove implements Movable {
 
     @Override
     public boolean canMove(final Position source, final Position target) {
-        final int rankGap = target.getRank() - source.getRank();
-        final int fileGap = target.getFile() - source.getFile();
+        final int rankGap = target.calculateRankGap(source);
+        final int fileGap = target.calculateFileGap(source);
         return Math.abs(rankGap * fileGap) == KNIGHT_MOVE_GAP;
     }
 

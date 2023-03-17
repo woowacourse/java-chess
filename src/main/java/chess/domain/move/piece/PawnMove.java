@@ -13,7 +13,7 @@ public class PawnMove implements Movable {
 
     @Override
     public boolean canMove(final Position source, final Position target) {
-        if (source.getRank() < target.getRank()) {
+        if (target.isRankGreaterThan(source)) {
             final Location allPositions = Move.getAllPositions(source,
                     List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT), PAWN_MAX_MOVE_COUNT);
             return allPositions.contains(target);
@@ -25,8 +25,8 @@ public class PawnMove implements Movable {
 
     @Override
     public boolean canAttack(final Position source, final Position target) {
-        return Math.abs(target.getRank() - source.getRank()) == ATTACK_INDEX
-                && Math.abs(target.getFile() - source.getFile()) == ATTACK_INDEX;
+        return Math.abs(target.calculateRankGap(source)) == ATTACK_INDEX
+                && Math.abs(target.calculateFileGap(source)) == ATTACK_INDEX;
     }
 
     @Override

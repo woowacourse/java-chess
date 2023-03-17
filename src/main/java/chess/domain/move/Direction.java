@@ -35,6 +35,6 @@ public enum Direction {
     }
 
     public Position calculate(final Position before) {
-        return before.calculate(this.rankMove, this.fileMove);
+        return before.calculate(new Position(this.rankMove, this.fileMove));
     }
 }

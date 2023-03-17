@@ -40,7 +40,7 @@ public final class ChessBoard {
     public boolean isPossibleRoute(final Position source, final Position target, final Piece piece) {
         final Position unitPosition = source.computeUnitPosition(target);
         Position currentPosition = Position.copy(source);
-        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
+        currentPosition = currentPosition.calculate(unitPosition);
         if (isObstructed(target, unitPosition, currentPosition)) {
             return false;
         }
@@ -55,7 +55,7 @@ public final class ChessBoard {
         if (board.containsKey(currentPosition)) {
             return true;
         }
-        final Position nextPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
+        final Position nextPosition = currentPosition.calculate(unitPosition);
         return isObstructed(target, unitPosition, nextPosition);
     }
 

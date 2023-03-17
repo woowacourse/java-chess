@@ -15,16 +15,12 @@ public final class Position {
         return new Position(other.rank, other.file);
     }
 
-    public Position calculate(final int rankMove, final int fileMove) {
-        return new Position(this.rank + rankMove, this.file + fileMove);
+    public Position calculate(final Position other) {
+        return new Position(this.rank + other.rank, this.file + other.file);
     }
 
     public boolean isOver(final int limit) {
         return rank < 0 || rank >= limit || file < 0 || file >= limit;
-    }
-
-    public boolean isRankGreaterThan(final int rank) {
-        return this.rank > rank;
     }
 
     public Position computeUnitPosition(final Position target) {
@@ -32,6 +28,22 @@ public final class Position {
         int rankGap = target.rank - this.rank;
         int gcdGap = getGcdGap(Math.abs(fileGap), Math.abs(rankGap));
         return new Position(rankGap / gcdGap, fileGap / gcdGap);
+    }
+
+    public int calculateRankGap(final Position other) {
+        return this.rank - other.rank;
+    }
+
+    public int calculateFileGap(final Position other) {
+        return this.file - other.file;
+    }
+
+    public boolean isRankSame(final int rank) {
+        return this.rank == rank;
+    }
+
+    public boolean isRankGreaterThan(final Position other) {
+        return this.rank > other.rank;
     }
 
     private int getGcdGap(final int fileGap, final int rankGap) {
@@ -66,13 +78,5 @@ public final class Position {
                 "rank=" + rank +
                 ", file=" + file +
                 '}';
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public int getFile() {
-        return file;
     }
 }
