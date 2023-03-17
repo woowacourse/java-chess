@@ -30,10 +30,7 @@ public class Command {
     public static Command parse(List<String> inputs) {
         inputs = new ArrayList<>(inputs);
         final String typeInput = inputs.remove(COMMAND_TYPE_INDEX);
-        final Type type = Arrays.stream(Type.values())
-                .filter(it -> it.name().equalsIgnoreCase(typeInput))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 커맨드입니다."));
+        final Type type = Type.find(typeInput);
         return new Command(type, inputs);
     }
 
