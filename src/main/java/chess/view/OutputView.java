@@ -28,19 +28,19 @@ public class OutputView {
     private static final String EMPTY_PIECE_ICON = ".";
 
     static {
-        whitePieceIcons.put(Rook.class, "♜");
-        whitePieceIcons.put(Pawn.class, "♟");
-        whitePieceIcons.put(Bishop.class, "♝");
-        whitePieceIcons.put(King.class, "♚");
-        whitePieceIcons.put(Knight.class, "♞");
-        whitePieceIcons.put(Queen.class, "♛");
+        whitePieceIcons.put(Rook.class, "r");
+        whitePieceIcons.put(Pawn.class, "p");
+        whitePieceIcons.put(Bishop.class, "b");
+        whitePieceIcons.put(King.class, "k");
+        whitePieceIcons.put(Knight.class, "n");
+        whitePieceIcons.put(Queen.class, "q");
 
-        blackPieceIcons.put(Rook.class, "♖");
-        blackPieceIcons.put(Pawn.class, "♙");
-        blackPieceIcons.put(Bishop.class, "♗");
-        blackPieceIcons.put(King.class, "♔");
-        blackPieceIcons.put(Knight.class, "♘");
-        blackPieceIcons.put(Queen.class, "♕");
+        blackPieceIcons.put(Rook.class, "R");
+        blackPieceIcons.put(Pawn.class, "P");
+        blackPieceIcons.put(Bishop.class, "B");
+        blackPieceIcons.put(King.class, "K");
+        blackPieceIcons.put(Knight.class, "N");
+        blackPieceIcons.put(Queen.class, "Q");
 
         colorIconMapping.put(Color.WHITE, whitePieceIcons);
         colorIconMapping.put(Color.BLACK, blackPieceIcons);
@@ -68,7 +68,8 @@ public class OutputView {
     }
 
     private static String convertCaseAccordingToColor(final Piece piece) {
-        return colorIconMapping.get(piece.color()).get(piece.getClass());
+        final Map<Class<?>, String> pieceIconMap = colorIconMapping.get(piece.color());
+        return pieceIconMap.get(piece.getClass());
     }
 
     public static void printStartMessage() {
