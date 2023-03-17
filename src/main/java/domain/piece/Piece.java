@@ -10,8 +10,6 @@ import java.util.stream.IntStream;
 import domain.board.Square;
 
 public abstract class Piece {
-    private static final int MIN_RANGE = 0;
-    private static final int MAX_RANGE = 7;
     protected static final int FILE = 0;
     protected static final int RANK = 1;
 
@@ -94,11 +92,6 @@ public abstract class Piece {
     protected boolean isExistPieceOnPath(Map<Square, Camp> pathInfo) {
         return pathInfo.values().stream()
                 .anyMatch(camp -> camp != Camp.NONE);
-    }
-
-    protected boolean isInCoordinateRange(int fileCoordinate, int rankCoordinate) {
-        return fileCoordinate >= MIN_RANGE && fileCoordinate <= MAX_RANGE
-                && rankCoordinate >= MIN_RANGE && rankCoordinate <= MAX_RANGE;
     }
 
     protected boolean isDifferentCamp(Camp otherCamp) {
