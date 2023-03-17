@@ -3,14 +3,15 @@ package chess.domain.piece.moveRule;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.Map;
 
 public class QueenMoveRule extends UnJumpableMoveRule {
 
     private static QueenMoveRule instance;
-    private QueenMoveRule() {}
+
+    private QueenMoveRule() {
+    }
 
     public static QueenMoveRule getInstance() {
         if (instance == null) {

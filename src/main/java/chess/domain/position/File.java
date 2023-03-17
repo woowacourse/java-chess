@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
-
 import java.util.Arrays;
 
 public enum File {

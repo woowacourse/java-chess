@@ -4,9 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.database.User;
 import chess.database.UserDao;
-import org.junit.jupiter.api.Test;
-
 import java.sql.SQLException;
+import org.junit.jupiter.api.Test;
 
 class UserDaoTest {
 
@@ -16,9 +15,7 @@ class UserDaoTest {
     public void connection() {
         try (final var connection = userDao.getConnection()) {
             assertThat(connection).isNotNull();
-        }
-        catch (SQLException e) {
-            return;
+        } catch (SQLException e) {
         }
     }
 

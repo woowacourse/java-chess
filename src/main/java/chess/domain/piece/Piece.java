@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.piece.moveRule.MoveRule;
 import chess.domain.position.Position;
-
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,8 +28,12 @@ public final class Piece {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Piece piece = (Piece) o;
         return Objects.equals(pieceState, piece.pieceState) && color == piece.color;
     }

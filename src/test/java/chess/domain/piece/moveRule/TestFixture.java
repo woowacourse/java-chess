@@ -10,7 +10,7 @@ public class TestFixture {
     public static final Position A5 = Position.of(File.FILE_A, Rank.RANK5);
     public static final Position A7 = Position.of(File.FILE_A, Rank.RANK7);
 
-    public static final Position B1 =Position.of(File.FILE_B, Rank.RANK1);
+    public static final Position B1 = Position.of(File.FILE_B, Rank.RANK1);
     public static final Position B3 = Position.of(File.FILE_B, Rank.RANK3);
     public static final Position D1 = Position.of(File.FILE_D, Rank.RANK1);
     public static final Position D4 = Position.of(File.FILE_D, Rank.RANK4);

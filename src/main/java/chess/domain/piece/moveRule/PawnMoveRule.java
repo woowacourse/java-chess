@@ -6,14 +6,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-
 import java.util.Map;
 
 public class PawnMoveRule extends UnJumpableMoveRule {
-    private static final Rank WHITE_PAWN_INIT_RANK = Rank.RANK2;
-    private static final Rank BLACK_PAWN_INIT_RANK = Rank.RANK7;
     public static final int TWO_SQUARE = 2;
     public static final int ONE_SQUARE = 1;
+    private static final Rank WHITE_PAWN_INIT_RANK = Rank.RANK2;
+    private static final Rank BLACK_PAWN_INIT_RANK = Rank.RANK7;
     private final Direction direction;
 
     private PawnMoveRule(Direction direction) {
@@ -40,7 +39,6 @@ public class PawnMoveRule extends UnJumpableMoveRule {
         }
         if (isDiagonalMove(currentPosition, nextPosition)) {
             moveDiagonal(currentPosition, nextPosition, board);
-            return;
         }
     }
 
@@ -48,18 +46,12 @@ public class PawnMoveRule extends UnJumpableMoveRule {
         if (direction.equals(Direction.PLUS) && currentPosition.isSameRank(WHITE_PAWN_INIT_RANK)) {
             return true;
         }
-        if (direction.equals(Direction.MINUS) && currentPosition.isSameRank(BLACK_PAWN_INIT_RANK)) {
-            return true;
-        }
-        return false;
+        return direction.equals(Direction.MINUS) && currentPosition.isSameRank(BLACK_PAWN_INIT_RANK);
     }
 
     private boolean isForwardDistanceMove(Position currentPosition, Position nextPosition, int distance) {
         Position forwardPosition = currentPosition.moveRank(direction, distance);
-        if (forwardPosition.equals(nextPosition)) {
-            return true;
-        }
-        return false;
+        return forwardPosition.equals(nextPosition);
     }
 
     private boolean isDiagonalMove(Position currentPosition, Position nextPosition) {
@@ -88,7 +80,8 @@ public class PawnMoveRule extends UnJumpableMoveRule {
         }
     }
 
-    private void validateDiagonalNoOpponent(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    private void validateDiagonalNoOpponent(Position currentPosition, Position nextPosition,
+                                            Map<Position, Piece> board) {
         Piece nextPiece = board.get(nextPosition);
         Piece curPiece = board.get(currentPosition);
         if (!curPiece.isOpponent(nextPiece)) {

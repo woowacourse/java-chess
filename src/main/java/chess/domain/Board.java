@@ -2,11 +2,15 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.moveRule.*;
+import chess.domain.piece.moveRule.BishopMoveRule;
+import chess.domain.piece.moveRule.KingMoveRule;
+import chess.domain.piece.moveRule.KnightMoveRule;
+import chess.domain.piece.moveRule.PawnMoveRule;
+import chess.domain.piece.moveRule.QueenMoveRule;
+import chess.domain.piece.moveRule.RookMoveRule;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-
 import java.util.HashMap;
 import java.util.Map;
 

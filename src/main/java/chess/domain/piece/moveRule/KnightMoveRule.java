@@ -3,13 +3,14 @@ package chess.domain.piece.moveRule;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-
 import java.util.Map;
 
 public class KnightMoveRule implements MoveRule {
 
     private static KnightMoveRule instance;
-    private KnightMoveRule() {}
+
+    private KnightMoveRule() {
+    }
 
     public static KnightMoveRule getInstance() {
         if (instance == null) {
@@ -19,7 +20,7 @@ public class KnightMoveRule implements MoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition,  Map<Position, Piece> board) {
+    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
         validateKnightDirection(currentPosition, nextPosition);
         validateDestination(currentPosition, nextPosition, board);
 

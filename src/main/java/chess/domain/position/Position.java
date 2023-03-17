@@ -1,27 +1,27 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
+import static java.util.Objects.hash;
 
+import chess.domain.Direction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Objects.hash;
-
 public class Position {
 
-    private static final Map<Integer, Position> cache;
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
     public static final int TWO_SQUARE = 2;
     public static final int ONE_SQUARE = 1;
-    private final File file;
-    private final Rank rank;
+    private static final Map<Integer, Position> cache;
 
     static {
         cache = new HashMap<>();
     }
+
+    private final File file;
+    private final Rank rank;
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -43,10 +43,7 @@ public class Position {
     }
 
     public boolean isNear(Position other) {
-        if (getMaxDistance(other) <= ONE_SQUARE) {
-            return true;
-        }
-        return false;
+        return getMaxDistance(other) <= ONE_SQUARE;
     }
 
     public boolean isStraightEqual(Position other) {
@@ -61,10 +58,7 @@ public class Position {
         if (file.distance(other.file) == TWO_SQUARE && rank.distance(other.rank) == ONE_SQUARE) {
             return true;
         }
-        if (rank.distance(other.rank) == TWO_SQUARE && file.distance(other.file) == ONE_SQUARE) {
-            return true;
-        }
-        return false;
+        return rank.distance(other.rank) == TWO_SQUARE && file.distance(other.file) == ONE_SQUARE;
     }
 
     public List<Position> getRoute(Position other) {
@@ -117,8 +111,12 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return file == position.file && rank == position.rank;
     }

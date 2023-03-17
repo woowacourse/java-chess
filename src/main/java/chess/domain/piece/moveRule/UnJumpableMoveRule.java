@@ -2,10 +2,8 @@ package chess.domain.piece.moveRule;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public abstract class UnJumpableMoveRule implements MoveRule {
     protected void validateRoute(Map<Position, Piece> board, List<Position> route) {

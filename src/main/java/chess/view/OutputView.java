@@ -1,13 +1,12 @@
 package chess.view;
 
 import chess.domain.position.Position;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    public void printStartMessage()  {
+    public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");

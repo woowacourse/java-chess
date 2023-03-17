@@ -3,7 +3,6 @@ package chess.domain.piece.moveRule;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,9 @@ public class RookMoveRule extends UnJumpableMoveRule {
 
 
     private static RookMoveRule instance;
-    private RookMoveRule() {}
+
+    private RookMoveRule() {
+    }
 
     public static RookMoveRule getInstance() {
         if (instance == null) {

@@ -1,25 +1,27 @@
 package chess.domain.piece.moveRule;
 
+import static chess.domain.piece.moveRule.TestFixture.A1;
+import static chess.domain.piece.moveRule.TestFixture.A5;
+import static chess.domain.piece.moveRule.TestFixture.A7;
+import static chess.domain.piece.moveRule.TestFixture.B2;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static chess.domain.piece.moveRule.TestFixture.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PawnMoveRuleTest {
     private Piece blackPiece;
     private Piece whitePiece;
-    private MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
-    private MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
+    private final MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
+    private final MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
     private Map<Position, Piece> board;
 
     @BeforeAll

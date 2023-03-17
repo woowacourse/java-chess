@@ -3,14 +3,14 @@ package chess.domain.piece.moveRule;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-
 import java.util.Map;
 
 public class KingMoveRule implements MoveRule {
 
     private static KingMoveRule instance;
 
-    private KingMoveRule() {}
+    private KingMoveRule() {
+    }
 
     public static KingMoveRule getInstance() {
         if (instance == null) {
