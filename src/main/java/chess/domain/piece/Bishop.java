@@ -11,7 +11,7 @@ public class Bishop extends LinearPiece {
 
     public Bishop(final Type type, final Side side) {
         super(type, side);
-        movePatterns = Arrays.asList(BishopMovePattern.values());
+        this.movePatterns = Arrays.asList(BishopMovePattern.values());
     }
 
     @Override

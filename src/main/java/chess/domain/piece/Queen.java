@@ -11,7 +11,7 @@ public class Queen extends LinearPiece {
 
     public Queen(final Type type, final Side side) {
         super(type, side);
-        movePatterns = Arrays.asList(QueenMovePattern.values());
+        this.movePatterns = Arrays.asList(QueenMovePattern.values());
     }
 
     @Override

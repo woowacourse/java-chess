@@ -14,7 +14,7 @@ public class King extends ImmediatePiece {
 
     public King(final Type type, final Side side) {
         super(type, side);
-        movePatterns = Arrays.asList(KingMovePattern.values());
+        this.movePatterns = Arrays.asList(KingMovePattern.values());
     }
 
     @Override

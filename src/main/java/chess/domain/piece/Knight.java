@@ -14,7 +14,7 @@ public class Knight extends ImmediatePiece {
 
     public Knight(final Type type, final Side side) {
         super(type, side);
-        movePatterns = Arrays.asList(KnightMovePattern.values());
+        this.movePatterns = Arrays.asList(KnightMovePattern.values());
     }
 
     @Override

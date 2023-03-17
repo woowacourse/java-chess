@@ -14,9 +14,8 @@ public class Pawn extends Piece {
 
     public Pawn(final Type type, final Side side) {
         super(type, side);
-        //TODO this 추가
-        movePatterns = initMovePatterns(side);
-        moved = false;
+        this.movePatterns = initMovePatterns(side);
+        this.moved = false;
     }
 
     private List<MovePattern> initMovePatterns(final Side side) {

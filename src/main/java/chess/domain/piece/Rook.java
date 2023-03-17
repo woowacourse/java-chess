@@ -11,7 +11,7 @@ public class Rook extends LinearPiece {
 
     public Rook(final Type type, final Side side) {
         super(type, side);
-        movePatterns = Arrays.asList(RookMovePattern.values());
+        this.movePatterns = Arrays.asList(RookMovePattern.values());
     }
 
     @Override
