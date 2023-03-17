@@ -3,7 +3,6 @@ package chess.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.AbstractTestFixture;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -11,7 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GameTest extends AbstractTestFixture {
+public class GameTest {
 
     @DisplayName("기물을 움직이게 한다")
     @Test
