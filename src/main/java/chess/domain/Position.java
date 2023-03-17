@@ -4,8 +4,9 @@ import java.util.Objects;
 
 public final class Position {
 
-    private int rank;
-    private char file;
+    private final int rank;
+    private final char file;
+
      private Position(final int rank, final char file) {
         validatePosition(rank, file);
         this.rank = rank;
@@ -14,14 +15,6 @@ public final class Position {
 
     public static Position from(final int rank, final char file) {
         return new Position(rank, file);
-    }
-
-    public void moveRank(final int movingRank) {
-        this.rank += movingRank;
-    }
-
-    public void moveFile(final int movingFile) {
-        this.file += movingFile;
     }
 
     private void validatePosition(final int rank, final char file) {
@@ -64,4 +57,42 @@ public final class Position {
     public boolean isSame(char file, int rank) {
         return this.file == file && this.rank == rank;
     }
+
+    public boolean isSamePosition(Position findPosition) {
+        return isSame(findPosition.file, findPosition.rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return rank == position.rank && file == position.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, file);
+    }
+
+    public int calculateFileDistance(int file) {
+        return Math.abs(this.file - file);
+    }
+
+    public int calculateRankDistance(int rank) {
+        return Math.abs(this.rank - rank);
+    }
+
+    public Position move(int fileDirection, int rankDirection) {
+        return new Position(rank + rankDirection, (char)(file + fileDirection));
+    }
+
 }

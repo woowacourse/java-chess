@@ -7,21 +7,6 @@ import chess.domain.Position;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.domain.Pieces;
-import chess.domain.Player;
-import chess.domain.Players;
-import chess.domain.Position;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,22 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PawnStrategyTest {
 
-    PieceStrategy pawnStrategy;
+    PieceStrategy pawnStrategy = new PawnStrategy();
     MoveRequest request;
-
-    @BeforeEach
-    void setUp() {
-        pawnStrategy = new PawnStrategy();
-        Pieces whitePieces = Pieces.createWhitePieces();
-        Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
-        Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
-        request = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
-                "white", // 이동할 기물 진영
-                new PositionDto(Position.from(2, 'a')), // movablePiecePosition
-                new PositionDto(Position.from(4, 'a')) // targetPosition
-        );
-    }
 
     @Test
     @DisplayName("첫번째 차례에 화이트 폰은 앞으로 최대 2칸 이동할 수 있다.")
@@ -105,7 +76,7 @@ class PawnStrategyTest {
                 players.getAllPosition(),
                 "white",
                 new PositionDto(Position.from(1, 'a')),
-                new PositionDto(Position.from(3, 'a')));
+                new PositionDto(Position.from(2, 'a')));
 
         // when, then
         assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));

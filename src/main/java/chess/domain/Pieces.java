@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.math.BigInteger;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -105,5 +106,21 @@ public final class Pieces {
 
     public List<Piece> getPieces() {
         return pieces;
+    }
+
+    public Piece findPiece(Position findPosition) {
+        return pieces.stream()
+                .filter(piece -> piece.isSamePosition(findPosition))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치를 확인해주세요."));
+    }
+
+    public boolean hasPosition(Position findPosition) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.isSamePosition(findPosition));
+    }
+
+    public void remove(Position changedPosition) {
+        pieces.removeIf(piece -> piece.isSamePosition(changedPosition));
     }
 }

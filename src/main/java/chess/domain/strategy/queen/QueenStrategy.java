@@ -16,7 +16,15 @@ public class QueenStrategy implements PieceStrategy {
         try {
             rookStrategy.validateDirection(request);
         } catch (IllegalArgumentException ignored) {
+            validateBishopStrategy(request);
+        }
+    }
+
+    private void validateBishopStrategy(MoveRequest request) {
+        try {
             bishopStrategy.validateDirection(request);
+        } catch (IllegalArgumentException queen) {
+            throw new IllegalArgumentException("퀸의 이동 경로가 아닙니다.");
         }
     }
 

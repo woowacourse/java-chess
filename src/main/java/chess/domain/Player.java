@@ -28,6 +28,10 @@ public class Player {
                 '}';
     }
 
+    public Pieces getOriginPieces() {
+        return this.pieces;
+    }
+
     public List<Piece> getPieces() {
         return pieces.getPieces();
     }
@@ -36,9 +40,32 @@ public class Player {
         return color;
     }
 
-    public void move(boolean position) {
-        if (color.equals("white")) {
+    public boolean hasPositionPiece(final Position findPosition) {
+        return pieces.hasPosition(findPosition);
+    }
 
+    public Position movePieceByInput(
+            final List<Position> allPosition,
+            final Position findPosition,
+            final String inputTargetPosition
+    ) {
+        char file = inputTargetPosition.charAt(0);
+        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1)));
+        Position targetPosition = Position.from(rank, file);
+
+        if (pieces.hasPosition(targetPosition)) {
+            throw new IllegalArgumentException("상대 기물 위치로만 이동할 수 있습니다.");
         }
+
+        Piece findPiece = findPiece(findPosition);
+        return findPiece.move(allPosition, targetPosition, color);
+    }
+
+    private Piece findPiece(final Position findPosition) {
+        return pieces.findPiece(findPosition);
+    }
+
+    public void removePiece(Position changedPosition) {
+        pieces.remove(changedPosition);
     }
 }

@@ -24,19 +24,20 @@ public class Piece {
 
     public Position move(
             final List<Position> positions,
-            final String inputTargetPosition,
+            final Position inputTargetPosition,
             final String movablePieceColor
     ) {
-        char file = inputTargetPosition.charAt(0);
-        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1)));
+        char file =  inputTargetPosition.getFile();
+        int rank = inputTargetPosition.getRank();
 
-        Position changedPosition = shape.move(MoveRequest.from(
+        shape.move(MoveRequest.from(
                 positions, // 모든 기물들의 위치
                 movablePieceColor, // 이동할 기물 진영
                 new PositionDto(position), // 이동할 기물의 위치
                 new PositionDto(Position.from(rank, file)) // 이동할 위치
         ));
 
+        Position changedPosition = Position.from(rank, file);
         this.position = changedPosition;
         return changedPosition;
     }

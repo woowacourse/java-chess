@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.strategy.rook.RookStrategy;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,12 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayersTest {
 
     Players players;
+    RookStrategy rookStrategy;
 
     @BeforeEach
     void setUp() {
         Pieces whitePieces = Pieces.createWhitePieces();
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
-        players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
+        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
+        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
+        players = Players.from(whitePlayer, blackPlayer);
+        rookStrategy = new RookStrategy();
     }
 
     @Test
@@ -37,6 +43,19 @@ class PlayersTest {
         // when, then
         assertThat(players.isPieceExistsInputPosition(file, rank - 1))
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("이동 경로에 다른 기물이 존재하면 예외가 발생한다.")
+    void validateAlreadyExistPieceMovingRoute() {
+        // when, then
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> players.validateAlreadyExistPieceMovingRoute(
+                        Position.from(0, 'a'),
+                        Position.from(2, 'a')
+                )
+        );
     }
 
 }

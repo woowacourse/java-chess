@@ -41,7 +41,7 @@ public final class InputView {
         return inputCommand.equals("end");
     }
 
-    public static List<String> getMovePieceCommand() {
+    public static List<String> getCommand() {
         return Arrays.stream(SCANNER.nextLine().split(" "))
                 .collect(toList());
     }

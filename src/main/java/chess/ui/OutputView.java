@@ -47,4 +47,8 @@ public final class OutputView {
     public static void printChessBoardStatus(PiecesResponse piecesResponse) {
         printInitializedChessBoard(piecesResponse);
     }
+
+    public static void printErrorMessage(String message) {
+        System.out.println("[ERROR]: " + message);
+    }
 }

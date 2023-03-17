@@ -10,17 +10,21 @@ import java.util.List;
 public class PawnStrategy implements PieceStrategy {
 
     @Override
-    public Position move(final MoveRequest request) {
+    public void validateDirection(final MoveRequest request) {
         List<Position> positions = request.getPositions();
         String movablePieceColor = request.getMovablePieceColor();
         PositionDto movablePiecePosition = request.getMovablePieceDto();
         PositionDto targetPosition = request.getTargetPositionDto();
 
-        Position moveFrontPosition = canMoveFront(positions, movablePieceColor, movablePiecePosition, targetPosition);
-        if (moveFrontPosition != null) return moveFrontPosition;
+        boolean moveFrontPosition = canMoveFront(positions, movablePieceColor, movablePiecePosition, targetPosition);
+        if (moveFrontPosition) {
+            return;
+        }
 
-        Position moveDiagonalPosition = canMoveDiagonal(movablePiecePosition, targetPosition);
-        if (moveDiagonalPosition != null) return moveDiagonalPosition;
+        boolean moveDiagonalPosition = canMoveDiagonal(movablePiecePosition, targetPosition);
+        if (moveDiagonalPosition) {
+            return;
+        }
         throw new IllegalArgumentException("이동할 수 있는 위치가 아닙니다.");
     }
 
@@ -31,14 +35,14 @@ public class PawnStrategy implements PieceStrategy {
             }
             return getBlackPosition(movablePiecePosition, targetPosition);
         }
-        return null;
+        return false;
     }
 
-    private Position canMoveDiagonal(PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean canMoveDiagonal(PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (isDiagonal(movablePiecePosition, targetPosition)) {
-            return moveDiagonal(movablePiecePosition, targetPosition);
+            return true;
         }
-        return null;
+        throw new IllegalArgumentException("이동할 수 있는 위치가 아닙니다.");
     }
 
     private boolean isDiagonal(PositionDto movablePiecePosition, PositionDto targetPosition) {
@@ -52,15 +56,15 @@ public class PawnStrategy implements PieceStrategy {
                 .anyMatch(position -> !position.isSamePosition(Position.from(targetPosition.getRank(), targetPosition.getFile())));
     }
 
-    private Position getWhitePosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean getWhitePosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
         validateWhiteMoveBackWard(movablePiecePosition, targetPosition);
-        if (targetPosition.getRank() - movablePiecePosition.getRank() == 2) {
+        if (targetPosition.getRank() - movablePiecePosition.getRank() <= 2) {
             if (isWhiteFirstStep(movablePiecePosition.getRank())) {
-                return Position.from(targetPosition.getRank(), targetPosition.getFile());
+                return true;
             }
             throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
         }
-        return true;
+        throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
     private static void validateWhiteMoveBackWard(PositionDto movablePiecePosition, PositionDto targetPosition) {
@@ -73,11 +77,11 @@ public class PawnStrategy implements PieceStrategy {
         validateBlackMoveBackWard(movablePiecePosition, targetPosition);
         if (targetPosition.getRank() - movablePiecePosition.getRank() == -2) {
             if (isBlackFirstStep(movablePiecePosition.getRank())) {
-                return Position.from(targetPosition.getRank(), targetPosition.getFile());
+                return true;
             }
             throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
         }
-        return Position.from(targetPosition.getRank(), targetPosition.getFile());
+        throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
     private static void validateBlackMoveBackWard(PositionDto movablePiecePosition, PositionDto targetPosition) {
