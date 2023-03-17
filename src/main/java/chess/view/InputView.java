@@ -30,7 +30,7 @@ public class InputView {
     }
 
     private void validateCommand(List<String> commands) {
-        Command command = Command.renderToCommand(commands.get(0));
+        Command command = Command.renderToCommand(commands.get(CommandRule.MAIN_COMMAND_INDEX.value));
 
         if (command == Command.MOVE) {
             validateMoveCommand(commands);
@@ -87,11 +87,13 @@ public class InputView {
     }
 
     private enum CommandRule {
-        MOVE_COMMAND_SIZE(3),
-        NORMAL_COMMAND_SIZE(1),
+        MAIN_COMMAND_INDEX(0),
         SOURCE_COMMAND_INDEX(1),
         TARGET_COMMAND_INDEX(2),
-        SQUARE_COMMAND_SIZE(2);
+        NORMAL_COMMAND_SIZE(1),
+        SQUARE_COMMAND_SIZE(2),
+        MOVE_COMMAND_SIZE(3),
+        ;
 
         private final int value;
 
