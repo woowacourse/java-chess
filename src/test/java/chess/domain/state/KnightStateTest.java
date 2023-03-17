@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+@SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class KnightStateTest {
+class KnightStateTest {
 
-    public static final KnightState knightState = KnightState.getInstance();
+    private static final KnightState knightState = KnightState.getInstance();
 
     @ParameterizedTest
     @CsvSource(value = {"2, 1", "2, -1", "1, 2", "-1, 2"})

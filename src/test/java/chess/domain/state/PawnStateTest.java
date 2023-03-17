@@ -14,9 +14,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class PawnStateTest {
+class PawnStateTest {
 
-    public static final InitialPawnState initialPawnState = InitialPawnState.getInstance();
+    private static final InitialPawnState initialPawnState = InitialPawnState.getInstance();
     private static final MovedPawnState movedPawnState = MovedPawnState.getInstance();
 
     @Test

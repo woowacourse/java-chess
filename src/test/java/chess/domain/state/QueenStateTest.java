@@ -13,9 +13,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class QueenStateTest {
+class QueenStateTest {
 
-    public static final QueenState queenState = QueenState.getInstance();
+    private static final QueenState queenState = QueenState.getInstance();
 
     @ParameterizedTest
     @CsvSource(value = {"1, 1", "3, 0", "-5, -5", " 0, -7", "5, -5"})

@@ -13,9 +13,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class RookStateTest {
+class RookStateTest {
 
-    public static final RookState rookState = RookState.getInstance();
+    private static final RookState rookState = RookState.getInstance();
 
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "3, 0", "-5, 0", "0, -7", "0, -5"})

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    public static final Piece EMPTY_PIECE = Piece.empty();
+    private static final Piece EMPTY_PIECE = Piece.empty();
     private static final int RANK_SIZE = 8;
 
     private final Map<Position, Piece> piecePosition = new HashMap<>();
