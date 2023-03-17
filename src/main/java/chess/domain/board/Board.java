@@ -25,22 +25,24 @@ public class Board {
     private final Map<Position, Piece> board;
     private Color turn;
 
-    private Board(final Map<Position, Piece> board) {
-        this.board = board;
-        turn = Color.WHITE;
+    public Board() {
+        this(Collections.emptyMap(), Color.WHITE);
     }
 
-    public static Board initialize() {
-        final Map<Position, Piece> result = new HashMap<>();
-        result.putAll(initializePiece(Color.WHITE, Rank.ONE));
-        result.putAll(initializePawn(Color.WHITE, Rank.TWO));
-        result.putAll(initializeEmptyPiece(List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)));
-        result.putAll(initializePawn(Color.BLACK, Rank.SEVEN));
-        result.putAll(initializePiece(Color.BLACK, Rank.EIGHT));
-        return new Board(result);
+    private Board(final Map<Position, Piece> board, final Color turn) {
+        this.board = new HashMap<>(board);
+        this.turn = turn;
     }
 
-    private static Map<Position, Piece> initializePiece(final Color color, final Rank rank) {
+    public void initialize() {
+        board.putAll(initializePiece(Color.WHITE, Rank.ONE));
+        board.putAll(initializePawn(Color.WHITE, Rank.TWO));
+        board.putAll(initializeEmptyPiece(List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)));
+        board.putAll(initializePawn(Color.BLACK, Rank.SEVEN));
+        board.putAll(initializePiece(Color.BLACK, Rank.EIGHT));
+    }
+
+    private Map<Position, Piece> initializePiece(final Color color, final Rank rank) {
         final List<Piece> pieces = List.of(
                 Rook.from(color), Knight.from(color), Bishop.from(color), Queen.from(color),
                 King.from(color), Bishop.from(color), Knight.from(color), Rook.from(color)
@@ -52,13 +54,13 @@ public class Board {
                 .collect(toMap(index -> Position.of(files.get(index), rank), pieces::get));
     }
 
-    private static Map<Position, Piece> initializePawn(final Color color, final Rank rank) {
+    private Map<Position, Piece> initializePawn(final Color color, final Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
                 .collect(toMap(Function.identity(), ignore -> Pawn.from(color)));
     }
 
-    private static Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
+    private Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
         return ranks.stream()
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
                 .collect(toMap(Function.identity(), ignore -> Empty.create()));
@@ -98,6 +100,10 @@ public class Board {
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.create());
         turn = turn.nextTurn();
+    }
+
+    public boolean isInitialized() {
+        return board.size() != 0;
     }
 
     public Map<Position, Piece> getBoard() {

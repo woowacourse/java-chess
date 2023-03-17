@@ -25,6 +25,8 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -45,9 +47,12 @@ public class ChessGameTest {
     @Test
     void 체스_게임을_생성한다() {
         // given
-        final ChessGame chessGame = ChessGame.initialize();
+        final ChessGame chessGame = new ChessGame();
 
-        // expect
+        // when
+        chessGame.initialize();
+
+        // then
         final List<PieceType> result = generateResult(chessGame);
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
@@ -64,7 +69,8 @@ public class ChessGameTest {
     @Test
     void 기물을_움직인다() {
         // given
-        final ChessGame chessGame = ChessGame.initialize();
+        final ChessGame chessGame = new ChessGame();
+        chessGame.initialize();
 
         // when
         chessGame.move("e2", "e4");
@@ -77,7 +83,8 @@ public class ChessGameTest {
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final ChessGame chessGame = ChessGame.initialize();
+        final ChessGame chessGame = new ChessGame();
+        chessGame.initialize();
 
         // when
         chessGame.move("e2", "e4");
@@ -101,5 +108,21 @@ public class ChessGameTest {
                 PAWN, PAWN, PAWN, PAWN, EMPTY, PAWN, PAWN, PAWN,
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, EMPTY, EMPTY, ROOK
         );
+    }
+
+    @ParameterizedTest(name = "체스게임이 초기화 되었는지 확인한다. 초기화:{0}, 결과:{0}")
+    @ValueSource(booleans = {true, false})
+    void 체스게임이_초기화_되었는지_확인한다(final boolean initialize) {
+        // given
+        final ChessGame chessGame = new ChessGame();
+        if (initialize) {
+            chessGame.initialize();
+        }
+
+        // when
+        final boolean result = chessGame.isInitialized();
+
+        // then
+        assertThat(result).isEqualTo(initialize);
     }
 }

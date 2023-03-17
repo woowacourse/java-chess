@@ -23,6 +23,8 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -43,9 +45,12 @@ public class BoardTest {
     @Test
     void 체스판을_초기화한다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = new Board();
 
-        // expect
+        // when
+        board.initialize();
+
+        // then
         final List<PieceType> result = generateResult(board);
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
@@ -62,7 +67,8 @@ public class BoardTest {
     @Test
     void 불가능한_이동_커맨드를_입력받는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = new Board();
+        board.initialize();
 
         // expect
         assertThatThrownBy(() -> board.move("d2", "d5"))
@@ -73,7 +79,8 @@ public class BoardTest {
     @Test
     void 이동_가능한_커맨드를_입력받는_경우_기물을_이동한다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = new Board();
+        board.initialize();
 
         // when
         board.move("e2", "e4");
@@ -85,7 +92,8 @@ public class BoardTest {
     @Test
     void 상대편의_기물을_이동하려는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = new Board();
+        board.initialize();
 
         // expect
         assertThatThrownBy(() -> board.move("g7", "g6"))
@@ -96,11 +104,28 @@ public class BoardTest {
     @Test
     void 이동_경로에_기물이_있는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = new Board();
+        board.initialize();
 
         // expect
         assertThatThrownBy(() -> board.move("d1", "d4"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있을 수 없습니다.");
+    }
+
+    @ParameterizedTest(name = "체스판이 초기화 되었는지 확인한다. 초기화:{0}, 결과:{0}")
+    @ValueSource(booleans = {true, false})
+    void 체스판이_초기화_되었는지_확인한다(final boolean initialized) {
+        // given
+        final Board board = new Board();
+        if (initialized) {
+            board.initialize();
+        }
+
+        // when
+        final boolean result = board.isInitialized();
+
+        // then
+        assertThat(result).isEqualTo(initialized);
     }
 }

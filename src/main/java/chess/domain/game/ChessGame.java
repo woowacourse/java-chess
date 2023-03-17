@@ -9,16 +9,20 @@ public class ChessGame {
 
     private final Board board;
 
-    private ChessGame(final Board board) {
-        this.board = board;
+    public ChessGame() {
+        this.board = new Board();
     }
 
-    public static ChessGame initialize() {
-        return new ChessGame(Board.initialize());
+    public void initialize() {
+        board.initialize();
     }
 
     public void move(final String source, final String target) {
         board.move(source, target);
+    }
+
+    public boolean isInitialized() {
+        return board.isInitialized();
     }
 
     public Map<Position, Piece> getBoard() {
