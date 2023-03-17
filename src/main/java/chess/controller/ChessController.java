@@ -23,7 +23,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
 
-        inputView.printStartMessage();
+        outputView.printStartMessage();
 
         if (isStartCommand()) {
             play(chessGame);

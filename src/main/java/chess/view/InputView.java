@@ -5,16 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String START_MESSAGE = "체스 게임을 시작합니다.";
-    private static final String COMMAND_MESSAGE = "게임 시작은 start, 종료는 end 명령을 입력하세요.";
     private static final String DELIMITER = " ";
 
     private static final Scanner scanner = new Scanner(System.in);
-
-    public void printStartMessage() {
-        System.out.println(START_MESSAGE);
-        System.out.println(COMMAND_MESSAGE);
-    }
 
     public List<String> requestCommand() {
         String input = scanner.nextLine();
