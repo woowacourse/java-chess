@@ -37,4 +37,21 @@ public class Pawn extends Piece {
     public boolean isMovableDirection(Direction direction) {
         return movableDirection.contains(direction);
     }
+
+    public void setFirstMove(boolean firstMove) {
+        this.isFirstMove = firstMove;
+        this.movableDistance = 1;
+    }
+
+    public void checkMoveForwardByPawn(Direction direction, boolean isPositionToMoveEmpty) {
+        if (isForwardDirection(direction) && !isPositionToMoveEmpty) {
+            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE);
+
+        }
+    }
+
+    private boolean isForwardDirection(Direction direction) {
+        return direction == Direction.TOP || direction == Direction.BOTTOM;
+    }
+
 }
