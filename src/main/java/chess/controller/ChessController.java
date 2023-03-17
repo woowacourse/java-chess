@@ -27,8 +27,10 @@ public class ChessController {
     }
 
     private void startGame() {
-        chessGame.start();
-        OutputView.printBoard(chessGame.getBoard());
+        printError(() -> {
+            chessGame.start();
+            OutputView.printBoard(chessGame.getBoard());
+        });
     }
 
     private void movePiece(GameCommand gameCommand) {
