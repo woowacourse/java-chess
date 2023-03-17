@@ -7,10 +7,14 @@ import java.util.List;
 public class Bishop extends Piece {
 
     private final List<Direction> directions;
+    private String name = "b";
 
     public Bishop(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
+        if (side == Side.BLACK) {
+            name = name.toUpperCase();
+        }
     }
 
     private List<Direction> initDirections() {
@@ -39,5 +43,10 @@ public class Bishop extends Piece {
             paths.add(nextPosition);
         }
         return paths;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

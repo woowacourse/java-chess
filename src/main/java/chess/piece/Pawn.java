@@ -8,10 +8,14 @@ import java.util.List;
 public class Pawn extends Piece {
 
     private final List<Direction> directions;
+    private String name = "p";
 
     public Pawn(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
+        if (side == Side.BLACK) {
+            name = name.toUpperCase();
+        }
     }
 
     private List<Direction> initDirections() {
@@ -67,5 +71,10 @@ public class Pawn extends Piece {
             return List.of(position.getNextPosition(direction));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
