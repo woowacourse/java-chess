@@ -8,39 +8,84 @@
 
 ```mermaid
 classDiagram
+  class Board {
+    -Map~Position|Piece~: Squares
+  }
 
-    class Board {
-        -Map~Position|Piece~: Squares
-    }
+  class Piece {
+    <<abstract>>
+    -Role: role
+    -Team: Team
+  }
 
-    class Piece {
-        -Role: role
-        -Team: Team
-    }
+  class Position {
+    - int: x
+    - int: y
+  }
 
-    class Position {
-        - int: x
-        - int: y
-    }
+  class Type {
+    <<enumeration>>
+    KING,
+    QUEEN,
+    ROOK,
+    BISHOP,
+    KNIGHT,
+    PAWN,
+    EMPTY
+  }
 
-    class Type {
-        <<enumeration>>
-        KING,
-        QUEEN,
-        ROOK,
-        BISHOP,
-        KNIGHT,
-        PAWN,
-        EMPTY
-    }
-
-    class Team {
-        <<enumeration>>
-        WHITE,
-        BLACK,
-        NONE
-    }
-
+  class Team {
+    <<enumeration>>
+    WHITE,
+    BLACK,
+    NONE
+  }
+```
+```mermaid
+flowchart BT
+  Pawn --> Piece
+  King --> Piece
+  Knight --> Piece
+  Bishop --> Piece
+  Queen --> Piece
+  Rook --> Piece
+  Empty --> Piece
+```
+```mermaid
+stateDiagram
+  ChessGame --> WaitingState
+  state WaitingState {
+    [*] --> startGame
+    [*] --> movePiece
+    [*] --> getBoard
+    startGame --> [*]
+    movePiece --> Exception
+    getBoard --> Exception
+  }
+```
+```mermaid
+stateDiagram
+  ChessGame --> RunningState
+  state RunningState {
+    [*] --> startGame
+    [*] --> movePiece
+    [*] --> getBoard
+    startGame --> Exception
+    movePiece --> [*]
+    getBoard --> [*]
+  }
+```
+```mermaid
+stateDiagram
+  ChessGame --> EndState
+  state EndState {
+    [*] --> startGame
+    [*] --> movePiece
+    [*] --> getBoard
+    startGame --> Exception
+    movePiece --> Exception
+    getBoard --> Exception
+  }
 ```
 
 ## 기능 요구 사항
