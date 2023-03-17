@@ -11,6 +11,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readCommand() {
-        return Arrays.asList(scanner.nextLine().split(DELIMITER));
+        final String input = scanner.nextLine();
+        return Arrays.asList(input.split(DELIMITER));
     }
 }
