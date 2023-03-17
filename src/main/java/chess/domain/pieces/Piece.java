@@ -20,6 +20,14 @@ public abstract class Piece {
         return name.isPlace();
     }
 
+    public boolean isKnight() {
+        return this.name.isKnight();
+    }
+
+    public boolean isPawn() {
+        return this.name.isPawn();
+    }
+
     public boolean isNameLowerCase() {
         return this.name.isLowerCase();
     }

@@ -28,6 +28,14 @@ public class Name {
         return name.equals(PLACE);
     }
 
+    public boolean isPawn() {
+        return name.equals("p") || name.equals("P");
+    }
+
+    public boolean isKnight() {
+        return name.equals("n") || name.equals("N");
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

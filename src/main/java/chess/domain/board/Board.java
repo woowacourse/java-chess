@@ -1,8 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.direction.Direction;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Place;
 import java.util.List;
@@ -33,7 +31,7 @@ public class Board {
     private void validateMove(final Position start, final Position end) {
         Piece piece = findPieceFromPosition(start);
         validateMoveSamePosition(start, end);
-        if (!(piece instanceof Knight)) {
+        if (!piece.isKnight()) {
             validateObstacle(start, end);
         }
         piece.canMove(start, end);
@@ -52,7 +50,7 @@ public class Board {
 
         boolean isObstacleExist = routes.stream()
                 .map(route -> findPieceFromPosition(Position.from(route)))
-                .anyMatch(piece -> !(piece instanceof Place));
+                .anyMatch(piece -> !(piece.isPlace()));
 
         if (isObstacleExist) {
             throw new IllegalArgumentException("장애물이 존재합니다.");
@@ -60,7 +58,7 @@ public class Board {
     }
 
     private void validatePawnMove(final Piece piece, final Position start, final Position end) {
-        if (!(piece instanceof Pawn)) {
+        if (!(piece.isPawn())) {
             return;
         }
 
@@ -82,14 +80,14 @@ public class Board {
 
     private void validateLowercasePawnAttack(final Position end) {
         Piece upperEnemy = findPieceFromPosition(end);
-        if (upperEnemy.isNameLowerCase() || upperEnemy instanceof Place) {
+        if (upperEnemy.isNameLowerCase() || upperEnemy.isPlace()) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
     private void validateLowercasePawnMoveForward(final Position end) {
         Piece destination = findPieceFromPosition(end);
-        if (!(destination instanceof Place)) {
+        if (!(destination.isPlace())) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
@@ -116,14 +114,14 @@ public class Board {
 
     private void validateUppercasePawnAttack(final Position end) {
         Piece lowerEnemy = findPieceFromPosition(end);
-        if (lowerEnemy.isNameUpperCase() || lowerEnemy instanceof Place) {
+        if (lowerEnemy.isNameUpperCase() || lowerEnemy.isPlace()) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
     private void validateUppercasePawnMoveForward(final Position end) {
         Piece destination = findPieceFromPosition(end);
-        if (!(destination instanceof Place)) {
+        if (!(destination.isPlace())) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }

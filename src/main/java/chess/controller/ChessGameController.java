@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ChessGameController {
 
+    private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
     private static final int COMMAND_INDEX = 0;
-    private static final String MOVE_COMMAND = "move";
     private static final int SELECTED_PIECE = 1;
     private static final int DESTINATION = 2;
-    private static final String START_COMMAND = "start";
 
     private final InputView inputView;
     private final OutputView outputView;
