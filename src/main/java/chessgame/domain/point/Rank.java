@@ -32,7 +32,7 @@ public enum Rank {
         if (RANK_MAP.containsKey(result)) {
             return RANK_MAP.get(result);
         }
-        throw new IllegalArgumentException("file 좌표가 잘못되었습니다.");
+        throw new IllegalArgumentException("rank 좌표가 잘못되었습니다.");
     }
 
     public int distance(Rank target) {
