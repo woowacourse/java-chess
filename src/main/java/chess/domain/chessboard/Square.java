@@ -7,8 +7,9 @@ import java.util.List;
 
 public final class Square {
     private PieceState pieceState;
+    private static final Square EMPTY_SQUARE = new Square();
 
-    public Square() {
+    private Square() {
         pieceState = new Empty();
     }
 
