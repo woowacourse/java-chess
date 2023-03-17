@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,7 +19,7 @@ class BishopTest {
         Bishop bishop = new Bishop(new Name("b"));
 
         // when & then
-        assertDoesNotThrow(() -> bishop.canMove(start, end));
+        assertDoesNotThrow(() -> bishop.canMove(Position.from(start), Position.from(end)));
     }
 
     @ParameterizedTest
@@ -30,7 +31,7 @@ class BishopTest {
 
         // when & then
         assertThatThrownBy(
-                () -> bishop.canMove(start, end)
+                () -> bishop.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Col;
+import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 public class Pawn extends Piece {
@@ -12,8 +13,6 @@ public class Pawn extends Piece {
     private static final int MOVE_RIGHT = 1;
     private static final int MOVE_LEFT = -1;
     private static final int SAME_POSITION = 0;
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
 
     private boolean isFirstMove;
 
@@ -23,15 +22,15 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void canMove(final String start, final String end) {
+    public void canMove(final Position start, final Position end) {
         if (!validatePosition(start, end)) {
             throw new IllegalArgumentException("Pawn의 움직임 범위가 올바르지 않습니다.");
         }
     }
 
-    private boolean validatePosition(final String start, final String end) {
-        int subRow = Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW));
-        int subCol = Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN));
+    private boolean validatePosition(final Position start, final Position end) {
+        int subRow = Row.subPositionFromArrivePosition(start.getRow(), end.getRow());
+        int subCol = Col.subPositionFromArrivePosition(start.getCol(), end.getCol());
 
         if (this.isFirstMove) {
             this.isFirstMove = false;

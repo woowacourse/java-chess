@@ -1,5 +1,7 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Position;
+
 public abstract class Piece {
 
     private final Name name;
@@ -8,7 +10,7 @@ public abstract class Piece {
         this.name = name;
     }
 
-    public abstract void canMove(final String start, final String end);
+    public abstract void canMove(final Position start, final Position end);
 
     public String getName() {
         return name.getName();

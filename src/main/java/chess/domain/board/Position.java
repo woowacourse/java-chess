@@ -38,6 +38,14 @@ public class Position {
         return this.row.getIndexOfRow() == UPPER_PAWN_INDEX;
     }
 
+    public char getCol() {
+        return col.getIndexOfCol();
+    }
+
+    public char getRow() {
+        return row.getIndexOfRow();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

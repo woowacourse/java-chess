@@ -20,7 +20,7 @@ class KnightTest {
 
         // when  & then
         Assertions.assertDoesNotThrow(
-                () -> knight.canMove(start, end)
+                () -> knight.canMove(Position.from(start), Position.from(end))
         );
     }
 
@@ -33,7 +33,7 @@ class KnightTest {
 
         // when  & then
         assertThatThrownBy(
-                () -> knight.canMove(start, end)
+                () -> knight.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

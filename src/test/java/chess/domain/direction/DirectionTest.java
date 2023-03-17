@@ -2,6 +2,7 @@ package chess.domain.direction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("d4", "e5", "f6");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -32,7 +33,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("f6", "e5", "d4");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -47,7 +48,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("b7", "c6");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -62,7 +63,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("c6", "b7");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -77,7 +78,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("c4", "c5", "c6");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -92,7 +93,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("c6", "c5", "c4");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -107,7 +108,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("b8", "c8");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();
@@ -122,7 +123,7 @@ class DirectionTest {
         List<String> expectedResult = List.of("b8", "c8");
 
         // when
-        List<String> result = Direction.getRoute(start, end);
+        List<String> result = Direction.getRoute(Position.from(start), Position.from(end));
 
         // then
         assertThat(result.containsAll(expectedResult)).isTrue();

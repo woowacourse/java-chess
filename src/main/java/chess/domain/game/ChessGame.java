@@ -17,13 +17,17 @@ public class ChessGame {
     }
 
     public void move(final String start, final String end) {
-        validateTurn(start);
-        board.switchPosition(start, end);
+        Position startPosition = Position.from(start);
+        Position endPosition = Position.from(end);
+
+        validateTurn(startPosition);
+
+        board.switchPosition(startPosition, endPosition);
         isLowerTeamTurn = !isLowerTeamTurn;
     }
 
-    private void validateTurn(final String start) {
-        if (board.findPiece(start).isNameLowerCase() != isLowerTeamTurn) {
+    private void validateTurn(final Position start) {
+        if (board.findPieceFromPosition(start).isNameLowerCase() != isLowerTeamTurn) {
             throw new IllegalArgumentException("상대편 말은 움직일 수 없습니다.");
         }
     }

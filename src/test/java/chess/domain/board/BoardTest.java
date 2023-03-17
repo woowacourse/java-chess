@@ -28,10 +28,12 @@ class BoardTest {
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
         Board board = BoardFactory.createBoard();
+        Position startPosition = Position.from(start);
+        Position endPosition = Position.from(end);
 
         // when & then
         assertThatThrownBy(
-                () -> board.switchPosition(start, end)
+                () -> board.switchPosition(startPosition, endPosition)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,12 +42,13 @@ class BoardTest {
     void move_success() {
         // given
         Board board = BoardFactory.createBoard();
-
+        Position startPosition = Position.from("a2");
+        Position endPosition = Position.from("a3");
         // when
-        board.switchPosition("a2", "a3");
+        board.switchPosition(startPosition, endPosition);
 
         // then
-        assertThat(board.findPiece("a3").getName()).isEqualTo("p");
+        assertThat(board.findPieceFromPosition(Position.from("a3")).getName()).isEqualTo("p");
     }
 
     @Test
@@ -53,11 +56,11 @@ class BoardTest {
     void lower_pawn_attack_success() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("b7", "b5");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("b7"), Position.from("b5"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition("a4", "b5"));
+        assertDoesNotThrow(() -> board.switchPosition(Position.from("a4"), Position.from("b5")));
     }
 
     @Test
@@ -65,12 +68,12 @@ class BoardTest {
     void upper_pawn_attack_success() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("b7", "b5");
-        board.switchPosition("a1", "a2");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("b7"), Position.from("b5"));
+        board.switchPosition(Position.from("a1"), Position.from("a2"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition("b5", "a4"));
+        assertDoesNotThrow(() -> board.switchPosition(Position.from("b5"), Position.from("a4")));
     }
 
     @Test
@@ -80,7 +83,7 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a2", "b3"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a2"), Position.from("b3")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -89,10 +92,10 @@ class BoardTest {
     void upper_pawn_does_not_move_diagonal_when_space_is_empty() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a3");
+        board.switchPosition(Position.from("a2"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a7", "b6"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a7"), Position.from("b6")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -101,11 +104,11 @@ class BoardTest {
     void lower_pawn_does_not_attack_forward_enemy() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("a7", "a5");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("a7"), Position.from("a5"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a4", "a5"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a4"), Position.from("a5")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -114,12 +117,12 @@ class BoardTest {
     void upper_pawn_does_not_attack_forward_enemy() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("a7", "a5");
-        board.switchPosition("a1", "a3");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("a7"), Position.from("a5"));
+        board.switchPosition(Position.from("a1"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a5", "a4"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a5"), Position.from("a4")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class PawnTest {
         Pawn pawn = new Pawn(new Name("p"));
 
         // when & then
-        Assertions.assertDoesNotThrow(() -> pawn.canMove(start, end));
+        Assertions.assertDoesNotThrow(() -> pawn.canMove(Position.from(start), Position.from(end)));
     }
 
     @ParameterizedTest
@@ -30,7 +31,7 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-                () -> pawn.canMove(start, end)
+                () -> pawn.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,7 +43,7 @@ class PawnTest {
         Pawn pawn = new Pawn(new Name("P"));
 
         // when & then
-        Assertions.assertDoesNotThrow(() -> pawn.canMove(start, end));
+        Assertions.assertDoesNotThrow(() -> pawn.canMove(Position.from(start), Position.from(end)));
     }
 
     @ParameterizedTest
@@ -54,7 +55,7 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-                () -> pawn.canMove(start, end)
+                () -> pawn.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,10 +66,10 @@ class PawnTest {
         Pawn pawn = new Pawn(new Name("p"));
 
         // when
-        pawn.canMove("a2", "a3");
+        pawn.canMove(Position.from("a2"), Position.from("a3"));
 
         // then
-        assertThatThrownBy(() -> pawn.canMove("a3", "a5"))
+        assertThatThrownBy(() -> pawn.canMove(Position.from("a3"), Position.from("a5")))
                 .isInstanceOf(IllegalArgumentException.class);
      }
 }

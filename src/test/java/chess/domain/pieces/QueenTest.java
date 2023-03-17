@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,7 +20,7 @@ class QueenTest {
 
         // when & then
         assertDoesNotThrow(
-                () -> queen.canMove(start, end)
+                () -> queen.canMove(Position.from(start), Position.from(end))
         );
     }
 
@@ -32,7 +33,7 @@ class QueenTest {
         Queen queen = new Queen(new Name("q"));
 
         // when & then
-        assertDoesNotThrow(() -> queen.canMove(start, end));
+        assertDoesNotThrow(() -> queen.canMove(Position.from(start), Position.from(end)));
     }
 
     @ParameterizedTest
@@ -44,7 +45,7 @@ class QueenTest {
 
         // when & then
         assertThatThrownBy(
-                () -> queen.canMove(start, end)
+                () -> queen.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

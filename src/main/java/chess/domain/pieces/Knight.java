@@ -1,24 +1,22 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Col;
+import chess.domain.board.Position;
 import chess.domain.board.Row;
 import java.util.List;
 
 public class Knight extends Piece {
-
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
 
     public Knight(final Name name) {
         super(name);
     }
 
     @Override
-    public void canMove(final String start, final String end) {
+    public void canMove(final Position start, final Position end) {
         List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
 
-        int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW)));
-        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN)));
+        int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.getRow(), end.getRow()));
+        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.getCol(), end.getCol()));
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         if (!possibleSubPosition.contains(newPosition)) {

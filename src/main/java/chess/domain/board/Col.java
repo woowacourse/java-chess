@@ -30,4 +30,8 @@ public enum Col {
         Col endCol = fromByInput(end);
         return endCol.column - startCol.column;
     }
+
+    public char getIndexOfCol() {
+        return this.column;
+    }
 }

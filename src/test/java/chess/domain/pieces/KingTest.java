@@ -19,7 +19,7 @@ class KingTest {
         King king = new King(new Name("k"));
 
         // when & then
-        assertDoesNotThrow(() -> king.canMove(start, end));
+        assertDoesNotThrow(() -> king.canMove(Position.from(start), Position.from(end)));
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ class KingTest {
 
         // when & then
         assertThatThrownBy(
-                () -> king.canMove(start, end)
+                () -> king.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

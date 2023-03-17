@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,7 +20,7 @@ class RookTest {
 
         // when & then
         assertDoesNotThrow(
-                () -> rook.canMove(start, end)
+                () -> rook.canMove(Position.from(start), Position.from(end))
         );
     }
 
@@ -32,7 +33,7 @@ class RookTest {
 
         // when & then
         assertThatThrownBy(
-                () -> rook.canMove(start, end)
+                () -> rook.canMove(Position.from(start), Position.from(end))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.direction;
 
+import chess.domain.board.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,24 +27,24 @@ public enum Direction {
         this.row = row;
     }
 
-    public static boolean isLowerPawnDiagonal(final String start, final String end) {
+    public static boolean isLowerPawnDiagonal(final Position start, final Position end) {
         Direction direction = findDirection(start, end);
         return direction.equals(NORTH_WEST) || direction.equals(NORTH_EAST);
     }
 
-    public static boolean isUpperPawnDiagonal(final String start, final String end) {
+    public static boolean isUpperPawnDiagonal(final Position start, final Position end) {
         Direction direction = findDirection(start, end);
         return direction.equals(SOUTH_WEST) || direction.equals(SOUTH_EAST);
     }
 
-    public static List<String> getRoute(final String start, final String end) {
+    public static List<String> getRoute(final Position start, final Position end) {
         Direction direction = findDirection(start, end);
         List<String> route = new ArrayList<>();
 
-        char row = (char) (start.charAt(ROW) + direction.row);
-        char col = (char) (start.charAt(COLUMN) + direction.col);
+        char row = (char) (start.getRow() + direction.row);
+        char col = (char) (start.getCol() + direction.col);
 
-        while (row != end.charAt(ROW) || col != end.charAt(COLUMN)) {
+        while (row != end.getRow() || col != end.getCol()) {
             route.add(col + String.valueOf(row));
             row = (char) (row + direction.row);
             col = (char) (col + direction.col);
@@ -51,16 +52,16 @@ public enum Direction {
         return route;
     }
 
-    public static Direction findDirection(final String start, final String end) {
+    public static Direction findDirection(final Position start, final Position end) {
         return Arrays.stream(Direction.values()).
                 filter(direction -> direction.isSameDirection(start, end))
                 .findFirst()
                 .get();
     }
 
-    private boolean isSameDirection(final String start, final String end) {
-        int subRow = end.charAt(ROW) - start.charAt(ROW);
-        int subCol = end.charAt(COLUMN) - start.charAt(COLUMN);
+    private boolean isSameDirection(final Position start, final Position end) {
+        int subRow = end.getRow() - start.getRow();
+        int subCol = end.getCol() - start.getCol();
 
         if (subRow != 0) {
             subRow = subRow / Math.abs(subRow);
