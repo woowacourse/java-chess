@@ -22,7 +22,7 @@ public class Pawn extends Piece {
 
     @Override
     public void move(final PiecePosition destination) {
-        final Path path = Path.of(piecePosition, destination);
+        final Path path = path(destination);
         validatePath(path);
         validateMove(destination);
         piecePosition = destination;
@@ -36,7 +36,7 @@ public class Pawn extends Piece {
     }
 
     private void validateMove(final PiecePosition destination) {
-        final Path path = Path.of(piecePosition, destination);
+        final Path path = path(destination);
         if (!path.isStraight()) {
             throw new IllegalArgumentException("폰은 적이 없는 경우 직선으로만 이동할 수 있습니다.");
         }
@@ -44,7 +44,7 @@ public class Pawn extends Piece {
 
     @Override
     public void moveToKill(final Piece enemy) {
-        final Path path = Path.of(piecePosition, enemy.piecePosition());
+        final Path path = path(enemy.piecePosition());
         validatePath(path);
         validateKill(enemy);
         piecePosition = enemy.piecePosition();
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
     @Override
     protected void validateKill(final Piece enemy) {
         super.validateKill(enemy);
-        final Path path = Path.of(piecePosition, enemy.piecePosition());
+        final Path path = path(enemy.piecePosition());
         if (!path.isDiagonal()) {
             throw new IllegalArgumentException("폰은 대각선 위치에 있는 적만 죽일 수 있습니다.");
         }
