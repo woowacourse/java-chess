@@ -6,25 +6,25 @@ import java.util.List;
 public enum Direction {
     RIGHT {
         @Override
-        public Direction flipVertical() {
+        public Direction flipHorizontal() {
             return LEFT;
         }
     },
     UP {
         @Override
-        public Direction flipHorizontal() {
+        public Direction flipVertical() {
             return DOWN;
         }
     },
     LEFT {
         @Override
-        public Direction flipVertical() {
+        public Direction flipHorizontal() {
             return RIGHT;
         }
     },
     DOWN {
         @Override
-        public Direction flipHorizontal() {
+        public Direction flipVertical() {
             return UP;
         }
     };
@@ -66,11 +66,11 @@ public enum Direction {
         return !isHorizontal();
     }
 
-    public Direction flipHorizontal() {
+    public Direction flipVertical() {
         return this;
     }
 
-    public Direction flipVertical() {
+    public Direction flipHorizontal() {
         return this;
     }
 }

@@ -29,7 +29,7 @@ public class Pawn extends Piece {
 
     private static Set<Move> convertColor(Set<Move> moves) {
         return moves.stream()
-                .map(Move::flipHorizontal)
+                .map(Move::flipVertical)
                 .collect(Collectors.toSet());
     }
 

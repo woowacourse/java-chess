@@ -16,20 +16,20 @@ public class MoveTest extends AbstractTestFixture {
 
     @DisplayName("상하 대칭 할 수 있다.")
     @Test
-    void flipHorizontal() {
+    void flipVertical() {
         Move move = createMove(RIGHT, UP, UP);
         Move move2 = createMove(RIGHT, DOWN, DOWN);
 
-        assertThat(move.flipHorizontal()).isEqualTo(move2);
+        assertThat(move.flipVertical()).isEqualTo(move2);
     }
 
     @DisplayName("좌우 대칭 할 수 있다.")
     @Test
-    void flipVertical() {
+    void flipHorizontal() {
         Move move = createMove(RIGHT, RIGHT, UP);
         Move move2 = createMove(LEFT, LEFT, UP);
 
-        assertThat(move.flipVertical()).isEqualTo(move2);
+        assertThat(move.flipHorizontal()).isEqualTo(move2);
     }
 
     @SuppressWarnings("Convert2MethodRef")

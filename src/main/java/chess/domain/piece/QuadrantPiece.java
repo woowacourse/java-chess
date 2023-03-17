@@ -20,9 +20,9 @@ public abstract class QuadrantPiece extends Piece {
     private static Stream<Move> flip(Move move) {
         return Stream.of(
                 move,
-                move.flipHorizontal(),
                 move.flipVertical(),
-                move.flipHorizontal().flipVertical()
+                move.flipHorizontal(),
+                move.flipVertical().flipHorizontal()
         );
     }
 }

@@ -57,12 +57,12 @@ public class Move {
         }
     }
 
-    public Move flipHorizontal() {
-        return flip(Direction::flipHorizontal);
-    }
-
     public Move flipVertical() {
         return flip(Direction::flipVertical);
+    }
+
+    public Move flipHorizontal() {
+        return flip(Direction::flipHorizontal);
     }
 
     private Move flip(Function<Direction, Direction> directionFlipper) {
