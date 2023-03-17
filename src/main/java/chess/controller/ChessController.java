@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.dto.GameStatusDto;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -33,6 +34,6 @@ public class ChessController {
     }
 
     private void play() {
-
+        OutputView.printGameStatus(GameStatusDto.from(board));
     };
 }

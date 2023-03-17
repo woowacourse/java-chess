@@ -6,7 +6,7 @@ import chess.domain.square.Square;
 public class Pawn extends Piece {
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, "p");
     }
 
     // TODO: 코드 개선 시급

@@ -6,6 +6,7 @@ import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -80,5 +81,9 @@ public class Board {
     private void movePiece(final Square current, final Square destination) {
         board.put(destination, getPiece(current));
         board.remove(current);
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return new HashMap<>(board);
     }
 }

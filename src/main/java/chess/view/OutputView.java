@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.dto.GameStatusDto;
+
 public class OutputView {
 
     private static final String START_MESSAGE_PREFIX = "> ";
@@ -21,5 +23,13 @@ public class OutputView {
 
     private static void printEachStartPrefixMessage(final String message) {
         System.out.println(START_MESSAGE_PREFIX + message);
+    }
+
+    public static void printGameStatus(GameStatusDto gameStatusDto) {
+        gameStatusDto.getGameStatus().forEach(OutputView::printGameStatusRow);
+    }
+
+    private static void printGameStatusRow(String row) {
+        System.out.println(row);
     }
 }
