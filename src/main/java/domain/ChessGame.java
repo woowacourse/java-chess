@@ -68,7 +68,7 @@ public class ChessGame {
     }
 
     private void validatePawnDestination(final Position source, final Position target, final Square endPoint) {
-        if (isDiagonallyMovable(source, target, endPoint) || isStraightMovable(source, target, endPoint)) { // 대각인 경우, 상대방의 기물만 존재하면 됨
+        if (isDiagonallyMovable(source, target, endPoint) || isStraightMovable(source, target, endPoint)) {
             return;
         }
 
@@ -84,7 +84,7 @@ public class ChessGame {
     }
 
     private void checkTarget(final Square endPoint) {
-        if ((endPoint.getType() != EmptyType.EMPTY && endPoint.isSameColor(colorTurn))) { // 우리팀 기물이 목표지점에 있을 떄
+        if ((endPoint.getType() != EmptyType.EMPTY && endPoint.isSameColor(colorTurn))) {
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }
