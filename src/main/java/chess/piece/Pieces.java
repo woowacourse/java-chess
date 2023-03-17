@@ -67,6 +67,11 @@ public class Pieces {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 존재하는 기물이 없습니다."));
     }
 
+    public boolean isPieceExistOnPosition(final Position position) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.isSamePosition(position));
+    }
+
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
