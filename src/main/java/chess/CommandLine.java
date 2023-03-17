@@ -14,12 +14,12 @@ public class CommandLine {
     private static final int ZERO_ARGUMENT_SIZE = 1;
     private static final int TWO_ARGUMENT_SIZE = 3;
     private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
+    private static final int TARGET_INDEX = 3;
     private static final List<String> VALID_COMMANDS = List.of(START, MOVE, END);
     private final List<String> tokens;
     
     public CommandLine(final List<String> tokens) {
-        validate(tokens);
+        this.validate(tokens);
         this.tokens = tokens;
     }
     

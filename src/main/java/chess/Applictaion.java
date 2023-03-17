@@ -10,5 +10,4 @@ public class Applictaion {
         ChessController chessController = new ChessController(new InputView(), new OutputView());
         chessController.execute();
     }
-    
 }
