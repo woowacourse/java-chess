@@ -1,8 +1,8 @@
 package chess.view;
 
-import static chess.constant.GameCommand.*;
+import static chess.constant.GameCommand.MOVE;
+import static chess.constant.GameCommand.START;
 
-import chess.constant.GameCommand;
 import java.util.List;
 
 public class InputValidator {

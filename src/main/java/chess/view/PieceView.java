@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.Team;
 
 public enum PieceView {
+
     KING("K", "k"),
     QUEEN("Q", "q"),
     ROOK("R", "r"),
