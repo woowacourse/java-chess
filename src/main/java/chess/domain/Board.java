@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 import java.util.Map;
@@ -19,23 +20,60 @@ public class Board {
     }
 
     public void move(Square current, Square destination) {
+        Piece piece = getPiece(current);
+        Direction direction = piece.findDirection(current, destination);
+        validateRoute(current, destination, direction);
+
+        if (!isEmptySquare(destination)) {
+            checkEnemy(current, destination);
+        }
+
+        movePiece(current, destination);
+    }
+
+    private void validateRoute(Square current, Square destination, Direction direction) {
+        Square next = current.move(direction);
+        if (next.equals(destination)) {
+            return;
+        }
+        if (!isEmptySquare(next)) {
+            throw new IllegalArgumentException("길막 중입니다.");
+        }
+        validateRoute(next, destination, direction);
+    }
+
+    private void checkEnemy(Square current, Square destination) {
+        if (isEnemy(current, destination)) {
+            catchEnemy(current, destination);
+            return;
+        }
+        throw new IllegalArgumentException("길막 중입니다.");
+    }
+
+    private boolean isEnemy(Square current, Square destination) {
+        Piece currentPiece = getPiece(current);
+        Piece destinationPiece = getPiece(destination);
+        return currentPiece.isEnemy(destinationPiece);
+    }
+
+    private void catchEnemy(final Square current, final Square destination) {
+        board.remove(destination);
+        movePiece(current, destination);
+    }
+
+    private Piece getPiece(final Square current) {
         if (isEmptySquare(current)) {
             throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
         }
-        if (canNotMove(current, destination)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-        Piece piece = board.get(current);
-        piece.canMove(current, destination);
-        board.remove(current);
-        board.put(destination, piece);
+        return board.get(current);
     }
 
-    private boolean canNotMove(Square current, Square destination) {
-        return !board.get(current).canMove(current, destination);
-    }
-
-    private boolean isEmptySquare(Square square) {
+    private boolean isEmptySquare(final Square square) {
         return !board.containsKey(square);
+    }
+
+    private void movePiece(final Square current, final Square destination) {
+        board.put(destination, getPiece(current));
+        board.remove(current);
     }
 }

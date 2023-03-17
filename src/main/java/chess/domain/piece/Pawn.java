@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class Pawn extends Piece {
@@ -12,7 +13,7 @@ public class Pawn extends Piece {
     // TODO: 적이 있는 경우에만 대각 이동 가능하게 하기
     // TODO: 더블폰푸시 길막인 상태에서 불가하게 하기
     @Override
-    public boolean canMove(Square current, Square destination) {
-        return moveStrategy.canMove(current, destination);
+    public Direction findDirection(Square current, Square destination) {
+        return null;
     }
 }

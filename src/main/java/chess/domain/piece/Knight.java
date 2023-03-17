@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.piece.strategy.PieceDirection;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class Knight extends Piece {
@@ -10,7 +12,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Square current, Square destination) {
-        return moveStrategy.canMove(current, destination);
+    public Direction findDirection(Square current, Square destination) {
+        int fileDifference = current.getFileDifference(destination);
+        int rankDifference = current.getRankDifference(destination);
+        return PieceDirection.KNIGHT.findDirection(fileDifference, rankDifference);
     }
 }

@@ -3,28 +3,35 @@ package chess.domain.square;
 public enum Direction {
 
     UP(0, 1),
-    UPRIGHT(1, 1),
+    UP_RIGHT(1, 1),
     RIGHT(1, 0),
-    DOWNRIGHT(1, -1),
+    DOWN_RIGHT(1, -1),
     DOWN(0, -1),
-    DOWNLEFT(-1, -1),
+    DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
-    UPLEFT(-1, 1);
+    UP_LEFT(-1, 1),
+    UP_UP_RIGHT(1, 2),
+    UP_RIGHT_RIGHT(2, 1),
+    DOWN_RIGHT_RIGHT(2, -1),
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+    DOWN_LEFT_LEFT(-2, -1),
+    UP_LEFT_LEFT(-2, 1),
+    UP_UP_LEFT(-1, 2);
 
+    private final int fileDirection;
+    private final int rankDirection;
 
-    Direction(final int fileDifference, final int rankDifference) {
-        this.fileDifference = fileDifference;
-        this.rankDifference = rankDifference;
+    Direction(final int fileDirection, final int rankDirection) {
+        this.fileDirection = fileDirection;
+        this.rankDirection = rankDirection;
     }
 
-    private final int fileDifference;
-    private final int rankDifference;
-
-    public int getFileDifference() {
-        return fileDifference;
+    public int getFileDirection() {
+        return fileDirection;
     }
 
-    public int getRankDifference() {
-        return rankDifference;
+    public int getRankDirection() {
+        return rankDirection;
     }
 }

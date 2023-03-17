@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.piece.strategy.PieceDirection;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class Bishop extends Piece {
@@ -10,8 +12,9 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Square current, Square destination) {
-
-        return false;
+    public Direction findDirection(Square current, Square destination) {
+        int fileDifference = current.getFileDifference(destination);
+        int rankDifference = current.getRankDifference(destination);
+        return PieceDirection.DIAGONAL.findDirection(fileDifference, rankDifference);
     }
 }

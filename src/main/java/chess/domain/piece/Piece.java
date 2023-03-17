@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 import java.util.Objects;
@@ -19,7 +20,7 @@ abstract public class Piece {
         return piece.color != color;
     }
 
-    public abstract boolean canMove(Square current, Square destination);
+    public abstract Direction findDirection(final Square current, final Square destination);
 
     @Override
     public boolean equals(final Object o) {

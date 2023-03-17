@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class Queen extends Piece {
@@ -13,8 +14,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Square current, Square destination) {
+    public Direction findDirection(Square current, Square destination) {
 
-        return false;
+        return null;
     }
 }

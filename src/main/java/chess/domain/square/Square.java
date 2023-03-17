@@ -49,7 +49,7 @@ public final class Square {
     }
 
     public Square move(final Direction direction) {
-        return move(direction.getFileDifference(), direction.getRankDifference());
+        return move(direction.getFileDirection(), direction.getRankDirection());
     }
 
     public Square move(final int fileDifference, final int rankDifference) {

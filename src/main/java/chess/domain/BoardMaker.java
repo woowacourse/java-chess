@@ -12,7 +12,7 @@ import chess.domain.piece.strategy.DiagonalMoveStrategy;
 import chess.domain.piece.strategy.KingMoveStrategy;
 import chess.domain.piece.strategy.KnightMoveStrategy;
 import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.piece.strategy.PawnDirection;
+import chess.domain.piece.strategy.PieceDirection;
 import chess.domain.piece.strategy.PawnMoveStrategy;
 import chess.domain.piece.strategy.StraightMoveStrategy;
 import chess.domain.square.File;
@@ -41,7 +41,7 @@ public class BoardMaker {
     private Map<Square, Piece> makePawn(final Color color) {
         Map<Square, Piece> pawns = new HashMap<>();
         Rank rank = getPawnRankByColor(color);
-        MoveStrategy moveStrategy = new PawnMoveStrategy(PawnDirection.from(color));
+        MoveStrategy moveStrategy = new PawnMoveStrategy(PieceDirection.pawnFrom(color));
         for (File file : File.values()) {
             pawns.put(Square.of(file, rank), new Pawn(color, moveStrategy));
         }

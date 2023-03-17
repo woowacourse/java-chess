@@ -1,13 +1,12 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class PawnMoveStrategy implements MoveStrategy {
 
-    private final PawnDirection moveDirection;
+    private final PieceDirection moveDirection;
 
-    public PawnMoveStrategy(final PawnDirection moveDirection) {
+    public PawnMoveStrategy(final PieceDirection moveDirection) {
         this.moveDirection = moveDirection;
     }
 
@@ -19,11 +18,11 @@ public class PawnMoveStrategy implements MoveStrategy {
 
         int fileDifference = current.getFileDifference(destination);
         int rankDifference = current.getRankDifference(destination);
-        return moveDirection.isExist(fileDifference, rankDifference);
+        return true;
     }
 
     private boolean isDoublePawnPush(Square current, Square destination) {
-        if (moveDirection.equals(PawnDirection.UPPER)) {
+        if (moveDirection.equals(PieceDirection.WHITE_PAWN)) {
             return isDoublePawnPushWhenUpper(current, destination);
         }
         return isDoublePawnPushWhenLower(current, destination);
