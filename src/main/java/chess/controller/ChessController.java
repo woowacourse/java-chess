@@ -24,7 +24,7 @@ public class ChessController {
         outputView.printStartMessage();
         start();
         Board board = new Board();
-리        progress(board);
+        progress(board);
     }
 
     private void start() {
@@ -71,18 +71,10 @@ public class ChessController {
     }
 
     private boolean isWrongInputTeam(Board board, Team turn, Position source) {
-        try {
-            validateTurn(board, turn, source);
-        } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
+        if (!board.isTurn(source, turn)) {
+            outputView.printWrongTurnMessage(turn);
             return true;
         }
         return false;
-    }
-
-    private void validateTurn(Board board, Team turn, Position source) {
-        if (!board.isTurn(source, turn)) {
-            throw new IllegalArgumentException("[ERROR] 지금은 "+ turn + "차례입니다.");
-        }
     }
 }
