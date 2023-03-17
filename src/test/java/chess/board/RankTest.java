@@ -1,7 +1,6 @@
 package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ class RankTest {
         Rank targetRank = Rank.FIVE;
 
         // when
-        final int valuePoint = rank.getValuePoint(targetRank);
+        final int valuePoint = rank.getDirectionTo(targetRank);
 
         // then
         assertThat(valuePoint).isEqualTo(1);

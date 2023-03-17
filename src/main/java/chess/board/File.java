@@ -12,6 +12,10 @@ public enum File {
     G(7, "g"),
     H(8, "h");
 
+    private static final int RIGHT = 1;
+    private static final int NO_DIRECTION = 0;
+    private static final int LEFT = -1;
+
     private final int value;
     private final String text;
 
@@ -34,14 +38,14 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 파일 값이 존재하지 않습니다."));
     }
 
-    public int getValuePoint(File targetFile) {
-        if (targetFile.value - this.value == 0) {
-            return 0;
+    public int getDirectionTo(File targetFile) {
+        if (targetFile.value - this.value == NO_DIRECTION) {
+            return NO_DIRECTION;
         }
-        if (targetFile.value - this.value > 0) {
-            return 1;
+        if (targetFile.value - this.value > NO_DIRECTION) {
+            return RIGHT;
         }
-        return -1;
+        return LEFT;
     }
 
     public int getValueDiff(File targetFile) {

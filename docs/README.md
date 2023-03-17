@@ -35,3 +35,15 @@
 - [x] 게임 시작/종료 여부를 입력할 수 있다.
   - [x] 'start' 또는 'end'가 아니면 예외처리한다.
 
+## 1단계 리팩토링
+### 1차 리뷰
+- [x] getValuePoint 메서드명 개선
+- [ ] initBoardSpaces for문 8의 의미는?
+- [ ] 각 말을 표시하는 방법은 어느 영역의 관심사일까?
+- [ ] 컨트롤러의 repeat 메서드명 개선
+- [ ] Knight getPaths가 사용하지 않음을 나타내자.
+- [ ] Pawn 매직 넘버 개선
+- [ ] Piece.move()는 부모 클래스가 자식 클래스에 의존하는, 즉, DIP 위반 아닐까?
+- [ ] indexOf 메서드에 List에 존재하지 않는 값을 전달한다면?
+- [ ] ChessController와 InputView가 같은 문자열이 있는데, 이는 같은 의미를 가지는 걸까?
+- [ ] Calculator 주석 제거

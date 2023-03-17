@@ -14,8 +14,8 @@ public class Position {
     }
 
     public Direction getDirectionTo(Position targetPosition) {
-        final int fileValuePoint = file.getValuePoint(targetPosition.file);
-        final int rankValuePoint = rank.getValuePoint(targetPosition.rank);
+        final int fileValuePoint = file.getDirectionTo(targetPosition.file);
+        final int rankValuePoint = rank.getDirectionTo(targetPosition.rank);
         return Direction.from(fileValuePoint, rankValuePoint);
     }
 

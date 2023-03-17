@@ -12,6 +12,10 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final int UP = 1;
+    private static final int NO_DIRECTION = 0;
+    private static final int DOWN = -1;
+
     private final int value;
 
     Rank(final int value) {
@@ -25,14 +29,14 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 랭크 값이 존재하지 않습니다."));
     }
 
-    public int getValuePoint(Rank targetRank) {
+    public int getDirectionTo(Rank targetRank) {
         if (targetRank.value - this.value == 0) {
-            return 0;
+            return NO_DIRECTION;
         }
         if (targetRank.value - this.value > 0) {
-            return 1;
+            return UP;
         }
-        return -1;
+        return DOWN;
     }
 
     public int getValueDiff(Rank targetRank) {
