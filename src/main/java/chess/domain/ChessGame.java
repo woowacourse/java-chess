@@ -66,9 +66,9 @@ public class ChessGame {
                 .substring(0, FILE_RANK_DIVIDING_INDEX);
         String endFile = commandAndParameters.get(DEST_POSITION_INDEX)
                 .substring(FILE_RANK_DIVIDING_INDEX);
-        Position startPosition = Position.of(Rank.from(startRank), File.from(startFile));
-        Position endPosition = Position.of(Rank.from(endRank), File.from(endFile));
-        chessBoard.move(startPosition, endPosition);
+        Position source = Position.of(Rank.from(startRank), File.from(startFile));
+        Position destination = Position.of(Rank.from(endRank), File.from(endFile));
+        chessBoard.move(source, destination);
     }
 
     private void checkGameNotFinished() {

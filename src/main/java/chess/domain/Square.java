@@ -32,12 +32,12 @@ public class Square {
         return piece.getClass() == King.class;
     }
 
-    public boolean canAttack(final Position endPosition) {
-        return piece.canAttack(position, endPosition);
+    public boolean canAttack(final Position destination) {
+        return piece.canAttack(position, destination);
     }
 
-    public boolean canMove(final Position startPosition, final Position endPosition) {
-        return piece.canMove(startPosition, endPosition);
+    public boolean canMove(final Position source, final Position destination) {
+        return piece.canMove(source, destination);
     }
 
     public void moveTo(Turn turn, final Square destination) {

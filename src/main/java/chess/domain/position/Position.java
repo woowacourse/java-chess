@@ -12,15 +12,6 @@ public class Position {
 
     static {
         CACHE = new HashMap<>();
-        for (File file : File.values()) {
-            cacheEachFile(file);
-        }
-    }
-
-    private static void cacheEachFile(final File file) {
-        for (Rank rank : Rank.values()) {
-            CACHE.put(rank.name() + file.name(), new Position(rank, file));
-        }
     }
 
     private Position(Rank rank, File file) {
@@ -29,15 +20,17 @@ public class Position {
     }
 
     public static Position of(Rank rank, File file) {
-        return CACHE.get(rank.name() + file.name());
+        final String key = rank.name() + file.name();
+        CACHE.putIfAbsent(key, new Position(rank, file));
+        return CACHE.get(key);
     }
 
-    public int calculateFileDistance(final Position startPosition) {
-        return file.calculateDistance(startPosition.file);
+    public int calculateFileDistance(final Position source) {
+        return file.calculateDistance(source.file);
     }
 
-    public int calculateRankDistance(final Position startPosition) {
-        return rank.calculateDistance(startPosition.rank);
+    public int calculateRankDistance(final Position source) {
+        return rank.calculateDistance(source.rank);
     }
 
     public Position move(final int rankDirection, final int fileDirection) {

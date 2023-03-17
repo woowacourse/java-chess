@@ -9,18 +9,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position startPosition, final Position endPosition) {
-        if (startPosition.equals(endPosition)) {
+    public boolean canMove(final Position source, final Position destination) {
+        if (source.equals(destination)) {
             return false;
         }
-        int diffFile = endPosition.calculateFileDistance(startPosition);
-        int diffRank = endPosition.calculateRankDistance(startPosition);
+        int diffFile = destination.calculateFileDistance(source);
+        int diffRank = destination.calculateRankDistance(source);
 
         return (Math.abs(diffFile) == Math.abs(diffRank));
     }
 
     @Override
-    public boolean canAttack(final Position startPosition, final Position endPosition) {
-        return canMove(startPosition, endPosition);
+    public boolean canAttack(final Position source, final Position destination) {
+        return canMove(source, destination);
     }
 }

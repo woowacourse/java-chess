@@ -17,17 +17,19 @@ public class ChessBoard {
         this.turn = new Turn();
     }
 
-    public void move(final Position startPosition, final Position endPosition) {
-        validateAllyPiece(startPosition);
-        validateNotExistAllyAt(endPosition);
-        validateNotBlocked(startPosition, endPosition);
-        if (canAttack(startPosition, endPosition) || canMove(startPosition, endPosition)) {
-            executeMove(startPosition, endPosition);
+    public void move(final Position source, final Position destination) {
+        validateAllyPiece(source);
+        validateNotExistAllyAt(destination);
+        validateNotBlocked(source, destination);
+        if (canAttack(source, destination) || canMove(source, destination)) {
+            executeMove(source, destination);
+            return;
         }
+        throw new IllegalArgumentException("기물의 이동 범위 밖입니다.");
     }
 
-    private void validateAllyPiece(final Position startPosition) {
-        if (findSquareByPosition(startPosition).isSameTeam(turn.findCurrentEnemyTeam())) {
+    private void validateAllyPiece(final Position source) {
+        if (findSquareByPosition(source).isSameTeam(turn.findCurrentEnemyTeam())) {
             throw new IllegalArgumentException("상대방의 기물은 이동시킬 수 없습니다.");
         }
     }
@@ -39,25 +41,25 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
     }
 
-    private void validateNotExistAllyAt(final Position endPosition) {
+    private void validateNotExistAllyAt(final Position destination) {
         final Team team = turn.findCurrentTeam();
-        if (isMyPiece(team, endPosition)) {
+        if (isMyPiece(team, destination)) {
             throw new IllegalArgumentException("도착지에 아군 기물이 있습니다.");
         }
     }
 
-    private boolean isMyPiece(final Team team, final Position endPosition) {
-        return findSquareByPosition(endPosition).isSameTeam(team);
+    private boolean isMyPiece(final Team team, final Position destination) {
+        return findSquareByPosition(destination).isSameTeam(team);
     }
 
-    private void validateNotBlocked(final Position startPosition, final Position endPosition) {
-        int diffFile = endPosition.calculateFileDistance(startPosition);
-        int diffRank = endPosition.calculateRankDistance(startPosition);
+    private void validateNotBlocked(final Position source, final Position destination) {
+        int diffFile = destination.calculateFileDistance(source);
+        int diffRank = destination.calculateRankDistance(source);
         BigInteger gcd = BigInteger.valueOf(diffFile).gcd(BigInteger.valueOf(diffRank));
         int fileDirection = diffFile / gcd.intValue();
         int rankDirection = diffRank / gcd.intValue();
-        Position tempPosition = startPosition.move(rankDirection, fileDirection);
-        while (!tempPosition.equals(endPosition)) {
+        Position tempPosition = source.move(rankDirection, fileDirection);
+        while (!tempPosition.equals(destination)) {
             validateIsEmpty(tempPosition);
             tempPosition = tempPosition.move(rankDirection, fileDirection);
         }
@@ -74,20 +76,20 @@ public class ChessBoard {
                 .isEmpty();
     }
 
-    private boolean canAttack(final Position startPosition, final Position endPosition) {
-        final Square userSquare = findSquareByPosition(startPosition);
-        final Square targetSquare = findSquareByPosition(endPosition);
+    private boolean canAttack(final Position source, final Position destination) {
+        final Square userSquare = findSquareByPosition(source);
+        final Square targetSquare = findSquareByPosition(destination);
         return targetSquare.isSameTeam(turn.findCurrentEnemyTeam())
-                && userSquare.canAttack(endPosition);
+                && userSquare.canAttack(destination);
     }
 
-    private boolean canMove(final Position startPosition, final Position endPosition) {
-        return isEmptyAt(endPosition) &&
-                findSquareByPosition(startPosition).canMove(startPosition, endPosition);
+    private boolean canMove(final Position source, final Position destination) {
+        return isEmptyAt(destination) &&
+                findSquareByPosition(source).canMove(source, destination);
     }
 
-    private void executeMove(final Position startPosition, final Position endPosition) {
-        findSquareByPosition(startPosition).moveTo(turn, findSquareByPosition(endPosition));
+    private void executeMove(final Position source, final Position destination) {
+        findSquareByPosition(source).moveTo(turn, findSquareByPosition(destination));
         turn = turn.next();
     }
 

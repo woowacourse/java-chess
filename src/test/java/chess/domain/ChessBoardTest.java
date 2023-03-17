@@ -37,13 +37,13 @@ class ChessBoardTest {
     @Test
     void should_체스_기물을_이동시킨다_when_장애물이_없는_상황에서_이동_명령을_받았을_때() {
         //given
-        Position startPosition = Position.of(Rank.C, File.TWO);
-        Position endPosition = Position.of(Rank.C, File.FOUR);
+        Position source = Position.of(Rank.C, File.TWO);
+        Position destination = Position.of(Rank.C, File.FOUR);
 
         //when
-        chessBoard.move(startPosition, endPosition);
+        chessBoard.move(source, destination);
         boolean isEmpty = chessBoard.getSquares().stream()
-                .filter(square -> square.isSamePosition(startPosition))
+                .filter(square -> square.isSamePosition(source))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
                 .isEmpty();
@@ -59,13 +59,13 @@ class ChessBoardTest {
         @Test
         void should_체스_기물을_이동시키지못한다_when_장애물이_있는_상황일때() {
             //given
-            Position startPosition = Position.of(Rank.A, File.ONE);
-            Position endPosition = Position.of(Rank.A, File.FOUR);
+            Position source = Position.of(Rank.A, File.ONE);
+            Position destination = Position.of(Rank.A, File.FOUR);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이동 경로에 다른 기물이 있습니다.");
         }
@@ -73,13 +73,13 @@ class ChessBoardTest {
         @Test
         void should_체스_기물을_이동시키지못한다_when_도착지에_내_기물이_있는_상황일때() {
             //given
-            Position startPosition = Position.of(Rank.A, File.ONE);
-            Position endPosition = Position.of(Rank.A, File.TWO);
+            Position source = Position.of(Rank.A, File.ONE);
+            Position destination = Position.of(Rank.A, File.TWO);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("도착지에 아군 기물이 있습니다.");
         }
@@ -87,13 +87,13 @@ class ChessBoardTest {
         @Test
         void should_체스_기물을_이동시키지못한다_when_상대방의_기물을_이동시키려고_할_때() {
             //given
-            Position startPosition = Position.of(Rank.C, File.SEVEN);
-            Position endPosition = Position.of(Rank.C, File.SIX);
+            Position source = Position.of(Rank.C, File.SEVEN);
+            Position destination = Position.of(Rank.C, File.SIX);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("상대방의 기물은 이동시킬 수 없습니다.");
         }
@@ -105,12 +105,12 @@ class ChessBoardTest {
         @Test
         void should_폰을_이동시킨다_when_폰이_공격가능할때() {
             //given
-            Position startPosition = Position.of(Rank.C, File.TWO);
+            Position source = Position.of(Rank.C, File.TWO);
             Position middlePosition = Position.of(Rank.C, File.FOUR);
             Position enemyStartPosition = Position.of(Rank.D, File.SEVEN);
             Position enemyEndPosition = Position.of(Rank.D, File.FIVE);
 
-            chessBoard.move(startPosition, middlePosition);
+            chessBoard.move(source, middlePosition);
             chessBoard.move(enemyStartPosition, enemyEndPosition);
 
             //when

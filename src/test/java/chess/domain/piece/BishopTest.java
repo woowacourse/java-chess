@@ -16,12 +16,12 @@ class BishopTest {
     @CsvSource(value = {"a:1", "a:5", "e:1", "h:8"}, delimiter = ':')
     void should_true반환_when_움직일_수_있는_위치라면(String rank, String file) {
         //given
-        Position startPosition = Position.of(Rank.from(rank), File.from(file));
-        Position endPosition = Position.of(Rank.C, File.THREE);
+        Position source = Position.of(Rank.from(rank), File.from(file));
+        Position destination = Position.of(Rank.C, File.THREE);
         Bishop bishop = new Bishop(Team.WHITE);
 
         //when
-        boolean actual = bishop.canMove(startPosition, endPosition);
+        boolean actual = bishop.canMove(source, destination);
 
         //then
         assertThat(actual).isTrue();
@@ -31,12 +31,12 @@ class BishopTest {
     @CsvSource(value = {"c:1", "a:3", "c:8", "h:3", "c:3"}, delimiter = ':')
     void should_false반환_when_움직일_수_없는_위치라면(String rank, String file) {
         //given
-        Position startPosition = Position.of(Rank.from(rank), File.from(file));
-        Position endPosition = Position.of(Rank.C, File.THREE);
+        Position source = Position.of(Rank.from(rank), File.from(file));
+        Position destination = Position.of(Rank.C, File.THREE);
         Bishop bishop = new Bishop(Team.WHITE);
 
         //when
-        boolean actual = bishop.canMove(startPosition, endPosition);
+        boolean actual = bishop.canMove(source, destination);
 
         //then
         assertThat(actual).isFalse();

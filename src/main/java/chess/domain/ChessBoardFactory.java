@@ -13,22 +13,22 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChessBoardFactory {
 
     public static ChessBoard create() {
         List<Square> squares = new ArrayList<>();
-
         for (File file : File.values()) {
-            squares.addAll(Arrays.stream(Rank.values())
-                    .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file)))
-                    .collect(Collectors.toUnmodifiableList()));
+            addSqaureOfEachFile(squares, file);
         }
-
         return new ChessBoard(squares);
+    }
+
+    private static void addSqaureOfEachFile(final List<Square> squares, final File file) {
+        for (Rank rank : Rank.values()) {
+            squares.add(new Square(Position.of(rank, file), createPiece(rank, file)));
+        }
     }
 
     private static Piece createPiece(Rank rank, File file) {
