@@ -15,6 +15,16 @@ import java.util.function.Supplier;
 public class ChessController {
 
     private static final String GAME_EXIT_COMMAND = "end";
+    private static final String INPUT_COMMAND_DELIMITER = " ";
+    private static final String POSITION_DELIMITER = "";
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+    private static final int MOVE_COMMAND_INPUT_CORRECT_SIZE = 3;
+    private static final int INPUT_SOURCE_STRING_INDEX = 0;
+    private static final int INPUT_TARGET_STRING_INDEX = 1;
+    private static final int INPUT_COMMAND_INDEX = 0;
+    private static final int INPUT_SOURCE_POSITION_INDEX = 1;
+    private static final int INPUT_TARGET_POSITION_INDEX = 2;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -49,33 +59,33 @@ public class ChessController {
         validateUserInputToGameCommandAfterStart(userInput);
 
         List<Position> positions = convertUserInputToPositions(userInput);
-        Position sourcePosition = positions.get(0);
-        Position targetPosition = positions.get(1);
+        Position sourcePosition = positions.get(INPUT_SOURCE_STRING_INDEX);
+        Position targetPosition = positions.get(INPUT_TARGET_STRING_INDEX);
 
         game.move(side, sourcePosition, targetPosition);
         return GameCommand.MOVE;
     }
 
     private List<Position> convertUserInputToPositions(String userInput) {
-        List<String> inputs = Arrays.asList(userInput.split(" "));
-        String sourceString = inputs.get(1);
-        String targetString = inputs.get(2);
+        List<String> inputs = Arrays.asList(userInput.split(INPUT_COMMAND_DELIMITER));
+        String sourceString = inputs.get(INPUT_SOURCE_POSITION_INDEX);
+        String targetString = inputs.get(INPUT_TARGET_POSITION_INDEX);
 
-        List<String> sourceFileAndRank = Arrays.asList(sourceString.split(""));
-        List<String> targetFileAndRank = Arrays.asList(targetString.split(""));
+        List<String> sourceFileAndRank = Arrays.asList(sourceString.split(POSITION_DELIMITER));
+        List<String> targetFileAndRank = Arrays.asList(targetString.split(POSITION_DELIMITER));
 
         List<Position> positions = new ArrayList<>();
-        positions.add(Position.of(sourceFileAndRank.get(0), sourceFileAndRank.get(1)));
-        positions.add(Position.of(targetFileAndRank.get(0), targetFileAndRank.get(1)));
+        positions.add(Position.of(sourceFileAndRank.get(FILE_INDEX), sourceFileAndRank.get(RANK_INDEX)));
+        positions.add(Position.of(targetFileAndRank.get(FILE_INDEX), targetFileAndRank.get(RANK_INDEX)));
         return positions;
     }
 
     private void validateUserInputToGameCommandAfterStart(String userInput) {
-        List<String> inputs = Arrays.asList(userInput.split(" "));
-        if (inputs.size() != 3) {
+        List<String> inputs = Arrays.asList(userInput.split(INPUT_COMMAND_DELIMITER));
+        if (inputs.size() != MOVE_COMMAND_INPUT_CORRECT_SIZE) {
             throw new IllegalArgumentException("올바르지 않은 움직임입니다. (예: move b2 b3)");
         }
-        GameCommand command = GameCommand.from(inputs.get(0));
+        GameCommand command = GameCommand.from(inputs.get(INPUT_COMMAND_INDEX));
 
         if (command.equals(GameCommand.START)) {
             throw new IllegalArgumentException("게임이 이미 실행중입니다.");
