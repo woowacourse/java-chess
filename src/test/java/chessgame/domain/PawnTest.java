@@ -52,6 +52,16 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("화이트 폰은 대각선으로 한 칸 이동할 수 없다")
+    void isReachableByRuleWhiteCantDiagonal() {
+        Coordinate startCoordinate = new Coordinate(2, 0);
+        Coordinate endCoordinate = new Coordinate(3, 1);
+        Pawn pawn = new WhitePawn();
+
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+    }
+
+    @Test
     @DisplayName("블랙 폰은 아래로 한 칸 이동할 수 있다")
     void isReachableByRuleDown() {
         Coordinate startCoordinate = new Coordinate(6, 0);
@@ -86,6 +96,16 @@ class PawnTest {
     void isReachableByRuleCantUp() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(7, 0);
+        Pawn pawn = new BlackPawn();
+
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+    }
+
+    @Test
+    @DisplayName("블랙 폰은 대각선을 이동할 수 없다")
+    void isReachableByRuleBlackCantDiagonal() {
+        Coordinate startCoordinate = new Coordinate(6, 0);
+        Coordinate endCoordinate = new Coordinate(5, 1);
         Pawn pawn = new BlackPawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
