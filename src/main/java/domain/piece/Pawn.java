@@ -31,7 +31,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isEatable(final Position source, final Position destination) {
+    public boolean isCapturable(final Position source, final Position destination) {
         if (isBlack() &&
                 source.moveDownLeft(ONE_STEP).equals(destination) ||
                 source.moveDownRight(ONE_STEP).equals(destination)) {

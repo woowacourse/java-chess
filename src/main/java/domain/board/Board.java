@@ -26,7 +26,7 @@ public final class Board {
         validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {
-            killDestination(source, destination, piece);
+            captureDestination(source, destination, piece);
         }
         if (!board.containsKey(destination)) {
             moveDestination(source, destination, piece);
@@ -61,8 +61,8 @@ public final class Board {
                 piece.isBlack() == board.get(destination).isBlack();
     }
 
-    private void killDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isEatable(source, destination)) {
+    private void captureDestination(final Position source, final Position destination, final Piece piece) {
+        if (piece.isCapturable(source, destination)) {
             board.put(destination, board.remove(source));
             return;
         }

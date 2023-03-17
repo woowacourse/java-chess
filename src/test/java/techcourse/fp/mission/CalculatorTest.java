@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class CalculatorTest {
@@ -12,7 +13,7 @@ class CalculatorTest {
 
     @Test
     public void sumAll() {
-        int sum = Calculator.sumAll(numbers);
+        int sum = Calculator.sumAll(numbers, (ignore) -> true);
         assertThat(sum).isEqualTo(21);
     }
 
