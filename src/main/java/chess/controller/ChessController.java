@@ -40,7 +40,7 @@ public class ChessController {
                 this.outputView.printBoard(BoardDto.create(chessGame.getBoard()));
                 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                this.outputView.printError(e.getMessage());
             }
         }
     }
