@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum Direction {
 
     EAST(1, 0),
@@ -27,6 +30,14 @@ public enum Direction {
     Direction(final int fileDisplacement, final int rankDisplacement) {
         this.fileDisplacement = fileDisplacement;
         this.rankDisplacement = rankDisplacement;
+    }
+
+    public static Optional<Direction> find(Position start, Position next) {
+        return Arrays.stream(values())
+                .filter(direction ->
+                        direction.fileDisplacement == start.fileIncreaseFrom(next)
+                                && direction.rankDisplacement == start.rankIncreaseFrom(next))
+                .findAny();
     }
 
     public int nextFile(int currentFile) {

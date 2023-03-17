@@ -46,7 +46,16 @@ public class Pawn extends Piece {
     }
 
     public boolean isAttack(Position source, Position dest) {
-        return source.isOneStepForwardDiagonal(dest);
+        return Direction.find(source, dest)
+                .map(this::isRightAttackDirectionByCamp)
+                .orElse(false);
+    }
+
+    private boolean isRightAttackDirectionByCamp(Direction direction) {
+        if (camp == Camp.WHITE) {
+            return direction == Direction.NORTH_EAST || direction == Direction.NORTH_WEST;
+        }
+        return direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST;
     }
 
     private boolean isStartRank(final Position current) {

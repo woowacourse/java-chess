@@ -10,7 +10,7 @@ public class Position {
     private static final int MAXIMUM = 8;
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
-    
+
     private final int file;
     private final int rank;
 
@@ -52,8 +52,12 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
-    public boolean isOneStepForwardDiagonal(Position other) {
-        return ((other.file - file) == 1) && (Math.abs(other.rank - rank) == 1);
+    public int fileIncreaseFrom(Position destination) {
+        return destination.file - file;
+    }
+
+    public int rankIncreaseFrom(Position destination) {
+        return destination.rank - rank;
     }
 
     public boolean isInExpectedRank(int rank) {

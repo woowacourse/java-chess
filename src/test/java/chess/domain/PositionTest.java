@@ -51,12 +51,29 @@ public class PositionTest {
         assertThat(next).isNull();
     }
 
-    @DisplayName("전달 받은 위치가 현재 위치로부터 대각선 한 칸 앞이면 참을 반환한다.")
+    @DisplayName("다음 이동 위치를 전달받아, 증가하는 file 값을 계산한다.")
     @Test
-    void 대각선_한칸앞_확인() {
-        Position current = Position.of(1, 1);
+    void 다음_이동_파일_증가값_반환() {
+        int file = 1;
+        int rank = 1;
+        Position current = Position.of(file, rank);
 
-        assertThat(current.isOneStepForwardDiagonal(Position.of(2, 2)))
-                .isTrue();
+        int increase = 1;
+
+        assertThat(current.fileIncreaseFrom(Position.of(file + increase, rank)))
+                .isEqualTo(increase);
+    }
+
+    @DisplayName("다음 이동 위치를 전달받아, 증가하는 rank 값을 계산한다.")
+    @Test
+    void 다음_이동_랭크_증가값_반환() {
+        int file = 1;
+        int rank = 1;
+        Position current = Position.of(file, rank);
+
+        int increase = 1;
+
+        assertThat(current.rankIncreaseFrom(Position.of(file, rank + increase)))
+                .isEqualTo(increase);
     }
 }
