@@ -2,9 +2,9 @@ package chess.view;
 
 import chess.domain.Board;
 import chess.domain.File;
-import chess.domain.piece.Piece;
 import chess.domain.Position;
 import chess.domain.Rank;
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
@@ -12,7 +12,7 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printErrorMessage(final Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println(e.getMessage() + LINE_SEPARATOR);
     }
 
     public void printStartMessage() {
@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public void printBoard(final Board board) {
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder(LINE_SEPARATOR);
         final Map<Position, Piece> boardMap = board.getBoard();
 
         for (Rank rank : Rank.values()) {
