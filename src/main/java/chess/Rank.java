@@ -30,4 +30,8 @@ public enum Rank {
     public int value() {
         return value;
     }
+
+    public boolean isSame(final int rank) {
+        return this.value == rank;
+    }
 }

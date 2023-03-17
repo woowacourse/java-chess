@@ -17,8 +17,9 @@ import java.util.Optional;
 
 public class King extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP, DOWN, RIGHT, LEFT, UP_RIGHT, UP_LEFT,
-            DOWN_RIGHT, DOWN_LEFT);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(
+            UP, DOWN, RIGHT, LEFT,
+            UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
     public King(final Color color) {
         super(color);

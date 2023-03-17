@@ -28,6 +28,10 @@ public class Pawn extends Piece {
             Color.BLACK, 7,
             Color.WHITE, 2
     );
+    private static final Map<Color, Integer> INITIAL_RANK_DIFFERENCE = Map.of(
+            Color.BLACK, -2,
+            Color.WHITE, 2
+    );
 
 
     public Pawn(final Color color) {
@@ -37,31 +41,38 @@ public class Pawn extends Piece {
     public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
         Movement movement = to.convertMovement(from);
 
-        if (destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color)) {
-
-            if (color.isWhite() && from.rank().value() == 2
-                    && rankDifference(from, to) == 2) {
-                final Position wayPoint = from.moveBy(UP);
-
-                return new Path(wayPoint);
-            }
-
-            if (color.isBlack() && from.rank().value() == 7
-                    && rankDifference(from, to) == -2) {
-                Position wayPoint = from.moveBy(DOWN);
-
-                return new Path(wayPoint);
-            }
-
-            return new Path();
+        if (destination.isEmpty()) {
+            return searchPathToEmptyPosition(from, to, movement);
         }
-        // 상대 말인 경우
-        if (destination.isPresent()
-                && destination.get().color.isDifferentColor(color)
-                && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
-            return new Path();
+
+        return searchPathToEnemyPosition(destination.get(), movement);
+    }
+
+    private Path searchPathToEnemyPosition(final Piece destination, final Movement movement) {
+        if (!destination.color.isDifferentColor(color)) {
+            throw new IllegalStateException("같은 색의 말이 있는 곳으로는 이동할 수 없음!");
         }
-        throw new IllegalStateException();
+
+        if (!CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
+            throw new IllegalStateException("움직일 수 있는 방향이 아님!");
+        }
+
+        return new Path();
+    }
+
+    private Path searchPathToEmptyPosition(final Position from, final Position to, final Movement movement) {
+        if (movement != CAN_MOVE_EMPTY_DESTINATION.get(color)) {
+            throw new IllegalStateException("움직일 수 있는 방향이 아님!");
+        }
+
+        if (from.isSameRank(INITIAL_POSITION_RANK.get(color))
+                && rankDifference(from, to) == INITIAL_RANK_DIFFERENCE.get(color)) {
+            final Position wayPoint = from.moveBy(CAN_MOVE_EMPTY_DESTINATION.get(color));
+
+            return new Path(wayPoint);
+        }
+
+        return new Path();
     }
 
     private int rankDifference(final Position from, final Position to) {

@@ -35,6 +35,10 @@ public class Position {
         return movement.nextPosition(file, rank);
     }
 
+    public boolean isSameRank(int rank) {
+        return this.rank.isSame(rank);
+    }
+
     public int rankDifference(final Position from) {
         return this.rank.value() - from.rank.value();
     }
@@ -42,7 +46,6 @@ public class Position {
     public int fileDifference(final Position from) {
         return this.file.value() - from.file.value();
     }
-
 
 
     @Override
