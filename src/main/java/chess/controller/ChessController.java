@@ -9,16 +9,13 @@ import chess.domain.board.Square;
 import chess.renderer.FileInputRenderer;
 import chess.renderer.RankInputRenderer;
 import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ChessController {
     private final InputView inputView;
-    private final OutputView outputView;
     private Commend commend;
 
     public ChessController() {
         this.inputView = new InputView();
-        this.outputView = new OutputView();
         this.commend = new StartCommend(this);
     }
 
