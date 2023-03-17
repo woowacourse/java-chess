@@ -93,7 +93,7 @@ public class Board {
             path.add(Position.of(file, rank));
         }
 
-        return path;
+        return path.subList(0, path.size() - 1);
     }
 
     private void validatePathIsEmpty(final List<Position> path) {
