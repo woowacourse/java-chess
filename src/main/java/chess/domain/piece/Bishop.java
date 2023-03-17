@@ -14,6 +14,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Square source, Square target) {
-        return source.calculateFileDistance(target) == source.calculateRankDistance(target);
+        return source.calculateFileDistance(target)
+                == source.calculateRankDistance(target);
     }
 }

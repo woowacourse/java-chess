@@ -8,7 +8,6 @@ public class Pawn extends Piece {
     private static final int WHITE_MIN_MOVABLE_RANK = 1;
     private static final int BLACK_MAX_MOVABLE_RANK = -2;
     private static final int BLACK_MIN_MOVABLE_RANK = -1;
-    private static final int MIN_MOVABLE_FILE = 1;
 
     public Pawn(Camp camp) {
         super(camp);
@@ -30,14 +29,24 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveBlack(Square source, Square target) {
+        if (source.calculateRankDifference(target) >= 0) {
+            return false;
+        }
+        return canBlackFirstMove(source, target);
+    }
+
+    private boolean canMoveWhite(Square source, Square target) {
+
+        if (source.calculateRankDifference(target) <= 0) {
+            return false;
+        }
+        return canWhiteFirstMove(source, target);
+    }
+
+    private boolean canBlackFirstMove(Square source, Square target) {
         int rankDifference = source.calculateRankDifference(target);
         int fileDistance = source.calculateFileDistance(target);
 
-        //뒤로 가는거 + 옆으로 가는거 검증
-        if (rankDifference >= 0) {
-            return false;
-        }
-        //시작 위치
         if (source.isRankSeven()) {
             return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == 0 ||
                     rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == 1;
@@ -46,15 +55,9 @@ public class Pawn extends Piece {
         return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= 1;
     }
 
-    private boolean canMoveWhite(Square source, Square target) {
+    private static boolean canWhiteFirstMove(Square source, Square target) {
         int rankDifference = source.calculateRankDifference(target);
         int fileDistance = source.calculateFileDistance(target);
-
-        //뒤로 가는거 + 옆으로 가는거 검증
-        if (rankDifference <= 0) {
-            return false;
-        }
-        //시작 위치
         if (source.isRankTwo()) {
             return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == 0 ||
                     rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == 1;

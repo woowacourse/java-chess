@@ -19,5 +19,4 @@ public class King extends Piece {
         return (source.calculateRankDistance(target) == MOVABLE_DISTANCE) ||
                 (source.calculateFileDistance(target) == MOVABLE_DISTANCE);
     }
-
 }

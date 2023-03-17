@@ -3,11 +3,6 @@ package chess.controller;
 import chess.controller.commend.Commend;
 import chess.controller.commend.StartCommend;
 import chess.domain.ChessGame;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
-import chess.renderer.FileInputRenderer;
-import chess.renderer.RankInputRenderer;
 import chess.view.InputView;
 
 public class ChessController {
@@ -39,12 +34,5 @@ public class ChessController {
 
     public void setCommend(Commend commend) {
         this.commend = commend;
-    }
-
-    private Square makeSquare(String command) {
-        File file = FileInputRenderer.renderString(String.valueOf(command.charAt(0)));
-        Rank rank = RankInputRenderer.renderString(String.valueOf(command.charAt(1)));
-
-        return new Square(file, rank);
     }
 }
