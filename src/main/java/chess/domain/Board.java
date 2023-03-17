@@ -75,7 +75,7 @@ public class Board {
     private void validatePath(final Position source, final Position target, final Direction unit, final Piece piece) {
         List<Position> path = calculatePath(source, target, unit);
         validatePathIsEmpty(path);
-        validateMovableByCount(piece, path.size());
+        validateMovableByCount(piece, path.size() + 1);
     }
 
     private List<Position> calculatePath(Position source, Position target, Direction unit) {
