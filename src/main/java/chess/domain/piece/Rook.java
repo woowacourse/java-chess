@@ -11,7 +11,8 @@ public class Rook extends Piece {
 
     @Override
     public Direction findDirection(Square current, Square destination) {
-
-        return null;
+        int fileDifference = current.getFileDifference(destination);
+        int rankDifference = current.getRankDifference(destination);
+        return PieceDirection.STRAIGHT.findDirection(fileDifference, rankDifference);
     }
 }

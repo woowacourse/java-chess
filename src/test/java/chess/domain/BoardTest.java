@@ -98,6 +98,57 @@ class BoardTest {
     }
 
     @Nested
+    @DisplayName("룩")
+    class Rook {
+
+        private Square whiteLeftRook;
+
+        @BeforeEach
+        void setup() {
+            whiteLeftRook = Square.of(File.A, Rank.ONE);
+            board.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR));
+            board.move(Square.of(File.B, Rank.SEVEN), Square.of(File.B, Rank.FIVE));
+            board.move(Square.of(File.A, Rank.FOUR), Square.of(File.B, Rank.FIVE));
+            board.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE));
+        }
+
+        @Test
+        @DisplayName("이동 성공")
+        void move_success() {
+            assertThatCode(() -> board.move(whiteLeftRook, Square.of(File.A, Rank.FOUR)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("적 제거 성공")
+        void move_success_when_enemy_exists() {
+            assertThatCode(() -> board.move(whiteLeftRook, Square.of(File.A, Rank.FIVE)))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("아군 위치로는 이동 실패")
+        void move_fail_when_ally_exists() {
+            assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.B, Rank.ONE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("잘못된 위치로는 이동 실패")
+        void move_fail() {
+            assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.B, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("길막인 경우 이동 실패")
+        void move_fail_when_block() {
+            assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.A, Rank.SIX)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+    }
+
+    @Nested
     @DisplayName("나이트")
     class Knight {
 
@@ -178,6 +229,13 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.D, Rank.THREE)))
+                    .isInstanceOf(WrongDirectionException.class);
+        }
+
+        @Test
+        @DisplayName("길막인 경우 이동 실패")
+        void move_fail_when_block() {
+            assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.A, Rank.THREE)))
                     .isInstanceOf(WrongDirectionException.class);
         }
     }
