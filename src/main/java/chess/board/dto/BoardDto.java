@@ -27,8 +27,9 @@ public class BoardDto {
         for (Piece piece : pieces) {
             final NameDto nameDto = new NameDto(piece);
             final String pieceName = nameDto.getName();
-            final List<String> names = nameBoard.get(getFlippedIndex(piece.getRank()));
-            names.set(getFlippedIndex(piece.getFile()), pieceName);
+            final List<String> rank = nameBoard.get(getFlippedIndex(piece.getRank()));
+            final int fileIndex = piece.getFile() - 1;
+            rank.set(fileIndex, pieceName);
         }
     }
 
