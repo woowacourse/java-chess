@@ -32,7 +32,7 @@ public abstract class Piece {
 
     public abstract PieceMove getMovement(Position from, Position to);
 
-    abstract boolean isPeaceRule(Position from, Position to);
+    abstract boolean isPieceRule(Position from, Position to);
 
     @Override
     public boolean equals(Object o) {

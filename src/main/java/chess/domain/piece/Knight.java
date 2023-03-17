@@ -14,7 +14,7 @@ public final class Knight extends Piece {
     @Override
     public PieceMove getMovement(Position from, Position to) {
 
-        if (isPeaceRule(from, to)) {
+        if (isPieceRule(from, to)) {
             return new PassingMove();
         }
 
@@ -22,7 +22,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    boolean isPeaceRule(Position from, Position to) {
+    boolean isPieceRule(Position from, Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 

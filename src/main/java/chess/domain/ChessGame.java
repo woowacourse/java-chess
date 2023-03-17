@@ -27,6 +27,9 @@ public class ChessGame {
             validateMovable(pieceMove, position);
         }
         validateSameCamp(fromPiece, toPiece);
+//        if (pieceMove.isMovable(toPiece)) {
+//
+//        }
 
         piecesPosition.movePieceOn(fromPosition, toPosition);
     }

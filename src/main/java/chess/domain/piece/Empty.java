@@ -16,7 +16,7 @@ public final class Empty extends Piece {
     }
 
     @Override
-    boolean isPeaceRule(Position from, Position to) {
+    boolean isPieceRule(Position from, Position to) {
         return false;
     }
 

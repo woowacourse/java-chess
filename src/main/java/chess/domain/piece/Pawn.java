@@ -19,7 +19,7 @@ public final class Pawn extends Piece {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 
-        if (isPeaceRule(from, to)) {
+        if (isPieceRule(from, to)) {
             isMoved = true;
             return decidePawnMove(rankGap, fileGap);
         }
@@ -36,7 +36,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    boolean isPeaceRule(Position from, Position to) {
+    boolean isPieceRule(Position from, Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 
