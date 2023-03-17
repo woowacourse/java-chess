@@ -2,22 +2,16 @@ package chess.domain.piece.type.pawn.state;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.type.pawn.move.PawnColorMoveStrategy;
 
-public class InitialPawn extends PawnState {
-
-    public InitialPawn(final PawnColorMoveStrategy colorMoveStrategy) {
-        super(colorMoveStrategy);
-    }
+public class InitialPawn implements PawnState {
 
     @Override
     public PawnState next(final PiecePosition piecePosition) {
-        return new MovedPawn(colorMoveStrategy);
+        return new MovedPawn();
     }
 
     @Override
     public void validateMovable(final Path path) {
-        colorMoveStrategy.validateMovementDirection(path);
         if (isPawnSpecialDestination(path)) {
             return;
         }

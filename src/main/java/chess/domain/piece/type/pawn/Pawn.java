@@ -10,17 +10,20 @@ import chess.domain.piece.type.pawn.state.PawnState;
 
 public class Pawn extends Piece {
 
+    private final PawnColorMoveStrategy pawnColorMoveStrategy;
     private PawnState pawnState;
 
     public Pawn(final Color color, final PiecePosition piecePosition) {
         super(color, piecePosition);
         // TODO 질문입니다 !!
         //  생성자에서 로직이 들어가는 것이 괜찮을까요? 이정도는 간단하니 괜찮다 생각합니다..
-        this.pawnState = new InitialPawn(PawnColorMoveStrategy.byColor(color));
+        this.pawnColorMoveStrategy = PawnColorMoveStrategy.byColor(color);
+        this.pawnState = new InitialPawn();
     }
 
     @Override
     protected void validateMovable(final Path path) {
+        pawnColorMoveStrategy.validateMovementDirection(path);
         pawnState.validateMovable(path);
     }
 

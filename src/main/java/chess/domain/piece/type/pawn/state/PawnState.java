@@ -2,17 +2,10 @@ package chess.domain.piece.type.pawn.state;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.type.pawn.move.PawnColorMoveStrategy;
 
-public abstract class PawnState {
+public interface PawnState {
 
-    protected final PawnColorMoveStrategy colorMoveStrategy;
+    PawnState next(final PiecePosition piecePosition);
 
-    protected PawnState(final PawnColorMoveStrategy colorMoveStrategy) {
-        this.colorMoveStrategy = colorMoveStrategy;
-    }
-
-    public abstract PawnState next(final PiecePosition piecePosition);
-
-    public abstract void validateMovable(final Path path);
+    void validateMovable(final Path path);
 }
