@@ -3,7 +3,6 @@ package techcourse.fp.mission;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -13,7 +12,7 @@ public class StreamStudy {
 
     public static long countWords() throws IOException {
         String contents = Files.readString(Paths
-            .get("C:\\Users\\user\\Desktop\\우테코\\레벨 1\\체스\\java-chess\\src\\main\\resources\\techcourse\\fp\\war-and-peace.txt"));
+                .get("C:\\Users\\user\\Desktop\\우테코\\레벨 1\\체스\\java-chess\\src\\main\\resources\\techcourse\\fp\\war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         return words.stream()
@@ -42,7 +41,7 @@ public class StreamStudy {
 
     public static void printLongestWordTop100() throws IOException {
         String contents = Files.readString(Paths
-            .get("C:\\Users\\user\\Desktop\\우테코\\레벨 1\\체스\\java-chess\\src\\main\\resources\\techcourse\\fp\\war-and-peace.txt"));
+                .get("C:\\Users\\user\\Desktop\\우테코\\레벨 1\\체스\\java-chess\\src\\main\\resources\\techcourse\\fp\\war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
 //        System.out.println(words);

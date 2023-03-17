@@ -6,6 +6,7 @@ import chess.domain.board.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
+
 import java.util.List;
 
 public class ChessController {

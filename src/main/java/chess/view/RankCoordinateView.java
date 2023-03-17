@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.RankCoordinate;
+
 import java.util.Arrays;
 
 public enum RankCoordinateView {

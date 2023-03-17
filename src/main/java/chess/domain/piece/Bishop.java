@@ -13,7 +13,7 @@ public class Bishop extends Piece {
         return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
                 && isNotSameColor(color);
     }
-    
+
     @Override
     public boolean isEmpty() {
         return false;

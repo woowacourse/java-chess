@@ -5,6 +5,7 @@ import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
+
 import java.util.Map;
 
 public class OutputView {

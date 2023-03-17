@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Position {
-
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
@@ -17,74 +18,43 @@ public class Position {
     }
 
     public List<Position> findPath(Position targetPosition) {
-        int nowFileCoordinate = this.getColumn();
-        int nowRankCoordinate = this.getRow();
-        int targetFileCoordinate = targetPosition.getColumn();
-        int targetRankCoordinate = targetPosition.getRow();
-
-        if (nowFileCoordinate == targetFileCoordinate) {
-            return getPathByRank(targetRankCoordinate);
+        int columnStep = getStep(this.getColumn(), targetPosition.getColumn());
+        int rowStep = getStep(this.getRow(), targetPosition.getRow());
+        int difference = getDifference(targetPosition);
+        if (isNotStraight(targetPosition)) {
+            return Collections.emptyList();
         }
-        if (nowRankCoordinate == targetRankCoordinate) {
-            return getPathByFile(targetFileCoordinate);
-        }
-        if (Math.abs(nowFileCoordinate - targetFileCoordinate) == Math.abs(nowRankCoordinate - targetRankCoordinate)) {
-            return getPathByDiagonal(targetFileCoordinate, targetRankCoordinate);
-        }
-        return Collections.emptyList();
+        return IntStream.range(1, difference)
+                .mapToObj(x -> createPosition(columnStep, rowStep, x))
+                .collect(Collectors.toList());
     }
 
-    private List<Position> getPathByDiagonal(int targetFileCoordinate, int targetRankCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowFileCoordinate = this.getColumn();
-        int nowRankCoordinate = this.getRow();
-
-        int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-
-        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
-            nowFileCoordinate += columnStep;
-            nowRankCoordinate += rowStep;
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    RankCoordinate.findBy(nowRankCoordinate));
-            paths.add(position);
-        }
-        return paths;
+    private Position createPosition(int columnStep, int rowStep, int x) {
+        return new Position(FileCoordinate.findBy(this.getColumn() + (columnStep * x)),
+                RankCoordinate.findBy(this.getRow() + (rowStep * x)));
     }
 
-    private List<Position> getPathByFile(int targetFileCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowFileCoordinate = this.getColumn();
-        int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
-            nowFileCoordinate += columnStep;
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    this.getRankCoordinate());
-            paths.add(position);
-        }
-        return paths;
+    private int getDifference(Position targetPosition) {
+        int columnDifference = Math.abs(targetPosition.getColumn() - this.getColumn());
+        int rowDifference = Math.abs(targetPosition.getRow() - this.getRow());
+        return Math.max(columnDifference, rowDifference);
     }
 
-    private List<Position> getPathByRank(int targetRankCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowRankCoordinate = this.getRow();
-        int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-        while (nowRankCoordinate + rowStep != targetRankCoordinate) {
-            nowRankCoordinate += rowStep;
-            Position position = new Position(this.getFileCoordinate(),
-                    RankCoordinate.findBy(nowRankCoordinate));
-            paths.add(position);
-        }
-        return paths;
+    private boolean isNotStraight(Position targetPosition) {
+        int columnDifference = Math.abs(targetPosition.getColumn() - this.getColumn());
+        int rowDifference = Math.abs(targetPosition.getRow() - this.getRow());
+        return columnDifference != 0 && rowDifference != 0 && columnDifference != rowDifference;
     }
 
     private int getStep(int nowCoordinate, int targetCoordinate) {
-        if (nowCoordinate - targetCoordinate > 0) {
+        if (nowCoordinate > targetCoordinate) {
             return -1;
         }
-        return 1;
+        if (nowCoordinate < targetCoordinate) {
+            return 1;
+        }
+        return 0;
     }
-
 
     public FileCoordinate getFileCoordinate() {
         return fileCoordinate;
