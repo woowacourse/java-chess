@@ -18,6 +18,7 @@ import java.util.Optional;
 public class King extends Piece {
 
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L, UR, UL, DR, DL);
+    private static final String KING_MOVE_OVER_ONE_MESSAGE = "왕은 한 칸만 움직일 수 있습니다.";
 
     public King(final Color color) {
         super(color);
@@ -26,14 +27,11 @@ public class King extends Piece {
     @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
-        Movement movement = to.convertMovement(from);
-
+        final Movement movement = to.convertMovement(from);
         validateMovable(movement, CAN_MOVE_DESTINATION);
-
         if (!from.moveBy(movement).equals(to)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(KING_MOVE_OVER_ONE_MESSAGE);
         }
-
         return new Path();
     }
 }

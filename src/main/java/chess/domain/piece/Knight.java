@@ -30,18 +30,15 @@ public class Knight extends Piece {
     @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
-
         final Movement movement = to.convertMovement(from);
+        validateMovable(movement, CAN_MOVE_DESTINATION);
+        validateManhattanDistance(from, to);
+        return new Path();
+    }
 
-        int rankDifference = Math.abs(to.rankDifference(from));
-        int fileDifference = Math.abs(to.fileDifference(from));
-
-        if (rankDifference + fileDifference != 3) {
+    private void validateManhattanDistance(final Position from, final Position to) {
+        if (from.rankDifference(to) + from.fileDifference(to) != 3) {
             throw new IllegalArgumentException();
         }
-
-        validateMovable(movement, CAN_MOVE_DESTINATION);
-
-        return new Path();
     }
 }

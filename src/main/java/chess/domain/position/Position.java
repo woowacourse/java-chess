@@ -34,11 +34,11 @@ public class Position {
     }
 
     public int rankDifference(final Position from) {
-        return this.rank.value() - from.rank.value();
+        return Math.abs(this.rank.value() - from.rank.value());
     }
 
     public int fileDifference(final Position from) {
-        return this.file.value() - from.file.value();
+        return Math.abs(this.file.value() - from.file.value());
     }
 
     public boolean isEqualRank(final Rank rank) {
