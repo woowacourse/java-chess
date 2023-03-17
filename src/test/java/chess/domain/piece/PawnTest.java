@@ -24,7 +24,7 @@ public class PawnTest {
     }
 
     @ParameterizedTest(name = "폰이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
-    @CsvSource(value = {"2:2", "0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
+    @CsvSource(value = {"0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE);

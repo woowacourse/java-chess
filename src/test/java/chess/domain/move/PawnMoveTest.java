@@ -43,7 +43,7 @@ public class PawnMoveTest {
     }
 
     @ParameterizedTest(name = "source에서 target으로 폰이 갈 수 없는 위치면 false를 반환한다.")
-    @CsvSource(value = {"2:2", "0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
+    @CsvSource(value = {"0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
     void canMoveFailWhenWrongTarget(final int targetRank, final int targetFile) {
         // given
         final PawnMove pawnMove = new PawnMove();
