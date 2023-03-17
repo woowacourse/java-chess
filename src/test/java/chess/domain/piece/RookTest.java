@@ -1,14 +1,10 @@
 package chess.domain.piece;
 
 import static chess.domain.board.MoveType.MOVE;
-import static chess.domain.move.Direction.DOWN;
-import static chess.domain.move.Direction.LEFT;
-import static chess.domain.move.Direction.RIGHT;
-import static chess.domain.move.Direction.UP;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.move.Move;
+import chess.domain.position.Move;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +15,10 @@ public class RookTest {
     void canMove_HorizontalVertical_Infinite() {
         Rook rook = new Rook(WHITE);
 
-        assertThat(rook.isValidMove(new Move(LEFT, LEFT, LEFT), MOVE)).isTrue();
-        assertThat(rook.isValidMove(new Move(RIGHT, RIGHT), MOVE)).isTrue();
-        assertThat(rook.isValidMove(new Move(UP, UP), MOVE)).isTrue();
-        assertThat(rook.isValidMove(new Move(DOWN), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(3, 0), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(-1, 0), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(0, 1), MOVE)).isTrue();
+        assertThat(rook.isValidMove(new Move(0, -3), MOVE)).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -30,8 +26,8 @@ public class RookTest {
     void canNotMove() {
         Rook rook = new Rook(WHITE);
 
-        assertThat(rook.isValidMove(new Move(LEFT, LEFT, UP), MOVE)).isFalse();
-        assertThat(rook.isValidMove(new Move(LEFT, UP), MOVE)).isFalse();
-        assertThat(rook.isValidMove(new Move(RIGHT, RIGHT, DOWN, DOWN), MOVE)).isFalse();
+        assertThat(rook.isValidMove(new Move(2, 1), MOVE)).isFalse();
+        assertThat(rook.isValidMove(new Move(1, 1), MOVE)).isFalse();
+        assertThat(rook.isValidMove(new Move(-2, -2), MOVE)).isFalse();
     }
 }

@@ -3,7 +3,6 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,13 +38,13 @@ public class PositionTest {
                 .hasMessage("잘못된 포지션입니다.");
     }
 
-    @DisplayName("방향으로 이동할 수 있다")
+    @DisplayName("움직임으로으로 이동할 수 있다")
     @ParameterizedTest
-    @CsvSource({"RIGHT,C,TWO", "UP,B,THREE", "LEFT,A,TWO", "DOWN,B,ONE"})
-    void move(Direction direction, File file, Rank rank) {
-        Position position = new Position(File.B, Rank.TWO);
+    @CsvSource({"1,2,D,FIVE", "-1,-2,B,ONE"})
+    void move(int deltaFile, int deltaRank, File newFile, Rank newRank) {
+        Position position = new Position(File.C, Rank.THREE);
 
-        assertThat(position.move(direction))
-                .isEqualTo(new Position(file, rank));
+        assertThat(position.move(new Move(deltaFile, deltaRank)))
+                .isEqualTo(new Position(newFile, newRank));
     }
 }

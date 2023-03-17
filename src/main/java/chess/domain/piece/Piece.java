@@ -1,18 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.board.MoveType;
-import chess.domain.move.Move;
-import java.util.Set;
+import chess.domain.position.Move;
 
 public abstract class Piece {
 
     protected final Color color;
-    protected final Set<Move> moves;
 
-    public Piece(Color color, Set<Move> moves) {
+    public Piece(Color color) {
         this.color = color;
-        this.moves = moves;
     }
+
+    public abstract boolean isValidMove(Move move, MoveType moveType);
 
     public boolean isRightTarget(Piece target) {
         return color != target.color;
@@ -20,22 +19,6 @@ public abstract class Piece {
 
     public boolean hasColor(Color color) {
         return this.color == color;
-    }
-
-    public boolean isValidMove(Move move, MoveType moveType) {
-        return checkContainment(moves, move);
-    }
-
-    protected boolean checkContainment(Set<Move> moves, Move move) {
-        boolean isContaining = false;
-        for (Move pieceMove : moves) {
-            isContaining = isContaining || compareMove(pieceMove, move);
-        }
-        return isContaining;
-    }
-
-    protected boolean compareMove(Move pieceMove, Move move) {
-        return pieceMove.equals(move);
     }
 
     public Piece touch() {

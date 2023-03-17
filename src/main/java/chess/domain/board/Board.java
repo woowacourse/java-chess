@@ -1,10 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.move.Move;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Move;
 import chess.domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -22,14 +23,13 @@ public class Board {
 
     public void move(Position source, Position target) {
         Piece sourcePiece = findPieceToMove(source);
+        Move move = new Move(source, target);
+
         MoveType moveType = checkType(sourcePiece, target);
-        Move move = Move.of(source, target);
-
         checkPieceReachable(sourcePiece, moveType, move);
-        checkNotCrossOtherPiece(source, target, move);
+        checkNotCrossOtherPiece(source, move);
 
-        pieces.remove(source);
-        pieces.put(target, sourcePiece.touch());
+        movePiece(source, target, sourcePiece);
     }
 
     private Piece findPieceToMove(Position position) {
@@ -57,12 +57,10 @@ public class Board {
         }
     }
 
-    private void checkNotCrossOtherPiece(Position source, Position target, Move move) {
-        Move unitMove = move.getUnitMove();
-        Position current = moveFrom(source, unitMove);
-        while (!current.equals(target)) {
-            checkEmpty(current);
-            current = moveFrom(current, unitMove);
+    private void checkNotCrossOtherPiece(Position position, Move move) {
+        List<Move> moves = move.findRoute();
+        for (Move route : moves) {
+            checkEmpty(position.move(route));
         }
     }
 
@@ -72,12 +70,13 @@ public class Board {
         }
     }
 
-    private Position moveFrom(Position position, Move move) {
-        return move.findDestinationFrom(position);
-    }
-
     private boolean isEmpty(Position position) {
         return pieces.get(position) == null;
+    }
+
+    private void movePiece(Position source, Position target, Piece sourcePiece) {
+        pieces.remove(source);
+        pieces.put(target, sourcePiece.touch());
     }
 
     public Map<Position, Piece> getPieces() {

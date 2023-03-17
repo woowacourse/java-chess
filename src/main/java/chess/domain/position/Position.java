@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.move.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -41,10 +40,18 @@ public class Position {
         }
     }
 
-    public Position move(Direction direction) {
-        File newFile = file.move(direction);
-        Rank newRank = rank.move(direction);
+    public Position move(Move move) {
+        File newFile = file.move(move.getDeltaFile());
+        Rank newRank = rank.move(move.getDeltaRank());
         return new Position(newFile, newRank);
+    }
+
+    public static int getDeltaFile(Position source, Position target) {
+        return target.getFileIndex() - source.getFileIndex();
+    }
+
+    public static int getDeltaRank(Position source, Position target) {
+        return target.getRankIndex() - source.getRankIndex();
     }
 
     public int getFileIndex() {

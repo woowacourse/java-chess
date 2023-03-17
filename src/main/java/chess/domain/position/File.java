@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import static chess.domain.position.Position.INVALID_POSITION;
 
-import chess.domain.move.Direction;
 import java.util.Arrays;
 
 public enum File {
@@ -21,23 +20,8 @@ public enum File {
         this.index = index;
     }
 
-    public File move(Direction direction) {
-        if (direction == Direction.LEFT) {
-            return left();
-        }
-        if (direction == Direction.RIGHT) {
-            return right();
-        }
-        return this;
-    }
-
-    private File left() {
-        return indexOf(this.index - 1);
-    }
-
-    private File right() {
-        return indexOf(this.index + 1);
-
+    public File move(int deltaFile) {
+        return indexOf(this.index + deltaFile);
     }
 
     private File indexOf(int index) {

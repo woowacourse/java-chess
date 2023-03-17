@@ -1,20 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
-import chess.domain.move.Move;
-import java.util.Set;
+import chess.domain.board.MoveType;
+import chess.domain.position.Move;
 
-public class Knight extends QuadrantPiece {
+public class Knight extends Piece {
+
+    private static final int PRODUCT_OF_CHANGE = 2;
 
     public Knight(Color color) {
-        super(color, setUpMoves());
+        super(color);
     }
 
-    private static Set<Move> setUpMoves() {
-        return Set.of(
-                new Move(Direction.RIGHT, Direction.RIGHT, Direction.UP),
-                new Move(Direction.RIGHT, Direction.UP, Direction.UP)
-        );
+    @Override
+    public boolean isValidMove(Move move, MoveType moveType) {
+        return move.isRightProductOfChange(PRODUCT_OF_CHANGE);
     }
 
     @Override

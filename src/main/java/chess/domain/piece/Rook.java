@@ -1,20 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
-import chess.domain.move.Move;
-import java.util.Set;
+import chess.domain.board.MoveType;
+import chess.domain.position.Move;
 
-public class Rook extends InfinitePiece {
+public class Rook extends Piece {
 
     public Rook(Color color) {
-        super(color, setUpMoves());
+        super(color);
     }
 
-    private static Set<Move> setUpMoves() {
-        return Set.of(
-                new Move(Direction.UP),
-                new Move(Direction.RIGHT)
-        );
+    @Override
+    public boolean isValidMove(Move move, MoveType moveType) {
+        return move.isStraight();
     }
 
     @Override

@@ -1,21 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
-import chess.domain.move.Move;
-import java.util.Set;
+import chess.domain.board.MoveType;
+import chess.domain.position.Move;
 
-public class Queen extends InfinitePiece {
+public class Queen extends Piece {
 
     public Queen(Color color) {
-        super(color, setUpMoves());
+        super(color);
     }
 
-    private static Set<Move> setUpMoves() {
-        return Set.of(
-                new Move(Direction.UP),
-                new Move(Direction.RIGHT),
-                new Move(Direction.UP, Direction.RIGHT)
-        );
+    @Override
+    public boolean isValidMove(Move move, MoveType moveType) {
+        return move.isStraight() || move.isDiagonal();
     }
 
     @Override
