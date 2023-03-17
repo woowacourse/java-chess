@@ -27,20 +27,13 @@ public class Running extends AbstractChessState {
         if (command.isEnd()) {
             return new End(chessBoard);
         }
-        validateSize(command);
         return movePiece(command);
     }
 
-    private void validateSize(final Command command) {
-        if (command.parameters().size() != 2) {
-            throw new IllegalArgumentException("제대로 입력되지 않았습니다.");
-        }
-    }
-
     private Running movePiece(final Command command) {
-        final List<String> parameters = command.parameters();
-        final PiecePosition from = PiecePosition.of(parameters.get(FROM_POSITION_INDEX));
-        final PiecePosition to = PiecePosition.of(parameters.get(TO_POSITION_INDEX));
+        final List<PiecePosition> piecePositions = command.moveParameters();
+        final PiecePosition from = piecePositions.get(FROM_POSITION_INDEX);
+        final PiecePosition to = piecePositions.get(TO_POSITION_INDEX);
         chessBoard.movePiece(turn, from, to);
         return new Running(chessBoard, turn.change());
     }

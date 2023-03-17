@@ -32,7 +32,7 @@ public class PiecePosition {
 
     private static void validateLength(final String rankAndFile) {
         if (rankAndFile.length() != RANK_INDEX + 1) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("위치가 올바르지 않습니다");
         }
     }
 

@@ -1,5 +1,7 @@
 package chess.domain.state.command;
 
+import chess.domain.piece.position.PiecePosition;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +37,10 @@ public class Command {
         return new Command(type, inputs);
     }
 
-    public List<String> parameters() {
-        return commands;
+    public List<PiecePosition> moveParameters() {
+        final PiecePosition from = PiecePosition.of(commands.get(FROM_POSITION_INDEX));
+        final PiecePosition to = PiecePosition.of(commands.get(TO_POSITION_INDEX));
+        return Arrays.asList(from, to);
     }
 
     public boolean isStart() {
