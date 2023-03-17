@@ -29,17 +29,17 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("File의 index는 1~8이여야합니다."));
     }
 
-    public static List<File> getBetween(final File from, final File to) {
+    public static int calculateInterval(final File from, final File to) {
+        return Math.abs(from.index - to.index);
+    }
+
+    public static List<File> sliceBetween(final File from, final File to) {
         final int min = Math.min(from.index, to.index);
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
                 .mapToObj(File::of)
                 .collect(Collectors.toList());
-    }
-
-    public static int calculateInterval(final File from, final File to) {
-        return Math.abs(from.index - to.index);
     }
 
     public int getIndex() {

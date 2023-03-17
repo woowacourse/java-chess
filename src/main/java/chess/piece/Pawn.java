@@ -12,9 +12,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to, final Piece toPiece) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
-        }
+        validateStay(from, to);
 
         if (isBlackPawnMovable(from, to, toPiece)) {
             return true;
@@ -73,6 +71,12 @@ public class Pawn extends Piece {
             }
         }
         return false;
+    }
+
+    private void validateStay(final Position from, final Position to) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
+        }
     }
 
     @Override

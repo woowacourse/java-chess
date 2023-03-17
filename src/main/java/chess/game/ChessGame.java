@@ -17,14 +17,6 @@ public class ChessGame {
         chessBoard.movePiece(from, to);
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
-    public boolean isEnd() {
-        return endStatus;
-    }
-
     public void receiveCommand(final Command command) {
         if (command == Command.START) {
             this.endStatus = false;
@@ -33,4 +25,13 @@ public class ChessGame {
             this.endStatus = true;
         }
     }
+
+    public boolean isEnd() {
+        return endStatus;
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
 }

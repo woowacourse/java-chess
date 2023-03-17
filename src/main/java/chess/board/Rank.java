@@ -29,17 +29,17 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
     }
 
-    public static List<Rank> getBetween(final Rank from, final Rank to) {
+    public static int calculateInterval(final Rank from, final Rank to) {
+        return Math.abs(from.index - to.index);
+    }
+
+    public static List<Rank> sliceBetween(final Rank from, final Rank to) {
         final int min = Math.min(from.index, to.index);
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
                 .mapToObj(Rank::of)
                 .collect(Collectors.toList());
-    }
-
-    public static int calculateInterval(final Rank from, final Rank to) {
-        return Math.abs(from.index - to.index);
     }
 
     public int getIndex() {

@@ -56,23 +56,23 @@ public class ChessBoard {
         Piece toPiece = piecePosition.get(to);
 
         if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
-            validateRook(from, to);
+            validateFileAndRank(from, to);
             move(from, to);
         }
 
         if (fromPiece.isBishop() && fromPiece.isMovable(from, to, toPiece)) {
-            validateBishop(from, to);
+            validateDiagonal(from, to);
             move(from, to);
         }
 
         if (fromPiece.isQueen() && fromPiece.isMovable(from, to, toPiece)) {
-            validateRook(from, to);
-            validateBishop(from, to);
+            validateFileAndRank(from, to);
+            validateDiagonal(from, to);
             move(from, to);
         }
 
         if (fromPiece.isPawn() && fromPiece.isMovable(from, to, toPiece)) {
-            validateRookByRank(from, to);
+            validateRanks(from, to);
             move(from, to);
         }
 
@@ -85,26 +85,15 @@ public class ChessBoard {
         }
     }
 
-    private void validateRook(final Position from, final Position to) {
-        validateSameRank(from, to);
-        validateSameFile(from, to);
+    private void move(final Position from, final Position to) {
+        final Piece piece = piecePosition.get(from);
+        piecePosition.put(from, new EmptyPiece());
+        piecePosition.put(to, piece);
     }
 
-    private void validateSameFile(final Position from, final Position to) {
-        if (from.getFile() == to.getFile()) {
-            validateRookByRank(from, to);
-        }
-    }
-
-    private void validateSameRank(final Position from, final Position to) {
-        if (from.getRank() == to.getRank()) {
-            validateRookByFile(from, to);
-        }
-    }
-
-    private void validateBishop(final Position from, final Position to) {
-        List<File> files = File.getBetween(from.getFile(), to.getFile());
-        List<Rank> ranks = Rank.getBetween(from.getRank(), to.getRank());
+    private void validateDiagonal(final Position from, final Position to) {
+        List<File> files = File.sliceBetween(from.getFile(), to.getFile());
+        List<Rank> ranks = Rank.sliceBetween(from.getRank(), to.getRank());
 
         if (files.size() != ranks.size()) {
             return;
@@ -131,29 +120,22 @@ public class ChessBoard {
                 .collect(Collectors.toList());
 
         for (final Position position : collect) {
-            validateRoute(piecePosition.get(position));
+            validateBlockedRoute(piecePosition.get(position));
         }
     }
 
-    private void move(final Position from, final Position to) {
-        final Piece piece = piecePosition.get(from);
-        piecePosition.put(from, new EmptyPiece());
-        piecePosition.put(to, piece);
+    private void validateFileAndRank(final Position from, final Position to) {
+        validateSameRank(from, to);
+        validateSameFile(from, to);
     }
 
-    private void validateRookByFile(final Position from, final Position to) {
-        final File fromFile = from.getFile();
-        final File toFile = to.getFile();
-        final int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
-        final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
-
-        for (int i = min; i <= max; i++) {
-            Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
-            validateRoute(validationPiece);
+    private void validateSameFile(final Position from, final Position to) {
+        if (from.getFile() == to.getFile()) {
+            validateRanks(from, to);
         }
     }
 
-    private void validateRookByRank(final Position from, final Position to) {
+    private void validateRanks(final Position from, final Position to) {
         final Rank fromRank = from.getRank();
         final Rank toRank = to.getRank();
         final int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
@@ -162,11 +144,29 @@ public class ChessBoard {
         for (int i = min; i <= max; i++) {
             Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
 
-            validateRoute(validationPiece);
+            validateBlockedRoute(validationPiece);
         }
     }
 
-    private void validateRoute(final Piece validationPiece) {
+    private void validateSameRank(final Position from, final Position to) {
+        if (from.getRank() == to.getRank()) {
+            validateFiles(from, to);
+        }
+    }
+
+    private void validateFiles(final Position from, final Position to) {
+        final File fromFile = from.getFile();
+        final File toFile = to.getFile();
+        final int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
+        final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
+
+        for (int i = min; i <= max; i++) {
+            Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
+            validateBlockedRoute(validationPiece);
+        }
+    }
+
+    private void validateBlockedRoute(final Piece validationPiece) {
         if (!validationPiece.isEmpty()) {
             throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
