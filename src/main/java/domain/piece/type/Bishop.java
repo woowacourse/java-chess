@@ -1,7 +1,10 @@
 package domain.piece.type;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -23,32 +26,44 @@ public class Bishop extends Piece {
 
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        for (Direction direction : movableDirection) {
-            ArrayList<Square> squares = getAllPath(currentSquare, targetSquare, direction);
-            if (squares.contains(targetSquare)) {
-                return squares;
-            }
-        }
-        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+        List<Integer> gaps = calculateGap(currentSquare, targetSquare);
+        Integer distance = Collections.max(gaps);
+        validateMovable(gaps);
+        List<Integer> direction = calculateDirection(gaps, distance);
+        return calculatePath(currentSquare, distance, direction);
     }
 
-    private ArrayList<Square> getAllPath(Square currentSquare, Square targetSquare, Direction direction) {
-        List<Integer> currentCoordinate = currentSquare.toCoordinate();
-        Integer file = currentCoordinate.get(FILE);
-        Integer rank = currentCoordinate.get(RANK);
-
-        ArrayList<Square> squares = new ArrayList<>();
-        for (int i = 1; i < 8; i++) {
-            int fileCoordinate = file + (i * direction.getFile());
-            int rankCoordinate = rank + (i * direction.getRank());
-            if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
-                Square pathSquare = new Square(fileCoordinate, rankCoordinate);
-                squares.add(pathSquare);
-                if (pathSquare.equals(targetSquare)) {
-                    return squares;
-                }
-            }
+    private void validateMovable(List<Integer> gaps) {
+        if (isNotDiagonal(gaps)) {
+            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
-        return squares;
+    }
+
+    private List<Integer> calculateGap(Square currentSquare, Square targetSquare) {
+        return IntStream.range(0, 2)
+                .map(i -> targetSquare.toCoordinate().get(i) - currentSquare.toCoordinate().get(i))
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+    private static List<Integer> calculateDirection(List<Integer> gaps, Integer distance) {
+        return gaps.stream()
+                .mapToInt(gap -> gap / distance)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+    private List<Square> calculatePath(Square currentSquare, Integer distance, List<Integer> direction) {
+        List<Integer> coordinate = currentSquare.toCoordinate();
+        Integer currentFile = coordinate.get(FILE);
+        Integer currentRank = coordinate.get(RANK);
+        return IntStream.range(1, distance + 1)
+                .mapToObj(dist -> new Square(currentFile + direction.get(FILE) * dist,
+                        currentRank + direction.get(RANK) * dist))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private boolean isNotDiagonal(List<Integer> gap) {
+        return !Objects.equals(Math.abs(gap.get(FILE)), Math.abs(gap.get(RANK)));
     }
 }
