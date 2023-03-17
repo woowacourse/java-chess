@@ -20,6 +20,7 @@ public class GameStatusDto {
         this.gameStatus = gameStatus;
     }
 
+    // TODO: 죄송합니다. 심각함ㅠㅠ
     public static GameStatusDto from(final Board board) {
         Map<Square, Piece> domainBoard = board.getBoard();
         List<String> gameStatus = new ArrayList<>();
@@ -27,7 +28,7 @@ public class GameStatusDto {
             char rank = (char) ('8' - i);
             StringBuilder row = new StringBuilder();
             for (int j = 0; j < 8; j++) {
-                char file = (char) ('h' - j);
+                char file = (char) ('a' + j);
                 Square now = Square.of(File.from(file), Rank.from(rank));
                 if (domainBoard.containsKey(now)) {
                     Piece piece = domainBoard.get(now);
