@@ -15,8 +15,7 @@ public class King extends Piece {
     }
 
     private List<Direction> initDirections() {
-        final List<Direction> directions = new ArrayList<>(Arrays.asList(Direction.values()));
-        return directions;
+        return new ArrayList<>(Arrays.asList(Direction.values()));
     }
 
     @Override
@@ -25,6 +24,11 @@ public class King extends Piece {
         final boolean isPossibleDirection = directions.contains(direction);
         final boolean isPossibleDistance = position.getMoveCount(targetPosition, direction) == 1;
         return isPossibleDistance && isPossibleDirection;
+    }
+
+    @Override
+    public Piece move(Position positionToMove) {
+        return new King(positionToMove, this.side);
     }
 
     @Override

@@ -18,6 +18,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public Piece move(Position positionToMove) {
+        return new Knight(positionToMove, this.side);
+    }
+
+    @Override
     public List<Position> getPaths(final Position targetPosition) {
         return Collections.emptyList();
     }

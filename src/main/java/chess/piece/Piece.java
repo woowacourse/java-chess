@@ -19,24 +19,7 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
-    public Piece move(final Position positionToMove) {
-        if (this instanceof King) {
-            return new King(positionToMove, this.side);
-        }
-        if (this instanceof Queen) {
-            return new Queen(positionToMove, this.side);
-        }
-        if (this instanceof Rook) {
-            return new Rook(positionToMove, this.side);
-        }
-        if (this instanceof Knight) {
-            return new Knight(positionToMove, this.side);
-        }
-        if (this instanceof Bishop) {
-            return new Bishop(positionToMove, this.side);
-        }
-        return new Pawn(positionToMove, this.side);
-    }
+    public abstract Piece move(final Position positionToMove);
 
     public abstract List<Position> getPaths(Position targetPosition);
 
