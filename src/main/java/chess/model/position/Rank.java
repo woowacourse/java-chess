@@ -1,6 +1,8 @@
 package chess.model.position;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -13,6 +15,9 @@ public enum Rank {
     SEVENTH(7),
     EIGHTH(8);
 
+    private static final Map<Integer, Rank> CACHE = Arrays.stream(values())
+            .collect(Collectors.toMap(rank -> rank.value, rank -> rank));
+
     private final int value;
 
     Rank(final int value) {
@@ -20,9 +25,15 @@ public enum Rank {
     }
 
     public static Rank findRank(final int value) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.value == value).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
+        validateRank(value);
+
+        return CACHE.get(value);
+    }
+
+    private static void validateRank(final int value) {
+        if (!CACHE.containsKey(value)) {
+            throw new IllegalArgumentException("존재하지 않는 행입니다.");
+        }
     }
 
     public int differ(final Rank other) {

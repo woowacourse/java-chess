@@ -60,7 +60,7 @@ public class Board {
 
     private static void createSquare(final List<Square> squares, final File file) {
         for (Rank rank : Rank.values()) {
-            final Position position = new Position(file, rank);
+            final Position position = Position.of(file, rank);
 
             squares.add(new EmptySquare(position));
         }
