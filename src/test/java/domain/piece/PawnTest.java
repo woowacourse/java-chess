@@ -1,9 +1,5 @@
-package domain;
+package domain.piece;
 
-import domain.piece.BlackPawn;
-import domain.piece.Coordinate;
-import domain.piece.Pawn;
-import domain.piece.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

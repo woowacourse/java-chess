@@ -1,6 +1,5 @@
-package domain;
+package domain.board;
 
-import domain.board.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
-package domain;
+package domain.board;
 
-import domain.board.BoardInitialImage;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;

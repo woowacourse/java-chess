@@ -1,6 +1,5 @@
-package domain;
+package domain.piece;
 
-import domain.piece.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
