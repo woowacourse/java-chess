@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class User {
 
     private final String userId;
-    private final String name;
+    private String name;
 
     public User(final String userId, final String name) {
         this.userId = userId;

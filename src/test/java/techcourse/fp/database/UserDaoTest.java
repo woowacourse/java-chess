@@ -1,10 +1,12 @@
 package techcourse.fp.database;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public final class UserDaoTest {
@@ -20,11 +22,18 @@ public final class UserDaoTest {
         }
     }
 
-    @Test
+    @BeforeEach
     public void insert() {
         final User user = new User("testUserId", "testUser");
 
         userDao.insert(user);
+    }
+
+    @AfterEach
+    public void deleteByUserId() {
+        final int affectedUser = userDao.deleteByUserId("testUserId");
+
+        assertThat(affectedUser).isEqualTo(1);
     }
 
     @Test
@@ -36,15 +45,8 @@ public final class UserDaoTest {
 
     @Test
     public void update() {
-        final int affectedRows = userDao.update(new User("testUserId", "hi"));
+        final int affectedRow = userDao.updateUser(new User("testUserId", "newTestName"));
 
-        assertThat(affectedRows).isEqualTo(1);
-    }
-
-    @Test
-    public void deleteUserById() {
-        final int deletedUser = userDao.deleteByUserId("neo");
-
-        assertThat(deletedUser).isEqualTo(1);
+        assertThat(affectedRow).isEqualTo(1);
     }
 }

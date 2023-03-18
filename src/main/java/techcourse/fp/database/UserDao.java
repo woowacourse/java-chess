@@ -30,9 +30,11 @@ public final class UserDao {
     public void insert(final User user) {
         final String query = "INSERT INTO user (user_id, name) VALUES (?, ?)";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setString(1, user.userId());
             preparedStatement.setString(2, user.name());
+
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -42,7 +44,8 @@ public final class UserDao {
     public User findByUserId(final String userId) {
         final String query = "SELECT * FROM user WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setString(1, userId);
 
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -58,10 +61,11 @@ public final class UserDao {
         return null;
     }
 
-    public int update(final User user) {
-        final String query = "UPDATE user set name = ? where userId = ?";
+    public int updateUser(final User user) {
+        final String query = "UPDATE user set name = ? where user_id = ?";
         try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setString(1, user.name());
             preparedStatement.setString(2, user.userId());
 
@@ -74,7 +78,9 @@ public final class UserDao {
     public int deleteByUserId(final String userId) {
         final String query = "DELETE FROM user WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
+            preparedStatement.setString(1, userId);
 
             return preparedStatement.executeUpdate();
         } catch (final SQLException e) {
