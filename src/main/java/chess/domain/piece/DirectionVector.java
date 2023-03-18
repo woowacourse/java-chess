@@ -17,16 +17,16 @@ public enum DirectionVector {
 
     private final int x;
     private final int y;
-    private final BiFunction<Integer, Integer, Boolean> biFunction;
+    private final BiFunction<Integer, Integer, Boolean> way;
 
-    DirectionVector(final int x, final int y, final BiFunction<Integer, Integer, Boolean> biFunction) {
+    DirectionVector(final int x, final int y, final BiFunction<Integer, Integer, Boolean> way) {
         this.x = x;
         this.y = y;
-        this.biFunction = biFunction;
+        this.way = way;
     }
 
     public boolean isOnMyWay(final int distanceX, final int distanceY) {
-        return biFunction.apply(distanceX, distanceY);
+        return way.apply(distanceX, distanceY);
     }
 
     public File next(final File file) {
