@@ -38,13 +38,13 @@ public class Knight extends Piece {
         return new Path();
     }
 
-    private static void validateMovement(final Movement movement) {
+    private void validateMovement(final Movement movement) {
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
             throw new IllegalStateException("Knight가 움직일 수 없는 방향임!");
         }
     }
 
-    private static void validatePositionDifference(final Position from, final Position to) {
+    private void validatePositionDifference(final Position from, final Position to) {
         int rankDifference = Math.abs(to.rankDifference(from));
         int fileDifference = Math.abs(to.fileDifference(from));
 

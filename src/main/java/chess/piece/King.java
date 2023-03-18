@@ -36,13 +36,13 @@ public class King extends Piece {
         return new Path();
     }
 
-    private static void validateMovement(final Movement movement) {
+    private void validateMovement(final Movement movement) {
         if (!CAN_MOVE_DESTINATION.contains(movement)) {
             throw new IllegalStateException("King이 움직일 수 없는 방향임!");
         }
     }
 
-    private static void validateAvailableDestination(final Position from, final Position to, final Movement movement) {
+    private void validateAvailableDestination(final Position from, final Position to, final Movement movement) {
         if (!from.moveBy(movement).equals(to)) {
             throw new IllegalStateException("갈 수 없는 도착지입니다.");
         }

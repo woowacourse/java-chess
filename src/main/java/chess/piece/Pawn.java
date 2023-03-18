@@ -37,6 +37,7 @@ public class Pawn extends Piece {
         super(color);
     }
 
+    @Override
     public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
         Movement movement = to.convertMovement(from);
 
