@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 public class Board {
 
     private static final Piece EMPTY_PIECE = Piece.empty();
-    private static final int RANK_SIZE = 8;
 
     private final Map<Position, Piece> piecePosition = new HashMap<>();
 
@@ -41,7 +40,7 @@ public class Board {
 
     private void makePiecesExceptPawns(Color color, Rank rank) {
         List<PieceType> highPieceOrder = orderedPiece();
-        for (int i = 0; i < RANK_SIZE; i++) {
+        for (int i = 0; i < Rank.size(); i++) {
             Position position = Position.of(File.from(i + 1), rank);
             Piece piece = new Piece(highPieceOrder.get(i), color);
             piecePosition.put(position, piece);

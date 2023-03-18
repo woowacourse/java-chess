@@ -15,7 +15,7 @@ public enum Rank {
     SIX("6", 6),
     SEVEN("7", 7),
     EIGHT("8", 8);
-    
+
     private static final int SKIP_FIRST = 1;
 
     private final String rankName;
@@ -38,6 +38,10 @@ public enum Rank {
                 .filter(it -> it.order == rankOrder)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
+    }
+
+    public static int size() {
+        return values().length;
     }
 
     public int getDifference(Rank other) {
