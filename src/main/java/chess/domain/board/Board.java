@@ -18,7 +18,7 @@ public class Board {
 
     public boolean checkTurn(Position position, Color turn) {
         Piece piece = findPieceToMove(position);
-        return piece.hasColor(turn);
+        return piece.isRightTurn(turn);
     }
 
     public void move(Position source, Position target) {

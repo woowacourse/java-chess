@@ -51,8 +51,8 @@ public class PieceTest {
     void hasColor() {
         Piece piece = new PieceImplement(WHITE);
 
-        assertThat(piece.hasColor(WHITE)).isTrue();
-        assertThat(piece.hasColor(BLACK)).isFalse();
+        assertThat(piece.isRightTurn(WHITE)).isTrue();
+        assertThat(piece.isRightTurn(BLACK)).isFalse();
     }
 
     @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")

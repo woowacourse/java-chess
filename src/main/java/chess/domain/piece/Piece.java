@@ -17,8 +17,8 @@ public abstract class Piece {
         return color != target.color;
     }
 
-    public boolean hasColor(Color color) {
-        return this.color == color;
+    public boolean isRightTurn(Color turn) {
+        return this.color == turn;
     }
 
     public Piece touch() {
