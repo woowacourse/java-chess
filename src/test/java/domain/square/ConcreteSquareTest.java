@@ -20,7 +20,7 @@ class ConcreteSquareTest {
 
         assertThat(square.isMovable(
                 new Coordinate(1, 0),
-                new Coordinate(0, 0)
+                new Coordinate(2, 0)
         )).isTrue();
     }
 
@@ -33,8 +33,8 @@ class ConcreteSquareTest {
         square.checkMoved();
 
         assertThat(square.isMovable(
-                new Coordinate(2, 0),
-                new Coordinate(0, 0)
+                new Coordinate(1, 0),
+                new Coordinate(3, 0)
         )).isFalse();
     }
 }
