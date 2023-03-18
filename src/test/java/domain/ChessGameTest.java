@@ -23,7 +23,7 @@ class ChessGameTest {
         //when&then
         assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6")))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("BLACK의 턴이 아닙니다.");
+                .hasMessageContaining("지금은 WHITE의 턴입니다.");
     }
 
     @Test

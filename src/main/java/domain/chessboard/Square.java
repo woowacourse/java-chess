@@ -40,8 +40,8 @@ public class Square {
         return squareStatus.getColor() == color;
     }
 
-    public SquareStatus getSquareStatus() {
-        return squareStatus;
+    public boolean isDifferentColor(final Color color) {
+        return squareStatus.getColor() != color;
     }
 
     public boolean isEqualType(final Type type) {
@@ -54,6 +54,10 @@ public class Square {
 
     public Type getType() {
         return squareStatus.getType();
+    }
+
+    public SquareStatus getSquareStatus() {
+        return squareStatus;
     }
 
 }

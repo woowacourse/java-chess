@@ -11,30 +11,29 @@ import domain.type.PieceType;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private Color colorTurn;
+    private final Turn turn;
 
     public ChessGame(final ChessBoard chessBoard) {
-        colorTurn = Color.WHITE;
+        turn = new Turn(Color.WHITE);
         this.chessBoard = chessBoard;
     }
 
     public void move(final Position source, final Position target) {
         final Square startPoint = chessBoard.findSquare(source);
         final Square endPoint = chessBoard.findSquare(target);
+
         validateTurn(startPoint);
-
         checkCondition(source, target, startPoint, endPoint);
-
         movePiece(startPoint, endPoint);
 
-        colorTurn = colorTurn.reverse();
+        turn.nextTurn();
     }
 
     private void validateTurn(final Square square) {
-        final Color reverse = colorTurn.reverse();
+        final Color turnColor = turn.getColor();
 
-        if (square.isSameColor(reverse)) {
-            throw new IllegalStateException(String.format("%s의 턴이 아닙니다.", reverse));
+        if (square.isDifferentColor(turnColor)) {
+            throw new IllegalStateException(String.format("지금은 %s의 턴입니다.", turnColor));
         }
     }
 
@@ -47,16 +46,16 @@ public class ChessGame {
     private void checkRoute(final Position source, final Position target, final Square startPoint) {
         Route route = startPoint.findRoute(source, target);
 
-        final boolean isCorrectRoute = !route.getRoute().stream()
+        final boolean hasHurdle = route.getRoute().stream()
                 .map(chessBoard::findSquare)
                 .map(Square::getType)
-                .allMatch(type -> EmptyType.EMPTY == type);
+                .anyMatch(type -> type != EmptyType.EMPTY);
 
-        validateRoute(isCorrectRoute);
+        validateRoute(hasHurdle);
     }
 
-    private void validateRoute(final boolean isCorrectRoute) {
-        if (isCorrectRoute) {
+    private void validateRoute(final boolean hasHurdle) {
+        if (hasHurdle) {
             throw new IllegalStateException("장애물이 있어 이동할 수 없습니다.");
         }
     }
@@ -80,11 +79,11 @@ public class ChessGame {
     }
 
     private boolean isDiagonallyMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.isEqualType(EmptyType.EMPTY) || (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
+        return endPoint.isEqualType(EmptyType.EMPTY) || (endPoint.isDifferentColor(turn.getColor()) && source.isDiagonally(target));
     }
 
     private void checkTarget(final Square endPoint) {
-        if ((endPoint.isDifferentType(EmptyType.EMPTY) && endPoint.isSameColor(colorTurn))) {
+        if ((endPoint.isDifferentType(EmptyType.EMPTY) && endPoint.isSameColor(turn.getColor()))) {
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }
