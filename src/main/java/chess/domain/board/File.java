@@ -13,15 +13,15 @@ public enum File {
     G('g'),
     H('h');
 
-    private final Character index;
+    private final char index;
 
-    File(final Character index) {
+    File(final char index) {
         this.index = index;
     }
 
-    public static File from(final Character fileIndex) {
+    public static File from(final char fileIndex) {
         return Arrays.stream(File.values())
-                .filter(file -> file.index.equals(fileIndex))
+                .filter(file -> file.index == fileIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 인덱스입니다."));
     }

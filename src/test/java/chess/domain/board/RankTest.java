@@ -31,13 +31,13 @@ class RankTest {
             value = {"ONE:1", "TWO:2", "THREE:3", "FOUR:4", "FIVE:5", "SIX:6", "SEVEN:7", "EIGHT:8"},
             delimiter = ':'
     )
-    void 랭크는_1부터_8까지_인덱스를_갖는다(final Rank rank, final Character rankIndex) {
+    void 랭크는_1부터_8까지_인덱스를_갖는다(final Rank rank, final char rankIndex) {
         assertThat(Rank.from(rankIndex)).isEqualTo(rank);
     }
 
     @Test
     void 전달받은_인덱스가_존재하지_않으면_예외를_던진다() {
-        final Character input = '9';
+        final char input = '9';
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Rank.from(input))
@@ -64,7 +64,7 @@ class RankTest {
         final Rank eight = Rank.EIGHT;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> eight.next())
+                .isThrownBy(eight::next)
                 .withMessage("존재하지 않는 랭크 인덱스입니다.");
     }
 
@@ -80,7 +80,7 @@ class RankTest {
         final Rank one = Rank.ONE;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> one.prev())
+                .isThrownBy(one::prev)
                 .withMessage("존재하지 않는 랭크 인덱스입니다.");
     }
 }

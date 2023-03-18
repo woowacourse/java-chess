@@ -13,15 +13,15 @@ public enum Rank {
     SEVEN('7'),
     EIGHT('8');
 
-    private final Character index;
+    private final char index;
 
-    Rank(final Character index) {
+    Rank(final char index) {
         this.index = index;
     }
 
-    public static Rank from(final Character index) {
+    public static Rank from(final char index) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.index.equals(index))
+                .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크 인덱스입니다."));
     }

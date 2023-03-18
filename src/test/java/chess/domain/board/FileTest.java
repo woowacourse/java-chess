@@ -26,13 +26,13 @@ class FileTest {
 
     @ParameterizedTest
     @CsvSource(value = {"A:a", "B:b", "C:c", "D:d", "E:e", "F:f", "G:g", "H:h"}, delimiter = ':')
-    void 파일은_a부터_h까지_인덱스를_갖는다(final File file, final Character fileIndex) {
+    void 파일은_a부터_h까지_인덱스를_갖는다(final File file, final char fileIndex) {
         assertThat(File.from(fileIndex)).isEqualTo(file);
     }
 
     @Test
     void 전달받은_인덱스가_존재하지_않으면_예외를_던진다() {
-        final Character input = 'i';
+        final char input = 'i';
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> File.from(input))
@@ -59,7 +59,7 @@ class FileTest {
         final File h = File.H;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> h.next())
+                .isThrownBy(h::next)
                 .withMessage("존재하지 않는 파일 인덱스입니다.");
     }
 
@@ -75,7 +75,7 @@ class FileTest {
         final File a = File.A;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> a.prev())
+                .isThrownBy(a::prev)
                 .withMessage("존재하지 않는 파일 인덱스입니다.");
     }
 }
