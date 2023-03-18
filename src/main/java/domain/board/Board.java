@@ -9,10 +9,9 @@ import java.util.List;
 
 public class Board {
 
-    public static final int RANK_COUNT = 8;
-    public static final int FILE_COUNT = 8;
+    public static final int RANK_SIZE = 8;
+    public static final int FILE_SIZE = 8;
 
-    // TODO: RANKS 일급컬렉션 지정
     private final List<Rank> ranks;
 
     public Board() {
@@ -21,8 +20,8 @@ public class Board {
 
     public List<Rank> initialize() {
         List<Rank> ranks = new ArrayList<>();
-        for (int row = 0; row < RANK_COUNT; row++) {
-            ranks.add(new Rank(row, FILE_COUNT));
+        for (int row = 0; row < RANK_SIZE; row++) {
+            ranks.add(new Rank(row, FILE_SIZE));
         }
         return ranks;
     }
