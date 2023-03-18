@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.dto.ChessInputDto;
+import chess.dto.CommandDto;
 
 import java.util.Scanner;
 
@@ -11,9 +11,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static ChessInputDto inputGameState() {
+    public static CommandDto inputGameState() {
         final String command = scanner.nextLine();
 
-        return ChessInputDto.from(command.split(DELIMITER));
+        return CommandDto.from(command.split(DELIMITER));
     }
 }

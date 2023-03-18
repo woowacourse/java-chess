@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import chess.dto.ChessInputDto;
+import chess.dto.CommandDto;
 import chess.view.Command;
 
 import java.util.HashMap;
@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class CommandProcessor {
-    private Map<Command, Function<ChessInputDto, State>> commands;
+    private Map<Command, Function<CommandDto, State>> commands;
 
-    private CommandProcessor(final Map<Command, Function<ChessInputDto, State>> commands) {
+    private CommandProcessor(final Map<Command, Function<CommandDto, State>> commands) {
         this.commands = commands;
     }
 
@@ -18,12 +18,12 @@ public class CommandProcessor {
         return new CommandProcessor(new HashMap<>());
     }
 
-    public void register(Command command, Function<ChessInputDto, State> consumer) {
+    public void register(Command command, Function<CommandDto, State> consumer) {
         commands.put(command, consumer);
     }
 
-    public void execute(StateProcessor stateProcessor, ChessInputDto chessInputDto) {
-        stateProcessor.changeState(commands.get(chessInputDto.getGameState())
-                .apply(chessInputDto));
+    public void execute(StateProcessor stateProcessor, CommandDto commandDto) {
+        stateProcessor.changeState(commands.get(commandDto.getGameState())
+                .apply(commandDto));
     }
 }

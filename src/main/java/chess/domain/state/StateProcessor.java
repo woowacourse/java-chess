@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.dto.ChessInputDto;
+import chess.dto.CommandDto;
 
 import java.util.Map;
 
@@ -33,15 +33,15 @@ public class StateProcessor {
         return !state.isEnd();
     }
 
-    public State move(final ChessInputDto chessInputDto) {
-        return state.move(chessInputDto.getSource(), chessInputDto.getTarget());
+    public State move(final CommandDto commandDto) {
+        return state.move(commandDto.getSource(), commandDto.getTarget());
     }
 
-    public State start(final ChessInputDto chessInputDto) {
+    public State start(final CommandDto commandDto) {
         return state.start();
     }
 
-    public State end(final ChessInputDto chessInputDto) {
+    public State end(final CommandDto commandDto) {
         return state.end();
     }
 }
