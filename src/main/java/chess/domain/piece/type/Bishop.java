@@ -1,22 +1,18 @@
-package chess.domain.piece;
+package chess.domain.piece.type;
 
-import chess.domain.Color;
-import chess.domain.Direction;
-import chess.domain.Position;
+import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.List;
 
-public class Queen extends Piece {
+public class Bishop extends Piece {
 
-    private static final String name = "q";
-    public static final String DIRECTION_ERROR_MESSAGE = "Queen이 이동할 수 있는 방향이 아닙니다";
-    public static final String MOVE_ERROR_MESSAGE = "목적지에 아군이 있으므로 Queen는 이동할 수 없습니다.";
+    private static final String name = "b";
     private static final List<Direction> movableDirection = List.of(
-            Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
-
-    public Queen(Color color) {
+    public Bishop(Color color) {
         super(name, color);
     }
 
@@ -30,13 +26,13 @@ public class Queen extends Piece {
 
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
+            throw new IllegalArgumentException("bishop이 이동할 수 있는 방향이 아닙니다");
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
         if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
+            throw new IllegalArgumentException("목적지에 아군이 있으므로 bishop는 이동할 수 없습니다.");
         }
     }
 }

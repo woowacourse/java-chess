@@ -1,9 +1,9 @@
 package chess.dto;
 
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Rank;
-import chess.domain.piece.Piece;
+import chess.domain.board.Column;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.piece.type.Piece;
 
 import java.util.ArrayList;
 import java.util.List;

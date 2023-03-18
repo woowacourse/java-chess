@@ -1,10 +1,10 @@
-package chess.domain.boardstrategy;
+package chess.domain.board.boardstrategy;
 
-import chess.domain.Color;
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Rank;
-import chess.domain.piece.*;
+import chess.domain.piece.Color;
+import chess.domain.board.Column;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.piece.type.*;
 
 import java.util.Arrays;
 import java.util.HashMap;

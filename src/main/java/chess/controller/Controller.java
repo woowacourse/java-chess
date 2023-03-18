@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Rank;
-import chess.domain.boardstrategy.InitialBoardStrategy;
+import chess.domain.board.Column;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.board.boardstrategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;

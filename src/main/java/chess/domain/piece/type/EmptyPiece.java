@@ -1,8 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.type;
 
-import chess.domain.Color;
-import chess.domain.Direction;
-import chess.domain.Position;
+import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 public final class EmptyPiece extends Piece {
 

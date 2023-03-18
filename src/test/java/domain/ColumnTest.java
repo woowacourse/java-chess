@@ -1,6 +1,6 @@
 package domain;
 
-import chess.domain.Column;
+import chess.domain.board.Column;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
