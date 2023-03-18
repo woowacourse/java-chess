@@ -15,7 +15,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        System.out.println("> 좌표 안가");
+        System.out.println("> 좌표 안내");
         System.out.println("RNBQKBNR  8 (rank 8)\n" +
                 "PPPPPPPP  7\n" +
                 "........  6\n" +
@@ -25,7 +25,11 @@ public class OutputView {
                 "pppppppp  2\n" +
                 "rnbqkbnr  1 (rank 1)\n" +
                 "\n" +
-                "abcdefgh");
+                "abcdefgh\n");
+    }
+
+    public static void printNotice(String message) {
+        System.out.println(message);
     }
 
     public static void printErrorMessage(String message) {
@@ -35,9 +39,11 @@ public class OutputView {
     public static void printChessBoard(ChessBoard chessBoard) {
         final List<Row> rows = chessBoard.getChessBoard();
 
+        System.out.print(System.lineSeparator());
         for (Row row : rows) {
             printRow(row);
         }
+        System.out.print(System.lineSeparator());
     }
 
     private static void printRow(final Row row) {
@@ -52,7 +58,7 @@ public class OutputView {
     private static String convertPieceToElement(final Square square) {
         final String elementName = ChessBoardElement.getElementName(square.getType());
 
-        if (square.isDifferentType(EmptyType.EMPTY)  && square.isSameColor(Color.BLACK)) {
+        if (square.isDifferentType(EmptyType.EMPTY) && square.isSameColor(Color.BLACK)) {
             return elementName.toUpperCase();
         }
         return elementName;

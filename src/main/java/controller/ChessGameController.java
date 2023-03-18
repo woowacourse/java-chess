@@ -1,67 +1,39 @@
 package controller;
 
-import domain.ChessGame;
 import domain.chessboard.ChessBoard;
-import domain.coordinate.PositionFactory;
-import view.Command;
+import domain.chessgame.ChessGame;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ChessGameController {
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-
-    private ChessGame chessGame;
-    private boolean isKeepGaming;
-
-    public ChessGameController() {
-    }
+    private GameStatus gameStatus;
 
     public void run() {
         OutputView.printStartMessage();
+        gameStatus = new Start(new ChessGame(ChessBoard.generate()));
 
-        isKeepGaming = true;
-
-        while (isKeepGaming) {
-            progress();
+        while (gameStatus.isKeepGaming()) {
+            retryOnError(this::playGame);
         }
     }
 
-    public void progress() {
+    private void playGame(List<String> inputs) {
+        gameStatus = gameStatus.setGameStatus(inputs);
+        gameStatus.playTurn(inputs);
+
+        OutputView.printChessBoard(gameStatus.getChessBoard());
+    }
+
+    private void retryOnError(Consumer<List<String>> playGame) {
         try {
-            playTurn();
-            OutputView.printChessBoard(chessGame.getChessBoard());
+            playGame.accept(InputView.readline());
         } catch (IllegalStateException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }
-    }
-
-    private void playTurn() {
-        List<String> inputs = InputView.readline();
-        Command command = Command.from(inputs.get(COMMAND_INDEX));
-        isStart(command);
-        isMove(inputs, command);
-        isEnd(command);
-    }
-
-    private void isStart(final Command command) {
-        if (command == Command.START) {
-            chessGame = new ChessGame(ChessBoard.generate());
-        }
-    }
-
-    private void isMove(final List<String> inputs, final Command command) {
-        if (command == Command.MOVE) {
-            chessGame.move(PositionFactory.createPosition(inputs.get(SOURCE_INDEX)), PositionFactory.createPosition(inputs.get(TARGET_INDEX)));
-        }
-    }
-
-    private void isEnd(final Command command) {
-        isKeepGaming = command != Command.END;
     }
 
 }
