@@ -4,7 +4,6 @@ import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import domain.piece.Position;
 import domain.piece.Side;
-
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +20,10 @@ public class Game {
 
     public void move(Side side, Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
+        validateMoving(sourcePosition, targetPosition, sourcePiece);
         if (!sourcePiece.isSideOf(side)) {
             throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
         }
-        validateMoving(sourcePosition, targetPosition, sourcePiece);
         movePiece(sourcePosition, targetPosition, sourcePiece);
     }
 

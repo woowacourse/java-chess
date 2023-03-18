@@ -1,17 +1,16 @@
 package domain.game;
 
-import domain.piece.Piece;
-import domain.piece.Position;
-import domain.piece.Side;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.piece.Side;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class GameTest {
     private Map<Position, Piece> chessBoard;
@@ -118,5 +117,13 @@ class GameTest {
         assertThatThrownBy(() -> game.move(Side.BLACK, Position.of("c", "2"), Position.of("c", "4")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
+    }
+
+    @DisplayName("Source position에 말이 없으면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenSourcePositionisEmpty() {
+        assertThatThrownBy(() -> game.move(Side.BLACK, Position.of("c", "3"), Position.of("c", "4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("source위치에 말이 없습니다.");
     }
 }
