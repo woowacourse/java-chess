@@ -4,6 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public final class Square {
     }
 
     public Set<Position> computePath(Position source, Position target) {
-        return piece.computePath(source, target);
+        return piece.computePathWithValidate(source, target);
     }
 
     public boolean canMovePiece(Map<Position, Boolean> isEmptyPath, Position source, Position target) {

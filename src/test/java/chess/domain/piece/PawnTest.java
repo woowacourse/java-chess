@@ -29,75 +29,75 @@ class PawnTest {
     @Test
     @DisplayName("흑색 폰의 대각선 경로를 계산한다.")
     void computePath_Black() {
-        final var pawn = new Pawn(Color.BLACK);
+        final var pawn = new BlackPawn();
 
-        assertThat(pawn.computePath(B5, A4)).containsExactly(A4);
+        assertThat(pawn.computePathWithValidate(B5, A4)).containsExactly(A4);
     }
 
     @Test
     @DisplayName("백색 폰의 한칸 전진 경로를 계산한다.")
     void computePath_White() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
-        assertThat(pawn.computePath(B5, B6)).containsExactly(B6);
+        assertThat(pawn.computePathWithValidate(B5, B6)).containsExactly(B6);
     }
 
     @Test
     @DisplayName("백색 폰의 두칸 전진 경로를 계산한다.")
     void computePath_WhiteTwo() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
-        assertThat(pawn.computePath(B2, B4)).containsExactlyInAnyOrder(B3, B4);
+        assertThat(pawn.computePathWithValidate(B2, B4)).containsExactlyInAnyOrder(B3, B4);
     }
 
     @Test
     @DisplayName("폰이 시작위치가 아니면 두칸 전진할 수 없다.")
     void computePath_WhiteTwoException() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new BlackPawn();
 
-        assertThatThrownBy(() -> pawn.computePath(B5, B7))
+        assertThatThrownBy(() -> pawn.computePathWithValidate(B5, B7))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("흑색 폰의 두칸 전진 경로를 계산한다.")
     void computePath_BlackTwo() {
-        final var pawn = new Pawn(Color.BLACK);
+        final var pawn = new BlackPawn();
 
-        assertThat(pawn.computePath(B7, B5)).containsExactlyInAnyOrder(B6, B5);
+        assertThat(pawn.computePathWithValidate(B7, B5)).containsExactlyInAnyOrder(B6, B5);
     }
 
     @Test
     @DisplayName("폰이 초기위치가 아니면 두칸 전진할 수 없다.")
     void computePath_BlackTwoException() {
-        final var pawn = new Pawn(Color.BLACK);
+        final var pawn = new BlackPawn();
 
-        assertThatThrownBy(() -> pawn.computePath(B5, B3))
+        assertThatThrownBy(() -> pawn.computePathWithValidate(B5, B3))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("유효하지 않은 위치를 받으면 예외가 발생한다.")
     void computePath_BlackIllegalTarget_Exception() {
-        final var pawn = new Pawn(Color.BLACK);
+        final var pawn = new BlackPawn();
 
-        assertThatThrownBy(() -> pawn.computePath(B5, E4))
+        assertThatThrownBy(() -> pawn.computePathWithValidate(B5, E4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("유효하지 않은 위치를 받으면 예외가 발생한다.")
     void computePath_WhiteIllegalTarget_Exception() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
-        assertThatThrownBy(() -> pawn.computePath(B5, E4))
+        assertThatThrownBy(() -> pawn.computePathWithValidate(B5, E4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("폰은 대각선 위치에 기물이 있으면 이동할 수 있다.")
     void canMove_diagonalExist_true() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
         final var source = C4;
         final var target = D5;
@@ -108,7 +108,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 전진할 경로에 기물이 없으면 이동할 수 있다.")
     void canMove_forwardEmpty_true() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
         final var source = C4;
         final var target = C5;
@@ -119,7 +119,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 대각선위치에 기물이 없으면 이동할 수 없다.")
     void canMove_diagonalEmpty_false() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
         final var source = C4;
         final var target = D5;
@@ -130,7 +130,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 대각선위치에 기물이 있으면 이동할 수 있다.")
     void canMove_diagonalExist_true2() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
         final var source = C4;
         final var target = D5;
@@ -141,7 +141,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 두칸 전진 경로에 기물이 있으면 이동할 수 없다.")
     void canMove_forwardTwoExist_false() {
-        final var pawn = new Pawn(Color.WHITE);
+        final var pawn = new WhitePawn();
 
         final var source = C4;
         final var target = C6;

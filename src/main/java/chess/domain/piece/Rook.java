@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class Rook extends Piece {
+public final class Rook extends Normal {
 
     public Rook(final Color color) {
         super(color);
@@ -13,8 +13,6 @@ public final class Rook extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        validateSamePosition(source, target);
-
         if (source.isFileEquals(target)) {
             return getFilePath(source, target);
         }

@@ -30,7 +30,7 @@ class BishopTest {
         final var source = B4;
         final var target = F8;
 
-        Set<Position> positions = bishop.computePath(source, target);
+        Set<Position> positions = bishop.computePathWithValidate(source, target);
 
         assertThat(positions).containsExactlyInAnyOrder(F8, E7, D6, C5);
     }
@@ -42,7 +42,7 @@ class BishopTest {
         final var source = C5;
         final var target = G1;
 
-        Set<Position> positions = bishop.computePath(source, target);
+        Set<Position> positions = bishop.computePathWithValidate(source, target);
 
         assertThat(positions).containsExactlyInAnyOrder(D4, E3, F2, G1);
     }

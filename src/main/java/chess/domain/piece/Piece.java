@@ -2,9 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Piece {
 
@@ -17,21 +15,22 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Set<Position> computePath(Position source, Position target);
+    protected abstract Set<Position> computePath(Position source, Position target);
 
-    protected void validateSamePosition(Position source, Position target) {
+    public abstract Kind getKind();
+
+    public Set<Position> computePathWithValidate(Position source, Position target) {
+        validateSamePosition(source, target);
+        return computePath(source, target);
+    }
+
+    private void validateSamePosition(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
 
-    public boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
-        isEmptyPosition = new HashMap<>(isEmptyPosition);
-        isEmptyPosition.remove(target);
-        return isEmptyPosition.keySet()
-                .stream()
-                .allMatch(isEmptyPosition::get);
-    }
+    public abstract boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target);
 
     public boolean isEmpty() {
         return false;
@@ -48,6 +47,4 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
-
-    public abstract Kind getKind();
 }

@@ -33,7 +33,7 @@ class QueenTest {
         final var source = C3;
         final var target = F6;
 
-        assertThat(queen.computePath(source, target)).containsExactlyInAnyOrder(F6, E5, D4);
+        assertThat(queen.computePathWithValidate(source, target)).containsExactlyInAnyOrder(F6, E5, D4);
     }
 
     @DisplayName("대각선에 있으면 이동경로에 포함된다")
@@ -43,7 +43,7 @@ class QueenTest {
         final var source = E5;
         final var target = B2;
 
-        assertThat(queen.computePath(source, target)).containsExactlyInAnyOrder(B2, C3, D4);
+        assertThat(queen.computePathWithValidate(source, target)).containsExactlyInAnyOrder(B2, C3, D4);
     }
 
     @DisplayName("같은 Rank에 있으면 이동경로에 포함된다")
@@ -53,7 +53,7 @@ class QueenTest {
         final var source = C3;
         final var target = A3;
 
-        assertThat(queen.computePath(source, target)).containsExactlyInAnyOrder(A3, B3);
+        assertThat(queen.computePathWithValidate(source, target)).containsExactlyInAnyOrder(A3, B3);
     }
 
     @DisplayName("같은 File에 있으면 이동경로에 포함된다")
@@ -63,7 +63,7 @@ class QueenTest {
         final var source = C3;
         final var target = F3;
 
-        assertThat(queen.computePath(source, target)).containsExactlyInAnyOrder(F3, E3, D3);
+        assertThat(queen.computePathWithValidate(source, target)).containsExactlyInAnyOrder(F3, E3, D3);
     }
 
     @DisplayName("같은 File에 있으면 이동경로에 포함된다")
@@ -73,7 +73,7 @@ class QueenTest {
         final var source = C3;
         final var target = C6;
 
-        assertThat(queen.computePath(source, target)).containsExactlyInAnyOrder(C6, C5, C4);
+        assertThat(queen.computePathWithValidate(source, target)).containsExactlyInAnyOrder(C6, C5, C4);
     }
 
     @DisplayName("잘못된 target이면 예외가 발생한다")
@@ -83,7 +83,7 @@ class QueenTest {
         final var source = C3;
         final var target = H7;
 
-        assertThatThrownBy(() -> queen.computePath(source, target))
+        assertThatThrownBy(() -> queen.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -28,10 +28,18 @@ public final class Squares {
         return new Squares(pieces);
     }
 
-    public static Squares initPawns(Color color) {
+    public static Squares initWhitePawns() {
         final var pawns = new ArrayList<Square>();
         for (int i = 0; i < SQUARES_SIZE; i++) {
-            pawns.add(new Square(new Pawn(color)));
+            pawns.add(new Square(new WhitePawn()));
+        }
+        return new Squares(pawns);
+    }
+
+    public static Squares initBlackPawns() {
+        final var pawns = new ArrayList<Square>();
+        for (int i = 0; i < SQUARES_SIZE; i++) {
+            pawns.add(new Square(new BlackPawn()));
         }
         return new Squares(pawns);
     }

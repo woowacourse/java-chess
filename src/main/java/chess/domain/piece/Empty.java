@@ -18,7 +18,6 @@ public final class Empty extends Piece {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_EXCEPTION_MESSAGE);
     }
 
-    @Override
     public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_EXCEPTION_MESSAGE);
     }

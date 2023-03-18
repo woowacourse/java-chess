@@ -25,7 +25,7 @@ class RookTest {
     @Test
     void computePath_sameFile() {
         Rook rook = new Rook(Color.BLACK);
-        Set<Position> positions = rook.computePath(B5, B1);
+        Set<Position> positions = rook.computePathWithValidate(B5, B1);
 
         assertThat(positions).containsExactlyInAnyOrder(B4, B3, B2, B1);
     }
@@ -34,7 +34,7 @@ class RookTest {
     @Test
     void computePath_sameRank() {
         Rook rook = new Rook(Color.BLACK);
-        Set<Position> positions = rook.computePath(A4, E4);
+        Set<Position> positions = rook.computePathWithValidate(A4, E4);
 
         assertThat(positions).containsExactlyInAnyOrder(E4, D4, C4, B4);
     }
@@ -44,7 +44,7 @@ class RookTest {
     void computPath_throw() {
         var rook = new Rook(Color.BLACK);
 
-        assertThatThrownBy(() -> rook.computePath(A4, B7))
+        assertThatThrownBy(() -> rook.computePathWithValidate(A4, B7))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

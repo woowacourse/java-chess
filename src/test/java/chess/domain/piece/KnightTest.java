@@ -20,7 +20,7 @@ class KnightTest {
         final var source = B4;
         final var target = D3;
 
-        Set<Position> positions = knight.computePath(source, target);
+        Set<Position> positions = knight.computePathWithValidate(source, target);
 
         assertThat(positions).containsExactlyInAnyOrder(D3);
     }
@@ -31,7 +31,7 @@ class KnightTest {
         final var source = C4;
         final var target = E3;
 
-        Set<Position> positions = knight.computePath(source, target);
+        Set<Position> positions = knight.computePathWithValidate(source, target);
 
         assertThat(positions).containsExactlyInAnyOrder(E3);
     }
@@ -43,7 +43,7 @@ class KnightTest {
         final var source = B4;
         final var target = E4;
 
-        assertThatThrownBy(() -> kngiht.computePath(source, target))
+        assertThatThrownBy(() -> kngiht.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

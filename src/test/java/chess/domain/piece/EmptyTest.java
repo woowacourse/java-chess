@@ -22,7 +22,7 @@ class EmptyTest {
     void emptyComputePathExceptionTest() {
         Empty empty = new Empty();
 
-        assertThatThrownBy(() -> empty.computePath(A5, B5))
+        assertThatThrownBy(() -> empty.computePathWithValidate(A5, B5))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

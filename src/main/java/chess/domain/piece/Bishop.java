@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class Bishop extends Piece {
+public final class Bishop extends Normal {
 
     private static final double INCLINATION_ONE = 1.0d;
     private static final double INCLINATION_NEGATIVE_ONE = -1.0d;
@@ -16,11 +16,9 @@ public final class Bishop extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        validateSamePosition(source, target);
-
         final var inclination = source.computeInclination(target);
         if (inclination == INCLINATION_ONE) {
-            return computePathInclainationOne(source, target);
+            return computePathInclinationOne(source, target);
         }
 
         if (inclination == INCLINATION_NEGATIVE_ONE) {
@@ -44,7 +42,7 @@ public final class Bishop extends Piece {
         return positions;
     }
 
-    private Set<Position> computePathInclainationOne(final Position source, final Position target) {
+    private Set<Position> computePathInclinationOne(final Position source, final Position target) {
         Set<Position> positions = new HashSet<>();
         var max = Position.maxRank(source, target);
         var min = Position.minRank(source, target);
