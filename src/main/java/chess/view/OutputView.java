@@ -22,4 +22,8 @@ public class OutputView {
         final String chessBoard = BoardViewForm.createChessBoard(board);
         System.out.println(chessBoard + System.lineSeparator());
     }
+
+    public static void printExceptionMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
