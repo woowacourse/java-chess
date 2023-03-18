@@ -11,17 +11,9 @@ public class ChessGame {
     private final Board board;
     private Color currentTurnColor;
 
-    private ChessGame() {
-        this.board = null;
-    }
-
     private ChessGame(final Board board) {
         this.board = board;
         this.currentTurnColor = Color.WHITE;
-    }
-
-    public static ChessGame createWithUninitializedBoard() {
-        return new ChessGame();
     }
 
     public static ChessGame createWith(final PiecesGenerator piecesGenerator) {
@@ -29,7 +21,6 @@ public class ChessGame {
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
-        validateInitialization();
         validateTurnColor(currentPosition);
         board.move(currentPosition, targetPosition);
         changeTurnColor();
@@ -46,17 +37,6 @@ public class ChessGame {
     }
 
     public List<Piece> getExistingPieces() {
-        validateInitialization();
         return board.getExistingPieces();
-    }
-
-    private void validateInitialization() {
-        if (!isInitialized()) {
-            throw new IllegalStateException("보드가 초기화되지 않았습니다.");
-        }
-    }
-
-    public boolean isInitialized() {
-        return board != null;
     }
 }

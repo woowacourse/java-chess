@@ -8,6 +8,9 @@ public class Command {
     private static final int COMMAND_TYPE_INDEX = 0;
     private static final int COMMAND_PARAMETER_START_INDEX = 1;
 
+    public static final int MOVE_CURRENT_POSITION_INDEX = 0;
+    public static final int MOVE_TARGET_POSITION_INDEX = 1;
+
     private final Type type;
     private final List<String> parameters;
 
@@ -16,7 +19,7 @@ public class Command {
         this.parameters = parameters;
     }
 
-    public static Command from(List<String> inputValues) {
+    public static Command of(List<String> inputValues) {
         final Type commandType = Type.findBy(inputValues.get(COMMAND_TYPE_INDEX));
         final List<String> commandParameters = new ArrayList<>();
         if (commandType.isParameterAllowed()) {
