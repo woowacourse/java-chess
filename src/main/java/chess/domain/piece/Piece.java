@@ -15,6 +15,10 @@ public abstract class Piece {
         return color.isBlack();
     }
 
+    public boolean hasSameColor(final Piece piece) {
+        return color == piece.color;
+    }
+
     public abstract List<Square> findRoute(final Square source, final Square destination);
 
     public abstract boolean isPawn();

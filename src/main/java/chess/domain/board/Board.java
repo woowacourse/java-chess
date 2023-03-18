@@ -75,7 +75,9 @@ public class Board {
     }
 
     private boolean isSameColor(final Square source, final Square destination) {
-        return board.get(source).isBlack() == board.get(destination).isBlack();
+        final Piece sourcePiece = board.get(source);
+        final Piece destinationPiece = board.get(destination);
+        return sourcePiece.hasSameColor(destinationPiece);
     }
 
     public boolean canMovePawn(final Square source, final List<Square> routes) {
