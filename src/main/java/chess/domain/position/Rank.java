@@ -1,8 +1,9 @@
 package chess.domain.position;
 
-import chess.domain.move.Direction;
 import java.util.Arrays;
 import java.util.Optional;
+
+import chess.domain.move.Direction;
 
 public enum Rank {
 
@@ -47,7 +48,12 @@ public enum Rank {
                 .orElseThrow(UnsupportedOperationException::new);
     }
 
+    public int minus(Rank other) {
+        return index - other.index;
+    }
+
     public int getIndex() {
         return index;
     }
+
 }

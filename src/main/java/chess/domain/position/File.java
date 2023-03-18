@@ -1,8 +1,9 @@
 package chess.domain.position;
 
-import chess.domain.move.Direction;
 import java.util.Arrays;
 import java.util.Optional;
+
+import chess.domain.move.Direction;
 
 public enum File {
     A(1),
@@ -44,6 +45,10 @@ public enum File {
     private File right() {
         return indexOf(this.index + 1)
                 .orElseThrow(UnsupportedOperationException::new);
+    }
+
+    public int minus(File file) {
+        return this.index - file.index;
     }
 
     public int getIndex() {

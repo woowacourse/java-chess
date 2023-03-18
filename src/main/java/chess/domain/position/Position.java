@@ -1,7 +1,14 @@
 package chess.domain.position;
 
-import chess.domain.move.Direction;
+import static chess.domain.move.Direction.DOWN;
+import static chess.domain.move.Direction.LEFT;
+import static chess.domain.move.Direction.RIGHT;
+import static chess.domain.move.Direction.UP;
+
 import java.util.Objects;
+
+import chess.domain.move.Direction;
+import chess.domain.move.Directions;
 
 public class Position {
 
@@ -17,6 +24,22 @@ public class Position {
         File newFile = file.move(direction);
         Rank newRank = rank.move(direction);
         return new Position(newFile, newRank);
+    }
+
+    public Directions getHorizontalDirectionsTo(Position other) {
+        int difference = other.file.minus(file);
+        if (difference < 0) {
+            return new Directions(LEFT.repeat(Math.abs(difference)));
+        }
+        return new Directions(RIGHT.repeat(difference));
+    }
+
+    public Directions getVerticalDirectionsTo(Position other) {
+        int difference = other.rank.minus(rank);
+        if (difference > 0) {
+            return new Directions(UP.repeat(difference));
+        }
+        return new Directions(DOWN.repeat(Math.abs(difference)));
     }
 
     public int getFileIndex() {
@@ -35,7 +58,7 @@ public class Position {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position position = (Position) o;
+        Position position = (Position)o;
         return file == position.file && rank == position.rank;
     }
 
