@@ -30,16 +30,10 @@ public class King extends Piece {
         destination.ifPresent(super::validateSameColor);
 
         Movement movement = to.convertMovement(from);
-        validateMovement(movement);
+        validateMovement(movement, CAN_MOVE_DESTINATION);
         validateAvailableDestination(from, to, movement);
 
         return new Path();
-    }
-
-    private void validateMovement(final Movement movement) {
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException("King이 움직일 수 없는 방향임!");
-        }
     }
 
     private void validateAvailableDestination(final Position from, final Position to, final Movement movement) {

@@ -53,17 +53,13 @@ public class Pawn extends Piece {
             throw new IllegalStateException("같은 색의 말이 있는 곳으로는 이동할 수 없음!");
         }
 
-        if (!CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
-            throw new IllegalStateException("움직일 수 있는 방향이 아님!");
-        }
+        validateMovement(movement, CAN_MOVE_ENEMY_DESTINATION.get(color));
 
         return new Path();
     }
 
     private Path searchPathToEmptyPosition(final Position from, final Position to, final Movement movement) {
-        if (movement != CAN_MOVE_EMPTY_DESTINATION.get(color)) {
-            throw new IllegalStateException("움직일 수 있는 방향이 아님!");
-        }
+        validateMovement(movement, List.of(CAN_MOVE_EMPTY_DESTINATION.get(color)));
 
         if (isMoveOneStep(from, to)) {
             return new Path();

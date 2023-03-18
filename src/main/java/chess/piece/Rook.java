@@ -25,7 +25,7 @@ public class Rook extends Piece {
         destination.ifPresent(super::validateSameColor);
 
         Movement movement = to.convertMovement(from);
-        validateMovement(movement);
+        validateMovement(movement, CAN_MOVE_DESTINATION);
 
         return trackPath(from, to, movement);
     }
@@ -41,11 +41,5 @@ public class Rook extends Piece {
             positions.add(next);
         }
         return new Path(positions);
-    }
-
-    private void validateMovement(final Movement movement) {
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException();
-        }
     }
 }

@@ -32,16 +32,10 @@ public class Knight extends Piece {
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
         Movement movement = to.convertMovement(from);
-        validateMovement(movement);
+        validateMovement(movement, CAN_MOVE_DESTINATION);
         validatePositionDifference(from, to);
 
         return new Path();
-    }
-
-    private void validateMovement(final Movement movement) {
-        if (!CAN_MOVE_DESTINATION.contains(movement)) {
-            throw new IllegalStateException("Knight가 움직일 수 없는 방향임!");
-        }
     }
 
     private void validatePositionDifference(final Position from, final Position to) {
