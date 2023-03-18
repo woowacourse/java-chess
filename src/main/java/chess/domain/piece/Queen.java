@@ -1,14 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 
 public class Queen extends Piece {
 
     private static final String name = "q";
+    public static final String DIRECTION_ERROR_MESSAGE = "Queen이 이동할 수 있는 방향이 아닙니다";
+    public static final String MOVE_ERROR_MESSAGE = "목적지에 아군이 있으므로 Queen는 이동할 수 없습니다.";
     private static final List<Direction> movableDirection = List.of(
             Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
@@ -28,13 +30,13 @@ public class Queen extends Piece {
 
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("queen이 이동할 수 있는 방향이 아닙니다");
+            throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
         if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException("목적지에 아군이 있으므로 queen는 이동할 수 없습니다.");
+            throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
         }
     }
 }
