@@ -32,11 +32,11 @@ public class Position {
         return range < MIN_RANGE || range > MAX_RANGE;
     }
 
-    public boolean isSameXTo(Position other) {
+    public boolean isSameXAs(Position other) {
         return this.x == other.x;
     }
 
-    public boolean isSameYTo(Position other) {
+    public boolean isSameYAs(Position other) {
         return this.y == other.y;
     }
 

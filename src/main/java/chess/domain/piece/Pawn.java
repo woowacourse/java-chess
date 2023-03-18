@@ -16,14 +16,14 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        if (source.isSameYTo(target)) {
+        if (source.isSameYAs(target)) {
             return false;
         }
         if (isWhitePawnReverseDirection(source, target) || isBlackPawnReverseDirection(source, target)) {
             return false;
         }
         int distance = source.getDistanceTo(target);
-        if (canMoveSpecialDistance(source, distance)) {
+        if (canMoveInitialDistance(source, distance)) {
             return true;
         }
         return distance == PAWN_DEFAULT_DISTANCE;
@@ -37,11 +37,11 @@ public class Pawn extends Piece {
         return this.team == Team.BLACK && target.isOverThanYTo(source);
     }
 
-    private boolean canMoveSpecialDistance(Position source, int distance) {
-        return distance == PAWN_SPECIAL_DISTANCE && isPawnInitPosition(source);
+    private boolean canMoveInitialDistance(Position source, int distance) {
+        return distance == PAWN_SPECIAL_DISTANCE && isPawnInitialPosition(source);
     }
 
-    private boolean isPawnInitPosition(Position source) {
+    private boolean isPawnInitialPosition(Position source) {
         return source.isSameY(WHITE_PAWN_INIT_Y_POS) || source.isSameY(BLACK_PAWN_INIT_Y_POS);
     }
 }

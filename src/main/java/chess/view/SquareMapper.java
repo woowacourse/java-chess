@@ -26,10 +26,10 @@ public class SquareMapper {
             throw new IllegalArgumentException("[ERROR] 일치하는 기물이 없습니다.");
         }
         String value = mapper.get(role);
-        return convertString(team, value);
+        return convertAlphabetType(team, value);
     }
 
-    private static String convertString(Team team, String value) {
+    private static String convertAlphabetType(Team team, String value) {
         if (team == Team.BLACK) {
             return value.toUpperCase();
         }
