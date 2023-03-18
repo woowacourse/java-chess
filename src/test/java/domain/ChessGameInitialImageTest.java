@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class BoardInitialImageTest {
+class ChessGameInitialImageTest {
 
     @ParameterizedTest(name = "{0}행 {1}열의 록을 가져온다")
     @CsvSource(value = {"0,0", "7,0", "0,7", "7,7"})

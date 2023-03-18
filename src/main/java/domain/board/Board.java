@@ -1,8 +1,8 @@
 package domain.board;
 
+import domain.piece.Coordinate;
 import domain.square.EmptySquare;
 import domain.square.Square;
-import domain.piece.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,70 +10,44 @@ import java.util.List;
 public class Board {
 
     public static final int RANK_SIZE = 8;
-    public static final int FILE_SIZE = 8;
 
     private final List<Rank> ranks;
 
-    public Board() {
-        ranks = initialize();
+    public Board(final int fileSize) {
+        this.ranks = initializeRanks(fileSize);
     }
 
-    public List<Rank> initialize() {
+    private List<Rank> initializeRanks(final int fileSize) {
         List<Rank> ranks = new ArrayList<>();
         for (int row = 0; row < RANK_SIZE; row++) {
-            ranks.add(new Rank(row, FILE_SIZE));
+            ranks.add(new Rank(row, fileSize));
         }
         return ranks;
     }
-
-    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (isMovable(startCoordinate, endCoordinate)) {
-            int startRow = startCoordinate.getRow();
-            int startCol = startCoordinate.getCol();
-            int endRow = endCoordinate.getRow();
-            int endCol = endCoordinate.getCol();
-
-            Square findSquare = ranks.get(startRow).findPiece(startCol);
-            ranks.get(startRow).replacePiece(startCol, new EmptySquare());
-            ranks.get(endRow).replacePiece(endCol, findSquare);
-        }
+    
+    public Square findSquare(final Coordinate target) {
+        Rank rankWithTargetSquare = ranks.get(target.getRow());
+        return rankWithTargetSquare.findSquare(target.getCol());
     }
 
-    private boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return isMovableByRule(startCoordinate, endCoordinate) &&
-                !isPieceExistsAtEnd(endCoordinate) &&
-                isNotBlocked(startCoordinate, endCoordinate);
+    public void replaceSquare(final Coordinate target, final Square square) {
+        Rank rankWithTargetSquare = ranks.get(target.getRow());
+        rankWithTargetSquare.replaceSquare(target.getCol(), square);
     }
 
-    private boolean isMovableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        int row = startCoordinate.getRow();
-        int col = startCoordinate.getCol();
-
-        return ranks.get(row).isMovableAt(col, startCoordinate, endCoordinate);
+    public void replaceWithEmptySquare(final Coordinate target) {
+        Rank rankWithTargetSquare = ranks.get(target.getRow());
+        rankWithTargetSquare.replaceSquare(target.getCol(), new EmptySquare());
     }
 
-    private boolean isPieceExistsAtEnd(final Coordinate endCoordinate) {
-        return ranks.get(endCoordinate.getRow()).isExistPiece(endCoordinate.getCol());
+    public boolean isMovable(final Coordinate start, final Coordinate end) {
+        return ranks.get(start.getRow())
+                .isMovableAt(start, end);
     }
 
-    private boolean isNotBlocked(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Square square = ranks.get(startCoordinate.getRow()).findPiece(startCoordinate.getCol());
-
-        if (square.canReap()) {
-            return true;
-        }
-        return isNotBlockedWhenNotReap(startCoordinate, endCoordinate);
-    }
-
-    private boolean isNotBlockedWhenNotReap(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
-        Coordinate indexCoordinate = startCoordinate.add(directionVector);
-
-        while (!ranks.get(indexCoordinate.getRow()).isExistPiece(indexCoordinate.getCol()) &&
-        !indexCoordinate.equals(endCoordinate)) {
-            indexCoordinate = indexCoordinate.add(directionVector);
-        }
-        return indexCoordinate.equals(endCoordinate);
+    public boolean isSquareNotEmptyAt(final Coordinate target) {
+        return ranks.get(target.getRow())
+                .isExistSquare(target.getCol());
     }
 
     public List<Rank> getRanks() {

@@ -22,21 +22,21 @@ public class Rank {
         return squares;
     }
 
-    public Square findPiece(final int col) {
+    public Square findSquare(final int col) {
         return squares.get(col);
     }
 
-    public boolean isExistPiece(final int col) {
+    public boolean isExistSquare(final int col) {
         return squares.get(col).isExist();
     }
 
-    public void replacePiece(final int col, final Square newSquare) {
+    public void replaceSquare(final int col, final Square newSquare) {
         squares.set(col, newSquare);
         squares.get(col).checkMoved();
     }
 
-    public boolean isMovableAt(final int col, final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Square targetSquare = squares.get(col);
+    public boolean isMovableAt(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        Square targetSquare = squares.get(startCoordinate.getCol());
         return targetSquare.isMovable(startCoordinate, endCoordinate);
     }
 

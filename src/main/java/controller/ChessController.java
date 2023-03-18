@@ -1,6 +1,6 @@
 package controller;
 
-import domain.board.Board;
+import domain.board.ChessGame;
 import domain.piece.Coordinate;
 import view.InputView;
 import view.OutputView;
@@ -31,29 +31,29 @@ public class ChessController {
 
     private void startChessGame() {
         outputView.printGameStartMessage();
-        Board board = new Board();
+        ChessGame chessGame = new ChessGame();
         Command command = Command.of(inputView.readCommand());
         if (command.isStart()) {
-            startBoardInteraction(board);
+            startInteraction(chessGame);
         }
         outputView.printGameEndMessage();
     }
 
-    private void startBoardInteraction(final Board board) {
+    private void startInteraction(final ChessGame chessGame) {
         Command command;
         do {
-            outputView.printBoard(board);
+            outputView.printBoard(chessGame);
             List<String> frontCommand = inputView.readCommand();
             command = Command.of(frontCommand);
-            moveByCommand(board, command, frontCommand);
+            moveByCommand(chessGame, command, frontCommand);
         } while (command.isNotEnd());
     }
 
-    private void moveByCommand(final Board board, final Command command, final List<String> frontCommand) {
+    private void moveByCommand(final ChessGame chessGame, final Command command, final List<String> frontCommand) {
         if (command.isMove()) {
             Coordinate startCoordinate = convertCoordinate(frontCommand.get(START_COORDINATE_INDEX));
             Coordinate endCoordinate = convertCoordinate(frontCommand.get(END_COORDINATE_INDEX));
-            board.move(startCoordinate, endCoordinate);
+            chessGame.move(startCoordinate, endCoordinate);
         }
     }
 

@@ -1,6 +1,6 @@
 package view;
 
-import domain.board.Board;
+import domain.board.ChessGame;
 import domain.square.Square;
 import domain.board.Rank;
 
@@ -10,10 +10,11 @@ public class OutputView {
             "> 게임 시작 : start" + System.lineSeparator() +
             "> 게임 종료 : end" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    public static final String GAME_END_MESSAGE = "게임을 종료합니다.";
 
-    public void printBoard(final Board board) {
+    public void printBoard(final ChessGame chessGame) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Rank rank : board.getRanks()) {
+        for (Rank rank : chessGame.getBoard().getRanks()) {
             stringBuilder.insert(0, makeRank(rank));
         }
         System.out.println(stringBuilder);
@@ -30,6 +31,10 @@ public class OutputView {
 
     public void printGameStartMessage() {
         System.out.println(GAME_START_MESSAGE);
+    }
+
+    public void printGameEndMessage() {
+        System.out.println(GAME_END_MESSAGE);
     }
 
     public void printExceptionMessage(final String message) {
