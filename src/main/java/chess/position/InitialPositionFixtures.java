@@ -1,4 +1,4 @@
-package chess.path;
+package chess.position;
 
 import chess.position.Position;
 

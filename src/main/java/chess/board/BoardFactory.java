@@ -1,21 +1,21 @@
 package chess.board;
 
-import static chess.path.InitialPositionFixtures.BLACK_BISHOP_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_KING_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_KNIGHT_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_KNIGHT_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_QUEEN_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_ROOK_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.BLACK_ROOK_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_BISHOP_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_KING_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_KNIGHT_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_KNIGHT_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_QUEEN_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_ROOK_LEFT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_ROOK_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_BISHOP_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_KING_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_KNIGHT_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_KNIGHT_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_QUEEN_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_ROOK_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_ROOK_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_BISHOP_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_KING_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_KNIGHT_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_KNIGHT_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_QUEEN_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_ROOK_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_ROOK_RIGHT_POSITION;
 
 import chess.piece.Bishop;
 import chess.piece.Color;

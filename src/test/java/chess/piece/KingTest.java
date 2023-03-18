@@ -1,6 +1,6 @@
 package chess.piece;
 
-import static chess.path.InitialPositionFixtures.WHITE_KING_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_KING_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

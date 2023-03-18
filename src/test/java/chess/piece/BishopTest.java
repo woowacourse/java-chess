@@ -1,7 +1,7 @@
 package chess.piece;
 
-import static chess.path.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
-import static chess.path.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
+import static chess.position.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
+import static chess.position.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
