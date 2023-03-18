@@ -1,8 +1,6 @@
 
 package chess.domain;
 
-import chess.practiceMove.Direction;
-
 import java.util.Objects;
 
 public class Position {
