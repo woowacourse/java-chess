@@ -67,7 +67,7 @@ public class Board {
 
     private boolean isExistHurdle(final List<Square> squares) {
         return squares.stream()
-                .anyMatch(square -> board.containsKey(square));
+                .anyMatch(board::containsKey);
     }
 
     private boolean isAttackable(final Square source, final Square destination) {

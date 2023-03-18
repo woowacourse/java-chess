@@ -55,10 +55,9 @@ class DirectionVectorTest {
 
     @Test
     void 해당_방향의_다음_파일을_반환한다() {
-        final DirectionVector directionVector = SOUTHEAST;
         final File d = File.D;
 
-        assertThat(directionVector.next(d)).isEqualTo(File.E);
+        assertThat(SOUTHEAST.next(d)).isEqualTo(File.E);
     }
 
     @ParameterizedTest
@@ -70,10 +69,9 @@ class DirectionVectorTest {
 
     @Test
     void 해당_방향의_다음_랭크를_반환한다() {
-        final DirectionVector directionVector = SOUTHEAST;
         final Rank four = Rank.FOUR;
 
-        assertThat(directionVector.next(four)).isEqualTo(Rank.THREE);
+        assertThat(SOUTHEAST.next(four)).isEqualTo(Rank.THREE);
     }
 
     @ParameterizedTest
