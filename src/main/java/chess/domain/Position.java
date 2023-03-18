@@ -1,14 +1,14 @@
 package chess.domain;
 
-import chess.domain.exception.IllegalPieceMoveException;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Position {
+
     private static final Map<File, Map<Rank, Position>> cache = new EnumMap<>(File.class);
 
     static {
@@ -46,23 +46,22 @@ public class Position {
     }
 
     public List<Position> createStraightPath(Position destination) {
-        validateStraight(destination);
+        if (!isStraight(destination)) {
+            return Collections.emptyList();
+        }
         if (isDiagonal(destination)) {
             return createDiagonalPath(destination);
         }
         return createCrossPath(destination);
     }
 
-    private void validateStraight(Position destination) {
+    private boolean isStraight(Position destination) {
         int rankDifference = getRankDifference(destination);
         int fileDifference = getFileDifference(destination);
         if (rankDifference == 0 || fileDifference == 0) {
-            return;
+            return true;
         }
-        if (Math.abs(rankDifference) == Math.abs(fileDifference)) {
-            return;
-        }
-        throw new IllegalPieceMoveException();
+        return Math.abs(rankDifference) == Math.abs(fileDifference);
     }
 
     private boolean isDiagonal(Position destination) {

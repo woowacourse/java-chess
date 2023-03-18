@@ -9,8 +9,4 @@ public interface MoveState {
     default MoveState getNextState() {
         return this;
     }
-
-    default boolean canJump() {
-        return false;
-    }
 }

@@ -24,9 +24,4 @@ public class KnightState implements MoveState {
         }
         return Math.abs(x) == 1 && Math.abs(y) == 2;
     }
-
-    @Override
-    public boolean canJump() {
-        return true;
-    }
 }

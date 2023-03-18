@@ -33,10 +33,6 @@ public class Piece {
         return ColorCompareResult.of(this.color, color);
     }
 
-    public boolean canJump() {
-        return moveState.canJump();
-    }
-
     public PieceType getType() {
         return PieceType.getType(moveState);
     }

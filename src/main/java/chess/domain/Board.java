@@ -74,9 +74,7 @@ public class Board {
         if (piecePosition.get(origin) == EMPTY_PIECE) {
             throw new IllegalPieceMoveException();
         }
-        if (!piecePosition.get(origin).canJump()) {
-            checkPath(origin, destination);
-        }
+        checkPath(origin, destination);
     }
 
     private void checkPath(Position origin, Position destination) {

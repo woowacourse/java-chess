@@ -15,6 +15,7 @@ public enum Rank {
     SIX("6", 6),
     SEVEN("7", 7),
     EIGHT("8", 8);
+    
     private static final int SKIP_FIRST = 1;
 
     private final String rankName;

@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.view.response.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -31,7 +30,10 @@ class BoardTest {
         var result = board.getPieces().get(0);
         //then
 
-        var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
+        var check = result.stream()
+                .map(Piece::getType)
+                .map(PieceType::getType)
+                .collect(Collectors.toList());
         assertThat(check)
                 .containsExactly("r", "n", "b", "q", "k", "b", "n", "r")
                 .hasSize(8);
@@ -46,7 +48,10 @@ class BoardTest {
         var result = board.getPieces().get(1);
         //then
 
-        var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
+        var check = result.stream()
+                .map(Piece::getType)
+                .map(PieceType::getType)
+                .collect(Collectors.toList());
         assertThat(check)
                 .containsOnly("p")
                 .hasSize(8);

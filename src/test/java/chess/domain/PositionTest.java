@@ -1,6 +1,21 @@
 package chess.domain;
 
-import chess.domain.exception.IllegalPieceMoveException;
+import static chess.domain.PositionFixture.A1;
+import static chess.domain.PositionFixture.A3;
+import static chess.domain.PositionFixture.B2;
+import static chess.domain.PositionFixture.C3;
+import static chess.domain.PositionFixture.D4;
+import static chess.domain.PositionFixture.E1;
+import static chess.domain.PositionFixture.E2;
+import static chess.domain.PositionFixture.E3;
+import static chess.domain.PositionFixture.E4;
+import static chess.domain.PositionFixture.E5;
+import static chess.domain.PositionFixture.F1;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -8,14 +23,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static chess.domain.PositionFixture.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -81,14 +88,16 @@ public class PositionTest {
 
     @ParameterizedTest
     @CsvSource(value = {"B, THREE", "F, FIVE"})
-    void 한_직선_위의_Position_이_아니라면_Path_를_만들_수_없다(File file, Rank rank) {
+    void 한_직선_위의_Position_이_아니라면_Path_빈_Path_를_반환한다(File file, Rank rank) {
         //given
         Position origin = A1;
         Position destination = Position.of(file, rank);
 
         //expect
-        assertThatThrownBy(() -> origin.createStraightPath(destination))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        List<Position> result = origin.createStraightPath(destination);
+
+        assertThat(result)
+                .isEmpty();
     }
 
     @ParameterizedTest

@@ -4,6 +4,7 @@ import chess.domain.ColorCompareResult;
 import chess.domain.exception.IllegalPieceMoveException;
 
 public class EmptyState implements MoveState {
+
     private static final EmptyState instance = new EmptyState();
 
     private EmptyState() {
@@ -20,11 +21,6 @@ public class EmptyState implements MoveState {
 
     @Override
     public MoveState getNextState() {
-        throw new IllegalPieceMoveException();
-    }
-
-    @Override
-    public boolean canJump() {
         throw new IllegalPieceMoveException();
     }
 }
