@@ -10,6 +10,8 @@ graph TD
 
     Square --> File
     Square --> Rank
+    
+    BoardFactory --> Board
 
     Board --> Square
     Board --> PIECE

@@ -1,14 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.board.Square;
+import chess.domain.piece.strategy.Strategy;
 import java.util.List;
 
 public abstract class Piece {
 
     protected final Color color;
+    protected final Strategy strategy;
 
-    protected Piece(final Color color) {
+    protected Piece(final Color color, final Strategy strategy) {
         this.color = color;
+        this.strategy = strategy;
+    }
+
+    public List<Square> findRoute(final Square source, final Square destination) {
+        return strategy.findRoute(source, destination);
     }
 
     public boolean isBlack() {
@@ -22,8 +29,6 @@ public abstract class Piece {
     public boolean isSameColor(final Color color) {
         return this.color == color;
     }
-
-    public abstract List<Square> findRoute(final Square source, final Square destination);
 
     public abstract boolean isPawn();
 }
