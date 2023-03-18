@@ -20,7 +20,8 @@ public class Piece {
     }
 
     public void move(int x, int y, Piece piece) {
-        if (!moveState.canMove(x, color.colorForwardDirection(y), piece.compareColor(color))) {
+        boolean canMove = moveState.canMove(x, color.colorForwardDirection(y), piece.compareColor(color));
+        if (!canMove) {
             throw new IllegalPieceMoveException();
         }
         moveState = moveState.getNextState();
@@ -28,6 +29,14 @@ public class Piece {
 
     private ColorCompareResult compareColor(Color color) {
         return ColorCompareResult.of(this.color, color);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", moveState=" + moveState +
+                '}';
     }
 
     public PieceType getType() {

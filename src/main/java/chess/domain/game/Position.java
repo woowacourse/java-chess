@@ -42,7 +42,7 @@ public class Position {
     }
 
     public List<Position> createStraightPath(Position destination) {
-        if (!isStraight(destination)) {
+        if (isNotStraight(destination)) {
             return Collections.emptyList();
         }
         if (isDiagonal(destination)) {
@@ -51,13 +51,13 @@ public class Position {
         return createCrossPath(destination);
     }
 
-    private boolean isStraight(Position destination) {
+    private boolean isNotStraight(Position destination) {
         int rankDifference = getRankDifference(destination);
         int fileDifference = getFileDifference(destination);
         if (rankDifference == 0 || fileDifference == 0) {
-            return true;
+            return false;
         }
-        return Math.abs(rankDifference) == Math.abs(fileDifference);
+        return Math.abs(rankDifference) != Math.abs(fileDifference);
     }
 
     private boolean isDiagonal(Position destination) {
