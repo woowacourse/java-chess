@@ -25,7 +25,7 @@ public class Coordinate {
     }
 
     public double getInclination(final Coordinate otherCoordinate) {
-        return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+        return ((double)otherCoordinate.row - this.row) / (otherCoordinate.col - this.col);
     }
 
     public boolean hasDistanceLessThanOne(final Coordinate otherCoordinate) {
