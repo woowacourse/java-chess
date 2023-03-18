@@ -6,37 +6,57 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
+@DisplayName("룩은 ")
 class RookTest {
 
-    @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 수퍙 & 수직")
-    void isMovable_true() {
+    @ParameterizedTest
+    @MethodSource("isMovableTrueCase")
+    @DisplayName("수평, 수직 방향으로 칸 수 제한 없이 이동할 수 있다.")
+    void isMovable_true(Position movablePosition) {
         // given
-        final Rook rook = new Rook(new Position(File.A, Rank.ONE), Side.WHITE);
-        final Position horizontalPosition = new Position(File.H, Rank.ONE);
-        final Position verticalPosition = new Position(File.A, Rank.EIGHT);
+        final Rook rook = new Rook(new Position(File.D, Rank.FOUR), Side.WHITE);
 
         // when, then
-        assertThat(rook.isMovable(horizontalPosition)).isTrue();
-        assertThat(rook.isMovable(verticalPosition)).isTrue();
+        assertThat(rook.isMovable(movablePosition)).isTrue();
+    }
+
+    static Stream<Position> isMovableTrueCase() {
+        return Stream.of(
+                new Position(File.D, Rank.SEVEN),
+                new Position(File.H, Rank.FOUR),
+                new Position(File.D, Rank.THREE),
+                new Position(File.A, Rank.FOUR)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMovableFalseCase")
+    @DisplayName("대각 방향으로 이동할 수 없다.")
+    void isMovable_false(Position notMovablePosition) {
+        // given
+        final Rook rook = new Rook(new Position(File.D, Rank.FOUR), Side.WHITE);
+
+        // when, then
+        assertThat(rook.isMovable(notMovablePosition)).isFalse();
+    }
+
+    static Stream<Position> isMovableFalseCase() {
+        return Stream.of(
+                new Position(File.F, Rank.SIX),
+                new Position(File.G, Rank.ONE),
+                new Position(File.B, Rank.TWO),
+                new Position(File.C, Rank.FIVE)
+        );
     }
 
     @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 대각")
-    void isMovable_false() {
-        // given
-        final Rook rook = new Rook(new Position(File.A, Rank.ONE), Side.WHITE);
-        final Position diagonalPosition = new Position(File.C, Rank.THREE);
-
-        // when, then
-        assertThat(rook.isMovable(diagonalPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("대상 Position까지 가는 경로들을 반환한다.")
+    @DisplayName("이동 경로를 반환한다.")
     void getPaths() {
         // given
         final Rook rook = new Rook(new Position(File.A, Rank.ONE), Side.WHITE);

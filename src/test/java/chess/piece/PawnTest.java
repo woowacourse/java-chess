@@ -13,11 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+@DisplayName("폰은 ")
 public class PawnTest {
 
     @ParameterizedTest
     @MethodSource("isMovableTrueCase_white")
-    @DisplayName("폰은 위, 오른쪽 위, 왼쪽 위 방향으로 한 칸씩 이동할 수 있다.")
+    @DisplayName("흰색 진영인 경우 위, 오른쪽 위, 왼쪽 위 방향으로 한 칸씩 이동할 수 있다.")
     void isMovable_white_true(Position movablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
@@ -36,7 +37,7 @@ public class PawnTest {
 
     @ParameterizedTest
     @MethodSource("isMovableFalseCase_white")
-    @DisplayName("폰은 앞, 오른쪽 앞, 왼쪽 앞을 제외한 방향으로 이동할 수 없다.")
+    @DisplayName("앞, 오른쪽 앞, 왼쪽 앞을 제외한 방향으로 이동할 수 없다.")
     void isMovable_white_false(Position notMovablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
@@ -56,7 +57,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("흰색 폰은 시작 위치인 경우 두 칸 위로 이동 가능하다.")
+    @DisplayName("흰색 진영이고 시작 위치인 경우 두 칸 위로 이동 가능하다.")
     void isMovable_whiteStartPosition_twoUp() {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
@@ -68,7 +69,7 @@ public class PawnTest {
 
     @ParameterizedTest
     @MethodSource("isMovableTrueCase_black")
-    @DisplayName("검은색 폰은 아래, 왼쪽 아래, 오른쪽 아래 방향으로 한 칸씩 이동할 수 있다.")
+    @DisplayName("검은색 진영인 경우 아래, 왼쪽 아래, 오른쪽 아래 방향으로 한 칸씩 이동할 수 있다.")
     void isMovable_black_true(Position movablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
@@ -87,7 +88,7 @@ public class PawnTest {
 
     @ParameterizedTest
     @MethodSource("isMovableFalseCase_black")
-    @DisplayName("검은색 폰은 아래, 왼쪽 아래, 오른쪽 아래를 제외한 방향으로 이동할 수 없다.")
+    @DisplayName("검은색 진영인 경우 아래, 왼쪽 아래, 오른쪽 아래를 제외한 방향으로 이동할 수 없다.")
     void isMovable_black_false(Position notMovablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
@@ -107,7 +108,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("검은색 진영은 시작 위치인 경우 두 칸 아래로 이동 가능하다.")
+    @DisplayName("검은색 진영이고 시작 위치인 경우 두 칸 아래로 이동 가능하다.")
     void isMovable_blackStartPosition_twoDown() {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
@@ -118,7 +119,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("폰이 시작 위치에서 두 칸 이동했을 떄의 경로를 반환한다.")
+    @DisplayName("시작 위치에서 두 칸 이동했을 떄의 경로를 반환한다.")
     void getPaths() {
         // given
         final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Side.WHITE);
@@ -133,7 +134,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("폰이 한 칸만 이동했을 경우 빈 경로를 반환한다.")
+    @DisplayName("한 칸만 이동했을 경우 빈 경로를 반환한다.")
     void getPaths_empty() {
         // given
         final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Side.WHITE);

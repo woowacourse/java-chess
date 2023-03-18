@@ -7,36 +7,40 @@ import chess.board.Position;
 import chess.board.Rank;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
+@DisplayName("킹은 ")
 class KingTest {
-    @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 대각")
-    void isMovable_true() {
+    @ParameterizedTest
+    @MethodSource("isMovableTrueCase")
+    @DisplayName("어느 방향으로든 한 칸씩 이동할 수 있다.")
+    void isMovable_true(Position movablePosition) {
         // given
-        final King king = new King(new Position(File.A, Rank.THREE), Side.WHITE);
-        final Position diagonalPosition = new Position(File.B, Rank.FOUR);
+        final King king = new King(new Position(File.D, Rank.FOUR), Side.WHITE);
 
         // when, then
-        assertThat(king.isMovable(diagonalPosition)).isTrue();
+        assertThat(king.isMovable(movablePosition)).isTrue();
+    }
+
+    static Stream<Position> isMovableTrueCase() {
+        return Stream.of(
+                new Position(File.D, Rank.FIVE),
+                new Position(File.E, Rank.FIVE),
+                new Position(File.E, Rank.FOUR),
+                new Position(File.E, Rank.THREE),
+                new Position(File.D, Rank.THREE),
+                new Position(File.C, Rank.THREE),
+                new Position(File.C, Rank.FOUR),
+                new Position(File.C, Rank.FIVE)
+        );
     }
 
     @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - 수평 & 수직")
-    void isMovable_false() {
-        // given
-        final King king = new King(new Position(File.A, Rank.THREE), Side.WHITE);
-        final Position verticalPosition = new Position(File.A, Rank.FOUR);
-        final Position horizontalPosition = new Position(File.B, Rank.THREE);
-
-        // when, then
-        assertThat(king.isMovable(verticalPosition)).isTrue();
-        assertThat(king.isMovable(horizontalPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("킹은 2칸 이상 떨어져 있는 Position으로 이동할 수 없다.")
+    @DisplayName("2칸 이상 떨어져 있는 Position으로 이동할 수 없다.")
     void isMovable_distanceIsGreaterThanOne_false() {
         // given
         final King king = new King(new Position(File.A, Rank.THREE), Side.WHITE);
@@ -47,7 +51,7 @@ class KingTest {
     }
 
     @Test
-    @DisplayName("킹은 한 번에 두 칸 이상 이동할 수 없기 때문에 중간 경로가 존재하지 않는다.")
+    @DisplayName("한 번에 두 칸 이상 이동할 수 없기 때문에 중간 경로가 존재하지 않는다.")
     void getPaths() {
         // given
         final King king = new King(new Position(File.A, Rank.THREE), Side.WHITE);
