@@ -4,73 +4,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Direction {
-    RIGHT {
+    RIGHT(Axis.HORIZON) {
         @Override
-        public Direction flipVertical() {
+        public Direction flip() {
             return LEFT;
         }
     },
-    UP {
+    UP(Axis.VERTICAL) {
         @Override
-        public Direction flipHorizontal() {
+        public Direction flip() {
             return DOWN;
         }
     },
-    LEFT {
+    LEFT(Axis.HORIZON) {
         @Override
-        public Direction flipVertical() {
+        public Direction flip() {
             return RIGHT;
         }
     },
-    DOWN {
+    DOWN(Axis.VERTICAL) {
         @Override
-        public Direction flipHorizontal() {
+        public Direction flip() {
             return UP;
         }
     };
 
-    public static List<Direction> from(int deltaFile, int deltaRank) {
+    private final Axis axis;
+
+    Direction(Axis axis) {
+        this.axis = axis;
+    }
+
+    public boolean isIn(Axis axis) {
+        return this.axis == axis;
+    }
+
+    public Direction flipOver(Axis axis) {
+        if (this.axis == axis) {
+            return this;
+        }
+        return flip();
+    }
+
+    public abstract Direction flip();
+
+    public List<Direction> repeat(long times) {
         List<Direction> directions = new ArrayList<>();
-        addHorizontalDirections(deltaFile, directions);
-        addVerticalDirections(deltaRank, directions);
+        for (int i = 0; i < times; i++) {
+            directions.add(this);
+        }
         return directions;
-    }
-
-    private static void addHorizontalDirections(int deltaFile, List<Direction> directions) {
-        while (deltaFile > 0) {
-            directions.add(RIGHT);
-            deltaFile--;
-        }
-        while (deltaFile < 0) {
-            directions.add(LEFT);
-            deltaFile++;
-        }
-    }
-
-    private static void addVerticalDirections(int deltaRank, List<Direction> directions) {
-        while (deltaRank > 0) {
-            directions.add(UP);
-            deltaRank--;
-        }
-        while (deltaRank < 0) {
-            directions.add(DOWN);
-            deltaRank++;
-        }
-    }
-
-    public boolean isHorizontal() {
-        return List.of(RIGHT, LEFT).contains(this);
-    }
-
-    public boolean isVertical() {
-        return !isHorizontal();
-    }
-
-    public Direction flipHorizontal() {
-        return this;
-    }
-
-    public Direction flipVertical() {
-        return this;
     }
 }
