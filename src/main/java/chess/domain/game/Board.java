@@ -73,7 +73,7 @@ public class Board {
             piecePosition.put(destination, targetPiece);
             piecePosition.put(origin, Piece.empty());
         } catch (IllegalPieceMoveException e) {
-            throw new ChessGameException(e);
+            throw new ChessGameException(e.getMessage());
         }
     }
 

@@ -5,8 +5,4 @@ public class ChessGameException extends RuntimeException {
     public ChessGameException(String message) {
         super(message);
     }
-
-    public ChessGameException(Throwable cause) {
-        super(cause);
-    }
 }
