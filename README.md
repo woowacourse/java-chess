@@ -16,6 +16,7 @@ classDiagram
     <<abstract>>
     -Role: role
     -Team: Team
+    +canMove(Position src, Position dst)
   }
 
   class Position {
@@ -23,7 +24,7 @@ classDiagram
     - int: y
   }
 
-  class Type {
+  class Role {
     <<enumeration>>
     KING,
     QUEEN,
