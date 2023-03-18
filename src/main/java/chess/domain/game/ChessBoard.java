@@ -1,10 +1,10 @@
 package chess.domain.game;
 
 import chess.domain.Color;
+import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.practiceMove.Direction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,40 +24,38 @@ public class ChessBoard {
 
 
     public void move(Position start, Position end) {
-        Piece startPiece = findStartPiece(start);
+        checkIfPiecesExistInRoute(start, end);
+        Piece pieceToMove = findPieceAtStart(start);
         Color colorOfDestination = chessBoard.get(end).getColor();
-
-        if (startPiece.isMovable(start, end, colorOfDestination)) {
-            checkMovableRoute(start, end, startPiece);
-            movePieceToDestination(start, end, startPiece);
+        if (pieceToMove.isMovable(start, end, colorOfDestination)) {
+            movePieceToDestination(start, end, pieceToMove);
         }
     }
 
-    private Piece findStartPiece(Position start) {
+    private Piece findPieceAtStart(Position start) {
         return chessBoard.get(start);
     }
 
 
-    private void checkMovableRoute(Position start, Position end, Piece startPiece) {
+    private void checkIfPiecesExistInRoute(Position start, Position end) {
+        Direction direction = Direction.findDirectionByGap(start, end);
         Position currentPosition = start;
-        Direction direction = Direction.findDirectionByGap(start, end, startPiece);
-
         do {
             currentPosition = currentPosition.moveDirection(direction);
-            checkOtherPieceInTravelRoute(currentPosition, end, findStartPiece(start));
+            checkOtherPieceInMovedPosition(currentPosition, end);
         } while (!currentPosition.equals(end));
 
+    }
+
+    private void checkOtherPieceInMovedPosition(Position currentPosition, Position end) {
+        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
+            throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE);
+        }
     }
 
     private void movePieceToDestination(Position start, Position end, Piece piece) {
         chessBoard.replace(start, new EmptyPiece());
         chessBoard.replace(end, piece);
-    }
-
-    private void checkOtherPieceInTravelRoute(Position currentPosition, Position end, Piece startPiece) {
-        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
-            throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE);
-        }
     }
 
 }
