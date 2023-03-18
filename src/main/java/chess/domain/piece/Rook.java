@@ -25,10 +25,10 @@ public class Rook extends Piece {
 
 
     private DirectionVector findDirectionVector(final Square source, final Square destination) {
-        final int distanceX = destination.calculateDistanceX(source);
-        final int distanceY = destination.calculateDistanceY(source);
+        final int distanceFile = destination.calculateDistanceFile(source);
+        final int distanceRank = destination.calculateDistanceRank(source);
         return directions.stream()
-                .filter(directions -> directions.isOnMyWay(distanceX, distanceY))
+                .filter(directions -> directions.isOnMyWay(distanceFile, distanceRank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 움직일 수 있는 경로가 아닙니다."));
     }

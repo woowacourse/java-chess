@@ -37,11 +37,11 @@ public class Square {
         return rank == Rank.TWO;
     }
 
-    public int calculateDistanceX(final Square square) {
+    public int calculateDistanceFile(final Square square) {
         return this.file.calculateDistance(square.file);
     }
 
-    public int calculateDistanceY(final Square square) {
+    public int calculateDistanceRank(final Square square) {
         return this.rank.calculateDistance(square.rank);
     }
 

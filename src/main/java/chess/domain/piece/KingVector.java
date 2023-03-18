@@ -13,16 +13,16 @@ public enum KingVector {
     NORTHEAST(1, 1),
     NORTHWEST(-1, 1);
 
-    private final int x;
-    private final int y;
+    private final int unitFile;
+    private final int unitRank;
 
-    KingVector(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    KingVector(final int unitFile, final int unitRank) {
+        this.unitFile = unitFile;
+        this.unitRank = unitRank;
     }
 
-    public static boolean isExistMovableVector(final int distanceX, final int distanceY) {
+    public static boolean isExistMovableVector(final int distanceFile, final int distanceRank) {
         return Arrays.stream(KingVector.values())
-                .anyMatch(kingVector -> kingVector.x == distanceX && kingVector.y == distanceY);
+                .anyMatch(kingVector -> kingVector.unitFile == distanceFile && kingVector.unitRank == distanceRank);
     }
 }

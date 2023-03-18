@@ -53,8 +53,8 @@ class DirectionVectorTest {
 
     @ParameterizedTest
     @MethodSource("generateDirections")
-    void 가는_경로인지_확인한다(final DirectionVector directionVector, final int x, final int y, final boolean result) {
-        assertThat(directionVector.isOnMyWay(x, y)).isEqualTo(result);
+    void 가는_경로인지_확인한다(final DirectionVector directionVector, final int file, final int rank, final boolean result) {
+        assertThat(directionVector.isOnMyWay(file, rank)).isEqualTo(result);
     }
 
     @Test
