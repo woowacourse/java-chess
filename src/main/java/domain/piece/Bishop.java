@@ -4,13 +4,14 @@ import java.util.List;
 
 public class Bishop implements Piece {
 
-    private static final List<Inclination> availableInclinations = List.of(
+    private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE
-    );
+    ));
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return availableInclinations.stream()
-                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate)));
+        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+
+        return DIRECTION.canBeDirectionOf(inclination);
     }
 }

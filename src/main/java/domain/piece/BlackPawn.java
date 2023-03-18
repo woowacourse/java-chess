@@ -4,21 +4,23 @@ import java.util.List;
 
 public class BlackPawn extends Pawn {
 
-    private static final List<Inclination> availableInclinations = List.of(
+    private static final Direction DIRECTION = new Direction(List.of(
             Inclination.POSITIVE_INFINITY
-    );
+    ));
 
     @Override
     public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return availableInclinations.stream()
-                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate))) &&
+        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+
+        return DIRECTION.canBeDirectionOf(inclination) &&
                 startCoordinate.hasDistanceLessThanTwo(endCoordinate);
     }
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return availableInclinations.stream()
-                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate))) &&
+        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+
+        return DIRECTION.canBeDirectionOf(inclination) &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
     }
 }

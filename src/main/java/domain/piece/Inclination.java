@@ -1,5 +1,7 @@
 package domain.piece;
 
+import java.util.Arrays;
+
 public enum Inclination {
 
     POSITIVE_INFINITY(Double.POSITIVE_INFINITY),
@@ -20,7 +22,10 @@ public enum Inclination {
         this.inclination = inclination;
     }
 
-    public boolean isSameAs(final double other) {
-        return Double.compare(this.inclination, other) == 0;
+    public static Inclination of(final double numericInclination) {
+        return Arrays.stream(values())
+                .filter(it -> Double.compare(it.inclination, numericInclination) == 0)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 정의되지 않은 방향입니다."));
     }
 }

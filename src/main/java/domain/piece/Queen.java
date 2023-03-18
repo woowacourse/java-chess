@@ -4,14 +4,15 @@ import java.util.List;
 
 public class Queen implements Piece {
 
-    private static final List<Inclination> availableInclinations = List.of(
+    private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,
             Inclination.ZERO, Inclination.MINUS_ZERO
-    );
+    ));
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return availableInclinations.stream()
-                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate)));
+        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+
+        return DIRECTION.canBeDirectionOf(inclination);
     }
 }

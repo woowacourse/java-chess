@@ -16,7 +16,7 @@ class InclinationTest {
 
         double actual = start.getInclination(end);
 
-        assertThat(expected.isSameAs(actual)).isTrue();
+        assertThat(Inclination.of(actual)).isEqualTo(expected);
     }
 
     @Test
@@ -28,7 +28,8 @@ class InclinationTest {
 
         double actual = start.getInclination(end);
 
-        assertThat(expected.isSameAs(actual)).isTrue();
+        assertThat(Inclination.of(actual)).isEqualTo(expected);
+
     }
 
     @Test
@@ -40,7 +41,8 @@ class InclinationTest {
 
         double actual = start.getInclination(end);
 
-        assertThat(expected.isSameAs(actual)).isTrue();
+        assertThat(Inclination.of(actual)).isEqualTo(expected);
+
     }
 
     @Test
@@ -52,7 +54,8 @@ class InclinationTest {
 
         double actual = start.getInclination(end);
 
-        assertThat(expected.isSameAs(actual)).isTrue();
+        assertThat(Inclination.of(actual)).isEqualTo(expected);
+
     }
 
     @Test
@@ -64,6 +67,6 @@ class InclinationTest {
 
         double actual = start.getInclination(end);
 
-        assertThat(expected.isSameAs(actual)).isTrue();
+        assertThat(Inclination.of(actual)).isEqualTo(expected);
     }
 }
