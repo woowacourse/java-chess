@@ -18,7 +18,7 @@ public class Position {
         return destination.rank.getIndex() - rank.getIndex();
     }
 
-    public int findGapOfColum(Position destination) {
+    public int findGapOfColumn(Position destination) {
         return destination.column.getIndex() - column.getIndex();
     }
 

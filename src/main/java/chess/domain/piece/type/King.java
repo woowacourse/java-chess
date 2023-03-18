@@ -39,7 +39,7 @@ public class King extends Piece {
     }
 
     public void checkMovableAtOnce(Position start, Position end) {
-        int absGapOfColumn = Math.abs(start.findGapOfColum(end));
+        int absGapOfColumn = Math.abs(start.findGapOfColumn(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
         if (absGapOfColumn <= MOVABLE_DISTANCE && absGapOfRank <= MOVABLE_DISTANCE) {

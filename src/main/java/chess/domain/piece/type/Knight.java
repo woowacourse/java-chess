@@ -46,7 +46,7 @@ public class Knight extends Piece {
     }
 
     public void checkMovableDistance(Position start, Position end) {
-        int distanceOfColumns = Math.abs(start.findGapOfColum(end));
+        int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
         int distanceOfRanks = Math.abs(start.findGapOfRank(end));
 
         if(!isMovableDistance(distanceOfColumns, distanceOfRanks)) {

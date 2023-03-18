@@ -50,7 +50,7 @@ public class Pawn extends Piece {
     }
 
     private void checkMovableDistance(Position start, Position end) {
-        int distanceOfColumns = Math.abs(start.findGapOfColum(end));
+        int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
         int distanceOfRanks = Math.abs(start.findGapOfRank(end));
         if (isFirstMove) {
             checkMovableDistanceWhenFirstMove(distanceOfColumns, distanceOfRanks);
