@@ -32,10 +32,10 @@ public enum Command {
             final String[] source = splitPosition(splitCommand, SOURCE_INDEX);
             final String[] target = splitPosition(splitCommand, TARGET_INDEX);
 
-            final Position sourcePosition = Position.of(File.getFile(source[FILE_INDEX]),
-                    Rank.getRank(Integer.parseInt(source[RANK_INDEX])));
-            final Position targetPosition = Position.of(File.getFile(target[FILE_INDEX]),
-                    Rank.getRank(Integer.parseInt(target[RANK_INDEX])));
+            final Position sourcePosition = Position.of(File.findBySymbol(source[FILE_INDEX]),
+                    Rank.findByIndex(Integer.parseInt(source[RANK_INDEX])));
+            final Position targetPosition = Position.of(File.findBySymbol(target[FILE_INDEX]),
+                    Rank.findByIndex(Integer.parseInt(target[RANK_INDEX])));
 
             chessGame.moveOrNot(sourcePosition, targetPosition);
         };

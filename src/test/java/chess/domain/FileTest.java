@@ -14,7 +14,7 @@ public class FileTest {
     @ParameterizedTest
     @ValueSource(strings = {"z", "i", "A"})
     void 잘못된_위치인_경우_예외를_던진다(String symbol) {
-        Assertions.assertThatThrownBy(() -> File.getFile(symbol))
+        Assertions.assertThatThrownBy(() -> File.findBySymbol(symbol))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 위치입니다.");
     }

@@ -21,14 +21,14 @@ public enum File {
         this.index = index;
     }
 
-    public static File getFile(final String symbol) {
+    public static File findBySymbol(final String symbol) {
         return Arrays.stream(values())
                 .filter(file -> file.symbol.equals(symbol))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다."));
     }
 
-    public static File getFile(final int index) {
+    public static File findByIndex(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
                 .findFirst()

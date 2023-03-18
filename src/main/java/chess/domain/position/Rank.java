@@ -19,7 +19,7 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank getRank(final int index) {
+    public static Rank findByIndex(final int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()

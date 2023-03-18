@@ -14,7 +14,7 @@ public class RankTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
     void 잘못된_위치인_경우_예외를_던진다(int index) {
-        Assertions.assertThatThrownBy(() -> Rank.getRank(index))
+        Assertions.assertThatThrownBy(() -> Rank.findByIndex(index))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 위치입니다.");
     }

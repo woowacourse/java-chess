@@ -41,8 +41,8 @@ public class Position {
         final int nextFileIndex = this.file.index() + movePattern.getFileVector();
         final int nextRankIndex = this.rank.index() + movePattern.getRankVector();
 
-        final File nextFile = File.getFile(nextFileIndex);
-        final Rank nextRank = Rank.getRank(nextRankIndex);
+        final File nextFile = File.findByIndex(nextFileIndex);
+        final Rank nextRank = Rank.findByIndex(nextRankIndex);
 
         return Position.of(nextFile, nextRank);
     }
