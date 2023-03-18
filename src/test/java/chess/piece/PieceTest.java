@@ -61,4 +61,23 @@ class PieceTest {
                 Arguments.arguments(new Pawn(new Position(File.B, Rank.TWO), Side.WHITE), new Position(File.B, Rank.FOUR), Pawn.class)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("isPawnTestCases")
+    @DisplayName("해당 기물이 폰인지 확인한다.")
+    void isPawn(Piece piece, boolean expectedResult) {
+        // when, then
+        assertThat(piece.isPawn()).isEqualTo(expectedResult);
+    }
+
+    static Stream<Arguments> isPawnTestCases() {
+        return Stream.of(
+                Arguments.arguments(new Rook(new Position(File.A, Rank.ONE), Side.WHITE), false),
+                Arguments.arguments(new Knight(new Position(File.B, Rank.ONE), Side.WHITE), false),
+                Arguments.arguments(new Queen(new Position(File.D, Rank.ONE), Side.WHITE), false),
+                Arguments.arguments(new Bishop(new Position(File.C, Rank.ONE), Side.WHITE), false),
+                Arguments.arguments(new King(new Position(File.E, Rank.ONE), Side.WHITE), false),
+                Arguments.arguments(new Pawn(new Position(File.B, Rank.TWO), Side.WHITE), true)
+        );
+    }
 }
