@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 

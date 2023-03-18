@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.Position;
-import chess.domain.boardStrategy.BoardStrategy;
+import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.piece.Piece;
 
 import java.util.Map;

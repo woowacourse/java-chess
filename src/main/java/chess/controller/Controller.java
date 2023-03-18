@@ -3,16 +3,14 @@ package chess.controller;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.boardStrategy.InitialBoardStrategy;
+import chess.domain.boardstrategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.view.Command;
 
 import static chess.view.InputView.readStateCommand;
-import static chess.view.OutputView.printBoard;
-import static chess.view.OutputView.printExceptionMessage;
-import static chess.view.OutputView.printStartGuideMessage;
+import static chess.view.OutputView.*;
 
 public class Controller {
 

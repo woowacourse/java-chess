@@ -1,17 +1,10 @@
-package chess.domain.boardStrategy;
+package chess.domain.boardstrategy;
 
 import chess.domain.Color;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,7 +13,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class InitialBoardStrategy implements BoardStrategy {
-    private Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
     public Map<Position, Piece> generate() {
