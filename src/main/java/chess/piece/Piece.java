@@ -21,6 +21,8 @@ public abstract class Piece {
 
     public abstract Piece move(final Position positionToMove);
 
+    public abstract boolean isPawn();
+
     public abstract List<Position> getPaths(Position targetPosition);
 
     public boolean isSameSide(Piece piece) {

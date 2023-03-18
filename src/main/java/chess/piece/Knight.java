@@ -23,6 +23,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public List<Position> getPaths(final Position targetPosition) {
         return Collections.emptyList();
     }

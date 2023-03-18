@@ -64,6 +64,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public List<Position> getPaths(final Position targetPosition) {
         final Direction direction = position.getDirectionTo(targetPosition);
         final int moveCount = position.getMoveCount(targetPosition, direction);
