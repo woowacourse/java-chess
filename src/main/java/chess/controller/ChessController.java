@@ -2,12 +2,14 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.Position;
-import chess.view.response.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Arrays;
+import chess.view.request.CommandType;
+import chess.view.request.RequestInfo;
+import chess.view.response.PieceResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -30,11 +32,11 @@ public class ChessController {
     public void run() {
         outputView.printInitialMessage();
         while (true) {
-            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
-            if (requestInfo.gameCommand == GameCommand.END) {
+            RequestInfo requestInfo = repeat(inputView::inputGameCommand);
+            if (requestInfo.getCommandType() == CommandType.END) {
                 return;
             }
-            if (requestInfo.gameCommand == GameCommand.START) {
+            if (requestInfo.getCommandType() == CommandType.START) {
                 gameStart();
                 return;
             }
@@ -45,21 +47,21 @@ public class ChessController {
     private void gameStart() {
         board = new Board();
         printBoard();
-        while (true) {
-            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
-            if (requestInfo.gameCommand == GameCommand.END) {
+        RequestInfo requestInfo;
+        do {
+            requestInfo = repeat(inputView::inputGameCommand);
+            if (requestInfo.getCommandType() == CommandType.END) {
                 return;
             }
-            if (requestInfo.gameCommand == GameCommand.MOVE) {
-                move(requestInfo.input);
+            if (requestInfo.getCommandType() == CommandType.MOVE) {
+                move(requestInfo.getCommands());
                 continue;
             }
             outputView.printUnsuitableCommand();
-        }
+        } while (requestInfo.isRunning());
     }
 
-    private void move(String input) {
-        List<String> command = Arrays.asList(input.split(" "));
+    private void move(List<String> command) {
         try {
             board.movePiece(makePosition(command.get(ORIGIN_INDEX)), makePosition(command.get(DEST_INDEX)));
         } catch (IllegalPieceMoveException e) {
@@ -87,23 +89,21 @@ public class ChessController {
     }
 
     private <T> T repeat(Supplier<T> supplier) {
-        while (true) {
-            try {
-                return supplier.get();
-            } catch (Exception e) {
-                outputView.printError(e);
-            }
+        Optional<T> result = Optional.empty();
+        while (result.isEmpty()) {
+            result = returnIfNoError(supplier);
         }
+        return result.get();
     }
 
-    private static class RequestInfo {
-
-        private final GameCommand gameCommand;
-        private final String input;
-
-        private RequestInfo(String input) {
-            gameCommand = GameCommand.from(input);
-            this.input = input;
+    private <T> Optional<T> returnIfNoError(Supplier<T> supplier) {
+        Optional<T> result;
+        try {
+            result = Optional.of(supplier.get());
+        } catch (Exception e) {
+            outputView.printError(e);
+            result = Optional.empty();
         }
+        return result;
     }
 }
