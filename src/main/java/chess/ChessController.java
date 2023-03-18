@@ -30,23 +30,24 @@ public class ChessController {
         }
     }
 
-    private Position searchPosition(final List<String> moveCommand, final int index) {
-        String from = moveCommand.get(index);
-
-        int fromFile = from.charAt(0) - 'a' + 1;
-        int fromRank = from.charAt(1) - '0';
-        return new Position(fromFile, fromRank);
-    }
-
     private void printBoard() {
         OutputView.printBoard(board.board());
     }
 
     private void movePiece(final Color turn) {
         List<String> moveCommand = InputView.readMoveCommand();
-        Position from = searchPosition(moveCommand, 0);
-        Position to = searchPosition(moveCommand, 1);
+
+        Position from = searchPosition(moveCommand.get(0));
+        Position to = searchPosition(moveCommand.get(1));
+
         board.move(from, to, turn);
+    }
+
+    private Position searchPosition(final String command) {
+        int fromFile = command.charAt(0) - 'a' + 1;
+        int fromRank = command.charAt(1) - '0';
+
+        return new Position(fromFile, fromRank);
     }
 
     private Color changeTurn(Color color) {
