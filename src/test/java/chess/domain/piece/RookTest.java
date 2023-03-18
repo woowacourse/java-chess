@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.FOUR;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.THREE;
 import static chess.domain.piece.Color.BLACK;
+import static chess.util.SquareFixture.E_FIVE;
+import static chess.util.SquareFixture.E_FOUR;
+import static chess.util.SquareFixture.E_SIX;
+import static chess.util.SquareFixture.E_THREE;
+import static chess.util.SquareFixture.F_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -24,13 +23,9 @@ class RookTest {
     void 움직이려는_칸까지_가는_경로를_구한다() {
         final Rook rook = new Rook(BLACK);
 
-        final List<Square> route = rook.findRoute(new Square(E, THREE), new Square(E, SIX));
+        final List<Square> route = rook.findRoute(E_THREE, E_SIX);
 
-        assertThat(route).containsExactly(
-                new Square(E, FOUR),
-                new Square(E, FIVE),
-                new Square(E, SIX)
-        );
+        assertThat(route).containsExactly(E_FOUR, E_FIVE, E_SIX);
     }
 
     @Test
@@ -38,7 +33,7 @@ class RookTest {
         final Rook rook = new Rook(BLACK);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> rook.findRoute(new Square(F, THREE), new Square(E, FOUR)))
+                .isThrownBy(() -> rook.findRoute(F_THREE, E_FOUR))
                 .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
     }
 }

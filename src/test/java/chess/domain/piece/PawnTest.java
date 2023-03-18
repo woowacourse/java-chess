@@ -1,20 +1,20 @@
 package chess.domain.piece;
 
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.FOUR;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.THREE;
-import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.util.SquareFixture.E_FIVE;
+import static chess.util.SquareFixture.E_FOUR;
+import static chess.util.SquareFixture.E_SEVEN;
+import static chess.util.SquareFixture.E_SIX;
+import static chess.util.SquareFixture.E_THREE;
+import static chess.util.SquareFixture.E_TWO;
+import static chess.util.SquareFixture.F_SIX;
+import static chess.util.SquareFixture.F_THREE;
+import static chess.util.SquareFixture.F_TWO;
+import static chess.util.SquareFixture.G_FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -32,28 +32,22 @@ class PawnTest {
             @Test
             void 대각선으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(BLACK);
-                final Square source = new Square(E, SEVEN);
-                final Square destination = new Square(F, SIX);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(F, SIX));
+                assertThat(pawn.findRoute(E_SEVEN, F_SIX)).containsExactly(F_SIX);
             }
 
             @Test
             void 한칸_앞으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(BLACK);
-                final Square source = new Square(E, SEVEN);
-                final Square destination = new Square(E, SIX);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(E, SIX));
+                assertThat(pawn.findRoute(E_SEVEN, E_SIX)).containsExactly(E_SIX);
             }
 
             @Test
             void 두칸_앞으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(BLACK);
-                final Square source = new Square(E, SEVEN);
-                final Square destination = new Square(E, FIVE);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(E, FIVE));
+                assertThat(pawn.findRoute(E_SEVEN, E_FIVE)).containsExactly(E_FIVE);
             }
 
             @Test
@@ -61,7 +55,7 @@ class PawnTest {
                 final Pawn pawn = new Pawn(BLACK);
 
                 assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawn.findRoute(new Square(E, SEVEN), new Square(E, FOUR)))
+                        .isThrownBy(() -> pawn.findRoute(E_SEVEN, E_FOUR))
                         .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
             }
         }
@@ -71,28 +65,22 @@ class PawnTest {
             @Test
             void 대각선으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(WHITE);
-                final Square source = new Square(E, TWO);
-                final Square destination = new Square(F, THREE);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(F, THREE));
+                assertThat(pawn.findRoute(E_TWO, F_THREE)).containsExactly(F_THREE);
             }
 
             @Test
             void 한칸_앞으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(WHITE);
-                final Square source = new Square(E, TWO);
-                final Square destination = new Square(E, THREE);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(E, THREE));
+                assertThat(pawn.findRoute(E_TWO, E_THREE)).containsExactly(E_THREE);
             }
 
             @Test
             void 두칸_앞으로_움직이는_경로를_구한다() {
                 final Pawn pawn = new Pawn(WHITE);
-                final Square source = new Square(E, TWO);
-                final Square destination = new Square(E, FOUR);
 
-                assertThat(pawn.findRoute(source, destination)).containsExactly(new Square(E, FOUR));
+                assertThat(pawn.findRoute(E_TWO, E_FOUR)).containsExactly(E_FOUR);
             }
 
             @Test
@@ -100,7 +88,7 @@ class PawnTest {
                 final Pawn pawn = new Pawn(WHITE);
 
                 assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawn.findRoute(new Square(F, TWO), new Square(G, FOUR)))
+                        .isThrownBy(() -> pawn.findRoute(F_TWO, G_FOUR))
                         .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
             }
         }

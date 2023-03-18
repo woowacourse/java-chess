@@ -1,22 +1,15 @@
 package chess.domain.piece;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.File.H;
-import static chess.domain.board.Rank.EIGHT;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.FOUR;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.THREE;
-import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.Color.BLACK;
+import static chess.util.SquareFixture.A_ONE;
+import static chess.util.SquareFixture.B_TWO;
+import static chess.util.SquareFixture.C_THREE;
+import static chess.util.SquareFixture.D_FOUR;
+import static chess.util.SquareFixture.E_FIVE;
+import static chess.util.SquareFixture.F_SIX;
+import static chess.util.SquareFixture.G_FIVE;
+import static chess.util.SquareFixture.G_SEVEN;
+import static chess.util.SquareFixture.H_EIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -34,17 +27,9 @@ class QueenTest {
     void 움직이려는_칸까지_가는_경로를_구한다() {
         final Queen queen = new Queen(BLACK);
 
-        final List<Square> route = queen.findRoute(new Square(A, ONE), new Square(H, EIGHT));
+        final List<Square> route = queen.findRoute(A_ONE, H_EIGHT);
 
-        assertThat(route).containsExactly(
-                new Square(B, TWO),
-                new Square(C, THREE),
-                new Square(D, FOUR),
-                new Square(E, FIVE),
-                new Square(F, SIX),
-                new Square(G, SEVEN),
-                new Square(H, EIGHT)
-        );
+        assertThat(route).containsExactly(B_TWO, C_THREE, D_FOUR, E_FIVE, F_SIX, G_SEVEN, H_EIGHT);
     }
 
     @Test
@@ -52,7 +37,7 @@ class QueenTest {
         final Queen queen = new Queen(BLACK);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> queen.findRoute(new Square(D, FOUR), new Square(G, FIVE)))
+                .isThrownBy(() -> queen.findRoute(D_FOUR, G_FIVE))
                 .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
     }
 }
