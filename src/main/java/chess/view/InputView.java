@@ -9,12 +9,8 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public String readChessExecuteCommand() {
-        return scanner.nextLine();
-    }
-
-    public List<String> readChessGameCommand() {
-        return Arrays.stream(scanner.nextLine().split(" "))
+    public List<String> readExecuteCommands() {
+        return Arrays.stream(scanner.nextLine().split(" ", -1))
                 .collect(Collectors.toList());
     }
 }

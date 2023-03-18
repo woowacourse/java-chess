@@ -12,15 +12,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ChessStartCommandTest {
+class ExecuteStateTest {
 
     @Test
     void 정상적인_게임_실행명령을_전달받으면_실행상태를_반환한다() {
         final String input = "start";
 
-        final ChessStartCommand chessStartCommand = ChessStartCommand.from(input);
+        final ExecuteState executeState = ExecuteState.from(input);
 
-        assertThat(chessStartCommand).isEqualTo(ChessStartCommand.START);
+        assertThat(executeState).isEqualTo(ExecuteState.START);
     }
 
     @ParameterizedTest
@@ -28,8 +28,8 @@ class ChessStartCommandTest {
     @ValueSource(strings = {"merry"})
     void 정상적이지_않은_게임_실행명령을_전달받으면_예외를_던진다(final String input) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> ChessStartCommand.from(input))
+                .isThrownBy(() -> ExecuteState.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .withMessage("start나 end 중 입력해야 합니다.");
+                .withMessage("유효하지 않은 실행 명령입니다.");
     }
 }
