@@ -22,7 +22,7 @@ public class Black extends State {
 
     @Override
     public State start() {
-        return new Ready(Board.create());
+        return new White(Board.create());
     }
 
     @Override
