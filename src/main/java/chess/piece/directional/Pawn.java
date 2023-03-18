@@ -1,21 +1,23 @@
-package chess.piece;
+package chess.piece.directional;
 
 import chess.board.Position;
+import chess.piece.Direction;
+import chess.piece.Piece;
+import chess.piece.Side;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pawn extends Piece {
-
-    private final List<Direction> directions;
+public class Pawn extends DirectionalPiece {
 
     public Pawn(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
     }
 
-    private List<Direction> initDirections() {
+    @Override
+    protected List<Direction> initDirections() {
         final List<Direction> directions = new ArrayList<>();
         if (this.side == Side.WHITE) {
             initWhiteSideDirections(directions);

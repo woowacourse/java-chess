@@ -7,7 +7,7 @@ import chess.board.Position;
 import chess.board.Rank;
 import java.util.List;
 
-import chess.piece.normal.Queen;
+import chess.piece.directional.normal.longrange.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

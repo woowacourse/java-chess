@@ -1,4 +1,4 @@
-package chess.piece.normal;
+package chess.piece.directional.normal;
 
 import chess.board.Position;
 import chess.piece.Direction;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class King extends NormalPiece {
 
-    private final List<Direction> directions;
 
     public King(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
     }
 
-    private List<Direction> initDirections() {
+    @Override
+    protected List<Direction> initDirections() {
         return new ArrayList<>(Arrays.asList(Direction.values()));
     }
 
