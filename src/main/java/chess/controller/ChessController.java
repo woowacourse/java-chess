@@ -2,12 +2,14 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.view.response.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ChessController {
 
@@ -71,7 +73,17 @@ public class ChessController {
     }
 
     private void printBoard() {
-        outputView.printBoard(board.getPiecePosition());
+        List<List<PieceResponse>> pieceResponses = makePieceResponses();
+        outputView.printBoard(pieceResponses);
+    }
+
+    private List<List<PieceResponse>> makePieceResponses() {
+        return board.getPieces()
+                .stream()
+                .map(row -> row.stream()
+                        .map(PieceResponse::from)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 
     private <T> T repeat(Supplier<T> supplier) {

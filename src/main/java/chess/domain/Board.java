@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.dto.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,13 +88,12 @@ public class Board {
         }
     }
 
-    public List<List<PieceResponse>> getPiecePosition() {
-        List<List<PieceResponse>> response = new ArrayList<>();
+    public List<List<Piece>> getPieces() {
+        List<List<Piece>> response = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            List<PieceResponse> pieceResponses = Arrays.stream(File.values())
+            List<Piece> pieceResponses = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
                     .map(piecePosition::get)
-                    .map(PieceResponse::from)
                     .collect(Collectors.toList());
             response.add(pieceResponses);
         }

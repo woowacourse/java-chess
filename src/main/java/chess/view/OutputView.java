@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.dto.PieceResponse;
+import chess.view.response.PieceResponse;
 
 import java.util.List;
 

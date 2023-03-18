@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.dto.PieceResponse;
+import chess.view.response.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -28,7 +28,7 @@ class BoardTest {
         Board board = new Board();
 
         //when
-        var result = board.getPiecePosition().get(0);
+        var result = board.getPieces().get(0);
         //then
 
         var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
@@ -43,7 +43,7 @@ class BoardTest {
         Board board = new Board();
 
         //when
-        var result = board.getPiecePosition().get(1);
+        var result = board.getPieces().get(1);
         //then
 
         var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
