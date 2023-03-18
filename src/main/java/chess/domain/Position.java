@@ -73,7 +73,7 @@ public class Position {
     private List<Position> createDiagonalPath(Position destination) {
         List<Rank> ranks = rank.createPath(destination.rank);
         List<File> files = file.createPath(destination.file);
-        ArrayList<Position> result = new ArrayList<>();
+        List<Position> result = new ArrayList<>();
         for (int i = 0; i < ranks.size(); i++) {
             result.add(Position.of(files.get(i), ranks.get(i)));
         }
