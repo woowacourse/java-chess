@@ -63,7 +63,8 @@ public class ChessController {
 
     private void gameLoop() {
         GameCommand command = printErrorAndRetry(InputView::readCommand);
-        actionMap.get(command.getCommand()).execute(command);
+        actionMap.getOrDefault(command.getCommand(), Action.INVALID_ACTION)
+                .execute(command);
     }
 
     private <T> T printErrorAndRetry(Supplier<T> supplier) {
