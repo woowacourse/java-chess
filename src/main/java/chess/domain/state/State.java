@@ -17,8 +17,4 @@ public abstract class State {
     public abstract State start();
 
     public abstract State end();
-
-    public Board getBoard() {
-        return board;
-    }
 }
