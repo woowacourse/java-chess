@@ -23,8 +23,7 @@ public enum Command {
 
     public static Command createPlayOrEnd(final String inputCommand) {
         return Arrays.stream(values())
-                .filter(command -> command == MOVE || command == END)
-                .filter(command -> command.name().toLowerCase().equalsIgnoreCase(inputCommand))
+                .filter(command -> (command == MOVE || command == END ) && command.name().toLowerCase().equals(inputCommand))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("move 또는 end를 입력해주세요."));
     }
