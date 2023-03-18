@@ -16,20 +16,11 @@ public final class Queen extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        final var inclination = source.computeInclination(target);
-        if (inclination == POSITIVE_ONE) {
-            return getPositiveOneInclinationPath(source, target);
+        try{
+            return source.computeCrossOrDiagonalPath(target);
+        } catch(IllegalArgumentException e) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
-        if (inclination == NEGATIVE_ONE) {
-            return getNegativeOneInclinationPath(source, target);
-        }
-        if (source.isFileEquals(target)) {
-            return getFilePath(source, target);
-        }
-        if (source.isRankEquals(target)) {
-            return getRankPath(source, target);
-        }
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     private Set<Position> getNegativeOneInclinationPath(final Position source, final Position target) {

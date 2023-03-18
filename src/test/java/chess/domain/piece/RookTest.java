@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static chess.domain.piece.PawnTest.*;
+import static chess.domain.piece.QueenTest.A3;
+import static chess.domain.piece.QueenTest.C3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,6 +39,15 @@ class RookTest {
         Set<Position> positions = rook.computePathWithValidate(A4, E4);
 
         assertThat(positions).containsExactlyInAnyOrder(E4, D4, C4, B4);
+    }
+
+    @DisplayName("같은 Rank일 때 이동 가능한 경로를 계산한다")
+    @Test
+    void computePath_sameRank2() {
+        Rook rook = new Rook(Color.BLACK);
+        Set<Position> positions = rook.computePathWithValidate(C3, A3);
+
+        assertThat(positions).containsExactlyInAnyOrder(A3, B3);
     }
 
     @DisplayName("source와 target의 File이 같지않고 Rank가 같지 않으면 예외를 발생한다")

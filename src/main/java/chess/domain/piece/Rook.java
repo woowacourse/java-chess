@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class Rook extends Normal {
@@ -13,41 +12,11 @@ public final class Rook extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (source.isFileEquals(target)) {
-            return getFilePath(source, target);
+        try {
+            return source.computeCrossPath(target);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
-        if (source.isRankEquals(target)) {
-            return getRankPath(source, target);
-        }
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
-    }
-
-    private Set<Position> getRankPath(final Position source, final Position target) {
-        Set<Position> path = new HashSet<>();
-        var max = Position.maxFile(source, target);
-        var min = Position.minFile(source, target);
-
-        while (max.isFileOver(min)) {
-            path.add(max);
-            max = max.getLeftStraight();
-        }
-        path.add(target);
-        path.remove(source);
-        return path;
-    }
-
-    private Set<Position> getFilePath(final Position source, final Position target) {
-        Set<Position> path = new HashSet<>();
-        var max = Position.maxRank(source, target);
-        var min = Position.minRank(source, target);
-
-        while (max.isRankOver(min)) {
-            path.add(max);
-            max = max.getDownStraight();
-        }
-        path.add(target);
-        path.remove(source);
-        return path;
     }
 
     @Override

@@ -8,6 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PositionTest {
 
     public static final Position B4 = new Position(File.B, Rank.FOUR);
+    public static final Position B6 = new Position(File.B, Rank.SIX);
+    public static final Position C5 = new Position(File.C, Rank.FIVE);
+    public static final Position A7 = new Position(File.A, Rank.SEVEN);
     public static final Position E7 = new Position(File.E, Rank.SEVEN);
 
     @Test
@@ -66,5 +69,14 @@ class PositionTest {
         double v = source.computeInclination(target);
 
         assertThat(v).isEqualTo(-1.0d);
+    }
+
+    @Test
+    @DisplayName("대각 경로를 계산한다")
+    void computeDiagonalPath() {
+        var source = C5;
+        var target = A7;
+
+        assertThat(source.computeDiagonalPath(target)).contains(A7,B6);
     }
 }
