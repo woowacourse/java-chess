@@ -2,10 +2,10 @@ package chess.controller;
 
 import static chess.controller.ChessStartCommand.START;
 
-import chess.controller.dto.ChessBoardDto;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.ChessBoardDto;
 
 public class ChessController {
 

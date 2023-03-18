@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.view.dto;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class ChessBoardDto {
 
-    private static final Map<Class, String> pieceName = Map.of(
+    private static final Map<Class<? extends Piece>, String> pieceName = Map.of(
             Pawn.class, "p",
             Rook.class, "r",
             Knight.class, "n",

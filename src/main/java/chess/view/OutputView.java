@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.dto.ChessBoardDto;
+import chess.view.dto.ChessBoardDto;
 
 public class OutputView {
 
