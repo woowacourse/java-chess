@@ -15,10 +15,6 @@ public class Board {
         this.board = board;
     }
 
-    public Map<Position, Piece> board() {
-        return board;
-    }
-
     public void move(final Position from, final Position to, final Color turn) {
         validateCanMove(from, to, turn);
         movePiece(from, to);
@@ -55,5 +51,9 @@ public class Board {
     private void movePiece(final Position from, final Position to) {
         Piece piece = board.remove(from);
         board.put(to, piece);
+    }
+
+    public Map<Position, Piece> board() {
+        return Map.copyOf(board);
     }
 }
