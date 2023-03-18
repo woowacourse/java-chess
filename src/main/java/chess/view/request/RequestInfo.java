@@ -20,8 +20,4 @@ public class RequestInfo {
     public CommandType getCommandType() {
         return commandType;
     }
-
-    public boolean isRunning() {
-        return commandType.isRunning();
-    }
 }

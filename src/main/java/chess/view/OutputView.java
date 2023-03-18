@@ -38,9 +38,4 @@ public class OutputView {
     public void printError(Exception e) {
         System.out.println(e.getMessage());
     }
-
-    public void printUnsuitableCommand() {
-        System.out.println("해당 상황에서 입력할 수 없는 커맨드 입니다.");
-        System.out.println();
-    }
 }

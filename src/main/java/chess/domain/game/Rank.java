@@ -40,10 +40,6 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
 
-    public static int size() {
-        return values().length;
-    }
-
     public int getDifference(Rank other) {
         return other.order - order;
     }

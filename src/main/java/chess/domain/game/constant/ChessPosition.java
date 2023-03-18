@@ -26,12 +26,12 @@ public class ChessPosition {
     private static final Piece BLACK_PAWN = new Piece(PieceType.PAWN, Color.BLACK);
     private static final Piece EMPTY_PIECE = Piece.empty();
     private static final List<Piece> highBlackPieces = List.of(
-            BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP,
-            BLACK_KNIGHT, BLACK_ROOK
+            BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN,
+            BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK
     );
     private static final List<Piece> highWhitePiece = List.of(
-            WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP,
-            WHITE_KNIGHT, WHITE_ROOK
+            WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN,
+            WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     );
 
     private static final Map<Position, Piece> piecePositions = new HashMap<>();

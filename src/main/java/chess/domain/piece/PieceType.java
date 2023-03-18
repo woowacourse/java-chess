@@ -31,13 +31,6 @@ public enum PieceType {
         this.state = state;
     }
 
-    public static PieceType from(String type) {
-        return Arrays.stream(PieceType.values())
-                .filter(it -> it.name.equals(type))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
-    }
-
     public static PieceType getName(MoveState moveState) {
         return Arrays.stream(values())
                 .filter(it -> it.state.contains(moveState))
