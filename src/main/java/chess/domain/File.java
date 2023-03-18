@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public enum File {
@@ -32,13 +29,18 @@ public enum File {
     }
 
     public static List<File> filesBetween(final File from, final File to) {
-        final int min = Math.min(from.position, to.position);
-        final int max = Math.max(from.position, to.position);
+        final int smaller = Math.min(from.position, to.position);
+        final int bigger = Math.max(from.position, to.position);
         List<File> files = Arrays.stream(values())
-                                 .filter(file -> file.position > min && file.position < max)
+                                 .filter(file -> file.position > smaller && file.position < bigger)
                                  .collect(Collectors.toList());
 
-        if (from.position == max) {
+        return sortByPosition(from, to, files);
+    }
+
+    private static List<File> sortByPosition(final File from, final File to, final List<File> files) {
+        files.sort(Comparator.comparing(File::getPosition));
+        if (from.position > to.position) {
             Collections.reverse(files);
         }
         return files;

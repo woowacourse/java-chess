@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public enum Rank {
@@ -33,13 +30,17 @@ public enum Rank {
     }
 
     public static List<Rank> ranksBetween(final Rank from, final Rank to) {
-        final int min = Math.min(from.position, to.position);
-        final int max = Math.max(from.position, to.position);
+        final int smaller = Math.min(from.position, to.position);
+        final int bigger = Math.max(from.position, to.position);
         List<Rank> ranks = Arrays.stream(values())
-                                 .filter(rank -> rank.position > min && rank.position < max)
+                                 .filter(rank -> rank.position > smaller && rank.position < bigger)
                                  .collect(Collectors.toList());
+        return sortByPosition(from, to, ranks);
+    }
 
-        if (from.position == max) {
+    private static List<Rank> sortByPosition(final Rank from, final Rank to, final List<Rank> ranks) {
+        ranks.sort(Comparator.comparing(Rank::getPosition));
+        if (from.position > to.position) {
             Collections.reverse(ranks);
         }
         return ranks;
