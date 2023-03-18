@@ -36,4 +36,8 @@ public class Game {
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
+
+    public String getTurn() {
+        return this.turn.name();
+    }
 }

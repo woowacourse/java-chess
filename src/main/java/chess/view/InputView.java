@@ -14,8 +14,12 @@ public class InputView {
     }
 
     public Request askCommand() {
-        String input = scanner.nextLine().strip().toUpperCase();
-        String[] inputs = input.split(" ");
+        return askCommand("");
+    }
+
+    public Request askCommand(String turn) {
+        printTurn(turn);
+        String[] inputs = inputCommand();
         validateHasLength(inputs);
         CommandType commandType = CommandType.from(inputs[0]);
         if (commandType.isSingleCommandType()) {
@@ -26,6 +30,14 @@ public class InputView {
         return Request.createMoveCommand(inputs[1], inputs[2]);
     }
 
+    private void printTurn(String turn) {
+        System.out.print(turn + "> ");
+    }
+
+    private String[] inputCommand() {
+        String input = scanner.nextLine().strip().toUpperCase();
+        return input.split(" ");
+    }
 
     private void validateParameters(String[] inputs) {
         if (inputs.length != 3) {

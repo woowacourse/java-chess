@@ -62,7 +62,7 @@ public class ChessGameController {
     }
 
     private CommandType playOnce(Game game) {
-        Request request = inputView.askCommand();
+        Request request = inputView.askCommand(game.getTurn());
         CommandType command = request.getCommandType();
         if (command == CommandType.START) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
