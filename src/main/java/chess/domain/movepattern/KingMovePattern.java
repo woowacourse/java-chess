@@ -28,4 +28,14 @@ public enum KingMovePattern implements MovePattern {
     public int getRankVector() {
         return rankVector;
     }
+
+    @Override
+    public int nextFileIndex(final int currentFileIndex) {
+        return currentFileIndex + this.fileVector;
+    }
+
+    @Override
+    public int nextRankIndex(final int currentRankIndex) {
+        return currentRankIndex + this.rankVector;
+    }
 }
