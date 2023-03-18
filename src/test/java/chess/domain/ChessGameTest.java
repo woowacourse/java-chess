@@ -8,6 +8,7 @@ import static chess.util.SquareFixture.B_THREE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+import chess.domain.board.BoardFactory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -22,14 +23,14 @@ class ChessGameTest {
 
         @Test
         void 움직일_수_있다면_기물을_움직인다() {
-            final ChessGame chessGame = new ChessGame();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create());
 
             assertThatNoException().isThrownBy(() -> chessGame.move(A_TWO, A_THREE));
         }
 
         @Test
         void 움직일_수_없는_위치라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create());
 
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> chessGame.move(A_TWO, B_THREE))
@@ -38,7 +39,7 @@ class ChessGameTest {
 
         @Test
         void 기물이_존재하지_않으면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create());
             chessGame.move(A_TWO, A_THREE);
 
             assertThatIllegalArgumentException()
@@ -48,7 +49,7 @@ class ChessGameTest {
 
         @Test
         void 알맞은_차례가_아니라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create());
 
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> chessGame.move(A_SEVEN, A_SIX))

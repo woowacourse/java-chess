@@ -53,7 +53,7 @@ class BoardTest {
 
     @Test
     void 체스보드는_기물의_위치를_가지고_있다() {
-        final Board board = Board.generate();
+        final Board board = BoardFactory.create();
 
         assertAll(
                 () -> assertThat(board.findPieceOf(A_ONE)).containsInstanceOf(Rook.class),
@@ -105,7 +105,7 @@ class BoardTest {
         class 나이트의_경우 {
             @Test
             void 이동경로로_이동할_수_있으면_true_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //Knight
                 final Square source = new Square(File.B, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.C, Rank.THREE));
@@ -115,7 +115,7 @@ class BoardTest {
 
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //Knight
                 final Square source = new Square(File.G, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.E, Rank.TWO));
@@ -129,7 +129,7 @@ class BoardTest {
 
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //Rook
                 final Square source = new Square(File.A, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
@@ -143,7 +143,7 @@ class BoardTest {
 
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //Bishop
                 final Square source = new Square(File.C, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.D, Rank.TWO), new Square(File.E, Rank.THREE));
@@ -157,7 +157,7 @@ class BoardTest {
 
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //Queen
                 final Square source = new Square(File.D, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.C, Rank.TWO), new Square(File.B, Rank.THREE));
@@ -171,7 +171,7 @@ class BoardTest {
 
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
-                final Board board = Board.generate();
+                final Board board = BoardFactory.create();
                 //King
                 final Square source = new Square(File.E, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.F, Rank.TWO));
@@ -186,7 +186,7 @@ class BoardTest {
 
         @Test
         void 폰이_초기_위치일_때_두칸_갈_수_있다() {
-            final Board board = Board.generate();
+            final Board board = BoardFactory.create();
             final Square source = new Square(File.A, Rank.TWO);
             final List<Square> routes = List.of(new Square(File.A, Rank.FOUR));
 
@@ -195,7 +195,7 @@ class BoardTest {
 
         @Test
         void 폰이_초기_위치일_때_한칸_갈_수_있다() {
-            final Board board = Board.generate();
+            final Board board = BoardFactory.create();
             final Square source = new Square(File.B, Rank.TWO);
             final List<Square> routes = List.of(new Square(File.B, Rank.THREE));
 
@@ -204,7 +204,7 @@ class BoardTest {
 
         @Test
         void 폰이_초기_위치일_때_대각선으로_갈_수_없다() {
-            final Board board = Board.generate();
+            final Board board = BoardFactory.create();
             final Square source = new Square(File.C, Rank.TWO);
             final List<Square> routes = List.of(new Square(File.D, Rank.THREE));
 
@@ -214,7 +214,7 @@ class BoardTest {
 
     @Test
     void 기물을_움직인다() {
-        final Board board = Board.generate();
+        final Board board = BoardFactory.create();
         final Square source = new Square(File.E, Rank.TWO);
         final Square destination = new Square(File.E, Rank.FOUR);
 

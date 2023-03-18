@@ -10,7 +10,12 @@ import java.util.List;
 
 public class ChessGame {
 
-    private final Board board = Board.generate();
+    private final Board board;
+
+    public ChessGame(final Board board) {
+        this.board = board;
+    }
+
     private Color color = Color.WHITE;
 
     public void move(final Square source, final Square destination) {
