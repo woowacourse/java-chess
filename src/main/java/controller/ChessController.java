@@ -30,32 +30,31 @@ public class ChessController {
     }
 
     private void startChessGame() {
-        Board board = new Board();
-        Command command = Command.START;
         outputView.printGameStartMessage();
-        while (command.isContinue()) {
-            List<String> commands = inputView.readCommand();
-            command = Command.of(commands);
-            carryOutByCommand(board, commands, command);
-            outputView.printBoard(board);
-        }
-    }
-
-    private void carryOutByCommand(final Board board, final List<String> commands, final Command command) {
+        Board board = new Board();
+        Command command = Command.of(inputView.readCommand());
         if (command.isStart()) {
-            board.initialize();
-            return;
+            startBoardInteraction(board);
         }
-        moveIfCommandIsNotEnd(board, commands, command);
+        outputView.printGameEndMessage();
     }
 
-    private void moveIfCommandIsNotEnd(final Board board, final List<String> commands, final Command command) {
-        if (command.isEnd()) {
-            return;
+    private void startBoardInteraction(final Board board) {
+        Command command;
+        do {
+            outputView.printBoard(board);
+            List<String> frontCommand = inputView.readCommand();
+            command = Command.of(frontCommand);
+            moveByCommand(board, command, frontCommand);
+        } while (command.isNotEnd());
+    }
+
+    private void moveByCommand(final Board board, final Command command, final List<String> frontCommand) {
+        if (command.isMove()) {
+            Coordinate startCoordinate = convertCoordinate(frontCommand.get(START_COORDINATE_INDEX));
+            Coordinate endCoordinate = convertCoordinate(frontCommand.get(END_COORDINATE_INDEX));
+            board.move(startCoordinate, endCoordinate);
         }
-        Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
-        Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
-        board.move(startCoordinate, endCoordinate);
     }
 
     private Coordinate convertCoordinate(final String frontCoordinate) {

@@ -25,16 +25,12 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 명령입니다."));
     }
 
-    public boolean isContinue() {
-        return isStart() || isMove();
-    }
-
     public boolean isStart() {
         return this == Command.START;
     }
 
-    public boolean isEnd() {
-        return this == Command.END;
+    public boolean isNotEnd() {
+        return this != Command.END;
     }
 
     public boolean isMove() {
