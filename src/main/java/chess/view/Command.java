@@ -17,6 +17,6 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(gameState -> gameState.command.equals(inputCommand))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start와 end만 입력할 수 있습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move 만 입력할 수 있습니다."));
     }
 }
