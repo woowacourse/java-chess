@@ -6,6 +6,8 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import java.util.List;
+
+import chess.piece.normal.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

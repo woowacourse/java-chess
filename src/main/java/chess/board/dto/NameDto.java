@@ -1,12 +1,12 @@
 package chess.board.dto;
 
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
+import chess.piece.normal.Bishop;
+import chess.piece.normal.King;
+import chess.piece.special.Knight;
+import chess.piece.special.Pawn;
 import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
+import chess.piece.normal.Queen;
+import chess.piece.normal.Rook;
 import chess.piece.Side;
 import java.util.HashMap;
 import java.util.Map;

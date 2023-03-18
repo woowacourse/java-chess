@@ -1,10 +1,14 @@
-package chess.piece;
+package chess.piece.normal;
 
 import chess.board.Position;
+import chess.piece.Direction;
+import chess.piece.Piece;
+import chess.piece.Side;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends NormalPiece {
 
     private final List<Direction> directions;
 
@@ -31,23 +35,5 @@ public class Rook extends Piece {
     @Override
     public Piece move(Position positionToMove) {
         return new Rook(positionToMove, this.side);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public List<Position> getPaths(Position targetPosition) {
-        List<Position> paths = new ArrayList<>();
-        final Direction direction = position.getDirectionTo(targetPosition);
-        final int moveCountBeforeArrivalPosition = position.getMoveCount(targetPosition, direction) - 1;
-        Position nextPosition = this.position;
-        for (int next = 0; next < moveCountBeforeArrivalPosition; next++) {
-            nextPosition = nextPosition.getNextPosition(direction);
-            paths.add(nextPosition);
-        }
-        return paths;
     }
 }

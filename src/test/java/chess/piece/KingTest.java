@@ -7,6 +7,8 @@ import chess.board.Position;
 import chess.board.Rank;
 import java.util.Collections;
 import java.util.List;
+
+import chess.piece.normal.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
