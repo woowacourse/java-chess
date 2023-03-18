@@ -42,7 +42,7 @@ public abstract class Piece {
     protected final Path generatePathFromTo(final Position from, final Position to, final Movement movement) {
         Position next = from;
         final Deque<Position> positions = new LinkedList<>();
-        while (next.equals(to)) {
+        while (!next.equals(to)) {
             next = next.moveBy(movement);
             positions.add(next);
         }
