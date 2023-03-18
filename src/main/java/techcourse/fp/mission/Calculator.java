@@ -11,7 +11,7 @@ public class Calculator {
 //        }
 //        return total;
         return sumIfCan(numbers, number -> true);
-    }f
+    }
 
     public static int sumAllEven(List<Integer> numbers) {
 //        int total = 0;
