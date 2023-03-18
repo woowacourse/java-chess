@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
+    private static final int BOARD_ROW_SIZE = 8;
+
     private final List<List<String>> nameBoard;
 
     private BoardDto(final List<List<String>> nameBoard) {
@@ -21,7 +23,7 @@ public class BoardDto {
 
     private static void initBoardSpaces(List<List<String>> nameBoard) {
         final List<String> emptyNames = List.of(".", ".", ".", ".", ".", ".", ".", ".");
-        for (int rowIndex = 0; rowIndex < 8; rowIndex++) {
+        for (int rowIndex = 0; rowIndex < BOARD_ROW_SIZE; rowIndex++) {
             List<String> row = new ArrayList<>(emptyNames);
             nameBoard.add(row);
         }
@@ -39,7 +41,7 @@ public class BoardDto {
     }
 
     private static int getFlippedIndex(int originalIndex) {
-        return Math.abs(originalIndex - 8);
+        return Math.abs(originalIndex - BOARD_ROW_SIZE);
     }
 
     public List<List<String>> getNameBoard() {
