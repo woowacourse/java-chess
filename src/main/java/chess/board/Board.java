@@ -1,10 +1,10 @@
 package chess.board;
 
+import java.util.List;
+
 import chess.piece.Direction;
-import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
-import java.util.List;
 
 public class Board {
 
@@ -19,7 +19,7 @@ public class Board {
         checkPieceMovable(targetPosition, sourcePiece);
         checkPath(targetPosition, sourcePiece);
         checkTargetPosition(targetPosition, sourcePiece);
-        if (sourcePiece instanceof Pawn) {
+        if (sourcePiece.isPawn()) {
             checkPawnDiagonalMove(sourcePosition, targetPosition);
         }
         final Piece movedPiece = sourcePiece.move(targetPosition);
