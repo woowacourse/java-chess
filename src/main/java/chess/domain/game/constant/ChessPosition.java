@@ -12,70 +12,44 @@ import java.util.Map;
 
 public class ChessPosition {
 
-    private static final Piece WHITE_KING = new Piece(PieceType.KING, Color.WHITE);
-    private static final Piece BLACK_KING = new Piece(PieceType.KING, Color.BLACK);
-    private static final Piece WHITE_QUEEN = new Piece(PieceType.QUEEN, Color.WHITE);
-    private static final Piece BLACK_QUEEN = new Piece(PieceType.QUEEN, Color.BLACK);
-    private static final Piece WHITE_ROOK = new Piece(PieceType.ROOK, Color.WHITE);
-    private static final Piece BLACK_ROOK = new Piece(PieceType.ROOK, Color.BLACK);
-    private static final Piece WHITE_BISHOP = new Piece(PieceType.BISHOP, Color.WHITE);
-    private static final Piece BLACK_BISHOP = new Piece(PieceType.BISHOP, Color.BLACK);
-    private static final Piece WHITE_KNIGHT = new Piece(PieceType.KNIGHT, Color.WHITE);
-    private static final Piece BLACK_KNIGHT = new Piece(PieceType.KNIGHT, Color.BLACK);
-    private static final Piece WHITE_PAWN = new Piece(PieceType.PAWN, Color.WHITE);
-    private static final Piece BLACK_PAWN = new Piece(PieceType.PAWN, Color.BLACK);
     private static final Piece EMPTY_PIECE = Piece.empty();
-    private static final List<Piece> highBlackPieces = List.of(
-            BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN,
-            BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK
+    private static final List<PieceType> highPieceTypes = List.of(
+            PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+            PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK
     );
-    private static final List<Piece> highWhitePiece = List.of(
-            WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN,
-            WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
-    );
-
-    private static final Map<Position, Piece> piecePositions = new HashMap<>();
-
-    static {
-        makeBlackHighPiece();
-        makeBlackPawn();
-        makeWhitePawn();
-        makeWhiteHighPiece();
-        makeEmptyPiece();
-    }
 
     private ChessPosition() {
     }
 
-    private static void makeBlackHighPiece() {
-        for (int i = 0; i < highBlackPieces.size(); i++) {
+    private static void makeBlackHighPiece(Map<Position, Piece> piecePositions) {
+        for (int i = 0; i < highPieceTypes.size(); i++) {
             Position position = Position.of(File.from(i + 1), Rank.EIGHT);
-            piecePositions.put(position, highBlackPieces.get(i));
+            piecePositions.put(position, new Piece(highPieceTypes.get(i), Color.BLACK));
         }
     }
 
-    private static void makeBlackPawn() {
+    private static void makeBlackPawn(Map<Position, Piece> piecePositions) {
         for (File file : File.values()) {
             Position position = Position.of(file, Rank.SEVEN);
-            piecePositions.put(position, BLACK_PAWN);
+            piecePositions.put(position, new Piece(PieceType.PAWN, Color.BLACK));
         }
     }
 
-    private static void makeWhitePawn() {
+    private static void makeWhitePawn(Map<Position, Piece> piecePositions) {
         for (File file : File.values()) {
             Position position = Position.of(file, Rank.TWO);
-            piecePositions.put(position, WHITE_PAWN);
+            piecePositions.put(position, new Piece(PieceType.PAWN, Color.WHITE));
         }
     }
 
-    private static void makeWhiteHighPiece() {
-        for (int i = 0; i < highWhitePiece.size(); i++) {
+    private static void makeWhiteHighPiece(Map<Position, Piece> piecePositions) {
+        for (int i = 0; i < highPieceTypes.size(); i++) {
             Position position = Position.of(File.from(i + 1), Rank.ONE);
-            piecePositions.put(position, highWhitePiece.get(i));
+            piecePositions.put(position, new Piece(highPieceTypes.get(i), Color.WHITE));
         }
     }
 
-    private static void makeEmptyPiece() {
+    private static void makeEmptyPiece(Map<Position, Piece> piecePositions) {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 piecePositions.computeIfAbsent(Position.of(file, rank), ignored -> EMPTY_PIECE);
@@ -84,6 +58,12 @@ public class ChessPosition {
     }
 
     public static Map<Position, Piece> initialPiecePositions() {
-        return new HashMap<>(Map.copyOf(piecePositions));
+        Map<Position, Piece> piecePositions = new HashMap<>();
+        makeBlackHighPiece(piecePositions);
+        makeBlackPawn(piecePositions);
+        makeWhitePawn(piecePositions);
+        makeWhiteHighPiece(piecePositions);
+        makeEmptyPiece(piecePositions);
+        return new HashMap<>(piecePositions);
     }
 }
