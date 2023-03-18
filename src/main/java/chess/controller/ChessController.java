@@ -6,6 +6,8 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessController {
 
     private final ChessGame chessGame = new ChessGame();
@@ -19,25 +21,33 @@ public class ChessController {
 
     private void start() {
         try {
-            chessGame.start(InputView.readCommand());
+            List<String> command = InputView.readCommand();
+            chessGame.start(Command.from(command));
+            OutputView.printGameStatus(chessGame.getGameStatus());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             start();
         }
     }
 
-    // TODO: 개선 필요
     private void play() {
-        OutputView.printGameStatus(chessGame.getGameStatus());
-        while (InputView.readCommand() == Command.MOVE) {
-            String current = InputView.readSquare();
-            String destination = InputView.readSquare();
-            try {
-                move(current, destination);
-                OutputView.printGameStatus(chessGame.getGameStatus());
-            } catch (RuntimeException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        try {
+            playUntilMove();
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            play();
+        }
+    }
+
+    private void playUntilMove() {
+        List<String> command = InputView.readCommand();
+        while (Command.from(command).isMoveCommand()) {
+            move(command.get(1), command.get(2));
+            OutputView.printGameStatus(chessGame.getGameStatus());
+            command = InputView.readCommand();
+        }
+        if (Command.from(command).isStartCommand()) {
+            start();
         }
     }
 

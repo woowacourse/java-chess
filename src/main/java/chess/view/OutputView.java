@@ -27,6 +27,7 @@ public class OutputView {
 
     public static void printGameStatus(GameStatusDto gameStatusDto) {
         gameStatusDto.getGameStatus().forEach(OutputView::printGameStatusRow);
+        System.out.println();
     }
 
     private static void printGameStatusRow(String row) {
