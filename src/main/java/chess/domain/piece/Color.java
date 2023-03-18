@@ -5,13 +5,13 @@ public enum Color {
     WHITE(1),
     NONE(0);
 
-    private final int direction;
+    private final int forwardDirection;
 
-    Color(int direction) {
-        this.direction = direction;
+    Color(int forwardDirection) {
+        this.forwardDirection = forwardDirection;
     }
 
-    public int colorDirection(int amount) {
-        return amount * direction;
+    public int colorForwardDirection(int amount) {
+        return amount * forwardDirection;
     }
 }

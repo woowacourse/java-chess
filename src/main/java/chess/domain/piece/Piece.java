@@ -20,7 +20,7 @@ public class Piece {
     }
 
     public void move(int x, int y, Piece piece) {
-        if (!moveState.canMove(x, color.colorDirection(y), piece.compareColor(color))) {
+        if (!moveState.canMove(x, color.colorForwardDirection(y), piece.compareColor(color))) {
             throw new IllegalPieceMoveException();
         }
         moveState = moveState.getNextState();

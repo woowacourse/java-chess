@@ -16,7 +16,7 @@ class ColorTest {
     @CsvSource(value = {"BLACK, -1", "WHITE, 1", "NONE, 0"})
     void 색에_따라_값이_변화하는_테스트(Color color, int result) {
         //expect
-        assertThat(color.colorDirection(1))
+        assertThat(color.colorForwardDirection(1))
                 .isEqualTo(result);
     }
 }
