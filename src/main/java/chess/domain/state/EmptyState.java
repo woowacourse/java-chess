@@ -15,7 +15,7 @@ public class EmptyState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
         throw new IllegalPieceMoveException();
     }
 

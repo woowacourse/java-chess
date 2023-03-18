@@ -14,8 +14,8 @@ public class RookState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return isValidVariance(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        return isValidVariance(fileDifference, rankDifference) && colorCompareResult != ColorCompareResult.SAME_COLOR;
     }
 
     private boolean isValidVariance(int x, int y) {

@@ -14,8 +14,8 @@ public class QueenState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return isValidRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        return isValidRequest(fileDifference, rankDifference) && colorCompareResult != ColorCompareResult.SAME_COLOR;
     }
 
     private boolean isValidRequest(int x, int y) {

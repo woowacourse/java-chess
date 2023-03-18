@@ -14,8 +14,8 @@ public class KnightState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return validMoveRequest(x, y) && ColorCompareResult.SAME_COLOR != colorCompareResult;
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        return validMoveRequest(fileDifference, rankDifference) && ColorCompareResult.SAME_COLOR != colorCompareResult;
     }
 
     private boolean validMoveRequest(int x, int y) {

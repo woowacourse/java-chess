@@ -14,7 +14,8 @@ public class BishopState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return Math.abs(x) == Math.abs(y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        return Math.abs(fileDifference) == Math.abs(rankDifference)
+                && colorCompareResult != ColorCompareResult.SAME_COLOR;
     }
 }

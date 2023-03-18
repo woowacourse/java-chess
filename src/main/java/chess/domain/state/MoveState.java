@@ -4,7 +4,7 @@ import chess.domain.ColorCompareResult;
 
 public interface MoveState {
 
-    boolean canMove(int x, int y, ColorCompareResult colorCompareResult);
+    boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult);
 
     default MoveState getNextState() {
         return this;

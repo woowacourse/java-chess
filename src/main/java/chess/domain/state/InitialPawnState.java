@@ -14,11 +14,11 @@ public class InitialPawnState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        if (isOneOrTwoStraightMove(x, y)) {
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        if (isOneOrTwoStraightMove(fileDifference, rankDifference)) {
             return colorCompareResult == ColorCompareResult.EMPTY;
         }
-        if (isOneDiagonalMove(x, y)) {
+        if (isOneDiagonalMove(fileDifference, rankDifference)) {
             return colorCompareResult == ColorCompareResult.DIFFERENT_COLOR;
         }
         return false;

@@ -14,11 +14,11 @@ public class MovedPawnState implements MoveState {
     }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        if (isOneStraightMove(x, y)) {
+    public boolean canMove(int fileDifference, int rankDifference, ColorCompareResult colorCompareResult) {
+        if (isOneStraightMove(fileDifference, rankDifference)) {
             return colorCompareResult == ColorCompareResult.EMPTY;
         }
-        if (isOneDiagonalMove(x, y)) {
+        if (isOneDiagonalMove(fileDifference, rankDifference)) {
             return colorCompareResult == ColorCompareResult.DIFFERENT_COLOR;
         }
         return false;
