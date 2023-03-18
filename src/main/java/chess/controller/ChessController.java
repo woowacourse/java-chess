@@ -43,11 +43,11 @@ public class ChessController {
     public void run() {
         outputView.printInitialMessage();
         while (chessGame.isRunning()) {
-            execute();
+            play();
         }
     }
 
-    private void execute() {
+    private void play() {
         try {
             RequestInfo requestInfo = repeat(inputView::inputGameCommand);
             Consumer<List<String>> action = commandTypeToAction.get(requestInfo.getCommandType());
