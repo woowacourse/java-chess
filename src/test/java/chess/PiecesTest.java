@@ -81,8 +81,23 @@ class PiecesTest {
         pieces.synchronizeMovedPiece(pieceBeforeMove, movedPiece);
         final List<Piece> afterMovePieces = pieces.getPieces();
 
-
         // then
         assertThat(afterMovePieces.get(pieceBeforeMoveIndex)).isEqualTo(movedPiece);
+    }
+
+    @Test
+    @DisplayName("기물을 게임에서 제거한다.")
+    void remove() {
+        // given
+        final Pieces pieces = new Pieces();
+        final Position position = new Position(File.A, Rank.SEVEN);
+        final List<Piece> piecesBeforeRemove = pieces.getPieces();
+
+        // when
+        pieces.remove(pieces.findPieceByPosition(position));
+        final List<Piece> piecesAfterRemove = pieces.getPieces();
+
+        // then
+        assertThat(piecesAfterRemove.size()).isEqualTo(piecesBeforeRemove.size() - 1);
     }
 }
