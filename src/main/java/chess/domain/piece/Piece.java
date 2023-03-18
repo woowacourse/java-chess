@@ -16,7 +16,11 @@ public abstract class Piece {
     }
 
     public boolean hasSameColor(final Piece piece) {
-        return color == piece.color;
+        return isSameColor(piece.color);
+    }
+
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
     }
 
     public abstract List<Square> findRoute(final Square source, final Square destination);
