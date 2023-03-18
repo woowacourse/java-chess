@@ -1,29 +1,29 @@
 package chess.dto;
 
 import chess.domain.Position;
-import chess.view.GameState;
+import chess.view.Command;
 
 public class ChessInputDto {
-    private final GameState gameState;
+    private final Command command;
     private final Position source;
     private final Position target;
 
-    private ChessInputDto(final GameState gameState, final Position source, final Position target) {
-        this.gameState = gameState;
+    private ChessInputDto(final Command command, final Position source, final Position target) {
+        this.command = command;
         this.source = source;
         this.target = target;
     }
 
-    public static ChessInputDto from(final GameState gameState, final String source, final String target) {
-        return new ChessInputDto(gameState, Position.from(source), Position.from(target));
+    public static ChessInputDto from(final Command command, final String source, final String target) {
+        return new ChessInputDto(command, Position.from(source), Position.from(target));
     }
 
-    public static ChessInputDto from(final GameState gameState) {
-        return new ChessInputDto(gameState, Position.NOT_ABLE, Position.NOT_ABLE);
+    public static ChessInputDto from(final Command command) {
+        return new ChessInputDto(command, Position.NOT_ABLE, Position.NOT_ABLE);
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public Command getGameState() {
+        return command;
     }
 
     public Position getSource() {

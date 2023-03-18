@@ -20,9 +20,9 @@ public class InputView {
         final String command = scanner.nextLine();
 
         final List<String> commands = Arrays.asList(command.split(DELIMITER));
-        final GameState gameState = GameState.from(commands.get(GAME_STATE_INDEX));
+        final Command gameState = Command.from(commands.get(GAME_STATE_INDEX));
 
-        if (gameState == GameState.START || gameState == GameState.END) {
+        if (gameState == Command.START || gameState == Command.END) {
             return ChessInputDto.from(gameState);
         }
 
