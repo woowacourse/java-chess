@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.move.Move;
 import java.util.Set;
+
+import chess.domain.move.Move;
 
 public abstract class Piece {
 
@@ -22,14 +23,9 @@ public abstract class Piece {
     }
 
     public boolean hasMove(Move move) {
-        boolean hasMove = false;
-        for (Move pieceMove : moves) {
-            hasMove = hasMove || compareMove(pieceMove, move);
-        }
-        return hasMove;
+        return moves.stream()
+                .anyMatch(it -> compareMove(it, move));
     }
-
-    public abstract PieceType getType();
 
     protected boolean compareMove(Move pieceMove, Move move) {
         return pieceMove.equals(move);
@@ -42,4 +38,6 @@ public abstract class Piece {
     public Piece touch() {
         return this;
     }
+
+    public abstract PieceType getType();
 }
