@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.dto.GameStatusDto;
 import chess.dto.SquareMoveDto;
 import chess.view.Command;
 import chess.view.InputView;
