@@ -24,4 +24,12 @@ class EmptyPieceTest {
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("서버 내부 에러 - EmptyPiece는 움직임의 경로를 계산할 수 없습니다.");
     }
+
+    @DisplayName("상대 진영의 말인지 확인하면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenCheckEmptyPieceIsOpponentSide() {
+        assertThatThrownBy(() -> new EmptyPiece().isOpponentSideWith(Pawn.createOfBlack()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("서버 내부 에러 - EmptyPiece는 상대 진영인지 확인할 수 없습니다.");
+    }
 }
