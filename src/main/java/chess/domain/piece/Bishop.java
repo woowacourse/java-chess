@@ -20,7 +20,7 @@ public final class Bishop extends Piece {
 
         final var inclination = source.computeInclination(target);
         if (inclination == INCLINATION_ONE) {
-            return computePathInclainationOne(source, target);
+            return computePathInclinationOne(source, target);
         }
 
         if (inclination == INCLINATION_NEGATIVE_ONE) {
@@ -44,7 +44,7 @@ public final class Bishop extends Piece {
         return positions;
     }
 
-    private Set<Position> computePathInclainationOne(final Position source, final Position target) {
+    private Set<Position> computePathInclinationOne(final Position source, final Position target) {
         Set<Position> positions = new HashSet<>();
         var max = Position.maxRank(source, target);
         var min = Position.minRank(source, target);

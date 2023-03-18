@@ -18,7 +18,7 @@ public final class ChessGame {
     }
 
     public void playTurn(Position source, Position target) {
-        board.play(source, target, turn);
+        board.confirmMove(source, target, turn);
         this.turn = changeTurn();
     }
 

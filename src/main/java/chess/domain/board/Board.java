@@ -13,17 +13,17 @@ public final class Board {
     private final List<Squares> board = new ArrayList<>();
 
     public Board() {
-        board.add(Squares.initPieces(Color.WHITE));
-        board.add(Squares.initPawns(Color.WHITE));
-        board.add(Squares.initEmpty());
-        board.add(Squares.initEmpty());
-        board.add(Squares.initEmpty());
-        board.add(Squares.initEmpty());
-        board.add(Squares.initPawns(Color.BLACK));
-        board.add(Squares.initPieces(Color.BLACK));
+        board.add(Squares.initializePieces(Color.WHITE));
+        board.add(Squares.initializePawns(Color.WHITE));
+        board.add(Squares.initializeEmpty());
+        board.add(Squares.initializeEmpty());
+        board.add(Squares.initializeEmpty());
+        board.add(Squares.initializeEmpty());
+        board.add(Squares.initializePawns(Color.BLACK));
+        board.add(Squares.initializePieces(Color.BLACK));
     }
 
-    public void play(Position source, Position target, Color color) {
+    public void confirmMove(final Position source, final Position target, Color color) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
         validateLegalSourceColor(sourceSquare, color);

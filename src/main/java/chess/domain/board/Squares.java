@@ -15,7 +15,7 @@ public final class Squares {
         this.squares = squares;
     }
 
-    public static Squares initPieces(Color color) {
+    public static Squares initializePieces(Color color) {
         final var pieces = new ArrayList<Square>();
         pieces.add(new Square(new Rook(color)));
         pieces.add(new Square(new Knight(color)));
@@ -28,7 +28,7 @@ public final class Squares {
         return new Squares(pieces);
     }
 
-    public static Squares initPawns(Color color) {
+    public static Squares initializePawns(Color color) {
         final var pawns = new ArrayList<Square>();
         for (int i = 0; i < SQUARES_SIZE; i++) {
             pawns.add(new Square(new Pawn(color)));
@@ -36,7 +36,7 @@ public final class Squares {
         return new Squares(pawns);
     }
 
-    public static Squares initEmpty() {
+    public static Squares initializeEmpty() {
         final var list = new ArrayList<Square>();
         for (int i = 0; i < SQUARES_SIZE; i++) {
             list.add(new Square(new Empty()));
