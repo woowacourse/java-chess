@@ -32,7 +32,7 @@ public class InputView {
 
     private void validateGameCommandInput(final String gameCommand) {
         if (isWrongGameCommand(gameCommand)) {
-            throw new IllegalArgumentException("[ERROR] \"start\", \"end\", \"move\"만 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] " + START_COMMAND + ", " + END_COMMAND + ", " + MOVE_COMMAND + "만 입력해주세요.");
         }
     }
 
@@ -45,7 +45,8 @@ public class InputView {
         final String gameCommand = splitGameCommand.get(GAME_COMMAND_INDEX);
         final int splitGameCommandSize = splitGameCommand.size();
         if (isWrongStartOrEndCommandFormat(splitGameCommandSize, gameCommand)) {
-            throw new IllegalArgumentException("[ERROR] \"start\" 또는 \"end\" 커맨드는 \"start\" 또는 \"end\"만 입력해야 합니다.");
+            throw new IllegalArgumentException("[ERROR] " +  START_COMMAND + "또는 " + END_COMMAND + "커맨드는 "
+                    + START_COMMAND + "또는 " + END_COMMAND + "만 입력해야 합니다.");
         }
 
         if (isWrongMoveCommandFormat(splitGameCommandSize, gameCommand)) {
