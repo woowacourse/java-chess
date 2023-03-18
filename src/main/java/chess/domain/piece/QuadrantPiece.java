@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.move.Move;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import chess.domain.move.Axis;
+import chess.domain.move.Move;
 
 public abstract class QuadrantPiece extends Piece {
 
@@ -20,9 +22,9 @@ public abstract class QuadrantPiece extends Piece {
     private static Stream<Move> flip(Move move) {
         return Stream.of(
                 move,
-                move.flipHorizontal(),
-                move.flipVertical(),
-                move.flipHorizontal().flipVertical()
+                move.flipOver(Axis.HORIZON),
+                move.flipOver(Axis.VERTICAL),
+                move.flipOver(Axis.HORIZON).flipOver(Axis.VERTICAL)
         );
     }
 }

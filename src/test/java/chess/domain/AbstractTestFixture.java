@@ -1,16 +1,16 @@
 package chess.domain;
 
 import chess.domain.move.Direction;
+import chess.domain.move.Directions;
 import chess.domain.move.Move;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
 
 public abstract class AbstractTestFixture {
 
     public static Move createMove(Direction... directions) {
-        return new Move(List.of(directions));
+        return new Move(Directions.of(directions));
     }
 
     public static Position createPosition(String position) {

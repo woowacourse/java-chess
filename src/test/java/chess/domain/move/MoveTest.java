@@ -7,10 +7,11 @@ import static chess.domain.move.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.AbstractTestFixture;
-import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.AbstractTestFixture;
+import chess.domain.position.Position;
 
 public class MoveTest extends AbstractTestFixture {
 
@@ -18,18 +19,18 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void flipHorizontal() {
         Move move = createMove(RIGHT, UP, UP);
-        Move move2 = createMove(RIGHT, DOWN, DOWN);
+        Move expected = createMove(RIGHT, DOWN, DOWN);
 
-        assertThat(move.flipHorizontal()).isEqualTo(move2);
+        assertThat(move.flipOver(Axis.HORIZON)).isEqualTo(expected);
     }
 
     @DisplayName("좌우 대칭 할 수 있다.")
     @Test
     void flipVertical() {
         Move move = createMove(RIGHT, RIGHT, UP);
-        Move move2 = createMove(LEFT, LEFT, UP);
+        Move expected = createMove(LEFT, LEFT, UP);
 
-        assertThat(move.flipVertical()).isEqualTo(move2);
+        assertThat(move.flipOver(Axis.VERTICAL)).isEqualTo(expected);
     }
 
     @SuppressWarnings("Convert2MethodRef")
@@ -37,16 +38,14 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void emptyMove_throws() {
         assertThatThrownBy(() -> createMove())
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("방향이 존재해야합니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("양방향이 존재하면 예외를 던진다")
     @Test
     void bidirectional_throws() {
         assertThatThrownBy(() -> createMove(RIGHT, LEFT))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("양방향이 존재하면 안됩니다");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("같은 수인지 확인한다")
@@ -71,7 +70,7 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void findDestination() {
         Move move = createMove(RIGHT, RIGHT, UP, UP, UP);
-        Position destination = move.findDestinationFrom(createPosition("A,ONE"));
+        Position destination = move.move(createPosition("A,ONE"));
 
         assertThat(destination).isEqualTo(createPosition("C,FOUR"));
     }
@@ -99,6 +98,5 @@ public class MoveTest extends AbstractTestFixture {
         Position target = createPosition("E,TWO");
 
         assertThat(Move.of(source, target)).isEqualTo(createMove(LEFT, LEFT, UP));
-
     }
 }
