@@ -14,21 +14,20 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class ChessBoardDto {
 
-    private static final Map<Class, String> pieceName = new HashMap<>(Map.of(
+    private static final Map<Class, String> pieceName = Map.of(
             Pawn.class, "p",
             Rook.class, "r",
             Knight.class, "n",
             Bishop.class, "b",
             Queen.class, "q",
             King.class, "k"
-    ));
+    );
     private static final String EMPTY = ".";
 
     private final List<String> lines;
