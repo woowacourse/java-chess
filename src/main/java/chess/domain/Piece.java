@@ -4,6 +4,7 @@ import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.state.MoveState;
 
 public class Piece {
+
     private static final Piece empty = new Piece(PieceType.EMPTY, Color.NONE);
 
     private final Color color;
@@ -34,7 +35,7 @@ public class Piece {
     }
 
     public PieceType getType() {
-        return PieceType.getType(moveState);
+        return PieceType.getName(moveState);
     }
 
     public Color getColor() {

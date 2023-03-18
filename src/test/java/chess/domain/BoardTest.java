@@ -32,7 +32,7 @@ class BoardTest {
 
         var check = result.stream()
                 .map(Piece::getType)
-                .map(PieceType::getType)
+                .map(PieceType::getName)
                 .collect(Collectors.toList());
         assertThat(check)
                 .containsExactly("r", "n", "b", "q", "k", "b", "n", "r")
@@ -50,7 +50,7 @@ class BoardTest {
 
         var check = result.stream()
                 .map(Piece::getType)
-                .map(PieceType::getType)
+                .map(PieceType::getName)
                 .collect(Collectors.toList());
         assertThat(check)
                 .containsOnly("p")

@@ -23,30 +23,30 @@ public enum PieceType {
 
     private static final int INITIAL_STATE = 0;
 
-    private final String type;
+    private final String name;
     private final List<MoveState> state;
 
-    PieceType(String type, List<MoveState> state) {
-        this.type = type;
+    PieceType(String name, List<MoveState> state) {
+        this.name = name;
         this.state = state;
     }
 
     public static PieceType from(String type) {
         return Arrays.stream(PieceType.values())
-                .filter(it -> it.type.equals(type))
+                .filter(it -> it.name.equals(type))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
     }
 
-    public static PieceType getType(MoveState moveState) {
+    public static PieceType getName(MoveState moveState) {
         return Arrays.stream(values())
                 .filter(it -> it.state.contains(moveState))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
     public MoveState getState() {

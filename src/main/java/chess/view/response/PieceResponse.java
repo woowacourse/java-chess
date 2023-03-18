@@ -13,7 +13,7 @@ public class PieceResponse {
     }
 
     public static PieceResponse from(Piece piece) {
-        return new PieceResponse(piece.getType().getType(), piece.getColor().name());
+        return new PieceResponse(piece.getType().getName(), piece.getColor().name());
     }
 
     @Override
