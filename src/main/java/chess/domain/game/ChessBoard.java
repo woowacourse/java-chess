@@ -13,22 +13,25 @@ public class ChessBoard {
     private static final String OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE = "이동 경로에 기물이 있으므로 이동할 수 없습니다";
 
     private final Map<Position, Piece> chessBoard;
+    private Color turn = Color.WHITE;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
         this.chessBoard = new HashMap<>(chessBoard);
     }
 
-    public Map<Position, Piece> getChessBoard() {
-        return new HashMap<>(chessBoard);
-    }
-
-
     public void move(Position start, Position end) {
-        checkIfPiecesExistInRoute(start, end);
         Piece pieceToMove = findPieceAtStart(start);
+        checkTurn(pieceToMove.getColor());
+        checkIfPiecesExistInRoute(start, end);
         Color colorOfDestination = chessBoard.get(end).getColor();
         if (pieceToMove.isMovable(start, end, colorOfDestination)) {
             movePieceToDestination(start, end, pieceToMove);
+        }
+    }
+
+    private void checkTurn(Color colorOfStartPiece) {
+        if(colorOfStartPiece.isOpponent(turn)) {
+            throw new IllegalArgumentException("상대편의 기물을 움직일 수 없습니다");
         }
     }
 
@@ -56,6 +59,10 @@ public class ChessBoard {
     private void movePieceToDestination(Position start, Position end, Piece piece) {
         chessBoard.replace(start, new EmptyPiece());
         chessBoard.replace(end, piece);
+        turn = piece.getColor().getOpponent();
     }
 
+    public Map<Position, Piece> getChessBoard() {
+        return new HashMap<>(chessBoard);
+    }
 }
