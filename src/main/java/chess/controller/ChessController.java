@@ -43,13 +43,17 @@ public class ChessController {
     public void run() {
         outputView.printInitialMessage();
         while (chessGame.isRunning()) {
-            try {
-                RequestInfo requestInfo = repeat(inputView::inputGameCommand);
-                Consumer<List<String>> action = commandTypeToAction.get(requestInfo.getCommandType());
-                action.accept(requestInfo.getCommands());
-            } catch (ChessGameException e) {
-                outputView.printError(e);
-            }
+            execute();
+        }
+    }
+
+    private void execute() {
+        try {
+            RequestInfo requestInfo = repeat(inputView::inputGameCommand);
+            Consumer<List<String>> action = commandTypeToAction.get(requestInfo.getCommandType());
+            action.accept(requestInfo.getCommands());
+        } catch (ChessGameException e) {
+            outputView.printError(e);
         }
     }
 
