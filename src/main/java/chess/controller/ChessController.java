@@ -27,19 +27,26 @@ public class ChessController {
     }
 
     private void startGame() {
-        printError(() -> {
-            chessGame.start();
-            OutputView.printBoard(chessGame.getBoard());
-        });
+        chessGame.start();
+        OutputView.printBoard(chessGame.getBoard());
     }
 
     private void movePiece(GameCommand gameCommand) {
-        printError(() -> {
-            PositionRequest source = PositionMapper.map(gameCommand.getParameter(0));
-            PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
-            chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
-            OutputView.printBoard(chessGame.getBoard());
-        });
+        PositionRequest source = PositionMapper.map(gameCommand.getParameter(0));
+        PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
+        chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
+        OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void endGame() {
+        chessGame.end();
+    }
+
+    public void run() {
+        OutputView.printStartMessage();
+        while (!chessGame.isEnd()) {
+            printError(this::gameLoop);
+        }
     }
 
     private void printError(Runnable runnable) {
@@ -50,24 +57,13 @@ public class ChessController {
         }
     }
 
-    private void endGame() {
-        chessGame.end();
-    }
-
-    public void run() {
-        OutputView.printStartMessage();
-        while (!chessGame.isEnd()) {
-            gameLoop();
-        }
-    }
-
     private void gameLoop() {
         GameCommand command = printErrorAndRetry(InputView::readCommand);
         actionMap.getOrDefault(command.getCommand(), Action.INVALID_ACTION)
                 .execute(command);
     }
 
-    private <T> T printErrorAndRetry(Supplier<T> supplier) {
+    private GameCommand printErrorAndRetry(Supplier<GameCommand> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException | IllegalStateException e) {
