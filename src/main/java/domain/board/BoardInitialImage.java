@@ -20,6 +20,9 @@ import java.util.stream.IntStream;
 
 public class BoardInitialImage {
 
+    public static final int RANK_SIZE = 8;
+    public static final int EMPTY_RANK_SIZE = 4;
+
     private static final List<List<Square>> boardImage;
 
     static {
@@ -37,7 +40,7 @@ public class BoardInitialImage {
     }
 
     private static List<List<Square>> makeEmptyRanks() {
-        return IntStream.range(0, 4)
+        return IntStream.range(0, EMPTY_RANK_SIZE)
                 .mapToObj(i -> makeEmptyRank())
                 .collect(Collectors.toList());
     }
@@ -55,19 +58,19 @@ public class BoardInitialImage {
     }
 
     private static List<Square> makeEmptyRank() {
-        return IntStream.range(0, 8)
+        return IntStream.range(0, RANK_SIZE)
                 .mapToObj(i -> new EmptySquare())
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeWhiteBackRank() {
-        return IntStream.range(0, 8)
+        return IntStream.range(0, RANK_SIZE)
                 .mapToObj(i -> new ConcreteSquare(new WhitePawn(), Camp.WHITE))
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeBlackBackRank() {
-        return IntStream.range(0, 8)
+        return IntStream.range(0, RANK_SIZE)
                 .mapToObj(i -> new ConcreteSquare(new BlackPawn(), Camp.BLACK))
                 .collect(Collectors.toList());
     }
