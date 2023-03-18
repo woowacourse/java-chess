@@ -1,12 +1,12 @@
-package domain;
+package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
-import domain.chessboard.EmptyType;
 import domain.chessboard.Square;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
-import domain.piece.PieceType;
+import domain.type.EmptyType;
+import domain.type.PieceType;
 
 public class ChessGame {
 

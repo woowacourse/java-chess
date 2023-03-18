@@ -1,10 +1,10 @@
 package domain;
 
-import domain.chessboard.Empty;
-import domain.chessboard.EmptyType;
 import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.King;
+import domain.squarestatus.Empty;
+import domain.type.EmptyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

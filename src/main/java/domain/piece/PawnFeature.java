@@ -1,5 +1,8 @@
 package domain.piece;
 
+import domain.squarestatus.Piece;
+import domain.type.PieceType;
+
 public abstract class PawnFeature extends Piece {
 
     public PawnFeature(final Color color) {

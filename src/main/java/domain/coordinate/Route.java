@@ -4,14 +4,14 @@ import java.util.List;
 
 public class Route {
 
-    private final List<Position> route;
+    private final List<Position> positions;
 
-    public Route(final List<Position> route) {
-        this.route = route;
+    public Route(final List<Position> positions) {
+        this.positions = positions;
     }
 
     public List<Position> getRoute() {
-        return route;
+        return positions;
     }
 
 }

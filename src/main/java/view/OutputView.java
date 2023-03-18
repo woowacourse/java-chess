@@ -1,10 +1,10 @@
 package view;
 
 import domain.chessboard.ChessBoard;
-import domain.chessboard.EmptyType;
-import domain.chessboard.Rank;
+import domain.chessboard.Row;
 import domain.chessboard.Square;
 import domain.piece.Color;
+import domain.type.EmptyType;
 
 import java.util.List;
 
@@ -33,25 +33,26 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        List<Rank> ranks = chessBoard.getChessBoard();
+        final List<Row> rows = chessBoard.getChessBoard();
 
-        for (Rank rank : ranks) {
-            printRank(rank);
+        for (Row row : rows) {
+            printRow(row);
         }
     }
 
-    private static void printRank(final Rank rank) {
-        for (Square square : rank.getRank()) {
+    private static void printRow(final Row row) {
+        final List<Square> squares = row.getRow();
+
+        for (Square square : squares) {
             System.out.print(convertPieceToElement(square));
         }
         System.out.println();
     }
 
     private static String convertPieceToElement(final Square square) {
-        final String elementName = ChessBoardElement.from(square.getType())
-                .getElementName();
+        final String elementName = ChessBoardElement.getElementName(square.getType());
 
-        if (square.getType() != EmptyType.EMPTY && square.isSameColor(Color.BLACK)) {
+        if (square.isDifferentType(EmptyType.EMPTY)  && square.isSameColor(Color.BLACK)) {
             return elementName.toUpperCase();
         }
         return elementName;

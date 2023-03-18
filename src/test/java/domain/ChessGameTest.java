@@ -1,10 +1,11 @@
 package domain;
 
 import domain.chessboard.ChessBoard;
-import domain.chessboard.Type;
 import domain.coordinate.PositionFactory;
+import domain.chessgame.ChessGame;
 import domain.piece.Color;
-import domain.piece.PieceType;
+import domain.type.PieceType;
+import domain.type.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

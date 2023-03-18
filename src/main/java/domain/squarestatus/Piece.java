@@ -1,9 +1,10 @@
-package domain.piece;
+package domain.squarestatus;
 
-import domain.chessboard.SquareStatus;
-import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
+import domain.piece.Color;
+import domain.type.PieceType;
+import domain.type.Type;
 
 public abstract class Piece implements SquareStatus {
 

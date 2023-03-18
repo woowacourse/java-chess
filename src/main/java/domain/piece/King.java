@@ -2,6 +2,8 @@ package domain.piece;
 
 import domain.coordinate.Position;
 import domain.coordinate.Route;
+import domain.squarestatus.Piece;
+import domain.type.PieceType;
 
 import java.util.Collections;
 

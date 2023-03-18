@@ -4,7 +4,11 @@ import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
 import domain.piece.Pawn;
-import domain.piece.PieceType;
+import domain.squarestatus.Empty;
+import domain.squarestatus.SquareStatus;
+import domain.type.EmptyType;
+import domain.type.PieceType;
+import domain.type.Type;
 
 public class Square {
 
@@ -21,7 +25,7 @@ public class Square {
     }
 
     public void bePiece(final Square square) {
-        if (square.getType() == PieceType.PAWN) {
+        if (square.isEqualType(PieceType.PAWN)) {
             squareStatus = new Pawn(square.squareStatus.getColor());
             return;
         }

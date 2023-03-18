@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Position {
 
     private static final List<List<Position>> CACHE;
+    private static final int COLUMN_SIZE = 8;
+    private static final int ROW_SIZE = 8;
 
     private final int x;
     private final int y;
@@ -28,14 +30,14 @@ public class Position {
     }
 
     private static void addColumn() {
-        for (int y = 0; y < 8; y++) {
+        for (int y = 0; y < COLUMN_SIZE; y++) {
             CACHE.add(new ArrayList<>());
             addRow(y);
         }
     }
 
     private static void addRow(final int y) {
-        for (int x = 0; x < 8; x++) {
+        for (int x = 0; x < ROW_SIZE; x++) {
             CACHE.get(y).add(new Position(x, y));
         }
     }
@@ -53,17 +55,25 @@ public class Position {
     }
 
     public boolean isDiagonally(Position otherPosition) {
-        final int diffX = Math.abs(this.diffX(otherPosition));
-        final int diffY = Math.abs(this.diffY(otherPosition));
+        final int diffX = getDiffX(otherPosition);
+        final int diffY = getDiffY(otherPosition);
 
         return (diffX != 0 || diffY != 0) && (diffX == diffY);
     }
 
     public boolean isStraight(Position otherPosition) {
-        final int diffX = Math.abs(this.diffX(otherPosition));
-        final int diffY = Math.abs(this.diffY(otherPosition));
+        final int diffX = getDiffX(otherPosition);
+        final int diffY = getDiffY(otherPosition);
 
         return (diffX != 0 || diffY != 0) && (diffX == 0 || diffY == 0);
+    }
+
+    private int getDiffY(final Position otherPosition) {
+        return Math.abs(this.diffY(otherPosition));
+    }
+
+    private int getDiffX(final Position otherPosition) {
+        return Math.abs(this.diffX(otherPosition));
     }
 
     public int getX() {

@@ -1,8 +1,8 @@
 package view;
 
-import domain.chessboard.EmptyType;
-import domain.chessboard.Type;
-import domain.piece.PieceType;
+import domain.type.EmptyType;
+import domain.type.Type;
+import domain.type.PieceType;
 
 import java.util.Arrays;
 
@@ -24,15 +24,15 @@ public enum ChessBoardElement {
         this.elementName = elementName;
     }
 
-    public static ChessBoardElement from(Type type) {
+    private static ChessBoardElement from(final Type type) {
         return Arrays.stream(values())
                 .filter(value -> value.type == type)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    public String getElementName() {
-        return elementName;
+    public static String getElementName(final Type type) {
+        return from(type).elementName;
     }
 
 }

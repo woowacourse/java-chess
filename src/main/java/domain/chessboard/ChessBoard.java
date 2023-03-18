@@ -9,33 +9,32 @@ public class ChessBoard {
 
     private static final int NUMBER_OF_NONE_LINES = 4;
 
-    private final List<Rank> chessBoard;
+    private final List<Row> rows;
 
-    public ChessBoard(final List<Rank> chessBoard) {
-        this.chessBoard = chessBoard;
+    public ChessBoard(final List<Row> rows) {
+        this.rows = rows;
     }
 
     public static ChessBoard generate() {
-        final List<Rank> chessBoard = new ArrayList<>();
-        chessBoard.add(Rank.initRankToRank(RankFactory.OTHERS_BLACK));
-        chessBoard.add(Rank.initRankToRank(RankFactory.PAWN_BLACK));
+        final List<Row> chessBoard = new ArrayList<>();
+        chessBoard.add(Row.initRankToRank(RowFactory.OTHERS_BLACK));
+        chessBoard.add(Row.initRankToRank(RowFactory.PAWN_BLACK));
         for (int i = 0; i < NUMBER_OF_NONE_LINES; i++) {
-            chessBoard.add(Rank.initRankToRank(RankFactory.EMPTY));
+            chessBoard.add(Row.initRankToRank(RowFactory.EMPTY));
         }
-        chessBoard.add(Rank.initRankToRank(RankFactory.PAWN_WHITE));
-        chessBoard.add(Rank.initRankToRank(RankFactory.OTHERS_WHITE));
+        chessBoard.add(Row.initRankToRank(RowFactory.PAWN_WHITE));
+        chessBoard.add(Row.initRankToRank(RowFactory.OTHERS_WHITE));
 
         return new ChessBoard(new ArrayList<>(chessBoard));
     }
 
-    public List<Rank> getChessBoard() {
-        return new ArrayList<>(chessBoard);
+    public List<Row> getChessBoard() {
+        return new ArrayList<>(rows);
     }
 
     public Square findSquare(Position position) {
-        return chessBoard.get(position.getY())
-                .getRank()
-                .get(position.getX());
+        return rows.get(position.getY())
+                .getSquare(position.getX());
     }
 
 }

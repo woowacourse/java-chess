@@ -1,7 +1,7 @@
 package domain;
 
 import domain.chessboard.ChessBoard;
-import domain.chessboard.Rank;
+import domain.chessboard.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class ChessBoardTest {
         final int sum = ChessBoard.generate()
                 .getChessBoard()
                 .stream()
-                .map(Rank::getRank)
+                .map(Row::getRow)
                 .mapToInt(Collection::size)
                 .sum();
 

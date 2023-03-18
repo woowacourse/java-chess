@@ -1,4 +1,4 @@
-package domain.chessboard;
+package domain.type;
 
 public interface Type {
 
