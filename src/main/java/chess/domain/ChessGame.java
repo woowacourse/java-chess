@@ -7,7 +7,8 @@ import chess.view.Command;
 
 public class ChessGame {
 
-    private final Board board;
+    // TODO: 불변 만들기
+    private Board board;
 
     public ChessGame() {
         this.board = Board.create();
@@ -22,6 +23,10 @@ public class ChessGame {
 
     public void move(final SquareMoveDto squareMoveDto) {
         board.move(squareMoveDto.getCurrent(), squareMoveDto.getDestination());
+    }
+
+    public void reset() {
+        board = Board.create();
     }
 
     public GameStatusDto getGameStatus() {

@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.dto.GameStatusDto;
 import chess.dto.SquareMoveDto;
 import chess.view.Command;
 import chess.view.InputView;
@@ -32,14 +33,14 @@ public class ChessController {
 
     private void play() {
         try {
-            playUntilStop();
+            playUntilEnd();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             play();
         }
     }
 
-    private void playUntilStop() {
+    private void playUntilEnd() {
         List<String> command = InputView.readCommand();
         while (Command.from(command).isMoveCommand()) {
             move(command.get(1), command.get(2));
@@ -47,6 +48,7 @@ public class ChessController {
             command = InputView.readCommand();
         }
         checkStart(command);
+        checkEnd(command);
     }
 
     private void move(String current, String destination) {
@@ -56,7 +58,15 @@ public class ChessController {
 
     private void checkStart(final List<String> command) {
         if (Command.from(command).isStartCommand()) {
-            start();
+            chessGame.reset();
+            OutputView.printGameStatus(chessGame.getGameStatus());
+            playUntilEnd();
+        }
+    }
+
+    private void checkEnd(final List<String> command) {
+        if (!Command.from(command).isEndCommand()) {
+            playUntilEnd();
         }
     }
 }
