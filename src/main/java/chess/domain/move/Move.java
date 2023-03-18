@@ -35,7 +35,7 @@ public class Move {
                 .collect(Collectors.toList()));
     }
 
-    public Position findDestinationFrom(Position position) {
+    public Position move(Position position) {
         Position destination = position;
         for (UnitMove unitMove : unitMoves) {
             destination = unitMove.move(destination);

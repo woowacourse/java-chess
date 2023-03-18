@@ -1,10 +1,11 @@
 package chess.domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import chess.domain.move.Move;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Board {
 
@@ -15,84 +16,80 @@ public class Board {
     }
 
     public void move(Position source, Position target, boolean isWhiteTurn) {
-        Piece sourcePiece = findSourcePiece(source);
-        checkTurn(isWhiteTurn, sourcePiece);
-        boolean isAttack = checkIsAttack(sourcePiece, target);
-        Move move = Move.of(source, target);
-
-        checkPieceReachable(sourcePiece, isAttack, move);
-        checkNotCrossOtherPiece(source, target, move);
-
-        if (isAttack) {
-            pieces.remove(target);
-        }
-        pieces.remove(source);
-        pieces.put(target, sourcePiece.touch());
+        validatePieceExistsAt(source);
+        validateTurn(isWhiteTurn, source);
+        validateNotFriendlyFire(source, target);
+        validateMoveExists(source, target);
+        validateNoJumps(source, target);
+        makeMove(source, target);
     }
 
-    private void checkTurn(boolean isWhiteTurn, Piece sourcePiece) {
+    private void validatePieceExistsAt(Position source) {
+        if (getPieceAt(source) == null) {
+            throw new IllegalArgumentException("움직일 기물이 없습니다");
+        }
+    }
+
+    private void validateTurn(boolean isWhiteTurn, Position source) {
+        Piece sourcePiece = getPieceAt(source);
         if (!sourcePiece.hasColor(isWhiteTurn)) {
             throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
         }
     }
 
-    private Piece findSourcePiece(Position source) {
-        Piece sourcePiece = pieces.get(source);
-        if (sourcePiece == null) {
-            throw new IllegalArgumentException("움직일 기물이 없습니다");
-        }
-        return sourcePiece;
-    }
-
-    private boolean checkIsAttack(Piece sourcePiece, Position target) {
-        Piece targetPiece = pieces.get(target);
-        if (isEmpty(target)) {
-            return false;
-        }
-        if (sourcePiece.hasSameColor(targetPiece)) {
+    private void validateNotFriendlyFire(Position source, Position target) {
+        Piece sourcePiece = getPieceAt(source);
+        Piece targetPiece = getPieceAt(target);
+        if (targetPiece != null && sourcePiece.hasSameColor(targetPiece)) {
             throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
         }
-        return true;
     }
 
-    private void checkPieceReachable(Piece sourcePiece, boolean isAttack, Move move) {
-        if (!canMove(sourcePiece, move, isAttack)) {
+    private void validateMoveExists(Position source, Position target) {
+        if (!hasMove(source, target)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
 
-    private boolean canMove(Piece piece, Move move, boolean isAttack) {
-        if (isAttack) {
-            return piece.hasAttackMove(move);
+    private boolean hasMove(Position source, Position target) {
+        Piece sourcePiece = getPieceAt(source);
+        Move move = Move.of(source, target);
+        if (isAttack(target)) {
+            return sourcePiece.hasAttackMove(move);
         }
-        return piece.hasMove(move);
+        return sourcePiece.hasMove(move);
     }
 
-    private void checkNotCrossOtherPiece(Position source, Position target, Move move) {
-        Move unitMove = move.getUnitMove();
-        Position current = moveFrom(source, unitMove);
+    private void validateNoJumps(Position source, Position target) {
+        Move unitMove = Move.of(source, target).getUnitMove();
+        Position current = unitMove.move(source);
         while (!current.equals(target)) {
-            checkEmpty(current);
-            current = moveFrom(current, unitMove);
+            validateNoPieceAt(current);
+            current = unitMove.move(current);
         }
     }
 
-    private void checkEmpty(Position position) {
-        if (isNotEmpty(position)) {
+    private void validateNoPieceAt(Position position) {
+        if (getPieceAt(position) != null) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
     }
 
-    private Position moveFrom(Position position, Move move) {
-        return move.findDestinationFrom(position);
+    private void makeMove(Position source, Position target) {
+        if (isAttack(target)) {
+            pieces.remove(target);
+        }
+        pieces.put(target, getPieceAt(source).touch());
+        pieces.remove(source);
     }
 
-    private boolean isEmpty(Position position) {
-        return !isNotEmpty(position);
+    private boolean isAttack(Position target) {
+        Piece targetPiece = getPieceAt(target);
+        return targetPiece != null;
     }
 
-    private boolean isNotEmpty(Position position) {
-        return pieces.get(position) != null;
+    private Piece getPieceAt(Position position) {
+        return pieces.get(position);
     }
 
     public Map<Position, Piece> getPieces() {
