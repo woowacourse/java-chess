@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 import java.util.Map;
 
-public abstract class Pawn extends Piece{
+public abstract class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);

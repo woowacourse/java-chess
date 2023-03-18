@@ -1,8 +1,6 @@
 package techcourse.fp.mission;
 
 import java.util.List;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
 
 public class Calculator {
 

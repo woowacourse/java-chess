@@ -2,7 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class Piece {
 

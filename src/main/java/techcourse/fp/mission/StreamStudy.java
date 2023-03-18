@@ -3,17 +3,15 @@ package techcourse.fp.mission;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class StreamStudy {
 
     public static long countWords() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         return words.stream()
@@ -42,16 +40,16 @@ public class StreamStudy {
 
     public static void printLongestWordTop100() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         words = words.stream()
-                    .filter(w -> w.length() > 12)
-                    .distinct()
-                    .sorted((x, y) -> y.length() - x.length())
-                    .limit(100)
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toList());
+                .filter(w -> w.length() > 12)
+                .distinct()
+                .sorted((x, y) -> y.length() - x.length())
+                .limit(100)
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
 
         System.out.println(words);
         System.out.println(words.size());
