@@ -30,10 +30,6 @@ public class Position {
     }
 
     public static Position of(char fileName, char rankName) {
-        return of(String.valueOf(fileName), String.valueOf(rankName));
-    }
-
-    private static Position of(String fileName, String rankName) {
         File file = File.from(fileName);
         Rank rank = Rank.from(rankName);
         Map<Rank, Position> rankToPosition = cache.get(file);

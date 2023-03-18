@@ -7,28 +7,28 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum File {
-    A("a", 1),
-    B("b", 2),
-    C("c", 3),
-    D("d", 4),
-    E("e", 5),
-    F("f", 6),
-    G("g", 7),
-    H("h", 8);
+    A('a', 1),
+    B('b', 2),
+    C('c', 3),
+    D('d', 4),
+    E('e', 5),
+    F('f', 6),
+    G('g', 7),
+    H('h', 8);
 
     private static final int SKIP_FIRST = 1;
 
-    private final String fileName;
+    private final char fileName;
     private final int order;
 
-    File(String fileName, int order) {
+    File(char fileName, int order) {
         this.fileName = fileName;
         this.order = order;
     }
 
-    public static File from(String fileName) {
+    public static File from(char fileName) {
         return Arrays.stream(File.values())
-                .filter(it -> it.fileName.equals(fileName))
+                .filter(it -> it.fileName == fileName)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
     }

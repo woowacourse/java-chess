@@ -7,28 +7,28 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum Rank {
-    ONE("1", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8);
+    ONE('1', 1),
+    TWO('2', 2),
+    THREE('3', 3),
+    FOUR('4', 4),
+    FIVE('5', 5),
+    SIX('6', 6),
+    SEVEN('7', 7),
+    EIGHT('8', 8);
 
     private static final int SKIP_FIRST = 1;
 
-    private final String rankName;
+    private final char rankName;
     private final int order;
 
-    Rank(String rankName, int order) {
+    Rank(char rankName, int order) {
         this.rankName = rankName;
         this.order = order;
     }
 
-    public static Rank from(String rankName) {
+    public static Rank from(char rankName) {
         return Arrays.stream(Rank.values())
-                .filter(it -> it.rankName.equals(rankName))
+                .filter(it -> it.rankName == rankName)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
