@@ -20,6 +20,7 @@ public enum PieceType {
     KING("k", List.of(KingState.getInstance())),
     PAWN("p", List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
     EMPTY(".", List.of(EmptyState.getInstance()));
+
     private static final int INITIAL_STATE = 0;
 
     private final String type;
