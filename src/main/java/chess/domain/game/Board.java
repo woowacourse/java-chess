@@ -1,9 +1,9 @@
 package chess.domain.game;
 
-import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

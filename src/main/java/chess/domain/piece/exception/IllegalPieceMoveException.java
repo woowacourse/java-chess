@@ -1,4 +1,4 @@
-package chess.domain.exception;
+package chess.domain.piece.exception;
 
 public class IllegalPieceMoveException extends RuntimeException {
 

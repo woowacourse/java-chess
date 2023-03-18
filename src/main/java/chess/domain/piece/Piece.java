@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import chess.domain.piece.state.MoveState;
 
 public class Piece {

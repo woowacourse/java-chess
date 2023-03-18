@@ -1,15 +1,17 @@
 package chess.controller;
 
-import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.game.Board;
 import chess.domain.game.Position;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.request.CommandType;
 import chess.view.request.RequestInfo;
 import chess.view.response.PieceResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
