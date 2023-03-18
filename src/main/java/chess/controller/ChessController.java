@@ -68,7 +68,7 @@ public class ChessController {
     private GameStatus handleStartCommand(GameStatus gameStatus, final Board board) {
         checkGameAlreadyStart(gameStatus);
         gameStatus = GameStatus.START;
-        OutputView.printBoard(new BoardDto(board));
+        OutputView.printBoard(BoardDto.of(board));
         return gameStatus;
     }
 
@@ -84,7 +84,7 @@ public class ChessController {
         final Position targetPosition = generatePosition(moveCommand.get(TARGET_POSITION_INDEX));
 
         board.movePiece(sourcePosition, targetPosition);
-        OutputView.printBoard(new BoardDto(board));
+        OutputView.printBoard(BoardDto.of(board));
         return gameStatus;
     }
 
