@@ -1,9 +1,7 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.state.Ready;
-import chess.domain.state.State;
-import chess.dto.ChessInputDto;
+import chess.domain.state.CommandProcessor;
+import chess.domain.state.StateProcessor;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -12,36 +10,29 @@ public final class Controller {
     public void run() {
         OutputView.printStartMessage();
 
-        State state = new Ready(Board.create());
-        while (!state.isEnd()) {
-            state = processGame(state);
+        CommandProcessor commandProcessor = CommandProcessor.create();
+        StateProcessor stateProcessor = StateProcessor.create();
+
+        setup(commandProcessor, stateProcessor);
+
+        while (stateProcessor.isNotEnd()) {
+            retryOnError(() -> commandProcessor.execute(stateProcessor, InputView.inputGameState()));
+            OutputView.printChessBoard(stateProcessor.getBoard());
         }
     }
 
-    private State processGame(final State state) {
+    private static void setup(final CommandProcessor commandProcessor, final StateProcessor stateProcessor) {
+        commandProcessor.register(Command.START, stateProcessor::start);
+        commandProcessor.register(Command.END, stateProcessor::end);
+        commandProcessor.register(Command.MOVE, stateProcessor::move);
+    }
+
+    private void retryOnError(Runnable runnable) {
         try {
-            final ChessInputDto chessInputDto = InputView.inputGameState();
-            final Command command = chessInputDto.getGameState();
-
-            return processState(state, chessInputDto, command);
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            runnable.run();
+        } catch (Exception e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            retryOnError(runnable);
         }
-        return state.end();
-    }
-
-    private State processState(final State state, final ChessInputDto chessInputDto, final Command command) {
-        State newState = state;
-        if (command == Command.START) {
-            newState = state.start();
-        }
-        if (command == Command.END) {
-            newState = state.end();
-        }
-        if (command == Command.MOVE) {
-            newState = state.move(chessInputDto.getSource(), chessInputDto.getTarget());
-        }
-        OutputView.printChessBoard(state.getBoard().getBoard());
-        return newState;
     }
 }
