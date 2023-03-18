@@ -4,7 +4,6 @@ import chess.domain.game.exception.ChessGameException;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.exception.IllegalPieceMoveException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,17 +63,13 @@ public class Board {
     }
 
     public void movePiece(Position origin, Position destination) {
-        try {
-            validateMoveRequest(origin, destination);
-            Piece targetPiece = piecePosition.get(origin);
-            targetPiece.move(origin.getFileDifference(destination),
-                    origin.getRankDifference(destination),
-                    piecePosition.get(destination));
-            piecePosition.put(destination, targetPiece);
-            piecePosition.put(origin, Piece.empty());
-        } catch (IllegalPieceMoveException e) {
-            throw new ChessGameException(e.getMessage());
-        }
+        validateMoveRequest(origin, destination);
+        Piece targetPiece = piecePosition.get(origin);
+        targetPiece.move(origin.getFileDifference(destination),
+                origin.getRankDifference(destination),
+                piecePosition.get(destination));
+        piecePosition.put(destination, targetPiece);
+        piecePosition.put(origin, Piece.empty());
     }
 
     private void validateMoveRequest(Position origin, Position destination) {

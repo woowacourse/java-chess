@@ -1,8 +1,10 @@
 package chess.domain.game;
 
+import chess.domain.game.exception.ChessGameException;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartState;
 import chess.domain.piece.Piece;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import java.util.List;
 
 public class ChessGame {
@@ -25,15 +27,17 @@ public class ChessGame {
     }
 
     public void move(List<String> command) {
-        Position origin = Position.of(
-                command.get(ORIGIN_INDEX).charAt(FILE_INDEX),
-                command.get(ORIGIN_INDEX).charAt(RANK_INDEX)
-        );
-        Position destination = Position.of(
-                command.get(DESTINATION_INDEX).charAt(FILE_INDEX),
-                command.get(DESTINATION_INDEX).charAt(RANK_INDEX)
-        );
-        gameState.move(() -> gameState.move(() -> board.movePiece(origin, destination)));
+        handleError(() -> {
+            Position origin = Position.of(
+                    command.get(ORIGIN_INDEX).charAt(FILE_INDEX),
+                    command.get(ORIGIN_INDEX).charAt(RANK_INDEX)
+            );
+            Position destination = Position.of(
+                    command.get(DESTINATION_INDEX).charAt(FILE_INDEX),
+                    command.get(DESTINATION_INDEX).charAt(RANK_INDEX)
+            );
+            gameState.move(() -> gameState.move(() -> board.movePiece(origin, destination)));
+        });
     }
 
     public List<List<Piece>> getPieces() {
@@ -46,5 +50,13 @@ public class ChessGame {
 
     public void end() {
         gameState = gameState.end();
+    }
+
+    private void handleError(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalPieceMoveException e) {
+            throw new ChessGameException(e.getMessage(), e);
+        }
     }
 }
