@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.THREE;
 import static chess.domain.piece.DirectionVector.EAST;
 import static chess.domain.piece.DirectionVector.NORTH;
 import static chess.domain.piece.DirectionVector.NORTHEAST;
@@ -55,9 +59,7 @@ class DirectionVectorTest {
 
     @Test
     void 해당_방향의_다음_파일을_반환한다() {
-        final File d = File.D;
-
-        assertThat(SOUTHEAST.next(d)).isEqualTo(File.E);
+        assertThat(SOUTHEAST.next(D)).isEqualTo(E);
     }
 
     @ParameterizedTest
@@ -69,9 +71,7 @@ class DirectionVectorTest {
 
     @Test
     void 해당_방향의_다음_랭크를_반환한다() {
-        final Rank four = Rank.FOUR;
-
-        assertThat(SOUTHEAST.next(four)).isEqualTo(Rank.THREE);
+        assertThat(SOUTHEAST.next(FOUR)).isEqualTo(THREE);
     }
 
     @ParameterizedTest

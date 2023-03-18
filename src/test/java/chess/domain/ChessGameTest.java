@@ -1,10 +1,14 @@
 package chess.domain;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.SIX;
+import static chess.domain.board.Rank.THREE;
+import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -21,8 +25,8 @@ class ChessGameTest {
         @Test
         void 움직일_수_있다면_기물을_움직인다() {
             final ChessGame chessGame = new ChessGame();
-            final Square source = new Square(File.A, Rank.TWO);
-            final Square destination = new Square(File.A, Rank.THREE);
+            final Square source = new Square(A, TWO);
+            final Square destination = new Square(A, THREE);
 
             assertThatNoException().isThrownBy(() -> chessGame.move(source, destination));
         }
@@ -30,8 +34,8 @@ class ChessGameTest {
         @Test
         void 움직일_수_없는_위치라면_예외를_던진다() {
             final ChessGame chessGame = new ChessGame();
-            final Square source = new Square(File.A, Rank.TWO);
-            final Square destination = new Square(File.B, Rank.THREE);
+            final Square source = new Square(A, TWO);
+            final Square destination = new Square(B, THREE);
 
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> chessGame.move(source, destination))
@@ -41,8 +45,8 @@ class ChessGameTest {
         @Test
         void 기물이_존재하지_않으면_예외를_던진다() {
             final ChessGame chessGame = new ChessGame();
-            final Square source = new Square(File.A, Rank.TWO);
-            final Square destination = new Square(File.A, Rank.THREE);
+            final Square source = new Square(A, TWO);
+            final Square destination = new Square(A, THREE);
             chessGame.move(source, destination);
 
             assertThatIllegalArgumentException()
@@ -53,8 +57,8 @@ class ChessGameTest {
         @Test
         void 알맞은_차례가_아니라면_예외를_던진다() {
             final ChessGame chessGame = new ChessGame();
-            final Square source = new Square(File.A, Rank.SEVEN);
-            final Square destination = new Square(File.A, Rank.SIX);
+            final Square source = new Square(A, SEVEN);
+            final Square destination = new Square(A, SIX);
 
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> chessGame.move(source, destination))
