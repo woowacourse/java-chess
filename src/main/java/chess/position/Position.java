@@ -23,11 +23,11 @@ public class Position {
                 rankGap / greatestCommonDivisor);
     }
 
-    private int findGreatestCommonDivisor(int num1, int num2) {
-        if (num2 == 0) {
-            return Math.abs(num1);
+    private int findGreatestCommonDivisor(int number1, int number2) {
+        if (number2 == 0) {
+            return Math.abs(number1);
         }
-        return findGreatestCommonDivisor(num2, num1 % num2);
+        return findGreatestCommonDivisor(number2, number1 % number2);
     }
 
     public Position moveBy(Movement movement) {
