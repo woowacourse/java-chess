@@ -3,10 +3,10 @@ package chess.controller;
 import java.util.Arrays;
 
 public enum Command {
-    START("start"),
-    MOVE("move"),
-    END("end"),
-    EMPTY(""),
+    START,
+    MOVE,
+    END,
+    EMPTY,
     ;
 
     public static final int MOVE_COMMAND_SIZE = 3;
@@ -14,24 +14,18 @@ public enum Command {
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_TARGET_INDEX = 2;
 
-    private final String value;
-
-    Command(final String value) {
-        this.value = value;
-    }
-
     public static Command createStart(final String inputCommand) {
-        if (START.value.equalsIgnoreCase(inputCommand)) {
+        if (START.name().toLowerCase().equalsIgnoreCase(inputCommand)) {
             return START;
         }
-        throw new IllegalArgumentException("START를 입력해주세요.");
+        throw new IllegalArgumentException("start를 입력해주세요.");
     }
 
     public static Command createPlayOrEnd(final String inputCommand) {
         return Arrays.stream(values())
                 .filter(command -> command == MOVE || command == END)
-                .filter(command -> command.value.equalsIgnoreCase(inputCommand))
+                .filter(command -> command.name().toLowerCase().equalsIgnoreCase(inputCommand))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("MOVE 또는 END를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("move 또는 end를 입력해주세요."));
     }
 }

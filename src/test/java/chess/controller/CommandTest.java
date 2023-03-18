@@ -16,7 +16,7 @@ public class CommandTest {
         // expect
         assertThatThrownBy(() -> Command.createStart("end"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("START를 입력해주세요.");
+                .hasMessage("start를 입력해주세요.");
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CommandTest {
         // expect
         assertThatThrownBy(() -> Command.createPlayOrEnd("start"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("MOVE 또는 END를 입력해주세요.");
+                .hasMessage("move 또는 end를 입력해주세요.");
     }
 
     @Test
