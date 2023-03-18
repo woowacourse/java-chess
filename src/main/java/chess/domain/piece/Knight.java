@@ -12,7 +12,7 @@ public final class Knight extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (source.canKnightJump(target)) {
+        if (canKnightJump(source, target)) {
             return Set.of(target);
         }
         throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
@@ -21,5 +21,12 @@ public final class Knight extends Normal {
     @Override
     public Kind getKind() {
         return Kind.KNIGHT;
+    }
+
+    private boolean canKnightJump(final Position source, final Position target) {
+        final var fileSub = Math.abs(source.fileSub(target));
+        final var rankSub = Math.abs(source.rankSub(target));
+
+        return (fileSub == 2 && rankSub == 1) || (fileSub == 1 && rankSub == 2);
     }
 }

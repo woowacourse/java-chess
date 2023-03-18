@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class Bishop extends Normal {
@@ -13,15 +12,20 @@ public final class Bishop extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        try {
+        if (canBishopMove(source, target)) {
             return source.computeDiagonalPath(target);
-        } catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     @Override
     public Kind getKind() {
         return Kind.BISHOP;
+    }
+
+    private boolean canBishopMove(Position source, Position target) {
+        var inclination = source.computeInclination(target);
+
+        return Math.abs(inclination) == 1;
     }
 }

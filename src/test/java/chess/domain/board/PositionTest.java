@@ -32,24 +32,6 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("랭크가 같으면 true를 반환한다.")
-    void isRankEqauls_True() {
-        var source = new Position(File.C, Rank.EIGHT);
-        var target = new Position(File.D, Rank.EIGHT);
-
-        assertThat(source.isRankEquals(target)).isTrue();
-    }
-
-    @Test
-    @DisplayName("랭크가 다르면 false를 반환한다.")
-    void isRankEqauls_False() {
-        var source = new Position(File.C, Rank.FIVE);
-        var target = new Position(File.D, Rank.EIGHT);
-
-        assertThat(source.isRankEquals(target)).isFalse();
-    }
-
-    @Test
     @DisplayName("두 포지션의 기울기를 계산한다.")
     void computeInclination_result1() {
         var source = B4;

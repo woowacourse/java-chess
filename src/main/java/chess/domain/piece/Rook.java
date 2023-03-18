@@ -12,15 +12,22 @@ public final class Rook extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        try {
+        if (canRookMove(source, target)){
             return source.computeCrossPath(target);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+
+        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     @Override
     public Kind getKind() {
         return Kind.ROOK;
+    }
+
+    private boolean canRookMove(final Position source, final Position target) {
+        var fileSub = source.fileSub(target);
+        var rankSub = source.rankSub(target);
+
+        return fileSub == 0 || rankSub == 0;
     }
 }

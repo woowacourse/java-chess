@@ -13,7 +13,7 @@ public final class King extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (source.isNear(target)) {
+        if (canKingMove(source, target)) {
             Set<Position> path = new HashSet<>();
             path.add(target);
 
@@ -26,5 +26,11 @@ public final class King extends Normal {
     @Override
     public Kind getKind() {
         return Kind.KING;
+    }
+
+    private boolean canKingMove(final Position source, final Position target) {
+        var fileSub = Math.abs(source.fileSub(target));
+        var rankSub = Math.abs(source.rankSub(target));
+        return fileSub <= 1 && rankSub <= 1;
     }
 }

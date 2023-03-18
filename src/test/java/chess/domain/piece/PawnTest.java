@@ -53,7 +53,7 @@ class PawnTest {
     @Test
     @DisplayName("폰이 시작위치가 아니면 두칸 전진할 수 없다.")
     void computePath_WhiteTwoException() {
-        final var pawn = new BlackPawn();
+        final var pawn = new WhitePawn();
 
         assertThatThrownBy(() -> pawn.computePathWithValidate(B5, B7))
                 .isInstanceOf(IllegalArgumentException.class);

@@ -6,10 +6,6 @@ import java.util.Set;
 
 public final class Position {
 
-    private static final int NEAR_SQUARES = 1;
-    private static final int TWO_SQUARES = 2;
-    private static final int EQUAL_FILE = 0;
-
     private final File file;
     private final Rank rank;
 
@@ -18,40 +14,36 @@ public final class Position {
         this.rank = rank;
     }
 
-    public static Position maxRank(final Position source, final Position target) {
-        if (source.isRankOver(target)) {
+    private Position maxRank(final Position source, final Position target) {
+        if (source.rank.isOver(target.rank)) {
             return source;
         }
         return target;
     }
 
-    public static Position minRank(final Position source, final Position target) {
-        if (source.isRankOver(target)) {
+    private Position minRank(final Position source, final Position target) {
+        if (source.rank.isOver(target.rank)) {
             return target;
         }
         return source;
     }
 
-    public static Position maxFile(final Position source, final Position target) {
-        if (source.isFileOver(target)) {
+    private Position maxFile(final Position source, final Position target) {
+        if (source.file.isOver(target.file)) {
             return source;
         }
         return target;
     }
 
-    public static Position minFile(final Position source, final Position target) {
-        if (source.isFileOver(target)) {
+    private Position minFile(final Position source, final Position target) {
+        if (source.file.isOver(target.file)) {
             return target;
         }
         return source;
     }
 
-    public boolean isBlackPawnInitRank() {
-        return rank == Rank.SEVEN;
-    }
-
-    public boolean isWhitePawnInitRank() {
-        return rank == Rank.TWO;
+    public boolean isRank(Rank rank) {
+        return this.rank == rank;
     }
 
     public Position getUpStraight() {
@@ -78,78 +70,11 @@ public final class Position {
         return file.equals(target.file);
     }
 
-    public boolean isRankEquals(final Position target) {
-        return rank.equals(target.rank);
-    }
-
-    public boolean isFileOver(final Position target) {
-        return file.isOver(target.file);
-    }
-
-    public boolean isRankOver(final Position target) {
-        return rank.isOver(target.rank);
-    }
-
     public double computeInclination(final Position target) {
-        final var fileSub = target.file.sub(this.file);
-        final var rankSub = target.rank.sub(this.rank);
+        final var fileSub = fileSub(target);
+        final var rankSub = rankSub(target);
 
         return fileSub / (double) rankSub;
-    }
-
-    public boolean isNear(final Position target) {
-        return Math.abs(file.sub(target.file)) <= NEAR_SQUARES && Math.abs(rank.sub(target.rank)) <= NEAR_SQUARES;
-    }
-
-    public boolean canKnightJump(final Position target) {
-
-        final var fileSub = Math.abs(this.file.sub(target.file));
-        final var rankSub = Math.abs(this.rank.sub(target.rank));
-
-        return (fileSub == TWO_SQUARES && rankSub == NEAR_SQUARES) || (fileSub == NEAR_SQUARES && rankSub == TWO_SQUARES);
-    }
-
-    public boolean canWhitePawnMove(final Position target) {
-        int fileSub = target.file.sub(file);
-        int rankSub = target.rank.sub(rank);
-        return (Math.abs(fileSub) <= NEAR_SQUARES && rankSub == NEAR_SQUARES) ||
-                (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
-    }
-
-    public boolean canBlackPawnMove(final Position target) {
-        int fileSub = file.sub(target.file);
-        int rankSub = rank.sub(target.rank);
-        return (Math.abs(fileSub) <= NEAR_SQUARES && rankSub == NEAR_SQUARES) ||
-                (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
-    }
-
-    public int getRank() {
-        return rank.getValue() - NEAR_SQUARES;
-    }
-
-    public int getFile() {
-        return file.getValue() - NEAR_SQUARES;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "rank=" + file +
-                ", file=" + rank +
-                '}';
     }
 
     public Set<Position> computeDiagonalPath(Position target) {
@@ -176,7 +101,7 @@ public final class Position {
 
     private Set<Position> inclinationOne(Position max, Position min) {
         Set<Position> positions = new HashSet<>();
-        while (max.isRankOver(min)) {
+        while (max.rank.isOver(min.rank)) {
             positions.add(max);
             max = max.getLeftDownDiagonal();
         }
@@ -185,7 +110,7 @@ public final class Position {
 
     private Set<Position> inclinationNegativeOne(Position max, Position min) {
         Set<Position> positions = new HashSet<>();
-        while (max.isRankOver(min)) {
+        while (max.rank.isOver(min.rank)) {
             max = max.getRightDownDiagonal();
             positions.add(max);
         }
@@ -213,7 +138,7 @@ public final class Position {
         var min = minRank(this, target);
 
         Set<Position> path = new HashSet<>();
-        while (max.isRankOver(min)) {
+        while (max.rank.isOver(min.rank)) {
             path.add(max);
             max = max.getDownStraight();
         }
@@ -225,7 +150,7 @@ public final class Position {
         var min = minFile(this, target);
 
         Set<Position> path = new HashSet<>();
-        while (max.isFileOver(min)) {
+        while (max.file.isOver(min.file)) {
             path.add(max);
             max = max.getLeftStraight();
         }
@@ -241,5 +166,42 @@ public final class Position {
         }
 
         throw new IllegalArgumentException("십자 또는 대각 경로를 구할 수 없는 위치입니다.");
+    }
+
+    public int fileSub(final Position target) {
+        return file.sub(target.file);
+    }
+
+    public int rankSub(final Position target) {
+        return rank.sub(target.rank);
+    }
+
+    public int getRank() {
+        return rank.getValue() - 1;
+    }
+
+    public int getFile() {
+        return file.getValue() - 1;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + file +
+                ", file=" + rank +
+                '}';
     }
 }

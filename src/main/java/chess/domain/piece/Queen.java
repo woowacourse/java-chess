@@ -12,15 +12,23 @@ public final class Queen extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        try{
+        if (canQueenMove(source, target)){
             return source.computeCrossOrDiagonalPath(target);
-        } catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+
+        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     @Override
     public Kind getKind() {
         return Kind.QUEEN;
+    }
+
+    private boolean canQueenMove(final Position source, final Position target) {
+        var fileSub = source.fileSub(target);
+        var rankSub = source.rankSub(target);
+        var inclination = source.computeInclination(target);
+
+        return fileSub == 0 || rankSub == 0 || Math.abs(inclination) == 1;
     }
 }
