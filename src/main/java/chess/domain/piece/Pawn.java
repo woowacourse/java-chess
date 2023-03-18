@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 
 public class Pawn extends Piece {
-
+    
     private static final String name = "p";
-    private static final String MOVE_FORWARD_ERROR_GUIDE_MESSAGE = "도착점에 기물이 있어 Pawn은 앞으로 이동할 수 없습니다";
+    public static final String DIRECTION_ERROR_MESSAGE = "Pawn이 이동할 수 있는 방향이 아닙니다";
+    public static final String DISTANCE_ERROR_MESSAGE = "Pawn이 한 번에 이동할 수 있는 거리가 아닙니다";
+    private static final String MOVE_FORWARD_ERROR_GUIDE_MESSAGE = "Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다";
     private static final String MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE = "Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다";
     private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
     private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
@@ -33,48 +35,49 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(Position start, Position end, Color colorOfDestination) {
         Direction direction = findDirectionToMove(start, end);
+
         checkMovableDirection(direction);
-        checkMovableAtOnce(start, end);
+        checkMovableDistance(start, end);
         checkMovableToDestination(colorOfDestination, direction);
+        isFirstMove = false;
         return true;
     }
 
-    public void checkMovableDirection(Direction direction) {
-        if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("pawn이 이동할 수 있는 방향이 아닙니다");
+    protected void checkMovableDirection(Direction direction) {
+        if (!movableDirection.contains(direction)) {
+            throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
         }
     }
 
-    public void checkMovableAtOnce(Position start, Position end) {
-        int absGapOfColumn = Math.abs(start.findGapOfColum(end));
-        int absGapOfRank = Math.abs(start.findGapOfRank(end));
-
-        if (isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
-            throw new IllegalArgumentException("pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+    private void checkMovableDistance(Position start, Position end) {
+        int distanceOfColumns = Math.abs(start.findGapOfColum(end));
+        int distanceOfRanks = Math.abs(start.findGapOfRank(end));
+        if (isFirstMove) {
+            checkMovableDistanceWhenFirstMove(distanceOfColumns, distanceOfRanks);
         }
+        checkMovableDistanceAfterFirstMove(distanceOfColumns, distanceOfRanks);
+    }
 
-        if(!isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE){
-            throw new IllegalArgumentException("pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+    private void checkMovableDistanceWhenFirstMove(int distanceOfColumns, int distanceOfRanks) {
+        if (distanceOfColumns > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE
+                || distanceOfRanks > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
+            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
+        }
+    }
+
+    private static void checkMovableDistanceAfterFirstMove(int distanceOfColumns, int distanceOfRanks) {
+        if (distanceOfColumns > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE
+                || distanceOfRanks > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE) {
+            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination, Direction direction) {
-        if(isForwardDirection(direction)) {
+        if (isForwardDirection(direction)) {
             checkMoveForward(colorOfDestination);
         }
-
-        if(isDiagonalDirection(direction)){
+        if (isDiagonalDirection(direction)) {
             checkMoveDiagonal(colorOfDestination);
-        }
-    }
-
-    public void checkMoveForward(Color colorOfDestination) {
-        if (colorOfDestination != Color.NONE) {
-            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE);
         }
     }
 
@@ -82,9 +85,9 @@ public class Pawn extends Piece {
         return direction == Direction.TOP || direction == Direction.BOTTOM;
     }
 
-    public void checkMoveDiagonal(Color colorOfDestination) {
-        if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE);
+    private void checkMoveForward(Color colorOfDestination) {
+        if (colorOfDestination != Color.NONE) {
+            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE);
         }
     }
 
@@ -92,4 +95,10 @@ public class Pawn extends Piece {
         return direction != Direction.TOP && direction != Direction.BOTTOM;
     }
 
+
+    private void checkMoveDiagonal(Color colorOfDestination) {
+        if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
+            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE);
+        }
+    }
 }
