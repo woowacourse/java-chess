@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    Board board;
+    private Board board;
 
     @BeforeEach
     void setUp() {

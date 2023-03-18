@@ -25,15 +25,9 @@ class BoardFactoryTest {
         final BoardFactory boardFactory = new BoardFactory();
 
         final Map<Position, Piece> board = boardFactory.createInitialBoard().board();
-        final Map<Class<? extends Piece>, Integer> result =
-                board.values()
-                        .stream()
-                        .collect(
-                                Collectors.groupingBy(Piece::getClass,
-                                        Collectors.summingInt(
-                                                value -> 1)
-                                )
-                        );
+        final Map<? extends Class<? extends Piece>, Long> result = board.values()
+                .stream()
+                .collect(Collectors.groupingBy(Piece::getClass, Collectors.counting()));
 
         assertAll(
                 () -> assertEquals(board.size(), 32),

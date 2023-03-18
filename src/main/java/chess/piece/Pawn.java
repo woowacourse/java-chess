@@ -33,7 +33,6 @@ public class Pawn extends Piece {
             Color.WHITE, 2
     );
 
-
     public Pawn(final Color color) {
         super(color);
     }
