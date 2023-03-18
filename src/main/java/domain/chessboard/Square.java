@@ -40,6 +40,14 @@ public class Square {
         return squareStatus;
     }
 
+    public boolean isEqualType(final Type type) {
+        return squareStatus.getType() == type;
+    }
+
+    public boolean isDifferentType(final Type type) {
+        return squareStatus.getType() != type;
+    }
+
     public Type getType() {
         return squareStatus.getType();
     }

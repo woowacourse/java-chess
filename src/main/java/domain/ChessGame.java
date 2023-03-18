@@ -62,7 +62,7 @@ public class ChessGame {
     }
 
     private void checkPawn(final Position source, final Position target, final Square startPoint, final Square endPoint) {
-        if (startPoint.getType().equals(PieceType.PAWN)) {
+        if (startPoint.isEqualType(PieceType.PAWN)) {
             validatePawnDestination(source, target, endPoint);
         }
     }
@@ -76,15 +76,15 @@ public class ChessGame {
     }
 
     private boolean isStraightMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.getType() == EmptyType.EMPTY && source.isStraight(target);
+        return endPoint.isEqualType(EmptyType.EMPTY) && source.isStraight(target);
     }
 
     private boolean isDiagonallyMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.getType() == EmptyType.EMPTY || (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
+        return endPoint.isEqualType(EmptyType.EMPTY) || (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
     }
 
     private void checkTarget(final Square endPoint) {
-        if ((endPoint.getType() != EmptyType.EMPTY && endPoint.isSameColor(colorTurn))) {
+        if ((endPoint.isDifferentType(EmptyType.EMPTY) && endPoint.isSameColor(colorTurn))) {
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }
