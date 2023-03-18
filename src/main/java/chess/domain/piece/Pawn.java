@@ -7,12 +7,12 @@ import chess.domain.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
-    
+
     private static final String name = "p";
     public static final String DIRECTION_ERROR_MESSAGE = "Pawn이 이동할 수 있는 방향이 아닙니다";
     public static final String DISTANCE_ERROR_MESSAGE = "Pawn이 한 번에 이동할 수 있는 거리가 아닙니다";
-    private static final String MOVE_FORWARD_ERROR_GUIDE_MESSAGE = "Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다";
-    private static final String MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE = "Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다";
+    private static final String MOVE_FORWARD_ERROR_MESSAGE = "Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다";
+    private static final String MOVE_DIAGONAL_ERROR_MESSAGE = "Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다";
     private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
     private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
     private final List<Direction> movableDirection;
@@ -87,7 +87,7 @@ public class Pawn extends Piece {
 
     private void checkMoveForward(Color colorOfDestination) {
         if (colorOfDestination != Color.NONE) {
-            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE);
+            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_MESSAGE);
         }
     }
 
@@ -98,7 +98,7 @@ public class Pawn extends Piece {
 
     private void checkMoveDiagonal(Color colorOfDestination) {
         if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE);
+            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_MESSAGE);
         }
     }
 }
