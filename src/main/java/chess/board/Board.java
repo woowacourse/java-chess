@@ -19,7 +19,7 @@ public class Board {
         return board;
     }
 
-    public void move(Position from, Position to, final Color turn) {
+    public void move(final Position from, final Position to, final Color turn) {
         validateCanMove(from, to, turn);
         movePiece(from, to);
     }
@@ -40,15 +40,15 @@ public class Board {
         }
     }
 
-    private void validateIsDifferentColor(final Position from, final Color turn) {
-        if (!board.get(from).isSameColor(turn)) {
-            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
-        }
-    }
-
     private void validateIsFromEmpty(final Position from) {
         if (!board.containsKey(from)) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
+        }
+    }
+
+    private void validateIsDifferentColor(final Position from, final Color turn) {
+        if (!board.get(from).isSameColor(turn)) {
+            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }
 

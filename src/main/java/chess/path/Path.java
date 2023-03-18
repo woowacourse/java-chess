@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Path {
 
-    private List<Position> positions;
+    private final List<Position> positions;
 
     public Path(final List<Position> positions) {
         this.positions = positions;

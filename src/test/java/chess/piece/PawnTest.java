@@ -7,6 +7,7 @@ import chess.path.Path;
 import chess.position.Position;
 import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,7 @@ class PawnTest {
     @Nested
     class searchPathTo {
 
+        @DisplayName("초기 위치에서 1칸 앞으로 전진할 수 있다..")
         @Test
         void test_searchPathTo() {
 
@@ -29,6 +31,7 @@ class PawnTest {
                     .containsExactly();
         }
 
+        @DisplayName("초기 위치에서는 2칸 앞으로 전진할 수 있다.")
         @Test
         void test_searchPathTo2() {
 
@@ -41,6 +44,7 @@ class PawnTest {
                     .containsExactly(new Position(1, 3));
         }
 
+        @DisplayName("대각선으로 이동하는 경우, 다른 색 말이 도착지에 있으면 이동할 수 있다.")
         @Test
         void test_searchPathTo3() {
             Position to = new Position(2, 3);
@@ -53,6 +57,7 @@ class PawnTest {
                     .containsExactly();
         }
 
+        @DisplayName("대각선으로 이동하는 경우, 같은 색 말이 도착지에 있으면 이동할 수 없다.")
         @Test
         void test_searchPathTo4() {
             Position to = new Position(2, 3);
@@ -63,13 +68,14 @@ class PawnTest {
                     .isInstanceOf(IllegalStateException.class);
         }
 
+        @DisplayName("초기 위치가 아니면 2칸 이동할 수 없다.")
         @Test
         void test_searchPathTo5() {
-            Position from = new Position(2, 5);
-            Position to = new Position(3, 4);
-            Piece piece = new Pawn(Color.BLACK);
+            Pawn pawn = new Pawn(Color.WHITE);
 
-            Path path = piece.searchPathTo(from, to, Optional.of(new Pawn(Color.WHITE)));
+            assertThatThrownBy(() ->
+                    pawn.searchPathTo(new Position(2, 4), new Position(2, 6), Optional.empty()))
+                    .isInstanceOf(IllegalStateException.class);
         }
     }
 }

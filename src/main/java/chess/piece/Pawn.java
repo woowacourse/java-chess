@@ -65,14 +65,29 @@ public class Pawn extends Piece {
             throw new IllegalStateException("움직일 수 있는 방향이 아님!");
         }
 
-        if (from.isSameRank(INITIAL_POSITION_RANK.get(color))
-                && rankDifference(from, to) == INITIAL_RANK_DIFFERENCE.get(color)) {
+        if (isMoveOneStep(from, to)) {
+            return new Path();
+        }
+
+        if (isInInitialPosition(from) && isMoveTwoSteps(from, to)) {
             final Position wayPoint = from.moveBy(CAN_MOVE_EMPTY_DESTINATION.get(color));
 
             return new Path(wayPoint);
         }
 
-        return new Path();
+        throw new IllegalStateException("움직일 수 있는 방법이 아님!");
+    }
+
+    private boolean isMoveOneStep(final Position from, final Position to) {
+        return Math.abs(rankDifference(from, to)) == 1;
+    }
+
+    private boolean isMoveTwoSteps(final Position from, final Position to) {
+        return rankDifference(from, to) == INITIAL_RANK_DIFFERENCE.get(color);
+    }
+
+    private boolean isInInitialPosition(final Position from) {
+        return from.isSameRank(INITIAL_POSITION_RANK.get(color));
     }
 
     private int rankDifference(final Position from, final Position to) {
