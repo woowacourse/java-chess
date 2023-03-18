@@ -1,6 +1,13 @@
 package chess.domain.board;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum RankCoordinate {
     EIGHT(8),
@@ -44,5 +51,21 @@ public enum RankCoordinate {
 
     public boolean isPawnRank() {
         return this == RankCoordinate.TWO || this == RankCoordinate.SEVEN;
+    }
+
+    public List<RankCoordinate> betweenRanks(RankCoordinate other) {
+        List<RankCoordinate> result = IntStream.range(min(rowNumber, other.rowNumber), max(rowNumber, other.rowNumber))
+                .skip(1)
+                .mapToObj(RankCoordinate::findBy)
+                .collect(Collectors.toList());
+        if (rowNumber > other.rowNumber) {
+            Collections.reverse(result);
+        }
+        return result;
+    }
+
+
+    public int calculateGap(final RankCoordinate other) {
+        return rowNumber - other.rowNumber;
     }
 }

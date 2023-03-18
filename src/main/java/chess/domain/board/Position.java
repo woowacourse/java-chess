@@ -1,12 +1,13 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Position {
-
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
@@ -16,73 +17,50 @@ public class Position {
         this.rankCoordinate = rankCoordinate;
     }
 
+    public int calculateFileGap(Position targetPosition) {
+        return fileCoordinate.calculateGap(targetPosition.fileCoordinate);
+    }
+
+    public int calculateRankGap(Position targetPosition) {
+        return rankCoordinate.calculateGap(targetPosition.rankCoordinate);
+    }
+
     public List<Position> findPath(Position targetPosition) {
-        int nowFileCoordinate = this.getColumn();
-        int nowRankCoordinate = this.getRow();
-        int targetFileCoordinate = targetPosition.getColumn();
-        int targetRankCoordinate = targetPosition.getRow();
+        List<RankCoordinate> betweenRanks = rankCoordinate.betweenRanks(targetPosition.rankCoordinate);
+        List<FileCoordinate> betweenFiles = fileCoordinate.betweenFiles(targetPosition.fileCoordinate);
 
-        if (nowFileCoordinate == targetFileCoordinate) {
-            return getPathByRank(targetRankCoordinate);
+        if (calculateFileGap(targetPosition) == 0 || calculateRankGap(targetPosition) == 0) {
+            return betweenStraight(betweenRanks, betweenFiles);
         }
-        if (nowRankCoordinate == targetRankCoordinate) {
-            return getPathByFile(targetFileCoordinate);
+        if (betweenRanks.size() != betweenFiles.size()) {
+            return Collections.emptyList();
         }
-        if (Math.abs(nowFileCoordinate - targetFileCoordinate) == Math.abs(nowRankCoordinate - targetRankCoordinate)) {
-            return getPathByDiagonal(targetFileCoordinate, targetRankCoordinate);
-        }
-        return Collections.emptyList();
+        return getPathByDiagonal(betweenRanks, betweenFiles);
     }
 
-    private List<Position> getPathByDiagonal(int targetFileCoordinate, int targetRankCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowFileCoordinate = this.getColumn();
-        int nowRankCoordinate = this.getRow();
-
-        int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-
-        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
-            nowFileCoordinate += columnStep;
-            nowRankCoordinate += rowStep;
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    RankCoordinate.findBy(nowRankCoordinate));
-            paths.add(position);
+    private List<Position> betweenStraight(List<RankCoordinate> ranks, List<FileCoordinate> files) {
+        if (files.isEmpty()) {
+            return betweenRankStraight(ranks);
         }
-        return paths;
+        return betweenFileStraight(files);
     }
 
-    private List<Position> getPathByFile(int targetFileCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowFileCoordinate = this.getColumn();
-        int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
-            nowFileCoordinate += columnStep;
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    this.getRankCoordinate());
-            paths.add(position);
-        }
-        return paths;
+    private List<Position> betweenRankStraight(final List<RankCoordinate> ranks) {
+        return ranks.stream()
+                .map(rank -> new Position(fileCoordinate, rank))
+                .collect(toList());
     }
 
-    private List<Position> getPathByRank(int targetRankCoordinate) {
-        List<Position> paths = new ArrayList<>();
-        int nowRankCoordinate = this.getRow();
-        int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-        while (nowRankCoordinate + rowStep != targetRankCoordinate) {
-            nowRankCoordinate += rowStep;
-            Position position = new Position(this.getFileCoordinate(),
-                    RankCoordinate.findBy(nowRankCoordinate));
-            paths.add(position);
-        }
-        return paths;
+    private List<Position> betweenFileStraight(final List<FileCoordinate> files) {
+        return files.stream()
+                .map(file -> new Position(file, rankCoordinate))
+                .collect(toList());
     }
 
-    private int getStep(int nowCoordinate, int targetCoordinate) {
-        if (nowCoordinate - targetCoordinate > 0) {
-            return -1;
-        }
-        return 1;
+    private List<Position> getPathByDiagonal(List<RankCoordinate> ranks, List<FileCoordinate> files) {
+        return IntStream.range(0, ranks.size())
+                .mapToObj(index -> new Position(files.get(index), ranks.get(index)))
+                .collect(toList());
     }
 
     public FileCoordinate getFileCoordinate() {

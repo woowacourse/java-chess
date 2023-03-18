@@ -74,4 +74,14 @@ class PositionTest {
         assertThat(path).containsOnly(C_5, C_6);
         assertThat(reversePath).containsOnly(C_5, C_6);
     }
+
+    @Test
+    void 출발과_도착_file의_차이를_계산한다() {
+        assertThat(B_1.calculateFileGap(F_7)).isEqualTo(-4);
+    }
+
+    @Test
+    void 출발과_도착_rank의_차이를_계산한다() {
+        assertThat(B_1.calculateRankGap(F_7)).isEqualTo(-6);
+    }
 }

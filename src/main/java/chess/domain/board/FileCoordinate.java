@@ -1,6 +1,13 @@
 package chess.domain.board;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum FileCoordinate {
     A(1),
@@ -28,5 +35,21 @@ public enum FileCoordinate {
 
     public int getColumnNumber() {
         return columnNumber;
+    }
+
+    public List<FileCoordinate> betweenFiles(FileCoordinate other) {
+        List<FileCoordinate> result = IntStream.range(min(columnNumber, other.columnNumber),
+                        max(columnNumber, other.columnNumber))
+                .skip(1)
+                .mapToObj(FileCoordinate::findBy)
+                .collect(Collectors.toList());
+        if (columnNumber > other.columnNumber) {
+            Collections.reverse(result);
+        }
+        return result;
+    }
+
+    public int calculateGap(final FileCoordinate other) {
+        return columnNumber - other.columnNumber;
     }
 }
