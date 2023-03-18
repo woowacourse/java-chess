@@ -32,27 +32,31 @@ public class ChessController {
 
     private void play() {
         try {
-            playUntilMove();
+            playUntilStop();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             play();
         }
     }
 
-    private void playUntilMove() {
+    private void playUntilStop() {
         List<String> command = InputView.readCommand();
         while (Command.from(command).isMoveCommand()) {
             move(command.get(1), command.get(2));
             OutputView.printGameStatus(chessGame.getGameStatus());
             command = InputView.readCommand();
         }
-        if (Command.from(command).isStartCommand()) {
-            start();
-        }
+        checkStart(command);
     }
 
     private void move(String current, String destination) {
         SquareMoveDto moveDto = SquareMoveDto.from(current, destination);
         chessGame.move(moveDto);
+    }
+
+    private void checkStart(final List<String> command) {
+        if (Command.from(command).isStartCommand()) {
+            start();
+        }
     }
 }
