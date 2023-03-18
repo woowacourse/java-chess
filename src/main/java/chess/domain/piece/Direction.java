@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 import java.util.Arrays;
 
-public enum Direction{
+public enum Direction {
     TOP(0, 1),
     BOTTOM(0, -1),
     LEFT(-1, 0),
@@ -25,25 +25,19 @@ public enum Direction{
     private static final String NO_DIRECTION_ERROR_GUIDE_MESSAGE = "일치하는 Direction 값이 없습니다";
     private final int x;
     private final int y;
+
     Direction(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    public static Direction findDirectionByGap(Position start, Position end) {
-        int gapOfRanks = start.findGapOfRank(end);
-        int gapOfColumns = start.findGapOfColum(end);
-        int absX = Math.abs(gapOfColumns);
-        int absY = Math.abs(gapOfRanks);
 
-        return Arrays.stream(Direction.values())
-                .filter(direction -> {
-                    if(hasExactlySameDirectionWith(gapOfColumns, gapOfColumns)) {
-                        return direction.x == gapOfColumns && direction.y == gapOfRanks;
-                    }
-                    return direction.x * absX ==  gapOfColumns && direction.y * absY == gapOfRanks;
-                })
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
+    public static Direction findDirectionByGap(Position start, Position end) {
+        int distanceOfColumns = start.findGapOfColumn(end);
+        int distanceOfRanks = start.findGapOfRank(end);
+        if (hasExactlySameDirectionWith(distanceOfColumns, distanceOfRanks)) {
+            return findDirectionHasExactlySameUnitVector(distanceOfColumns, distanceOfRanks);
+        }
+        return findDirectionHasSameUnitVector(distanceOfColumns, distanceOfRanks);
     }
 
     private static boolean hasExactlySameDirectionWith(int gapOfColumns, int gapOfRanks) {
@@ -51,6 +45,22 @@ public enum Direction{
                 .anyMatch(direction -> direction.x == gapOfColumns && direction.y == gapOfRanks);
     }
 
+    private static Direction findDirectionHasExactlySameUnitVector(int distanceOfColumns, int distanceOfRanks) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.x == distanceOfColumns && direction.y == distanceOfRanks)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
+    }
+
+    private static Direction findDirectionHasSameUnitVector(int distanceOfColumns, int distanceOfRanks) {
+        int absX = Math.abs(distanceOfColumns);
+        int absY = Math.abs(distanceOfRanks);
+
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.x * absX == distanceOfColumns && direction.y * absY == distanceOfRanks)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
+    }
     public int getX() {
         return x;
     }
