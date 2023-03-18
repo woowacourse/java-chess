@@ -18,7 +18,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new BoardFactory());
+        board = new BoardFactory().createInitialBoard();
     }
 
     @DisplayName("빈 출발점을 선택하는 경우 예외 처리한다.")

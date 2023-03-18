@@ -11,8 +11,8 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(final BoardFactory boardFactory) {
-        this.board = boardFactory.createInitialBoard();
+    public Board(final Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public Map<Position, Piece> board() {

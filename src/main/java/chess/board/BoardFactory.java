@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    public Map<Position, Piece> createInitialBoard() {
+    public Board createInitialBoard() {
         Map<Position, Piece> board = new HashMap<>();
 
         board.putAll(createPawn());
@@ -41,7 +41,7 @@ public class BoardFactory {
         board.putAll(createRook());
         board.putAll(createKnight());
 
-        return board;
+        return new Board(board);
     }
 
     private Map<Position, Piece> createPawn() {

@@ -24,7 +24,7 @@ class BoardFactoryTest {
     void test_createInitialBoard() {
         final BoardFactory boardFactory = new BoardFactory();
 
-        final Map<Position, Piece> board = boardFactory.createInitialBoard();
+        final Map<Position, Piece> board = boardFactory.createInitialBoard().board();
         final Map<Class<? extends Piece>, Integer> result =
                 board.values()
                         .stream()

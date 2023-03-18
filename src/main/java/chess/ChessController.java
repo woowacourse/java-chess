@@ -13,10 +13,8 @@ public class ChessController {
     private final Board board;
 
     public ChessController() {
-        BoardFactory boardFactory = new BoardFactory();
-        this.board = new Board(boardFactory);
+        this.board = new BoardFactory().createInitialBoard();
     }
-
 
     public void run() {
         String command = InputView.readStartCommand();
@@ -32,7 +30,7 @@ public class ChessController {
         }
     }
 
-    private static Position searchPosition(final List<String> moveCommand, final int index) {
+    private Position searchPosition(final List<String> moveCommand, final int index) {
         String from = moveCommand.get(index);
 
         int fromFile = from.charAt(0) - 'a' + 1;
@@ -51,7 +49,7 @@ public class ChessController {
         board.move(from, to, turn);
     }
 
-    private static Color changeTurn(Color color) {
+    private Color changeTurn(Color color) {
         return color.opposite();
     }
 }
