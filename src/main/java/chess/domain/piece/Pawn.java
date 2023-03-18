@@ -1,30 +1,42 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
-import chess.domain.move.Move;
-import java.util.List;
+import static chess.domain.move.Direction.LEFT;
+import static chess.domain.move.Direction.RIGHT;
+import static chess.domain.move.Direction.UP;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import chess.domain.move.Axis;
+import chess.domain.move.Move;
+
 public class Pawn extends Piece {
 
-    private static final Move WHITE_UNIT_MOVE = new Move(List.of(Direction.UP));
+    private static final Set<Move> WHITE_UNTOUCHED_MOVES = Set.of(new Move(UP), new Move(UP, UP));
+    private static final Set<Move> WHITE_TOUCHED_MOVES = Set.of(new Move(UP));
+    private static final Set<Move> WHITE_ATTACK_MOVES = Set.of(new Move(UP, RIGHT), new Move(UP, LEFT));
     private static final int UNTOUCHED_MOVE_SIZE = 2;
 
     public Pawn(boolean isWhite) {
-        super(isWhite, setUpMoves(isWhite));
+        super(isWhite, setUpUntouchedMoves(isWhite));
     }
 
     private Pawn(boolean isWhite, Set<Move> moves) {
         super(isWhite, moves);
     }
 
-    private static Set<Move> setUpMoves(boolean isWhite) {
-        Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE, WHITE_UNIT_MOVE.repeat(2));
+    private static Set<Move> setUpUntouchedMoves(boolean isWhite) {
         if (isWhite) {
-            return whiteMoves;
+            return WHITE_UNTOUCHED_MOVES;
         }
-        return convertColor(whiteMoves);
+        return convertColor(WHITE_UNTOUCHED_MOVES);
+    }
+
+    private static Pawn createTouched(boolean isWhite) {
+        if (isWhite) {
+            return new Pawn(isWhite, WHITE_TOUCHED_MOVES);
+        }
+        return new Pawn(isWhite, convertColor(WHITE_TOUCHED_MOVES));
     }
 
     private static Set<Move> convertColor(Set<Move> moves) {
@@ -36,17 +48,9 @@ public class Pawn extends Piece {
     @Override
     public Piece touch() {
         if (isUntouched()) {
-            return createTouchedPawn();
+            return createTouched(isWhite);
         }
         return this;
-    }
-
-    private Pawn createTouchedPawn() {
-        Set<Move> whiteMoves = Set.of(WHITE_UNIT_MOVE);
-        if (isWhite) {
-            return new Pawn(true, whiteMoves);
-        }
-        return new Pawn(false, convertColor(whiteMoves));
     }
 
     private boolean isUntouched() {
@@ -54,22 +58,16 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean hasAttackMove(Move attackMove) {
-        boolean hasAttackMove = false;
-        for (Move pieceMove : getAttackMoves()) {
-            hasAttackMove = hasAttackMove || compareMove(pieceMove, attackMove);
-        }
-        return hasAttackMove;
+    public boolean hasAttackMove(Move move) {
+        return getAttackMoves().stream()
+                .anyMatch(it -> compareMove(it, move));
     }
 
     private Set<Move> getAttackMoves() {
-        Set<Move> whiteAttackMoves = Set.of(
-                new Move(Direction.UP, Direction.RIGHT),
-                new Move(Direction.UP, Direction.LEFT));
         if (isWhite) {
-            return whiteAttackMoves;
+            return WHITE_ATTACK_MOVES;
         }
-        return convertColor(whiteAttackMoves);
+        return convertColor(WHITE_ATTACK_MOVES);
     }
 
     @Override
