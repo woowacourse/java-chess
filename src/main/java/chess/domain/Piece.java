@@ -15,10 +15,6 @@ public class Piece {
         moveState = pieceType.getState();
     }
 
-    public Piece(String type, Color color) {
-        this(PieceType.from(type), color);
-    }
-
     public static Piece empty() {
         return empty;
     }

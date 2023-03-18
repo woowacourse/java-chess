@@ -16,7 +16,7 @@ class PieceTest {
     @Test
     void 피스_이름_가져오기_테스트() {
         //given
-        Piece piece = new Piece("p", Color.WHITE);
+        Piece piece = new Piece(PieceType.PAWN, Color.WHITE);
 
         //when
         PieceType result = piece.getType();
