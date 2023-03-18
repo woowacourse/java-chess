@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public String readChessExecuteCommand() {
         return scanner.nextLine();
