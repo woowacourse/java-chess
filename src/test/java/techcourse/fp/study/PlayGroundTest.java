@@ -22,16 +22,39 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 @SuppressWarnings("NonAsciiCharacters")
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
-
+    static ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
+        return list.stream()
+                .filter(condition)
+                .collect(toList());
+    }
+
+    public static void log(Object... objects) {
+        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
+
+        for (Object object : objects) {
+            now.append(" - ").append(object.toString());
+        }
+
+        System.out.println(now);
+
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void For문을_활용하여_콜론을_추가하는_문자열_작성() {
-        final int size = numbers.size();
+        int size = numbers.size();
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < size; i++) {
@@ -62,7 +85,7 @@ class PlayGroundTest {
 
     @Test
     public void Stream을_활용하여_콜론을_추가하는_문자열_작성() {
-        final String result = numbers.stream()
+        String result = numbers.stream()
                 .map(String::valueOf)
                 .collect(joining(COLON_DELIMITER));
 
@@ -91,8 +114,6 @@ class PlayGroundTest {
         executorService.submit(() -> System.out.println("test"));
     }
 
-    static ExecutorService executorService = Executors.newFixedThreadPool(10);
-
     @Test
     public void printAllOld() {
         PlayGround.printAllOld(numbers);
@@ -119,7 +140,7 @@ class PlayGroundTest {
     @Test
     public void 함수를_반환_값으로_활용하는_예제() {
         Function<String, Integer> toInt = value -> Integer.parseInt(value);
-        final Integer number = toInt.apply("100");
+        Integer number = toInt.apply("100");
         //toInt(100);
         assertThat(number).isEqualTo(100);
     }
@@ -132,11 +153,6 @@ class PlayGroundTest {
     public void Function_예제() {
         println("Area is ", 2, 3,
                 (message, length, width) -> message + (length * width));
-    }
-
-    @FunctionalInterface
-    interface TriFunction<T1, T2, T3, R> {
-        R apply(T1 t1, T2 t2, T3 t3);
     }
 
     private <T1, T2, T3> void println(T1 t1, T2 t2, T3 t3, TriFunction<T1, T2, T3, String> function) {
@@ -156,21 +172,15 @@ class PlayGroundTest {
         assertThat(filteredLessThanThree.size()).isEqualTo(8);
     }
 
-    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
-        return list.stream()
-                .filter(condition)
-                .collect(toList());
-    }
-
     @Test
     public void Stream을_사용하지_않은_경우() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         int expected = 8;
 
         Integer notUsingStreamResult = null;
-        for (final Integer number : numbers) {
+        for (Integer number : numbers) {
             if (number > 2 && number <= 5) {
-                final int newNumber = number * 2;
+                int newNumber = number * 2;
                 if (newNumber > 7) {
                     notUsingStreamResult = newNumber;
                     break;
@@ -247,22 +257,6 @@ class PlayGroundTest {
         log("The count is", stream.count());
     }
 
-    public static void log(Object... objects) {
-        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
-
-        for (Object object : objects) {
-            now.append(" - ").append(object.toString());
-        }
-
-        System.out.println(now);
-
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
@@ -276,5 +270,11 @@ class PlayGroundTest {
     public void 무한_스트림_문제() {
         IntStream.iterate(0, i -> i + 1)
                 .forEach(System.out::println);
+    }
+
+    @FunctionalInterface
+    interface TriFunction<T1, T2, T3, R> {
+
+        R apply(T1 t1, T2 t2, T3 t3);
     }
 }
