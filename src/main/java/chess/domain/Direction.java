@@ -1,9 +1,4 @@
-package chess.practiceMove;
-
-import chess.domain.Position;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Piece;
+package chess.domain;
 
 import java.util.Arrays;
 
@@ -32,21 +27,26 @@ public enum Direction{
         this.x = x;
         this.y = y;
     }
-    public static Direction findDirectionByGap(Position start, Position end, Piece piece) {
-        int gapOfRank = start.findGapOfRank(end);
-        int gapOfColumn = start.findGapOfColum(end);
-        int absX = Math.abs(gapOfColumn);
-        int absY = Math.abs(gapOfRank);
+    public static Direction findDirectionByGap(Position start, Position end) {
+        int gapOfRanks = start.findGapOfRank(end);
+        int gapOfColumns = start.findGapOfColum(end);
+        int absX = Math.abs(gapOfColumns);
+        int absY = Math.abs(gapOfRanks);
 
         return Arrays.stream(Direction.values())
                 .filter(direction -> {
-                    if(piece instanceof Knight) {
-                        return direction.x == gapOfColumn && direction.y == gapOfRank;
+                    if(hasExactlySameDirectionWith(gapOfColumns, gapOfColumns)) {
+                        return direction.x == gapOfColumns && direction.y == gapOfRanks;
                     }
-                    return direction.x * absX ==  gapOfColumn && direction.y * absY == gapOfRank;
+                    return direction.x * absX ==  gapOfColumns && direction.y * absY == gapOfRanks;
                 })
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
+    }
+
+    private static boolean hasExactlySameDirectionWith(int gapOfColumns, int gapOfRanks) {
+        return Arrays.stream(values())
+                .anyMatch(direction -> direction.x == gapOfColumns && direction.y == gapOfRanks);
     }
 
     public int getX() {
