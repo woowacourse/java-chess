@@ -14,11 +14,12 @@ public class ChessGame {
     }
 
     public void move(final Coordinate start, final Coordinate end) {
-        if (isMovable(start, end)) {
-            Square findSquare = board.findSquare(start);
-            board.replaceWithEmptySquare(start);
-            board.replaceSquare(end, findSquare);
+        if (!isMovable(start, end)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치로 가는 경로에 기물이 이미 존재합니다.");
         }
+        Square findSquare = board.findSquare(start);
+        board.replaceWithEmptySquare(start);
+        board.replaceSquare(end, findSquare);
     }
 
     private boolean isMovable(final Coordinate start, final Coordinate end) {
@@ -32,7 +33,7 @@ public class ChessGame {
     }
 
     private boolean isEmptySquareAt(final Coordinate target) {
-        return board.isSquareNotEmptyAt(target);
+        return board.isSquareEmptyAt(target);
     }
 
     private boolean isNotBlocked(final Coordinate start, final Coordinate end) {
@@ -47,7 +48,7 @@ public class ChessGame {
         Coordinate directionVector = DirectionVector.calculate(start, end);
         Coordinate indexCoordinate = start.add(directionVector);
 
-        while (!board.isSquareNotEmptyAt(indexCoordinate) &&
+        while (board.isSquareEmptyAt(indexCoordinate) &&
                 !indexCoordinate.equals(end)) {
             indexCoordinate = indexCoordinate.add(directionVector);
         }

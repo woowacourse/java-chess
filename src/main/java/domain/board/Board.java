@@ -45,8 +45,8 @@ public class Board {
                 .isMovableAt(start, end);
     }
 
-    public boolean isSquareNotEmptyAt(final Coordinate target) {
-        return ranks.get(target.getRow())
+    public boolean isSquareEmptyAt(final Coordinate target) {
+        return !ranks.get(target.getRow())
                 .isExistSquare(target.getCol());
     }
 
