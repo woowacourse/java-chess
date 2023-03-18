@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public class Board {
 
-    private final List<Piece> pieces;
+    private final List<Piece> existingPieces;
 
     private Board(final List<Piece> pieces) {
-        this.pieces = pieces;
+        this.existingPieces = pieces;
     }
 
     public static Board createBoardWith(final PiecesGenerator piecesGenerator) {
@@ -22,32 +22,27 @@ public class Board {
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
-        final Piece pieceToMove = findPieceToMoveIn(currentPosition);
+        final Piece pieceToMove = findPieceOrElseThrowIn(currentPosition);
         final List<Position> passingPositions = pieceToMove.getPassingPositions(targetPosition);
 
-        validateExistenceIn(passingPositions);
+        validatePieceExistenceIn(passingPositions);
 
         processMoving(pieceToMove, targetPosition);
     }
 
-    private Piece findPieceToMoveIn(final Position position) {
+    private Piece findPieceOrElseThrowIn(final Position position) {
         return findPieceOptionalIn(position)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
     }
 
     private Optional<Piece> findPieceOptionalIn(final Position position) {
-        return pieces.stream()
+        return existingPieces.stream()
                 .filter(piece -> position.equals(piece.getPosition()))
                 .findAny();
     }
 
-    private Piece findPieceIn(final Position position) {
-        return findPieceOptionalIn(position)
-                .orElseGet(() -> new BlankPiece(position.getFile(), position.getRank()));
-    }
-
-    private void validateExistenceIn(final List<Position> passingPositions) {
-        final boolean isBlocked = pieces.stream()
+    private void validatePieceExistenceIn(final List<Position> passingPositions) {
+        final boolean isBlocked = existingPieces.stream()
                 .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
         if (isBlocked) {
             throw new IllegalArgumentException("이동 경로에 다른 말이 있습니다.");
@@ -55,19 +50,24 @@ public class Board {
     }
 
     private void processMoving(final Piece pieceToMove, final Position targetPosition) {
-        final Piece pieceInTargetPosition = findPieceIn(targetPosition);
+        final Piece pieceInTargetPosition = findPieceOrElseBlankPieceIn(targetPosition);
         final Piece movedPiece = pieceToMove.move(pieceInTargetPosition);
 
-        pieces.remove(pieceToMove);
-        pieces.remove(pieceInTargetPosition);
-        pieces.add(movedPiece);
+        existingPieces.remove(pieceToMove);
+        existingPieces.remove(pieceInTargetPosition);
+        existingPieces.add(movedPiece);
+    }
+
+    private Piece findPieceOrElseBlankPieceIn(final Position position) {
+        return findPieceOptionalIn(position)
+                .orElseGet(() -> new BlankPiece(position.getFile(), position.getRank()));
     }
 
     public boolean isSameColor(final Position position, final Color otherColor) {
-        return findPieceToMoveIn(position).isSameColor(otherColor);
+        return findPieceOrElseThrowIn(position).isSameColor(otherColor);
     }
 
-    public List<Piece> getPieces() {
-        return List.copyOf(pieces);
+    public List<Piece> getExistingPieces() {
+        return List.copyOf(existingPieces);
     }
 }

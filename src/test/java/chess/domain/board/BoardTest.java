@@ -44,7 +44,7 @@ class BoardTest {
                 new Rook(A, ONE, WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
-        final List<Piece> pieces = board.getPieces();
+        final List<Piece> pieces = board.getExistingPieces();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .contains(
@@ -66,7 +66,7 @@ class BoardTest {
 
         board.move(new Position(D, EIGHT), new Position(D, FIVE));
 
-        final List<Piece> pieces = board.getPieces();
+        final List<Piece> pieces = board.getExistingPieces();
         final Piece queen = pieces.get(0);
 
         assertThat(queen.getPosition()).isEqualTo(new Position(D, FIVE));
@@ -82,7 +82,7 @@ class BoardTest {
         final Board board = Board.createBoardWith(piecesGenerator);
 
         board.move(new Position(D, EIGHT), new Position(D, FIVE));
-        final List<Piece> pieces = board.getPieces();
+        final List<Piece> pieces = board.getExistingPieces();
         final Piece queen = pieces.get(0);
 
         assertSoftly(softly -> {

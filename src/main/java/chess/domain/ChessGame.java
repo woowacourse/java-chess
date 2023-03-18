@@ -47,7 +47,7 @@ public class ChessGame {
 
     public List<Piece> getExistingPieces() {
         validateInitialization();
-        return board.getPieces();
+        return board.getExistingPieces();
     }
 
     private void validateInitialization() {
