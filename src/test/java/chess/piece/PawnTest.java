@@ -7,28 +7,56 @@ import chess.board.Position;
 import chess.board.Rank;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PawnTest {
 
-    @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - White : U, UR, UL")
-    void isMovable_white_true() {
+    @ParameterizedTest
+    @MethodSource("isMovableTrueCase_white")
+    @DisplayName("폰은 위, 오른쪽 위, 왼쪽 위 방향으로 한 칸씩 이동할 수 있다.")
+    void isMovable_white_true(Position movablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
-        final Position upPosition = new Position(File.B, Rank.THREE);
-        final Position upRightPosition = new Position(File.C, Rank.THREE);
-        final Position upLeftPosition = new Position(File.A, Rank.THREE);
 
         // when, then
-        assertThat(pawn.isMovable(upPosition)).isTrue();
-        assertThat(pawn.isMovable(upRightPosition)).isTrue();
-        assertThat(pawn.isMovable(upLeftPosition)).isTrue();
+        assertThat(pawn.isMovable(movablePosition)).isTrue();
+    }
+
+    static Stream<Position> isMovableTrueCase_white() {
+        return Stream.of(
+                new Position(File.B, Rank.THREE),
+                new Position(File.C, Rank.THREE),
+                new Position(File.A, Rank.THREE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMovableFalseCase_white")
+    @DisplayName("폰은 앞, 오른쪽 앞, 왼쪽 앞을 제외한 방향으로 이동할 수 없다.")
+    void isMovable_white_false(Position notMovablePosition) {
+        // given
+        final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
+
+        // when, then
+        assertThat(pawn.isMovable(notMovablePosition)).isFalse();
+    }
+
+    static Stream<Position> isMovableFalseCase_white() {
+        return Stream.of(
+                new Position(File.C, Rank.TWO),
+                new Position(File.C, Rank.ONE),
+                new Position(File.B, Rank.ONE),
+                new Position(File.A, Rank.ONE),
+                new Position(File.A, Rank.TWO)
+        );
     }
 
     @Test
-    @DisplayName("흰색 진영은 시작 위치인 경우 두 칸 위로 이동 가능하다.")
+    @DisplayName("흰색 폰은 시작 위치인 경우 두 칸 위로 이동 가능하다.")
     void isMovable_whiteStartPosition_twoUp() {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
@@ -38,30 +66,44 @@ public class PawnTest {
         assertThat(pawn.isMovable(upPosition)).isTrue();
     }
 
-    @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - white : false")
-    void isMovable_white_false() {
-        // given
-        final Pawn pawn = new Pawn(new Position(File.B, Rank.TWO), Side.WHITE);
-        final Position falsePosition = new Position(File.D, Rank.FIVE);
-
-        // when, then
-        assertThat(pawn.isMovable(falsePosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - black : D, DR, DL")
-    void isMovable_black_true() {
+    @ParameterizedTest
+    @MethodSource("isMovableTrueCase_black")
+    @DisplayName("검은색 폰은 아래, 왼쪽 아래, 오른쪽 아래 방향으로 한 칸씩 이동할 수 있다.")
+    void isMovable_black_true(Position movablePosition) {
         // given
         final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
-        final Position downPosition = new Position(File.B, Rank.SIX);
-        final Position downRightPosition = new Position(File.C, Rank.SIX);
-        final Position downLeftPosition = new Position(File.A, Rank.SIX);
 
         // when, then
-        assertThat(pawn.isMovable(downPosition)).isTrue();
-        assertThat(pawn.isMovable(downRightPosition)).isTrue();
-        assertThat(pawn.isMovable(downLeftPosition)).isTrue();
+        assertThat(pawn.isMovable(movablePosition)).isTrue();
+    }
+
+    static Stream<Position> isMovableTrueCase_black() {
+        return Stream.of(
+                new Position(File.B, Rank.SIX),
+                new Position(File.C, Rank.SIX),
+                new Position(File.A, Rank.SIX)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMovableFalseCase_black")
+    @DisplayName("검은색 폰은 아래, 왼쪽 아래, 오른쪽 아래를 제외한 방향으로 이동할 수 없다.")
+    void isMovable_black_false(Position notMovablePosition) {
+        // given
+        final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
+
+        // when, then
+        assertThat(pawn.isMovable(notMovablePosition)).isFalse();
+    }
+
+    static Stream<Position> isMovableFalseCase_black() {
+        return Stream.of(
+                new Position(File.C, Rank.SEVEN),
+                new Position(File.C, Rank.EIGHT),
+                new Position(File.B, Rank.EIGHT),
+                new Position(File.A, Rank.EIGHT),
+                new Position(File.A, Rank.SEVEN)
+        );
     }
 
     @Test
@@ -76,41 +118,30 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("대상 Position을 받아서 이동 가능 여부를 반환한다. - black : false")
-    void isMovable_black_false() {
-        // given
-        final Pawn pawn = new Pawn(new Position(File.B, Rank.SEVEN), Side.BLACK);
-        final Position falsePosition = new Position(File.D, Rank.FIVE);
-
-        // when, then
-        assertThat(pawn.isMovable(falsePosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("시작 위치에서 두 칸 이동했을 경우 이동 경로를 반환한다.")
+    @DisplayName("폰이 시작 위치에서 두 칸 이동했을 떄의 경로를 반환한다.")
     void getPaths() {
         // given
-        final King king = new King(new Position(File.A, Rank.TWO), Side.WHITE);
+        final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Side.WHITE);
         final Position targetPosition = new Position(File.A, Rank.FOUR);
         List<Position> expectedPaths = List.of(new Position(File.A, Rank.THREE));
 
         // when
-        List<Position> paths = king.getPaths(targetPosition);
+        List<Position> paths = pawn.getPaths(targetPosition);
 
         // then
         assertThat(paths).isEqualTo(expectedPaths);
     }
 
     @Test
-    @DisplayName("한 칸만 이동했을 경우 빈 경로를 반환한다.")
+    @DisplayName("폰이 한 칸만 이동했을 경우 빈 경로를 반환한다.")
     void getPaths_empty() {
         // given
-        final King king = new King(new Position(File.A, Rank.TWO), Side.WHITE);
+        final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Side.WHITE);
         final Position targetPosition = new Position(File.A, Rank.THREE);
         List<Position> expectedPaths = Collections.emptyList();
 
         // when
-        List<Position> paths = king.getPaths(targetPosition);
+        List<Position> paths = pawn.getPaths(targetPosition);
 
         // then
         assertThat(paths).isEqualTo(expectedPaths);
