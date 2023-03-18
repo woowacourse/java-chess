@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 class BoardTest {
 
     @Test
-    void 첫_뻔쨰_줄_테스트() {
+    void 첫_번째_줄_테스트() {
         //given
         Board board = new Board();
 
@@ -40,7 +40,7 @@ class BoardTest {
     }
 
     @Test
-    void 두_뻔쨰_줄_테스트() {
+    void 두_번째_줄_테스트() {
         //given
         Board board = new Board();
 
