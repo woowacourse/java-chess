@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Position;
 import chess.domain.board.Squares;
 import chess.view.*;
 
@@ -30,6 +31,15 @@ public final class ChessController {
         repeatPlay();
     }
 
+    private void startByCommand() {
+        String input = inputView.inputStartCommand();
+        if (Command.from(input) != Command.START) {
+            throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
+        }
+        List<Squares> board = chessGame.getBoard();
+        printBoard(board);
+    }
+
     private void repeatReadStart() {
         try {
             startByCommand();
@@ -38,15 +48,6 @@ public final class ChessController {
             outputView.printGuideMessage();
             repeatReadStart();
         }
-    }
-
-    private void startByCommand() {
-        String input = inputView.inputStartCommand();
-        if (Command.from(input) != Command.START) {
-            throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
-        }
-        List<Squares> board = chessGame.getBoard();
-        printBoard(board);
     }
 
     private void repeatPlay() {
@@ -74,7 +75,8 @@ public final class ChessController {
         List<String> commands = inputView.inputCommand();
         while (Command.from(commands.get(COMMAND_INDEX)) != Command.END) {
             cannotStartDuringPlaying(commands);
-            commands = playGame(commands);
+            playGame(commands);
+            commands = inputView.inputCommand();
         }
     }
 
@@ -84,13 +86,13 @@ public final class ChessController {
         }
     }
 
-    private List<String> playGame(List<String> command) {
-        if (Command.from(command.get(COMMAND_INDEX)) == Command.MOVE) {
-            chessGame.playTurn(PositionParser.parse(command.get(SOURCE_INDEX)), PositionParser.parse(command.get(TARGET_INDEX)));
+    private void playGame(final List<String> commands) {
+        if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
+            Position source = PositionParser.parse(commands.get(SOURCE_INDEX));
+            Position target = PositionParser.parse(commands.get(TARGET_INDEX));
+            chessGame.playTurn(source, target);
             List<Squares> board = chessGame.getBoard();
             printBoard(board);
         }
-        command = inputView.inputCommand();
-        return command;
     }
 }

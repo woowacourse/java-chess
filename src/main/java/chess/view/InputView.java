@@ -23,6 +23,7 @@ public final class InputView {
         String input = scanner.nextLine();
         return Arrays.stream(input.split(DELIMITER))
                 .map(String::strip)
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
     }
 }
