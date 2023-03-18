@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.domain.ColorCompareResult;
+import chess.domain.piece.ColorCompareResult;
+import chess.domain.piece.state.InitialPawnState;
+import chess.domain.piece.state.MoveState;
+import chess.domain.piece.state.MovedPawnState;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

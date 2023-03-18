@@ -1,6 +1,6 @@
 package chess.view.response;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 public class PieceResponse {
 

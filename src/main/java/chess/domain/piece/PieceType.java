@@ -1,14 +1,14 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.state.BishopState;
-import chess.domain.state.EmptyState;
-import chess.domain.state.InitialPawnState;
-import chess.domain.state.KingState;
-import chess.domain.state.KnightState;
-import chess.domain.state.MoveState;
-import chess.domain.state.MovedPawnState;
-import chess.domain.state.QueenState;
-import chess.domain.state.RookState;
+import chess.domain.piece.state.BishopState;
+import chess.domain.piece.state.EmptyState;
+import chess.domain.piece.state.InitialPawnState;
+import chess.domain.piece.state.KingState;
+import chess.domain.piece.state.KnightState;
+import chess.domain.piece.state.MoveState;
+import chess.domain.piece.state.MovedPawnState;
+import chess.domain.piece.state.QueenState;
+import chess.domain.piece.state.RookState;
 import java.util.Arrays;
 import java.util.List;
 

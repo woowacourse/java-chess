@@ -14,6 +14,9 @@ import static chess.domain.PositionFixture.F1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.game.File;
+import chess.domain.game.Position;
+import chess.domain.game.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;

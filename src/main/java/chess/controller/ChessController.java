@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.Position;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.game.Board;
+import chess.domain.game.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.request.CommandType;

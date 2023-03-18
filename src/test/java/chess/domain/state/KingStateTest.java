@@ -1,10 +1,11 @@
 package chess.domain.state;
 
-import static chess.domain.ColorCompareResult.DIFFERENT_COLOR;
+import static chess.domain.piece.ColorCompareResult.DIFFERENT_COLOR;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import chess.domain.piece.state.KingState;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

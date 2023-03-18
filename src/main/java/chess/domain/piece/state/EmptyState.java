@@ -1,7 +1,7 @@
-package chess.domain.state;
+package chess.domain.piece.state;
 
-import chess.domain.ColorCompareResult;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.ColorCompareResult;
 
 public class EmptyState implements MoveState {
 
