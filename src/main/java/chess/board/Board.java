@@ -41,13 +41,8 @@ public class Board {
 
     private void checkPath(final Position targetPosition, final Piece sourcePiece) {
         final List<Position> paths = sourcePiece.getPaths(targetPosition);
-        for (Position pathPosition : paths) {
-            checkPieceExistOnPath(pathPosition);
-        }
-    }
-
-    private void checkPieceExistOnPath(final Position pathPosition) {
-        if (pieces.isPieceExistOnPosition(pathPosition)) {
+        boolean isExistPieceOnPath = paths.stream().anyMatch(pieces::isPieceExistOnPosition);
+        if (isExistPieceOnPath) {
             throw new IllegalArgumentException("[ERROR] 타겟 위치까지의 경로에 말이 존재합니다.");
         }
     }
