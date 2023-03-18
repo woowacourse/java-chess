@@ -14,6 +14,10 @@ public class Board {
         this.pieces = pieces;
     }
 
+    public Piece findPieceByPosition(final Position position) {
+        return pieces.findPieceByPosition(position);
+    }
+
     public void movePiece(Position sourcePosition, Position targetPosition) {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
         checkPieceMovable(targetPosition, sourcePiece);

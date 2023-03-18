@@ -1,35 +1,40 @@
 package chess.controller;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import chess.board.Board;
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
-import chess.board.dto.BoardDto;
+import chess.game.ChessGame;
 import chess.game.GameStatus;
 import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Supplier;
 
 public class ChessController {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     private final InputView inputView;
+    private final ChessGame chessGame;
 
     public ChessController(final InputView inputView) {
         this.inputView = inputView;
+        this.chessGame = new ChessGame(new Board(new Pieces()));
     }
 
     public void run() {
+        printInitMessage();
         GameStatus gameStatus = GameStatus.INIT;
-        final Board board = setUp();
 
-        while(!(gameStatus == GameStatus.END)) {
+        while (!(gameStatus == GameStatus.END)) {
             final GameStatus finalGameStatus = gameStatus;
-            gameStatus = repeat(() -> handleCommand(finalGameStatus, board));
+            gameStatus = repeat(() -> handleCommand(finalGameStatus, chessGame));
         }
+    }
+
+    private void printInitMessage() {
+        OutputView.printGameStartMessage();
+        OutputView.printGameCommandInputMessage();
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -41,22 +46,15 @@ public class ChessController {
         }
     }
 
-    private Board setUp() {
-        Board board = new Board(new Pieces());
-        OutputView.printGameStartMessage();
-        OutputView.printGameCommandInputMessage();
-        return board;
-    }
-
-    private GameStatus handleCommand(GameStatus gameStatus, final Board board) {
+    private GameStatus handleCommand(GameStatus gameStatus, final ChessGame chessGame) {
         final List<String> splitGameCommand = inputGameCommand();
         final String gameCommand = splitGameCommand.get(0);
 
         if (gameCommand.equals("start")) {
-            return handleStartCommand(gameStatus, board);
+            return handleStartCommand(gameStatus, chessGame);
         }
         if (gameCommand.equals("move")) {
-            return handleMoveCommand(gameStatus, board, splitGameCommand);
+            return handleMoveCommand(gameStatus, chessGame, splitGameCommand);
         }
         return GameStatus.END;
     }
@@ -65,10 +63,10 @@ public class ChessController {
         return repeat(inputView::inputGameCommand);
     }
 
-    private GameStatus handleStartCommand(GameStatus gameStatus, final Board board) {
+    private GameStatus handleStartCommand(GameStatus gameStatus, final ChessGame chessGame) {
         checkGameAlreadyStart(gameStatus);
         gameStatus = GameStatus.START;
-        OutputView.printBoard(BoardDto.of(board));
+        OutputView.printBoard(chessGame.generateBoardDto());
         return gameStatus;
     }
 
@@ -78,13 +76,12 @@ public class ChessController {
         }
     }
 
-    private GameStatus handleMoveCommand(GameStatus gameStatus, final Board board, final List<String> moveCommand) {
+    private GameStatus handleMoveCommand(GameStatus gameStatus, final ChessGame chessGame, final List<String> moveCommand) {
         checkGameNotStart(gameStatus);
-        final Position sourcePosition = generatePosition(moveCommand.get(SOURCE_POSITION_INDEX));
-        final Position targetPosition = generatePosition(moveCommand.get(TARGET_POSITION_INDEX));
-
-        board.movePiece(sourcePosition, targetPosition);
-        OutputView.printBoard(BoardDto.of(board));
+        final Position sourcePosition = chessGame.generatePosition(moveCommand.get(SOURCE_POSITION_INDEX));
+        final Position targetPosition = chessGame.generatePosition(moveCommand.get(TARGET_POSITION_INDEX));
+        chessGame.movePiece(sourcePosition, targetPosition);
+        OutputView.printBoard(chessGame.generateBoardDto());
         return gameStatus;
     }
 
@@ -92,12 +89,5 @@ public class ChessController {
         if (gameStatus != GameStatus.START) {
             throw new IllegalArgumentException("[ERROR] 게임 시작 이후에 말을 이동할 수 있습니다.");
         }
-    }
-
-    private Position generatePosition(final String positionInput) {
-        final List<String> splitSourcePosition = Arrays.asList(positionInput.split(""));
-        final File sourceFile = File.of(splitSourcePosition.get(0));
-        final Rank sourceRank = Rank.of(Integer.parseInt(splitSourcePosition.get(SOURCE_POSITION_INDEX)));
-        return new Position(sourceFile, sourceRank);
     }
 }
