@@ -15,9 +15,4 @@ public class Queen implements Piece {
         }
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
-
-    @Override
-    public boolean canReap() {
-        return false;
-    }
 }

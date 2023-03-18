@@ -17,9 +17,4 @@ public class BlackPawn extends Pawn {
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0 &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
     }
-
-    @Override
-    public boolean canReap() {
-        return false;
-    }
 }

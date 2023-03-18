@@ -16,9 +16,4 @@ public class WhitePawn extends Pawn {
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.NEGATIVE_INFINITY) == 0 &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
     }
-
-    @Override
-    public boolean canReap() {
-        return false;
-    }
 }
