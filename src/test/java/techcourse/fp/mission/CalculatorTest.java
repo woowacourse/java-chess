@@ -12,7 +12,7 @@ class CalculatorTest {
 
     @Test
     public void sumAll() {
-        int sum = Calculator.sumAll(numbers);
+        int sum = Calculator.sumAll(numbers, (number) -> true);
         assertThat(sum).isEqualTo(21);
     }
 

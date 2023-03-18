@@ -63,7 +63,8 @@ public final class UserDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
+                    PASSWORD);
             preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, updatedName);
@@ -92,7 +93,8 @@ public final class UserDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
+                    PASSWORD);
             preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, id);
