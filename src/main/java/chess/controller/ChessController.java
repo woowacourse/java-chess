@@ -2,16 +2,14 @@ package chess.controller;
 
 import chess.domain.game.Board;
 import chess.domain.game.Position;
-import chess.domain.piece.exception.IllegalPieceMoveException;
+import chess.domain.game.exception.ChessGameException;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.request.CommandType;
 import chess.view.request.RequestInfo;
 import chess.view.response.PieceResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -66,7 +64,7 @@ public class ChessController {
     private void move(List<String> command) {
         try {
             board.movePiece(makePosition(command.get(ORIGIN_INDEX)), makePosition(command.get(DEST_INDEX)));
-        } catch (IllegalPieceMoveException e) {
+        } catch (ChessGameException e) {
             outputView.printError(e);
         }
         printBoard();
