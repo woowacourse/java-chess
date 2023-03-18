@@ -38,13 +38,14 @@ public class Position {
     }
 
     public Position move(final MovePattern movePattern) {
-        final int nextFileIndex = this.file.index() + movePattern.getFileVector();
-        final int nextRankIndex = this.rank.index() + movePattern.getRankVector();
+        final int nextFileIndex = movePattern.nextFileIndex(fileIndex());
+        final int nextRankIndex = movePattern.nextRankIndex(rankIndex());
 
-        final File nextFile = File.findByIndex(nextFileIndex);
-        final Rank nextRank = Rank.findByIndex(nextRankIndex);
+        if (Board.isInRange(nextFileIndex, nextRankIndex)) {
+            return Position.of(File.findByIndex(nextFileIndex), Rank.findByIndex(nextRankIndex));
+        }
 
-        return Position.of(nextFile, nextRank);
+        return this;
     }
 
     public File getFile() {
@@ -55,11 +56,11 @@ public class Position {
         return rank;
     }
 
-    public int getFileIndex() {
+    public int fileIndex() {
         return file.index();
     }
 
-    public int getRankIndex() {
+    public int rankIndex() {
         return rank.index();
     }
 }

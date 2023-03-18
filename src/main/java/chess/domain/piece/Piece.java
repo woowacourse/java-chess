@@ -17,8 +17,8 @@ public abstract class Piece {
     }
 
     protected boolean isRangeValid(final Position position, final MovePattern movePattern) {
-        final int nextRank = position.getRankIndex() + movePattern.getRankVector();
-        final int nextFile = position.getFileIndex() + movePattern.getFileVector();
+        final int nextRank = position.rankIndex() + movePattern.getRankVector();
+        final int nextFile = position.fileIndex() + movePattern.getFileVector();
         return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 

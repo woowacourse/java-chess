@@ -91,8 +91,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isDiagonal(Position source, Position nextPosition) {
-        return Math.abs((source.getRankIndex() - nextPosition.getRankIndex())) == Math.abs(
-                (source.getFileIndex() - nextPosition.getFileIndex()));
+        return Math.abs((source.rankIndex() - nextPosition.rankIndex())) == Math.abs(
+                (source.fileIndex() - nextPosition.fileIndex()));
     }
 
     private void checkDiagonalSide(final List<Position> movablePositions, final Position nextPosition,

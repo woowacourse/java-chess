@@ -31,11 +31,11 @@ public class Board {
         return piece.getSide();
     }
 
-    public boolean isInRange(final int fileIndex, final int rankIndex) {
+    public static boolean isInRange(final int fileIndex, final int rankIndex) {
         return isIndexInRange(fileIndex) && isIndexInRange(rankIndex);
     }
 
-    private boolean isIndexInRange(final int index) {
+    private static boolean isIndexInRange(final int index) {
         return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
     }
 
