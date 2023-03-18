@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.Type;
 import chess.domain.ChessGame;
 import chess.domain.File;
 import chess.domain.Position;
@@ -8,13 +10,10 @@ import chess.domain.board.maker.StartingPiecesGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
-
 public class ChessController {
 
-    private final int COMMAND_INDEX = 0;
-    private final int MOVE_CURRENT_POSITION_INDEX = 1;
-    private final int MOVE_TARGET_POSITION_INDEX = 2;
+    private final int MOVE_CURRENT_POSITION_INDEX = 0;
+    private final int MOVE_TARGET_POSITION_INDEX = 1;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -29,45 +28,42 @@ public class ChessController {
     public void run() {
         outputView.printGameStartGuideMessage();
 
-        while (true) {
-            final List<String> commandInputs = inputView.readGameCommand();
+        Command command;
+        do {
+            command = Command.from(inputView.readGameCommand());
 
-            processStartCommand(commandInputs);
+            processCommand(command);
 
-            processMoveCommand(commandInputs);
+            outputView.printBoard(chessGame.getExistingPieces());
 
-            if (GameCommand.findBy(commandInputs.get(COMMAND_INDEX)) == GameCommand.END) {
-                break;
-            }
-        }
+        } while (!command.is(Type.END));
 
     }
 
-    private void processStartCommand(final List<String> commandInputs) {
-        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
-        if (command == GameCommand.START) {
-            validateWithStartCommand();
-            chessGame = ChessGame.createWith(new StartingPiecesGenerator());
-            outputView.printBoard(chessGame.getExistingPieces());
+    private void processCommand(final Command command) {
+        if (command.is(Type.START)) {
+            processStart();
         }
+        if (command.is(Type.MOVE)) {
+            processMove(command);
+        }
+    }
+
+    private void processStart() {
+        validateWithStartCommand();
+        chessGame = ChessGame.createWith(new StartingPiecesGenerator());
+    }
+
+    private void processMove(final Command command) {
+        validateWithMoveCommand();
+        final Position currentPosition = generatePositionBy(command.getParameterAt(MOVE_CURRENT_POSITION_INDEX));
+        final Position targetPosition = generatePositionBy(command.getParameterAt(MOVE_TARGET_POSITION_INDEX));
+        chessGame.move(currentPosition, targetPosition);
     }
 
     private void validateWithStartCommand() {
         if (chessGame.isInitialized()) {
             throw new IllegalArgumentException("게임이 이미 진행중입니다.");
-        }
-    }
-
-    private void processMoveCommand(final List<String> commandInputs) {
-        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
-        if ((command == GameCommand.MOVE)) {
-            validateWithMoveCommand();
-            final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
-            final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
-
-            chessGame.move(currentPosition, targetPosition);
-
-            outputView.printBoard(chessGame.getExistingPieces());
         }
     }
 
