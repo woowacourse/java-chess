@@ -1,15 +1,12 @@
-package chess.piece.special;
+package chess.piece;
 
 import chess.board.Position;
-import chess.piece.Direction;
-import chess.piece.Piece;
-import chess.piece.Side;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pawn extends SpecialPiece {
+public class Pawn extends Piece {
 
     private final List<Direction> directions;
 

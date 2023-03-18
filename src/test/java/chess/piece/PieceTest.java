@@ -11,8 +11,6 @@ import chess.piece.normal.Bishop;
 import chess.piece.normal.King;
 import chess.piece.normal.Queen;
 import chess.piece.normal.Rook;
-import chess.piece.special.Knight;
-import chess.piece.special.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

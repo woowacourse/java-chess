@@ -1,13 +1,11 @@
-package chess.piece.special;
+package chess.piece;
 
 import chess.board.Position;
-import chess.piece.Piece;
-import chess.piece.Side;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Knight extends SpecialPiece {
+public class Knight extends Piece {
 
     public Knight(final Position position, final Side side) {
         super(position, side);

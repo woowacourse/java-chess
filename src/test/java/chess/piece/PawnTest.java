@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.piece.normal.King;
-import chess.piece.special.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
