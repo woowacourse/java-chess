@@ -82,4 +82,11 @@ public class Pieces {
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
+
+    public void remove(final Piece pieceToRemove) {
+        if (!pieces.contains(pieceToRemove)) {
+            throw new IllegalArgumentException("[ERROR] 지우려고 하는 기물이 존재하지 않습니다.");
+        }
+        pieces.remove(pieceToRemove);
+    }
 }
