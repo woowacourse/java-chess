@@ -31,14 +31,14 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order + 1)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - 다음 File은 존재하지 않습니다."));
     }
 
     public File getPrevious() {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order - 1)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - 이전 File은 존재하지 않습니다."));
     }
 
     public String getText() {
