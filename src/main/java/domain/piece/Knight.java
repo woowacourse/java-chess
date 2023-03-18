@@ -4,9 +4,11 @@ import java.util.List;
 
 public class Knight implements Piece {
 
-    private static final List<Double> availableInclinations = List.of(
-            0.5, -0.5, 2.0, -2.0
+    private static final List<Inclination> availableInclinations = List.of(
+            Inclination.ZERO_POINT_FIVE, Inclination.MINUS_ZERO_POINT_FIVE,
+            Inclination.TWO, Inclination.MINUS_TWO
     );
+
     private static final List<Coordinate> availableCoordinateDifferences = List.of(
             new Coordinate(1, 2),
             new Coordinate(2, 1)
@@ -14,10 +16,8 @@ public class Knight implements Piece {
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (startCoordinate.equals(endCoordinate)) {
-            return false;
-        }
-        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate)) &&
+        return availableInclinations.stream()
+                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate))) &&
                 availableCoordinateDifferences.contains(startCoordinate.minusWithAbsoluteValue(endCoordinate));
     }
 

@@ -1,20 +1,24 @@
 package domain.piece;
 
+import java.util.List;
+
 public class BlackPawn extends Pawn {
+
+    private static final List<Inclination> availableInclinations = List.of(
+            Inclination.POSITIVE_INFINITY
+    );
 
     @Override
     public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0 &&
+        return availableInclinations.stream()
+                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate))) &&
                 startCoordinate.hasDistanceLessThanTwo(endCoordinate);
     }
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (startCoordinate.equals(endCoordinate)) {
-            return false;
-        }
-
-        return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0 &&
+        return availableInclinations.stream()
+                .anyMatch(inclination -> inclination.isSameAs(startCoordinate.getInclination(endCoordinate))) &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
     }
 }
