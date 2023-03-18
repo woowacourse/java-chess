@@ -41,8 +41,8 @@ public final class ChessController {
     }
 
     private void startByCommand() {
-        List<String> command = inputView.inputCommand();
-        if (Command.from(command.get(COMMAND_INDEX)) != Command.START) {
+        String input = inputView.inputStartCommand();
+        if (Command.from(input) != Command.START) {
             throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
         }
         List<Squares> board = chessGame.getBoard();
@@ -60,21 +60,21 @@ public final class ChessController {
     }
 
     private void printBoard(final List<Squares> board) {
-        List<List<String>> collect = board.stream()
+        List<List<String>> pieceNames = board.stream()
                 .map(Squares::getPieces)
                 .map(KindMapper::mapToStrings)
                 .collect(Collectors.toList());
 
-        Collections.reverse(collect);
+        Collections.reverse(pieceNames);
 
-        collect.forEach(outputView::printRank);
+        pieceNames.forEach(outputView::printRank);
     }
 
     private void playGameUntilEnd() {
-        List<String> command = inputView.inputCommand();
-        while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
-            cannotStartDuringPlaying(command);
-            command = playGame(command);
+        List<String> commands = inputView.inputCommand();
+        while (Command.from(commands.get(COMMAND_INDEX)) != Command.END) {
+            cannotStartDuringPlaying(commands);
+            commands = playGame(commands);
         }
     }
 

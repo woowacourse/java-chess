@@ -14,6 +14,11 @@ public final class InputView {
         this.scanner = scanner;
     }
 
+    public String inputStartCommand() {
+        String input = scanner.nextLine();
+        return input.strip().toUpperCase();
+    }
+
     public List<String> inputCommand() {
         String input = scanner.nextLine();
         return Arrays.stream(input.split(DELIMITER))
