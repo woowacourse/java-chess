@@ -47,11 +47,11 @@ public class ChessGame {
         return board.canMove(source, route);
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     private void nextTurn() {
         color = color.reverse();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

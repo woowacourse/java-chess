@@ -26,16 +26,16 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 인덱스입니다."));
     }
 
-    public int calculateDistance(final File file) {
-        return this.index - file.index;
-    }
-
     public File next() {
         return File.from((char) (index + 1));
     }
 
     public File prev() {
         return File.from(((char) (index - 1)));
+    }
+
+    public int calculateDistance(final File file) {
+        return this.index - file.index;
     }
 }
 
