@@ -12,6 +12,10 @@ public class InputView {
     private static final String MOVE_COMMAND = "move";
     private static final int CORRECT_START_END_SPLIT_SIZE = 1;
     private static final int CORRECT_MOVE_SPLIT_SIZE = 3;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
+    private static final int RANK_INDEX = 1;
+    private static final String NUMERIC_REGEX = "[0-9]";
 
     private final Scanner scanner;
 
@@ -26,6 +30,7 @@ public class InputView {
 
         validateGameCommandInput(gameCommand);
         validateGameCommandFormat(splitGameCommand);
+        validateMoveGameCommandRank(splitGameCommand, gameCommand);
 
         return splitGameCommand;
     }
@@ -61,5 +66,25 @@ public class InputView {
 
     private boolean isWrongMoveCommandFormat(final int splitGameCommandSize, final String gameCommand) {
         return gameCommand.equals(MOVE_COMMAND) && splitGameCommandSize != CORRECT_MOVE_SPLIT_SIZE;
+    }
+
+    private void validateMoveGameCommandRank(List<String> splitGameCommand, String gameCommand) {
+        if (gameCommand.equals(MOVE_COMMAND)) {
+            String sourcePosition = splitGameCommand.get(SOURCE_POSITION_INDEX);
+            String targetPosition = splitGameCommand.get(TARGET_POSITION_INDEX);
+            validateRankNumeric(sourcePosition, targetPosition);
+        }
+    }
+
+    private void validateRankNumeric(String sourcePosition, String targetPosition) {
+        if (isRankNotNumeric(sourcePosition) || isRankNotNumeric(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 랭크 값은 숫자여야 합니다.");
+        }
+    }
+
+    private boolean isRankNotNumeric(String position) {
+        List<String> splitPosition = Arrays.asList(position.split(""));
+        String rank = splitPosition.get(RANK_INDEX);
+        return !rank.matches(NUMERIC_REGEX);
     }
 }

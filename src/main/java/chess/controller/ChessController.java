@@ -97,15 +97,7 @@ public class ChessController {
     private Position generatePosition(final String positionInput) {
         final List<String> splitSourcePosition = Arrays.asList(positionInput.split(""));
         final File sourceFile = File.of(splitSourcePosition.get(0));
-        final Rank sourceRank = extractRank(splitSourcePosition);
+        final Rank sourceRank = Rank.of(Integer.parseInt(splitSourcePosition.get(SOURCE_POSITION_INDEX)));
         return new Position(sourceFile, sourceRank);
-    }
-
-    private Rank extractRank(final List<String> splitSourcePosition) {
-        try {
-            return Rank.of(Integer.parseInt(splitSourcePosition.get(SOURCE_POSITION_INDEX)));
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("[ERROR] 랭크 값은 숫자여야 합니다.");
-        }
     }
 }
