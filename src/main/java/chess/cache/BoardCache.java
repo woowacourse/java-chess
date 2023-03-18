@@ -8,19 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class BoardCache {
+    public static final int FIRST_INDEX = 0;
+    public static final int MAX_SIZE = 8;
     private static final Map<Position, Piece> board = new HashMap<>();
 
     private BoardCache() {
     }
 
     static {
-        for (int column = 0; column < 8; column++) {
+        for (int column = FIRST_INDEX; column < MAX_SIZE; column++) {
             addRow(column);
         }
     }
 
     private static void addRow(final int column) {
-        for (int row = 0; row < 8; row++) {
+        for (int row = FIRST_INDEX; row < MAX_SIZE; row++) {
             board.put(Position.of(column, row), Empty.create());
         }
     }

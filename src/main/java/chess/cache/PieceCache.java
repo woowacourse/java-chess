@@ -8,6 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PieceCache {
+    public static final int FIRST_INDEX = 0;
+    public static final int MAX_SIZE = 8;
+    public static final int KING_ROW_INDEX = 4;
+    public static final int QUEEN_ROW_INDEX = 3;
+    public static final int BISHOP_LEFT_ROW_INDEX = 2;
+    public static final int BISHOP_RIGHT_ROW_INDEX = 5;
+    public static final int KNIGHT_LEFT_ROW_INDEX = 1;
+    public static final int KNIGHT_RIGHT_ROW_INDEX = 6;
+    public static final int ROOK_LEFT_ROW_INDEX = 0;
+    public static final int ROOK_RIGHT_ROW_INDEX = 7;
     private static final Map<Position, Piece> board = new HashMap<>();
 
     private PieceCache() {
@@ -30,31 +40,31 @@ public final class PieceCache {
     }
 
     private static void addKing(final int column, final Color color) {
-        board.put(Position.of(4, column), Knight.from(color));
+        board.put(Position.of(KING_ROW_INDEX, column), Knight.from(color));
 
     }
 
     private static void addQueen(final int column, final Color color) {
-        board.put(Position.of(3, column), Queen.from(color));
+        board.put(Position.of(QUEEN_ROW_INDEX, column), Queen.from(color));
     }
 
     private static void addBishop(final int column, final Color color) {
-        board.put(Position.of(2, column), Bishop.from(color));
-        board.put(Position.of(5, column), Bishop.from(color));
+        board.put(Position.of(BISHOP_LEFT_ROW_INDEX, column), Bishop.from(color));
+        board.put(Position.of(BISHOP_RIGHT_ROW_INDEX, column), Bishop.from(color));
     }
 
     private static void addKnight(final int column, final Color color) {
-        board.put(Position.of(1, column), Knight.from(color));
-        board.put(Position.of(6, column), Knight.from(color));
+        board.put(Position.of(KNIGHT_LEFT_ROW_INDEX, column), Knight.from(color));
+        board.put(Position.of(KNIGHT_RIGHT_ROW_INDEX, column), Knight.from(color));
     }
 
     private static void addRook(final int column, final Color color) {
-        board.put(Position.of(0, column), Rook.from(color));
-        board.put(Position.of(7, column), Rook.from(color));
+        board.put(Position.of(ROOK_LEFT_ROW_INDEX, column), Rook.from(color));
+        board.put(Position.of(ROOK_RIGHT_ROW_INDEX, column), Rook.from(color));
     }
 
     private static void addPawn(final int column, final Color color) {
-        for (int row = 0; row < 8; row++) {
+        for (int row = FIRST_INDEX; row < MAX_SIZE; row++) {
             board.put(Position.of(row, column), Pawn.from(color));
         }
     }
