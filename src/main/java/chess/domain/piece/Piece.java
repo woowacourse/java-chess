@@ -20,6 +20,10 @@ public abstract class Piece {
 
     protected abstract boolean isValidTarget(final Piece target);
 
+    public boolean isUnmovable(final Position start, final Position end, final Piece target){
+        return !isMovable(start, end, target);
+    }
+
     public PieceType type() {
         return type;
     }

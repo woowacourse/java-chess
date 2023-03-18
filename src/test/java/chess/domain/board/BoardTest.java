@@ -67,7 +67,7 @@ public class BoardTest {
         // expect
         assertThatThrownBy(() -> board.move("d2", "d5"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바르지 않은 이동 명령어 입니다. 시작: d2 도착: d5");
+                .hasMessage("올바르지 않은 이동 명령어입니다.");
     }
 
     @Test
@@ -101,6 +101,6 @@ public class BoardTest {
         // expect
         assertThatThrownBy(() -> board.move("d1", "d4"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 기물이 있을 수 없습니다.");
+                .hasMessage("이동 경로에 기물이 존재합니다.");
     }
 }
