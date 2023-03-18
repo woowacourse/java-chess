@@ -2,31 +2,33 @@
 
 ```mermaid
 graph TD
-    ChessController --> InputView
-    ChessController --> OutputView
+  ChessController --> InputView
+  ChessController --> OutputView
+  ChessController --> ExecuteState
 
-    ChessController --> ChessGame
-    ChessGame --> Board
+  ChessController --> ChessGame
+  ChessGame --> Board
 
-    Square --> File
-    Square --> Rank
-    
-    BoardFactory --> Board
+  Square --> File
+  Square --> Rank
 
-    Board --> Square
-    Board --> PIECE
+  BoardFactory --> Board
 
-    PIECE --> Color
+  Board --> Square
+  Board --> PIECE
 
-    subgraph PIECE
-        direction BT
-        Pawn -.-> Piece
-        Rook -.-> Piece
-        Bishop -.-> Piece
-        Knight -.-> Piece
-        Queen -.-> Piece
-        King -.-> Piece
-    end
+  PIECE --> Color
+  PIECE --> Strategy
+
+  subgraph PIECE
+    direction BT
+    Pawn -.-> Piece
+    Rook -.-> Piece
+    Bishop -.-> Piece
+    Knight -.-> Piece
+    Queen -.-> Piece
+    King -.-> Piece
+  end
 ```
 
 ## 구현 기능 목록
@@ -37,8 +39,7 @@ graph TD
 
 ### 체스 보드
 
-- 체스 기물 위치를 알고 있다.
-    - [x] 체스 기물 위치를 초기화한다.
+- [x] 체스 기물 위치를 알고 있다.
 - [x] 특정 칸에 존재하는 기물을 확인한다.
 - [x] 이동 경로로 이동할 수 있는지 확인한다.
 - [x] 폰이 이동 경로로 이동할 수 있는지 확인한다.
@@ -61,9 +62,17 @@ graph TD
 
 ### 체스 기물
 
+- 여러 가지 기물이 존재한다.
+    - 폰
+    - 룩
+    - 나이트
+    - 비숍
+    - 퀸
+    - 킹
 - 색을 가진다.
     - [x] 흑과 백이 존재한다.
     - [x] 검은색인지 확인한다.
+    - [x] 같은 색인지 확인한다.
 - [x] 움직이는 경로를 반환한다.
 - [x] 폰인지 확인한다.
 
@@ -75,10 +84,10 @@ graph TD
 
 ### 입력
 
-- [x] 게임 시작/종료 여부를 입력한다.
-- [x] 이동할 기물의 위치를 입력한다.
+- [x] 게임 실행 명령을 입력한다.
 
 ### 출력
 
 - [x] 게임 시작 문구를 출력한다.
 - [x] 체스판을 출력한다.
+- [x] 에러 메시지를 출력한다.
