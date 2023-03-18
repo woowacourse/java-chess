@@ -10,9 +10,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Direction findDirection(Square current, Square destination) {
-        int fileDifference = current.getFileDifference(destination);
-        int rankDifference = current.getRankDifference(destination);
+    public Direction findDirection(final Square current, final Square destination) {
+        final int fileDifference = current.getFileDifference(destination);
+        final int rankDifference = current.getRankDifference(destination);
         return PieceDirection.KING_AND_QUEEN.findDirection(fileDifference, rankDifference);
     }
 }

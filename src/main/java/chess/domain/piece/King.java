@@ -6,21 +6,23 @@ import chess.domain.square.Square;
 
 public class King extends Piece {
 
+    private final static int MOVE_RANGE = 1;
+
     public King(final Color color) {
         super(color, 'k');
     }
 
     @Override
-    public Direction findDirection(Square current, Square destination) {
-        int fileDifference = current.getFileDifference(destination);
-        int rankDifference = current.getRankDifference(destination);
+    public Direction findDirection(final Square current, final Square destination) {
+        final int fileDifference = current.getFileDifference(destination);
+        final int rankDifference = current.getRankDifference(destination);
         validateDifference(fileDifference);
         validateDifference(rankDifference);
         return PieceDirection.KING_AND_QUEEN.findDirection(fileDifference, rankDifference);
     }
 
     private void validateDifference(final int difference) {
-        if (Math.abs(difference) > 1) {
+        if (Math.abs(difference) > MOVE_RANGE) {
             throw new WrongDirectionException();
         }
     }
