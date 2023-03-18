@@ -54,7 +54,7 @@ public class Game {
         }
     }
 
-    private static void validateExistPieceOnSourcePosition(Piece sourcePiece) {
+    private void validateExistPieceOnSourcePosition(Piece sourcePiece) {
         if (sourcePiece.isEmptyPiece()) {
             throw new IllegalArgumentException("source위치에 말이 없습니다.");
         }

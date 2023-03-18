@@ -1,9 +1,8 @@
 package domain.piece;
 
-import view.PieceCategory;
-
 import java.util.Collections;
 import java.util.List;
+import view.PieceCategory;
 
 public final class Pawn extends Piece {
 
@@ -100,7 +99,6 @@ public final class Pawn extends Piece {
     }
 
     private static boolean isOneStepUpward(Movement movement) {
-
         return movement.isOneStep() &&
                 movement.isPerpendicular() &&
                 movement.isUpward();
