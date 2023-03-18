@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 public abstract class Piece {
 
@@ -26,10 +26,11 @@ public abstract class Piece {
     }
 
     public Direction findDirectionToMove(Position start, Position end) {
-        return Direction.findDirectionByGap(start, end, this);
+        return Direction.findDirectionByGap(start, end);
     }
 
     abstract public boolean isMovable(Position start, Position end, Color colorOfDestination);
+    abstract protected void checkMovableDirection(Direction direction);
 
     public Color getColor() {
         return color;
