@@ -24,30 +24,6 @@ public class Coordinate {
         return new Coordinate(Math.abs(otherCoordinate.row - this.row), Math.abs(otherCoordinate.col - this.col));
     }
 
-    public boolean hasPositiveRowValue() {
-        return row > 0;
-    }
-
-    public boolean hasNegativeRowValue() {
-        return row < 0;
-    }
-
-    public boolean isRowZero() {
-        return row == 0;
-    }
-
-    public boolean hasPositiveColValue() {
-        return col > 0;
-    }
-
-    public boolean hasNegativeColValue() {
-        return col < 0;
-    }
-
-    public boolean isColZero() {
-        return col == 0;
-    }
-
     public double getInclination(final Coordinate otherCoordinate) {
         return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }

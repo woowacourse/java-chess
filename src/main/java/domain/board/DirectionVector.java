@@ -9,49 +9,49 @@ public enum DirectionVector {
     N(new Coordinate(1, 0)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasPositiveRowValue() && coordinate.isColZero();
+            return coordinate.getRow() > 0 && coordinate.getCol() == 0;
         }
     },
     NE(new Coordinate(1, 1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasPositiveRowValue() && coordinate.hasPositiveColValue();
+            return coordinate.getRow() > 0 && coordinate.getCol() > 0;
         }
     },
     E(new Coordinate(0, 1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.isRowZero() && coordinate.hasPositiveColValue();
+            return coordinate.getRow() == 0 && coordinate.getCol() > 0;
         }
     },
     SE(new Coordinate(-1, 1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasNegativeRowValue() && coordinate.hasPositiveColValue();
+            return coordinate.getRow() < 0 && coordinate.getCol() > 0;
         }
     },
     S(new Coordinate(-1, 0)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasNegativeRowValue() && coordinate.isColZero();
+            return coordinate.getRow() < 0 && coordinate.getCol() == 0;
         }
     },
     SW(new Coordinate(-1, -1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasNegativeRowValue() && coordinate.hasNegativeColValue();
+            return coordinate.getRow() < 0 && coordinate.getCol() < 0;
         }
     },
     W(new Coordinate(0, -1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.isRowZero() && coordinate.hasNegativeColValue();
+            return coordinate.getRow() == 0 && coordinate.getCol() < 0;
         }
     },
     NW(new Coordinate(1, -1)) {
         @Override
         boolean isExist(final Coordinate coordinate) {
-            return coordinate.hasPositiveRowValue() && coordinate.hasNegativeColValue();
+            return coordinate.getRow() > 0 && coordinate.getCol() < 0;
         }
     };
 
