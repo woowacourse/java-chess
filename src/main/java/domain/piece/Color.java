@@ -11,4 +11,7 @@ public enum Color {
         return BLACK;
     }
 
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }

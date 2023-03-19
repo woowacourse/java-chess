@@ -5,6 +5,9 @@ import domain.type.PieceType;
 
 public abstract class PawnFeature extends Piece {
 
+    private static final int WHITE_DIRECTION = -1;
+    private static final int BLACK_DIRECTION = 1;
+
     public PawnFeature(final Color color) {
         super(color, PieceType.PAWN);
     }
@@ -14,10 +17,10 @@ public abstract class PawnFeature extends Piece {
     }
 
     protected final int chooseDirection() {
-        if (color == Color.WHITE) {
-            return -1;
+        if (color.isWhite()) {
+            return WHITE_DIRECTION;
         }
-        return 1;
+        return BLACK_DIRECTION;
     }
 
 }
