@@ -16,12 +16,13 @@
 
 - [x] 화이트, 블랙으로 나뉘며 한 턴씩 번갈아 가며 기물을 움직인다.
 - [x] 화이트가 기물을 먼저 움직인다.
+- [ ] 킹이 잡힌 경우 게임을 종료한다.
 
 **보드**
 
 - [x] 보드는 가로 8칸, 세로 8칸로 이루어져있고, 총 64칸이 존재한다.
     - [x] 가로(Rank)줄은 아래부터 위로 1 ~ 8이다.
-    - [x] 세로(Rank)줄은 왼쪽에서 오른쪽으로 A ~ H이다.
+    - [x] 세로(File)줄은 왼쪽에서 오른쪽으로 A ~ H이다.
 - [x] 각 칸에는 기물이 존재하거나, 존재하지 않을 수 있다.
 
 **기물**
@@ -38,16 +39,26 @@
 - [x] 움직이려는 칸에 같은 편 기물이 존재하는 경우 움직일 수 없다.
 - [x] 움직이려는 칸에 상대 편 기물이 존재하는 경우 해당 기물을 잡는다.
 
+**점수 계산**
+
+- [ ] 각 진영의 점수를 구한다. 기물의 점수는 아래와 같다.
+    - [ ] 킹: 0점
+    - [ ] 퀸: 9점
+    - [ ] 룩: 5점
+    - [ ] 비숍: 3점
+    - [ ] 나이트: 2.5점
+    - [ ] 폰: 1점
+- [ ] 폰의 경우 세로(File)줄에 여러 개 있는 경우(더블 폰, 트리플 폰) 각 0.5점으로 계산한다.
+
 ### 다이어그램
 
 ```mermaid
 graph TD
     ChessController --> InputView
-    ChessController --> OutputView
+    ChessController --> OutputView --> BoardConverter
 
     ChessController --> ChessGame
-    ChessGame --> Board
-
+    ChessGame --> Board --> BoardGenerator
     Position --> Rank
     Position --> File
 
