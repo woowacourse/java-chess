@@ -1,11 +1,12 @@
 package chess.domain;
 
-import static chess.domain.MoveStrategy.*;
-
 import chess.domain.piece.Piece;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static chess.domain.MoveStrategy.PAWN_STRAIGHT;
 
 public class Board {
 
@@ -36,7 +37,7 @@ public class Board {
     }
 
     private void validateSource(Position source) {
-        if (!board.containsKey(source)) {
+        if (haveNoPieceInPosition(source)) {
             throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
         }
     }
@@ -56,13 +57,13 @@ public class Board {
     }
 
     private void validateBlocked(List<Position> path, int index) {
-        if (board.containsKey(path.get(index))) {
+        if (havePieceInPosition(path.get(index))) {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 있습니다.");
         }
     }
 
     private void validateSameTeam(Position source, Position target) {
-        if (!board.containsKey(target)) {
+        if (haveNoPieceInPosition(target)) {
             return;
         }
 
@@ -75,11 +76,11 @@ public class Board {
     }
 
     private void validatePawnMoving(Position source, Position target) {
-        if (!board.containsKey(target) && !PAWN_STRAIGHT.isMovable(source, target)) {
+        if (haveNoPieceInPosition(target) && !PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대 기물이 없을 경우, 대각선으로 움직일 수 없습니다.");
         }
 
-        if (board.containsKey(target) && PAWN_STRAIGHT.isMovable(source, target)) {
+        if (havePieceInPosition(target) && PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 기물이 있는 곳으로 직진할 수 없습니다.");
         }
     }
@@ -90,12 +91,20 @@ public class Board {
         board.put(target, piece);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    private boolean havePieceInPosition(Position position) {
+        return board.containsKey(position);
+    }
+
+    private boolean haveNoPieceInPosition(Position position) {
+        return !board.containsKey(position);
     }
 
     public boolean isTurn(Position source, Team turn) {
         validateSource(source);
         return board.get(source).isSameTeam(turn);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }
