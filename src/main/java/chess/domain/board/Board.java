@@ -77,7 +77,7 @@ public class Board {
         if (turn.isOpponent(piece.color())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
+        if (isPieceExistsBetweenPositions(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
         if (piece.isUnmovable(sourcePosition, targetPosition, board.get(targetPosition))) {
@@ -85,7 +85,7 @@ public class Board {
         }
     }
 
-    private boolean isPieceExistsBetweenPosition(final Position sourcePosition, final Position targetPosition) {
+    private boolean isPieceExistsBetweenPositions(final Position sourcePosition, final Position targetPosition) {
         return sourcePosition.between(targetPosition).stream()
                 .anyMatch(this::isPieceExists);
     }
