@@ -8,7 +8,7 @@ import view.OutputView;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ChessGameController {
+public final class ChessGameController {
 
     private GameStatus gameStatus;
 

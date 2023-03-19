@@ -6,7 +6,7 @@ import domain.coordinate.Route;
 import java.util.Collections;
 import java.util.List;
 
-public class InitPawn extends PawnFeature {
+public final class InitPawn extends PawnFeature {
 
     public InitPawn(final Color color) {
         super(color);

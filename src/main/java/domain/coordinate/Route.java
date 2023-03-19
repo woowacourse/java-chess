@@ -2,7 +2,7 @@ package domain.coordinate;
 
 import java.util.List;
 
-public class Route {
+public final class Route {
 
     private final List<Position> positions;
 

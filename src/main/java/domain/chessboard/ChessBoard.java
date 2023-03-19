@@ -5,7 +5,7 @@ import domain.coordinate.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessBoard {
+public final class ChessBoard {
 
     private static final int NUMBER_OF_NONE_LINES = 4;
 

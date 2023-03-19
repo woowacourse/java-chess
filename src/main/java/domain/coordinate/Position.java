@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
     private static final List<List<Position>> CACHE;
     private static final int COLUMN_SIZE = 8;

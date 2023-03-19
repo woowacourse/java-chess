@@ -5,7 +5,7 @@ import domain.coordinate.Route;
 
 import java.util.Collections;
 
-public class Pawn extends PawnFeature {
+public final class Pawn extends PawnFeature {
 
     public Pawn(final Color color) {
         super(color);

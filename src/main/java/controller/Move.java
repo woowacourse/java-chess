@@ -5,12 +5,12 @@ import domain.coordinate.PositionFactory;
 
 import java.util.List;
 
-public class Move extends GameStatus {
+public final class Move extends GameStatus {
 
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
-    protected Move(final ChessGame chessGame) {
+    Move(final ChessGame chessGame) {
         super(chessGame);
     }
 

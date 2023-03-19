@@ -8,7 +8,7 @@ import domain.piece.Color;
 import domain.type.EmptyType;
 import domain.type.PieceType;
 
-public class ChessGame {
+public final class ChessGame {
 
     private final ChessBoard chessBoard;
     private final Turn turn;

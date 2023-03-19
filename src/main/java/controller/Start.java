@@ -5,9 +5,9 @@ import view.OutputView;
 
 import java.util.List;
 
-public class Start extends GameStatus {
+public final class Start extends GameStatus {
 
-    protected Start(ChessGame chessGame) {
+    Start(ChessGame chessGame) {
         super(chessGame);
     }
 

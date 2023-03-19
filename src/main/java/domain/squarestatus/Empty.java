@@ -6,7 +6,7 @@ import domain.piece.Color;
 import domain.type.EmptyType;
 import domain.type.Type;
 
-public class Empty implements SquareStatus {
+public final class Empty implements SquareStatus {
 
     private static final String EMPTY_ERROR_MESSAGE = "기물이 없습니다.";
 
