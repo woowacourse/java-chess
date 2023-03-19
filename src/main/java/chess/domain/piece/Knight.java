@@ -4,8 +4,10 @@ import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.function.IntPredicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Knight extends Piece {
     private static final List<Integer> moveY = List.of(2, 1, -1, -2, -2, -1, 1, 2);
@@ -21,14 +23,14 @@ public final class Knight extends Piece {
 
     @Override
     public List<Position> findPositions(final Position source, final Position target) {
-        for (int index = 0; index < 8; index++) {
-            int expectRow = source.getRow() + moveX.get(index);
-            int expectColumn = source.getColumn() + moveY.get(index);
+        int maxCases = 8;
+        return IntStream.range(0, maxCases)
+                .filter(canKnightMove(source, target))
+                .mapToObj(i -> target)
+                .collect(Collectors.toList());
+    }
 
-            if (target.getRow() == expectRow && target.getColumn() == expectColumn) {
-                return List.of(target);
-            }
-        }
-        return Collections.emptyList();
+    private static IntPredicate canKnightMove(final Position source, final Position target) {
+        return i -> target.getRow() == source.getRow() + moveX.get(i) && target.getColumn() == source.getColumn() + moveY.get(i);
     }
 }
