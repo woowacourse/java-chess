@@ -85,8 +85,8 @@ class BoardTest {
 	void throwExceptionWhenNotMovableByCount() {
 		board.move(Position.from("e2"), Position.from("e4"));
 
-		final Position source = Position.from("e1");
-		final Position target = Position.from("e3");
+		final Position source = Position.from("e4");
+		final Position target = Position.from("e6");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
