@@ -22,6 +22,10 @@ public abstract class Piece {
         return team.equals(Team.BLACK);
     }
 
+    public boolean isWhite() {
+        return !isBlack();
+    }
+
     public String getName() {
         return name;
     }

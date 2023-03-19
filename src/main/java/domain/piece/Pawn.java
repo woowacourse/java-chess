@@ -16,18 +16,27 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        if (isBlack() && source.getRank() == INITIAL_RANK_BLACK) {
-            return source.moveDown(TWO_STEP_AT_FIRST).equals(destination) ||
-                    source.moveDown(ONE_STEP).equals(destination);
-        }
-        if (!isBlack() && source.getRank() == INITIAL_RANK_WHITE) {
-            return source.moveUp(TWO_STEP_AT_FIRST).equals(destination) ||
-                    source.moveUp(ONE_STEP).equals(destination);
+        if (nowInitialPosition(source)) {
+            return firstMovable(source, destination);
         }
         if (isBlack()) {
             return source.moveDown(ONE_STEP).equals(destination);
         }
         return source.moveUp(ONE_STEP).equals(destination);
+    }
+
+    private boolean firstMovable(final Position source, final Position destination) {
+        if (isBlack()) {
+            return source.moveDown(TWO_STEP_AT_FIRST).equals(destination) ||
+                    source.moveDown(ONE_STEP).equals(destination);
+        }
+        return source.moveUp(TWO_STEP_AT_FIRST).equals(destination) ||
+                source.moveUp(ONE_STEP).equals(destination);
+    }
+
+    private boolean nowInitialPosition(final Position source) {
+        return (isBlack() && source.getRank() == INITIAL_RANK_BLACK) ||
+                (isWhite() && source.getRank() == INITIAL_RANK_WHITE);
     }
 
     @Override
