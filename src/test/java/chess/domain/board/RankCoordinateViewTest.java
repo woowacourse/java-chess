@@ -8,6 +8,7 @@ import static chess.domain.board.RankCoordinate.THREE;
 import static chess.domain.board.RankCoordinate.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -19,27 +20,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RankCoordinateViewTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"ONE:true", "TWO:true", "THREE:false", "EIGHT:false"}, delimiter = ':')
-    void White팀의_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
-        assertThat(rankCoordinate.isWhiteRank()).isEqualTo(expect);
+    @CsvSource(value = {"ONE:WHITE", "TWO:WHITE", "THREE:EMPTY", "EIGHT:BLACK"}, delimiter = ':')
+    void 랭크로_어느_팀인지_확인할_수_있다(RankCoordinate rankCoordinate, Color expect) {
+        assertThat(rankCoordinate.getColor()).isEqualTo(expect);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SEVEN:true", "EIGHT:true", "TWO:false", "SIX:false"}, delimiter = ':')
-    void Black팀의_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
-        assertThat(rankCoordinate.isBlackRank()).isEqualTo(expect);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"ONE:true", "TWO:false", "THREE:false", "EIGHT:true"}, delimiter = ':')
-    void Side_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
-        assertThat(rankCoordinate.isSideRank()).isEqualTo(expect);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"SEVEN:true", "EIGHT:false", "TWO:true", "SIX:false"}, delimiter = ':')
-    void Pawn_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
-        assertThat(rankCoordinate.isPawnRank()).isEqualTo(expect);
+    @CsvSource(value = {"ONE:SIDE_RANK", "TWO:PAWN_RANK", "THREE:EMPTY_RANK", "EIGHT:SIDE_RANK"}, delimiter = ':')
+    void Side_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, RankType expect) {
+        assertThat(rankCoordinate.getRankType()).isEqualTo(expect);
     }
 
     @Test

@@ -6,16 +6,6 @@ public enum RankType {
     EMPTY_RANK,
     ;
 
-    public static RankType of(RankCoordinate rankCoordinate) {
-        if (rankCoordinate.isSideRank()) {
-            return RankType.SIDE_RANK;
-        }
-        if (rankCoordinate.isPawnRank()) {
-            return RankType.PAWN_RANK;
-        }
-        return RankType.EMPTY_RANK;
-    }
-
     public boolean isSideRank() {
         return this == SIDE_RANK;
     }

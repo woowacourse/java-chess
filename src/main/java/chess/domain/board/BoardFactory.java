@@ -26,14 +26,14 @@ public class BoardFactory {
     public static Board createBoard() {
         Map<Position, Piece> boards = new HashMap<>();
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
-            Color color = Color.of(rankCoordinate);
+            Color color = rankCoordinate.getColor();
             createRank(boards, rankCoordinate, color);
         }
         return new Board(boards);
     }
 
     private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
-        RankType rankType = RankType.of(rankCoordinate);
+        RankType rankType = rankCoordinate.getRankType();
         if (rankType.isSideRank()) {
             putSideRank(boards, rankCoordinate, color);
         }

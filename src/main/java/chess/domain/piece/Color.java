@@ -1,20 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.board.RankCoordinate;
-
 public enum Color {
-    BLACK,
-    WHITE,
-    EMPTY;
+    BLACK(1),
+    WHITE(-1),
+    EMPTY(0),
+    ;
+    private final int direction;
 
-    public static Color of(RankCoordinate rankCoordinate) {
-        if (rankCoordinate.isWhiteRank()) {
-            return Color.WHITE;
-        }
-        if (rankCoordinate.isBlackRank()) {
-            return Color.BLACK;
-        }
-        return Color.EMPTY;
+    Color(int direction) {
+        this.direction = direction;
     }
 
     public boolean isOpposite(Color color) {
@@ -32,9 +26,6 @@ public enum Color {
     }
 
     public int getDirection() {
-        if (this == BLACK) {
-            return 1;
-        }
-        return -1;
+        return direction;
     }
 }

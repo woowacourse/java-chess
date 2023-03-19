@@ -63,22 +63,6 @@ public class Position {
                 .collect(toList());
     }
 
-    public FileCoordinate getFileCoordinate() {
-        return fileCoordinate;
-    }
-
-    public RankCoordinate getRankCoordinate() {
-        return rankCoordinate;
-    }
-
-    public int getColumn() {
-        return fileCoordinate.getColumnNumber();
-    }
-
-    public int getRow() {
-        return rankCoordinate.getRowNumber();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

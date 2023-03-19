@@ -33,12 +33,9 @@ public enum FileCoordinate {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
     }
 
-    public int getColumnNumber() {
-        return columnNumber;
-    }
-
     public List<FileCoordinate> betweenFiles(FileCoordinate other) {
-        List<FileCoordinate> result = IntStream.range(min(columnNumber, other.columnNumber),
+        List<FileCoordinate> result = IntStream.range(
+                        min(columnNumber, other.columnNumber),
                         max(columnNumber, other.columnNumber))
                 .skip(1)
                 .mapToObj(FileCoordinate::findBy)
