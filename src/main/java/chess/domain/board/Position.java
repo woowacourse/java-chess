@@ -50,23 +50,19 @@ public final class Position {
         return this.rank == rank;
     }
 
-    public Position getUpStraight() {
-        return new Position(file, rank.plus());
-    }
-
-    public Position getRightDownDiagonal() {
+    private Position getRightDownDiagonal() {
         return new Position(file.plus(), rank.minus());
     }
 
-    public Position getDownStraight() {
+    private Position getDownStraight() {
         return new Position(file, rank.minus());
     }
 
-    public Position getLeftDownDiagonal() {
+    private Position getLeftDownDiagonal() {
         return new Position(file.minus(), rank.minus());
     }
 
-    public Position getLeftStraight() {
+    private Position getLeftStraight() {
         return new Position(file.minus(), rank);
     }
 
@@ -90,35 +86,27 @@ public final class Position {
             throw new IllegalArgumentException(CAN_NOT_COMPUTE_DIAGONAL_PATH_EXCEPTION_MESSAGE);
         }
 
-        Set<Position> positions = new HashSet<>();
+        Set<Position> path = computePathByInclination(max, min, inclination);
+
+        path.add(target);
+        path.remove(this);
+        return path;
+    }
+
+    private Set<Position> computePathByInclination(Position max, Position min, final double inclination) {
+        Set<Position> path = new HashSet<>();
+        while (max.rank.isOver(min.rank)) {
+            path.add(max);
+            max = nextMax(max, inclination);
+        }
+        return path;
+    }
+
+    private Position nextMax(final Position max, final double inclination) {
         if (inclination == 1) {
-            positions = inclinationOne(max, min);
+            return max.getLeftDownDiagonal();
         }
-        if (inclination == -1) {
-            positions = inclinationNegativeOne(max, min);
-        }
-
-        positions.add(target);
-        positions.remove(this);
-        return positions;
-    }
-
-    private Set<Position> inclinationOne(Position max, Position min) {
-        Set<Position> positions = new HashSet<>();
-        while (max.rank.isOver(min.rank)) {
-            positions.add(max);
-            max = max.getLeftDownDiagonal();
-        }
-        return positions;
-    }
-
-    private Set<Position> inclinationNegativeOne(Position max, Position min) {
-        Set<Position> positions = new HashSet<>();
-        while (max.rank.isOver(min.rank)) {
-            max = max.getRightDownDiagonal();
-            positions.add(max);
-        }
-        return positions;
+        return max.getRightDownDiagonal();
     }
 
     public Set<Position> computeCrossPath(Position target) {
