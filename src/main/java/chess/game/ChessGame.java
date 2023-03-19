@@ -4,7 +4,7 @@ import chess.board.Board;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.board.dto.BoardDto;
+import chess.controller.dto.BoardDto;
 import chess.piece.Piece;
 
 public class ChessGame {

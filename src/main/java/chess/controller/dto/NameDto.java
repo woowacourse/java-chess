@@ -1,4 +1,4 @@
-package chess.board.dto;
+package chess.controller.dto;
 
 import chess.piece.directional.normal.longrange.Bishop;
 import chess.piece.directional.normal.King;
