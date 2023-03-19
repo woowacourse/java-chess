@@ -24,7 +24,17 @@ public final class Waiting implements GameStatus {
     }
 
     @Override
+    public GameStatus end() {
+        return new Finished();
+    }
+
+    @Override
+    public boolean isOnGoing() {
+        return true;
+    }
+
+    @Override
     public List<Squares> getBoard() {
-        return null;
+        throw new UnsupportedOperationException("보드가 존재하지 않습니다.");
     }
 }

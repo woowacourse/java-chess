@@ -7,6 +7,7 @@ import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessGameTest {
@@ -31,5 +32,31 @@ class ChessGameTest {
 
         assertThatThrownBy(() -> chessGame.playTurn(source, target))
                 .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("end를 호출하면 onGoing이 false가 된다.")
+    void end_onGoing_false() {
+        //given
+        final var chessGame = new ChessGame();
+        //when
+        chessGame.end();
+        //then
+        assertThat(chessGame.isOnGoing()).isFalse();
+    }
+
+    @Test
+    @DisplayName("end가 호출되기전엔 onGoing이 true이다")
+    void beforeEnd_onGoing_true() {
+        final var chessGame = new ChessGame();
+        assertThat(chessGame.isOnGoing()).isTrue();
+    }
+
+    @Test
+    @DisplayName("end가 호출되기전엔 onGoing이 true이다2")
+    void beforeEnd_onGoing_true2() {
+        final var chessGame = new ChessGame();
+        chessGame.startGame();
+        assertThat(chessGame.isOnGoing()).isTrue();
     }
 }

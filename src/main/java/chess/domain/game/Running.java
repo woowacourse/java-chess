@@ -28,6 +28,16 @@ public final class Running implements GameStatus {
         return new Running(board, changeTurn());
     }
 
+    @Override
+    public GameStatus end() {
+        return new Finished();
+    }
+
+    @Override
+    public boolean isOnGoing() {
+        return true;
+    }
+
     private Color changeTurn() {
         if (turn.isBlack()) {
             return Color.WHITE;

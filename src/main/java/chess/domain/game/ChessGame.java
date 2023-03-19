@@ -8,7 +8,6 @@ import java.util.List;
 public final class ChessGame {
 
     private GameStatus gameStatus;
-    private boolean isOnGoing = true;
 
     public ChessGame() {
         this.gameStatus = new Waiting();
@@ -27,10 +26,10 @@ public final class ChessGame {
     }
 
     public void end() {
-        this.isOnGoing = false;
+        this.gameStatus = gameStatus.end();
     }
 
     public boolean isOnGoing() {
-        return isOnGoing;
+        return gameStatus.isOnGoing();
     }
 }

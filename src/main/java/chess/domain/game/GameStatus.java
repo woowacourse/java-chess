@@ -11,5 +11,9 @@ public interface GameStatus {
 
     GameStatus playTurn(Position source, Position target);
 
+    GameStatus end();
+
+    boolean isOnGoing();
+
     List<Squares> getBoard();
 }
