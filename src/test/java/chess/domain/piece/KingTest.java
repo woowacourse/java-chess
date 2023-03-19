@@ -24,7 +24,7 @@ class KingTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.THREE),
-                        Move.RIGHT_UP
+                        Move.UP_RIGHT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
@@ -34,7 +34,7 @@ class KingTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.ONE),
-                        Move.RIGHT_DOWN
+                        Move.DOWN_RIGHT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
@@ -44,7 +44,7 @@ class KingTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.ONE),
-                        Move.LEFT_DOWN
+                        Move.DOWN_LEFT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
@@ -54,7 +54,7 @@ class KingTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.THREE),
-                        Move.LEFT_UP
+                        Move.UP_LEFT
                 )
         );
     }

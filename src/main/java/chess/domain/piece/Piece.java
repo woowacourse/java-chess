@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.KnightMove;
 import chess.domain.board.Move;
 import chess.domain.board.Square;
 import java.util.Objects;
@@ -15,10 +14,6 @@ public abstract class Piece {
     }
 
     public boolean isMovable(final Square source, final Square target, final Move move) {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean isMovable(final Square source, final Square target, final KnightMove move) {
         throw new UnsupportedOperationException();
     }
 

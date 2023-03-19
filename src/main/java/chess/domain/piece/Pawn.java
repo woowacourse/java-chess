@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -23,9 +22,18 @@ public class Pawn extends Piece {
 
     private List<Move> makePossibleMove() {
         if (camp.equals(Camp.WHITE)) {
-            return new ArrayList<>(List.of(Move.UP, Move.RIGHT_UP, Move.LEFT_UP));
+            return List.of(
+                    Move.UP,
+                    Move.UP_RIGHT,
+                    Move.UP_LEFT
+            );
         }
-        return new ArrayList<>(List.of(Move.DOWN, Move.RIGHT_DOWN, Move.LEFT_DOWN));
+
+        return List.of(
+                Move.DOWN,
+                Move.DOWN_RIGHT,
+                Move.DOWN_LEFT
+        );
     }
 
     @Override

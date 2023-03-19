@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
@@ -13,7 +12,12 @@ public class Bishop extends Piece {
     }
 
     private static List<Move> makePossibleMove() {
-        return new ArrayList<>(List.of(Move.values()).subList(4, 8));
+        return List.of(
+                Move.UP_LEFT,
+                Move.UP_RIGHT,
+                Move.DOWN_LEFT,
+                Move.DOWN_RIGHT
+        );
     }
 
     @Override

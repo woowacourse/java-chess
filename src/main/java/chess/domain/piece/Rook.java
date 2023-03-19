@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -13,7 +12,12 @@ public class Rook extends Piece {
     }
 
     private static List<Move> makePossibleMove() {
-        return new ArrayList<>(List.of(Move.values()).subList(0, 4));
+        return List.of(
+                Move.UP,
+                Move.DOWN,
+                Move.LEFT,
+                Move.RIGHT
+        );
     }
 
     @Override

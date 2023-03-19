@@ -53,7 +53,7 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.B, Rank.THREE);
             final Pawn pawn = new Pawn(Camp.WHITE);
-            final Move move = Move.RIGHT_UP;
+            final Move move = Move.UP_RIGHT;
 
             assertThat(pawn.isMovable(source, target, move)).isTrue();
         }
@@ -64,7 +64,7 @@ class PawnTest {
             final Square source = new Square(File.B, Rank.TWO);
             final Square target = new Square(File.A, Rank.THREE);
             final Pawn pawn = new Pawn(Camp.WHITE);
-            final Move move = Move.LEFT_UP;
+            final Move move = Move.UP_LEFT;
 
             assertThat(pawn.isMovable(source, target, move)).isTrue();
         }
@@ -112,7 +112,7 @@ class PawnTest {
             final Square source = new Square(File.B, Rank.SEVEN);
             final Square target = new Square(File.A, Rank.SIX);
             final Pawn pawn = new Pawn(Camp.BLACK);
-            final Move move = Move.LEFT_DOWN;
+            final Move move = Move.DOWN_LEFT;
 
             assertThat(pawn.isMovable(source, target, move)).isTrue();
         }
@@ -123,7 +123,7 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.SEVEN);
             final Square target = new Square(File.B, Rank.SIX);
             final Pawn pawn = new Pawn(Camp.BLACK);
-            final Move move = Move.RIGHT_DOWN;
+            final Move move = Move.DOWN_RIGHT;
 
             assertThat(pawn.isMovable(source, target, move)).isTrue();
         }

@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
-import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
@@ -13,7 +12,16 @@ public class King extends Piece {
     }
 
     private static List<Move> makePossibleMove() {
-        return new ArrayList<>(List.of(Move.values()));
+        return List.of(
+                Move.UP,
+                Move.DOWN,
+                Move.LEFT,
+                Move.RIGHT,
+                Move.UP_LEFT,
+                Move.UP_RIGHT,
+                Move.DOWN_LEFT,
+                Move.DOWN_RIGHT
+        );
     }
 
     @Override

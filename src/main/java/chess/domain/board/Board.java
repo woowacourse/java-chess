@@ -38,7 +38,7 @@ public class Board {
 
     private boolean isMovable(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
-        final Move move = Move.calculateDirection(source, target);
+        final Move move = Move.calculateMove(source, target);
 
         if (isSameRole(source, Role.KNIGHT)) {
             return isKnightMovable(source, target, sourcePiece);
@@ -53,7 +53,7 @@ public class Board {
     }
 
     private boolean isKnightMovable(final Square source, final Square target, final Piece piece) {
-        final KnightMove knightMove = KnightMove.calculateDirection(source, target);
+        final Move knightMove = Move.calculateMove(source, target);
         return piece.isMovable(source, target, knightMove);
     }
 
