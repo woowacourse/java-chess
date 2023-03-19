@@ -17,19 +17,19 @@ public final class Position {
         this.rank = rank;
     }
 
-    public Position getRightDownDiagonal() {
+    private Position getRightDownDiagonal() {
         return new Position(file.plus(), rank.minus());
     }
 
-    public Position getDownStraight() {
+    private Position getDownStraight() {
         return new Position(file, rank.minus());
     }
 
-    public Position getLeftDownDiagonal() {
+    private Position getLeftDownDiagonal() {
         return new Position(file.minus(), rank.minus());
     }
 
-    public Position getLeftStraight() {
+    private Position getLeftStraight() {
         return new Position(file.minus(), rank);
     }
 
@@ -77,28 +77,28 @@ public final class Position {
         return positions;
     }
 
-    public static Position maxRank(final Position source, final Position target) {
+    private static Position maxRank(final Position source, final Position target) {
         if (source.isRankOver(target)) {
             return source;
         }
         return target;
     }
 
-    public static Position minRank(final Position source, final Position target) {
+    private static Position minRank(final Position source, final Position target) {
         if (source.isRankOver(target)) {
             return target;
         }
         return source;
     }
 
-    public static Position maxFile(final Position source, final Position target) {
+    private static Position maxFile(final Position source, final Position target) {
         if (source.isFileOver(target)) {
             return source;
         }
         return target;
     }
 
-    public static Position minFile(final Position source, final Position target) {
+    private static Position minFile(final Position source, final Position target) {
         if (source.isFileOver(target)) {
             return target;
         }
