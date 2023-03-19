@@ -4,13 +4,18 @@ import chess.domain.Position;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
 import chess.view.InputView;
-import chess.view.PositionMapper;
 import chess.view.OutputView;
+import chess.view.PositionMapper;
+
 import java.util.List;
 import java.util.function.Supplier;
 
 public class ChessController {
     private static final String MOVE_COMMAND = "move";
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     private final ChessGame chessGame;
 
     public ChessController(ChessGame chessGame) {
@@ -22,37 +27,37 @@ public class ChessController {
         GameCommand gameCommand = repeat(InputView::readGameCommand);
         if (gameCommand == GameCommand.START) {
             OutputView.printBoard(chessGame.getBoard());
-            while (gameLoop() == GameStatus.CONTINUE);
+            while (gameLoop() == GameStatus.CONTINUE) ;
         }
     }
 
     private GameStatus gameLoop() {
         List<String> commands = repeat(InputView::readMoveCommand);
-        String command = commands.get(0);
+        String command = commands.get(COMMAND_INDEX);
 
         if (MOVE_COMMAND.equals(command)) {
-            execute(() -> move(commands));
+            move(commands);
             return GameStatus.CONTINUE;
         }
         return GameStatus.EXIT;
     }
 
-    private void execute(Runnable runnable) {
+    private void move(List<String> command) {
         try {
-            runnable.run();
+            PositionRequest source = PositionMapper.map(command.get(SOURCE_INDEX));
+            PositionRequest target = PositionMapper.map(command.get(TARGET_INDEX));
+            chessGame.move(convertRequestToPosition(source), convertRequestToPosition(target));
+            OutputView.printBoard(chessGame.getBoard());
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void move(List<String> command) {
-        PositionRequest source = PositionMapper.map(command.get(1));
-        PositionRequest target = PositionMapper.map(command.get(2));
-        chessGame.move(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
-        OutputView.printBoard(chessGame.getBoard());
+    private static Position convertRequestToPosition(PositionRequest request) {
+        return Position.of(request.getX(), request.getY());
     }
 
-    private  <T> T repeat(Supplier<T> supplier) {
+    private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
