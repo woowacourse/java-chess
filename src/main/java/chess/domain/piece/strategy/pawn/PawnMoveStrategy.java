@@ -8,8 +8,8 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
     @Override
     public void validatePath(final Path path) {
         validAdditionalConstraint(path);
-        if (path.rankInterval() == 0) {
-            throw new IllegalArgumentException("폰의 움직임은 Rank 가 증가하거나 감소해야 합니다.");
+        if (path.isHorizontal()) {
+            throw new IllegalArgumentException("폰은 수평으로 움직일 수 없습니다.");
         }
         if (!path.isUnitDistance() && !path.isTwoVerticalMove()) {
             throw new IllegalArgumentException("폰은 그렇게 움직일 수 없습니다.");

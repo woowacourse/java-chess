@@ -22,7 +22,7 @@ public class Turn {
         return whiteTurn;
     }
 
-    public boolean missMatch(final Color color) {
+    public boolean misMatch(final Color color) {
         return turn != color;
     }
 

@@ -63,6 +63,10 @@ public class Path {
         return Math.abs(fileInterval()) == 0;
     }
 
+    public boolean isHorizontal() {
+        return rankInterval() == 0;
+    }
+
     public List<PiecePosition> waypoints() {
         return iterate(source,
                 current -> !current.equals(destination),

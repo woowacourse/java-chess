@@ -12,18 +12,12 @@ public class InitialPawn implements PawnState {
 
     @Override
     public void validatePath(final Path path) {
-        if (isStraightTwoPath(path)) {
+        if (path.isTwoVerticalMove()) {
             return;
         }
+
         if (!path.isUnitDistance()) {
             throw new IllegalArgumentException("폰은 첫 이동이 아닌 이상 1칸 씩만 이동할 수 있습니다.");
         }
-    }
-
-    private boolean isStraightTwoPath(final Path path) {
-        if (Math.abs(path.rankInterval()) != 2) {
-            return false;
-        }
-        return Math.abs(path.fileInterval()) == 0;
     }
 }

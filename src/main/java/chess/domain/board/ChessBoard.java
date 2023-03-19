@@ -27,7 +27,7 @@ public class ChessBoard {
     }
 
     private void validateMissMatchSelect(final Turn turn, final Piece from) {
-        if (turn.missMatch(from.color())) {
+        if (turn.misMatch(from.color())) {
             throw new IllegalArgumentException("상대 말을 선택하셨습니다.");
         }
     }
