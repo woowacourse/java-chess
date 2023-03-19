@@ -24,7 +24,7 @@ public enum ViewFile {
 
     public static File from(String viewFile) {
         return Arrays.stream(ViewFile.values())
-                .filter(it -> it.viewFile.equals(viewFile))
+                .filter(it -> it.viewFile.equalsIgnoreCase(viewFile))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))
                 .file;
