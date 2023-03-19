@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -63,16 +64,16 @@ class RankTest {
 
         assertThat(rankTwo.getSquares())
                 .map(Square::getPieceType)
-                .isNull();
+                .allMatch(Objects::isNull);
         assertThat(rankThree.getSquares())
                 .map(Square::getPieceType)
-                .isNull();
+                .allMatch(Objects::isNull);
         assertThat(rankFour.getSquares())
                 .map(Square::getPieceType)
-                .isNull();
+                .allMatch(Objects::isNull);
         assertThat(rankFive.getSquares())
                 .map(Square::getPieceType)
-                .isNull();
+                .allMatch(Objects::isNull);
     }
 
     @Test
