@@ -40,4 +40,8 @@ public abstract class Piece {
     public double getScore() {
         return score.getScore();
     }
+
+    public void updatePawnHalfScore() {
+        this.score.updateScoreByOtherPawnsBeingWithSameColumn();
+    }
 }

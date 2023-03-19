@@ -128,19 +128,65 @@ public class Board {
     }
 
     // todo: 점수 계산
-    public double calculateScoreOfLowerTeam() {
+    public double getScoreOfLowerTeam() {
+        board.keySet().stream()
+                .filter(this::isLowerTeamOfPawn)
+                .map(Position::getCol)
+                .distinct()
+                .forEach(column -> calculatePawnScoreOfLowerTeam(Column.fromByInput(column)));
+
         return board.values().stream()
                 .filter(Piece::isNameLowerCase)
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
-    public double calculateScoreOfUpperTeam() {
+    private void calculatePawnScoreOfLowerTeam(final Column column) {
+        List<Position> positions = Position.getAllPositionsByColumn(column);
+
+        int count = (int) positions.stream()
+                .filter(this::isLowerTeamOfPawn)
+                .count();
+
+        if (count >= 2) {
+            positions.stream()
+                    .filter(position -> findPieceFromPosition(position).isPawn())
+                    .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
+        }
+    }
+
+    private boolean isLowerTeamOfPawn(final Position position) {
+        return board.get(position).isNameLowerCase() && board.get(position).isPawn();
+    }
+
+    public double getScoreOfUpperTeam() {
+        board.keySet().stream()
+                .filter(this::isUpperTeamOfPawn)
+                .map(Position::getCol)
+                .distinct()
+                .forEach(column -> calculatePawnScoreOfUpperTeam(Column.fromByInput(column)));
+
         return board.values().stream()
                 .filter(Piece::isNameUpperCase)
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
-    // todo: King dead
+    private void calculatePawnScoreOfUpperTeam(final Column column) {
+        List<Position> positions = Position.getAllPositionsByColumn(column);
+
+        int count = (int) positions.stream()
+                .filter(this::isUpperTeamOfPawn)
+                .count();
+
+        if (count >= 2) {
+            positions.stream()
+                    .filter(position -> findPieceFromPosition(position).isPawn())
+                    .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
+        }
+    }
+
+    private boolean isUpperTeamOfPawn(final Position position) {
+        return board.get(position).isNameUpperCase() && board.get(position).isPawn();
+    }
 }

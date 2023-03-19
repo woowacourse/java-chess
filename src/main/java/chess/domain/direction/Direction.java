@@ -1,5 +1,6 @@
 package chess.domain.direction;
 
+import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.exception.CommandException;
 import java.util.ArrayList;

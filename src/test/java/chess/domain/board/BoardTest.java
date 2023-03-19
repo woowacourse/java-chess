@@ -154,11 +154,11 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // when
-        double score = board.calculateScoreOfLowerTeam();
+        double score = board.getScoreOfLowerTeam();
 
         // then
         assertThat(score).isEqualTo(38);
-     }
+    }
 
     @Test
     @DisplayName("대문자 팀 점수 계산 (초기 세팅)")
@@ -167,9 +167,54 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // when
-        double score = board.calculateScoreOfUpperTeam();
+        double score = board.getScoreOfUpperTeam();
 
         // then
         assertThat(score).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("소문자 팀 점수 계산 (같은 Column에 폰이 겹치는 경우가 있는 경우 0.5로 계산한다.)")
+    void returns_sum_of_lower_team_score_when_pawn_has_same_column() {
+        // given
+        Board board = BoardFactory.createBoard();
+
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("b7"), Position.from("b5"));
+        board.switchPosition(Position.from("a4"), Position.from("b5"));
+        board.switchPosition(Position.from("d7"), Position.from("d5"));
+        board.switchPosition(Position.from("b5"), Position.from("b6"));
+        board.switchPosition(Position.from("c7"), Position.from("b6"));
+        board.switchPosition(Position.from("a1"), Position.from("a7"));
+
+        // when
+        double result = board.getScoreOfLowerTeam();
+
+        // then
+        assertThat(result).isEqualTo(37.0);
+        assertThat(board.getScoreOfUpperTeam()).isEqualTo(36.0);
+    }
+
+    @Test
+    @DisplayName("대문자 팀 점수 계산 (같은 Column에 폰이 겹치는 경우가 있는 경우 0.5로 계산한다.)")
+    void returns_sum_of_upper_team_score_when_pawn_has_same_column() {
+        // given
+        Board board = BoardFactory.createBoard();
+        double expectedResult = 36;
+
+        board.switchPosition(Position.from("a2"), Position.from("a3"));
+        board.switchPosition(Position.from("a7"), Position.from("a5"));
+        board.switchPosition(Position.from("b2"), Position.from("b4"));
+        board.switchPosition(Position.from("a5"), Position.from("b4"));
+        board.switchPosition(Position.from("c2"), Position.from("c3"));
+        board.switchPosition(Position.from("d7"), Position.from("d5"));
+        board.switchPosition(Position.from("c3"), Position.from("c4"));
+        board.switchPosition(Position.from("d5"), Position.from("c4"));
+
+        // when
+        double result = board.getScoreOfUpperTeam();
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
     }
 }

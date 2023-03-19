@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score {
 
-    private final double score;
+    private double score;
 
     public Score(final double score) {
         this.score = score;
@@ -12,6 +12,10 @@ public class Score {
 
     public double getScore() {
         return this.score;
+    }
+
+    public void updateScoreByOtherPawnsBeingWithSameColumn() {
+        this.score = 0.5;
     }
 
     @Override

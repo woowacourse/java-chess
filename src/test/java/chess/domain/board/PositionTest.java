@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.exception.PositionMessage;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,4 +45,17 @@ public class PositionTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PositionMessage.INVALID_ROW.getMessage());
     }
+
+    @Test
+    @DisplayName("해당하는 Column에 속한 모든 row를 조합해서 출력해준다.")
+    void returns_all_positions_by_column() {
+        // given
+        Column column = Column.C;
+
+        // when
+        List<Position> result = Position.getAllPositionsByColumn(column);
+
+        // then
+        assertThat(result.size()).isEqualTo(Row.values().length);
+     }
 }

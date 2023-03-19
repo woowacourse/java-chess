@@ -39,12 +39,12 @@ public class ChessGame {
 
 
     // todo: 점수 계산
-    private double calculateScoreOfLowerTeam() {
-        return board.calculateScoreOfLowerTeam();
+    public double calculateScoreOfLowerTeam() {
+        return board.getScoreOfLowerTeam();
     }
 
-    private double calculateScoreOfUpperTeam() {
-        return board.calculateScoreOfUpperTeam();
+    public double calculateScoreOfUpperTeam() {
+        return board.getScoreOfUpperTeam();
     }
 
     // todo: King dead

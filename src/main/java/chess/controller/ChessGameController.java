@@ -24,6 +24,9 @@ public class ChessGameController {
         Command command = inputView.readGameCommand();
 
         playChess(chessGame, command);
+
+        System.out.println(chessGame.calculateScoreOfLowerTeam());
+        System.out.println(chessGame.calculateScoreOfUpperTeam());
     }
 
     private void playChess(ChessGame chessGame, Command command) {
