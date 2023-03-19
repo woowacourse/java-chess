@@ -1,5 +1,6 @@
 package chess.model.position;
 
+import chess.model.piece.Direction;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +41,13 @@ public class Position implements IndexConvertable {
         return new Distance(differFile, differRank);
     }
 
+    public Position findNextPosition(final Direction direction) {
+        final Rank nextRank = direction.findNextRank(rank);
+        final File nextFile = direction.findNextFile(file);
+
+        return of(nextFile, nextRank);
+    }
+
     @Override
     public int convertToIndex() {
         return ((rank.value() - 1) * FILE_MAX_SIZE) + (file.value() - 1);
@@ -60,10 +68,5 @@ public class Position implements IndexConvertable {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    @Override
-    public String toString() {
-        return file.name() + rank.value();
     }
 }

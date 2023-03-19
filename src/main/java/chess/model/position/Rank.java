@@ -40,7 +40,18 @@ public enum Rank {
         return this.value - other.value;
     }
 
+    public Rank findNextRank(final int offer) {
+        final int nextRankValue = this.value + offer;
+
+        return findRank(nextRankValue);
+    }
+
     public int value() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

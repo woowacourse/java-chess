@@ -1,0 +1,78 @@
+package chess.model.position;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+class RankTest {
+
+    @Nested
+    @DisplayName("findRank() 테스트")
+    class FindRankMethodTest {
+
+        @ParameterizedTest(name = "findRank()는 {0}을 전달하면 {1}을 반환한다")
+        @CsvSource(value = {"1:FIRST", "2:SECOND", "3:THIRD", "4:FOURTH", "5:FIFTH", "6:SIXTH", "7:SEVENTH",
+                "8:EIGHTH"}, delimiter = ':')
+        void findRank_givenValue_thenReturnSameValueRank(final int value, final Rank expected) {
+            // when
+            final Rank actual = Rank.findRank(value);
+
+            // then
+            assertThat(actual).isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "1 ~ 8의 범위를 벗어나는 값 {0}을 전달하면 예외가 발생한다")
+        @ValueSource(ints = {0, 9})
+        void findRank_givenInvalidValue_thenFail(final int value) {
+            assertThatThrownBy(() -> Rank.findRank(value))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("존재하지 않는 행입니다.");
+        }
+    }
+
+    @Test
+    @DisplayName("differ()는 다른 Rank를 전달하면 차이를 반환한다")
+    void differ_givenOtherRank_thenReturnDiffer() {
+        // given
+        final Rank first = Rank.FIRST;
+
+        // when
+        final int actual = first.differ(Rank.FIRST);
+
+        assertThat(actual).isZero();
+    }
+
+    @Nested
+    @DisplayName("findNextRank() 테스트")
+    class FindNextRankMethodTest {
+
+        @ParameterizedTest(name = "주어지는 offset이 {0}일 때 {1}을 반환한다")
+        @CsvSource(value = {
+                "1:SIXTH", "0:FIFTH", "-1:FOURTH", "2:SEVENTH", "-2:THIRD"
+        }, delimiter = ':')
+        void findNextRank_givenOffset_thenReturnNextRank(final int offer, final Rank expected) {
+            // given
+            final Rank fifth = Rank.FIFTH;
+
+            // when
+            final Rank actual = fifth.findNextRank(offer);
+
+            // then
+            assertThat(actual).isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "Rank가 {0}일 때 계산 결과가 1 ~ 8의 범위를 넘어서는 offer {1}이 주어지면 예외가 발생한다.")
+        @CsvSource(value = {"FIRST:-1", "EIGHTH:1"}, delimiter = ':')
+        void findNextRank_whenBoundaryRank_givenBoundaryOffset_thenFail(final Rank rank, final int offer) {
+            assertThatThrownBy(() -> rank.findNextRank(offer))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("존재하지 않는 행입니다.");
+        }
+    }
+}

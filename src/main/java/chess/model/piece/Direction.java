@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.File;
+import chess.model.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +29,7 @@ public enum Direction {
             NORTH, WEST, SOUTH, EAST,
             NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
     );
-    private static final List<Direction> DIAGONAL = List.of(
-            NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
-    );
+    private static final List<Direction> DIAGONAL = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
     
     private final int file;
@@ -75,11 +75,17 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.match(file, rank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Direction을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("방향을 찾을 수 없습니다."));
     }
 
     public static boolean isDiagonal(final Direction direction) {
         return DIAGONAL.contains(direction);
+    }
+
+    public boolean match(final int file, final int rank) {
+        int gcd = gcd(Math.abs(rank), Math.abs(file));
+
+        return this.rank == (rank / gcd) && this.file == (file / gcd);
     }
 
     private int gcd(final int a, final int b) {
@@ -90,9 +96,11 @@ public enum Direction {
         return gcd(b, a % b);
     }
 
-    public boolean match(final int file, final int rank) {
-        int gcd = gcd(Math.abs(rank), Math.abs(file));
+    public Rank findNextRank(final Rank rank) {
+        return rank.findNextRank(this.rank);
+    }
 
-        return this.rank == (rank / gcd) && this.file == (file / gcd);
+    public File findNextFile(final File file) {
+        return file.findNextFile(this.file);
     }
 }

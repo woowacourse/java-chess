@@ -15,8 +15,10 @@ public enum File {
     G(7),
     H(8);
 
-    private static final Map<String, File> CACHE = Arrays.stream(values())
+    private static final Map<String, File> NAME_CACHE = Arrays.stream(values())
             .collect(Collectors.toMap(Enum::toString, file -> file));
+    private static final Map<Integer, File> VALUE_CACHE = Arrays.stream(values())
+            .collect(Collectors.toMap(file -> file.value, file -> file));
 
     private final int value;
 
@@ -24,16 +26,16 @@ public enum File {
         this.value = value;
     }
 
-    public static File findFile(final String file) {
-        final String key = file.toUpperCase();
+    public static File findFile(final String fileName) {
+        final String key = fileName.toUpperCase();
 
         validateRank(key);
 
-        return CACHE.get(key);
+        return NAME_CACHE.get(key);
     }
 
     private static void validateRank(final String key) {
-        if (!CACHE.containsKey(key)) {
+        if (!NAME_CACHE.containsKey(key)) {
             throw new IllegalArgumentException("존재하지 않는 열입니다.");
         }
     }
@@ -42,7 +44,26 @@ public enum File {
         return this.value - other.value;
     }
 
+    public File findNextFile(final int offer) {
+        final Integer nextValue = this.value + offer;
+
+        validateFileValueKey(nextValue);
+
+        return VALUE_CACHE.get(nextValue);
+    }
+
+    private void validateFileValueKey(final Integer key) {
+        if (!VALUE_CACHE.containsKey(key)) {
+            throw new IllegalArgumentException("존재하지 않는 열입니다.");
+        }
+    }
+
     public int value() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 }
