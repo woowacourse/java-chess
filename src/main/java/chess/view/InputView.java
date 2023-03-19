@@ -26,7 +26,7 @@ public class InputView {
     
     private static void validateInputCommand(String inputCommand) {
         validateBlank(inputCommand);
-        validateStartOrEndCommandForm(inputCommand);
+        validateCommandForm(inputCommand);
     }
     
     private static void validateBlank(String inputCommand) {
@@ -35,9 +35,9 @@ public class InputView {
         }
     }
     
-    private static void validateStartOrEndCommandForm(String inputCommand) {
+    private static void validateCommandForm(String inputCommand) {
         String[] splitedInputCommand = inputCommand.split(" ");
-        if (isCorrectCommand(splitedInputCommand[0])) {
+        if (!isCorrectCommand(splitedInputCommand[0])) {
             throw new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다.");
         }
         
@@ -48,7 +48,33 @@ public class InputView {
     }
     
     private static boolean isCorrectCommand(String command) {
-        return !List.of("start", "end", "move").contains(command);
+        return List.of("start", "end", "move").contains(command);
+    }
+    
+    public static String inputInitCommand() {
+        try {
+            String inputInitCommand = bufferedReader.readLine();
+            validateInputInitCommand(inputInitCommand);
+            return inputInitCommand;
+        } catch (IOException e) {
+            return inputInitCommand();
+        }
+    }
+    
+    private static void validateInputInitCommand(String inputInitCommand) {
+        validateBlank(inputInitCommand);
+        validateInitCommandForm(inputInitCommand);
+    }
+    
+    private static void validateInitCommandForm(String inputInitCommand) {
+        String[] splitedInputCommand = inputInitCommand.split(" ");
+        if (!isCorrectInitCommand(splitedInputCommand[0])) {
+            throw new IllegalArgumentException("게임 첫 시작에선 start, end 명령만 입력할 수 있습니다.");
+        }
+    }
+    
+    private static boolean isCorrectInitCommand(String command) {
+        return List.of("start", "end").contains(command);
     }
     
     public static <T> T repeatAtExceptionCase(Supplier<T> inputProcess) {
