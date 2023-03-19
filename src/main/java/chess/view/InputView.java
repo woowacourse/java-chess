@@ -24,9 +24,8 @@ public class InputView {
         System.out.println(NEXT_LINE + "이동할 위치를 입력해주세요.");
         final String moveCommand = scanner.nextLine();
 
-        List<String> commands = Arrays.stream(moveCommand.split(DELIMITER, LIMIT))
+        return Arrays.stream(moveCommand.split(DELIMITER, LIMIT))
                 .map(String::trim)
                 .collect(toList());
-        return commands;
     }
 }
