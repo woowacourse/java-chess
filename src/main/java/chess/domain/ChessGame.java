@@ -4,7 +4,7 @@ import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
-import chess.domain.validateMove.SourceMove;
+import chess.domain.validateMove.SourceMoveValidator;
 import chess.domain.validateMove.ValidateData;
 
 public class ChessGame {
@@ -40,7 +40,7 @@ public class ChessGame {
         if (source.equals(target)) {
             return false;
         }
-        return new SourceMove().validate(new ValidateData(source, target, chessboard));
+        return new SourceMoveValidator().validate(new ValidateData(source, target, chessboard));
     }
 
     public Chessboard getChessboard() {

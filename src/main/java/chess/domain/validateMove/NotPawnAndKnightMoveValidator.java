@@ -1,6 +1,6 @@
 package chess.domain.validateMove;
 
-public class EmptyRoute implements ValidateMove {
+public class NotPawnAndKnightMoveValidator implements ValidateMove {
     @Override
     public void setNext(ValidateMove validateMove) {
     }

@@ -2,7 +2,7 @@ package chess.domain.validateMove;
 
 import chess.domain.piece.PieceType;
 
-public class PawnMove implements ValidateMove {
+public class PawnMoveValidator implements ValidateMove {
     private ValidateMove next;
 
     @Override
@@ -13,7 +13,7 @@ public class PawnMove implements ValidateMove {
     @Override
     public boolean validate(ValidateData validateData) {
         if (validateData.getSourcePiece().getPieceType() != PieceType.PAWN) {
-            setNext(new EmptyRoute());
+            setNext(new NotPawnAndKnightMoveValidator());
             return next.validate(validateData);
         }
         if (validateData.getSource().isSameFile(validateData.getTarget())) {
