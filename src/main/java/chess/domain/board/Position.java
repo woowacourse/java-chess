@@ -18,8 +18,15 @@ public final class Position {
         this.rank = rank;
     }
 
-    public double computeInclination(final Position target) {
-        return fileSub(target) / (double) rankSub(target);
+    public Set<Position> computeCrossOrDiagonalPath(Position target) {
+        if (Math.abs(computeInclination(target)) == 1) {
+            return computeDiagonalPath(target);
+        }
+        if (file == target.file || rank == target.rank) {
+            return computeCrossPath(target);
+        }
+
+        throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE);
     }
 
     public Set<Position> computeDiagonalPath(Position target) {
@@ -34,6 +41,10 @@ public final class Position {
         path.add(target);
         path.remove(this);
         return path;
+    }
+
+    public double computeInclination(final Position target) {
+        return fileSub(target) / (double) rankSub(target);
     }
 
     private Set<Position> computePathByInclination(Position max, Position min, final double inclination) {
@@ -92,15 +103,20 @@ public final class Position {
         return path;
     }
 
-    public Set<Position> computeCrossOrDiagonalPath(Position target) {
-        if (Math.abs(computeInclination(target)) == 1) {
-            return computeDiagonalPath(target);
-        }
-        if (file == target.file || rank == target.rank) {
-            return computeCrossPath(target);
-        }
+    public boolean isRank(Rank rank) {
+        return this.rank == rank;
+    }
 
-        throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE);
+    public boolean isSameFile(final Position target) {
+        return file == target.file;
+    }
+
+    public int fileSub(final Position target) {
+        return file.sub(target.file);
+    }
+
+    public int rankSub(final Position target) {
+        return rank.sub(target.rank);
     }
 
     private Position getMaxRankPosition(final Position source, final Position target) {
@@ -131,10 +147,6 @@ public final class Position {
         return source;
     }
 
-    public boolean isRank(Rank rank) {
-        return this.rank == rank;
-    }
-
     private Position getRightDownDiagonal() {
         return new Position(file.plus(), rank.minus());
     }
@@ -149,26 +161,6 @@ public final class Position {
 
     private Position getLeftStraight() {
         return new Position(file.minus(), rank);
-    }
-
-    public boolean isSameFile(final Position target) {
-        return file == target.file;
-    }
-
-    public int fileSub(final Position target) {
-        return file.sub(target.file);
-    }
-
-    public int rankSub(final Position target) {
-        return rank.sub(target.rank);
-    }
-
-    public int getRank() {
-        return rank.getValue() - 1;
-    }
-
-    public int getFile() {
-        return file.getValue() - 1;
     }
 
     @Override
@@ -190,5 +182,13 @@ public final class Position {
                 "rank=" + file +
                 ", file=" + rank +
                 '}';
+    }
+
+    public int getRank() {
+        return rank.getValue() - 1;
+    }
+
+    public int getFile() {
+        return file.getValue() - 1;
     }
 }
