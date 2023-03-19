@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.exception.PieceMessage;
 import chess.factory.BoardFactory;
+import chess.factory.BoardFactoryForTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -224,7 +225,7 @@ class BoardTest {
     @DisplayName("3단계 요구 사항에 나온 맵 점수 테스트")
     void returns_score_of_example_map() {
         // given
-        Board board = createBoard();
+        Board board = BoardFactoryForTest.createBoard();
 
         // when
         double scoreOfUpperTeam = board.getScoreOfUpperTeam();
@@ -236,4 +237,27 @@ class BoardTest {
                 () -> assertThat(scoreOfLowerTeam).isEqualTo(19.5)
         );
      }
+
+     @Test
+     @DisplayName("King이 한명이라도 죽으면 게임은 멈춘다.")
+     void chess_done_when_king_is_dead() {
+         // given
+         Board board = BoardFactory.createBoard();
+         board.switchPosition(Position.from("e2"), Position.from("e4"));
+         board.switchPosition(Position.from("a7"), Position.from("a5"));
+         board.switchPosition(Position.from("h2"), Position.from("h4"));
+         board.switchPosition(Position.from("a8"), Position.from("a6"));
+         board.switchPosition(Position.from("f2"), Position.from("f4"));
+         board.switchPosition(Position.from("a6"), Position.from("e6"));
+         board.switchPosition(Position.from("e4"), Position.from("e5"));
+         board.switchPosition(Position.from("e6"), Position.from("e5"));
+         board.switchPosition(Position.from("a2"), Position.from("a3"));
+         board.switchPosition(Position.from("e5"), Position.from("e1"));
+
+         // when
+         boolean isKingDead = board.isGameDone();
+
+         // then
+         assertThat(isKingDead).isTrue();
+      }
 }

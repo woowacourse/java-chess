@@ -32,6 +32,10 @@ public class Name {
         return name.equals("p") || name.equals("P");
     }
 
+    public boolean isKing() {
+        return name.equals("k") || name.equals("K");
+    }
+
     public boolean isKnight() {
         return name.equals("n") || name.equals("N");
     }

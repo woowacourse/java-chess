@@ -37,8 +37,6 @@ public class ChessGame {
         return Collections.unmodifiableMap(board.getBoard());
     }
 
-
-    // todo: 점수 계산
     public double calculateScoreOfLowerTeam() {
         return board.getScoreOfLowerTeam();
     }
@@ -47,5 +45,7 @@ public class ChessGame {
         return board.getScoreOfUpperTeam();
     }
 
-    // todo: King dead
+    public boolean isGameDone() {
+        return board.isGameDone();
+    }
 }

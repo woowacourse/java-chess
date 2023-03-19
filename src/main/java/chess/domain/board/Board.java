@@ -189,4 +189,12 @@ public class Board {
     private boolean isUpperTeamOfPawn(final Position position) {
         return board.get(position).isNameUpperCase() && board.get(position).isPawn();
     }
+
+    public boolean isGameDone() {
+        int countOfKing = (int) board.values().stream()
+                .filter(piece -> piece.isKing())
+                .count();
+
+        return countOfKing == 1;
+    }
 }

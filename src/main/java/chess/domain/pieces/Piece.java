@@ -29,6 +29,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public boolean isNameLowerCase() {
         return this.name.isLowerCase();
     }

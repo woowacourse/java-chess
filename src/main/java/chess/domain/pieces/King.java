@@ -32,4 +32,9 @@ public class King extends Piece {
             throw new IllegalArgumentException(PieceMessage.KING_INVALID_MOVE.getMessage());
         }
     }
+
+    @Override
+    public boolean isKing() {
+        return this.name.isKing();
+    }
 }
