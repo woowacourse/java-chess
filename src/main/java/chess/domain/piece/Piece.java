@@ -17,11 +17,14 @@ public abstract class Piece {
 
     public abstract MovablePaths findMovablePaths(Position position);
 
-    public abstract boolean isNotPawn();
+    public abstract boolean canMoveToEmptySquare(Position source, Position dest);
+
+    public abstract boolean canAttack(Piece target, Position source, Position dest);
 
     public boolean isDifferentColor(TeamColor color) {
         return !isSameColor(color);
     }
+
     public boolean isSameColor(TeamColor color) {
         return this.color == color;
     }

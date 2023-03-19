@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.TeamColor;
 import chess.domain.path.Direction;
 import chess.domain.path.MovablePaths;
 import chess.domain.path.Path;
 import chess.domain.position.Position;
-import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +55,16 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isNotPawn() {
-        return false;
+    public boolean canMoveToEmptySquare(final Position source, final Position dest) {
+        return dest.isInSameFile(source);
     }
 
-    public boolean isNotAttack(final Position source, final Position dest) {
-         return !isAttack(source, dest);
+    @Override
+    public boolean canAttack(final Piece target, final Position source, final Position dest) {
+        return target.isDifferentColor(color) && isAttack(source, dest);
     }
 
-    public boolean isAttack(final Position source, final Position dest) {
+    private boolean isAttack(final Position source, final Position dest) {
         return source.isOneStepForwardDiagonal(dest);
     }
 

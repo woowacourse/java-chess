@@ -8,31 +8,11 @@ import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PawnTest {
-
-    @Nested
-    @DisplayName("Pawn 공통 기능 테스트")
-    class PawnCommonTest {
-
-        @Test
-        @DisplayName("Pawn 이 가려는 방향이 대각선이면 공격 방향이다.")
-        void 대각선_이동_공격() {
-            Pawn pawn = new Pawn(TeamColor.WHITE);
-
-            assertThat(pawn.isAttack(Position.of(1, 2), Position.of(2, 3))).isTrue();
-        }
-
-        @Test
-        @DisplayName("Pawn 이 가려는 방향이 대각선이 아니면 공격이 아니다.")
-        void 대각선_외의_경로_이동() {
-            Pawn pawn = new Pawn(TeamColor.WHITE);
-
-            assertThat(pawn.isNotAttack(Position.of(1, 2), Position.of(1, 3))).isTrue();
-        }
-
-    }
 
     @Nested
     @DisplayName("하얀색 Pawn 테스트")
@@ -57,6 +37,36 @@ public class PawnTest {
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(3);
         }
+
+        @ParameterizedTest
+        @CsvSource(value = {"1:3:true", "2:3:false"}, delimiter = ':')
+        @DisplayName("Pawn 은 앞으로 직진할 때만 이동 가능하다.")
+        void 앞으로_직진이면_이동_가능(int file, int rank, boolean isAble) {
+            Pawn pawn = new Pawn(TeamColor.WHITE);
+
+            assertThat(pawn.canMoveToEmptySquare(Position.of(1, 2), Position.of(file, rank)))
+                .isEqualTo(isAble);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {"1:3:false", "2:3:true"}, delimiter = ':')
+        @DisplayName("Pawn 은 대각선 한 칸 이동일 때만 공격 가능하다.")
+        void 대각선_공격_가능(int file, int rank, boolean isAble) {
+            Pawn pawn = new Pawn(TeamColor.WHITE);
+
+            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.of(1, 2),
+                Position.of(file, rank))).isEqualTo(isAble);
+        }
+
+        @Test
+        @DisplayName("Pawn 은 상대 말만 공격 가능하다.")
+        void 상대말_공격_가능() {
+            Pawn pawn = new Pawn(TeamColor.WHITE);
+
+            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.of(1, 2),
+                Position.of(2, 3))).isFalse();
+        }
+
     }
 
     @Nested
@@ -78,10 +88,40 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 3));
+            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 6));
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(3);
         }
+
+        @ParameterizedTest
+        @CsvSource(value = {"2:6:true", "3:6:false"}, delimiter = ':')
+        @DisplayName("Pawn 은 앞으로 직진할 때만 이동 가능하다.")
+        void 앞으로_직진이면_이동_가능(int file, int rank, boolean isAble) {
+            Pawn pawn = new Pawn(TeamColor.BLACK);
+
+            assertThat(pawn.canMoveToEmptySquare(Position.of(2, 7), Position.of(file, rank)))
+                .isEqualTo(isAble);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {"2:6:false", "1:4:true"}, delimiter = ':')
+        @DisplayName("Pawn 은 대각선 한 칸 이동일 때만 공격 가능하다.")
+        void 대각선_공격_가능(int file, int rank, boolean isAble) {
+            Pawn pawn = new Pawn(TeamColor.BLACK);
+
+            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.of(2, 5),
+                Position.of(file, rank))).isEqualTo(isAble);
+        }
+
+        @Test
+        @DisplayName("Pawn 은 상대 말만 공격 가능하다.")
+        void 상대말_공격_가능() {
+            Pawn pawn = new Pawn(TeamColor.BLACK);
+
+            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.of(2, 7),
+                Position.of(3, 6))).isFalse();
+        }
+
     }
 
 }

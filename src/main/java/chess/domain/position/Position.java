@@ -54,7 +54,11 @@ public class Position {
     }
 
     public boolean isOneStepForwardDiagonal(Position other) {
-        return other.x - x == 1 && Math.abs(other.y - y) == 1;
+        return Math.abs(other.x - x) == 1 && Math.abs(other.y - y) == 1;
+    }
+
+    public boolean isInSameFile(Position other) {
+        return x == other.x;
     }
 
     public boolean isInExpectedRank(int rank) {

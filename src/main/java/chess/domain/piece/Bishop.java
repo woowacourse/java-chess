@@ -31,8 +31,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isNotPawn() {
+    public boolean canMoveToEmptySquare(final Position source, final Position dest) {
         return true;
+    }
+
+    @Override
+    public boolean canAttack(final Piece target, final Position source, final Position dest) {
+        return target.isDifferentColor(color);
     }
 
 }
