@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final double L_MOVE_SLOPE1 = 0.5;
+    private static final double L_MOVE_SLOPE2 = 2.0;
+
     public Knight(final Position position, final Side side) {
         super(position, side);
     }
@@ -15,7 +18,7 @@ public class Knight extends Piece {
     public boolean isMovable(Position targetPosition) {
         final double slope = position.getSlope(targetPosition);
 
-        return slope == 0.5 || slope == 2.0;
+        return slope == L_MOVE_SLOPE1 || slope == L_MOVE_SLOPE2;
     }
 
     @Override

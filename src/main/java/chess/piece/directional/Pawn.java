@@ -11,6 +11,11 @@ import java.util.List;
 
 public class Pawn extends DirectionalPiece {
 
+    private static final int INITIAL_MOVE_COUNT = 2;
+    private static final int NOT_INITIAL_MOVE_COUNT = 1;
+    private static final int WHITE_RANK_VALUE = 2;
+    private static final int BLACK_RANK_VALUE = 7;
+
     public Pawn(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
@@ -33,19 +38,19 @@ public class Pawn extends DirectionalPiece {
         final Direction direction = position.getDirectionTo(targetPosition);
         final int moveCount = position.getMoveCount(targetPosition, direction);
 
-        if (isStartPosition() && moveCount == 2) {
+        if (isStartPosition() && moveCount == INITIAL_MOVE_COUNT) {
             return direction == Direction.UP || direction == Direction.DOWN;
         }
 
         final boolean isPossibleDirection = directions.contains(direction);
-        final boolean isPossibleDistance = moveCount == 1;
+        final boolean isPossibleDistance = moveCount == NOT_INITIAL_MOVE_COUNT;
 
         return isPossibleDirection && isPossibleDistance;
     }
 
     private boolean isStartPosition() {
-        final boolean isWhiteStartPosition = position.getRank() == 2 && side == Side.WHITE;
-        final boolean isBlackStartPosition = position.getRank() == 7 && side == Side.BLACK;
+        final boolean isWhiteStartPosition = position.getRank() == WHITE_RANK_VALUE && side == Side.WHITE;
+        final boolean isBlackStartPosition = position.getRank() == BLACK_RANK_VALUE && side == Side.BLACK;
         return isWhiteStartPosition || isBlackStartPosition;
     }
 
@@ -64,7 +69,7 @@ public class Pawn extends DirectionalPiece {
         final Direction direction = position.getDirectionTo(targetPosition);
         final int moveCount = position.getMoveCount(targetPosition, direction);
 
-        if (isStartPosition() && moveCount == 2) {
+        if (isStartPosition() && moveCount == INITIAL_MOVE_COUNT) {
             return List.of(position.getNextPosition(direction));
         }
         return Collections.emptyList();

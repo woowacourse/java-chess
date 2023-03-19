@@ -11,6 +11,8 @@ import chess.piece.Side;
 
 public class King extends NormalPiece {
 
+    private static final int KING_MOVE_COUNT = 1;
+
     public King(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
@@ -25,7 +27,7 @@ public class King extends NormalPiece {
     public boolean isMovable(Position targetPosition) {
         final Direction direction = position.getDirectionTo(targetPosition);
         final boolean isPossibleDirection = directions.contains(direction);
-        final boolean isPossibleDistance = position.getMoveCount(targetPosition, direction) == 1;
+        final boolean isPossibleDistance = position.getMoveCount(targetPosition, direction) == KING_MOVE_COUNT;
         return isPossibleDistance && isPossibleDirection;
     }
 
