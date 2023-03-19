@@ -8,11 +8,11 @@ public final class Row {
 
     private final List<Square> squares;
 
-    public Row(final List<Square> squares) {
+    private Row(final List<Square> squares) {
         this.squares = squares;
     }
 
-    public static Row initRankToRank(final RowFactory rowFactory) {
+    public static Row from(final RowFactory rowFactory) {
         return new Row(rowFactory.getSquareStatus()
                 .stream()
                 .map(Square::new)

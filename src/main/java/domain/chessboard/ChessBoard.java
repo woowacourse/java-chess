@@ -17,13 +17,13 @@ public final class ChessBoard {
 
     public static ChessBoard generate() {
         final List<Row> chessBoard = new ArrayList<>();
-        chessBoard.add(Row.initRankToRank(RowFactory.OTHERS_BLACK));
-        chessBoard.add(Row.initRankToRank(RowFactory.PAWN_BLACK));
+        chessBoard.add(Row.from(RowFactory.OTHERS_BLACK));
+        chessBoard.add(Row.from(RowFactory.PAWN_BLACK));
         for (int i = 0; i < NUMBER_OF_NONE_LINES; i++) {
-            chessBoard.add(Row.initRankToRank(RowFactory.EMPTY));
+            chessBoard.add(Row.from(RowFactory.EMPTY));
         }
-        chessBoard.add(Row.initRankToRank(RowFactory.PAWN_WHITE));
-        chessBoard.add(Row.initRankToRank(RowFactory.OTHERS_WHITE));
+        chessBoard.add(Row.from(RowFactory.PAWN_WHITE));
+        chessBoard.add(Row.from(RowFactory.OTHERS_WHITE));
 
         return new ChessBoard(new ArrayList<>(chessBoard));
     }
