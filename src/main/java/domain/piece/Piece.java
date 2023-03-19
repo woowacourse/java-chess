@@ -7,30 +7,30 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.board.Square;
+import domain.piece.type.Type;
 
 public abstract class Piece {
     protected static final int FILE = 0;
     protected static final int RANK = 1;
 
-    public Camp getCamp() {
-        return camp;
-    }
-
     private final Camp camp;
+    private final Type type;
 
-    public Piece(Camp camp) {
+    public Piece(Camp camp, Type type) {
         this.camp = camp;
+        this.type = type;
     }
 
     protected abstract void validateMovable(List<Integer> gaps);
 
-    public boolean isWhite() {
-        return camp.equals(Camp.WHITE);
-    }
 
     public abstract List<Square> fetchMovePath(Square currentSquare, Square targetSquare);
 
     public abstract boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare);
+
+    public boolean isWhite() {
+        return camp.equals(Camp.WHITE);
+    }
 
     protected Integer calculateDistance(List<Integer> gaps) {
         List<Integer> absGaps = gaps.stream()
@@ -105,5 +105,13 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

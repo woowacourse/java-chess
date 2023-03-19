@@ -3,13 +3,14 @@ package domain.piece.type.restricted;
 import java.util.List;
 
 import domain.piece.Camp;
+import domain.piece.type.Type;
 
 public class Knight extends RestrictedPiece {
     public static final int KNIGHT_GAP_SUM = 3;
     public static final int KNIGHT_GAP_SUBTRACTION = 1;
 
-    public Knight(Camp camp) {
-        super(camp);
+    public Knight(Camp camp, Type type) {
+        super(camp, type);
     }
 
     @Override

@@ -13,8 +13,8 @@ public class Pawn extends Piece {
     private static final int BLACK_INITIAL_RANK_COORDINATE = 6;
     private boolean isGoingForward;
 
-    public Pawn(Camp camp) {
-        super(camp);
+    public Pawn(Camp camp, Type type) {
+        super(camp, type);
     }
 
     @Override

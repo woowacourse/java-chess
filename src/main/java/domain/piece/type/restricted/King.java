@@ -3,12 +3,13 @@ package domain.piece.type.restricted;
 import java.util.List;
 
 import domain.piece.Camp;
+import domain.piece.type.Type;
 
 public class King extends RestrictedPiece {
     public static final int MOVE_DISTANCE_LIMIT = 1;
 
-    public King(Camp camp) {
-        super(camp);
+    public King(Camp camp, Type type) {
+        super(camp, type);
     }
 
     @Override

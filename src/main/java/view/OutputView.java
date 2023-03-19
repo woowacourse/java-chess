@@ -31,26 +31,12 @@ public class OutputView {
         }
     }
 
-    private static String pieceToString(Piece piece) {
-        if (piece.isPawn()) {
-            return Type.PAWN.convertToCamp(piece);
+    private static char pieceToString(Piece piece) {
+        char label = piece.getType().getLabel();
+        if (!piece.isWhite()) {
+            return Character.toUpperCase(label);
         }
-        if (piece.isRook()) {
-            return Type.ROOK.convertToCamp(piece);
-        }
-        if (piece.isBishop()) {
-            return Type.BISHOP.convertToCamp(piece);
-        }
-        if (piece.isKnight()) {
-            return Type.KNIGHT.convertToCamp(piece);
-        }
-        if (piece.isQueen()) {
-            return Type.QUEEN.convertToCamp(piece);
-        }
-        if (piece.isKing()) {
-            return Type.KING.convertToCamp(piece);
-        }
-        return Type.EMPTY.convertToCamp(piece);
+        return label;
     }
 
     public static void printChessInfo() {
@@ -63,29 +49,4 @@ public class OutputView {
     public static void printErrorMessage(RuntimeException e) {
         System.out.println(e.getMessage());
     }
-
-    private enum Type {
-        PAWN("p"),
-        ROOK("r"),
-        BISHOP("b"),
-        KNIGHT("n"),
-        QUEEN("q"),
-        KING("k"),
-        EMPTY(".");
-
-        private final String value;
-
-        Type(String value) {
-            this.value = value;
-        }
-
-        public String convertToCamp(Piece piece) {
-            if (piece.isWhite()) {
-                return this.value;
-            }
-
-            return value.toUpperCase();
-        }
-    }
-
 }

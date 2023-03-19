@@ -6,10 +6,11 @@ import java.util.Map;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.type.Type;
 
 public abstract class RestrictedPiece extends Piece {
-    public RestrictedPiece(Camp camp) {
-        super(camp);
+    public RestrictedPiece(Camp camp, Type type) {
+        super(camp, type);
     }
 
     @Override
