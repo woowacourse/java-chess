@@ -7,5 +7,4 @@ public enum EmptyType implements Type {
     public static boolean isEmpty(Type type) {
         return EMPTY == type;
     }
-
 }
