@@ -6,6 +6,10 @@ import java.util.Set;
 
 public final class Position {
 
+    private static final String CAN_NOT_COMPUTE_DIAGONAL_PATH_EXCEPTION_MESSAGE = "대각 경로를 구할 수 없는 위치입니다.";
+    private static final String CAN_NOT_COMPUTE_CROSS_EXCEPTION_MESSAGE = "십자 경로를 계산할 수 없는 위치입니다.";
+    private static final String CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE = "십자 또는 대각 경로를 구할 수 없는 위치입니다.";
+
     private final File file;
     private final Rank rank;
 
@@ -83,7 +87,7 @@ public final class Position {
 
         double inclination = computeInclination(target);
         if (Math.abs(inclination) != 1) {
-            throw new IllegalArgumentException("대각 경로를 구할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CAN_NOT_COMPUTE_DIAGONAL_PATH_EXCEPTION_MESSAGE);
         }
 
         Set<Position> positions = new HashSet<>();
@@ -120,7 +124,7 @@ public final class Position {
     public Set<Position> computeCrossPath(Position target) {
         Set<Position> path = new HashSet<>();
         if (file != target.file && rank != target.rank) {
-            throw new IllegalArgumentException("십자 경로를 계산할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_EXCEPTION_MESSAGE);
         }
         if (file == target.file) {
             path = sameFilePath(target);
@@ -165,7 +169,7 @@ public final class Position {
             return computeCrossPath(target);
         }
 
-        throw new IllegalArgumentException("십자 또는 대각 경로를 구할 수 없는 위치입니다.");
+        throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE);
     }
 
     public int fileSub(final Position target) {

@@ -117,6 +117,28 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("백색 폰은 아래로 갈 수 없다.")
+    void canMove_down_false() {
+        final var pawn = new WhitePawn();
+
+        final var source = C5;
+        final var target = C4;
+
+        assertThatThrownBy(() -> pawn.computePathWithValidate(source, target)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("흑색 폰은 위로 갈 수 없다.")
+    void canMove_up_false() {
+        final var pawn = new BlackPawn();
+
+        final var source = C4;
+        final var target = C5;
+
+        assertThatThrownBy(() -> pawn.computePathWithValidate(source, target)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("폰은 대각선위치에 기물이 없으면 이동할 수 없다.")
     void canMove_diagonalEmpty_false() {
         final var pawn = new WhitePawn();
