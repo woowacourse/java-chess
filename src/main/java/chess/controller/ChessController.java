@@ -32,7 +32,7 @@ public class ChessController {
     }
 
     private void processGame() {
-        final Command firstCommand = repeat(this::readCommand);
+        final Command firstCommand = readValidateInput(this::readCommand);
         chessGame.receiveCommand(firstCommand);
 
         while (!chessGame.isEnd()) {
@@ -50,7 +50,7 @@ public class ChessController {
     }
 
     private Command readMoveCommand(final List<String> movePositions) {
-        return repeat(() -> {
+        return readValidateInput(() -> {
             final List<String> commands = inputView.readGameCommand();
             final Command result = Command.from(commands.get(0));
             if (result != Command.MOVE) {
@@ -69,11 +69,11 @@ public class ChessController {
 
     private void renderChessBoard() {
         final ChessBoard chessBoard = chessGame.getChessBoard();
-        final ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
+        final ChessBoardDto chessBoardDto = ChessBoardDto.from(chessBoard);
         outputView.printChessBoard(chessBoardDto);
     }
 
-    private <T> T repeat(final Supplier<T> function) {
+    private <T> T readValidateInput(final Supplier<T> function) {
         Optional<T> input;
         do {
             input = repeatByEx(function);
@@ -84,7 +84,7 @@ public class ChessController {
     private <T> Optional<T> repeatByEx(final Supplier<T> function) {
         try {
             return Optional.of(function.get());
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return Optional.empty();
         }

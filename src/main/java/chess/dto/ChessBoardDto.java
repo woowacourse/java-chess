@@ -16,7 +16,7 @@ public class ChessBoardDto {
 
     private final List<PieceDto> pieceDtos;
 
-    public static ChessBoardDto toView(final ChessBoard board) {
+    public static ChessBoardDto from(final ChessBoard board) {
         final List<PieceDto> pieces = pieceToView(board.getPiecePosition());
         return new ChessBoardDto(pieces);
     }
