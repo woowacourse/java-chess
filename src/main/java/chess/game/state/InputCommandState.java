@@ -2,11 +2,10 @@ package chess.game.state;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Team;
+import chess.game.Command;
 import chess.view.InputView;
 
 public class InputCommandState extends ChessGameState {
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
     private static final String SPACE_DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_COORDINATE_INDEX = 1;
@@ -18,13 +17,15 @@ public class InputCommandState extends ChessGameState {
     
     @Override
     public ChessGameState next() {
-        String command = InputView.repeatAtExceptionCase(InputView::inputCommand);
-        String[] splitedCommand = command.split(SPACE_DELIMITER);
-        if (isCommandStart(splitedCommand)){
+        String inputtedCommand = InputView.repeatAtExceptionCase(InputView::inputCommand);
+        String[] splitedCommand = inputtedCommand.split(SPACE_DELIMITER);
+        Command command = Command.from(splitedCommand[COMMAND_INDEX]);
+        
+        if (command.isStart()){
             return new GameStartState(currentOrderTeam);
         }
         
-        if (isCommandMove(splitedCommand)){
+        if (command.isMove()){
             return new PieceMoveState(
                     chessBoard,
                     currentOrderTeam,
@@ -33,13 +34,5 @@ public class InputCommandState extends ChessGameState {
             );
         }
         return new GameEndState();
-    }
-    
-    private boolean isCommandStart(String[] splitedCommand) {
-        return START_COMMAND.equals(splitedCommand[COMMAND_INDEX]);
-    }
-    
-    private boolean isCommandMove(String[] splitedCommand) {
-        return MOVE_COMMAND.equals(splitedCommand[COMMAND_INDEX]);
     }
 }
