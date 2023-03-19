@@ -20,6 +20,6 @@ public final class Rook extends Piece {
 
     @Override
     protected boolean isNotMovable(final Location start, final Location end) {
-        return !start.isSameLine(end);
+        return start.isNotSameLine(end);
     }
 }

@@ -20,6 +20,6 @@ public final class Queen extends Piece {
 
     @Override
     protected boolean isNotMovable(final Location start, final Location end) {
-        return !start.isSameLine(end) && !start.isDiagonal(end);
+        return start.isNotSameLine(end) && !start.isDiagonal(end);
     }
 }

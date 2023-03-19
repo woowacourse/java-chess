@@ -42,7 +42,7 @@ public final class Location {
         return false;
     }
 
-    public boolean isSameLine(final Location location) {
+    public boolean isNotSameLine(final Location location) {
         return isSameCol(location) || isSameRow(location);
     }
 
