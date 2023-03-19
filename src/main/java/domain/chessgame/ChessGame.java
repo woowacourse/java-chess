@@ -8,6 +8,8 @@ import domain.piece.Color;
 import domain.type.EmptyType;
 import domain.type.PieceType;
 
+import java.util.function.Predicate;
+
 public final class ChessGame {
 
     private final ChessBoard chessBoard;
@@ -49,7 +51,7 @@ public final class ChessGame {
         final boolean hasHurdle = route.getRoute().stream()
                 .map(chessBoard::findSquare)
                 .map(Square::getType)
-                .anyMatch(type -> type != EmptyType.EMPTY);
+                .anyMatch(Predicate.not(EmptyType::isEmpty));
 
         validateRoute(hasHurdle);
     }
