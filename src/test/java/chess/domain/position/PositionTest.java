@@ -89,4 +89,16 @@ class PositionTest {
             assertThat(betweenPositions).contains(Position.of(File.B, Rank.ONE), Position.of(File.C, Rank.ONE));
         }
     }
+
+    @Test
+    @DisplayName("랭크와 파일의 차이만큼 이동할 수 있다.")
+    void movePositionTest() {
+        Position fromPosition = Position.of(File.A, Rank.ONE);
+        int fileStep = 1;
+        int rankStep = 3;
+
+        Position movedPosition = fromPosition.move(fileStep, rankStep);
+
+        assertThat(movedPosition).isEqualTo(Position.of(File.B, Rank.FOUR));
+    }
 }

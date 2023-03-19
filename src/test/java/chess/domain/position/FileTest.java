@@ -1,6 +1,7 @@
 package chess.domain.position;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,18 @@ class FileTest {
 
         int gap = file.subtractOrder(other);
 
-        Assertions.assertThat(gap).isEqualTo(-4);
+        assertThat(gap).isEqualTo(-4);
+    }
+
+    @Test
+    @DisplayName("파일의 순서에 따라 이동할 수 있다")
+    void moveOrderByStepTest() {
+        File fromFile = File.A;
+        int step = 3;
+
+        File toFile = fromFile.move(step);
+
+        assertThat(toFile).isEqualTo(File.D);
+        assertThat(toFile.subtractOrder(fromFile)).isEqualTo(step);
     }
 }

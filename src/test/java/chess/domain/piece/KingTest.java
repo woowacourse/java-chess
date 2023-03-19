@@ -9,21 +9,53 @@ import chess.domain.position.move.BlockingMove;
 import chess.domain.position.move.InvalidMove;
 import chess.domain.position.move.PieceMove;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class KingTest {
 
-    @Test
+    @Nested
     @DisplayName("킹은 모든 방향으로 움직일 수 있다.")
-    void movableTest() {
-        Piece king = new King(Camp.WHITE);
+    class KingMoveDirectionTest {
 
-        Position from = Position.of(File.A, Rank.ONE);
-        Position to = Position.of(File.A, Rank.TWO);
+        @Test
+        @DisplayName("대각선 방향")
+        void movableDiagonalTest() {
+            Piece king = new King(Camp.WHITE);
 
-        PieceMove result = king.getMovement(from, to);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.B, Rank.TWO);
 
-        assertThat(result).isInstanceOf(BlockingMove.class);
+            PieceMove result = king.getMovement(from, to);
+
+            assertThat(result).isInstanceOf(BlockingMove.class);
+        }
+
+        @Test
+        @DisplayName("직진 방향")
+        void movableForwardTest() {
+            Piece king = new King(Camp.WHITE);
+
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.A, Rank.TWO);
+
+            PieceMove result = king.getMovement(from, to);
+
+            assertThat(result).isInstanceOf(BlockingMove.class);
+        }
+
+        @Test
+        @DisplayName("후진 방향")
+        void movableBackwardTest() {
+            Piece king = new King(Camp.WHITE);
+
+            Position from = Position.of(File.A, Rank.TWO);
+            Position to = Position.of(File.A, Rank.ONE);
+
+            PieceMove result = king.getMovement(from, to);
+
+            assertThat(result).isInstanceOf(BlockingMove.class);
+        }
     }
 
     @Test

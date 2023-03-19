@@ -75,6 +75,7 @@ public final class Position {
     public Position move(int fileStep, int rankStep) {
         File newFile = file.move(fileStep);
         Rank newRank = rank.move(rankStep);
+
         return Position.of(newFile, newRank);
     }
 }
