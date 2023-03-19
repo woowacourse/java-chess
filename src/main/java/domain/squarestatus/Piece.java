@@ -1,7 +1,6 @@
 package domain.squarestatus;
 
 import domain.coordinate.Position;
-import domain.coordinate.Route;
 import domain.piece.Color;
 import domain.type.PieceType;
 import domain.type.Type;
@@ -15,9 +14,6 @@ public abstract class Piece implements SquareStatus {
         this.color = color;
         this.pieceType = pieceType;
     }
-
-    @Override
-    public abstract Route findRoute(final Position source, final Position target);
 
     @Override
     public final Type getType() {
