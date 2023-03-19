@@ -2,6 +2,7 @@ package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
+import static java.lang.Math.*;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -35,8 +36,11 @@ public class Board {
         pieces.remove(src);
     }
 
-    private boolean canMove(Square src, Square dst) {
-        Piece piece = findPieceBy(src);
+    private boolean canMove(final Square src, final Square dst) {
+        final Piece piece = findPieceBy(src);
+        final int fileInterval = File.calculate(src.getFile(), dst.getFile());
+        final int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
+        final boolean canAttack = canAttack(dst, piece);
 
         piece.canMove(fileInterval, rankInterval, canAttack);
 
@@ -48,7 +52,7 @@ public class Board {
 
     private boolean canAttack(final Square dst, final Piece piece) {
         if (pieces.containsKey(dst)) {
-            return pieces.get(dst).getColor() == piece.getColor();
+            return pieces.get(dst).getColor() != piece.getColor();
         }
         return false;
     }
@@ -64,15 +68,24 @@ public class Board {
         Square nextSquare = src;
         int fileMoveDirection = getMoveDirection(fileInterval);
         int rankMoveDirection = getMoveDirection(rankInterval);
+
         int interval = getMoveInterval(fileInterval, rankInterval);
 
         boolean notContainPiece = true;
         while (interval > 0 && notContainPiece) {
             nextSquare = nextSquare.next(fileMoveDirection, rankMoveDirection);
-            notContainPiece = !pieces.containsKey(nextSquare);
+            notContainPiece = isNotContainPiece(src, nextSquare);
             interval--;
         }
         return notContainPiece;
+    }
+
+    private boolean isNotContainPiece(Square src, Square nextSquare) {
+        Piece piece = pieces.get(src);
+        if (pieces.containsKey(nextSquare)) {
+            return pieces.get(nextSquare).getColor() != piece.getColor();
+        }
+        return true;
     }
 
     private int getMoveDirection(final int interval) {
@@ -80,7 +93,7 @@ public class Board {
     }
 
     private int getMoveInterval(final int fileInterval, final int rankInterval) {
-        return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
+        return max(abs(fileInterval), abs(rankInterval));
     }
 
     public Map<Square, Piece> getPieces() {
