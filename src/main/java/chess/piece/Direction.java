@@ -24,7 +24,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(value -> value.x == xPoint && value.y == yPoint)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 x좌표와 y좌표에 해당하는 방향이 존재하지 않습니다."));
     }
 
     public int getNextXPoint(int xPoint) {
