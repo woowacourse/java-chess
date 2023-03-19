@@ -25,10 +25,6 @@ public abstract class Piece {
         return !this.team.isSameTeam(team);
     }
 
-    public Team team() {
-        return team;
-    }
-
     public List<Position> findPath(Position source, Position target) {
         int rankDiff = source.rankDiff(target);
         int fileDiff = source.fileDiff(target);
@@ -48,5 +44,9 @@ public abstract class Piece {
             path.add(current);
         }
         return path;
+    }
+
+    public Team team() {
+        return team;
     }
 }
