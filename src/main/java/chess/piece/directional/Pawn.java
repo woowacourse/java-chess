@@ -67,7 +67,7 @@ public class Pawn extends DirectionalPiece {
     }
 
     @Override
-    public boolean isPawn() {
+    public boolean isNeedToCheckWhenDiagonalMove() {
         return true;
     }
 

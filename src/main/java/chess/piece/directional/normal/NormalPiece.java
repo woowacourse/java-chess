@@ -15,7 +15,7 @@ public abstract class NormalPiece extends DirectionalPiece {
     }
 
     @Override
-    public boolean isPawn() {
+    public boolean isNeedToCheckWhenDiagonalMove() {
         return false;
     }
 

@@ -23,14 +23,14 @@ public class Board {
         checkPieceMovable(targetPosition, sourcePiece);
         checkPath(targetPosition, sourcePiece);
         checkTargetPosition(targetPosition, sourcePiece);
-        if (sourcePiece.isPawn()) {
-            checkPawnDiagonalMove(sourcePosition, targetPosition);
+        if (sourcePiece.isNeedToCheckWhenDiagonalMove()) {
+            checkPieceDiagonalMove(sourcePosition, targetPosition);
         }
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
     }
 
-    private void checkPawnDiagonalMove(Position sourcePosition, Position targetPosition) {
+    private void checkPieceDiagonalMove(Position sourcePosition, Position targetPosition) {
         Direction direction = sourcePosition.getDirectionTo(targetPosition);
         if (direction.isDiagonalMovable() && !pieces.isPieceExistOnPosition(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] Pawn은 대각선에 적팀 기물이 있을 때만 이동할 수 있습니다.");

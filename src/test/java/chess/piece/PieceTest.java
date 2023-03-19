@@ -72,7 +72,7 @@ class PieceTest {
     @DisplayName("해당 기물이 폰인지 확인한다.")
     void isPawn(Piece piece, boolean expectedResult) {
         // when, then
-        assertThat(piece.isPawn()).isEqualTo(expectedResult);
+        assertThat(piece.isNeedToCheckWhenDiagonalMove()).isEqualTo(expectedResult);
     }
 
     static Stream<Arguments> isPawnTestCases() {

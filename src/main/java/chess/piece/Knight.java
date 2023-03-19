@@ -24,7 +24,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
+    public boolean isNeedToCheckWhenDiagonalMove() {
         return false;
     }
 
