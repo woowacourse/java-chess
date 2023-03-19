@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class BlackPawn extends Pawn {
@@ -29,17 +28,15 @@ public final class BlackPawn extends Pawn {
     }
 
     private Set<Position> generateTargetPath(final Position source, final Position target) {
-        Set<Position> targetPath = new HashSet<>();
-        if (Math.abs(source.rankSub(target)) == 2) {
-            validateInitBlack(source);
-            targetPath.add(source.getDownStraight());
+        if (source.isFileEquals(target)) {
+            validateInitBlack(source, target);
+            return source.computeCrossPath(target);
         }
-        targetPath.add(target);
-        return targetPath;
+        return source.computeDiagonalPath(target);
     }
 
-    private void validateInitBlack(final Position source) {
-        if (!source.isRank(INIT_RANK)) {
+    private void validateInitBlack(final Position source, final Position target) {
+        if (Math.abs(source.rankSub(target)) == 2 && !source.isRank(INIT_RANK)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
