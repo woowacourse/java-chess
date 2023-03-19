@@ -1,8 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
 import chess.domain.path.Direction;
-import chess.view.File;
-import chess.view.Rank;
 import java.util.Objects;
 
 public class Position {

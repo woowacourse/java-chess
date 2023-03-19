@@ -1,7 +1,7 @@
 package chess.controller.state;
 
 import chess.domain.ChessBoard;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.TeamColor;
 import chess.dto.ChessBoardDto;
 

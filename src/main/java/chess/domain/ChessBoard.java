@@ -4,6 +4,7 @@ import chess.domain.path.MovablePaths;
 import chess.domain.path.Path;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 

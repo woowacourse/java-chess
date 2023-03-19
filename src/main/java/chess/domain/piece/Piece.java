@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.path.MovablePaths;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.TeamColor;
 import java.util.Objects;
 
