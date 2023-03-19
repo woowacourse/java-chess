@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Piece;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;

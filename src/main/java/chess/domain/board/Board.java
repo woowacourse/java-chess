@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 

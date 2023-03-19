@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.controller.command.Command;
 import chess.controller.command.Type;
 import chess.domain.ChessGame;
-import chess.domain.board.maker.StartingPiecesGenerator;
+import chess.domain.piece.maker.StartingPiecesGenerator;
 import chess.domain.piece.Piece;
 
 import java.util.List;

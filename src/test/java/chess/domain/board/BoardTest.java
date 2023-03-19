@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.TestPiecesGenerator;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;

@@ -1,4 +1,4 @@
-package chess.domain.board.maker;
+package chess.domain.piece.maker;
 
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;

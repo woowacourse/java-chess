@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.controller.command.Command;
-import chess.domain.board.maker.EmptyPieceGenerator;
+import chess.domain.piece.maker.EmptyPieceGenerator;
 import chess.domain.state.ChessState;
 import chess.view.InputView;
 import chess.view.OutputView;
