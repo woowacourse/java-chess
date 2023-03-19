@@ -14,6 +14,7 @@ public class ChessApplication {
 			play(board);
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e.getMessage());
+			play(board);
 		}
 	}
 
