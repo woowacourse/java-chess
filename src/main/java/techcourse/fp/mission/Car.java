@@ -1,6 +1,7 @@
 package techcourse.fp.mission;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class Car {
 
@@ -12,8 +13,8 @@ public class Car {
         this.position = position;
     }
 
-    public Car move(MoveStrategy moveStrategy) {
-        if (moveStrategy.isMovable()) {
+    public Car move(Supplier<Boolean> isMovable) {
+        if (isMovable.get()) {
             return new Car(name, position + 1);
         }
         return this;

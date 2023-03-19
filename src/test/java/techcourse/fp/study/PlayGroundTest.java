@@ -17,9 +17,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -96,7 +94,7 @@ class PlayGroundTest {
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("/Users/leedo/Desktop/WoowahanTechCourse/java-chess/src/main/resources/techcourse/fp/war-and-peace.txt"));
 
         words.collect(
                         groupingBy(word -> word.chars().sorted()
@@ -262,7 +260,7 @@ class PlayGroundTest {
         IntStream stream = IntStream.of(1, 2);
         stream.forEach(System.out::println);
 
-        stream.forEach(System.out::println);
+//        stream.forEach(System.out::println);
     }
 
     @Test
