@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class Bishop extends Normal {
@@ -18,42 +17,14 @@ public final class Bishop extends Normal {
     public Set<Position> computePath(final Position source, final Position target) {
         final var inclination = source.computeInclination(target);
         if (inclination == INCLINATION_ONE) {
-            return computePathInclinationOne(source, target);
+            return source.generateInclinationOnePath(target);
         }
 
         if (inclination == INCLINATION_NEGATIVE_ONE) {
-            return computePathInclinationNegativeOne(source, target);
+            return source.generateInclinationNegativeOnePath(target);
         }
 
         throw new IllegalArgumentException("갈 수 없는 위치입니다.");
-    }
-
-    private Set<Position> computePathInclinationNegativeOne(final Position source, final Position target) {
-        Set<Position> positions = new HashSet<>();
-        var max = Position.maxRank(source, target);
-        var min = Position.minRank(source, target);
-
-        while (max.isRankOver(min)) {
-            max = max.getRightDownDiagonal();
-            positions.add(max);
-        }
-        positions.add(target);
-        positions.remove(source);
-        return positions;
-    }
-
-    private Set<Position> computePathInclinationOne(final Position source, final Position target) {
-        Set<Position> positions = new HashSet<>();
-        var max = Position.maxRank(source, target);
-        var min = Position.minRank(source, target);
-
-        while (max.isRankOver(min)) {
-            positions.add(max);
-            max = max.getLeftDownDiagonal();
-        }
-        positions.add(target);
-        positions.remove(source);
-        return positions;
     }
 
     @Override

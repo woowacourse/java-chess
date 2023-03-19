@@ -1,12 +1,16 @@
 package chess.domain.board;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public final class Position {
 
     private static final int NEAR_SQUARES = 1;
     private static final int TWO_SQUARES = 2;
     private static final int EQUAL_FILE = 0;
+    private static final int VALUE_INDEX_ADJUST = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -99,11 +103,11 @@ public final class Position {
     }
 
     public int getRank() {
-        return rank.getValue() - NEAR_SQUARES;
+        return rank.getValue() - VALUE_INDEX_ADJUST;
     }
 
     public int getFile() {
-        return file.getValue() - NEAR_SQUARES;
+        return file.getValue() - VALUE_INDEX_ADJUST;
     }
 
     public boolean canWhitePawnMove(final Position target) {
@@ -120,27 +124,6 @@ public final class Position {
                 (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "rank=" + file +
-                ", file=" + rank +
-                '}';
-    }
-
     public boolean distanceEquals(final Position target, final int distance) {
         int fileDistance = this.rank.sub(target.rank);
         int rankDistance = this.file.sub(target.file);
@@ -154,5 +137,74 @@ public final class Position {
 
     public boolean rankSubLessThan(final Position target, final int distance) {
         return this.rank.sub(target.rank) < distance;
+    }
+
+    public Set<Position> generateFilePath(final Position target) {
+        Set<Position> path = new HashSet<>();
+        var max = Position.maxRank(this, target);
+        var min = Position.minRank(this, target);
+
+        while (max.isRankOver(min)) {
+            path.add(max);
+            max = max.getDownStraight();
+        }
+        path.add(target);
+        path.remove(this);
+        return path;
+    }
+
+    public Set<Position> generateRankPath(final Position target) {
+        Set<Position> path = new HashSet<>();
+        var max = Position.maxFile(this, target);
+        var min = Position.minFile(this, target);
+
+        while (max.isFileOver(min)) {
+            path.add(max);
+            max = max.getLeftStraight();
+        }
+        path.add(target);
+        path.remove(this);
+        return path;
+    }
+
+    public Set<Position> generateInclinationOnePath(final Position target) {
+        Set<Position> positions = new HashSet<>();
+        var max = Position.maxRank(this, target);
+        var min = Position.minRank(this, target);
+
+        while (max.isRankOver(min)) {
+            positions.add(max);
+            max = max.getLeftDownDiagonal();
+        }
+        positions.add(target);
+        positions.remove(this);
+        return positions;
+    }
+
+    public Set<Position> generateInclinationNegativeOnePath(final Position target) {
+        Set<Position> positions = new HashSet<>();
+        var max = Position.maxRank(this, target);
+        var min = Position.minRank(this, target);
+
+        while (max.isRankOver(min)) {
+            max = max.getRightDownDiagonal();
+            positions.add(max);
+        }
+        positions.add(target);
+        positions.remove(this);
+        return positions;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }
