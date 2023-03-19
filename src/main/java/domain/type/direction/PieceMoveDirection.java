@@ -48,7 +48,7 @@ public enum PieceMoveDirection {
         return Arrays.stream(PieceMoveDirection.values())
             .filter(direction -> direction.condition.test(start, end))
             .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 경로 입니다."));
     }
 
     public boolean isNightMoveDirection() {
