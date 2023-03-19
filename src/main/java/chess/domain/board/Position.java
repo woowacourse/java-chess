@@ -19,22 +19,17 @@ public final class Position {
     }
 
     public double computeInclination(final Position target) {
-        final var fileSub = fileSub(target);
-        final var rankSub = rankSub(target);
-
-        return fileSub / (double) rankSub;
+        return fileSub(target) / (double) rankSub(target);
     }
 
     public Set<Position> computeDiagonalPath(Position target) {
-        var max = maxRank(this, target);
-        var min = minRank(this, target);
-
         double inclination = computeInclination(target);
         if (Math.abs(inclination) != 1) {
             throw new IllegalArgumentException(CAN_NOT_COMPUTE_DIAGONAL_PATH_EXCEPTION_MESSAGE);
         }
 
-        Set<Position> path = computePathByInclination(max, min, inclination);
+        Set<Position> path = computePathByInclination(getMaxRankPosition(this, target),
+                getMinRankPosition(this, target), inclination);
 
         path.add(target);
         path.remove(this);
@@ -45,12 +40,12 @@ public final class Position {
         Set<Position> path = new HashSet<>();
         while (max.rank.isOver(min.rank)) {
             path.add(max);
-            max = nextMax(max, inclination);
+            max = getNextMax(max, inclination);
         }
         return path;
     }
 
-    private Position nextMax(final Position max, final double inclination) {
+    private Position getNextMax(final Position max, final double inclination) {
         if (inclination == 1) {
             return max.getLeftDownDiagonal();
         }
@@ -63,19 +58,19 @@ public final class Position {
             throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_EXCEPTION_MESSAGE);
         }
         if (file == target.file) {
-            path = sameFilePath(target);
+            path = computeSameFilePath(target);
         }
         if (rank == target.rank) {
-            path = sameRankPath(target);
+            path = computeSameRankPath(target);
         }
         path.add(target);
         path.remove(this);
         return path;
     }
 
-    private Set<Position> sameFilePath(Position target) {
-        var max = maxRank(this, target);
-        var min = minRank(this, target);
+    private Set<Position> computeSameFilePath(Position target) {
+        var max = getMaxRankPosition(this, target);
+        var min = getMinRankPosition(this, target);
 
         Set<Position> path = new HashSet<>();
         while (max.rank.isOver(min.rank)) {
@@ -85,9 +80,9 @@ public final class Position {
         return path;
     }
 
-    private Set<Position> sameRankPath(Position target) {
-        var max = maxFile(this, target);
-        var min = minFile(this, target);
+    private Set<Position> computeSameRankPath(Position target) {
+        var max = getMaxFilePosition(this, target);
+        var min = getMinFilePosition(this, target);
 
         Set<Position> path = new HashSet<>();
         while (max.file.isOver(min.file)) {
@@ -108,28 +103,28 @@ public final class Position {
         throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE);
     }
 
-    private Position maxRank(final Position source, final Position target) {
+    private Position getMaxRankPosition(final Position source, final Position target) {
         if (source.rank.isOver(target.rank)) {
             return source;
         }
         return target;
     }
 
-    private Position minRank(final Position source, final Position target) {
+    private Position getMinRankPosition(final Position source, final Position target) {
         if (source.rank.isOver(target.rank)) {
             return target;
         }
         return source;
     }
 
-    private Position maxFile(final Position source, final Position target) {
+    private Position getMaxFilePosition(final Position source, final Position target) {
         if (source.file.isOver(target.file)) {
             return source;
         }
         return target;
     }
 
-    private Position minFile(final Position source, final Position target) {
+    private Position getMinFilePosition(final Position source, final Position target) {
         if (source.file.isOver(target.file)) {
             return target;
         }
