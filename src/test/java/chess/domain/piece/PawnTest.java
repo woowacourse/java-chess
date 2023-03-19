@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.PositionFixture.B_1;
-import static chess.domain.PositionFixture.B_7;
+import static chess.domain.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -45,6 +44,12 @@ class PawnTest {
     void 폰은_대각선에_적이_없다면_그_방향으로_이동할_수_없다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Team.WHITE);
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Team.WHITE)).isEqualTo(expect);
+    }
+
+    @Test
+    void 폰은_직선방향에_적이_있어도_그_방향으로_이동할_수_없다() {
+        Pawn pawn = new Pawn(Team.WHITE);
+        assertThat(pawn.canMove(B_1, B_2, Team.BLACK)).isFalse();
     }
 
     @Test
