@@ -1,17 +1,15 @@
 package domain.piece;
 
-import domain.Location;
 import domain.type.Color;
 import domain.type.PieceType;
 
 public final class EmptyPiece extends Piece {
-    
-    protected EmptyPiece() {
-        super(Color.NONE, PieceType.EMPTY);
+
+    private EmptyPiece() {
+        super(Color.NONE, PieceType.EMPTY, (start, end) -> false);
     }
 
-    @Override
-    protected boolean isNotMovable(Location start, Location end) {
-        return false;
+    public static EmptyPiece create() {
+        return new EmptyPiece();
     }
 }

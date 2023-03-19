@@ -6,36 +6,32 @@ import domain.type.PieceType;
 import domain.type.direction.PieceMoveDirection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import view.PieceView;
 
 public abstract class Piece {
 
-    protected static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
-    protected final Color color;
-    protected final PieceType pieceType;
+    private static final int FIRST_MOVE = 1;
+    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
+    private final Color color;
+    private final PieceType pieceType;
+    private final BiPredicate<Location, Location> moveCheckStrategy;
 
-    protected Piece(final Color color, final PieceType pieceType) {
+    protected Piece(Color color, PieceType pieceType, BiPredicate<Location, Location> moveCheckStrategy) {
         this.color = color;
         this.pieceType = pieceType;
+        this.moveCheckStrategy = moveCheckStrategy;
     }
-
-    public static Piece getEmpty() {
-        return new EmptyPiece();
-    }
-
-    abstract protected boolean isNotMovable(final Location start, final Location end);
 
     public List<Location> searchPath(final Location start, final Location end) {
         final PieceMoveDirection direction = PieceMoveDirection.find(start, end);
-        if (isNotMovable(start, end)) {
+        if (!moveCheckStrategy.test(start, end)) {
             throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
-        final int totalMoveCount = getTotalMoveCount(start, end);
-        final int excludeStartLocation = 1;
-        final int includeEndMove = totalMoveCount + 1;
-        return IntStream.range(excludeStartLocation, includeEndMove)
+        final int lastMove = getTotalMoveCount(start, end) + 1;
+        return IntStream.range(FIRST_MOVE, lastMove)
             .mapToObj(
                 count -> Location.of(
                     start.getCol() + (direction.getColDiff() * count),
@@ -43,11 +39,15 @@ public abstract class Piece {
             .collect(Collectors.toList());
     }
 
-    private static int getTotalMoveCount(final Location start, final Location end) {
-        return Math.max(
-            Math.abs(start.getCol() - end.getCol()),
-            Math.abs(start.getRow() - end.getRow())
-        );
+    private int getTotalMoveCount(final Location start, final Location end) {
+        PieceMoveDirection pieceMoveDirection = PieceMoveDirection.find(start, end);
+        int moveCount = 1;
+        Location current = start;
+        while (!current.addDirectionOnce(pieceMoveDirection).equals(end)) {
+            moveCount++;
+            current = current.addDirectionOnce(pieceMoveDirection);
+        }
+        return moveCount;
     }
 
     public boolean isSameType(final PieceType pieceType) {

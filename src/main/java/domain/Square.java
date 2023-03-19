@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ public final class Square {
     }
 
     public static Square empty() {
-        return new Square(Piece.getEmpty());
+        return new Square(EmptyPiece.create());
     }
 
     public List<Location> searchPath(final Location start, final Location end) {
@@ -22,7 +23,7 @@ public final class Square {
 
     public void moveTo(final Square square) {
         square.piece = this.piece;
-        this.piece = Piece.getEmpty();
+        this.piece = EmptyPiece.create();
     }
 
     public boolean isWhite() {
