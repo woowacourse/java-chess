@@ -20,7 +20,6 @@ import static chess.domain.board.Rank.TWO;
 import chess.domain.board.Position;
 
 public class PositionFixture {
-
     public static final Position A1 = Position.of(A, ONE);
     public static final Position A2 = Position.of(A, TWO);
     public static final Position A3 = Position.of(A, THREE);

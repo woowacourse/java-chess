@@ -5,7 +5,6 @@ import static chess.domain.piece.PieceType.KNIGHT;
 import chess.domain.board.Position;
 
 public class Knight extends Piece {
-
     private static final Knight WHITE = new Knight(Color.WHITE);
     private static final Knight BLACK = new Knight(Color.BLACK);
     private static final int GAP_LOWER_BOUND = 1;

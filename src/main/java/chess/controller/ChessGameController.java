@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameController {
-
     private final ChessGame chessGame;
     private final Map<Command, ChessGameAction> commandMapper = new EnumMap<>(Command.class);
 

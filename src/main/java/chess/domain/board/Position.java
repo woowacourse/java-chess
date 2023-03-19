@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Position {
-
     private static final int STRAIGHT_GAP = 0;
     private static final Map<String, Position> CACHE;
 

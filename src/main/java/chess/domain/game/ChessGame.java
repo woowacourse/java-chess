@@ -6,7 +6,6 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class ChessGame {
-
     private final Board board;
 
     public ChessGame() {

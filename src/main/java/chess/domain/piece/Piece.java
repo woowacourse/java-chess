@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public abstract class Piece {
-
     private final Color color;
     private final PieceType type;
 

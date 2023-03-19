@@ -5,7 +5,6 @@ import static chess.domain.piece.PieceType.QUEEN;
 import chess.domain.board.Position;
 
 public class Queen extends Piece {
-
     private static final Queen WHITE = new Queen(Color.WHITE);
     private static final Queen BLACK = new Queen(Color.BLACK);
     private static final int VALID_GAP = 0;

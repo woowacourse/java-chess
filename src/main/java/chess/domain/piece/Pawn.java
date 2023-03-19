@@ -7,7 +7,6 @@ import chess.domain.board.Rank;
 import java.util.Map;
 
 public class Pawn extends Piece {
-
     private static final Pawn WHITE = new Pawn(Color.WHITE);
     private static final Pawn BLACK = new Pawn(Color.BLACK);
     private static final Map<Color, Integer> GAP_LOWER_BOUND = Map.of(Color.WHITE, -1, Color.BLACK, 1);

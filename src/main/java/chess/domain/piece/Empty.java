@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public class Empty extends Piece {
-
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
