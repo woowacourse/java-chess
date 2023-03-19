@@ -29,7 +29,7 @@ public class MovablePosition {
 
     private void makeRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
         if (pieceShape.equals(Shape.WHITE_PAWN.getName())) {
-            addPawnPosition(chessBoard, sourcePosition, Direction.HWITE_PAWN_MOVE_DIRECTION, 2);
+            addPawnPosition(chessBoard, sourcePosition, Direction.WHITE_PAWN_MOVE_DIRECTION, 2);
         }
         if (pieceShape.equals(Shape.BLACK_PAWN.getName())) {
             addPawnPosition(chessBoard, sourcePosition, Direction.BLACK_PAWN_MOVE_DIRECTION, 7);
