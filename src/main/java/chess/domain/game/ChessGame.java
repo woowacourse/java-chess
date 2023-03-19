@@ -1,8 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardFactory;
-import chess.domain.board.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -10,38 +8,21 @@ import java.util.List;
 
 public class ChessGame {
 
-    private final ChessBoardFactory factory;
-    private ChessBoard chessBoard;
-    private Turn turn;
+    private ChessGameStep step;
 
-    public ChessGame(final ChessBoardFactory factory, final Turn turn) {
-        this.factory = factory;
-        this.turn = turn;
-    }
-
-    public boolean isInitialized() {
-        return chessBoard != null;
+    public ChessGame(final ChessBoard chessBoard) {
+        this.step = new InitializeGame(chessBoard);
     }
 
     public void initialize() {
-        if (isInitialized()) {
-            throw new IllegalArgumentException("이미 초기화되었습니다.");
-        }
-        this.chessBoard = factory.create();
+        step = step.initialize();
     }
 
     public void movePiece(final PiecePosition source, final PiecePosition destination) {
-        if (!isInitialized()) {
-            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
-        }
-        chessBoard.movePiece(turn, source, destination);
-        turn = turn.change();
+        step = step.movePiece(source, destination);
     }
 
     public List<Piece> pieces() {
-        if (!isInitialized()) {
-            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
-        }
-        return chessBoard.pieces();
+        return step.pieces();
     }
 }

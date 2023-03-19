@@ -3,9 +3,7 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 import chess.domain.board.ChessBoardFactory;
-import chess.domain.board.Turn;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -34,7 +32,7 @@ public class ChessController {
     public void run() {
         OutputView.printStartMessage();
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
-        final ChessGame chessGame = new ChessGame(chessBoardFactory, new Turn(Color.WHITE));
+        final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
 
         CommandType commandType = null;
         while (commandType != CommandType.END) {
@@ -48,7 +46,7 @@ public class ChessController {
             final Command command = Command.parse(commands);
             actionMapping.get(command.type()).execute(chessGame, command);
             return command.type();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             OutputView.error(e.getMessage());
             return null;
         }
