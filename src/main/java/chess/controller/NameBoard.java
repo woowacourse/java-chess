@@ -8,11 +8,11 @@ import java.util.Map;
 import chess.piece.Knight;
 import chess.piece.Piece;
 import chess.piece.Side;
-import chess.piece.directional.Pawn;
-import chess.piece.directional.normal.King;
-import chess.piece.directional.normal.longrange.Bishop;
-import chess.piece.directional.normal.longrange.Queen;
-import chess.piece.directional.normal.longrange.Rook;
+import chess.piece.Pawn;
+import chess.piece.King;
+import chess.piece.Bishop;
+import chess.piece.Queen;
+import chess.piece.Rook;
 
 public class NameBoard {
 

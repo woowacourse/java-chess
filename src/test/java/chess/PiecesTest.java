@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.piece.directional.Pawn;
+import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import chess.piece.Side;

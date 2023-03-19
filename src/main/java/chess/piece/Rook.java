@@ -1,17 +1,34 @@
-package chess.piece.directional.normal;
+package chess.piece;
+
+import chess.board.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.board.Position;
-import chess.piece.Direction;
-import chess.piece.Side;
-import chess.piece.directional.DirectionalPiece;
+public class Rook extends Piece {
 
-public abstract class NormalPiece extends DirectionalPiece {
+    private final List<Direction> directions;
 
-    public NormalPiece(Position position, Side side) {
+    public Rook(final Position position, final Side side) {
         super(position, side);
+        this.directions = initDirections();
+    }
+
+    @Override
+    public boolean isMovable(Position targetPosition) {
+        final Direction direction = position.getDirectionTo(targetPosition);
+        return directions.contains(direction);
+    }
+
+    private List<Direction> initDirections() {
+        return new ArrayList<>(
+                List.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
+        );
+    }
+
+    @Override
+    public Piece move(Position positionToMove) {
+        return new Rook(positionToMove, this.side);
     }
 
     @Override

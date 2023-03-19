@@ -1,28 +1,26 @@
-package chess.piece.directional;
+package chess.piece;
 
 import chess.board.Position;
-import chess.piece.Direction;
-import chess.piece.Piece;
-import chess.piece.Side;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pawn extends DirectionalPiece {
+public class Pawn extends Piece {
 
     private static final int INITIAL_MOVE_COUNT = 2;
     private static final int NOT_INITIAL_MOVE_COUNT = 1;
     private static final int WHITE_RANK_VALUE = 2;
     private static final int BLACK_RANK_VALUE = 7;
 
+    private final List<Direction> directions;
+
     public Pawn(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
     }
 
-    @Override
-    protected List<Direction> initDirections() {
+    private List<Direction> initDirections() {
         final List<Direction> directions = new ArrayList<>();
         if (this.side == Side.WHITE) {
             directions.addAll(List.of(Direction.UP, Direction.UP_RIGHT, Direction.UP_LEFT));
