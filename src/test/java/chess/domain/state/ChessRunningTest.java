@@ -30,7 +30,7 @@ class ChessRunningTest {
 
         @Test
         @DisplayName("게임 시작 명령시 예외를 발생시킨다")
-        void start_chess_command_throw_exception_test() {
+        void start_chess_command_throw_exception() {
             final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))));
 
             assertThatThrownBy(() -> chessRunning.process(Command.of((List.of("start")))))
@@ -40,7 +40,7 @@ class ChessRunningTest {
 
         @Test
         @DisplayName("이동 명령시 진행중인 상태의 체스를 반환한다")
-        void move_chess_command_throw_exception_test() {
+        void move_chess_command_throw_exception() {
             final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))));
 
             final ChessState state = chessRunning.process(Command.of(List.of("move", "a2", "a4")));

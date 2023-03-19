@@ -30,7 +30,7 @@ class ChessEndTest {
     @ParameterizedTest
     @MethodSource("provideCommand")
     @DisplayName("게임 커멘드 입력시 체스가 종료되었다는 예외를 발생시킨다.")
-    void command_process_throws_exception_test(final Command command) {
+    void command_process_throws_exception(final Command command) {
         final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))));
 
         assertThatThrownBy(() -> chessEnd.process(command))

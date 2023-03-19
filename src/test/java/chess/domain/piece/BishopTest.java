@@ -31,7 +31,7 @@ class BishopTest {
 
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
-    void getPassingPathTest() {
+    void get_passing_path_test() {
         final Piece bishop = new Bishop(C, EIGHT, Color.BLACK);
 
         final List<Position> path = bishop.getPassingPositions(new Position(F, FIVE));
@@ -43,7 +43,7 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource({"E, FOUR", "C, EIGHT"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest(final File file, final Rank rank) {
+    void invalid_target_position_throw_exception(final File file, final Rank rank) {
         final Piece bishop = new Bishop(C, EIGHT, Color.BLACK);
 
         assertThatThrownBy(() -> bishop.getPassingPositions(new Position(file, rank)))
@@ -54,7 +54,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
-    void moveTest(final Piece pieceInTargetPosition) {
+    void move_test(final Piece pieceInTargetPosition) {
         final Piece originalBishop = new Bishop(C, EIGHT, BLACK);
 
         final Piece movedBishop = originalBishop.move(pieceInTargetPosition);
@@ -71,7 +71,7 @@ class BishopTest {
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+    void catch_same_color_throw_exception() {
         final Piece originalBishop = new Bishop(F, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(D, SIX, BLACK);
 

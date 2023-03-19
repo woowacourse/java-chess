@@ -34,14 +34,14 @@ class PositionTest {
 
     @Test
     @DisplayName("File과 Rank정보로 위치를 만든다")
-    void initTest() {
+    void init_test() {
         assertThatNoException().isThrownBy(() -> new Position(A, ONE));
     }
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, true", "E, ONE, true", "C, SIX, false", "G, TWO, false"})
     @DisplayName("상하좌우 위치에 있는지 확인한다")
-    void isInCrossPositionTest(final File file, final Rank rank, final boolean expected) {
+    void cross_position_check_test(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
         final boolean actual = E_FOUR.isInCrossPosition(otherPosition);
@@ -52,7 +52,7 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"A, FOUR, false", "E, ONE, false", "C, SIX, true", "G, TWO, true"})
     @DisplayName("대각선 위치에 있는지 확인한다")
-    void isInDiagonalPositionTest(final File file, final Rank rank, final boolean expected) {
+    void diagonal_position_check_test(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
         final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
@@ -63,7 +63,7 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"D, FOUR, 1", "F, FIVE, 2", "G, FIVE, 3"})
     @DisplayName("맨허튼 거리를 계산한다")
-    void calculateManhattanDistanceTest(final File file, final Rank rank, final int expectedDistance) {
+    void manhattan_distance_calculate_test(final File file, final Rank rank, final int expectedDistance) {
         final Position otherPosition = new Position(file, rank);
 
         final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
@@ -74,7 +74,7 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("provideOtherPositionAndExpectedPassingPositions")
     @DisplayName("입력 받은 위치로 가는 경로에 있는 위치들을 반환한다")
-    void findPassingPositionsTest(final Position otherPosition, final List<Position> expectedPassingPositions) {
+    void find_passing_position_test(final Position otherPosition, final List<Position> expectedPassingPositions) {
         final List<Position> actualPassingPositions = E_FOUR.findPassingPositions(otherPosition);
 
         assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
@@ -93,7 +93,7 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"FOUR, true", "SIX, false"})
     @DisplayName("Rank가 높은지 확인한다.")
-    void isUpperRankThanTest(final Rank otherRank, final boolean expected) {
+    void upper_rank_check_test(final Rank otherRank, final boolean expected) {
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 
@@ -105,7 +105,7 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"FOUR, false", "SIX, true"})
     @DisplayName("Rank가 낮은지 확인한다.")
-    void isLowerRankThanTest(final Rank otherRank, final boolean expected) {
+    void lower_rank_check_test(final Rank otherRank, final boolean expected) {
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 

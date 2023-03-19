@@ -23,7 +23,7 @@ class StartingPiecesGeneratorTest {
 
     @Test
     @DisplayName("초기 체스판이 정상적으로 생성된다")
-    void initTest() {
+    void init_test() {
         final List<Piece> pieces = new StartingPiecesGenerator().generate();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)

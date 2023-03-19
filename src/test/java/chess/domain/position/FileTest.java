@@ -23,7 +23,7 @@ class FileTest {
     @ParameterizedTest
     @CsvSource({"A, 3", "B, 2", "D, 0", "H, 4"})
     @DisplayName("거리 계산 테스트")
-    void calculateDistanceTest(final File otherFile, final int expectedDistance) {
+    void distance_calculate_test(final File otherFile, final int expectedDistance) {
         final File file = D;
 
         final int actualDistance = file.calculateDistance(otherFile);

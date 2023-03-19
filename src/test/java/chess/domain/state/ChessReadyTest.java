@@ -32,7 +32,7 @@ class ChessReadyTest {
 
         @Test
         @DisplayName("이동 명령시 예외를 발생시킨다")
-        void move_chess_command_throw_exception_test() {
+        void move_chess_command_throw_exception() {
             final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())));
 
             assertThatThrownBy(() -> chessReady.process(Command.of(List.of("move", "a2", "a3"))))

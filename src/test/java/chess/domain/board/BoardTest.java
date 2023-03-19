@@ -35,7 +35,7 @@ class BoardTest {
 
     @Test
     @DisplayName("초기 체스판이 정상적으로 생성된다")
-    void initTest() {
+    void init_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Pawn(A, SEVEN, BLACK),
                 new Rook(A, EIGHT, BLACK),
@@ -94,7 +94,7 @@ class BoardTest {
 
     @Test
     @DisplayName("현재 위치에 말이 없다면, 예외가 발생한다")
-    void can_not_find_piece_in_current_position() {
+    void empty_position_access_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of());
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -105,7 +105,7 @@ class BoardTest {
 
     @Test
     @DisplayName("목표 위치로 이동할 수 없다면, 예외가 발생한다")
-    void throws_exception_if_can_not_move_to_target_position() {
+    void invalid_target_position_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
@@ -118,7 +118,7 @@ class BoardTest {
 
     @Test
     @DisplayName("이동 경로에 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_piece_in_passing_path() {
+    void blocked_moving_path_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
@@ -132,7 +132,7 @@ class BoardTest {
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+    void catching_same_color_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
@@ -147,7 +147,7 @@ class BoardTest {
     @ParameterizedTest
     @CsvSource({"BLACK, true", "WHITE, false"})
     @DisplayName("같은 색인지 확인한다")
-    void isSameColorTest(final Color color, final boolean expected) {
+    void check_is_same_color_test(final Color color, final boolean expected) {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));

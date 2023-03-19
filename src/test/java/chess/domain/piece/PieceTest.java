@@ -43,14 +43,14 @@ class PieceTest {
 
     @Test
     @DisplayName("위치를 가지는 말이 정상적으로 생성이 된다")
-    void initTest() {
+    void init_test() {
         assertThatNoException().isThrownBy(() -> new TestPiece(A, ONE, BLACK));
     }
 
     @ParameterizedTest()
     @DisplayName("같은 색인지 확인한다")
     @CsvSource({"BLACK, true", "WHITE, false"})
-    void isSameColorTest(final Color otherColor, final boolean expected) {
+    void check_is_same_color_test(final Color otherColor, final boolean expected) {
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
 
         final boolean actual = piece.isSameColor(otherColor);

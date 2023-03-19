@@ -21,7 +21,7 @@ class RankTest {
     @ParameterizedTest
     @CsvSource({"ONE, 3", "TWO, 2", "FOUR, 0", "EIGHT, 4"})
     @DisplayName("거리 계산 테스트")
-    void calculateDistanceTest(final Rank otherRank, final int expectedDistance) {
+    void distance_calculate_test(final Rank otherRank, final int expectedDistance) {
         final Rank rank = FOUR;
 
         final int actualDistance = rank.calculateDistance(otherRank);
@@ -59,7 +59,7 @@ class RankTest {
     @ParameterizedTest
     @CsvSource({"FOUR, true", "SIX, false"})
     @DisplayName("높은지 확인해서 반환한다.")
-    void isUpperThanTest(final Rank otherRank, final boolean expected) {
+    void check_upper_test(final Rank otherRank, final boolean expected) {
         final Rank rank = FIVE;
 
         final boolean actual = rank.isUpperThan(otherRank);
@@ -70,7 +70,7 @@ class RankTest {
     @ParameterizedTest
     @CsvSource({"FOUR, false", "SIX, true"})
     @DisplayName("낮은지 확인해서 반환한다.")
-    void isLowerThanTest(final Rank otherRank, final boolean expected) {
+    void check_lower_test(final Rank otherRank, final boolean expected) {
         final Rank rank = FIVE;
 
         final boolean actual = rank.isLowerThan(otherRank);

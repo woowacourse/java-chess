@@ -25,7 +25,7 @@ class BlankPieceTest {
 
     @Test
     @DisplayName("이동 명령시 예외를 발생한다")
-    void move_throws_exception_test() {
+    void move_throws_exception() {
         assertThatThrownBy(() -> blankPiece.move(new BlankPiece(File.A, Rank.TWO)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(BLANK_PIECE_EXCEPTION_MESSAGE);
@@ -33,7 +33,7 @@ class BlankPieceTest {
 
     @Test
     @DisplayName("이동 경로 반환 명령시 예외를 발생한다")
-    void get_passing_positions_throws_exception_test() {
+    void get_passing_positions_throws_exception() {
         assertThatThrownBy(() -> blankPiece.getPassingPositions(new Position(File.A, Rank.TWO)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(BLANK_PIECE_EXCEPTION_MESSAGE);
