@@ -125,4 +125,33 @@ public class BoardTest {
         // then
         assertThat(result).isEqualTo(initialized);
     }
+
+    @Test
+    void 기물의_총_점수를_반환한다() {
+        // given
+        final Board board = new Board();
+        board.initialize();
+
+        // when
+        final double score = board.score(Color.WHITE);
+
+        // then
+        assertThat(score).isEqualTo(38.0);
+    }
+
+    @Test
+    void 하나의_File에_여러_개의_폰이_존재하는_경우_각폰의_점수가_반이_된다() {
+        // given
+        final Board board = new Board();
+        board.initialize();
+        board.move("e2", "e4");
+        board.move("d7", "d5");
+        board.move("e4", "d5");
+
+        // when
+        final double score = board.score(Color.WHITE);
+
+        // then
+        assertThat(score).isEqualTo(37.0);
+    }
 }

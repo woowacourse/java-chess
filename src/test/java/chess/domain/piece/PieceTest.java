@@ -34,6 +34,16 @@ public class PieceTest {
         assertThat(piece.isSameColor(color)).isEqualTo(result);
     }
 
+    @ParameterizedTest(name = "색을 입력받아 같은 색인지 확인한다. 현재 타입: PAWN, 입력: {0}, 결과: {1}")
+    @CsvSource({"PAWN, true", "KING, false"})
+    void 카입을_입력받아_같은_타입인지_확인한다(final PieceType type, final boolean result) {
+        // given
+        final Piece piece = generatePiece(Color.WHITE, PieceType.PAWN);
+
+        // expect
+        assertThat(piece.isSameType(type)).isEqualTo(result);
+    }
+
     @Test
     void 해당_기물의_색상을_반환한다() {
         // given

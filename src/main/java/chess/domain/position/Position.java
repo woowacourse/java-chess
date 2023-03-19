@@ -96,4 +96,8 @@ public class Position {
                 ", rank=" + rank +
                 '}';
     }
+
+    public File file() {
+        return file;
+    }
 }

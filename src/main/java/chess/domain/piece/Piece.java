@@ -31,11 +31,19 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public final boolean isSameType(final PieceType type) {
+        return this.type == type;
+    }
+
     public PieceType type() {
         return type;
     }
 
     public Color color() {
         return color;
+    }
+
+    public double score() {
+        return type.score();
     }
 }

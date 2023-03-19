@@ -1,14 +1,23 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceType.PAWN;
+
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
+    private static final int MULTIPLE_PAWN_COUNT = 2;
+    private static final double MULTIPLE_PAWN_SCORE = 0.5;
+
     private final Map<Position, Piece> board;
     private Color turn;
 
@@ -63,6 +72,30 @@ public class Board {
 
     public boolean isInitialized() {
         return board.size() != 0;
+    }
+
+    public double score(final Color color) {
+        return pieceScore(color) - multiplePawnScore(color);
+    }
+
+    private double pieceScore(final Color color) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::score)
+                .sum();
+    }
+
+    private double multiplePawnScore(final Color color) {
+        final Map<File, Long> pawnCount = Arrays.stream(Rank.values())
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
+                .filter(position -> board.get(position).isSameColor(color))
+                .filter(position -> board.get(position).isSameType(PAWN))
+                .collect(Collectors.groupingBy(Position::file, Collectors.counting()));
+
+        return pawnCount.values().stream()
+                .filter(value -> value >= MULTIPLE_PAWN_COUNT)
+                .mapToDouble(value -> value * MULTIPLE_PAWN_SCORE)
+                .sum();
     }
 
     public Map<Position, Piece> getBoard() {
