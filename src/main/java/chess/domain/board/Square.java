@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
+import chess.domain.piece.normal.Piece;
+import chess.domain.piece.property.Color;
 
 import java.util.Map;
 import java.util.Set;

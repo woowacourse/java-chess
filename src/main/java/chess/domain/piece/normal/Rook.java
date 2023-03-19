@@ -1,6 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.normal;
 
 import chess.domain.board.Position;
+import chess.domain.piece.property.Color;
+import chess.domain.piece.property.Kind;
 
 import java.util.Set;
 

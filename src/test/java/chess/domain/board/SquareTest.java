@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
+import chess.domain.piece.normal.King;
 import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

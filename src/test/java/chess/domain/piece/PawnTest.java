@@ -4,6 +4,7 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

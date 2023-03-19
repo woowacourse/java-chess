@@ -1,9 +1,9 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Kind;
-import chess.domain.piece.Piece;
+import chess.domain.piece.normal.Piece;
+import chess.domain.piece.property.Color;
+import chess.domain.piece.property.Kind;
 
 import java.util.Map;
 import java.util.Set;

@@ -1,6 +1,6 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.property.Color;
 
 public final class PawnStrategyFactory {
 
