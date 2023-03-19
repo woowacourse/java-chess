@@ -8,6 +8,7 @@ public final class ChessGame {
     public void initialize() {
         this.board = new Board(new PathValidator());
         board.initialize();
+        isWhite = true;
     }
 
     public void move(final Location start, final Location end) {
