@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    public static final int CHESS_BOARD_NUMBER = 64;
+    public static final int ONE_LINE = 8;
+
     public void printInitGame() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -18,11 +21,11 @@ public class OutputView {
     public void printChessBoard(final ChessBoardDto chessBoardDto) {
         final List<PieceDto> pieceDtos = chessBoardDto.getPieceDtos();
 
-        for (int i = 0; i < 64; i += 8) {
+        for (int i = 0; i < CHESS_BOARD_NUMBER; i += ONE_LINE) {
             final List<String> origin = pieceDtos.stream()
                     .map(PieceDto::getView)
                     .collect(Collectors.toList());
-            final List<String> strings = origin.subList(i, Math.min(i + 8, origin.size()));
+            final List<String> strings = origin.subList(i, Math.min(i + ONE_LINE, origin.size()));
             strings.forEach(System.out::print);
             System.out.println();
         }
