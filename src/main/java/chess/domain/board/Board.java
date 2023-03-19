@@ -126,4 +126,21 @@ public class Board {
             throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
     }
+
+    // todo: 점수 계산
+    public double calculateScoreOfLowerTeam() {
+        return board.values().stream()
+                .filter(Piece::isNameLowerCase)
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    public double calculateScoreOfUpperTeam() {
+        return board.values().stream()
+                .filter(Piece::isNameUpperCase)
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    // todo: King dead
 }

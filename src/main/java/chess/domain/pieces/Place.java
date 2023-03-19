@@ -6,9 +6,11 @@ import chess.exception.PieceMessage;
 public class Place extends Piece {
 
     private static final String PLACE = ".";
+    private static final double SCORE_OF_PLACE = 0;
 
     public Place() {
         super(new Name(PLACE));
+        this.score = new Score(SCORE_OF_PLACE);
     }
 
     @Override

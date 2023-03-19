@@ -36,4 +36,16 @@ public class ChessGame {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board.getBoard());
     }
+
+
+    // todo: 점수 계산
+    private double calculateScoreOfLowerTeam() {
+        return board.calculateScoreOfLowerTeam();
+    }
+
+    private double calculateScoreOfUpperTeam() {
+        return board.calculateScoreOfUpperTeam();
+    }
+
+    // todo: King dead
 }

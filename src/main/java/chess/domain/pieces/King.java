@@ -8,8 +8,11 @@ import java.util.List;
 
 public class King extends Piece {
 
+    private static final double SCORE_OF_KING = 0;
+
     public King(final Name name) {
         super(name);
+        this.score = new Score(SCORE_OF_KING);
     }
 
     @Override

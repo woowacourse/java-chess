@@ -14,11 +14,13 @@ public class Pawn extends Piece {
     private static final int MOVE_RIGHT = 1;
     private static final int MOVE_LEFT = -1;
     private static final int SAME_POSITION = 0;
+    private static final double SCORE_OF_PAWN = 1;
 
     private boolean isFirstMove;
 
     public Pawn(final Name name) {
         super(name);
+        this.score = new Score(SCORE_OF_PAWN);
         this.isFirstMove = true;
     }
 

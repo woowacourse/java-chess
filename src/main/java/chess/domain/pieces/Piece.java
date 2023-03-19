@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 public abstract class Piece {
 
     protected final Name name;
+    protected Score score;
 
     public Piece(final Name name) {
         this.name = name;
@@ -34,5 +35,9 @@ public abstract class Piece {
 
     public boolean isNameUpperCase() {
         return this.name.isUpperCase();
+    }
+
+    public double getScore() {
+        return score.getScore();
     }
 }

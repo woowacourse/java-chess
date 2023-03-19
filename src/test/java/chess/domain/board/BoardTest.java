@@ -146,4 +146,30 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
+
+    @Test
+    @DisplayName("소문자 팀 점수 계산 (초기 세팅)")
+    void returns_sum_of_lower_team_score() {
+        // given
+        Board board = BoardFactory.createBoard();
+
+        // when
+        double score = board.calculateScoreOfLowerTeam();
+
+        // then
+        assertThat(score).isEqualTo(38);
+     }
+
+    @Test
+    @DisplayName("대문자 팀 점수 계산 (초기 세팅)")
+    void returns_sum_of_upper_team_score() {
+        // given
+        Board board = BoardFactory.createBoard();
+
+        // when
+        double score = board.calculateScoreOfUpperTeam();
+
+        // then
+        assertThat(score).isEqualTo(38);
+    }
 }
