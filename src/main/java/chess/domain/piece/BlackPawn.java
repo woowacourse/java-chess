@@ -9,7 +9,6 @@ import java.util.Set;
 public final class BlackPawn extends Pawn {
 
     private static final Rank INIT_RANK = Rank.SEVEN;
-    private static final int DOWN = 1;
 
     public BlackPawn() {
         super(Color.BLACK);
