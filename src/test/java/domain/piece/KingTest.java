@@ -4,8 +4,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class KingTest {
+
+    @Test
+    @DisplayName("킹은 정상 생성이 된다")
+    void constructorTest() {
+        assertThatCode(King::new)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("킹은 디폴트 상태를 가진다")
+    void propertyTest() {
+        Piece king = new King();
+
+        assertThat(king.canReap()).isFalse();
+        assertThat(king.isPawn()).isFalse();
+    }
 
     @Test
     @DisplayName("킹은 오른쪽으로 한 칸 움직일 수 있다")

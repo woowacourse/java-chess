@@ -1,11 +1,30 @@
 package domain.piece;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class QueenTest {
+
+    @Test
+    @DisplayName("퀸은 정상 생성이 된다")
+    void constructorTest() {
+        assertThatCode(Queen::new)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("퀸은 디폴트 상태를 가진다")
+    void propertyTest() {
+        Piece queen = new Queen();
+
+        assertThat(queen.canReap()).isFalse();
+        assertThat(queen.isPawn()).isFalse();
+    }
 
     @ParameterizedTest(name = "우측 상단으로 {0}칸 이동할 수 있다")
     @ValueSource(ints = {1, 3, 7})
@@ -47,7 +66,7 @@ class QueenTest {
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
-    @ParameterizedTest(name = "룩은 왼쪽으로 {0}칸 이동할 수 있다")
+    @ParameterizedTest(name = "왼쪽으로 {0}칸 이동할 수 있다")
     @ValueSource(ints = {1, 3, 7})
     void isReachableByRuleLeft(int distance) {
         Coordinate startCoordinate = new Coordinate(0, 7);
@@ -57,7 +76,7 @@ class QueenTest {
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
-    @ParameterizedTest(name = "룩은 오른쪽으로 {0}칸 이동할 수 있다")
+    @ParameterizedTest(name = "오른쪽으로 {0}칸 이동할 수 있다")
     @ValueSource(ints = {1, 3, 7})
     void isReachableByRuleRight(int distance) {
         Coordinate startCoordinate = new Coordinate(0, 0);

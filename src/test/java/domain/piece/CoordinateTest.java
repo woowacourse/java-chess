@@ -8,6 +8,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CoordinateTest {
 
     @Test
+    @DisplayName("좌표는 정상 생성이 된다")
+    void constructorTest() {
+        Coordinate coordinate = new Coordinate(1, 2);
+
+        assertThat(coordinate.getRow()).isEqualTo(1);
+        assertThat(coordinate.getCol()).isEqualTo(2);
+    }
+
+    @Test
     @DisplayName("상대 좌표와의 기울기가 1인 경우를 계산한다")
     void hasInclinationOfOne() {
         Coordinate startCoordinate = new Coordinate(0, 0);

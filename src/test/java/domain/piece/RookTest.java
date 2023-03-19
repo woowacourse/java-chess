@@ -1,11 +1,30 @@
 package domain.piece;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class RookTest {
+
+    @Test
+    @DisplayName("룩은 정상 생성이 된다")
+    void constructorTest() {
+        assertThatCode(Rook::new)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("룩은 디폴트 상태를 가진다")
+    void propertyTest() {
+        Piece rook = new Rook();
+
+        assertThat(rook.canReap()).isFalse();
+        assertThat(rook.isPawn()).isFalse();
+    }
 
     @ParameterizedTest(name = "룩은 왼쪽으로 {0}칸 이동할 수 있다")
     @ValueSource(ints = {1, 3, 7})

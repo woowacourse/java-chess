@@ -1,11 +1,30 @@
 package domain.piece;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class KnightTest {
+
+    @Test
+    @DisplayName("퀸은 정상 생성이 된다")
+    void constructorTest() {
+        assertThatCode(Knight::new)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("퀸은 디폴트 상태를 가진다")
+    void propertyTest() {
+        Piece knight = new Knight();
+
+        assertThat(knight.canReap()).isTrue();
+        assertThat(knight.isPawn()).isFalse();
+    }
 
     @ParameterizedTest(name = "(4, 4)에서 ({0}, {1})로의 이동이 가능하다")
     @CsvSource(value = {"6:5", "6:3", "2:5", "2:3", "5:6", "3:6", "3:2", "5:2"}, delimiter = ':')
