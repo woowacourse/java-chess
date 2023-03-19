@@ -2,11 +2,13 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.PiecesPosition;
+import chess.domain.piece.Camp;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.ViewFile;
 import chess.view.ViewRank;
+
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -45,7 +47,7 @@ public final class ChessController {
         PiecesPosition piecesPosition = new PiecesPosition();
         printBoard(piecesPosition);
 
-        return new ChessGame(piecesPosition);
+        return new ChessGame(piecesPosition, Camp.WHITE);
     }
 
     private void play(ChessGame chessGame) {

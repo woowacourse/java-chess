@@ -4,6 +4,7 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
+
 import java.util.List;
 
 public final class ChessGame {
@@ -13,9 +14,10 @@ public final class ChessGame {
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
 
     private final PiecesPosition piecesPosition;
-    private Camp turnCamp = Camp.WHITE;
+    private Camp turnCamp;
 
-    public ChessGame(PiecesPosition piecesPosition) {
+    public ChessGame(PiecesPosition piecesPosition, Camp turnCamp) {
+        this.turnCamp = turnCamp;
         this.piecesPosition = piecesPosition;
     }
 
