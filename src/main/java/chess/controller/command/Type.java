@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Type {
-    START("start", false),
-    END("end", false),
-    MOVE("move", true);
+    START("start", 0),
+    END("end", 0),
+    MOVE("move", 2);
 
     static final String INVALID_COMMAND_MESSAGE = "잘못된 명령어 입력 입니다.";
 
@@ -19,11 +19,11 @@ public enum Type {
     }
 
     private final String value;
-    private final boolean isParameterAllowed;
+    private final int requiredParameterNumber;
 
-    Type(final String value, final boolean isParameterAllowed) {
+    Type(final String value, final int requiredParameterNumber) {
         this.value = value;
-        this.isParameterAllowed = isParameterAllowed;
+        this.requiredParameterNumber = requiredParameterNumber;
     }
 
     public static Type findBy(String inputValue) {
@@ -34,7 +34,7 @@ public enum Type {
         );
     }
 
-    public boolean isParameterAllowed() {
-        return isParameterAllowed;
+    public int getRequiredParameterNumber() {
+        return requiredParameterNumber;
     }
 }

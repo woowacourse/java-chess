@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Command {
 
+    private static final String INVALID_PARAMETER_NUMBER_MESSAGE = "커멘드에 맞는 파라미터를 입력해주세요.";
     private static final int COMMAND_TYPE_INDEX = 0;
     private static final int COMMAND_PARAMETER_START_INDEX = 1;
 
@@ -22,10 +23,17 @@ public class Command {
     public static Command of(List<String> inputValues) {
         final Type commandType = Type.findBy(inputValues.get(COMMAND_TYPE_INDEX));
         final List<String> commandParameters = new ArrayList<>();
-        if (commandType.isParameterAllowed()) {
-            commandParameters.addAll(inputValues.subList(COMMAND_PARAMETER_START_INDEX, inputValues.size()));
+        validateParameterSize(inputValues, commandType);
+        for (int index = COMMAND_PARAMETER_START_INDEX; index <= commandType.getRequiredParameterNumber(); index++) {
+            commandParameters.add(inputValues.get(index));
         }
         return new Command(commandType, commandParameters);
+    }
+
+    private static void validateParameterSize(final List<String> inputValues, final Type commandType) {
+        if (inputValues.size() - 1 != commandType.getRequiredParameterNumber()) {
+            throw new IllegalArgumentException(INVALID_PARAMETER_NUMBER_MESSAGE);
+        }
     }
 
     public boolean is(final Type compareType) {
