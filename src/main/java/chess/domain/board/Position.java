@@ -20,6 +20,20 @@ public class Position {
      *
      * 이에 대한 리뷰어님의 의견이 궁금합니다!
      */
+
+    /** todo: 질문5
+     * 뷰에서 포지션에대한 정보를 문자열로 제공 했을 때,
+     * 예) a1
+     * a와 1에 대한 각각 Column과 Rank에서 유효성을 검사하고
+     * Position객체에서는 필드 자체(Column과 Rank)의 유효성 검사를 할 필요 없다고 생각하였는데,
+     *
+     * Position객체의 생성 시 인자를 문자열로 받아, 객체 내부에서 필드의 유효성 검사를 하는 것이 맞을까요?
+     * 예) Position of(String column, String rank) {
+     *     ~
+     * }
+     *
+     * 이에 대한 리뷰어님의 의견이 궁금합니다
+     */
     static {
         cache = Column.getOrderedColumns().stream()
                 .flatMap(column -> Rank.getOrderedRanks().stream()
@@ -53,11 +67,6 @@ public class Position {
         Rank newRank = Rank.findRankByIndex(rank.getIndex() + direction.getY());
 
         return new Position(newColumn, newRank);
-    }
-
-    @Override
-    public String toString() {
-        return column.name() + rank.name();
     }
 
     @Override
