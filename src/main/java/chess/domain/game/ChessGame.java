@@ -31,7 +31,7 @@ public class ChessGame {
     }
 
     public void movePiece(final PiecePosition source, final PiecePosition destination) {
-        if (isInitialized()) {
+        if (!isInitialized()) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
         }
         chessBoard.movePiece(turn, source, destination);
@@ -39,6 +39,9 @@ public class ChessGame {
     }
 
     public List<Piece> pieces() {
+        if (!isInitialized()) {
+            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
+        }
         return chessBoard.pieces();
     }
 }
