@@ -7,6 +7,7 @@ import domain.Location;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import util.ColumnConverter;
 import view.InputView;
 import view.OutputView;
 

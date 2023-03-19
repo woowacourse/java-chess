@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public enum ColumnConverter {
         final ColumnConverter findColumn = Arrays.stream(values())
             .filter(view -> view.sign.equals(sign))
             .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException("컬럼 인덱스로 변환할 수 있는 값이 아닙니다."));
         return convert(findColumn);
     }
 }
