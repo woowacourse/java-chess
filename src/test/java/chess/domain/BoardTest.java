@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,7 +102,8 @@ class BoardTest {
 
 		board.move(source, target);
 
-		assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class);
-		assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class);
+		assertAll(
+			() -> assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class),
+			() -> assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class));
 	}
 }
