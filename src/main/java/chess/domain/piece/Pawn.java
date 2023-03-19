@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
 	public boolean movableByCount(final int count) {
 		if (isFirst) {
 			isFirst = false;
-			return count == 1;
+			return count <= 1;
 		}
 		return count == 0;
 	}
