@@ -1,19 +1,12 @@
 package chess.controller;
 
+import chess.domain.commnad.Command;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessGameController {
-
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
-    private static final int COMMAND_INDEX = 0;
-    private static final int SELECTED_PIECE = 1;
-    private static final int DESTINATION = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -28,37 +21,33 @@ public class ChessGameController {
 
         outputView.printStartMessage();
 
-        List<String> inputCommand = inputView.readGameCommand();
+        Command command = inputView.readGameCommand();
 
-        playChess(chessGame, inputCommand);
+        playChess(chessGame, command);
     }
 
-    private void playChess(ChessGame chessGame, List<String> inputCommand) {
-        while (isNotEnd(inputCommand)) {
+    private void playChess(ChessGame chessGame, Command command) {
+        while (!command.isGameStop()) {
             try {
-                chessGame = createNewChessGame(chessGame, inputCommand);
-                tryChessMove(chessGame, inputCommand);
+                chessGame = createNewChessGame(chessGame, command);
+                tryChessMove(chessGame, command);
                 outputView.printBoard(chessGame.getBoard());
-                inputCommand = inputView.readGameCommand();
+                command = inputView.readGameCommand();
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
-                inputCommand = inputView.readGameCommand();
+                command = inputView.readGameCommand();
             }
         }
     }
 
-    private boolean isNotEnd(final List<String> inputCommand) {
-        return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
-    }
-
-    private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(COMMAND_INDEX).startsWith(MOVE_COMMAND)) {
-            chessGame.move(inputCommand.get(SELECTED_PIECE), inputCommand.get(DESTINATION));
+    private void tryChessMove(final ChessGame chessGame, final Command command) {
+        if (command.isMove()) {
+            chessGame.move(command.findSelectedPiece(), command.findDestination());
         }
     }
 
-    private ChessGame createNewChessGame(ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(COMMAND_INDEX).equals(START_COMMAND)) {
+    private ChessGame createNewChessGame(ChessGame chessGame, final Command command) {
+        if (command.isCreateNewGame()) {
             chessGame = new ChessGame(BoardFactory.createBoard());
         }
         return chessGame;
