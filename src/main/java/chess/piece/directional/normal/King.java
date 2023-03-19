@@ -1,16 +1,15 @@
 package chess.piece.directional.normal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import chess.board.Position;
 import chess.piece.Direction;
 import chess.piece.Piece;
 import chess.piece.Side;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class King extends NormalPiece {
-
 
     public King(final Position position, final Side side) {
         super(position, side);
