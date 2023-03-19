@@ -45,14 +45,14 @@ public class Pawn extends Piece {
             return false;
         }
         final int rankGap = start.calculateRankGap(end);
-        return canMoveStraightOne(color(), rankGap) || canMoveStraightTwo(start, color(), rankGap);
+        return canMoveStraight(color(), rankGap) || canMoveStraightDoubleStep(start, color(), rankGap);
     }
 
-    private boolean canMoveStraightOne(final Color color, final int rankGap) {
+    private boolean canMoveStraight(final Color color, final int rankGap) {
         return rankGap == GAP_LOWER_BOUND.get(color);
     }
 
-    private boolean canMoveStraightTwo(final Position start, final Color color, final int rankGap) {
+    private boolean canMoveStraightDoubleStep(final Position start, final Color color, final int rankGap) {
         return rankGap == GAP_UPPER_BOUND.get(color) && start.isSameRank(INITIAL_RANK.get(color));
     }
 

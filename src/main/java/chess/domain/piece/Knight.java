@@ -27,11 +27,11 @@ public class Knight extends Piece {
         final int fileGap = Math.abs(start.calculateFileGap(end));
         final int rankGap = Math.abs(start.calculateRankGap(end));
 
-        return isMovable(fileGap, rankGap) || isMovable(rankGap, fileGap);
+        return canMove(fileGap, rankGap) || canMove(rankGap, fileGap);
     }
 
-    private boolean isMovable(final int firstGap, final int secondGap) {
-        return firstGap == GAP_LOWER_BOUND && secondGap == GAP_UPPER_BOUND;
+    private boolean canMove(final int first, final int second) {
+        return first == GAP_LOWER_BOUND && second == GAP_UPPER_BOUND;
     }
 
     @Override
