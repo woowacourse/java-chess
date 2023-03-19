@@ -19,8 +19,8 @@ public class Board {
         this.board = board;
     }
 
-    public static Board create(final Map<Position, Piece> board) {
-        return new Board(BoardFactory.create(board));
+    public static Board create() {
+        return new Board(BoardFactory.create());
     }
 
     public Map<Position, Piece> getBoard() {

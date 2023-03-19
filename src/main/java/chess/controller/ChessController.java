@@ -5,32 +5,29 @@ import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.HashMap;
-
-
 public class ChessController {
 
-    public void run() {
-        Board board = Board.create(new HashMap<>());
+	private static void startGame(final Board board) {
+		Command.ofStart(InputView.askStart());
+		OutputView.printBoard(board);
+	}
 
-        startGame(board);
-        playGame(board);
-    }
+	private static void playGame(final Board board) {
+		Command command = Command.ofMoveOrEnd(InputView.askNext());
+		if (command.isEnd()) {
+			return;
+		}
+		if (command.isMove()) {
+			board.move(command.getSource(), command.getTarget());
+			OutputView.printBoard(board);
+			playGame(board);
+		}
+	}
 
-    private static void startGame(final Board board) {
-        Command.ofStart(InputView.askStart());
-        OutputView.printBoard(board);
-    }
+	public void run() {
+		Board board = Board.create();
 
-    private static void playGame(final Board board) {
-        Command command = Command.ofMoveOrEnd(InputView.askNext());
-        if (command.isEnd()) {
-            return;
-        }
-        if (command.isMove()) {
-            board.move(command.getSource(), command.getTarget());
-            OutputView.printBoard(board);
-            playGame(board);
-        }
-    }
+		startGame(board);
+		playGame(board);
+	}
 }
