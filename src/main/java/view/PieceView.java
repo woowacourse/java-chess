@@ -11,7 +11,8 @@ public enum PieceView {
     BISHOP("B", "b", PieceType.BISHOP),
     QUEEN("Q", "q", PieceType.QUEEN),
     KING("K", "k", PieceType.KING),
-    PAWN("P", "p", PieceType.PAWN);
+    PAWN("P", "p", PieceType.PAWN),
+    EMPTY(".", ".", PieceType.EMPTY);
 
     private final String blackSign;
     private final String whiteSign;

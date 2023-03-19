@@ -28,7 +28,8 @@ public final class Knight extends Piece {
         return List.of(end);
     }
 
-    private boolean isNotMovable(final Location start, final Location end) {
+    @Override
+    protected boolean isNotMovable(final Location start, final Location end) {
         if (Math.abs(start.getCol() - end.getCol()) == 1) {
             return Math.abs(start.getRow() - end.getRow()) != 2;
         }

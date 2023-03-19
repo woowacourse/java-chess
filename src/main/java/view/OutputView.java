@@ -3,14 +3,11 @@ package view;
 import domain.Board;
 import domain.Line;
 import domain.piece.Piece;
-import domain.type.PieceType;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class OutputView {
-
-    private static final String EMPTY_SIGN = ".";
 
     public void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();
@@ -28,9 +25,6 @@ public final class OutputView {
     }
 
     private static String makePieceSign(final Piece piece) {
-        if (piece.isSameType(PieceType.EMPTY)) {
-            return EMPTY_SIGN;
-        }
         return PieceView.findSign(piece);
     }
 }
