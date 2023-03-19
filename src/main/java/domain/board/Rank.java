@@ -12,9 +12,9 @@ public enum Rank {
     SEVEN('7'),
     EIGHT('8');
 
-    private final Character value;
+    private final char value;
 
-    Rank(Character value) {
+    Rank(char value) {
         this.value = value;
     }
 
@@ -30,5 +30,9 @@ public enum Rank {
                 .filter(rank -> rank.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+    }
+
+    public char getValue() {
+        return value;
     }
 }

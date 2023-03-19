@@ -26,7 +26,7 @@ class ChessBoardTest {
 
         Square square = chessBoard.toSquare(1, 1);
 
-        assertThat(square).isEqualTo(new Square(File.B, Rank.TWO));
+        assertThat(square).isEqualTo(Square.of(File.B, Rank.TWO));
     }
 
     @Nested
@@ -43,7 +43,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("폰이 제대로 놓여있는지 확인한다.")
         void pawnTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.H, Rank.TWO));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.H, Rank.TWO));
 
             assertThat(piece.isPawn()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -52,7 +52,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("나이트가 제대로 놓여있는지 확인한다.")
         void knightTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.B, Rank.ONE));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.B, Rank.ONE));
 
             assertThat(piece.isKnight()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -61,7 +61,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("룩이 제대로 놓여있는지 확인한다.")
         void rookTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.A, Rank.ONE));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.A, Rank.ONE));
 
             assertThat(piece.isRook()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -70,7 +70,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("비숍이 제대로 놓여있는지 확인한다.")
         void bishopTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.C, Rank.ONE));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.C, Rank.ONE));
 
             assertThat(piece.isBishop()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -79,7 +79,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("퀸이 제대로 놓여있는지 확인한다.")
         void queenTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.D, Rank.ONE));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.D, Rank.ONE));
 
             assertThat(piece.isQueen()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -88,7 +88,7 @@ class ChessBoardTest {
         @Test
         @DisplayName("킹이 제대로 놓여있는지 확인한다.")
         void kingTest() {
-            Piece piece = chessBoard.getBoard().get(new Square(File.E, Rank.ONE));
+            Piece piece = chessBoard.getBoard().get(Square.of(File.E, Rank.ONE));
 
             assertThat(piece.isKing()).isTrue();
             assertThat(piece.isWhite()).isTrue();
@@ -100,8 +100,8 @@ class ChessBoardTest {
     void moveTest() {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialize();
-        Square currentSquare = new Square(File.A, Rank.TWO);
-        Square targetSquare = new Square(File.A, Rank.FOUR);
+        Square currentSquare = Square.of(File.A, Rank.TWO);
+        Square targetSquare = Square.of(File.A, Rank.FOUR);
         Piece piece = chessBoard.getBoard().get(currentSquare);
         chessBoard.move(currentSquare, targetSquare);
         assertThat(chessBoard.getBoard().get(targetSquare)).isEqualTo(piece);

@@ -58,7 +58,7 @@ public abstract class Piece {
         Integer currentFile = coordinate.get(FILE);
         Integer currentRank = coordinate.get(RANK);
         return IntStream.range(1, distance + 1)
-                .mapToObj(dist -> new Square(currentFile + direction.get(FILE) * dist,
+                .mapToObj(dist -> Square.of(currentFile + direction.get(FILE) * dist,
                         currentRank + direction.get(RANK) * dist))
                 .collect(Collectors.toUnmodifiableList());
     }

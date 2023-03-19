@@ -26,7 +26,7 @@ public class ChessBoard {
     public ChessBoard() {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(new Square(file, rank), Empty.getInstance());
+                board.put(Square.of(file, rank), Empty.getInstance());
             }
         }
     }
@@ -50,10 +50,10 @@ public class ChessBoard {
         List<Square> initialBlackPawnSquares = new ArrayList<>();
 
         for (File value : File.values()) {
-            initialWhitePawnSquares.add(new Square(value, WHITE_PAWN_RANK));
+            initialWhitePawnSquares.add(Square.of(value, WHITE_PAWN_RANK));
         }
         for (File value : File.values()) {
-            initialBlackPawnSquares.add(new Square(value, BLACK_PAWN_RANK));
+            initialBlackPawnSquares.add(Square.of(value, BLACK_PAWN_RANK));
         }
         for (Square initialWhitePawnSquare : initialWhitePawnSquares) {
             board.put(initialWhitePawnSquare, new Pawn(WHITE));
@@ -64,23 +64,23 @@ public class ChessBoard {
     }
 
     private void initializeKings(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
-        board.put(new Square(File.E, WHITE_WITHOUT_PAWN_RANK), new King(WHITE));
-        board.put(new Square(File.E, BLACK_WITHOUT_PAWN_RANK), new King(BLACK));
+        board.put(Square.of(File.E, WHITE_WITHOUT_PAWN_RANK), new King(WHITE));
+        board.put(Square.of(File.E, BLACK_WITHOUT_PAWN_RANK), new King(BLACK));
     }
 
     private void initializeQueens(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
-        board.put(new Square(File.D, WHITE_WITHOUT_PAWN_RANK), new Queen(WHITE));
-        board.put(new Square(File.D, BLACK_WITHOUT_PAWN_RANK), new Queen(BLACK));
+        board.put(Square.of(File.D, WHITE_WITHOUT_PAWN_RANK), new Queen(WHITE));
+        board.put(Square.of(File.D, BLACK_WITHOUT_PAWN_RANK), new Queen(BLACK));
     }
 
     private void initializeBishops(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
         List<File> initialBishopFiles = List.of(File.C, File.F);
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialBishopFile, WHITE_WITHOUT_PAWN_RANK);
             board.put(square, new Bishop(WHITE));
         }
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialBishopFile, BLACK_WITHOUT_PAWN_RANK);
             board.put(square, new Bishop(BLACK));
         }
     }
@@ -89,12 +89,12 @@ public class ChessBoard {
         List<File> initialKnightFiles = List.of(File.B, File.G);
 
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialKnightFile, WHITE_WITHOUT_PAWN_RANK);
             board.put(square, new Knight(WHITE));
         }
 
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialKnightFile, BLACK_WITHOUT_PAWN_RANK);
             board.put(square, new Knight(BLACK));
         }
     }
@@ -103,12 +103,12 @@ public class ChessBoard {
         List<File> initialRookFiles = List.of(File.A, File.H);
 
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialRookFile, WHITE_WITHOUT_PAWN_RANK);
             board.put(square, new Rook(WHITE));
         }
 
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = Square.of(initialRookFile, BLACK_WITHOUT_PAWN_RANK);
             board.put(square, new Rook(BLACK));
         }
     }
@@ -116,7 +116,7 @@ public class ChessBoard {
     public Square toSquare(int fileCoordinate, int rankCoordinate) {
         File targetFile = File.findFile(fileCoordinate);
         Rank targetRank = Rank.findRank(rankCoordinate);
-        return new Square(targetFile, targetRank);
+        return Square.of(targetFile, targetRank);
     }
 
     public void move(Square currentSquare, Square targetSquare) {

@@ -11,7 +11,7 @@ class SquareTest {
     @Test
     @DisplayName("square의 좌표를 반환한다.")
     void toCoordinate() {
-        Square square = new Square(File.H, Rank.FIVE);
+        Square square = Square.of(File.H, Rank.FIVE);
 
         List<Integer> coordinate = square.toCoordinate();
 

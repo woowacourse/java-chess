@@ -19,11 +19,11 @@ class BishopTest {
     @DisplayName("bishop이 이동할 수 있는 칸의 좌표를 반환한다.")
     void bishopMoveTest() {
         Bishop bishop = new Bishop(Camp.WHITE);
-        assertThat(bishop.fetchMovePath(new Square(1,3), new Square(5,7))).contains(
-                new Square(2,4),
-                new Square(3,5),
-                new Square(4,6),
-                new Square(5,7)
+        assertThat(bishop.fetchMovePath(Square.of(1,3), Square.of(5,7))).contains(
+                Square.of(2,4),
+                Square.of(3,5),
+                Square.of(4,6),
+                Square.of(5,7)
         );
     }
 
@@ -31,7 +31,7 @@ class BishopTest {
     @DisplayName("bishop이 이동할 수 있는 칸의 좌표를 반환한다.")
     void bishopMoveFailTest() {
         Bishop bishop = new Bishop(Camp.WHITE);
-        assertThatThrownBy(() -> bishop.fetchMovePath(new Square(1, 3), new Square(1, 4)))
+        assertThatThrownBy(() -> bishop.fetchMovePath(Square.of(1, 3), Square.of(1, 4)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 경로입니다.");
     }
@@ -41,12 +41,12 @@ class BishopTest {
     void canMove() {
         Bishop whiteBishop = new Bishop(Camp.WHITE);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        Square targetSquare = new Square(7, 7);
+        Square targetSquare = Square.of(7, 7);
         pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(Square.of(6,6), Camp.NONE);
+        pathInfo.put(Square.of(5,5), Camp.NONE);
+        pathInfo.put(Square.of(4,4), Camp.NONE);
+        pathInfo.put(Square.of(3,3), Camp.NONE);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -58,12 +58,12 @@ class BishopTest {
     void canMoveFailByPath() {
         Bishop whiteBishop = new Bishop(Camp.WHITE);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        Square targetSquare = new Square(7, 7);
+        Square targetSquare = Square.of(7, 7);
         pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.WHITE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(Square.of(6,6), Camp.NONE);
+        pathInfo.put(Square.of(5,5), Camp.NONE);
+        pathInfo.put(Square.of(4,4), Camp.WHITE);
+        pathInfo.put(Square.of(3,3), Camp.NONE);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -75,12 +75,12 @@ class BishopTest {
     void canMoveFailByTarget() {
         Bishop whiteBishop = new Bishop(Camp.WHITE);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        Square targetSquare = new Square(7, 7);
+        Square targetSquare = Square.of(7, 7);
         pathInfo.put(targetSquare, Camp.WHITE);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(Square.of(6,6), Camp.NONE);
+        pathInfo.put(Square.of(5,5), Camp.NONE);
+        pathInfo.put(Square.of(4,4), Camp.NONE);
+        pathInfo.put(Square.of(3,3), Camp.NONE);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -92,12 +92,12 @@ class BishopTest {
     void canMoveEatEnemy() {
         Bishop whiteBishop = new Bishop(Camp.WHITE);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        Square targetSquare = new Square(7, 7);
+        Square targetSquare = Square.of(7, 7);
         pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(Square.of(6,6), Camp.NONE);
+        pathInfo.put(Square.of(5,5), Camp.NONE);
+        pathInfo.put(Square.of(4,4), Camp.NONE);
+        pathInfo.put(Square.of(3,3), Camp.NONE);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 

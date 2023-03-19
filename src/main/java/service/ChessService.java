@@ -47,12 +47,12 @@ public class ChessService {
     }
 
     private Square getTargetSquare(String[] inputs) {
-        return new Square(File.findFile(inputs[2].charAt(0)),
+        return Square.of(File.findFile(inputs[2].charAt(0)),
                 Rank.findRank(inputs[2].charAt(1)));
     }
 
     private Square getCurrentSquare(String[] inputs) {
-        return new Square(File.findFile(inputs[1].charAt(0)),
+        return Square.of(File.findFile(inputs[1].charAt(0)),
                 Rank.findRank(inputs[1].charAt(1)));
     }
 

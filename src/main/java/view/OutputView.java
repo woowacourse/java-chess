@@ -27,7 +27,7 @@ public class OutputView {
 
     private static void addPieceName(Map<Square, Piece> board, Rank value, StringBuilder stringBuilder) {
         for (File file : File.values()) {
-            stringBuilder.append(pieceToString(board.get(new Square(file, value))));
+            stringBuilder.append(pieceToString(board.get(Square.of(file, value))));
         }
     }
 

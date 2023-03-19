@@ -8,14 +8,25 @@ public class Square {
     private final File file;
     private final Rank rank;
 
-    public Square(File file, Rank rank) {
+    private Square(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public Square(int fileCoordinate, int rankCoordinate) {
-        this.file = File.findFile(fileCoordinate);
-        this.rank = Rank.findRank(rankCoordinate);
+    public static Square of(File file, Rank rank) {
+        SquareName squareName = new SquareName(String.valueOf(new char[]{file.getValue(), rank.getValue()}));
+        if (SquareCache.contains(squareName)) {
+            return SquareCache.getSquare(squareName);
+        }
+        Square square = new Square(file, rank);
+        SquareCache.putSquare(squareName, square);
+        return square;
+    }
+
+    public static Square of(int fileCoordinate, int rankCoordinate) {
+        File file = File.findFile(fileCoordinate);
+        Rank rank = Rank.findRank(rankCoordinate);
+        return of(file, rank);
     }
 
     public List<Integer> toCoordinate() {
