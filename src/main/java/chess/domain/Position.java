@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    //    public static final Position NOT_ABLE = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        public static final Position IS_NULL = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
     private final int row;
     private final int column;
 

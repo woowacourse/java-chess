@@ -19,6 +19,9 @@ public class CommandDto {
     }
 
     public static CommandDto from(String... commands) {
+        if (commands.length == 1) {
+            return new CommandDto(Command.from(commands[GAME_STATE_INDEX]), Position.IS_NULL, Position.IS_NULL);
+        }
         return new CommandDto(Command.from(commands[GAME_STATE_INDEX]), Position.from(commands[SOURCE_INDEX]), Position.from(commands[TARGET_INDEX]));
     }
 
