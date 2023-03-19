@@ -39,9 +39,10 @@ public class Board {
     private void validateMovable(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Team targetTeam = decideTargetTeam(target);
-        if (!sourcePiece.isMovable(source, target, targetTeam)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+        if (sourcePiece.isMovable(source, target, targetTeam)) {
+            return;
         }
+        throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
     }
 
     private Team decideTargetTeam(Position target) {
@@ -88,6 +89,6 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
     }
 }
