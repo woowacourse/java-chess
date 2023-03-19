@@ -22,7 +22,7 @@ public enum File {
         this.index = index;
     }
 
-    public static File of(final int index) {
+    public static File from(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
                 .findFirst()
@@ -38,7 +38,7 @@ public enum File {
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
-                .mapToObj(File::of)
+                .mapToObj(File::from)
                 .collect(Collectors.toList());
     }
 

@@ -2,7 +2,6 @@ package chess.board;
 
 import chess.fixture.FixturePosition;
 import chess.piece.Bishop;
-import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
@@ -25,16 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessBoardTest {
 
-    private Map<Position, Piece> piecePosition;
+    private final Map<Position, Piece> piecePosition = new HashMap<>();
 
     @BeforeEach
     void setUp() {
-        piecePosition = new HashMap<>();
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                piecePosition.put(new Position(file, rank), new EmptyPiece());
-            }
-        }
+        PieceFactory.createEmptyPiece(piecePosition);
     }
 
     @Nested
