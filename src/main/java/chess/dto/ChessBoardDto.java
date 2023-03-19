@@ -6,9 +6,11 @@ import chess.board.Position;
 import chess.board.Rank;
 import chess.piece.Piece;
 
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoardDto {
 
@@ -24,15 +26,21 @@ public class ChessBoardDto {
     }
 
     private static List<PieceDto> pieceToView(final Map<Position, Piece> piecePosition) {
-        final List<PieceDto> pieceDtoList = new LinkedList<>();
+        List<Rank> ranks = getReverseRank();
+        return ranks.stream()
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> {
+                            final Piece piece = piecePosition.get(new Position(file, rank));
+                            return new PieceDto(piece);
+                        }))
+                .collect(Collectors.toList());
+    }
 
-        for (final Rank rank : Rank.values()) {
-            for (final File file : File.values()) {
-                final Piece piece = piecePosition.get(new Position(file, rank));
-                pieceDtoList.add(new PieceDto(piece));
-            }
-        }
-        return pieceDtoList;
+    private static List<Rank> getReverseRank() {
+        List<Rank> ranks = Arrays.stream(Rank.values())
+                .collect(Collectors.toList());
+        Collections.reverse(ranks);
+        return ranks;
     }
 
     public List<PieceDto> getPieceDtos() {
