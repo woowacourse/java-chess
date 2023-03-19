@@ -44,13 +44,13 @@ public enum PieceInitializer {
 
     public static Map<Position, Piece> createPiecesWithPosition() {
         return Arrays.stream(values())
-                .map(PieceInitializer::makeSquare)
+                .map(PieceInitializer::placePieces)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (old, add) -> old,
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (existing, add) -> add,
                         HashMap::new));
     }
 
-    private List<Entry<Position, Piece>> makeSquare() {
+    private List<Entry<Position, Piece>> placePieces() {
         return files.stream()
                 .map(file -> new AbstractMap.SimpleEntry<>(Position.of(file, rank), piece))
                 .collect(Collectors.toList());

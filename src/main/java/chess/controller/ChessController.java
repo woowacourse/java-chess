@@ -37,22 +37,21 @@ public class ChessController {
             return state.end();
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            GameState nextGameState = state.play(chessBoard, commandRequest, currentTurnCamp);
+            GameState nextState = state.play(chessBoard, commandRequest, currentTurnCamp);
             currentTurnCamp = currentTurnCamp.transfer();
             outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-            return nextGameState;
+            return nextState;
         }
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         return state.start();
     }
 
-    private GameState retryCampPlayIfCommandIllegal(ChessBoard chessBoard, GameState state) {
-        while (true) {
-            try {
-                return executeCampPlay(chessBoard, state);
-            } catch (final IllegalStateException | IllegalArgumentException exception) {
-                outputView.printInputErrorMessage(exception.getMessage());
-            }
+    private GameState retryCampPlayIfCommandIllegal(final ChessBoard chessBoard, final GameState state) {
+        try {
+            return executeCampPlay(chessBoard, state);
+        } catch (final IllegalStateException | IllegalArgumentException exception) {
+            outputView.printInputErrorMessage(exception.getMessage());
+            return retryCampPlayIfCommandIllegal(chessBoard, state);
         }
     }
 }

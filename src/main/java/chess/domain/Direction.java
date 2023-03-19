@@ -34,9 +34,8 @@ public enum Direction {
 
     public static Optional<Direction> find(Position start, Position next) {
         return Arrays.stream(values())
-                .filter(direction ->
-                        direction.fileDisplacement == start.fileIncreaseFrom(next)
-                                && direction.rankDisplacement == start.rankIncreaseFrom(next))
+                .filter(direction -> direction.fileDisplacement == start.fileIncreaseFrom(next)
+                        && direction.rankDisplacement == start.rankIncreaseFrom(next))
                 .findAny();
     }
 

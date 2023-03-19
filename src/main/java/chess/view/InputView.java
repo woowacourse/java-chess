@@ -25,7 +25,7 @@ public class InputView {
     public CommandRequest requestGameCommand() {
         String[] request = readRequest();
         if (request.length == SINGLE_COMMAND_LENGTH) {
-            return CommandRequest.fromControlCommand(Command.findByAnswer(request[COMMAND_INDEX]));
+            return CommandRequest.fromControlCommand(Command.findSingleCommand(request[COMMAND_INDEX]));
         }
         validateMoveCommandRequest(request);
         return CommandRequest.fromMoveCommand(parsePosition(request[SOURCE_POSITION_INDEX]),
