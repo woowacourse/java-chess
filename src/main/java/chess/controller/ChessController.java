@@ -26,7 +26,7 @@ public class ChessController {
         printInitMessage();
         GameStatus gameStatus = GameStatus.INIT;
 
-        while (!(gameStatus == GameStatus.END)) {
+        while (gameStatus != GameStatus.END) {
             final GameStatus finalGameStatus = gameStatus;
             gameStatus = repeat(() -> handleCommand(finalGameStatus, chessGame));
         }
