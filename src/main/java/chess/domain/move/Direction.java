@@ -32,18 +32,6 @@ public enum Direction {
         this.dy = dy;
     }
 
-    public boolean isHorizontal() {
-        return List.of(RIGHT, LEFT).contains(this);
-    }
-
-    public boolean isVertical() {
-        return List.of(UP, DOWN).contains(this);
-    }
-
-    public boolean isDiagonal() {
-        return List.of(RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP).contains(this);
-    }
-
     public static Direction calculateUnitDirection(Position source, Position target) {
         int dx = diffFile(source, target);
         int dy = diffRank(source, target);
@@ -52,10 +40,10 @@ public enum Direction {
             throw new IllegalArgumentException("출발점과 도착점은 같을 수 없습니다.");
         }
         if (dx == 0) {
-            return calculateVertical(dx, dy);
+            return calculateVertical(dy);
         }
         if (dy == 0) {
-            return calculateHorizontal(dx, dy);
+            return calculateHorizontal(dx);
         }
         if (Math.abs(dx) == Math.abs(dy)) {
             return calculateDiagonal(dx, dy);
@@ -66,14 +54,14 @@ public enum Direction {
         throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
     }
 
-    private static Direction calculateVertical(final int dx, final int dy) {
+    private static Direction calculateVertical(final int dy) {
         if (dy < 0) {
             return DOWN;
         }
         return UP;
     }
 
-    private static Direction calculateHorizontal(int dx, int dy) {
+    private static Direction calculateHorizontal(int dx) {
         if (dx < 0) {
             return LEFT;
         }
