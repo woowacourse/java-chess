@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Path {
 
-    public static final int PAWN_START_PATH_COUNT = 2;
     private static final String POSITION_NOT_IN_PATH_ERROR_MESSAGE = "경로에 존재하지 않는 위치입니다.";
     private final List<Position> positions;
 
@@ -23,18 +22,9 @@ public class Path {
         return new Path(positions);
     }
 
-    public static Path ofPawnStartPath(Position current, Direction direction) {
+    public static Path ofMultiPath(Position current, final Direction direction, int size) {
         List<Position> positions = new ArrayList<>();
-        while (positions.size() < PAWN_START_PATH_COUNT) {
-            current = current.findNextPosition(direction);
-            positions.add(current);
-        }
-        return new Path(positions);
-    }
-
-    public static Path ofMultiPath(Position current, final Direction direction) {
-        List<Position> positions = new ArrayList<>();
-        while ((current = current.findNextPosition(direction)) != null) {
+        while (positions.size() < size && (current = current.findNextPosition(direction)) != null) {
             positions.add(current);
         }
         return new Path(positions);

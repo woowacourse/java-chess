@@ -25,7 +25,7 @@ public class Queen extends Piece {
     public MovablePaths findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : DIRECTIONS) {
-            paths.add(Path.ofMultiPath(current, direction));
+            paths.add(Path.ofMultiPath(current, direction, Position.max()));
         }
         return new MovablePaths(paths);
     }
