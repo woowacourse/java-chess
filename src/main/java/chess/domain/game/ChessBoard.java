@@ -25,6 +25,7 @@ public class ChessBoard {
     }
 
     public void move(Position start, Position end) {
+        checkIfMoveToSamePosition(start, end);
         Piece pieceToMove = findPieceAtStart(start);
         checkTurn(pieceToMove.getColor());
         checkIfPiecesExistInRoute(start, end);
@@ -33,6 +34,13 @@ public class ChessBoard {
             movePieceToDestination(start, end, pieceToMove);
         }
     }
+
+    private static void checkIfMoveToSamePosition(Position start, Position end) {
+        if(start.equals(end)) {
+            throw new IllegalArgumentException("제자리로는 이동할 수 없습니다");
+        }
+    }
+
 
     private void checkTurn(Color colorOfStartPiece) {
         if(colorOfStartPiece.isOpponent(turn)) {
