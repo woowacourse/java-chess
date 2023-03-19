@@ -19,7 +19,8 @@ class PieceTest {
     @Test
     void 위치와_색상_전략을_가지고_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new Piece(Color.WHITE, PiecePosition.of(1, 'a'), path -> true) {
+        assertDoesNotThrow(() -> new Piece(Color.WHITE, PiecePosition.of(1, 'a'), path -> {
+        }) {
 
             @Override
             protected void validatePath(final Path path) {
@@ -61,7 +62,9 @@ class PieceTest {
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, PiecePosition.of(1, 'a'), path -> false);
+        Piece myPiece = new Piece(Color.BLACK, PiecePosition.of(1, 'a'), path -> {
+            throw new IllegalArgumentException();
+        });
 
         // when & then
         assertThatThrownBy(() -> myPiece.waypoints(PiecePosition.of(1, 'b')))

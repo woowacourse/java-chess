@@ -31,7 +31,7 @@ class BlackPawnMoveStrategyTest {
         final Path path = Path.of(from, to);
 
         // when & then
-        assertThat(blackPawnMoveStrategy.movable(path)).isTrue();
+        assertDoesNotThrow(() -> blackPawnMoveStrategy.validatePath(path));
     }
 
     @ParameterizedTest(name = "이외의 경우 오류이다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 불가능하다.")
@@ -50,6 +50,7 @@ class BlackPawnMoveStrategyTest {
         final Path path = Path.of(from, to);
 
         // when & then
-        assertThat(blackPawnMoveStrategy.movable(path)).isFalse();
+        assertThatThrownBy(() -> blackPawnMoveStrategy.validatePath(path))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

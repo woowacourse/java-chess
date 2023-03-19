@@ -6,17 +6,17 @@ import chess.domain.piece.position.Path;
 public abstract class PawnMoveStrategy implements MoveStrategy {
 
     @Override
-    public boolean movable(final Path path) {
-        if (!satisfyAdditionalConstraint(path)) {
-            return false;
-        }
+    public void validatePath(final Path path) {
+        validAdditionalConstraint(path);
         if (path.rankInterval() == 0) {
-            return false;
+            throw new IllegalArgumentException("폰의 움직임은 Rank 가 증가하거나 감소해야 합니다.");
         }
-        return path.isUnitDistance() || isTwoVerticalMove(path);
+        if (!path.isUnitDistance() && !isTwoVerticalMove(path)) {
+            throw new IllegalArgumentException("폰은 그렇게 움직일 수 없습니다.");
+        }
     }
 
-    protected abstract boolean satisfyAdditionalConstraint(final Path path);
+    protected abstract void validAdditionalConstraint(final Path path);
 
     private boolean isTwoVerticalMove(final Path path) {
         if (Math.abs(path.rankInterval()) != 2) {

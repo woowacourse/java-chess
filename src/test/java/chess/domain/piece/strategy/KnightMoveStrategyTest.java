@@ -3,6 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.piece.MoveStrategy;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -11,8 +12,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -43,7 +46,7 @@ class KnightMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isTrue();
+            assertDoesNotThrow(() -> strategy.validatePath(path));
         }
 
         @ParameterizedTest(name = "경유지는 없다.")
@@ -84,7 +87,7 @@ class KnightMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isFalse();
+            assertThatThrownBy(() -> strategy.validatePath(path));
         }
 
         @ParameterizedTest(name = "경유지를 조회하면 예외. [e4] -> [{0}]")

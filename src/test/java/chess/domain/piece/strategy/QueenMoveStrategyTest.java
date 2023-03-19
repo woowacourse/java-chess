@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import static chess.domain.piece.position.PiecePositionFixture.piecePositions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -62,7 +63,7 @@ class QueenMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isTrue();
+            assertDoesNotThrow(() -> strategy.validatePath(path));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
@@ -116,7 +117,8 @@ class QueenMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isFalse();
+            assertThatThrownBy(() -> strategy.validatePath(path))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest(name = "경유지를 조회하면 예외. [e4] -> [{1}]")

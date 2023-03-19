@@ -24,25 +24,25 @@ public class Pawn extends Piece {
     public Piece move(final PiecePosition destination, final Piece nullablePiece) {
         final Path path = path(destination);
         validatePath(path);
-
-        if (nullablePiece == null) {
-            validateMove(destination);
-        } else {
-            validateKill(nullablePiece);
-        }
+        validateMove(destination, nullablePiece);
         return new Pawn(color, destination, moveStrategy, pawnState.next(destination));
     }
 
     @Override
     protected void validatePath(final Path path) {
-        if (!moveStrategy.movable(path)) {
-            throw new IllegalArgumentException("폰 움직임 오류");
-        }
-
+        moveStrategy.validatePath(path);
         pawnState.validatePath(path);
     }
 
-    private void validateMove(final PiecePosition destination) {
+    private void validateMove(final PiecePosition destination, final Piece nullablePiece) {
+        if (nullablePiece == null) {
+            validateJustMove(destination);
+            return;
+        }
+        validateKill(nullablePiece);
+    }
+
+    private void validateJustMove(final PiecePosition destination) {
         final Path path = path(destination);
         if (!path.isStraight()) {
             throw new IllegalArgumentException("폰은 적이 없는 경우 직선으로만 이동할 수 있습니다.");

@@ -17,18 +17,22 @@ public class Piece implements Cloneable {
         this.moveStrategy = moveStrategy;
     }
 
-    public List<PiecePosition> waypoints(final PiecePosition destination) {
+    /**
+     * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
+     */
+    public List<PiecePosition> waypoints(final PiecePosition destination) throws IllegalArgumentException {
         validatePath(path(destination));
         return moveStrategy.waypoints(path(destination));
     }
 
     protected void validatePath(final Path path) {
-        if (!moveStrategy.movable(path)) {
-            throw new IllegalArgumentException("이동 오류");
-        }
+        moveStrategy.validatePath(path);
     }
 
-    public Piece move(final PiecePosition destination, final Piece nullablePiece) {
+    /**
+     * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
+     */
+    public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         final Path path = path(destination);
         validatePath(path);
         if (nullablePiece != null) {

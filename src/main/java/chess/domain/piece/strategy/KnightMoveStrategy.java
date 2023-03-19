@@ -10,18 +10,19 @@ import java.util.List;
 public class KnightMoveStrategy implements MoveStrategy {
 
     @Override
-    public boolean movable(final Path path) {
+    public void validatePath(final Path path) {
         if (Math.abs(path.fileInterval()) == 1 && Math.abs(path.rankInterval()) == 2) {
-            return true;
+            return;
         }
-        return Math.abs(path.fileInterval()) == 2 && Math.abs(path.rankInterval()) == 1;
+        if (Math.abs(path.fileInterval()) == 2 && Math.abs(path.rankInterval()) == 1) {
+            return;
+        }
+        throw new IllegalArgumentException("나이트는 그렇게 이동할 수 없습니다.");
     }
 
     @Override
-    public List<PiecePosition> waypoints(final Path path) {
-        if (!movable(path)) {
-            throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다.");
-        }
+    public List<PiecePosition> waypoints(final Path path) throws IllegalArgumentException {
+        validatePath(path);
         return Collections.emptyList();
     }
 }

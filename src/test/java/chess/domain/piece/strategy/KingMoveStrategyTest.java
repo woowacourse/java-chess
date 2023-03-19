@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -42,7 +43,7 @@ class KingMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isTrue();
+            assertDoesNotThrow(() -> strategy.validatePath(path));
         }
 
         @ParameterizedTest(name = "경유지는 없다.")
@@ -84,7 +85,8 @@ class KingMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.movable(path)).isFalse();
+            assertThatThrownBy(() -> strategy.validatePath(path))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest(name = "경유지를 조회하면 예외. [e4] -> [{0}]")

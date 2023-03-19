@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -32,7 +31,7 @@ class WhitePawnMoveStrategyTest {
         ;
 
         // when & then
-        assertThat(whitePawnMoveStrategy.movable(path)).isTrue();
+        assertDoesNotThrow(() -> whitePawnMoveStrategy.validatePath(path));
     }
 
     @ParameterizedTest(name = "이외의 경우 오류이다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 불가능하다.")
@@ -51,6 +50,7 @@ class WhitePawnMoveStrategyTest {
         final Path path = Path.of(from, to);
 
         // when & then
-        assertThat(whitePawnMoveStrategy.movable(path)).isFalse();
+        assertThatThrownBy(() -> whitePawnMoveStrategy.validatePath(path))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

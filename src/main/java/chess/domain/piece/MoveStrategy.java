@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface MoveStrategy {
 
-    boolean movable(final Path path);
-
-    default List<PiecePosition> waypoints(final Path path) {
-        if (!movable(path)) {
-            throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다.");
-        }
+    /**
+     * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
+     */
+    default List<PiecePosition> waypoints(final Path path) throws IllegalArgumentException{
+        validatePath(path);
         return path.waypoints();
     }
+
+    void validatePath(final Path path);
 }
