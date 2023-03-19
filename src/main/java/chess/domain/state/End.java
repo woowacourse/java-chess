@@ -15,16 +15,16 @@ public class End extends State {
 
     @Override
     public State move(final Position source, final Position target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("End 상태일 때 사용하지 않는 move 메서드 입니다.");
     }
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("End 상태일 때 사용하지 않는 start 메서드 입니다.");
     }
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("End 상태일 때 사용하지 않은 end 메서드 입니다.");
     }
 }
