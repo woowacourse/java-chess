@@ -1,10 +1,11 @@
-package chess.view.commend;
+package chess.controller.commend;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.renderer.CommendRenderer;
 import chess.renderer.FileInputRenderer;
 import chess.renderer.RankInputRenderer;
 import chess.view.validator.ValidateType;
@@ -21,7 +22,7 @@ public class RunningCommend extends Commend {
         List<String> commend = inputView.requestCommend(List.of(ValidateType.PLAY,
                 ValidateType.MOVE_SIZE,
                 ValidateType.OUT_OF_RANGE));
-        if (CommendType.match(commend.get(0)).equals(CommendType.END)) {
+        if (CommendRenderer.render(commend.get(0)).equals(CommendType.END)) {
             this.chessController.setCommend(new EndCommend(chessController));
             return true;
         }

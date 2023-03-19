@@ -1,9 +1,9 @@
 package chess.controller;
 
+import chess.controller.commend.Commend;
+import chess.controller.commend.StartCommend;
 import chess.domain.ChessGame;
 import chess.view.InputView;
-import chess.view.commend.Commend;
-import chess.view.commend.StartCommend;
 
 public class ChessController {
     private final InputView inputView;
