@@ -32,9 +32,13 @@ public class ChessApplication {
 			return;
 		}
 		if (command.isMove()) {
-			board.move(command.getSource(), command.getTarget());
-			OutputView.printBoard(board);
-			play(board);
+			movePiece(board, command);
 		}
+	}
+
+	private static void movePiece(Board board, Command command) {
+		board.move(command.getSource(), command.getTarget());
+		OutputView.printBoard(board);
+		play(board);
 	}
 }
