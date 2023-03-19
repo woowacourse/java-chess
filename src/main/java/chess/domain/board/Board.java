@@ -33,6 +33,7 @@ public final class Board {
         Square targetSquare = getSquare(target);
         validateEmpty(sourceSquare);
         validateTurn(sourceSquare, color);
+        validateSameColor(sourceSquare, targetSquare);
         Set<Position> movablePath = sourceSquare.computePath(source, target);
         Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
 
