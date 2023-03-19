@@ -4,6 +4,8 @@ import domain.piece.Coordinate;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 
+import java.util.Objects;
+
 public final class ConcreteSquare extends Square {
 
     private final Piece piece;
@@ -41,5 +43,18 @@ public final class ConcreteSquare extends Square {
     @Override
     public Camp getCamp() {
         return camp;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConcreteSquare that = (ConcreteSquare) o;
+        return piece.getClass() == that.piece.getClass() && camp == that.camp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(piece, camp);
     }
 }

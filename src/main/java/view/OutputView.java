@@ -22,7 +22,7 @@ public final class OutputView {
 
     private StringBuilder makeRank(final Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Square square : rank.getPieces()) {
+        for (Square square : rank.getSquares()) {
             stringBuilder.append(PieceTypeMapper.getTarget(square));
         }
         stringBuilder.append(System.lineSeparator());

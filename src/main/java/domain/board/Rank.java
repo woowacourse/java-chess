@@ -40,7 +40,7 @@ public final class Rank {
         return targetSquare.isMovable(startCoordinate, endCoordinate);
     }
 
-    public List<Square> getPieces() {
+    public List<Square> getSquares() {
         return squares;
     }
 }
