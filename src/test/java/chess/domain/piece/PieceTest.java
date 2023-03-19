@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class PieceTest {
 
     @Test
-    void 위치와_색상을_가지고_생성된다() {
+    void 위치와_색상_전략을_가지고_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new Piece(Color.WHITE, PiecePosition.of(1, 'a')) {
+        assertDoesNotThrow(() -> new Piece(Color.WHITE, PiecePosition.of(1, 'a'), path -> true) {
 
             @Override
             protected void validatePath(final Path path) {
@@ -41,7 +41,7 @@ class PieceTest {
 
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
-            super(color, piecePosition);
+            super(color, piecePosition, null);
         }
 
         @Override
@@ -61,17 +61,11 @@ class PieceTest {
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, PiecePosition.of(1, 'a')) {
-            @Override
-            protected void validatePath(final Path path) {
-                throw new IllegalArgumentException("도달 불가");
-            }
-        };
+        Piece myPiece = new Piece(Color.BLACK, PiecePosition.of(1, 'a'), path -> false);
 
         // when & then
         assertThatThrownBy(() -> myPiece.waypoints(PiecePosition.of(1, 'b')))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도달 불가");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

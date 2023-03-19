@@ -1,8 +1,10 @@
-package chess.domain.piece.type;
+package chess.domain.piece;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.strategy.pawn.BlackPawnMoveStrategy;
+import chess.domain.piece.strategy.pawn.WhitePawnMoveStrategy;
 import chess.domain.piece.type.pawn.Pawn;
+import chess.domain.piece.type.pawn.state.InitialPawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -38,7 +40,7 @@ class PawnTest {
         void 움직이지_않은_경우_북쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
+            final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThat(pawn.waypoints(destination))
@@ -64,11 +66,25 @@ class PawnTest {
         void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
+            final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
             pawn.move(PiecePosition.of(4, 'b'));
 
             // when & then
             assertThat(pawn.waypoints(destination)).isEmpty();
+        }
+
+        @Test
+        void 움직인_경우_북쪽으로_두칸_이동_불가() {
+            // given
+            final PiecePosition currentPosition = PiecePosition.of("b2");
+            final PiecePosition firstDestination = PiecePosition.of("b3");
+            final PiecePosition secondDestination = PiecePosition.of("b5");
+            final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
+            pawn.move(firstDestination);
+
+            // when & then
+            assertThatThrownBy(() -> pawn.move(secondDestination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b2] 에서 [{0}] 으로는 이동이 불가능하다. ")
@@ -81,7 +97,7 @@ class PawnTest {
         void 모든_경우_세칸_이상은_이동할_수_없다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
+            final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThatThrownBy(() -> pawn.waypoints(destination))
@@ -99,7 +115,7 @@ class PawnTest {
         void 모든_경우_북쪽이_아닌_방향으로_이동할_수_없다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
+            final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThatThrownBy(() -> pawn.waypoints(destination))
@@ -117,7 +133,7 @@ class PawnTest {
         void 움직이지_않은_경우_남쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
             // given
             final PiecePosition currentPosition = PiecePosition.of("b7");
-            final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+            final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThat(pawn.waypoints(destination))
@@ -143,11 +159,25 @@ class PawnTest {
         void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+            final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
             pawn.move(PiecePosition.of(5, 'b'));
 
             // when & then
             assertThat(pawn.waypoints(destination)).isEmpty();
+        }
+
+        @Test
+        void 움직인_경우_남쪽으로_두칸_이동_불가() {
+            // given
+            final PiecePosition currentPosition = PiecePosition.of("b7");
+            final PiecePosition firstDestination = PiecePosition.of("b6");
+            final PiecePosition secondDestination = PiecePosition.of("b4");
+            final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
+            pawn.move(firstDestination);
+
+            // when & then
+            assertThatThrownBy(() -> pawn.move(secondDestination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest(name = "어떠한 경우에도 세 칸 이상은 이동할 수 없다. 예를 들어 [b7] 에서 [{0}] 으로는 이동이 불가능하다. ")
@@ -161,15 +191,13 @@ class PawnTest {
         void 모든_경우_세칸_이상은_이동할_수_없다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+            final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
-        // TODO 질문입니다 !!
-        // BlackPawnMovementStrategy Test가 있는데 필요한가?
         @ParameterizedTest(name = "어떠한 경우에도 남쪽이 아닌 방향으로 이동할 수 없다. 예를 들어 [b7] 에서 [{0}] 으로는 이동이 불가능하다.")
         @CsvSource({
                 "b8",
@@ -181,7 +209,7 @@ class PawnTest {
         void 모든_경우_남쪽이_아닌_방향으로_이동할_수_없다(final PiecePosition destination) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+            final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
             // when & then
             assertThatThrownBy(() -> pawn.waypoints(destination))
@@ -193,7 +221,7 @@ class PawnTest {
     void 단순_이동_시_직진만_가능하다() {
         // given
         final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-        final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+        final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
         pawn.move(PiecePosition.of(6, 'b'));
@@ -206,7 +234,7 @@ class PawnTest {
     void 단순_이동_시_대각선으로_이동하면_오류() {
         // given
         final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-        final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
+        final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
         assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'c')))
@@ -218,8 +246,8 @@ class PawnTest {
     @Test
     void 아군을_죽일_수_없다() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
-        final Pawn ally = new Pawn(Color.BLACK, PiecePosition.of("c5"));
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"), new BlackPawnMoveStrategy(), new InitialPawn());
+        final Pawn ally = new Pawn(Color.BLACK, PiecePosition.of("c5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
         assertThatThrownBy(() -> pawn.moveToKill(ally))
@@ -229,8 +257,8 @@ class PawnTest {
     @Test
     void 상대방이_대각선_위치에_있다면_죽일_수_있다() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
-        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("c5"));
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"), new BlackPawnMoveStrategy(), new InitialPawn());
+        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("c5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
         pawn.moveToKill(enemy);
@@ -242,8 +270,8 @@ class PawnTest {
     @Test
     void 상대방이_대각선_위치에_없다면_죽일_수_없다() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"));
-        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("b5"));
+        final Pawn pawn = new Pawn(Color.BLACK, PiecePosition.of("b6"), new BlackPawnMoveStrategy(), new InitialPawn());
+        final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("b5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
         assertThatThrownBy(() -> pawn.moveToKill(enemy))

@@ -5,23 +5,27 @@ import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
 
-public abstract class Piece implements Cloneable {
+public class Piece implements Cloneable {
 
     protected final Color color;
     protected PiecePosition piecePosition;
+    protected MoveStrategy moveStrategy;
 
-    public Piece(final Color color, final PiecePosition piecePosition) {
+    public Piece(final Color color, final PiecePosition piecePosition, final MoveStrategy moveStrategy) {
         this.color = color;
         this.piecePosition = piecePosition;
+        this.moveStrategy = moveStrategy;
     }
 
     public List<PiecePosition> waypoints(final PiecePosition destination) {
-        final Path path = path(destination);
-        validatePath(path);
-        return path.waypoints();
+        return moveStrategy.waypoints(path(destination));
     }
 
-    protected abstract void validatePath(final Path path);
+    protected void validatePath(final Path path) {
+        if (!moveStrategy.movable(path)) {
+            throw new IllegalArgumentException("이동 오류");
+        }
+    }
 
     public void move(final PiecePosition destination) {
         final Path path = path(destination);
@@ -69,5 +73,9 @@ public abstract class Piece implements Cloneable {
 
     public PiecePosition piecePosition() {
         return piecePosition;
+    }
+
+    public MoveStrategy moveStrategy() {
+        return moveStrategy;
     }
 }

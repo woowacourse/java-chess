@@ -5,12 +5,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
-import chess.domain.piece.type.pawn.Pawn;
+import chess.domain.piece.strategy.BishopMoveStrategy;
+import chess.domain.piece.strategy.KingMoveStrategy;
+import chess.domain.piece.strategy.KnightMoveStrategy;
+import chess.domain.piece.strategy.QueenMoveStrategy;
+import chess.domain.piece.strategy.RookMoveStrategy;
+import chess.domain.piece.strategy.pawn.BlackPawnMoveStrategy;
+import chess.domain.piece.strategy.pawn.WhitePawnMoveStrategy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,19 +29,19 @@ public class OutputView {
     private static final String EMPTY_PIECE_ICON = ".";
 
     static {
-        whitePieceIcons.put(Rook.class, "r");
-        whitePieceIcons.put(Pawn.class, "p");
-        whitePieceIcons.put(Bishop.class, "b");
-        whitePieceIcons.put(King.class, "k");
-        whitePieceIcons.put(Knight.class, "n");
-        whitePieceIcons.put(Queen.class, "q");
+        whitePieceIcons.put(RookMoveStrategy.class, "r");
+        whitePieceIcons.put(WhitePawnMoveStrategy.class, "p");
+        whitePieceIcons.put(BishopMoveStrategy.class, "b");
+        whitePieceIcons.put(KingMoveStrategy.class, "k");
+        whitePieceIcons.put(KnightMoveStrategy.class, "n");
+        whitePieceIcons.put(QueenMoveStrategy.class, "q");
 
-        blackPieceIcons.put(Rook.class, "R");
-        blackPieceIcons.put(Pawn.class, "P");
-        blackPieceIcons.put(Bishop.class, "B");
-        blackPieceIcons.put(King.class, "K");
-        blackPieceIcons.put(Knight.class, "N");
-        blackPieceIcons.put(Queen.class, "Q");
+        blackPieceIcons.put(RookMoveStrategy.class, "R");
+        blackPieceIcons.put(BlackPawnMoveStrategy.class, "P");
+        blackPieceIcons.put(BishopMoveStrategy.class, "B");
+        blackPieceIcons.put(KingMoveStrategy.class, "K");
+        blackPieceIcons.put(KnightMoveStrategy.class, "N");
+        blackPieceIcons.put(QueenMoveStrategy.class, "Q");
 
         colorIconMapping.put(Color.WHITE, whitePieceIcons);
         colorIconMapping.put(Color.BLACK, blackPieceIcons);
@@ -69,7 +70,7 @@ public class OutputView {
 
     private static String convertCaseAccordingToColor(final Piece piece) {
         final Map<Class<?>, String> pieceIconMap = colorIconMapping.get(piece.color());
-        return pieceIconMap.get(piece.getClass());
+        return pieceIconMap.get(piece.moveStrategy().getClass());
     }
 
     public static void printStartMessage() {

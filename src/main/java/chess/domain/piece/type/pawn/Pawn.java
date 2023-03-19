@@ -4,20 +4,20 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.type.pawn.move.PawnColorMoveStrategy;
-import chess.domain.piece.type.pawn.state.InitialPawn;
+import chess.domain.piece.strategy.pawn.PawnMoveStrategy;
 import chess.domain.piece.type.pawn.state.PawnState;
 
 public class Pawn extends Piece {
 
-    private final PawnColorMoveStrategy pawnColorMoveStrategy;
     private PawnState pawnState;
 
-    public Pawn(final Color color, final PiecePosition piecePosition) {
-        super(color, piecePosition);
-        // TODO 생성자에서 로직이 들어가는 것이 괜찮을까요? 이정도는 간단하니 괜찮다 생각합니다..
-        this.pawnColorMoveStrategy = PawnColorMoveStrategy.byColor(color);
-        this.pawnState = new InitialPawn();
+    public Pawn(final Color color,
+                final PiecePosition piecePosition,
+                final PawnMoveStrategy strategy,
+                final PawnState pawnState
+    ) {
+        super(color, piecePosition, strategy);
+        this.pawnState = pawnState;
     }
 
     @Override
@@ -31,7 +31,10 @@ public class Pawn extends Piece {
 
     @Override
     protected void validatePath(final Path path) {
-        pawnColorMoveStrategy.validateMovementDirection(path);
+        if (!moveStrategy.movable(path)) {
+            throw new IllegalArgumentException("폰 움직임 오류");
+        }
+
         pawnState.validatePath(path);
     }
 
