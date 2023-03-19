@@ -26,64 +26,49 @@ public final class Pawn extends Piece {
         return createMovablePositions(source, target);
     }
 
-    private int createPawnDirection() {
-        int direction = DIRECTION_DOWN;
-        if (Color.WHITE == color) {
-            direction = DIRECTION_UP;
+    private List<Position> createMovablePositions(final Position source, final Position target) {
+        if (source.isNotDistanceTwo(target)) {
+            return List.of(Position.of(source.getRow(), source.getColumn() + directionDecider()));
         }
-        return direction;
+        return calculateDistanceTwoCases(source);
     }
 
-    private List<Position> createMovablePositions(final Position source, final Position target) {
+    private int directionDecider() {
+        if (Color.WHITE == color) {
+            return DIRECTION_UP;
+        }
+        return DIRECTION_DOWN;
+    }
+
+    private List<Position> calculateDistanceTwoCases(final Position source) {
         final List<Position> result = new ArrayList<>();
-
-        addPawnDoubleMoveAndDiagonal(source, target, result);
-        addPawnSingleMove(source, target, result);
-
+        result.add(createPawnCaptureLeft(source));
+        result.add(createPawnCaptureRight(source));
+        if (isStartPosition(source)) {
+            result.add(createPawnDoubleMove(source));
+        }
         return result;
     }
 
-    private void addPawnSingleMove(final Position source, final Position target, final List<Position> result) {
-        if (!isTwoSquareMove(source, target)) {
-            createFrontOneSquare(source, result);
-        }
-    }
-
-    private void addPawnDoubleMoveAndDiagonal(final Position source, final Position target, final List<Position> result) {
-        if (isTwoSquareMove(source, target)) {
-            result.add(createLeftDiagonal(source));
-            result.add(createRightDiagonal(source));
-            if (isStartPosition(source)) {
-                result.add(createFrontTwoSquares(source));
-            }
-        }
-    }
-
-    private void createFrontOneSquare(final Position source, final List<Position> result) {
-        final int pawnDirection = createPawnDirection();
-        result.add(Position.of(source.getRow(), source.getColumn() + pawnDirection));
-    }
-
-    private Position createFrontTwoSquares(final Position source) {
-        final int pawnDirection = createPawnDirection();
-        return Position.of(source.getRow(), source.getColumn() + 2 * pawnDirection);
-    }
-
     private boolean isStartPosition(final Position source) {
-        return source.getColumn() == 1 || source.getColumn() == 6;
+        int blackColorStartIndex = 1;
+        int whiteColorStartIndex = 6;
+        return source.getColumn() == blackColorStartIndex || source.getColumn() == whiteColorStartIndex;
     }
 
-    private Position createRightDiagonal(final Position source) {
-        final int pawnDirection = createPawnDirection();
+    private Position createPawnCaptureRight(final Position source) {
+        final int pawnDirection = directionDecider();
         return Position.of(source.getRow() + DIRECTION_RIGHT, source.getColumn() + pawnDirection);
     }
 
-    private Position createLeftDiagonal(final Position source) {
-        final int pawnDirection = createPawnDirection();
+    private Position createPawnCaptureLeft(final Position source) {
+        final int pawnDirection = directionDecider();
         return Position.of(source.getRow() + DIRECTION_LEFT, source.getColumn() + pawnDirection);
     }
 
-    private boolean isTwoSquareMove(final Position source, final Position target) {
-        return 2 == Math.abs(source.getRow() - target.getRow()) + Math.abs(source.getColumn() - target.getColumn());
+    private Position createPawnDoubleMove(final Position source) {
+        int twoMove = 2;
+        final int pawnDirection = directionDecider();
+        return Position.of(source.getRow(), source.getColumn() + twoMove * pawnDirection);
     }
 }

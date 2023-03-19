@@ -57,6 +57,11 @@ public class Position implements Comparable<Position> {
         return this.row != end.getRow() && this.column != end.column;
     }
 
+    public boolean isNotDistanceTwo(Position end) {
+        int distanceTwo = 2;
+        return distanceTwo != Math.abs(this.row - end.row) + Math.abs(this.column - end.column);
+    }
+
     public int getRow() {
         return row;
     }
