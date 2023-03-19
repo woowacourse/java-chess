@@ -13,7 +13,7 @@ class KingTest {
 
     public static final Position B5 = new Position(File.B, Rank.FIVE);
     public static final Position B6 = new Position(File.B, Rank.SIX);
-    public static final Position D7 = new Position(File.D, Rank.SEVEN);
+    public static final Position B7 = new Position(File.B, Rank.SEVEN);
     public static final Position C6 = new Position(File.C, Rank.SIX);
 
     @DisplayName("Rank와 File이 1씩 차이날 때 경로에 타겟이 포함된다")
@@ -44,7 +44,7 @@ class KingTest {
         var king = new King(Color.BLACK);
 
         var source = B5;
-        var target = D7;
+        var target = B7;
 
         assertThatThrownBy(() -> king.computePath(source, target))
                 .isInstanceOf(IllegalArgumentException.class);

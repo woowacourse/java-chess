@@ -87,6 +87,24 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("흑색 폰은 뒤로 갈 수 없다.")
+    void computePath_blackBackward_exception() {
+        final var pawn = new Pawn(Color.BLACK);
+
+        assertThatThrownBy(() -> pawn.computePath(B5, B6))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("백색 폰은 뒤로 갈 수 없다.")
+    void computePath_whiteBackward_exception() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        assertThatThrownBy(() -> pawn.computePath(B5, B4))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("유효하지 않은 위치를 받으면 예외가 발생한다.")
     void computePath_WhiteIllegalTarget_Exception() {
         final var pawn = new Pawn(Color.WHITE);

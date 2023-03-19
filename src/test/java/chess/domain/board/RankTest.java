@@ -39,5 +39,4 @@ class RankTest {
         assertThatThrownBy(EIGHT::plus)
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

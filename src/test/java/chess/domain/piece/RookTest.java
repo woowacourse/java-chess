@@ -48,6 +48,7 @@ class RookTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("룩은 빈 경로면 움직일 수 있다.")
     @Test
     void canMove_emptyPath_true() {
         var rook = new Rook(Color.BLACK);
@@ -58,6 +59,7 @@ class RookTest {
         assertThat(actual).isTrue();
     }
 
+    @DisplayName("룩은 타겟 위치에 기물이 있어도 움직일 수 있다.")
     @Test
     void canMove_emptyPathAndTargetExist_true() {
         var rook = new Rook(Color.BLACK);
@@ -68,6 +70,7 @@ class RookTest {
         assertThat(actual).isTrue();
     }
 
+    @DisplayName("룩은 경로에 기물이 있으면 움직일 수 없다.")
     @Test
     void canMove_notEmptyPath_false() {
         var rook = new Rook(Color.BLACK);

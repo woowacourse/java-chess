@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
 
+    @DisplayName("나이트는 유효한 위치를 받으면 경로를 반환한다.")
     @Test
     void computePath_legal() {
         final var knight = new Knight(Color.BLACK);
@@ -25,6 +26,7 @@ class KnightTest {
         assertThat(positions).containsExactlyInAnyOrder(D3);
     }
 
+    @DisplayName("나이트는 유효한 위치를 받으면 경로를 반환한다.")
     @Test
     void computePath_legal2() {
         final var knight = new Knight(Color.BLACK);
