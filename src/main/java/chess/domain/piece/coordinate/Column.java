@@ -1,26 +1,34 @@
 package chess.domain.piece.coordinate;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-public class Column {
+public enum Column {
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
+    
     private static final char MIN_COLUMN_CHAR = 'a';
-    private static final char MAX_COLUMN_CHAR = 'h';
     
     private final char column;
     
-    public Column(char column) {
-        validateOutOfRange(column);
+    Column(char column) {
         this.column = column;
     }
     
-    private void validateOutOfRange(char column) {
-        if (isColumnOutOfRange(column)) {
-            throw new IllegalArgumentException("column는 a~h까지의 문자만 가능합니다.");
-        }
+    public static Column from(char otherColumn) {
+        return Arrays.stream(values())
+                .filter(column -> column.isSameColumn(otherColumn))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Column는 a~h까지의 문자만 가능합니다. 다시 입력해주세요."));
     }
     
-    private boolean isColumnOutOfRange(char column) {
-        return column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR;
+    private boolean isSameColumn(char otherColumn) {
+        return this.column == otherColumn;
     }
     
     public int directionNumberTo(Column otherColumn) {
@@ -37,19 +45,6 @@ public class Column {
     
     public int subtract(Column targetColumn) {
         return this.column - targetColumn.column;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Column column1 = (Column) o;
-        return column == column1.column;
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(column);
     }
     
     @Override
