@@ -26,6 +26,6 @@ public final class Bishop extends Normal {
     private boolean canBishopMove(Position source, Position target) {
         var inclination = source.computeInclination(target);
 
-        return Math.abs(inclination) == 1;
+        return Math.abs(inclination) == INCLINATION;
     }
 }

@@ -9,6 +9,7 @@ public final class Position {
     private static final String CAN_NOT_COMPUTE_DIAGONAL_PATH_EXCEPTION_MESSAGE = "대각 경로를 구할 수 없는 위치입니다.";
     private static final String CAN_NOT_COMPUTE_CROSS_EXCEPTION_MESSAGE = "십자 경로를 계산할 수 없는 위치입니다.";
     private static final String CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE = "십자 또는 대각 경로를 구할 수 없는 위치입니다.";
+    private static final int INDEX_ADJUSTMENT = 1;
 
     private final File file;
     private final Rank rank;
@@ -185,10 +186,10 @@ public final class Position {
     }
 
     public int getRank() {
-        return rank.getValue() - 1;
+        return rank.getValue() - INDEX_ADJUSTMENT;
     }
 
     public int getFile() {
-        return file.getValue() - 1;
+        return file.getValue() - INDEX_ADJUSTMENT;
     }
 }

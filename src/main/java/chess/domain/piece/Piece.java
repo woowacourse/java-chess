@@ -11,6 +11,8 @@ public abstract class Piece {
     protected static final int SAME_SQUARE = 0;
     protected static final int ONE_SQUARES = 1;
     protected static final int TWO_SQUARES = 2;
+    protected static final int INCLINATION = 1;
+
 
     protected final Color color;
 
