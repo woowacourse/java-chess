@@ -3,6 +3,10 @@ package chess.view;
 import java.util.Map;
 
 public class OutputView {
+
+    private static final int MAP_SIZE = 64;
+    private static final int LINE_SIZE = 8;
+
     public void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
@@ -11,8 +15,8 @@ public class OutputView {
     }
 
     public void printChessBoard(final Map<Integer, String> pieces) {
-        for (int i = 0; i < 64; i++) {
-            if (i % 8 == 0) {
+        for (int i = 0; i < MAP_SIZE; i++) {
+            if (i % LINE_SIZE == 0) {
                 System.out.println();
             }
             if (pieces.containsKey(i)) {

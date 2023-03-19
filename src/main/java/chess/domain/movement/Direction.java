@@ -6,8 +6,12 @@ public enum Direction {
     L_SHAPE,
     OTHER;
 
+    private static final int STRAIGHT_DISTANCE = 0;
+    private static final int EXPONENTIATION_NUMBER = 2;
+    private static final int L_SHAPE_INCLINATION_DISTANCE = 5;
+
     public static Direction from(final int fileInterval, final int rankInterval) {
-        if (fileInterval == 0 || rankInterval == 0) {
+        if (fileInterval == STRAIGHT_DISTANCE || rankInterval == STRAIGHT_DISTANCE) {
             return STRAIGHT;
         }
 
@@ -15,7 +19,7 @@ public enum Direction {
             return DIAGONAL;
         }
 
-        if (Math.pow(fileInterval, 2) + Math.pow(rankInterval, 2) == 5) {
+        if (Math.pow(fileInterval, EXPONENTIATION_NUMBER) + Math.pow(rankInterval, EXPONENTIATION_NUMBER) == L_SHAPE_INCLINATION_DISTANCE) {
             return L_SHAPE;
         }
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ChessGame {
 
+    private static final int SQUARE_INPUT_LENGTH = 2;
+
     private final Board board;
     private Team team;
 
@@ -25,12 +27,12 @@ public class ChessGame {
         changeTeam();
     }
 
-    private Square getSquare(final String movePosition) {
-        List<String> position = Arrays.asList(movePosition.split(""));
-        if (position.size() != 2) {
+    private Square getSquare(final String moveSquare) {
+        List<String> square = Arrays.asList(moveSquare.split(""));
+        if (square.size() != SQUARE_INPUT_LENGTH) {
             throw new IllegalArgumentException("source위치, target 위치는 알파벳(a~h)과 숫자(1~8)로 입력해주세요. 예) a1");
         }
-        return Square.of(File.findFileBy(position.get(0)), Rank.findRankBy(position.get(1)));
+        return Square.of(File.findFileBy(square.get(0)), Rank.findRankBy(square.get(1)));
     }
 
     private void validateSameTeam(final Square src) {

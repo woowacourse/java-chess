@@ -16,6 +16,8 @@ import java.util.function.Supplier;
 
 public class GameController {
 
+    private static final int MOVE_COMMAND_SIZE = 3;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -66,7 +68,7 @@ public class GameController {
     }
 
     private void validateMoveCommandFormat(final List<String> gameCommand) {
-        if (gameCommand.size() != 3) {
+        if (gameCommand.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("move source위치 target위치 형태로 입력해주세요. 예) move a2 a3");
         }
     }

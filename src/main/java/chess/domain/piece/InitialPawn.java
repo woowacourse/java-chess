@@ -9,25 +9,29 @@ import chess.domain.movement.Movement;
 
 public class InitialPawn extends Piece {
 
+    private static final int IMMOVABLE_RANK_BOUNDARY = 2;
+    private static final int IMMOVABLE_FILE_BOUNDARY = 0;
+    private static final int MOVABLE_RANK_BOUNDARY = 0;
+
     public InitialPawn(final Team team) {
         super(team, INITIAL_PAWN);
     }
 
     @Override
     public void validateMovement(final int fileInterval, final int rankInterval) {
-        if (Math.abs(rankInterval) > 2) {
+        if (Math.abs(rankInterval) > IMMOVABLE_RANK_BOUNDARY) {
             throw new IllegalArgumentException("폰은 한 칸 또는 두 칸만 이동할 수 있습니다.");
         }
 
-        if (Math.abs(fileInterval) > 0) {
+        if (Math.abs(fileInterval) > IMMOVABLE_FILE_BOUNDARY) {
             throw new IllegalArgumentException("폰은 앞으로만 움직일 수 있습니다.");
         }
 
-        if (this.getTeam() == WHITE && rankInterval < 0) {
+        if (this.getTeam() == WHITE && rankInterval < MOVABLE_RANK_BOUNDARY) {
             throw new IllegalArgumentException("화이트 폰은 위로만 움직일 수 있습니다.");
         }
 
-        if (this.getTeam() == BLACK && rankInterval > 0) {
+        if (this.getTeam() == BLACK && rankInterval > MOVABLE_RANK_BOUNDARY) {
             throw new IllegalArgumentException("블랙 폰은 아래로만 움직일 수 있습니다.");
         }
 
