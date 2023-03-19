@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.MoveStrategy.*;
-
-import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
+
+import static chess.domain.MoveStrategy.QUEEN;
 
 public class Queen extends Piece {
 
@@ -13,8 +12,11 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return QUEEN.isMovable(source, target);
+    public boolean isMovable(Position source, Position target, Team team) {
+        if (this.isNotSameTeam(team)) {
+            return QUEEN.isMovable(source, target);
+        }
+        throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 팀 기물이 있습니다.");
     }
 
     @Override
