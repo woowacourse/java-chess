@@ -1,18 +1,12 @@
 package chess.view;
 
-import static chess.view.PieceView.*;
-
 import chess.domain.Board;
 import chess.domain.Position;
-import chess.domain.Team;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
+
 import java.util.Map;
+
+import static chess.view.PieceView.*;
 
 public class OutputView {
 
@@ -66,42 +60,38 @@ public class OutputView {
 
     private void printIfKing(Piece piece) {
         if (piece.getClass() == King.class) {
-            System.out.print(KING.getPieceView(piece.getTeam()));
+            System.out.print(KING.getPieceView(piece.team()));
         }
     }
 
     private void printIfQueen(Piece piece) {
         if (piece.getClass() == Queen.class) {
-            System.out.print(QUEEN.getPieceView(piece.getTeam()));
+            System.out.print(QUEEN.getPieceView(piece.team()));
         }
     }
 
     private void printIfKnight(Piece piece) {
         if (piece.getClass() == Knight.class) {
-            System.out.print(KNIGHT.getPieceView(piece.getTeam()));
+            System.out.print(KNIGHT.getPieceView(piece.team()));
         }
     }
 
     private void printIfBishop(Piece piece) {
         if (piece.getClass() == Bishop.class) {
-            System.out.print(BISHOP.getPieceView(piece.getTeam()));
+            System.out.print(BISHOP.getPieceView(piece.team()));
         }
     }
 
     private void printIfRook(Piece piece) {
         if (piece.getClass() == Rook.class) {
-            System.out.print(ROOK.getPieceView(piece.getTeam()));
+            System.out.print(ROOK.getPieceView(piece.team()));
         }
     }
 
     private void printIfPawn(Piece piece) {
         if (piece.getClass() == Pawn.class) {
-            System.out.print(PAWN.getPieceView(piece.getTeam()));
+            System.out.print(PAWN.getPieceView(piece.team()));
         }
-    }
-
-    public void printWrongTurnMessage(Team turn) {
-        System.out.println("[ERROR] 지금은 " + turn + "차례입니다.");
     }
 
     public void printExceptionMessage(Exception exception) {
