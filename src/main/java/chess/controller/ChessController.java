@@ -6,7 +6,9 @@ import chess.domain.game.ChessGame;
 import chess.view.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class ChessController {
@@ -18,11 +20,15 @@ public final class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final ChessGame chessGame;
+    private final Map<Command, Action> commandMap = new HashMap<>();
 
     public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGame = chessGame;
+        commandMap.put(Command.START, new Action(this::start));
+        commandMap.put(Command.MOVE, new Action(this::move));
+        commandMap.put(Command.END, new Action(this::end));
     }
 
     public void play() {
@@ -35,9 +41,8 @@ public final class ChessController {
     private void repeatRead() {
         try {
             List<String> commands = inputView.inputCommand();
-            isMove(commands);
-            isStart(commands);
-            isEnd(commands);
+            Command command = Command.from(commands.get(COMMAND_INDEX));
+            commandMap.get(command).excute(commands);
         } catch (RuntimeException e) {
             outputView.printErrorMesage(e);
             outputView.printGuideMessage();
@@ -45,30 +50,21 @@ public final class ChessController {
         }
     }
 
-    private void isMove(final List<String> commands) {
-        if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
-            Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
-            Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
-            chessGame.playTurn(parsedFile, parsedRank);
-            printBoard(chessGame.getBoard());
-        }
+    private void move(final List<String> commands) {
+        Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
+        Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
+        chessGame.playTurn(parsedFile, parsedRank);
+        printBoard(chessGame.getBoard());
     }
 
-    private void isStart(final List<String> commands) {
-        if (Command.from(commands.get(COMMAND_INDEX)) == Command.START) {
-            startGame();
-        }
-    }
-
-    private void startGame() {
+    private void start(final List<String> commands) {
         chessGame.startGame();
         printBoard(chessGame.getBoard());
     }
 
-    private void isEnd(final List<String> commands) {
-        if (Command.from(commands.get(COMMAND_INDEX)) == Command.END) {
-            chessGame.end();
-        }
+
+    private void end(final List<String> commands) {
+        chessGame.end();
     }
 
     private void printBoard(final List<Squares> board) {
@@ -76,6 +72,7 @@ public final class ChessController {
                 .map(Squares::getPieces)
                 .map(KindMapper::mapToStrings)
                 .collect(Collectors.toList());
+
         Collections.reverse(pieceNames);
 
         pieceNames.forEach(outputView::printRank);
