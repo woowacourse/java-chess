@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static chess.domain.Team.BLACK;
 
 import chess.domain.Team;
-import chess.domain.movement.Movement;
 
 public abstract class Piece {
     private final Team team;
@@ -14,12 +13,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public void validateMovement(int fileInterval, int rankInterval) {
-        Movement movement = Movement.of(fileInterval, rankInterval);
-        if (!pieceType.getMovements().contains(movement)) {
-            throw new IllegalArgumentException("말이 이동할 수 없는 규칙입니다.");
-        }
-    }
+    public abstract void canMove(int fileInterval, int rankInterval, boolean canAttack);
 
     public Team getColor() {
         return team;

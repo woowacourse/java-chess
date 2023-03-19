@@ -38,14 +38,19 @@ public class Board {
     private boolean canMove(Square src, Square dst) {
         Piece piece = findPieceBy(src);
 
-        int fileInterval = File.calculate(src.getFile(), dst.getFile());
-        int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
-        piece.validateMovement(fileInterval, rankInterval);
+        piece.canMove(fileInterval, rankInterval, canAttack);
 
         if (piece.getPieceType() == KNIGHT) {
             return !pieces.containsKey(dst);
         }
         return canMoveNextSquare(src, fileInterval, rankInterval);
+    }
+
+    private boolean canAttack(final Square dst, final Piece piece) {
+        if (pieces.containsKey(dst)) {
+            return pieces.get(dst).getColor() == piece.getColor();
+        }
+        return false;
     }
 
     private Piece findPieceBy(Square square) {
