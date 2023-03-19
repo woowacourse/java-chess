@@ -12,22 +12,22 @@ import java.util.stream.Stream;
 
 class SquareTest {
 
-    @ParameterizedTest(name = "file과 rank에 해당하는 Sqaure를 생성할 수 있다.")
+    @ParameterizedTest(name = "{0}과 {1}에 해당하는 Sqaure를 생성할 수 있다.")
     @MethodSource("fileAndRankProvider")
-    void createSquareSuccessTest(File file, Rank rank) {
+    void createSquareSuccessTest(String f, String r, File file, Rank rank) {
         Assertions.assertDoesNotThrow(() -> new Square(file, rank));
     }
 
     // 코드 리팩토링 예정
     static Stream<Arguments> fileAndRankProvider() {
         return Stream.of(
-                Arguments.arguments(File.A, Rank.ONE),
-                Arguments.arguments(File.B, Rank.ONE),
-                Arguments.arguments(File.C, Rank.ONE),
-                Arguments.arguments(File.D, Rank.ONE),
-                Arguments.arguments(File.E, Rank.ONE),
-                Arguments.arguments(File.F, Rank.ONE),
-                Arguments.arguments(File.G, Rank.ONE)
+                Arguments.arguments("a", "1", File.A, Rank.ONE),
+                Arguments.arguments("b", "1", File.B, Rank.ONE),
+                Arguments.arguments("c", "1", File.C, Rank.ONE),
+                Arguments.arguments("d", "1", File.D, Rank.ONE),
+                Arguments.arguments("e", "1", File.E, Rank.ONE),
+                Arguments.arguments("f", "1", File.F, Rank.ONE),
+                Arguments.arguments("g", "1", File.G, Rank.ONE)
         );
     }
 

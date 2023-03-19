@@ -36,17 +36,17 @@ class PawnTest {
                 .isFalse();
     }
 
-    @ParameterizedTest(name = "흰색 진영의 폰은 이동규칙에 따라 이동할 수 있다")
+    @ParameterizedTest(name = "흰색 진영의 폰은 e2에서 {0}로 이동할 수 있다")
     @MethodSource("whitePawnMovableSquareProvider")
-    void canMoveWhitePawnTest(Square target) {
+    void canMoveWhitePawnTest(String name, Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.WHITE);
         Assertions.assertThat(pawn.canMove(new Square(File.E, Rank.TWO), target))
                 .isTrue();
     }
 
-    @ParameterizedTest(name = "검은색 진영의 폰은 이동규칙에 따라 이동할 수 있다")
+    @ParameterizedTest(name = "검은색 진영의 폰은 e7에서 {0}로 이동할 수 있다")
     @MethodSource("blackPawnMovableSquareProvider")
-    void canMoveBlackPawnTest(Square target) {
+    void canMoveBlackPawnTest(String name, Square target) {
         Piece pawn = PieceType.PAWN.createPiece(Camp.BLACK);
         Assertions.assertThat(pawn.canMove(new Square(File.E, Rank.SEVEN), target))
                 .isTrue();
@@ -54,20 +54,20 @@ class PawnTest {
 
     static Stream<Arguments> whitePawnMovableSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.E, Rank.FOUR)),
-                Arguments.arguments(new Square(File.E, Rank.THREE)),
-                Arguments.arguments(new Square(File.F, Rank.THREE)),
-                Arguments.arguments(new Square(File.D, Rank.THREE))
+                Arguments.arguments("e4", new Square(File.E, Rank.FOUR)),
+                Arguments.arguments("e3", new Square(File.E, Rank.THREE)),
+                Arguments.arguments("f3", new Square(File.F, Rank.THREE)),
+                Arguments.arguments("d3", new Square(File.D, Rank.THREE))
 
         );
     }
 
     static Stream<Arguments> blackPawnMovableSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.E, Rank.FIVE)),
-                Arguments.arguments(new Square(File.E, Rank.SIX)),
-                Arguments.arguments(new Square(File.F, Rank.SIX)),
-                Arguments.arguments(new Square(File.D, Rank.SIX))
+                Arguments.arguments("e5", new Square(File.E, Rank.FIVE)),
+                Arguments.arguments("e6", new Square(File.E, Rank.SIX)),
+                Arguments.arguments("f6", new Square(File.F, Rank.SIX)),
+                Arguments.arguments("d6", new Square(File.D, Rank.SIX))
 
         );
     }

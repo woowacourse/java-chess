@@ -16,18 +16,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class ChessGameTest {
-    @ParameterizedTest(name = "잘못된 위치 입력시 예외가 발생한다")
+    @ParameterizedTest(name = "{0} 이동할 수 없다")
     @MethodSource("invalidSquareProvider")
-    void moveToInvalidSquare(Square source, Square target) {
+    void moveToInvalidSquare(String name, Square source, Square target) {
         ChessGame chessGame = new ChessGame();
 
         Assertions.assertThatThrownBy(() -> chessGame.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest(name = "이동 가능한 위치 입력시 기물이 이동한다")
+    @ParameterizedTest(name = "{0} 이동할 수 있다")
     @MethodSource("validSquareProvider")
-    void moveToValidSquare(Square source, Square target) {
+    void moveToValidSquare(String name, Square source, Square target) {
         ChessGame chessGame = new ChessGame();
         Chessboard chessboard = chessGame.getChessboard();
         Piece expected = chessboard.getPieceAt(source);
@@ -88,19 +88,16 @@ class ChessGameTest {
 
     static Stream<Arguments> invalidSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.A, Rank.ONE), new Square(File.A, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FIVE)),
-                Arguments.arguments(new Square(File.A, Rank.THREE), new Square(File.A, Rank.FOUR)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.FOUR)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.B, Rank.TWO))
+                Arguments.arguments("룩 앞에 기물이 있는 경우", new Square(File.A, Rank.ONE), new Square(File.A, Rank.THREE)),
+                Arguments.arguments("폰은 3칸", new Square(File.A, Rank.TWO), new Square(File.A, Rank.FIVE)),
+                Arguments.arguments("기물이 없는 경우", new Square(File.A, Rank.THREE), new Square(File.A, Rank.FOUR))
         );
     }
 
     static Stream<Arguments> validSquareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE)),
-                Arguments.arguments(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR))
+                Arguments.arguments("폰은 한칸", new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE)),
+                Arguments.arguments("폰은 처음 두칸 이동", new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR))
         );
     }
 

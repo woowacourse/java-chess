@@ -27,23 +27,23 @@ class KnightTest {
                 .isFalse();
     }
 
-    @ParameterizedTest(name = "나이트 이동조건인 경우, 이동할 수 있다")
+    @ParameterizedTest(name = "나이트는 {0}로 이동할 수 있다")
     @MethodSource("squareProvider")
-    void canMoveTestWithMovableRankDistance(Square target) {
+    void canMoveTestWithMovableRankDistance(String name, Square target) {
         Assertions.assertThat(knight.canMove(source, target))
                 .isTrue();
     }
 
     static Stream<Arguments> squareProvider() {
         return Stream.of(
-                Arguments.arguments(new Square(File.G, Rank.THREE)),
-                Arguments.arguments(new Square(File.G, Rank.FIVE)),
-                Arguments.arguments(new Square(File.F, Rank.TWO)),
-                Arguments.arguments(new Square(File.F, Rank.SIX)),
-                Arguments.arguments(new Square(File.D, Rank.TWO)),
-                Arguments.arguments(new Square(File.D, Rank.SIX)),
-                Arguments.arguments(new Square(File.C, Rank.THREE)),
-                Arguments.arguments(new Square(File.C, Rank.FIVE))
+                Arguments.arguments("e4에서 g3", new Square(File.G, Rank.THREE)),
+                Arguments.arguments("e4에서 g5", new Square(File.G, Rank.FIVE)),
+                Arguments.arguments("e4에서 f2", new Square(File.F, Rank.TWO)),
+                Arguments.arguments("e4에서 f6", new Square(File.F, Rank.SIX)),
+                Arguments.arguments("e4에서 d2", new Square(File.D, Rank.TWO)),
+                Arguments.arguments("e4에서 d6", new Square(File.D, Rank.SIX)),
+                Arguments.arguments("e4에서 c3", new Square(File.C, Rank.THREE)),
+                Arguments.arguments("e4에서 c5", new Square(File.C, Rank.FIVE))
         );
     }
 }
