@@ -68,6 +68,6 @@ public class ChessController {
     }
 
     private void end(final ChessGame chessGame, final Command command) {
-        OutputView.showBoard(chessGame.pieces());
+        // ignored
     }
 }
