@@ -1,8 +1,9 @@
 package chess.controller;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
-import chess.domain.PiecesPosition;
 import chess.domain.piece.Camp;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -10,6 +11,7 @@ import chess.view.ViewFile;
 import chess.view.ViewRank;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ChessController {
@@ -44,10 +46,12 @@ public final class ChessController {
     }
 
     private ChessGame startChessGame() {
-        PiecesPosition piecesPosition = new PiecesPosition();
-        printBoard(piecesPosition);
+        ChessBoard piecesPosition = new ChessBoard();
+        Map<Position, Piece> chessBoard = piecesPosition.createBoard();
 
-        return new ChessGame(piecesPosition, Camp.WHITE);
+        printBoard(chessBoard);
+
+        return new ChessGame(chessBoard, Camp.WHITE);
     }
 
     private void play(ChessGame chessGame) {
@@ -90,8 +94,8 @@ public final class ChessController {
         return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
-    private void printBoard(PiecesPosition piecesPosition) {
-        outputView.printChessState(piecesPosition.getPiecesPosition());
+    private void printBoard(Map<Position, Piece> piecesPosition) {
+        outputView.printChessState(piecesPosition);
     }
 
     public void printErrorMessage(Exception exception) {

@@ -1,11 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Camp;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
 
 import java.util.List;
+import java.util.Map;
 
 public final class ChessGame {
 
@@ -13,23 +15,23 @@ public final class ChessGame {
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
 
-    private final PiecesPosition piecesPosition;
+    private final Map<Position, Piece> piecesPosition;
     private Camp turnCamp;
 
-    public ChessGame(PiecesPosition piecesPosition, Camp turnCamp) {
+    public ChessGame(Map<Position, Piece> piecesPosition, Camp turnCamp) {
         this.turnCamp = turnCamp;
         this.piecesPosition = piecesPosition;
     }
 
     public void move(Position fromPosition, Position toPosition) {
-        Piece fromPiece = piecesPosition.choicePiece(fromPosition);
-        Piece toPiece = piecesPosition.choicePiece(toPosition);
+        Piece fromPiece = piecesPosition.get(fromPosition);
+        Piece toPiece = piecesPosition.get(toPosition);
         validateBeforeMoveTo(fromPiece, toPiece);
 
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
         validateMovable(toPiece, pieceMove);
-        piecesPosition.movePieceOn(fromPosition, toPosition);
+        movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
@@ -56,7 +58,7 @@ public final class ChessGame {
     }
 
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
-        Piece fromPiece = piecesPosition.choicePiece(fromPosition);
+        Piece fromPiece = piecesPosition.get(fromPosition);
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
 
         List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
@@ -74,17 +76,22 @@ public final class ChessGame {
     }
 
     private void validateMovableBetween(PieceMove pieceMove, Position position) {
-        Piece betweenPiece = piecesPosition.choicePiece(position);
+        Piece betweenPiece = piecesPosition.get(position);
         if (!pieceMove.isMovable(betweenPiece, false)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
+    }
+
+    private void movePieceOn(Position fromPosition, Position toPosition) {
+        piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
+        piecesPosition.put(fromPosition, new Empty());
     }
 
     private void changeTurn() {
         this.turnCamp = Camp.convert(turnCamp);
     }
 
-    public PiecesPosition getPiecesPosition() {
+    public Map<Position, Piece> getPiecesPosition() {
         return piecesPosition;
     }
 }

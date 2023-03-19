@@ -1,24 +1,12 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,25 +15,32 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PiecesPositionTest {
+import java.util.Map;
+import java.util.stream.Stream;
 
-    @Test
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+@TestInstance(Lifecycle.PER_CLASS)
+class ChessBoardTest {
+
+    Map<Position, Piece> board;
+
+    @BeforeAll
     @DisplayName("64개의 기물이 생성된다.")
-    void initialChessBoardTest() {
-        PiecesPosition piecesPosition = new PiecesPosition();
-
-        assertThat(piecesPosition.getPiecesPosition()).hasSize(64);
+    void setUp() {
+        ChessBoard chessBoard = new ChessBoard();
+        board = chessBoard.createBoard();
     }
 
+    @TestInstance(Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("귀족 랭크")
-    @TestInstance(Lifecycle.PER_CLASS)
     class White {
         @ParameterizedTest(name = "화이트 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateWhite")
         void judgePiecesTest2(Position position, Piece piece) {
-            PiecesPosition piecesPosition = new PiecesPosition();
-            assertThat(piecesPosition.getPiecesPosition().get(position))
+            assertThat(board.get(position))
                     .isEqualTo(piece);
         }
 
@@ -66,9 +61,7 @@ class PiecesPositionTest {
         @ParameterizedTest(name = "블랙 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateBlack")
         void judgePiecesTest3(Position position, Piece piece) {
-            PiecesPosition piecesPosition = new PiecesPosition();
-
-            assertThat(piecesPosition.getPiecesPosition().get(position))
+            assertThat(board.get(position))
                     .isEqualTo(piece);
         }
 
@@ -90,11 +83,9 @@ class PiecesPositionTest {
     @ParameterizedTest(name = "폰 기물이 기본 위치에 배치된다.")
     @CsvSource(value = {"TWO, WHITE", "SEVEN, BLACK"})
     void judgePiecesTest4(Rank rank, Camp camp) {
-        PiecesPosition piecesPosition = new PiecesPosition();
-
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(piecesPosition.getPiecesPosition().get(position))
+            assertThat(board.get(position))
                     .isEqualTo(new Pawn(camp));
         }
     }
@@ -102,26 +93,10 @@ class PiecesPositionTest {
     @ParameterizedTest(name = "빈공간이 존재한다.")
     @EnumSource(names = {"THREE", "FOUR", "FIVE", "SIX"})
     void judgePiecesTest5(Rank rank) {
-        PiecesPosition piecesPosition = new PiecesPosition();
-
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(piecesPosition.getPiecesPosition().get(position))
+            assertThat(board.get(position))
                     .isEqualTo(new Empty());
         }
-    }
-
-    @Test
-    @DisplayName("위치로 기물을 이동할 수 있다.")
-    void movePieceOn() {
-        Position whitePawnPosition = Position.of(File.A, Rank.TWO);
-        Position emptyPosition = Position.of(File.A, Rank.FOUR);
-
-        PiecesPosition piecesPosition = new PiecesPosition();
-
-        piecesPosition.movePieceOn(whitePawnPosition, emptyPosition);
-
-        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Empty.class);
-        assertThat(piecesPosition.choicePiece(emptyPosition)).isInstanceOf(Pawn.class);
     }
 }
