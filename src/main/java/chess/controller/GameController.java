@@ -5,8 +5,8 @@ import static chess.domain.Command.MOVE;
 import static chess.domain.Command.START;
 import static chess.domain.Team.WHITE;
 
-import chess.domain.ChessGame;
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class GameController {
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -40,21 +43,21 @@ public class GameController {
 
     private Command startGame() {
         List<String> gameCommand = inputView.readGameCommand();
-        Command command = Command.from(gameCommand.get(0));
+        Command command = Command.from(gameCommand.get(COMMAND_INDEX));
         checkWrongCommand(command, MOVE);
         return command;
     }
 
     private Command progressGame(ChessGame chessGame) {
         List<String> gameCommand = inputView.readGameCommand();
-        Command command = Command.from(gameCommand.get(0));
+        Command command = Command.from(gameCommand.get(COMMAND_INDEX));
         if (command == END) {
             return command;
         }
         checkWrongCommand(command, START);
         validateMoveCommandFormat(gameCommand);
 
-        chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
+        chessGame.movePiece(gameCommand.get(SOURCE_INDEX), gameCommand.get(TARGET_INDEX));
         outputView.printChessBoard(chessGame.getBoard().getBoardResult());
         return command;
     }

@@ -8,6 +8,10 @@ import java.util.List;
 
 public class ChessGame {
 
+    private static final int POSITION_SIZE = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final Board board;
     private Team team;
 
@@ -27,10 +31,10 @@ public class ChessGame {
 
     private Square getSquare(final String movePosition) {
         List<String> position = Arrays.asList(movePosition.split(""));
-        if (position.size() != 2) {
+        if (position.size() != POSITION_SIZE) {
             throw new IllegalArgumentException("source위치, target 위치는 알파벳(a~h)과 숫자(1~8)로 입력해주세요. 예) a1");
         }
-        return Square.of(File.findFileBy(position.get(0)), Rank.findRankBy(position.get(1)));
+        return Square.of(File.findFileBy(position.get(FILE_INDEX)), Rank.findRankBy(position.get(RANK_INDEX)));
     }
 
 

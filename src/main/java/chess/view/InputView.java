@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private static final String DELIMITER = " ";
 
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readGameCommand() {
         String gameCommand = scanner.nextLine();
         validateNull(gameCommand);
-        return Arrays.asList(gameCommand.split(" "));
+
+        return Arrays.asList(gameCommand.split(DELIMITER));
     }
 
     private void validateNull(String input) {
