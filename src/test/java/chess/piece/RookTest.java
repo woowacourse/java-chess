@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.path.Path;
 import chess.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ class RookTest {
         Piece Rook = new Rook(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = Rook.searchPathTo(initialPosition, new Position(5, 8), Optional.empty());
+        Path path = Rook.searchPathTo(initialPosition, new Position(5, 8), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -34,7 +33,7 @@ class RookTest {
         Rook Rook = new Rook(Color.WHITE);
 
         Position initialPosition = new Position(5, 5);
-        Path path = Rook.searchPathTo(initialPosition, new Position(5, 1), Optional.empty());
+        Path path = Rook.searchPathTo(initialPosition, new Position(5, 1), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -54,7 +53,7 @@ class RookTest {
         assertThatThrownBy(
                 () -> Rook.searchPathTo(initialPosition,
                         new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+                        new King(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

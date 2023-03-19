@@ -4,7 +4,6 @@ import chess.path.Movement;
 import chess.path.Path;
 import chess.position.Position;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Piece {
 
@@ -18,7 +17,7 @@ public abstract class Piece {
         return color == Color.BLACK;
     }
 
-    public abstract Path searchPathTo(Position from, Position to, Optional<Piece> destination);
+    public abstract Path searchPathTo(Position from, Position to, Piece destination);
 
     protected void validateMovement(final Movement movement, List<Movement> availableMovements) {
         if (!availableMovements.contains(movement)) {

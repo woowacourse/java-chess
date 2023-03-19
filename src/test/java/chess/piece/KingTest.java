@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.path.Path;
 import chess.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ class KingTest {
         assertThatThrownBy(
                 () -> piece.searchPathTo(initialPosition,
                         new Position(8, 1),
-                        Optional.of(new King(Color.BLACK))))
+                        new King(Color.BLACK)))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -34,7 +33,7 @@ class KingTest {
 
         Piece piece = new King(Color.WHITE);
 
-        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), Optional.empty());
+        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -47,7 +46,7 @@ class KingTest {
 
         Piece piece = new King(Color.WHITE);
 
-        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), Optional.of(new Queen(Color.BLACK)));
+        Path path = piece.searchPathTo(WHITE_KING_POSITION, new Position(5, 2), new Queen(Color.BLACK));
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))

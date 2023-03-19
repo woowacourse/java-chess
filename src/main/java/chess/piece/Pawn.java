@@ -12,7 +12,6 @@ import chess.path.Path;
 import chess.position.Position;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -38,14 +37,14 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
+    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
         Movement movement = to.convertMovement(from);
 
-        if (destination.isEmpty()) {
+        if (destination == null) {
             return searchPathToEmptyPosition(from, to, movement);
         }
 
-        return searchPathToEnemyPosition(destination.get(), movement);
+        return searchPathToEnemyPosition(destination, movement);
     }
 
     private Path searchPathToEnemyPosition(final Piece destination, final Movement movement) {

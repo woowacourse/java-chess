@@ -14,7 +14,6 @@ import chess.path.Path;
 import chess.position.Position;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Queen extends Piece {
 
@@ -27,8 +26,10 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-        destination.ifPresent(super::validateSameColor);
+    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
+        if (destination != null) {
+            validateSameColor(destination);
+        }
 
         Movement movement = to.convertMovement(from);
         validateMovement(movement, CAN_MOVE_DESTINATION);

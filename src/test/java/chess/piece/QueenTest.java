@@ -19,7 +19,7 @@ class QueenTest {
         Piece queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 8), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(5, 8), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -36,7 +36,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(8, 4), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(8, 4), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -50,7 +50,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 5);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 1), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(5, 1), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -71,7 +71,7 @@ class QueenTest {
         assertThatThrownBy(
                 () -> queen.searchPathTo(initialPosition,
                         new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+                        new King(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.path.Path;
 import chess.position.Position;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,13 +15,13 @@ class PieceTest {
     void test_isBlack() {
         Piece blackPiece = new Piece(Color.BLACK) {
             @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+            public Path searchPathTo(final Position from, final Position to, final Piece destination) {
                 return null;
             }
         };
         Piece whitePiece = new Piece(Color.WHITE) {
             @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+            public Path searchPathTo(final Position from, final Position to, final Piece destination) {
                 return null;
             }
         };

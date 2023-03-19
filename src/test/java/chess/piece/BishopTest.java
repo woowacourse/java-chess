@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.path.Path;
 import chess.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,7 +21,7 @@ class BishopTest {
         @Test
         void test_searchPathTo() {
             Piece bishop = new Bishop(Color.WHITE);
-            Path path = bishop.searchPathTo(WHITE_BISHOP_LEFT_POSITION, new Position(7, 5), Optional.empty());
+            Path path = bishop.searchPathTo(WHITE_BISHOP_LEFT_POSITION, new Position(7, 5), null);
 
             assertThat(path)
                     .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -38,7 +37,7 @@ class BishopTest {
 
             Bishop bishop = new Bishop(Color.BLACK);
 
-            Path path = bishop.searchPathTo(BLACK_BISHOP_RIGHT_POSITION, new Position(1, 3), Optional.empty());
+            Path path = bishop.searchPathTo(BLACK_BISHOP_RIGHT_POSITION, new Position(1, 3), null);
 
             assertThat(path)
                     .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -59,7 +58,7 @@ class BishopTest {
         assertThatThrownBy(
                 () -> bishop.searchPathTo(WHITE_BISHOP_LEFT_POSITION,
                         new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+                        new King(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

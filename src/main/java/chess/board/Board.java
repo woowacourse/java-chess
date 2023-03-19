@@ -5,7 +5,6 @@ import chess.piece.Color;
 import chess.piece.Piece;
 import chess.position.Position;
 import java.util.Map;
-import java.util.Optional;
 
 public class Board {
 
@@ -25,8 +24,10 @@ public class Board {
         validateIsFromEmpty(from);
         validateIsDifferentColor(from, turn);
 
+        Piece destination = board.getOrDefault(to, null);
+
         Path path = board.get(from)
-                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
+                .searchPathTo(from, to, destination);
         path.validateObstacle(board.keySet());
     }
 
