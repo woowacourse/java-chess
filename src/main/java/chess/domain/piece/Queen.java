@@ -17,6 +17,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return moveStrategy.canMove(source, target);
+        return moveStrategy.isMovable(source, target);
     }
 }

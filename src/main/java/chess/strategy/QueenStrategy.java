@@ -8,7 +8,7 @@ public class QueenStrategy implements MoveStrategy{
     private final DiagonalStrategy diagonalStrategy = new DiagonalStrategy();
 
     @Override
-    public boolean canMove(Position source, Position target) {
-        return crossStrategy.canMove(source, target) || diagonalStrategy.canMove(source, target);
+    public boolean isMovable(Position source, Position target) {
+        return crossStrategy.isMovable(source, target) || diagonalStrategy.isMovable(source, target);
     }
 }

@@ -4,6 +4,6 @@ import chess.domain.Position;
 
 public interface MoveStrategy {
 
-    boolean canMove(Position source, Position target);
+    boolean isMovable(Position source, Position target);
 
 }
