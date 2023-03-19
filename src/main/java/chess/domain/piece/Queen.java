@@ -12,7 +12,7 @@ public final class Queen extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (canQueenMove(source, target)){
+        if (canQueenMove(source, target)) {
             return source.computeCrossOrDiagonalPath(target);
         }
 
