@@ -16,10 +16,11 @@ public final class King extends Piece {
 
     @Override
     public String name() {
+        String name = "k";
         if (super.team().equals(Team.WHITE)) {
-            return "k";
+            return name;
         }
-        return "K";
+        return name.toUpperCase();
     }
 
     @Override
@@ -29,6 +30,6 @@ public final class King extends Piece {
 
     @Override
     public boolean movableByCount(final int count) {
-        return count <= 1;
+        return count == 0;
     }
 }

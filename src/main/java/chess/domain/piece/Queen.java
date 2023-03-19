@@ -16,10 +16,11 @@ public final class Queen extends Piece {
 
     @Override
     public String name() {
+        String name = "q";
         if (super.team().equals(Team.WHITE)) {
-            return "q";
+            return name;
         }
-        return "Q";
+        return name.toUpperCase();
     }
 
     @Override

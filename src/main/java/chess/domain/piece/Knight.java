@@ -17,10 +17,11 @@ public final class Knight extends Piece {
 
     @Override
     public String name() {
+        String name = "n";
         if (super.team().equals(Team.WHITE)) {
-            return "n";
+            return name;
         }
-        return "N";
+        return name.toUpperCase();
     }
 
     @Override

@@ -16,10 +16,11 @@ public final class Rook extends Piece {
 
     @Override
     public String name() {
+        String name = "r";
         if (super.team().equals(Team.WHITE)) {
-            return "r";
+            return name;
         }
-        return "R";
+        return name.toUpperCase();
     }
 
     @Override

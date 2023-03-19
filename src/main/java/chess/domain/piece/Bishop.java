@@ -17,10 +17,11 @@ public final class Bishop extends Piece {
 
     @Override
     public String name() {
+        String name = "b";
         if (super.team().equals(Team.WHITE)) {
-            return "b";
+            return name;
         }
-        return "B";
+        return name.toUpperCase();
     }
 
     @Override
