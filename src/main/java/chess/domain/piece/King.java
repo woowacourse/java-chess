@@ -21,7 +21,7 @@ public final class King extends Piece {
     }
 
     @Override
-    boolean isPieceRule(Position from, Position to) {
+    protected boolean isPieceRule(Position from, Position to) {
         int fileGap = Math.abs(to.calculateFileGap(from));
         int rankGap = Math.abs(to.calculateRankGap(from));
 

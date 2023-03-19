@@ -36,7 +36,7 @@ public abstract class Piece {
 
     public abstract PieceMove getMovement(Position from, Position to);
 
-    abstract boolean isPieceRule(Position from, Position to);
+    protected abstract boolean isPieceRule(Position from, Position to);
 
     @Override
     public boolean equals(Object o) {

@@ -21,7 +21,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    boolean isPieceRule(Position from, Position to) {
+    protected boolean isPieceRule(Position from, Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 
