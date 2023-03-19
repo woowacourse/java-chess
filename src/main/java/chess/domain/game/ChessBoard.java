@@ -1,12 +1,13 @@
 package chess.domain.game;
 
+import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
-import chess.domain.board.Position;
 import chess.domain.piece.type.EmptyPiece;
 import chess.domain.piece.type.Piece;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -15,8 +16,12 @@ public class ChessBoard {
     private final Map<Position, Piece> chessBoard;
     private Color turn = Color.WHITE;
 
-    public ChessBoard(Map<Position, Piece> chessBoard) {
-        this.chessBoard = new HashMap<>(chessBoard);
+    public ChessBoard() {
+        this.chessBoard = new LinkedHashMap<>();
+    }
+
+    public void initialize(Map<Position, Piece> chessBoard) {
+        this.chessBoard.putAll(chessBoard);
     }
 
     public void move(Position start, Position end) {
@@ -60,6 +65,10 @@ public class ChessBoard {
         chessBoard.replace(start, new EmptyPiece());
         chessBoard.replace(end, piece);
         turn = piece.getColor().getOpponent();
+    }
+
+    public boolean isInitialized() {
+        return chessBoard.size() != 0;
     }
 
     public Map<Position, Piece> getChessBoard() {
