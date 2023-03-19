@@ -10,6 +10,7 @@ public class InputView {
     private static final String NEXT_LINE = System.lineSeparator();
     private static final String DELIMITER = " ";
     private static final int LIMIT = -1;
+    private static final int MOVE_COMMAND_SIZE = 3;
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -23,8 +24,9 @@ public class InputView {
         System.out.println(NEXT_LINE + "이동할 위치를 입력해주세요.");
         final String moveCommand = scanner.nextLine();
 
-        return Arrays.stream(moveCommand.split(DELIMITER, LIMIT))
+        List<String> commands = Arrays.stream(moveCommand.split(DELIMITER, LIMIT))
                 .map(String::trim)
                 .collect(toList());
+        return commands;
     }
 }

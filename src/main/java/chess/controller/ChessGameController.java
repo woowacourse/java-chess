@@ -3,9 +3,9 @@ package chess.controller;
 import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.MOVE_COMMAND_INDEX;
-import static chess.controller.Command.MOVE_COMMAND_SIZE;
 import static chess.controller.Command.MOVE_SOURCE_INDEX;
 import static chess.controller.Command.MOVE_TARGET_INDEX;
+import static chess.controller.Command.START;
 
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
@@ -15,69 +15,34 @@ import java.util.List;
 public class ChessGameController {
 
     private final ChessGame chessGame;
-    private Command command;
 
     public ChessGameController(final ChessGame chessGame) {
         this.chessGame = chessGame;
-        this.command = Command.EMPTY;
     }
 
-    public void run(final Retry retry) {
-        initialize(retry);
-        play(retry);
-    }
-
-    private void initialize(final Retry retry) {
+    public void run() {
         OutputView.printGameStart();
-        while (command != Command.START) {
-            command = readCommand(retry);
-        }
-        OutputView.printBoard(chessGame.getBoard());
-    }
-
-    private Command readCommand(Retry retry) {
-        while (retry.isRepeatable()) {
-            try {
-                return Command.createStart(InputView.readCommand());
-            } catch (IllegalArgumentException e) {
-                OutputView.printException(e.getMessage());
-                retry = retry.decrease();
-            }
-        }
-        throw new IllegalArgumentException(Retry.RETRY_FAIL_MESSAGE);
-    }
-
-    private void play(final Retry retry) {
+        Command command = getInitialCommand();
         while (command != END) {
-            readMoveCommand(retry);
+            command = play();
         }
     }
 
-    private void readMoveCommand(Retry retry) {
-        while (retry.isRepeatable()) {
-            try {
-                move(InputView.readMoveCommand());
-                return;
-            } catch (IllegalArgumentException e) {
-                OutputView.printException(e.getMessage());
-                retry = retry.decrease();
-            }
+    private Command getInitialCommand() {
+        final Command command = Command.getValidate(InputView.readCommand(), START, END);
+        if (command == START) {
+            OutputView.printBoard(chessGame.getBoard());
         }
-        throw new IllegalArgumentException(Retry.RETRY_FAIL_MESSAGE);
+        return command;
     }
 
-    private void move(final List<String> commands) {
-        validateMoveCommandSize(commands);
-        command = Command.createPlayOrEnd(commands.get(MOVE_COMMAND_INDEX));
+    private Command play() {
+        final List<String> commands = InputView.readMoveCommand();
+        final Command command = Command.getValidate(commands.get(MOVE_COMMAND_INDEX), MOVE, END);
         if (command == MOVE) {
             chessGame.move(commands.get(MOVE_SOURCE_INDEX), commands.get(MOVE_TARGET_INDEX));
             OutputView.printBoard(chessGame.getBoard());
         }
-    }
-
-    private void validateMoveCommandSize(final List<String> commands) {
-        if (commands.size() != MOVE_COMMAND_SIZE) {
-            throw new IllegalArgumentException("올바른 커맨드를 입력해주세요.");
-        }
+        return command;
     }
 }

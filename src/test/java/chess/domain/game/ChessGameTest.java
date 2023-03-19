@@ -51,12 +51,12 @@ public class ChessGameTest {
         final List<PieceType> result = generateResult(chessGame);
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
-                PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
+                PAWN,  PAWN,   PAWN,  PAWN,  PAWN, PAWN,   PAWN,  PAWN,
                 EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
                 EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
                 EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
                 EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
+                PAWN,  PAWN,   PAWN,  PAWN,  PAWN, PAWN,   PAWN,  PAWN,
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
         );
     }
@@ -92,14 +92,14 @@ public class ChessGameTest {
         // then
         final List<PieceType> result = generateResult(chessGame);
         assertThat(result).containsExactly(
-                ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
-                EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
-                PAWN, EMPTY, KNIGHT, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
-                BISHOP, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KNIGHT, EMPTY, EMPTY,
-                PAWN, PAWN, PAWN, PAWN, EMPTY, PAWN, PAWN, PAWN,
-                ROOK, KNIGHT, BISHOP, QUEEN, KING, EMPTY, EMPTY, ROOK
+                ROOK,  EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
+                EMPTY, PAWN,  PAWN,   EMPTY, EMPTY, PAWN ,  PAWN,  PAWN,
+                PAWN,  EMPTY, KNIGHT, PAWN, EMPTY, EMPTY,  EMPTY,  EMPTY,
+                EMPTY, EMPTY, EMPTY,  EMPTY, PAWN, EMPTY,  EMPTY,  EMPTY,
+                BISHOP, EMPTY,EMPTY,  EMPTY, PAWN, EMPTY,  EMPTY,  EMPTY,
+                EMPTY, EMPTY, EMPTY,  EMPTY, EMPTY, KNIGHT, EMPTY, EMPTY,
+                PAWN,  PAWN,  PAWN,   PAWN,  EMPTY,  PAWN,  PAWN,  PAWN,
+                ROOK, KNIGHT, BISHOP,  QUEEN, KING, EMPTY, EMPTY,   ROOK
         );
     }
 }
