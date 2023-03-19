@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.piece.Team;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,23 @@ public enum Rank {
                 .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
+    }
+
+    public static Rank from(final Team team, final boolean isPawn) {
+        if (team == Team.WHITE) {
+            if (isPawn) {
+                return TWO;
+            }
+            return ONE;
+        }
+
+        if (team == Team.BLACK) {
+            if (isPawn) {
+                return SEVEN;
+            }
+            return EIGHT;
+        }
+        throw new IllegalArgumentException("올바르지 않은 팀입니다.");
     }
 
     public static int calculateInterval(final Rank from, final Rank to) {
