@@ -71,7 +71,7 @@ public class ChessController {
     private GameStatus handleStartCommand(GameStatus gameStatus, final ChessGame chessGame) {
         checkGameAlreadyStart(gameStatus);
         gameStatus = GameStatus.START;
-        NameBoard nameBoard = new NameBoard(chessGame.getPieces());
+        NameBoard nameBoard = NameBoard.generateNameBoard(chessGame.getPieces());
         OutputView.printBoard(nameBoard.getNameBoard());
         return gameStatus;
     }
@@ -87,7 +87,7 @@ public class ChessController {
         Position sourcePosition = generatePosition(SOURCE_POSITION_INDEX, chessGame, moveCommand);
         Position targetPosition = generatePosition(TARGET_POSITION_INDEX, chessGame, moveCommand);
         chessGame.movePiece(sourcePosition, targetPosition);
-        NameBoard nameBoard = new NameBoard(chessGame.getPieces());
+        NameBoard nameBoard = NameBoard.generateNameBoard(chessGame.getPieces());
         OutputView.printBoard(nameBoard.getNameBoard());
         return gameStatus;
     }

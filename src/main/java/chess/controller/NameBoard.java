@@ -30,18 +30,18 @@ public class NameBoard {
         nameByPiece.put(Pawn.class, Name.PAWN);
     }
 
-    public NameBoard(List<Piece> pieces) {
-        this.nameBoard = generateNameBoard(pieces);
+    private NameBoard(List<List<String>> nameBoard) {
+        this.nameBoard = new ArrayList<>(nameBoard);
     }
 
-    private List<List<String>> generateNameBoard(List<Piece> pieces) {
+    public static NameBoard generateNameBoard(List<Piece> pieces) {
         List<List<String>> nameBoard = new ArrayList<>();
         initNameBoard(nameBoard);
         fillNameBoardWithNames(pieces, nameBoard);
-        return nameBoard;
+        return new NameBoard(nameBoard);
     }
 
-    private void initNameBoard(List<List<String>> nameBoard) {
+    private static void initNameBoard(List<List<String>> nameBoard) {
         final List<String> emptyNames = List.of(".", ".", ".", ".", ".", ".", ".", ".");
         for (int rowIndex = 0; rowIndex < BOARD_ROW_SIZE; rowIndex++) {
             List<String> row = new ArrayList<>(emptyNames);
@@ -49,7 +49,7 @@ public class NameBoard {
         }
     }
 
-    private void fillNameBoardWithNames(List<Piece> pieces, List<List<String>> nameBoard) {
+    private static void fillNameBoardWithNames(List<Piece> pieces, List<List<String>> nameBoard) {
         for (Piece piece : pieces) {
             final String pieceName = generateName(piece);
             int flippedIndex = getFlippedIndex(piece.getRank());
@@ -59,7 +59,7 @@ public class NameBoard {
         }
     }
 
-    private String generateName(Piece piece) {
+    private static String generateName(Piece piece) {
         Name pieceName = nameByPiece.get(piece.getClass());
         Side side = piece.getSide();
         if (Side.BLACK == side) {
@@ -68,7 +68,7 @@ public class NameBoard {
         return pieceName.getLowerCaseValue();
     }
 
-    private int getFlippedIndex(int originalIndex) {
+    private static int getFlippedIndex(int originalIndex) {
         return Math.abs(originalIndex - BOARD_ROW_SIZE);
     }
 
