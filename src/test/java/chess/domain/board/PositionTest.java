@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -39,4 +40,166 @@ class PositionTest {
                 .isEqualTo(expectedGap);
     }
 
+
+
+    @Test
+    void 위로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.TOP;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.D, Rank.FIVE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 아래로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.BOTTOM;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.D, Rank.THREE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+
+    @Test
+    void 오른쪽으로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.RIGHT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.E, Rank.FOUR);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 왼쪽으로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.LEFT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.C, Rank.FOUR);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 왼쪽_위로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.TOP_LEFT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.C, Rank.FIVE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 오른쪽_위로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.TOP_RIGHT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.E, Rank.FIVE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 왼쪽_아래로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.BOTTOM_LEFT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.C, Rank.THREE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 오른쪽_아래로_한칸이동한_Position을_반환한다() {
+        Direction direction = Direction.BOTTOM_RIGHT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.E, Rank.THREE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 위로_두칸_왼쪽으로_한칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_TOP_LEFT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.C, Rank.SIX);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 위로_두칸_오른쪽으로_한칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_TOP_RIGHT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.E, Rank.SIX);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 위로_한칸_왼쪽으로_두칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_LEFT_TOP;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.B, Rank.FIVE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 아래로_한칸_왼쪽으로_두칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_LEFT_BOTTOM;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.B, Rank.THREE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 위로_한칸_오른쪽으로_두칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_RIGHT_TOP;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.F, Rank.FIVE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 아래로_한칸_오른쪽으로_두칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_RIGHT_BOTTOM;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.F, Rank.THREE);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 아래로_두칸_왼쪽으로_한칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_BOTTOM_LEFT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.C, Rank.TWO);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
+
+    @Test
+    void 아래로_두칸_오른쪽으로_한칸_이동한_Position을_반환한다() {
+        Direction direction = Direction.KNIGHT_BOTTOM_RIGHT;
+        Position currentPosition = Position.of(Column.D, Rank.FOUR);
+        Position movedPostion = Position.of(Column.E, Rank.TWO);
+
+        assertThat(currentPosition.moveDirection(direction))
+                .isEqualTo(movedPostion);
+    }
 }
