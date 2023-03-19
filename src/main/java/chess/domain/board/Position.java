@@ -17,7 +17,7 @@ public class Position {
     static {
         CACHE = Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> Map.entry(file.command() + rank.command(), new Position(file, rank))))
+                        .map(rank -> Map.entry(file.symbol() + rank.symbol(), new Position(file, rank))))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -30,7 +30,7 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        return CACHE.get(file.command() + rank.command());
+        return CACHE.get(file.symbol() + rank.symbol());
     }
 
     public static Position from(final String position) {

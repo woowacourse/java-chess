@@ -22,19 +22,12 @@ public enum Rank {
 
     private static final int START_EXCLUSIVE = 1;
 
-    private final String command;
+    private final String symbol;
     private final int position;
 
-    Rank(final String command, final int position) {
-        this.command = command;
+    Rank(final String symbol, final int position) {
+        this.symbol = symbol;
         this.position = position;
-    }
-
-    public static Rank from(final String command) {
-        return Arrays.stream(values())
-                .filter(value -> value.command.equalsIgnoreCase(command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("랭크는 1 ~ 8 사이의 값이어야 합니다."));
     }
 
     private static Rank from(final int position) {
@@ -59,7 +52,7 @@ public enum Rank {
         return position - target.position;
     }
 
-    public String command() {
-        return command;
+    public String symbol() {
+        return symbol;
     }
 }
