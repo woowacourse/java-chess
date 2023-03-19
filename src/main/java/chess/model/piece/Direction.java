@@ -25,8 +25,8 @@ public enum Direction {
     SOUTH_WEST_WEST(-2, -1),
     SOUTH_EAST_EAST(2, -1);
 
-    private static final List<Direction> DIAGONAL = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
-    private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
+    public static final List<Direction> DIAGONAL = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    public static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
     
     private final int file;
     private final int rank;
@@ -41,10 +41,6 @@ public enum Direction {
                 .filter(direction -> direction.match(file, rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("방향을 찾을 수 없습니다."));
-    }
-
-    public static boolean isDiagonal(final Direction direction) {
-        return DIAGONAL.contains(direction);
     }
 
     public boolean match(final int file, final int rank) {
