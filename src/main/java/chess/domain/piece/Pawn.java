@@ -48,11 +48,11 @@ public class Pawn extends Piece {
         return canMoveStraightOne(color(), rankGap) || canMoveStraightTwo(start, color(), rankGap);
     }
 
-    private static boolean canMoveStraightOne(final Color color, final int rankGap) {
+    private boolean canMoveStraightOne(final Color color, final int rankGap) {
         return rankGap == GAP_LOWER_BOUND.get(color);
     }
 
-    private static boolean canMoveStraightTwo(final Position start, final Color color, final int rankGap) {
+    private boolean canMoveStraightTwo(final Position start, final Color color, final int rankGap) {
         return rankGap == GAP_UPPER_BOUND.get(color) && start.isSameRank(INITIAL_RANK.get(color));
     }
 
