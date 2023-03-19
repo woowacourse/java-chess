@@ -5,12 +5,10 @@ import domain.piece.Coordinate;
 
 public final class ChessGame {
 
-    public static final int FILE_SIZE = 8;
-
     private final Board board;
 
     public ChessGame() {
-        this.board = new Board(FILE_SIZE);
+        this.board = new Board();
     }
 
     public void move(final Coordinate start, final Coordinate end) {
