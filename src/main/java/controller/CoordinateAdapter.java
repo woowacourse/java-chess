@@ -9,8 +9,8 @@ public class CoordinateAdapter {
 
     public static Coordinate convert(final String frontCoordinate) {
         validateSize(frontCoordinate);
-        int row = convertRow(frontCoordinate);
-        int col = convertCol(frontCoordinate);
+        int row = convertToRow(frontCoordinate);
+        int col = convertToCol(frontCoordinate);
         return new Coordinate(row, col);
     }
 
@@ -20,20 +20,20 @@ public class CoordinateAdapter {
         }
     }
 
-    private static int convertRow(final String frontCoordinate) {
+    private static int convertToRow(final String frontCoordinate) {
         char pureRow = frontCoordinate.charAt(1);
         if (pureRow >='0' && pureRow <= '9') {
             return Character.getNumericValue(pureRow) - 1;
         }
-        throw new IllegalArgumentException("[ERROR] 행은 알파벳 소문자여야 합니다.");
+        throw new IllegalArgumentException("[ERROR] Y축 좌표는 숫자여야 합니다.");
     }
 
-    private static int convertCol(final String frontCoordinate) {
+    private static int convertToCol(final String frontCoordinate) {
         char pureCol = frontCoordinate.charAt(0);
         if (Character.isAlphabetic(pureCol) &&
                 Character.isLowerCase(pureCol)) {
             return (int) pureCol - ASCII_ALPHABET_A;
         }
-        throw new IllegalArgumentException("[ERROR] 열은 숫자여야 합니다.");
+        throw new IllegalArgumentException("[ERROR] X축 좌표는 알파벳 소문자여야 합니다.");
     }
 }
