@@ -22,14 +22,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
+    private final static Map<Position, Piece> INIT_CHESS_BOARD = new HashMap<>();
 
-    public static Board createBoard() {
-        Map<Position, Piece> boards = new HashMap<>();
+    static {
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
             Color color = rankCoordinate.getColor();
-            createRank(boards, rankCoordinate, color);
+            createRank(INIT_CHESS_BOARD, rankCoordinate, color);
         }
-        return new Board(boards);
+    }
+
+    public static Board createBoard() {
+        return new Board(new HashMap<>(INIT_CHESS_BOARD));
     }
 
     private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
