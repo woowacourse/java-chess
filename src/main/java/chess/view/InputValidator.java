@@ -1,9 +1,8 @@
 package chess.view;
 
-import static chess.constant.GameCommand.MOVE;
-import static chess.constant.GameCommand.START;
-
 import java.util.List;
+
+import static chess.view.GameCommand.*;
 
 public class InputValidator {
 
@@ -21,15 +20,11 @@ public class InputValidator {
     }
 
     public static void validateStartCommand(String input) {
-        if (!input.equals(START)) {
-            throw new IllegalArgumentException("[ERROR] 게임을 시작하기 위해서는 " + START + "를 입력해주세요.");
-        }
+        START.validateCommand(input);
     }
 
     public static void validateMoveCommand(String input) {
-        if (!input.equals(MOVE)) {
-            throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위해서는 " + MOVE + "를 입력해주세요.");
-        }
+        MOVE.validateCommand(input);
     }
 
     public static void validateCommandSize(List<String> commands) {

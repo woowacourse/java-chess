@@ -1,11 +1,11 @@
 package chess.view;
 
-import static chess.constant.GameCommand.END;
-import static chess.view.InputValidator.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static chess.view.GameCommand.END;
+import static chess.view.InputValidator.*;
 
 public class InputView {
 
@@ -20,8 +20,7 @@ public class InputView {
 
     public String readCommand() {
         String input = scanner.nextLine();
-
-        if (END.equals(input)) {
+        if (END.getCommand().equals(input)) {
             return input;
         }
 
