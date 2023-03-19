@@ -24,10 +24,6 @@ public abstract class Piece {
         return this.color == otherColor;
     }
 
-    public final boolean isBlack() {
-        return color.isBlack();
-    }
-
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);

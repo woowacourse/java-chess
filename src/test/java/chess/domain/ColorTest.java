@@ -9,11 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ColorTest {
 
     @ParameterizedTest
-    @CsvSource({"BLACK, true", "WHITE, false"})
-    @DisplayName("검정 색인지 확인한다")
-    void isBlackTest(final Color color, final boolean expected) {
-        final boolean actual = color.isBlack();
+    @CsvSource({"BLACK, WHITE", "WHITE, BLACK", "BLANK, BLANK"})
+    @DisplayName("반대되는 색상을 얻는다")
+    void opposite_color_test(final Color originalColor, final Color expectedOpposite) {
+        final Color actualOpposite = originalColor.getOppositeColor();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actualOpposite).isEqualTo(expectedOpposite);
     }
 }

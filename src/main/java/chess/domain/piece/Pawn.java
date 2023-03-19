@@ -56,7 +56,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isOppositeColorSide(final Position targetPosition) {
-        if (color.isBlack()) {
+        if (color.equals(Color.BLACK)) {
             return position.isUpperRankThan(targetPosition);
         }
         return position.isLowerRankThan(targetPosition);
