@@ -6,10 +6,8 @@ import java.util.Set;
 
 public final class Position {
 
-    private static final int NEAR_SQUARES = 1;
-    private static final int TWO_SQUARES = 2;
-    private static final int EQUAL_FILE = 0;
     private static final int VALUE_INDEX_ADJUST = 1;
+    private static final int NEAR_DISTANCE_EXCLUDE = 2;
 
     private final File file;
     private final Rank rank;
@@ -17,18 +15,6 @@ public final class Position {
     public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public boolean isBlackPawnInitRank() {
-        return rank == Rank.SEVEN;
-    }
-
-    public boolean isWhitePawnInitRank() {
-        return rank == Rank.TWO;
-    }
-
-    public Position getUpStraight() {
-        return new Position(file, rank.plus());
     }
 
     public Position getRightDownDiagonal() {
@@ -61,6 +47,34 @@ public final class Position {
 
     public boolean isRankOver(final Position target) {
         return rank.isOver(target.rank);
+    }
+
+    public Set<Position> generateInclinationOnePath(final Position target) {
+        Set<Position> positions = new HashSet<>();
+        var max = Position.maxRank(this, target);
+        var min = Position.minRank(this, target);
+
+        while (max.isRankOver(min)) {
+            positions.add(max);
+            max = max.getLeftDownDiagonal();
+        }
+        positions.add(target);
+        positions.remove(this);
+        return positions;
+    }
+
+    public Set<Position> generateInclinationNegativeOnePath(final Position target) {
+        Set<Position> positions = new HashSet<>();
+        var max = Position.maxRank(this, target);
+        var min = Position.minRank(this, target);
+
+        while (max.isRankOver(min)) {
+            max = max.getRightDownDiagonal();
+            positions.add(max);
+        }
+        positions.add(target);
+        positions.remove(this);
+        return positions;
     }
 
     public static Position maxRank(final Position source, final Position target) {
@@ -99,29 +113,15 @@ public final class Position {
     }
 
     public boolean isNear(final Position target) {
-        return Math.abs(file.sub(target.file)) <= NEAR_SQUARES && Math.abs(rank.sub(target.rank)) <= NEAR_SQUARES;
+        return fileSubLessThan(target, NEAR_DISTANCE_EXCLUDE) && rankSubLessThan(target, NEAR_DISTANCE_EXCLUDE);
     }
 
-    public int getRank() {
-        return rank.getValue() - VALUE_INDEX_ADJUST;
+    public boolean fileSubLessThan(final Position target, final int distance) {
+        return Math.abs(this.file.sub(target.file)) < distance;
     }
 
-    public int getFile() {
-        return file.getValue() - VALUE_INDEX_ADJUST;
-    }
-
-    public boolean canWhitePawnMove(final Position target) {
-        int fileSub = target.file.sub(file);
-        int rankSub = target.rank.sub(rank);
-        return (Math.abs(fileSub) <= NEAR_SQUARES && rankSub == NEAR_SQUARES) ||
-                (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
-    }
-
-    public boolean canBlackPawnMove(final Position target) {
-        int fileSub = file.sub(target.file);
-        int rankSub = rank.sub(target.rank);
-        return (Math.abs(fileSub) <= NEAR_SQUARES && rankSub == NEAR_SQUARES) ||
-                (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
+    public boolean rankSubLessThan(final Position target, final int distance) {
+        return Math.abs(this.rank.sub(target.rank)) < distance;
     }
 
     public boolean distanceEquals(final Position target, final int distance) {
@@ -131,12 +131,12 @@ public final class Position {
         return fileDistance * fileDistance + rankDistance * rankDistance == distance;
     }
 
-    public boolean fileSubLessThan(final Position target, final int distance) {
-        return this.file.sub(target.file) < distance;
+    public boolean rankNotEquals(final int rankExpected) {
+        return this.rank.NotEquals(rankExpected);
     }
 
-    public boolean rankSubLessThan(final Position target, final int distance) {
-        return this.rank.sub(target.rank) < distance;
+    public boolean rankSubEquals(final Position target, final int expected) {
+        return this.rank.sub(target.rank) == expected;
     }
 
     public Set<Position> generateFilePath(final Position target) {
@@ -167,32 +167,12 @@ public final class Position {
         return path;
     }
 
-    public Set<Position> generateInclinationOnePath(final Position target) {
-        Set<Position> positions = new HashSet<>();
-        var max = Position.maxRank(this, target);
-        var min = Position.minRank(this, target);
-
-        while (max.isRankOver(min)) {
-            positions.add(max);
-            max = max.getLeftDownDiagonal();
-        }
-        positions.add(target);
-        positions.remove(this);
-        return positions;
+    public int getRank() {
+        return rank.getValue() - VALUE_INDEX_ADJUST;
     }
 
-    public Set<Position> generateInclinationNegativeOnePath(final Position target) {
-        Set<Position> positions = new HashSet<>();
-        var max = Position.maxRank(this, target);
-        var min = Position.minRank(this, target);
-
-        while (max.isRankOver(min)) {
-            max = max.getRightDownDiagonal();
-            positions.add(max);
-        }
-        positions.add(target);
-        positions.remove(this);
-        return positions;
+    public int getFile() {
+        return file.getValue() - VALUE_INDEX_ADJUST;
     }
 
     @Override

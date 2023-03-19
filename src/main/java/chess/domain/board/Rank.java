@@ -51,6 +51,10 @@ public enum Rank {
         return this.value - rank.value;
     }
 
+    public boolean NotEquals(final int rankExpected) {
+        return value != rankExpected;
+    }
+
     public int getValue() {
         return value;
     }
