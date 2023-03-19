@@ -67,10 +67,10 @@ class PawnTest {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
-            pawn.move(PiecePosition.of(4, 'b'), null);
+            final Piece next = pawn.move(PiecePosition.of(4, 'b'), null);
 
             // when & then
-            assertThat(pawn.waypoints(destination)).isEmpty();
+            assertThat(next.waypoints(destination)).isEmpty();
         }
 
         @Test
@@ -160,10 +160,10 @@ class PawnTest {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
-            pawn.move(PiecePosition.of(5, 'b'), null);
+            final Piece next = pawn.move(PiecePosition.of(5, 'b'), null);
 
             // when & then
-            assertThat(pawn.waypoints(destination)).isEmpty();
+            assertThat(next.waypoints(destination)).isEmpty();
         }
 
         @Test
@@ -224,10 +224,10 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
-        pawn.move(PiecePosition.of(6, 'b'), null);
+        final Piece next = pawn.move(PiecePosition.of(6, 'b'), null);
 
         // then
-        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of(6, 'b'));
+        assertThat(next.piecePosition()).isEqualTo(PiecePosition.of(6, 'b'));
     }
 
     @Test
@@ -261,10 +261,10 @@ class PawnTest {
         final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("c5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
-        pawn.move(enemy.piecePosition, enemy);
+        final Piece next = pawn.move(enemy.piecePosition, enemy);
 
         // then
-        assertThat(pawn.piecePosition()).isEqualTo(enemy.piecePosition());
+        assertThat(next.piecePosition()).isEqualTo(enemy.piecePosition());
     }
 
     @Test

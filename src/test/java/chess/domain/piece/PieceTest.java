@@ -74,10 +74,10 @@ class PieceTest {
         final Piece pawn = new MyPiece(Color.BLACK, PiecePosition.of("b6"));
 
         // when
-        pawn.move(PiecePosition.of("b5"), null);
+        final Piece next = pawn.move(PiecePosition.of("b5"), null);
 
         // then
-        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b5"));
+        assertThat(next.piecePosition()).isEqualTo(PiecePosition.of("b5"));
     }
 
     @Test
@@ -87,10 +87,10 @@ class PieceTest {
         final Piece enemy = new MyPiece(Color.WHITE, PiecePosition.of("b7"));
 
         // when
-        pawn.move(enemy.piecePosition, enemy);
+        final Piece next = pawn.move(enemy.piecePosition, enemy);
 
         // then
-        assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b7"));
+        assertThat(next.piecePosition()).isEqualTo(PiecePosition.of("b7"));
     }
 
     @Test

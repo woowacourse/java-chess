@@ -8,8 +8,8 @@ import java.util.List;
 public class Piece implements Cloneable {
 
     protected final Color color;
-    protected PiecePosition piecePosition;
-    protected MoveStrategy moveStrategy;
+    protected final PiecePosition piecePosition;
+    protected final MoveStrategy moveStrategy;
 
     public Piece(final Color color, final PiecePosition piecePosition, final MoveStrategy moveStrategy) {
         this.color = color;
@@ -28,13 +28,13 @@ public class Piece implements Cloneable {
         }
     }
 
-    public void move(final PiecePosition destination, final Piece nullablePiece) {
+    public Piece move(final PiecePosition destination, final Piece nullablePiece) {
         final Path path = path(destination);
         validatePath(path);
         if (nullablePiece != null) {
             validateKill(nullablePiece);
         }
-        this.piecePosition = destination;
+        return new Piece(color, destination, moveStrategy);
     }
 
     protected void validateKill(final Piece enemy) {

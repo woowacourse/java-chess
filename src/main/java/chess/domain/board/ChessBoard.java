@@ -46,12 +46,12 @@ public class ChessBoard {
 
     private void move(final Piece from, final PiecePosition destination) {
         final Piece to = optGet(destination).orElse(null);
+        final Piece move = from.move(destination, to);
+        pieces.remove(from);
         if (existByPosition(destination)) {
-            from.move(destination, to);
             pieces.remove(to);
-            return;
         }
-        from.move(destination, to);
+        pieces.add(move);
     }
 
     public Piece findByPosition(final PiecePosition piecePosition) {

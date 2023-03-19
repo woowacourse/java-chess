@@ -1,19 +1,19 @@
 package chess.domain.piece.type.pawn;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.MoveStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.pawn.PawnMoveStrategy;
 import chess.domain.piece.type.pawn.state.PawnState;
 
 public class Pawn extends Piece {
 
-    private PawnState pawnState;
+    private final PawnState pawnState;
 
     public Pawn(final Color color,
                 final PiecePosition piecePosition,
-                final PawnMoveStrategy strategy,
+                final MoveStrategy strategy,
                 final PawnState pawnState
     ) {
         super(color, piecePosition, strategy);
@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(final PiecePosition destination, final Piece nullablePiece) {
+    public Piece move(final PiecePosition destination, final Piece nullablePiece) {
         final Path path = path(destination);
         validatePath(path);
 
@@ -30,8 +30,7 @@ public class Pawn extends Piece {
         } else {
             validateKill(nullablePiece);
         }
-        piecePosition = destination;
-        pawnState = pawnState.next(destination);
+        return new Pawn(color, destination, moveStrategy, pawnState.next(destination));
     }
 
     @Override
