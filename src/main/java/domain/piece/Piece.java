@@ -46,6 +46,23 @@ public abstract class Piece {
                 .collect(Collectors.toList());
     }
 
+    protected List<Integer> calculateDirection(List<Integer> gaps, Integer distance) {
+        return gaps.stream()
+                .mapToInt(gap -> gap / distance)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+    protected List<Square> calculatePath(Square currentSquare, Integer distance, List<Integer> direction) {
+        List<Integer> coordinate = currentSquare.toCoordinate();
+        Integer currentFile = coordinate.get(FILE);
+        Integer currentRank = coordinate.get(RANK);
+        return IntStream.range(1, distance + 1)
+                .mapToObj(dist -> new Square(currentFile + direction.get(FILE) * dist,
+                        currentRank + direction.get(RANK) * dist))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     protected boolean isExistPieceOnPath(Map<Square, Camp> pathInfo) {
         return pathInfo.values().stream()
                 .anyMatch(camp -> camp != Camp.NONE);

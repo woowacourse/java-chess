@@ -3,8 +3,6 @@ package domain.piece.type;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -26,14 +24,15 @@ public class Pawn extends Piece {
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> gaps = calculateGap(currentSquare, targetSquare);
+        Integer distance = calculateDistance(gaps);
+        List<Integer> direction = calculateDirection(gaps, distance);
         validateMovable(gaps);
         changeFirstMoveState();
         changeGoingForwardState(gaps);
-        Integer distance = calculateDistance(gaps);
         if (distance == 1) {
             return List.of(targetSquare);
         }
-        return calculateDoubleStepPath(currentSquare);
+        return calculatePath(currentSquare, distance, direction);
     }
 
     private void changeGoingForwardState(List<Integer> gaps) {
@@ -86,13 +85,6 @@ public class Pawn extends Piece {
         if (isFirstMove) {
             isFirstMove = false;
         }
-    }
-
-    private List<Square> calculateDoubleStepPath(Square currentSquare) {
-        List<Integer> coordinate = currentSquare.toCoordinate();
-        return IntStream.range(1, 3)
-                .mapToObj(dist -> new Square(coordinate.get(FILE), coordinate.get(RANK) + dist))
-                .collect(Collectors.toUnmodifiableList());
     }
 
     public boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare) {
