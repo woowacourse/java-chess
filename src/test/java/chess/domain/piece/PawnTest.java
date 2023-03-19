@@ -37,7 +37,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.BLACK);
 
         // then
-        assertTrue(pawn.movableByCount(2));
+        assertTrue(pawn.movableByCount(1));
     }
 
     @Test
@@ -60,9 +60,9 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.BLACK);
 
         // when
-        pawn.movableByCount(2);
+        pawn.movableByCount(1);
 
         // then
-        assertTrue(pawn.movableByCount(1));
+        assertTrue(pawn.movableByCount(0));
     }
 }

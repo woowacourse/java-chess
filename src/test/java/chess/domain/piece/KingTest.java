@@ -36,7 +36,7 @@ class KingTest {
         final King king = new King(Team.WHITE);
 
         // then
-        assertTrue(king.movableByCount(1));
+        assertTrue(king.movableByCount(0));
     }
 
     @Test
