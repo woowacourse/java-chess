@@ -37,11 +37,9 @@ public class ChessController {
     }
 
     private void play() {
-        boolean isPlaying = true;
-        while (isPlaying) {
+        do {
             outputView.printBoard(chessGame.getBoard());
-            isPlaying = executeCommand();
-        }
+        } while (executeCommand());
     }
 
     private boolean executeCommand() {
