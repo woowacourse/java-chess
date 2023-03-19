@@ -3,6 +3,9 @@ package chess.controller;
 import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
+import chess.domain.state.End;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -14,19 +17,29 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private Game game;
+    private State state;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.game = new Game();
+        this.state = new Ready();
     }
 
     public void run() {
         outputView.printGameStartMessage();
-        boolean isEnd = false;
-        while (!isEnd) {
+
+        while (!(state instanceof End)) {
+            executeState();
+        }
+    }
+
+    private void executeState() {
+        try {
             final GameCommand gameCommand = generateGameCommand();
-            isEnd = executeGameCommand(gameCommand);
+            executeGameCommand(gameCommand);
+        } catch (final IllegalStateException e) {
+            System.err.println("[ERROR] " + e.getMessage());
         }
     }
 
@@ -39,21 +52,19 @@ public class ChessController {
         }
     }
 
-    private boolean executeGameCommand(final GameCommand gameCommand) {
+    private void executeGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
-            start();
-            return false;
+            state = state.start();
+            game = new Game();
+            outputView.printChessBoard(game.getPieces());
         }
         if (gameCommand.isMove()) {
+            state = state.next();
             play(gameCommand);
-            return false;
         }
-        return true;
-    }
-
-    private void start() {
-        game = new Game();
-        outputView.printChessBoard(game.getPieces());
+        if (gameCommand.isEnd()) {
+            state = state.end();
+        }
     }
 
     private void play(final GameCommand gameCommand) {

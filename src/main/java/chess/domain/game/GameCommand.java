@@ -6,27 +6,28 @@ import chess.domain.board.Square;
 import java.util.List;
 
 public class GameCommand {
-    private enum gameCommandIndex {
+    private enum GameCommandIndex {
         COMMAND(0),
         SOURCE(1),
         TARGET(2);
 
         private final int index;
 
-        gameCommandIndex(final int index) {
+        GameCommandIndex(final int index) {
             this.index = index;
         }
     }
 
-    private enum moveIndex {
+    private enum MoveIndex {
         FILE(0),
         RANK(1);
 
         private final int index;
 
-        moveIndex(final int index) {
+        MoveIndex(final int index) {
             this.index = index;
         }
+
     }
 
     private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
@@ -43,13 +44,13 @@ public class GameCommand {
     }
 
     private void validateGameCommand(final List<String> gameCommand) {
-        final String command = gameCommand.get(gameCommandIndex.COMMAND.index);
+        final String command = gameCommand.get(GameCommandIndex.COMMAND.index);
         final boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
         if (isCommandMove) {
             validateMoveCommand(
-                    gameCommand.get(gameCommandIndex.SOURCE.index),
-                    gameCommand.get(gameCommandIndex.TARGET.index)
+                    gameCommand.get(GameCommandIndex.SOURCE.index),
+                    gameCommand.get(GameCommandIndex.TARGET.index)
             );
             return;
         }
@@ -66,22 +67,26 @@ public class GameCommand {
     }
 
     public boolean isStart() {
-        return gameCommand.get(gameCommandIndex.COMMAND.index).equals(START_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
     }
 
     public boolean isMove() {
-        return gameCommand.get(gameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+    }
+
+    public boolean isEnd() {
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(END_COMMAND);
     }
 
     public List<Square> convertToSquare() {
-        final String source = gameCommand.get(gameCommandIndex.SOURCE.index);
-        final String target = gameCommand.get(gameCommandIndex.TARGET.index);
+        final String source = gameCommand.get(GameCommandIndex.SOURCE.index);
+        final String target = gameCommand.get(GameCommandIndex.TARGET.index);
 
-        final File sourceFile = File.findFileByLetter(source.charAt(moveIndex.FILE.index));
-        final Rank sourceRank = Rank.findRankByLetter(source.charAt(moveIndex.RANK.index));
+        final File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
+        final Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
 
-        final File targetFile = File.findFileByLetter(target.charAt(moveIndex.FILE.index));
-        final Rank targetRank = Rank.findRankByLetter(target.charAt(moveIndex.RANK.index));
+        final File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
+        final Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
 
         return List.of(new Square(sourceFile, sourceRank), new Square(targetFile, targetRank));
     }
