@@ -21,19 +21,22 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
+        return isStraightPath(sourcePosition, targetPosition, team)
+                || isDiagonalPath(sourcePosition, targetPosition, team);
+    }
+
+    public boolean isStraightPath(Position sourcePosition, Position targetPosition, Team team) {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
-        int direction = this.getTeam().getDirection();
-        int nextRankNumber = getNextRankNumber(sourceRankNumber, direction);
-
-        if (this.getTeam() == Team.BLACK) {
-            return (isSameFileCoordinate(sourcePosition, targetPosition)
-                    && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
-                    || isDiagonalPath(sourcePosition, targetPosition, team);
+        int nextRankNumber = getNextRankNumber(sourceRankNumber, getTeam().getDirection());
+        if (getTeam() == Team.BLACK) {
+            return isSameFileCoordinate(sourcePosition, targetPosition)
+                    && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber
+                    && team == Team.EMPTY;
         }
-        return (isSameFileCoordinate(sourcePosition, targetPosition)
-                && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
-                || isDiagonalPath(sourcePosition, targetPosition, team);
+        return isSameFileCoordinate(sourcePosition, targetPosition)
+                && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber
+                && team == Team.EMPTY;
     }
 
     private int getNextRankNumber(int sourceRankNumber, int direction) {
