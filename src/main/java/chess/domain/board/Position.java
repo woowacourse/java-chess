@@ -98,13 +98,6 @@ public final class Position {
         return Math.abs(file.sub(target.file)) <= NEAR_SQUARES && Math.abs(rank.sub(target.rank)) <= NEAR_SQUARES;
     }
 
-    public boolean canKnightJump(final Position target) {
-        final var fileSub = Math.abs(this.file.sub(target.file));
-        final var rankSub = Math.abs(this.rank.sub(target.rank));
-
-        return (fileSub == TWO_SQUARES && rankSub == NEAR_SQUARES) || (fileSub == NEAR_SQUARES && rankSub == TWO_SQUARES);
-    }
-
     public int getRank() {
         return rank.getValue() - NEAR_SQUARES;
     }
@@ -146,5 +139,20 @@ public final class Position {
                 "rank=" + file +
                 ", file=" + rank +
                 '}';
+    }
+
+    public boolean distanceEquals(final Position target, final int distance) {
+        int fileDistance = this.rank.sub(target.rank);
+        int rankDistance = this.file.sub(target.file);
+
+        return fileDistance * fileDistance + rankDistance * rankDistance == distance;
+    }
+
+    public boolean fileSubLessThan(final Position target, final int distance) {
+        return this.file.sub(target.file) < distance;
+    }
+
+    public boolean rankSubLessThan(final Position target, final int distance) {
+        return this.rank.sub(target.rank) < distance;
     }
 }
