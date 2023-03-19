@@ -3,12 +3,12 @@ package chess.domain.piece.type;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 
 import java.util.List;
 import java.util.Map;
 
 public class Knight extends Piece {
-    private static final String name = "n";
     public static final String DIRECTION_ERROR_MESSAGE = "Knight가 이동할 수 있는 방향이 아닙니다";
     public static final String DISTANCE_ERROR_MESSAGE = "Knight가 한 번에 이동할 수 있는 거리가 아닙니다";
     public static final String MOVE_ERROR_MESSAGE = "Knight는 도착점에 아군이 있으면 이동할 수 없습니다.";
@@ -25,7 +25,7 @@ public class Knight extends Piece {
 
 
     public Knight(Color color) {
-        super(name, color);
+        super(PieceType.KNIGHT, color);
     }
 
     @Override

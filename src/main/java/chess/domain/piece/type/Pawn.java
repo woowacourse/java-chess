@@ -3,12 +3,12 @@ package chess.domain.piece.type;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 
 import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final String name = "p";
     public static final String DIRECTION_ERROR_MESSAGE = "Pawn이 이동할 수 있는 방향이 아닙니다";
     public static final String DISTANCE_ERROR_MESSAGE = "Pawn이 한 번에 이동할 수 있는 거리가 아닙니다";
     private static final String MOVE_FORWARD_ERROR_MESSAGE = "Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다";
@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     private boolean isFirstMove = true;
 
     public Pawn(Color color) {
-        super(name, color);
+        super(PieceType.PAWN, color);
         this.movableDirection = createMovableDirectionByColor(color);
     }
 
@@ -49,11 +49,13 @@ public class Pawn extends Piece {
         }
     }
 
+    //todo: 코드오류로 수정한 것 커밋
     private void checkMovableDistance(Position start, Position end) {
         int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
         int distanceOfRanks = Math.abs(start.findGapOfRank(end));
         if (isFirstMove) {
             checkMovableDistanceWhenFirstMove(distanceOfColumns, distanceOfRanks);
+            return;
         }
         checkMovableDistanceAfterFirstMove(distanceOfColumns, distanceOfRanks);
     }

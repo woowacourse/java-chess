@@ -3,17 +3,16 @@ package chess.domain.piece.type;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 
 import java.util.List;
 
 public class Bishop extends Piece {
-
-    private static final String name = "b";
     private static final List<Direction> movableDirection = List.of(
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
     public Bishop(Color color) {
-        super(name, color);
+        super(PieceType.BISHOP, color);
     }
 
     @Override

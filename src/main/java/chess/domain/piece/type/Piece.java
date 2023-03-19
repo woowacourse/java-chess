@@ -3,22 +3,16 @@ package chess.domain.piece.type;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 
 public abstract class Piece {
 
-    private final String name;
+    private final PieceType pieceType;
     private final Color color;
 
-    public Piece(String name, Color color) {
-        this.name = name;
+    protected Piece(PieceType pieceType, Color color) {
+        this.pieceType = pieceType;
         this.color = color;
-    }
-
-    public String findName() {
-        if (color == Color.WHITE) {
-            return name.toLowerCase();
-        }
-        return name.toUpperCase();
     }
 
     public boolean isSameColor(Color color) {
@@ -29,10 +23,16 @@ public abstract class Piece {
         return Direction.findDirectionByGap(start, end);
     }
 
-    abstract public boolean isMovable(Position start, Position end, Color colorOfDestination);
-    abstract protected void checkMovableDirection(Direction direction);
+    public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
+
+    protected abstract void checkMovableDirection(Direction direction);
 
     public Color getColor() {
         return color;
+    }
+
+    //remove
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }
