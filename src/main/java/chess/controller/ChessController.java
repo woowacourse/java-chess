@@ -1,14 +1,11 @@
 package chess.controller;
 
-import static chess.constant.GameCommand.END;
-import static chess.view.PositionConverter.convertToSourcePosition;
-import static chess.view.PositionConverter.convertToTargetPosition;
-
+import chess.ChessGame;
 import chess.domain.Board;
-import chess.domain.Position;
-import chess.domain.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import static chess.view.GameCommand.END;
 
 public class ChessController {
 
@@ -24,7 +21,12 @@ public class ChessController {
         outputView.printStartMessage();
         start();
         Board board = new Board();
-        progress(board);
+        ChessGame chessGame = new ChessGame(board);
+        outputView.printBoard(board);
+
+        while (progress(chessGame)) {
+            outputView.printBoard(board);
+        }
     }
 
     private void start() {
@@ -36,29 +38,17 @@ public class ChessController {
         }
     }
 
-    private void progress(Board board) {
-        boolean isPlay = true;
-        Team turn = Team.getStartTeam();
-        while (isPlay) {
-            outputView.printBoard(board);
-            isPlay = play(board, turn);
-            turn = turn.reverse();
-        }
-    }
-
-    private boolean play(Board board, Team turn) {
+    private boolean progress(ChessGame chessGame) {
         String command = inputCommand();
-        if (command.equals(END)) {
+        if (isStop(command)) {
             return false;
         }
-        Position source = convertToSourcePosition(command);
-        Position target = convertToTargetPosition(command);
-        if (isWrongInputTeam(board, turn, source)) {
-            return play(board, turn);
+        try {
+            return startGame(chessGame, command);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return progress(chessGame);
         }
-
-        board.move(source, target);
-        return true;
     }
 
     private String inputCommand() {
@@ -70,11 +60,12 @@ public class ChessController {
         }
     }
 
-    private boolean isWrongInputTeam(Board board, Team turn, Position source) {
-        if (!board.isTurn(source, turn)) {
-            outputView.printWrongTurnMessage(turn);
-            return true;
-        }
-        return false;
+    private boolean isStop(String command) {
+        return END.getCommand().equals(command);
+    }
+
+    private boolean startGame(ChessGame chessGame, String command) {
+        chessGame.progress(command);
+        return true;
     }
 }
