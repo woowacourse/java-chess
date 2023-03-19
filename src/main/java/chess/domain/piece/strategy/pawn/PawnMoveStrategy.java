@@ -11,17 +11,10 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
         if (path.rankInterval() == 0) {
             throw new IllegalArgumentException("폰의 움직임은 Rank 가 증가하거나 감소해야 합니다.");
         }
-        if (!path.isUnitDistance() && !isTwoVerticalMove(path)) {
+        if (!path.isUnitDistance() && !path.isTwoVerticalMove()) {
             throw new IllegalArgumentException("폰은 그렇게 움직일 수 없습니다.");
         }
     }
 
     protected abstract void validAdditionalConstraint(final Path path);
-
-    private boolean isTwoVerticalMove(final Path path) {
-        if (Math.abs(path.rankInterval()) != 2) {
-            return false;
-        }
-        return Math.abs(path.fileInterval()) == 0;
-    }
 }

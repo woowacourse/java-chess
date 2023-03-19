@@ -48,17 +48,10 @@ public class ChessBoard {
         final Piece to = optGet(destination).orElse(null);
         final Piece move = from.move(destination, to);
         pieces.remove(from);
-        if (existByPosition(destination)) {
+        if (to != null) {
             pieces.remove(to);
         }
         pieces.add(move);
-    }
-
-    public Piece findByPosition(final PiecePosition piecePosition) {
-        return pieces.stream()
-                .filter(piece -> piece.existIn(piecePosition))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
     }
 
     private boolean existByPosition(final PiecePosition piecePosition) {
@@ -66,14 +59,21 @@ public class ChessBoard {
                 .anyMatch(piece -> piece.existIn(piecePosition));
     }
 
-    public List<Piece> pieces() {
-        return pieces.stream().map(Piece::clone)
-                .collect(Collectors.toList());
-    }
-
     private Optional<Piece> optGet(final PiecePosition piecePosition) {
         return pieces.stream()
                 .filter(piece -> piece.existIn(piecePosition))
                 .findAny();
+    }
+
+    Piece findByPosition(final PiecePosition piecePosition) {
+        return pieces.stream()
+                .filter(piece -> piece.existIn(piecePosition))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
+    }
+
+    public List<Piece> pieces() {
+        return pieces.stream().map(Piece::clone)
+                .collect(Collectors.toList());
     }
 }

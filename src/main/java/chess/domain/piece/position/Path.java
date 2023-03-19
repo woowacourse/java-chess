@@ -56,15 +56,18 @@ public class Path {
                 && Math.abs(source.fileInterval(destination)) <= 1;
     }
 
+    public boolean isTwoVerticalMove() {
+        if (Math.abs(rankInterval()) != 2) {
+            return false;
+        }
+        return Math.abs(fileInterval()) == 0;
+    }
+
     public List<PiecePosition> waypoints() {
         return iterate(source,
                 current -> !current.equals(destination),
                 current -> current.move(current.direction(destination)))
                 .skip(1)
                 .collect(Collectors.toList());
-    }
-
-    public PiecePosition source() {
-        return source;
     }
 }

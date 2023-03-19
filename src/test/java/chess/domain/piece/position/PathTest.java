@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -245,5 +246,23 @@ class PathTest {
 
         // when & then
         assertThat(path.waypoints()).isEmpty();
+    }
+
+    @Test
+    void 두칸의_수직이동여부를_확인할_수_있다() {
+        // given
+        final PiecePosition source = PiecePosition.of("e4");
+
+        // when
+        final Path north = Path.of(source, PiecePosition.of("e6"));
+        final Path south = Path.of(source, PiecePosition.of("e2"));
+        final Path not = Path.of(source, PiecePosition.of("f4"));
+
+        // then
+        assertAll(
+                () -> assertThat(north.isTwoVerticalMove()).isTrue(),
+                () -> assertThat(south.isTwoVerticalMove()).isTrue(),
+                () -> assertThat(not.isTwoVerticalMove()).isFalse()
+        );
     }
 }
