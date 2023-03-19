@@ -30,7 +30,7 @@ public class ChessBoardDto {
         return ranks.stream()
                 .flatMap(rank -> Arrays.stream(File.values())
                         .map(file -> {
-                            final Piece piece = piecePosition.get(new Position(file, rank));
+                            final Piece piece = piecePosition.get(Position.of(file, rank));
                             return new PieceDto(piece);
                         }))
                 .collect(Collectors.toList());

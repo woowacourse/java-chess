@@ -1,16 +1,31 @@
 package chess.board;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-// TODO : 캐싱을 적용한다.
 public class Position {
+
+    private static final Map<String, Position> CACHE_POSITION;
+
+    static {
+        CACHE_POSITION = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> Map.entry(file.name() + rank.name(), new Position(file, rank)))
+                ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
     private final File file;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(final File file, final Rank rank) {
+        return CACHE_POSITION.get(file.name() + rank.name());
     }
 
     @Override

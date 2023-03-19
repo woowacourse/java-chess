@@ -21,7 +21,6 @@ public class Pawn extends Piece {
         if (isWhitePawnMovable(from, to, toPiece)) {
             return true;
         }
-
         throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
     }
 

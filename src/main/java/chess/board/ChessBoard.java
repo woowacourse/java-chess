@@ -93,7 +93,7 @@ public class ChessBoard {
         }
 
         final List<Position> collect = IntStream.range(0, cutFiles.size())
-                .mapToObj(index -> new Position(cutFiles.get(index), cutRanks.get(index)))
+                .mapToObj(index -> Position.of(cutFiles.get(index), cutRanks.get(index)))
                 .collect(Collectors.toList());
 
         for (final Position position : collect) {
@@ -119,7 +119,7 @@ public class ChessBoard {
         final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
+            Piece validationPiece = piecePosition.get(Position.of(from.getFile(), Rank.of(i)));
 
             validateBlockedRoute(validationPiece);
         }
@@ -138,7 +138,7 @@ public class ChessBoard {
         final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            Piece validationPiece = piecePosition.get(new Position(File.from(i), from.getRank()));
+            Piece validationPiece = piecePosition.get(Position.of(File.from(i), from.getRank()));
             validateBlockedRoute(validationPiece);
         }
     }

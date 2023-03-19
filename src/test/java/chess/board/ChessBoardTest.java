@@ -385,7 +385,7 @@ class ChessBoardTest {
         @CsvSource(value = {"A:TWO", "B:TWO", "C:TWO", "D:TWO", "E:TWO", "F:TWO", "G:TWO", "H:TWO"}, delimiter = ':')
         void 폰의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -398,7 +398,7 @@ class ChessBoardTest {
         @CsvSource(value = {"A:ONE", "H:ONE"}, delimiter = ':')
         void 룩의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -411,7 +411,7 @@ class ChessBoardTest {
         @CsvSource(value = {"B:ONE", "G:ONE"}, delimiter = ':')
         void 나이트의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -424,7 +424,7 @@ class ChessBoardTest {
         @CsvSource(value = {"C:ONE", "F:ONE"}, delimiter = ':')
         void 비숍의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -466,7 +466,7 @@ class ChessBoardTest {
                 delimiter = ':')
         void 폰의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -479,7 +479,7 @@ class ChessBoardTest {
         @CsvSource(value = {"A:EIGHT", "H:EIGHT"}, delimiter = ':')
         void 룩의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -492,7 +492,7 @@ class ChessBoardTest {
         @CsvSource(value = {"B:EIGHT", "G:EIGHT"}, delimiter = ':')
         void 나이트의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
@@ -505,7 +505,7 @@ class ChessBoardTest {
         @CsvSource(value = {"C:EIGHT", "F:EIGHT"}, delimiter = ':')
         void 비숍의_초기_위치는_(File file, Rank rank) {
             //given
-            Position position = new Position(file, rank);
+            Position position = Position.of(file, rank);
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
