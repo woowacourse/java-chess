@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Knight extends Piece {
@@ -21,14 +21,22 @@ public final class Knight extends Piece {
 
     @Override
     public List<Position> findPositions(final Position source, final Position target) {
+        final List<Position> positions = new ArrayList<>();
         for (int index = 0; index < 8; index++) {
-            int expectRow = source.getRow() + moveX.get(index);
-            int expectColumn = source.getColumn() + moveY.get(index);
-
-            if (target.getRow() == expectRow && target.getColumn() == expectColumn) {
-                return List.of(target);
-            }
+            final Position movePosition = Position.of(moveX.get(index), moveY.get(index));
+            final Position movedPosition = source.move(movePosition);
+            addPositionIfMovableArea(target, movedPosition, positions);
         }
-        return Collections.emptyList();
+        return positions;
+    }
+
+    private void addPositionIfMovableArea(
+            final Position target,
+            final Position movedPosition,
+            final List<Position> positions
+    ) {
+        if (target.equals(movedPosition)) {
+            positions.add(target);
+        }
     }
 }
