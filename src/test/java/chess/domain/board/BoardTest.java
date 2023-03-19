@@ -17,7 +17,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -30,18 +30,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class BoardTest {
 
-    private static List<PieceType> generateResult(final Board board) {
-        final List<Rank> ranks = Arrays.stream(Rank.values())
-                .collect(toList());
-        Collections.reverse(ranks);
-        final Map<Position, Piece> result = board.getBoard();
-        return ranks.stream()
-                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
-                .map(result::get)
-                .map(Piece::type)
-                .collect(toList());
-    }
-
     @Test
     void 체스판을_초기화한다() {
         // given
@@ -51,8 +39,14 @@ public class BoardTest {
         board.initialize();
 
         // then
-        final List<PieceType> result = generateResult(board);
-        assertThat(result).containsExactly(
+        final Map<Position, Piece> result = board.getBoard();
+        final List<PieceType> pieceTypes = Arrays.stream(Rank.values())
+                .sorted(Comparator.reverseOrder())
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
+                .map(result::get)
+                .map(Piece::type)
+                .collect(toList());
+        assertThat(pieceTypes).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
                 EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,

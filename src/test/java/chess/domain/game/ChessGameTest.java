@@ -19,7 +19,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -32,12 +32,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class ChessGameTest {
 
-    private static List<PieceType> generateResult(final ChessGame chessGame) {
-        final List<Rank> ranks = Arrays.stream(Rank.values())
-                .collect(toList());
-        Collections.reverse(ranks);
-        final Map<Position, Piece> board = chessGame.getBoard();
-        return ranks.stream()
+    private static List<PieceType> toPieceTypes(final Map<Position, Piece> board) {
+        return Arrays.stream(Rank.values())
+                .sorted(Comparator.reverseOrder())
                 .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
                 .map(board::get)
                 .map(Piece::type)
@@ -53,7 +50,7 @@ public class ChessGameTest {
         chessGame.initialize();
 
         // then
-        final List<PieceType> result = generateResult(chessGame);
+        final List<PieceType> result = toPieceTypes(chessGame.getBoard());
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
@@ -97,7 +94,7 @@ public class ChessGameTest {
         chessGame.move("d7", "d6");
 
         // then
-        final List<PieceType> result = generateResult(chessGame);
+        final List<PieceType> result = toPieceTypes(chessGame.getBoard());
         assertThat(result).containsExactly(
                 ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
