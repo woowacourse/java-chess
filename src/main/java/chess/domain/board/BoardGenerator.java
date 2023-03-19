@@ -53,7 +53,7 @@ public class BoardGenerator {
     private static Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
         return ranks.stream()
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
-                .collect(toMap(Function.identity(), ignore -> Empty.create()));
+                .collect(toMap(Function.identity(), ignore -> Empty.instance()));
     }
 
     public static Map<Position, Piece> generate() {

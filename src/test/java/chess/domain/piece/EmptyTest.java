@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 public class EmptyTest {
 
     @Test
-    void 빈_칸이_정상적으로_생성된다() {
+    void 빈_기물을_정상적으로_반환한다() {
         // given
-        final Empty empty = Empty.create();
+        final Empty empty = Empty.instance();
 
         // expect
         assertThat(empty.type()).isEqualTo(PieceType.EMPTY);
