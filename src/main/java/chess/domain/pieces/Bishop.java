@@ -7,7 +7,6 @@ import chess.exception.PieceMessage;
 
 public class Bishop extends Piece {
 
-
     public Bishop(final Name name) {
         super(name);
     }
