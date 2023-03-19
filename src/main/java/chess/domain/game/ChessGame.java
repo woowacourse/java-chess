@@ -25,4 +25,12 @@ public class ChessGame {
     public List<Piece> pieces() {
         return step.pieces();
     }
+
+    public boolean playable() {
+        return step.playable();
+    }
+
+    public void end() {
+        step = step.end();
+    }
 }

@@ -34,21 +34,18 @@ public class ChessController {
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
         final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
 
-        CommandType commandType = null;
-        while (commandType != CommandType.END) {
-            commandType = play(chessGame);
+        while (chessGame.playable()) {
+            play(chessGame);
         }
     }
 
-    private CommandType play(final ChessGame chessGame) {
+    private void play(final ChessGame chessGame) {
         try {
             final List<String> commands = InputView.readCommand();
             final Command command = Command.parse(commands);
             actionMapping.get(command.type()).execute(chessGame, command);
-            return command.type();
         } catch (Exception e) {
             OutputView.error(e.getMessage());
-            return null;
         }
     }
 
@@ -66,6 +63,6 @@ public class ChessController {
     }
 
     private void end(final ChessGame chessGame, final Command command) {
-        // ignored
+        chessGame.end();
     }
 }

@@ -17,6 +17,11 @@ public class InitializeGame implements ChessGameStep {
     }
 
     @Override
+    public boolean playable() {
+        return true;
+    }
+
+    @Override
     public ChessGameStep initialize() {
         return new MovePiece(chessBoard, new Turn(Color.WHITE));
     }
@@ -24,6 +29,11 @@ public class InitializeGame implements ChessGameStep {
     @Override
     public ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination) {
         throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
+    }
+
+    @Override
+    public ChessGameStep end() {
+        return new EndGame();
     }
 
     @Override

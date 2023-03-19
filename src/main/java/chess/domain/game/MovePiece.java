@@ -18,6 +18,11 @@ public class MovePiece implements ChessGameStep {
     }
 
     @Override
+    public boolean playable() {
+        return true;
+    }
+
+    @Override
     public ChessGameStep initialize() {
         throw new IllegalStateException("이미 시작된 상태입니다.");
     }
@@ -26,6 +31,11 @@ public class MovePiece implements ChessGameStep {
     public ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination) {
         chessBoard.movePiece(turn, source, destination);
         return new MovePiece(chessBoard, turn.change());
+    }
+
+    @Override
+    public ChessGameStep end() {
+        return new EndGame();
     }
 
     @Override
