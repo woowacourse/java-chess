@@ -1,11 +1,9 @@
-package domain;
+package domain.path;
 
 import domain.piece.Piece;
 import domain.type.PieceType;
 import domain.type.direction.PieceMoveDirection;
 import java.util.List;
-import java.util.stream.IntStream;
-import util.ListUtil;
 
 public final class PathValidator {
 
@@ -20,22 +18,15 @@ public final class PathValidator {
         PieceMoveDirection.LEFT_DOWN
     );
 
-    public boolean isValid(final PieceMoveDirection direction, final Piece startPiece, final List<Square> path) {
-        if (isBlocked(path)) {
+    public boolean isValid(final PieceMoveDirection direction, final Piece startPiece, final Path path) {
+        if (path.isBlocked()) {
             return false;
         }
-        Piece endPiece = ListUtil.getLastElement(path).getPiece();
+        Piece endPiece = path.getEnd().getPiece();
         if (startPiece.isSameType(PieceType.PAWN)) {
             return isValidPawnPath(direction, startPiece, endPiece);
         }
         return startPiece.isDifferentColor(endPiece);
-    }
-
-    private boolean isBlocked(final List<Square> paths) {
-        final int exceptEndSquare = paths.size() - 1;
-        return IntStream.range(0, exceptEndSquare)
-            .mapToObj(paths::get)
-            .anyMatch(Square::isNotEmpty);
     }
 
     private boolean isValidPawnPath(PieceMoveDirection direction, Piece startPiece, Piece endPiece) {

@@ -60,17 +60,16 @@ public final class Board {
         final Square startSquare = findSquare(startLocation);
         final Piece startPiece = startSquare.getPiece();
         final PieceMoveDirection direction = PieceMoveDirection.find(startLocation, endLocation);
-        final List<Square> path = getSquaresInPath(startLocation, endLocation);
-        if (pathValidator.isValid(direction, startPiece, path)) {
+        if (pathValidator.isValid(direction, startPiece, makePath(startLocation, endLocation))) {
             return;
         }
         throw new IllegalArgumentException(PieceView.findSign(startPiece) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
     }
 
-    private List<Square> getSquaresInPath(final Location start, final Location end) {
+    private Path makePath(final Location start, final Location end) {
         final Square square = findSquare(start);
-        final List<Location> paths = square.searchPath(start, end);
-        return paths.stream().map(this::findSquare).collect(Collectors.toList());
+        final List<Location> locationPath = square.searchPath(start, end);
+        return new Path(locationPath.stream().map(this::findSquare).collect(Collectors.toList()));
     }
 
     public Square findSquare(final Location location) {
