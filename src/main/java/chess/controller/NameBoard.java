@@ -1,0 +1,78 @@
+package chess.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import chess.piece.Knight;
+import chess.piece.Piece;
+import chess.piece.Side;
+import chess.piece.directional.Pawn;
+import chess.piece.directional.normal.King;
+import chess.piece.directional.normal.longrange.Bishop;
+import chess.piece.directional.normal.longrange.Queen;
+import chess.piece.directional.normal.longrange.Rook;
+
+public class NameBoard {
+
+    private static final Map<Class<? extends Piece>, Name> nameByPiece = new HashMap<>();
+    private static final int BOARD_ROW_SIZE = 8;
+
+    private final List<List<String>> nameBoard;
+
+    static {
+        nameByPiece.put(King.class, Name.KING);
+        nameByPiece.put(Queen.class, Name.QUEEN);
+        nameByPiece.put(Bishop.class, Name.BISHOP);
+        nameByPiece.put(Knight.class, Name.KNIGHT);
+        nameByPiece.put(Rook.class, Name.ROOK);
+        nameByPiece.put(Pawn.class, Name.PAWN);
+    }
+
+    public NameBoard(List<Piece> pieces) {
+        this.nameBoard = generateNameBoard(pieces);
+    }
+
+    private List<List<String>> generateNameBoard(List<Piece> pieces) {
+        List<List<String>> nameBoard = new ArrayList<>();
+        initNameBoard(nameBoard);
+        fillNameBoardWithNames(pieces, nameBoard);
+        return nameBoard;
+    }
+
+    private void initNameBoard(List<List<String>> nameBoard) {
+        final List<String> emptyNames = List.of(".", ".", ".", ".", ".", ".", ".", ".");
+        for (int rowIndex = 0; rowIndex < BOARD_ROW_SIZE; rowIndex++) {
+            List<String> row = new ArrayList<>(emptyNames);
+            nameBoard.add(row);
+        }
+    }
+
+    private void fillNameBoardWithNames(List<Piece> pieces, List<List<String>> nameBoard) {
+        for (Piece piece : pieces) {
+            final String pieceName = generateName(piece);
+            int flippedIndex = getFlippedIndex(piece.getRank());
+            final List<String> rowNames = nameBoard.get(flippedIndex);
+            final int columnIndex = piece.getFile() - 1;
+            rowNames.set(columnIndex, pieceName);
+        }
+    }
+
+    private String generateName(Piece piece) {
+        Name pieceName = nameByPiece.get(piece.getClass());
+        Side side = piece.getSide();
+        if (Side.BLACK == side) {
+            return pieceName.getUpperCaseValue();
+        }
+        return pieceName.getLowerCaseValue();
+    }
+
+    private int getFlippedIndex(int originalIndex) {
+        return Math.abs(originalIndex - BOARD_ROW_SIZE);
+    }
+
+    public List<List<String>> getNameBoard() {
+        return List.copyOf(nameBoard);
+    }
+}

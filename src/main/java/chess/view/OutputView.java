@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.controller.dto.BoardDto;
 import java.util.List;
 
 public class OutputView {
@@ -16,9 +15,7 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(BoardDto boardDto) {
-        final List<List<String>> nameBoard = boardDto.getNameBoard();
-
+    public static void printBoard(List<List<String>> nameBoard) {
         for (List<String> names : nameBoard) {
             final String rowNames = String.join("", names);
             System.out.println(rowNames);

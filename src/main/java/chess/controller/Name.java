@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.controller;
 
 public enum Name {
     KING("k", "K"),

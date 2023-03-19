@@ -1,10 +1,11 @@
 package chess.game;
 
+import java.util.List;
+
 import chess.board.Board;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.controller.dto.BoardDto;
 import chess.piece.Piece;
 
 public class ChessGame {
@@ -15,10 +16,6 @@ public class ChessGame {
     public ChessGame(final Board board) {
         this.board = board;
         this.turn = Turn.WHITE;
-    }
-
-    public BoardDto generateBoardDto() {
-        return BoardDto.of(board);
     }
 
     public Position generatePosition(final String file, final int rank) {
@@ -38,5 +35,9 @@ public class ChessGame {
         if (!turn.isCorrectTurn(sourcePiece.getSide())) {
             throw new IllegalArgumentException("[ERROR] 현재 턴인 진영의 기물만 이동할 수 있습니다.");
         }
+    }
+
+    public List<Piece> getPieces() {
+        return board.getPieces();
     }
 }

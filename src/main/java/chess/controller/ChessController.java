@@ -15,11 +15,12 @@ import chess.view.OutputView;
 public class ChessController {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
-
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+
     private final InputView inputView;
     private final ChessGame chessGame;
+
 
     public ChessController(final InputView inputView) {
         this.inputView = inputView;
@@ -70,7 +71,8 @@ public class ChessController {
     private GameStatus handleStartCommand(GameStatus gameStatus, final ChessGame chessGame) {
         checkGameAlreadyStart(gameStatus);
         gameStatus = GameStatus.START;
-        OutputView.printBoard(chessGame.generateBoardDto());
+        NameBoard nameBoard = new NameBoard(chessGame.getPieces());
+        OutputView.printBoard(nameBoard.getNameBoard());
         return gameStatus;
     }
 
@@ -85,7 +87,8 @@ public class ChessController {
         Position sourcePosition = generatePosition(SOURCE_POSITION_INDEX, chessGame, moveCommand);
         Position targetPosition = generatePosition(TARGET_POSITION_INDEX, chessGame, moveCommand);
         chessGame.movePiece(sourcePosition, targetPosition);
-        OutputView.printBoard(chessGame.generateBoardDto());
+        NameBoard nameBoard = new NameBoard(chessGame.getPieces());
+        OutputView.printBoard(nameBoard.getNameBoard());
         return gameStatus;
     }
 
