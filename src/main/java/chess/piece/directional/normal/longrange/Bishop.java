@@ -17,12 +17,9 @@ public class Bishop extends LongRangePiece {
 
     @Override
     protected List<Direction> initDirections() {
-        final List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UP_RIGHT);
-        directions.add(Direction.UP_LEFT);
-        directions.add(Direction.DOWN_RIGHT);
-        directions.add(Direction.DOWN_LEFT);
-        return directions;
+        return new ArrayList<>(
+                List.of(Direction.UP_RIGHT, Direction.UP_LEFT, Direction.DOWN_RIGHT, Direction.DOWN_LEFT)
+        );
     }
 
     @Override

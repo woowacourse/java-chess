@@ -20,24 +20,12 @@ public class Pawn extends DirectionalPiece {
     protected List<Direction> initDirections() {
         final List<Direction> directions = new ArrayList<>();
         if (this.side == Side.WHITE) {
-            initWhiteSideDirections(directions);
+            directions.addAll(List.of(Direction.UP, Direction.UP_RIGHT, Direction.UP_LEFT));
         }
         if (this.side == Side.BLACK) {
-            initBlackSideDirections(directions);
+            directions.addAll(List.of(Direction.DOWN, Direction.DOWN_RIGHT, Direction.DOWN_LEFT));
         }
         return directions;
-    }
-
-    private void initWhiteSideDirections(final List<Direction> directions) {
-        directions.add(Direction.UP);
-        directions.add(Direction.UP_RIGHT);
-        directions.add(Direction.UP_LEFT);
-    }
-
-    private void initBlackSideDirections(final List<Direction> directions) {
-        directions.add(Direction.DOWN);
-        directions.add(Direction.DOWN_RIGHT);
-        directions.add(Direction.DOWN_LEFT);
     }
 
     @Override

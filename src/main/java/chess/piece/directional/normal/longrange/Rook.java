@@ -17,12 +17,9 @@ public class Rook extends LongRangePiece {
 
     @Override
     protected List<Direction> initDirections() {
-        final List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UP);
-        directions.add(Direction.DOWN);
-        directions.add(Direction.LEFT);
-        directions.add(Direction.RIGHT);
-        return directions;
+        return new ArrayList<>(
+                List.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
+        );
     }
 
     @Override
