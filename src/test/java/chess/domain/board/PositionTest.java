@@ -29,5 +29,14 @@ class PositionTest {
                 .isEqualTo(expectedGap);
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {"A,0","B,1","C,2","D,3","E,4","F,5", "G,6" ,"H,7"})
+    void 입력된_Position의_Column인덱스값에서_현재_Position의_Column인덱스값을_뺀_값을_반환한다(Column otherColumn, int expectedGap) {
+        Position otherPosition = Position.of(otherColumn, Rank.EIGHT);
+        Position currentPosition = Position.of(Column.A, Rank.EIGHT);
+
+        assertThat(currentPosition.findGapOfColumn(otherPosition))
+                .isEqualTo(expectedGap);
+    }
 
 }
