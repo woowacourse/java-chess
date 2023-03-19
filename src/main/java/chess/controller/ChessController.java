@@ -46,8 +46,8 @@ public final class ChessController {
 
     private void isMove(final List<String> commands) {
         if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
-            Position parsedFile = PositionParser.parse(commands.get(1));
-            Position parsedRank = PositionParser.parse(commands.get(2));
+            Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
+            Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
             chessGame.playTurn(parsedFile, parsedRank);
             printBoard(chessGame.getBoard());
         }
