@@ -30,13 +30,6 @@ public enum File {
         this.position = position;
     }
 
-    public static File from(final String command) {
-        return Arrays.stream(values())
-                .filter(value -> value.command.equalsIgnoreCase(command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("파일은 A ~ H 사이의 값이어야 합니다."));
-    }
-
     private static File from(final int position) {
         return Arrays.stream(values())
                 .filter(value -> value.position == position)

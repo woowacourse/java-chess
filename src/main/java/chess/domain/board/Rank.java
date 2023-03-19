@@ -30,13 +30,6 @@ public enum Rank {
         this.position = position;
     }
 
-    public static Rank from(final String command) {
-        return Arrays.stream(values())
-                .filter(value -> value.command.equalsIgnoreCase(command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("랭크는 1 ~ 8 사이의 값이어야 합니다."));
-    }
-
     private static Rank from(final int position) {
         return Arrays.stream(values())
                 .filter(value -> value.position == position)
