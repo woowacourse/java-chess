@@ -1,7 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -102,8 +102,9 @@ class BoardTest {
 
 		board.move(source, target);
 
-		assertAll(
-			() -> assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class),
-			() -> assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class));
+		assertSoftly(softly -> {
+			softly.assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class);
+			softly.assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class);
+		});
 	}
 }
