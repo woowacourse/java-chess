@@ -35,4 +35,18 @@ class RankTest {
         assertDoesNotThrow(() -> Rank.findRankByValue(existValue));
     }
 
+    @Test
+    void 입력한_인덱스와_일치하는_인덱스가_Rank에_존재하지_않는_경우_예외() {
+        int notExistIndex = 0;
+
+        assertThatThrownBy(() -> Rank.findRankByIndex(notExistIndex))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("존재하지 않는 Rank입니다");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1,2,3,4,5,6,7,8})
+    void 입력한_인덱스와_일치하는_인덱스가_존재하면_아무일도_일어나지_않는다(int existIndex) {
+        assertDoesNotThrow(() -> Rank.findRankByIndex(existIndex));
+    }
 }
