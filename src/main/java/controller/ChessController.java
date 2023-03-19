@@ -4,7 +4,6 @@ import static controller.Command.END;
 import static controller.Command.MOVE;
 
 import domain.board.Board;
-import domain.board.InitialChessAlignment;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -18,9 +17,9 @@ public final class ChessController {
     private static final int DESTINATION = 2;
     private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
 
-    public void run() {
+    public void run(Board board) {
         if (isStart()) {
-            final Board board = Board.create(new InitialChessAlignment());
+
             OutputView.printBoard(board.getPieces());
 
             play(board);
