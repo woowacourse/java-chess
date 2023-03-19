@@ -14,4 +14,6 @@ public interface PieceState {
     List<Coordinate> findRoute(final Coordinate from, final Coordinate to);
 
     void validateRoute(final List<PieceState> routeSquares);
+
+    boolean isMyTeam(Team team);
 }

@@ -14,4 +14,12 @@ public enum Team {
     public int getPawnDirection() {
         return pawnDirection;
     }
+
+    public Team flip() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+
+        return BLACK;
+    }
 }

@@ -3,6 +3,7 @@ package chess.domain.chessboard;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.Team;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,10 @@ public final class Square {
 
     public void switchPieceState(final Square other) {
         this.pieceState = other.pieceState;
+    }
+
+    public boolean isMyTeam(final Team team){
+        return this.pieceState.isMyTeam(team);
     }
 
     public PieceState getPieceState() {

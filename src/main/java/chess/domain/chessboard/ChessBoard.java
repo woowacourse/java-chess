@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public final class ChessBoard {
 
     private final Map<Coordinate, Square> squares = new LinkedHashMap<>();
+    private Team currentTurn = Team.WHITE;
 
     public ChessBoard() {
         initSquares();
@@ -85,12 +86,28 @@ public final class ChessBoard {
     }
 
     public void move(final Coordinate from, final Coordinate to) {
+        validateTurn(from);
         final Square departure = squares.get(from);
         final Square arrival = squares.get(to);
         validateCanMove(from, to, departure);
 
         arrival.switchPieceState(departure);
         departure.switchPieceState(new Square());
+        changeTurn();
+    }
+
+    private void validateTurn(final Coordinate from) {
+        if (checkNotCurrentTurn(from)) {
+            throw new IllegalArgumentException("현재 턴은 " + currentTurn + "입니다!");
+        }
+    }
+
+    private boolean checkNotCurrentTurn(final Coordinate from) {
+        return !squares.get(from).isMyTeam(currentTurn);
+    }
+
+    private void changeTurn() {
+        currentTurn = currentTurn.flip();
     }
 
     private void validateCanMove(final Coordinate from, final Coordinate to, final Square departure) {
