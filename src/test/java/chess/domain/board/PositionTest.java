@@ -59,6 +59,6 @@ class PositionTest {
         var source = C5;
         var target = A7;
 
-        assertThat(source.computeDiagonalPath(target)).contains(A7,B6);
+        assertThat(source.computeDiagonalPath(target)).contains(A7, B6);
     }
 }
