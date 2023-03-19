@@ -19,7 +19,7 @@ class PositionTest {
         var source = new Position(File.D, Rank.FIVE);
         var target = new Position(File.D, Rank.EIGHT);
 
-        assertThat(source.isFileEquals(target)).isTrue();
+        assertThat(source.isSameFile(target)).isTrue();
     }
 
     @Test
@@ -28,7 +28,7 @@ class PositionTest {
         var source = new Position(File.C, Rank.FIVE);
         var target = new Position(File.D, Rank.EIGHT);
 
-        assertThat(source.isFileEquals(target)).isFalse();
+        assertThat(source.isSameFile(target)).isFalse();
     }
 
     @Test

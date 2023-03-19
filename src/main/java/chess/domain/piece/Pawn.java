@@ -15,7 +15,7 @@ public abstract class Pawn extends Piece {
     }
 
     public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
-        if (source.isFileEquals(target)) {
+        if (source.isSameFile(target)) {
             return isEmptyPosition.keySet()
                     .stream()
                     .allMatch(isEmptyPosition::get);

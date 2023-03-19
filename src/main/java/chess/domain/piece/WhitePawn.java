@@ -28,7 +28,7 @@ public final class WhitePawn extends Pawn {
     }
 
     private Set<Position> generateTargetPath(final Position source, final Position target) {
-        if (source.isFileEquals(target)) {
+        if (source.isSameFile(target)) {
             validateInitWhite(source, target);
             return source.computeCrossPath(target);
         }

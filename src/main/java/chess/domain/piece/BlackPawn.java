@@ -28,7 +28,7 @@ public final class BlackPawn extends Pawn {
     }
 
     private Set<Position> generateTargetPath(final Position source, final Position target) {
-        if (source.isFileEquals(target)) {
+        if (source.isSameFile(target)) {
             validateInitBlack(source, target);
             return source.computeCrossPath(target);
         }

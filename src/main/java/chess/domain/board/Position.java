@@ -18,58 +18,6 @@ public final class Position {
         this.rank = rank;
     }
 
-    private Position maxRank(final Position source, final Position target) {
-        if (source.rank.isOver(target.rank)) {
-            return source;
-        }
-        return target;
-    }
-
-    private Position minRank(final Position source, final Position target) {
-        if (source.rank.isOver(target.rank)) {
-            return target;
-        }
-        return source;
-    }
-
-    private Position maxFile(final Position source, final Position target) {
-        if (source.file.isOver(target.file)) {
-            return source;
-        }
-        return target;
-    }
-
-    private Position minFile(final Position source, final Position target) {
-        if (source.file.isOver(target.file)) {
-            return target;
-        }
-        return source;
-    }
-
-    public boolean isRank(Rank rank) {
-        return this.rank == rank;
-    }
-
-    private Position getRightDownDiagonal() {
-        return new Position(file.plus(), rank.minus());
-    }
-
-    private Position getDownStraight() {
-        return new Position(file, rank.minus());
-    }
-
-    private Position getLeftDownDiagonal() {
-        return new Position(file.minus(), rank.minus());
-    }
-
-    private Position getLeftStraight() {
-        return new Position(file.minus(), rank);
-    }
-
-    public boolean isFileEquals(final Position target) {
-        return file.equals(target.file);
-    }
-
     public double computeInclination(final Position target) {
         final var fileSub = fileSub(target);
         final var rankSub = rankSub(target);
@@ -153,11 +101,63 @@ public final class Position {
         if (Math.abs(computeInclination(target)) == 1) {
             return computeDiagonalPath(target);
         }
-        if (file.equals(target.file) || rank.equals(target.rank)) {
+        if (file == target.file || rank == target.rank) {
             return computeCrossPath(target);
         }
 
         throw new IllegalArgumentException(CAN_NOT_COMPUTE_CROSS_DIAGONAL_EXCEPTION_MESSAGE);
+    }
+
+    private Position maxRank(final Position source, final Position target) {
+        if (source.rank.isOver(target.rank)) {
+            return source;
+        }
+        return target;
+    }
+
+    private Position minRank(final Position source, final Position target) {
+        if (source.rank.isOver(target.rank)) {
+            return target;
+        }
+        return source;
+    }
+
+    private Position maxFile(final Position source, final Position target) {
+        if (source.file.isOver(target.file)) {
+            return source;
+        }
+        return target;
+    }
+
+    private Position minFile(final Position source, final Position target) {
+        if (source.file.isOver(target.file)) {
+            return target;
+        }
+        return source;
+    }
+
+    public boolean isRank(Rank rank) {
+        return this.rank == rank;
+    }
+
+    private Position getRightDownDiagonal() {
+        return new Position(file.plus(), rank.minus());
+    }
+
+    private Position getDownStraight() {
+        return new Position(file, rank.minus());
+    }
+
+    private Position getLeftDownDiagonal() {
+        return new Position(file.minus(), rank.minus());
+    }
+
+    private Position getLeftStraight() {
+        return new Position(file.minus(), rank);
+    }
+
+    public boolean isSameFile(final Position target) {
+        return file == target.file;
     }
 
     public int fileSub(final Position target) {
