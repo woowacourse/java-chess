@@ -86,7 +86,7 @@ class RookMoveStrategyTest {
     }
 
     @Nested
-    class 직선이_아닌_경로로_움직이는_경우 {
+    class 룩선이_아닌_경로로_움직이는_경우 {
 
         @ParameterizedTest(name = "움직일 수 없다. [e4] -> [{1}]")
         @CsvSource({
