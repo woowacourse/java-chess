@@ -49,7 +49,6 @@ public class Pawn extends Piece {
         }
     }
 
-    //todo: 코드오류로 수정한 것 커밋
     private void checkMovableDistance(Position start, Position end) {
         int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
         int distanceOfRanks = Math.abs(start.findGapOfRank(end));

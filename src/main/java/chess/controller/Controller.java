@@ -24,7 +24,7 @@ public class Controller {
     private final Map<Command, Consumer<List<String>>> actionsByCommand;
 
     /**
-     * todo: 질문 4
+     * todo: 질문 1
      *
      * 컨트롤러 생성시, 인자로 받는 chessGame과 boardStrategy는
      * Command의 value값인, Consumer 람다식에 쓰이는 것외에는 쓰이지 않습니다.
