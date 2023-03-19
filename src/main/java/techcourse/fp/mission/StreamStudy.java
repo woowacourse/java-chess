@@ -11,12 +11,14 @@ public class StreamStudy {
 
     public static long countWords() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         long count = 0;
         for (String w : words) {
-            if (w.length() > 12) count++;
+            if (w.length() > 12) {
+                count++;
+            }
         }
         return count;
     }
@@ -46,7 +48,7 @@ public class StreamStudy {
 
     public static void printLongestWordTop100() throws IOException {
         String contents = Files.readString(Paths
-            .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         System.out.println(words);
