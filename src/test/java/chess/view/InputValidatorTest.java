@@ -1,11 +1,12 @@
 package chess.view;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputValidatorTest {
 
@@ -24,7 +25,7 @@ class InputValidatorTest {
         String input = "stort";
         assertThatThrownBy(() -> InputValidator.validateStartCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 게임을 시작하기 위해서는 start를 입력해주세요.");
+                .hasMessage("[ERROR] 게임을 진행하기 위해서는 start를 입력해주세요.");
     }
 
     @Test
