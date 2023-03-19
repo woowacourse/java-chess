@@ -62,10 +62,6 @@ public final class ChessController {
         outputView.printChessState(piecesPosition.getPiecesPosition());
     }
 
-    public void printErrorMessage(Exception exception) {
-        outputView.printErrorMessage(exception.getMessage());
-    }
-
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
             return request.get();

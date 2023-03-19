@@ -14,6 +14,8 @@ public final class InputView {
     private static final int TO_POSITION_INDEX = 2;
     private static final Scanner scanner = new Scanner(System.in);
     private static final String MOVE_DELIMITER = " ";
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final String MOVE_COMMAND_SIZE_ERROR = "이동 명령은 명령어를 포함하여 시작점과 도착점을 입력해야 합니다. 예. move b2 b3.";
 
     public ChessCommand readStartGame() {
         List<String> commands = Arrays.stream(scanner.nextLine().split(MOVE_DELIMITER))
@@ -30,6 +32,14 @@ public final class InputView {
         ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands.get(COMMAND_INDEX));
         if (chessCommand.isEnd()) {
             return ChessCommandDto.of(chessCommand);
+        }
+
+        return moveCommand(commands, chessCommand);
+    }
+
+    private static ChessCommandDto moveCommand(List<String> commands, ChessCommand chessCommand) {
+        if (commands.size() != MOVE_COMMAND_SIZE) {
+            throw new IllegalArgumentException(MOVE_COMMAND_SIZE_ERROR);
         }
 
         return ChessCommandDto.of(
