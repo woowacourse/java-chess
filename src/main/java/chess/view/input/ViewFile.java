@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.input;
 
 import chess.domain.position.File;
 import java.util.Arrays;

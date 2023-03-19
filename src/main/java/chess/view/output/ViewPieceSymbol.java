@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.output;
 
 import chess.domain.piece.PieceSymbol;
 import java.util.Arrays;

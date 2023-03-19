@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.input;
 
 import chess.domain.position.Rank;
 import java.util.Arrays;

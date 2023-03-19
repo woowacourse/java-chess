@@ -2,21 +2,13 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.PiecesPosition;
-import chess.domain.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
-import chess.view.ViewFile;
-import chess.view.ViewRank;
-import java.util.List;
+import chess.view.input.command.ChessCommand;
+import chess.view.input.command.ChessCommandDto;
+import chess.view.input.InputView;
+import chess.view.output.OutputView;
 import java.util.function.Supplier;
 
 public final class ChessController {
-
-    private static final int COMMAND_INDEX = 0;
-    private static final int FROM_POSITION_INDEX = 1;
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
-    private static final int TO_POSITION_INDEX = 2;
 
     private final OutputView outputView;
     private final InputView inputView;
@@ -28,17 +20,10 @@ public final class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-        requestStartCommand();
+        retryOnInvalidUserInput(inputView::readStartGame);
 
         ChessGame chessGame = startChessGame();
         play(chessGame);
-    }
-
-    private void requestStartCommand() {
-        retryOnInvalidUserInput(() -> {
-            List<String> strings = inputView.readCommand();
-            return ChessCommand.getStart(strings.get(COMMAND_INDEX));
-        });
     }
 
     private ChessGame startChessGame() {
@@ -52,40 +37,25 @@ public final class ChessController {
         ChessCommand command;
         do {
             command = retryOnInvalidUserInput(() -> playTurn(chessGame));
-        } while (!command.isEnd());
+        } while (command == ChessCommand.MOVE);
     }
 
     private ChessCommand playTurn(ChessGame chessGame) {
-        List<String> commands = inputView.readCommand();
-        ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands.get(COMMAND_INDEX));
-        if (chessCommand.isEnd()) {
+        ChessCommandDto chessCommandDto = inputView.readRunningCommand();
+        ChessCommand chessCommand = chessCommandDto.getChessCommand();
+        if (chessCommand == ChessCommand.END) {
             return chessCommand;
         }
 
-        move(chessGame, commands);
+        chessGame.move(chessCommandDto.getFromPosition(), chessCommandDto.getToPosition());
         printBoard(chessGame.getPiecesPosition());
         return chessCommand;
-    }
-
-    private void move(ChessGame chessGame, List<String> commands) {
-        String fromInput = commands.get(FROM_POSITION_INDEX);
-        String toInput = commands.get(TO_POSITION_INDEX);
-        validateEqualPosition(fromInput, toInput);
-
-        chessGame.move(toPosition(fromInput), toPosition(toInput));
     }
 
     private void validateEqualPosition(String fromInput, String toInput) {
         if (fromInput.equals(toInput)) {
             throw new IllegalArgumentException("출발 지점과 도착 지점은 동일할 수 없습니다");
         }
-    }
-
-    private Position toPosition(String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
-        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
-
-        return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
     private void printBoard(PiecesPosition piecesPosition) {

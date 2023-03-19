@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.view.input.command;
 
 import java.util.Arrays;
 
@@ -8,15 +8,16 @@ public enum ChessCommand {
     END("end"),
     ;
 
-    private final String command;
+    private final String commandInput;
 
-    ChessCommand(String command) {
-        this.command = command;
+
+    ChessCommand(String commandInput) {
+        this.commandInput = commandInput;
     }
 
     public static ChessCommand from(String inputCommand) {
         return Arrays.stream(ChessCommand.values())
-                .filter(it -> it.command.equals(inputCommand))
+                .filter(it -> it.commandInput.equals(inputCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 명령어는 존재하지 않습니다."));
     }
