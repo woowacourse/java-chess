@@ -4,7 +4,7 @@ import domain.piece.Coordinate;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 
-public class ConcreteSquare extends Square {
+public final class ConcreteSquare extends Square {
 
     private final Piece piece;
     private final Camp camp;

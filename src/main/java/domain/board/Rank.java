@@ -6,7 +6,7 @@ import domain.piece.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rank {
+public final class Rank {
 
     private final List<Square> squares;
 

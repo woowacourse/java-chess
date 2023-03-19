@@ -7,7 +7,7 @@ import view.OutputView;
 
 import java.util.List;
 
-public class ChessController {
+public final class ChessController {
 
     public static final char ASCII_ALPHABET_A = 'a';
     public static final int START_COORDINATE_INDEX = 1;

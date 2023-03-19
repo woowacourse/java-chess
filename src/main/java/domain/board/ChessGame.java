@@ -3,7 +3,7 @@ package domain.board;
 import domain.square.Square;
 import domain.piece.Coordinate;
 
-public class ChessGame {
+public final class ChessGame {
 
     public static final int FILE_SIZE = 8;
 

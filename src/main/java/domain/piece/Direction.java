@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.List;
 
-public class Direction {
+public final class Direction {
 
     private final List<Inclination> availableInclinations;
 

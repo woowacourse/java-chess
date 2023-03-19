@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-public class PieceTypeMapper {
+public final class PieceTypeMapper {
 
     private static final Map<Class<? extends Piece>, String> mapper = new HashMap<>();
 

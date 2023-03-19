@@ -7,7 +7,7 @@ import domain.square.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public final class Board {
 
     public static final int RANK_SIZE = 8;
 

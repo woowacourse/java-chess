@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.List;
 
-public class Rook implements Piece {
+public final class Rook implements Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,

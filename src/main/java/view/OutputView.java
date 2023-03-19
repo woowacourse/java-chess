@@ -4,7 +4,7 @@ import domain.board.ChessGame;
 import domain.square.Square;
 import domain.board.Rank;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다." + System.lineSeparator() +
             "> 게임 시작 : start" + System.lineSeparator() +

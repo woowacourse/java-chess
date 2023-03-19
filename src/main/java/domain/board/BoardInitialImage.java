@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class BoardInitialImage {
+public final class BoardInitialImage {
 
     public static final int RANK_SIZE = 8;
     public static final int EMPTY_RANK_SIZE = 4;

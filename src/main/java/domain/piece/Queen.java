@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.List;
 
-public class Queen implements Piece {
+public final class Queen implements Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,

@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.Objects;
 
-public class Coordinate {
+public final class Coordinate {
 
     private final int row;
     private final int col;

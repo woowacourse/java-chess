@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.List;
 
-public class Bishop implements Piece {
+public final class Bishop implements Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE

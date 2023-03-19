@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     public static final String COMMAND_DELIMITER = " ";
 

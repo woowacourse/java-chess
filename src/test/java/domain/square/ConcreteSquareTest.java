@@ -19,8 +19,8 @@ class ConcreteSquareTest {
         square.checkMoved();
 
         assertThat(square.isMovable(
-                new Coordinate(1, 0),
-                new Coordinate(2, 0)
+                new Coordinate(2, 0),
+                new Coordinate(1, 0)
         )).isTrue();
     }
 
@@ -28,13 +28,13 @@ class ConcreteSquareTest {
     @DisplayName("이미 이동했다면 두 칸을 움직일 수 없다")
     void isNotMovableWhenChecked() {
         Piece pawn = new BlackPawn();
-        Square square = new ConcreteSquare(pawn, Camp.BLACK);
+        Square square = new ConcreteSquare(pawn, Camp.WHITE);
 
         square.checkMoved();
 
         assertThat(square.isMovable(
-                new Coordinate(1, 0),
-                new Coordinate(3, 0)
+                new Coordinate(3, 0),
+                new Coordinate(1, 0)
         )).isFalse();
     }
 }
