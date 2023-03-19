@@ -37,12 +37,7 @@ class RookTest {
                         List.of(
                                 Position.of(1, 2),
                                 Position.of(1, 3),
-                                Position.of(1, 4),
-                                Position.of(1, 5),
-                                Position.of(1, 6),
-                                Position.of(1, 7),
-                                Position.of(1, 8),
-                                Position.of(1, 9)
+                                Position.of(1, 4)
                         )
                 ),
                 Arguments.arguments(
@@ -52,12 +47,13 @@ class RookTest {
                                 Position.of(3, 4),
                                 Position.of(2, 4),
                                 Position.of(1, 4),
-                                Position.of(0, 4),
-                                Position.of(-1, 4),
-                                Position.of(-2, 4),
-                                Position.of(-3, 4),
-                                Position.of(-4, 4)
+                                Position.of(0, 4)
                         )
+                ),
+                Arguments.arguments(
+                        Position.of(3, 3),
+                        Position.of(0, 4),
+                        List.of()
                 )
         );
     }

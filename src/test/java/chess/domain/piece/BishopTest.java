@@ -37,13 +37,7 @@ class BishopTest {
                         List.of(
                                 Position.of(2, 2),
                                 Position.of(3, 3),
-                                Position.of(4, 4),
-                                Position.of(5, 5),
-                                Position.of(6, 6),
-                                Position.of(7, 7),
-                                Position.of(8, 8),
-                                Position.of(9, 9)
-
+                                Position.of(4, 4)
                         )
                 ),
                 Arguments.arguments(
@@ -53,12 +47,13 @@ class BishopTest {
                                 Position.of(3, 3),
                                 Position.of(2, 2),
                                 Position.of(1, 1),
-                                Position.of(0, 0),
-                                Position.of(-1, -1),
-                                Position.of(-2, -2),
-                                Position.of(-3, -3),
-                                Position.of(-4, -4)
+                                Position.of(0, 0)
                         )
+                ),
+                Arguments.arguments(
+                        Position.of(1, 4),
+                        Position.of(0, 0),
+                        List.of()
                 )
         );
     }

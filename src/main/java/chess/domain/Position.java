@@ -1,9 +1,12 @@
 package chess.domain;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    public static final Position NOT_ABLE = new Position(-1, -1);
+    //    public static final Position NOT_ABLE = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
     private final int row;
     private final int column;
 
@@ -19,7 +22,39 @@ public class Position implements Comparable<Position> {
     public static Position from(final String rowColumn) {
         final int row = Row.findIndex(String.valueOf(rowColumn.charAt(0)));
         final int column = Column.findIndex(String.valueOf(rowColumn.charAt(1)));
+
         return new Position(row, column);
+    }
+
+    private int rowDirection(Position end) {
+        return Integer.compare(end.row, this.row);
+    }
+
+    private int columnDirection(Position end) {
+        return Integer.compare(end.column, this.column);
+    }
+
+    public List<Position> calculateBetweenPoints(Position end) {
+        int rowDirection = rowDirection(end);
+        int columnDirection = columnDirection(end);
+        int maxDistance = Math.max(Math.abs(row - end.row), Math.abs(column - end.column));
+
+        return IntStream.rangeClosed(1, maxDistance)
+                .mapToObj(distance -> Position.of(row + distance * rowDirection, column + distance * columnDirection))
+                .collect(Collectors.toList());
+    }
+
+    public boolean isNotLinearFunction(Position end) {
+        final int slopeOfOne = 1;
+        if ((end.column - this.column) == 0 || (end.row - this.row) == 0) {
+            return true;
+        }
+        final int slope = Math.abs((end.column - this.column) / (end.row - this.row));
+        return slope != slopeOfOne;
+    }
+
+    public boolean isNotConstantFunction(Position end) {
+        return this.row != end.getRow() && this.column != end.column;
     }
 
     public int getRow() {
@@ -33,9 +68,11 @@ public class Position implements Comparable<Position> {
     @Override
     public int compareTo(final Position position) {
         final int columnCompare = Integer.compare(this.column, position.column);
+
         if (columnCompare == 0) {
             return Integer.compare(this.row, position.row);
         }
+
         return columnCompare;
     }
 
