@@ -10,13 +10,15 @@ import chess.piece.Queen;
 import chess.piece.Rook;
 import chess.piece.Team;
 
+import java.util.List;
 import java.util.Map;
 
 public class PieceFactory {
 
     public static void createPiece(final Map<Position, Piece> piecePosition) {
         initPosition(piecePosition);
-        for (final Team team : Team.values()) {
+        List<Team> teams = List.of(Team.BLACK, Team.WHITE);
+        for (final Team team : teams) {
             createPawn(piecePosition, Rank.from(team, true), team);
             createRook(piecePosition, Rank.from(team, false), team);
             createKnight(piecePosition, Rank.from(team, false), team);
