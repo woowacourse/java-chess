@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class King extends Normal {
@@ -14,10 +13,8 @@ public final class King extends Normal {
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
         if (source.isNear(target)) {
-            Set<Position> path = new HashSet<>();
-            path.add(target);
 
-            return path;
+            return Set.of(target);
         }
 
         throw new IllegalArgumentException("갈 수 없는 위치입니다.");
