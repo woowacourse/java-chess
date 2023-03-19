@@ -6,6 +6,8 @@ import java.util.Set;
 
 public final class Knight extends Normal {
 
+    private static final int DISTANCE = 5;
+
     public Knight(final Color color) {
         super(color);
     }
@@ -27,6 +29,6 @@ public final class Knight extends Normal {
         final var fileSub = Math.abs(source.fileSub(target));
         final var rankSub = Math.abs(source.rankSub(target));
 
-        return (fileSub == 2 && rankSub == 1) || (fileSub == 1 && rankSub == 2);
+        return Math.pow(fileSub, 2) + Math.pow(rankSub, 2) == DISTANCE;
     }
 }
