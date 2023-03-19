@@ -7,13 +7,12 @@ public class Squares {
     private static final List<Square> squares = new ArrayList<>();
 
     static {
-        createSquares();
+        generateSquares();
     }
 
-    private Squares() {
-    }
+    private Squares() {}
 
-    private static void createSquares() {
+    private static void generateSquares() {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 squares.add(Square.of(file, rank));

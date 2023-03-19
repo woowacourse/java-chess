@@ -17,25 +17,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Pieces {
-    private final Map<Square, Piece> pieces = new HashMap<>();
+    private static final Map<Square, Piece> pieces = new HashMap<>();
 
-    private Pieces() {
+    static {
         generatePieces();
     }
 
+    private Pieces() {}
+
     public static Map<Square, Piece> init() {
-        Pieces pieces = new Pieces();
-        return new HashMap<>(pieces.pieces);
+        return new HashMap<>(pieces);
     }
 
-    private void generatePieces() {
+    private static void generatePieces() {
         initPieceExceptPawn(ONE, WHITE);
         initPawn(SEVEN, BLACK);
         initPieceExceptPawn(EIGHT, BLACK);
         initPawn(TWO, WHITE);
     }
 
-    private void initPieceExceptPawn(final Rank rank, final Team team) {
+    private static void initPieceExceptPawn(final Rank rank, final Team team) {
         pieces.put(Squares.getSquare(E, rank), new King(team));
         pieces.put(Squares.getSquare(D, rank), new Queen(team));
         pieces.put(Squares.getSquare(A, rank), new Rook(team));
@@ -46,7 +47,7 @@ public class Pieces {
         pieces.put(Squares.getSquare(F, rank), new Bishop(team));
     }
 
-    private void initPawn(final Rank rank, final Team team) {
+    private static void initPawn(final Rank rank, final Team team) {
         Arrays.stream(File.values())
                 .forEach(file -> pieces.put(Squares.getSquare(file, rank), new InitialPawn(team)));
     }
