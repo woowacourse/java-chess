@@ -1,4 +1,4 @@
-package chess.domain.order;
+package chess.domain.command;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class OrderCaseTest {
+class CommandCaseTest {
 
     @Test
     @DisplayName("start 명령어를 받으면 START를 반환한다")
     void from_start() {
         final String command = "start";
 
-        assertThat(OrderCase.from(command)).isEqualTo(OrderCase.START);
+        assertThat(CommandCase.from(command)).isEqualTo(CommandCase.START);
     }
 
     @Test
@@ -21,7 +21,7 @@ class OrderCaseTest {
     void from_end() {
         final String command = "end";
 
-        assertThat(OrderCase.from(command)).isEqualTo(OrderCase.END);
+        assertThat(CommandCase.from(command)).isEqualTo(CommandCase.END);
     }
 
     @Test
@@ -29,7 +29,7 @@ class OrderCaseTest {
     void from_move() {
         final String command = "move";
 
-        assertThat(OrderCase.from(command)).isEqualTo(OrderCase.MOVE);
+        assertThat(CommandCase.from(command)).isEqualTo(CommandCase.MOVE);
     }
 
     @Test
@@ -37,7 +37,7 @@ class OrderCaseTest {
     void invalidCommand() {
         final String command = "test";
 
-        assertThatThrownBy(() -> OrderCase.from(command))
+        assertThatThrownBy(() -> CommandCase.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력값은 start, end, move만 가능합니다.");
     }
@@ -45,18 +45,18 @@ class OrderCaseTest {
     @Test
     @DisplayName("START는 이름을 가진다")
     void getValue_START() {
-        assertThat(OrderCase.START.getValue()).isEqualTo("start");
+        assertThat(CommandCase.START.getValue()).isEqualTo("start");
     }
 
     @Test
     @DisplayName("END는 이름을 가진다")
     void getValue_END() {
-        assertThat(OrderCase.END.getValue()).isEqualTo("end");
+        assertThat(CommandCase.END.getValue()).isEqualTo("end");
     }
 
     @Test
     @DisplayName("MOVE는 이름을 가진다")
     void getValue_MOVE() {
-        assertThat(OrderCase.MOVE.getValue()).isEqualTo("move");
+        assertThat(CommandCase.MOVE.getValue()).isEqualTo("move");
     }
 }

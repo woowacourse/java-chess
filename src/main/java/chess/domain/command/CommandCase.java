@@ -1,8 +1,8 @@
-package chess.domain.order;
+package chess.domain.command;
 
 import java.util.Arrays;
 
-public enum OrderCase {
+public enum CommandCase {
 
     START("start"),
     END("end"),
@@ -10,13 +10,13 @@ public enum OrderCase {
 
     private final String value;
 
-    OrderCase(String value) {
+    CommandCase(String value) {
         this.value = value;
     }
 
-    public static OrderCase from(final String input) {
-        return Arrays.stream(OrderCase.values())
-                .filter(orderCase -> orderCase.getValue().equals(input))
+    public static CommandCase from(final String input) {
+        return Arrays.stream(CommandCase.values())
+                .filter(commandCase -> commandCase.getValue().equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move만 가능합니다."));
     }

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.order.Order;
+import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -18,17 +18,17 @@ public class ChessController {
     }
 
     private static void startGame(final Board board) {
-        Order.ofStart(InputView.askStart());
+        Command.ofStart(InputView.askStart());
         OutputView.printBoard(board);
     }
 
     private static void playGame(final Board board) {
-        Order order = Order.ofMoveOrEnd(InputView.askNext());
-        if (order.isEnd()) {
+        Command command = Command.ofMoveOrEnd(InputView.askNext());
+        if (command.isEnd()) {
             return;
         }
-        if (order.isMove()) {
-            board.move(order.getSource(), order.getTarget());
+        if (command.isMove()) {
+            board.move(command.getSource(), command.getTarget());
             OutputView.printBoard(board);
             playGame(board);
         }

@@ -1,4 +1,4 @@
-package chess.domain.order;
+package chess.domain.command;
 
 import chess.domain.position.Position;
 
@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static chess.domain.order.OrderCase.*;
-
-public final class Order {
+public final class Command {
     private static final String DELIMITER = " ";
     private static final int SOURCE_POSITION_INDEX = 0;
     private static final int TARGET_POSITION_INDEX = 1;
@@ -18,53 +16,53 @@ public final class Order {
     private static final int START_POSITION_INDEX = 1;
     private static final int END_POSITION_INDEX = 2;
 
-    private final OrderCase orderCase;
+    private final CommandCase commandCase;
     private final List<Position> moves;
 
-    private Order(final OrderCase orderCase, final List<Position> moves) {
-        this.orderCase = orderCase;
+    private Command(final CommandCase commandCase, final List<Position> moves) {
+        this.commandCase = commandCase;
         this.moves = moves;
     }
 
-    public static Order ofStart(final String input) {
-        OrderCase value = OrderCase.from(input);
+    public static Command ofStart(final String input) {
+        CommandCase value = CommandCase.from(input);
         validateStart(value);
-        return new Order(value, new ArrayList<>());
+        return new Command(value, new ArrayList<>());
     }
 
-    private static void validateStart(final OrderCase value) {
-        if (!value.equals(START)) {
+    private static void validateStart(final CommandCase value) {
+        if (!value.equals(CommandCase.START)) {
             throw new IllegalArgumentException("게임을 시작하려면 start만 입력해야합니다");
         }
     }
 
-    public static Order ofMoveOrEnd(final String input) {
+    public static Command ofMoveOrEnd(final String input) {
         List<String> inputs = Arrays.asList(input.split(DELIMITER));
-        OrderCase value = OrderCase.from(inputs.get(COMMAND_INDEX));
+        CommandCase value = CommandCase.from(inputs.get(COMMAND_INDEX));
 
-        if (value.equals(END)) {
+        if (value.equals(CommandCase.END)) {
             return ofEnd(input);
         }
-        if (value.equals(MOVE)) {
+        if (value.equals(CommandCase.MOVE)) {
             return ofMove(value, inputs);
         }
         throw new IllegalArgumentException("게임 진행중에는 end와 move 커맨드 입력만 가능합니다");
     }
 
-    private static Order ofEnd(final String input) {
-        OrderCase value = OrderCase.from(input);
+    private static Command ofEnd(final String input) {
+        CommandCase value = CommandCase.from(input);
 
-        if (!value.equals(END)) {
+        if (!value.equals(CommandCase.END)) {
             throw new IllegalArgumentException("게임을 종료하려면 end만 입력해야합니다");
         }
-        return new Order(value, new ArrayList<>());
+        return new Command(value, new ArrayList<>());
     }
 
-    private static Order ofMove(final OrderCase orderCase, final List<String> values) {
+    private static Command ofMove(final CommandCase commandCase, final List<String> values) {
         validateInputSize(values);
         validateEachPosition(values);
 
-        return new Order(orderCase, generatePositions(values));
+        return new Command(commandCase, generatePositions(values));
     }
 
     private static void validateInputSize(final List<String> values) {
@@ -95,11 +93,11 @@ public final class Order {
     }
 
     public boolean isEnd() {
-        return orderCase.equals(END);
+        return commandCase.equals(CommandCase.END);
     }
 
     public boolean isMove() {
-        return orderCase.equals(MOVE);
+        return commandCase.equals(CommandCase.MOVE);
     }
 
     public Position getSource() {
