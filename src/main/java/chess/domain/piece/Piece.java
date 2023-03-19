@@ -3,16 +3,20 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Role;
 import chess.domain.Team;
+import chess.strategy.MoveStrategy;
 
 import java.util.Objects;
 
 public abstract class Piece {
+
     protected final Role role;
     protected final Team team;
+    protected final MoveStrategy moveStrategy;
 
-    protected Piece(Role role, Team team) {
+    protected Piece(Role role, Team team, MoveStrategy moveStrategy) {
         this.role = role;
         this.team = team;
+        this.moveStrategy = moveStrategy;
     }
 
     public abstract boolean canMove(Position source, Position target);

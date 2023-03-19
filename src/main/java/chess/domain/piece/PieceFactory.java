@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class PieceFactory {
+
     private static final Map<Role, Function<Team, Piece>> FACTORY = new EnumMap<>(Role.class);
 
     private PieceFactory() {}

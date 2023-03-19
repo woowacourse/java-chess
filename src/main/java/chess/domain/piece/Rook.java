@@ -3,16 +3,12 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Role;
 import chess.domain.Team;
-import chess.strategy.CrossStrategy;
-import chess.strategy.MoveStrategy;
+import chess.strategy.RockStrategy;
 
 public class Rook extends Piece {
 
-    private final MoveStrategy moveStrategy;
-
     public Rook(Team team) {
-        super(Role.ROOK, team);
-        moveStrategy = new CrossStrategy();
+        super(Role.ROOK, team, new RockStrategy());
     }
 
     @Override
