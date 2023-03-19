@@ -19,12 +19,12 @@ class PawnTest {
     @DisplayName("pawn이 직선으로 움직일때 첫번째 이동이면, 두칸갈수 있다.")
     void fetchMovableCoordinate() {
         Pawn pawn = new Pawn(Camp.WHITE);
-        Square currentSquare = Square.of(2, 2);
-        Square targetSquare = Square.of(2, 4);
+        Square currentSquare = Square.of(2, 1);
+        Square targetSquare = Square.of(2, 3);
 
         List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
 
-        assertThat(squares).contains(Square.of(2,3), Square.of(2,4));
+        assertThat(squares).contains(Square.of(2, 2), Square.of(2, 3));
     }
 
     @Test
@@ -38,7 +38,7 @@ class PawnTest {
         pawn.fetchMovePath(currentSquare, targetSquare);
         List<Square> squares = pawn.fetchMovePath(targetSquare, nextTargetSquare);
 
-        assertThat(squares).containsExactly(Square.of(2,4));
+        assertThat(squares).containsExactly(Square.of(2, 4));
     }
 
     @Test
@@ -50,7 +50,7 @@ class PawnTest {
 
         List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
 
-        assertThat(squares).contains(Square.of(3,3));
+        assertThat(squares).contains(Square.of(3, 3));
     }
 
     @Test
@@ -66,11 +66,11 @@ class PawnTest {
     @DisplayName("폰이 직선으로 두칸 이동하는 경우, 경로에 기물이 없고 targetSquare에 기물이 없으면 true를 반환한다")
     void canMoveTwoStep() {
         Pawn pawn = new Pawn(Camp.WHITE);
-        Square targetSquare = Square.of(7, 7);
-        pawn.fetchMovePath(Square.of(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Square targetSquare = Square.of(7, 3);
+        pawn.fetchMovePath(Square.of(7, 1), targetSquare);
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.NONE);
-        pathInfo.put(Square.of(6,7), Camp.NONE);
+        pathInfo.put(Square.of(7, 2), Camp.NONE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -80,12 +80,13 @@ class PawnTest {
     @Test
     @DisplayName("폰이 직선으로 두칸 이동하는 경우, 경로에 기물이 있으면 false를 반환한다")
     void canMoveTwoStepFailByPath() {
-        Pawn pawn = new Pawn(Camp.WHITE);
-        Square targetSquare = Square.of(7, 7);
-        pawn.fetchMovePath(Square.of(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Pawn pawn = new Pawn(Camp.BLACK);
+        Square currentSquare = Square.of(1, 6);
+        Square targetSquare = Square.of(1, 4);
+        pawn.fetchMovePath(currentSquare, targetSquare);
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.NONE);
-        pathInfo.put(Square.of(6,7), Camp.WHITE);
+        pathInfo.put(Square.of(1, 5), Camp.WHITE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -96,11 +97,12 @@ class PawnTest {
     @DisplayName("폰이 직선으로 두칸 이동하는 경우, 경로에 기물이 없지만 targetSquare에 기물이 있는경우 false를 반환한다")
     void canMoveTwoStepFailByTarget() {
         Pawn pawn = new Pawn(Camp.WHITE);
-        Square targetSquare = Square.of(7, 7);
-        pawn.fetchMovePath(Square.of(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Square currentSquare = Square.of(7, 1);
+        Square targetSquare = Square.of(7, 3);
+        pawn.fetchMovePath(currentSquare, targetSquare);
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.WHITE);
-        pathInfo.put(Square.of(6,7), Camp.NONE);
+        pathInfo.put(Square.of(7, 2), Camp.NONE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -112,8 +114,8 @@ class PawnTest {
     void canMoveOneStepFailByTarget() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = Square.of(7, 7);
-        pawn.fetchMovePath(Square.of(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        pawn.fetchMovePath(Square.of(7, 6), targetSquare);
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.WHITE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -128,7 +130,7 @@ class PawnTest {
         Square currentSquare = Square.of(7, 5);
         Square targetSquare = Square.of(7, 6);
         pawn.fetchMovePath(currentSquare, targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.NONE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -142,7 +144,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = Square.of(7, 7);
         pawn.fetchMovePath(Square.of(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.BLACK);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -157,7 +159,7 @@ class PawnTest {
         Square currentSquare = Square.of(1, 3);
         Square targetSquare = Square.of(0, 4);
         pawn.fetchMovePath(currentSquare, targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.BLACK);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -171,7 +173,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = Square.of(7, 7);
         pawn.fetchMovePath(Square.of(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.WHITE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -185,7 +187,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = Square.of(7, 7);
         pawn.fetchMovePath(Square.of(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.NONE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);

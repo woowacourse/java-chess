@@ -9,7 +9,8 @@ import domain.piece.Camp;
 import domain.piece.Piece;
 
 public class Pawn extends Piece {
-    private boolean isFirstMove = true;
+    private static final int WHITE_INITIAL_RANK_COORDINATE = 1;
+    private static final int BLACK_INITIAL_RANK_COORDINATE = 6;
     private boolean isGoingForward;
 
     public Pawn(Camp camp) {
@@ -27,7 +28,7 @@ public class Pawn extends Piece {
         Integer distance = calculateDistance(gaps);
         List<Integer> direction = calculateDirection(gaps, distance);
         validateMovable(gaps);
-        changeFirstMoveState();
+        validateDoubleStep(currentSquare, distance);
         changeGoingForwardState(gaps);
         if (distance == 1) {
             return List.of(targetSquare);
@@ -48,7 +49,6 @@ public class Pawn extends Piece {
         validateDiagonalMove(fileGapAbs, rankGapAbs);
         validateForwardMove(fileGapAbs, rankGapAbs);
         validateRankGap(rankGap);
-        validateDoubleStep(rankGapAbs);
     }
 
     private void validateRankGap(int rankGap) {
@@ -75,15 +75,17 @@ public class Pawn extends Piece {
         }
     }
 
-    private void validateDoubleStep(int rankGapAbs) {
-        if (rankGapAbs == 2 && !isFirstMove) {
-            throw new IllegalArgumentException("더블 스텝은 첫 움직임에만 가능합니다.");
+    private void validateDoubleStep(Square currentSquare, int distance) {
+        if (distance != 2) {
+            return;
         }
-    }
-
-    private void changeFirstMoveState() {
-        if (isFirstMove) {
-            isFirstMove = false;
+        List<Integer> coordinate = currentSquare.toCoordinate();
+        Integer rankCoordinate = coordinate.get(RANK);
+        if (isWhite() && rankCoordinate != WHITE_INITIAL_RANK_COORDINATE) {
+            throw new IllegalStateException("더블스텝은 첫 움직임에만 가능합니다.");
+        }
+        if (!isWhite() && rankCoordinate != BLACK_INITIAL_RANK_COORDINATE) {
+            throw new IllegalStateException("더블스텝은 첫 움직임에만 가능합니다.");
         }
     }
 
