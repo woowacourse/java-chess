@@ -1,6 +1,7 @@
 package controller;
 
 import static controller.ProgressCommand.END;
+import static controller.ProgressCommand.MOVE;
 
 import domain.board.Board;
 import domain.position.Position;
@@ -11,7 +12,7 @@ import view.OutputView;
 
 public final class ChessController {
 
-    private static final int COMMAND = 0;
+    private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_PIECE = 1;
     private static final int DESTINATION = 2;
 
@@ -33,17 +34,39 @@ public final class ChessController {
     }
 
     private void play(final Board board) {
-        final List<String> gameOption = InputView.readPlayGameOption();
-        final ProgressCommand command = ProgressCommand.from(gameOption.get(COMMAND));
+        List<String> commands;
+        while (MOVE.equals(ProgressCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
+            board.move(getSourcePiece(commands), getDestination(commands));
+            OutputView.printBoard(board.getPieces());
+        }
+    }
 
-        if (END.equals(command)) {
+    private List<String> readProgressCommand() {
+        try {
+            List<String> commands = inputMoveEndCommand();
+            validateCommands(commands);
+            return commands;
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return readProgressCommand();
+        }
+    }
+
+    private List<String> inputMoveEndCommand() {
+        final List<String> gameOption = InputView.readPlayGameOption();
+        ProgressCommand.from(gameOption.get(COMMAND_INDEX));
+        return gameOption;
+    }
+
+    private void validateCommands(List<String> commands) {
+        if (END.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
+            return;
+        }
+        if (MOVE.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 3) {
             return;
         }
 
-        board.move(getSourcePiece(gameOption), getDestination(gameOption));
-        OutputView.printBoard(board.getPieces());
-
-        play(board);
+        throw new IllegalArgumentException("move source위치 target위치 또는 end로 입력해야 합니다.");
     }
 
     private Position getDestination(final List<String> gameOption) {
