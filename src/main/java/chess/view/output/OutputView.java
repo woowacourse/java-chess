@@ -20,7 +20,7 @@ public final class OutputView {
         StringBuilder chessBoardView = new StringBuilder();
         for (Position position : piecePoint.keySet()) {
             Piece piece = piecePoint.get(position);
-            String viewSymbolBy = ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbol(), piece.isBlack());
+            String viewSymbolBy = getViewSymbolBy(piece);
 
             checkLineBreak(chessBoardView);
             chessBoardView.append(viewSymbolBy);
@@ -29,7 +29,15 @@ public final class OutputView {
         System.out.println(chessBoardView);
     }
 
-    private static void checkLineBreak(StringBuilder chessBoardView) {
+    private String getViewSymbolBy(Piece piece) {
+        if (piece.isBlack()) {
+            return BlackPieceSymbolView.getViewSymbolBy(piece.getPieceSymbol());
+        }
+
+        return WhitePieceSymbolView.getViewSymbolBy(piece.getPieceSymbol());
+    }
+
+    private void checkLineBreak(StringBuilder chessBoardView) {
         if (chessBoardView.length() % (CHESS_BOARD_WIDTH + LINE_BREAK_INDEX) == 0) {
             chessBoardView.append(System.lineSeparator());
         }

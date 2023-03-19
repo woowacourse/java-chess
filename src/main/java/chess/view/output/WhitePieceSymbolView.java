@@ -4,7 +4,7 @@ import chess.domain.piece.PieceSymbol;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public enum ViewPieceSymbol {
+public enum WhitePieceSymbolView {
     PAWN(PieceSymbol.PAWN, "p"),
     BISHOP(PieceSymbol.BISHOP, "b"),
     KING(PieceSymbol.KING, "k"),
@@ -17,26 +17,16 @@ public enum ViewPieceSymbol {
     private final PieceSymbol pieceSymbol;
     private final String viewSymbol;
 
-    ViewPieceSymbol(PieceSymbol pieceSymbol, String viewSymbol) {
+    WhitePieceSymbolView(PieceSymbol pieceSymbol, String viewSymbol) {
         this.pieceSymbol = pieceSymbol;
         this.viewSymbol = viewSymbol;
     }
 
-    public static String getViewSymbolBy(PieceSymbol pieceSymbol, boolean upperFlag) {
-        String viewSymbol = Arrays.stream(ViewPieceSymbol.values())
+    public static String getViewSymbolBy(PieceSymbol pieceSymbol) {
+        return Arrays.stream(WhitePieceSymbolView.values())
                 .filter(it -> it.pieceSymbol == pieceSymbol)
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
                 .viewSymbol;
-
-        return applyUpperFlag(viewSymbol, upperFlag);
-    }
-
-    private static String applyUpperFlag(String viewSymbol, boolean upperFlag) {
-        if (upperFlag) {
-            return viewSymbol.toUpperCase();
-        }
-
-        return viewSymbol;
     }
 }
