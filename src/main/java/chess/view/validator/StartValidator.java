@@ -12,11 +12,14 @@ public class StartValidator implements InputValidator {
 
     @Override
     public void validate(InputRequest inputRequest) {
-        if (inputRequest.notValidate(ValidateType.START)) {
-            setNext();
-            next.validate(inputRequest);
-            return;
+        if (inputRequest.contains(ValidateType.START)) {
+            validateInput(inputRequest);
         }
+        setNext();
+        next.validate(inputRequest);
+    }
+
+    private static void validateInput(InputRequest inputRequest) {
         inputRequest.getValue()
                 .stream()
                 .filter(input -> input.equals(START_INPUT) || input.equals(END_INPUT))

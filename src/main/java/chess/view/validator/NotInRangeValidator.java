@@ -14,15 +14,14 @@ public class NotInRangeValidator implements InputValidator {
 
     @Override
     public void validate(InputRequest inputRequest) {
-        if (inputRequest.notValidate(ValidateType.OUT_OF_RANGE)) {
-            setNext();
-            next.validate(inputRequest);
-            return;
+        if (inputRequest.contains(ValidateType.OUT_OF_RANGE)) {
+            validateFile(String.valueOf(inputRequest.getValue().get(1).charAt(0)));
+            validateRank(String.valueOf(inputRequest.getValue().get(1).charAt(1)));
+            validateFile(String.valueOf(inputRequest.getValue().get(2).charAt(0)));
+            validateRank(String.valueOf(inputRequest.getValue().get(2).charAt(1)));
         }
-        validateFile(String.valueOf(inputRequest.getValue().get(1).charAt(0)));
-        validateRank(String.valueOf(inputRequest.getValue().get(1).charAt(1)));
-        validateFile(String.valueOf(inputRequest.getValue().get(2).charAt(0)));
-        validateRank(String.valueOf(inputRequest.getValue().get(2).charAt(1)));
+        setNext();
+        next.validate(inputRequest);
     }
 
     private void validateFile(String file) {

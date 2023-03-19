@@ -1,8 +1,10 @@
-package chess.controller.commend;
+package chess.view.commend;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 import chess.view.validator.ValidateType;
+
+import java.util.List;
 
 public class StartCommend extends Commend {
     public StartCommend(ChessController chessController) {
@@ -11,7 +13,7 @@ public class StartCommend extends Commend {
 
     @Override
     public boolean operate(ChessGame chessGame) {
-        if (CommendType.match(inputView.requestCommend(ValidateType.START).get(0)).equals(CommendType.END)) {
+        if (CommendType.match(inputView.requestCommend(List.of(ValidateType.START)).get(0)).equals(CommendType.END)) {
             this.chessController.setCommend(new EndCommend(chessController));
             return true;
         }

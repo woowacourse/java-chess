@@ -15,7 +15,7 @@ public class InputRequest {
         return value;
     }
 
-    public boolean notValidate(ValidateType validateType) {
-        return !validateTypes.contains(validateType);
+    public boolean contains(ValidateType validateType) {
+        return validateTypes.contains(validateType);
     }
 }

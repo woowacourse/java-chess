@@ -1,4 +1,4 @@
-package chess.controller.commend;
+package chess.view.commend;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
@@ -18,12 +18,13 @@ public class RunningCommend extends Commend {
 
     @Override
     public boolean operate(ChessGame chessGame) {
-        List<String> commend = inputView.requestCommend(ValidateType.PLAY);
+        List<String> commend = inputView.requestCommend(List.of(ValidateType.PLAY,
+                ValidateType.MOVE_SIZE,
+                ValidateType.OUT_OF_RANGE));
         if (CommendType.match(commend.get(0)).equals(CommendType.END)) {
             this.chessController.setCommend(new EndCommend(chessController));
             return true;
         }
-        ;
         chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));
         outputView.printChessBoard(chessGame.getChessboard());
         return true;

@@ -19,9 +19,9 @@ public class InputView {
         System.out.println(START_MESSAGE);
     }
 
-    public List<String> requestCommend(ValidateType validateType) {
+    public List<String> requestCommend(List<ValidateType> validateTypes) {
         List<String> input = List.of(scanner.nextLine().split(" "));
-        validate(input, List.of(validateType));
+        validate(input, validateTypes);
         return input;
     }
 
