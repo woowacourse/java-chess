@@ -79,14 +79,9 @@ public class Board {
     }
 
     private List<Position> calculatePath(Position source, Position target, Direction unit) {
+        List<Position> path = new ArrayList<>();
         char file = source.file();
         int rank = source.rank();
-        return searchPath(target, unit, file, rank);
-    }
-
-    private static List<Position> searchPath(final Position target, final Direction unit, char file, int rank) {
-        List<Position> path = new ArrayList<>();
-
         while (file != target.file() || rank != target.rank()) {
             file += unit.getDx();
             rank += unit.getDy();
