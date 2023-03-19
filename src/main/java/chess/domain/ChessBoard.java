@@ -5,7 +5,6 @@ import chess.domain.path.Path;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -23,10 +22,7 @@ public class ChessBoard {
         piecesByPosition = InitialPiece.getPiecesWithPosition();
     }
 
-    public void move(final List<Integer> sourcePosition, final List<Integer> destPosition,
-        final TeamColor teamColor) {
-        Position source = Position.from(sourcePosition);
-        Position dest = Position.from(destPosition);
+    public void move(final Position source, final Position dest, final TeamColor teamColor) {
         Piece piece = findPieceInStartPosition(source, teamColor);
         progressMove(teamColor, source, dest, piece);
     }

@@ -1,40 +1,39 @@
 package chess.dto;
 
 import chess.view.Command;
-import java.util.Collections;
-import java.util.List;
 
 public class CommandRequest {
 
-    private final Command command;
-    private final List<Integer> source;
-    private final List<Integer> destination;
+    private static final String EMPTY = "";
 
-    private CommandRequest(final Command command, final List<Integer> source,
-        final List<Integer> destination) {
+    private final Command command;
+    private final String source;
+    private final String destination;
+
+    private CommandRequest(final Command command, final String source, final String destination) {
         this.command = command;
         this.source = source;
         this.destination = destination;
     }
 
-    public static CommandRequest fromMoveCommand(final List<Integer> source,
-        final List<Integer> destination) {
+    public static CommandRequest fromMoveCommand(final String source, final String destination) {
         return new CommandRequest(Command.MOVE, source, destination);
     }
 
     public static CommandRequest fromControlCommand(final Command command) {
-        return new CommandRequest(command, Collections.emptyList(), Collections.emptyList());
+        return new CommandRequest(command, EMPTY, EMPTY);
     }
 
     public Command getCommand() {
         return command;
     }
 
-    public List<Integer> getSource() {
+    public String getSource() {
         return source;
     }
 
-    public List<Integer> getDestination() {
+    public String getDestination() {
         return destination;
     }
+
 }

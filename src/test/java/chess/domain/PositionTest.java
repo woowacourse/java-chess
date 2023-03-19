@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.path.Direction;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PositionTest {
 
@@ -19,17 +19,25 @@ public class PositionTest {
     @DisplayName("Position 은 각각 1 ~ 8을 넘길 수 없다.")
     void 위치_생성_실패(int x, int y) {
         assertThatThrownBy(() -> Position.of(x, y))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(OUT_OF_BOUNDS_ERROR_MESSAGE);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(OUT_OF_BOUNDS_ERROR_MESSAGE);
     }
 
     @DisplayName("Position 이 1 ~ 8 이내이면 생성이 이루어진다. 두 좌표값을 받으면 첫 번째를 파일로, 두 번째를 랭크로 생성한다.")
     @Test
     void 위치_생성_성공_좌표값() {
         Position coordsToPosition = Position.of(1, 8);
-        Position inputsToPosition = Position.from(List.of(1, 8));
+        Position inputsToPosition = Position.from("a8");
 
         assertThat(coordsToPosition).isEqualTo(inputsToPosition);
+    }
+
+    @DisplayName("문자열로 전달된 Position 이 범위 밖의 값이라면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"i1", "11", "a0", "a9"})
+    void 문자열_위치_생성_실패(String positionInput) {
+        assertThatThrownBy(() -> Position.from(positionInput))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("전달 받은 방향에 따른 다음 위치를 반환한다.")
@@ -58,6 +66,7 @@ public class PositionTest {
         Position current = Position.of(1, 1);
 
         assertThat(current.isOneStepForwardDiagonal(Position.of(2, 2)))
-                .isTrue();
+            .isTrue();
     }
+
 }

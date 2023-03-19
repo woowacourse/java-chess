@@ -2,7 +2,6 @@ package chess.controller.state;
 
 import chess.domain.ChessBoard;
 import chess.dto.ChessBoardDto;
-import java.util.List;
 
 public class Start implements State {
 
@@ -14,7 +13,7 @@ public class Start implements State {
     }
 
     @Override
-    public void move(List<Integer> source, List<Integer> dest) {
+    public void move(String source, String dest) {
         throw new IllegalArgumentException(WRONG_REQUEST_ERROR_MESSAGE);
     }
 

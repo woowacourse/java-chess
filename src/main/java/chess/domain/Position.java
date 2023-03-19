@@ -1,7 +1,8 @@
 package chess.domain;
 
 import chess.domain.path.Direction;
-import java.util.List;
+import chess.view.File;
+import chess.view.Rank;
 import java.util.Objects;
 
 public class Position {
@@ -24,9 +25,9 @@ public class Position {
         return new Position(x, y);
     }
 
-    public static Position from(List<Integer> rankFile) {
-        return new Position(rankFile.get(POSITION_FILE_INDEX),
-                rankFile.get(POSITION_RANK_INDEX));
+    public static Position from(final String fileRank) {
+        return new Position(File.findByIndex(String.valueOf(fileRank.charAt(POSITION_FILE_INDEX))),
+            Rank.findByIndex(String.valueOf(fileRank.charAt(POSITION_RANK_INDEX))));
     }
 
     private void validate(int x, int y) {
@@ -82,9 +83,9 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+            "x=" + x +
+            ", y=" + y +
+            '}';
     }
 
 }

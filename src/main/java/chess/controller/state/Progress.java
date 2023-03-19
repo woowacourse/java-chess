@@ -1,9 +1,9 @@
 package chess.controller.state;
 
 import chess.domain.ChessBoard;
+import chess.domain.Position;
 import chess.domain.TeamColor;
 import chess.dto.ChessBoardDto;
-import java.util.List;
 
 public class Progress implements State {
 
@@ -23,8 +23,8 @@ public class Progress implements State {
     }
 
     @Override
-    public void move(List<Integer> source, List<Integer> dest) {
-        chessBoard.move(source, dest, currentColor);
+    public void move(String source, String dest) {
+        chessBoard.move(Position.from(source), Position.from(dest), currentColor);
         currentColor = currentColor.transfer();
     }
 

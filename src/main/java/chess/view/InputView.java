@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.dto.CommandRequest;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -12,9 +11,8 @@ public class InputView {
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
-    private static final int POSITION_FILE_INDEX = 0;
-    private static final int POSITION_RANK_INDEX = 1;
     private static final String WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE = "이동 요청 정보가 잘못 되었습니다.";
+
     private final Scanner scanner;
 
     public InputView() {
@@ -27,8 +25,8 @@ public class InputView {
             return CommandRequest.fromControlCommand(Command.findByAnswer(request[COMMAND_INDEX]));
         }
         validateMoveCommandRequest(request);
-        return CommandRequest.fromMoveCommand(parsePosition(request[SOURCE_POSITION_INDEX]),
-            parsePosition(request[DESTINATION_POSITION_INDEX]));
+        return CommandRequest.fromMoveCommand(request[SOURCE_POSITION_INDEX],
+            request[DESTINATION_POSITION_INDEX]);
     }
 
     private String[] readRequest() {
@@ -40,11 +38,6 @@ public class InputView {
         if (request.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
-    }
-
-    private List<Integer> parsePosition(String word) {
-        return List.of(File.findByIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))),
-            Rank.findByIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
     }
 
 }
