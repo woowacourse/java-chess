@@ -57,13 +57,13 @@ public final class ChessController {
         printBoard(chessGame.getBoard());
     }
 
-    private void start(final List<String> commands) {
+    private void start(final List<String> ignored) {
         chessGame.startGame();
         printBoard(chessGame.getBoard());
     }
 
 
-    private void end(final List<String> commands) {
+    private void end(final List<String> ignored) {
         chessGame.end();
     }
 
