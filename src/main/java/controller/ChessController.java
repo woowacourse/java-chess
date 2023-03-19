@@ -36,8 +36,16 @@ public final class ChessController {
     private void play(final Board board) {
         List<String> commands;
         while (MOVE.equals(ProgressCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
-            board.move(getSourcePiece(commands), getDestination(commands));
+            movePieceWithHandling(board, commands);
             OutputView.printBoard(board.getPieces());
+        }
+    }
+
+    private void movePieceWithHandling(Board board, List<String> commands) {
+        try {
+            board.move(getSourcePiece(commands), getDestination(commands));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
         }
     }
 
