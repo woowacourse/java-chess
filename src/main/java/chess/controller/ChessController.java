@@ -1,5 +1,6 @@
 package chess.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -14,6 +15,9 @@ import chess.view.OutputView;
 public class ChessController {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
+
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private final InputView inputView;
     private final ChessGame chessGame;
 
@@ -78,11 +82,19 @@ public class ChessController {
 
     private GameStatus handleMoveCommand(GameStatus gameStatus, final ChessGame chessGame, final List<String> moveCommand) {
         checkGameNotStart(gameStatus);
-        final Position sourcePosition = chessGame.generatePosition(moveCommand.get(SOURCE_POSITION_INDEX));
-        final Position targetPosition = chessGame.generatePosition(moveCommand.get(TARGET_POSITION_INDEX));
+        Position sourcePosition = generatePosition(SOURCE_POSITION_INDEX, chessGame, moveCommand);
+        Position targetPosition = generatePosition(TARGET_POSITION_INDEX, chessGame, moveCommand);
         chessGame.movePiece(sourcePosition, targetPosition);
         OutputView.printBoard(chessGame.generateBoardDto());
         return gameStatus;
+    }
+
+    private Position generatePosition(int positionIndex, ChessGame chessGame, List<String> moveCommand) {
+        String positionInput = moveCommand.get(positionIndex);
+        final List<String> splitPosition = Arrays.asList(positionInput.split(""));
+        String file = splitPosition.get(FILE_INDEX);
+        int rank = Integer.parseInt(splitPosition.get(RANK_INDEX));
+        return chessGame.generatePosition(file, rank);
     }
 
     private void checkGameNotStart(final GameStatus gameStatus) {

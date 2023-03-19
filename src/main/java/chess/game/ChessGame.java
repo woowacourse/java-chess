@@ -1,8 +1,5 @@
 package chess.game;
 
-import java.util.Arrays;
-import java.util.List;
-
 import chess.board.Board;
 import chess.board.File;
 import chess.board.Position;
@@ -11,9 +8,6 @@ import chess.board.dto.BoardDto;
 import chess.piece.Piece;
 
 public class ChessGame {
-
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
 
     private final Board board;
     private Turn turn;
@@ -27,10 +21,9 @@ public class ChessGame {
         return BoardDto.of(board);
     }
 
-    public Position generatePosition(final String positionInput) {
-        final List<String> splitSourcePosition = Arrays.asList(positionInput.split(""));
-        final File sourceFile = File.of(splitSourcePosition.get(FILE_INDEX));
-        final Rank sourceRank = Rank.of(Integer.parseInt(splitSourcePosition.get(RANK_INDEX)));
+    public Position generatePosition(final String file, final int rank) {
+        final File sourceFile = File.of(file);
+        final Rank sourceRank = Rank.of(rank);
         return new Position(sourceFile, sourceRank);
     }
 
