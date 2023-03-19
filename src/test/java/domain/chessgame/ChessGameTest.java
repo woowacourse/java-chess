@@ -1,8 +1,7 @@
-package domain;
+package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
 import domain.coordinate.PositionFactory;
-import domain.chessgame.ChessGame;
 import domain.piece.Color;
 import domain.type.PieceType;
 import domain.type.Type;

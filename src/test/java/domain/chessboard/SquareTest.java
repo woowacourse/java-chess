@@ -1,6 +1,5 @@
-package domain;
+package domain.chessboard;
 
-import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.King;
 import domain.squarestatus.Empty;

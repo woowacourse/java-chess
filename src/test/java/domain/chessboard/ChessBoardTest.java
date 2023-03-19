@@ -1,7 +1,5 @@
-package domain;
+package domain.chessboard;
 
-import domain.chessboard.ChessBoard;
-import domain.chessboard.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

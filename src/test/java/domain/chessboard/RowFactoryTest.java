@@ -1,6 +1,5 @@
-package domain;
+package domain.chessboard;
 
-import domain.chessboard.RowFactory;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
