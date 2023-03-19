@@ -25,10 +25,6 @@ public enum Direction {
     SOUTH_WEST_WEST(-2, -1),
     SOUTH_EAST_EAST(2, -1);
 
-    private static final List<Direction> ALL_DIRECTIONS = List.of(
-            NORTH, WEST, SOUTH, EAST,
-            NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
-    );
     private static final List<Direction> DIAGONAL = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
     
@@ -40,42 +36,11 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> knight() {
-        return List.of(
-                NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
-                NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
-        );
-    }
-
-    public static List<Direction> whitePawn() {
-        return List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    }
-
-    public static List<Direction> blackPawn() {
-        return List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static List<Direction> king() {
-        return ALL_DIRECTIONS;
-    }
-
-    public static List<Direction> queen() {
-        return ALL_DIRECTIONS;
-    }
-
-    public static List<Direction> rook() {
-        return ORTHOGONAL;
-    }
-
-    public static List<Direction> bishop() {
-        return DIAGONAL;
-    }
-
     public static Direction findDirection(final int rank, final int file) {
         return Arrays.stream(values())
                 .filter(direction -> direction.match(file, rank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("방향을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("방향을 찾을 수 없습니다."));
     }
 
     public static boolean isDiagonal(final Direction direction) {

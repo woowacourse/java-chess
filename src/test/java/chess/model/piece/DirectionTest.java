@@ -7,10 +7,34 @@ import chess.model.position.File;
 import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class DirectionTest {
+
+    @Nested
+    @DisplayName("findDirection() 테스트")
+    class FindDirectionMethodTest {
+
+        @Test
+        @DisplayName("유효한 rank, file을 전달하면 그 방향에 맞는 Direction을 반환한다")
+        void findDirection_givenValidRankAndFile_thenSuccess() {
+            // when
+            final Direction actual = Direction.findDirection(3, 3);
+
+            // then
+            assertThat(actual).isSameAs(Direction.NORTH_EAST);
+        }
+
+        @Test
+        @DisplayName("유효하지 않은 rank, file을 전달하면 예외가 발생한다")
+        void findDirection_gievnInvalidRankAndFile_thenFail() {
+            assertThatThrownBy(() -> Direction.findDirection(5, 7))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("방향을 찾을 수 없습니다.");
+        }
+    }
 
     @ParameterizedTest(name = "match()는 Direction.{0}이고 rank={1}, file={2}이면 {3}을 반환한다.")
     @CsvSource({"SOUTH,0,-1,true", "NORTH_WEST,-3,3,true", "NORTH_WEST_WEST,-4,2,true"})
