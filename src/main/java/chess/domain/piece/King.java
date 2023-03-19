@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
 
@@ -12,8 +10,8 @@ import static chess.domain.position.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANC
 
 public class King extends Piece {
 
-    public King(final File file, final Rank rank, final Color color) {
-        super(file, rank, color);
+    public King(final Position position, final Color color) {
+        super(position, color);
     }
 
     @Override
@@ -28,7 +26,7 @@ public class King extends Piece {
         final Position targetPosition = pieceInTargetPosition.getPosition();
         validateDestination(targetPosition);
         validateCatchingSameColor(pieceInTargetPosition);
-        return new King(targetPosition.getFile(), targetPosition.getRank(), color);
+        return new King(targetPosition, color);
     }
 
     @Override

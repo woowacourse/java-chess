@@ -29,7 +29,7 @@ class KnightTest {
     @CsvSource({"C, SIX", "D, SEVEN"})
     @DisplayName("지나갈 경로를 얻는다.")
     void get_passing_path_test(final File file, final Rank rank) {
-        final Piece knight = new Knight(B, EIGHT, Color.BLACK);
+        final Piece knight = new Knight(new Position(B, EIGHT), Color.BLACK);
 
         final List<Position> path = knight.getPassingPositions(new Position(file, rank));
 
@@ -41,7 +41,7 @@ class KnightTest {
     @CsvSource({"C, EIGHT", "B, FIVE"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void invalid_target_position_throw_exception(final File file, final Rank rank) {
-        final Piece knight = new Knight(C, EIGHT, Color.BLACK);
+        final Piece knight = new Knight(new Position(C, EIGHT), Color.BLACK);
 
         assertThatThrownBy(() -> knight.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -52,7 +52,7 @@ class KnightTest {
     @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
     void move_test(final Piece pieceInTargetPosition) {
-        final Piece originalKnight = new Knight(B, EIGHT, BLACK);
+        final Piece originalKnight = new Knight(new Position(B, EIGHT), BLACK);
 
         final Piece movedKnight = originalKnight.move(pieceInTargetPosition);
 
@@ -61,16 +61,16 @@ class KnightTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(C, SIX)),
-                Arguments.of(new Pawn(C, SIX, WHITE))
+                Arguments.of(new BlankPiece(new Position(C, SIX))),
+                Arguments.of(new Pawn(new Position(C, SIX), WHITE))
         );
     }
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catch_same_color_throw_exception() {
-        final Piece originalKnight = new Knight(B, EIGHT, BLACK);
-        final Piece sameColorPiece = new Pawn(C, SIX, BLACK);
+        final Piece originalKnight = new Knight(new Position(B, EIGHT), BLACK);
+        final Piece sameColorPiece = new Pawn(new Position(C, SIX), BLACK);
 
         assertThatThrownBy(() -> originalKnight.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -60,7 +60,7 @@ public class Board {
 
     private Piece findPieceOrElseBlankPieceIn(final Position position) {
         return findPieceOptionalIn(position)
-                .orElseGet(() -> new BlankPiece(position.getFile(), position.getRank()));
+                .orElseGet(() -> new BlankPiece(position));
     }
 
     public boolean isSameColor(final Position position, final Color otherColor) {

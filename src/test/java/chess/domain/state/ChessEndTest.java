@@ -25,7 +25,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessEndTest {
 
-    private static final Pawn pawn = new Pawn(File.A, Rank.TWO, Color.WHITE);
+    private static final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Color.WHITE);
 
     @ParameterizedTest
     @MethodSource("provideCommand")

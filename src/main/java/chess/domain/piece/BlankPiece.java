@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
 
@@ -11,8 +9,8 @@ public class BlankPiece extends Piece {
 
     static final String BLANK_PIECE_EXCEPTION_MESSAGE = "유효하지 않은 체스말 사용입니다.";
 
-    public BlankPiece(final File file, final Rank rank) {
-        super(file, rank, Color.BLANK);
+    public BlankPiece(final Position position) {
+        super(position, Color.BLANK);
     }
 
     @Override

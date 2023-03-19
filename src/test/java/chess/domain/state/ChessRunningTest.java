@@ -22,7 +22,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessRunningTest {
 
-    private static final Pawn pawn = new Pawn(File.A, Rank.TWO, Color.WHITE);
+    private static final Pawn pawn = new Pawn(new Position(File.A, Rank.TWO), Color.WHITE);
 
     @Nested
     @DisplayName("체스 게임  커맨트 진행 테스트")

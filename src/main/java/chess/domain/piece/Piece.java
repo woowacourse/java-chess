@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
 
@@ -15,9 +13,9 @@ public abstract class Piece {
     protected final Position position;
     protected final Color color;
 
-    protected Piece(final File file, final Rank rank, final Color color) {
-        this.color = color;
-        this.position = new Position(file, rank);
+    protected Piece(final Position position, final Color color) {
+        this.position = position;
+        this.color =color;
     }
 
     public final boolean isSameColor(final Color otherColor) {

@@ -37,11 +37,11 @@ class BoardTest {
     @DisplayName("초기 체스판이 정상적으로 생성된다")
     void init_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Pawn(A, SEVEN, BLACK),
-                new Rook(A, EIGHT, BLACK),
+                new Pawn(new Position(A, SEVEN), BLACK),
+                new Rook(new Position(A, EIGHT), BLACK),
 
-                new Pawn(A, TWO, WHITE),
-                new Rook(A, ONE, WHITE)
+                new Pawn(new Position(A, TWO), WHITE),
+                new Rook(new Position(A, ONE), WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
         final List<Piece> pieces = board.getExistingPieces();
@@ -60,7 +60,7 @@ class BoardTest {
     @DisplayName("말을 원하는 위치로 이동시킨다")
     void move_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK)
+                new Queen(new Position(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -76,8 +76,8 @@ class BoardTest {
     @DisplayName("다른 색 말을 잡는다.")
     void catch_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK),
-                new Pawn(D, FIVE, WHITE)
+                new Queen(new Position(D, EIGHT), BLACK),
+                new Pawn(new Position(D, FIVE), WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -107,7 +107,7 @@ class BoardTest {
     @DisplayName("목표 위치로 이동할 수 없다면, 예외가 발생한다")
     void invalid_target_position_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK)
+                new Queen(new Position(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -120,8 +120,8 @@ class BoardTest {
     @DisplayName("이동 경로에 말이 있다면, 예외가 발생한다")
     void blocked_moving_path_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK),
-                new Pawn(D, SEVEN, BLACK)
+                new Queen(new Position(D, EIGHT), BLACK),
+                new Pawn(new Position(D, SEVEN), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -134,8 +134,8 @@ class BoardTest {
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catching_same_color_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK),
-                new Pawn(D, SEVEN, BLACK)
+                new Queen(new Position(D, EIGHT), BLACK),
+                new Pawn(new Position(D, SEVEN), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
@@ -147,9 +147,9 @@ class BoardTest {
     @ParameterizedTest
     @CsvSource({"BLACK, true", "WHITE, false"})
     @DisplayName("같은 색인지 확인한다")
-    void check_is_same_color_test(final Color color, final boolean expected) {
+    void ch_is_same_color_test(final Color color, final boolean expected) {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(D, EIGHT, BLACK)
+                new Queen(new Position(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 

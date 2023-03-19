@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -18,8 +17,8 @@ public class Pawn extends Piece {
             Color.WHITE, Rank.TWO
     );
 
-    public Pawn(final File file, final Rank rank, final Color color) {
-        super(file, rank, color);
+    public Pawn(final Position position, final Color color) {
+        super(position, color);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class Pawn extends Piece {
         validateDiagonalColor(pieceInTargetPosition, targetPosition);
         validateHorizontalColor(pieceInTargetPosition, targetPosition);
 
-        return new Pawn(targetPosition.getFile(), targetPosition.getRank(), color);
+        return new Pawn(targetPosition, color);
     }
 
     private void validateDiagonalColor(final Piece pieceInTargetPosition, final Position targetPosition) {

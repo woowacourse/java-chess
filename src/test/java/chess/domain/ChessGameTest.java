@@ -24,7 +24,7 @@ class ChessGameTest {
     @DisplayName("턴이 바뀌었는지 확인한다")
     void change_turn_test() {
         final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
-                new Pawn(A, TWO, WHITE)
+                new Pawn(new Position(A, TWO), WHITE)
         )));
 
         chessGame.move(new Position(A, TWO), new Position(A, FOUR));
@@ -37,8 +37,8 @@ class ChessGameTest {
     @DisplayName("입력 받은 현재 위치 말 색상이 이동할 차례가 아니면, 예외를 던진다.")
     void invalid_turn_color_moving_throw_exception() {
         final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
-                new Pawn(A, TWO, WHITE),
-                new Pawn(A, SEVEN, BLACK)
+                new Pawn(new Position(A, TWO), WHITE),
+                new Pawn(new Position(A, SEVEN), BLACK)
         )));
 
         assertThatThrownBy(() -> chessGame.move(new Position(A, SEVEN), new Position(A, SIX)))

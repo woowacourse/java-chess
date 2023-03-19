@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
 
@@ -12,8 +10,8 @@ public class Knight extends Piece {
     private static final int MOVABLE_MANHATTAN_DISTANCE = 3;
     private static final List<Position> PASSING_POSITIONS_WITH_LEAPING = List.of();
 
-    public Knight(final File file, final Rank rank, final Color color) {
-        super(file, rank, color);
+    public Knight(final Position position, final Color color) {
+        super(position, color);
     }
 
     @Override
@@ -27,7 +25,7 @@ public class Knight extends Piece {
         final Position targetPosition = pieceInTargetPosition.getPosition();
         validateDestination(targetPosition);
         validateCatchingSameColor(pieceInTargetPosition);
-        return new Knight(targetPosition.getFile(), targetPosition.getRank(), color);
+        return new Knight(targetPosition, color);
     }
 
     @Override

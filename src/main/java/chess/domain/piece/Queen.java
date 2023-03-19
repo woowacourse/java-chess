@@ -1,16 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
 
 public class Queen extends Piece {
 
-    public Queen(final File file, final Rank rank, final Color color) {
-        super(file, rank, color);
+    public Queen(final Position position, final Color color) {
+        super(position, color);
     }
 
     @Override
@@ -23,7 +21,7 @@ public class Queen extends Piece {
         final Position targetPosition = pieceInTargetPosition.getPosition();
         validateDestination(targetPosition);
         validateCatchingSameColor(pieceInTargetPosition);
-        return new Queen(targetPosition.getFile(), targetPosition.getRank(), color);
+        return new Queen(targetPosition, color);
     }
 
     @Override
