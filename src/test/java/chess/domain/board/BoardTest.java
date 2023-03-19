@@ -1,7 +1,9 @@
 package chess.domain.board;
 
+import static chess.factory.BoardFactoryForTest.createBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.exception.PieceMessage;
@@ -217,4 +219,21 @@ class BoardTest {
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
+
+    @Test
+    @DisplayName("3단계 요구 사항에 나온 맵 점수 테스트")
+    void returns_score_of_example_map() {
+        // given
+        Board board = createBoard();
+
+        // when
+        double scoreOfUpperTeam = board.getScoreOfUpperTeam();
+        double scoreOfLowerTeam = board.getScoreOfLowerTeam();
+
+        // then
+        assertAll(
+                () -> assertThat(scoreOfUpperTeam).isEqualTo(20),
+                () -> assertThat(scoreOfLowerTeam).isEqualTo(19.5)
+        );
+     }
 }
