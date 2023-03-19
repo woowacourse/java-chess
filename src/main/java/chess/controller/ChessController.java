@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.domain.board.Squares;
+import chess.domain.game.ChessGame;
 import chess.view.*;
 
 import java.util.Collections;
@@ -27,36 +27,46 @@ public final class ChessController {
 
     public void play() {
         outputView.startMessage();
-        repeatReadStart();
-        repeatPlay();
-    }
-
-    private void startByCommand() {
-        String input = inputView.inputStartCommand();
-        if (Command.from(input) != Command.START) {
-            throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
-        }
-        List<Squares> board = chessGame.getBoard();
-        printBoard(board);
-    }
-
-    private void repeatReadStart() {
-        try {
-            startByCommand();
-        } catch (RuntimeException e) {
-            outputView.printErrorMesage(e);
-            outputView.printGuideMessage();
-            repeatReadStart();
+        while (chessGame.isOnGoing()) {
+            repeatRead();
         }
     }
 
-    private void repeatPlay() {
+    private void repeatRead() {
         try {
-            playGameUntilEnd();
+            List<String> commands = inputView.inputCommand();
+            isMove(commands);
+            isStart(commands);
+            isEnd(commands);
         } catch (RuntimeException e) {
             outputView.printErrorMesage(e);
-            outputView.printGuideMessage();
-            repeatPlay();
+            repeatRead();
+        }
+    }
+
+    private void isMove(final List<String> commands) {
+        if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
+            Position parsedFile = PositionParser.parse(commands.get(1));
+            Position parsedRank = PositionParser.parse(commands.get(2));
+            chessGame.playTurn(parsedFile, parsedRank);
+            printBoard(chessGame.getBoard());
+        }
+    }
+
+    private void isStart(final List<String> commands) {
+        if (Command.from(commands.get(COMMAND_INDEX)) == Command.START) {
+            startGame();
+        }
+    }
+
+    private void startGame() {
+        chessGame.startGame();
+        printBoard(chessGame.getBoard());
+    }
+
+    private void isEnd(final List<String> commands) {
+        if (Command.from(commands.get(COMMAND_INDEX)) == Command.END) {
+            chessGame.end();
         }
     }
 
@@ -65,34 +75,8 @@ public final class ChessController {
                 .map(Squares::getPieces)
                 .map(KindMapper::mapToStrings)
                 .collect(Collectors.toList());
-
         Collections.reverse(pieceNames);
 
         pieceNames.forEach(outputView::printRank);
-    }
-
-    private void playGameUntilEnd() {
-        List<String> commands = inputView.inputCommand();
-        while (Command.from(commands.get(COMMAND_INDEX)) != Command.END) {
-            cannotStartDuringPlaying(commands);
-            playGame(commands);
-            commands = inputView.inputCommand();
-        }
-    }
-
-    private void cannotStartDuringPlaying(final List<String> command) {
-        if (Command.from(command.get(COMMAND_INDEX)) == Command.START) {
-            throw new IllegalArgumentException("게임을 시작한 후 시작 명령어를 입력할 수 없습니다.");
-        }
-    }
-
-    private void playGame(final List<String> commands) {
-        if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
-            Position source = PositionParser.parse(commands.get(SOURCE_INDEX));
-            Position target = PositionParser.parse(commands.get(TARGET_INDEX));
-            chessGame.playTurn(source, target);
-            List<Squares> board = chessGame.getBoard();
-            printBoard(board);
-        }
     }
 }
