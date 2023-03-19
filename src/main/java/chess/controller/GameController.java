@@ -8,6 +8,7 @@ import static chess.domain.Team.WHITE;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -34,7 +35,7 @@ public class GameController {
         }
         ChessGame chessGame = new ChessGame(new Board(), WHITE);
         Board board = chessGame.getBoard();
-        outputView.printChessBoard(board.getBoardResult());
+        outputView.printChessBoard(BoardDto.of(board).getPieces());
 
         do {
             command = readUntilValidate(() -> progressGame(chessGame));
@@ -58,7 +59,7 @@ public class GameController {
         validateMoveCommandFormat(gameCommand);
 
         chessGame.movePiece(gameCommand.get(SOURCE_INDEX), gameCommand.get(TARGET_INDEX));
-        outputView.printChessBoard(chessGame.getBoard().getBoardResult());
+        outputView.printChessBoard(BoardDto.of(chessGame.getBoard()).getPieces());
         return command;
     }
 
