@@ -151,6 +151,21 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("폰이 대각선으로 이동하는 경우, targetSquare에 상대진영의 기물이 있는 경우 true를 반환한다.")
+    void canMoveDiagonalBlack() {
+        Pawn pawn = new Pawn(Camp.WHITE);
+        Square currentSquare = new Square(1, 3);
+        Square targetSquare = new Square(0, 4);
+        pawn.fetchMovePath(currentSquare, targetSquare);
+        Map<Square,Camp> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, Camp.BLACK);
+
+        boolean result = pawn.canMove(pathInfo, targetSquare);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
     @DisplayName("폰이 대각선으로 이동하는 경우, targetSquare에 같은진영의 기물이 있는 경우 false를 반환한다.")
     void canMoveDiagonalFailSameCamp() {
         Pawn pawn = new Pawn(Camp.WHITE);

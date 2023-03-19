@@ -36,7 +36,7 @@ public class Pawn extends Piece {
     }
 
     private void changeGoingForwardState(List<Integer> gaps) {
-        isGoingForward = !Objects.equals(gaps.get(FILE), gaps.get(RANK));
+        isGoingForward = !Objects.equals(Math.abs(gaps.get(FILE)), Math.abs(gaps.get(RANK)));
     }
 
     @Override

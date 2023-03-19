@@ -3,8 +3,6 @@ package domain.piece.type.unrestricted;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -19,12 +17,10 @@ public abstract class UnrestrictedPiece extends Piece {
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> gaps = calculateGap(currentSquare, targetSquare);
         Integer distance = calculateDistance(gaps);
-        validateMovable(gaps);
         List<Integer> direction = calculateDirection(gaps, distance);
+        validateMovable(gaps);
         return calculatePath(currentSquare, distance, direction);
     }
-
-
 
     protected boolean isNotForward(List<Integer> gap) {
         Integer fileGap = gap.get(FILE);
