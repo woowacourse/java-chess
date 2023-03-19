@@ -16,7 +16,6 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.team.Team;
 
 public final class BoardFactory {
 
@@ -79,7 +78,7 @@ public final class BoardFactory {
 
 	private static void fill(final Map<Position, Piece> board, final Rank rank, final File file) {
 		if (board.get(Position.of(file.value(), rank.value())) == null) {
-			board.put(Position.of(file.value(), rank.value()), new Empty(Team.NONE));
+			board.put(Position.of(file.value(), rank.value()), new Empty(NONE));
 		}
 	}
 }
