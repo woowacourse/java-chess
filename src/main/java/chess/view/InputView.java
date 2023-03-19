@@ -6,9 +6,15 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InputView {
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private static final String MOVE_COMMAND_FORMAT = "move\\s[a-z][1-9]\\s[a-z][1-9]";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
+    private static final String MOVE_COMMAND = "move";
     
     private InputView() {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
@@ -41,14 +47,16 @@ public class InputView {
             throw new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다.");
         }
         
-        if ("move".equals(splitedInputCommand[0]) && (splitedInputCommand.length != 3)) {
-                throw new IllegalArgumentException("move 명령은 출발 좌표와 도착 좌표를 입력해야 합니다.");
-            
+        if (MOVE_COMMAND.equals(splitedInputCommand[0])) {
+            Matcher matcher = Pattern.compile(MOVE_COMMAND_FORMAT).matcher(inputCommand);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException("move 명령의 입력 형식이 잘못되었습니다. 다시 입력해주세요.");
+            }
         }
     }
     
     private static boolean isCorrectCommand(String command) {
-        return List.of("start", "end", "move").contains(command);
+        return List.of(START_COMMAND, END_COMMAND, MOVE_COMMAND).contains(command);
     }
     
     public static String inputInitCommand() {
@@ -67,14 +75,13 @@ public class InputView {
     }
     
     private static void validateInitCommandForm(String inputInitCommand) {
-        String[] splitedInputCommand = inputInitCommand.split(" ");
-        if (!isCorrectInitCommand(splitedInputCommand[0])) {
+        if (!isCorrectInitCommand(inputInitCommand)) {
             throw new IllegalArgumentException("게임 첫 시작에선 start, end 명령만 입력할 수 있습니다.");
         }
     }
     
     private static boolean isCorrectInitCommand(String command) {
-        return List.of("start", "end").contains(command);
+        return List.of(START_COMMAND, END_COMMAND).contains(command);
     }
     
     public static <T> T repeatAtExceptionCase(Supplier<T> inputProcess) {

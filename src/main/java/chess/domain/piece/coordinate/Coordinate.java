@@ -11,7 +11,7 @@ public class Coordinate {
         this(parseColumn(sourceCoordinate), parseRow(sourceCoordinate));
     }
     
-    private Coordinate(char column, int row) {
+    public Coordinate(char column, int row) {
         this(Column.from(column), Row.from(row));
     }
     

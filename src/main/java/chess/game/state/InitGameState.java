@@ -5,6 +5,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class InitGameState extends ChessGameState {
+    private static final String START_COMMAND = "start";
     private static final int COMMAND_INDEX = 0;
     
     public InitGameState(Team currentOrderTeam) {
@@ -25,6 +26,6 @@ public class InitGameState extends ChessGameState {
     }
     
     private boolean isCommandStart(String[] splitedCommand) {
-        return "start".equals(splitedCommand[COMMAND_INDEX]);
+        return START_COMMAND.equals(splitedCommand[COMMAND_INDEX]);
     }
 }
