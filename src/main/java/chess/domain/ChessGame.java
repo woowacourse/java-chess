@@ -40,17 +40,16 @@ public final class ChessGame {
     }
 
     private void validateFromPiece(Piece fromPiece) {
-        if (fromPiece.isBlack() && turnCamp != Camp.BLACK
-                || !fromPiece.isBlack() && turnCamp == Camp.BLACK) {
-            throw new IllegalArgumentException(TURN_MISMATCHED);
-        }
-
         if (fromPiece.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CHOICE);
         }
     }
 
     private void validateSameCamp(Piece fromPiece, Piece toPiece) {
+        if (fromPiece.isMismatchedCamp(turnCamp)) {
+            throw new IllegalArgumentException(TURN_MISMATCHED);
+        }
+
         if (fromPiece.isSameCamp(toPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }

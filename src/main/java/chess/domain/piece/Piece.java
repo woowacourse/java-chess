@@ -30,6 +30,10 @@ public abstract class Piece {
         return camp == other.camp;
     }
 
+    public boolean isMismatchedCamp(Camp camp) {
+        return this.camp != camp;
+    }
+
     public abstract PieceMove getMovement(Position from, Position to);
 
     abstract boolean isPieceRule(Position from, Position to);
