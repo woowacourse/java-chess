@@ -15,7 +15,8 @@ class KingTest {
         //given
         final King king = new King(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("C5", "D5", "E5", "C4", "E4", "C3", "D3", "E3");
+        final List<Position> destinations = Positions.of(
+                "C5", "D5", "E5", "C4", "E4", "C3", "D3", "E3");
 
         //when
 
@@ -29,7 +30,8 @@ class KingTest {
         //given
         final King king = new King(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("B7", "D8", "G6");
+        final List<Position> destinations = Positions.of(
+                "B7", "D8", "G6");
 
         //when
 

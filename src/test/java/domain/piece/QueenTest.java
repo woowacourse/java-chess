@@ -16,7 +16,8 @@ class QueenTest {
         //given
         final Queen queen = new Queen(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A7", "D5", "A1", "C4", "D1", "C3", "G7", "E3");
+        final List<Position> destinations = Positions.of(
+                "A7", "D5", "A1", "C4", "D1", "C3", "G7", "E3");
 
         //when
 
@@ -30,7 +31,8 @@ class QueenTest {
         //given
         final Queen queen = new Queen(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A8", "B5", "G6");
+        final List<Position> destinations = Positions.of(
+                "A8", "B5", "G6");
 
         //when
 

@@ -15,7 +15,8 @@ class RookTest {
         //given
         final Rook rook = new Rook(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("D3", "D5", "D1", "D8", "A4", "C4", "E4", "H4");
+        final List<Position> destinations = Positions.of(
+                "D3", "D5", "D1", "D8", "A4", "C4", "E4", "H4");
 
         //when
 
@@ -29,7 +30,8 @@ class RookTest {
         //given
         final Rook rook = new Rook(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A8", "B5", "G6");
+        final List<Position> destinations = Positions.of(
+                "A8", "B5", "G6");
 
         //when
 

@@ -15,7 +15,8 @@ class KnightTest {
         //given
         final Knight knight = new Knight(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("E6", "C6", "B5", "F5", "B3", "F3", "C2", "E2");
+        final List<Position> destinations = Positions.of(
+                "E6", "C6", "B5", "F5", "B3", "F3", "C2", "E2");
 
         //when
 
@@ -29,7 +30,8 @@ class KnightTest {
         //given
         final Knight knight = new Knight(Team.BLACK);
         Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A8", "H5", "G6");
+        final List<Position> destinations = Positions.of(
+                "A8", "H5", "G6");
 
         //when
 
