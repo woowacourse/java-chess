@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Position implements IndexConvertable {
+public class Position {
 
     private static final Map<File, Map<Rank, Position>> CACHE;
 
@@ -46,11 +46,6 @@ public class Position implements IndexConvertable {
         final File nextFile = direction.findNextFile(file);
 
         return of(nextFile, nextRank);
-    }
-
-    @Override
-    public int convertToIndex() {
-        return ((rank.value() - 1) * FILE_MAX_SIZE) + (file.value() - 1);
     }
 
     @Override

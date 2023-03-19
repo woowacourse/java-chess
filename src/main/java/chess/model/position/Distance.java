@@ -2,7 +2,7 @@ package chess.model.position;
 
 import chess.model.piece.Direction;
 
-public class Distance implements IndexConvertable {
+public class Distance {
 
     private final int file;
     private final int rank;
@@ -12,13 +12,8 @@ public class Distance implements IndexConvertable {
         this.rank = rank;
     }
 
-    public Direction findDirection() {
-        return Direction.findDirection(rank, file);
-    }
-
-    @Override
-    public int convertToIndex() {
-        return Math.abs((rank * FILE_MAX_SIZE) + file);
+    public boolean matchByDirection(final Direction direction) {
+        return direction.match(file, rank);
     }
 
     public int rank() {
