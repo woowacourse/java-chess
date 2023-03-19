@@ -5,7 +5,7 @@ import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
 
-public class Piece implements Cloneable {
+public class Piece {
 
     protected final Color color;
     protected final PiecePosition piecePosition;
@@ -57,15 +57,6 @@ public class Piece implements Cloneable {
 
     protected Path path(final PiecePosition destination) {
         return Path.of(piecePosition, destination);
-    }
-
-    @Override
-    public Piece clone() {
-        try {
-            return (Piece) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 
     public Color color() {

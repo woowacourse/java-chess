@@ -1,9 +1,9 @@
-package chess.domain.state.command;
+package chess.controller.command;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum Type {
+public enum CommandType {
 
     START(0),
     MOVE(2),
@@ -12,11 +12,11 @@ public enum Type {
 
     private final int parameterSize;
 
-    Type(final int parameterSize) {
+    CommandType(final int parameterSize) {
         this.parameterSize = parameterSize;
     }
 
-    public static Type find(final String input) {
+    public static CommandType find(final String input) {
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(input))
                 .findAny()

@@ -28,18 +28,6 @@ class PieceTest {
         });
     }
 
-    @Test
-    void clone_할_수_있다() {
-        // given
-        final MyPiece myPiece = new MyPiece(Color.BLACK, PiecePosition.of(1, 'a'));
-
-        // when
-        final Piece clone = myPiece.clone();
-
-        // then
-        assertThat(clone).isExactlyInstanceOf(MyPiece.class);
-    }
-
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
             super(color, piecePosition, null);

@@ -1,4 +1,4 @@
-package chess.domain.state.command;
+package chess.controller.command;
 
 import chess.domain.piece.position.PiecePosition;
 
@@ -12,26 +12,26 @@ public class Command {
     public static final int TO_POSITION_INDEX = 1;
     private static final int COMMAND_TYPE_INDEX = 0;
 
-    private final Type type;
+    private final CommandType commandType;
     private final List<String> commands;
 
-    private Command(final Type type, final List<String> commands) {
-        validateParameterSize(type, commands);
-        this.type = type;
+    private Command(final CommandType commandType, final List<String> commands) {
+        validateParameterSize(commandType, commands);
+        this.commandType = commandType;
         this.commands = commands;
     }
 
-    private void validateParameterSize(final Type type, final List<String> commands) {
-        if (!type.matchSize(commands)) {
-            throw new IllegalArgumentException(type + " 명령어의 파라미터가 올바르지 않습니다.");
+    private void validateParameterSize(final CommandType commandType, final List<String> commands) {
+        if (!commandType.matchSize(commands)) {
+            throw new IllegalArgumentException(commandType + " 명령어의 파라미터가 올바르지 않습니다.");
         }
     }
 
     public static Command parse(List<String> inputs) {
         inputs = new ArrayList<>(inputs);
         final String typeInput = inputs.remove(COMMAND_TYPE_INDEX);
-        final Type type = Type.find(typeInput);
-        return new Command(type, inputs);
+        final CommandType commandType = CommandType.find(typeInput);
+        return new Command(commandType, inputs);
     }
 
     public List<PiecePosition> moveParameters() {
@@ -40,11 +40,7 @@ public class Command {
         return Arrays.asList(from, to);
     }
 
-    public boolean isStart() {
-        return type == Type.START;
-    }
-
-    public boolean isEnd() {
-        return type == Type.END;
+    public CommandType type() {
+        return commandType;
     }
 }

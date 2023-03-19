@@ -18,32 +18,34 @@ import chess.domain.piece.type.pawn.state.InitialPawn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessBoardFactory {
 
-    private static final List<Piece> pieces = new ArrayList<>();
-
-    static {
-        createExcludePawn(1, Color.WHITE);
-        createExcludePawn(8, Color.BLACK);
-        createPawns(2, Color.WHITE);
-        createPawns(7, Color.BLACK);
+    public ChessBoard create() {
+        List<Piece> pieces = new ArrayList<>(32);
+        pieces.addAll(createPawns(2, Color.WHITE));
+        pieces.addAll(createPawns(7, Color.BLACK));
+        pieces.addAll(createExcludePawn(1, Color.WHITE));
+        pieces.addAll(createExcludePawn(8, Color.BLACK));
+        return ChessBoard.from(pieces);
     }
 
-    private static void createPawns(final int rank, final Color color) {
-        for (char file = File.MIN; file <= File.MAX; file++) {
-            pieces.add(new Pawn(color, PiecePosition.of(rank, file), byColor(color), new InitialPawn()));
-        }
+    private List<Piece> createPawns(final int rank, final Color color) {
+        return IntStream.rangeClosed(File.MIN, File.MAX)
+                .mapToObj(file -> new Pawn(color, PiecePosition.of(rank, (char) file), byColor(color), new InitialPawn()))
+                .collect(Collectors.toList());
     }
 
-    private static PawnMoveStrategy byColor(final Color color) {
+    private PawnMoveStrategy byColor(final Color color) {
         if (color.isWhite()) {
             return new WhitePawnMoveStrategy();
         }
         return new BlackPawnMoveStrategy();
     }
 
-    private static void createExcludePawn(final int rank, final Color color) {
+    private List<Piece> createExcludePawn(final int rank, final Color color) {
+        List<Piece> pieces = new ArrayList<>(8);
         pieces.add(new Piece(color, PiecePosition.of(rank, 'a'), new RookMoveStrategy()));
         pieces.add(new Piece(color, PiecePosition.of(rank, 'b'), new KnightMoveStrategy()));
         pieces.add(new Piece(color, PiecePosition.of(rank, 'c'), new BishopMoveStrategy()));
@@ -52,11 +54,6 @@ public class ChessBoardFactory {
         pieces.add(new Piece(color, PiecePosition.of(rank, 'f'), new BishopMoveStrategy()));
         pieces.add(new Piece(color, PiecePosition.of(rank, 'g'), new KnightMoveStrategy()));
         pieces.add(new Piece(color, PiecePosition.of(rank, 'h'), new RookMoveStrategy()));
-    }
-
-    public static ChessBoard create() {
-        return ChessBoard.from(pieces.stream()
-                .map(Piece::clone)
-                .collect(Collectors.toList()));
+        return pieces;
     }
 }

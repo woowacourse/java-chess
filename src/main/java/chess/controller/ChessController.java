@@ -1,40 +1,73 @@
 package chess.controller;
 
-import chess.domain.board.ChessBoard;
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
 import chess.domain.board.ChessBoardFactory;
-import chess.domain.state.ChessState;
-import chess.domain.state.Initialize;
-import chess.domain.state.command.Command;
+import chess.domain.board.Turn;
+import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
+import chess.domain.piece.position.PiecePosition;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+
+import static chess.controller.command.Command.FROM_POSITION_INDEX;
+import static chess.controller.command.Command.TO_POSITION_INDEX;
 
 public class ChessController {
 
+    private final Map<CommandType, ChessAction> actionMapping = new EnumMap<>(CommandType.class);
+
+    interface ChessAction {
+        void execute(final ChessGame chessGame, final Command command);
+    }
+
+    public ChessController() {
+        actionMapping.put(CommandType.START, this::start);
+        actionMapping.put(CommandType.MOVE, this::move);
+        actionMapping.put(CommandType.END, this::end);
+    }
+
     public void run() {
         OutputView.printStartMessage();
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-        final ChessState state = new Initialize(chessBoard);
-        run(chessBoard, state);
-    }
+        final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
+        final ChessGame chessGame = new ChessGame(chessBoardFactory, new Turn(Color.WHITE));
 
-    private void run(final ChessBoard chessBoard, final ChessState state) {
-        ChessState current = state;
-        while (current.executable()) {
-            current = execute(chessBoard, current);
+        CommandType commandType = null;
+        while (commandType != CommandType.END) {
+            commandType = play(chessGame);
         }
     }
 
-    private ChessState execute(final ChessBoard chessBoard, final ChessState state) {
-        ChessState current = state;
+    private CommandType play(final ChessGame chessGame) {
         try {
-            final List<String> command = InputView.readCommand();
-            current = state.execute(Command.parse(command));
-            OutputView.showBoard(chessBoard.pieces());
-        } catch (final Exception e) {
+            final List<String> commands = InputView.readCommand();
+            final Command command = Command.parse(commands);
+            actionMapping.get(command.type()).execute(chessGame, command);
+            return command.type();
+        } catch (IllegalArgumentException e) {
             OutputView.error(e.getMessage());
+            return null;
         }
-        return current;
+    }
+
+    private void start(final ChessGame chessGame, final Command command) {
+        chessGame.initialize();
+        OutputView.showBoard(chessGame.pieces());
+    }
+
+    private void move(final ChessGame chessGame, final Command command) {
+        final List<PiecePosition> piecePositions = command.moveParameters();
+        final PiecePosition from = piecePositions.get(FROM_POSITION_INDEX);
+        final PiecePosition to = piecePositions.get(TO_POSITION_INDEX);
+        chessGame.movePiece(from, to);
+        OutputView.showBoard(chessGame.pieces());
+    }
+
+    private void end(final ChessGame chessGame, final Command command) {
+        OutputView.showBoard(chessGame.pieces());
     }
 }

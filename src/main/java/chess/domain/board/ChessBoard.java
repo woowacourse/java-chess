@@ -3,9 +3,9 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -73,7 +73,6 @@ public class ChessBoard {
     }
 
     public List<Piece> pieces() {
-        return pieces.stream().map(Piece::clone)
-                .collect(Collectors.toList());
+        return new ArrayList<>(pieces);
     }
 }
