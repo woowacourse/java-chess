@@ -11,6 +11,7 @@ public enum InitialSymbols {
     private static final int SECOND_INITIAL_ROW_OF_PIECES_EXCLUDING_PAWN = 8;
     private static final int FIRST_INITIAL_ROW_OF_PAWN = 2;
     private static final int SECOND_INITIAL_ROW_OF_PAWN = 7;
+    
     private final List<Character> symbols;
     
     InitialSymbols(List<Character> symbols) {
