@@ -24,6 +24,6 @@ public class Game {
             throw new IllegalArgumentException("자신의 말만 이동할 수 있습니다.");
         }
         board.move(source, target);
-        turn = turn.nextTurn(turn);
+        turn = Camp.nextTurn(turn);
     }
 }

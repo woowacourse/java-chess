@@ -15,7 +15,7 @@ public enum Camp {
         return expression.apply(weight);
     }
 
-    public Camp nextTurn(final Camp turn) {
+    public static Camp nextTurn(final Camp turn) {
         if (turn.equals(WHITE)) {
             return BLACK;
         }
