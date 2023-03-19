@@ -95,6 +95,7 @@ public class Board {
     }
 
     public boolean isTurn(Position source, Team turn) {
+        validateSource(source);
         return board.get(source).isSameTeam(turn);
     }
 }
