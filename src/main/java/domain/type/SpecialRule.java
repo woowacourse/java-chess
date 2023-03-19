@@ -3,6 +3,7 @@ package domain.type;
 import domain.Location;
 import domain.ValidateDto;
 import domain.piece.Piece;
+import domain.type.direction.PieceMoveDirection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -13,7 +14,7 @@ public enum SpecialRule {
     PAWN_MOVE_ONCE(SpecialRule::isPawnMoveOnce, SpecialRule::judgePawnMoveOnce),
     PAWN_MOVE_TWICE(SpecialRule::isPawnMoveTwice, SpecialRule::judgePawnMoveTwice),
     NOT_EXIST((start, end) -> false, (start, end) -> false);
-    
+
     private static final int WHITE_PAWN_INITIAL_ROW = 1;
     private static final int BLACK_PAWN_INITIAL_ROW = 6;
     private final BiPredicate<ValidateDto, ValidateDto> condition;
@@ -40,8 +41,9 @@ public enum SpecialRule {
     }
 
     private static boolean judgeWhitePawnAttack(final ValidateDto start, final ValidateDto end) {
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
-        final List<Direction> attackDirection = List.of(Direction.LEFT_UP, Direction.RIGHT_UP);
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
+        final List<PieceMoveDirection> attackDirection = List.of(PieceMoveDirection.LEFT_UP,
+            PieceMoveDirection.RIGHT_UP);
         final Location expected = start.getLocation().addDirectionOnce(direction);
         return attackDirection.contains(direction)
             && expected.equals(end.getLocation())
@@ -49,8 +51,9 @@ public enum SpecialRule {
     }
 
     private static boolean judgeBlackPawnAttack(final ValidateDto start, final ValidateDto end) {
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
-        final List<Direction> attackDirection = List.of(Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
+        final List<PieceMoveDirection> attackDirection = List.of(PieceMoveDirection.LEFT_DOWN,
+            PieceMoveDirection.RIGHT_DOWN);
         final Location expected = start.getLocation().addDirectionOnce(direction);
         return attackDirection.contains(direction)
             && expected.equals(end.getLocation())
@@ -61,36 +64,36 @@ public enum SpecialRule {
         if (!start.getPiece().isSameType(PieceType.PAWN)) {
             return false;
         }
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
         final Location expected = start.getLocation().addDirectionOnce(direction);
-        final List<Direction> moveDirection = List.of(Direction.UP, Direction.DOWN);
+        final List<PieceMoveDirection> moveDirection = List.of(PieceMoveDirection.UP, PieceMoveDirection.DOWN);
         return moveDirection.contains(direction) && expected.equals(end.getLocation());
     }
 
     private static boolean judgePawnMoveOnce(final ValidateDto start, final ValidateDto end) {
         final Piece piece = start.getPiece();
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
         if (piece.isWhite()) {
-            return direction.equals(Direction.UP) && end.getPiece().isSameType(PieceType.EMPTY);
+            return direction.equals(PieceMoveDirection.UP) && end.getPiece().isSameType(PieceType.EMPTY);
         }
-        return direction.equals(Direction.DOWN) && end.getPiece().isSameType(PieceType.EMPTY);
+        return direction.equals(PieceMoveDirection.DOWN) && end.getPiece().isSameType(PieceType.EMPTY);
     }
 
     private static boolean isPawnMoveTwice(final ValidateDto start, final ValidateDto end) {
         if (!start.getPiece().isSameType(PieceType.PAWN)) {
             return false;
         }
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
         final Location expected = start.getLocation()
             .addDirectionOnce(direction)
             .addDirectionOnce(direction);
-        final List<Direction> moveDirection = List.of(Direction.UP, Direction.DOWN);
+        final List<PieceMoveDirection> moveDirection = List.of(PieceMoveDirection.UP, PieceMoveDirection.DOWN);
         return moveDirection.contains(direction) && expected.equals(end.getLocation());
     }
 
     private static boolean judgePawnMoveTwice(final ValidateDto start, final ValidateDto end) {
         final Piece piece = start.getPiece();
-        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
+        final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
         if (piece.isWhite()) {
             return judgeWhitePawnMoveTwice(start, end, direction);
         }
@@ -98,15 +101,15 @@ public enum SpecialRule {
     }
 
     private static boolean judgeWhitePawnMoveTwice(final ValidateDto start, final ValidateDto end,
-        final Direction direction) {
-        return start.getLocation().getRow() == WHITE_PAWN_INITIAL_ROW && direction.equals(Direction.UP)
+        final PieceMoveDirection direction) {
+        return start.getLocation().getRow() == WHITE_PAWN_INITIAL_ROW && direction.equals(PieceMoveDirection.UP)
             && end.getPiece()
             .isSameType(PieceType.EMPTY);
     }
 
     private static boolean judgeBlackPawnMoveTwice(final ValidateDto start, final ValidateDto end,
-        final Direction direction) {
-        return start.getLocation().getRow() == BLACK_PAWN_INITIAL_ROW && direction.equals(Direction.DOWN)
+        final PieceMoveDirection direction) {
+        return start.getLocation().getRow() == BLACK_PAWN_INITIAL_ROW && direction.equals(PieceMoveDirection.DOWN)
             && end.getPiece()
             .isSameType(PieceType.EMPTY);
     }

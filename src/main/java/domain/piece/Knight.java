@@ -3,6 +3,7 @@ package domain.piece;
 import domain.Location;
 import domain.type.Color;
 import domain.type.PieceType;
+import domain.type.direction.PieceMoveDirection;
 import java.util.List;
 import view.PieceView;
 
@@ -30,12 +31,7 @@ public final class Knight extends Piece {
 
     @Override
     protected boolean isNotMovable(final Location start, final Location end) {
-        if (Math.abs(start.getCol() - end.getCol()) == 1) {
-            return Math.abs(start.getRow() - end.getRow()) != 2;
-        }
-        if (Math.abs(start.getRow() - end.getRow()) == 1) {
-            return Math.abs(start.getCol() - end.getCol()) != 2;
-        }
-        return true;
+        PieceMoveDirection direction = PieceMoveDirection.find(start, end);
+        return direction.isEightCardinalDirection();
     }
 }

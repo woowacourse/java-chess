@@ -2,8 +2,8 @@ package domain.piece;
 
 import domain.Location;
 import domain.type.Color;
-import domain.type.Direction;
 import domain.type.PieceType;
+import domain.type.direction.PieceMoveDirection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,20 +26,28 @@ public abstract class Piece {
     }
 
     abstract protected boolean isNotMovable(final Location start, final Location end);
-    
+
     public List<Location> searchPath(final Location start, final Location end) {
-        final Direction direction = Direction.find(start, end);
-        if (direction.equals(Direction.ELSE) || isNotMovable(start, end)) {
+        final PieceMoveDirection direction = PieceMoveDirection.find(start, end);
+        if (isNotMovable(start, end)) {
             throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
-        final int totalMove = Math.max(
-            Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
-        return IntStream.range(1, totalMove + 1)
+        final int totalMoveCount = getTotalMoveCount(start, end);
+        final int excludeStartLocation = 1;
+        final int includeEndMove = totalMoveCount + 1;
+        return IntStream.range(excludeStartLocation, includeEndMove)
             .mapToObj(
                 count -> Location.of(
                     start.getCol() + (direction.getColDiff() * count),
                     start.getRow() + (direction.getRowDiff()) * count))
             .collect(Collectors.toList());
+    }
+
+    private static int getTotalMoveCount(final Location start, final Location end) {
+        return Math.max(
+            Math.abs(start.getCol() - end.getCol()),
+            Math.abs(start.getRow() - end.getRow())
+        );
     }
 
     public boolean isSameType(final PieceType pieceType) {

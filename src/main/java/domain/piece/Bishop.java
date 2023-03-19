@@ -17,9 +17,9 @@ public final class Bishop extends Piece {
     public static Bishop makeWhite() {
         return new Bishop(Color.WHITE);
     }
-    
+
     @Override
     protected boolean isNotMovable(final Location start, final Location end) {
-        return !start.isDiagonal(end);
+        return start.isNotDiagonal(end);
     }
 }

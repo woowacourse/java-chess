@@ -17,9 +17,13 @@ public final class Pawn extends Piece {
     public static Pawn makeWhite() {
         return new Pawn(Color.WHITE);
     }
-    
+
     @Override
     protected boolean isNotMovable(final Location start, final Location end) {
-        return Math.abs(start.getRow() - end.getRow()) > 2;
+        int rowDiff = end.getRow() - start.getRow();
+        if (isWhite()) {
+            return rowDiff < 1 || rowDiff > 2;
+        }
+        return rowDiff > -1 || rowDiff < -2;
     }
 }

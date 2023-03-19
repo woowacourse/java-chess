@@ -1,6 +1,6 @@
 package domain;
 
-import domain.type.Direction;
+import domain.type.direction.PieceMoveDirection;
 import java.util.Objects;
 
 public final class Location {
@@ -42,14 +42,22 @@ public final class Location {
         return false;
     }
 
-    public boolean isNotSameLine(final Location location) {
+    public boolean isSameLine(final Location location) {
         return isSameCol(location) || isSameRow(location);
+    }
+
+    public boolean isNotSameLine(final Location location) {
+        return !isSameLine(location);
     }
 
     public boolean isDiagonal(final Location location) {
         final int colDifference = Math.abs(col - location.getCol());
         final int rowDifference = Math.abs(row - location.getRow());
         return colDifference == rowDifference;
+    }
+
+    public boolean isNotDiagonal(final Location location) {
+        return !isDiagonal(location);
     }
 
     public boolean isHigherThan(final Location location) {
@@ -68,7 +76,7 @@ public final class Location {
         return row;
     }
 
-    public Location addDirectionOnce(final Direction direction) {
+    public Location addDirectionOnce(final PieceMoveDirection direction) {
         return Location.of(col + direction.getColDiff(), row + direction.getRowDiff());
     }
 
