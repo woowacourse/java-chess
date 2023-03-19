@@ -4,5 +4,5 @@ import chess.domain.piece.Piece;
 
 public interface PieceMove {
 
-    boolean isMovable(Piece piece, boolean isLastIndex);
+    boolean isMovable(Piece piece, boolean isLastPiece);
 }
