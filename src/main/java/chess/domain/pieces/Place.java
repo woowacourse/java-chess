@@ -15,4 +15,9 @@ public class Place extends Piece {
     public void canMove(final Position start, final Position end) {
         throw new IllegalArgumentException(PieceMessage.PLACE_INVALID_MOVE.getMessage());
     }
+
+    @Override
+    public boolean isPlace() {
+        return this.name.isPlace();
+    }
 }

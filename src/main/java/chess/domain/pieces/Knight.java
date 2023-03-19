@@ -24,4 +24,9 @@ public class Knight extends Piece {
             throw new IllegalArgumentException(PieceMessage.KNIGHT_INVALID_MOVE.getMessage());
         }
     }
+
+    @Override
+    public boolean isKnight() {
+        return this.name.isKnight();
+    }
 }

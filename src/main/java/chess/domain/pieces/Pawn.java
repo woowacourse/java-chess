@@ -77,4 +77,9 @@ public class Pawn extends Piece {
     private boolean isLowerPawnMoveAfterFirst(final int subRow, final int subCol) {
         return subCol == SAME_POSITION && subRow == MOVE_UP_ONE;
     }
+
+    @Override
+    public boolean isPawn() {
+        return this.name.isPawn();
+    }
 }
