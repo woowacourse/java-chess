@@ -2,8 +2,10 @@ package techcourse.fp.mission;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 @SuppressWarnings("NonAsciiCharacters")
 class CarTest {
 

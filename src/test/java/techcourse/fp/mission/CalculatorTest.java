@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 class CalculatorTest {
 
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);

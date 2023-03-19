@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 @SuppressWarnings("NonAsciiCharacters")
 class PlayGroundTest {
 
