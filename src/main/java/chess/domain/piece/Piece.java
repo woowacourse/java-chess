@@ -23,6 +23,14 @@ public abstract class Piece {
 
     protected abstract boolean isValidTarget(final Piece target);
 
+    public final boolean isNotSameColor(final Color color) {
+        return this.color != color;
+    }
+
+    public final boolean isSameColor(final Color color) {
+        return this.color == color;
+    }
+
     public PieceType type() {
         return type;
     }

@@ -35,7 +35,7 @@ public class Board {
     }
 
     private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        if (turn.isOpponent(piece.color())) {
+        if (piece.isNotSameColor(turn)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
         if (piece.isNotMovable(sourcePosition, targetPosition, board.get(targetPosition))) {

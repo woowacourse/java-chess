@@ -47,7 +47,7 @@ public class BoardConverter {
 
     private static String generatePieceSymbol(final Piece piece) {
         final String result = SYMBOLS.get(piece.type());
-        if (piece.color() == Color.WHITE) {
+        if (piece.isSameColor(Color.WHITE)) {
             return result.toLowerCase();
         }
         return result;
