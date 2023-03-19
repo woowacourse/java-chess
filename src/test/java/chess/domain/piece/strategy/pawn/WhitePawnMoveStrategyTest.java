@@ -1,8 +1,7 @@
-package chess.domain.piece.move;
+package chess.domain.piece.strategy.pawn;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.pawn.WhitePawnMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
