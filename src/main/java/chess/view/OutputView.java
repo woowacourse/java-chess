@@ -1,8 +1,5 @@
 package chess.view;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -10,6 +7,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 import chess.dto.controllertoview.PieceInfo;
 
 import java.util.List;

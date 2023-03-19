@@ -1,9 +1,9 @@
 package chess.dto.controllertoview;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 
 public class PieceInfo {
 

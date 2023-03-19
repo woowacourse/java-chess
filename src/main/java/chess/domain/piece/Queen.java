@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.List;
 

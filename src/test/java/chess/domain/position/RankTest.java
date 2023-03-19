@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -8,12 +8,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.THREE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RankTest {

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,11 +13,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
-import static chess.domain.File.E;
-import static chess.domain.Rank.EIGHT;
-import static chess.domain.Rank.SEVEN;
+import static chess.domain.piece.property.Color.BLACK;
+import static chess.domain.piece.property.Color.WHITE;
+import static chess.domain.position.File.E;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.SEVEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

@@ -3,10 +3,10 @@ package chess.domain.state;
 import chess.controller.command.Command;
 import chess.controller.command.Type;
 import chess.domain.ChessGame;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.List;
 

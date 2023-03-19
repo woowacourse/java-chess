@@ -2,18 +2,19 @@ package chess.domain;
 
 import chess.TestPiecesGenerator;
 import chess.domain.piece.Pawn;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.TWO;
+import static chess.domain.piece.property.Color.BLACK;
+import static chess.domain.piece.property.Color.WHITE;
+import static chess.domain.position.File.A;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

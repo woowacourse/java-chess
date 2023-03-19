@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.List;
 import java.util.Map;
 
-import static chess.domain.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
-import static chess.domain.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
+import static chess.domain.position.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
+import static chess.domain.position.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
 
 public class Pawn extends Piece {
 

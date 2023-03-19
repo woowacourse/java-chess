@@ -1,8 +1,10 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.maker.PiecesGenerator;
+import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 
 import java.util.List;
 

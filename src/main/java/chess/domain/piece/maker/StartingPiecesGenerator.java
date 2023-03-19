@@ -1,8 +1,5 @@
 package chess.domain.piece.maker;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -10,25 +7,28 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.File.E;
-import static chess.domain.File.F;
-import static chess.domain.File.G;
-import static chess.domain.File.H;
-import static chess.domain.Rank.EIGHT;
-import static chess.domain.Rank.ONE;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.TWO;
+import static chess.domain.piece.property.Color.BLACK;
+import static chess.domain.piece.property.Color.WHITE;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
+import static chess.domain.position.File.G;
+import static chess.domain.position.File.H;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.TWO;
 
 public class StartingPiecesGenerator implements PiecesGenerator {
 

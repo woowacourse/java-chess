@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,21 +10,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.File.E;
-import static chess.domain.File.F;
-import static chess.domain.File.G;
-import static chess.domain.File.H;
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.ONE;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
+import static chess.domain.position.File.G;
+import static chess.domain.position.File.H;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.THREE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 

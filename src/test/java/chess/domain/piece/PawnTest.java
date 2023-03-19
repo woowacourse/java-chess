@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,17 +15,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.piece.property.Color.BLACK;
+import static chess.domain.piece.property.Color.WHITE;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.THREE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
