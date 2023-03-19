@@ -17,6 +17,7 @@ class FileTest {
     class FindFileMethodTest {
 
         @ParameterizedTest(name = "{0}을 전달하면 {1}을 반환한다")
+        @DisplayName("findFile() 성공 테스트")
         @CsvSource(
                 value = {"a:A", "b:B", "c:C", "d:D", "e:E", "f:F", "g:G", "h:H"},
                 delimiter = ':'
@@ -30,6 +31,7 @@ class FileTest {
         }
 
         @ParameterizedTest(name = "1 ~ 8의 범위를 벗어나는 값 {0}을 전달하면 예외가 발생한다")
+        @DisplayName("findFile() 실패 테스트")
         @ValueSource(strings = {"I", "Z"})
         void findFile_givenInvalidName_thenFail(final String name) {
             assertThatThrownBy(() -> File.findFile(name))
@@ -56,6 +58,7 @@ class FileTest {
     class FindNextFileMethodTest {
 
         @ParameterizedTest(name = "주어지는 offer가 {0}일 때 {1}을 반환한다")
+        @DisplayName("findNextFile() 성공 테스트")
         @CsvSource(value = {
                 "1:F", "0:E", "-1:D", "2:G", "-2:C"
         }, delimiter = ':')
@@ -71,6 +74,7 @@ class FileTest {
         }
 
         @ParameterizedTest(name = "File이 {0}일 때 계산 결과가 1 ~ 8의 범위를 넘어서는 offer {1}이 주어지면 예외가 발생한다.")
+        @DisplayName("findNextFile() 실패 테스트")
         @CsvSource(value = {"A:-1", "H:1"}, delimiter = ':')
         void findNextRank_whenBoundaryRank_givenBoundaryOffset_thenFail(final File file, final int offer) {
             assertThatThrownBy(() -> file.findNextFile(offer))

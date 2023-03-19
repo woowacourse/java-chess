@@ -36,6 +36,7 @@ class EmptyTest {
     }
 
     @ParameterizedTest(name = "isSameTeam()을 호출하면 Camp.{0}일 때 false를 반환한다")
+    @DisplayName("isSameTeam() 테스트")
     @EnumSource(Camp.class)
     void isSameTeam_whenCall_thenReturnFalse(final Camp camp) {
         // when

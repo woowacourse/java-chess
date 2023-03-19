@@ -37,6 +37,7 @@ class DirectionTest {
     }
 
     @ParameterizedTest(name = "match()는 Direction.{0}이고 rank={1}, file={2}이면 {3}을 반환한다.")
+    @DisplayName("match() 테스트")
     @CsvSource({"SOUTH,0,-1,true", "NORTH_WEST,-3,3,true", "NORTH_WEST_WEST,-4,2,true"})
     void match_givenRankAndFile_thenReturnResult(
             final Direction direction,
@@ -48,23 +49,12 @@ class DirectionTest {
     }
 
     @ParameterizedTest(name = "findDirection()은 rank = {0}, file = {1}일 때 Direction.{2}를 반환한다.")
+    @DisplayName("findDirection() 테스트")
     @CsvSource({
-            "0,1,NORTH",
-            "1,0,EAST",
-            "0,-1,SOUTH",
-            "-1,0,WEST",
-            "1,1,NORTH_EAST",
-            "-1,1,NORTH_WEST",
-            "1,-1,SOUTH_EAST",
-            "-1,-1,SOUTH_WEST",
-            "1,2,NORTH_NORTH_EAST",
-            "-1,2,NORTH_NORTH_WEST",
-            "1,-2,SOUTH_SOUTH_EAST",
-            "-1,-2,SOUTH_SOUTH_WEST",
-            "-2,1,NORTH_WEST_WEST",
-            "2,1,NORTH_EAST_EAST",
-            "-2,-1,SOUTH_WEST_WEST",
-            "2,-1,SOUTH_EAST_EAST"
+            "0,1,NORTH", "1,0,EAST", "0,-1,SOUTH", "-1,0,WEST", "1,1,NORTH_EAST", "-1,1,NORTH_WEST",
+            "1,-1,SOUTH_EAST", "-1,-1,SOUTH_WEST", "1,2,NORTH_NORTH_EAST", "-1,2,NORTH_NORTH_WEST",
+            "1,-2,SOUTH_SOUTH_EAST", "-1,-2,SOUTH_SOUTH_WEST", "-2,1,NORTH_WEST_WEST", "2,1,NORTH_EAST_EAST",
+            "-2,-1,SOUTH_WEST_WEST", "2,-1,SOUTH_EAST_EAST"
     })
     void findDirection_givenRankAndFile_thenReturnDirection(final int rank, final int file, final Direction result) {
         final Direction direction = Direction.findDirection(file, rank);
@@ -77,6 +67,7 @@ class DirectionTest {
     class FindNextRankMethodTest {
 
         @ParameterizedTest(name = "Rank.FIFTH일 때 Direction.{0}에서 findNextRank()를 호출하면 {1}을 반환한다")
+        @DisplayName("findNextRank() 성공 테스트")
         @CsvSource(value = {
                 "NORTH:SIXTH", "EAST:FIFTH", "SOUTH:FOURTH", "WEST:FIFTH", "SOUTH_SOUTH_WEST:THIRD",
                 "NORTH_EAST:SIXTH", "NORTH_WEST:SIXTH", "SOUTH_EAST:FOURTH", "SOUTH_WEST:FOURTH",
@@ -95,6 +86,7 @@ class DirectionTest {
         }
 
         @ParameterizedTest(name = "Direction.{1}일 때 Rank가 {0}이라면 계산 결과가 1 ~ 8의 범위를 넘어서서 예외가 발생한다.")
+        @DisplayName("findNextRank() 실패 테스트")
         @CsvSource(value = {
                 "FIRST:SOUTH", "FIRST:SOUTH_EAST", "FIRST:SOUTH_WEST", "FIRST:SOUTH_SOUTH_EAST",
                 "FIRST:SOUTH_SOUTH_WEST", "FIRST:SOUTH_WEST_WEST", "FIRST:SOUTH_EAST_EAST", "EIGHTH:NORTH:",
@@ -113,13 +105,14 @@ class DirectionTest {
     class FindNextFileMethodTest {
 
         @ParameterizedTest(name = "File.E일 때 Direction.{0}에서 findNextFile()를 호출하면 {1}을 반환한다")
+        @DisplayName("findNextFile() 성공 테스트")
         @CsvSource(value = {
                 "NORTH:E", "EAST:F", "SOUTH:E", "WEST:D",
                 "NORTH_EAST:F", "NORTH_WEST:D", "SOUTH_EAST:F", "SOUTH_WEST:D",
                 "NORTH_NORTH_EAST:F", "NORTH_NORTH_WEST:D", "SOUTH_SOUTH_EAST:F", "SOUTH_SOUTH_WEST:D",
                 "NORTH_WEST_WEST:C", "NORTH_EAST_EAST:G", "SOUTH_WEST_WEST:C", "SOUTH_EAST_EAST:G"
         }, delimiter = ':')
-        void findNextRank_givenOffset_thenReturnNextRank(final Direction direction, final File expected) {
+        void findNextFile_givenOffset_thenReturnNextRank(final Direction direction, final File expected) {
             // given
             final File e = File.E;
 
@@ -131,12 +124,13 @@ class DirectionTest {
         }
 
         @ParameterizedTest(name = "Direction.{1}일 때 File이 {0}이라면 계산 결과가 1 ~ 8의 범위를 넘어서서 예외가 발생한다.")
+        @DisplayName("findNextFile() 실패 테스트")
         @CsvSource(value = {
                 "A:WEST", "A:NORTH_WEST", "A:SOUTH_WEST", "A:NORTH_NORTH_WEST", "A:SOUTH_SOUTH_WEST",
                 "A:NORTH_WEST_WEST", "A:SOUTH_WEST_WEST", "H:EAST", "H:NORTH_EAST", "H:SOUTH_EAST",
                 "H:NORTH_NORTH_EAST", "H:SOUTH_SOUTH_EAST", "H:NORTH_EAST_EAST", "H:SOUTH_EAST_EAST"
         }, delimiter = ':')
-        void findNextRank_whenBoundaryRank_givenBoundaryOffset_thenFail(final File file, final Direction direction) {
+        void findNextFile_whenBoundaryRank_givenBoundaryOffset_thenFail(final File file, final Direction direction) {
             assertThatThrownBy(() -> direction.findNextFile(file))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("존재하지 않는 열입니다.");

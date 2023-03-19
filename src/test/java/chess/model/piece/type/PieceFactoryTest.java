@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PieceFactoryTest {
 
     @ParameterizedTest(name = "create()는 {0}을 건네주면 {1}의 타입의 기물을 반환한다")
+    @DisplayName("create() 성공 테스트")
     @CsvSource(value = {
             "chess.model.piece.type.Bishop:chess.model.piece.type.Bishop",
             "chess.model.piece.type.Pawn:chess.model.piece.type.InitialPawn",

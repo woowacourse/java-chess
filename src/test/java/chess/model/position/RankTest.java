@@ -17,6 +17,7 @@ class RankTest {
     class FindRankMethodTest {
 
         @ParameterizedTest(name = "findRank()는 {0}을 전달하면 {1}을 반환한다")
+        @DisplayName("findRank() 성공 테스트")
         @CsvSource(value = {"1:FIRST", "2:SECOND", "3:THIRD", "4:FOURTH", "5:FIFTH", "6:SIXTH", "7:SEVENTH",
                 "8:EIGHTH"}, delimiter = ':')
         void findRank_givenValue_thenReturnSameValueRank(final int value, final Rank expected) {
@@ -28,6 +29,7 @@ class RankTest {
         }
 
         @ParameterizedTest(name = "1 ~ 8의 범위를 벗어나는 값 {0}을 전달하면 예외가 발생한다")
+        @DisplayName("findRank() 실패 테스트")
         @ValueSource(ints = {0, 9})
         void findRank_givenInvalidValue_thenFail(final int value) {
             assertThatThrownBy(() -> Rank.findRank(value))
@@ -52,7 +54,8 @@ class RankTest {
     @DisplayName("findNextRank() 테스트")
     class FindNextRankMethodTest {
 
-        @ParameterizedTest(name = "주어지는 offset이 {0}일 때 {1}을 반환한다")
+        @ParameterizedTest(name = "주어지는 offer가 {0}일 때 {1}을 반환한다")
+        @DisplayName("findNextRank() 성공 테스트")
         @CsvSource(value = {
                 "1:SIXTH", "0:FIFTH", "-1:FOURTH", "2:SEVENTH", "-2:THIRD"
         }, delimiter = ':')
@@ -68,6 +71,7 @@ class RankTest {
         }
 
         @ParameterizedTest(name = "Rank가 {0}일 때 계산 결과가 1 ~ 8의 범위를 넘어서는 offer {1}이 주어지면 예외가 발생한다.")
+        @DisplayName("findNextRank() 실패 테스트")
         @CsvSource(value = {"FIRST:-1", "EIGHTH:1"}, delimiter = ':')
         void findNextRank_whenBoundaryRank_givenBoundaryOffset_thenFail(final Rank rank, final int offer) {
             assertThatThrownBy(() -> rank.findNextRank(offer))

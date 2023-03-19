@@ -40,6 +40,7 @@ class PositionTest {
     class FindNextPositionMethodTest {
 
         @ParameterizedTest(name = " D4에서 Direction.{0}를 건네주면 ({1} / {2})의 Position을 반환한다")
+        @DisplayName("findNextPosition() 성공 테스트")
         @CsvSource(value = {
                 "NORTH:D:FIFTH", "EAST:E:FOURTH", "SOUTH:D:THIRD", "WEST:C:FOURTH", "NORTH_EAST:E:FIFTH",
                 "NORTH_WEST:C:FIFTH", "SOUTH_EAST:E:THIRD", "SOUTH_WEST:C:THIRD", "NORTH_NORTH_EAST:E:SIXTH",
@@ -62,6 +63,7 @@ class PositionTest {
         }
 
         @ParameterizedTest(name = "({1} / {2})의 Position Direction.{0}을 건네주면 예외가 발생한다")
+        @DisplayName("findNextPosition() 실패 테스트")
         @CsvSource(value = {
                 "NORTH:D:EIGHTH", "EAST:H:FOURTH", "SOUTH:D:FIRST", "WEST:A:FIRST", "NORTH_EAST:D:EIGHTH",
                 "NORTH_EAST:H:FOURTH", "NORTH_WEST:A:FOURTH", "NORTH_WEST:D:EIGHTH", "NORTH_WEST:A:FOURTH",

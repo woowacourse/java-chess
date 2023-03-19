@@ -21,6 +21,7 @@ class DistanceTest {
     }
 
     @ParameterizedTest(name = "matchByDirection()은 ({0} / {1})일 때 Direction.{2}라면 true를 반환한다")
+    @DisplayName("matchByDirection() 테스트")
     @CsvSource(value = {
             "0:1:NORTH", "1:0:EAST", "0:-1:SOUTH", "-1:0:WEST", "1:1:NORTH_EAST", "-1:1:NORTH_WEST",
             "1:-1:SOUTH_EAST", "-1:-1:SOUTH_WEST", "1:2:NORTH_NORTH_EAST", "-1:2:NORTH_NORTH_WEST",
