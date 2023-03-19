@@ -5,7 +5,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMatcher;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
-import chess.piece.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +12,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RowPieces implements Comparable<RowPieces> {
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
     private static final int MIN_COLUMN_INDEX = 0;
     private static final int MAX_COLUMN_INDEX = 7;
     private static final int FIRST_PIECE_INDEX = 0;
@@ -40,7 +37,7 @@ public class RowPieces implements Comparable<RowPieces> {
         InitialSymbols initialSymbols = InitialSymbols.from(rowNum);
         Character symbol = initialSymbols.findSymbolByColumnIndex(columnIndex);
         Team team = Team.from(rowNum);
-        Coordinate coordinate = new Coordinate(rowNum, parseColumn(columnIndex));
+        Coordinate coordinate = new Coordinate(parseColumn(columnIndex), rowNum);
         
         return PieceMatcher.of(symbol, team, coordinate);
     }
@@ -51,65 +48,59 @@ public class RowPieces implements Comparable<RowPieces> {
     
     @Override
     public int compareTo(RowPieces otherRowPieces) {
-        return firstPiece(this).compareTo(firstPiece(otherRowPieces));
+        return firstPiece(this).compareToPieceByRowNum(firstPiece(otherRowPieces));
     }
     
     private Piece firstPiece(RowPieces rowPieces) {
         return rowPieces.pieces.get(FIRST_PIECE_INDEX);
     }
     
-    public boolean isMovable(RowPieces targetRowPieces, List<Integer> sourceCoordinate, List<Integer> destinationCoordinate) {
-        Piece sourcePiece = findPieceByColumn(this, parseColumn(sourceCoordinate));
-        Piece destinationPiece = findPieceByColumn(targetRowPieces, parseColumn(destinationCoordinate));
-        
+    public boolean isSameCoordinate(Coordinate coordinate) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.isSameCoordinate(coordinate));
+    }
+    
+    public boolean isMovable(RowPieces targetRowPieces, Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
+        Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
+        Piece destinationPiece = findPieceByCoordinate(targetRowPieces, destinationCoordinate);
+    
         return sourcePiece.isMovable(destinationPiece);
     }
     
-    private char parseColumn(List<Integer> coordinate) {
-        return (char)(int) coordinate.get(COLUMN_INDEX);
-    }
-    
-    private Piece findPieceByColumn(RowPieces rowPieces, char column) {
+    private Piece findPieceByCoordinate(RowPieces rowPieces, Coordinate coordinate) {
         return rowPieces.pieces.stream()
-                .filter(piece -> piece.isSameColumn(column))
+                .filter(piece -> piece.isSameCoordinate(coordinate))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
     
-    public boolean isSameRow(int otherRow) {
-        return pieces.get(FIRST_PIECE_INDEX).isSameRow(otherRow);
+    public boolean isPieceByCoordinateNotEmpty(Coordinate researchCoordinate) {
+        return !findPieceByCoordinate(this, researchCoordinate).isSameTeam(Team.EMPTY);
     }
     
-    public boolean isPieceByColumnNotEmpty(int columnNumber) {
-        return !findPieceByColumn(this, (char) columnNumber).isSameTeam(Team.EMPTY);
+    public boolean isPieceByCoordinateKnight(Coordinate coordinate) {
+        return findPieceByCoordinate(this, coordinate)
+                .isKnight();
     }
     
     public void move(
             RowPieces rowPiecesContainsDestinationPiece,
-            List<Integer> sourceCoordinate,
-            List<Integer> destinationCoordinate
+            Coordinate sourceCoordinate,
+            Coordinate destinationCoordinate
     ) {
-        Piece sourcePiece = findPieceByColumn(this, parseColumn(sourceCoordinate));
+        Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
         Piece movedPiece = sourcePiece.movedSourcePiece(destinationCoordinate);
-        
-        rowPiecesContainsDestinationPiece.switchPiece(movedPiece, parseColumn(destinationCoordinate));
-        switchPiece(createEmpty(sourceCoordinate), parseColumn(sourceCoordinate));
+    
+        rowPiecesContainsDestinationPiece.switchPiece(movedPiece, destinationCoordinate);
+        switchPiece(createEmpty(sourceCoordinate), sourceCoordinate);
     }
     
-    private void switchPiece(Piece movedPiece, char column) {
-        pieces.set(column - MIN_COLUMN_CHAR, movedPiece);
+    private void switchPiece(Piece movedPiece, Coordinate coordinate) {
+        pieces.set(coordinate.columnIndexAtRowPieces(), movedPiece);
     }
     
-    private Empty createEmpty(List<Integer> coordinate) {
-        return new Empty(Team.EMPTY, new Coordinate(findRow(coordinate), parseColumn(coordinate)));
-    }
-    
-    private int findRow(List<Integer> coordinate) {
-        return coordinate.get(ROW_INDEX);
-    }
-    
-    public boolean isPieceByColumnKnight(char column) {
-        return findPieceByColumn(this, column).isKnight();
+    private Piece createEmpty(Coordinate coordinate) {
+        return new Empty(Team.EMPTY, coordinate);
     }
     
     public List<Piece> pieces() {

@@ -4,7 +4,11 @@ import chess.game.state.*;
 import chess.view.OutputView;
 
 public class ChessGameLauncher {
-    private ChessGameState chessGameState = new InitGameState();
+    private ChessGameState chessGameState;
+    
+    public ChessGameLauncher() {
+        this.chessGameState = new InitGameState();
+    }
     
     public void execute() {
         while (chessGameState.runnable()) {

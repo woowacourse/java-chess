@@ -23,6 +23,14 @@ public class Row {
         return row < MIN_ROW || row > MAX_ROW;
     }
     
+    public int directionNumberTo(Row otherRow) {
+        return Integer.compare(otherRow.row, this.row);
+    }
+    
+    public int add(int directionNumber) {
+        return row + directionNumber;
+    }
+    
     public int compareTo(Row otherRow) {
         return this.row - otherRow.row;
     }
@@ -33,10 +41,6 @@ public class Row {
     
     public boolean isPawnStartRow(int pawnStartRow) {
         return row == pawnStartRow;
-    }
-    
-    public boolean isSame(int otherRow) {
-        return this.row == otherRow;
     }
     
     @Override

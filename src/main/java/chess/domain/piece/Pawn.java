@@ -70,7 +70,7 @@ public class Pawn extends Piece {
     }
     
     private boolean isPawnImmovableForwardTwoSpace(Piece targetPiece, int startRow) {
-        return !coordinate().isPawnStartRow(startRow) || !targetPiece.isSameTeam(Team.EMPTY);
+        return !coordinate.isPawnStartRow(startRow) || !targetPiece.isSameTeam(Team.EMPTY);
     }
     
     private boolean isPawnImmovableDiagonalOneSpace(Piece targetPiece, Team team) {

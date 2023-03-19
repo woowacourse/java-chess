@@ -23,12 +23,20 @@ public class Column {
         return column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR;
     }
     
-    public int subtract(Column targetColumn) {
-        return this.column - targetColumn.column;
+    public int directionNumberTo(Column otherColumn) {
+        return Integer.compare(otherColumn.column, column);
     }
     
-    public boolean isSame(char otherColumn) {
-        return this.column == otherColumn;
+    public char add(int directionNumber) {
+        return (char) (column + directionNumber);
+    }
+    
+    public int minusMinColumn() {
+        return column - MIN_COLUMN_CHAR;
+    }
+    
+    public int subtract(Column targetColumn) {
+        return this.column - targetColumn.column;
     }
     
     @Override

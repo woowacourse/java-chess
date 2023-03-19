@@ -1,13 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.board.RowPieces;
+import chess.domain.piece.coordinate.Coordinate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +33,7 @@ class RowPiecesTest {
     @CsvSource(value = {"a,a,true", "c,c,false", "d,d,true"})
     void 출발_객체가_도착지_좌표로_이동할_수_있는지_판단(char sourceColumn, char destinationColumn, boolean expectedResult) {
         RowPieces targetRowPieces = new RowPieces(1);
-        boolean isMovable = rowPieces.isMovable(targetRowPieces, List.of((int) sourceColumn, 0), List.of((int) destinationColumn, 0));
+        boolean isMovable = rowPieces.isMovable(targetRowPieces, new Coordinate(sourceColumn, 8), new Coordinate(destinationColumn, 1));
         Assertions.assertThat(isMovable).isEqualTo(expectedResult);
     }
 }

@@ -28,6 +28,30 @@ public class Coordinate {
         return Integer.parseInt(sourceCoordinate[1]);
     }
     
+    public Coordinate coordinateOneStepFor(Coordinate destinationCoordinate) {
+        return new Coordinate(oneStepByColumnFor(destinationCoordinate), oneStepByRowFor(destinationCoordinate));
+    }
+    
+    private char oneStepByColumnFor(Coordinate coordinate) {
+        return this.column.add(directionNumberOfColumn(coordinate));
+    }
+    
+    private int directionNumberOfColumn(Coordinate coordinate) {
+        return this.column.directionNumberTo(coordinate.column);
+    }
+    
+    private int oneStepByRowFor(Coordinate destinationCoordinate) {
+        return this.row.add(directionNumberOfRow(destinationCoordinate));
+    }
+    
+    private int directionNumberOfRow(Coordinate coordinate) {
+        return this.row.directionNumberTo(coordinate.row);
+    }
+    
+    public int columnIndexAtRowPieces() {
+        return column.minusMinColumn();
+    }
+    
     public int compareToPieceByRowNum(Coordinate otherCoordinate) {
         return this.row.compareTo(otherCoordinate.row);
     }
@@ -40,14 +64,6 @@ public class Coordinate {
     
     public boolean isPawnStartRow(int pawnStartRow) {
         return row.isPawnStartRow(pawnStartRow);
-    }
-    
-    public boolean isSameColumn(char otherColumn) {
-        return this.column.isSame(otherColumn);
-    }
-    
-    public boolean isSameRow(int otherRow) {
-        return this.row.isSame(otherRow);
     }
     
     @Override
