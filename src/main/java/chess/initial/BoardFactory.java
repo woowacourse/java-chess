@@ -1,16 +1,30 @@
 package chess.initial;
 
+import static chess.domain.team.Team.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.team.Team;
 
 public final class BoardFactory {
+
+	private static final String A1 = "a1";
+	private static final String B1 = "b1";
+	private static final String C1 = "c1";
+	private static final String D1 = "d1";
+	private static final String E1 = "e1";
 
 	private BoardFactory() {
 	}
@@ -23,8 +37,32 @@ public final class BoardFactory {
 	}
 
 	private static void fillPieces(final Map<Position, Piece> board) {
-		board.putAll(BlackFactory.create(new HashMap<>()));
-		board.putAll(WhiteFactory.create(new HashMap<>()));
+		fillFour(board, A1, new Rook(WHITE), new Rook(BLACK));
+		fillFour(board, B1, new Knight(WHITE), new Knight(BLACK));
+		fillFour(board, C1, new Bishop(WHITE), new Bishop(BLACK));
+		fillTwo(board, D1, new King(WHITE), new King(BLACK));
+		fillTwo(board, E1, new Queen(WHITE), new Queen(BLACK));
+		fillPawn(board);
+	}
+
+	private static void fillFour(final Map<Position, Piece> board, final String point, final Piece white,
+		final Piece black) {
+		fillTwo(board, point, white, black);
+		board.put(Position.side(point), white);
+		board.put(Position.diagonal(point), black);
+	}
+
+	private static void fillTwo(final Map<Position, Piece> board, final String point, final Piece white,
+		final Piece black) {
+		board.put(Position.from(point), white);
+		board.put(Position.oppsite(point), black);
+	}
+
+	private static void fillPawn(final Map<Position, Piece> board) {
+		for (final File file : File.values()) {
+			board.put(Position.of(file.value(), 2), new Pawn(WHITE));
+			board.put(Position.of(file.value(), 7), new Pawn(BLACK));
+		}
 	}
 
 	private static void fillEmpty(final Map<Position, Piece> board) {
@@ -39,7 +77,7 @@ public final class BoardFactory {
 		}
 	}
 
-	private static void fill(Map<Position, Piece> board, Rank rank, File file) {
+	private static void fill(final Map<Position, Piece> board, final Rank rank, final File file) {
 		if (board.get(Position.of(file.value(), rank.value())) == null) {
 			board.put(Position.of(file.value(), rank.value()), new Empty(Team.NONE));
 		}
