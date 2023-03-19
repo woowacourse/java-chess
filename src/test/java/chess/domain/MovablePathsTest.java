@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
 class MovablePathsTest {
 
     @DisplayName("이동 가능한 경로들에 도착지가 없다면 예외가 발생한다")

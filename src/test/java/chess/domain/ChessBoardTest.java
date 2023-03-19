@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
 class ChessBoardTest {
 
     private static final String WRONG_START_ERROR_MESSAGE = "시작 위치에 말이 없습니다.";

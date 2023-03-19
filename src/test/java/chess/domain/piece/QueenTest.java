@@ -8,6 +8,7 @@ import chess.domain.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class QueenTest {
 
     @Test
