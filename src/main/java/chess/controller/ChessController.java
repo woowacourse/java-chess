@@ -40,6 +40,7 @@ public final class ChessController {
             isEnd(commands);
         } catch (RuntimeException e) {
             outputView.printErrorMesage(e);
+            outputView.printGuideMessage();
             repeatRead();
         }
     }
