@@ -1,19 +1,8 @@
 package chess.domain;
 
-import static chess.domain.square.File.A;
-import static chess.domain.square.File.B;
-import static chess.domain.square.File.C;
-import static chess.domain.square.File.D;
-import static chess.domain.square.File.E;
-import static chess.domain.square.File.F;
-import static chess.domain.square.File.G;
-import static chess.domain.square.File.H;
-import static chess.domain.square.Rank.EIGHT;
-import static chess.domain.square.Rank.ONE;
-import static chess.domain.square.Rank.SEVEN;
-import static chess.domain.square.Rank.TWO;
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.square.File.*;
+import static chess.domain.square.Rank.*;
+import static chess.domain.Team.*;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.InitialPawn;
@@ -22,10 +11,7 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.square.File;
-import chess.domain.square.Rank;
-import chess.domain.square.Square;
-import chess.domain.square.Squares;
+import chess.domain.square.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

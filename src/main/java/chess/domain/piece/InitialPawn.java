@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.Team.*;
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 
 import chess.domain.Team;

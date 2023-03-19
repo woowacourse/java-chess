@@ -1,10 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.movement.Movement.CONTINUOUS_DIAGONAL;
-import static chess.domain.movement.Movement.CONTINUOUS_L_SHAPE;
-import static chess.domain.movement.Movement.CONTINUOUS_STRAIGHT;
-import static chess.domain.movement.Movement.DISCONTINUOUS_DIAGONAL;
-import static chess.domain.movement.Movement.DISCONTINUOUS_STRAIGHT;
+import static chess.domain.movement.Movement.*;
 
 import chess.domain.movement.Movement;
 import java.util.List;
