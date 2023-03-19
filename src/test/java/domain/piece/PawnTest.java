@@ -89,4 +89,16 @@ class PawnTest {
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
+
+    @Test
+    @DisplayName("블랙 폰은 가로로 이동할 수 없다")
+    void isReachableByRuleCantStraight() {
+        Coordinate startCoordinate = new Coordinate(6, 0);
+        Coordinate endCoordinate = new Coordinate(6, 1);
+        Pawn blackPawn = new BlackPawn();
+        Pawn whitePawn = new WhitePawn();
+
+        assertThat(blackPawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(whitePawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+    }
 }
