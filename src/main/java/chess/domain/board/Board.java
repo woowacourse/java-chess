@@ -21,13 +21,13 @@ public class Board {
     }
 
     public void move(final Square source, final Square target) {
-        if (isMovable(source, target)) {
-            moveIfPawn(source);
-            board.put(target, board.get(source));
-            board.put(source, new Empty());
-            return;
+        if (!isMovable(source, target)) {
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        throw new IllegalArgumentException("이동할 수 없습니다.");
+
+        moveIfPawn(source);
+        board.put(target, board.get(source));
+        board.put(source, new Empty());
     }
 
     private void moveIfPawn(final Square source) {
