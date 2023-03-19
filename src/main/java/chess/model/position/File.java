@@ -16,7 +16,7 @@ public enum File {
     H(8);
 
     private static final Map<String, File> NAME_CACHE = Arrays.stream(values())
-            .collect(Collectors.toMap(Enum::toString, file -> file));
+            .collect(Collectors.toMap(Enum::name, file -> file));
     private static final Map<Integer, File> VALUE_CACHE = Arrays.stream(values())
             .collect(Collectors.toMap(file -> file.value, file -> file));
 
@@ -60,10 +60,5 @@ public enum File {
 
     public int value() {
         return value;
-    }
-
-    @Override
-    public String toString() {
-        return this.name();
     }
 }
