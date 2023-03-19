@@ -3,16 +3,12 @@ package chess.controller;
 import chess.domain.Position;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
-import chess.view.PositionMapper;
+import chess.view.*;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 public class ChessController {
-    private static final String MOVE_COMMAND = "move";
-    private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
@@ -33,9 +29,9 @@ public class ChessController {
 
     private GameStatus gameLoop() {
         List<String> commands = repeat(InputView::readMoveCommand);
-        String command = commands.get(COMMAND_INDEX);
+        MoveCommand moveCommand = MoveCommand.of(commands).orElse(MoveCommand.END);
 
-        if (MOVE_COMMAND.equals(command)) {
+        if (moveCommand == MoveCommand.MOVE) {
             move(commands);
             return GameStatus.CONTINUE;
         }
