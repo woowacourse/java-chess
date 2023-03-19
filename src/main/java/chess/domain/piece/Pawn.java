@@ -1,12 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.MoveStrategy.BLACK_PAWN;
-import static chess.domain.MoveStrategy.BLACK_PAWN_FIRST;
-import static chess.domain.MoveStrategy.WHITE_PAWN;
-import static chess.domain.MoveStrategy.WHITE_PAWN_FIRST;
-
 import chess.domain.Position;
 import chess.domain.Team;
+
+import static chess.domain.MoveStrategy.*;
 
 public class Pawn extends Piece {
 
@@ -18,21 +15,54 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        if (team == Team.BLACK) {
-            return isBlackMovable(source, target);
+    public boolean isMovable(Position source, Position target, Team team) {
+        if (this.isSameTeam(team)) {
+            throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 팀 기물이 있습니다.");
         }
-        return isWhiteMovable(source, target);
+        if (team == Team.EMPTY) {
+            return isMovableToEmpty(source, target);
+        }
+        return isMovableToEnemy(source, target);
     }
 
-    private boolean isBlackMovable(Position source, Position target) {
-        return BLACK_PAWN.isMovable(source, target)
-                || (source.isSameRank(BLACK_INIT_RANK) && BLACK_PAWN_FIRST.isMovable(source, target));
+    private boolean isMovableToEmpty(Position source, Position target) {
+        if (team == Team.BLACK) {
+            return isBlackMovableToEmpty(source, target);
+        }
+        return isWhiteMovableToEmpty(source, target);
     }
 
-    private boolean isWhiteMovable(Position source, Position target) {
-        return WHITE_PAWN.isMovable(source, target)
-                || (source.isSameRank(WHITE_INIT_RANK) && WHITE_PAWN_FIRST.isMovable(source, target));
+    private boolean isBlackMovableToEmpty(Position source, Position target) {
+        return (isFirstMoveBlackPawn(source) && BLACK_PAWN_FIRST.isMovable(source, target))
+                || BLACK_PAWN_NORMAL.isMovable(source, target);
+    }
+
+    private boolean isFirstMoveBlackPawn(Position source) {
+        return source.isSameRank(BLACK_INIT_RANK);
+    }
+
+    private boolean isWhiteMovableToEmpty(Position source, Position target) {
+        return (isFirstMoveWhitePawn(source) && WHITE_PAWN_FIRST.isMovable(source, target))
+                || WHITE_PAWN_NORMAL.isMovable(source, target);
+    }
+
+    private boolean isFirstMoveWhitePawn(Position source) {
+        return source.isSameRank(WHITE_INIT_RANK);
+    }
+
+    private boolean isMovableToEnemy(Position source, Position target) {
+        if (team == Team.BLACK) {
+            return isBlackMovableToEnemy(source, target);
+        }
+        return isWhiteMovableToEnemy(source, target);
+    }
+
+    private boolean isBlackMovableToEnemy(Position source, Position target) {
+        return BLACK_PAWN_ENEMY.isMovable(source, target);
+    }
+
+    private boolean isWhiteMovableToEnemy(Position source, Position target) {
+        return WHITE_PAWN_ENEMY.isMovable(source, target);
     }
 
     @Override
@@ -41,10 +71,5 @@ public class Pawn extends Piece {
             return Math.abs(fileDiff);
         }
         return Math.abs(fileDiff + rankDiff);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 }

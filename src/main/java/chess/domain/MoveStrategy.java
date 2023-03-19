@@ -11,10 +11,11 @@ public enum MoveStrategy {
     QUEEN((fileDiff, rankDiff) -> ROOK.moveStrategy.apply(fileDiff, rankDiff)
             || BISHOP.moveStrategy.apply(fileDiff, rankDiff)),
     BLACK_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == -2),
-    BLACK_PAWN((fileDiff, rankDiff) -> rankDiff == -1 && Math.abs(fileDiff) <= 1),
+    BLACK_PAWN_NORMAL((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == -1),
+    BLACK_PAWN_ENEMY((fileDiff, rankDiff) -> Math.abs(fileDiff) == 1 && rankDiff == -1),
     WHITE_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == 2),
-    WHITE_PAWN((fileDiff, rankDiff) -> rankDiff == 1 && Math.abs(fileDiff) <= 1),
-    PAWN_STRAIGHT(ROOK.moveStrategy);
+    WHITE_PAWN_NORMAL((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == 1),
+    WHITE_PAWN_ENEMY((fileDiff, rankDiff) -> Math.abs(fileDiff) == 1 && rankDiff == 1);
 
     private final BiFunction<Integer, Integer, Boolean> moveStrategy;
 
