@@ -55,10 +55,10 @@ public final class ChessController {
     }
 
     private void play(ChessGame chessGame) {
-        ChessCommand command;
+        ChessCommand chessCommand = ChessCommand.START;
         do {
-            command = retryOnInvalidUserInput(() -> playTurn(chessGame));
-        } while (!command.isEnd());
+            chessCommand = retryOnInvalidUserInput(() -> playTurn(chessGame));
+        } while (!chessCommand.isEnd());
     }
 
     private ChessCommand playTurn(ChessGame chessGame) {
