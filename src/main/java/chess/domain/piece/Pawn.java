@@ -24,7 +24,8 @@ public class Pawn extends Piece {
     @Override
     protected boolean canMove(final Position targetPosition) {
         if (isInitialPosition()) {
-            return position.calculateManhattanDistance(targetPosition) <= 2 && isOppositeColorSide(targetPosition);
+            return position.calculateManhattanDistance(targetPosition) <= DIAGONAL_ADJACENT_MANHATTAN_DISTANCE
+                    && isOppositeColorSide(targetPosition);
         }
         return isNeighborDistance(targetPosition) && isOppositeColorSide(targetPosition);
     }
