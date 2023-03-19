@@ -16,7 +16,7 @@ public final class ChessController {
     private static final int SOURCE_PIECE = 1;
     private static final int DESTINATION = 2;
 
-    public void run(Board board) {
+    public void run(final Board board) {
         if (isGameStart()) {
             OutputView.printBoard(board.getPieces());
             play(board);
@@ -41,7 +41,7 @@ public final class ChessController {
         }
     }
 
-    private void movePieceWithHandling(Board board, List<String> commands) {
+    private void movePieceWithHandling(final Board board, final List<String> commands) {
         try {
             board.move(getSourcePiece(commands), getDestination(commands));
         } catch (IllegalArgumentException e) {
@@ -66,7 +66,7 @@ public final class ChessController {
         return gameOption;
     }
 
-    private void validateCommands(List<String> commands) {
+    private void validateCommands(final List<String> commands) {
         if (END.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
             return;
         }

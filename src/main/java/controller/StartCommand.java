@@ -4,7 +4,7 @@ public enum StartCommand {
     START,
     END;
 
-    public static StartCommand from(String command) {
+    public static StartCommand from(final String command) {
         try {
             return StartCommand.valueOf(command.toUpperCase());
         } catch (IllegalArgumentException e) {

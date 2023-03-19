@@ -4,7 +4,7 @@ public enum ProgressCommand {
     END,
     MOVE;
 
-    public static ProgressCommand from(String command) {
+    public static ProgressCommand from(final String command) {
         try {
             return ProgressCommand.valueOf(command.toUpperCase());
         } catch (IllegalArgumentException e) {
