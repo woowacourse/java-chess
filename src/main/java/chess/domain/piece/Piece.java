@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,23 +14,19 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Position source, Position target);
+    public abstract boolean isMovable(Position source, Position target, Team team);
 
     protected abstract int calculateCount(int fileDiff, int rankDiff);
-
-    public boolean isSameTeam(Piece otherPiece) {
-        return team.isSameTeam(otherPiece.team);
-    }
 
     public boolean isSameTeam(Team team) {
         return this.team.isSameTeam(team);
     }
 
-    public boolean isPawn() {
-        return false;
+    public boolean isNotSameTeam(Team team) {
+        return !this.team.isSameTeam(team);
     }
 
-    public Team getTeam() {
+    public Team team() {
         return team;
     }
 
@@ -51,7 +48,6 @@ public abstract class Piece {
             current = current.moveBy(rankUnit, fileUnit);
             path.add(current);
         }
-
         return path;
     }
 }
