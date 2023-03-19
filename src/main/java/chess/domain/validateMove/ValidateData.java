@@ -4,12 +4,12 @@ import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 
-public class ValidateDto {
+public class ValidateData {
     private final Square source;
     private final Square target;
     private final Chessboard chessboard;
 
-    public ValidateDto(Square source, Square target, Chessboard chessboard) {
+    public ValidateData(Square source, Square target, Chessboard chessboard) {
         this.source = source;
         this.target = target;
         this.chessboard = chessboard;

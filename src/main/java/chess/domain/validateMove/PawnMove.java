@@ -11,15 +11,15 @@ public class PawnMove implements ValidateMove {
     }
 
     @Override
-    public boolean validate(ValidateDto validateDto) {
-        if (validateDto.getSourcePiece().getPieceType() != PieceType.PAWN) {
+    public boolean validate(ValidateData validateData) {
+        if (validateData.getSourcePiece().getPieceType() != PieceType.PAWN) {
             setNext(new EmptyRoute());
-            return next.validate(validateDto);
+            return next.validate(validateData);
         }
-        if (validateDto.getSource().isSameFile(validateDto.getTarget())) {
-            return validateDto.getChessboard().isEmptyInRoute(validateDto.getSource(), validateDto.getTarget()) &&
-                    validateDto.getChessboard().getPieceAt(validateDto.getTarget()).getPieceType() == PieceType.EMPTY;
+        if (validateData.getSource().isSameFile(validateData.getTarget())) {
+            return validateData.getChessboard().isEmptyInRoute(validateData.getSource(), validateData.getTarget()) &&
+                    validateData.getChessboard().getPieceAt(validateData.getTarget()).getPieceType() == PieceType.EMPTY;
         }
-        return validateDto.getSourcePiece().isOpposite(validateDto.getTargetPiece());
+        return validateData.getSourcePiece().isOpposite(validateData.getTargetPiece());
     }
 }

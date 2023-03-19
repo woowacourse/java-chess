@@ -9,10 +9,10 @@ public class SourceMove implements ValidateMove {
     }
 
     @Override
-    public boolean validate(ValidateDto validateDto) {
-        if (validateDto.getSourcePiece().canMove(validateDto.getSource(), validateDto.getTarget())) {
+    public boolean validate(ValidateData validateData) {
+        if (validateData.getSourcePiece().canMove(validateData.getSource(), validateData.getTarget())) {
             setNext(new KnightMove());
-            return next.validate(validateDto);
+            return next.validate(validateData);
         }
         return false;
     }

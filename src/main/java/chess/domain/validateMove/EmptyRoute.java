@@ -6,9 +6,9 @@ public class EmptyRoute implements ValidateMove {
     }
 
     @Override
-    public boolean validate(ValidateDto validateDto) {
-        if (validateDto.getChessboard().isEmptyInRoute(validateDto.getSource(), validateDto.getTarget())) {
-            return validateDto.getSourcePiece().isNotSameCamp(validateDto.getTargetPiece());
+    public boolean validate(ValidateData validateData) {
+        if (validateData.getChessboard().isEmptyInRoute(validateData.getSource(), validateData.getTarget())) {
+            return validateData.getSourcePiece().isNotSameCamp(validateData.getTargetPiece());
         }
         return false;
     }
