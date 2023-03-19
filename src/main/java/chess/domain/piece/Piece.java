@@ -12,6 +12,10 @@ public abstract class Piece {
         this.type = type;
     }
 
+    public boolean isNotMovable(Position sourcePosition, Position targetPosition, Piece target) {
+        return !isMovable(sourcePosition, targetPosition, target);
+    }
+
     public boolean isMovable(final Position start, final Position end, final Piece target) {
         return isValidMove(start, end) && isValidTarget(target);
     }

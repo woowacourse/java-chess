@@ -38,7 +38,7 @@ public class Board {
         if (turn.isOpponent(piece.color())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (!piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
+        if (piece.isNotMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
             throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다.");
         }
         if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
