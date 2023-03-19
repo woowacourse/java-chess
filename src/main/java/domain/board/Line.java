@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import domain.piece.Bishop;
 import domain.piece.King;

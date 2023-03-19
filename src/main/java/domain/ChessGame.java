@@ -1,5 +1,8 @@
 package domain;
 
+import domain.board.Board;
+import domain.path.PathValidator;
+
 public final class ChessGame {
 
     private Board board;

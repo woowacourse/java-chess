@@ -1,9 +1,9 @@
 package controller;
 
 import common.ExecuteContext;
-import domain.Board;
 import domain.ChessGame;
 import domain.Location;
+import domain.board.Board;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

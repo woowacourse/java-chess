@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.board.Board;
 import domain.piece.Pawn;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

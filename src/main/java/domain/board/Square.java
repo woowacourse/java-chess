@@ -1,5 +1,6 @@
-package domain;
+package domain.board;
 
+import domain.Location;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import java.util.List;

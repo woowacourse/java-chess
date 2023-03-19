@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.board.Line;
+import domain.board.Square;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;

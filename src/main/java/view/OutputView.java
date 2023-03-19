@@ -1,7 +1,7 @@
 package view;
 
-import domain.Board;
-import domain.Line;
+import domain.board.Board;
+import domain.board.Line;
 import domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;

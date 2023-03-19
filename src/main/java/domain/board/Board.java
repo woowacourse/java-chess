@@ -1,5 +1,8 @@
-package domain;
+package domain.board;
 
+import domain.Location;
+import domain.path.Path;
+import domain.path.PathValidator;
 import domain.piece.Piece;
 import domain.type.direction.PieceMoveDirection;
 import java.util.ArrayList;
