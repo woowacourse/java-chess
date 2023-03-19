@@ -2,42 +2,37 @@ package chess.dto;
 
 import chess.piece.Piece;
 
+import java.util.Map;
+import java.util.function.Predicate;
+
 public class PieceDto {
 
     private final String view;
+    private final Map<Predicate<Piece>, String> views = Map.of(
+            Piece::isKing, "k",
+            Piece::isQueen, "q",
+            Piece::isKnight, "n",
+            Piece::isPawn, "p",
+            Piece::isRook, "r",
+            Piece::isBishop, "b",
+            Piece::isEmpty, "."
+    );
 
     public PieceDto(final Piece piece) {
         this.view = parseByTeam(piece);
     }
 
-    private String parseByTeam(final Piece piece) {
-        if (piece.isBlack()) {
-            return parseToPiece(piece).toUpperCase();
-        }
+    private String parseByTeam(final Piece piece2) {
+        String result = views.entrySet().stream()
+                .filter(piece -> piece.getKey().test(piece2))
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElseThrow(() -> new IllegalStateException("Piece 변환 과정 중 오류가 발생했습니다."));
 
-        return parseToPiece(piece);
-    }
-
-    private String parseToPiece(final Piece piece) {
-        if (piece.isKing()) {
-            return "k";
+        if (piece2.isBlack()) {
+            return result.toUpperCase();
         }
-        if (piece.isQueen()) {
-            return "q";
-        }
-        if (piece.isKnight()) {
-            return "n";
-        }
-        if (piece.isPawn()) {
-            return "p";
-        }
-        if (piece.isRook()) {
-            return "r";
-        }
-        if (piece.isBishop()) {
-            return "b";
-        }
-        return ".";
+        return result;
     }
 
     public String getView() {
