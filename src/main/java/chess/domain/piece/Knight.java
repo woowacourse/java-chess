@@ -30,7 +30,7 @@ public class Knight extends Piece {
         return isMovable(fileGap, rankGap) || isMovable(rankGap, fileGap);
     }
 
-    private static boolean isMovable(final int firstGap, final int secondGap) {
+    private boolean isMovable(final int firstGap, final int secondGap) {
         return firstGap == GAP_LOWER_BOUND && secondGap == GAP_UPPER_BOUND;
     }
 
