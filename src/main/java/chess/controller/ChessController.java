@@ -5,10 +5,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
-import chess.view.ViewFile;
-import chess.view.ViewRank;
+import chess.view.*;
 
 import java.util.List;
 import java.util.Map;
@@ -76,15 +73,8 @@ public final class ChessController {
     private void move(ChessGame chessGame, List<String> commands) {
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
-        validateEqualPosition(fromInput, toInput);
 
         chessGame.move(toPosition(fromInput), toPosition(toInput));
-    }
-
-    private void validateEqualPosition(String fromInput, String toInput) {
-        if (fromInput.equals(toInput)) {
-            throw new IllegalArgumentException("출발 지점과 도착 지점은 동일할 수 없습니다");
-        }
     }
 
     private Position toPosition(String positionInput) {
@@ -96,10 +86,6 @@ public final class ChessController {
 
     private void printBoard(Map<Position, Piece> piecesPosition) {
         outputView.printChessState(piecesPosition);
-    }
-
-    public void printErrorMessage(Exception exception) {
-        outputView.printErrorMessage(exception.getMessage());
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {

@@ -14,6 +14,7 @@ public final class ChessGame {
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
+    public static final String SAME_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
     private final Map<Position, Piece> piecesPosition;
     private Camp turnCamp;
@@ -24,20 +25,19 @@ public final class ChessGame {
     }
 
     public void move(Position fromPosition, Position toPosition) {
-        Piece fromPiece = piecesPosition.get(fromPosition);
-        Piece toPiece = piecesPosition.get(toPosition);
-        validateBeforeMoveTo(fromPiece, toPiece);
+        validateBeforeMoveTo(fromPosition, toPosition);
 
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
-        validateMovable(toPiece, pieceMove);
+        validateMovable(toPosition, pieceMove);
         movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
-    private void validateBeforeMoveTo(Piece fromPiece, Piece toPiece) {
-        validateFromPiece(fromPiece);
-        validateSameCamp(fromPiece, toPiece);
+    private void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
+        validateFromPiece(piecesPosition.get(fromPosition));
+        validateSameCamp(piecesPosition.get(fromPosition), piecesPosition.get(toPosition));
+        validateEqualPosition(fromPosition, toPosition);
     }
 
     private void validateFromPiece(Piece fromPiece) {
@@ -57,6 +57,12 @@ public final class ChessGame {
         }
     }
 
+    private void validateEqualPosition(Position fromPosition, Position toPosition) {
+        if (fromPosition.isSamePosition(toPosition)) {
+            throw new IllegalArgumentException(SAME_POSITION);
+        }
+    }
+
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
         Piece fromPiece = piecesPosition.get(fromPosition);
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
@@ -69,8 +75,8 @@ public final class ChessGame {
         return pieceMove;
     }
 
-    private void validateMovable(Piece toPiece, PieceMove pieceMove) {
-        if (!pieceMove.isMovable(toPiece, true)) {
+    private void validateMovable(Position toPosition, PieceMove pieceMove) {
+        if (!pieceMove.isMovable(piecesPosition.get(toPosition), true)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
     }

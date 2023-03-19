@@ -35,6 +35,10 @@ public final class Position {
         return file.subtractOrder(other.file);
     }
 
+    public boolean isSamePosition(Position toPosition) {
+        return this.file == toPosition.file && this.rank == toPosition.rank;
+    }
+
     public List<Position> getBetweenPositions(Position other) {
         int fileGap = this.calculateFileGap(other);
         int rankGap = this.calculateRankGap(other);
