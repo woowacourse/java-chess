@@ -24,6 +24,10 @@ public class Board {
         squares.put(source, Empty.INSTANCE);
     }
 
+    public Piece findByPosition(Position position) {
+        return squares.get(position);
+    }
+
     private void validate(Position source, Position target) {
         validateDuplicate(source, target);
         Piece sourcePiece = squares.get(source);
