@@ -1,5 +1,7 @@
 package chess.domain.movement;
 
+import static java.lang.Math.*;
+
 public enum Direction {
     STRAIGHT,
     DIAGONAL,
@@ -11,18 +13,30 @@ public enum Direction {
     private static final int EXPONENTIATION = 5;
 
     public static Direction from(final int fileInterval, final int rankInterval) {
-        if (fileInterval == STRAIGHT_LIMIT || rankInterval == STRAIGHT_LIMIT) {
+        if (isStraight(fileInterval, rankInterval)) {
             return STRAIGHT;
         }
 
-        if (Math.abs(fileInterval) == Math.abs(rankInterval)) {
+        if (isDiagonal(fileInterval, rankInterval)) {
             return DIAGONAL;
         }
 
-        if (Math.pow(fileInterval, EXPONENT) + Math.pow(rankInterval, EXPONENT) == EXPONENTIATION) {
+        if (isLShape(fileInterval, rankInterval)) {
             return L_SHAPE;
         }
 
         return OTHER;
+    }
+
+    private static boolean isLShape(final int fileInterval, final int rankInterval) {
+        return pow(fileInterval, EXPONENT) + pow(rankInterval, EXPONENT) == EXPONENTIATION;
+    }
+
+    private static boolean isDiagonal(final int fileInterval, final int rankInterval) {
+        return abs(fileInterval) == abs(rankInterval);
+    }
+
+    private static boolean isStraight(final int fileInterval, final int rankInterval) {
+        return fileInterval == STRAIGHT_LIMIT || rankInterval == STRAIGHT_LIMIT;
     }
 }

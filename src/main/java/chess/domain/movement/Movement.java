@@ -1,10 +1,7 @@
 package chess.domain.movement;
 
-import static chess.domain.movement.Continuity.CONTINUOUS;
-import static chess.domain.movement.Continuity.DISCONTINUOUS;
-import static chess.domain.movement.Direction.DIAGONAL;
-import static chess.domain.movement.Direction.L_SHAPE;
-import static chess.domain.movement.Direction.STRAIGHT;
+import static chess.domain.movement.Continuity.*;
+import static chess.domain.movement.Direction.*;
 
 import java.util.Arrays;
 
@@ -25,11 +22,19 @@ public enum Movement {
     }
 
     public static Movement of(int fileInterval, int rankInterval) {
-        Continuity continuity = Continuity.of(fileInterval, rankInterval);
-        Direction direction =  Direction.from(fileInterval, rankInterval);
+        final Continuity continuity = Continuity.of(fileInterval, rankInterval);
+        final Direction direction =  Direction.from(fileInterval, rankInterval);
+        return findMovement(continuity, direction);
+    }
+
+    private static Movement findMovement(final Continuity continuity, final Direction direction) {
         return Arrays.stream(Movement.values())
-                .filter(movement -> movement.continuity == continuity && movement.direction == direction)
+                .filter(movement -> movement.isCorrectMovement(continuity, direction))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 움직임입니다."));
+    }
+
+    private boolean isCorrectMovement(final Continuity continuity, final Direction direction) {
+        return this.continuity == continuity && this.direction == direction;
     }
 }

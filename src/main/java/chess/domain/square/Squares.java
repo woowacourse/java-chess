@@ -14,9 +14,13 @@ public class Squares {
 
     private static void generateSquares() {
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                squares.add(Square.of(file, rank));
-            }
+            addSquare(rank);
+        }
+    }
+
+    private static void addSquare(final Rank rank) {
+        for (File file : File.values()) {
+            squares.add(Square.of(file, rank));
         }
     }
 
