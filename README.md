@@ -77,7 +77,7 @@
 
 - [ ] `start` 명령어 재입력시 게임 초기화 방지
 
-- [ ] `GameCommand` 클래스 패키징
+- [x] `GameCommand` 클래스 패키징
 
 - [x] Factory 형태로 체스판 생성
 

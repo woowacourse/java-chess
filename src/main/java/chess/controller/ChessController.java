@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.GameCommand;
-import chess.domain.Game;
 import chess.domain.board.Square;
+import chess.domain.game.Game;
+import chess.domain.game.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

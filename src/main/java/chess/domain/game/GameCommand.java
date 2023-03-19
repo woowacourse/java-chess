@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.game;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
