@@ -51,12 +51,12 @@ public class InputView {
         return !List.of("start", "end", "move").contains(command);
     }
     
-    public static <T> T repeat(Supplier<T> inputProcess) {
+    public static <T> T repeatAtExceptionCase(Supplier<T> inputProcess) {
         try {
             return inputProcess.get();
         } catch (IllegalArgumentException illegalArgumentException) {
             System.out.println(illegalArgumentException.getMessage());
-            return repeat(inputProcess);
+            return repeatAtExceptionCase(inputProcess);
         }
     }
 }

@@ -15,7 +15,7 @@ public class Application {
     }
     
     private static void runChessGame(ChessBoard chessBoard) {
-        String command = InputView.repeat(InputView::inputCommand);
+        String command = InputView.repeatAtExceptionCase(InputView::inputCommand);
         String[] splitedCommand = command.split(" ");
     
         commandMoveCase(chessBoard, splitedCommand);
