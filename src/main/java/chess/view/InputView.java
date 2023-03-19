@@ -10,6 +10,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
+    private static final int END_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
 
@@ -35,7 +36,7 @@ public class InputView {
     }
 
     private static void validateMoveCommand(List<String> command) {
-        if (command.size() != MOVE_COMMAND_SIZE) {
+        if (command.size() != END_COMMAND_SIZE && command.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("[ERROR] move (source) (target) 형식으로 입력해주세요.");
         }
     }

@@ -17,6 +17,6 @@ public enum GameCommand {
         return Arrays.stream(values())
                 .filter(gameStartCommand -> gameStartCommand.value.equals(command))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커멘드가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] start를 입력해야 게임이 시작됩니다."));
     }
 }
