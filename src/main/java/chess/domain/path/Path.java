@@ -22,7 +22,7 @@ public class Path {
         return new Path(positions);
     }
 
-    public static Path ofMultiPath(Position current, final Direction direction, int size) {
+    public static Path ofMultiPath(Position current, final Direction direction, final int size) {
         List<Position> positions = new ArrayList<>();
         while (positions.size() < size && (current = current.findNextPosition(direction)) != null) {
             positions.add(current);
@@ -30,15 +30,15 @@ public class Path {
         return new Path(positions);
     }
 
-    public boolean hasPosition(Position position) {
+    public boolean hasPosition(final Position position) {
         return positions.contains(position);
     }
 
-    public Position findPositionByIndex(int index) {
+    public Position findPositionByIndex(final int index) {
         return positions.get(index);
     }
 
-    public int findIndexByPosition(Position position) {
+    public int findIndexByPosition(final Position position) {
         if (positions.contains(position)) {
             return positions.indexOf(position);
         }

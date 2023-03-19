@@ -23,7 +23,7 @@ public enum Rank {
         this.index = index;
     }
 
-    public static int findByIndex(String index) {
+    public static int findByIndex(final String index) {
         return Arrays.stream(values())
             .filter(rank -> rank.index.equalsIgnoreCase(index))
             .findAny()

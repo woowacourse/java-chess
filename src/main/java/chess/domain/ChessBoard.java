@@ -79,7 +79,7 @@ public class ChessBoard {
         return !hasOtherPieceInDestination(dest);
     }
 
-    private boolean isWrongAttack(Position source, Position dest, Piece piece) {
+    private boolean isWrongAttack(final Position source, final Position dest, final Piece piece) {
         return hasOtherPieceInDestination(dest) && !piece.canAttack(piecesByPosition.get(dest),
             source, dest);
     }

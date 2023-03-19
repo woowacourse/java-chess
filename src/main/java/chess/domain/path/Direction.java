@@ -29,11 +29,11 @@ public enum Direction {
         this.rankChange = rankChange;
     }
 
-    public int moveFile(int origin) {
+    public int moveFile(final int origin) {
         return origin +fileChange;
     }
 
-    public int moveRank(int origin) {
+    public int moveRank(final int origin) {
         return origin + rankChange;
     }
 

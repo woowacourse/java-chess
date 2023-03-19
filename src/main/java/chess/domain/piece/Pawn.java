@@ -16,7 +16,7 @@ public class Pawn extends Piece {
 
     private final List<Direction> directions;
 
-    public Pawn(TeamColor color) {
+    public Pawn(final TeamColor color) {
         super(color, PieceType.PAWN);
         this.directions = getDirectionsByColor();
     }

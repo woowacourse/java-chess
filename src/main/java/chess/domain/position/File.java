@@ -23,7 +23,7 @@ public enum File {
         this.index = index;
     }
 
-    public static int findByIndex(String index) {
+    public static int findByIndex(final String index) {
         File foundFile = Arrays.stream(values())
             .filter(file -> file.index.equalsIgnoreCase(index))
             .findAny()

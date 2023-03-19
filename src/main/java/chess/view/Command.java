@@ -16,7 +16,7 @@ public enum Command {
         this.answer = answer;
     }
 
-    public static Command findByAnswer(String input) {
+    public static Command findByAnswer(final String input) {
         return Arrays.stream(values())
             .filter(command -> command != MOVE)
             .filter(command -> command.answer.equalsIgnoreCase(input))

@@ -12,7 +12,7 @@ public class ChessGame {
         this.teamColor = TeamColor.WHITE;
     }
 
-    public void move(Position source, Position dest) {
+    public void move(final Position source, final Position dest) {
         chessBoard.move(source, dest, teamColor);
         teamColor = teamColor.transfer();
     }

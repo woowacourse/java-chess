@@ -32,7 +32,7 @@ public enum PieceName {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
     }
 
-    public String getName(TeamColor color) {
+    public String getName(final TeamColor color) {
         if (color == TeamColor.WHITE) {
             return name.toLowerCase();
         }

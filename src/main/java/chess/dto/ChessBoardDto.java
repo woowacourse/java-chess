@@ -17,11 +17,11 @@ public class ChessBoardDto {
 
     private final List<List<String>> board;
 
-    private ChessBoardDto(List<List<String>> convertedBoard) {
+    private ChessBoardDto(final List<List<String>> convertedBoard) {
         this.board = convertedBoard;
     }
 
-    public static ChessBoardDto from(ChessBoard chessBoard) {
+    public static ChessBoardDto from(final ChessBoard chessBoard) {
         List<List<String>> board = new ArrayList<>();
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
         for (int rankIndex = RANK_SIZE; rankIndex >= FIRST_INDEX; rankIndex--) {

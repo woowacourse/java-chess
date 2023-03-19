@@ -32,7 +32,7 @@ public class Position {
         return MAXIMUM;
     }
 
-    private void validate(int x, int y) {
+    private void validate(final int x, final int y) {
         if (isNotInRange(x, y)) {
             throw new IllegalArgumentException(OUT_OF_BOUNDS_ERROR_MESSAGE);
         }
@@ -57,15 +57,15 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
-    public boolean isOneStepForwardDiagonal(Position other) {
+    public boolean isOneStepForwardDiagonal(final Position other) {
         return Math.abs(other.x - x) == 1 && Math.abs(other.y - y) == 1;
     }
 
-    public boolean isInSameFile(Position other) {
+    public boolean isInSameFile(final Position other) {
         return x == other.x;
     }
 
-    public boolean isInExpectedRank(int rank) {
+    public boolean isInExpectedRank(final int rank) {
         return y == rank;
     }
 

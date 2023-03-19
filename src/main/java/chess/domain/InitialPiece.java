@@ -35,7 +35,7 @@ public enum InitialPiece {
     private final int rank;
     private final Piece piece;
 
-    InitialPiece(List<Integer> files, int rank, Piece piece) {
+    InitialPiece(final List<Integer> files, final int rank, Piece piece) {
         this.files = files;
         this.rank = rank;
         this.piece = piece;
@@ -49,8 +49,8 @@ public enum InitialPiece {
         return piecesByPosition;
     }
 
-    private static void putPieceToMap(Map<Position, Piece> map,
-        InitialPiece pieceWithStartPosition) {
+    private static void putPieceToMap(final Map<Position, Piece> map,
+        final InitialPiece pieceWithStartPosition) {
         for (int file : pieceWithStartPosition.files) {
             map.put(Position.of(file, pieceWithStartPosition.rank), pieceWithStartPosition.piece);
         }
