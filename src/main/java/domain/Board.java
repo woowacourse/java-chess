@@ -12,7 +12,7 @@ public final class Board {
     private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
-    public static final int EMPTY_LINE_COUNT = 4;
+    private static final int EMPTY_LINE_COUNT = 4;
     private final PathValidator pathValidator;
     private List<Line> lines;
 

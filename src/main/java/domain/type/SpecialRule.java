@@ -15,6 +15,19 @@ public enum SpecialRule {
     PAWN_MOVE_TWICE(SpecialRule::isPawnMoveTwice, SpecialRule::judgePawnMoveTwice),
     NOT_EXIST((start, end) -> false, (start, end) -> false);
 
+    private static final List<PieceMoveDirection> PAWN_MOVE_DIRECTIONS = List.of(
+        PieceMoveDirection.UP,
+        PieceMoveDirection.DOWN
+    );
+    private static final List<PieceMoveDirection> BLACK_PAWN_ATTACK_DIRECTIONS = List.of(
+        PieceMoveDirection.LEFT_DOWN,
+        PieceMoveDirection.RIGHT_DOWN
+    );
+    private static final List<PieceMoveDirection> WHITE_PAWN_ATTACK_DIRECTIONS = List.of(
+        PieceMoveDirection.LEFT_UP,
+        PieceMoveDirection.RIGHT_UP
+    );
+
     private static final int WHITE_PAWN_INITIAL_ROW = 1;
     private static final int BLACK_PAWN_INITIAL_ROW = 6;
     private final BiPredicate<ValidateDto, ValidateDto> condition;
@@ -28,8 +41,11 @@ public enum SpecialRule {
 
     private static boolean isPawnAttackCondition(final ValidateDto start, final ValidateDto end) {
         final Piece startPiece = start.getPiece();
-        return startPiece.isSameType(PieceType.PAWN)
-            && start.getLocation().isDiagonal(end.getLocation());
+        return isPawn(startPiece) && start.getLocation().isDiagonal(end.getLocation());
+    }
+
+    private static boolean isPawn(final Piece piece) {
+        return piece.isSameType(PieceType.PAWN);
     }
 
     private static boolean judgePawnAttack(final ValidateDto start, final ValidateDto end) {
@@ -42,53 +58,51 @@ public enum SpecialRule {
 
     private static boolean judgeWhitePawnAttack(final ValidateDto start, final ValidateDto end) {
         final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
-        final List<PieceMoveDirection> attackDirection = List.of(PieceMoveDirection.LEFT_UP,
-            PieceMoveDirection.RIGHT_UP);
         final Location expected = start.getLocation().addDirectionOnce(direction);
-        return attackDirection.contains(direction)
+        return WHITE_PAWN_ATTACK_DIRECTIONS.contains(direction)
             && expected.equals(end.getLocation())
             && start.getPiece().isEnemy(end.getPiece());
     }
 
     private static boolean judgeBlackPawnAttack(final ValidateDto start, final ValidateDto end) {
         final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
-        final List<PieceMoveDirection> attackDirection = List.of(PieceMoveDirection.LEFT_DOWN,
-            PieceMoveDirection.RIGHT_DOWN);
         final Location expected = start.getLocation().addDirectionOnce(direction);
-        return attackDirection.contains(direction)
+        return BLACK_PAWN_ATTACK_DIRECTIONS.contains(direction)
             && expected.equals(end.getLocation())
             && start.getPiece().isEnemy(end.getPiece());
     }
 
     private static boolean isPawnMoveOnce(final ValidateDto start, final ValidateDto end) {
-        if (!start.getPiece().isSameType(PieceType.PAWN)) {
+        if (!isPawn(start.getPiece())) {
             return false;
         }
         final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
-        final Location expected = start.getLocation().addDirectionOnce(direction);
-        final List<PieceMoveDirection> moveDirection = List.of(PieceMoveDirection.UP, PieceMoveDirection.DOWN);
-        return moveDirection.contains(direction) && expected.equals(end.getLocation());
+        final Location expected = start.getLocation()
+            .addDirectionOnce(direction);
+        return PAWN_MOVE_DIRECTIONS.contains(direction) && expected.equals(end.getLocation());
     }
 
     private static boolean judgePawnMoveOnce(final ValidateDto start, final ValidateDto end) {
-        final Piece piece = start.getPiece();
         final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
-        if (piece.isWhite()) {
-            return direction.equals(PieceMoveDirection.UP) && end.getPiece().isSameType(PieceType.EMPTY);
+        if (start.getPiece().isWhite()) {
+            return direction.equals(PieceMoveDirection.UP) && isEmptyPiece(end.getPiece());
         }
-        return direction.equals(PieceMoveDirection.DOWN) && end.getPiece().isSameType(PieceType.EMPTY);
+        return direction.equals(PieceMoveDirection.DOWN) && isEmptyPiece(end.getPiece());
+    }
+
+    private static boolean isEmptyPiece(final Piece piece) {
+        return piece.isSameType(PieceType.EMPTY);
     }
 
     private static boolean isPawnMoveTwice(final ValidateDto start, final ValidateDto end) {
-        if (!start.getPiece().isSameType(PieceType.PAWN)) {
+        if (!isPawn(start.getPiece())) {
             return false;
         }
         final PieceMoveDirection direction = PieceMoveDirection.find(start.getLocation(), end.getLocation());
         final Location expected = start.getLocation()
             .addDirectionOnce(direction)
             .addDirectionOnce(direction);
-        final List<PieceMoveDirection> moveDirection = List.of(PieceMoveDirection.UP, PieceMoveDirection.DOWN);
-        return moveDirection.contains(direction) && expected.equals(end.getLocation());
+        return PAWN_MOVE_DIRECTIONS.contains(direction) && expected.equals(end.getLocation());
     }
 
     private static boolean judgePawnMoveTwice(final ValidateDto start, final ValidateDto end) {
@@ -103,15 +117,13 @@ public enum SpecialRule {
     private static boolean judgeWhitePawnMoveTwice(final ValidateDto start, final ValidateDto end,
         final PieceMoveDirection direction) {
         return start.getLocation().getRow() == WHITE_PAWN_INITIAL_ROW && direction.equals(PieceMoveDirection.UP)
-            && end.getPiece()
-            .isSameType(PieceType.EMPTY);
+            && isEmptyPiece(end.getPiece());
     }
 
     private static boolean judgeBlackPawnMoveTwice(final ValidateDto start, final ValidateDto end,
         final PieceMoveDirection direction) {
         return start.getLocation().getRow() == BLACK_PAWN_INITIAL_ROW && direction.equals(PieceMoveDirection.DOWN)
-            && end.getPiece()
-            .isSameType(PieceType.EMPTY);
+            && isEmptyPiece(end.getPiece());
     }
 
     public static SpecialRule getRuleBy(final ValidateDto start, final ValidateDto end) {

@@ -46,18 +46,10 @@ public final class Location {
         return isSameCol(location) || isSameRow(location);
     }
 
-    public boolean isNotSameLine(final Location location) {
-        return !isSameLine(location);
-    }
-
     public boolean isDiagonal(final Location location) {
         final int colDifference = Math.abs(col - location.getCol());
         final int rowDifference = Math.abs(row - location.getRow());
         return colDifference == rowDifference;
-    }
-
-    public boolean isNotDiagonal(final Location location) {
-        return !isDiagonal(location);
     }
 
     public boolean isHigherThan(final Location location) {
