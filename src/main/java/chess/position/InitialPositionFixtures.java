@@ -1,7 +1,5 @@
 package chess.position;
 
-import chess.position.Position;
-
 public class InitialPositionFixtures {
     public static final Position WHITE_KING_POSITION = new Position(5, 1);
     public static final Position BLACK_KING_POSITION = new Position(5, 8);

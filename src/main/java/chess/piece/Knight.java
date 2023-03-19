@@ -41,8 +41,8 @@ public class Knight extends Piece {
     }
 
     private void validatePositionDifference(final Position from, final Position to) {
-        int rankDifference = Math.abs(to.rankDifference(from));
-        int fileDifference = Math.abs(to.fileDifference(from));
+        int rankDifference = Math.abs(to.rankGap(from));
+        int fileDifference = Math.abs(to.fileGap(from));
 
         boolean hasInvalidPositionDifference = rankDifference + fileDifference != POSITION_DIFFERENCE;
         if (hasInvalidPositionDifference) {

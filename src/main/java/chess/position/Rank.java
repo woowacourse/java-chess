@@ -27,6 +27,10 @@ public enum Rank {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    int gapWith(Rank rank) {
+        return this.value - rank.value;
+    }
+
     public int value() {
         return value;
     }

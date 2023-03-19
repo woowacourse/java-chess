@@ -14,13 +14,22 @@ public class Position {
     }
 
     public Movement convertMovement(Position from) {
-        int rankGap = rank.value() - from.rank.value();
-        int fileGap = file.value() - from.file.value();
+        int rankGap = this.rankGap(from);
+        int fileGap = this.fileGap(from);
 
-        int greatestCommonDivisor = findGreatestCommonDivisor(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
+        int greatestCommonDivisor = findGreatestCommonDivisor(Math.max(rankGap, fileGap),
+                Math.min(rankGap, fileGap));
+        validateGreatestCommonDivisor(greatestCommonDivisor);
 
         return Movement.of(fileGap / greatestCommonDivisor,
                 rankGap / greatestCommonDivisor);
+    }
+
+    private static void validateGreatestCommonDivisor(final int greatestCommonDivisor) {
+        // TODO: Controller에서 이미 검증된 부분임.
+        if (greatestCommonDivisor == 0) {
+            throw new IllegalStateException("출발지와 목적지가 동일해 이동할 수 없음!");
+        }
     }
 
     private int findGreatestCommonDivisor(int number1, int number2) {
@@ -38,14 +47,13 @@ public class Position {
         return this.rank.isSame(rank);
     }
 
-    public int rankDifference(final Position from) {
-        return this.rank.value() - from.rank.value();
+    public int rankGap(final Position from) {
+        return rank.gapWith(from.rank);
     }
 
-    public int fileDifference(final Position from) {
-        return this.file.value() - from.file.value();
+    public int fileGap(final Position from) {
+        return file.gapWith(from.file);
     }
-
 
     @Override
     public boolean equals(final Object o) {

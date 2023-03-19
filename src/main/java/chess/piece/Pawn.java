@@ -74,11 +74,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isMoveOneStep(final Position from, final Position to) {
-        return Math.abs(to.rankDifference(from)) == 1;
+        return Math.abs(to.rankGap(from)) == 1;
     }
 
     private boolean isMoveTwoSteps(final Position from, final Position to) {
-        return to.rankDifference(from) == INITIAL_RANK_DIFFERENCE.get(color);
+        return to.rankGap(from) == INITIAL_RANK_DIFFERENCE.get(color);
     }
 
     private boolean isInInitialPosition(final Position from) {

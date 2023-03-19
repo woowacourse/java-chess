@@ -27,6 +27,10 @@ public enum File {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    int gapWith(File file) {
+        return this.value - file.value;
+    }
+
     public int value() {
         return value;
     }
