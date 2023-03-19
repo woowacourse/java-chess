@@ -22,6 +22,10 @@ public class Position implements Comparable<Position> {
         return new Position(row, column);
     }
 
+    public Position move(final Position position) {
+        return new Position(this.row + position.row, this.column + position.column);
+    }
+
     public int getRow() {
         return row;
     }
