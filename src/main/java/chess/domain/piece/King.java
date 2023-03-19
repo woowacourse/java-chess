@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.game.Position;
 
-import static chess.domain.MoveStrategy.KING;
+import static chess.domain.piece.MoveStrategy.KING;
 
 public class King extends Piece {
 

@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.game.Position;
 
 import java.util.function.BiFunction;
 

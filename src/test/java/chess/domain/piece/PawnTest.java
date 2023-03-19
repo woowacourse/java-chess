@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.game.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

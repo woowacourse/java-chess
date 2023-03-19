@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.game.Position;
 
-import static chess.domain.MoveStrategy.BISHOP;
+import static chess.domain.piece.MoveStrategy.BISHOP;
 
 public class Bishop extends Piece {
 

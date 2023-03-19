@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 

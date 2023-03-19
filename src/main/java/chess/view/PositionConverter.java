@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Position;
+import chess.domain.game.Position;
 
 public class PositionConverter {
 

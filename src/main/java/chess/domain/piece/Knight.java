@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.game.Position;
 
 import java.util.List;
 
-import static chess.domain.MoveStrategy.KNIGHT;
+import static chess.domain.piece.MoveStrategy.KNIGHT;
 
 public class Knight extends Piece {
 
