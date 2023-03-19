@@ -19,7 +19,7 @@ public abstract class Piece {
     }
 
     public boolean isEmpty() {
-        return false;
+        return camp==Camp.NEUTRAL;
     }
 
     public boolean isSameCamp(Piece other) {

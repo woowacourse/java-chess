@@ -19,9 +19,4 @@ public final class Empty extends Piece {
     boolean isPieceRule(Position from, Position to) {
         return false;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
 }
