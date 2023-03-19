@@ -52,12 +52,6 @@ public final class ChessController {
         return chessCommand;
     }
 
-    private void validateEqualPosition(String fromInput, String toInput) {
-        if (fromInput.equals(toInput)) {
-            throw new IllegalArgumentException("출발 지점과 도착 지점은 동일할 수 없습니다");
-        }
-    }
-
     private void printBoard(PiecesPosition piecesPosition) {
         outputView.printChessState(piecesPosition.getPiecesPosition());
     }

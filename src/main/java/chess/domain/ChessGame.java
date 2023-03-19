@@ -11,6 +11,7 @@ public final class ChessGame {
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
+    private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
     private final PiecesPosition piecesPosition;
     private Camp turnCamp = Camp.WHITE;
@@ -20,6 +21,7 @@ public final class ChessGame {
     }
 
     public void move(Position fromPosition, Position toPosition) {
+        validateEqualPosition(fromPosition, toPosition);
         Piece fromPiece = piecesPosition.choicePiece(fromPosition);
         Piece toPiece = piecesPosition.choicePiece(toPosition);
         validateBeforeMoveTo(fromPiece, toPiece);
@@ -27,7 +29,8 @@ public final class ChessGame {
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
         validateMovable(toPiece, pieceMove);
-        piecesPosition.movePieceOn(fromPosition, toPosition);
+        piecesPosition.movePieceBy(fromPosition, toPosition);
+        piecesPosition.cleanUpPosition(fromPosition);
         changeTurn();
     }
 
@@ -50,6 +53,12 @@ public final class ChessGame {
     private void validateSameCamp(Piece fromPiece, Piece toPiece) {
         if (fromPiece.isSameCamp(toPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
+        }
+    }
+
+    private void validateEqualPosition(Position fromPosition, Position toPosition) {
+        if (fromPosition.equals(toPosition)) {
+            throw new IllegalArgumentException(UNABLE_TO_EQUAL_POSITION);
         }
     }
 

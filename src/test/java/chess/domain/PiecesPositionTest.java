@@ -113,15 +113,25 @@ class PiecesPositionTest {
 
     @Test
     @DisplayName("위치로 기물을 이동할 수 있다.")
-    void movePieceOn() {
+    void movePieceByPositionTest() {
         Position whitePawnPosition = Position.of(File.A, Rank.TWO);
         Position emptyPosition = Position.of(File.A, Rank.FOUR);
 
         PiecesPosition piecesPosition = new PiecesPosition();
 
-        piecesPosition.movePieceOn(whitePawnPosition, emptyPosition);
+        piecesPosition.movePieceBy(whitePawnPosition, emptyPosition);
 
-        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Empty.class);
         assertThat(piecesPosition.choicePiece(emptyPosition)).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    @DisplayName("지정한 위치를 빈 공간으로 변경할 수 있다.")
+    void cleanUpPositionTest() {
+        Position whitePawnPosition = Position.of(File.A, Rank.TWO);
+        PiecesPosition piecesPosition = new PiecesPosition();
+        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Pawn.class);
+
+        piecesPosition.cleanUpPosition(whitePawnPosition);
+        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Empty.class);
     }
 }

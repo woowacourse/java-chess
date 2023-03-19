@@ -48,4 +48,16 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("동일한 위치로 이동 시킬 수 없다")
+    void moveEqualPositionTest() {
+        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessGame chessGame = new ChessGame(piecesPosition);
+
+        Position toPosition = Position.of(File.A, Rank.FOUR);
+
+        assertThatThrownBy(() -> chessGame.move(toPosition, toPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

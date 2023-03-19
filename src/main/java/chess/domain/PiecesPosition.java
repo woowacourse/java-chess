@@ -59,9 +59,12 @@ public final class PiecesPosition {
         return piecesPosition.get(position);
     }
 
-    public void movePieceOn(Position fromPosition, Position toPosition) {
+    public void movePieceBy(Position fromPosition, Position toPosition) {
         piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
-        piecesPosition.put(fromPosition, new Empty());
+    }
+
+    public void cleanUpPosition(Position position) {
+        piecesPosition.put(position, new Empty());
     }
 
     public Map<Position, Piece> getPiecesPosition() {
