@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
+
+    public static final int CROSS_ADJACENT_MANHATTAN_DISTANCE = 1;
+    public static final int DIAGONAL_ADJACENT_MANHATTAN_DISTANCE = 2;
+
     private final File file;
     private final Rank rank;
 

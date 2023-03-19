@@ -8,6 +8,9 @@ import chess.domain.Rank;
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
+import static chess.domain.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
+
 public class Pawn extends Piece {
 
     private static final Map<Color, Rank> INITIAL_RANK = Map.of(
@@ -52,7 +55,8 @@ public class Pawn extends Piece {
 
     private boolean isNeighborDistance(final Position targetPosition) {
         final int manhattanDistance = position.calculateManhattanDistance(targetPosition);
-        return manhattanDistance == 1 || (manhattanDistance == 2 && !position.isInCrossPosition(targetPosition));
+        return manhattanDistance == CROSS_ADJACENT_MANHATTAN_DISTANCE
+                || (manhattanDistance == DIAGONAL_ADJACENT_MANHATTAN_DISTANCE && !position.isInCrossPosition(targetPosition));
     }
 
     private boolean isOppositeColorSide(final Position targetPosition) {

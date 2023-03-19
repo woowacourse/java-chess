@@ -7,6 +7,9 @@ import chess.domain.Rank;
 
 import java.util.List;
 
+import static chess.domain.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
+import static chess.domain.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
+
 public class King extends Piece {
 
     public King(final File file, final Rank rank, final Color color) {
@@ -16,7 +19,8 @@ public class King extends Piece {
     @Override
     protected boolean canMove(final Position targetPosition) {
         final int manhattanDistance = position.calculateManhattanDistance(targetPosition);
-        return manhattanDistance == 1 || (manhattanDistance == 2 && !position.isInCrossPosition(targetPosition));
+        return manhattanDistance == CROSS_ADJACENT_MANHATTAN_DISTANCE ||
+                (manhattanDistance == DIAGONAL_ADJACENT_MANHATTAN_DISTANCE && !position.isInCrossPosition(targetPosition));
     }
 
     @Override
