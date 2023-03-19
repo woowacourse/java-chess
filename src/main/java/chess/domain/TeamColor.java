@@ -11,7 +11,6 @@ public enum TeamColor {
         this.startingRank = startingRank;
     }
 
-
     public int startingRank() {
         return startingRank;
     }

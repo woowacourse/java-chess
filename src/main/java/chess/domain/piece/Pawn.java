@@ -55,11 +55,15 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public boolean isNotPawn() {
+        return false;
     }
 
-    public boolean isAttack(Position source, Position dest) {
+    public boolean isNotAttack(final Position source, final Position dest) {
+         return !isAttack(source, dest);
+    }
+
+    public boolean isAttack(final Position source, final Position dest) {
         return source.isOneStepForwardDiagonal(dest);
     }
 

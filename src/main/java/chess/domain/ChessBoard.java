@@ -29,19 +29,18 @@ public class ChessBoard {
     }
 
     private Piece findPieceInStartPosition(final Position start, final TeamColor color) {
-        if (piecesByPosition.containsKey(start)) {
-            Piece piece = piecesByPosition.get(start);
-            validatePieceColor(color, piece);
-            return piece;
+        if (!piecesByPosition.containsKey(start)) {
+            throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
         }
-        throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
+        Piece piece = piecesByPosition.get(start);
+        validatePieceColor(color, piece);
+        return piece;
     }
 
     private void validatePieceColor(final TeamColor color, final Piece piece) {
-        if (piece.isSameColor(color)) {
-            return;
+        if (piece.isDifferentColor(color)) {
+            throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
         }
-        throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
 
     private void progressMove(final TeamColor teamColor, final Position source, final Position dest,
@@ -77,24 +76,28 @@ public class ChessBoard {
     }
 
     private void validatePawnAttack(final Piece piece, final Position source, final Position dest) {
-        if (!piece.isPawn()) {
+        if (piece.isNotPawn()) {
             return;
         }
         Pawn pawn = (Pawn) piece;
-        if (pawn.isAttack(source, dest) && !isOtherPieceInDestination(dest)) {
+        if (pawn.isAttack(source, dest) && hasNothingInDestination(dest)) {
             throw new IllegalArgumentException(WRONG_PAWN_PATH_ERROR_MESSAGE);
         }
-        if (!pawn.isAttack(source, dest) && isOtherPieceInDestination(dest)) {
+        if (pawn.isNotAttack(source, dest) && hasOtherPieceInDestination(dest)) {
             throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
         }
     }
 
-    private boolean isOtherPieceInDestination(final Position dest) {
+    private boolean hasNothingInDestination(final Position dest) {
+        return !hasOtherPieceInDestination(dest);
+    }
+
+    private boolean hasOtherPieceInDestination(final Position dest) {
         return piecesByPosition.containsKey(dest);
     }
 
     private void validateObstacleInDestination(final Position dest, final TeamColor color) {
-        if (!piecesByPosition.containsKey(dest)) {
+        if (hasNothingInDestination(dest)) {
             return;
         }
         if (piecesByPosition.get(dest).isSameColor(color)) {
