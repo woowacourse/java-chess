@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,25 +13,17 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Set<Position> computePath(Position source, Position target);
+    public abstract Set<Position> computePath(final Position source, final Position target);
 
-    protected void validateSamePosition(Position source, Position target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
-        }
-    }
+    public abstract boolean canMove(
+            final Map<Position, Boolean> isEmptyPosition,
+            final Position source,
+            final Position target
+    );
 
-    public boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
-        isEmptyPosition = new HashMap<>(isEmptyPosition);
-        isEmptyPosition.remove(target);
-        return isEmptyPosition.keySet()
-                .stream()
-                .allMatch(isEmptyPosition::get);
-    }
+    public abstract Kind getKind();
 
-    public boolean isEmpty() {
-        return false;
-    }
+    public abstract boolean isEmpty();
 
     public boolean equalsColor(final Piece targetSquare) {
         return color == targetSquare.color;
@@ -45,6 +36,4 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
-
-    public abstract Kind getKind();
 }

@@ -85,4 +85,9 @@ public final class Pawn extends Piece {
     public Kind getKind() {
         return Kind.PAWN;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

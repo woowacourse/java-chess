@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class Queen extends Piece {
+public final class Queen extends Normal {
 
     private static final double POSITIVE_ONE = 1.0d;
     private static final double NEGATIVE_ONE = -1.0d;
@@ -16,8 +16,6 @@ public final class Queen extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        validateSamePosition(source, target);
-
         final var inclination = source.computeInclination(target);
         if (inclination == POSITIVE_ONE) {
             return getPositiveOneInclinationPath(source, target);

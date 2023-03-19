@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 import java.util.Set;
 
-public final class Knight extends Piece {
+public final class Knight extends Normal {
 
     public Knight(final Color color) {
         super(color);
