@@ -4,21 +4,17 @@ import chess.domain.board.Position;
 
 public class King extends Piece {
 
+    private static final int MAX_DISTANCE = 1;
+
     public King(Color color) {
         super(color);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        int sourceColumnNumber = sourcePosition.getColumn();
-        int targetColumnNumber = targetPosition.getColumn();
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-
-        return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
-                && Math.abs(sourceRankNumber - targetRankNumber) <= 1
-                && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameColor(color);
+    protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        int fileGap = Math.abs(sourcePosition.calculateFileGap(targetPosition));
+        int rankGap = Math.abs(sourcePosition.calculateRankGap(targetPosition));
+        return fileGap <= MAX_DISTANCE && rankGap <= MAX_DISTANCE;
     }
 
     @Override

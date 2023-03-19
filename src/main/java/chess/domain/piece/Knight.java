@@ -9,19 +9,14 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        int sourceColumnNumber = sourcePosition.getFileCoordinate().getColumnNumber();
-        int targetColumnNumber = targetPosition.getFileCoordinate().getColumnNumber();
-        int sourceRankNumber = sourcePosition.getRankCoordinate().getRowNumber();
-        int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
+    protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        int rankGap = Math.abs(sourcePosition.calculateRankGap(targetPosition));
+        int fileGap = Math.abs(sourcePosition.calculateFileGap(targetPosition));
+        return isMovable(rankGap, fileGap) || isMovable(fileGap, rankGap);
+    }
 
-        if (Math.abs(sourceColumnNumber - targetColumnNumber) == 2) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 1 && isNotSameColor(color);
-        }
-        if (Math.abs(sourceColumnNumber - targetColumnNumber) == 1) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 2 && isNotSameColor(color);
-        }
-        return false;
+    private boolean isMovable(int firstGap, int secondGap) {
+        return firstGap == 1 && secondGap == 2;
     }
 
     @Override

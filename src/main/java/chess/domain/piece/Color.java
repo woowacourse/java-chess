@@ -33,8 +33,8 @@ public enum Color {
 
     public int getDirection() {
         if (this == BLACK) {
-            return -1;
+            return 1;
         }
-        return 1;
+        return -1;
     }
 }

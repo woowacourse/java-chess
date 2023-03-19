@@ -9,11 +9,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameColor(color);
+    protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        return isDiagonal(sourcePosition, targetPosition);
     }
-    
+
     @Override
     public boolean isEmpty() {
         return false;

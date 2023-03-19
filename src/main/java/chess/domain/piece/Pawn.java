@@ -4,6 +4,10 @@ import chess.domain.board.Position;
 
 public class Pawn extends Piece {
 
+    private static final int MOVABLE_DISTANCE = 1;
+    private static final int INITIAL_MOVABLE_DISTANCE = 2;
+    private static final int VALID_STRAIGHT_GAP = 0;
+
     private int moveCount;
 
     public Pawn(Color color) {
@@ -15,43 +19,38 @@ public class Pawn extends Piece {
         this.moveCount = moveCount;
     }
 
+    @Override
+    protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        return isStraightPawnMove(sourcePosition, targetPosition, targetColor) ||
+                isDiagonalPawnMove(sourcePosition, targetPosition, targetColor);
+    }
+
+    private boolean isStraightPawnMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        if (sourcePosition.calculateFileGap(targetPosition) != VALID_STRAIGHT_GAP ||
+                getColor().isOpposite(targetColor)) {
+            return false;
+        }
+        int rankGap = sourcePosition.calculateRankGap(targetPosition);
+        return canMoveStraightOne(rankGap) || canMoveStraightTwo(rankGap);
+    }
+
+    private boolean canMoveStraightOne(int rankGap) {
+        return rankGap == MOVABLE_DISTANCE * getColor().getDirection();
+    }
+
+    private boolean canMoveStraightTwo(int rankGap) {
+        return rankGap == INITIAL_MOVABLE_DISTANCE * getColor().getDirection() && isFirstMove();
+    }
+
     private boolean isFirstMove() {
         return this.moveCount == 0;
     }
 
-    @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        boolean isSameFileCoordinate = sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-        int direction = this.getColor().getDirection();
-        int nextRankNumber = sourceRankNumber + direction;
-
-        boolean diagonalPath = isDiagonalPath(sourcePosition, targetPosition, color);
-        if (isFirstMove()) {
-            nextRankNumber = sourceRankNumber + (2 * direction);
-        }
-        if (this.getColor() == Color.BLACK) {
-            return (isSameFileCoordinate && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
-                    || diagonalPath;
-        }
-        return (isSameFileCoordinate && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
-                || diagonalPath;
-    }
-
-    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Color color) {
-        if (!this.getColor().isOpposite(color)) {
-            return false;
-        }
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-        int direction = this.getColor().getDirection();
-        int diagonalRankNumber = sourceRankNumber + direction;
-        int sourceFileNumber = sourcePosition.getColumn();
-        int targetFileNumber = targetPosition.getColumn();
-
-        return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber
-                && isNotSameColor(color);
+    private boolean isDiagonalPawnMove(Position sourcePosition, Position targetPosition, Color color) {
+        int rankGap = sourcePosition.calculateRankGap(targetPosition);
+        int fileGap = Math.abs(sourcePosition.calculateFileGap(targetPosition));
+        boolean isOpponent = getColor().isOpposite(color);
+        return rankGap == MOVABLE_DISTANCE * getColor().getDirection() && fileGap == MOVABLE_DISTANCE && isOpponent;
     }
 
     @Override

@@ -4,39 +4,44 @@ import chess.domain.board.Position;
 
 public abstract class Piece {
 
+    private static final int STRAIGHT_GAP = 0;
+
     private final Color color;
 
     protected Piece(Color color) {
         this.color = color;
     }
 
-    public abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
+    protected abstract boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor);
 
     public abstract boolean isEmpty();
 
     public abstract Piece move();
 
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color targetColor) {
+        if (isSameTeam(targetColor) || isMyPosition(sourcePosition, targetPosition)) {
+            return false;
+        }
+        return validMove(sourcePosition, targetPosition, targetColor);
+    }
+
     public boolean isSameTeam(Color color) {
         return this.color == color;
     }
 
-    protected boolean isNotMyPosition(Position sourcePosition, Position targetPosition) {
-        return !sourcePosition.equals(targetPosition);
+    private boolean isMyPosition(Position sourcePosition, Position targetPosition) {
+        return sourcePosition.equals(targetPosition);
     }
 
     protected boolean isDiagonal(Position sourcePosition, Position targetPosition) {
-        int columnAbs = Math.abs(sourcePosition.getColumn() - targetPosition.getColumn());
-        int rowAbs = Math.abs(sourcePosition.getRow() - targetPosition.getRow());
-        return columnAbs == rowAbs;
+        int columnGapAbs = Math.abs(sourcePosition.calculateFileGap(targetPosition));
+        int rowGapAbs = Math.abs(sourcePosition.calculateRankGap(targetPosition));
+        return columnGapAbs == rowGapAbs;
     }
 
     protected boolean isStraight(Position sourcePosition, Position targetPosition) {
-        return (sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate()
-                || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
-    }
-
-    protected boolean isNotSameColor(Color color) {
-        return this.color != color;
+        return sourcePosition.calculateFileGap(targetPosition) == STRAIGHT_GAP
+                || sourcePosition.calculateRankGap(targetPosition) == STRAIGHT_GAP;
     }
 
     public Color getColor() {
