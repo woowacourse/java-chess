@@ -26,10 +26,7 @@ public abstract class Pawn extends Piece {
     protected boolean canPawnMove(final Position source, final Position target, final int direction) {
         int fileSub = source.fileSub(target) * direction;
         int rankSub = source.rankSub(target) * direction;
-        return (fileSub <= 1 && rankSub == 1) ||
-                (fileSub == 0 && rankSub == 2);
+        return (fileSub <= ONE_SQUARES && rankSub == ONE_SQUARES) ||
+                (fileSub == SAME_SQUARE && rankSub == TWO_SQUARES);
     }
-
-    // white pawn : 위로 간다.
-    // black pawn : 아래로 간다.
 }

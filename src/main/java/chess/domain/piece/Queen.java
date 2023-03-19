@@ -29,6 +29,6 @@ public final class Queen extends Normal {
         var rankSub = source.rankSub(target);
         var inclination = source.computeInclination(target);
 
-        return fileSub == 0 || rankSub == 0 || Math.abs(inclination) == 1;
+        return fileSub == SAME_SQUARE || rankSub == SAME_SQUARE || Math.abs(inclination) == 1;
     }
 }

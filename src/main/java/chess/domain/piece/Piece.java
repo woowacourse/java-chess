@@ -8,6 +8,9 @@ import java.util.Set;
 public abstract class Piece {
 
     protected static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "갈 수 없는 위치입니다.";
+    protected static final int SAME_SQUARE = 0;
+    protected static final int ONE_SQUARES = 1;
+    protected static final int TWO_SQUARES = 2;
 
     protected final Color color;
 

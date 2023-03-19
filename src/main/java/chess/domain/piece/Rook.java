@@ -28,6 +28,6 @@ public final class Rook extends Normal {
         var fileSub = source.fileSub(target);
         var rankSub = source.rankSub(target);
 
-        return fileSub == 0 || rankSub == 0;
+        return fileSub == SAME_SQUARE || rankSub == SAME_SQUARE;
     }
 }

@@ -31,6 +31,6 @@ public final class King extends Normal {
     private boolean canKingMove(final Position source, final Position target) {
         var fileSub = Math.abs(source.fileSub(target));
         var rankSub = Math.abs(source.rankSub(target));
-        return fileSub <= 1 && rankSub <= 1;
+        return fileSub <= ONE_SQUARES && rankSub <= ONE_SQUARES;
     }
 }

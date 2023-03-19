@@ -36,7 +36,7 @@ public final class WhitePawn extends Pawn {
     }
 
     private void validateInitWhite(final Position source, final Position target) {
-        if (Math.abs(source.rankSub(target)) == 2 && !source.isRank(INIT_RANK)) {
+        if (Math.abs(source.rankSub(target)) == TWO_SQUARES && !source.isRank(INIT_RANK)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
