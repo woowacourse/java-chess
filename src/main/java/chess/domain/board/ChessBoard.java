@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -22,7 +23,7 @@ public class ChessBoard {
         final Piece from = findByPosition(source);
         validateMissMatchSelect(turn, from);
         validateNonBlock(from, destination);
-        moveOrKill(from, destination);
+        move(from, destination);
     }
 
     private void validateMissMatchSelect(final Turn turn, final Piece from) {
@@ -43,23 +44,14 @@ public class ChessBoard {
                 .anyMatch(this::existByPosition);
     }
 
-    private void moveOrKill(final Piece from, final PiecePosition destination) {
+    private void move(final Piece from, final PiecePosition destination) {
+        final Piece to = optGet(destination).orElse(null);
         if (existByPosition(destination)) {
-            kill(from, destination);
+            from.move(destination, to);
+            pieces.remove(to);
             return;
         }
-        from.move(destination);
-    }
-
-    private void kill(final Piece from, final PiecePosition destination) {
-        final Piece to = findByPosition(destination);
-        from.moveToKill(to);
-        pieces.remove(to);
-    }
-
-    private boolean existByPosition(final PiecePosition piecePosition) {
-        return pieces.stream()
-                .anyMatch(piece -> piece.existIn(piecePosition));
+        from.move(destination, to);
     }
 
     public Piece findByPosition(final PiecePosition piecePosition) {
@@ -69,8 +61,19 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
     }
 
+    private boolean existByPosition(final PiecePosition piecePosition) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.existIn(piecePosition));
+    }
+
     public List<Piece> pieces() {
         return pieces.stream().map(Piece::clone)
                 .collect(Collectors.toList());
+    }
+
+    private Optional<Piece> optGet(final PiecePosition piecePosition) {
+        return pieces.stream()
+                .filter(piece -> piece.existIn(piecePosition))
+                .findAny();
     }
 }

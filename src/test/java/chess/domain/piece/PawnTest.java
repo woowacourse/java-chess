@@ -67,7 +67,7 @@ class PawnTest {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
-            pawn.move(PiecePosition.of(4, 'b'));
+            pawn.move(PiecePosition.of(4, 'b'), null);
 
             // when & then
             assertThat(pawn.waypoints(destination)).isEmpty();
@@ -80,10 +80,10 @@ class PawnTest {
             final PiecePosition firstDestination = PiecePosition.of("b3");
             final PiecePosition secondDestination = PiecePosition.of("b5");
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition, new WhitePawnMoveStrategy(), new InitialPawn());
-            pawn.move(firstDestination);
+            pawn.move(firstDestination, null);
 
             // when & then
-            assertThatThrownBy(() -> pawn.move(secondDestination))
+            assertThatThrownBy(() -> pawn.move(secondDestination, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -160,7 +160,7 @@ class PawnTest {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
-            pawn.move(PiecePosition.of(5, 'b'));
+            pawn.move(PiecePosition.of(5, 'b'), null);
 
             // when & then
             assertThat(pawn.waypoints(destination)).isEmpty();
@@ -173,10 +173,10 @@ class PawnTest {
             final PiecePosition firstDestination = PiecePosition.of("b6");
             final PiecePosition secondDestination = PiecePosition.of("b4");
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
-            pawn.move(firstDestination);
+            pawn.move(firstDestination, null);
 
             // when & then
-            assertThatThrownBy(() -> pawn.move(secondDestination))
+            assertThatThrownBy(() -> pawn.waypoints(secondDestination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -224,7 +224,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
-        pawn.move(PiecePosition.of(6, 'b'));
+        pawn.move(PiecePosition.of(6, 'b'), null);
 
         // then
         assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of(6, 'b'));
@@ -237,9 +237,9 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.BLACK, currentPosition, new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
-        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'c')))
+        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'c'), null))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'd')))
+        assertThatThrownBy(() -> pawn.move(PiecePosition.of(6, 'd'), null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -250,7 +250,7 @@ class PawnTest {
         final Pawn ally = new Pawn(Color.BLACK, PiecePosition.of("c5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
-        assertThatThrownBy(() -> pawn.moveToKill(ally))
+        assertThatThrownBy(() -> pawn.move(ally.piecePosition, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -261,7 +261,7 @@ class PawnTest {
         final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("c5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when
-        pawn.moveToKill(enemy);
+        pawn.move(enemy.piecePosition, enemy);
 
         // then
         assertThat(pawn.piecePosition()).isEqualTo(enemy.piecePosition());
@@ -274,7 +274,7 @@ class PawnTest {
         final Pawn enemy = new Pawn(Color.WHITE, PiecePosition.of("b5"), new BlackPawnMoveStrategy(), new InitialPawn());
 
         // when & then
-        assertThatThrownBy(() -> pawn.moveToKill(enemy))
+        assertThatThrownBy(() -> pawn.move(enemy.piecePosition, enemy))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

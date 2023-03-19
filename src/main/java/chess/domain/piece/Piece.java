@@ -18,6 +18,7 @@ public class Piece implements Cloneable {
     }
 
     public List<PiecePosition> waypoints(final PiecePosition destination) {
+        validatePath(path(destination));
         return moveStrategy.waypoints(path(destination));
     }
 
@@ -27,17 +28,13 @@ public class Piece implements Cloneable {
         }
     }
 
-    public void move(final PiecePosition destination) {
+    public void move(final PiecePosition destination, final Piece nullablePiece) {
         final Path path = path(destination);
         validatePath(path);
+        if (nullablePiece != null) {
+            validateKill(nullablePiece);
+        }
         this.piecePosition = destination;
-    }
-
-    public void moveToKill(final Piece enemy) {
-        final Path path = path(enemy.piecePosition);
-        validatePath(path);
-        validateKill(enemy);
-        this.piecePosition = enemy.piecePosition;
     }
 
     protected void validateKill(final Piece enemy) {

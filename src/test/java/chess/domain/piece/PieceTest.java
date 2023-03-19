@@ -74,7 +74,7 @@ class PieceTest {
         final Piece pawn = new MyPiece(Color.BLACK, PiecePosition.of("b6"));
 
         // when
-        pawn.move(PiecePosition.of("b5"));
+        pawn.move(PiecePosition.of("b5"), null);
 
         // then
         assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b5"));
@@ -87,7 +87,7 @@ class PieceTest {
         final Piece enemy = new MyPiece(Color.WHITE, PiecePosition.of("b7"));
 
         // when
-        pawn.moveToKill(enemy);
+        pawn.move(enemy.piecePosition, enemy);
 
         // then
         assertThat(pawn.piecePosition()).isEqualTo(PiecePosition.of("b7"));
@@ -100,7 +100,7 @@ class PieceTest {
         final Piece ally = new MyPiece(Color.BLACK, PiecePosition.of("b7"));
 
         // when & then
-        assertThatThrownBy(() -> pawn.moveToKill(ally))
+        assertThatThrownBy(() -> pawn.move(ally.piecePosition, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

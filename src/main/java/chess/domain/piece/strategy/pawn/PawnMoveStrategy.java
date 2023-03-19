@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.MoveStrategy;
 import chess.domain.piece.position.Path;
 
