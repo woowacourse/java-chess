@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 
 import java.util.Comparator;
@@ -29,14 +30,12 @@ public class ChessBoard {
                 .collect(Collectors.toList());
     }
     
-    public void move(Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
+    public void move(Coordinate sourceCoordinate, Coordinate destinationCoordinate, Team currentOrderTeam) {
         RowPieces rowPiecesContainsSourcePiece = findRowPiecesByCoordinate(sourceCoordinate);
         RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByCoordinate(destinationCoordinate);
         
-        boolean isMovableSourcePiece = isMovableSourcePiece(sourceCoordinate, destinationCoordinate);
-        if (isMovableSourcePiece) {
-            rowPiecesContainsSourcePiece.move(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        }
+        validateMovableSourcePiece(sourceCoordinate, destinationCoordinate, currentOrderTeam);
+        rowPiecesContainsSourcePiece.move(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
     }
     
     private RowPieces findRowPiecesByCoordinate(Coordinate coordinate) {
@@ -46,16 +45,37 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당 좌표는 존재하지 않습니다."));
     }
     
-    private boolean isMovableSourcePiece(Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
+    private void validateMovableSourcePiece(Coordinate sourceCoordinate, Coordinate destinationCoordinate, Team currentOrderTeam) {
         RowPieces rowPiecesContainsSourcePiece = findRowPiecesByCoordinate(sourceCoordinate);
         RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByCoordinate(destinationCoordinate);
     
+        boolean isCorrectOrderTeam = rowPiecesContainsSourcePiece.isCorrectOrderTeam(sourceCoordinate, currentOrderTeam);
         boolean isMovablePiece = rowPiecesContainsSourcePiece
                 .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
         boolean isEmptyRoute = isEmptyRoute(FIRST_TRY, sourceCoordinate, destinationCoordinate);
         boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByCoordinateKnight(sourceCoordinate);
     
-        return isMovablePiece && (isEmptyRoute || isSourcePieceKnight);
+        validateCurrentOrderTeam(isCorrectOrderTeam);
+        validateMovable(isMovablePiece);
+        validateRoute(isEmptyRoute, isSourcePieceKnight);
+    }
+    
+    private void validateCurrentOrderTeam(boolean isCorrectOrderTeam) {
+        if (!isCorrectOrderTeam) {
+            throw new IllegalArgumentException("해당 기물이 속한 팀의 순서가 아닙니다. 다시 입력해주세요.");
+        }
+    }
+    
+    private void validateMovable(boolean isMovablePiece) {
+        if (!isMovablePiece) {
+            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 목적지입니다. 다시 입력해주세요.");
+        }
+    }
+    
+    private void validateRoute(boolean isEmptyRoute, boolean isSourcePieceKnight) {
+        if (!isEmptyRoute && !isSourcePieceKnight) {
+            throw new IllegalArgumentException("목적지까지의 경로에 기물이 있어서 목적지로 갈 수 없습니다. 다시 입력해주세요.");
+        }
     }
     
     private boolean isEmptyRoute(boolean isNotFirstTry, Coordinate researchCoordinate, Coordinate destinationCoordinate) {

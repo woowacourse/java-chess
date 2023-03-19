@@ -81,7 +81,7 @@ public class InputView {
         try {
             return inputProcess.get();
         } catch (IllegalArgumentException illegalArgumentException) {
-            System.out.println(illegalArgumentException.getMessage());
+            OutputView.printErrorMessage(illegalArgumentException.getMessage());
             return repeatAtExceptionCase(inputProcess);
         }
     }

@@ -1,13 +1,14 @@
 package chess.game.state;
 
+import chess.domain.piece.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class InitGameState extends ChessGameState {
     private static final int COMMAND_INDEX = 0;
     
-    public InitGameState() {
-        super(null);
+    public InitGameState(Team currentOrderTeam) {
+        super(null, currentOrderTeam);
     }
     
     @Override
@@ -17,7 +18,7 @@ public class InitGameState extends ChessGameState {
         String[] splitedCommand = command.split(" ");
     
         if (isCommandStart(splitedCommand)){
-            return new GameStartState();
+            return new GameStartState(currentOrderTeam);
         }
     
         return new GameEndState();

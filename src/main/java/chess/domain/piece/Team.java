@@ -41,4 +41,12 @@ public enum Team {
     public boolean isSameTeam(Team otherTeam) {
         return this == otherTeam;
     }
+    
+    public Team nextTeam() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        
+        return WHITE;
+    }
 }

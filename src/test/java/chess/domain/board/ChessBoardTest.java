@@ -30,24 +30,24 @@ class ChessBoardTest {
     
     @Test
     void 경로에_기물이_있으면_이동_불가능하다() {
-        chessBoard.move(A_ONE, parseCoordinate("a3"));
+        chessBoard.move(A_ONE, parseCoordinate("a3"), Team.BLACK);
         Piece piece = chessBoard.chessBoard().get(5).pieces().get(0);
         Assertions.assertThat(piece.isSameTeam(Team.EMPTY)).isTrue();
     }
     
     @Test
     void 경로에_기물이_없으면_이동_가능하다() {
-        chessBoard.move(parseCoordinate("a2"), parseCoordinate("a4"));
+        chessBoard.move(parseCoordinate("a2"), parseCoordinate("a4"), Team.BLACK);
         Piece piece = chessBoard.chessBoard().get(4).pieces().get(0);
         Assertions.assertThat(piece).isEqualTo(new Pawn(Team.BLACK, parseCoordinate("a4")));
     }
     
     @Test
     void 도착지에_상대팀_기물이_있으면_잡아먹는다() {
-        chessBoard.move(parseCoordinate("a2"), parseCoordinate("a4"));
-        chessBoard.move(A_ONE, parseCoordinate("a3"));
-        chessBoard.move(parseCoordinate("a3"), parseCoordinate("b3"));
-        chessBoard.move(parseCoordinate("b3"), parseCoordinate("b7"));
+        chessBoard.move(parseCoordinate("a2"), parseCoordinate("a4"), Team.BLACK);
+        chessBoard.move(A_ONE, parseCoordinate("a3"), Team.BLACK);
+        chessBoard.move(parseCoordinate("a3"), parseCoordinate("b3"), Team.BLACK);
+        chessBoard.move(parseCoordinate("b3"), parseCoordinate("b7"), Team.BLACK);
         Piece piece = chessBoard.chessBoard().get(1).pieces().get(1);
         Assertions.assertThat(piece).isEqualTo(new Rook(Team.BLACK, parseCoordinate("b7")));
     }

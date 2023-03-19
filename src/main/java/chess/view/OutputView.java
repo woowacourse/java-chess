@@ -50,6 +50,10 @@ public class OutputView {
         return ".";
     }
     
+    public static void printErrorMessage(String message) {
+        println("[ERROR]" + message);
+    }
+    
     public static void println(String message) {
         System.out.println(message);
     }

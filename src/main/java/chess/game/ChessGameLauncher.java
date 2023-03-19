@@ -1,5 +1,6 @@
 package chess.game;
 
+import chess.domain.piece.Team;
 import chess.game.state.*;
 import chess.view.OutputView;
 
@@ -7,7 +8,7 @@ public class ChessGameLauncher {
     private ChessGameState chessGameState;
     
     public ChessGameLauncher() {
-        this.chessGameState = new InitGameState();
+        this.chessGameState = new InitGameState(Team.BLACK);
     }
     
     public void execute() {
@@ -21,10 +22,10 @@ public class ChessGameLauncher {
             chessGameState = chessGameState.next();
         } catch (IllegalStateException illegalStateException) {
             chessGameState = new GameEndState();
-            OutputView.println(illegalStateException.getMessage());
+            OutputView.printErrorMessage(illegalStateException.getMessage());
         } catch (IllegalArgumentException illegalArgumentException) {
             chessGameState = new OutputChessBoardState(chessGameState);
-            OutputView.println(illegalArgumentException.getMessage());
+            OutputView.printErrorMessage(illegalArgumentException.getMessage());
         }
     }
 }

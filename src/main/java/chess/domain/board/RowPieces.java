@@ -103,6 +103,10 @@ public class RowPieces implements Comparable<RowPieces> {
         return new Empty(Team.EMPTY, coordinate);
     }
     
+    public boolean isCorrectOrderTeam(Coordinate coordinate, Team currentOrderTeam) {
+        return findPieceByCoordinate(this, coordinate).isSameTeam(currentOrderTeam);
+    }
+    
     public List<Piece> pieces() {
         return pieces;
     }
