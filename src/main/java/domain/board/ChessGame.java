@@ -14,34 +14,38 @@ public final class ChessGame {
     }
 
     public void move(final Coordinate start, final Coordinate end) {
-        if (!isMovable(start, end)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치로 가는 경로에 기물이 이미 존재합니다.");
-        }
+        validateMove(start, end);
         Square findSquare = board.findSquare(start);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
     }
 
-    private boolean isMovable(final Coordinate start, final Coordinate end) {
-        return isMovableByRule(start, end) &&
-                isEmptySquareAt(end) &&
-                isNotBlocked(start, end);
+    private void validateMove(final Coordinate start, final Coordinate end) {
+        validateMoveByRule(start, end);
+        validateIsEmptySquareAt(end);
+        validateNotBlocked(start, end);
     }
 
-    private boolean isMovableByRule(final Coordinate start, final Coordinate end) {
-        return board.isMovable(start, end);
-    }
-
-    private boolean isEmptySquareAt(final Coordinate target) {
-        return board.isSquareEmptyAt(target);
-    }
-
-    private boolean isNotBlocked(final Coordinate start, final Coordinate end) {
-        Square square = board.findSquare(start);
-        if (square.canReap()) {
-            return true;
+    private void validateMoveByRule(final Coordinate start, final Coordinate end) {
+        if (board.isMovable(start, end)) {
+            return;
         }
-        return isNotBlockedWhenCantReap(start, end);
+        throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 방향으로 이동할 수 없습니다.");
+    }
+
+    private void validateIsEmptySquareAt(final Coordinate target) {
+        if (board.isSquareEmptyAt(target)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 이미 존재합니다.");
+    }
+
+    private void validateNotBlocked(final Coordinate start, final Coordinate end) {
+        Square square = board.findSquare(start);
+        if (square.canReap() || isNotBlockedWhenCantReap(start, end)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 위치로 가는 길에 다른 기물이 존재합니다.");
     }
 
     private boolean isNotBlockedWhenCantReap(final Coordinate start, final Coordinate end) {

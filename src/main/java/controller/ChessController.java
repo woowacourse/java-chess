@@ -34,12 +34,21 @@ public final class ChessController {
         ChessGame chessGame = new ChessGame();
         Command command = Command.of(inputView.readCommand());
         if (command.isStart()) {
-            startInteraction(chessGame);
+            startInteractionLoop(chessGame);
         }
         outputView.printGameEndMessage();
     }
 
-    private void startInteraction(final ChessGame chessGame) {
+    private void startInteractionLoop(final ChessGame chessGame) {
+        try {
+            doOneInteraction(chessGame);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            startInteractionLoop(chessGame);
+        }
+    }
+
+    private void doOneInteraction(final ChessGame chessGame) {
         Command command;
         do {
             outputView.printBoard(chessGame);
