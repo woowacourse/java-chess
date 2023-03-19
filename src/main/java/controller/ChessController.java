@@ -1,7 +1,6 @@
 package controller;
 
-import static controller.Command.END;
-import static controller.Command.MOVE;
+import static controller.ProgressCommand.END;
 
 import domain.board.Board;
 import domain.position.Position;
@@ -15,32 +14,27 @@ public final class ChessController {
     private static final int COMMAND = 0;
     private static final int SOURCE_PIECE = 1;
     private static final int DESTINATION = 2;
-    private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
 
     public void run(Board board) {
-        if (isStart()) {
-
+        if (isGameStart()) {
             OutputView.printBoard(board.getPieces());
-
             play(board);
         }
     }
 
-    private boolean isStart() {
-        final Command command = Command.from(InputView.readStartGameOption());
-
-        if (END.equals(command)) {
-            return false;
+    private boolean isGameStart() {
+        try {
+            final StartCommand command = StartCommand.from(InputView.readStartGameOption());
+            return StartCommand.START.equals(command);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return isGameStart();
         }
-        if (MOVE.equals(command)) {
-            throw new IllegalArgumentException(NOT_STARTED);
-        }
-        return true;
     }
 
     private void play(final Board board) {
         final List<String> gameOption = InputView.readPlayGameOption();
-        final Command command = Command.from(gameOption.get(COMMAND));
+        final ProgressCommand command = ProgressCommand.from(gameOption.get(COMMAND));
 
         if (END.equals(command)) {
             return;

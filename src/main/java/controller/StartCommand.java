@@ -1,15 +1,14 @@
 package controller;
 
-public enum Command {
+public enum StartCommand {
     START,
-    END,
-    MOVE;
+    END;
 
     private static final String INVALID_GAME_OPTION = "start 또는 end만 입력해야 합니다.";
 
-    public static Command from(String command) {
+    public static StartCommand from(String command) {
         try {
-            return Command.valueOf(command.toUpperCase());
+            return StartCommand.valueOf(command.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(INVALID_GAME_OPTION);
         }
