@@ -9,6 +9,8 @@ import java.util.stream.IntStream;
 
 public class Position {
 
+    private static final int VALID_STRAIGHT = 0;
+
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
 
@@ -29,7 +31,7 @@ public class Position {
         List<RankCoordinate> betweenRanks = rankCoordinate.betweenRanks(targetPosition.rankCoordinate);
         List<FileCoordinate> betweenFiles = fileCoordinate.betweenFiles(targetPosition.fileCoordinate);
 
-        if (calculateFileGap(targetPosition) == 0 || calculateRankGap(targetPosition) == 0) {
+        if (calculateFileGap(targetPosition) == VALID_STRAIGHT || calculateRankGap(targetPosition) == VALID_STRAIGHT) {
             return betweenStraight(betweenRanks, betweenFiles);
         }
         if (betweenRanks.size() != betweenFiles.size()) {
