@@ -1,99 +1,23 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
+import chess.domain.factory.BoardFactory;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.piece.Role;
-import chess.domain.piece.Rook;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
     private static final boolean IS_MOVED = true;
-    private static final int BOARD_LINE_SIZE = 8;
 
     private final Map<Square, Piece> board;
 
     public Board() {
-        this.board = generateBoard();
-    }
-
-    private LinkedHashMap<Square, Piece> generateBoard() {
-        final LinkedHashMap<Square, Piece> board = new LinkedHashMap<>();
-        final List<Piece> pieces = generatePieces();
-        final List<Square> squares = generateSquares();
-
-        for (int i = 0; i < squares.size(); i++) {
-            board.put(squares.get(i), pieces.get(i));
-        }
-
-        return board;
-    }
-
-    private List<Piece> generatePieces() {
-        final List<Piece> pieces = new ArrayList<>();
-
-        pieces.addAll(generateFirstLine(Camp.BLACK));
-        pieces.addAll(generateSecondLine(Camp.BLACK));
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateSecondLine(Camp.WHITE));
-        pieces.addAll(generateFirstLine(Camp.WHITE));
-
-        return pieces;
-    }
-
-    private List<Piece> generateFirstLine(final Camp camp) {
-        final List<Piece> pieces = new ArrayList<>();
-
-        pieces.add(new Rook(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Queen(camp));
-        pieces.add(new King(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Rook(camp));
-
-        return pieces;
-    }
-
-    private List<Piece> generateSecondLine(final Camp camp) {
-        final List<Piece> pieces = new ArrayList<>();
-
-        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Pawn(camp));
-        }
-
-        return pieces;
-    }
-
-    private List<Piece> generateEmptyLine() {
-        final List<Piece> pieces = new ArrayList<>();
-
-        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Empty());
-        }
-
-        return pieces;
-    }
-
-    private List<Square> generateSquares() {
-        return Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values())
-                        .map(file -> new Square(file, rank)))
-                .collect(Collectors.toList());
+        final BoardFactory boardFactory = new BoardFactory();
+        this.board = boardFactory.createBoard();
     }
 
     public void move(final Square source, final Square target) {
