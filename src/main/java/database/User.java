@@ -22,10 +22,7 @@ public final class User {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        final User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(name, user.name);
+        return userId.equals(((User) o).userId);
     }
 
     @Override
