@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String EXCEPTION_MESSAGE_SIGN = "[ERROR] ";
     private static final String EMPTY_SQUARE = ".";
     private static final String NEW_LINE = System.lineSeparator();
     private static final Map<Class<? extends Piece>, String> UPPER_SIGN_BY_PIECE;
@@ -102,5 +103,9 @@ public class OutputView {
             return upperPieceMessage;
         }
         return upperPieceMessage.toLowerCase();
+    }
+
+    public void printErrorMessage(final RuntimeException exception) {
+        System.out.println(EXCEPTION_MESSAGE_SIGN + exception.getMessage());
     }
 }

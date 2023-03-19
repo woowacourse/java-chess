@@ -24,12 +24,25 @@ public class ChessController {
         outputView.printGameStartGuideMessage();
         ChessState chess = ChessState.start(new EmptyPieceGenerator());
         do {
-            final Command command = Command.of(inputView.readGameCommand());
-            chess = chess.process(command);
-
-            final List<PieceInfo> pieceInfos = getPieceInfos(chess);
-            outputView.printBoard(pieceInfos);
+            chess = readAndProcessCommand(chess);
         } while (!chess.isEnd());
+    }
+
+    private ChessState readAndProcessCommand(final ChessState chess) {
+        try {
+            final Command command = Command.of(inputView.readGameCommand());
+            final ChessState newChessState = chess.process(command);
+            printExistingPieces(newChessState);
+            return newChessState;
+        } catch (RuntimeException exception) {
+            outputView.printErrorMessage(exception);
+            return chess;
+        }
+    }
+
+    private void printExistingPieces(final ChessState chess) {
+        final List<PieceInfo> pieceInfos = getPieceInfos(chess);
+        outputView.printBoard(pieceInfos);
     }
 
     private static List<PieceInfo> getPieceInfos(final ChessState chess) {
