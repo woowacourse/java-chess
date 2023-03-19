@@ -48,6 +48,9 @@ public final class Board {
     }
 
     private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
+        if (sourceSquare.isEmpty()) {
+            throw new IllegalArgumentException("비어있는 칸입니다.");
+        }
         if (!sourceSquare.equalsColor(color)) {
             throw new IllegalArgumentException("움직일 수 있는 기물이 아닙니다.");
         }
