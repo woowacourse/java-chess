@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Map;
 
 public class Pawn extends Piece {

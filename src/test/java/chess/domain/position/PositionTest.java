@@ -1,6 +1,6 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.Position.from;
+import static chess.domain.position.Position.from;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A2;
 import static chess.fixture.PositionFixture.A3;

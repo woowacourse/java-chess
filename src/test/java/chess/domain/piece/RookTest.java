@@ -4,9 +4,9 @@ import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.Pawn.from;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

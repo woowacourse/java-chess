@@ -3,8 +3,8 @@ package chess.view;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

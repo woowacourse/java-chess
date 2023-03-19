@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 public class PieceTest {
