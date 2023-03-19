@@ -5,10 +5,8 @@ import java.util.Objects;
 
 public final class Location {
 
-    private static final int MAX_COL = 7;
-    private static final int MIN_COL = 0;
-    private static final int MAX_ROW = 7;
-    private static final int MIN_ROW = 0;
+    private static final int MAX_RANGE = 7;
+    private static final int MIN_RANGE = 0;
     private static final String INVALID_LOCATION_ERROR_MESSAGE = "해당 위치는 존재하지 않습니다.";
     private final int col;
     private final int row;
@@ -20,8 +18,8 @@ public final class Location {
     }
 
     private void validate(final int col, final int row) {
-        if (col < MIN_COL || col > MAX_COL
-            || row < MIN_ROW || row > MAX_ROW) {
+        if (col < MIN_RANGE || col > MAX_RANGE
+            || row < MIN_RANGE || row > MAX_RANGE) {
             throw new IllegalArgumentException(INVALID_LOCATION_ERROR_MESSAGE);
         }
     }

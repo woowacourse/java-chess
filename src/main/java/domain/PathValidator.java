@@ -19,7 +19,8 @@ public final class PathValidator {
     }
 
     private boolean isBlocked(final List<Square> paths) {
-        return IntStream.range(0, paths.size() - 1)
+        final int exceptEndSquare = paths.size() - 1;
+        return IntStream.range(0, exceptEndSquare)
             .mapToObj(paths::get)
             .anyMatch(Square::isNotEmpty);
     }
