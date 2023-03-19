@@ -1,5 +1,7 @@
 package domain;
 
+import domain.piece.Piece;
+import domain.type.direction.PieceMoveDirection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,14 +55,13 @@ public final class Board {
 
     private void validatePath(final Location startLocation, final Location endLocation) {
         final Square startSquare = findSquare(startLocation);
-        final Square endSquare = findSquare(endLocation);
-        final ValidateDto start = ValidateDto.of(startLocation, startSquare);
-        final ValidateDto end = ValidateDto.of(endLocation, endSquare);
+        final Piece startPiece = startSquare.getPiece();
+        final PieceMoveDirection direction = PieceMoveDirection.find(startLocation, endLocation);
         final List<Square> path = getSquaresInPath(startLocation, endLocation);
-        if (pathValidator.isValid(start, end, path)) {
+        if (pathValidator.isValid(direction, startPiece, path)) {
             return;
         }
-        throw new IllegalArgumentException(PieceView.findSign(start.getPiece()) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
+        throw new IllegalArgumentException(PieceView.findSign(startPiece) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
     }
 
     private List<Square> getSquaresInPath(final Location start, final Location end) {
