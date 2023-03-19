@@ -16,30 +16,18 @@ public class ChessGame {
     }
 
     public void movePieceTo(Position sourcePosition, Position targetPosition) {
-        validate(color, sourcePosition);
         move(sourcePosition, targetPosition);
     }
 
     private void move(Position sourcePosition, Position targetPosition) {
+        validateColor(color, sourcePosition);
         board.movePiece(sourcePosition, targetPosition);
         this.color = color.getReverseColor();
     }
 
-
-    private void validate(Color color, Position sourcePosition) {
-        Piece sourcePiece = board.findPiece(sourcePosition);
-        validateEmpty(sourcePiece);
-        validateColor(color, sourcePiece);
-    }
-
-    private void validateEmpty(Piece sourcePiece) {
-        if (sourcePiece.isEmpty()) {
-            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
-        }
-    }
-
-    private static void validateColor(Color color, Piece sourcePiece) {
-        if (!sourcePiece.isSameTeam(color)) {
+    private void validateColor(Color color, Position sourcePosition) {
+        Piece piece = board.findPiece(sourcePosition);
+        if (!piece.isSameTeam(color)) {
             throw new IllegalArgumentException("상대 팀의 말을 옮길 수 없습니다.");
         }
     }

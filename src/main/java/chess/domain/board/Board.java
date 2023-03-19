@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -20,12 +19,6 @@ public class Board {
         throw new IllegalArgumentException("잘못된 위치를 입력했습니다");
     }
 
-    public boolean isEmptyPosition(List<Position> paths) {
-        return paths.stream()
-                .map(boards::get)
-                .allMatch(Piece::isEmpty) || paths.isEmpty();
-    }
-
     public void movePiece(Position sourcePosition, Position targetPosition) {
         validateMove(sourcePosition, targetPosition);
         Piece sourcePiece = boards.get(sourcePosition);
@@ -36,22 +29,32 @@ public class Board {
 
     private void validateMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = findPiece(sourcePosition);
-        Piece targetPiece = findPiece(targetPosition);
-        validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
-        List<Position> path = sourcePosition.findPath(targetPosition);
-        validatePath(path);
+        validateEmpty(sourcePiece);
+        validateCanMove(sourcePosition, targetPosition, sourcePiece);
+        validatePath(sourcePosition, targetPosition);
     }
 
-    private void validatePath(List<Position> path) {
-        if (!isEmptyPosition(path)) {
+    private void validatePath(Position sourcePosition, Position targetPosition) {
+        if (!isEmptyPosition(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("경로가 없습니다.");
         }
     }
 
-    private void validateCanMove(Position sourcePosition, Position targetPosition,
-                                 Piece sourcePiece, Piece targetPiece) {
-        if (!sourcePiece.canMove(sourcePosition, targetPosition, targetPiece.getColor())) {
+    private boolean isEmptyPosition(Position sourcePosition, Position targetPosition) {
+        return sourcePosition.findPath(targetPosition).stream()
+                .map(boards::get)
+                .allMatch(Piece::isEmpty);
+    }
+
+    private void validateCanMove(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        if (!sourcePiece.canMove(sourcePosition, targetPosition, boards.get(targetPosition).getColor())) {
             throw new IllegalArgumentException("잘못된 위치를 지정하셨습니다.");
+        }
+    }
+
+    private void validateEmpty(Piece sourcePiece) {
+        if (sourcePiece.isEmpty()) {
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
     }
 
