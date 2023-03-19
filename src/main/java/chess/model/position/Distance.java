@@ -16,6 +16,10 @@ public class Distance {
         return direction.match(file, rank);
     }
 
+    public Direction findDirection() {
+        return Direction.findDirection(rank, file);
+    }
+
     public int rank() {
         return rank;
     }
