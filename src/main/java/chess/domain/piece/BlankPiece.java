@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BlankPiece extends Piece {
 
-    private static final String BLANK_PIECE_EXCEPTION_MESSAGE = "유효하지 않은 체스말 사용입니다.";
+    static final String BLANK_PIECE_EXCEPTION_MESSAGE = "유효하지 않은 체스말 사용입니다.";
 
     public BlankPiece(final File file, final Rank rank) {
         super(file, rank, Color.BLANK);
