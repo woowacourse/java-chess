@@ -19,10 +19,18 @@ public class CommandDto {
     }
 
     public static CommandDto from(String... commands) {
+        validateCommandsLength(commands);
+
         if (commands.length == 1) {
             return new CommandDto(Command.from(commands[GAME_STATE_INDEX]), Position.IS_NULL, Position.IS_NULL);
         }
         return new CommandDto(Command.from(commands[GAME_STATE_INDEX]), Position.from(commands[SOURCE_INDEX]), Position.from(commands[TARGET_INDEX]));
+    }
+
+    private static void validateCommandsLength(final String[] commands) {
+        if (commands.length != 1 && commands.length != 3) {
+            throw new IllegalArgumentException("유효한 입력이 아닙니다.");
+        }
     }
 
     public Command getGameState() {
