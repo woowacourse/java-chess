@@ -7,5 +7,6 @@ public enum PieceType {
 	ROOK,
 	KNIGHT,
 	BISHOP,
-	PAWN
+	PAWN,
+	INITIAL_PAWN
 }

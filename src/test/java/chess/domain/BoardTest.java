@@ -16,13 +16,6 @@ class BoardTest {
 		board = Board.create();
 	}
 
-	private void moveEveryPawnForward(final int distance) {
-		for (int i = 0; i < 7; i++) {
-			board.movePiece(Team.WHITE, new Position(i, 1), new Position(i, 1 + distance));
-			board.movePiece(Team.BLACK, new Position(i, 6), new Position(i, 6 - distance));
-		}
-	}
-
 	@Nested
 	@DisplayName("movePiece 예외 발생 테스트")
 	class MovePieceFailTest {
@@ -91,12 +84,14 @@ class BoardTest {
 		}
 
 		@Test
-		@DisplayName("적이 없는 상태에서 폰이 대각선으로 이동하려 하면 예외가 발생해야 한다.")
+		@DisplayName("적이 없는 상태에서 일반 폰이 대각선으로 이동하려 하면 예외가 발생해야 한다.")
 		void checkIsSourcePawnMovingProperDiagonalTest1() {
 			Position b2 = new Position(1, 1);
-			Position a3 = new Position(0, 2);
+			Position b3 = new Position(1, 2);
+			Position a4 = new Position(0, 3);
+			board.movePiece(Team.WHITE, b2, b3);
 
-			Exception e = assertThrows(IllegalArgumentException.class, () -> board.movePiece(Team.WHITE, b2, a3));
+			Exception e = assertThrows(IllegalArgumentException.class, () -> board.movePiece(Team.WHITE, b3, a4));
 			assertEquals("폰은 적이 존재할 때만 대각선으로 이동할 수 있습니다.", e.getMessage());
 		}
 
@@ -155,6 +150,13 @@ class BoardTest {
 						new Position(column, 5 - nextMoveDistance)
 					));
 			}
+		}
+	}
+
+	private void moveEveryPawnForward(final int distance) {
+		for (int i = 0; i < 7; i++) {
+			board.movePiece(Team.WHITE, new Position(i, 1), new Position(i, 1 + distance));
+			board.movePiece(Team.BLACK, new Position(i, 6), new Position(i, 6 - distance));
 		}
 	}
 }

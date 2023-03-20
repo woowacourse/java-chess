@@ -3,14 +3,18 @@ package chess.domain.piece;
 import chess.domain.RelativePosition;
 import chess.domain.Team;
 
-public class Pawn extends Piece {
+public class InitialPawn extends Piece {
 
-	public Pawn(final Team team) {
+	public InitialPawn(final Team team) {
 		super(team, Movement.PAWN);
 	}
 
 	@Override
 	public boolean isMobile(RelativePosition relativePosition) {
+		return relativePosition.isXZeroAndYOneOrTwo() && isMovementMobile(relativePosition.getGcdDivided());
+	}
+
+	private boolean isMovementMobile(RelativePosition relativePosition) {
 		if (team.isBlack()) {
 			relativePosition = relativePosition.inverseByXAxis();
 		}
@@ -18,12 +22,12 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean isNormalPawn() {
+	public boolean isInitialPawn() {
 		return true;
 	}
 
 	@Override
 	public PieceType getType() {
-		return PieceType.PAWN;
+		return PieceType.INITIAL_PAWN;
 	}
 }

@@ -23,6 +23,7 @@ public class OutputRenderer {
 		PIECE_TO_STRING.put(PieceType.KNIGHT, "N");
 		PIECE_TO_STRING.put(PieceType.BISHOP, "B");
 		PIECE_TO_STRING.put(PieceType.PAWN, "P");
+		PIECE_TO_STRING.put(PieceType.INITIAL_PAWN, "P");
 	}
 
 	public static BoardDto toBoardDto(final Map<Position, Piece> board) {

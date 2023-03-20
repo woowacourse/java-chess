@@ -33,7 +33,11 @@ public abstract class Piece {
 		return false;
 	}
 
-	public boolean isPawn() {
+	public boolean isNormalPawn() {
+		return false;
+	}
+
+	public boolean isInitialPawn() {
 		return false;
 	}
 
