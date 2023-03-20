@@ -1,6 +1,7 @@
 package domain.chessGame;
 
 import domain.piece.Piece;
+import domain.piece.PieceName;
 import domain.position.Direction;
 import domain.position.Position;
 
@@ -36,7 +37,7 @@ public final class ChessBoard {
     private boolean isPieceMovable(Position startPosition, Position endPosition) {
         List<Position> path = startPosition.getPathTo(endPosition);
         Piece startPiece = chessBoard.get(startPosition);
-        if (startPiece.isPawn()) {
+        if (startPiece.getPieceType() == PieceName.PAWN) {
             considerPawnCase(startPosition, endPosition);
         }
         return startPiece.isMovablePath(startPosition, path) &&

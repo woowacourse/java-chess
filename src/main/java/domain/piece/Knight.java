@@ -29,9 +29,4 @@ public final class Knight extends Piece {
     protected boolean isMovableDistance(int distance) {
         throw new UnsupportedOperationException("[ERROR] Knight 객체에서는 지원하지 않는 기능입니다.");
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

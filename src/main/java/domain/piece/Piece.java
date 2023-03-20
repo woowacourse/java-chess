@@ -14,6 +14,10 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public PieceName getPieceType() {
+        return name;
+    }
+
     public String getName() {
         if (isBlack()) {
             return name.getBlack();
@@ -34,6 +38,4 @@ public abstract class Piece {
     protected abstract boolean isMovableDirection(Position start, Position nextPosition);
 
     protected abstract boolean isMovableDistance(int distance);
-
-    public abstract boolean isPawn();
 }

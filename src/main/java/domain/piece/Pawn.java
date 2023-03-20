@@ -43,9 +43,4 @@ public final class Pawn extends Piece {
     protected boolean isMovableDistance(int distance) {
         return distance == 1;
     }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
 }
