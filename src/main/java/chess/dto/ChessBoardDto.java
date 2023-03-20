@@ -25,15 +25,15 @@ public class ChessBoardDto {
     }
 
     private static List<PieceDto> pieceToView(final Map<Position, Piece> piecePosition) {
-        final List<PieceDto> pieceDtoList = new LinkedList<>();
+        final List<PieceDto> pieceDtos = new LinkedList<>();
 
         Arrays.stream(Rank.values())
                 .forEach(rank -> Arrays.stream(File.values())
                 .map(file -> piecePosition.get(new Position(file, rank)))
                 .map(PieceDto::new)
-                .forEach(pieceDtoList::add));
+                .forEach(pieceDtos::add));
 
-        return pieceDtoList;
+        return pieceDtos;
     }
 
     public List<PieceDto> getPieceDtos() {
