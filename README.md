@@ -50,3 +50,11 @@
 ### 출력
 - [x] 게임 시작 문구를 출력한다.
 - [x] 체스판 현황을 출력한다.
+
+### DB
+- DB 계획도
+  - Room (room_id, game_id, user1, user2)
+  - Game (game_id, board_id)
+  - board (chess_id, position(String), piece(String))
+
+
