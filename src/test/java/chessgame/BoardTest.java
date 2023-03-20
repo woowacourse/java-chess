@@ -56,4 +56,31 @@ class BoardTest {
         assertThatThrownBy(()->board.move(A1,A2,Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+
+    @Test
+    @DisplayName("폰이 공격 대상이 없는 좌표로 대각선 이동 시 실패 테스트")
+    void Should_ThrowException_When_ImpossibleMove() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        assertThatThrownBy(() -> board.move(B2, C3,Team.WHITE))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("불가능한 움직임 입니다.");
+    }
+
+
+    @Test
+    @DisplayName("폰이 전진 시 상대 기물이 있을 경우 실패 테스트")
+    void Should_ThrowException_When_PawnAttackStraight() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        board.move(A2, A4,Team.WHITE);
+        board.move(A7, A5,Team.BLACK);
+
+        assertThatThrownBy(() -> board.move(A4, A5,Team.WHITE))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("폰은 직진으로 적을 잡을수 없습니다.");
+    }
+
+
 }
