@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.math.BigInteger;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -8,14 +7,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static chess.domain.Shape.BISHOP;
+import static chess.domain.Shape.KNIGHT;
+import static chess.domain.Shape.ROOK;
+
 public final class Pieces {
 
     public static final char FIRST_RANK = 'a';
     public static final char LAST_RANK = 'h';
-    private static final char MIDDLE_RANK = 'd';
     public static final int FIRST_FILE_OF_WHITE = 0;
-    private static final int LAST_FILE_OF_WHITE = 1;
     public static final int FIRST_FILE_OF_BLACK = 7;
+    private static final int LAST_FILE_OF_WHITE = 1;
+    private static final char MIDDLE_RANK = 'd';
     private static final int LAST_FILE_OF_BLACK = 6;
     private static final char QUEEN_DEFAULT_RANK_POSITION = 'd';
     private static final char KING_DEFAULT_RANK_POSITION = 'e';
@@ -54,13 +57,12 @@ public final class Pieces {
 
     public static Pieces createWhitePieces() {
         List<Piece> pieceList = new ArrayList<>();
-        makeWhitePieces(pieceList);
+        addWhitePieces(pieceList);
         return new Pieces(pieceList);
     }
 
-    private static void makeWhitePieces(final List<Piece> pieceList) {
-        Deque<Character> deque = new ArrayDeque<>(List.of('r', 'n', 'b'));
-        makeRookAndBishopAndKnight(deque, pieceList);
+    private static void addWhitePieces(final List<Piece> pieceList) {
+        makeRookAndBishopAndKnight(pieceList);
         makePawns(pieceList, LAST_FILE_OF_WHITE);
         makeQueenAndKing(pieceList);
     }
@@ -71,10 +73,14 @@ public final class Pieces {
         }
     }
 
-    private static void makeRookAndBishopAndKnight(final Deque<Character> deque, final List<Piece> pieceList) {
+    private static void makeRookAndBishopAndKnight(final List<Piece> pieceList) {
+        final Deque<Character> whiteNames = new ArrayDeque<>(
+                List.of(ROOK.getWhiteName(), KNIGHT.getWhiteName(), BISHOP.getWhiteName())
+        );
+
         for (int frontPosition = FIRST_RANK; frontPosition < MIDDLE_RANK; frontPosition++) {
-            Character shapeValue = deque.pollFirst();
-            Shape shape = Shape.findByWhiteName(shapeValue);
+            Character shapeValue = whiteNames.pollFirst();
+            Shape shape = Shape.findShapeByWhiteName(shapeValue);
             addPiecePairs(pieceList, frontPosition, shape);
         }
     }
@@ -97,13 +103,6 @@ public final class Pieces {
                 .count();
     }
 
-    @Override
-    public String toString() {
-        return "Pieces{" +
-                "pieces=" + pieces +
-                '}';
-    }
-
     public List<Piece> getPieces() {
         return pieces;
     }
@@ -123,4 +122,12 @@ public final class Pieces {
     public void remove(Position changedPosition) {
         pieces.removeIf(piece -> piece.isSamePosition(changedPosition));
     }
+
+    @Override
+    public String toString() {
+        return "Pieces{" +
+                "pieces=" + pieces +
+                '}';
+    }
+
 }
