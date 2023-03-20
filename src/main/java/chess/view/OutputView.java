@@ -14,11 +14,15 @@ public class OutputView {
         final Map<Position, Piece> chessBoard = board.getBoard();
 
         for (final Rank rank : Rank.values()) {
-            for (final File file : File.values()) {
-                final Position position = Position.of(file.value(), rank.value());
-                System.out.printf(chessBoard.get(position).name());
-            }
-            System.out.println();
+            printEachRank(chessBoard, rank);
+        }
+        System.out.println();
+    }
+
+    private static void printEachRank(final Map<Position, Piece> chessBoard, final Rank rank) {
+        for (final File file : File.values()) {
+            final Position position = Position.of(file.value(), rank.value());
+            System.out.printf(chessBoard.get(position).name());
         }
         System.out.println();
     }
