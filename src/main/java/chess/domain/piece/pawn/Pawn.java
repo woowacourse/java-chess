@@ -14,7 +14,7 @@ public final class Pawn extends Piece {
 
     public Pawn(final Color color) {
         super(color);
-        this.pawnMoveStrategy = PawnStrategyFactory.from(color);
+        this.pawnMoveStrategy = PawnMoveStrategy.from(color);
     }
 
     @Override
