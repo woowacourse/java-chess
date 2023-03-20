@@ -19,12 +19,14 @@ public class ChessBoard {
         return new ChessBoard(pieces);
     }
 
-    public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {
-        final Piece from = findByPosition(source);
-        final Piece to = optGet(destination).orElse(null);
-        validateMissMatchSelect(turn, from);
-        validateNonBlock(from, destination, to);
-        move(from, destination, to);
+    public void movePiece(final Turn turn,
+                          final PiecePosition source,
+                          final PiecePosition destination) {
+        final Piece fromPiece = findByPosition(source);
+        final Piece destinationPiece = findNullableByPosition(destination);
+        validateMissMatchSelect(turn, fromPiece);
+        validateNonBlock(fromPiece, destination, destinationPiece);
+        move(fromPiece, destination, destinationPiece);
     }
 
     private void validateMissMatchSelect(final Turn turn, final Piece from) {
@@ -33,8 +35,10 @@ public class ChessBoard {
         }
     }
 
-    private void validateNonBlock(final Piece from, final PiecePosition destination, final Piece to) {
-        final List<PiecePosition> waypoints = from.waypoints(destination, to);
+    private void validateNonBlock(final Piece fromPiece,
+                                  final PiecePosition destination,
+                                  final Piece destinationPiece) {
+        final List<PiecePosition> waypoints = fromPiece.waypoints(destination, destinationPiece);
         if (isBlocking(waypoints)) {
             throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
         }
@@ -45,13 +49,13 @@ public class ChessBoard {
                 .anyMatch(this::existByPosition);
     }
 
-    private void move(final Piece from, final PiecePosition destination, final Piece to) {
-        final Piece move = from.move(destination, to);
-        pieces.remove(from);
-        if (to != null) {
-            pieces.remove(to);
+    private void move(final Piece fromPiece, final PiecePosition destination, final Piece destinationPiece) {
+        final Piece movedPiece = fromPiece.move(destination, destinationPiece);
+        pieces.remove(fromPiece);
+        if (destinationPiece != null) {
+            pieces.remove(destinationPiece);
         }
-        pieces.add(move);
+        pieces.add(movedPiece);
     }
 
     private boolean existByPosition(final PiecePosition piecePosition) {
@@ -59,10 +63,11 @@ public class ChessBoard {
                 .anyMatch(piece -> piece.existIn(piecePosition));
     }
 
-    private Optional<Piece> optGet(final PiecePosition piecePosition) {
+    private Piece findNullableByPosition(final PiecePosition piecePosition) {
         return pieces.stream()
                 .filter(piece -> piece.existIn(piecePosition))
-                .findAny();
+                .findAny()
+                .orElse(null);
     }
 
     Piece findByPosition(final PiecePosition piecePosition) {
