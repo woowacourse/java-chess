@@ -10,6 +10,7 @@ import static chess.PositionFixtures.E1;
 import static chess.PositionFixtures.E5;
 import static chess.PositionFixtures.F2;
 import static chess.PositionFixtures.F4;
+import static chess.piece.PiecesFixtures.KNIGHT_BLACK_B3;
 import static chess.piece.PiecesFixtures.KNIGHT_BLACK_C2;
 import static chess.piece.PiecesFixtures.KNIGHT_WHITE_A1;
 import static chess.piece.PiecesFixtures.KNIGHT_WHITE_A2;
@@ -105,7 +106,8 @@ class KnightTest {
     @Test
     void move_otherColor() {
         final var moved = KNIGHT_WHITE_A1.move(B3, Set.of(
-                KNIGHT_WHITE_A1
+                KNIGHT_WHITE_A1,
+                KNIGHT_BLACK_B3
         ));
 
         assertThat(moved).isEqualTo(KNIGHT_WHITE_B3);
@@ -117,7 +119,7 @@ class KnightTest {
     ........
     ........
     ........
-    .N......
+    .n......
     ........
     n.......
      */
