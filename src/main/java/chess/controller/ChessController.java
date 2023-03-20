@@ -1,8 +1,14 @@
 package chess.controller;
 
+import chess.controller.dto.CommandDto;
+import chess.controller.dto.InputRenderer;
+import chess.controller.dto.OutputRenderer;
 import chess.domain.Board;
 import chess.domain.position.Position;
-import chess.view.*;
+import chess.view.InputView;
+import chess.view.OutputView;
+
+import java.util.List;
 
 public class ChessController {
 
@@ -38,8 +44,10 @@ public class ChessController {
 
         CommandDto commandDto = readMove();
         while (commandDto.getCommand() == Command.MOVE) {
-            Position sourcePosition = commandDto.getSourcePosition();
-            Position targetPosition = commandDto.getTargetPosition();
+            List<Integer> source = commandDto.getSource();
+            List<Integer> target = commandDto.getTarget();
+            Position sourcePosition = new Position(source.get(0), source.get(1));
+            Position targetPosition = new Position(target.get(0), target.get(1));
             errorController.tryCatchStrategy(() -> {
                 board.movePiece(sourcePosition, targetPosition);
                 OutputView.printBoard(OutputRenderer.toBoardDto(board.getBoard()));

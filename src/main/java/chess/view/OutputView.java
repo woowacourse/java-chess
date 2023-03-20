@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.BoardDto;
+import chess.controller.dto.BoardDto;
 
 import java.util.List;
 
