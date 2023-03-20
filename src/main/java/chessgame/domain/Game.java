@@ -18,7 +18,7 @@ public class Game {
     }
 
     public void setState(Command command) {
-        state = state.click(command,board);
+        state = state.run(command,board);
     }
 
     public boolean isEnd() {

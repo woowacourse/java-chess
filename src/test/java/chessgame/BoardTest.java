@@ -81,6 +81,5 @@ class BoardTest {
             .isExactlyInstanceOf(IllegalArgumentException.class)
             .hasMessage("폰은 직진으로 적을 잡을수 없습니다.");
     }
-
-
+    
 }

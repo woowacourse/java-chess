@@ -10,7 +10,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State click(Command command, Board board) {
+    public State run(Command command, Board board) {
         if (command.isStart()) {
             return new White();
         }

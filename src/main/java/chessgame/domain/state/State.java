@@ -5,5 +5,5 @@ import chessgame.domain.Command;
 
 public interface State {
     boolean isEnd();
-    State click(Command command, Board board);
+    State run(Command command, Board board);
 }

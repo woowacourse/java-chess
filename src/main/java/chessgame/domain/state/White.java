@@ -11,7 +11,7 @@ public class White implements State {
     }
 
     @Override
-    public State click(Command command, Board board) {
+    public State run(Command command, Board board) {
         if(command.isStart()){
             throw new IllegalArgumentException("시작을 입력할 수 없습니다.");
         }

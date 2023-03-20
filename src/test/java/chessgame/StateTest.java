@@ -16,7 +16,7 @@ public class StateTest {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 
-        State start = state.click(Command.of("start"), board);
+        State start = state.run(Command.of("start"), board);
 
         assertThat(start).isInstanceOf(White.class);
     }
@@ -28,8 +28,8 @@ public class StateTest {
 
         State state = new Ready();
 
-        State start = state.click(Command.of("start"), board);
-        State move = start.click(Command.of("move a2 a4"), board);
+        State start = state.run(Command.of("start"), board);
+        State move = start.run(Command.of("move a2 a4"), board);
 
         assertThat(move).isInstanceOf(Black.class);
     }
@@ -40,9 +40,9 @@ public class StateTest {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 
-        State start = state.click(Command.of("start"), board);
-        State whiteMove = start.click(Command.of("move a2 a4"), board);
-        State blackMove = whiteMove.click(Command.of("move a7 a5"), board);
+        State start = state.run(Command.of("start"), board);
+        State whiteMove = start.run(Command.of("move a2 a4"), board);
+        State blackMove = whiteMove.run(Command.of("move a7 a5"), board);
 
         assertThat(blackMove).isInstanceOf(White.class);
     }
@@ -53,7 +53,7 @@ public class StateTest {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 
-        State end = state.click(Command.of("end"), board);
+        State end = state.run(Command.of("end"), board);
 
         assertThat(end).isInstanceOf(End.class);
     }
