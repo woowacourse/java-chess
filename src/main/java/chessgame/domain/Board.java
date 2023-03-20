@@ -24,16 +24,25 @@ public class Board {
         checkSamePoint(source, target);
         checkSource(source, turn);
         boolean hasTarget = checkTarget(target, turn);
-        executeMove(source, target, piece, hasTarget);
+        if(piece instanceof Pawn) {
+            excutePawnMove(source, target, piece, hasTarget);
+            return;
+        }
+        executeMove(source, target, piece);
     }
 
-    private void executeMove(Point source, Point target, Piece piece, boolean hasTarget) {
-        if (piece.isMovable(source, target)) {
-            checkPawnMove(piece, hasTarget);
+    private void excutePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
+        if(piece.isMovable(source,target)){
+            checkPawnMove(piece,hasTarget);
             followPieceRoute(source, target, piece);
             return;
-        } else if (piece instanceof Pawn) {
-            checkPawnAttack(source, target, piece, hasTarget);
+        }
+        checkPawnAttack(source, target, piece, hasTarget);
+    }
+
+    private void executeMove(Point source, Point target, Piece piece) {
+        if (piece.isMovable(source, target)) {
+            followPieceRoute(source, target, piece);
             return;
         }
         throw new IllegalArgumentException("움직일 수 없습니다.");
