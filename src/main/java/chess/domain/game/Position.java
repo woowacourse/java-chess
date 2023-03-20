@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 public class Position {
 
     private static final Map<File, Map<Rank, Position>> cache = new EnumMap<>(File.class);
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     static {
         for (File file : File.values()) {
@@ -27,6 +29,10 @@ public class Position {
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position from(String position) {
+        return of(position.charAt(FILE_INDEX), position.charAt(RANK_INDEX));
     }
 
     public static Position of(char fileName, char rankName) {
