@@ -1,8 +1,8 @@
 package chess.model.position;
 
-import static chess.model.board.PositionFixture.A1;
-import static chess.model.board.PositionFixture.B2;
-import static chess.model.board.PositionFixture.D4;
+import static chess.helper.PositionFixture.A1;
+import static chess.helper.PositionFixture.B2;
+import static chess.helper.PositionFixture.D4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

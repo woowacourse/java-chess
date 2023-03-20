@@ -1,4 +1,4 @@
-package chess.model.board;
+package chess.helper;
 
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -71,4 +71,13 @@ public final class PositionFixture {
     public static final Position F7 = Position.of(File.F, Rank.SEVENTH);
     public static final Position G7 = Position.of(File.G, Rank.SEVENTH);
     public static final Position H7 = Position.of(File.H, Rank.SEVENTH);
+
+    public static final Position A8 = Position.of(File.A, Rank.EIGHTH);
+    public static final Position B8 = Position.of(File.B, Rank.EIGHTH);
+    public static final Position C8 = Position.of(File.C, Rank.EIGHTH);
+    public static final Position D8 = Position.of(File.D, Rank.EIGHTH);
+    public static final Position E8 = Position.of(File.E, Rank.EIGHTH);
+    public static final Position F8 = Position.of(File.F, Rank.EIGHTH);
+    public static final Position G8 = Position.of(File.G, Rank.EIGHTH);
+    public static final Position H8 = Position.of(File.H, Rank.EIGHTH);
 }
