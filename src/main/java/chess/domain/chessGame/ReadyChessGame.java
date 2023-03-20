@@ -28,6 +28,6 @@ public class ReadyChessGame implements ChessGame {
 
     @Override
     public Map<Position, String> getPrintingBoard() {
-        return null;
+        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
     }
 }
