@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class ColorTest {
 
     @Test
-    void 색은_개수가_2개이다() {
+    void 색은_검은색_흰색으로_구분한다() {
         final List<Color> colors = Arrays.stream(values())
                 .collect(Collectors.toList());
 
