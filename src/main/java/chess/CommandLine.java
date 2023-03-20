@@ -3,11 +3,7 @@ package chess;
 import java.util.List;
 
 public class CommandLine {
-    
-    private static final String INVALID_COMMAND_ERROR_MESSAGE = "잘못된 명령어입니다.";
-    private static final String INVALID_ARGUMENT_ERROR_MESSAGE = "는 인자를 입력할 수 없습니다.";
-    private static final String INVALID_ARGUMENT_COUNT_ERROR_MESSAGE = "는 인자를 2개만 가질 수 있습니다.";
-    private static final String NO_ARGUMENT_ERROR_MESSAGE = "인자를 반환할 수 없는 명령입니다.";
+
     private static final String START = "start";
     private static final String MOVE = "move";
     private static final String END = "end";
@@ -26,19 +22,19 @@ public class CommandLine {
     private void validate(final List<String> tokens) {
         String command = tokens.get(0);
         if (!VALID_COMMANDS.contains(command)) {
-            throw new IllegalArgumentException(INVALID_COMMAND_ERROR_MESSAGE);
+            throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
         if (!command.equals(MOVE) && tokens.size() != ZERO_ARGUMENT_SIZE) {
-            throw new IllegalArgumentException(command + INVALID_ARGUMENT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(command + "는 인자를 입력할 수 없습니다.");
         }
         if (command.equals(MOVE) && tokens.size() != TWO_ARGUMENT_SIZE) {
-            throw new IllegalArgumentException(command + INVALID_ARGUMENT_COUNT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(command + "는 인자를 2개만 가질 수 있습니다.");
         }
     }
     
     public List<String> getArguments() {
         if (this.tokens.size() != TWO_ARGUMENT_SIZE) {
-            throw new IllegalStateException(NO_ARGUMENT_ERROR_MESSAGE);
+            throw new IllegalStateException("인자를 반환할 수 없는 명령입니다.");
         }
         return this.tokens.subList(SOURCE_INDEX, TARGET_INDEX);
     }

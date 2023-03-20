@@ -8,10 +8,6 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class ChessGame {
-    
-    
-    public static final String GAME_CANNOT_EXECUTE_MESSAGE = "실행할 수 없는 명령입니다.";
-    public static final String GAME_HAS_NOT_STARTED = "게임이 시작되지 않았습니다.";
 
     private final Board board;
     private Color turn;
@@ -25,7 +21,7 @@ public class ChessGame {
     
     public void start() {
         if (status != GameStatus.START) {
-            throw new IllegalStateException(GAME_CANNOT_EXECUTE_MESSAGE);
+            throw new IllegalStateException("실행할 수 없는 명령입니다.");
         }
         board.initialize();
         status = GameStatus.MOVE;
@@ -33,7 +29,7 @@ public class ChessGame {
     
     public void move(final List<String> arguments) {
         if (status != GameStatus.MOVE) {
-            throw new IllegalStateException(GAME_HAS_NOT_STARTED);
+            throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
@@ -65,7 +61,7 @@ public class ChessGame {
     
     public void end() {
         if (status != GameStatus.MOVE) {
-            throw new IllegalStateException(GAME_HAS_NOT_STARTED);
+            throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
         status = GameStatus.END;
     }

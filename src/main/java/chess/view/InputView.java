@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 public class InputView {
     
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String DELIMITER = " ";
     
     public List<String> readCommand() {
         String input = scanner.nextLine();
-        return Arrays.stream(input.split(" ")).collect(Collectors.toList());
+        return Arrays.stream(input.split(DELIMITER)).collect(Collectors.toList());
     }
 }

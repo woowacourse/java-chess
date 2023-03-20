@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceFactory {
-    
-    
+
     public static List<Piece> createWhitePawns() {
         return createPawns(Color.WHITE);
     }

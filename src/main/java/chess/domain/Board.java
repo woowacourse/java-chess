@@ -15,12 +15,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class Board {
-    
-    public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
-    public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
-    public static final String OTHER_PIECE_IN_ROUTE = "경로에 다른 피스가 존재합니다.";
-    public static final String PIECE_CANNOT_MOVE_SAME_COLOR = "목적지에 같은 색깔의 피스가 있습니다.";
-    public static final String PAWN_CANNOT_MOVE_EMPTY_DIAGONAL = "비어있기 때문에 대각선으로 이동할 수 없습니다.";
+
     public static final int WHITE_GENERALS_RANK = 0;
     public static final int WHITE_PAWNS_RANK = 1;
     public static final int BLACK_PAWNS_RANK = 6;
@@ -64,10 +59,10 @@ public class Board {
     
     public Piece getValidSourcePiece(final Position source, final Color color) {
         if (isEmpty(source)) {
-            throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE);
+            throw new IllegalArgumentException("피스가 존재하지 않습니다.");
         }
         if (!isSameColor(source, color)) {
-            throw new IllegalArgumentException(OTHER_COLOR_PIECE_ERROR_MESSAGE);
+            throw new IllegalArgumentException("상대편 피스입니다.");
         }
         return board.get(source);
     }
@@ -83,7 +78,7 @@ public class Board {
     
     private void checkOtherPieceInRoute(final Position move) {
         if (!isEmpty(move)) {
-            throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
+            throw new IllegalArgumentException("경로에 다른 피스가 존재합니다.");
         }
     }
     
@@ -100,13 +95,13 @@ public class Board {
     
     private void checkDiagonalPiece(final Position destination) {
         if (isEmpty(destination)) {
-            throw new IllegalArgumentException(PAWN_CANNOT_MOVE_EMPTY_DIAGONAL);
+            throw new IllegalArgumentException("비어있기 때문에 대각선으로 이동할 수 없습니다.");
         }
     }
     
     public void checkSameColor(final Position destination, Color color) {
         if (isSameColor(destination, color)) {
-            throw new IllegalArgumentException(PIECE_CANNOT_MOVE_SAME_COLOR);
+            throw new IllegalArgumentException("목적지에 같은 색깔의 피스가 있습니다.");
         }
     }
     
