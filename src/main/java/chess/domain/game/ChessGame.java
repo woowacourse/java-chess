@@ -27,11 +27,12 @@ public class ChessGame {
         chessBoard.move(start, end);
     }
 
-    public boolean isStarted() {
+    private boolean isStarted() {
         return chessBoard.isInitialized();
     }
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getChessBoard();
     }
+
 }
