@@ -10,7 +10,7 @@ public class Turn {
     }
 
     public boolean isNotCurrentTurn(Color color) {
-        return this.color != color;
+        return this.color.isOpposite(color);
     }
 
     public void next() {

@@ -19,7 +19,7 @@ public abstract class Piece {
     public abstract Piece move();
 
     public boolean canMove(Position sourcePosition, Position targetPosition, Color targetColor) {
-        if (getColor() == targetColor) {
+        if (getColor().isSame(targetColor)) {
             return false;
         }
         return validMove(sourcePosition, targetPosition, targetColor);

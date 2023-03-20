@@ -15,6 +15,10 @@ public enum Color {
         return this.getReverseColor() == color;
     }
 
+    public boolean isSame(Color targetColor) {
+        return this == targetColor;
+    }
+
     public Color getReverseColor() {
         if (this == BLACK) {
             return WHITE;
@@ -28,4 +32,5 @@ public enum Color {
     public int getDirection() {
         return direction;
     }
+
 }

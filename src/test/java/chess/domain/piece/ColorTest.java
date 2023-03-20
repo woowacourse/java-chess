@@ -16,4 +16,10 @@ class ColorTest {
     void 반대_진영인지_확인한다(Color color, boolean expect) {
         assertThat(Color.BLACK.isOpposite(color)).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK:true", "WHITE:false"}, delimiter = ':')
+    void 같은_진영인지_확인한다(Color color, boolean expect) {
+        assertThat(Color.BLACK.isSame(color)).isEqualTo(expect);
+    }
 }
