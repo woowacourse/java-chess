@@ -26,17 +26,13 @@ public class Board {
         checkOppositeSidePieceOnTargetPosition(sourcePiece, targetPosition);
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
+        changeTurnToMove();
     }
 
     private void checkTurnToMoveBySide(final Side sourcePieceSide) {
         if (sourcePieceSide != turnToMove) {
             throw new IllegalArgumentException("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
         }
-        if (turnToMove == Side.BLACK) {
-            turnToMove = Side.WHITE;
-            return;
-        }
-        turnToMove = Side.BLACK;
     }
 
     private void checkPieceMovable(final Position sourcePosition, final Position targetPosition) {
@@ -93,6 +89,14 @@ public class Board {
         if (targetPiece.isOppositeSide(sourcePiece)) {
             pieces.remove(targetPiece);
         }
+    }
+
+    private void changeTurnToMove() {
+        if (turnToMove == Side.BLACK) {
+            turnToMove = Side.WHITE;
+            return;
+        }
+        turnToMove = Side.BLACK;
     }
 
     public List<Piece> getPieces() {
