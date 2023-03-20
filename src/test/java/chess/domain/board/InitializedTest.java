@@ -66,4 +66,52 @@ public class InitializedTest {
         // then
         assertThat(score).isEqualTo(37.0);
     }
+
+    @Test
+    void 왕이_잡힌_경우_왕을_잡은쪽이_승리한다() {
+        // given
+        Board board = new Start();
+        board = board.initialize();
+        board = board.move("e2", "e4");
+        board = board.move("e7", "e5");
+        board = board.move("d1", "h5");
+        board = board.move("f7", "f5");
+        board = board.move("h5", "e8");
+
+        // when
+        final Color result = board.winner();
+
+        // then
+        assertThat(result).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    void 왕이_잡히지_않은_경우_점수를_비교하여_결과를_계산한다() {
+        // given
+        Board board = new Start();
+        board = board.initialize();
+        board = board.move("d2", "d4");
+        board = board.move("b8", "c6");
+        board = board.move("c1", "f4");
+        board = board.move("c6", "d4");
+
+        // when
+        final Color result = board.winner();
+
+        // then
+        assertThat(result).isEqualTo(Color.BLACK);
+    }
+
+    @Test
+    void 양쪽다_왕이_살아있고_점수가_동일할_경우_EMPTY를_반환한다() {
+        // given
+        Board board = new Start();
+        board = board.initialize();
+
+        // when
+        final Color result = board.winner();
+
+        // then
+        assertThat(result).isEqualTo(Color.EMPTY);
+    }
 }

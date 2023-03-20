@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 public final class Start extends AbstractBoard {
 
+    private static final String INVALID_GAME_STATE_MESSAGE = "게임이 시작되지 않았습니다.";
+
     public Start() {
         super(new HashMap<>(), Color.WHITE);
     }
@@ -27,11 +29,16 @@ public final class Start extends AbstractBoard {
 
     @Override
     public Board move(final String source, final String target) {
-        throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
     }
 
     @Override
     public double score(final Color color) {
-        throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
+    }
+
+    @Override
+    public Color winner() {
+        throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
     }
 }

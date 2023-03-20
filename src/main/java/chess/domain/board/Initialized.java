@@ -4,6 +4,7 @@ import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -52,5 +53,36 @@ public abstract class Initialized extends AbstractBoard {
                 .filter(value -> value >= MULTIPLE_PAWN_COUNT)
                 .mapToDouble(value -> value * MULTIPLE_PAWN_SCORE)
                 .sum();
+    }
+
+    @Override
+    public final Color winner() {
+        if (isKingDead(Color.WHITE) || isKingDead(Color.BLACK)) {
+            return calculateByKing();
+        }
+        return calculateByScore();
+    }
+
+    private boolean isKingDead(final Color color) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .noneMatch(piece -> piece.isSameColor(color));
+    }
+
+    private Color calculateByKing() {
+        if (isKingDead(Color.WHITE)) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
+
+    private Color calculateByScore() {
+        if (score(Color.WHITE) == score(Color.BLACK)) {
+            return Color.EMPTY;
+        }
+        if (score(Color.WHITE) > score(Color.BLACK)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
     }
 }

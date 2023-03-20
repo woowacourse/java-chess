@@ -31,6 +31,9 @@ public abstract class AbstractBoard implements Board {
     public abstract double score(final Color color);
 
     @Override
+    public abstract Color winner();
+
+    @Override
     public final Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }

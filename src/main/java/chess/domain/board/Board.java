@@ -17,5 +17,7 @@ public interface Board {
 
     double score(final Color color);
 
+    Color winner();
+
     Map<Position, Piece> getBoard();
 }
