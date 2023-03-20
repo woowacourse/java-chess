@@ -1,5 +1,6 @@
-package chess.view;
+package chess.controller;
 
+import chess.controller.Command;
 import chess.domain.position.Position;
 
 public class CommandDto {

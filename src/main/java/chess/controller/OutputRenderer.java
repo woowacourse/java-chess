@@ -1,5 +1,6 @@
-package chess.view;
+package chess.controller;
 
+import chess.controller.BoardDto;
 import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;

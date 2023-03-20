@@ -1,5 +1,7 @@
-package chess.view;
+package chess.controller;
 
+import chess.controller.Command;
+import chess.controller.CommandDto;
 import chess.domain.position.Position;
 
 import java.util.Arrays;

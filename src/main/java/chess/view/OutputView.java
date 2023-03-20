@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.controller.BoardDto;
+
 import java.util.List;
 
 public class OutputView {

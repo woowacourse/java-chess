@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller;
 
 public enum Command {
 
