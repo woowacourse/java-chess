@@ -49,7 +49,7 @@ public final class ChessBoard {
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {
-        if (currentPosition.equals(target)) {
+        if (currentPosition.isSame(target)) {
             return false;
         }
         if (board.containsKey(currentPosition)) {

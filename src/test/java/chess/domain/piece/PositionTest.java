@@ -116,4 +116,19 @@ class PositionTest {
         assertThat(source.isRankGreaterThan(target))
                 .isSameAs(expected);
     }
+
+    @ParameterizedTest(name = "두 개의 위치가 동일한지 판단한다.")
+    @CsvSource(value = {"4:true", "5:false"}, delimiter = ':')
+    void isSame(final int rank, final boolean expected) {
+        // given
+        final Position source = new Position(4, 4);
+        final Position target = new Position(rank, 4);
+
+        // when
+        boolean actual = source.isSame(target);
+
+        // then
+        assertThat(actual)
+                .isSameAs(expected);
+    }
 }

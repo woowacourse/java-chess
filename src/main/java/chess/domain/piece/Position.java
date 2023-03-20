@@ -46,6 +46,10 @@ public final class Position {
         return this.rank > other.rank;
     }
 
+    public boolean isSame(final Position other) {
+        return this.equals(other);
+    }
+
     private int getGcdGap(final int fileGap, final int rankGap) {
         if (fileGap < rankGap) {
             return computeGcd(fileGap, rankGap);
