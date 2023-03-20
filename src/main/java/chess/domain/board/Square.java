@@ -34,6 +34,14 @@ public class Square {
         return ranks;
     }
 
+    public static Square from(String fileAndRank) {
+        int fileValue = fileAndRank.charAt(0) - 'a' + 1;
+        int rankValue = fileAndRank.charAt(1) - '1' + 1;
+        File file = File.from(fileValue);
+        Rank rank = Rank.from(rankValue);
+        return Square.of(file, rank);
+    }
+
     public static Square of(final File file, final Rank rank) {
         Map<Rank, Square> rankSquareMap = CACHE.get(file);
         return rankSquareMap.get(rank);
@@ -65,5 +73,10 @@ public class Square {
         File nextFile = file.getNextFile(fileUnit);
         Rank nextRank = rank.getNextRank(rankUnit);
         return of(nextFile, nextRank);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s%s", file, rank);
     }
 }

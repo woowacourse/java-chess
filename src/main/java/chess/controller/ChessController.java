@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ChessController {
+    private static final int SOURCE_INDEX_OF_MOVE_COMMAND = 1;
+    private static final int TARGET_INDEX_OF_MOVE_COMMAND = 2;
+    private static final String DELIMITER_OF_MOVE_COMMAND = " ";
+
     private final InputView inputView;
     private final OutputView outputView;
     private Board board;
@@ -41,7 +45,7 @@ public class ChessController {
             return true;
         }
         if (command.contains("move")) {
-            String[] commands = command.split(" ");
+            String[] commands = command.split(DELIMITER_OF_MOVE_COMMAND);
             validateMoveCommand(commands);
             movePiece(commands);
             return true;
@@ -49,7 +53,7 @@ public class ChessController {
         throw new IllegalArgumentException("해당 명령어는 존재하지 않습니다.");
     }
 
-    private Boolean repeat(Supplier<Boolean> playGame) {
+    private Boolean repeat(final Supplier<Boolean> playGame) {
         try {
             return playGame.get();
         } catch (Exception e) {
@@ -65,18 +69,11 @@ public class ChessController {
     }
 
     private void movePiece(final String[] commands) {
-        Square sourceSquare = convertSquare(commands[1]);
-        Square targetSquare = convertSquare(commands[2]);
+        Square sourceSquare = Square.from(commands[SOURCE_INDEX_OF_MOVE_COMMAND]);
+        Square targetSquare = Square.from(commands[TARGET_INDEX_OF_MOVE_COMMAND]);
+        //TODO: 이부분 스퀘어를 String으로 넘길지 Square로 넘길지 고민중
         board.makeMove(sourceSquare, targetSquare);
         showBoard();
-    }
-
-    private Square convertSquare(final String command) {
-        int fileValue = command.charAt(0) - 'a' + 1;
-        int rankValue = command.charAt(1) - '1' + 1;
-        File file = File.from(fileValue);
-        Rank rank = Rank.from(rankValue);
-        return Square.of(file, rank);
     }
 
     private void showStartMessage() {
