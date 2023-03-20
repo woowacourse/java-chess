@@ -10,11 +10,13 @@ class CommandTest {
 
 
     @Test
-    @DisplayName("isFinish() : end 명령어가 들어오면 true를 반환한다.")
+    @DisplayName("isEnd() : end 명령어가 들어오면 true를 반환한다.")
     void test_isFinish() throws Exception {
         //given
         String command1 = "end";
         String command2 = "move";
+
+        System.out.println(Command.START.name());
 
         //when & then
         assertTrue(Command.isEnd(command1));
