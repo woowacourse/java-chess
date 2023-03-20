@@ -44,13 +44,14 @@ public final class ChessGame {
 
     private void checkRoute(final Position source, final Position target) {
         Route route = chessBoard.findRoute(source, target);
+        validateRoute(hasHurdle(route));
+    }
 
-        final boolean hasHurdle = route.getRoute().stream()
+    private boolean hasHurdle(final Route route) {
+        return route.getRoute().stream()
                 .map(chessBoard::findPosition)
                 .map(SquareStatus::getType)
                 .anyMatch(Predicate.not(EmptyType::isEmpty));
-
-        validateRoute(hasHurdle);
     }
 
     private void validateRoute(final boolean hasHurdle) {

@@ -16,6 +16,7 @@ public enum ChessBoardFactory {
     OTHERS_WHITE(List.of(new Rook(Color.WHITE), new Knight(Color.WHITE), new Bishop(Color.WHITE), new Queen(Color.WHITE), new King(Color.WHITE), new Bishop(Color.WHITE), new Knight(Color.WHITE), new Rook(Color.WHITE)));
 
     private static final Map<Position, SquareStatus> chessBoard;
+    private static final int MAX_SIZE = 8;
 
     private final List<SquareStatus> squareStatuses;
 
@@ -37,7 +38,7 @@ public enum ChessBoardFactory {
     }
 
     private static void putRow(final int row, final List<SquareStatus> squareStatuses) {
-        for (int column = 0; column < 8; column++) {
+        for (int column = 0; column < MAX_SIZE; column++) {
             chessBoard.put(Position.of(column, row), squareStatuses.get(column));
         }
     }
