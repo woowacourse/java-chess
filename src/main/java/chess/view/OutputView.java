@@ -3,7 +3,6 @@ package chess.view;
 import static chess.view.PieceRender.render;
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.List;
@@ -19,8 +18,8 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(Board board) {
-        List<List<Square>> squares = board.getBoard().stream()
+    public static void printBoard(List<Rank> board) {
+        List<List<Square>> squares = board.stream()
                 .map(Rank::getRank)
                 .collect(toList());
 

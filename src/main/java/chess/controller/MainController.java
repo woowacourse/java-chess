@@ -8,8 +8,8 @@ import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
 
-import chess.domain.ChessGame;
 import chess.domain.Position;
+import chess.domain.board.Board;
 import chess.domain.math.PositionConverter;
 import chess.view.Command;
 import chess.view.InputView;
@@ -23,10 +23,10 @@ public class MainController {
     private static final int ONLY_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
-    private final ChessGame chessGame;
+    private final Board board;
 
-    public MainController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public MainController(final Board board) {
+        this.board = board;
     }
 
     public void run() {
@@ -35,7 +35,7 @@ public class MainController {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
 
         if (command == START) {
-            printBoard(chessGame.getBoard());
+            printBoard(board.getBoard());
             while (repeatUntilValidInput(this::playChess));
         }
         printFinishMessage();
@@ -65,8 +65,8 @@ public class MainController {
         Position current = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
         Position target = PositionConverter.toPosition(inputs.get(TARGET_INDEX_POSITION));
 
-        chessGame.movePiece(current, target);
-        printBoard(chessGame.getBoard());
+        board.movePiece(current, target);
+        printBoard(board.getBoard());
     }
 
     private List<String> readValidCommand() {
