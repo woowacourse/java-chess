@@ -24,8 +24,8 @@ public class King extends Piece {
     }
 
     @Override
-    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
-        super.validateSameColor(destination);
+    public Path searchPathTo(final Position from, final Position to, final Piece locatedPiece) {
+        super.validateSameColor(locatedPiece);
 
         Movement movement = to.convertMovement(from);
 

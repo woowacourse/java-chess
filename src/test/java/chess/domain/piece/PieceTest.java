@@ -46,7 +46,7 @@ class PieceTest {
     private static Piece createPiece(Color color) {
         return new Piece(color) {
             @Override
-            public Path searchPathTo(final Position from, final Position to, final Piece destination) {
+            public Path searchPathTo(final Position from, final Position to, final Piece locatedPiece) {
                 return null;
             }
         };

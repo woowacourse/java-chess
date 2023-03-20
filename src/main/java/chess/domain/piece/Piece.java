@@ -15,7 +15,7 @@ public abstract class Piece {
         return color == Color.BLACK;
     }
 
-    public abstract Path searchPathTo(Position from, Position to, Piece destination);
+    public abstract Path searchPathTo(Position from, Position to, Piece locatedPiece);
 
     protected void validateSameColor(Piece other) {
         if (other != null && color.isSameColor(other.color)) {

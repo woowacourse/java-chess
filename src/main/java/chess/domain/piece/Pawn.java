@@ -34,10 +34,10 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public Path searchPathTo(Position from, Position to, Piece destination) {
+    public Path searchPathTo(Position from, Position to, Piece locatedPiece) {
         Movement movement = to.convertMovement(from);
 
-        if (canMove(destination, movement)) {
+        if (canMove(locatedPiece, movement)) {
 
             if (canMoveWhitePawn(from, to)) {
                 final Position wayPoint = from.moveBy(U);
@@ -55,7 +55,7 @@ public class Pawn extends Piece {
         }
 
         // 상대 말인 경우
-        if (canMoveDiagonal(destination, movement)) {
+        if (canMoveDiagonal(locatedPiece, movement)) {
             return new Path();
         }
         throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
