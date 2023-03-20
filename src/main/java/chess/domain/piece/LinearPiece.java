@@ -19,12 +19,19 @@ public abstract class LinearPiece extends Piece {
         for (MovePattern movePattern : movePatterns) {
             Position nextPosition = source;
             boolean killFlag = false;
-            while (isRangeValid(nextPosition, movePattern) && !killFlag) {
+            while (canMove(board, movePattern, nextPosition, killFlag)) {
                 nextPosition = nextPosition.move(movePattern);
                 killFlag = checkSide(movablePositions, nextPosition, board);
             }
         }
         return movablePositions;
+    }
+
+    private boolean canMove(final Board board, final MovePattern movePattern,
+                            final Position nextPosition, final boolean killFlag) {
+        return isRangeValid(nextPosition, movePattern)
+                && !killFlag
+                && isPossibleNextPosition(board, nextPosition, movePattern);
     }
 
     private boolean checkSide(final List<Position> movablePositions, final Position nextPosition, final Board board) {
@@ -33,5 +40,9 @@ public abstract class LinearPiece extends Piece {
             movablePositions.add(nextPosition);
         }
         return nextSide != this.side && nextSide != Side.NEUTRALITY;
+    }
+
+    private boolean isPossibleNextPosition(final Board board, final Position nextPosition, MovePattern movePattern) {
+        return board.findSideByPosition(nextPosition.move(movePattern)) != this.side;
     }
 }
