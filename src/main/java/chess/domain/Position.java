@@ -75,7 +75,7 @@ public final class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return Objects.equals(rank, position.rank) && Objects.equals(file, position.file);
     }
 
     @Override
@@ -84,11 +84,11 @@ public final class Position {
     }
 
     public int calculateFileDistance(int file) {
-        return Math.abs(this.file - file);
+        return this.file.calculateDistance(file);
     }
 
     public int calculateRankDistance(int rank) {
-        return Math.abs(this.rank - rank);
+        return this.rank.calculateDistance(rank);
     }
 
     public Position move(int fileDirection, int rankDirection) {
