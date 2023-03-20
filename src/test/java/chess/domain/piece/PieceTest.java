@@ -24,17 +24,6 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("isSameColor() : 두 피스가 같은 색인지 구별할 수 있다.")
-    void test_isSameColor() throws Exception {
-        //given
-        final Piece whitePiece = createPiece(Color.WHITE);
-
-        //when & then
-        assertTrue(whitePiece.isSameColor(Color.WHITE));
-        assertFalse(whitePiece.isSameColor(Color.BLACK));
-    }
-
-    @Test
     @DisplayName("isDifferentColor() : 두 피스가 다른 색인지 구별할 수 있다.")
     void test_isDifferentColor() throws Exception {
         //given

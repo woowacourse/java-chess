@@ -24,7 +24,6 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DR, DL),
             Color.WHITE, List.of(UR, UL)
     );
-
     private static final List<Movement> MOVEMENT_CANDIDATES = List.of(D, U, DR, DL, UR, UL);
     
     private static final int WHITE_PAWN_START_RANK = 2;
@@ -73,21 +72,35 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveDiagonal(final Piece destination, final Movement movement) {
-        return destination != null && destination.color.isDifferentColor(color)
+        return destination != null && destination.isDifferentColor(this)
                 && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement);
     }
 
     private boolean canMoveBlackPawn(final Position from, final Position to) {
-        return color.isBlack() && from.rank().value() == BLACK_PAWN_START_RANK
-                && rankDifference(from, to) == MAXIMUM_BLACK_PAWN_MANHATTAN_DISTANCE;
+        return color.isBlack() && isBlackPawnStartRank(from) && hasBlackPawnMovedTwice(from, to);
     }
 
-    private boolean canMoveWhitePawn(final Position from, final Position to) {
-        return color.isWhite() && from.rank().value() == WHITE_PAWN_START_RANK
-                && rankDifference(from, to) == MAXIMUM_WHITE_PAWN_MANHATTAN_DISTANCE;
+    private static boolean isBlackPawnStartRank(final Position from) {
+        return from.rank().value() == BLACK_PAWN_START_RANK;
+    }
+
+    private boolean hasBlackPawnMovedTwice(final Position from, final Position to) {
+        return rankDifference(from, to) == MAXIMUM_BLACK_PAWN_MANHATTAN_DISTANCE;
     }
 
     private int rankDifference(final Position from, final Position to) {
         return to.calculateRankBetween(from);
+    }
+
+    private boolean canMoveWhitePawn(final Position from, final Position to) {
+        return color.isWhite() && isWhitePawnStartRank(from) && hasWhitePawnMovedTwice(from, to);
+    }
+
+    private static boolean isWhitePawnStartRank(final Position from) {
+        return from.rank().value() == WHITE_PAWN_START_RANK;
+    }
+
+    private boolean hasWhitePawnMovedTwice(final Position from, final Position to) {
+        return rankDifference(from, to) == MAXIMUM_WHITE_PAWN_MANHATTAN_DISTANCE;
     }
 }
