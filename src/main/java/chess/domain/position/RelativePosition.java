@@ -43,10 +43,6 @@ public class RelativePosition {
         return bigX.gcd(bigY).intValue();
     }
 
-    public boolean isZeroAbsTwo() {
-        return x == 0 && Math.abs(y) == 2;
-    }
-
     public RelativePosition inverseByXAxis() {
         return new RelativePosition(x, -1 * y);
     }

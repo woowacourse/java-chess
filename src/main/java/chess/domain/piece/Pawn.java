@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.movement.Movement;
 import chess.domain.position.RelativePosition;
-import chess.domain.Team;
 
 public class Pawn extends NoneEmptyPiece {
 
@@ -15,7 +15,7 @@ public class Pawn extends NoneEmptyPiece {
 
     @Override
     public boolean isMobile(RelativePosition relativePosition) {
-        if (!hasMoved && relativePosition.isZeroAbsTwo()) {
+        if (!hasMoved && isMoveTwoBlocks(relativePosition)) {
             relativePosition = relativePosition.toUnit();
         }
         if (isMovementMobile(relativePosition)) {
@@ -23,6 +23,10 @@ public class Pawn extends NoneEmptyPiece {
             return true;
         }
         return false;
+    }
+
+    private boolean isMoveTwoBlocks(RelativePosition relativePosition) {
+        return relativePosition.equals(new RelativePosition(0, 2)) || relativePosition.equals(new RelativePosition(0, -2));
     }
 
     private boolean isMovementMobile(RelativePosition relativePosition) {
