@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
 import chess.domain.move.enums.DiagonalMove;
 import chess.domain.move.enums.HorizontalMove;
 import chess.domain.move.enums.MoveEnum;
@@ -9,7 +8,6 @@ import chess.domain.team.Team;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public final class Queen extends Piece {
     private static final List<MoveEnum> moves = new ArrayList<>();

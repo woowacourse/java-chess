@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.move.Direction;
 import chess.domain.move.DirectionHandler;
 import chess.domain.move.enums.MoveEnum;
 import chess.domain.piece.Empty;
