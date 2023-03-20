@@ -50,10 +50,6 @@ public class Piece {
         return moveRule.canAttack(source, target);
     }
 
-    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
-        return moveRule.isPossibleRoute(source, target, isPossible);
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

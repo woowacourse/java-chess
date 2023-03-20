@@ -32,7 +32,7 @@ public final class ChessGame {
 
     private void validateObstacle(final Position source, final Position target, final Piece piece) {
         boolean isPossibleRoute = chessBoard.isPossibleRoute(source, target, piece);
-        if (!piece.isPossibleRoute(source, target, isPossibleRoute)) {
+        if (!isPossibleRoute) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }

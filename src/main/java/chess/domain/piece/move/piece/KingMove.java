@@ -17,12 +17,4 @@ public final class KingMove implements MoveRule {
     public boolean canAttack(final Position source, final Position target) {
         return canMove(source, target);
     }
-
-    @Override
-    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
-        if (!isPossible) {
-            return false;
-        }
-        return canMove(source, target);
-    }
 }

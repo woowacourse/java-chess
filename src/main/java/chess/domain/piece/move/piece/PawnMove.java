@@ -28,9 +28,4 @@ public class PawnMove implements MoveRule {
         return Math.abs(target.calculateRankGap(source)) == ATTACK_INDEX
                 && Math.abs(target.calculateFileGap(source)) == ATTACK_INDEX;
     }
-
-    @Override
-    public boolean isPossibleRoute(final Position source, final Position target, final boolean isPossible) {
-        return canMove(source, target);
-    }
 }
