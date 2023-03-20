@@ -27,7 +27,7 @@ public class Board {
 
     private Board(final Map<Position, Piece> board) {
         this.board = board;
-        turn = Color.WHITE;
+        this.turn = Color.WHITE;
     }
 
     public static Board initialize() {

@@ -103,4 +103,33 @@ public class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 기물이 존재합니다.");
     }
+
+    @Test
+    void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
+        // given
+        final Board board = Board.initialize();
+
+        // when
+        board.move("e2", "e4");
+        board.move("e7", "e5");
+        board.move("g1", "f3");
+        board.move("b8", "c6");
+        board.move("f1", "b5");
+        board.move("a7", "a6");
+        board.move("b5", "a4");
+        board.move("d7", "d6");
+
+        // then
+        final List<PieceType> result = generateResult(board);
+        assertThat(result).containsExactly(
+                ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
+                EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
+                PAWN, EMPTY, KNIGHT, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+                BISHOP, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KNIGHT, EMPTY, EMPTY,
+                PAWN, PAWN, PAWN, PAWN, EMPTY, PAWN, PAWN, PAWN,
+                ROOK, KNIGHT, BISHOP, QUEEN, KING, EMPTY, EMPTY, ROOK
+        );
+    }
 }

@@ -46,8 +46,7 @@ graph TD
     ChessController --> InputView
     ChessController --> OutputView
 
-    ChessController --> ChessGame
-    ChessGame --> Board
+    ChessController --> Board
 
     Position --> Rank
     Position --> File
