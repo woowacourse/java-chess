@@ -52,7 +52,7 @@ public enum Direction {
     }
 
     public static List<Direction> getEmpty() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     public boolean matches(RelativePosition relativePosition) {
