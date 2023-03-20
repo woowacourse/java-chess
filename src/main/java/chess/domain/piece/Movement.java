@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.List;
+
+import chess.domain.RelativePosition;
 
 public enum Movement {
 

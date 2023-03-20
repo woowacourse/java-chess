@@ -16,7 +16,7 @@ import chess.domain.piece.Rook;
 
 public class BoardMaker {
 
-	public static Map<Position, Piece> setPiece() {
+	public static Map<Position, Piece> setPieces() {
 		Map<Position, Piece> board = new HashMap<>();
 		List<Piece> whitePieces = new ArrayList<>(
 			List.of(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),

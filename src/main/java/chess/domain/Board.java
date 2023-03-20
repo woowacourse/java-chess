@@ -25,7 +25,7 @@ public class Board {
 	}
 
 	public static Board create() {
-		Map<Position, Piece> board = BoardMaker.setPiece();
+		Map<Position, Piece> board = BoardMaker.setPieces();
 		return new Board(board);
 	}
 

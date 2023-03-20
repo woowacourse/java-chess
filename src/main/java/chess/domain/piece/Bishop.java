@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
 import chess.domain.Team;
 
 public class Bishop extends Piece {

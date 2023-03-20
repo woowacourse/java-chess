@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
 import chess.domain.RelativePosition;
 import chess.domain.Team;
 

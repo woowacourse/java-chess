@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
 import chess.domain.RelativePosition;
 import chess.domain.Team;
 
@@ -9,7 +8,7 @@ public abstract class Piece {
 	protected final Team team;
 	protected final Movement movement;
 
-	public Piece(Team team, Movement movement) {
+	public Piece(final Team team, final Movement movement) {
 		this.team = team;
 		this.movement = movement;
 	}
