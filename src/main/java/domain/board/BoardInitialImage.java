@@ -76,7 +76,12 @@ public final class BoardInitialImage {
     }
 
     public static Square getSquareByCoordinate(final int row, final int col) {
-        return boardImage.get(row)
+        Square findSquare = boardImage.get(row)
                 .get(col);
+
+        if (findSquare.isExist()) {
+            return new ConcreteSquare((ConcreteSquare)findSquare);
+        }
+        return new EmptySquare();
     }
 }
