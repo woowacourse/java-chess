@@ -24,7 +24,7 @@ public class StartController extends Controller {
 		throw new IllegalStateException(CANNOT_INITIALIZE_GAME_ERROR_MESSAGE);
 	}
 
-	public ChessService initializeChess() {
+	private ChessService initializeChess() {
 		mainController.enableMoveControllerState();
 		return ChessService.create();
 	}

@@ -14,7 +14,7 @@ public class ExceptionHandler {
 		return result;
 	}
 
-	public static <T> T tryCatchStrategy(final Supplier<T> strategy, T result) {
+	private static <T> T tryCatchStrategy(final Supplier<T> strategy, T result) {
 		try {
 			result = strategy.get();
 		} catch (Exception exception) {
