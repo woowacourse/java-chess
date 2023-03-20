@@ -1,6 +1,7 @@
 package chess.domain.dto;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class PieceResponse {
 
@@ -13,7 +14,7 @@ public class PieceResponse {
     }
 
     public static PieceResponse from(Piece piece) {
-        return new PieceResponse(piece.getType().getType(), piece.getColor().name());
+        return new PieceResponse(PieceType.getNameOf(piece), piece.getColor().name());
     }
 
     @Override

@@ -2,8 +2,20 @@ package chess.domain;
 
 import chess.domain.dto.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.BishopPiece;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.KingPiece;
+import chess.domain.piece.KnightPiece;
+import chess.domain.piece.PawnPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.QueenPiece;
+import chess.domain.piece.RookPiece;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -24,7 +36,7 @@ public class Board {
     private void makeEmptyPiece() {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                piecePosition.computeIfAbsent(Position.of(file, rank), (ignored) -> Piece.empty());
+                piecePosition.computeIfAbsent(Position.of(file, rank), (ignored) -> EmptyPiece.getInstance());
             }
         }
     }
@@ -35,38 +47,37 @@ public class Board {
     }
 
     private void makePiecesExceptPawns(Color color, Rank rank) {
-        List<PieceType> highPieceOrder = orderedPiece();
+        List<Piece> highPieceOrder = orderedPiece(color);
         for (int i = 0; i < RANK_SIZE; i++) {
             Position position = Position.of(File.from(i + 1), rank);
-            Piece piece = new Piece(highPieceOrder.get(i), color);
-            piecePosition.put(position, piece);
+            piecePosition.put(position, highPieceOrder.get(i));
         }
     }
 
-    private List<PieceType> orderedPiece() {
+    private List<Piece> orderedPiece(Color color) {
         return List.of(
-                PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
-                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
+                new RookPiece(color), new KnightPiece(color), new BishopPiece(color), new QueenPiece(color),
+                new KingPiece(color), new BishopPiece(color), new KnightPiece(color), new RookPiece(color));
     }
 
     private void makePawns(Color color, Rank rank) {
         for (File file : File.values()) {
-            piecePosition.put(Position.of(file, rank), new Piece(PieceType.PAWN, color));
+            piecePosition.put(Position.of(file, rank), new PawnPiece(color));
         }
     }
 
     public void movePiece(Position origin, Position destination) {
         validateMoveRequest(origin, destination);
         Piece targetPiece = piecePosition.get(origin);
-        targetPiece.move(origin.getFileDifference(destination),
-                origin.getRankDifference(destination),
-                piecePosition.get(destination));
+        if (!targetPiece.canMove(origin, destination, piecePosition.get(destination))) {
+            throw new IllegalPieceMoveException();
+        }
         piecePosition.put(destination, targetPiece);
-        piecePosition.put(origin, Piece.empty());
+        piecePosition.put(origin, EmptyPiece.getInstance());
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
-        if (piecePosition.get(origin) == Piece.empty()) {
+        if (piecePosition.get(origin) == EmptyPiece.getInstance()) {
             throw new IllegalPieceMoveException();
         }
         if (!piecePosition.get(origin).canJump()) {
@@ -77,7 +88,7 @@ public class Board {
     private void checkPath(Position origin, Position destination) {
         List<Position> straightPath = origin.createStraightPath(destination);
         for (Position position : straightPath) {
-            if (piecePosition.get(position) != Piece.empty()) {
+            if (piecePosition.get(position) != EmptyPiece.getInstance()) {
                 throw new IllegalPieceMoveException();
             }
         }

@@ -1,12 +1,18 @@
-package chess.domain.state;
+package chess.domain.piece;
 
-import chess.domain.ColorCompareResult;
+import chess.domain.Color;
+import chess.domain.Position;
 
-public class QueenState implements MoveState {
+public class QueenPiece extends Piece {
+    public QueenPiece(Color color) {
+        super(color);
+    }
 
     @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return isValidRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+    public boolean canMove(Position from, Position to, Piece piece) {
+        int x = from.getFileDifference(to);
+        int y = from.getRankDifference(to);
+        return isValidRequest(x, y) && piece.color != color;
     }
 
     private boolean isValidRequest(int x, int y) {
@@ -27,5 +33,4 @@ public class QueenState implements MoveState {
     public boolean canJump() {
         return false;
     }
-
 }
