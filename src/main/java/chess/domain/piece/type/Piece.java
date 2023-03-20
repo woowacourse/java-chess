@@ -19,10 +19,6 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public Direction findDirectionToMove(Position start, Position end) {
-        return Direction.findDirectionByGap(start, end);
-    }
-
     public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
 
     protected abstract void checkMovableDirection(Direction direction);
@@ -31,7 +27,6 @@ public abstract class Piece {
         return color;
     }
 
-    //remove
     public PieceType getPieceType() {
         return pieceType;
     }

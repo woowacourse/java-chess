@@ -24,7 +24,7 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = findDirectionToMove(start, end);
+        Direction direction = Direction.findDirectionByGap(start, end);
         checkMovableDirection(direction);
         checkMovableAtOnce(start, end);
         checkMovableToDestination(colorOfDestination);
