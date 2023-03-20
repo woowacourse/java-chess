@@ -13,19 +13,29 @@ public final class Coordinate {
     }
 
     public Coordinate add(final Coordinate otherCoordinate) {
-        return new Coordinate(this.row + otherCoordinate.row, this.col + otherCoordinate.col);
+        return new Coordinate(
+                this.row + otherCoordinate.row,
+                this.col + otherCoordinate.col
+        );
     }
 
     public Coordinate minus(final Coordinate otherCoordinate) {
-        return new Coordinate(otherCoordinate.row - this.row, otherCoordinate.col - this.col);
+        return new Coordinate(
+                otherCoordinate.row - this.row,
+                otherCoordinate.col - this.col
+        );
     }
 
     public Coordinate minusWithAbsoluteValue(final Coordinate otherCoordinate) {
-        return new Coordinate(Math.abs(otherCoordinate.row - this.row), Math.abs(otherCoordinate.col - this.col));
+        return new Coordinate(
+                Math.abs(otherCoordinate.row - this.row),
+                Math.abs(otherCoordinate.col - this.col)
+        );
     }
 
     public double getInclination(final Coordinate otherCoordinate) {
-        return ((double)otherCoordinate.row - this.row) / (otherCoordinate.col - this.col);
+        return ((double)otherCoordinate.row - this.row) /
+                (otherCoordinate.col - this.col);
     }
 
     public boolean hasDistanceLessThanOne(final Coordinate otherCoordinate) {
