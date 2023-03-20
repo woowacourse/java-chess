@@ -32,7 +32,7 @@ public class Position {
         return cache.get(hash);
     }
 
-    public static Position of(String positionCommand) {
+    public static Position from(String positionCommand) {
         char fileCommand = positionCommand.charAt(FILE_INDEX);
         char rankCommand = positionCommand.charAt(RANK_INDEX);
         return of(File.of(fileCommand), Rank.of(rankCommand));
