@@ -20,11 +20,25 @@ public enum Column {
         this.index = index;
     }
 
-    public static int findIndex(final String inputType) {
+    public static Column from(final String inputType) {
         return Arrays.stream(Column.values())
                 .filter(columnType -> columnType.type.equals(inputType))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 세로 입력값 입니다."))
-                .index;
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 세로 입력값 입니다."));
+    }
+
+    public Column move(final int inputIndex) {
+        return Arrays.stream(Column.values())
+                .filter(columnType -> columnType.index == this.index + inputIndex)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가로 입력값 입니다."));
+    }
+
+    public int distance(Column column) {
+        return Math.abs(index - column.index);
+    }
+
+    public int direction(Column column) {
+        return Integer.compare(this.index, column.index);
     }
 }
