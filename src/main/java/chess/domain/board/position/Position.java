@@ -14,6 +14,11 @@ public class Position {
         this.rank = Rank.from(rank);
     }
 
+    public Position(final char file, final char rank) {
+        this.file = File.from(file);
+        this.rank = Rank.from(rank);
+    }
+
     public Movement convertMovement(Position from) {
 
         int rankGap = calculateRankBetween(from);

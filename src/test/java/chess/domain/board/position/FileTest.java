@@ -34,4 +34,27 @@ class FileTest {
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("이동할 수 없는 File 방향입니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "a -> 1",
+            "b -> 2",
+            "c -> 3",
+            "d -> 4",
+            "e -> 5",
+            "f -> 6",
+            "g -> 7",
+            "h -> 8"
+    }, delimiterString = " -> ")
+    @DisplayName("from() : char형이 주어질 경우, value에 속한 File을 생성할 수 있다.")
+    void test_from(final char value, final int result) throws Exception {
+        //given
+        final File file = File.from(result);
+
+        //when
+        final File convertedFile = File.from(value);
+
+        //then
+        assertEquals(convertedFile, file);
+    }
 }

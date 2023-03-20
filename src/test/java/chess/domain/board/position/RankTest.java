@@ -34,4 +34,27 @@ class RankTest {
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("이동할 수 없는 Rank 방향입니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "1 -> 1",
+            "2 -> 2",
+            "3 -> 3",
+            "4 -> 4",
+            "5 -> 5",
+            "6 -> 6",
+            "7 -> 7",
+            "8 -> 8"
+    }, delimiterString = " -> ")
+    @DisplayName("from() : char형이 주어질 경우, value에 속한 Rank을 생성할 수 있다.")
+    void test_from(final char value, final int result) throws Exception {
+        //given
+        final Rank file = Rank.from(result);
+
+        //when
+        final Rank convertedRank = Rank.from(value);
+
+        //then
+        assertEquals(convertedRank, file);
+    }
 }

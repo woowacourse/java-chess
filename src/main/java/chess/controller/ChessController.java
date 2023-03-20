@@ -12,12 +12,11 @@ import java.util.List;
 
 public class ChessController {
 
-    private static final int STARTING_VALUE_OF_FILE = 1;
-    private static final char STARTING_CHARACTER_OF_FILE = 'a';
-    private static final char STARTING_VALUE_OF_RANK = '0';
     private static final int START_COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
+    private static final int SOURCE_POSITION = 1;
+    private static final int TARGET_POSITION = 2;
+    private static final int POSITION_FILE = 0;
+    private static final int POSITION_RANK = 1;
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
@@ -50,10 +49,10 @@ public class ChessController {
         }
     }
 
-    private Color movePiece(final Board board, Color turn, final List<String> moveCommand, final String startCommand) {
+    private Color movePiece(final Board board, Color turn, final List<String> moveCommands, final String startCommand) {
         if (Command.isMove(startCommand)) {
-            final Position fromPosition = convertPositionFrom(moveCommand.get(SOURCE_POSITION_INDEX));
-            final Position toPosition = convertPositionFrom(moveCommand.get(TARGET_POSITION_INDEX));
+            final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION));
+            final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION));
 
             board.move(fromPosition, toPosition, turn);
 
@@ -63,10 +62,7 @@ public class ChessController {
         return turn;
     }
 
-    private Position convertPositionFrom(String position) {
-        final int file = position.charAt(0) - STARTING_CHARACTER_OF_FILE + STARTING_VALUE_OF_FILE;
-        final int rank = position.charAt(1) - STARTING_VALUE_OF_RANK;
-
-        return new Position(file, rank);
+    private Position convertPositionFrom(String moveCommand) {
+        return new Position(moveCommand.charAt(POSITION_FILE), moveCommand.charAt(POSITION_RANK));
     }
 }

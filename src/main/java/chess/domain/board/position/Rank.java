@@ -14,6 +14,8 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final char STARTING_CHARACTER_OF_RANK = '0';
+
     private final int value;
 
     Rank(final int value) {
@@ -23,6 +25,13 @@ public enum Rank {
     public static Rank from(int value) {
         return Arrays.stream(values())
                      .filter(it -> it.value == value)
+                     .findAny()
+                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 Rank 방향입니다."));
+    }
+
+    public static Rank from(char value) {
+        return Arrays.stream(values())
+                     .filter(it -> it.value == value - STARTING_CHARACTER_OF_RANK)
                      .findAny()
                      .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 Rank 방향입니다."));
     }

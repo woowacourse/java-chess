@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -14,9 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-
-    private static final int START_VALUE_OF_FILE = 1;
-    private static final int END_VALUE_OF_FILE = 8;
 
     public Map<Position, Piece> createInitialBoard() {
         Map<Position, Piece> chessBoard = new HashMap<>();
@@ -34,7 +32,7 @@ public class BoardFactory {
     private Map<Position, Piece> createPawn() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        for (int file = START_VALUE_OF_FILE; file <= END_VALUE_OF_FILE; file++) {
+        for (int file = File.START.value(); file <= File.END.value(); file++) {
             final Position whitePosition = new Position(file, WhitePiecePosition.PAWN_RANK.value());
             final Position blackPosition = new Position(file, BlackPiecePosition.PAWN_RANK.value());
             pieceMap.put(whitePosition, new Pawn(Color.WHITE));
