@@ -1,6 +1,7 @@
 package chess.view;
 
-import java.util.List;
+import chess.controller.GameStatus;
+
 import java.util.Scanner;
 
 public final class InputView {
@@ -11,27 +12,32 @@ public final class InputView {
         this.scanner = scanner;
     }
 
-    public String readInitCommand() {
+    public String readLine() {
         return scanner.nextLine().trim();
     }
 
-    public List<String> readCommand() {
-        final String input = scanner.nextLine();
-        final List<String> split = List.of(input.split(" "));
-        if (split.get(0).equals("move") && isInvalidInput(split)) {
-            throw new IllegalArgumentException("잘못된 커맨드를 입력하셨습니다.");
+    public String readCommand() {
+        final String input = readLine();
+        final GameStatus gameStatus = GameStatus.from(input);
+        if (gameStatus.isMove()) {
+            return input;
         }
-
-        if (split.get(1).equals("end") && split.size() != 1) {
-            throw new IllegalArgumentException("잘못된 커맨드를 입력하셨습니다.");
+        if (gameStatus.isStart() || gameStatus.isEnd()) {
+            return gameStatus.name();
         }
-
-        return split;
+        throw new AssertionError();
     }
 
-    private boolean isInvalidInput(final List<String> split) {
-        return split.size() != 3 ||
-                split.get(1).length() != 2 ||
-                split.get(2).length() != 2;
+    public String readStartCommand() {
+        final String input = readLine();
+        validateStartCommand(input);
+        return input;
     }
+
+    private void validateStartCommand(final String input) {
+        if (!GameStatus.START.name().equalsIgnoreCase(input)) {
+            throw new IllegalArgumentException("start를 입력해야 게임을 시작할 수 있습니다.");
+        }
+    }
+
 }

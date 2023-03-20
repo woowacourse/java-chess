@@ -9,53 +9,58 @@ import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final Map<GameStatus, Consumer<List<String>>> gameStatusMap;
+    private Board board;
+
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.gameStatusMap = new EnumMap<>(GameStatus.class);
+        initGameStatusMap();
     }
 
-    public void run() {
-        final Board board = BoardFactory.generate();
-
+    private void initGameStatusMap() {
         outputView.printInitialMessage();
-        final Command initCommand = getInitCommand();
+        gameStatusMap.put(GameStatus.START, this::start);
+        gameStatusMap.put(GameStatus.MOVE, this::move);
+        gameStatusMap.put(GameStatus.END, this::end);
+    }
 
-        if (initCommand.isStart()) {
-            outputView.printBoard(BoardDto.create(board.getBoard()));
-            move(board);
-        }
+    private void start(final List<String> input) {
+        board = BoardFactory.generate();
+        outputView.printBoard(BoardDto.create(board.getBoard()));
+    }
+
+    private void move(final List<String> input) {
+        board.move(parseToPosition(input.get(1)), parseToPosition(input.get(2)));
+        outputView.printBoard(BoardDto.create(board.getBoard()));
+    }
+
+    private void end(final List<String> input) {
         outputView.printEndMessage();
     }
 
-    private Command getInitCommand() {
-        try {
-            final String rawCommand = inputView.readInitCommand();
-            return Command.createInitMessage(rawCommand);
-        } catch (IllegalArgumentException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return getInitCommand();
-        }
-    }
+    public GameStatus run() {
+        final String input = inputView.readCommand();
+        final List<String> collect = Arrays.stream(input.split(" "))
+                .collect(Collectors.toList());
+        final GameStatus gameStatus = GameStatus.from(input);
+        gameStatusMap.get(gameStatus)
+                .accept(collect);
 
-    private void move(final Board board) {
-        try {
-            List<String> commands = inputView.readCommand();
-            while (!Command.createMoveOrEndMessage(commands.get(0)).isEnd()) {
-                board.move(parseToPosition(commands.get(1)), parseToPosition(commands.get(2)));
-                outputView.printBoard(BoardDto.create(board.getBoard()));
-                commands = inputView.readCommand();
-            }
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            move(board);
-        }
+        return gameStatus;
     }
 
     private Position parseToPosition(final String command) {
