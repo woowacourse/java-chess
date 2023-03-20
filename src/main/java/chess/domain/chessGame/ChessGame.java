@@ -9,8 +9,7 @@ public interface ChessGame {
     ChessGame start();
 
     void end();
-
-    boolean isEnd();
+    boolean isPlaying();
 
     Map<Position, String> getPrintingBoard();
 }

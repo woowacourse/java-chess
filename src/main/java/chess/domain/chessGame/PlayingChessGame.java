@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class PlayingChessGame implements ChessGame {
     private final Board board;
-    private boolean isEnd = false;
+    private boolean isPlaying = true;
 
     public PlayingChessGame(Board board) {
         this.board = board;
@@ -26,12 +26,12 @@ public class PlayingChessGame implements ChessGame {
 
     @Override
     public void end() {
-        isEnd = true;
+        isPlaying = false;
     }
 
     @Override
-    public boolean isEnd() {
-        return isEnd;
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     @Override

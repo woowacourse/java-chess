@@ -27,7 +27,7 @@ public class ChessGameController {
         do {
             List<String> inputCommand = inputView.inputCommand();
             chessGame = executeCommand(chessGame, inputCommand);
-        } while (!chessGame.isEnd());
+        } while (chessGame.isPlaying());
     }
 
     private ChessGame executeCommand(ChessGame chessGame, List<String> inputCommand) {

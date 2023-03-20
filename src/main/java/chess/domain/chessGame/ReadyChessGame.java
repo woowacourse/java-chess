@@ -22,7 +22,7 @@ public class ReadyChessGame implements ChessGame {
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isPlaying() {
         return false;
     }
 
