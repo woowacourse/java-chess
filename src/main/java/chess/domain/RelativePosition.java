@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class RelativePosition {
 
@@ -78,8 +79,6 @@ public class RelativePosition {
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        return result;
+        return Objects.hash(x, y);
     }
 }
