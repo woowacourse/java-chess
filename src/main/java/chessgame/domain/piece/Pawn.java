@@ -37,27 +37,43 @@ public class Pawn implements Piece {
 
     private boolean isPawnMove(Point source, Point target, Team team) {
         if (team == Team.BLACK && source.fileDistance(target) == 0) {
-            return canPawnMove(source, target, BLACK_DISTANCE, BLACK_INITIAL_RANK);
+            return canPawnBlackMove(source, target);
         }
         if (team == Team.WHITE && source.fileDistance(target) == 0) {
-            return canPawnMove(source, target, WHITE_DISTANCE, WHITE_INITIAL_RANK);
+            return canPawnWhiteMove(source, target);
         }
         return false;
     }
 
-    private boolean canPawnMove(Point source, Point target, int distance, Rank rank) {
-        if (source.isInitialPoint(rank) && (source.rankDistance(target) == distance
-                || source.rankDistance(target) == distance * 2)) {
+    private boolean canPawnBlackMove(Point source, Point target) {
+        if (source.isInitialPoint(BLACK_INITIAL_RANK) && (source.rankDistance(target) == BLACK_DISTANCE
+                || source.rankDistance(target) == BLACK_DISTANCE * 2)) {
             return true;
         }
-        return source.rankDistance(target) == distance;
+        return source.rankDistance(target) == BLACK_DISTANCE;
+    }
+
+    private boolean canPawnWhiteMove(Point source, Point target) {
+        if (source.isInitialPoint(WHITE_INITIAL_RANK) && (source.rankDistance(target) == WHITE_DISTANCE
+                || source.rankDistance(target) == WHITE_DISTANCE * 2)) {
+            return true;
+        }
+        return source.rankDistance(target) == WHITE_DISTANCE;
     }
 
     private boolean canPawnAttack(Point source, Point target, int distance) {
-        if (source.rankDistance(target) == distance && source.fileDistance(target) == distance) {
+        if (checkRankLengthOne(source,target,distance) && checkFileLengthOne(source, target, distance)) {
             return true;
         }
-        return source.rankDistance(target) == distance && source.fileDistance(target) == -distance;
+        return checkRankLengthOne(source,target,distance) && checkFileLengthOne(source, target, -distance);
+    }
+
+    private boolean checkRankLengthOne(Point source, Point target, int distance){
+        return source.rankDistance(target) == distance;
+    }
+
+    private boolean checkFileLengthOne(Point source, Point target, int distance){
+        return source.fileDistance(target) == distance;
     }
 
     @Override
