@@ -83,6 +83,10 @@ public class ChessBoard {
         if (fromPiece.isKnight() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
         }
+
+        if (fromPiece.isEmpty()) {
+            throw new IllegalArgumentException("해당 위치에는 움직일 수 있는 기물이 없습니다.");
+        }
     }
 
     private void move(final Position from, final Position to) {

@@ -26,5 +26,6 @@ public class OutputView {
             strings.forEach(System.out::print);
             System.out.println();
         }
+        System.out.println();
     }
 }
