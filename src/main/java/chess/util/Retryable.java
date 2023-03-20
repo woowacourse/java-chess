@@ -2,11 +2,16 @@ package chess.util;
 
 
 import chess.view.OutputView;
+
 import java.util.function.Supplier;
 
-public interface Retryable {
 
-    static <T> T retryWhenException(Supplier<T> supplier) {
+public class Retryable {
+
+    private Retryable() {
+    }
+
+    public static <T> T retryWhenException(Supplier<T> supplier) {
         T result;
 
         do {
