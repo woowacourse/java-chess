@@ -11,9 +11,10 @@ public abstract class PawnFeature extends Piece {
     }
 
     protected final int chooseDirection() {
-        if (color == Color.WHITE) {
+        if (color.isWhite()) {
             return -1;
         }
+
         return 1;
     }
 

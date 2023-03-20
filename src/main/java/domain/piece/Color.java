@@ -13,4 +13,12 @@ public enum Color {
                 .orElseThrow(IllegalAccessError::new);
     }
 
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
 }
