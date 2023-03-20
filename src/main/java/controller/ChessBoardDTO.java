@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ChessBoardDTO {
+public final class ChessBoardDTO {
 
     private final List<List<String>> rowDTOs;
 
