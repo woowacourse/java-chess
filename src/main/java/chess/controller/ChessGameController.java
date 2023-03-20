@@ -38,7 +38,7 @@ public class ChessGameController {
         if (command.isPlaying()) {
             final Square from = toSquare(commandDto.getSourceRank(), commandDto.getSourceFile());
             final Square to = toSquare(commandDto.getDestinationRank(), commandDto.getDestinationFile());
-            if (!chessBoard.move(from, to)) {
+            if (!chessBoard.canMove(from, to)) {
                 outputView.printInvalidMoveMessage();
             }
         }

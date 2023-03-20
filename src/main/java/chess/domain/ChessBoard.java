@@ -19,7 +19,7 @@ public class ChessBoard {
         this(pieces, true);
     }
 
-    public boolean move(Square from, Square to) {
+    public boolean canMove(Square from, Square to) {
         final Piece target = pieces.get(from);
         validateEmptySquare(target);
         validateTurn(target);

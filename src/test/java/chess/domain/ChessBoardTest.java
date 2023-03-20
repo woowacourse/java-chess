@@ -149,7 +149,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
@@ -163,7 +163,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
@@ -176,7 +176,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
@@ -189,8 +189,8 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
-                assertThat(chessBoard.move(from, Square.of(Rank.SIX, File.C))).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, Square.of(Rank.SIX, File.C))).isFalse();
             }
         }
 
@@ -207,7 +207,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
@@ -221,7 +221,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한다면 true를 반환한다")
@@ -234,7 +234,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치가 비어있다면 true를 반환한다")
@@ -246,7 +246,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -259,7 +259,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
         }
 
@@ -276,7 +276,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
@@ -290,7 +290,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한다면 true를 반환한다")
@@ -303,7 +303,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치가 비어 있다면 true를 반환한다")
@@ -315,7 +315,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -328,7 +328,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
         }
 
@@ -346,7 +346,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치가 비어있다면 true를 반환한다")
@@ -358,7 +358,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -371,7 +371,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
         }
 
@@ -391,8 +391,8 @@ class ChessBoardTest {
 
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from1, to1)).isTrue();
-                assertThat(chessBoard.move(from2, to2)).isTrue();
+                assertThat(chessBoard.canMove(from1, to1)).isTrue();
+                assertThat(chessBoard.canMove(from2, to2)).isTrue();
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
@@ -408,8 +408,8 @@ class ChessBoardTest {
                 pieces.put(middle2, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to1)).isFalse();
-                assertThat(chessBoard.move(from, to2)).isFalse();
+                assertThat(chessBoard.canMove(from, to1)).isFalse();
+                assertThat(chessBoard.canMove(from, to2)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한다면 true를 반환한다")
@@ -421,7 +421,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치가 비어 있다면 true를 반환한다")
@@ -432,7 +432,7 @@ class ChessBoardTest {
                 pieces.put(from, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -446,8 +446,8 @@ class ChessBoardTest {
                 pieces.put(to2, King.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to1)).isFalse();
-                assertThat(chessBoard.move(from, to2)).isFalse();
+                assertThat(chessBoard.canMove(from, to1)).isFalse();
+                assertThat(chessBoard.canMove(from, to2)).isFalse();
             }
         }
 
@@ -464,7 +464,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치가 비어 있다면 true를 반환한다")
@@ -475,7 +475,7 @@ class ChessBoardTest {
                 pieces.put(from, King.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.canMove(from, to)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -487,7 +487,7 @@ class ChessBoardTest {
                 pieces.put(to, Queen.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.canMove(from, to)).isFalse();
             }
         }
 
@@ -504,7 +504,7 @@ class ChessBoardTest {
                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(from, to))
+                assertThatThrownBy(() -> chessBoard.canMove(from, to))
                         .isInstanceOf(IllegalArgumentException.class);
             }
 
@@ -519,8 +519,8 @@ class ChessBoardTest {
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> {
-                    chessBoard.move(from, to1);
-                    chessBoard.move(to1, to2);
+                    chessBoard.canMove(from, to1);
+                    chessBoard.canMove(to1, to2);
                 }).isInstanceOf(IllegalArgumentException.class);
             }
 
@@ -534,8 +534,8 @@ class ChessBoardTest {
                 ChessBoard chessBoard = new ChessBoard(pieces, false);
 
                 assertThatThrownBy(() -> {
-                    chessBoard.move(blackFrom, blackTo1);
-                    chessBoard.move(blackTo1, blackTo2);
+                    chessBoard.canMove(blackFrom, blackTo1);
+                    chessBoard.canMove(blackTo1, blackTo2);
                 }).isInstanceOf(IllegalArgumentException.class);
             }
         }
