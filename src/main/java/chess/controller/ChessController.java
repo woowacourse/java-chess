@@ -10,7 +10,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitialMessage();
-        if (Command.START.equals(readStartSign())) {
+        if (Command.START == readStartSign()) {
             playChess();
         }
     }
@@ -19,7 +19,7 @@ public class ChessController {
         Command startSign;
         do {
             startSign = readCommand().getCommand();
-        } while (Command.MOVE.equals(startSign));
+        } while (Command.MOVE == startSign);
         return startSign;
     }
 
@@ -48,7 +48,7 @@ public class ChessController {
         CommandDto moveSign;
         do {
             moveSign = readCommand();
-        } while (Command.START.equals(moveSign.getCommand()));
+        } while (Command.START == moveSign.getCommand());
         return moveSign;
     }
 
