@@ -1,6 +1,7 @@
 package chess.domain;
 
 public enum Role {
+
     KING,
     QUEEN,
     ROOK,

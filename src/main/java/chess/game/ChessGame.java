@@ -8,9 +8,11 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.dto.SquareResponse;
+
 import java.util.List;
 
 public class ChessGame {
+
     private final Board board;
     private Turn turn;
 
@@ -33,7 +35,7 @@ public class ChessGame {
     private void validateTurn(Position source) {
         Piece sourcePiece = board.findByPosition(source);
         if (isInvalidTurn(sourcePiece)) {
-            throw new IllegalArgumentException("[ERROR] "+ turn.getTeam().name() + "팀의 말만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("[ERROR] " + turn.getTeam().name() + "팀의 말만 이동할 수 있습니다.");
         }
     }
 

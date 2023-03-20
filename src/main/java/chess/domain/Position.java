@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
 public class Position {
+
     private static final Map<Integer, Position> CACHE = new ConcurrentHashMap<>(64);
     private static final int MIN_RANGE = 0;
     private static final int MAX_RANGE = 7;

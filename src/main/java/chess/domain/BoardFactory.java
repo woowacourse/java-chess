@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.function.IntFunction;
 
 public class BoardFactory {
+
     private static final List<Role> CHESSMEN = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
     private static final int BOARD_ROW_SIZE = 8;
 

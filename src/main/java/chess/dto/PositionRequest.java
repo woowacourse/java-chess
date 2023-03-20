@@ -1,6 +1,7 @@
 package chess.dto;
 
 public class PositionRequest {
+
     private final int x;
     private final int y;
 

@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.view.SquareMapper;
 
 public class SquareResponse {
+
     private final String symbol;
     private final int x;
     private final int y;

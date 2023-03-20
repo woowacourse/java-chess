@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ChessController {
+
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 

@@ -13,10 +13,10 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return moveStrategy.isMovable(source, target) && isCollectDirection(source, target);
+        return moveStrategy.isMovable(source, target) && isCorrectDirection(source, target);
     }
 
-    private boolean isCollectDirection(Position source, Position target) {
+    private boolean isCorrectDirection(Position source, Position target) {
         if (isWhitePawnReverseDirection(source, target) || isBlackPawnReverseDirection(source, target)) {
             return false;
         }

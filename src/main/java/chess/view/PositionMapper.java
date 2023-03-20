@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class PositionMapper {
+
     private static final Map<String, Integer> files = new HashMap<>();
     private static final Map<String, Integer> ranks = new HashMap<>();
     private static final Pattern REGEX = Pattern.compile("^[a-h][1-8]$");

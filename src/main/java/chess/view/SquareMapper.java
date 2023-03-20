@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class SquareMapper {
+
     private static final Map<Role, String> mapper = new EnumMap<>(Role.class);
 
     private SquareMapper() {
