@@ -9,6 +9,7 @@ import chess.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ChessController {
@@ -39,21 +40,23 @@ public class ChessController {
     }
 
     private void play(ChessGame chessGame) {
+        Optional<List<String>> commands;
         do {
             outputView.printChessBoard(chessGame.getChessboard());
-        } while (retryOnInvalidUserInput(() -> handleCommand(chessGame)) != Command.END);
+            commands = retryOnInvalidUserInput(this::handleCommand);
+            commands.ifPresent(command -> movePiece(chessGame, command));
+        } while (commands.isPresent());
     }
 
-    private Command handleCommand(ChessGame chessGame) {
-        List<String> command = requestCommand();
+    private Optional<List<String>> handleCommand() {
+        List<String> commands = requestCommand();
+        String mainCommand = commands.get(Index.MAIN_COMMAND.value);
 
-        if (Command.isEndCommand(command.get(Index.MAIN_COMMAND.value))) {
-            return Command.END;
+        if (Command.isEndCommand(mainCommand)) {
+            return Optional.empty();
         }
 
-        movePiece(chessGame, command);
-
-        return Command.MOVE;
+        return Optional.of(commands);
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
