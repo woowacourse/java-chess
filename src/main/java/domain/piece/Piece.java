@@ -22,11 +22,11 @@ public abstract class Piece {
     }
 
     public boolean isBlack() {
-        return color.equals(Color.BLACK);
+        return color == Color.BLACK;
     }
 
     public boolean isWhite() {
-        return color.equals(Color.WHITE);
+        return color == Color.WHITE;
     }
 
     public abstract boolean isMovablePath(Position start, List<Position> path);

@@ -30,13 +30,13 @@ public final class Pawn extends Piece {
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
         if (isBlack()) {
-            return start.moveDown().equals(nextPosition) ||
-                    start.moveDownRight().equals(nextPosition) ||
-                    start.moveDownLeft().equals(nextPosition);
+            return start.moveDown() == nextPosition ||
+                    start.moveDownRight() == nextPosition ||
+                    start.moveDownLeft() == nextPosition;
         }
-        return start.moveUp().equals(nextPosition) ||
-                start.moveUpRight().equals(nextPosition) ||
-                start.moveUpLeft().equals(nextPosition);
+        return start.moveUp() == nextPosition ||
+                start.moveUpRight() == nextPosition ||
+                start.moveUpLeft() == nextPosition;
     }
 
     @Override
