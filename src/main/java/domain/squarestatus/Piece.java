@@ -35,6 +35,17 @@ public abstract class Piece implements SquareStatus {
         return this.color.isDifferent(color);
     }
 
+    @Override
+    public final boolean isSameType(final Type type) {
+        return this.pieceType.isSame(type);
+    }
+
+    @Override
+    public final boolean isDifferentType(final Type type) {
+        return this.pieceType.isDifferent(type);
+    }
+
+
     protected final void validateMovable(final Position source, final Position target) {
         if (isMovable(source, target)) {
             return;

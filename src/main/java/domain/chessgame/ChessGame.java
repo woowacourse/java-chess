@@ -60,7 +60,7 @@ public final class ChessGame {
     }
 
     private void checkPawn(final Position source, final Position target) {
-        if (chessBoard.isEqualType(source, PieceType.PAWN)) {
+        if (chessBoard.isSameType(source, PieceType.PAWN)) {
             validatePawnDestination(source, target);
         }
     }
@@ -74,11 +74,11 @@ public final class ChessGame {
     }
 
     private boolean isStraightMovable(final Position source, final Position target) {
-        return chessBoard.isEqualType(target, EmptyType.EMPTY) && source.isStraight(target);
+        return chessBoard.isSameType(target, EmptyType.EMPTY) && source.isStraight(target);
     }
 
     private boolean isDiagonallyMovable(final Position source, final Position target) {
-        return chessBoard.isEqualType(target, EmptyType.EMPTY) || (chessBoard.isDifferentColor(target, turn.getColor()) && source.isDiagonally(target));
+        return chessBoard.isSameType(target, EmptyType.EMPTY) || (chessBoard.isDifferentColor(target, turn.getColor()) && source.isDiagonally(target));
     }
 
     private void checkTarget(final Position target) {

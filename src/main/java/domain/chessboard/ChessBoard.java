@@ -56,16 +56,16 @@ public class ChessBoard {
         return squareStatus.isDifferentColor(color);
     }
 
-    public boolean isEqualType(final Position position, final Type type) {
+    public boolean isSameType(final Position position, final Type type) {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
 
-        return squareStatus.getType() == type;
+        return squareStatus.isSameType(type);
     }
 
     public boolean isDifferentType(final Position position, final Type type) {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
 
-        return squareStatus.getType() != type;
+        return squareStatus.isDifferentType(type);
     }
 
     public Map<Position, SquareStatus> getChessBoard() {
