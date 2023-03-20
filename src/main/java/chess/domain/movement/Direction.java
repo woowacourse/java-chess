@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.movement;
+
+import chess.domain.position.RelativePosition;
 
 import java.util.Collections;
 import java.util.List;

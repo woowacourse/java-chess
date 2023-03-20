@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.*;
+import chess.domain.position.Position;
+import chess.domain.position.RelativePosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
-import chess.domain.RelativePosition;
+import chess.domain.movement.Movement;
+import chess.domain.position.RelativePosition;
 import chess.domain.Team;
 
 public abstract class Piece {

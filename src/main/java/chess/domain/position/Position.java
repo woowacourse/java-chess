@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 public class Position {
 

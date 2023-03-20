@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.view.*;
 
 public class ChessController {
