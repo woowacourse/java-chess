@@ -26,7 +26,7 @@ public final class ChessGame {
     }
 
     private void validateTurn(final Square findSquare) {
-        if (findSquare.getCamp() != turn.getTurn()) {
+        if (turn.isNotFor(findSquare.getCamp())) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }

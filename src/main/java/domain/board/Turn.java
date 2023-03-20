@@ -18,7 +18,7 @@ public class Turn {
         turn = Camp.BLACK;
     }
 
-    public Camp getTurn() {
-        return turn;
+    public boolean isNotFor(final Camp camp) {
+        return turn == camp;
     }
 }
