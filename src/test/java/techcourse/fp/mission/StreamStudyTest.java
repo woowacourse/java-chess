@@ -4,12 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class StreamStudyTest {
 
     private List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+    private final List<Integer> testNumbers = IntStream.range(0, 10_000_000)
+            .boxed()
+            .collect(Collectors.toList());
 
     @Test
     public void 문자_길이가_12보다_큰_경우_Filter() throws Exception {
@@ -25,8 +31,20 @@ class StreamStudyTest {
 
     @Test
     public void 모든_숫자의_합() {
-        long sum = StreamStudy.sumAll(numbers);
+        final long sum = StreamStudy.sumAll_intStream(numbers);
         assertThat(sum).isEqualTo(21);
+    }
+
+    @Test
+    public void 모든_숫자의_합_Stream() {
+        final long sum = StreamStudy.sumAll_stream(testNumbers);
+        System.out.println(sum);
+    }
+
+    @Test
+    public void 모든_숫자의_합_IntStream() {
+        final long sum = StreamStudy.sumAll_intStream(testNumbers);
+        System.out.println(sum);
     }
 
     @Test
