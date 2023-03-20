@@ -13,7 +13,7 @@ class KnightTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c3,a2", "c3,a4", "c3,b1", "c3,b5", "c3,d1", "c3,d5", "c3,e2", "c3,e4"})
-    @DisplayName("Knight가 정상적인 위치로 움직인다.")
+    @DisplayName("Knight는 ")
     void move_success(final String start, final String end) {
         // given
         Knight knight = new Knight(new Name("n"));

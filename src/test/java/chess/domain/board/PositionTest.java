@@ -19,7 +19,7 @@ public class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}과 같이 {displayName}")
     @ValueSource(strings = {"Z2", "z2", "m0", "a0", "z1"})
     @DisplayName("잘못된 위치면 예외를 발생시킨다.")
     void throws_exception_when_case_is_invalid(final String input) {

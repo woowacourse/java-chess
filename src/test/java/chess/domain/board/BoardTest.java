@@ -22,8 +22,8 @@ class BoardTest {
         assertThat(board.getBoard().size()).isEqualTo(64);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"c3, c3", "c2, b2", "c7,b7", "c7,c7"})
+    @ParameterizedTest(name = "{0} -> {1} {displayName}")
+    @CsvSource(value = {"c3:c3", "c2:b2", "c7:b7", "c7:c7"}, delimiter = ':')
     @DisplayName("같은 위치 혹은 같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
@@ -31,7 +31,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(
-                () -> board.switchPosition(start, end)
+            () -> board.switchPosition(start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -81,7 +81,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition("a2", "b3"))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -93,7 +93,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition("a7", "b6"))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -106,7 +106,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition("a4", "a5"))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -120,6 +120,6 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition("a5", "a4"))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

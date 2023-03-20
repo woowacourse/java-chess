@@ -11,9 +11,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class KingTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
     @CsvSource(value = {"c3:b2", "c3:c2", "c3:d2", "c3:b3", "c3:d3", "c3:b4", "c3:c4", "c3:d4"}, delimiter = ':')
-    @DisplayName("king이 올바른 위치로 움직인다.")
+    @DisplayName("king은 팔방으로 한칸만 움직인다.")
     void move_success(final String start, final String end) {
         // given
         King king = new King(new Name("k"));
@@ -22,16 +22,16 @@ class KingTest {
         assertDoesNotThrow(() -> king.canMove(start, end));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
     @CsvSource(value = {"c3:b1", "c3:c1", "c3:d1", "c3:b5"}, delimiter = ':')
-    @DisplayName("King이 올바른 위치로 움직이지 못하면 예외를 발생시킨다.")
+    @DisplayName("King이 팔방으로 한칸만 움직이지 않으면 예외를 발생시킨다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
         King king = new King(new Name("k"));
 
         // when & then
         assertThatThrownBy(
-                () -> king.canMove(start, end)
+            () -> king.canMove(start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }
