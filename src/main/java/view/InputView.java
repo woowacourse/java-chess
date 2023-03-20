@@ -1,7 +1,5 @@
 package view;
 
-import domain.GameCommand;
-
 import java.util.*;
 
 public final class InputView {

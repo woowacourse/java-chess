@@ -1,6 +1,6 @@
 package controller;
 
-import domain.GameCommand;
+import view.GameCommand;
 import domain.chessGame.ChessBoard;
 import domain.chessGame.ChessBoardGenerator;
 import domain.position.ColumnToNumber;
