@@ -20,15 +20,13 @@ public final class BoardDto {
 
     public static BoardDto create(Map<Position, Piece> board) {
         List<String> names = new ArrayList<>();
-
-        for (int rankOrder = 8; rankOrder >= 1; rankOrder--) {
-            for (int fileOrder = 1; fileOrder <= 8; fileOrder++) {
+        for (int rankOrder = Rank.MAX_ORDER; rankOrder >= Rank.MIN_ORDER; rankOrder--) {
+            for (int fileOrder = File.MIN_ORDER; fileOrder <= File.MAX_ORDER; fileOrder++) {
                 final Position position = Position.of(File.of(fileOrder), Rank.of(rankOrder));
                 final Piece piece = board.get(position);
                 names.add(PieceRender.renderName(piece));
             }
         }
-
         return new BoardDto(names);
     }
 

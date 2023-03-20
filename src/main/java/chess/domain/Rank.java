@@ -12,6 +12,9 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    public static final int MIN_ORDER = 1;
+    public static final int MAX_ORDER = 8;
+
     private final int order;
 
     Rank(final int order) {

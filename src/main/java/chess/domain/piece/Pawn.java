@@ -54,16 +54,18 @@ public final class Pawn extends MovablePiece {
         if (isAttack(source, target, targetColor)) {
             return Collections.emptyList();
         }
-
         if (isOneStepMove(source, target, targetColor)) {
             return Collections.emptyList();
         }
-
         if (isTwoStepMove(source, target, targetColor)) {
             return getTwoStepPath(source, movingStrategy);
         }
-
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
+    }
+
+    @Override
+    protected List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
+        return Collections.emptyList();
     }
 
     private boolean isAttack(final Position source, final Position target, final Color targetColor) {
@@ -86,11 +88,9 @@ public final class Pawn extends MovablePiece {
         if (color.isWhite()) {
             return source.getRankOrder() == INITIAL_WHITE_RANK;
         }
-
         if (color.isBlack()) {
             return source.getRankOrder() == INITIAL_BLACK_RANK;
         }
-
         return false;
     }
 }

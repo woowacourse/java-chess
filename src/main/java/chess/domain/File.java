@@ -12,6 +12,9 @@ public enum File {
     G(7),
     H(8);
 
+    public static final int MIN_ORDER = 1;
+    public static final int MAX_ORDER = 8;
+
     private final int order;
 
     File(final int order) {
