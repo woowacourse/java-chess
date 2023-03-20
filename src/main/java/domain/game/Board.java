@@ -8,10 +8,10 @@ import domain.piece.Side;
 import java.util.List;
 import java.util.Map;
 
-public class Game {
+public class Board {
     private final Map<Position, Piece> chessBoard;
 
-    public Game(Map<Position, Piece> chessBoard) {
+    public Board(Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
     }
 

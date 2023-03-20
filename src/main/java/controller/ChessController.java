@@ -1,7 +1,7 @@
 package controller;
 
+import domain.game.Board;
 import domain.game.ChessBoardGenerator;
-import domain.game.Game;
 import domain.piece.Position;
 import domain.piece.Side;
 import view.GameCommand;
@@ -33,26 +33,26 @@ public class ChessController {
     public void run() {
         this.outputView.printGameGuideMessage();
         repeatByRunnable(inputView::requestStartCommand);
-        Game game = new Game(new ChessBoardGenerator().generate());
+        Board chessBoard = new Board(new ChessBoardGenerator().generate());
 
         Side side = Side.WHITE;
-        this.outputView.printChessBoard(game.getChessBoard());
+        this.outputView.printChessBoard(chessBoard.getChessBoard());
 
-        progressChess(game, side);
+        progressChess(chessBoard, side);
     }
 
-    private void progressChess(Game game, Side side) {
+    private void progressChess(Board chessBoard, Side side) {
         GameCommand gameCommand;
         do {
             Side currentSide = side;
             this.outputView.printSide(side);
-            gameCommand = repeatBySupplier(() -> moveByUserInput(game, currentSide));
-            this.outputView.printChessBoard(game.getChessBoard());
+            gameCommand = repeatBySupplier(() -> moveByUserInput(chessBoard, currentSide));
+            this.outputView.printChessBoard(chessBoard.getChessBoard());
             side = changeSide(side);
         } while (gameCommand.equals(GameCommand.MOVE));
     }
 
-    private GameCommand moveByUserInput(Game game, Side side) {
+    private GameCommand moveByUserInput(Board chessBoard, Side side) {
         String userInput = this.inputView.requestUserInputDuringProgressChess();
         if (userInput.equals(GAME_EXIT_COMMAND)) {
             return GameCommand.END;
@@ -63,7 +63,7 @@ public class ChessController {
         Position sourcePosition = positions.get(INPUT_SOURCE_STRING_INDEX);
         Position targetPosition = positions.get(INPUT_TARGET_STRING_INDEX);
 
-        game.move(side, sourcePosition, targetPosition);
+        chessBoard.move(side, sourcePosition, targetPosition);
         return GameCommand.MOVE;
     }
 
