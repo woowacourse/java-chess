@@ -18,8 +18,7 @@ class PieceTest {
 
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
-            super(color, piecePosition, (path, nullableEnemy) -> {
-
+            super(color, piecePosition, new PieceMovement() {
             });
         }
     }
@@ -36,8 +35,11 @@ class PieceTest {
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), (path, nullableEnemy) -> {
-            throw new IllegalArgumentException();
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new PieceMovement() {
+            @Override
+            public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+                throw new IllegalArgumentException();
+            }
         });
 
         // when & then
@@ -60,8 +62,11 @@ class PieceTest {
     @Test
     void 이동할_수_없는_경로로_이동하면_오류() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), (path, nullableEnemy) -> {
-            throw new IllegalArgumentException();
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), new PieceMovement() {
+            @Override
+            public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+                throw new IllegalArgumentException();
+            }
         });
         // when & then
         assertThatThrownBy(() -> pawn.move(of("b5"), null))
@@ -79,16 +84,5 @@ class PieceTest {
 
         // then
         assertThat(next.piecePosition()).isEqualTo(of("b7"));
-    }
-
-    @Test
-    void 아군은_죽일_수_없다() {
-        // given
-        final Piece pawn = new MyPiece(Color.BLACK, of("b6"));
-        final Piece ally = new MyPiece(Color.BLACK, of("b7"));
-
-        // when & then
-        assertThatThrownBy(() -> pawn.move(ally.piecePosition, ally))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 }

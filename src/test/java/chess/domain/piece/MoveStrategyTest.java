@@ -20,26 +20,29 @@ class MoveStrategyTest {
     @Test
     void 올바른_경로가_아니면_예외가_발생한다() {
         // given
-        final PieceMovement strategy = (path, nullableEnemy) -> {
-            throw new IllegalArgumentException();
+        final PieceMovement strategy = new PieceMovement() {
+            @Override
+            public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+                throw new IllegalArgumentException();
+            }
         };
         final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
 
         // when & then
         assertThatThrownBy(() ->
-                strategy.waypoints(path, null)
+                strategy.waypoints(Color.BLACK, path, null)
         );
     }
 
     @Test
     void 올바른_경로라면_경유지를_반환한다() {
         // given
-        final PieceMovement strategy = (path, nullableEnemy) -> {
+        final PieceMovement strategy = new PieceMovement() {
         };
         final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
 
         // when
-        final List<PiecePosition> waypoints = strategy.waypoints(path, null);
+        final List<PiecePosition> waypoints = strategy.waypoints(Color.BLACK, path, null);
 
         // then
         assertThat(waypoints).containsOnly(PiecePosition.of("d3"));

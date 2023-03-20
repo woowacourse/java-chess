@@ -1,5 +1,6 @@
 package chess.domain.piece.strategy.pawn;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMovement;
 import chess.domain.piece.position.Path;
@@ -21,10 +22,11 @@ public class PawnMovement implements PieceMovement {
     }
 
     @Override
-    public void validateMove(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+    public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+        validateAllyKill(currentPieceColor, nullableEnemy);
         validateDefaultMove(path);
-        validateKill(path, nullableEnemy);
-        validateJustMove(path, nullableEnemy);
+        validateDiagonalKill(path, nullableEnemy);
+        validateVerticalMove(path, nullableEnemy);
 
         for (final PawnMoveConstraint constraint : constraints) {
             constraint.validateConstraint(path);
@@ -40,13 +42,13 @@ public class PawnMovement implements PieceMovement {
         }
     }
 
-    private void validateKill(final Path path, final Piece nullableEnemy) {
+    private void validateDiagonalKill(final Path path, final Piece nullableEnemy) {
         if (nullableEnemy != null && path.isStraight()) {
             throw new IllegalArgumentException("폰은 적이 있는 경우 직선으로 이동할 수 없습니다.");
         }
     }
 
-    private void validateJustMove(final Path path, final Piece nullableEnemy) {
+    private void validateVerticalMove(final Path path, final Piece nullableEnemy) {
         if (nullableEnemy == null && path.isDiagonal()) {
             throw new IllegalArgumentException("폰은 적이 없는 경우 대각선으로 이동할 수 없습니다.");
         }
