@@ -1,35 +1,20 @@
 package view;
 
 import domain.Board;
-import domain.Line;
-import domain.piece.EmptyPiece;
-import domain.piece.Piece;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import domain.Location;
 
 public class OutputView {
 
 
     public void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();
-        final List<Line> lines = board.getLines();
-        IntStream.iterate(lines.size() - 1, order -> order >= 0, order -> order - 1)
-            .forEach(order -> stringBuilder.append(makeLine(lines.get(order))).append("\n"));
-        System.out.println(stringBuilder);
-    }
-
-    private static String makeLine(final Line line) {
-        return line.getSquares()
-            .stream()
-            .map(square -> makePieceSign(square.getPiece()))
-            .collect(Collectors.joining());
-    }
-
-    private static String makePieceSign(final Piece piece) {
-        if (piece.equals(EmptyPiece.make())) {
-            return ".";
+        for (int row = 8; row >= 1; row--) {
+            for (int column = 1; column <= 8; column++) {
+                final String sign = PieceView.findSign(board.findPiece(Location.of(column, row)));
+                stringBuilder.append(sign);
+            }
+            stringBuilder.append("\n");
         }
-        return PieceView.findSign(piece);
+        System.out.println(stringBuilder);
     }
 }

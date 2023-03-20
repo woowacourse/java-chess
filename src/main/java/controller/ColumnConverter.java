@@ -3,14 +3,14 @@ package controller;
 import java.util.Arrays;
 
 public enum ColumnConverter {
-    FIRST(0, "a"),
-    SECOND(1, "b"),
-    THIRD(2, "c"),
-    FOURTH(3, "d"),
-    FIFTH(4, "e"),
-    SIXTH(5, "f"),
-    SEVENTH(6, "g"),
-    EIGHTH(7, "h"),
+    FIRST(1, "a"),
+    SECOND(2, "b"),
+    THIRD(3, "c"),
+    FOURTH(4, "d"),
+    FIFTH(5, "e"),
+    SIXTH(6, "f"),
+    SEVENTH(7, "g"),
+    EIGHTH(8, "h"),
     ;
 
     private final int column;

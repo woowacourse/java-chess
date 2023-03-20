@@ -60,7 +60,7 @@ public class ChessController {
         final String rowInput = location.substring(1);
         try {
             int col = ColumnConverter.findColumn(columnInput);
-            int row = Integer.parseInt(rowInput) - 1;
+            int row = Integer.parseInt(rowInput);
             return Location.of(col, row);
         } catch (Exception exception) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
