@@ -143,7 +143,7 @@ public class ChessBoard {
         final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            final Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
+            final Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.from(i)));
 
             validateBlockedRoute(validationPiece);
         }
@@ -162,7 +162,7 @@ public class ChessBoard {
         final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            final Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
+            final Piece validationPiece = piecePosition.get(new Position(File.from(i), from.getRank()));
             validateBlockedRoute(validationPiece);
         }
     }

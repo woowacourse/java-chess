@@ -22,10 +22,10 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank of(final int index) {
+    public static Rank from(final int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
     }
 
@@ -38,7 +38,7 @@ public enum Rank {
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
-                .mapToObj(Rank::of)
+                .mapToObj(Rank::from)
                 .collect(Collectors.toList());
     }
 

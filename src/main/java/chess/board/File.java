@@ -22,10 +22,10 @@ public enum File {
         this.index = index;
     }
 
-    public static File of(final int index) {
+    public static File from(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("File의 index는 1~8이여야합니다."));
     }
 
@@ -38,7 +38,7 @@ public enum File {
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
-                .mapToObj(File::of)
+                .mapToObj(File::from)
                 .collect(Collectors.toList());
     }
 

@@ -10,6 +10,6 @@ public class PositionConvertor {
         final int fileIndex = position.charAt(0) - 'a' + 1;
         final int rankIndex = Character.getNumericValue(position.charAt(1));
 
-        return new Position(File.of(fileIndex), Rank.of(rankIndex));
+        return new Position(File.from(fileIndex), Rank.from(rankIndex));
     }
 }
