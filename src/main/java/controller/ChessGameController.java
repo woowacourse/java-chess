@@ -1,6 +1,6 @@
 package controller;
 
-import domain.chessboard.ChessBoard;
+import domain.chessboard.ChessBoardFactory;
 import domain.chessgame.ChessGame;
 import view.InputView;
 import view.OutputView;
@@ -14,7 +14,7 @@ public final class ChessGameController {
 
     public void run() {
         OutputView.printStartMessage();
-        gameStatus = new Start(new ChessGame(ChessBoard.generate()));
+        gameStatus = new Start(new ChessGame(ChessBoardFactory.generate()));
 
         while (gameStatus.isKeepGaming()) {
             retryOnError(this::playGame);
@@ -25,7 +25,9 @@ public final class ChessGameController {
         gameStatus = gameStatus.setGameStatus(inputs);
         gameStatus.playTurn(inputs);
 
-        OutputView.printChessBoard(gameStatus.getChessBoard());
+        final ChessBoardDTO chessBoardDTO = ChessBoardDTO.from(gameStatus.getChessBoard());
+
+        OutputView.printChessBoard(chessBoardDTO);
     }
 
     private void retryOnError(Consumer<List<String>> playGame) {

@@ -1,10 +1,10 @@
 package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
-import domain.chessboard.Square;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
+import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;
 import domain.type.PieceType;
 
@@ -21,36 +21,33 @@ public final class ChessGame {
     }
 
     public void move(final Position source, final Position target) {
-        final Square startPoint = chessBoard.findSquare(source);
-        final Square endPoint = chessBoard.findSquare(target);
-
-        validateTurn(startPoint);
-        checkCondition(source, target, startPoint, endPoint);
-        movePiece(startPoint, endPoint);
+        validateTurn(source);
+        checkCondition(source, target);
+        movePiece(source, target);
 
         turn.nextTurn();
     }
 
-    private void validateTurn(final Square square) {
+    private void validateTurn(final Position source) {
         final Color turnColor = turn.getColor();
 
-        if (square.isDifferentColor(turnColor)) {
+        if (chessBoard.isDifferentColor(source, turnColor)) {
             throw new IllegalStateException(String.format("지금은 %s의 턴입니다.", turnColor));
         }
     }
 
-    private void checkCondition(final Position source, final Position target, final Square startPoint, final Square endPoint) {
-        checkRoute(source, target, startPoint);
-        checkPawn(source, target, startPoint, endPoint);
-        checkTarget(endPoint);
+    private void checkCondition(final Position source, final Position target) {
+        checkRoute(source, target);
+        checkPawn(source, target);
+        checkTarget(target);
     }
 
-    private void checkRoute(final Position source, final Position target, final Square startPoint) {
-        Route route = startPoint.findRoute(source, target);
+    private void checkRoute(final Position source, final Position target) {
+        Route route = chessBoard.findRoute(source, target);
 
         final boolean hasHurdle = route.getRoute().stream()
-                .map(chessBoard::findSquare)
-                .map(Square::getType)
+                .map(chessBoard::findPosition)
+                .map(SquareStatus::getType)
                 .anyMatch(Predicate.not(EmptyType::isEmpty));
 
         validateRoute(hasHurdle);
@@ -62,37 +59,36 @@ public final class ChessGame {
         }
     }
 
-    private void checkPawn(final Position source, final Position target, final Square startPoint, final Square endPoint) {
-        if (startPoint.isEqualType(PieceType.PAWN)) {
-            validatePawnDestination(source, target, endPoint);
+    private void checkPawn(final Position source, final Position target) {
+        if (chessBoard.isEqualType(source, PieceType.PAWN)) {
+            validatePawnDestination(source, target);
         }
     }
 
-    private void validatePawnDestination(final Position source, final Position target, final Square endPoint) {
-        if (isDiagonallyMovable(source, target, endPoint) || isStraightMovable(source, target, endPoint)) {
+    private void validatePawnDestination(final Position source, final Position target) {
+        if (isDiagonallyMovable(source, target) || isStraightMovable(source, target)) {
             return;
         }
 
         throw new IllegalStateException("잘못된 도착 지점입니다.");
     }
 
-    private boolean isStraightMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.isEqualType(EmptyType.EMPTY) && source.isStraight(target);
+    private boolean isStraightMovable(final Position source, final Position target) {
+        return chessBoard.isEqualType(target, EmptyType.EMPTY) && source.isStraight(target);
     }
 
-    private boolean isDiagonallyMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.isEqualType(EmptyType.EMPTY) || (endPoint.isDifferentColor(turn.getColor()) && source.isDiagonally(target));
+    private boolean isDiagonallyMovable(final Position source, final Position target) {
+        return chessBoard.isEqualType(target, EmptyType.EMPTY) || (chessBoard.isDifferentColor(target, turn.getColor()) && source.isDiagonally(target));
     }
 
-    private void checkTarget(final Square endPoint) {
-        if ((endPoint.isDifferentType(EmptyType.EMPTY) && endPoint.isSameColor(turn.getColor()))) {
+    private void checkTarget(final Position target) {
+        if ((chessBoard.isDifferentType(target, EmptyType.EMPTY) && chessBoard.isSameColor(target, turn.getColor()))) {
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }
 
-    private static void movePiece(final Square startPoint, final Square endPoint) {
-        endPoint.bePiece(startPoint);
-        startPoint.beEmpty();
+    private void movePiece(final Position source, final Position target) {
+        chessBoard.move(source, target);
     }
 
     public ChessBoard getChessBoard() {

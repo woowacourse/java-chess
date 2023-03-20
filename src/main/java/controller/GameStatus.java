@@ -1,6 +1,7 @@
 package controller;
 
 import domain.chessboard.ChessBoard;
+import domain.chessboard.ChessBoardFactory;
 import domain.chessgame.ChessGame;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public abstract class GameStatus {
         final Command command = Command.from(inputs.get(COMMAND_INDEX));
 
         if (command == Command.START) {
-            return new Start(new ChessGame(ChessBoard.generate()));
+            return new Start(new ChessGame(ChessBoardFactory.generate()));
         }
         if (command == Command.MOVE) {
             return new Move(chessGame);
