@@ -62,12 +62,12 @@ class BoardTest {
     }
 
     @Test
-    void 경로를_입력했을_때_경로가_비어있지_않다면_예외가_발생한다() {
+    void 경로를_입력했을_때_경로에_다른_말이_있다면_예외가_발생한다() {
         Board board = BoardFactory.createBoard();
 
         assertThatThrownBy(() -> board.movePiece(A_1, A_3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로가 없습니다.");
+                .hasMessage("경로에 다른 말이 있습니다.");
     }
 
     @Test

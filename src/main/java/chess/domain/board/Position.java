@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 public class Position {
 
     private static final int VALID_STRAIGHT = 0;
+    private static final List<Position> KNIGHT_PATH = Collections.emptyList();
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
@@ -35,7 +36,7 @@ public class Position {
             return betweenStraight(betweenRanks, betweenFiles);
         }
         if (betweenRanks.size() != betweenFiles.size()) {
-            return Collections.emptyList();
+            return KNIGHT_PATH;
         }
         return getPathByDiagonal(betweenRanks, betweenFiles);
     }
@@ -47,13 +48,13 @@ public class Position {
         return betweenFileStraight(files);
     }
 
-    private List<Position> betweenRankStraight(final List<RankCoordinate> ranks) {
+    private List<Position> betweenRankStraight(List<RankCoordinate> ranks) {
         return ranks.stream()
                 .map(rank -> new Position(fileCoordinate, rank))
                 .collect(toList());
     }
 
-    private List<Position> betweenFileStraight(final List<FileCoordinate> files) {
+    private List<Position> betweenFileStraight(List<FileCoordinate> files) {
         return files.stream()
                 .map(file -> new Position(file, rankCoordinate))
                 .collect(toList());
