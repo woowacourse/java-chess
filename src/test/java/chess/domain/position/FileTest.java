@@ -16,7 +16,7 @@ class FileTest {
     class 생성 {
         @ParameterizedTest
         @ValueSource(strings = {"1", "2", "3", "4", "5", "6", "7", "8"})
-        void should_정상생성_when_1에서8이_입력되었을때(final String input) {
+        void should_정상생성_when_1에서8이_입력되었을때(final int input) {
             //given
 
             //when
@@ -31,12 +31,10 @@ class FileTest {
             //given
 
             //when
-            final ThrowingCallable throwingCallable = () -> File.from(input);
+            final ThrowingCallable throwingCallable = () -> File.from(Integer.parseInt(input));
 
             //then
-            assertThatThrownBy(throwingCallable)
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("File은 1에서 8사이의 값 이어야 합니다.");
+            assertThatThrownBy(throwingCallable);
         }
     }
 

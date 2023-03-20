@@ -15,7 +15,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:4", "c:3"}, delimiter = ':')
-    void should_true반환_when_WHITE_팀일때_움직일_수_있는_위치라면(String rank, String file) {
+    void should_true반환_when_WHITE_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.TWO);
         Position destination = Position.of(Rank.from(rank), File.from(file));
@@ -30,7 +30,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:6", "c:5"}, delimiter = ':')
-    void should_true반환_when_BLACK_팀일때_움직일_수_있는_위치라면(String rank, String file) {
+    void should_true반환_when_BLACK_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.SEVEN);
         Position destination = Position.of(Rank.from(rank), File.from(file));
@@ -45,7 +45,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:2", "c:1", "d:3"}, delimiter = ':')
-    void should_false반환_when_움직일_수_없는_위치라면(String rank, String file) {
+    void should_false반환_when_움직일_수_없는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.TWO);
         Position destination = Position.of(Rank.from(rank), File.from(file));
@@ -75,7 +75,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"b:3", "d:3"}, delimiter = ':')
-    void should_ture반환_when_팀이_WHITE일때_공격할_수_있는_위치라면(String rank, String file) {
+    void should_ture반환_when_팀이_WHITE일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.TWO);
         Position destination = Position.of(Rank.from(rank), File.from(file));
@@ -90,7 +90,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"b:1", "d:1"}, delimiter = ':')
-    void should_ture반환_when_팀이_BLACK일때_공격할_수_있는_위치라면(String rank, String file) {
+    void should_ture반환_when_팀이_BLACK일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.TWO);
         Position destination = Position.of(Rank.from(rank), File.from(file));
@@ -105,7 +105,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:2", "c:3", "c:4", "c:1"}, delimiter = ':')
-    void should_false반환_when_공격할_수_없는_위치라면(String rank, String file) {
+    void should_false반환_when_공격할_수_없는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(Rank.C, File.TWO);
         Position destination = Position.of(Rank.from(rank), File.from(file));

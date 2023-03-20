@@ -22,13 +22,15 @@ public enum Rank {
     }
 
     static public Rank from(final String value) {
-        return Arrays.stream(Rank.values()).filter(rank -> rank.value.equals(value))
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rank는 a에서 h사이의 값 이어야 합니다."));
     }
 
     static public Rank from(final int index) {
-        return Arrays.stream(Rank.values()).filter(rank -> rank.index == index)
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rank는 a에서 h사이의 값 이어야 합니다."));
     }

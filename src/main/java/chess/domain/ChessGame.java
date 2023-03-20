@@ -66,8 +66,8 @@ public class ChessGame {
                 .substring(0, FILE_RANK_DIVIDING_INDEX);
         String endFile = commandAndParameters.get(DEST_POSITION_INDEX)
                 .substring(FILE_RANK_DIVIDING_INDEX);
-        Position source = Position.of(Rank.from(startRank), File.from(startFile));
-        Position destination = Position.of(Rank.from(endRank), File.from(endFile));
+        Position source = Position.of(Rank.from(startRank), File.from(Integer.parseInt(startFile)));
+        Position destination = Position.of(Rank.from(endRank), File.from(Integer.parseInt(endFile)));
         chessBoard.move(source, destination);
     }
 

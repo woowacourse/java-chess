@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PositionTest {
     @ParameterizedTest
     @CsvSource(value = {"2:1", "3:0", "4:-1"}, delimiter = ':')
-    void should_File간_거리를_반환_when_File_2개를_입력받으면(String file, int expected) {
+    void should_File간_거리를_반환_when_File_2개를_입력받으면(int file, int expected) {
         //given
         Position source = Position.of(Rank.A, File.from(file));
         Position destination = Position.of(Rank.A, File.THREE);
