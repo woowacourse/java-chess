@@ -60,12 +60,23 @@ public class Pawn extends Piece {
                 nextPosition = nextPosition.move(movePattern);
                 checkSide(movablePositions, source, nextPosition, board);
             }
-            if (!isDiagonal(source, source.move(movePattern)) && isRangeValid(source, movePattern) && isRangeValid(
-                    source.move(movePattern), movePattern) && !moved) {
+            if (canDoubleMove(source, board, movePattern)) {
                 movablePositions.add(source.move(movePattern).move(movePattern));
             }
         }
         return movablePositions;
+    }
+
+    private boolean canDoubleMove(final Position source, final Board board, final MovePattern movePattern) {
+        return isRangeValid(source, movePattern) && !isDiagonal(source, source.move(movePattern))
+                && isNeutrality(source, board, movePattern)
+                && isRangeValid(source.move(movePattern), movePattern)
+                && isNeutrality(source.move(movePattern), board, movePattern)
+                && !moved;
+    }
+
+    private static boolean isNeutrality(final Position source, final Board board, final MovePattern movePattern) {
+        return board.findSideByPosition(source.move(movePattern)).isNeutrality();
     }
 
     private void checkSide(final List<Position> movablePositions, final Position source, final Position nextPosition,
