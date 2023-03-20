@@ -1,6 +1,7 @@
 package chess.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,8 +11,20 @@ import java.util.stream.Stream;
 
 import static chess.PositionCache.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PositionTest {
+    @Test
+    void moveSuccess() {
+        //then
+        assertThat(POSITION_0_0.move(1, 3)).isEqualTo(POSITION_1_3);
+    }
+
+    @Test
+    void moveFail() {
+        //then
+        assertThatThrownBy(() -> POSITION_6_6.move(1, 3)).isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("두 점이 일차 함수 선상에 놓였을때 사이 값을 반환 하는 함수")
     @ParameterizedTest
