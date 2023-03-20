@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Square;
-import chess.domain.piece.PawnVector;
+import chess.domain.piece.strategy.vector.PawnVector;
 import java.util.ArrayList;
 import java.util.List;
 

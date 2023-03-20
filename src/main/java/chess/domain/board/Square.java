@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.DirectionVector;
+import chess.domain.piece.strategy.vector.DirectionVector;
 import java.util.Objects;
 
 public class Square {

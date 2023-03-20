@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.PawnStrategy;
+import chess.domain.piece.strategy.vector.PawnVector;
 
 public class Pawn extends Piece {
 

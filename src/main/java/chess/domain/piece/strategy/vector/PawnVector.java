@@ -1,5 +1,6 @@
-package chess.domain.piece;
+package chess.domain.piece.strategy.vector;
 
+import chess.domain.piece.Color;
 import java.util.List;
 
 public enum PawnVector {

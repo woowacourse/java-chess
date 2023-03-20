@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Square;
-import chess.domain.piece.KnightVector;
+import chess.domain.piece.strategy.vector.KnightVector;
 import java.util.ArrayList;
 import java.util.List;
 

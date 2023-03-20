@@ -1,16 +1,16 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.piece.DirectionVector.EAST;
-import static chess.domain.piece.DirectionVector.NORTH;
-import static chess.domain.piece.DirectionVector.NORTHEAST;
-import static chess.domain.piece.DirectionVector.NORTHWEST;
-import static chess.domain.piece.DirectionVector.SOUTH;
-import static chess.domain.piece.DirectionVector.SOUTHEAST;
-import static chess.domain.piece.DirectionVector.SOUTHWEST;
-import static chess.domain.piece.DirectionVector.WEST;
+import static chess.domain.piece.strategy.vector.DirectionVector.EAST;
+import static chess.domain.piece.strategy.vector.DirectionVector.NORTH;
+import static chess.domain.piece.strategy.vector.DirectionVector.NORTHEAST;
+import static chess.domain.piece.strategy.vector.DirectionVector.NORTHWEST;
+import static chess.domain.piece.strategy.vector.DirectionVector.SOUTH;
+import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHEAST;
+import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHWEST;
+import static chess.domain.piece.strategy.vector.DirectionVector.WEST;
 
 import chess.domain.board.Square;
-import chess.domain.piece.DirectionVector;
+import chess.domain.piece.strategy.vector.DirectionVector;
 import java.util.ArrayList;
 import java.util.List;
 

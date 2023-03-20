@@ -1,12 +1,12 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.piece.DirectionVector.NORTHEAST;
-import static chess.domain.piece.DirectionVector.NORTHWEST;
-import static chess.domain.piece.DirectionVector.SOUTHEAST;
-import static chess.domain.piece.DirectionVector.SOUTHWEST;
+import static chess.domain.piece.strategy.vector.DirectionVector.NORTHEAST;
+import static chess.domain.piece.strategy.vector.DirectionVector.NORTHWEST;
+import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHEAST;
+import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHWEST;
 
 import chess.domain.board.Square;
-import chess.domain.piece.DirectionVector;
+import chess.domain.piece.strategy.vector.DirectionVector;
 import java.util.ArrayList;
 import java.util.List;
 

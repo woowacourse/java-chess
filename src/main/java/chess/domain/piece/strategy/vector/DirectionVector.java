@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.strategy.vector;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
