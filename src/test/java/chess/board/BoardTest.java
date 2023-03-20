@@ -1,6 +1,7 @@
 package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.AllPiecesGenerator;
@@ -113,4 +114,41 @@ class BoardTest {
         // then
         assertThat(afterMoveSize).isEqualTo(beforeMoveSize);
     }
+
+    @Test
+    @DisplayName("적 기물이 대각 방향에 있을 때, 폰은 해당 방향으로 이동하며 적 기물을 잡을 수 있다.")
+    void checkPieceMovable_pawnDiagonalMove_success() {
+        // given
+        final Position sourcePosition = new Position(File.B, Rank.FOUR);
+        final Position targetPosition = new Position(File.C, Rank.FIVE);
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Pawn(sourcePosition, Side.WHITE),
+                new Pawn(targetPosition, Side.BLACK)
+        )));
+        final int beforeMoveSize = fixedBoard.getPieces().size();
+
+        // when
+        fixedBoard.movePiece(sourcePosition, targetPosition);
+        final int afterMoveSize = fixedBoard.getPieces().size();
+
+        // then
+        assertThat(afterMoveSize).isEqualTo(beforeMoveSize - 1);
+    }
+
+    @Test
+    @DisplayName("적 기물이 대각 방향에 존재하지 않는 상태에서 폰을 대각 방향으로 이동하면 예외가 발생한다.")
+    void checkPieceMovable_pawnDiagonalMove_throws() {
+        // given
+        final Position sourcePosition = new Position(File.B, Rank.FOUR);
+        final Position targetPosition = new Position(File.C, Rank.FIVE);
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Pawn(sourcePosition, Side.WHITE)
+        )));
+
+        // when, then
+        assertThatThrownBy(() -> fixedBoard.movePiece(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 대각 방향에 적이 있을 때만 대각으로 이동할 수 있습니다.");
+    }
+
 }
