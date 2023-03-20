@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.controller.BoardDto;
-import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
@@ -9,10 +7,9 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputRenderer {
-
-    private static final int BOARD_SIZE = 8;
     private static final Map<PieceType, String> PIECE_TO_STRING = new EnumMap<>(PieceType.class);
 
     static {
@@ -25,43 +22,23 @@ public class OutputRenderer {
         PIECE_TO_STRING.put(PieceType.PAWN, "P");
     }
 
-    public static BoardDto toBoardDto(final Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>(board.keySet());
-        sortPositions(positions);
-
-        List<List<String>> boardDto = stringifyPieces(board, positions);
+    public static BoardDto toBoardDto(final List<List<Piece>> board) {
+        List<List<String>> boardDto = stringifyPieces(board);
         return new BoardDto(boardDto);
     }
 
-    private static void sortPositions(final List<Position> positions) {
-        positions.sort((p1, p2) -> {
-            if (p1.getRow() == p2.getRow()) {
-                return p1.getColumn() - p2.getColumn();
-            }
-            return p2.getRow() - p1.getRow();
-        });
-    }
-
-    private static List<List<String>> stringifyPieces(final Map<Position, Piece> board, final List<Position> positions) {
+    private static List<List<String>> stringifyPieces(final List<List<Piece>> board) {
         List<List<String>> boardDto = new ArrayList<>();
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            List<String> line = stringifyLine(board, positions, i);
-            boardDto.add(line);
+        for (List<Piece> line : board) {
+            boardDto.add(stringifyLine(line));
         }
         return boardDto;
     }
 
-    private static List<String> stringifyLine(
-            final Map<Position, Piece> board,
-            final List<Position> positions,
-            final int column
-    ) {
-        List<String> line = new ArrayList<>();
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            Piece piece = board.get(positions.get(j + BOARD_SIZE * column));
-            line.add(stringifySign(piece));
-        }
-        return line;
+    private static List<String> stringifyLine(final List<Piece> line) {
+        return line.stream()
+                .map(OutputRenderer::stringifySign)
+                .collect(Collectors.toList());
     }
 
     private static String stringifySign(final Piece piece) {
