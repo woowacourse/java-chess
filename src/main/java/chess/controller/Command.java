@@ -1,32 +1,38 @@
 package chess.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Command {
-    START,
-    MOVE,
-    STATUS,
-    END,
-    EMPTY,
+    START(1),
+    MOVE(3),
+    STATUS(1),
+    END(1),
+    EMPTY(0),
     ;
 
-    public static final int DEFAULT_COMMAND_INDEX = 0;
+    private final int size;
+
+    Command(final int size) {
+        this.size = size;
+    }
+
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_TARGET_INDEX = 2;
-    public static final int DEFAULT_COMMAND_SIZE = 1;
-    public static final int MOVE_COMMAND_SIZE = 3;
+    private static final int COMMAND_INDEX = 0;
+
     private static final String INVALID_COMMAND_MESSAGE = "올바른 명령어를 입력해주세요.";
 
-    public static Command from(final String inputCommand) {
+    public static Command from(final List<String> commands) {
         return Arrays.stream(values())
                 .filter(command -> command != EMPTY)
-                .filter(command -> command.name().equalsIgnoreCase(inputCommand))
+                .filter(command -> command.name().equalsIgnoreCase(commands.get(COMMAND_INDEX)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND_MESSAGE));
     }
 
-    public static void validateCommandSize(final int given, final int expect) {
-        if (given != expect) {
+    public void validateCommandsSize(final List<String> commands) {
+        if (size != commands.size()) {
             throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
         }
     }
