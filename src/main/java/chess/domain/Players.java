@@ -97,11 +97,13 @@ public class Players {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "Players{" +
-                "players=" + players +
-                '}';
+    public void movePiece(String inputMovablePiece, String inputTargetPosition) {
+        Position findPosition = findPositionByInputPoint(inputMovablePiece);
+        Position targetPosition = Position.from(inputTargetPosition);
+        validatePosition(inputMovablePiece);
+        move(findPosition, targetPosition);
+        changeTurn();
     }
+
 
 }

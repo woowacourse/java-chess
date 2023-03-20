@@ -24,14 +24,8 @@ public final class ChessGameController {
             String inputTargetPosition = command.get(2);
 
             try {
-                Position findPosition = players.findPositionByInputPoint(inputMovablePiece);
-                Player findPlayer = players.findPlayerByPosition(findPosition);
-                Player anotherPlayer = players.getAnotherPlayer(findPlayer);
-                Position changedPosition = findPlayer.movePieceByInput(players.getAllPosition(), findPosition, inputTargetPosition);
-                players.validateAlreadyExistPieceMovingRoute(findPosition, changedPosition);
-                anotherPlayer.removePiece(changedPosition);
-
-                OutputView.printChessBoardStatus(new PiecesResponse(findPlayer, anotherPlayer));
+                players.movePiece(inputMovablePiece, inputTargetPosition);
+                OutputView.printChessBoardStatus(new PiecesResponse(players.getWhitePlayer(), players.getBlackPlayer()));
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
