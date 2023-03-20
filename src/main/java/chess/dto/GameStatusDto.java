@@ -33,7 +33,7 @@ public class GameStatusDto {
                 if (domainBoard.containsKey(now)) {
                     Piece piece = domainBoard.get(now);
                     String name = piece.getName();
-                    if (piece.getColor().equals(Color.BLACK)) {
+                    if (piece.getColor() == Color.BLACK) {
                         name = name.toUpperCase();
                     }
                     row.append(name);

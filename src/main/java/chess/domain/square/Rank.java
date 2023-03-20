@@ -26,14 +26,6 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
     }
 
-    public boolean canMoveDown() {
-        return !this.equals(Rank.ONE);
-    }
-
-    public boolean canMoveUp() {
-        return !this.equals(Rank.EIGHT);
-    }
-
     public boolean isBiggerThan(final Rank rank) {
         return value > rank.value;
     }

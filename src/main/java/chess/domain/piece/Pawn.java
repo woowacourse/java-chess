@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     public Direction findDirection(Square current, Square destination) {
         int fileDifference = current.getFileDifference(destination);
         int rankDifference = current.getRankDifference(destination);
-        if (color.equals(Color.WHITE)) {
+        if (color == Color.WHITE) {
             if (current.isRankTwo() && fileDifference == 0 && rankDifference == 2) {
                 return Direction.UP;
             }

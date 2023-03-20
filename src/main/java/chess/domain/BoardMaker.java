@@ -41,7 +41,7 @@ public class BoardMaker {
     }
 
     private Rank getPawnRankByColor(final Color color) {
-        if (color.equals(Color.WHITE)) {
+        if (color == Color.WHITE) {
             return Rank.TWO;
         }
         return Rank.SEVEN;

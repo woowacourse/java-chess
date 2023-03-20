@@ -29,7 +29,7 @@ public class ChessController {
     }
 
     private void validateStartCommand(Command command) {
-        if (command.equals(Command.START)) {
+        if (command == Command.START) {
             return;
         }
         throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");

@@ -65,11 +65,11 @@ public final class Square {
     }
 
     public boolean isRankTwo() {
-        return rank.equals(Rank.TWO);
+        return rank == Rank.TWO;
     }
 
     public boolean isRankSeven() {
-        return rank.equals(Rank.SEVEN);
+        return rank == Rank.SEVEN;
     }
 
     public int getFileDifference(final Square other) {
