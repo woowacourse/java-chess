@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.piece.Direction;
+import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import java.util.List;
@@ -14,17 +16,28 @@ public class Board {
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
-        checkPieceMovable(targetPosition, sourcePiece);
-        checkPath(targetPosition, sourcePiece);
         checkSameSidePieceOnTargetPosition(sourcePiece, targetPosition);
+        checkPath(targetPosition, sourcePiece);
+        checkPieceMovable(sourcePosition, targetPosition);
         checkOppositeSidePieceOnTargetPosition(sourcePiece, targetPosition);
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
     }
 
-    private void checkPieceMovable(final Position targetPosition, final Piece sourcePiece) {
+    private void checkPieceMovable(final Position sourcePosition, final Position targetPosition) {
+        final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
         if (!sourcePiece.isMovable(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 해당 기물은 대상 위치로 이동할 수 없습니다.");
+        }
+        if (sourcePiece.getClass() == Pawn.class) {
+            checkConditionOfPawnDiagonalMove(sourcePosition, targetPosition);
+        }
+    }
+
+    private void checkConditionOfPawnDiagonalMove(final Position sourcePosition, final Position targetPosition) {
+        final Direction direction = sourcePosition.getDirectionTo(targetPosition);
+        if (direction.isDiagonalMovable() && !pieces.isPieceExistOnPosition(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각 방향에 적이 있을 때만 대각으로 이동할 수 있습니다.");
         }
     }
 

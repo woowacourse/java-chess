@@ -8,6 +8,8 @@ import java.util.List;
 public class Pawn extends Piece {
 
     public static final int FIRST_MOVE_TWO_SPACES = 2;
+    private static final int WHITE_PAWN_INITIAL_RANK = 2;
+    private static final int BLACK_PAWN_INITIAL_RANK = 7;
 
     private final List<Direction> directions;
     private String name = "p";
@@ -46,21 +48,21 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(Position targetPosition) {
         final Direction direction = position.getDirectionTo(targetPosition);
-        final int moveCount = position.getMoveCount(targetPosition, direction);
-
-        if (isStartPosition() && moveCount == FIRST_MOVE_TWO_SPACES) {
-            return direction == Direction.UP || direction == Direction.DOWN;
+        if (!directions.contains(direction)) {
+            return false;
         }
 
-        final boolean isPossibleDirection = directions.contains(direction);
-        final boolean isPossibleDistance = moveCount == 1;
+        final int moveCount = position.getMoveCount(targetPosition, direction);
+        if (moveCount != 1) {
+            return isStartPosition() && direction.isVerticalMovable() && moveCount == WHITE_PAWN_INITIAL_RANK;
+        }
 
-        return isPossibleDirection && isPossibleDistance;
+        return true;
     }
 
     private boolean isStartPosition() {
-        final boolean isWhiteStartPosition = position.getRank() == 2 && side == Side.WHITE;
-        final boolean isBlackStartPosition = position.getRank() == 7 && side == Side.BLACK;
+        final boolean isWhiteStartPosition = position.getRank() == WHITE_PAWN_INITIAL_RANK && side == Side.WHITE;
+        final boolean isBlackStartPosition = position.getRank() == BLACK_PAWN_INITIAL_RANK && side == Side.BLACK;
         return isWhiteStartPosition || isBlackStartPosition;
     }
 
