@@ -50,12 +50,12 @@ public class ChessController {
         throw new IllegalArgumentException("해당 명령어는 존재하지 않습니다.");
     }
 
-    private Boolean repeat(Supplier<Boolean> playGame) {
+    private Boolean repeat(Supplier<Boolean> supplier) {
         try {
-            return playGame.get();
+            return supplier.get();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return repeat(playGame);
+            return repeat(supplier);
         }
     }
 
