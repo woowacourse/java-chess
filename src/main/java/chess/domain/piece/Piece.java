@@ -2,8 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.PieceType;
+import chess.domain.Position;
 
-public abstract class Piece implements Movable {
+import java.util.List;
+
+public abstract class Piece  {
     private final PieceType pieceType;
     protected final Color color;
 
@@ -31,4 +34,6 @@ public abstract class Piece implements Movable {
     public PieceType getPieceType() {
         return pieceType;
     }
+
+    public abstract List<Position> findPositions(final Position source, final Position target);
 }
