@@ -51,14 +51,18 @@ public class Movement {
         return Math.abs(fileIncrement) <= 2 && Math.abs(rankIncrement) <= 2;
     }
 
-    public boolean isCorrectForKnight() {
+    public boolean isThreeStepAndNotPerpendicular() {
         return Math.abs(this.fileIncrement * this.rankIncrement) == 2;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Movement movement = (Movement) o;
         return fileIncrement == movement.fileIncrement && rankIncrement == movement.rankIncrement;
     }

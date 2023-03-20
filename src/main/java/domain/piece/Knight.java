@@ -1,9 +1,8 @@
 package domain.piece;
 
-import view.PieceCategory;
-
 import java.util.Collections;
 import java.util.List;
+import view.PieceCategory;
 
 public class Knight extends Piece {
     private Knight(Side side) {
@@ -24,7 +23,7 @@ public class Knight extends Piece {
         if (this.isSameSideWith(targetPiece)) {
             return false;
         }
-        return movement.isCorrectForKnight();
+        return movement.isThreeStepAndNotPerpendicular();
     }
 
     @Override
