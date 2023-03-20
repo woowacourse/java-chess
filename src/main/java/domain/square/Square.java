@@ -13,9 +13,9 @@ public abstract class Square {
 
     public abstract Piece getPieceType();
     public abstract Camp getCamp();
-    public abstract Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
-    public abstract Boolean isExist();
-    public abstract Boolean canReap();
+    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
+    public abstract boolean isExist();
+    public abstract boolean canReap();
 
     protected Boolean isFirstMove() {
         return isFirstMove;

@@ -16,18 +16,23 @@ public final class ConcreteSquare extends Square {
         this.camp = camp;
     }
 
+    public ConcreteSquare(final ConcreteSquare other) {
+        this.piece = other.piece;
+        this.camp = other.camp;
+    }
+
     @Override
-    public Boolean canReap() {
+    public boolean canReap() {
         return piece.canReap();
     }
 
     @Override
-    public Boolean isExist() {
+    public boolean isExist() {
         return true;
     }
 
     @Override
-    public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (super.isFirstMove() && piece.isPawn()) {
             Pawn pawn = (Pawn) piece;
             return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);

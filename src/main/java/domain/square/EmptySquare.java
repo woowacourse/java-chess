@@ -6,17 +6,17 @@ import domain.piece.Piece;
 public final class EmptySquare extends Square {
 
     @Override
-    public Boolean canReap() {
+    public boolean canReap() {
         return false;
     }
 
     @Override
-    public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return false;
     }
 
     @Override
-    public Boolean isExist() {
+    public boolean isExist() {
         return false;
     }
 
