@@ -1,0 +1,53 @@
+package chess.piece.pawn;
+
+import static chess.PositionFixtures.A5;
+import static chess.PositionFixtures.A6;
+import static chess.PositionFixtures.B6;
+import static chess.piece.PiecesFixtures.KNIGHT_WHITE_B6;
+import static chess.piece.pawn.PawnFixtures.PAWN_BLACK_A7;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
+class FirstBlackPawnTest {
+
+    /*
+    ........
+    P.......
+    *.......
+    *.......
+    ........
+    ........
+    ........
+    ........
+     */
+    @Test
+    void legalMovePositions_a7() {
+        final var movablePositions = PAWN_BLACK_A7.legalMovePositions(Set.of(
+                PAWN_BLACK_A7
+        ));
+
+        assertThat(movablePositions).containsOnly(A6, A5);
+    }
+
+    /*
+    ........
+    P.......
+    *n......
+    *.......
+    ........
+    ........
+    ........
+    ........
+     */
+    @Test
+    void legalMovePositions_a7_opposite() {
+        final var movablePositions = PAWN_BLACK_A7.legalMovePositions(Set.of(
+                PAWN_BLACK_A7,
+                KNIGHT_WHITE_B6
+        ));
+
+        assertThat(movablePositions).containsOnly(A6, A5, B6);
+    }
+}
