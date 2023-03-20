@@ -1,6 +1,7 @@
 package chess.domain.strategy.king;
 
 import chess.domain.Position;
+import chess.domain.Color;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ class KingStrategyTest {
         //when
         MoveRequest moveRequest = MoveRequest.from(
                 piecesExist,
-                "white",
+                Color.WHITE,
                 new PositionDto(Position.from(4, 'f')),
                 new PositionDto(Position.from(rank, filter)));;
         //then
@@ -45,7 +46,7 @@ class KingStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(6, 'd')));
             //then
@@ -60,7 +61,7 @@ class KingStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(2, 'd')));
             //then
@@ -75,7 +76,7 @@ class KingStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(2, 'd')));
             //then
@@ -90,7 +91,7 @@ class KingStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(4, 'a')));
             //then
@@ -105,7 +106,7 @@ class KingStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(4, 'h')));
             //then

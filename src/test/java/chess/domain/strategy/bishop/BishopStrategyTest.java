@@ -2,6 +2,7 @@ package chess.domain.strategy.bishop;
 
 
 import chess.domain.Position;
+import chess.domain.Color;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ public class BishopStrategyTest {
             List<Position> piecesExist = List.of(Position.from(4, 'f'));
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(6, 'f')));
             assertThatThrownBy(() -> new BishopStrategy().validateDirection(moveRequest));
@@ -37,7 +38,7 @@ public class BishopStrategyTest {
             List<Position> piecesExist = List.of(Position.from(4, 'd'));
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(3, 'd')));
             //when
@@ -52,7 +53,7 @@ public class BishopStrategyTest {
             List<Position> piecesExist = List.of(Position.from(4, 'd'));
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(4, 'e')));
             //when
@@ -67,7 +68,7 @@ public class BishopStrategyTest {
             List<Position> piecesExist = List.of(Position.from(4, 'd'));
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(4, 'c')));
             //when

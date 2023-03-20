@@ -16,7 +16,6 @@ public class RookStrategy implements PieceStrategy {
         if (!sameRank && !sameFile) {
             throw new IllegalArgumentException("룩은 상하좌우로만 움직일 수 있습니다.");
         }
-
     }
 
 }

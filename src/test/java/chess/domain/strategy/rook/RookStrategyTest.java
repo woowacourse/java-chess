@@ -1,6 +1,7 @@
 package chess.domain.strategy.rook;
 
 import chess.domain.Position;
+import chess.domain.Color;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
@@ -23,7 +24,7 @@ class RookStrategyTest {
         //given
         MoveRequest request = MoveRequest.from(
                 Collections.emptyList(), // 모든 포지션
-                "white", // 이동할 기물 진영
+                Color.WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(1, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'a')) // targetPosition
         );
@@ -37,7 +38,7 @@ class RookStrategyTest {
         //given
         MoveRequest request = MoveRequest.from(
                 List.of(Position.from(0, 'a')),
-                "white", // 이동할 기물 진영
+                Color.WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(0, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(0, 'e')) // targetPosition
         );
@@ -51,7 +52,7 @@ class RookStrategyTest {
     void throwExceptionWhenTargetIsOnDiagonal() {
         MoveRequest request = MoveRequest.from(
                 Collections.emptyList(), // 모든 포지션
-                "white", // 이동할 기물 진영
+                Color.WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(0, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(1, 'b')) // targetPosition
         );

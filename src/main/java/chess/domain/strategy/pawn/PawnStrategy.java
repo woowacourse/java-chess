@@ -23,7 +23,6 @@ public class PawnStrategy implements PieceStrategy {
         }
         validateAlreadyExistFront(request.getPositions(), targetPosition);
         judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
-
     }
 
     private void judgeColor(String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {

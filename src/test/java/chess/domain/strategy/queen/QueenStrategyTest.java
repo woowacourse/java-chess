@@ -1,6 +1,7 @@
 package chess.domain.strategy.queen;
 
 import chess.domain.Position;
+import chess.domain.Color;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ class QueenStrategyTest {
         //when
         MoveRequest moveRequest = MoveRequest.from(
                 piecesExist,
-                "white",
+                Color.WHITE,
                 new PositionDto(Position.from(3, 'd')),
                 new PositionDto(Position.from(rank, file)));
         //then
@@ -42,7 +43,7 @@ class QueenStrategyTest {
             //when
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
-                    "white",
+                    Color.WHITE,
                     new PositionDto(Position.from(3, 'd')),
                     new PositionDto(Position.from(rank, file)));
             //then

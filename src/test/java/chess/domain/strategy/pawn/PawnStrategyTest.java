@@ -48,7 +48,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(1, 'a')),
                 new PositionDto(Position.from(3, 'a'))
         );
@@ -58,7 +58,7 @@ class PawnStrategyTest {
 
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(3, 'a')),
                 new PositionDto(Position.from(5, 'a')));
 
@@ -76,7 +76,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(1, 'a')),
                 new PositionDto(Position.from(2, 'a')));
 
@@ -93,7 +93,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(1, 'a')),
                 new PositionDto(Position.from(3, 'a'))
         );
@@ -103,7 +103,7 @@ class PawnStrategyTest {
 
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(3, 'a')),
                 new PositionDto(Position.from(2, 'a')));
 
@@ -121,7 +121,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "black",
+                BLACK,
                 new PositionDto(Position.from(6, 'a')),
                 new PositionDto(Position.from(4, 'a'))
         );
@@ -139,7 +139,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "black",
+                BLACK,
                 new PositionDto(Position.from(5, 'a')),
                 new PositionDto(Position.from(3, 'a'))
         );
@@ -157,7 +157,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "black",
+                BLACK,
                 new PositionDto(Position.from(6, 'a')),
                 new PositionDto(Position.from(5, 'a')));
 
@@ -174,7 +174,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "black",
+                BLACK,
                 new PositionDto(Position.from(6, 'a')),
                 new PositionDto(Position.from(7, 'a'))
         );
@@ -196,7 +196,7 @@ class PawnStrategyTest {
         // when, then
         request = MoveRequest.from(
                 List.of(Position.from(3, 'b')),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(2, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'b')) // targetPosition
         );
@@ -215,21 +215,21 @@ class PawnStrategyTest {
 
         MoveRequest whiteMoveFront1 = MoveRequest.from(
                 players.getAllPosition(),
-                "white", // 이동할 기물 진영
+                WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(1, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'a')) // targetPosition
         );
 
         MoveRequest whiteMoveFront2 = MoveRequest.from(
                 players.getAllPosition(),
-                "white", // 이동할 기물 진영
+                WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(3, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(4, 'a')) // targetPosition
         );
 
         MoveRequest whiteMoveFront3 = MoveRequest.from(
                 players.getAllPosition(),
-                "white", // 이동할 기물 진영
+                WHITE, // 이동할 기물 진영
                 new PositionDto(Position.from(4, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(5, 'a')) // targetPosition
         );
@@ -241,7 +241,7 @@ class PawnStrategyTest {
         // when, then
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "black", // 이동할 기물 진영
+                BLACK, // 이동할 기물 진영
                 new PositionDto(Position.from(6, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(5, 'a')) // targetPosition
         );
