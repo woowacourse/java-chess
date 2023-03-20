@@ -18,7 +18,7 @@ public class OutputView {
     }
 
     public static void printErrorMessage(String message) {
-        System.out.printf("[ERROR] : %s", message);
+        System.out.printf("[ERROR] : %s\n", message);
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
