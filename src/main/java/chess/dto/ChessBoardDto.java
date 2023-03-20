@@ -6,6 +6,7 @@ import chess.board.Position;
 import chess.board.Rank;
 import chess.piece.Piece;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,12 @@ public class ChessBoardDto {
     private static List<PieceDto> pieceToView(final Map<Position, Piece> piecePosition) {
         final List<PieceDto> pieceDtoList = new LinkedList<>();
 
-        for (final Rank rank : Rank.values()) {
-            for (final File file : File.values()) {
-                final Piece piece = piecePosition.get(new Position(file, rank));
-                pieceDtoList.add(new PieceDto(piece));
-            }
-        }
+        Arrays.stream(Rank.values())
+                .forEach(rank -> Arrays.stream(File.values())
+                .map(file -> piecePosition.get(new Position(file, rank)))
+                .map(PieceDto::new)
+                .forEach(pieceDtoList::add));
+
         return pieceDtoList;
     }
 
