@@ -94,7 +94,7 @@ public class Board {
 
     private boolean isDiagonalMove(final Position source, final Position target) {
         return Math.abs(source.getRow() - target.getRow()) == 1
-                && Math.abs(source.getColumn() - target.getColumn()) == 10
+                && Math.abs(source.getColumn() - target.getColumn()) == 1
                 && board.get(target).isNotSamePieceType(PieceType.EMPTY);
     }
 
