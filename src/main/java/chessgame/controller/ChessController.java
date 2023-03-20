@@ -33,7 +33,7 @@ public class ChessController {
         Board board = new Board();
         Command command = Command.START;
         inputView.printGameStartMessage();
-        while (command.isContinue()) {
+        while (command.canContinue()) {
             List<String> commands = inputView.readCommand();
             command = Command.of(commands);
             carryOutByCommand(board, commands, command);

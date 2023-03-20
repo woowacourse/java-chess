@@ -25,7 +25,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 명령입니다."));
     }
 
-    public boolean isContinue() {
+    public boolean canContinue() {
         return isStart() || isMove();
     }
 
