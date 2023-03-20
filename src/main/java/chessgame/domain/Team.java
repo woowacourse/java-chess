@@ -14,7 +14,7 @@ public enum Team {
         this.color = color;
     }
 
-    public String calculate(String convertedName) {
+    public String convertTeamName(String convertedName) {
         return name.apply(convertedName);
     }
 

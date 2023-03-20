@@ -22,7 +22,7 @@ public class Rook implements Piece {
     }
 
     public String toString() {
-        return team.calculate(ORIGINAL_NAME);
+        return team.convertTeamName(ORIGINAL_NAME);
     }
 
     @Override

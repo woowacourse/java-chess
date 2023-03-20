@@ -45,20 +45,20 @@ public class Board {
         }
     }
 
-    public void checkSource(Point source, Team turn) {
-        if (isContainsKey(source) && turn != board.get(source).team()) {
+    private void checkSource(Point source, Team turn) {
+        if (isBlockedPiece(source) && turn != board.get(source).team()) {
             throw new IllegalArgumentException(turn.color() + "팀 기물만 움직일 수 있습니다.");
         }
-        if (!isContainsKey(source)) {
+        if (!isBlockedPiece(source)) {
             throw new IllegalArgumentException("해당 좌표에 기물이 존재하지 않습니다.");
         }
     }
 
-    public boolean checkTarget(Point target, Team turn) {
-        if (isContainsKey(target) && turn == board.get(target).team()) {
+    private boolean checkTarget(Point target, Team turn) {
+        if (isBlockedPiece(target) && turn == board.get(target).team()) {
             throw new IllegalArgumentException("자기팀 기물을 잡을 수 없습니다.");
         }
-        return isContainsKey(target);
+        return isBlockedPiece(target);
     }
 
     private void checkPawnMove(Piece piece, boolean hasTarget) {
@@ -84,18 +84,21 @@ public class Board {
         board.remove(source);
     }
 
-    public boolean checkRoute(Point source, Point target) {
+    private boolean checkRoute(Point source, Point target) {
+        Point point=source;
         int eachFileMove = target.eachFileMove(source);
         int eachRankMove = target.eachRankMove(source);
         int distance = target.calculateDistance(source);
         while (distance-- > 0) {
-            Point point = source.move(eachFileMove, eachRankMove);
-            return !isContainsKey(point);
+            point = point.move(eachFileMove, eachRankMove);
+            if (isBlockedPiece(point)) {
+                return false;
+            }
         }
         return true;
     }
 
-    public boolean isContainsKey(Point point) {
+    private boolean isBlockedPiece(Point point) {
         return board.containsKey(point);
     }
 
