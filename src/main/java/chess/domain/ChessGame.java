@@ -11,12 +11,11 @@ import java.util.List;
 public class ChessGame {
 
     private final Board board;
+    private Color turnColor = Color.WHITE;
 
     public ChessGame(final Board board) {
         this.board = board;
     }
-
-    private Color color = Color.WHITE;
 
     public void move(final Square source, final Square destination) {
         final Piece piece = board.findPieceOf(source)
@@ -27,8 +26,8 @@ public class ChessGame {
     }
 
     private void validateTurn(final Piece piece) {
-        if (!piece.isSameColor(color)) {
-            throw new IllegalArgumentException(format("%s의 차례입니다.", color));
+        if (!piece.isSameColor(turnColor)) {
+            throw new IllegalArgumentException(format("%s의 차례입니다.", turnColor));
         }
     }
 
@@ -48,7 +47,7 @@ public class ChessGame {
     }
 
     private void nextTurn() {
-        color = color.reverse();
+        turnColor = turnColor.reverse();
     }
 
     public Board getBoard() {
