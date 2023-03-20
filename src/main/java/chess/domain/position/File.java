@@ -37,21 +37,8 @@ public enum File {
         return File.of(this.index + distance);
     }
 
-    public int distance(File other) {
-        return Math.abs(this.index - other.index);
-    }
-
-    public Direction getDirection(File other) {
-        if (other.index > this.index) {
-            return Direction.PLUS;
-        }
-        if (other.index < this.index) {
-            return Direction.MINUS;
-        }
-        return Direction.ZERO;
-    }
-
-    public File moveOnceToDirection(Direction direction) {
+    public File moveOnceToOther(File other) {
+        Direction direction = getDirection(other);
         if (direction.equals(Direction.PLUS)) {
             return next();
         }
@@ -61,8 +48,22 @@ public enum File {
         return this;
     }
 
+    public int distance(File other) {
+        return Math.abs(this.index - other.index);
+    }
+
     public int getFileIndex() {
         return index;
+    }
+
+    private Direction getDirection(File other) {
+        if (other.index > this.index) {
+            return Direction.PLUS;
+        }
+        if (other.index < this.index) {
+            return Direction.MINUS;
+        }
+        return Direction.ZERO;
     }
 
     private File next() {

@@ -68,11 +68,8 @@ public class Position {
     }
 
     public List<Position> getRoute(Position other) {
-        Direction rankDirection = rank.getDirection(other.rank);
-        Direction fileDirection = file.getDirection(other.file);
         int distance = getMaxDistance(other);
-        List<Position> route = getRouteToDirection(rankDirection, fileDirection, distance);
-        return route;
+        return getRouteToDirection(other.rank, other.file, distance);
     }
 
     private int getMaxDistance(Position other) {
@@ -81,16 +78,15 @@ public class Position {
         return Math.max(fileDistance, rankDistance);
     }
 
-    private List<Position> getRouteToDirection(Direction rankDirection, Direction fileDirection, int distance) {
+    private List<Position> getRouteToDirection(Rank nextRank, File nextFile, int distance) {
         List<Position> route = new ArrayList<>();
-        Rank currentRank = rank;
-        File currentFile = file;
+        Rank movingRank = rank;
+        File movingFile = file;
         for (int i = 0; i < distance - 1; i++) {
-            Rank newRank = currentRank.moveToDirection(rankDirection);
-            File newFile = currentFile.moveOnceToDirection(fileDirection);
-            route.add(Position.of(newFile, newRank));
-            currentRank = newRank;
-            currentFile = newFile;
+            movingRank = movingRank.moveOnceToOther(nextRank);
+            movingFile = movingFile.moveOnceToOther(nextFile);
+
+            route.add(Position.of(movingFile, movingRank));
         }
         return route;
     }

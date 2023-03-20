@@ -49,17 +49,8 @@ public enum Rank {
         return Math.abs(this.index - other.index);
     }
 
-    public Direction getDirection(Rank other) {
-        if (other.index > this.index) {
-            return Direction.PLUS;
-        }
-        if (other.index < this.index) {
-            return Direction.MINUS;
-        }
-        return Direction.ZERO;
-    }
-
-    public Rank moveToDirection(Direction direction) {
+    public Rank moveOnceToOther(Rank other) {
+        Direction direction = getDirection(other);
         if (direction.equals(Direction.PLUS)) {
             return next();
         }
@@ -71,6 +62,16 @@ public enum Rank {
 
     public int getRankIndex() {
         return MAX_RANK - index;
+    }
+
+    private Direction getDirection(Rank other) {
+        if (other.index > this.index) {
+            return Direction.PLUS;
+        }
+        if (other.index < this.index) {
+            return Direction.MINUS;
+        }
+        return Direction.ZERO;
     }
 
     private Rank prev() {
