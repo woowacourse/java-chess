@@ -2,6 +2,8 @@ package chess.view;
 
 import java.util.Scanner;
 
+import chess.dto.SquareDto;
+
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -16,7 +18,8 @@ public class InputView {
         }
     }
 
-    public static String readSquare() {
-        return scanner.next();
+    public static SquareDto readSquare() {
+        String square = scanner.next();
+        return SquareDto.of(square);
     }
 }

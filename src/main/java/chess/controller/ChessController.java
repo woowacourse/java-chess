@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.square.Square;
 import chess.dto.SquareDto;
 import chess.view.Command;
 import chess.view.InputView;
@@ -14,46 +13,76 @@ public class ChessController {
     public void run() {
         OutputView.printStartMessage();
         OutputView.printCommandMessage();
-        start();
-        play();
-    }
-
-    private void start() {
-        try {
-            validateStartCommand(InputView.readCommand());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            start();
-        }
-    }
-
-    private void validateStartCommand(Command command) {
-        if (command == Command.START) {
+        Command initialCommand = readInitialCommand();
+        if (initialCommand == Command.END) {
             return;
         }
-        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
-    }
-
-    // TODO: 개선 필요
-    private void play() {
-        OutputView.printGameStatus(chessGame.getGameStatus());
-        while (InputView.readCommand() == Command.MOVE) {
-            String current = InputView.readSquare();
-            String destination = InputView.readSquare();
-            try {
-                move(current, destination);
-                OutputView.printGameStatus(chessGame.getGameStatus());
-            } catch (RuntimeException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        if (initialCommand == Command.START) {
+            playGame();
         }
     }
 
-    private void move(String current, String destination) {
-        SquareDto currentDto = SquareDto.of(current);
-        Square currentSquare = Square.of(currentDto.getFile(), currentDto.getRank());
-        SquareDto destinationDto = SquareDto.of(destination);
-        Square destinationSquare = Square.of(destinationDto.getFile(), destinationDto.getRank());
-        chessGame.move(currentSquare, destinationSquare);
+    private Command readInitialCommand() {
+        Command command = InputView.readCommand();
+        try {
+            validateInitialCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readInitialCommand();
+        }
+    }
+
+    private void validateInitialCommand(Command command) {
+        if (command == Command.MOVE) {
+            throw new IllegalArgumentException("게임 시작 전에는 기물을 이동할 수 없습니다.");
+        }
+    }
+
+    private void playGame() {
+        OutputView.printGameStatus(chessGame.getGameStatus());
+        while (readPlayCommand() == Command.MOVE) {
+            SquareDto current = readSquare();
+            SquareDto destination = readSquare();
+            move(current, destination);
+        }
+    }
+
+    private Command readPlayCommand() {
+        Command command = InputView.readCommand();
+        try {
+            validatePlayCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readPlayCommand();
+        }
+    }
+
+    private void validatePlayCommand(Command command) {
+        if (command == Command.START) {
+            throw new IllegalArgumentException("이미 게임을 시작하셨습니다.");
+        }
+    }
+
+    private SquareDto readSquare() {
+        try {
+            return InputView.readSquare();
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return null;
+        }
+    }
+
+    private void move(SquareDto currentDto, SquareDto destinationDto) {
+        if (currentDto == null || destinationDto == null) {
+            return;
+        }
+        try {
+            chessGame.move(currentDto, destinationDto);
+            OutputView.printGameStatus(chessGame.getGameStatus());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 }

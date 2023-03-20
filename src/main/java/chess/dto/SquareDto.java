@@ -1,30 +1,36 @@
 package chess.dto;
 
+import java.util.regex.Pattern;
+
 import chess.domain.square.File;
 import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 public class SquareDto {
 
-    private final File file;
-    private final Rank rank;
+    private static final String SQUARE_REGEX = "^[a-h][1-8]$";
 
-    private SquareDto(final File file, final Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    private final Square square;
+
+    private SquareDto(final Square square) {
+        this.square = square;
     }
 
-    // TODO: 검증 필요
-    public static SquareDto of(String input) {
-        File file = File.from(input.charAt(0));
-        Rank rank = Rank.from(input.charAt(1));
-        return new SquareDto(file, rank);
+    public static SquareDto of(String square) {
+        validateSquare(square);
+        char file = square.charAt(0);
+        char rank = square.charAt(1);
+        return new SquareDto(Square.of(File.from(file), Rank.from(rank)));
     }
 
-    public File getFile() {
-        return file;
+    private static void validateSquare(String square) {
+        if (Pattern.matches(SQUARE_REGEX, square)) {
+            return;
+        }
+        throw new IllegalArgumentException("잘못된 보드 위치입니다. 보드는 a~h, 1~8로 구성됩니다.");
     }
 
-    public Rank getRank() {
-        return rank;
+    public Square getSquare() {
+        return square;
     }
 }
