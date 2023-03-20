@@ -6,9 +6,11 @@ public abstract class Piece {
 
     private final Camp camp;
 
-    public Piece(final Camp camp) {
+    protected Piece(final Camp camp) {
         this.camp = camp;
     }
+
+    protected abstract boolean movable(final Distance distance);
 
     public boolean movable(final Distance distance, final Piece target) {
         if (isUnAttackAble(target)) {
@@ -18,7 +20,7 @@ public abstract class Piece {
     }
 
     private boolean isUnAttackAble(final Piece target) {
-        return target.camp.isSameCamp(this.camp);
+        return target.isSameTeam(this.camp);
     }
 
     public Piece pick() {
@@ -32,8 +34,6 @@ public abstract class Piece {
     public boolean isNotPassable() {
         return true;
     }
-
-    protected abstract boolean movable(final Distance distance);
 
     public final Camp camp() {
         return camp;
