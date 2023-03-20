@@ -19,33 +19,44 @@ public class Board {
 
     public static Board create() {
         HashMap<Position, Piece> board = new HashMap<>();
+        initializeWhitePieces(board);
+        initializeEmptyPieces(board);
+        initializeBlackPieces(board);
+        return new Board(board);
+    }
+
+    private static void initializeWhitePieces(HashMap<Position, Piece> board) {
         List<Piece> whitePieces = new ArrayList<>(
                 List.of(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
                         new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE))
         );
-        List<Piece> blackPieces = new ArrayList<>(
-                List.of(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
-                        new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK))
-        );
-
         for (int i = 0; i < 8; i++) {
             board.put(new Position(i, 0), whitePieces.get(i));
         }
         for (int i = 0; i < 8; i++) {
             board.put(new Position(i, 1), new Pawn(Team.WHITE));
         }
+    }
+
+    private static void initializeEmptyPieces(HashMap<Position, Piece> board) {
         for (int i = 0; i < 8; i++) {
             for (int j = 2; j < 6; j++) {
                 board.put(new Position(i, j), new Empty());
             }
         }
+    }
+
+    private static void initializeBlackPieces(HashMap<Position, Piece> board) {
+        List<Piece> blackPieces = new ArrayList<>(
+                List.of(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
+                        new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK))
+        );
         for (int i = 0; i < 8; i++) {
             board.put(new Position(i, 6), new Pawn(Team.BLACK));
         }
         for (int i = 7; i >= 0; i--) {
             board.put(new Position(i, 7), blackPieces.get(i));
         }
-        return new Board(board);
     }
 
     public void movePiece(Position source, Position target) {
