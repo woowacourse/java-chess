@@ -107,11 +107,11 @@ public final class Order {
         return orderCase.equals(MOVE);
     }
 
-    public Position getSource() {
+    public Position source() {
         return moves.get(SOURCE_POSITION_INDEX);
     }
 
-    public Position getTarget() {
+    public Position target() {
         return moves.get(TARGET_POSITION_INDEX);
     }
 }

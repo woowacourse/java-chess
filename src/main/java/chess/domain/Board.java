@@ -7,6 +7,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.team.Team;
+import chess.domain.team.player.Player;
 import chess.initial.BoardFactory;
 
 import java.util.ArrayList;
@@ -29,10 +30,11 @@ public class Board {
         return board;
     }
 
-    public void move(final Position source, final Position target) {
+    public void move(final Position source, final Position target, final Player player) {
         validateNotSamePosition(source, target);
         validateSourceNotEmpty(source);
         validateNotSameTeam(source, target);
+        validateSameTeamPieceAndPlayer(source, player);
 
         Direction unitVector = Direction.findByPosition(source, target);
 
@@ -70,6 +72,14 @@ public class Board {
 
         if (sourcePiece.isSameTeam(targetPiece.team())) {
             throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
+        }
+    }
+
+    private void validateSameTeamPieceAndPlayer(final Position source, final Player player) {
+        Piece piece = board.get(source);
+
+        if(!player.containPiece(piece)) {
+            throw new IllegalArgumentException("상대방 기물을 움직이려고 시도하고 있습니다. 다른 체스말을 선택해주세요");
         }
     }
 

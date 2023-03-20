@@ -43,8 +43,8 @@ class OrderTest {
         final Order order = Order.ofMoveOrEnd(input);
 
         // then
-        assertEquals(Position.of(File.A, Rank.TWO), order.getSource());
-        assertEquals(Position.of(File.A, Rank.THREE), order.getTarget());
+        assertEquals(Position.of(File.A, Rank.TWO), order.source());
+        assertEquals(Position.of(File.A, Rank.THREE), order.target());
     }
 
     @Test
