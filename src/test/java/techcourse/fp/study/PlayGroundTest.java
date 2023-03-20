@@ -265,18 +265,14 @@ class PlayGroundTest {
     }
 
     @Test
-    @Disabled
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
-        stream.forEach(System.out::println);
-
         stream.forEach(System.out::println);
     }
 
     @Test
-    @Disabled
     public void 무한_스트림_문제() {
-        IntStream.iterate(0, i -> i + 1)
+        IntStream.iterate(0, i -> i < 10, i -> i + 1)
                 .forEach(System.out::println);
     }
 }
