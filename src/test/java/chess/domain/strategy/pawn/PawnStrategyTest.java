@@ -192,21 +192,21 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
 
         MoveRequest blackMoveFront1 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "black", // 이동할 기물 진영
                 new PositionDto(Position.from(6, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(4, 'b')) // targetPosition
         );
 
         MoveRequest blackMoveFront2 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "black", // 이동할 기물 진영
                 new PositionDto(Position.from(4, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'b')) // targetPosition
         );
 
         MoveRequest blackMoveFront3 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "black", // 이동할 기물 진영
                 new PositionDto(Position.from(3, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(2, 'b')) // targetPosition
@@ -218,7 +218,7 @@ class PawnStrategyTest {
 
         // when, then
         request = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "white", // 이동할 기물 진영
                 new PositionDto(Position.from(2, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'b')) // targetPosition
@@ -237,21 +237,21 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
 
         MoveRequest whiteMoveFront1 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "white", // 이동할 기물 진영
                 new PositionDto(Position.from(1, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'a')) // targetPosition
         );
 
         MoveRequest whiteMoveFront2 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "white", // 이동할 기물 진영
                 new PositionDto(Position.from(3, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(4, 'a')) // targetPosition
         );
 
         MoveRequest whiteMoveFront3 = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "white", // 이동할 기물 진영
                 new PositionDto(Position.from(4, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(5, 'a')) // targetPosition
@@ -263,7 +263,7 @@ class PawnStrategyTest {
 
         // when, then
         request = MoveRequest.from(
-                players.getAllPosition(), // 모든 포지션
+                players.getAllPosition(),
                 "black", // 이동할 기물 진영
                 new PositionDto(Position.from(6, 'b')), // movablePiecePosition
                 new PositionDto(Position.from(5, 'a')) // targetPosition

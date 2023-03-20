@@ -9,6 +9,9 @@ import java.util.List;
 
 public class PawnStrategy implements PieceStrategy {
 
+    private static final int WHITE_PAWN_FIRST_RANK = 1;
+    private static final int BLACK_PAWN_FIRST_RANK = 6;
+
     @Override
     public void validateDirection(final MoveRequest request) {
         List<Position> positions = request.getPositions();
@@ -31,9 +34,9 @@ public class PawnStrategy implements PieceStrategy {
     private boolean canMoveFront(List<Position> positions, String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (isNotAlreadyExistFront(positions, targetPosition) && isSameFile(movablePiecePosition, targetPosition)) {
             if (isWhitePiece(movablePieceColor)) {
-                return getWhitePosition(movablePiecePosition, targetPosition);
+                return canMoveWhitePosition(movablePiecePosition, targetPosition);
             }
-            return getBlackPosition(movablePiecePosition, targetPosition);
+            return canMoveBlackPosition(movablePiecePosition, targetPosition);
         }
         return false;
     }
@@ -56,15 +59,32 @@ public class PawnStrategy implements PieceStrategy {
                 .anyMatch(position -> !position.isSamePosition(Position.from(targetPosition.getRank(), targetPosition.getFile())));
     }
 
-    private boolean getWhitePosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean canMoveWhitePosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
         validateWhiteMoveBackWard(movablePiecePosition, targetPosition);
-        if (targetPosition.getRank() - movablePiecePosition.getRank() <= 2) {
-            if (isWhiteFirstStep(movablePiecePosition.getRank())) {
-                return true;
-            }
-            throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
+        return moveDistanceIsTwoStep("white", movablePiecePosition, targetPosition);
+    }
+
+    private boolean canMoveBlackPosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
+        validateBlackMoveBackWard(movablePiecePosition, targetPosition);
+        return moveDistanceIsTwoStep("black", movablePiecePosition, targetPosition);
+    }
+
+    private boolean moveDistanceIsTwoStep(String color, PositionDto movablePiecePosition, PositionDto targetPosition) {
+        int rankDistance = getRankDistance(targetPosition.getRank(), movablePiecePosition.getRank());
+        if (rankDistance == 2) {
+            return canMoveTwoStep(color, movablePiecePosition);
         }
-        throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
+        return true;
+    }
+
+    private boolean canMoveTwoStep(String color, PositionDto movablePiecePosition) {
+        if (isWhitePiece(color)) {
+            return validateWhiteFirstStep(movablePiecePosition.getRank());
+        }
+        if (isBlackPiece(color)) {
+            return validateBlackFirstStep(movablePiecePosition.getRank());
+        }
+        throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
     private static void validateWhiteMoveBackWard(PositionDto movablePiecePosition, PositionDto targetPosition) {
@@ -73,33 +93,36 @@ public class PawnStrategy implements PieceStrategy {
         }
     }
 
-    private boolean getBlackPosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
-        validateBlackMoveBackWard(movablePiecePosition, targetPosition);
-        if (targetPosition.getRank() - movablePiecePosition.getRank() == -2) {
-            if (isBlackFirstStep(movablePiecePosition.getRank())) {
-                return true;
-            }
-            throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
-        }
-        throw new IllegalArgumentException("첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
-    }
-
     private static void validateBlackMoveBackWard(PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (targetPosition.getRank() - movablePiecePosition.getRank() > 0) {
             throw new IllegalArgumentException("폰은 뒤로 이동할 수 없습니다.");
         }
     }
 
-    private boolean isBlackFirstStep(int rank) {
-        return rank == 6;
+    private boolean validateWhiteFirstStep(int rank) {
+        if (rank == WHITE_PAWN_FIRST_RANK) {
+            return true;
+        }
+        throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
-    private boolean isWhitePiece(String movablePieceColor) {
-        return movablePieceColor.equals("white");
+    private boolean validateBlackFirstStep(int rank) {
+        if (rank == BLACK_PAWN_FIRST_RANK) {
+            return true;
+        }
+        throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
-    private boolean isWhiteFirstStep(int rank) {
-        return rank == 1;
+    private boolean isWhitePiece(String color) {
+        return color.equals("white");
+    }
+
+    private boolean isBlackPiece(String color) {
+        return color.equals("black");
+    }
+
+    private int getRankDistance(int targetRank, int movableRank) {
+        return Math.abs(targetRank - movableRank);
     }
 
     private boolean isSameFile(PositionDto movablePiecePosition, PositionDto targetPosition) {
