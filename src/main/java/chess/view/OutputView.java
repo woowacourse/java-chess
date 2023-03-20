@@ -69,4 +69,8 @@ public class OutputView {
         }
         return pieceDisplay;
     }
+
+    public static void printExceptionMessage(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

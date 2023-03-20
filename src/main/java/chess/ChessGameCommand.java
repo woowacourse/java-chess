@@ -1,7 +1,6 @@
 package chess;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum ChessGameCommand {
     EMPTY,
@@ -12,11 +11,15 @@ public enum ChessGameCommand {
     ;
 
     public static final int COMMAND_INDEX = 0;
+    public static final int FROM_INDEX = 1;
+    public static final int TO_INDEX = 2;
+    public static final int DEFAULT_COMMAND_SIZE = 1;
+    public static final int MOVE_COMMAND_SIZE = 3;
 
-    public static ChessGameCommand from(List<String> input) {
+    public static ChessGameCommand from(String input) {
         return Arrays.stream(values())
                 .filter(state -> state != EMPTY)
-                .filter(state -> state.name().equalsIgnoreCase(input.get(COMMAND_INDEX)))
+                .filter(state -> state.name().equalsIgnoreCase(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 명령어가 없음!"));
     }
