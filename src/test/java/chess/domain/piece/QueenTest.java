@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class QueenTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false", "B:SIX:false", "A:FOUR:true",
+    @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "B:FOUR:true", "B:SIX:false", "A:FOUR:true",
             "C:SIX:true"}, delimiter = ':')
     void 퀸이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Queen queen = new Queen(Color.WHITE);

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -28,8 +29,15 @@ public class Board {
 
     private void validateMove(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         validateEmptyPiece(sourcePiece);
+        validateSamePosition(sourcePosition, targetPosition);
         validatePieceMove(sourcePosition, targetPosition, sourcePiece);
         validatePath(sourcePosition, targetPosition);
+    }
+
+    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("자신의 위치로 이동할 수 없습니다.");
+        }
     }
 
     private void validateEmptyPiece(Piece sourcePiece) {
@@ -39,7 +47,8 @@ public class Board {
     }
 
     private void validatePieceMove(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
-        if (!sourcePiece.canMove(sourcePosition, targetPosition, boards.get(targetPosition).getColor())) {
+        Color tagetColor = boards.get(targetPosition).getColor();
+        if (!sourcePiece.canMove(sourcePosition, targetPosition, tagetColor)) {
             throw new IllegalArgumentException("잘못된 위치를 지정하셨습니다.");
         }
     }
@@ -51,9 +60,9 @@ public class Board {
     }
 
     private boolean isBlockBetween(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.findPath(targetPosition).stream()
+        return !sourcePosition.findPath(targetPosition).stream()
                 .map(boards::get)
-                .noneMatch(Piece::isEmpty);
+                .allMatch(Piece::isEmpty);
     }
 
     public Map<Position, Piece> getBoards() {

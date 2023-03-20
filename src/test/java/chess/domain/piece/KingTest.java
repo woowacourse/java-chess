@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class KingTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:FIVE:true", "D:THREE:true", "E:SIX:false", "C:FOUR:false"}, delimiter = ':')
+    @CsvSource(value = {"B:FIVE:true", "D:THREE:true", "E:SIX:false", "E:FOUR:false"}, delimiter = ':')
     void 킹은_상하좌우_대각선으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         King king = new King(Color.WHITE);
 

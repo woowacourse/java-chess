@@ -19,18 +19,10 @@ public abstract class Piece {
     public abstract Piece move();
 
     public boolean canMove(Position sourcePosition, Position targetPosition, Color targetColor) {
-        if (isSameTeam(targetColor) || isMyPosition(sourcePosition, targetPosition)) {
+        if (getColor() == targetColor) {
             return false;
         }
         return validMove(sourcePosition, targetPosition, targetColor);
-    }
-
-    public boolean isSameTeam(Color color) {
-        return this.color == color;
-    }
-
-    private boolean isMyPosition(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.equals(targetPosition);
     }
 
     protected boolean isDiagonal(Position sourcePosition, Position targetPosition) {
@@ -46,5 +38,9 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean isSameColor(Color tagetColor) {
+        return this.color == tagetColor;
     }
 }

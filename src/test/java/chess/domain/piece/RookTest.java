@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RookTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:SIX:false", "A:FOUR:true", "C:SIX:true", "C:FOUR:false"}, delimiter = ':')
+    @CsvSource(value = {"B:SIX:false", "A:FOUR:true", "C:SIX:true", "B:FOUR:true"}, delimiter = ':')
     void 룩은_상하좌우로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Rook rook = new Rook(Color.WHITE);
 
@@ -27,7 +27,7 @@ class RookTest {
     @Test
     void 룩은_Empty가_아니다() {
         Rook rook = new Rook(Color.WHITE);
-        
+
         assertThat(rook.isEmpty()).isEqualTo(false);
     }
 }
