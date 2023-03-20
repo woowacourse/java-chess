@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.exception.PieceCannotMoveException;
 import chess.fixture.FixturePosition;
 import chess.piece.Bishop;
 import chess.piece.King;
@@ -32,10 +33,26 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 룩은_이동경로에_ {
+    class 룩은_ {
 
         @Test
-        void 같은_팀의_말이면_예외() {
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new Rook(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("ROOK이 움직일 수 없는 경로입니다.");
+        }
+
+        @Test
+        void 이동경로에_같은_팀의_말이면_예외() {
             //given
             Position from = FixturePosition.A1;
             Position to = FixturePosition.F1;
@@ -49,7 +66,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -68,10 +85,26 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 비숍은_이동경로에 {
+    class 비숍은_ {
 
         @Test
-        void 말이_있으면_예외() {
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new Bishop(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("BISHOP이 움직일 수 없는 경로입니다.");
+        }
+
+        @Test
+        void 이동경로에_말이_있으면_예외() {
             //given
             Position from = FixturePosition.A1;
             Position to = FixturePosition.H8;
@@ -85,11 +118,11 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
-        void 말이_있으면_예외2() {
+        void 이동경로에_말이_있으면_예외2() {
             //given
             Position from = FixturePosition.H1;
             Position to = FixturePosition.A8;
@@ -103,11 +136,11 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
-        void 말이_있으면_예외3() {
+        void 이동경로에_말이_있으면_예외3() {
             //given
             Position from = FixturePosition.D5;
             Position to = FixturePosition.A2;
@@ -121,11 +154,11 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
-        void 말이_있으면_예외4() {
+        void 이동경로에_말이_있으면_예외4() {
             //given
             Position from = FixturePosition.D5;
             Position to = FixturePosition.H1;
@@ -139,7 +172,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -158,7 +191,23 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 퀸은_이동경로에 {
+    class 퀸은_ {
+
+        @Test
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new Queen(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("QUEEN이 움직일 수 없는 경로입니다.");
+        }
 
         @Test
         void 말이_있으면_예외() {
@@ -175,7 +224,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -193,7 +242,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -211,7 +260,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -229,7 +278,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -247,7 +296,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test
@@ -269,6 +318,22 @@ class ChessBoardTest {
     class 킹은_ {
 
         @Test
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new King(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("KING이 움직일 수 없는 경로입니다.");
+        }
+
+        @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
             Position from = FixturePosition.A1;
@@ -281,7 +346,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
+                    .hasMessage("도착지에 동일한 팀의 말이 존재합니다");
         }
 
         @Test
@@ -303,6 +368,22 @@ class ChessBoardTest {
     class 나이트는_ {
 
         @Test
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new Knight(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("KNIGHT이 움직일 수 없는 경로입니다.");
+        }
+
+        @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
             Position from = FixturePosition.A1;
@@ -315,7 +396,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
+                    .hasMessage("도착지에 동일한 팀의 말이 존재합니다");
         }
 
         @Test
@@ -337,6 +418,22 @@ class ChessBoardTest {
     class 폰은_이동경로에 {
 
         @Test
+        void 이동할_수_없는_경로로_움직이면_예외() {
+            //given
+            Position from = FixturePosition.A1;
+            Position to = FixturePosition.F2;
+
+            piecePosition.put(from, new Pawn(Team.WHITE));
+
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+            //when & then
+            assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                    .isInstanceOf(PieceCannotMoveException.class)
+                    .hasMessage("PAWN이 움직일 수 없는 경로입니다.");
+        }
+
+        @Test
         void 같은_팀의_말이_있으면_예외() {
             //given
             Position from = FixturePosition.B2;
@@ -351,7 +448,7 @@ class ChessBoardTest {
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
         @Test

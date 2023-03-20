@@ -16,9 +16,8 @@ class EmptyPieceTest {
         Position from = FixturePosition.A1;
 
         //when & then
-        Assertions.assertThatThrownBy(() -> emptyPiece.isMovable(from, to, PieceFixture.EMPTY_PIECE))
-                .isInstanceOf(IllegalArgumentException.class)
+        Assertions.assertThatThrownBy(() -> emptyPiece.isMovable(from, to))
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("빈 말은 움직일 수 없습니다.");
     }
-
 }

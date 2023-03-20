@@ -1,35 +1,40 @@
 package chess.dto;
 
 import chess.piece.Piece;
+import chess.piece.PieceType;
+import chess.piece.Team;
 
 import java.util.Map;
-import java.util.function.Predicate;
+
+import static chess.piece.PieceType.BISHOP;
+import static chess.piece.PieceType.EMPTY;
+import static chess.piece.PieceType.KING;
+import static chess.piece.PieceType.KNIGHT;
+import static chess.piece.PieceType.PAWN;
+import static chess.piece.PieceType.QUEEN;
+import static chess.piece.PieceType.ROOK;
 
 public class PieceDto {
 
     private final String view;
-    private final Map<Predicate<Piece>, String> views = Map.of(
-            Piece::isKing, "k",
-            Piece::isQueen, "q",
-            Piece::isKnight, "n",
-            Piece::isPawn, "p",
-            Piece::isRook, "r",
-            Piece::isBishop, "b",
-            Piece::isEmpty, "."
+    private final Map<PieceType, String> views = Map.of(
+            KING, "k",
+            QUEEN, "q",
+            KNIGHT, "n",
+            PAWN, "p",
+            ROOK, "r",
+            BISHOP, "b",
+            EMPTY, "."
     );
 
     public PieceDto(final Piece piece) {
         this.view = parseByTeam(piece);
     }
 
-    private String parseByTeam(final Piece piece2) {
-        String result = views.entrySet().stream()
-                .filter(piece -> piece.getKey().test(piece2))
-                .findFirst()
-                .map(Map.Entry::getValue)
-                .orElseThrow(() -> new IllegalStateException("Piece 변환 과정 중 오류가 발생했습니다."));
+    private String parseByTeam(final Piece piece) {
+        String result = views.get(piece.getType());
 
-        if (piece2.isBlack()) {
+        if (piece.getTeam() == Team.BLACK) {
             return result.toUpperCase();
         }
         return result;

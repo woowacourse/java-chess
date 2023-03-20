@@ -7,79 +7,72 @@ import chess.board.Rank;
 public class Pawn extends Piece {
 
     public Pawn(final Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to, final Piece toPiece) {
-        validateStay(from, to);
-
-        if (isBlackPawnMovable(from, to, toPiece)) {
-            return true;
-        }
-
-        if (isWhitePawnMovable(from, to, toPiece)) {
-            return true;
-        }
-        throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
-    }
-
-    private boolean isWhitePawnMovable(final Position from, final Position to, final Piece toPiece) {
-        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+    public boolean isMovable(final Position from, final Position to) {
 
         if (team == Team.WHITE) {
-
-            final int rankInterval = to.getRank().getIndex() - from.getRank().getIndex();
-
-            if (rankInterval == 1 && fileInterval == 1 && toPiece.isBlack()) {
-                return true;
-            }
-
-            if (from.getRank() == Rank.TWO) {
-                if (to.getRank().getIndex() - from.getRank().getIndex() <= 2 && to.getFile() == from.getFile()) {
-                    return true;
-                }
-                throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
-            }
-
-            if (to.getRank().getIndex() - from.getRank().getIndex() == 1 && toPiece.isEmpty()) {
-                return true;
-            }
+            return isWhitePawnMovable(from, to);
         }
-        return false;
-    }
-
-    private boolean isBlackPawnMovable(final Position from, final Position to, final Piece toPiece) {
-        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
 
         if (team == Team.BLACK) {
-            final int rankInterval = from.getRank().getIndex() - to.getRank().getIndex();
-
-            if (rankInterval == 1 && fileInterval == 1 && toPiece.isWhite()) {
-                return true;
-            }
-            if (from.getRank() == Rank.SEVEN) {
-                if (from.getRank().getIndex() - to.getRank().getIndex() <= 2 && from.getFile() == to.getFile()) {
-                    return true;
-                }
-                throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
-            }
-
-            if (from.getRank().getIndex() - to.getRank().getIndex() == 1 && toPiece.isEmpty()) {
-                return true;
-            }
+            return isBlackPawnMovable(from, to);
         }
+
         return false;
     }
 
-    private void validateStay(final Position from, final Position to) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
+    private boolean isWhitePawnMovable(final Position from, final Position to) {
+
+        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+        final int rankInterval = getRankInterval(to.getRank(), from.getRank());
+
+        if (isDiagonalOneStep(fileInterval, rankInterval)) {
+            return true;
         }
+
+        if (from.getRank() == Rank.TWO) {
+            return isPawnInitMovable(from, to, rankInterval);
+        }
+
+        return isSameFile(fileInterval) && isMoveOneStep(rankInterval);
     }
 
-    @Override
-    public boolean isPawn() {
-        return true;
+    private boolean isBlackPawnMovable(final Position from, final Position to) {
+
+        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+        final int rankInterval = getRankInterval(from.getRank(), to.getRank());
+
+        if (isDiagonalOneStep(fileInterval, rankInterval)) {
+            return true;
+        }
+
+        if (from.getRank() == Rank.SEVEN) {
+            return isPawnInitMovable(from, to, rankInterval);
+        }
+
+        return isSameFile(fileInterval) && isMoveOneStep(rankInterval);
+    }
+
+    private boolean isPawnInitMovable(final Position from, final Position to, final int rankInterval) {
+        return (rankInterval <= 2) && (from.getFile() == to.getFile());
+    }
+
+    private boolean isDiagonalOneStep(final int fileInterval, final int rankInterval) {
+        return isMoveOneStep(fileInterval) && isMoveOneStep(rankInterval);
+    }
+
+    private boolean isSameFile(final int fileInterval) {
+        return fileInterval == 0;
+    }
+
+    private boolean isMoveOneStep(final int rankInterval) {
+        return rankInterval == 1;
+    }
+
+    private int getRankInterval(final Rank from, final Rank to) {
+        return from.getIndex() - to.getIndex();
     }
 }

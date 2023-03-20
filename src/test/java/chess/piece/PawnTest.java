@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
@@ -21,7 +20,7 @@ class PawnTest {
             Position to = FixturePosition.B3;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
@@ -33,7 +32,7 @@ class PawnTest {
             Position to = FixturePosition.B4;
 
             //then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
@@ -45,11 +44,11 @@ class PawnTest {
             Position to = FixturePosition.C3;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, new Pawn(Team.BLACK))).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
-        void 올바른_방향이_아니면_예외() {
+        void 올바른_방향이_아니면_False() {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
@@ -57,9 +56,7 @@ class PawnTest {
             Position to = FixturePosition.C4;
 
             //when & then
-            assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Pawn이 이동할 수 없는 경로입니다.");
+            assertThat(pawn.isMovable(from, to)).isFalse();
         }
     }
 
@@ -74,7 +71,7 @@ class PawnTest {
             Position to = FixturePosition.B4;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
@@ -86,7 +83,7 @@ class PawnTest {
             Position to = FixturePosition.B5;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
@@ -98,11 +95,11 @@ class PawnTest {
             Position to = FixturePosition.B6;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, new Pawn(Team.WHITE))).isTrue();
+            assertThat(pawn.isMovable(from, to)).isTrue();
         }
 
         @Test
-        void 올바른_방향이_아니면_예외() {
+        void 올바른_방향이_아니면_False() {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
@@ -110,9 +107,7 @@ class PawnTest {
             Position to = FixturePosition.C4;
 
             //when & then
-            assertThatThrownBy(() -> pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Pawn이 이동할 수 없는 경로입니다.");
+            assertThat(pawn.isMovable(from, to)).isFalse();
         }
     }
 }

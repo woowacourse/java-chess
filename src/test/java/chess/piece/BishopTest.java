@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BishopTest {
 
@@ -21,11 +20,11 @@ class BishopTest {
             Position to = FixturePosition.H8;
 
             //when & then
-            assertThat(bishop.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(bishop.isMovable(from, to)).isTrue();
         }
 
         @Test
-        void 대각선이_아니면_예외() {
+        void 대각선이_아니면_False() {
             //given
             Bishop bishop = new Bishop(Team.WHITE);
 
@@ -33,9 +32,7 @@ class BishopTest {
             Position to = FixturePosition.B8;
 
             //when & then
-            assertThatThrownBy(() -> bishop.isMovable(from, to, PieceFixture.EMPTY_PIECE))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Bishop이 이동할 수 없는 경로입니다.");
+            assertThat(bishop.isMovable(from, to)).isFalse();
         }
     }
 }

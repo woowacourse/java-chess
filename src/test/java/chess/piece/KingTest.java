@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
 
@@ -21,20 +20,18 @@ class KingTest {
             Position to = FixturePosition.B2;
 
             //when & then
-            assertThat(king.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(king.isMovable(from, to)).isTrue();
         }
 
         @Test
-        void 상하좌우_대각선으로_한칸이_아니면_예외() {
+        void 상하좌우_대각선으로_한칸이_아니면_False() {
             King king = new King(Team.WHITE);
 
             Position from = FixturePosition.A1;
             Position to = FixturePosition.B3;
 
             //when & then
-            assertThatThrownBy(() -> king.isMovable(from, to, PieceFixture.EMPTY_PIECE))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("King이 이동할 수 없는 경로입니다.");
+            assertThat(king.isMovable(from, to)).isFalse();
         }
     }
 }
