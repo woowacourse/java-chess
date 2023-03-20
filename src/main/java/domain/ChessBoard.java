@@ -75,6 +75,6 @@ public class ChessBoard {
     }
 
     private boolean hasPiece(Square route) {
-        return pieceLocations.containsKey(route);
+        return pieceLocations.hasPiece(route);
     }
 }

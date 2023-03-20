@@ -57,7 +57,7 @@ public class PieceLocations {
         pieceLocations.put(target, piece);
     }
 
-    public boolean containsKey(Square route) {
-        return pieceLocations.containsKey(route);
+    public boolean hasPiece(Square square) {
+        return pieceLocations.containsKey(square);
     }
 }
