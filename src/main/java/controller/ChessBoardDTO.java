@@ -2,7 +2,9 @@ package controller;
 
 import domain.chessboard.ChessBoard;
 import domain.coordinate.PositionFactory;
+import domain.piece.Color;
 import domain.squarestatus.SquareStatus;
+import domain.type.EmptyType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,17 @@ public class ChessBoardDTO {
     private static List<String> convertRowToChessBoardElement(final ChessBoard chessBoard, final int row) {
         return PositionFactory.findRow(row).stream()
                 .map(chessBoard::findPosition)
-                .map(SquareStatus::getType)
-                .map(ChessBoardElement::getElementName)
+                .map(ChessBoardDTO::convertPieceToElement)
                 .collect(Collectors.toList());
+    }
+
+    private static String convertPieceToElement(final SquareStatus squareStatus) {
+        final String elementName = ChessBoardElement.getElementName(squareStatus.getType());
+
+        if (squareStatus.isDifferentType(EmptyType.EMPTY) && squareStatus.isSameColor(Color.BLACK)) {
+            return elementName.toUpperCase();
+        }
+        return elementName;
     }
 
     public List<List<String>> getRowDTOs() {
