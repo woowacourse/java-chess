@@ -15,33 +15,20 @@ public final class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        GameCommand gameCommand = receiveStartOrEndCommand(receiveGameCommand());
+        GameCommand gameCommand = InputView.readInitialCommand();
         if (gameCommand == GameCommand.START) {
             startGame();
         }
     }
 
-    private GameCommand receiveStartOrEndCommand(GameCommand gameCommand) {
-        while (gameCommand == GameCommand.MOVE) {
-            OutputView.printNotStartedGameMessage();
-            gameCommand = receiveGameCommand();
-        }
-        return gameCommand;
-    }
-
-    private GameCommand receiveGameCommand() {
-        List<String> userInput = InputView.readUserInput();
-        return GameCommand.of(userInput.get(0));
-    }
-
     private void startGame() {
         ChessBoard chessBoard = setUpChessBoard();
-        List<String> userInput = InputView.readUserInput();
+        List<String> userInput = InputView.readPlayingCommand();
         GameCommand gameCommand = GameCommand.of(userInput.get(0));
 
         while (gameCommand != GameCommand.END) {
-            executePlayingCommand(chessBoard, userInput);
-            userInput = InputView.readUserInput();
+            executeMoveCommand(chessBoard, userInput);
+            userInput = InputView.readPlayingCommand();
             gameCommand = GameCommand.of(userInput.get(0));
         }
     }
@@ -53,27 +40,15 @@ public final class ChessController {
         return chessBoard;
     }
 
-    private void executePlayingCommand(ChessBoard chessBoard, List<String> userInput) {
-        GameCommand gameCommand = GameCommand.of(userInput.get(0));
-
-        if (gameCommand == GameCommand.START) {
-            throw new IllegalArgumentException("[ERROR] 게임 진행 중에는 move와 end 명령어만 입력 가능합니다.");
-        }
-
-        if (gameCommand == GameCommand.MOVE) {
-            executeMoveCommand(chessBoard, userInput);
-        }
-    }
-
     private void executeMoveCommand(ChessBoard chessBoard, List<String> userInput) {
-        Position start = inputToPosition(userInput.get(1));
-        Position end = inputToPosition(userInput.get(2));
+        Position start = convertInputToPosition(userInput.get(1));
+        Position end = convertInputToPosition(userInput.get(2));
 
         chessBoard.movePiece(start, end);
         OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
     }
 
-    private Position inputToPosition(String input) {
+    private Position convertInputToPosition(String input) {
         int row = RowToNumber.of(input.charAt(1));
         int column = ColumnToNumber.of(input.charAt(0));
 
