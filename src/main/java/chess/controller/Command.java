@@ -4,36 +4,28 @@ import java.util.Arrays;
 
 
 public enum Command {
-    START("start"),
-    END("end"),
-    MOVE("move");
+    START,
+    END,
+    MOVE;
 
-    private final String command;
-
-    Command(final String command) {
-        this.command = command;
-    }
-
-    public static Command createInitMessage(String rawCommand) {
-        if (rawCommand.equals(START.command) || rawCommand.equals(END.command)) {
-            return from(rawCommand);
+    public static Command createInitMessage(String command) {
+        if (command.equalsIgnoreCase(START.name()) || command.equalsIgnoreCase(END.name())) {
+            return from(command);
         }
-
         throw new IllegalArgumentException("잘못된 커맨드를 입력하였습니다.");
     }
 
-    private static Command from(String rawCommand) {
+    private static Command from(String command) {
         return Arrays.stream(values())
-                .filter(command -> command.command.equals(rawCommand))
+                .filter(value -> value.name().equalsIgnoreCase(command))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 커맨드를 입력하였습니다."));
     }
 
-    public static Command createMoveOrEndMessage(String rawCommand) {
-        if (rawCommand.equals(MOVE.command) || rawCommand.equals(END.command)) {
-            return from(rawCommand);
+    public static Command createMoveOrEndMessage(String command) {
+        if (command.equalsIgnoreCase(MOVE.name()) || command.equalsIgnoreCase(END.name())) {
+            return from(command);
         }
-
         throw new IllegalArgumentException("잘못된 커맨드를 입력하였습니다.");
     }
 

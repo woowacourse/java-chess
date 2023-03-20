@@ -31,7 +31,6 @@ public final class ChessController {
             outputView.printBoard(BoardDto.create(board.getBoard()));
             move(board);
         }
-
         outputView.printEndMessage();
     }
 
@@ -48,7 +47,6 @@ public final class ChessController {
     private void move(final Board board) {
         try {
             List<String> commands = inputView.readCommand();
-
             while (!Command.createMoveOrEndMessage(commands.get(0)).isEnd()) {
                 board.move(parseToPosition(commands.get(1)), parseToPosition(commands.get(2)));
                 outputView.printBoard(BoardDto.create(board.getBoard()));
@@ -61,9 +59,18 @@ public final class ChessController {
     }
 
     private Position parseToPosition(final String command) {
-        final int fileOrder = command.charAt(0) - 96;
-        final int rankOrder = command.charAt(1) - '0';
-
+        final int fileOrder = getFileOrder(command);
+        final int rankOrder = getRankOrder(command);
         return Position.of(File.of(fileOrder), Rank.of(rankOrder));
+    }
+
+    private int getFileOrder(final String command) {
+        final int charToIntDifference = 96;
+        return command.charAt(0) - charToIntDifference;
+    }
+
+    private int getRankOrder(final String command) {
+        final char charToIntDifference = '0';
+        return command.charAt(1) - charToIntDifference;
     }
 }
