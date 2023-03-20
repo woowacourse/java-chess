@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,7 +17,9 @@ class CoordinateTest {
         final String alphanumeric = "o9";
 
         //when & then
-        assertThatThrownBy(() -> Coordinate.of(alphanumeric)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Coordinate.of(alphanumeric))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 좌표값입니다.o9");
     }
 
     @Test
@@ -28,12 +31,14 @@ class CoordinateTest {
         final Coordinate coordinate = Coordinate.of(alphanumeric);
 
         //then
-        assertThat(coordinate)
-                .extracting("fileIndex")
-                .isEqualTo('a');
-        assertThat(coordinate)
-                .extracting("rankIndex")
-                .isEqualTo('3');
+        assertSoftly((softly) -> {
+            softly.assertThat(coordinate)
+                    .extracting("rankIndex")
+                    .isEqualTo('3');
+            softly.assertThat(coordinate)
+                    .extracting("fileIndex")
+                    .isEqualTo('a');
+        });
     }
 
     @Test
@@ -120,8 +125,10 @@ class CoordinateTest {
         final Coordinate h8 = Coordinate.of("h8");
 
         //when & then
-        assertThat(a1.isPositiveDiagonal(b2)).isTrue();
-        assertThat(h8.isPositiveDiagonal(b2)).isTrue();
+        assertSoftly((softly) -> {
+            softly.assertThat(a1.isPositiveDiagonal(b2)).isTrue();
+            softly.assertThat(h8.isPositiveDiagonal(b2)).isTrue();
+        });
     }
 
     @Test
@@ -134,9 +141,11 @@ class CoordinateTest {
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate a3 = Coordinate.of("a3");
         //when & then
-        assertThat(b6.isNegativeDiagonal(c5)).isTrue();
-        assertThat(b6.isNegativeDiagonal(e3)).isTrue();
-        assertThat(c1.isNegativeDiagonal(a3)).isTrue();
+        assertSoftly((softly) -> {
+            assertThat(b6.isNegativeDiagonal(c5)).isTrue();
+            assertThat(b6.isNegativeDiagonal(e3)).isTrue();
+            assertThat(c1.isNegativeDiagonal(a3)).isTrue();
+        });
     }
 
 }

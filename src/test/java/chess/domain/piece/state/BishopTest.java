@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BishopTest {
 
+    private static final String BISHOP_ERROR_MESSAGE = "Bishop(은)는 해당 좌표로 이동할 수 없습니다.";
+
     @Test
     void 비숍이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
@@ -23,7 +25,9 @@ class BishopTest {
         final Coordinate b3 = Coordinate.of("b3");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> bishop.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> bishop.findRoute(a1, b3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(BISHOP_ERROR_MESSAGE);
     }
 
     @Test
@@ -34,7 +38,8 @@ class BishopTest {
         final Coordinate c3 = Coordinate.of("c3");
 
         //when & then
-        Assertions.assertThat(bishop.findRoute(a1, c3)).containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
+        Assertions.assertThat(bishop.findRoute(a1, c3))
+                .containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
     }
 
 
@@ -46,7 +51,8 @@ class BishopTest {
         final Coordinate e1 = Coordinate.of("e1");
 
         //when & then
-        Assertions.assertThat(bishop.findRoute(c3, e1)).containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
+        Assertions.assertThat(bishop.findRoute(c3, e1))
+                .containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
     }
 
     @Test
@@ -58,7 +64,8 @@ class BishopTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(BISHOP_ERROR_MESSAGE);
     }
 
     @Test
@@ -70,7 +77,8 @@ class BishopTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(BISHOP_ERROR_MESSAGE);
     }
 
     @Test

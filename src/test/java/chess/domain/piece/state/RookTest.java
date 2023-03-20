@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RookTest {
 
+    private static final String ROOK_ERROR_MESSAGE = "Rook(은)는 해당 좌표로 이동할 수 없습니다.";
+
     @Test
     void 룩이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
@@ -23,7 +25,9 @@ class RookTest {
         final Coordinate b3 = Coordinate.of("b3");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> rook.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> rook.findRoute(a1, b3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ROOK_ERROR_MESSAGE);
     }
 
     @Test
@@ -59,7 +63,8 @@ class RookTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> rook.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ROOK_ERROR_MESSAGE);
     }
 
     @Test
@@ -71,7 +76,8 @@ class RookTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> rook.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ROOK_ERROR_MESSAGE);
     }
 
     @Test

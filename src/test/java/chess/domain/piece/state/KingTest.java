@@ -1,5 +1,7 @@
 package chess.domain.piece.state;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
@@ -7,13 +9,14 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KingTest {
+
+    private static final String KING_ERROR_MESSAGE = "King(은)는 해당 좌표로 이동할 수 없습니다.";
 
     @Test
     void 킹은_한칸_위_아래_좌_우로_움직일_수_있다() {
@@ -26,10 +29,12 @@ class KingTest {
         final Coordinate c2 = Coordinate.of("c2");
 
         //when & then
-        Assertions.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
-        Assertions.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
-        Assertions.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.of("a2"));
-        Assertions.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c2"));
+        assertSoftly((softly) -> {
+            softly.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
+            softly.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
+            softly.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.of("a2"));
+            softly.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c3"));
+        });
     }
 
     @Test
@@ -43,10 +48,12 @@ class KingTest {
         final Coordinate c3 = Coordinate.of("c3");
 
         //when & then
-        Assertions.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.of("a1"));
-        Assertions.assertThat(king.findRoute(b2, a3)).containsExactly(Coordinate.of("a3"));
-        Assertions.assertThat(king.findRoute(b2, c1)).containsExactly(Coordinate.of("c1"));
-        Assertions.assertThat(king.findRoute(b2, c3)).containsExactly(Coordinate.of("c3"));
+        assertSoftly((softly) -> {
+            softly.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.of("a1"));
+            softly.assertThat(king.findRoute(b2, a3)).containsExactly(Coordinate.of("a3"));
+            softly.assertThat(king.findRoute(b2, c1)).containsExactly(Coordinate.of("c1"));
+            softly.assertThat(king.findRoute(b2, c3)).containsExactly(Coordinate.of("c3"));
+        });
     }
 
 
@@ -58,7 +65,9 @@ class KingTest {
         final Coordinate b3 = Coordinate.of("b3");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> king.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> king.findRoute(a1, b3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(KING_ERROR_MESSAGE);
     }
 
 
@@ -70,8 +79,9 @@ class KingTest {
         final List<PieceState> route = List.of(new Pawn(team));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> king.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> king.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(KING_ERROR_MESSAGE);
     }
 
     @Test

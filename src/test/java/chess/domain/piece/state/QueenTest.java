@@ -1,5 +1,7 @@
 package chess.domain.piece.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
@@ -7,13 +9,14 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class QueenTest {
+
+    private static final String QUEEN_ERROR_MESSAGE = "Queen(은)는 해당 좌표로 이동할 수 없습니다.";
 
     @Test
     void 퀸은_같은_파일의_좌표로_움직일_수_있다() {
@@ -23,7 +26,7 @@ class QueenTest {
         final Coordinate a3 = Coordinate.of("a3");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, a3)).containsExactly(Coordinate.of("a2"), Coordinate.of("a3"));
+        assertThat(queen.findRoute(a1, a3)).containsExactly(Coordinate.of("a2"), Coordinate.of("a3"));
     }
 
 
@@ -35,7 +38,7 @@ class QueenTest {
         final Coordinate e1 = Coordinate.of("e1");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, e1)).containsExactly(Coordinate.of("b1"), Coordinate.of("c1")
+        assertThat(queen.findRoute(a1, e1)).containsExactly(Coordinate.of("b1"), Coordinate.of("c1")
                 , Coordinate.of("d1"), Coordinate.of("e1"));
     }
 
@@ -47,7 +50,9 @@ class QueenTest {
         final Coordinate b3 = Coordinate.of("b3");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> queen.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> queen.findRoute(a1, b3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(QUEEN_ERROR_MESSAGE);
     }
 
     @Test
@@ -58,7 +63,7 @@ class QueenTest {
         final Coordinate c3 = Coordinate.of("c3");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, c3)).containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
+        assertThat(queen.findRoute(a1, c3)).containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
     }
 
 
@@ -70,7 +75,7 @@ class QueenTest {
         final Coordinate e1 = Coordinate.of("e1");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(c3, e1)).containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
+        assertThat(queen.findRoute(c3, e1)).containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
     }
 
     @Test
@@ -81,8 +86,9 @@ class QueenTest {
         final List<PieceState> route = List.of(new Empty(), new Empty(), new Pawn(team));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> queen.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> queen.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(QUEEN_ERROR_MESSAGE);
     }
 
     @Test
@@ -93,8 +99,9 @@ class QueenTest {
         final List<PieceState> route = List.of(new Empty(), new Pawn(team), new Empty());
 
         //when & then
-        Assertions.assertThatThrownBy(() -> queen.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> queen.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(QUEEN_ERROR_MESSAGE);
     }
 
     @Test

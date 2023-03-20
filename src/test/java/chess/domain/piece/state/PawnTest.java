@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PawnTest {
 
+    private static final String PAWN_ERROR_MESSAGE = "Pawn(은)는 해당 좌표로 이동할 수 없습니다.";
+
     @Test
     void 폰은_직진할_떄_다른팀이_있으면_예외가_발생한다() {
         // given
@@ -26,7 +28,9 @@ class PawnTest {
         pawn.findRoute(c1, c2);
 
         //when & then
-        assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PAWN_ERROR_MESSAGE);
     }
 
     @Test
@@ -54,7 +58,9 @@ class PawnTest {
         pawn.findRoute(c1, b2);
 
         //when & then
-        assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PAWN_ERROR_MESSAGE);
     }
 
     @Test
@@ -87,7 +93,9 @@ class PawnTest {
         pawn.validateRoute(route1);
 
         //then
-        assertThatThrownBy(() -> pawn.findRoute(b2, b4)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.findRoute(b2, b4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PAWN_ERROR_MESSAGE);
     }
 
 
@@ -100,7 +108,8 @@ class PawnTest {
 
         //when & then
         assertThatThrownBy(() -> pawn.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PAWN_ERROR_MESSAGE);
     }
 
     @Test

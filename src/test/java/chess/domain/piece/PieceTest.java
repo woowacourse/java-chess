@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.piece.state.Bishop;
 import chess.domain.piece.state.Pawn;
 import chess.domain.piece.state.Rook;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -34,6 +33,6 @@ class PieceTest {
         final Bishop bishop = new Bishop(Team.BLACK);
 
         //when & then
-        Assertions.assertThat(rook.isSameTeam(bishop)).isFalse();
+        assertThat(rook.isSameTeam(bishop)).isFalse();
     }
 }

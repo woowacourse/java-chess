@@ -1,5 +1,7 @@
 package chess.domain.piece.state;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
@@ -7,13 +9,14 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KnightTest {
+
+    private static final String KNIGHT_ERROR_MESSAGE = "Knight(은)는 해당 좌표로 이동할 수 없습니다.";
 
     @Test
     void 나이트는_같은_랭크의_좌표로_움직일_수_있다() {
@@ -26,11 +29,12 @@ class KnightTest {
         final Coordinate e2 = Coordinate.of("e2");
 
         //when & then
-        Assertions.assertThat(knight.findRoute(c3, a4)).containsExactly(Coordinate.of("a4"));
-        Assertions.assertThat(knight.findRoute(c3, b1)).containsExactly(Coordinate.of("b1"));
-        Assertions.assertThat(knight.findRoute(c3, d5)).containsExactly(Coordinate.of("d5"));
-        Assertions.assertThat(knight.findRoute(c3, e2)).containsExactly(Coordinate.of("e2"));
-
+        assertSoftly((softly) -> {
+            softly.assertThat(knight.findRoute(c3, a4)).containsExactly(Coordinate.of("a4"));
+            softly.assertThat(knight.findRoute(c3, b1)).containsExactly(Coordinate.of("b1"));
+            softly.assertThat(knight.findRoute(c3, d5)).containsExactly(Coordinate.of("d5"));
+            softly.assertThat(knight.findRoute(c3, e2)).containsExactly(Coordinate.of("e2"));
+        });
     }
 
     @Test
@@ -41,7 +45,9 @@ class KnightTest {
         final Coordinate b8 = Coordinate.of("b8");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> knight.findRoute(a1, b8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> knight.findRoute(a1, b8))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(KNIGHT_ERROR_MESSAGE);
     }
 
     @Test
@@ -52,8 +58,9 @@ class KnightTest {
         final List<PieceState> route = List.of(new Pawn(team));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> knight.validateRoute(route))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> knight.validateRoute(route))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(KNIGHT_ERROR_MESSAGE);
     }
 
     @Test
