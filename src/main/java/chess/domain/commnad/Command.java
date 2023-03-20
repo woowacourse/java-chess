@@ -9,6 +9,7 @@ public class Command {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
+    private static final String STATUS_COMMAND = "status";
     private static final int COMMAND_INDEX = 0;
     private static final int SELECTED_PIECE = 1;
     private static final int DESTINATION = 2;
@@ -26,7 +27,7 @@ public class Command {
     }
 
     public void validate(final List<String> commands) {
-        List<String> permittedCommands = List.of(START_COMMAND, MOVE_COMMAND, END_COMMAND);
+        List<String> permittedCommands = List.of(START_COMMAND, MOVE_COMMAND, END_COMMAND, STATUS_COMMAND);
 
         if (!permittedCommands.contains(commands.get(COMMAND_INDEX))) {
             throw new IllegalArgumentException(CommandException.COMMAND_INVALID.getMessage());
@@ -51,5 +52,9 @@ public class Command {
 
     public boolean isCreateNewGame() {
         return commands.get(COMMAND_INDEX).equals(START_COMMAND);
+    }
+
+    public boolean isStatus() {
+        return commands.get(COMMAND_INDEX).equals(STATUS_COMMAND);
     }
 }

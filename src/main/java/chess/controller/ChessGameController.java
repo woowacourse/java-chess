@@ -28,30 +28,65 @@ public class ChessGameController {
 
         playChess(chessGame, command);
 
-        resultView.printScore(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
-        resultView.printWinner(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
+        resultView.printGameEnd();
     }
 
     private void playChess(ChessGame chessGame, Command command) {
-        while (!command.isGameStop() && !chessGame.isGameDone()) {
-            try {
-                chessGame = createNewChessGame(chessGame, command);
-                tryChessMove(chessGame, command);
-                outputView.printBoard(chessGame.getBoard());
-                if (chessGame.isGameDone()) {
-                    break;
-                }
-                command = inputView.readGameCommand();
-            } catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage());
-                command = inputView.readGameCommand();
+        while (!isGameEnd(chessGame, command)) {
+
+            chessGame = createNewChessGame(chessGame, command);
+            tryChessMove(chessGame, command);
+            outputView.printBoard(chessGame.getBoard());
+
+            if (isGameDone(chessGame)) {
+                break;
             }
+
+            command = inputView.readGameCommand();
         }
     }
 
+    private boolean isGameEnd(final ChessGame chessGame, final Command command) {
+        if (isCommandStatus(chessGame, command) || command.isGameStop()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isCommandStatus(final ChessGame chessGame, final Command command) {
+        if (command.isStatus()) {
+            resultView.printScore(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
+            resultView.printWinner(chessGame.calculateScoreOfUpperTeam(),
+                    chessGame.calculateScoreOfLowerTeam());
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isGameDone(final ChessGame chessGame) {
+        if (chessGame.isGameDone() && chessGame.isUpperTeamWin()) {
+            resultView.printWinnerIsUpperTeam();
+            return true;
+        }
+
+        if (chessGame.isGameDone()) {
+            resultView.printWinnerIsLowerTeam();
+            return true;
+        }
+
+        return false;
+    }
+
     private void tryChessMove(final ChessGame chessGame, final Command command) {
-        if (command.isMove()) {
+        if (!command.isMove()) {
+            return;
+        }
+
+        try {
             chessGame.move(command.findSelectedPiece(), command.findDestination());
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 

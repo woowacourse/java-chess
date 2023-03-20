@@ -197,4 +197,13 @@ public class Board {
 
         return countOfKing == 1;
     }
+
+    public boolean isUpperTeamWin() {
+        Piece kingOfWinner = board.values().stream()
+                .filter(piece -> piece.isKing())
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        return kingOfWinner.isNameUpperCase();
+    }
 }

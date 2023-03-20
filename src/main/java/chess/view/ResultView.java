@@ -2,6 +2,8 @@ package chess.view;
 
 public class ResultView {
 
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+
     public void printScore(final double upperTeamScore, final double lowerTeamScore) {
         System.out.println();
         System.out.println("대문자 팀의 남은 체스 점수 총 합은 : " + upperTeamScore + "점 입니다.");
@@ -20,5 +22,17 @@ public class ResultView {
         if (upperTeamScore < lowerTeamScore) {
             System.out.println("체스 우승 결과는 : 소문자팀");
         }
+    }
+
+    public void printGameEnd() {
+        System.out.println(LINE_SEPARATOR + "프로그램 종료");
+    }
+
+    public void printWinnerIsUpperTeam() {
+        System.out.println(LINE_SEPARATOR + "소문자팀 킹이 잡혀서, 대문자팀이 체스 게임에서 승리하였습니다.");
+    }
+
+    public void printWinnerIsLowerTeam() {
+        System.out.println(LINE_SEPARATOR + "대문자팀 킹이 잡혀서, 소문자팀이 체스 게임에서 승리하였습니다.");
     }
 }

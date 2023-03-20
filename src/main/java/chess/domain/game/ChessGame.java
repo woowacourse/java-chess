@@ -50,6 +50,10 @@ public class ChessGame {
         return board.isGameDone();
     }
 
+    public boolean isUpperTeamWin() {
+        return board.isUpperTeamWin();
+    }
+
     public void initBoard() {
         this.board = BoardFactory.createBoard();
     }
