@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -98,47 +97,47 @@ class RelativePositionTest {
         }
     }
 
-	@Nested
-	@DisplayName("상대 위치의 방향이 대각선 방향인지 확인하는 isDiagonal 메서드 테스트")
-	class isDiagonalTest {
-		@Test
-		@DisplayName("(3, -3)은 대각선 방향이다.")
-		void isDiagonalTest1() {
-			RelativePosition relativePosition = new RelativePosition(3, -3);
+    @Nested
+    @DisplayName("상대 위치의 방향이 대각선 방향인지 확인하는 isDiagonal 메서드 테스트")
+    class isDiagonalTest {
+        @Test
+        @DisplayName("(3, -3)은 대각선 방향이다.")
+        void isDiagonalTest1() {
+            RelativePosition relativePosition = new RelativePosition(3, -3);
 
-			assertThat(relativePosition.isDiagonal()).isEqualTo(true);
-		}
+            assertThat(relativePosition.isDiagonal()).isEqualTo(true);
+        }
 
-		@Test
-		@DisplayName("(-3, -3)은 대각선 방향이다.")
-		void isDiagonalTest2() {
-			RelativePosition relativePosition = new RelativePosition(-3, -3);
+        @Test
+        @DisplayName("(-3, -3)은 대각선 방향이다.")
+        void isDiagonalTest2() {
+            RelativePosition relativePosition = new RelativePosition(-3, -3);
 
-			assertThat(relativePosition.isDiagonal()).isEqualTo(true);
-		}
+            assertThat(relativePosition.isDiagonal()).isEqualTo(true);
+        }
 
-		@Test
-		@DisplayName("(-3, 3)은 대각선 방향이다.")
-		void isDiagonalTest3() {
-			RelativePosition relativePosition = new RelativePosition(-3, 3);
+        @Test
+        @DisplayName("(-3, 3)은 대각선 방향이다.")
+        void isDiagonalTest3() {
+            RelativePosition relativePosition = new RelativePosition(-3, 3);
 
-			assertThat(relativePosition.isDiagonal()).isEqualTo(true);
-		}
+            assertThat(relativePosition.isDiagonal()).isEqualTo(true);
+        }
 
-		@Test
-		@DisplayName("(3, 3)은 대각선 방향이다.")
-		void isDiagonalTest4() {
-			RelativePosition relativePosition = new RelativePosition(3, 3);
+        @Test
+        @DisplayName("(3, 3)은 대각선 방향이다.")
+        void isDiagonalTest4() {
+            RelativePosition relativePosition = new RelativePosition(3, 3);
 
-			assertThat(relativePosition.isDiagonal()).isEqualTo(true);
-		}
+            assertThat(relativePosition.isDiagonal()).isEqualTo(true);
+        }
 
-		@Test
-		@DisplayName("(1, 2)는 대각선 방향이 아니다.")
-		void isDiagonalTest5() {
-			RelativePosition relativePosition = new RelativePosition(1, 2);
+        @Test
+        @DisplayName("(1, 2)는 대각선 방향이 아니다.")
+        void isDiagonalTest5() {
+            RelativePosition relativePosition = new RelativePosition(1, 2);
 
-			assertThat(relativePosition.isDiagonal()).isEqualTo(false);
-		}
-	}
+            assertThat(relativePosition.isDiagonal()).isEqualTo(false);
+        }
+    }
 }
