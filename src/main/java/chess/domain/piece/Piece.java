@@ -11,8 +11,6 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract String name();
-
     public abstract boolean movable(final MoveEnum move);
 
     public abstract boolean movableByCount(final int count);

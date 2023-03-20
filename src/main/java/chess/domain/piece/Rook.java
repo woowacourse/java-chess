@@ -21,14 +21,6 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "r";
-        }
-        return "R";
-    }
-
-    @Override
     public boolean movable(final MoveEnum move) {
         return moves.contains(move);
     }

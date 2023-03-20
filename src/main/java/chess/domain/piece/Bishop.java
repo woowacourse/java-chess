@@ -19,15 +19,6 @@ public final class Bishop extends Piece {
     public Bishop(final Team team) {
         super(team);
     }
-
-    @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "b";
-        }
-        return "B";
-    }
-
     @Override
     public boolean movable(final MoveEnum move) {
         return moves.contains(move);

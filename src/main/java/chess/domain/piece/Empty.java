@@ -8,12 +8,6 @@ public final class Empty extends Piece {
     public Empty(final Team team) {
         super(team);
     }
-
-    @Override
-    public String name() {
-        return ".";
-    }
-
     @Override
     public boolean movable(final MoveEnum move) {
         return false;

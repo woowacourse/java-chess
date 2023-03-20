@@ -23,14 +23,6 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "q";
-        }
-        return "Q";
-    }
-
-    @Override
     public boolean movable(final MoveEnum move) {
         return moves.contains(move);
     }

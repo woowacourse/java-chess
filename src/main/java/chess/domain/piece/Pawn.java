@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.move.enums.MoveEnum;
 import chess.domain.team.Team;
+import chess.view.PieceName;
 
 import static chess.domain.move.enums.VerticalMove.*;
 
@@ -14,16 +15,8 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "p";
-        }
-        return "P";
-    }
-
-    @Override
     public boolean movable(final MoveEnum move) {
-        if (name().equals(name().toUpperCase())) {
+        if (team().equals(Team.BLACK)) {
             return DOWN.equals(move);
         }
         return UP.equals(move);

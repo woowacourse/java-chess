@@ -20,14 +20,6 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "n";
-        }
-        return "N";
-    }
-
-    @Override
     public boolean movable(final MoveEnum move) {
         return moves.contains(move);
     }

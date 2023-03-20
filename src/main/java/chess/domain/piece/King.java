@@ -24,14 +24,6 @@ public final class King extends Piece {
     }
 
     @Override
-    public String name() {
-        if (super.team().equals(Team.WHITE)) {
-            return "k";
-        }
-        return "K";
-    }
-
-    @Override
     public boolean movable(final MoveEnum move) {
         return moves.contains(move);
     }

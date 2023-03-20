@@ -22,7 +22,8 @@ public class OutputView {
     private static void printEachRank(final Map<Position, Piece> chessBoard, final Rank rank) {
         for (final File file : File.values()) {
             final Position position = Position.of(file, rank);
-            System.out.printf(chessBoard.get(position).name());
+            final Piece piece = chessBoard.get(position);
+            System.out.printf(PieceName.findNameByPiece(piece));
         }
         System.out.println();
     }
