@@ -10,7 +10,7 @@ public class SourceMoveValidator implements ValidateMove {
 
     @Override
     public boolean validate(ValidateData validateData) {
-        if (validateData.getSourcePiece().canMove(validateData.getSource(), validateData.getTarget())) {
+        if (validateData.canMove()) {
             setNext(new KnightMoveValidator());
             return next.validate(validateData);
         }

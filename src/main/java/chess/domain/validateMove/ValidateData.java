@@ -3,6 +3,7 @@ package chess.domain.validateMove;
 import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class ValidateData {
     private final Square source;
@@ -15,23 +16,35 @@ public class ValidateData {
         this.chessboard = chessboard;
     }
 
-    public Square getSource() {
-        return source;
-    }
-
-    public Square getTarget() {
-        return target;
-    }
-
-    public Chessboard getChessboard() {
-        return chessboard;
-    }
-
-    public Piece getSourcePiece() {
+    private Piece getSourcePiece() {
         return chessboard.getPieceAt(source);
     }
 
-    public Piece getTargetPiece() {
+    private Piece getTargetPiece() {
         return chessboard.getPieceAt(target);
+    }
+
+    public boolean canMove() {
+        return getSourcePiece().canMove(source, target);
+    }
+
+    public boolean isTypeOf(PieceType pieceType) {
+        return getSourcePiece().getPieceType() != pieceType;
+    }
+
+    public boolean isSameFile() {
+        return target.isSameFile(source);
+    }
+
+    public boolean isOpposite() {
+        return getSourcePiece().isOpposite(getTargetPiece());
+    }
+
+    public boolean isNotSameCamp() {
+        return getSourcePiece().isNotSameCamp(getTargetPiece());
+    }
+
+    public boolean isEmptyInRoute() {
+        return chessboard.isEmptyInRoute(source, target);
     }
 }

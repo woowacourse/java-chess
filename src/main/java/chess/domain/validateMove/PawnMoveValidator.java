@@ -12,14 +12,18 @@ public class PawnMoveValidator implements ValidateMove {
 
     @Override
     public boolean validate(ValidateData validateData) {
-        if (validateData.getSourcePiece().getPieceType() != PieceType.PAWN) {
+        if (validateData.isTypeOf(PieceType.PAWN)) {
             setNext(new NotPawnAndKnightMoveValidator());
             return next.validate(validateData);
         }
-        if (validateData.getSource().isSameFile(validateData.getTarget())) {
-            return validateData.getChessboard().isEmptyInRoute(validateData.getSource(), validateData.getTarget()) &&
-                    validateData.getChessboard().getPieceAt(validateData.getTarget()).getPieceType() == PieceType.EMPTY;
+        if (validateData.isSameFile()) {
+            return isPossibleToMove(validateData);
         }
-        return validateData.getSourcePiece().isOpposite(validateData.getTargetPiece());
+        return validateData.isOpposite();
+    }
+
+    private static boolean isPossibleToMove(ValidateData validateData) {
+        return validateData.isEmptyInRoute()
+                && validateData.isTypeOf(PieceType.EMPTY);
     }
 }
