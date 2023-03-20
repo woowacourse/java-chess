@@ -47,7 +47,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isAttackAble(final Distance distance, final Piece target) {
-        return isEnemy(target) && isAttackDirection(distance) && isAttackAbleDistance(distance);
+        return target.isNotPassable() && isEnemy(target)
+                && isAttackDirection(distance) && isAttackAbleDistance(distance);
     }
 
     private boolean isEnemy(final Piece target) {
