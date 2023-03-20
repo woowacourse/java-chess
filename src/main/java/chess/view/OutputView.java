@@ -1,7 +1,8 @@
 package chess.view;
 
-import chess.domain.piece.Position;
-import chess.domain.piece.type.Piece;
+import chess.controller.dto.BoardDto;
+import chess.controller.dto.PieceDto;
+import chess.controller.dto.PositionDto;
 
 import java.util.Map;
 
@@ -26,26 +27,27 @@ public final class OutputView {
                 END.name().toLowerCase(), MOVE.name().toLowerCase()));
     }
 
-    public static void printBoard(final Map<Position, Piece> board) {
+    public static void printBoard(final BoardDto boardDto) {
         final StringBuilder boardMessage = new StringBuilder();
         for (int rank = BOARD_SIZE - 1; rank >= 0; rank--) {
-            boardMessage.append(makeFileMessage(board, rank)).append(System.lineSeparator());
+            boardMessage.append(makeFileMessage(boardDto, rank)).append(System.lineSeparator());
         }
         print(boardMessage.toString());
     }
 
-    private static String makeFileMessage(final Map<Position, Piece> board, final int rank) {
+    private static String makeFileMessage(final BoardDto boardDto, final int rank) {
         final StringBuilder fileMessage = new StringBuilder();
         for (int file = 0; file < BOARD_SIZE; file++) {
-            fileMessage.append(getPieceName(board, rank, file));
+            fileMessage.append(getPieceName(boardDto, rank, file));
         }
         return fileMessage.toString();
     }
 
-    private static char getPieceName(final Map<Position, Piece> board, final int rank, final int file) {
-        final Position position = new Position(rank, file);
-        if (board.containsKey(position)) {
-            return PieceName.findMessage(board.get(position));
+    private static char getPieceName(final BoardDto boardDto, final int rank, final int file) {
+        final PositionDto positionDto = PositionDto.from(rank, file);
+        final Map<PositionDto, PieceDto> board = boardDto.getBoard();
+        if (board.containsKey(positionDto)) {
+            return PieceName.findMessage(board.get(positionDto));
         }
         return BLANK;
     }

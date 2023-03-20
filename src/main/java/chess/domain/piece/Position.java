@@ -79,4 +79,12 @@ public final class Position {
                 ", file=" + file +
                 '}';
     }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public int getFile() {
+        return file;
+    }
 }

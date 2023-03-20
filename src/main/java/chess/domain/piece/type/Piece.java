@@ -56,4 +56,8 @@ public abstract class Piece {
     public PieceType getPieceType() {
         return pieceType;
     }
+
+    public CampType getCampType() {
+        return campType;
+    }
 }

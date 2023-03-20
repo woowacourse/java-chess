@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.dto.BoardDto;
 import chess.controller.status.Start;
 import chess.controller.status.Status;
 import chess.domain.chess.ChessGame;
@@ -27,7 +28,8 @@ public final class ChessController {
         try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
-            gameStatus = gameStatus.checkCommand(command, () -> OutputView.printBoard(chessGame.getChessBoard()));
+            gameStatus = gameStatus.checkCommand(command,
+                    () -> OutputView.printBoard(BoardDto.from(chessGame.getChessBoard())));
             return gameStatus;
         } catch (IllegalArgumentException e) {
             OutputView.print(e.getMessage());

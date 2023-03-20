@@ -1,7 +1,7 @@
 package chess.view;
 
+import chess.controller.dto.PieceDto;
 import chess.domain.chess.CampType;
-import chess.domain.piece.type.Piece;
 import chess.domain.piece.type.PieceType;
 
 import java.util.Map;
@@ -29,10 +29,10 @@ public enum PieceName {
         this.name = name;
     }
 
-    public static Character findMessage(final Piece piece) {
-        if (piece.isSameCamp(CampType.BLACK)) {
-            return CACHE.get(piece.getPieceType());
+    public static Character findMessage(final PieceDto pieceDto) {
+        if (pieceDto.isSameCamp(CampType.BLACK)) {
+            return CACHE.get(pieceDto.getPieceType());
         }
-        return Character.toLowerCase(CACHE.get(piece.getPieceType()));
+        return Character.toLowerCase(CACHE.get(pieceDto.getPieceType()));
     }
 }
