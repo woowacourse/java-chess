@@ -1,18 +1,27 @@
 package chess.controller;
 
+import static chess.controller.ExceptionHandler.repeatUntilValidInput;
 import static chess.view.Command.END;
+import static chess.view.Command.MOVE;
 import static chess.view.Command.START;
-import static chess.view.InputView.readCommand;
-import static chess.view.InputView.readPositions;
+import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printFinishMessage;
+import static chess.view.OutputView.printGameStart;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
+import chess.domain.math.PositionConverter;
 import chess.view.Command;
-import chess.view.OutputView;
+import chess.view.InputView;
 import java.util.List;
 
 public class MainController {
+
+    private static final int COMMAND_INDEX = 0;
+    private static final int CURRENT_POSITION_INDEX = 1;
+    private static final int TARGET_INDEX_POSITION = 2;
+    private static final int ONLY_COMMAND_SIZE = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
 
     private final ChessGame chessGame;
 
@@ -21,40 +30,67 @@ public class MainController {
     }
 
     public void run() {
-        OutputView.printGameStart();
+        printGameStart();
+        List<String> inputs = repeatUntilValidInput(this::readValidCommand);
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
 
-        Command firstCommand = readCommand();
-        if (firstCommand == START) {
-            OutputView.printBoard(chessGame.getBoard());
-            playChess();
+        if (command == START) {
+            printBoard(chessGame.getBoard());
+            while (repeatUntilValidInput(this::playChess));
         }
-
         printFinishMessage();
     }
 
-    private void playChess() {
-        while (true) {
-            List<String> input = readPositions();
+    private boolean playChess() {
+        List<String> inputs = repeatUntilValidInput(this::readValidCommand);
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
 
-            if (Command.of(input.get(0)) == END) {
-                break;
-            }
+        return executeCommand(inputs, command);
+    }
 
-            Position current = toPosition(input.get(1));
-            Position target = toPosition(input.get(2));
+    private boolean executeCommand(final List<String> inputs, final Command command) {
+        if (command == END) {
+            return false;
+        }
+        if (command == START) {
+            throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
+        }
+        if (command == MOVE) {
+            movePiece(inputs);
+        }
+        return true;
+    }
 
-            chessGame.movePiece(current, target);
-            OutputView.printBoard(chessGame.getBoard());
+    private void movePiece(final List<String> inputs) {
+        Position current = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
+        Position target = PositionConverter.toPosition(inputs.get(TARGET_INDEX_POSITION));
+
+        chessGame.movePiece(current, target);
+        printBoard(chessGame.getBoard());
+    }
+
+    private List<String> readValidCommand() {
+        List<String> inputs = InputView.readCommand();
+        isValidCommand(inputs.get(COMMAND_INDEX));
+        isValidInputSize(inputs);
+
+        return inputs;
+    }
+
+    private void isValidCommand(final String commandValue) {
+        try {
+            Command.of(commandValue);
+        } catch (IllegalArgumentException e) {
+            throw e;
         }
     }
 
-    private Position toPosition(final String input) {
-        char first = input.charAt(0);
-        int col = Math.abs(first - 97);
+    private void isValidInputSize(final List<String> inputs) {
+        int size = inputs.size();
 
-        char second = input.charAt(1);
-        int row = Math.abs(Character.getNumericValue(second) - 8);
-
-        return new Position(row, col);
+        if (size == ONLY_COMMAND_SIZE || size == MOVE_COMMAND_SIZE) {
+            return;
+        }
+        throw new IllegalArgumentException("입력이 잘못되었습니다. 다시 입력해주세요.");
     }
 }
