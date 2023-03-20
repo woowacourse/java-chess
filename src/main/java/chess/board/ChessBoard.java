@@ -18,6 +18,10 @@ public class ChessBoard {
 
     private final Map<Position, Piece> piecePosition;
 
+    private ChessBoard(final Map<Position, Piece> piecePosition) {
+        this.piecePosition = piecePosition;
+    }
+
     public static ChessBoard createBoard() {
         final Map<Position, Piece> piecePosition = new HashMap<>();
         initPosition(piecePosition);
@@ -34,10 +38,6 @@ public class ChessBoard {
 
     static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
         return new ChessBoard(piecePosition);
-    }
-
-    private ChessBoard(final Map<Position, Piece> piecePosition) {
-        this.piecePosition = piecePosition;
     }
 
     private static void initPosition(final Map<Position, Piece> piecePosition) {
