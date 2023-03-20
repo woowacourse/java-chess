@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoardFactory {
+    
+    private ChessBoardFactory() {
+        throw new IllegalStateException("Factory 클래스를 인스턴스화할 수 없습니다!");
+    }
 
     public static ChessBoard create() {
         List<Square> squares = Arrays.stream(File.values())

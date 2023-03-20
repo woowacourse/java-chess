@@ -7,8 +7,8 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
 
-    protected Team team;
-    protected Trace trace;
+    protected final Team team;
+    protected final Trace trace;
 
     protected Piece(final Team team) {
         this.team = team;
@@ -23,11 +23,11 @@ public abstract class Piece {
         trace.add(turn, lastPosition);
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
     public boolean isSameTeam(final Team team) {
         return this.team == team;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }
