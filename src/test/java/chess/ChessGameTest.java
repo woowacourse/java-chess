@@ -6,6 +6,7 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,6 +84,43 @@ class ChessGameTest {
 
         assertThatThrownBy(() -> chessGame.move(movedSquare, target))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("Pawn이 상대편 끝 Rank에 도달하지 않은 경우, Promotion을 할 수 없다.")
+    @Test
+    void canPromotePawnFailTest() {
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.A, Rank.SEVEN);
+
+        chessboard.swapPiece(source, target);
+
+        assertThat(chessGame.canPromotion(target))
+                .isFalse();
+    }
+
+    @DisplayName("Pawn이 상대편 끝 Rank에 도달한 경우, Promotion을 할 수 있다.")
+    @Test
+    void canPromotePawnSuccessTest() {
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
+
+        chessboard.swapPiece(source, target);
+
+        assertThat(chessGame.canPromotion(target))
+                .isTrue();
+    }
+
+    @DisplayName("Pawn이 상대편 끝 Rank에 도달한 경우, 원하는 기물로 Promotion을 할 수 있다.")
+    @Test
+    void promotePawnSuccessTest() {
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square target = Square.getInstanceOf(File.A, Rank.EIGHT);
+
+        chessboard.swapPiece(source, target);
+        chessGame.promotePawn(target, PieceType.BISHOP);
+
+        assertThat(chessboard.getPieceAt(target).getPieceType())
+                .isEqualTo(PieceType.BISHOP);
     }
 
     static Stream<Arguments> invalidSquareProvider() {
