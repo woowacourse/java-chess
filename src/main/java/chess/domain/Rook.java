@@ -32,6 +32,13 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isNotSameSide(piece) && from.inLine(to);
+        return isNotSameSide(piece) && isLine(from, to);
+    }
+
+    private boolean isLine(final Square from, final Square to) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
+        return verticalDistance == 0 || horizontalDistance == 0;
     }
 }

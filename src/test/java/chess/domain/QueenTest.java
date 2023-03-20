@@ -28,38 +28,46 @@ public class QueenTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        @Nested
-        @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
-        class given_another_piece {
-            Queen whiteQueen = Queen.of(Side.WHITE);
-            Square from = Square.of(Rank.FOUR, File.D);
-            Square movableSquare1 = Square.of(Rank.ONE, File.G);
-            Square movableSquare2 = Square.of(Rank.FOUR, File.H);
-            Square unable = Square.of(Rank.THREE, File.B);
-            Bishop whiteBishop = Bishop.of(Side.WHITE)
-                                       .get(0);
-            Queen blackQueen = Queen.of(Side.BLACK);
+        Queen whiteQueen = Queen.of(Side.WHITE);
+        Square fromSquare = Square.of(Rank.FOUR, File.D);
+        Square movableSquare1 = Square.of(Rank.ONE, File.G);
+        Square movableSquare2 = Square.of(Rank.FOUR, File.H);
+        Square unMovableSquare = Square.of(Rank.THREE, File.B);
+        Bishop whiteBishop = Bishop.of(Side.WHITE)
+                                   .get(0);
+        Queen blackQueen = Queen.of(Side.BLACK);
 
+        @Nested
+        @DisplayName("이동할 수 있는 위치에 아군 기물이 있지 않다면")
+        class context1 {
             @Test
-            @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
-            void it_returns_movable() {
+            @DisplayName("true를 반환한다")
+            void it_returns_true() {
                 assertAll(
-                        () -> assertThat(whiteQueen.isMovable(from, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(from, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(from, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
                 );
             }
+        }
 
+        @Nested
+        @DisplayName("이동할 수 있는 위치에 아군 기물이 있다면")
+        class context2 {
             @Test
-            @DisplayName("갈 수 있고 해당 위치의 기물이 같은 진영인 경우 false를 반환한다")
-            void it_returns_not_movable1() {
-                assertThat(whiteQueen.isMovable(from, movableSquare1, whiteBishop)).isFalse();
+            @DisplayName("false를 반환한다")
+            void it_returns_false() {
+                assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, whiteBishop)).isFalse();
             }
+        }
 
+        @Nested
+        @DisplayName("이동할 수 없는 위치라면")
+        class context3 {
             @Test
-            @DisplayName("갈 수 없고 해당 위치의 기물이 상대 진영인 경우 false를 반환한다")
-            void it_returns_not_movable2() {
-                assertThat(whiteQueen.isMovable(from, unable, blackQueen)).isFalse();
+            @DisplayName("false를 반환한다")
+            void it_returns_false() {
+                assertThat(whiteQueen.isMovable(fromSquare, unMovableSquare, blackQueen)).isFalse();
             }
         }
     }

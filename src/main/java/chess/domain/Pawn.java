@@ -39,16 +39,40 @@ public final class Pawn extends Piece {
     }
 
     private boolean canMoveForward(final Square from, final Square to, final Piece piece) {
-        boolean targetInMovableRange = from.inPawnsMovableRange(to, side);
+        boolean targetInMovableRange = isMovableRange(from, to, side);
         if (atInitialPosition) {
-            targetInMovableRange = from.inPawnsInitialMovableRange(to, side);
+            targetInMovableRange = isInitialMovableRange(from, to, side);
         }
         return piece.isEmpty() && targetInMovableRange;
+    }
 
+    private boolean isInitialMovableRange(final Square from, final Square to, final Side side) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        return from.isBackOf(to, side) &&
+                (verticalDistance == 1 || verticalDistance == 2) &&
+                from.calculateHorizontalDistance(to) == 0;
+    }
+
+    private boolean isMovableRange(final Square from, final Square to, final Side side) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        return from.isBackOf(to, side) &&
+                verticalDistance == 1 &&
+                from.calculateHorizontalDistance(to) == 0;
     }
 
     private boolean isCatchable(final Square from, final Square to, final Piece piece) {
-        return this.isOppositeSide(piece) && from.inPawnsCatchableRange(to, side);
+        return this.isOppositeSide(piece) && isCatchableRange(from, to, side);
+    }
+
+    public boolean isCatchableRange(final Square from, final Square to, final Side side) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
+        return from.isBackOf(to, side) &&
+                verticalDistance == 1 &&
+                horizontalDistance == 1;
     }
 
     public void move() {

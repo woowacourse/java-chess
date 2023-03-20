@@ -24,6 +24,21 @@ public class Queen extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isNotSameSide(piece) && (from.inLine(to) || from.inDiagonal(to));
+        return isNotSameSide(piece) &&
+                (isLine(from, to) || isDiagonal(from, to));
+    }
+
+    private boolean isDiagonal(final Square from, final Square to) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
+        return verticalDistance == horizontalDistance;
+    }
+
+    private boolean isLine(final Square from, final Square to) {
+        from.validateNotSameSquare(to);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
+        return verticalDistance == 0 || horizontalDistance == 0;
     }
 }

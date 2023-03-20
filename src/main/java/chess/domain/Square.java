@@ -23,86 +23,43 @@ public class Square {
         return Objects.hash(rank, file);
     }
 
-
-    public boolean inLine(final Square to) {
-        checkSameSquare(to);
-        return this.rank == to.rank || this.file == to.file;
-    }
-
-    public boolean inDiagonal(final Square to) {
-        checkSameSquare(to);
-        final int verticalDistance = this.rank.distanceTo(to.rank);
-        final int horizontalDistance = this.file.distanceTo(to.file);
-        return verticalDistance == horizontalDistance;
-    }
-
-    public boolean inLShape(final Square to) {
-        checkSameSquare(to);
-        final int verticalDistance = this.rank.distanceTo(to.rank);
-        final int horizontalDistance = this.file.distanceTo(to.file);
-        if (verticalDistance == 0 || horizontalDistance == 0) {
-            return false;
+    public void validateNotSameSquare(final Square other) {
+        if (this == other) {
+            throw new IllegalArgumentException("같은 위치의 square입니다");
         }
-        return verticalDistance + horizontalDistance == 3;
     }
 
-    public boolean inPawnsInitialMovableRange(final Square to, final Side side) {
-        checkSameSquare(to);
-        final int verticalDistance = rank.distanceTo(to.rank);
-        return isBackOf(to, side) &&
-                (verticalDistance == 1 || verticalDistance == 2) &&
-                file.distanceTo(to.file) == 0;
-    }
-
-    public boolean inPawnsMovableRange(final Square to, final Side side) {
-        checkSameSquare(to);
-        final int verticalDistance = rank.distanceTo(to.rank);
-        return isBackOf(to, side) &&
-                verticalDistance == 1 &&
-                file.distanceTo(to.file) == 0;
-    }
-
-    public boolean inPawnsCatchableRange(final Square to, final Side side) {
-        checkSameSquare(to);
-        final int verticalDistance = rank.distanceTo(to.rank);
-        return isBackOf(to, side) &&
-                verticalDistance == 1 &&
-                file.distanceTo(to.file) == 1;
-    }
-
-    private boolean isBackOf(final Square to, final Side side) {
+    public boolean isBackOf(final Square to, final Side side) {
         if (side == Side.WHITE) {
             return to.rank.isBiggerThan(this.rank);
         }
         return this.rank.isBiggerThan(to.rank);
     }
 
-    public boolean inKingsRange(final Square to) {
-        checkSameSquare(to);
-        final int verticalDistance = rank.distanceTo(to.rank);
-        final int horizontalDistance = file.distanceTo(to.file);
-        return (verticalDistance == 1 || verticalDistance == 0) &&
-                (horizontalDistance == 1 || horizontalDistance == 0);
-    }
-
-    private void checkSameSquare(final Square to) {
-        if (this == to) {
-            throw new IllegalArgumentException("같은 지점이 들어왔습니다");
-        }
-    }
-
     public List<Square> squaresOfPath(Square to) {
-        if (inLine(to)) {
+        if (isLine(to)) {
             return squaresOfLine(to);
         }
-        if (inDiagonal(to)) {
+        if (isDiagonal(to)) {
             return squaresOfDiagonal(to);
         }
         return Collections.EMPTY_LIST;
     }
 
+    private boolean isLine(final Square to) {
+        validateNotSameSquare(to);
+        return this.rank == to.rank || this.file == to.file;
+    }
+
+    private boolean isDiagonal(final Square to) {
+        validateNotSameSquare(to);
+        final int verticalDistance = this.rank.distanceTo(to.rank);
+        final int horizontalDistance = this.file.distanceTo(to.file);
+        return verticalDistance == horizontalDistance;
+    }
+
     private List<Square> squaresOfLine(final Square to) {
-        if (!inLine(to)) {
+        if (!isLine(to)) {
             throw new IllegalArgumentException("직선이 아닙니다");
         }
         if (to.rank == this.rank) {
@@ -118,7 +75,7 @@ public class Square {
     }
 
     private List<Square> squaresOfDiagonal(final Square to) {
-        if (!inDiagonal(to)) {
+        if (!isDiagonal(to)) {
             throw new IllegalArgumentException("대각선이 아닙니다");
         }
         List<Rank> ranks = Rank.ranksBetween(this.rank, to.rank);
@@ -128,6 +85,14 @@ public class Square {
             squares.add(Square.of(ranks.get(i), files.get(i)));
         }
         return squares;
+    }
+
+    public int calculateVerticalDistance(final Square other) {
+        return rank.distanceTo(other.rank);
+    }
+
+    public int calculateHorizontalDistance(final Square other) {
+        return file.distanceTo(other.file);
     }
 
     public int getRank() {

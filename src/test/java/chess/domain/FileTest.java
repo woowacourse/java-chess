@@ -15,13 +15,14 @@ class FileTest {
         @Nested
         @DisplayName("다른 File 객체가 주어지면")
         class with_another_file {
-            final File from = File.A;
-            final File other = File.D;
+            final File file1 = File.A;
+            final File file2 = File.D;
 
             @Test
             @DisplayName("두 파일간의 거리를 계산한다")
             void it_returns_distance() {
-                assertThat(from.distanceTo(other)).isEqualTo(3);
+                assertThat(file1.distanceTo(file2)).isEqualTo(3);
+                assertThat(file2.distanceTo(file1)).isEqualTo(3);
             }
         }
     }

@@ -15,13 +15,14 @@ class RankTest {
         @Nested
         @DisplayName("다른 Rank 객체가 주어지면")
         class with_another_rank {
-            final Rank from = Rank.FOUR;
-            final Rank other = Rank.EIGHT;
+            final Rank rank1 = Rank.FOUR;
+            final Rank rank2 = Rank.EIGHT;
 
             @Test
             @DisplayName("두 랭크간의 거리를 계산한다")
             void it_returns_distance() {
-                assertThat(from.distanceTo(other)).isEqualTo(4);
+                assertThat(rank1.distanceTo(rank2)).isEqualTo(4);
+                assertThat(rank2.distanceTo(rank1)).isEqualTo(4);
             }
         }
     }
