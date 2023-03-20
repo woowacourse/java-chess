@@ -12,7 +12,7 @@ public class ReadyChessGame implements ChessGame {
 
     @Override
     public Map<Position, String> move(String currentPosition, String nextPosition) {
-        throw new IllegalArgumentException(GAME_NOT_START_ERROR_MESSAGE);
+        throw new IllegalStateException(GAME_NOT_START_ERROR_MESSAGE);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ReadyChessGame implements ChessGame {
 
     @Override
     public void end() {
-        throw new IllegalArgumentException(GAME_NOT_START_ERROR_MESSAGE);
+        throw new IllegalStateException(GAME_NOT_START_ERROR_MESSAGE);
     }
 
     @Override

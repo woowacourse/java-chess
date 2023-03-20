@@ -22,7 +22,7 @@ public class PlayingChessGame implements ChessGame {
 
     @Override
     public ChessGame start() {
-        throw new IllegalArgumentException("이미 플레이중인 게임입니다.");
+        throw new IllegalStateException("이미 플레이중인 게임입니다.");
     }
 
     @Override
