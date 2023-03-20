@@ -4,19 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class KingTest {
 
     @Test
-    @DisplayName("킹은 정상 생성이 된다")
-    void constructorTest() {
-        assertThatCode(King::new)
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("킹은 디폴트 상태를 가진다")
+    @DisplayName("킹은 기본 상태를 가진다")
     void propertyTest() {
         Piece king = new King();
 

@@ -8,16 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class ConcreteSquareTest {
-
-    @Test
-    @DisplayName("칸은 정상 생성이 된다")
-    void constructorTest() {
-        assertThatCode(() -> new ConcreteSquare(new Bishop(), Camp.BLACK))
-                .doesNotThrowAnyException();
-    }
 
     @Test
     @DisplayName("칸은 기본 상태를 가진다")

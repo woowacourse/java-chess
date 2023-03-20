@@ -6,19 +6,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class BishopTest {
 
     @Test
-    @DisplayName("비숍은 정상 생성이 된다")
-    void constructorTest() {
-        assertThatCode(Bishop::new)
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("비숍은 디폴트 상태를 가진다")
+    @DisplayName("비숍은 기본 상태를 가진다")
     void propertyTest() {
         Piece bishop = new Bishop();
 

@@ -4,21 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class PawnTest {
 
     @Test
-    @DisplayName("폰은 정상 생성이 된다")
-    void constructorTest() {
-        assertThatCode(WhitePawn::new)
-                .doesNotThrowAnyException();
-        assertThatCode(BlackPawn::new)
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("폰은 디폴트 상태를 가진다")
+    @DisplayName("폰은 기본 상태를 가진다")
     void propertyTest() {
         Piece whitePawn = new WhitePawn();
         Piece blackPawn = new BlackPawn();
