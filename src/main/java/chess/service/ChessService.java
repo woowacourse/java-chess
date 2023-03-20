@@ -9,23 +9,25 @@ import chess.domain.piece.Piece;
 
 public class ChessService {
 
+	private static final String SERVICE_STATE_ERROR_MESSAGE = "현재 상태에서 불가능한 명령입니다.";
+
 	private final Board board;
+	private ChessState state;
 	private Turn turn;
 
-	private ChessService(final Board board, final Turn turn) {
-		this.board = board;
-		this.turn = turn;
+	public ChessService() {
+		this.board = Board.create();
+		this.state = ChessState.UNINITIALIZED;
+		this.turn = Turn.WHITE;
 	}
 
-	public static ChessService temp() {
-		return new ChessService(Board.empty(), Turn.WHITE);
-	}
-
-	public static ChessService create() {
-		return new ChessService(Board.create(), Turn.WHITE);
+	public void initialize() {
+		assertState(ChessState.UNINITIALIZED);
+		changeState(ChessState.GAME_RUNNING);
 	}
 
 	public void movePiece(Position source, Position target) {
+		assertState(ChessState.GAME_RUNNING);
 		Team team = getCurrentTeam();
 		board.checkIsMovable(team, source, target);
 		board.movePiece(team, source, target);
@@ -46,6 +48,16 @@ public class ChessService {
 		}
 		if (turn == Turn.BLACK) {
 			turn = Turn.WHITE;
+		}
+	}
+
+	private void changeState(ChessState state) {
+		this.state = state;
+	}
+
+	private void assertState(ChessState state) {
+		if (this.state != state) {
+			throw new IllegalStateException(SERVICE_STATE_ERROR_MESSAGE);
 		}
 	}
 

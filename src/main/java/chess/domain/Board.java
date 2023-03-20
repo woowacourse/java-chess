@@ -1,8 +1,8 @@
 package chess.domain;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public class Board {
@@ -13,15 +13,13 @@ public class Board {
 	private static final String CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE = "말이 해당 방향으로 이동할 수 없습니다.";
 	private static final String CANNOT_MOVE_THROUGH_OBSTACLE_ERROR_MESSAGE = "말이 이동하려는 방향에 장애물이 있습니다.";
 	private static final String CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE = "폰은 적이 존재할 때만 대각선으로 이동할 수 있습니다.";
+	private static final int INITIAL_BLACK_PAWN_ROW = 6;
+	private static final int INITIAL_WHITE_PAWN_ROW = 1;
 
 	private final Map<Position, Piece> board;
 
 	private Board(Map<Position, Piece> board) {
 		this.board = board;
-	}
-
-	public static Board empty() {
-		return new Board(new HashMap<>());
 	}
 
 	public static Board create() {
@@ -32,6 +30,11 @@ public class Board {
 	public void movePiece(final Team team, final Position source, final Position target) {
 		checkIsMovable(team, source, target);
 		Piece piece = board.get(source);
+		if (isMovingInitialPawn(piece, team, source)) {
+			board.put(target, new Pawn(team));
+			board.put(source, Piece.empty());
+			return;
+		}
 		board.put(target, piece);
 		board.put(source, Piece.empty());
 	}
@@ -103,9 +106,22 @@ public class Board {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
 		RelativePosition relativePosition = RelativePosition.of(source, target);
-		if (sourcePiece.isPawn() && relativePosition.isDiagonal() && targetPiece.isEmpty()) {
+		if ((sourcePiece.isInitialPawn() || sourcePiece.isNormalPawn())
+			&& relativePosition.isDiagonal()
+			&& targetPiece.isEmpty()) {
 			throw new IllegalArgumentException(CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE);
 		}
+	}
+
+	private boolean isMovingInitialPawn(final Piece piece, final Team team, final Position source) {
+		return piece.isInitialPawn() && isInitialPawnPosition(team, source);
+	}
+
+	private boolean isInitialPawnPosition(final Team team, final Position position) {
+		if (team.isBlack() && position.getRow() == INITIAL_BLACK_PAWN_ROW) {
+			return true;
+		}
+		return team.isWhite() && position.getRow() == INITIAL_WHITE_PAWN_ROW;
 	}
 
 	public Map<Position, Piece> getBoard() {

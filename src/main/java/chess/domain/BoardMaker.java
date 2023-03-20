@@ -7,9 +7,9 @@ import java.util.Map;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
+import chess.domain.piece.InitialPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -31,7 +31,7 @@ public class BoardMaker {
 			board.put(new Position(i, 0), whitePieces.get(i));
 		}
 		for (int i = 0; i < 8; i++) {
-			board.put(new Position(i, 1), new Pawn(Team.WHITE));
+			board.put(new Position(i, 1), new InitialPawn(Team.WHITE));
 		}
 		for (int i = 0; i < 8; i++) {
 			for (int j = 2; j < 6; j++) {
@@ -39,7 +39,7 @@ public class BoardMaker {
 			}
 		}
 		for (int i = 0; i < 8; i++) {
-			board.put(new Position(i, 6), new Pawn(Team.BLACK));
+			board.put(new Position(i, 6), new InitialPawn(Team.BLACK));
 		}
 		for (int i = 7; i >= 0; i--) {
 			board.put(new Position(i, 7), blackPieces.get(i));

@@ -22,12 +22,4 @@ public class ExceptionHandler {
 		}
 		return result;
 	}
-
-	public static void tryCatchStrategy(final Runnable runnable) {
-		try {
-			runnable.run();
-		} catch (IllegalArgumentException exception) {
-			OutputView.printErrorMessage(exception.getMessage());
-		}
-	}
 }
