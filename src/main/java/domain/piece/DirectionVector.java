@@ -1,22 +1,22 @@
 package domain.piece;
 
 public enum DirectionVector {
-    TOP(Vectorr.of(0, 1)), TOP_RIGHT(Vectorr.of(1, 1)),
-    RIGHT(Vectorr.of(1, 0)), BOTTOM_RIGHT(Vectorr.of(1, -1)),
-    BOTTOM(Vectorr.of(0, -1)), BOTTOM_LEFT(Vectorr.of(-1, -1)),
-    LEFT(Vectorr.of(-1, 0)), TOP_LEFT(Vectorr.of(-1, 1));
+    TOP(Vector.of(0, 1)), TOP_RIGHT(Vector.of(1, 1)),
+    RIGHT(Vector.of(1, 0)), BOTTOM_RIGHT(Vector.of(1, -1)),
+    BOTTOM(Vector.of(0, -1)), BOTTOM_LEFT(Vector.of(-1, -1)),
+    LEFT(Vector.of(-1, 0)), TOP_LEFT(Vector.of(-1, 1));
 
-    private final Vectorr vectorr;
+    private final Vector vector;
 
-    DirectionVector(Vectorr vectorr) {
-        this.vectorr = vectorr;
+    DirectionVector(Vector vector) {
+        this.vector = vector;
     }
 
-    public Vectorr multiply(int length) {
-        return vectorr.multiply(length);
+    public Vector multiply(int length) {
+        return vector.multiply(length);
     }
 
-    public boolean isSameDirection(Vectorr vector) {
+    public boolean isSameDirection(Vector vector) {
         return this.multiply(vector.getMaxLength()).equals(vector);
     }
 

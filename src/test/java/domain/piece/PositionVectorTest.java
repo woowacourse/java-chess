@@ -13,42 +13,42 @@ class PositionVectorTest {
 
     static Stream<Arguments> parametersProvider1() {
         return Stream.of(
-            arguments(DirectionVector.TOP, 5, Vectorr.of(0, 5)),
-            arguments(DirectionVector.TOP_RIGHT, 2, Vectorr.of(2, 2)),
-            arguments(DirectionVector.RIGHT, 2, Vectorr.of(2, 0)),
-            arguments(DirectionVector.BOTTOM_RIGHT, 2, Vectorr.of(2, -2)),
-            arguments(DirectionVector.BOTTOM, 2, Vectorr.of(0, -2)),
-            arguments(DirectionVector.BOTTOM_LEFT, 6, Vectorr.of(-6, -6)),
-            arguments(DirectionVector.LEFT, 5, Vectorr.of(-5, 0)),
-            arguments(DirectionVector.TOP_LEFT, 2, Vectorr.of(-2, 2))
+            arguments(DirectionVector.TOP, 5, Vector.of(0, 5)),
+            arguments(DirectionVector.TOP_RIGHT, 2, Vector.of(2, 2)),
+            arguments(DirectionVector.RIGHT, 2, Vector.of(2, 0)),
+            arguments(DirectionVector.BOTTOM_RIGHT, 2, Vector.of(2, -2)),
+            arguments(DirectionVector.BOTTOM, 2, Vector.of(0, -2)),
+            arguments(DirectionVector.BOTTOM_LEFT, 6, Vector.of(-6, -6)),
+            arguments(DirectionVector.LEFT, 5, Vector.of(-5, 0)),
+            arguments(DirectionVector.TOP_LEFT, 2, Vector.of(-2, 2))
         );
     }
 
     static Stream<Arguments> parametersProvider2() {
         return Stream.of(
-            arguments(DirectionVector.TOP, Vectorr.of(0, 5)),
-            arguments(DirectionVector.TOP_RIGHT, Vectorr.of(2, 2)),
-            arguments(DirectionVector.RIGHT, Vectorr.of(2, 0)),
-            arguments(DirectionVector.BOTTOM_RIGHT, Vectorr.of(2, -2)),
-            arguments(DirectionVector.BOTTOM, Vectorr.of(0, -2)),
-            arguments(DirectionVector.BOTTOM_LEFT, Vectorr.of(-6, -6)),
-            arguments(DirectionVector.LEFT, Vectorr.of(-5, 0)),
-            arguments(DirectionVector.TOP_LEFT, Vectorr.of(-2, 2))
+            arguments(DirectionVector.TOP, Vector.of(0, 5)),
+            arguments(DirectionVector.TOP_RIGHT, Vector.of(2, 2)),
+            arguments(DirectionVector.RIGHT, Vector.of(2, 0)),
+            arguments(DirectionVector.BOTTOM_RIGHT, Vector.of(2, -2)),
+            arguments(DirectionVector.BOTTOM, Vector.of(0, -2)),
+            arguments(DirectionVector.BOTTOM_LEFT, Vector.of(-6, -6)),
+            arguments(DirectionVector.LEFT, Vector.of(-5, 0)),
+            arguments(DirectionVector.TOP_LEFT, Vector.of(-2, 2))
         );
     }
 
     @DisplayName("방향 벡터에 int 값을 넣으면 길이를 가진 벡터로 반환한다.")
     @ParameterizedTest(name = "{index} : {0} * {1} == {2}")
     @MethodSource("parametersProvider1")
-    void calculateVector(DirectionVector directionVector, int length, Vectorr expected) {
-        Vectorr actual = directionVector.multiply(length);
+    void calculateVector(DirectionVector directionVector, int length, Vector expected) {
+        Vector actual = directionVector.multiply(length);
         assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("방향 벡터와 벡터가 같은 방향인지 판단한다.")
     @ParameterizedTest(name = "{index} : {0} == {1}")
     @MethodSource("parametersProvider2")
-    void isSameDirection(DirectionVector directionVector, Vectorr vector) {
+    void isSameDirection(DirectionVector directionVector, Vector vector) {
         boolean actual = directionVector.isSameDirection(vector);
         assertThat(actual).isTrue();
     }

@@ -16,7 +16,7 @@ public class King extends Piece {
 
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
-        Vectorr vector = dest.calculateVector(src);
+        Vector vector = dest.calculateVector(src);
         Optional<DirectionVector> direction = findDirection(vector);
 
         if (direction.isEmpty() || vector.getMaxLength() != STEP_SIZE) {
@@ -25,7 +25,7 @@ public class King extends Piece {
         return List.of(dest);
     }
 
-    private Optional<DirectionVector> findDirection(Vectorr vector) {
+    private Optional<DirectionVector> findDirection(Vector vector) {
         return directions.stream()
             .filter(direction -> direction.isSameDirection(vector))
             .findAny();

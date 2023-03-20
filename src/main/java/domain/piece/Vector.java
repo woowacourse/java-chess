@@ -2,18 +2,18 @@ package domain.piece;
 
 import java.util.Objects;
 
-public class Vectorr {
+public class Vector {
 
     private final int x;
     private final int y;
 
-    private Vectorr(int x, int y) {
+    private Vector(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public static Vectorr of(int column, int row) {
-        return new Vectorr(column, row);
+    public static Vector of(int column, int row) {
+        return new Vector(column, row);
     }
 
     public int getMaxLength() {
@@ -28,8 +28,8 @@ public class Vectorr {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Vectorr vectorr = (Vectorr) o;
-        return x == vectorr.x && y == vectorr.y;
+        Vector vector = (Vector) o;
+        return x == vector.x && y == vector.y;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Vectorr {
         return Objects.hash(x, y);
     }
 
-    public Vectorr multiply(int length) {
+    public Vector multiply(int length) {
         return of(x * length, y * length);
     }
 

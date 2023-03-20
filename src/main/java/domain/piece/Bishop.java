@@ -20,7 +20,7 @@ public class Bishop extends Piece {
 
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
-        Vectorr vector = dest.calculateVector(src);
+        Vector vector = dest.calculateVector(src);
         Optional<DirectionVector> direction = findDirection(vector);
 
         if (direction.isEmpty()) {
@@ -29,13 +29,13 @@ public class Bishop extends Piece {
         return getSquaresToDestination(src, vector, direction.get());
     }
 
-    private Optional<DirectionVector> findDirection(Vectorr vector) {
+    private Optional<DirectionVector> findDirection(Vector vector) {
         return DIRECTIONS.stream()
                 .filter(direction -> direction.isSameDirection(vector))
                 .findAny();
     }
 
-    private List<Square> getSquaresToDestination(Square src, Vectorr vector,
+    private List<Square> getSquaresToDestination(Square src, Vector vector,
                                                  DirectionVector direction) {
         int maxStep = vector.getMaxLength();
         List<Square> result = new ArrayList<>();

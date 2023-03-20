@@ -1,6 +1,6 @@
 package domain;
 
-import domain.piece.Vectorr;
+import domain.piece.Vector;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,17 +33,17 @@ public class Square {
         return caches.computeIfAbsent(key, ignored -> new Square(chessColumn, rank));
     }
 
-    public Square add(Vectorr direction) {
+    public Square add(Vector direction) {
         int column = chessColumn.getColumn() + direction.getX();
         int row = rank.getRow() + direction.getY();
         validateSize(column, row);
         return of(column, row);
     }
 
-    public Vectorr calculateVector(Square other) {
+    public Vector calculateVector(Square other) {
         int column = chessColumn.minus(other.chessColumn);
         int row = rank.minus(other.rank);
-        return Vectorr.of(column, row);
+        return Vector.of(column, row);
     }
 
     @Override
