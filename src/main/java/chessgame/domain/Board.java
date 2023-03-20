@@ -36,7 +36,7 @@ public class Board {
             checkPawnAttack(source, target, piece, hasTarget);
             return;
         }
-        throw new IllegalArgumentException("움직일 수 없다.");
+        throw new IllegalArgumentException("움직일 수 없습니다.");
     }
 
     private void checkSamePoint(Point source, Point target) {

@@ -39,7 +39,7 @@ public class Command {
             return new Command(command);
         }
         if (MOVE.equals(moveCommand[0])) {
-            throw new IllegalArgumentException("move source target을 정확히 입력해주세요");
+            throw new IllegalArgumentException("move source target을 정확히 입력해주세요.");
         }
         throw new IllegalArgumentException("start, move, end만 입력 가능합니다.");
     }
