@@ -28,9 +28,9 @@ public class Players {
         int diffFile = toPosition.calculateFileDistance(fromPosition.getFile());
         int diffRank = toPosition.calculateRankDistance(fromPosition.getRank());
 
-        BigInteger gcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
-        int fileDirection = diffFile / gcd.intValue();
-        int rankDirection = diffRank / gcd.intValue();
+        BigInteger rankAndFileGcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
+        int fileDirection = diffFile / rankAndFileGcd.intValue();
+        int rankDirection = diffRank / rankAndFileGcd.intValue();
 
         Position tempPosition = fromPosition.move(fileDirection, rankDirection);
 
