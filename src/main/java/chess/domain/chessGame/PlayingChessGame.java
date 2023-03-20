@@ -14,7 +14,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) { //b1
+    public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) {
         Position currentPosition = Position.of(currentPositionSymbol);
         Position nextPosition = Position.of(nextPositionSymbol);
         return board.move(currentPosition, nextPosition);
