@@ -11,15 +11,17 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board() {
-        board = new HashMap<>();
-        init();
+    private Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
-    private void init() {
+    public static Board init() {
+        Map<Position, Piece> setting = new HashMap<>();
+        
         for (PieceSettings pieceSetting : PieceSettings.values()) {
-            board.put(pieceSetting.getPosition(), pieceSetting.getPiece());
+            setting.put(pieceSetting.getPosition(), pieceSetting.getPiece());
         }
+        return new Board(setting);
     }
 
     public void move(Position source, Position target) {

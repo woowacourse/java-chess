@@ -23,7 +23,7 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         start();
-        Board board = new Board();
+        Board board = Board.init();
         progress(board);
     }
 
