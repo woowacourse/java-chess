@@ -14,7 +14,7 @@ public class King extends Piece {
         super(side);
     }
 
-    public static King of(final Side side) {
+    public static King getKingOf(final Side side) {
         if (side == Side.BLACK) {
             return blackKing;
         }

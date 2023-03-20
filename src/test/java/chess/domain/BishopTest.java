@@ -19,7 +19,7 @@ public class BishopTest {
             @Test
             @DisplayName("해당 진영의 Bishop을 2개 생성한다")
             void it_returns_bishops() {
-                assertThat(Bishop.of(Side.BLACK)).hasSize(2);
+                assertThat(Bishop.getBishopsOf(Side.BLACK)).hasSize(2);
             }
         }
     }
@@ -27,15 +27,15 @@ public class BishopTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Bishop whiteBishop = Bishop.of(Side.WHITE)
+        Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
                                    .get(0);
         Square fromSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.ONE, File.G);
         Square movableSquare2 = Square.of(Rank.SIX, File.B);
         Square unMovableSquare = Square.of(Rank.THREE, File.B);
-        Bishop whiteBishop2 = Bishop.of(Side.WHITE)
+        Bishop whiteBishop2 = Bishop.getBishopsOf(Side.WHITE)
                                     .get(1);
-        Queen blackQueen = Queen.of(Side.BLACK);
+        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
 
         @Nested
         @DisplayName("이동 가능한 위치에 ")

@@ -19,7 +19,7 @@ public class QueenTest {
             @Test
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
-                Queen queen = Queen.of(Side.BLACK);
+                Queen queen = Queen.getQueenOf(Side.BLACK);
                 assertThat(queen.getSide()).isEqualTo("BLACK");
             }
         }
@@ -28,14 +28,14 @@ public class QueenTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Queen whiteQueen = Queen.of(Side.WHITE);
+        Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
         Square fromSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.ONE, File.G);
         Square movableSquare2 = Square.of(Rank.FOUR, File.H);
         Square unMovableSquare = Square.of(Rank.THREE, File.B);
-        Bishop whiteBishop = Bishop.of(Side.WHITE)
+        Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
                                    .get(0);
-        Queen blackQueen = Queen.of(Side.BLACK);
+        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
 
         @Nested
         @DisplayName("이동할 수 있는 위치에 아군 기물이 있지 않다면")

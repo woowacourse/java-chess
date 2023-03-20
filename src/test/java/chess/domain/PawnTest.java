@@ -19,7 +19,7 @@ class PawnTest {
             @Test
             @DisplayName("해당 진영의 Pawn을 8개 생성한다")
             void it_returns_pawns() {
-                assertThat(Pawn.of(Side.BLACK)).hasSize(8);
+                assertThat(Pawn.getPawnsOf(Side.BLACK)).hasSize(8);
             }
         }
     }
@@ -27,10 +27,10 @@ class PawnTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Pawn whitePawn = Pawn.of(Side.WHITE)
+        Pawn whitePawn = Pawn.getPawnsOf(Side.WHITE)
                              .get(0);
-        Queen blackQueen = Queen.of(Side.BLACK);
-        Queen whiteQueen = Queen.of(Side.WHITE);
+        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
+        Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
 
         @Nested
         @DisplayName("움직인적 없는 Pawn에 대해")

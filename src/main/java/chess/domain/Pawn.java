@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
+    private static final int NUMBER_OF_PAWNS_EACH_SIDE = 8;
+
     private static final List<Pawn> blackPawns = new ArrayList<>();
     private static final List<Pawn> whitePawns = new ArrayList<>();
 
@@ -20,12 +22,12 @@ public final class Pawn extends Piece {
     }
 
     private static void addPawns(final List<Pawn> pawns, final Side side) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < NUMBER_OF_PAWNS_EACH_SIDE; i++) {
             pawns.add(new Pawn(side));
         }
     }
 
-    public static List<Pawn> of(final Side side) {
+    public static List<Pawn> getPawnsOf(final Side side) {
         if (side == Side.BLACK) {
             return List.copyOf(blackPawns);
         }

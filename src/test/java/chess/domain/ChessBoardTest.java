@@ -143,7 +143,7 @@ class ChessBoardTest {
             void it_returns_true1() {
                 Square from = Square.of(Rank.SEVEN, File.A);
                 Square to = Square.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.of(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
                                      .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -156,9 +156,9 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.SEVEN, File.A);
                 Square middle = Square.of(Rank.SIX, File.A);
                 Square to = Square.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.of(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
                                      .get(0));
-                pieces.put(middle, Queen.of(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -169,9 +169,9 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Pawn.of(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.of(Side.WHITE));
+                pieces.put(to, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isTrue();
@@ -182,9 +182,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Pawn.of(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.of(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -201,7 +201,7 @@ class ChessBoardTest {
             void it_returns_true() {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square to = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.of(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -214,9 +214,9 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square middle = Square.of(Rank.FIVE, File.C);
                 Square to = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.of(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
                                        .get(0));
-                pieces.put(middle, Queen.of(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -227,9 +227,9 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.of(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
                                        .get(0));
-                pieces.put(to, Queen.of(Side.WHITE));
+                pieces.put(to, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isTrue();
@@ -242,9 +242,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.of(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
                                        .get(0));
-                pieces.put(to, Queen.of(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -260,7 +260,7 @@ class ChessBoardTest {
             void it_returns_true() {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square to = Square.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.of(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
                                      .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -273,9 +273,9 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square middle = Square.of(Rank.THREE, File.B);
                 Square to = Square.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.of(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
                                      .get(0));
-                pieces.put(middle, Queen.of(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -286,9 +286,9 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.B);
-                pieces.put(from, Rook.of(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.of(Side.WHITE));
+                pieces.put(to, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isTrue();
@@ -301,9 +301,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.FIVE, File.B);
-                pieces.put(from, Rook.of(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.of(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -319,7 +319,7 @@ class ChessBoardTest {
             void it_returns_true() {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square to = Square.of(Rank.TWO, File.G);
-                pieces.put(from, Knight.of(Side.BLACK)
+                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -333,9 +333,9 @@ class ChessBoardTest {
             void it_returns_false() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.FIVE, File.C);
-                pieces.put(from, Knight.of(Side.BLACK)
+                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
                                        .get(0));
-                pieces.put(to, Queen.of(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();
@@ -353,7 +353,7 @@ class ChessBoardTest {
                 Square to1 = Square.of(Rank.THREE, File.A);
                 Square to2 = Square.of(Rank.SEVEN, File.A);
 
-                pieces.put(from, Queen.of(Side.BLACK));
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -370,9 +370,9 @@ class ChessBoardTest {
                 Square middle2 = Square.of(Rank.FIVE, File.C);
                 Square to1 = Square.of(Rank.THREE, File.A);
                 Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.of(Side.BLACK));
-                pieces.put(middle1, Queen.of(Side.WHITE));
-                pieces.put(middle2, Queen.of(Side.WHITE));
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(middle1, Queen.getQueenOf(Side.WHITE));
+                pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to1)).isFalse();
@@ -385,8 +385,8 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to1 = Square.of(Rank.THREE, File.F);
                 Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.of(Side.BLACK));
-                pieces.put(to1, Queen.of(Side.WHITE));
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to1)).isTrue();
@@ -400,9 +400,9 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to1 = Square.of(Rank.THREE, File.A);
                 Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.of(Side.BLACK));
-                pieces.put(to1, King.of(Side.BLACK));
-                pieces.put(to2, King.of(Side.BLACK));
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to1, King.getKingOf(Side.BLACK));
+                pieces.put(to2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to1)).isFalse();
@@ -420,8 +420,8 @@ class ChessBoardTest {
                 Square from = Square.of(Rank.THREE, File.E);
                 Square to1 = Square.of(Rank.THREE, File.F);
                 Square to2 = Square.of(Rank.FOUR, File.D);
-                pieces.put(from, King.of(Side.BLACK));
-                pieces.put(to1, Queen.of(Side.WHITE));
+                pieces.put(from, King.getKingOf(Side.BLACK));
+                pieces.put(to1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to1)).isTrue();
@@ -434,8 +434,8 @@ class ChessBoardTest {
             void it_returns_false() {
                 Square from = Square.of(Rank.SEVEN, File.B);
                 Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, King.of(Side.BLACK));
-                pieces.put(to, Queen.of(Side.BLACK));
+                pieces.put(from, King.getKingOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(from, to)).isFalse();

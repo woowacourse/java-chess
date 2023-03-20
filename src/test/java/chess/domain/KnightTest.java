@@ -19,7 +19,7 @@ public class KnightTest {
             @Test
             @DisplayName("해당 진영의 Knight를 2개 생성한다")
             void it_returns_knights() {
-                assertThat(Knight.of(Side.BLACK)).hasSize(2);
+                assertThat(Knight.getKnightsOf(Side.BLACK)).hasSize(2);
             }
         }
     }
@@ -27,15 +27,15 @@ public class KnightTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Knight whiteKnight = Knight.of(Side.WHITE)
+        Knight whiteKnight = Knight.getKnightsOf(Side.WHITE)
                                    .get(0);
         Square fromSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.TWO, File.C);
         Square movableSquare2 = Square.of(Rank.FIVE, File.F);
         Square unMovableSquare = Square.of(Rank.TWO, File.B);
-        Knight whiteKnight2 = Knight.of(Side.WHITE)
+        Knight whiteKnight2 = Knight.getKnightsOf(Side.WHITE)
                                     .get(1);
-        Queen blackQueen = Queen.of(Side.BLACK);
+        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
 
         @Nested
         @DisplayName("갈 수 있는 위치에")

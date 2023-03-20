@@ -10,12 +10,11 @@ public class Queen extends Piece {
         whiteQueen = new Queen(Side.WHITE);
     }
 
-
     private Queen(final Side side) {
         super(side);
     }
 
-    public static Queen of(final Side side) {
+    public static Queen getQueenOf(final Side side) {
         if (side == Side.BLACK) {
             return blackQueen;
         }

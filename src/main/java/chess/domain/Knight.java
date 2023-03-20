@@ -25,7 +25,7 @@ public class Knight extends Piece {
         }
     }
 
-    public static List<Knight> of(final Side side) {
+    public static List<Knight> getKnightsOf(final Side side) {
         if (side == Side.BLACK) {
             return List.copyOf(blackKnights);
         }

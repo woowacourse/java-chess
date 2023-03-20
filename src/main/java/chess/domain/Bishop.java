@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
+    private static final int NUMBER_OF_BISHOPS_EACH_SIDE = 2;
+
     private static final List<Bishop> blackBishops = new ArrayList<>();
     private static final List<Bishop> whiteBishops = new ArrayList<>();
 
@@ -18,12 +20,12 @@ public class Bishop extends Piece {
     }
 
     private static void addBishops(final List<Bishop> bishops, final Side side) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < NUMBER_OF_BISHOPS_EACH_SIDE; i++) {
             bishops.add(new Bishop(side));
         }
     }
 
-    public static List<Bishop> of(final Side side) {
+    public static List<Bishop> getBishopsOf(final Side side) {
         if (side == Side.BLACK) {
             return List.copyOf(blackBishops);
         }

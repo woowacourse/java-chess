@@ -44,7 +44,6 @@ public class PieceDto {
 
     @Override
     public String toString() {
-        return
-                type;
+        return type;
     }
 }
