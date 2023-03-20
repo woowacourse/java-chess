@@ -6,7 +6,6 @@ import domain.type.Direction;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import view.PieceView;
 
 public class Bishop extends Piece {
 
@@ -30,7 +29,7 @@ public class Bishop extends Piece {
     public List<Location> searchPath(final Location start, final Location end) {
         final Direction direction = Direction.find(start, end);
         if (direction.equals(Direction.ELSE) || isNotMovable(start, end)) {
-            throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
         final int totalCount = Math.max(
             Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));

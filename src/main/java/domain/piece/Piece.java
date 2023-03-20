@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    protected static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
+    protected static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     protected final Color color;
     protected final PieceType pieceType;
 

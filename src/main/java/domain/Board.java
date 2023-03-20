@@ -5,11 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import view.PieceView;
 
 public class Board {
 
-    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
+    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final PathValidator pathValidator;
@@ -59,7 +58,7 @@ public class Board {
         if (pathValidator.isValid(start, end, path)) {
             return;
         }
-        throw new IllegalArgumentException(PieceView.findSign(start.getPiece()) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
+        throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
     }
 
     private List<Square> getSquaresInPath(final Location start, final Location end) {
