@@ -33,7 +33,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("File은 1에서 8사이의 값 이어야 합니다."));
     }
 
-    int calculateDistance(final File file) {
+    public int calculateDistance(final File file) {
         return this.index - file.index;
     }
 

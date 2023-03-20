@@ -33,7 +33,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("Rank는 a에서 h사이의 값 이어야 합니다."));
     }
 
-    int calculateDistance(final Rank rank) {
+    public int calculateDistance(final Rank rank) {
         return this.index - rank.index;
     }
 

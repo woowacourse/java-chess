@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Turn {
 
+    private static final int NUMBER_OF_TEAM = 2;
+
     private final int turn;
 
     public Turn() {
@@ -20,14 +22,14 @@ public class Turn {
     }
 
     public Team findCurrentTeam() {
-        if (turn % 2 == 0) {
+        if (turn % NUMBER_OF_TEAM == 0) {
             return Team.WHITE;
         }
         return Team.BLACK;
     }
 
     public Team findCurrentEnemyTeam() {
-        if (turn % 2 == 0) {
+        if (turn % NUMBER_OF_TEAM == 0) {
             return Team.BLACK;
         }
         return Team.WHITE;
