@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 public final class Knight extends Piece {
@@ -14,7 +15,7 @@ public final class Knight extends Piece {
     @Override
     public boolean isMovable(final Position source, final Position destination) {
         return source.getDistance(destination) == ONE_STEP_OF_KNIGHT &&
-                !source.isStraight(destination) &&
-                !source.isDiagonal(destination);
+                !Direction.isStraight(source, destination) &&
+                !Direction.isDiagonal(source, destination);
     }
 }

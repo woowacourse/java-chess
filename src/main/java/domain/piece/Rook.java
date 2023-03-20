@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 public final class Rook extends Piece {
@@ -12,6 +13,6 @@ public final class Rook extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        return source.isStraight(destination);
+        return Direction.isStraight(source, destination);
     }
 }

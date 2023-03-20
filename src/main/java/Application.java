@@ -15,6 +15,14 @@ public final class Application {
     private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
 
     public static void main(String[] args) {
+        try {
+            run();
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+        }
+    }
+
+    private static void run() {
         if (isStart()) {
             final Board board = Board.create(new InitialChessAlignment());
             OutputView.printBoard(board.getPieces());

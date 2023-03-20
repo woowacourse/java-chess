@@ -11,4 +11,8 @@ public final class OutputView {
     public static void printBoard(final Map<Position, Piece> board) {
         boardView.printBoard(board);
     }
+
+    public static void printError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 public final class King extends Piece {
@@ -14,10 +15,10 @@ public final class King extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        if (source.isDiagonal(destination) && source.getDistance(destination) == DIAGONAL_ONE_STEP) {
+        if (Direction.isDiagonal(source, destination) && source.getDistance(destination) == DIAGONAL_ONE_STEP) {
             return true;
         }
 
-        return source.isStraight(destination) && source.getDistance(destination) == ONE_STEP;
+        return Direction.isStraight(source, destination) && source.getDistance(destination) == ONE_STEP;
     }
 }

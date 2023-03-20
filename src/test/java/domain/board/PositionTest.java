@@ -1,12 +1,14 @@
 package domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import domain.position.Direction;
 import domain.position.Position;
 import domain.position.Positions;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
 
@@ -20,7 +22,7 @@ class PositionTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(source::isDiagonal);
+        assertThat(destinations).allMatch(destination -> Direction.isDiagonal(source, destination));
     }
 
     @DisplayName("대각선이 아니면 false를 반환한다")
@@ -33,7 +35,7 @@ class PositionTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(source::isDiagonal);
+        assertThat(destinations).noneMatch(destination -> Direction.isDiagonal(source, destination));
     }
 
     @DisplayName("직선이면 true를 반환한다")
@@ -46,7 +48,7 @@ class PositionTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(source::isStraight);
+        assertThat(destinations).allMatch(destination -> Direction.isStraight(source, destination));
     }
 
     @DisplayName("직선이 아니면 false를 반환한다")
@@ -59,7 +61,7 @@ class PositionTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(source::isStraight);
+        assertThat(destinations).noneMatch(destination -> Direction.isStraight(source, destination));
     }
 
     @DisplayName("거리를 맨허튼거리로 계산해 반환한다")
@@ -87,7 +89,7 @@ class PositionTest {
         //when
 
         //then
-        assertThat(source.moveDown(1)).isEqualTo(expected);
+        assertThat(source.move(Direction.S)).isEqualTo(expected);
     }
 
     @DisplayName("위로 한 칸 움직인 위치를 구할 수 있다")
@@ -100,22 +102,6 @@ class PositionTest {
         //when
 
         //then
-        assertThat(source.moveUp(1)).isEqualTo(expected);
-    }
-
-    @DisplayName("원하는 file과 rank만큼 움직인 위치를 구할 수 있다")
-    @Test
-    void move() {
-        //given
-        final Position source = Positions.from("D4");
-        final int rankDifference = 3;
-        final int fileDifference = 4;
-        final Position expected = Positions.from("H7");
-
-        //when
-
-        //then
-        assertThat(source.move(rankDifference, fileDifference)).isEqualTo(expected);
+        assertThat(source.move(Direction.N)).isEqualTo(expected);
     }
 }
-

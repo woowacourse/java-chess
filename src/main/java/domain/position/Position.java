@@ -6,7 +6,6 @@ public final class Position {
 
     private static final int FILE_OFFSET = 0;
     private static final int RANK_OFFSET = 1;
-    private static final int FILE_STAY = 0;
 
     private final File file;
     private final Rank rank;
@@ -16,70 +15,39 @@ public final class Position {
         this.rank = rank;
     }
 
-    public boolean isDiagonal(final Position other) {
-        if (this.equals(other)) {
-            return false;
-        }
-
-        return getFileDifference(other) == getRankDifference(other);
+    public int getFileDifference(final Position other) {
+        return other.getFile() - this.getFile();
     }
 
-    private int getFileDifference(final Position other) {
-        return Math.abs(this.getFile() - other.getFile());
-    }
-
-    private int getRankDifference(final Position other) {
-        return Math.abs(this.getRank() - other.getRank());
-    }
-
-    public boolean isStraight(final Position other) {
-        if (this.equals(other) || isDiagonal(other)) {
-            return false;
-        }
-
-        return other.getRank() == this.getRank() || other.getFile() == this.getFile();
+    public int getRankDifference(final Position other) {
+        return other.getRank() - this.getRank();
     }
 
     public int getDistance(final Position other) {
-        return getFileDifference(other) + getRankDifference(other);
+        return Math.abs(getFileDifference(other)) + Math.abs(getRankDifference(other));
     }
 
-    public Position moveUpRight(final int distance) {
-        return move(distance, distance);
-    }
-
-    public Position moveUpLeft(final int distance) {
-        return move(distance, -distance);
-    }
-
-    public Position moveDownRight(final int distance) {
-        return move(-distance, distance);
-    }
-
-    public Position moveDownLeft(final int distance) {
-        return move(-distance, -distance);
-    }
-
-    public Position moveUp(final int distance) {
-        return move(distance, FILE_STAY);
-    }
-
-    public Position moveDown(final int distance) {
-        return move(-distance, FILE_STAY);
-    }
-
-    public Position move(final int rankDifference, final int fileDifference) {
-        final int rank = this.getRank() + rankDifference;
-        final int file = this.getFile() + fileDifference;
+    public Position move(final Direction direction) {
+        final int rank = this.getRank() + direction.getRankDifference();
+        final int file = this.getFile() + direction.getFileDifference();
 
         return Positions.from(String.valueOf((char) file) + (char) rank);
+    }
+
+    public Position move(final Direction direction, final int distance) {
+        Position result = this;
+        for (int i = 0; i < distance; i++) {
+            result = result.move(direction);
+        }
+
+        return result;
     }
 
     public String getName() {
         return file.getName() + rank.getName();
     }
 
-    public int getFile() {
+    private int getFile() {
         return this.getName().charAt(FILE_OFFSET);
     }
 

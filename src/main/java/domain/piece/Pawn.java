@@ -1,12 +1,12 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 public final class Pawn extends Piece {
 
     private static final String NAME = "P";
-    private static final int ONE_STEP = 1;
-    private static final int TWO_STEP_AT_FIRST = 2;
+    private static final int TWO_STEP = 2;
     private static final char INITIAL_RANK_BLACK = '7';
     private static final char INITIAL_RANK_WHITE = '2';
 
@@ -16,30 +16,39 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        if (isBlack() && source.getRank() == INITIAL_RANK_BLACK) {
-            return source.moveDown(TWO_STEP_AT_FIRST).equals(destination) ||
-                    source.moveDown(ONE_STEP).equals(destination);
-        }
-        if (!isBlack() && source.getRank() == INITIAL_RANK_WHITE) {
-            return source.moveUp(TWO_STEP_AT_FIRST).equals(destination) ||
-                    source.moveUp(ONE_STEP).equals(destination);
+        final Direction direction = Direction.of(source, destination);
+        final int distance = source.getDistance(destination);
+
+        if (isBlack() && isBlackInitialRank(source)) {
+            return Direction.S.equals(direction) && distance <= TWO_STEP;
         }
         if (isBlack()) {
-            return source.moveDown(ONE_STEP).equals(destination);
+            return source.move(Direction.S).equals(destination);
         }
-        return source.moveUp(ONE_STEP).equals(destination);
+        if (isWhiteInitialRank(source)) {
+            return Direction.N.equals(direction) && distance <= TWO_STEP;
+        }
+        return source.move(Direction.N).equals(destination);
+    }
+
+    private boolean isWhiteInitialRank(final Position source) {
+        return source.getRank() == INITIAL_RANK_WHITE;
+    }
+
+    private boolean isBlackInitialRank(final Position source) {
+        return source.getRank() == INITIAL_RANK_BLACK;
     }
 
     @Override
     public boolean isCapturable(final Position source, final Position destination) {
         if (isBlack() &&
-                source.moveDownLeft(ONE_STEP).equals(destination) ||
-                source.moveDownRight(ONE_STEP).equals(destination)) {
+                source.move(Direction.SW).equals(destination) ||
+                source.move(Direction.SE).equals(destination)) {
             return true;
         }
 
         return !isBlack() &&
-                source.moveUpLeft(ONE_STEP).equals(destination) ||
-                source.moveUpRight(ONE_STEP).equals(destination);
+                source.move(Direction.NW).equals(destination) ||
+                source.move(Direction.NE).equals(destination);
     }
 }

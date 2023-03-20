@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Position;
 
 public final class Queen extends Piece {
@@ -12,6 +13,6 @@ public final class Queen extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        return source.isStraight(destination) || source.isDiagonal(destination);
+        return Direction.isStraight(source, destination) || Direction.isDiagonal(source, destination);
     }
 }
