@@ -1,6 +1,6 @@
 package chessgame;
 
-import static chessgame.PointFixture.*;
+import static chessgame.point.PointFixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.List;
@@ -9,10 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chessgame.domain.Board;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
-import chessgame.util.ChessBoardFactory;
 
 class GameTest {
 

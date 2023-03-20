@@ -1,6 +1,6 @@
-package chessgame;
+package chessgame.piece;
 
-import static chessgame.PointFixture.*;
+import static chessgame.point.PointFixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import org.assertj.core.api.Assertions;

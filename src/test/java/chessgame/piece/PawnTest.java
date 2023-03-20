@@ -1,6 +1,6 @@
-package chessgame;
+package chessgame.piece;
 
-import static chessgame.PointFixture.*;
+import static chessgame.point.PointFixture.*;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

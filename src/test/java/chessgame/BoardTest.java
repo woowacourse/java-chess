@@ -1,6 +1,6 @@
 package chessgame;
 
-import static chessgame.PointFixture.*;
+import static chessgame.point.PointFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 

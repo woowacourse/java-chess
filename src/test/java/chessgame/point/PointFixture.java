@@ -1,4 +1,4 @@
-package chessgame;
+package chessgame.point;
 
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
