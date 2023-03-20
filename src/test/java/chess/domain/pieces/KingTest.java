@@ -16,10 +16,12 @@ class KingTest {
     @DisplayName("king은 팔방으로 한칸만 움직인다.")
     void move_success(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         King king = new King(Team.WHITE);
 
         // when & then
-        assertDoesNotThrow(() -> king.canMove(start, end));
+        assertDoesNotThrow(() -> king.canMove(source, destination));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -27,11 +29,13 @@ class KingTest {
     @DisplayName("King이 팔방으로 한칸만 움직이지 않으면 예외를 발생시킨다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         King king = new King(Team.WHITE);
 
         // when & then
         assertThatThrownBy(
-            () -> king.canMove(start, end)
+            () -> king.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -16,14 +16,14 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void move(final String start, final String end) {
-        validateTurn(start);
-        board.switchPosition(start, end);
+    public void move(final Position source, final Position destination) {
+        validateTurn(source);
+        board.switchPosition(source, destination);
         isWhiteTeamTurn = !isWhiteTeamTurn;
     }
 
-    private void validateTurn(final String start) {
-        if (board.findPiece(start).isWhiteTeam() != isWhiteTeamTurn) {
+    private void validateTurn(final Position source) {
+        if (board.findPiece(source).isWhiteTeam() != isWhiteTeamTurn) {
             throw new IllegalArgumentException("상대편 말은 움직일 수 없습니다.");
         }
     }

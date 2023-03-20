@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
@@ -53,7 +54,9 @@ public class ChessGameController {
 
     private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
         if (inputCommand.get(COMMAND_INDEX).startsWith(MOVE_COMMAND)) {
-            chessGame.move(inputCommand.get(SELECTED_PIECE), inputCommand.get(DESTINATION));
+            Position source = Position.from(inputCommand.get(SELECTED_PIECE));
+            Position destination = Position.from(inputCommand.get(DESTINATION));
+            chessGame.move(source, destination);
         }
     }
 

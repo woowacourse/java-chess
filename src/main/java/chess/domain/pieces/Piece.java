@@ -1,5 +1,6 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Position;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -10,7 +11,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract void canMove(final String start, final String end);
+    public abstract void canMove(final Position start, final Position end);
 
     public Team getTeam() {
         return team;

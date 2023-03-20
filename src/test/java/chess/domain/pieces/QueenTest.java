@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,11 +16,13 @@ class QueenTest {
     @DisplayName("Queen은 사방으로 여러 칸 이동이 가능하다.")
     void move_success_like_rook(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Queen queen = new Queen(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(
-            () -> queen.canMove(start, end)
+            () -> queen.canMove(source, destination)
         );
     }
 
@@ -29,10 +32,12 @@ class QueenTest {
     @DisplayName("Queen은 대각선으로 여러칸 이동이 가능하다.")
     void move_success_like_bishop(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Queen queen = new Queen(Team.WHITE);
 
         // when & then
-        assertDoesNotThrow(() -> queen.canMove(start, end));
+        assertDoesNotThrow(() -> queen.canMove(source, destination));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -40,11 +45,13 @@ class QueenTest {
     @DisplayName("Queen은 팔방이 아닌 칸으로 이동하면 에러를 발생시킨다.")
     void throws_exception_when_move_position_invalid(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Queen queen = new Queen(Team.WHITE);
 
         // when & then
         assertThatThrownBy(
-            () -> queen.canMove(start, end)
+            () -> queen.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

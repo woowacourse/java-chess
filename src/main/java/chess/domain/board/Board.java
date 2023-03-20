@@ -21,35 +21,35 @@ public class Board {
         return board;
     }
 
-    public Piece findPiece(final String start) {
-        return board.get(Position.from(start));
+    public Piece findPiece(final Position position) {
+        return board.get(position);
     }
 
-    public void switchPosition(final String start, final String end) {
-        validateMove(start, end);
-        board.replace(Position.from(end), findPiece(start));
-        board.replace(Position.from(start), new Empty(Team.EMPTY));
+    public void switchPosition(final Position source, final Position destination) {
+        validateMove(source, destination);
+        board.replace(destination, findPiece(source));
+        board.replace(source, new Empty(Team.EMPTY));
     }
 
-    private void validateMove(final String start, final String end) {
-        Piece piece = findPiece(start);
-        validateMoveSamePosition(start, end);
+    private void validateMove(final Position source, final Position destination) {
+        Piece piece = findPiece(source);
+        validateMoveSamePosition(source, destination);
         if (!(piece instanceof Knight)) {
-            validateObstacle(start, end);
+            validateObstacle(source, destination);
         }
-        piece.canMove(start, end);
-        validatePawnMove(piece, start, end);
-        validateMoveMyTeam(start, end);
+        piece.canMove(source, destination);
+        validatePawnMove(piece, source, destination);
+        validateMoveMyTeam(source, destination);
     }
 
-    private void validateMoveSamePosition(final String start, final String end) {
-        if (start.equals(end)) {
+    private void validateMoveSamePosition(final Position source, final Position destination) {
+        if (source.equals(destination)) {
             throw new IllegalArgumentException("같은 위치로 움직일 수 없습니다.");
         }
     }
 
-    private void validateObstacle(final String start, final String end) {
-        List<String> routes = Direction.getRoute(start, end);
+    private void validateObstacle(final Position source, final Position destination) {
+        List<Position> routes = Direction.getRoute(source, destination);
 
         boolean isObstacleExist = routes.stream()
                 .map(this::findPiece)
@@ -60,42 +60,42 @@ public class Board {
         }
     }
 
-    private void validatePawnMove(final Piece piece, final String start, final String end) {
+    private void validatePawnMove(final Piece piece, final Position source, final Position destination) {
         if (!(piece instanceof Pawn)) {
             return;
         }
 
         if (piece.isWhiteTeam()) {
-            validateLowercasePawnMove(start, end);
+            validateLowercasePawnMove(source, destination);
             return;
         }
 
-        validateUppercasePawnMove(start, end);
+        validateUppercasePawnMove(source, destination);
     }
 
-    private void validateLowercasePawnMove(final String start, final String end) {
-        if (Direction.isLowerPawnDiagonal(start, end)) {
-            validateLowercasePawnAttack(end);
+    private void validateLowercasePawnMove(final Position source, final Position destination) {
+        if (Direction.isLowerPawnDiagonal(source, destination)) {
+            validateLowercasePawnAttack(destination);
             return;
         }
-        validateLowercasePawnMoveForward(end);
+        validateLowercasePawnMoveForward(destination);
     }
 
-    private void validateLowercasePawnAttack(final String end) {
+    private void validateLowercasePawnAttack(final Position end) {
         Piece upperEnemy = findPiece(end);
         if (upperEnemy.isWhiteTeam() || upperEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
-    private void validateLowercasePawnMoveForward(final String end) {
+    private void validateLowercasePawnMoveForward(final Position end) {
         Piece destination = findPiece(end);
         if (!(destination instanceof Empty)) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
-    private void validateUppercasePawnMove(final String start, final String end) {
+    private void validateUppercasePawnMove(final Position start, final Position end) {
         if (Direction.isUpperPawnDiagonal(start, end)) {
             validateUppercasePawnAttack(end);
             return;
@@ -103,7 +103,7 @@ public class Board {
         validateUppercasePawnMoveForward(end);
     }
 
-    private void validateMoveMyTeam(final String start, final String end) {
+    private void validateMoveMyTeam(final Position start, final Position end) {
         Piece selectedPiece = findPiece(start);
         Piece destinationPiece = findPiece(end);
         if (isSameTeam(selectedPiece, destinationPiece) && !destinationPiece.isEmpty()) {
@@ -112,17 +112,18 @@ public class Board {
     }
 
     private boolean isSameTeam(final Piece selectedPiece, final Piece destinationPiece) {
-        return selectedPiece.isWhiteTeam() == destinationPiece.isWhiteTeam();
+        return selectedPiece.isWhiteTeam() == destinationPiece.isWhiteTeam()
+            || selectedPiece.isBlackTeam() == destinationPiece.isBlackTeam();
     }
 
-    private void validateUppercasePawnAttack(final String end) {
+    private void validateUppercasePawnAttack(final Position end) {
         Piece lowerEnemy = findPiece(end);
         if (lowerEnemy.isBlackTeam() || lowerEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
-    private void validateUppercasePawnMoveForward(final String end) {
+    private void validateUppercasePawnMoveForward(final Position end) {
         Piece destination = findPiece(end);
         if (!(destination instanceof Empty)) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");

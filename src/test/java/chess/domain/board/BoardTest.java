@@ -28,11 +28,13 @@ class BoardTest {
     @DisplayName("같은 위치 혹은 같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Board board = BoardFactory.createBoard();
 
         // when & then
         assertThatThrownBy(
-            () -> board.switchPosition(start, end)
+            () -> board.switchPosition(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,14 +42,16 @@ class BoardTest {
     @DisplayName("체스 말이 정상적으로 움직인다.")
     void move_success() {
         // given
+        Position source = Position.from("a2");
+        Position destination = Position.from("a3");
         Board board = BoardFactory.createBoard();
 
         // when
-        board.switchPosition("a2", "a3");
+        board.switchPosition(source, destination);
 
         // then
-        assertThat(board.findPiece("a3").getTeam()).isEqualTo(Team.WHITE);
-        assertThat(board.findPiece("a2").getTeam()).isEqualTo(Team.EMPTY);
+        assertThat(board.findPiece(destination).getTeam()).isEqualTo(Team.WHITE);
+        assertThat(board.findPiece(source).getTeam()).isEqualTo(Team.EMPTY);
     }
 
     @Test
@@ -55,11 +59,11 @@ class BoardTest {
     void lower_pawn_attack_success() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("b7", "b5");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("b7"), Position.from("b5"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition("a4", "b5"));
+        assertDoesNotThrow(() -> board.switchPosition(Position.from("a4"), Position.from("b5")));
     }
 
     @Test
@@ -67,12 +71,12 @@ class BoardTest {
     void upper_pawn_attack_success() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("b7", "b5");
-        board.switchPosition("a1", "a2");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("b7"), Position.from("b5"));
+        board.switchPosition(Position.from("a1"), Position.from("a2"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition("b5", "a4"));
+        assertDoesNotThrow(() -> board.switchPosition(Position.from("b5"), Position.from("a4")));
     }
 
     @Test
@@ -82,7 +86,7 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a2", "b3"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a2"), Position.from("b3")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -90,11 +94,10 @@ class BoardTest {
     @DisplayName("upper 폰은 빈공간에서는 대각선으로 움직일 수 없다.")
     void upper_pawn_does_not_move_diagonal_when_space_is_empty() {
         // given
-        Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a3");
+        Board board = BoardFactory.createBoard();board.switchPosition(Position.from("a2"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a7", "b6"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a7"), Position.from("b6")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -103,11 +106,11 @@ class BoardTest {
     void lower_pawn_does_not_attack_forward_enemy() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("a7", "a5");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("a7"), Position.from("a5"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a4", "a5"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a4"), Position.from("a5")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -116,12 +119,12 @@ class BoardTest {
     void upper_pawn_does_not_attack_forward_enemy() {
         // given
         Board board = BoardFactory.createBoard();
-        board.switchPosition("a2", "a4");
-        board.switchPosition("a7", "a5");
-        board.switchPosition("a1", "a3");
+        board.switchPosition(Position.from("a2"), Position.from("a4"));
+        board.switchPosition(Position.from("a7"), Position.from("a5"));
+        board.switchPosition(Position.from("a1"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition("a5", "a4"))
+        assertThatThrownBy(() -> board.switchPosition(Position.from("a5"), Position.from("a4")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

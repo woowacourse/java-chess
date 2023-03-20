@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -26,6 +27,14 @@ public class Position {
         return new Position(row, col);
     }
 
+    public Row getRow() {
+        return row;
+    }
+
+    public Col getCol() {
+        return col;
+    }
+
     public boolean isPlacePositionAtFirst() {
         return EMPTY_PLACE_START_INDEX <= this.row.getIndexOfRow() && this.row.getIndexOfRow() <= EMPTY_PLACE_END_INDEX;
     }
@@ -36,6 +45,30 @@ public class Position {
 
     public boolean isUpperPawnPositionAtFirst() {
         return this.row.getIndexOfRow() == UPPER_PAWN_INDEX;
+    }
+
+    public int calculateDistanceOfRow(Position source) {
+        return this.row.subPositionFromArrivePosition(source.row);
+    }
+
+    public int calculateDistanceOfCol(Position source) {
+        return this.col.subPositionFromArrivePosition(source.col);
+    }
+
+    public Row nextRow(int directionOfRow) {
+        return this.row.nextRow(directionOfRow);
+    }
+
+    public Col nextCol(int directionOfCol) {
+        return this.col.nextCol(directionOfCol);
+    }
+
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+
+    public boolean isSameColumn(Col col) {
+        return this.col == col;
     }
 
     @Override

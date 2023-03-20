@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Col;
+import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 public class Queen extends Piece {
@@ -13,13 +14,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void canMove(final String start, final String end) {
-        validateMove(start, end);
+    public void canMove(final Position source, final Position destination) {
+        validateMove(source, destination);
     }
 
-    private void validateMove(final String start, final String end) {
-        int subRow = Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW));
-        int subCol = Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN));
+    private void validateMove(final Position source, final Position destination) {
+        int subRow = destination.calculateDistanceOfRow(source);
+        int subCol = destination.calculateDistanceOfCol(source);
 
         if (!validateMoveLikeBishop(subRow, subCol) && !validateMoveLikeRook(subRow, subCol)) {
             throw new IllegalArgumentException("Queen의 이동 범위가 올바르지 않습니다.");

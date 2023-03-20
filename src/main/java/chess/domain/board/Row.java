@@ -13,6 +13,9 @@ public enum Row {
     SEVEN('7'),
     EIGHT('8');
 
+    private static final char CHAR_TO_INT = '0';
+    private static final char INT_TO_CHAR = '0';
+
     private final char row;
 
     Row(final char row) {
@@ -26,10 +29,13 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
     }
 
-    public static int subPositionFromArrivePosition(final char start, final char end) {
-        Row startRow = fromByInput(start);
-        Row endRow = fromByInput(end);
-        return endRow.row - startRow.row;
+    public Row nextRow (final int next) {
+        int RowNumer = this.row - CHAR_TO_INT;
+        return fromByInput((char) (RowNumer + next + INT_TO_CHAR));
+    }
+
+    public int subPositionFromArrivePosition(final Row rowOfSource) {
+        return this.row - rowOfSource.row;
     }
 
     public char getIndexOfRow() {

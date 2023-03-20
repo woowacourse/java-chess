@@ -16,11 +16,13 @@ class KnightTest {
     @DisplayName("Knight는 ")
     void move_success(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Knight knight = new Knight(Team.WHITE);
 
         // when  & then
         Assertions.assertDoesNotThrow(
-                () -> knight.canMove(start, end)
+            () -> knight.canMove(source, destination)
         );
     }
 
@@ -29,11 +31,13 @@ class KnightTest {
     @DisplayName("Knight가 정상적인 위치로 움직이지 않는 경우 예외를 발생시킨다.")
     void throws_exception_when_knight_moves_invalid(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Knight knight = new Knight(Team.WHITE);
 
         // when  & then
         assertThatThrownBy(
-                () -> knight.canMove(start, end)
+            () -> knight.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

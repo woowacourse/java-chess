@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,11 +16,13 @@ class RookTest {
     @DisplayName("Rook은 사방으로 여러칸 이동이 가능하다.")
     void move_success(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Rook rook = new Rook(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(
-            () -> rook.canMove(start, end)
+            () -> rook.canMove(source, destination)
         );
     }
 
@@ -28,11 +31,13 @@ class RookTest {
     @DisplayName("Rook이 사방이 아닌 다른 곳으로 이동하면 예외를 발생시킨다.")
     void throws_exception_when_move_position_invalid(final String start, final String end) {
         // given
+        Position source = Position.from(start);
+        Position destination = Position.from(end);
         Rook rook = new Rook(Team.WHITE);
 
         // when & then
         assertThatThrownBy(
-            () -> rook.canMove(start, end)
+            () -> rook.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

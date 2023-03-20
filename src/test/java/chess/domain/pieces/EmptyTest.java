@@ -1,5 +1,6 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class EmptyTest {
 
         // when & then
         Assertions.assertThatThrownBy(
-                () -> empty.canMove("c3", "c4")
+            () -> empty.canMove(Position.from("c3"), Position.from("c4"))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }
