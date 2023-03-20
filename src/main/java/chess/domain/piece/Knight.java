@@ -18,7 +18,7 @@ import java.util.List;
 public final class Knight extends MovablePiece {
 
     private Knight(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.KNIGHT);
     }
 
     public static Knight create(final Color color) {

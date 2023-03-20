@@ -14,7 +14,7 @@ import java.util.List;
 public final class Bishop extends MovablePiece {
 
     private Bishop(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.BISHOP);
     }
 
     public static Bishop create(final Color color) {

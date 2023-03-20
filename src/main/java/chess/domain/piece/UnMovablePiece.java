@@ -8,13 +8,13 @@ import java.util.List;
 
 public final class UnMovablePiece extends Piece {
 
-    private UnMovablePiece(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+    private UnMovablePiece(final Color color, final MovingStrategies strategies, final PieceType pieceType) {
+        super(color, strategies, pieceType);
     }
 
     public static UnMovablePiece create() {
         MovingStrategies emptyStrategies = new MovingStrategies(Collections.emptyList());
-        return new UnMovablePiece(Color.EMPTY, emptyStrategies);
+        return new UnMovablePiece(Color.EMPTY, emptyStrategies, PieceType.EMPTY);
     }
 
     @Override

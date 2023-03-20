@@ -19,7 +19,7 @@ public final class Pawn extends MovablePiece {
     private static final int INITIAL_BLACK_RANK = 7;
 
     private Pawn(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.PAWN);
     }
 
     public static Pawn createByColor(final Color color) {

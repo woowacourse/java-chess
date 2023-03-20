@@ -14,7 +14,7 @@ import java.util.List;
 public final class Rook extends MovablePiece {
 
     private Rook(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.ROOK);
     }
 
     public static Rook create(final Color color) {

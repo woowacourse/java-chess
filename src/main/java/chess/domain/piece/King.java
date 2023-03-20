@@ -18,7 +18,7 @@ import java.util.List;
 public final class King extends MovablePiece {
 
     private King(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.KING);
     }
 
     public static King create(final Color color) {

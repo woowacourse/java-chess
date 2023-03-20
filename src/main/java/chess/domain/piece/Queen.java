@@ -18,7 +18,7 @@ import java.util.List;
 public final class Queen extends MovablePiece {
 
     private Queen(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+        super(color, strategies, PieceType.QUEEN);
     }
 
     public static Queen create(final Color color) {
