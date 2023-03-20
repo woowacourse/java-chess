@@ -37,7 +37,7 @@ public class Piece {
         return this.piecePosition.equals(piecePosition);
     }
 
-    protected Path path(final PiecePosition destination) {
+    private Path path(final PiecePosition destination) {
         return Path.of(piecePosition, destination);
     }
 
