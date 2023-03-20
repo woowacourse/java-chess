@@ -42,10 +42,9 @@ class PositionTest {
     void isOver(final int rank, final int file, final boolean expected) {
         // given
         final Position position = new Position(rank, file);
-        final int limit = 8;
 
         // when, then
-        assertThat(position.isOver(limit))
+        assertThat(position.isOver())
                 .isSameAs(expected);
     }
 

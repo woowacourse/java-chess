@@ -3,6 +3,9 @@ package chess.domain.piece;
 import java.util.Objects;
 
 public final class Position {
+    private static final int MIN = 0;
+    private static final int MAX = 8;
+
     private final int rank;
     private final int file;
 
@@ -19,8 +22,8 @@ public final class Position {
         return new Position(this.rank + other.rank, this.file + other.file);
     }
 
-    public boolean isOver(final int limit) {
-        return rank < 0 || rank >= limit || file < 0 || file >= limit;
+    public boolean isOver() {
+        return rank < MIN || rank >= MAX || file < MIN || file >= MAX;
     }
 
     public Position computeUnitPosition(final Position target) {
