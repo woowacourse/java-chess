@@ -1,7 +1,6 @@
 package chess.board;
 
 import chess.exception.PieceCannotMoveException;
-import chess.fixture.FixturePosition;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;
@@ -9,7 +8,6 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
-import chess.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,6 +17,34 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.fixture.PieceFixture.BISHOP_WHITE;
+import static chess.fixture.PieceFixture.KING_WHITE;
+import static chess.fixture.PieceFixture.KNIGHT_WHITE;
+import static chess.fixture.PieceFixture.PAWN_WHITE;
+import static chess.fixture.PieceFixture.QUEEN_WHITE;
+import static chess.fixture.PieceFixture.ROOK_BLACK;
+import static chess.fixture.PieceFixture.ROOK_WHITE;
+import static chess.fixture.PositionFixture.A1;
+import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A8;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B3;
+import static chess.fixture.PositionFixture.B4;
+import static chess.fixture.PositionFixture.C2;
+import static chess.fixture.PositionFixture.D1;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.D8;
+import static chess.fixture.PositionFixture.E1;
+import static chess.fixture.PositionFixture.E4;
+import static chess.fixture.PositionFixture.E5;
+import static chess.fixture.PositionFixture.E8;
+import static chess.fixture.PositionFixture.F1;
+import static chess.fixture.PositionFixture.F2;
+import static chess.fixture.PositionFixture.F3;
+import static chess.fixture.PositionFixture.F6;
+import static chess.fixture.PositionFixture.H1;
+import static chess.fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -32,16 +58,25 @@ class ChessBoardTest {
         PieceFactory.createEmptyPiece(piecePosition);
     }
 
+    @Test
+    void 체스판은_64개의_칸을_가진다() {
+        //given
+        ChessBoard chessBoard = ChessBoard.createBoard();
+        //when & then
+        assertThat(chessBoard.getPiecePosition().size())
+                .isEqualTo(64);
+    }
+
     @Nested
     class 룩은_ {
 
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new Rook(Team.WHITE));
+            piecePosition.put(from, ROOK_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -54,13 +89,11 @@ class ChessBoardTest {
         @Test
         void 이동경로에_같은_팀의_말이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = A1;
+            Position to = F1;
 
-            Position other = FixturePosition.D1;
-
-            piecePosition.put(from, new Rook(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.BLACK));
+            piecePosition.put(from, ROOK_WHITE);
+            piecePosition.put(D1, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -72,11 +105,11 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = A1;
+            Position to = F1;
 
-            piecePosition.put(from, new Rook(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, ROOK_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -90,10 +123,10 @@ class ChessBoardTest {
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
+            piecePosition.put(from, BISHOP_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -106,13 +139,11 @@ class ChessBoardTest {
         @Test
         void 이동경로에_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.H8;
+            Position from = A1;
+            Position to = H8;
 
-            Position other = FixturePosition.D4;
-
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, BISHOP_WHITE);
+            piecePosition.put(D4, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -124,13 +155,11 @@ class ChessBoardTest {
         @Test
         void 이동경로에_말이_있으면_예외2() {
             //given
-            Position from = FixturePosition.H1;
-            Position to = FixturePosition.A8;
+            Position from = H1;
+            Position to = A8;
 
-            Position other = FixturePosition.E4;
-
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, BISHOP_WHITE);
+            piecePosition.put(E4, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -142,13 +171,11 @@ class ChessBoardTest {
         @Test
         void 이동경로에_말이_있으면_예외3() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.A2;
+            Position from = D5;
+            Position to = A2;
 
-            Position other = FixturePosition.B3;
-
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, BISHOP_WHITE);
+            piecePosition.put(B3, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -160,13 +187,11 @@ class ChessBoardTest {
         @Test
         void 이동경로에_말이_있으면_예외4() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.H1;
+            Position from = D5;
+            Position to = H1;
 
-            Position other = FixturePosition.F3;
-
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, BISHOP_WHITE);
+            piecePosition.put(F3, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -178,11 +203,11 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F6;
+            Position from = A1;
+            Position to = F6;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, BISHOP_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -196,10 +221,10 @@ class ChessBoardTest {
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
+            piecePosition.put(from, QUEEN_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -212,13 +237,11 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.H8;
+            Position from = A1;
+            Position to = H8;
 
-            Position other = FixturePosition.D4;
-
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(D4, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -230,13 +253,11 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외2() {
             //given
-            Position from = FixturePosition.H1;
-            Position to = FixturePosition.A8;
+            Position from = H1;
+            Position to = A8;
 
-            Position other = FixturePosition.E4;
-
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(E4, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -248,13 +269,11 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외3() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.A2;
+            Position from = D5;
+            Position to = A2;
 
-            Position other = FixturePosition.B3;
-
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(B3, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -266,13 +285,11 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외4() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.H1;
+            Position from = D5;
+            Position to = H1;
 
-            Position other = FixturePosition.F3;
-
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(F3, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -284,13 +301,11 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외5() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = A1;
+            Position to = F1;
 
-            Position other = FixturePosition.D1;
-
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.BLACK));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(D1, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -302,11 +317,11 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = A1;
+            Position to = F1;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, QUEEN_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -320,10 +335,10 @@ class ChessBoardTest {
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new King(Team.WHITE));
+            piecePosition.put(from, KING_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -336,11 +351,11 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.A2;
+            Position from = A1;
+            Position to = A2;
 
-            piecePosition.put(from, new King(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.WHITE));
+            piecePosition.put(from, KING_WHITE);
+            piecePosition.put(to, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -352,11 +367,11 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.A2;
+            Position from = A1;
+            Position to = A2;
 
-            piecePosition.put(from, new King(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, KING_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -370,10 +385,10 @@ class ChessBoardTest {
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new Knight(Team.WHITE));
+            piecePosition.put(from, KNIGHT_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -386,11 +401,11 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.C2;
+            Position from = A1;
+            Position to = C2;
 
-            piecePosition.put(from, new Knight(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.WHITE));
+            piecePosition.put(from, KNIGHT_WHITE);
+            piecePosition.put(to, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -402,11 +417,11 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.C2;
+            Position from = A1;
+            Position to = C2;
 
-            piecePosition.put(from, new Knight(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, KNIGHT_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -420,10 +435,10 @@ class ChessBoardTest {
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F2;
+            Position from = A1;
+            Position to = F2;
 
-            piecePosition.put(from, new Pawn(Team.WHITE));
+            piecePosition.put(from, PAWN_WHITE);
 
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -436,13 +451,13 @@ class ChessBoardTest {
         @Test
         void 같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.B2;
-            Position to = FixturePosition.B4;
+            Position from = B2;
+            Position to = B4;
 
-            Position other = FixturePosition.B3;
+            Position other = B3;
 
-            piecePosition.put(from, new Pawn(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
+            piecePosition.put(from, PAWN_WHITE);
+            piecePosition.put(other, ROOK_WHITE);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
@@ -454,25 +469,16 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.D4;
-            Position to = FixturePosition.E5;
+            Position from = D4;
+            Position to = E5;
 
-            piecePosition.put(from, new Pawn(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
+            piecePosition.put(from, PAWN_WHITE);
+            piecePosition.put(to, ROOK_BLACK);
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
         }
-    }
-
-    @Test
-    void 체스판은_64개의_칸을_가진다() {
-        //given
-        ChessBoard chessBoard = ChessBoard.createBoard();
-        //when & then
-        assertThat(chessBoard.getPiecePosition().size())
-                .isEqualTo(64);
     }
 
     @Nested
@@ -533,24 +539,22 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = FixturePosition.D1;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
-            assertThat(piecePosition.get(position))
+            assertThat(piecePosition.get(D1))
                     .isInstanceOf(Queen.class);
         }
 
         @Test
         void 킹의_초기_위치는_E1_이다() {
             //given
-            Position position = FixturePosition.E1;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
-            assertThat(piecePosition.get(position))
+            assertThat(piecePosition.get(E1))
                     .isInstanceOf(King.class);
         }
     }
@@ -614,27 +618,23 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = FixturePosition.D8;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
-            assertThat(piecePosition.get(position))
+            assertThat(piecePosition.get(D8))
                     .isInstanceOf(Queen.class);
         }
 
         @Test
         void 킹의_초기_위치는_E8_이다() {
             //given
-            Position position = FixturePosition.E8;
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
-            assertThat(piecePosition.get(position))
+            assertThat(piecePosition.get(E8))
                     .isInstanceOf(King.class);
         }
     }
-
-
 }

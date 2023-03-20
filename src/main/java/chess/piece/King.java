@@ -17,10 +17,4 @@ public class King extends Piece {
 
         return isFileIntervalOne && isRankIntervalOne;
     }
-
-    private void validateDestination(final Piece toPiece) {
-        if (this.team == toPiece.team) {
-            throw new IllegalArgumentException("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
-        }
-    }
 }
