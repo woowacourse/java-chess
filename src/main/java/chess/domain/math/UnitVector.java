@@ -15,16 +15,16 @@ public enum UnitVector {
     UP_LEFT(-1, -1);
 
     private final int row;
-    private final int col;
+    private final int column;
 
-    UnitVector(int row, int col) {
+    UnitVector(int row, int column) {
         this.row = row;
-        this.col = col;
+        this.column = column;
     }
 
     public static UnitVector of(final Position current, final Position target) {
         int rowUnit = unit(target.getRow() - current.getRow());
-        int colUnit = unit(target.getCol() - current.getCol());
+        int colUnit = unit(target.getColumn() - current.getColumn());
 
         return Arrays.stream(UnitVector.values())
                 .filter(unitVector -> unitVector.isSame(rowUnit, colUnit))
@@ -39,15 +39,15 @@ public enum UnitVector {
         return input / Math.abs(input);
     }
 
-    private boolean isSame(final int row, final int col) {
-        return this.row == row && this.col == col;
+    private boolean isSame(final int row, final int column) {
+        return this.row == row && this.column == column;
     }
 
     public int getRow() {
         return row;
     }
 
-    public int getCol() {
-        return col;
+    public int getColumn() {
+        return column;
     }
 }

@@ -17,7 +17,7 @@ class PositionConverterTest {
 
         assertAll(
                 () -> assertThat(position.getRow()).isEqualTo(6),
-                () -> assertThat(position.getCol()).isEqualTo(1)
+                () -> assertThat(position.getColumn()).isEqualTo(1)
         );
     }
 }

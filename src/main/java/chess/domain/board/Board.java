@@ -116,12 +116,12 @@ public class Board {
 
     // current -> target - 1까지 돌면서 기물이 존재하면 예외 터트리는 함수
     private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
-        Position iterator = new Position(current.getRow(), current.getCol()).move(unitVector);
+        Position iterator = new Position(current.getRow(), current.getColumn()).move(unitVector);
 
         while (!iterator.equals(target)) {
             Rank iteratorRank = board.get(iterator.getRow());
 
-            if (!iteratorRank.isEmptyPiece(iterator.getCol())) {
+            if (!iteratorRank.isEmptyPiece(iterator.getColumn())) {
                 throw new IllegalArgumentException("가는 경로 도중에 다른 기물 존재");
             }
             iterator = iterator.move(unitVector);
@@ -130,28 +130,28 @@ public class Board {
 
     private Piece findPiece(final Position position) {
         Rank rank = board.get(position.getRow());
-        Square square = rank.findSquare(position.getCol());
+        Square square = rank.findSquare(position.getColumn());
 
         return square.getPiece();
     }
 
     private void move(final Position current, final Position target) {
-        Piece currentPointPiece = board.get(current.getRow()).findPiece(current.getCol());
+        Piece currentPointPiece = board.get(current.getRow()).findPiece(current.getColumn());
         Rank targetRank = board.get(target.getRow());
 
-        Square replacedSquare = targetRank.replacePiece(target.getCol(), currentPointPiece);
-        targetRank.replaceSquare(target.getCol(), replacedSquare);
+        Square replacedSquare = targetRank.replacePiece(target.getColumn(), currentPointPiece);
+        targetRank.replaceSquare(target.getColumn(), replacedSquare);
 
-        targetRank.replaceSquare(target.getCol(), replacedSquare);
+        targetRank.replaceSquare(target.getColumn(), replacedSquare);
 
         Rank currentRank = board.get(current.getRow());
-        Square newCurrentSquare = currentRank.replacePiece(current.getCol(), new EmptyPiece(NEUTRALITY));
-        currentRank.replaceSquare(current.getCol(), newCurrentSquare);
+        Square newCurrentSquare = currentRank.replacePiece(current.getColumn(), new EmptyPiece(NEUTRALITY));
+        currentRank.replaceSquare(current.getColumn(), newCurrentSquare);
     }
 
     private int calculateStep(final Position current, final Position target) {
         int rowDifferent = Math.abs(current.getRow() - target.getRow());
-        int colDifferent = Math.abs(current.getCol() - target.getCol());
+        int colDifferent = Math.abs(current.getColumn() - target.getColumn());
 
         return Math.max(rowDifferent, colDifferent);
     }

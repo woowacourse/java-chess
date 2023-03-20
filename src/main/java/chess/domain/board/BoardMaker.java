@@ -54,7 +54,7 @@ public class BoardMaker {
 
     private static Rank createSecondRank() {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(1, col), new Pawn(Team.BLACK)))
+                .mapToObj(column -> new Square(new Position(1, column), new Pawn(Team.BLACK)))
                 .collect(toList());
 
         return new Rank(squares);
@@ -62,7 +62,7 @@ public class BoardMaker {
 
     private static Rank createMiddleRank(int row) {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(row, col), new EmptyPiece(NEUTRALITY)))
+                .mapToObj(column -> new Square(new Position(row, column), new EmptyPiece(NEUTRALITY)))
                 .collect(toList());
 
         return new Rank(squares);
@@ -70,7 +70,7 @@ public class BoardMaker {
 
     private static Rank createSecondLastRank() {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(6, col), new Pawn(Team.WHITE)))
+                .mapToObj(column -> new Square(new Position(6, column), new Pawn(Team.WHITE)))
                 .collect(toList());
 
         return new Rank(squares);

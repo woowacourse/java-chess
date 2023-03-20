@@ -6,26 +6,26 @@ import java.util.Objects;
 public class Position {
 
     private final int row;
-    private final int col;
+    private final int column;
 
-    public Position(final int row, final int col) {
+    public Position(final int row, final int column) {
         this.row = row;
-        this.col = col;
+        this.column = column;
     }
 
     public Position move(final UnitVector unitVector) {
         int nextRow = this.row + unitVector.getRow();
-        int nextCol = this.col + unitVector.getCol();
+        int nextColumn = this.column + unitVector.getColumn();
 
-        return new Position(nextRow, nextCol);
+        return new Position(nextRow, nextColumn);
     }
 
     public int getRow() {
         return row;
     }
 
-    public int getCol() {
-        return col;
+    public int getColumn() {
+        return column;
     }
 
     @Override
@@ -33,11 +33,11 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return row == position.row && col == position.col;
+        return row == position.row && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(row, column);
     }
 }
