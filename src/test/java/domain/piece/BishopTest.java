@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.WHITE);
 
         //when & then
-        assertThatThrownBy(() -> bishop.findRoute(PositionFactory.createPosition("c3"), PositionFactory.createPosition("a2")))
+        assertThatThrownBy(() -> bishop.findRoute(MovePosition.of(PositionFactory.createPosition("c3"), PositionFactory.createPosition("a2"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }
@@ -31,10 +32,11 @@ class BishopTest {
         //given
         final Position source = PositionFactory.createPosition(sourceCommand);
         final Position target = PositionFactory.createPosition(targetCommand);
+        final MovePosition movePosition = MovePosition.of(source, target);
         final Bishop bishop = new Bishop(Color.WHITE);
 
         //when&then
-        assertThat(bishop.findRoute(source, target).getRoute()).hasSize(2);
+        assertThat(bishop.findRoute(movePosition).getRoute()).hasSize(2);
     }
 
 }

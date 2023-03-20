@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK);
 
             //when & then
-            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c2"), PositionFactory.createPosition("c3")))
+            assertThatThrownBy(() -> pawn.findRoute(MovePosition.of(PositionFactory.createPosition("c2"), PositionFactory.createPosition("c3"))))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
@@ -38,10 +39,11 @@ class PawnTest {
             //given
             final Position source = PositionFactory.createPosition(sourceCommand);
             final Position target = PositionFactory.createPosition(targetCommand);
+            final MovePosition movePosition = MovePosition.of(source, target);
             final Pawn pawn = new Pawn(Color.BLACK);
 
             //when&then
-            assertThat(pawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
+            assertThat(pawn.findRoute(movePosition).getRoute()).isEqualTo(Collections.emptyList());
         }
     }
 
@@ -55,7 +57,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE);
 
             //when & then
-            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c4"), PositionFactory.createPosition("c3")))
+            assertThatThrownBy(() -> pawn.findRoute(MovePosition.of(PositionFactory.createPosition("c4"), PositionFactory.createPosition("c3"))))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
@@ -67,10 +69,11 @@ class PawnTest {
             //given
             final Position source = PositionFactory.createPosition(sourceCommand);
             final Position target = PositionFactory.createPosition(targetCommand);
+            final MovePosition movePosition = MovePosition.of(source, target);
             final Pawn pawn = new Pawn(Color.WHITE);
 
             //when&then
-            assertThat(pawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
+            assertThat(pawn.findRoute(movePosition).getRoute()).isEqualTo(Collections.emptyList());
         }
     }
 

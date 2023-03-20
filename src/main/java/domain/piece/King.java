@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -12,15 +13,15 @@ public final class King extends Piece {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        validateMovable(movePosition);
         return new Route(Collections.emptyList());
     }
 
     @Override
-    protected boolean isMovable(final Position source, final Position target) {
-        int diffY = Math.abs(target.diffY(source));
-        int diffX = Math.abs(target.diffX(source));
+    protected boolean isMovable(MovePosition movePosition) {
+        int diffY = Math.abs(movePosition.diffY());
+        int diffX = Math.abs(movePosition.diffX());
 
         return (diffY != 0 || diffX != 0) && (diffX < 2 && diffY < 2);
     }

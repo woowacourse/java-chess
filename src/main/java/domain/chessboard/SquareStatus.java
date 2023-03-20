@@ -1,5 +1,6 @@
 package domain.chessboard;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
@@ -10,6 +11,6 @@ public interface SquareStatus {
 
     Color getColor();
 
-    Route findRoute(final Position source, final Position target);
+    Route findRoute(MovePosition movePosition);
 
 }

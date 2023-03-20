@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.coordinate.Position;
+import domain.coordinate.MovePosition;
 import domain.coordinate.Route;
 
 public final class Rook extends Piece implements VariableMover {
@@ -10,18 +10,18 @@ public final class Rook extends Piece implements VariableMover {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        validateMovable(movePosition);
 
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
+        int moveX = getMoveCoordinate(movePosition.diffX());
+        int moveY = getMoveCoordinate(movePosition.diffY());
 
-        return new Route(findPositions(source, target, moveX, moveY));
+        return new Route(findPositions(movePosition, moveX, moveY));
     }
 
     @Override
-    protected boolean isMovable(final Position source, final Position target) {
-        return source.isStraight(target);
+    protected boolean isMovable(MovePosition movePosition) {
+        return movePosition.isStraight();
     }
 
     public int getMoveCoordinate(final int diff) {

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -10,19 +11,19 @@ public final class Queen extends Piece implements VariableMover {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        validateMovable(movePosition);
 
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
+        int moveX = getMoveCoordinate(movePosition.diffX());
+        int moveY = getMoveCoordinate(movePosition.diffY());
 
-        return new Route(findPositions(source, target, moveX, moveY));
+        return new Route(findPositions(movePosition, moveX, moveY));
     }
 
     @Override
-    protected boolean isMovable(final Position source, final Position target) {
-        int diffX = Math.abs(target.diffX(source));
-        int diffY = Math.abs(target.diffY(source));
+    protected boolean isMovable(MovePosition movePosition) {
+        int diffX = Math.abs(movePosition.diffX());
+        int diffY = Math.abs(movePosition.diffY());
 
         return isMove(diffX, diffY) && (isBishopMovable(diffX, diffY) || isRookMovable(diffX, diffY));
     }

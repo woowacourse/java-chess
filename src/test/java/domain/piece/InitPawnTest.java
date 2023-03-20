@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ class InitPawnTest {
             final InitPawn initPawn = new InitPawn(Color.BLACK);
 
             //when & then
-            assertThatThrownBy(() -> initPawn.findRoute(PositionFactory.createPosition("c2"), PositionFactory.createPosition("c3")))
+            assertThatThrownBy(() -> initPawn.findRoute(MovePosition.of(PositionFactory.createPosition("c2"), PositionFactory.createPosition("c3"))))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
@@ -38,10 +39,11 @@ class InitPawnTest {
             //given
             final Position source = PositionFactory.createPosition(sourceCommand);
             final Position target = PositionFactory.createPosition(targetCommand);
+            final MovePosition movePosition = MovePosition.of(source, target);
             final InitPawn initPawn = new InitPawn(Color.BLACK);
 
             //when&then
-            assertThat(initPawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
+            assertThat(initPawn.findRoute(movePosition).getRoute()).isEqualTo(Collections.emptyList());
         }
 
         @Test
@@ -50,10 +52,11 @@ class InitPawnTest {
             //given
             final Position source = PositionFactory.createPosition("e4");
             final Position target = PositionFactory.createPosition("e2");
+            final MovePosition movePosition = MovePosition.of(source, target);
             final InitPawn initPawn = new InitPawn(Color.BLACK);
 
             //when&then
-            assertThat(initPawn.findRoute(source, target).getRoute()).hasSize(1);
+            assertThat(initPawn.findRoute(movePosition).getRoute()).hasSize(1);
         }
     }
 
@@ -67,7 +70,7 @@ class InitPawnTest {
             final InitPawn initPawn = new InitPawn(Color.WHITE);
 
             //when & then
-            assertThatThrownBy(() -> initPawn.findRoute(PositionFactory.createPosition("c4"), PositionFactory.createPosition("c3")))
+            assertThatThrownBy(() -> initPawn.findRoute(MovePosition.of(PositionFactory.createPosition("c4"), PositionFactory.createPosition("c3"))))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
@@ -79,10 +82,11 @@ class InitPawnTest {
             //given
             final Position source = PositionFactory.createPosition(sourceCommand);
             final Position target = PositionFactory.createPosition(targetCommand);
+            final MovePosition movePosition = MovePosition.of(source, target);
             final InitPawn initPawn = new InitPawn(Color.WHITE);
 
             //when&then
-            assertThat(initPawn.findRoute(source, target).getRoute()).isEqualTo(Collections.emptyList());
+            assertThat(initPawn.findRoute(movePosition).getRoute()).isEqualTo(Collections.emptyList());
         }
 
         @Test
@@ -91,10 +95,11 @@ class InitPawnTest {
             //given
             final Position source = PositionFactory.createPosition("e4");
             final Position target = PositionFactory.createPosition("e6");
+            final MovePosition movePosition = MovePosition.of(source, target);
             final InitPawn initPawn = new InitPawn(Color.WHITE);
 
             //when&then
-            assertThat(initPawn.findRoute(source, target).getRoute()).hasSize(1);
+            assertThat(initPawn.findRoute(movePosition).getRoute()).hasSize(1);
         }
     }
 

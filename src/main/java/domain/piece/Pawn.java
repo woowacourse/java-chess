@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -12,18 +13,18 @@ public class Pawn extends PawnFeature {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        validateMovable(movePosition);
 
         return new Route(Collections.emptyList());
     }
 
     @Override
-    protected boolean isMovable(final Position source, final Position target) {
+    protected boolean isMovable(MovePosition movePosition) {
         int direction = chooseDirection();
 
-        int diffY = target.diffY(source);
-        int diffX = target.diffX(source);
+        int diffY = movePosition.diffY();
+        int diffX = movePosition.diffX();
 
         return isPawnMovable(direction, diffY, diffX);
     }

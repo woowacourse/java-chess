@@ -1,5 +1,6 @@
 package domain.chessboard;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
@@ -25,7 +26,7 @@ public class Empty implements SquareStatus {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
+    public Route findRoute(MovePosition movePosition) {
         throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
     }
 

@@ -3,6 +3,7 @@ package domain;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.EmptyType;
 import domain.chessboard.Square;
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
@@ -18,12 +19,12 @@ public class ChessGame {
         this.chessBoard = chessBoard;
     }
 
-    public void move(final Position source, final Position target) {
-        final Square startPoint = chessBoard.findSquare(source);
-        final Square endPoint = chessBoard.findSquare(target);
+    public void move(final MovePosition movePosition) {
+        final Square startPoint = chessBoard.findSquare(movePosition.getSource());
+        final Square endPoint = chessBoard.findSquare(movePosition.getTarget());
         validateTurn(startPoint);
 
-        checkCondition(source, target, startPoint, endPoint);
+        checkCondition(movePosition, startPoint, endPoint);
 
         movePiece(startPoint, endPoint);
 
@@ -38,14 +39,14 @@ public class ChessGame {
         }
     }
 
-    private void checkCondition(final Position source, final Position target, final Square startPoint, final Square endPoint) {
-        checkRoute(source, target, startPoint);
-        checkPawn(source, target, startPoint, endPoint);
+    private void checkCondition(final MovePosition movePosition, final Square startPoint, final Square endPoint) {
+        checkRoute(movePosition, startPoint);
+        checkPawn(movePosition, startPoint, endPoint);
         checkTarget(endPoint);
     }
 
-    private void checkRoute(final Position source, final Position target, final Square startPoint) {
-        Route route = startPoint.findRoute(source, target);
+    private void checkRoute(final MovePosition movePosition, final Square startPoint) {
+        Route route = startPoint.findRoute(movePosition);
 
         final boolean isCorrectRoute = !route.getRoute().stream()
                 .map(chessBoard::findSquare)
@@ -61,30 +62,31 @@ public class ChessGame {
         }
     }
 
-    private void checkPawn(final Position source, final Position target, final Square startPoint, final Square endPoint) {
+    private void checkPawn(final MovePosition movePosition, final Square startPoint, final Square endPoint) {
         if (startPoint.getType().equals(PieceType.PAWN)) {
-            validatePawnDestination(source, target, endPoint);
+            validatePawnDestination(movePosition, endPoint);
         }
     }
 
-    private void validatePawnDestination(final Position source, final Position target, final Square endPoint) {
-        if (isDiagonallyMovable(source, target, endPoint) || isStraightMovable(source, target, endPoint)) { // 대각인 경우, 상대방의 기물만 존재하면 됨
+    private void validatePawnDestination(final MovePosition movePosition, final Square endPoint) {
+        if (isDiagonallyMovable(movePosition, endPoint) || isStraightMovable(movePosition, endPoint)) { // 대각인 경우, 상대방의 기물만 존재하면 됨
             return;
         }
 
         throw new IllegalStateException("잘못된 도착 지점입니다.");
     }
 
-    private boolean isStraightMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.isSameType(EmptyType.EMPTY) && source.isStraight(target);
+    private boolean isStraightMovable(final MovePosition movePosition, final Square endPoint) {
+
+        return endPoint.isSameType(EmptyType.EMPTY) && movePosition.isStraight();
     }
 
-    private boolean isDiagonallyMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.isSameType(EmptyType.EMPTY)|| (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
+    private boolean isDiagonallyMovable(final MovePosition movePosition, final Square endPoint) {
+        return endPoint.isSameType(EmptyType.EMPTY)|| (endPoint.isSameColor(colorTurn.reverse()) && movePosition.isDiagonally());
     }
 
     private void checkTarget(final Square endPoint) {
-        if ((endPoint.isNotSameType(EmptyType.EMPTY) && endPoint.isSameColor(colorTurn))) { // 우리팀 기물이 목표지점에 있을 떄
+        if ((endPoint.isNotSameType(EmptyType.EMPTY) && endPoint.isSameColor(colorTurn))) {
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }

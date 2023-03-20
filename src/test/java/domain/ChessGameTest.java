@@ -2,6 +2,7 @@ package domain;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.Type;
+import domain.coordinate.MovePosition;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
 import domain.piece.PieceType;
@@ -20,7 +21,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(ChessBoard.generate());
 
         //when&then
-        assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6")))
+        assertThatThrownBy(() -> chessGame.move(MovePosition.of(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("BLACK의 턴이 아닙니다.");
     }
@@ -32,7 +33,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(ChessBoard.generate());
 
         //when&then
-        assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a3")))
+        assertThatThrownBy(() -> chessGame.move(MovePosition.of(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a3"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("장애물이 있어 이동할 수 없습니다.");
     }
@@ -45,7 +46,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
-        chessGame.move(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4")));
 
         // then
         final Type a4 = chessBoard.findSquare(PositionFactory.createPosition("a4")).getType();
@@ -61,10 +62,10 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
-        chessGame.move(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
-        chessGame.move(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6"));
-        chessGame.move(PositionFactory.createPosition("a4"), PositionFactory.createPosition("a5"));
-        chessGame.move(PositionFactory.createPosition("b6"), PositionFactory.createPosition("a5"));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4")));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6")));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("a4"), PositionFactory.createPosition("a5")));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("b6"), PositionFactory.createPosition("a5")));
 
         //then
         final Color a5 = chessBoard.findSquare(PositionFactory.createPosition("a5")).getSquareStatus().getColor();
@@ -79,11 +80,11 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
-        chessGame.move(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
-        chessGame.move(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6"));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4")));
+        chessGame.move(MovePosition.of(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6")));
 
         // then
-        assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("a4"), PositionFactory.createPosition("a6")))
+        assertThatThrownBy(() -> chessGame.move(MovePosition.of(PositionFactory.createPosition("a4"), PositionFactory.createPosition("a6"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }
@@ -95,7 +96,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(ChessBoard.generate());
 
         //when&then
-        assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a2")))
+        assertThatThrownBy(() -> chessGame.move(MovePosition.of(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a2"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }

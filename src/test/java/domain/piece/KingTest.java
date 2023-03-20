@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class KingTest {
         final King king = new King(Color.WHITE);
 
         //when & then
-        assertThatThrownBy(() -> king.findRoute(PositionFactory.createPosition("c3"), PositionFactory.createPosition("a1")))
+        assertThatThrownBy(() -> king.findRoute(MovePosition.of(PositionFactory.createPosition("c3"), PositionFactory.createPosition("a1"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
     }
@@ -33,10 +34,11 @@ class KingTest {
         //given
         final Position source = PositionFactory.createPosition(sourceCommand);
         final Position target = PositionFactory.createPosition(targetCommand);
+        final MovePosition movePosition = MovePosition.of(source, target);
         final King king = new King(Color.WHITE);
 
         //when&then
-        assertThat(king.findRoute(source, target).getRoute()).isEqualTo(Collections.EMPTY_LIST);
+        assertThat(king.findRoute(movePosition).getRoute()).isEqualTo(Collections.EMPTY_LIST);
     }
 
 }

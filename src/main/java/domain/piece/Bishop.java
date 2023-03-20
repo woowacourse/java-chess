@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -12,22 +13,22 @@ public final class Bishop extends Piece implements VariableMover {
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        validateMovable(movePosition);
 
-        return new Route(getPositions(source, target));
+        return new Route(getPositions(movePosition));
     }
 
     @Override
-    protected boolean isMovable(final Position source, final Position target) {
-        return source.isDiagonally(target);
+    protected boolean isMovable(MovePosition movePosition) {
+        return movePosition.isDiagonally();
     }
 
-    private List<Position> getPositions(final Position source, final Position target) {
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
+    private List<Position> getPositions(MovePosition movePosition) {
+        int moveX = getMoveCoordinate(movePosition.diffX());
+        int moveY = getMoveCoordinate(movePosition.diffY());
 
-        return findPositions(source, target, moveX, moveY);
+        return findPositions(movePosition, moveX, moveY);
     }
 
     private int getMoveCoordinate(final int diff) {

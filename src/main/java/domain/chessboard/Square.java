@@ -1,5 +1,6 @@
 package domain.chessboard;
 
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
@@ -28,8 +29,8 @@ public class Square {
         squareStatus = square.squareStatus;
     }
 
-    public Route findRoute(final Position source, final Position target) {
-        return squareStatus.findRoute(source, target);
+    public Route findRoute(MovePosition movePosition) {
+        return squareStatus.findRoute(movePosition);
     }
 
     public boolean isSameColor(final Color color) {

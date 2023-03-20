@@ -2,6 +2,8 @@ package controller;
 
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
+import domain.coordinate.MovePosition;
+import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import view.Command;
 import view.InputView;
@@ -56,7 +58,9 @@ public class ChessGameController {
 
     private void isMove(final List<String> inputs, final Command command) {
         if (command == Command.MOVE) {
-            chessGame.move(PositionFactory.createPosition(inputs.get(SOURCE_INDEX)), PositionFactory.createPosition(inputs.get(TARGET_INDEX)));
+            Position source = PositionFactory.createPosition(inputs.get(SOURCE_INDEX));
+            Position target = PositionFactory.createPosition(inputs.get(TARGET_INDEX));
+            chessGame.move(MovePosition.of(source, target));
         }
     }
 
