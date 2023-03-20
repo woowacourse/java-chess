@@ -31,9 +31,7 @@ public class ChessController {
     }
 
     private boolean isStartCommand() {
-        Command userCommand = Command.renderToCommand(requestCommand().get(Index.MAIN_COMMAND.value));
-
-        return userCommand == Command.START;
+        return Command.isStartCommand(requestCommand().get(Index.MAIN_COMMAND.value));
     }
 
     private List<String> requestCommand() {
@@ -49,7 +47,7 @@ public class ChessController {
     private Command handleCommand(ChessGame chessGame) {
         List<String> command = requestCommand();
 
-        if (Command.renderToCommand(command.get(Index.MAIN_COMMAND.value)) == Command.END) {
+        if (Command.isEndCommand(command.get(Index.MAIN_COMMAND.value))) {
             return Command.END;
         }
 
@@ -92,11 +90,12 @@ public class ChessController {
             this.command = command;
         }
 
-        private static Command renderToCommand(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(IllegalArgumentException::new);
+        private static boolean isStartCommand(String input) {
+            return START.command.equals(input);
+        }
+
+        private static boolean isEndCommand(String input) {
+            return END.command.equals(input);
         }
     }
 
