@@ -14,10 +14,10 @@ import org.junit.jupiter.api.TestFactory;
 
 class ChessGameTest {
 
-    private static final Location WHITE_PAWN_START = Location.of(1, 1);
-    private static final Location WHITE_PAWN_END = Location.of(1, 2);
-    private static final Location BLACK_PAWN_START = Location.of(1, 6);
-    private static final Location BLACK_PAWN_END = Location.of(1, 5);
+    private static final Location WHITE_PAWN_START = Location.of(2, 2);
+    private static final Location WHITE_PAWN_END = Location.of(2, 3);
+    private static final Location BLACK_PAWN_START = Location.of(2, 7);
+    private static final Location BLACK_PAWN_END = Location.of(2, 6);
 
     @DisplayName("순서에 따라서 올바른 진영의 체스말을 움직인다.")
     @TestFactory
@@ -30,8 +30,8 @@ class ChessGameTest {
                         () -> chessGame.move(WHITE_PAWN_START, WHITE_PAWN_END)
                     );
                     final Board board = chessGame.getBoard();
-                    assertThat(board.findSquare(WHITE_PAWN_START).isNotEmpty()).isFalse();
-                    assertThat(board.findSquare(WHITE_PAWN_END).getPiece()).isEqualTo(Pawn.makeWhite());
+                    assertThat(board.findPiece(WHITE_PAWN_START).isNotEmpty()).isFalse();
+                    assertThat(board.findPiece(WHITE_PAWN_END)).isEqualTo(Pawn.makeWhite());
                 }
             ),
             DynamicTest.dynamicTest("두번째 순서에 검은색 진영의 폰을 한칸 전진한다.", () -> {
@@ -39,8 +39,8 @@ class ChessGameTest {
                         () -> chessGame.move(BLACK_PAWN_START, BLACK_PAWN_END)
                     );
                     final Board board = chessGame.getBoard();
-                    assertThat(board.findSquare(BLACK_PAWN_START).isNotEmpty()).isFalse();
-                    assertThat(board.findSquare(BLACK_PAWN_END).getPiece()).isEqualTo(Pawn.makeBlack());
+                    assertThat(board.findPiece(BLACK_PAWN_START).isNotEmpty()).isFalse();
+                    assertThat(board.findPiece(BLACK_PAWN_END)).isEqualTo(Pawn.makeBlack());
                 }
             )
         );

@@ -5,33 +5,33 @@ import java.util.Objects;
 
 public class Location {
 
-    private static final int MAX_COL = 7;
-    private static final int MIN_COL = 0;
-    private static final int MAX_ROW = 7;
-    private static final int MIN_ROW = 0;
+    private static final int MAX_COL = 8;
+    private static final int MIN_COL = 1;
+    private static final int MAX_ROW = 8;
+    private static final int MIN_ROW = 1;
     private static final String INVALID_LOCATION_ERROR_MESSAGE = "해당 위치는 존재하지 않습니다.";
-    private final int col;
+    private final int column;
     private final int row;
 
-    private Location(final int col, final int row) {
-        validate(col, row);
-        this.col = col;
+    private Location(final int column, final int row) {
+        validate(column, row);
+        this.column = column;
         this.row = row;
     }
 
-    private void validate(final int col, final int row) {
-        if (col < MIN_COL || col > MAX_COL
+    private void validate(final int column, final int row) {
+        if (column < MIN_COL || column > MAX_COL
             || row < MIN_ROW || row > MAX_ROW) {
             throw new IllegalArgumentException(INVALID_LOCATION_ERROR_MESSAGE);
         }
     }
 
-    public static Location of(final int col, final int row) {
-        return new Location(col, row);
+    public static Location of(final int column, final int row) {
+        return new Location(column, row);
     }
 
     public boolean isSameCol(final Location location) {
-        if (col == location.getCol()) {
+        if (column == location.getColumn()) {
             return row != location.getRow();
         }
         return false;
@@ -39,7 +39,7 @@ public class Location {
 
     public boolean isSameRow(final Location location) {
         if (row == location.getRow()) {
-            return col != location.getCol();
+            return column != location.getColumn();
         }
         return false;
     }
@@ -49,7 +49,7 @@ public class Location {
     }
 
     public boolean isDiagonal(final Location location) {
-        int colDifference = Math.abs(col - location.getCol());
+        int colDifference = Math.abs(column - location.getColumn());
         int rowDifference = Math.abs(row - location.getRow());
         return colDifference == rowDifference;
     }
@@ -59,11 +59,11 @@ public class Location {
     }
 
     public boolean isRightThan(Location location) {
-        return this.col > location.getCol();
+        return this.column > location.getColumn();
     }
 
-    public int getCol() {
-        return col;
+    public int getColumn() {
+        return column;
     }
 
     public int getRow() {
@@ -71,7 +71,7 @@ public class Location {
     }
 
     public Location addDirectionOnce(final Direction direction) {
-        return Location.of(col + direction.getColDiff(), row + direction.getRowDiff());
+        return Location.of(column + direction.getColumnDiff(), row + direction.getRowDiff());
     }
 
     @Override
@@ -83,19 +83,11 @@ public class Location {
             return false;
         }
         final Location location = (Location) o;
-        return getCol() == location.getCol() && getRow() == location.getRow();
+        return getColumn() == location.getColumn() && getRow() == location.getRow();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCol(), getRow());
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" +
-            "col=" + col +
-            ", row=" + row +
-            '}';
+        return Objects.hash(getColumn(), getRow());
     }
 }

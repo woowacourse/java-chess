@@ -1,10 +1,10 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import domain.piece.EmptyPiece;
+import domain.piece.Piece;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Board {
 
@@ -12,24 +12,29 @@ public class Board {
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final PathValidator pathValidator;
-    private List<Line> lines;
+    private final Map<Location, Piece> board;
 
-    public Board(PathValidator pathValidator) {
+
+    public Board(final PathValidator pathValidator, final Map<Location, Piece> board) {
         this.pathValidator = pathValidator;
+        this.board = board;
     }
 
     public void initialize() {
-        final List<Line> lines = new ArrayList<>();
-        lines.add(Line.whiteBack());
-        lines.add(Line.whiteFront());
-        IntStream.range(0, 4).mapToObj(count -> Line.empty()).forEach(lines::add);
-        lines.add(Line.blackFront());
-        lines.add(Line.blackBack());
-        this.lines = lines;
+        for (int column = 1; column <= 8; column++) {
+            putToBoard(column);
+        }
+    }
+
+    private void putToBoard(final int column) {
+        for (int row = 1; row <= 8; row++) {
+            final Piece piece = BoardSetting.findPiece(Location.of(column, row));
+            board.put(Location.of(column, row), piece);
+        }
     }
 
     public void moveWhite(final Location start, final Location end) {
-        final Square square = findSquare(start);
+        final Piece square = findPiece(start);
         if (square.isBlack()) {
             throw new IllegalArgumentException(WHITE_TURN_ERROR_MESSAGE);
         }
@@ -37,7 +42,7 @@ public class Board {
     }
 
     public void moveBlack(final Location start, final Location end) {
-        final Square square = findSquare(start);
+        final Piece square = findPiece(start);
         if (square.isWhite()) {
             throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
@@ -45,33 +50,34 @@ public class Board {
     }
 
     private void move(final Location start, final Location end) {
-        validatePath(start, end);
-        findSquare(start).moveTo(findSquare(end));
+        canMove(start, end);
+        convert(start, end);
     }
 
-    private void validatePath(final Location startLocation, final Location endLocation) {
-        final Square startSquare = findSquare(startLocation);
-        final Square endSquare = findSquare(endLocation);
-        final ValidateDto start = ValidateDto.of(startLocation, startSquare);
-        final ValidateDto end = ValidateDto.of(endLocation, endSquare);
-        final List<Square> path = getSquaresInPath(startLocation, endLocation);
+    private void canMove(final Location startLocation, final Location endLocation) {
+        final Piece startPiece = findPiece(startLocation);
+        final Piece endPiece = findPiece(endLocation);
+        final ValidateDto start = ValidateDto.of(startLocation, startPiece);
+        final ValidateDto end = ValidateDto.of(endLocation, endPiece);
+        final List<Piece> path = getPiecesInPath(startLocation, endLocation);
         if (pathValidator.isValid(start, end, path)) {
             return;
         }
         throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
     }
 
-    private List<Square> getSquaresInPath(final Location start, final Location end) {
-        final Square square = findSquare(start);
+    private void convert(final Location start, final Location end) {
+        board.replace(end, board.get(start));
+        board.replace(start, EmptyPiece.make());
+    }
+
+    private List<Piece> getPiecesInPath(final Location start, final Location end) {
+        final Piece square = findPiece(start);
         final List<Location> paths = square.searchPath(start, end);
-        return paths.stream().map(this::findSquare).collect(Collectors.toList());
+        return paths.stream().map(this::findPiece).collect(Collectors.toList());
     }
 
-    public Square findSquare(final Location location) {
-        return lines.get(location.getRow()).getByCol(location.getCol());
-    }
-
-    public List<Line> getLines() {
-        return Collections.unmodifiableList(lines);
+    public Piece findPiece(final Location location) {
+        return board.get(location);
     }
 }

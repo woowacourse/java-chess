@@ -12,8 +12,8 @@ public class ValidateDto {
         this.piece = piece;
     }
 
-    public static ValidateDto of(final Location location, final Square square) {
-        return new ValidateDto(location, square.getPiece());
+    public static ValidateDto of(final Location location, final Piece piece) {
+        return new ValidateDto(location, piece);
     }
 
     public Location getLocation() {

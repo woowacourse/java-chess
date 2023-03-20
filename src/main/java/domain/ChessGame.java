@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.HashMap;
+
 public class ChessGame {
 
     private Board board;
@@ -10,7 +12,7 @@ public class ChessGame {
     }
 
     public void initialize() {
-        this.board = new Board(new PathValidator());
+        this.board = new Board(new PathValidator(), new HashMap<>());
         board.initialize();
     }
 

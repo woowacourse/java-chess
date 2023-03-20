@@ -42,6 +42,10 @@ public abstract class Piece {
         return color.equals(Color.BLACK);
     }
 
+    public boolean isNotEmpty() {
+        return !pieceType.equals(PieceType.EMPTY);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
