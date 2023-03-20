@@ -17,6 +17,8 @@ public class PointFixture {
     public static final Point B3 = Point.of(File.B, Rank.THREE);
     public static final Point B5 = Point.of(File.B, Rank.FIVE);
     public static final Point B7 = Point.of(File.B, Rank.SEVEN);
+    public static final Point B8 = Point.of(File.B, Rank.EIGHT);
+
     public static final Point C3 = Point.of(File.C, Rank.THREE);
     public static final Point C6 = Point.of(File.C, Rank.SIX);
     public static final Point H4 = Point.of(File.H, Rank.FOUR);

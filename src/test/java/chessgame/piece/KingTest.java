@@ -11,7 +11,6 @@ import chessgame.domain.Team;
 import chessgame.domain.piece.King;
 
 public class KingTest {
-
     @Test
     @DisplayName("블랙팀이면, 이름이 대문자로 바뀌어서 저장되는지 확인한다.")
     void Should_UpperCaseName_When_BlackTeam() {
@@ -59,5 +58,4 @@ public class KingTest {
         boolean result = king.isMovable(A1, A3);
         Assertions.assertThat(result).isFalse();
     }
-
 }

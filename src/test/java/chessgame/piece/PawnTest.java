@@ -54,7 +54,7 @@ class PawnTest {
     @DisplayName("백팀 Pawn은 공격 시 대각선 위로 1칸 움직일 수 있다.")
     void Should_MoveDiagonalOneDistance_When_WhitePawnAttack() {
         Pawn pawn = Pawn.from(Team.WHITE);
-        boolean result = pawn.isAttack(A2,B3);
+        boolean result = pawn.isAttack(A2, B3);
         Assertions.assertThat(result).isTrue();
     }
 }

@@ -18,7 +18,7 @@ class PointTest {
         Point point = Point.of(File.A, Rank.ONE);
 
         Assertions.assertThat(point)
-            .isSameAs(Point.of(File.A, Rank.ONE));
+                .isSameAs(Point.of(File.A, Rank.ONE));
     }
 
     @Test

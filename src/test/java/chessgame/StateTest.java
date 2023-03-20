@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class StateTest {
     @Test
     @DisplayName("start 입력시 상태 테스트")
-    public void ready() {
+    void ready() {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 
@@ -21,9 +21,9 @@ public class StateTest {
         assertThat(start).isInstanceOf(White.class);
     }
 
-    @DisplayName("흰팀 상태 이후는 검은팀 상태 테스트")
     @Test
-    public void white() {
+    @DisplayName("흰팀 상태 이후는 검은팀 상태 테스트")
+    void white() {
         Board board = new Board(ChessBoardFactory.create());
 
         State state = new Ready();
@@ -34,9 +34,9 @@ public class StateTest {
         assertThat(move).isInstanceOf(Black.class);
     }
 
-    @DisplayName("검은팀 상태 이후는 흰 팀 상태 태스트")
     @Test
-    public void black() {
+    @DisplayName("검은팀 상태 이후는 흰 팀 상태 태스트")
+    void black() {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 
@@ -47,9 +47,9 @@ public class StateTest {
         assertThat(blackMove).isInstanceOf(White.class);
     }
 
-    @DisplayName("end 입력 시 종료 상태가 되는지 테스트")
     @Test
-    public void end() {
+    @DisplayName("end 입력 시 종료 상태가 되는지 테스트")
+    void end() {
         Board board = new Board(ChessBoardFactory.create());
         State state = new Ready();
 

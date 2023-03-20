@@ -10,7 +10,6 @@ import chessgame.domain.Team;
 import chessgame.domain.piece.Queen;
 
 public class QueenTest {
-
     @Test
     @DisplayName("Queen은 대각선으로 움직일 수 있다.")
     void Should_Move_When_Diagonal() {

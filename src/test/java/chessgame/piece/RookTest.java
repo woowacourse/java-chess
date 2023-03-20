@@ -10,7 +10,6 @@ import chessgame.domain.Team;
 import chessgame.domain.piece.Rook;
 
 class RookTest {
-
     @Test
     @DisplayName("Rook은 수평으로 움직일 수 있다")
     void Should_Move_When_Horizontal() {
