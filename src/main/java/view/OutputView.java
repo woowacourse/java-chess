@@ -12,7 +12,7 @@ public final class OutputView {
         boardView.printBoard(board);
     }
 
-    public static void printError(String errorMessage) {
+    public static void printError(final String errorMessage) {
         System.out.println(errorMessage);
     }
 }

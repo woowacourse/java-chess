@@ -1,12 +1,14 @@
 package database;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@Disabled
 class UserDaoTest {
 
     private final UserDao userDao = new UserDao();

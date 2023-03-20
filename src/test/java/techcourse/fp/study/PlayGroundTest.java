@@ -1,6 +1,5 @@
 package techcourse.fp.study;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -266,12 +265,9 @@ class PlayGroundTest {
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
         stream.forEach(System.out::println);
-
-//        stream.forEach(System.out::println);
     }
 
     @Test
-    @Disabled
     public void 무한_스트림_문제() {
         IntStream.iterate(0, i -> i + 1)
                 .limit(10)
