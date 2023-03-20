@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.position.Position;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -43,4 +44,17 @@ public abstract class Piece {
     protected abstract List<MovePattern> getMovePatterns();
 
     public abstract List<Position> findMovablePositions(final Position source, final Board board);
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Piece piece = (Piece) o;
+        return type == piece.type && side == piece.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, side);
+    }
 }
