@@ -1,5 +1,6 @@
 package chess.view;
 
+import static chess.view.OutputView.printCommandLine;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
@@ -10,12 +11,8 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static Command readCommand() {
-        String input = scanner.nextLine();
-        return Command.of(input);
-    }
-
-    public static List<String> readPositions() {
+    public static List<String> readCommand() {
+        printCommandLine();
         String input = scanner.nextLine();
 
         return Arrays.stream(input.split(" "))
