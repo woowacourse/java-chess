@@ -33,14 +33,13 @@ public final class ChessGameController {
 
                 OutputView.printChessBoardStatus(new PiecesResponse(findPlayer, anotherPlayer));
             } catch (IllegalArgumentException e) {
-                e.printStackTrace();
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
 
     }
 
-    private Players initializeChessBoard() {
+    private Players initializeChessGame() {
         Pieces whitePieces = Pieces.createWhitePieces();
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
 
