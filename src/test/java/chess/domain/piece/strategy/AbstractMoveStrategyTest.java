@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -25,15 +24,14 @@ class AbstractMoveStrategyTest {
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
 
             @Override
-            protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+            protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
                 throw new IllegalArgumentException();
             }
         };
-        final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
 
         // when & then
         assertThatThrownBy(() ->
-                strategy.waypoints(path, null)
+                strategy.waypoints(PiecePosition.of("d2"), PiecePosition.of("d4"), null)
         );
     }
 
@@ -42,14 +40,12 @@ class AbstractMoveStrategyTest {
         // given
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
             @Override
-            protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
-
+            protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
             }
         };
-        final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
 
         // when
-        final List<PiecePosition> waypoints = strategy.waypoints(path, null);
+        final List<PiecePosition> waypoints = strategy.waypoints(PiecePosition.of("d2"), PiecePosition.of("d4"), null);
 
         // then
         assertThat(waypoints).containsOnly(PiecePosition.of("d3"));

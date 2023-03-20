@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.Collections;
@@ -15,18 +14,21 @@ public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
     }
 
     @Override
-    public List<PiecePosition> waypoints(final Path path,
+    public List<PiecePosition> waypoints(final PiecePosition source,
+                                         final PiecePosition destination,
                                          final Piece nullableEnemy) throws IllegalArgumentException {
-        validateMove(path, nullableEnemy);
+        validateMove(source, destination, nullableEnemy);
         return Collections.emptyList();
     }
 
     @Override
-    protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
-        if (Math.abs(path.fileInterval()) == 1 && Math.abs(path.rankInterval()) == 2) {
+    protected void validateMoveWithNoAlly(final PiecePosition source,
+                                          final PiecePosition destination,
+                                          final Piece nullableEnemy) throws IllegalArgumentException {
+        if (Math.abs(source.fileInterval(destination)) == 1 && Math.abs(source.rankInterval(destination)) == 2) {
             return;
         }
-        if (Math.abs(path.fileInterval()) == 2 && Math.abs(path.rankInterval()) == 1) {
+        if (Math.abs(source.fileInterval(destination)) == 2 && Math.abs(source.rankInterval(destination)) == 1) {
             return;
         }
         throw new IllegalArgumentException("나이트는 그렇게 이동할 수 없습니다.");

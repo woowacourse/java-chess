@@ -2,7 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Path;
+import chess.domain.piece.position.PiecePosition;
 
 public class RookMovementStrategy extends AbstractPieceMovementStrategy {
 
@@ -11,8 +11,10 @@ public class RookMovementStrategy extends AbstractPieceMovementStrategy {
     }
 
     @Override
-    protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
-        if (!path.isStraight()) {
+    protected void validateMoveWithNoAlly(final PiecePosition source,
+                                          final PiecePosition destination,
+                                          final Piece nullableEnemy) throws IllegalArgumentException {
+        if (!isStraight(source, destination)) {
             throw new IllegalArgumentException("룩은 직선으로만 이동가능합니다.");
         }
     }

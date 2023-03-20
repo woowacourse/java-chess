@@ -2,7 +2,6 @@ package chess.domain.piece.strategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.strategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
@@ -31,11 +30,10 @@ class PawnMovementTest {
     @Test
     void 이동할_수_있으면_경유지_조회_가능() {
         // given
-        final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
-        assertDoesNotThrow(() -> pawnMovement.validateMove(path, null));
+        assertDoesNotThrow(() -> pawnMovement.validateMove(PiecePosition.of("d2"), PiecePosition.of("d4"), null));
 
         // when
-        final List<PiecePosition> waypoints = pawnMovement.waypoints(path, null);
+        final List<PiecePosition> waypoints = pawnMovement.waypoints(PiecePosition.of("d2"), PiecePosition.of("d4"), null);
 
         // then
         assertThat(waypoints).isNotEmpty();
@@ -44,13 +42,13 @@ class PawnMovementTest {
     @Test
     void 이동할_수_없으면_경유지_조회_불가() {
         // given
+        final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("d4");
-        final Path path = Path.of(PiecePosition.of("d2"), dest);
         final Piece enemy = piece(Color.BLACK, dest);
-        assertThatThrownBy(() -> pawnMovement.validateMove(path, enemy));
+        assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, enemy));
 
         // when & then
-        assertThatThrownBy(() -> pawnMovement.waypoints(path, enemy))
+        assertThatThrownBy(() -> pawnMovement.waypoints(source, dest, enemy))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -60,46 +58,46 @@ class PawnMovementTest {
         @Test
         void 대각선_한_칸_이동_가능() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("c3");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
             final Piece piece = piece(Color.BLACK, dest);
 
             // when & then
-            assertDoesNotThrow(() -> pawnMovement.validateMove(path, piece));
+            assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, piece));
         }
 
         @Test
         void 대각선_두칸_이상_이동_불가() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("f4");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
             final Piece piece = piece(Color.BLACK, dest);
 
             // when & then
-            assertThatThrownBy(() -> pawnMovement.validateMove(path, piece))
+            assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, piece))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void 수직_이동_불가() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("d3");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
             final Piece piece = piece(Color.BLACK, dest);
 
             // when & then
-            assertThatThrownBy(() -> pawnMovement.validateMove(path, piece))
+            assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, piece))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void 수평_이동_불가() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("c2");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
 
             // when & then
-            assertThatThrownBy(() -> pawnMovement.validateMove(path, null))
+            assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -110,42 +108,42 @@ class PawnMovementTest {
         @Test
         void 수직_한_칸_이동_가능() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("d3");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
 
             // when & then
-            assertDoesNotThrow(() -> pawnMovement.validateMove(path, null));
+            assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, null));
         }
 
         @Test
         void 수직_두칸_이동_가능() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("d1");
-            final Path path = Path.of(PiecePosition.of("d3"), dest);
 
             // when & then
-            assertDoesNotThrow(() -> pawnMovement.validateMove(path, null));
+            assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, null));
         }
 
         @Test
         void 대각선_이동_불가() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("e3");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
 
             // when & then
-            assertThatThrownBy(() -> pawnMovement.validateMove(path, null))
+            assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void 수평_이동_불가() {
             // given
+            final PiecePosition source = PiecePosition.of("d2");
             final PiecePosition dest = PiecePosition.of("c2");
-            final Path path = Path.of(PiecePosition.of("d2"), dest);
 
             // when & then
-            assertThatThrownBy(() -> pawnMovement.validateMove(path, null))
+            assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -153,39 +151,39 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지키지_않았다면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, (s, d) -> {
             throw new IllegalArgumentException();
         });
+        final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("d3");
-        final Path path = Path.of(PiecePosition.of("d2"), dest);
 
         // when & then
-        assertThatThrownBy(() -> pawnMovement.validateMove(path, null))
+        assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 추가_제약조건을_지켰다면_기본_이동에_대해서는_가능() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, (s, d) -> {
         });
+        final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("d3");
-        final Path path = Path.of(PiecePosition.of("d2"), dest);
 
         // when & then
-        assertDoesNotThrow(() -> pawnMovement.validateMove(path, null));
+        assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, null));
     }
 
     @Test
     void 추가_제약조건을_지켰더라도_기본_이동_수칙을_지키지_않으면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, (s, d) -> {
         });
+        final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("d5");
-        final Path path = Path.of(PiecePosition.of("d2"), dest);
 
         // when & then
-        assertThatThrownBy(() -> pawnMovement.validateMove(path, null))
+        assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -194,11 +192,10 @@ class PawnMovementTest {
         // given
         final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("c3");
-        final Path path = Path.of(source, dest);
         final Piece ally = new Piece(dest, new RookMovementStrategy(Color.WHITE));
 
         // when & then
-        assertThatThrownBy(() -> pawnMovement.validateMove(path, ally))
+        assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -207,10 +204,9 @@ class PawnMovementTest {
         // given
         final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("c3");
-        final Path path = Path.of(source, dest);
         final Piece enemy = new Piece(dest, new RookMovementStrategy(Color.BLACK));
 
         // when & then
-        assertDoesNotThrow(() -> pawnMovement.validateMove(path, enemy));
+        assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, enemy));
     }
 }

@@ -1,8 +1,9 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.position.Path;
+import chess.domain.piece.position.PiecePosition;
 
 public interface PawnMoveConstraint {
 
-    void validateConstraint(final Path path);
+    void validateConstraint(final PiecePosition source,
+                            final PiecePosition destination);
 }

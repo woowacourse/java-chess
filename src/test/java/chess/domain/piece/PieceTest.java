@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.Path;
+import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -26,7 +26,7 @@ class PieceTest {
         }
 
         @Override
-        protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+        protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
 
         }
     }
@@ -38,7 +38,7 @@ class PieceTest {
         }
 
         @Override
-        protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+        protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
             throw new IllegalArgumentException();
         }
     }

@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -28,11 +27,9 @@ class WhitePawnMoveConstraintTest {
     void 북쪽으로_이동할_수_있다(final PiecePosition from, final PiecePosition to) {
         // given
         final PawnMoveConstraint whitePawnMoveConstraint = new WhitePawnMoveConstraint();
-        final Path path = Path.of(from, to);
-        ;
 
         // when & then
-        assertDoesNotThrow(() -> whitePawnMoveConstraint.validateConstraint(path));
+        assertDoesNotThrow(() -> whitePawnMoveConstraint.validateConstraint(from, to));
     }
 
     @ParameterizedTest(name = "이외의 경우 오류이다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 불가능하다.")
@@ -46,10 +43,9 @@ class WhitePawnMoveConstraintTest {
     void 이외의_경우_오류(final PiecePosition from, final PiecePosition to) {
         // given
         final PawnMoveConstraint whitePawnMoveConstraint = new WhitePawnMoveConstraint();
-        final Path path = Path.of(from, to);
 
         // when & then
-        assertThatThrownBy(() -> whitePawnMoveConstraint.validateConstraint(path))
+        assertThatThrownBy(() -> whitePawnMoveConstraint.validateConstraint(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

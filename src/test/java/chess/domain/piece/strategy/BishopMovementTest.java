@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -51,21 +50,15 @@ class BishopMovementTest {
                 "g6",
         })
         void 움직일_수_있다(final PiecePosition destination) {
-            // given
-            final Path path = Path.of(source, destination);
-
             // when & then
-            assertDoesNotThrow(() -> movement.validateMove(path, null));
+            assertDoesNotThrow(() -> movement.validateMove(source, destination, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
         @MethodSource("bishopDestinations")
         void 경유지를_반환한다(final PiecePosition destination, final List<PiecePosition> waypoints) {
-            // given
-            final Path path = Path.of(source, destination);
-
             // when & then
-            assertThat(movement.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(movement.waypoints(source, destination, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> bishopDestinations() {
@@ -93,11 +86,8 @@ class BishopMovementTest {
                 "f4",
         })
         void 움직일_수_없다(final PiecePosition destination) {
-            // given
-            final Path path = Path.of(source, destination);
-
             // when & then
-            assertThatThrownBy(() -> movement.validateMove(path, null))
+            assertThatThrownBy(() -> movement.validateMove(source, destination, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -109,11 +99,8 @@ class BishopMovementTest {
                 "f4",
         })
         void 경유지를_조회하면_예외(final PiecePosition destination) {
-            // given
-            final Path path = Path.of(source, destination);
-
             // when & then
-            assertThatThrownBy(() -> movement.waypoints(path, null))
+            assertThatThrownBy(() -> movement.waypoints(source, destination, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -122,11 +109,10 @@ class BishopMovementTest {
     void 아군을_죽일_수_없다() {
         // given
         final PiecePosition dest = PiecePosition.of("d3");
-        final Path path = Path.of(source, dest);
         final Piece ally = new Piece(dest, new RookMovementStrategy(myColor));
 
         // when & then
-        assertThatThrownBy(() -> movement.validateMove(path, ally))
+        assertThatThrownBy(() -> movement.validateMove(source, dest, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -134,10 +120,9 @@ class BishopMovementTest {
     void 적군을_죽일_수_있다() {
         // given
         final PiecePosition dest = PiecePosition.of("d3");
-        final Path path = Path.of(source, dest);
         final Piece enemy = new Piece(dest, new RookMovementStrategy(enemyColor));
 
         // when & then
-        assertDoesNotThrow(() -> movement.validateMove(path, enemy));
+        assertDoesNotThrow(() -> movement.validateMove(source, dest, enemy));
     }
 }
