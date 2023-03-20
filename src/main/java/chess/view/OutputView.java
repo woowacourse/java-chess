@@ -17,7 +17,6 @@ public class OutputView {
         System.out.println(MOVE_COMMAND_GUIDE_MESSAGE);
     }
 
-    //todo: System.out.print(square), System.out,println()이 아니라 System.out.println(square)아닌가용?
     public static void printBoard(BoardDto boardDto) {
         List<List<String>> board = boardDto.getDto();
 
