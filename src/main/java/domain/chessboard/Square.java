@@ -35,6 +35,14 @@ public class Square {
     public boolean isSameColor(final Color color) {
         return squareStatus.getColor() == color;
     }
+    
+    public boolean isSameType(Type type) {
+        return squareStatus.getType() == type;
+    }
+
+    public boolean isNotSameType(Type type) {
+        return squareStatus.getType() != type;
+    }
 
     public SquareStatus getSquareStatus() {
         return squareStatus;

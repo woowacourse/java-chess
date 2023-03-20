@@ -76,15 +76,15 @@ public class ChessGame {
     }
 
     private boolean isStraightMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.getType() == EmptyType.EMPTY && source.isStraight(target);
+        return endPoint.isSameType(EmptyType.EMPTY) && source.isStraight(target);
     }
 
     private boolean isDiagonallyMovable(final Position source, final Position target, final Square endPoint) {
-        return endPoint.getType() == EmptyType.EMPTY || (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
+        return endPoint.isSameType(EmptyType.EMPTY)|| (endPoint.isSameColor(colorTurn.reverse()) && source.isDiagonally(target));
     }
 
     private void checkTarget(final Square endPoint) {
-        if ((endPoint.getType() != EmptyType.EMPTY && endPoint.isSameColor(colorTurn))) { // 우리팀 기물이 목표지점에 있을 떄
+        if ((endPoint.isNotSameType(EmptyType.EMPTY) && endPoint.isSameColor(colorTurn))) { // 우리팀 기물이 목표지점에 있을 떄
             throw new IllegalStateException("잘못된 도착 지점입니다.");
         }
     }
