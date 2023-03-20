@@ -20,24 +20,24 @@ public final class ChessGame {
     }
 
     private void play(final Position source, final Position target) {
-        final Piece piece = chessBoard.checkPiece(source);
-        validateCamp(piece);
+        validateCamp(source);
         validateTargetSameCamp(target);
-        validateObstacle(source, target, piece);
-        if (validateAttack(source, target, piece)) {
-            return;
+        validateObstacle(source, target);
+        if (validateAttack(source, target) || validateMove(source, target)) {
+            movePiece(source, target);
         }
-        validateMove(source, target, piece);
     }
 
-    private void validateObstacle(final Position source, final Position target, final Piece piece) {
+    private void validateObstacle(final Position source, final Position target) {
+        final Piece piece = chessBoard.checkPiece(source);
         boolean isPossibleRoute = chessBoard.isPossibleRoute(source, target, piece);
         if (!isPossibleRoute) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validateCamp(final Piece piece) {
+    private void validateCamp(final Position source) {
+        final Piece piece = chessBoard.checkPiece(source);
         if (!piece.isSameCamp(currentCamp)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다. 현재 차례 = " + currentCamp.name());
         }
@@ -49,21 +49,18 @@ public final class ChessGame {
         }
     }
 
-    private boolean validateAttack(final Position source, final Position target, final Piece piece) {
-        if (piece.canAttack(source, target) && chessBoard.contains(target)) {
-            movePiece(source, target, piece);
-            return true;
-        }
-        return false;
+    private boolean validateAttack(final Position source, final Position target) {
+        final Piece piece = chessBoard.checkPiece(source);
+        return piece.canAttack(source, target) && chessBoard.contains(target);
     }
 
-    private void validateMove(final Position source, final Position target, final Piece piece) {
-        if (piece.canMove(source, target)) {
-            movePiece(source, target, piece);
-        }
+    private boolean validateMove(final Position source, final Position target) {
+        final Piece piece = chessBoard.checkPiece(source);
+        return piece.canMove(source, target);
     }
 
-    private void movePiece(final Position source, final Position target, final Piece piece) {
+    private void movePiece(final Position source, final Position target) {
+        final Piece piece = chessBoard.checkPiece(source);
         chessBoard.removePiece(source);
         chessBoard.putPiece(target, piece);
     }
