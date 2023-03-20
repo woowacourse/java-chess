@@ -20,11 +20,12 @@ public class Board {
     public void move(final Position from, final Position to) {
         validateIsFromEmpty(from);
         turn.validateStartPieceColor(board.get(from));
-        final Path path = board.get(from)
+        final Piece movingPiece = board.get(from);
+        final Path path = movingPiece
                 .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
         path.validateObstacle(board.keySet());
-        final Piece piece = board.remove(from);
-        board.put(to, piece);
+        board.remove(from);
+        board.put(to, movingPiece);
         turn.changeTurn();
     }
 
