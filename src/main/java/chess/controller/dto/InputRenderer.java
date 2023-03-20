@@ -34,23 +34,24 @@ public class InputRenderer {
 
     public static CommandDto toCommandDto(final String string) {
         Command command = toCommand(string);
-        if (command == Command.MOVE) {
-            List<String> commandAndPositions = Arrays.asList(string.split(" "));
-            if (commandAndPositions.size() != 3) {
-                throw new IllegalArgumentException("source 위치와 target 위치를 입력해야 합니다. 예. move b2 b3");
-            }
-            List<Integer> source = toColumnAndRow(commandAndPositions.get(1));
-            List<Integer> target = toColumnAndRow(commandAndPositions.get(2));
-            return new CommandDto(command, source, target);
+        if(command == Command.START || command == Command.END){
+            return new CommandDto(command);
         }
-        return new CommandDto(command);
+
+        List<String> commandAndPositions = Arrays.asList(string.split(" "));
+        if (commandAndPositions.size() != 3) {
+            throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
+        }
+        List<Integer> source = toColumnAndRow(commandAndPositions.get(1));
+        List<Integer> target = toColumnAndRow(commandAndPositions.get(2));
+        return new CommandDto(command, source, target);
     }
 
     private static Command toCommand(final String string) {
         try {
             return Command.valueOf(getUpperCasedFirstWord(string));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("불가능한 명령입니다.");
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
     }
 

@@ -5,6 +5,8 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MoveValidator {
@@ -65,13 +67,15 @@ public class MoveValidator {
         RelativePosition relativePosition = RelativePosition.of(source, target);
         RelativePosition unitPosition = relativePosition.toUnit();
         Position currentPosition = source.move(unitPosition);
-        while (!currentPosition.equals(target)) {
-            if (!isEmpty(board, currentPosition)) {
-                return true;
-            }
+
+        List<Position> positions = new ArrayList<>();
+        while(!currentPosition.equals(target)){
+            positions.add(currentPosition);
             currentPosition = currentPosition.move(unitPosition);
         }
-        return false;
+
+        return positions.stream()
+                .anyMatch(position -> isEmpty(board, position));
     }
 
     private static void validateDiagonalImpossible(Map<Position, Piece> board, Position source, Position target) {
