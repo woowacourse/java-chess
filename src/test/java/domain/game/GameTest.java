@@ -20,7 +20,7 @@ class GameTest {
     @BeforeEach
     void generateGame() {
         this.chessBoard = new ChessBoardGenerator().generate();
-        this.game = new Game(this.chessBoard);
+        this.game = new Game(chessBoard);
     }
 
     @DisplayName("움직일 수 있는 source postion과 target position을 입력받은 경우," +

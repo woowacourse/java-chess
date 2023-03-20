@@ -1,5 +1,6 @@
 package controller;
 
+import domain.game.ChessBoardGenerator;
 import domain.game.Game;
 import domain.piece.Position;
 import domain.piece.Side;
@@ -32,7 +33,7 @@ public class ChessController {
     public void run() {
         this.outputView.printGameGuideMessage();
         repeatByRunnable(inputView::requestStartCommand);
-        Game game = Game.create();
+        Game game = new Game(new ChessBoardGenerator().generate());
 
         Side side = Side.WHITE;
         this.outputView.printChessBoard(game.getChessBoard());

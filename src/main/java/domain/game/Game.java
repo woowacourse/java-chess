@@ -15,10 +15,6 @@ public class Game {
         this.chessBoard = chessBoard;
     }
 
-    public static Game create() {
-        return new Game(new ChessBoardGenerator().generate());
-    }
-
     public void move(Side side, Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
         validateMoving(sourcePosition, targetPosition, sourcePiece, side);
