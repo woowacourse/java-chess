@@ -26,9 +26,9 @@ public final class ChessController {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGame = chessGame;
-        commandMap.put(Command.START, new Action(this::start));
+        commandMap.put(Command.START, new Action(ignored -> start()));
         commandMap.put(Command.MOVE, new Action(this::move));
-        commandMap.put(Command.END, new Action(this::end));
+        commandMap.put(Command.END, new Action(ignored -> end()));
     }
 
     public void play() {
@@ -50,6 +50,11 @@ public final class ChessController {
         }
     }
 
+    private void start() {
+        chessGame.startGame();
+        printBoard(chessGame.getBoard());
+    }
+
     private void move(final List<String> commands) {
         Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
         Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
@@ -57,13 +62,8 @@ public final class ChessController {
         printBoard(chessGame.getBoard());
     }
 
-    private void start(final List<String> ignored) {
-        chessGame.startGame();
-        printBoard(chessGame.getBoard());
-    }
 
-
-    private void end(final List<String> ignored) {
+    private void end() {
         chessGame.end();
     }
 
