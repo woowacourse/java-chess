@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.strategy.PieceMovement;
 
 import java.util.List;
 

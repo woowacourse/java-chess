@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.AbstractPieceMovement;
+import chess.domain.piece.strategy.AbstractPieceMovement;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 

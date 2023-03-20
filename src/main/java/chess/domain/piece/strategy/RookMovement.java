@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.piece.AbstractPieceMovement;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 

@@ -1,5 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.strategy;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 

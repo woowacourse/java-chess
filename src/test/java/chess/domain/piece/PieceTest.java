@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
+import chess.domain.piece.strategy.AbstractPieceMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
