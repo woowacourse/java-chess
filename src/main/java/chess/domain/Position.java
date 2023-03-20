@@ -52,14 +52,10 @@ public class Position {
     }
 
     public boolean isNotLinearFunction(Position position) {
-        final int slopeOfOne = 1;
-
         if (isSameColumn(position.getColumn()) || isSameRow(position.row)) {
             return true;
         }
-        final int slope = column.distance(position.column) / row.distance(position.row);
-
-        return slope != slopeOfOne;
+        return column.distance(position.column) != row.distance(position.row);
     }
 
     public boolean isSameRow(Row row) {

@@ -35,7 +35,7 @@ public final class King extends Piece {
     private void validateInvalidPosition(final Position source, final Position target) {
         final int kingMaxMoveDistance = 1;
 
-        if (source.calculateRowDistance(target.getRow()) > kingMaxMoveDistance &&
+        if (source.calculateRowDistance(target.getRow()) > kingMaxMoveDistance ||
                 source.calculateColumnDistance(target.getColumn()) > kingMaxMoveDistance) {
             throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
         }

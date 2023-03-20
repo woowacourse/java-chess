@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.PositionCache.*;
+import static chess.domain.Color.BLACK;
+import static chess.domain.piece.Pawn.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
     @DisplayName("rook이 움직일수 있는 범위 테스트")
@@ -25,9 +28,35 @@ class RookTest {
         // given
         final Piece rook = Rook.from(Color.WHITE);
         // when
-        List<Position> result = rook.findMoveAblePositions(source, target, Pawn.from(Color.BLACK));
+        List<Position> result = rook.findMoveAblePositions(source, target, from(BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("rook이 움직일수 있는 범위 실패 테스트")
+    @ParameterizedTest
+    @MethodSource("rookMovableFailTestDummy")
+    void rookMovableFailTest(
+            final Position source,
+            final Position target
+    ) {
+        // given
+        final Piece rook = Rook.from(Color.WHITE);
+        // then
+        assertThatThrownBy(() -> rook.findMoveAblePositions(source, target, from(BLACK))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> rookMovableFailTestDummy() {
+        return Stream.of(
+                Arguments.arguments(
+                        POSITION_1_1,
+                        POSITION_2_2
+                ),
+                Arguments.arguments(
+                        POSITION_4_4,
+                        POSITION_3_5
+                )
+        );
     }
 
     static Stream<Arguments> rookMovableSuccessTestDummy() {
