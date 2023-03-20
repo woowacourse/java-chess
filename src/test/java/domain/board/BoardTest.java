@@ -4,6 +4,7 @@ import static domain.board.ChessAlignmentMock.testStrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.fixture.TestFixture;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
@@ -11,7 +12,6 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -49,7 +49,7 @@ class BoardTest {
     @Test
     void kingMove() {
         //given
-        final King king = new King(Team.BLACK);
+        final King king = TestFixture.BLACK_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)));
 
         //when
@@ -64,8 +64,8 @@ class BoardTest {
     @Test
     void kingEat() {
         //given
-        final King king = new King(Team.BLACK);
-        final King feed = new King(Team.WHITE);
+        final King king = TestFixture.BLACK_KING;
+        final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
                 Positions.from("E5"), feed)));
 
@@ -81,7 +81,7 @@ class BoardTest {
     @Test
     void kingNotMove() {
         //given
-        final King king = new King(Team.BLACK);
+        final King king = TestFixture.BLACK_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)));
 
         //when
@@ -94,7 +94,7 @@ class BoardTest {
     @Test
     void queenMove() {
         //given
-        final Queen queen = new Queen(Team.BLACK);
+        final Queen queen = TestFixture.BLACK_QUEEN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)));
 
         //when
@@ -109,8 +109,8 @@ class BoardTest {
     @Test
     void queenEat() {
         //given
-        final Queen queen = new Queen(Team.BLACK);
-        final King feed = new King(Team.WHITE);
+        final Queen queen = TestFixture.BLACK_QUEEN;
+        final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
                 Positions.from("H8"), feed)));
 
@@ -126,7 +126,7 @@ class BoardTest {
     @Test
     void queenNotMove() {
         //given
-        final Queen queen = new Queen(Team.BLACK);
+        final Queen queen = TestFixture.BLACK_QUEEN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)));
 
         //when
@@ -139,8 +139,8 @@ class BoardTest {
     @Test
     void queenNotMove2() {
         //given
-        final Queen queen = new Queen(Team.BLACK);
-        final King another = new King(Team.WHITE);
+        final Queen queen = TestFixture.BLACK_QUEEN;
+        final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
                 Positions.from("D6"), another)));
 
@@ -154,7 +154,7 @@ class BoardTest {
     @Test
     void knightMove() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)));
 
         //when
@@ -169,8 +169,8 @@ class BoardTest {
     @Test
     void knightEat() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
-        final King feed = new King(Team.WHITE);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
+        final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
                 Positions.from("B3"), feed)));
 
@@ -186,9 +186,9 @@ class BoardTest {
     @Test
     void knightMove2() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
-        final King another1 = new King(Team.WHITE);
-        final King another2 = new King(Team.WHITE);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
+        final King another1 = TestFixture.WHITE_KING;
+        final King another2 = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
                 Positions.from("D3"), another1,
                 Positions.from("E3"), another2)));
@@ -205,7 +205,7 @@ class BoardTest {
     @Test
     void knightNotMove() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)));
 
         //when
@@ -218,7 +218,7 @@ class BoardTest {
     @Test
     void pawnTwoStepMove() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
 
         //when
@@ -233,7 +233,7 @@ class BoardTest {
     @Test
     void pawnOneStepMove() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
 
         //when
@@ -248,7 +248,7 @@ class BoardTest {
     @Test
     void pawnNotMove() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn)));
 
         //when
@@ -261,8 +261,8 @@ class BoardTest {
     @Test
     void pawnNotMove2() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
-        final King king = new King(Team.WHITE);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
+        final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn,
                 Positions.from("D3"), king)));
 
@@ -276,8 +276,8 @@ class BoardTest {
     @Test
     void pawnNotMove3() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
-        final King king = new King(Team.WHITE);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
+        final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
                 Positions.from("D6"), king)));
 
@@ -291,7 +291,7 @@ class BoardTest {
     @Test
     void pawnNotMove4() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
 
         //when
@@ -304,8 +304,8 @@ class BoardTest {
     @Test
     void pawnMove1() {
         //given
-        final Pawn pawn = new Pawn(Team.BLACK);
-        final King king = new King(Team.WHITE);
+        final Pawn pawn = TestFixture.BLACK_PAWN;
+        final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
                 Positions.from("E6"), king)));
 
@@ -321,7 +321,7 @@ class BoardTest {
     @Test
     void bishopMove() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)));
 
         //when
@@ -336,7 +336,7 @@ class BoardTest {
     @Test
     void bishopNotMove() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)));
 
         //when
@@ -349,8 +349,8 @@ class BoardTest {
     @Test
     void bishopNotMove2() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
-        final King another = new King(Team.WHITE);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
+        final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
                 Positions.from("D6"), another)));
 
@@ -364,8 +364,8 @@ class BoardTest {
     @Test
     void bishopEat() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
-        final King feed = new King(Team.WHITE);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
+        final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
                 Positions.from("H8"), feed)));
 
@@ -381,7 +381,7 @@ class BoardTest {
     @Test
     void rookMove() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
+        final Rook rook = TestFixture.BLACK_ROOK;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)));
 
         //when
@@ -396,7 +396,7 @@ class BoardTest {
     @Test
     void rookNotMove() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
+        final Rook rook = TestFixture.BLACK_ROOK;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)));
 
         //when
@@ -409,8 +409,8 @@ class BoardTest {
     @Test
     void rookNotMove2() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
-        final King another = new King(Team.WHITE);
+        final Rook rook = TestFixture.BLACK_ROOK;
+        final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
                 Positions.from("D6"), another)));
 
@@ -424,8 +424,8 @@ class BoardTest {
     @Test
     void rookEat() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
-        final King feed = new King(Team.WHITE);
+        final Rook rook = TestFixture.BLACK_ROOK;
+        final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
                 Positions.from("D8"), feed)));
 
@@ -441,8 +441,8 @@ class BoardTest {
     @Test
     void existOnDestination() {
         //given
-        final King king = new King(Team.BLACK);
-        final Bishop team = new Bishop(Team.BLACK);
+        final King king = TestFixture.BLACK_KING;
+        final Bishop team = TestFixture.BLACK_BISHOP;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
                 Positions.from("E5"), team)));
 

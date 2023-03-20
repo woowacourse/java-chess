@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.fixture.TestFixture;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -13,7 +14,7 @@ class BishopTest {
     @Test
     void bishopMovable() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "H8", "A7", "A1", "G1");
@@ -28,7 +29,7 @@ class BishopTest {
     @Test
     void bishopUnMovable() {
         //given
-        final Bishop bishop = new Bishop(Team.BLACK);
+        final Bishop bishop = TestFixture.BLACK_BISHOP;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "F8", "A6", "A2", "H3");

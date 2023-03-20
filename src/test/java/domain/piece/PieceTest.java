@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.fixture.TestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,12 @@ class PieceTest {
     @Test
     void pieceHasName() {
         //given
-        final Piece king = new King(Team.BLACK);
-        final Piece queen = new Queen(Team.BLACK);
-        final Piece knight = new Knight(Team.BLACK);
-        final Piece bishop = new Bishop(Team.BLACK);
-        final Piece rook = new Rook(Team.BLACK);
-        final Piece pawn = new Pawn(Team.BLACK);
+        final Piece king = TestFixture.BLACK_KING;
+        final Piece queen = TestFixture.BLACK_QUEEN;
+        final Piece knight = TestFixture.BLACK_KNIGHT;
+        final Piece bishop = TestFixture.BLACK_BISHOP;
+        final Piece rook = TestFixture.BLACK_ROOK;
+        final Piece pawn = TestFixture.BLACK_PAWN;
 
         //when
 
@@ -33,8 +34,8 @@ class PieceTest {
     @Test
     void pieceHasTeam() {
         //given
-        final Piece black = new King(Team.BLACK);
-        final Piece white = new King(Team.WHITE);
+        final Piece black = TestFixture.BLACK_KING;
+        final Piece white = TestFixture.WHITE_KING;
 
         //when
 

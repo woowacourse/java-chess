@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.fixture.TestFixture;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -13,7 +14,7 @@ class KnightTest {
     @Test
     void knightMovable() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "E6", "C6", "B5", "F5", "B3", "F3", "C2", "E2");
@@ -28,7 +29,7 @@ class KnightTest {
     @Test
     void knightUnMovable() {
         //given
-        final Knight knight = new Knight(Team.BLACK);
+        final Knight knight = TestFixture.BLACK_KNIGHT;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "A8", "H5", "G6");

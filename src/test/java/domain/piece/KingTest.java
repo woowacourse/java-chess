@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.fixture.TestFixture;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -13,7 +14,7 @@ class KingTest {
     @Test
     void kingMovable() {
         //given
-        final King king = new King(Team.BLACK);
+        final King king = TestFixture.BLACK_KING;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "C5", "D5", "E5", "C4", "E4", "C3", "D3", "E3");
@@ -28,7 +29,7 @@ class KingTest {
     @Test
     void kingUnMovable() {
         //given
-        final King king = new King(Team.BLACK);
+        final King king = TestFixture.BLACK_KING;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "B7", "D8", "G6");

@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.fixture.TestFixture;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.List;
@@ -13,7 +14,7 @@ class RookTest {
     @Test
     void rookMovable() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
+        final Rook rook = TestFixture.BLACK_ROOK;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "D3", "D5", "D1", "D8", "A4", "C4", "E4", "H4");
@@ -28,7 +29,7 @@ class RookTest {
     @Test
     void rookUnMovable() {
         //given
-        final Rook rook = new Rook(Team.BLACK);
+        final Rook rook = TestFixture.BLACK_ROOK;
         Position source = Positions.from("D4");
         final List<Position> destinations = Positions.of(
                 "A8", "B5", "G6");
