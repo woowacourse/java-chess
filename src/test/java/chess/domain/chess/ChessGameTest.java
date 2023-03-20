@@ -13,7 +13,6 @@ class ChessGameTest {
     void playMovableFail(final int rank, final int file) {
         // given
         final ChessGame chessGame = new ChessGame();
-        System.out.println(chessGame.getChessBoard());
         final Position source = new Position(rank, file);
         final Position target = new Position(6, 7);
 
