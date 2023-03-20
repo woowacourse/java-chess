@@ -9,6 +9,8 @@ import java.util.List;
 
 public class InitPawn extends PawnFeature {
 
+    private static final int INIT_PAWN_DISTANCE = 2;
+
     public InitPawn(final Color color) {
         super(color);
     }
@@ -27,7 +29,7 @@ public class InitPawn extends PawnFeature {
         int diffY = movePosition.diffY();
         int diffX = movePosition.diffX();
 
-        return isPawnMovable(direction, diffY, diffX) || diffY == direction * 2 && diffX == 0;
+        return isPawnMovable(direction, diffY, diffX) || diffY == direction * INIT_PAWN_DISTANCE && diffX == 0;
     }
 
     private List<Position> getRoute(MovePosition movePosition) {

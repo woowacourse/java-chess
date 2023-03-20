@@ -8,13 +8,15 @@ import java.util.Objects;
 public class Position {
 
     private static final List<List<Position>> CACHE;
+    public static final int ROW_SIZE = 8;
+    public static final int COLUMN_SIZE = 8;
 
     private final int x;
     private final int y;
 
     static {
         CACHE = new ArrayList<>();
-        addColumn();
+        createPositions();
     }
 
     private Position(final int x, final int y) {
@@ -27,15 +29,15 @@ public class Position {
                 .get(x);
     }
 
-    private static void addColumn() {
-        for (int y = 0; y < 8; y++) {
+    private static void createPositions() {
+        for (int y = 0; y < ROW_SIZE; y++) {
             CACHE.add(new ArrayList<>());
             addRow(y);
         }
     }
 
     private static void addRow(final int y) {
-        for (int x = 0; x < 8; x++) {
+        for (int x = 0; x < COLUMN_SIZE; x++) {
             CACHE.get(y).add(new Position(x, y));
         }
     }

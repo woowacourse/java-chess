@@ -1,12 +1,13 @@
 package domain.piece;
 
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 import domain.coordinate.Route;
 
 import java.util.Collections;
 
 public final class King extends Piece {
+
+    private static final int MAX_DISTANCE_OF_KING = 1;
 
     public King(final Color color) {
         super(color, PieceType.KING);
@@ -23,7 +24,8 @@ public final class King extends Piece {
         int diffY = Math.abs(movePosition.diffY());
         int diffX = Math.abs(movePosition.diffX());
 
-        return (diffY != 0 || diffX != 0) && (diffX < 2 && diffY < 2);
+        return (diffY != 0 || diffX != 0) && (diffX <= MAX_DISTANCE_OF_KING && diffY <= MAX_DISTANCE_OF_KING);
+
     }
 
 }

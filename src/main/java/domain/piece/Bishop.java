@@ -8,6 +8,8 @@ import java.util.List;
 
 public final class Bishop extends Piece implements VariableMover {
 
+    private static final int UNIT_MOVE_DISTANCE = 1;
+
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
     }
@@ -33,10 +35,10 @@ public final class Bishop extends Piece implements VariableMover {
 
     private int getMoveCoordinate(final int diff) {
         if (diff < 0) {
-            return -1;
+            return -UNIT_MOVE_DISTANCE;
         }
 
-        return 1;
+        return UNIT_MOVE_DISTANCE;
     }
 
 }
