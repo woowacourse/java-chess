@@ -33,12 +33,7 @@ public final class Start extends AbstractBoard {
     }
 
     @Override
-    public double score(final Color color) {
-        throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
-    }
-
-    @Override
-    public Color winner() {
+    public GameResult getResult() {
         throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
     }
 }

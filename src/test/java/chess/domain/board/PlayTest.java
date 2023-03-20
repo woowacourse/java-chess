@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -37,7 +40,8 @@ public class PlayTest {
         board = board.move("e2", "e4");
 
         // then
-        assertThat(board.getBoard().get(E4)).isEqualTo(Pawn.from(Color.WHITE));
+        final Map<Position, Piece> result = board.getResult().getBoard();
+        assertThat(result.get(E4)).isEqualTo(Pawn.from(Color.WHITE));
     }
 
     @Test

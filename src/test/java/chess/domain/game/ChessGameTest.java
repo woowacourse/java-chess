@@ -50,7 +50,7 @@ public class ChessGameTest {
         chessGame.initialize();
 
         // then
-        final List<PieceType> result = toPieceTypes(chessGame.getBoard());
+        final List<PieceType> result = toPieceTypes(chessGame.getResult().getBoard());
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
@@ -73,7 +73,7 @@ public class ChessGameTest {
         chessGame.move("e2", "e4");
 
         // then
-        final Map<Position, Piece> board = chessGame.getBoard();
+        final Map<Position, Piece> board = chessGame.getResult().getBoard();
         assertThat(board.get(E4)).isEqualTo(Pawn.from(Color.WHITE));
     }
 
@@ -94,7 +94,7 @@ public class ChessGameTest {
         chessGame.move("d7", "d6");
 
         // then
-        final List<PieceType> result = toPieceTypes(chessGame.getBoard());
+        final List<PieceType> result = toPieceTypes(chessGame.getResult().getBoard());
         assertThat(result).containsExactly(
                 ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,

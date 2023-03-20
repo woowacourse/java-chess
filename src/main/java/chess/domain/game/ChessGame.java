@@ -1,10 +1,8 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.GameResult;
 import chess.domain.board.Start;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import java.util.Map;
 
 public class ChessGame {
     private Board board;
@@ -25,7 +23,7 @@ public class ChessGame {
         board = board.move(source, target);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
+    public GameResult getResult() {
+        return board.getResult();
     }
 }

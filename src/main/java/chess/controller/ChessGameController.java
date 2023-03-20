@@ -11,6 +11,7 @@ import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 import static chess.controller.Command.validateCommandSize;
 
+import chess.domain.board.GameResult;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -57,7 +58,8 @@ public class ChessGameController {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
         chessGame.initialize();
-        OutputView.printBoard(chessGame.getBoard());
+        final GameResult result = chessGame.getResult();
+        OutputView.printBoard(result.getBoard());
     }
 
     private void move(final List<String> commands) {
@@ -68,6 +70,7 @@ public class ChessGameController {
         final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
         chessGame.move(source, target);
-        OutputView.printBoard(chessGame.getBoard());
+        final GameResult result = chessGame.getResult();
+        OutputView.printBoard(result.getBoard());
     }
 }

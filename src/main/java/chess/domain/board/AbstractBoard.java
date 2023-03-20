@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.Collections;
 import java.util.Map;
 
 public abstract class AbstractBoard implements Board {
@@ -28,13 +27,5 @@ public abstract class AbstractBoard implements Board {
     public abstract Board move(final String source, final String target);
 
     @Override
-    public abstract double score(final Color color);
-
-    @Override
-    public abstract Color winner();
-
-    @Override
-    public final Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
+    public abstract GameResult getResult();
 }

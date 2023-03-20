@@ -1,10 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import java.util.Map;
-
 public interface Board {
 
     Board initialize();
@@ -15,9 +10,5 @@ public interface Board {
 
     Board move(final String source, final String target);
 
-    double score(final Color color);
-
-    Color winner();
-
-    Map<Position, Piece> getBoard();
+    GameResult getResult();
 }

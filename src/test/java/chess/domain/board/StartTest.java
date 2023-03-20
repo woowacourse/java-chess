@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.File;
@@ -38,7 +37,7 @@ class StartTest {
         board = board.initialize();
 
         // then
-        final Map<Position, Piece> result = board.getBoard();
+        final Map<Position, Piece> result = board.getResult().getBoard();
         final List<PieceType> pieceTypes = Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
@@ -93,12 +92,12 @@ class StartTest {
     }
 
     @Test
-    void 초기화_되지_않은_상태에서_점수를_확인하려는_경우_예외를_던진다() {
+    void 초기화_되지_않은_상태에서_게임_결과를_반환하려는_경우_예외를_던진다() {
         // given
         final Start start = new Start();
 
         // expect
-        assertThatThrownBy(() -> start.score(Color.WHITE))
+        assertThatThrownBy(start::getResult)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
