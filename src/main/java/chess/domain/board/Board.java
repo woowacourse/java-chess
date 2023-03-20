@@ -36,7 +36,7 @@ public class Board {
             runLogic(current, target, moveableDirection);
             return;
         }
-        throw new RuntimeException("[ERROR] 패턴에서 걸러진 예외");
+        throw new IllegalArgumentException("패턴에서 걸러진 예외");
     }
 
     private void runLogic(final Position current, final Position target, final Direction moveableDirection) {
@@ -48,7 +48,7 @@ public class Board {
 
         if (currentPointPiece instanceof King) {
             if (calculateStep(current, target) != 1) {
-                throw new RuntimeException("킹은 1만");
+                throw new IllegalArgumentException("킹은 1만");
             }
             validateSameTeam(current, target);
         }
@@ -66,7 +66,7 @@ public class Board {
                     move(current, target);
                     return;
                 }
-                throw new RuntimeException("처음인데 2칸 이내 이동 x 또는 해당 위치 기물 존재");
+                throw new IllegalArgumentException("처음인데 2칸 이내 이동 x 또는 해당 위치 기물 존재");
             }
 
             if (targetStep == 1 && isEmptyPiece(target)) {
@@ -74,7 +74,7 @@ public class Board {
                 move(current, target);
                 return;
             }
-            throw new RuntimeException("폰은 첫 이동이 아니면 1칸만 가능 또는 해당 위치 기물 존재");
+            throw new IllegalArgumentException("폰은 첫 이동이 아니면 1칸만 가능 또는 해당 위치 기물 존재");
         }
 
         if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
@@ -87,7 +87,7 @@ public class Board {
 
     private void validateSameTeam(final Position current, final Position target) {
         if (findPiece(current).getTeam() == findPiece(target).getTeam()) {
-            throw new RuntimeException("[ERROR] 같은 팀이 존재하므로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("같은 팀이 존재하므로 이동할 수 없습니다.");
         }
     }
 
@@ -99,7 +99,7 @@ public class Board {
             return;
         }
 
-        throw new RuntimeException("[ERROR] 폰은 앞으로만 이동할 수 있습니다.");
+        throw new IllegalArgumentException("폰은 앞으로만 이동할 수 있습니다.");
     }
 
     private void checkPieceOfPawn(final Position current, final Position target, final Piece currentPointPiece) {
@@ -122,7 +122,7 @@ public class Board {
             Rank iteratorRank = board.get(iterator.getRow());
 
             if (!iteratorRank.isEmptyPiece(iterator.getCol())) {
-                throw new RuntimeException("[ERROR] 가는 경로 도중에 다른 기물 존재");
+                throw new IllegalArgumentException("가는 경로 도중에 다른 기물 존재");
             }
             iterator = iterator.move(unitVector);
         }
