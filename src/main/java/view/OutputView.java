@@ -1,9 +1,7 @@
 package view;
 
-import chess.position.Position;
-import chess.piece.Shape;
 import chess.piece.ChessPiece;
-
+import chess.position.Position;
 import java.util.Map;
 
 public class OutputView {
@@ -20,7 +18,7 @@ public class OutputView {
 
     private static void circuitHorizontal(Map<Position, ChessPiece> chessBoard, int vertical) {
         for (int horizontal = MIN_CHESS_BOARD_NUM; horizontal <= MAX_CHESS_BOARD_NUM; horizontal++) {
-            System.out.print(Shape.getNameByClass(chessBoard.get(Position.initPosition(horizontal, vertical))));
+            System.out.print(chessBoard.get(Position.initPosition(horizontal, vertical)).getName());
         }
     }
 

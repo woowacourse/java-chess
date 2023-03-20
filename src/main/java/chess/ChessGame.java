@@ -1,8 +1,8 @@
 package chess;
 
 import chess.piece.ChessPiece;
-import chess.piece.Empty;
-
+import chess.piece.Shape;
+import chess.piece.Side;
 import chess.position.Position;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ChessGame {
     }
 
     public void removeChessPiece(Position sourcePosition) {
-        chessBoard.getChessBoard().put(sourcePosition, new Empty(Side.BLANK));
+        chessBoard.getChessBoard().put(sourcePosition, new ChessPiece(Shape.BLANK, Side.BLANK));
     }
 
     public boolean validateMovablePosition(Position targetPosition, List<Position> movablePosition) {

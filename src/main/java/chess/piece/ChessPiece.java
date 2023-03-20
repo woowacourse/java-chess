@@ -1,36 +1,47 @@
 package chess.piece;
 
-import chess.ChessBoard;
-import chess.position.Position;
-import chess.Side;
-
-import java.util.List;
 import java.util.Objects;
 
-public abstract class ChessPiece {
+public class ChessPiece {
 
+    private final Shape shape;
     private final Side side;
 
-    public ChessPiece(Side side) {
+    public ChessPiece(Shape shape, Side side) {
+        this.shape = shape;
         this.side = side;
     }
 
-    abstract List<Position> getMovablePosition(ChessBoard chessBoard, Position sourcePosition);
+    public String getName() {
+        if (side.equals(Side.BLACK)) {
+            return shape.getBlackName();
+        }
+        return shape.getWhiteName();
+    }
 
-    public String getSide() {
-        return side.getSide();
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Side getSide() {
+        return side;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ChessPiece that = (ChessPiece) o;
-        return side == that.side;
+        return shape == that.shape;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(side);
+        return Objects.hash(shape);
     }
+
 }

@@ -1,16 +1,16 @@
 package chess;
 
-import chess.piece.Empty;
-import chess.piece.Knight;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import chess.piece.ChessPiece;
+import chess.piece.Shape;
+import chess.piece.Side;
 import chess.position.Position;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessGameTest {
 
@@ -27,7 +27,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         Position sourcePosition = Position.initPosition(2, 1);
 
-        assertThat(chessGame.findChessPiece(sourcePosition)).isInstanceOf(Knight.class);
+        assertThat(chessGame.findChessPiece(sourcePosition).getShape()).isEqualTo(Shape.KNIGHT);
     }
 
     @Test
@@ -39,7 +39,7 @@ class ChessGameTest {
 
         chessGame.removeChessPiece(sourcePosition);
 
-        assertThat(chessBoard.getChessPieceByPosition(sourcePosition)).isInstanceOf(Empty.class);
+        assertThat(chessBoard.getChessPieceByPosition(sourcePosition).getShape()).isEqualTo(Shape.BLANK);
     }
 
     @Test
@@ -48,7 +48,7 @@ class ChessGameTest {
 
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        Knight knight = new Knight(Side.WHITE);
+        ChessPiece knight = new ChessPiece(Shape.KNIGHT, Side.BLACK);
         Position targetPosition = Position.initPosition(1, 3);
 
         chessGame.copyChessPiece(knight, targetPosition);
@@ -63,7 +63,8 @@ class ChessGameTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         Position targetPosition = Position.initPosition(5, 5);
-        List<Position> movablePosition = List.of(Position.initPosition(3, 3), Position.initPosition(1, 3), Position.initPosition(2, 2), Position.initPosition(2, 4));
+        List<Position> movablePosition = List.of(Position.initPosition(3, 3), Position.initPosition(1, 3),
+                Position.initPosition(2, 2), Position.initPosition(2, 4));
 
         Assertions.assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
                 .isInstanceOf(IllegalArgumentException.class)

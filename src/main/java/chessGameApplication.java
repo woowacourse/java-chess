@@ -1,13 +1,11 @@
 import chess.ChessBoard;
 import chess.ChessGame;
-import chess.Side;
+import chess.piece.Side;
 import chess.position.MovablePosition;
 import chess.position.Position;
-import java.util.Objects;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
 
 public class chessGameApplication {
 
@@ -57,7 +55,7 @@ public class chessGameApplication {
 
     private static void move(ChessGame chessGame, ChessBoard chessBoard, List<String> moveCommand, Side side) {
         Position sourcePosition = Position.of(moveCommand.get(SOURCE_POSITION_INDEX));
-        if (!Objects.equals(chessBoard.getChessPieceByPosition(sourcePosition).getSide(), side.getSide())) {
+        if (!chessBoard.getChessPieceByPosition(sourcePosition).getSide().equals(side)) {
             throw new IllegalArgumentException("[ERROR] " + side.getSide() + "편의 기물을 움직여 주세요");
         }
         Position targetPosition = Position.of(moveCommand.get(TARGET_POSITION_INDEX));

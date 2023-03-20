@@ -1,10 +1,13 @@
 package chess;
 
-import chess.piece.*;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import chess.piece.ChessPiece;
+import chess.piece.Shape;
+import chess.piece.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessPieceTest {
 
@@ -12,20 +15,19 @@ class ChessPieceTest {
     @DisplayName("각 기물들이 올바르게 생성된다.")
     void shouldSuccessGeneratePieces() {
         assertSoftly(softly -> {
-            softly.assertThat(new King(Side.BLACK));
-            softly.assertThat(new Queen(Side.BLACK));
-            softly.assertThat(new Knight(Side.BLACK));
-            softly.assertThat(new Bishop(Side.BLACK));
-            softly.assertThat(new Rook(Side.BLACK));
-            softly.assertThat(new Pawn(Side.BLACK));
-            softly.assertThat(new King(Side.WHITE));
-            softly.assertThat(new Queen(Side.WHITE));
-            softly.assertThat(new Knight(Side.WHITE));
-            softly.assertThat(new Bishop(Side.WHITE));
-            softly.assertThat(new Rook(Side.WHITE));
-            softly.assertThat(new Pawn(Side.WHITE));
-
-            softly.assertThat(new Empty(Side.BLANK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.WHITE));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.QUEEN, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.QUEEN, Side.WHITE));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.KNIGHT, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.KNIGHT, Side.WHITE));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.BISHOP, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.BISHOP, Side.WHITE));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.ROOK, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.ROOK, Side.WHITE));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.PAWN, Side.BLACK));
+            assertDoesNotThrow(() -> new ChessPiece(Shape.PAWN, Side.WHITE));
         });
     }
 }

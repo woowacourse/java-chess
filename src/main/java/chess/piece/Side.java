@@ -1,4 +1,4 @@
-package chess;
+package chess.piece;
 
 public enum Side {
 

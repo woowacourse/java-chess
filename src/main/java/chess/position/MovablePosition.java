@@ -1,8 +1,6 @@
 package chess.position;
 
 import chess.ChessBoard;
-import chess.piece.ChessPiece;
-import chess.piece.Pawn;
 import chess.piece.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ public class MovablePosition {
     private static final int UNLIMIT_STEP_MOVEMENT = 8;
     private static final int MIN_CHESS_BOUNDARY = 1;
     private static final int MAX_CHESS_BOUNDARY = 8;
-    private static final String BLANK = "blank";
+    private static final String BLANK = ".";
 
     private final List<Position> movablePosition = new ArrayList<>();
 
@@ -21,32 +19,31 @@ public class MovablePosition {
     }
 
     public List<Position> findByShape(ChessBoard chessBoard, Position sourcePosition) {
-        ChessPiece chessPiece = chessBoard.getChessPieceByPosition(sourcePosition);
-        String pieceShape = Shape.getNameByClass(chessPiece);
-        makeRoute(chessBoard, sourcePosition, pieceShape);
+        makeRoute(chessBoard, sourcePosition);
         return movablePosition;
     }
 
-    private void makeRoute(ChessBoard chessBoard, Position sourcePosition, String pieceShape) {
-        if (pieceShape.equals(Shape.WHITE_PAWN.getName())) {
+    private void makeRoute(ChessBoard chessBoard, Position sourcePosition) {
+        String pieceName = chessBoard.getChessPieceByPosition(sourcePosition).getName();
+        if (pieceName.equals(Shape.PAWN.getWhiteName())) {
             addPawnPosition(chessBoard, sourcePosition, Direction.WHITE_PAWN_MOVE_DIRECTION, 2);
         }
-        if (pieceShape.equals(Shape.BLACK_PAWN.getName())) {
+        if (pieceName.equals(Shape.PAWN.getBlackName())) {
             addPawnPosition(chessBoard, sourcePosition, Direction.BLACK_PAWN_MOVE_DIRECTION, 7);
         }
-        if (pieceShape.equals(Shape.WHITE_ROOK.getName()) || pieceShape.equals(Shape.BLACK_ROOK.getName())) {
+        if (pieceName.equals(Shape.ROOK.getWhiteName()) || pieceName.equals(Shape.ROOK.getBlackName())) {
             addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.DIAGONAL_DIRECTION, true);
         }
-        if (pieceShape.equals(Shape.WHITE_BISHOP.getName()) || pieceShape.equals(Shape.BLACK_BISHOP.getName())) {
+        if (pieceName.equals(Shape.BISHOP.getWhiteName()) || pieceName.equals(Shape.BISHOP.getBlackName())) {
             addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.CROSS_DIRECTION, true);
         }
-        if (pieceShape.equals(Shape.WHITE_KNIGHT.getName()) || pieceShape.equals(Shape.BLACK_KNIGHT.getName())) {
+        if (pieceName.equals(Shape.KNIGHT.getWhiteName()) || pieceName.equals(Shape.KNIGHT.getBlackName())) {
             addKnightPosition(chessBoard, sourcePosition);
         }
-        if (pieceShape.equals(Shape.WHITE_QUEEN.getName()) || pieceShape.equals(Shape.BLACK_QUEEN.getName())) {
+        if (pieceName.equals(Shape.QUEEN.getWhiteName()) || pieceName.equals(Shape.QUEEN.getBlackName())) {
             addRoyalPosition(chessBoard, sourcePosition, true);
         }
-        if (pieceShape.equals(Shape.WHITE_KING.getName()) || pieceShape.equals(Shape.BLACK_KING.getName())) {
+        if (pieceName.equals(Shape.KING.getWhiteName()) || pieceName.equals(Shape.KING.getBlackName())) {
             addRoyalPosition(chessBoard, sourcePosition, false);
         }
     }
@@ -93,14 +90,14 @@ public class MovablePosition {
             int newY = sourcePosition.getYPosition() + movingPosition.getYPosition() * step;
             if ((newX >= MIN_CHESS_BOUNDARY && newX <= MAX_CHESS_BOUNDARY) && (newY >= MIN_CHESS_BOUNDARY
                     && newY <= MAX_CHESS_BOUNDARY)) {
-                if (chessBoard.getChessPieceByPosition(Position.initPosition(newX, newY)).getSide().equals(BLANK)) {
+                if (chessBoard.getChessPieceByPosition(Position.initPosition(newX, newY)).getName().equals(BLANK)) {
                     movablePosition.add(Position.initPosition(newX, newY));
                     continue;
                 }
                 if (checkPieceSideInPosition(chessBoard, sourcePosition, Position.initPosition(newX, newY))) {
                     break;
                 }
-                if (chessBoard.getChessPieceByPosition(sourcePosition).getClass().equals(Pawn.class)) {
+                if (chessBoard.getChessPieceByPosition(sourcePosition).getShape().equals(Shape.PAWN)) {
                     break;
                 }
                 movablePosition.add(Position.initPosition(newX, newY));
@@ -110,8 +107,8 @@ public class MovablePosition {
     }
 
     public boolean checkPieceSideInPosition(ChessBoard chessBoard, Position sourcePosition, Position checkPosition) {
-        String sourcePieceSide = chessBoard.getChessPieceByPosition(sourcePosition).getSide();
-        String checkPieceSide = chessBoard.getChessPieceByPosition(checkPosition).getSide();
+        String sourcePieceSide = chessBoard.getChessPieceByPosition(sourcePosition).getName();
+        String checkPieceSide = chessBoard.getChessPieceByPosition(checkPosition).getName();
         return sourcePieceSide.equals(checkPieceSide);
     }
 
