@@ -34,7 +34,7 @@ public class ChessController {
             return;
         }
         chessGame.initialize();
-        ExecuteContext.repeatWithDefaultAndRepeatableJudgeStrategy(this::printBoard,
+        ExecuteContext.repeatableExecute(this::printBoard,
             () -> command(inputView.getCommand()));
     }
 

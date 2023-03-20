@@ -2,7 +2,7 @@ package common;
 
 public class ExecuteContext {
 
-    public static <T> T workWithExecuteStrategy(final ExecuteStrategy<T> executeStrategy) {
+    public static <T> T repeatableExecute(final ExecuteStrategy<T> executeStrategy) {
         T result = null;
         while (result == null) {
             try {
@@ -14,19 +14,10 @@ public class ExecuteContext {
         return result;
     }
 
-    public static <T> void repeatWithDefaultAndRepeatableJudgeStrategy(final ExecuteStrategy<T> defaultStrategy,
+    public static <T> void repeatableExecute(final ExecuteStrategy<T> defaultStrategy,
         final ExecuteStrategy<Boolean> repeatableStrategy) {
         do {
             defaultStrategy.execute();
-        } while (repeat(repeatableStrategy));
-    }
-
-    private static <T> T repeat(final ExecuteStrategy<T> repeatableStrategy) {
-        try {
-            return repeatableStrategy.execute();
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-            return repeat(repeatableStrategy);
-        }
+        } while (repeatableExecute(repeatableStrategy));
     }
 }

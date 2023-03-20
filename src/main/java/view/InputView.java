@@ -18,7 +18,7 @@ public class InputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        final String order = ExecuteContext.workWithExecuteStrategy(() -> {
+        final String order = ExecuteContext.repeatableExecute(() -> {
             final String input = scanner.nextLine();
             checkExpectedInput(input, START, END);
             return input;
