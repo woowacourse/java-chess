@@ -40,7 +40,7 @@ public class InitialBoardStrategy implements BoardStrategy {
         Map<Position, Piece> emptyPieces = Column.getOrderedColumns().stream()
                 .flatMap(column -> Rank.getOrderedRanks().stream()
                         .map(rank -> Position.of(column, rank)))
-                .collect(Collectors.toMap(Function.identity(), ignored -> new EmptyPiece()));
+                .collect(Collectors.toMap(Function.identity(), ignored -> EmptyPiece.of()));
 
         board.putAll(emptyPieces);
     }

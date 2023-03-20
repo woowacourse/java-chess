@@ -26,7 +26,7 @@ public class ChessBoard {
 
     public void move(Position start, Position end) {
         checkIfMoveToSamePosition(start, end);
-        Piece pieceToMove = findPieceAtStart(start);
+        Piece pieceToMove = chessBoard.get(start);
         checkTurn(pieceToMove.getColor());
         checkIfPiecesExistInRoute(start, end);
         Color colorOfDestination = chessBoard.get(end).getColor();
@@ -48,11 +48,6 @@ public class ChessBoard {
         }
     }
 
-    private Piece findPieceAtStart(Position start) {
-        return chessBoard.get(start);
-    }
-
-
     private void checkIfPiecesExistInRoute(Position start, Position end) {
         Direction direction = Direction.findDirectionByGap(start, end);
         Position currentPosition = start;
@@ -70,7 +65,7 @@ public class ChessBoard {
     }
 
     private void movePieceToDestination(Position start, Position end, Piece piece) {
-        chessBoard.replace(start, new EmptyPiece());
+        chessBoard.replace(start, EmptyPiece.of());
         chessBoard.replace(end, piece);
         turn = piece.getColor().getOpponent();
     }

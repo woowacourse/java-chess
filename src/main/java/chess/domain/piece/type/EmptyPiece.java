@@ -7,8 +7,14 @@ import chess.domain.piece.PieceType;
 
 public final class EmptyPiece extends Piece {
 
-    public EmptyPiece() {
-        super(PieceType.EMPTY_PIECE, Color.NONE);
+    private static final EmptyPiece emptyPiece = new EmptyPiece(PieceType.EMPTY_PIECE, Color.NONE);
+
+    private EmptyPiece(PieceType pieceType, Color color) {
+        super(pieceType, color);
+    }
+
+    public static EmptyPiece of() {
+        return emptyPiece;
     }
 
     @Override
