@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
 import java.util.Arrays;
@@ -17,7 +18,10 @@ public final class PieceRender {
         throw new AssertionError();
     }
 
-    public static String renderName2(final PieceType pieceType, final Color color) {
+    public static String renderName(final Piece piece) {
+        final Color color = piece.getColor();
+        final PieceType pieceType = piece.getPieceType();
+
         if (color.isBlack()) {
             return CACHE.get(pieceType);
         }

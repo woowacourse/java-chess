@@ -27,7 +27,7 @@ public abstract class Piece {
         return color;
     }
 
-    public PieceType getPiece() {
+    public PieceType getPieceType() {
         return pieceType;
     }
 }
