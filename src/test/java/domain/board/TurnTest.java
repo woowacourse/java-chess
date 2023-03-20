@@ -9,21 +9,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class TurnTest {
 
     @Test
-    @DisplayName("턴은 기본 상태를 가진다")
-    void getTurn() {
-        Turn turn = new Turn(Camp.WHITE);
-
-        assertThat(turn.getTurn()).isEqualTo(Camp.WHITE);
-    }
-
-    @Test
     @DisplayName("첫 턴이 WHITE라면, 다음 턴은 BLACK이다")
     void invertTestWhenWhiteFirst() {
         Turn turn = new Turn(Camp.WHITE);
 
         turn.invert();
 
-        assertThat(turn.getTurn()).isEqualTo(Camp.BLACK);
+        assertThat(turn.isNotFor(Camp.BLACK)).isFalse();
     }
 
     @Test
@@ -34,6 +26,6 @@ class TurnTest {
         turn.invert();
         turn.invert();
 
-        assertThat(turn.getTurn()).isEqualTo(Camp.WHITE);
+        assertThat(turn.isNotFor(Camp.WHITE)).isFalse();
     }
 }
