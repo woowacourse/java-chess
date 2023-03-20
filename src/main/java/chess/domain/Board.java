@@ -50,8 +50,8 @@ public class Board {
         if (isEmpty(source)) {
             throw new IllegalArgumentException("source 위치에 조작할 수 있는 말이 없습니다.");
         }
-        if (hasSameTeam(source, target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
+        if (isSameTeam(source, target)) {
+            throw new IllegalArgumentException("target 위치에 같은 팀의 말이 존재합니다.");
         }
         if (isInvalidDirection(source, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
@@ -72,7 +72,7 @@ public class Board {
         return board.get(source).isEmpty();
     }
 
-    private boolean hasSameTeam(Position source, Position target) {
+    private boolean isSameTeam(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         if (sourcePiece.isBlack() && targetPiece.isBlack()) {
