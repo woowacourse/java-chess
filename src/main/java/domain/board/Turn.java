@@ -19,6 +19,6 @@ public class Turn {
     }
 
     public boolean isNotFor(final Camp camp) {
-        return turn == camp;
+        return turn != camp;
     }
 }
