@@ -1,6 +1,8 @@
 import domain.ChessBoard;
 import domain.Square;
+
 import java.util.function.Supplier;
+
 import view.Command;
 import view.End;
 import view.InputView;
@@ -32,12 +34,17 @@ public class MainController {
         inputView.printStartMessage();
         Command command = repeatInputReader(inputView::readCommand);
         if (command instanceof Start) {
-            printChessBoard(chessBoard);
-            do {
-                command = repeat(inputView::readCommand);
-                executeMoveCommand(chessBoard, command);
-            } while (!(command instanceof End));
+            playChess(chessBoard);
         }
+    }
+
+    private void playChess(ChessBoard chessBoard) {
+        printChessBoard(chessBoard);
+        Command command;
+        do {
+            command = repeatInputReader(inputView::readCommand);
+            executeMoveCommand(chessBoard, command);
+        } while (!(command instanceof End));
     }
 
     private void executeMoveCommand(ChessBoard chessBoard, Command command) {
