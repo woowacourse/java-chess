@@ -13,7 +13,8 @@ public class PieceName {
             Rook.class, "r",
             Knight.class, "n",
             Bishop.class, "b",
-            Pawn.class, "p"
+            Pawn.class, "p",
+            Empty.class, "."
     );
 
     public static String findNameByPiece(Piece piece) {
