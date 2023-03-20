@@ -75,6 +75,4 @@ class ChessGameTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
-
-
 }

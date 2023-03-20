@@ -29,7 +29,7 @@ public class ChessGame {
     }
 
     private static void validateStartCommand(final String command) {
-        if (Objects.isNull(command) || !(Command.from(command) == Command.START)) {
+        if (Objects.isNull(command) || (Command.from(command) != Command.START)) {
             throw new IllegalArgumentException("입력된 명령어가 올바르지 않습니다.");
         }
     }
