@@ -57,8 +57,8 @@ public class Board {
     private void canMove(final Location startLocation, final Location endLocation) {
         final Piece startPiece = findPiece(startLocation);
         final Piece endPiece = findPiece(endLocation);
-        final ValidateDto start = ValidateDto.of(startLocation, startPiece);
-        final ValidateDto end = ValidateDto.of(endLocation, endPiece);
+        final Section start = Section.of(startLocation, startPiece);
+        final Section end = Section.of(endLocation, endPiece);
         final List<Piece> path = getPiecesInPath(startLocation, endLocation);
         if (pathValidator.isValid(start, end, path)) {
             return;

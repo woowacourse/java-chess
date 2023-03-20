@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class PathValidator {
 
-    public boolean isValid(final ValidateDto start, final ValidateDto end, final List<Piece> path) {
+    public boolean isValid(final Section start, final Section end, final List<Piece> path) {
         if (isBlocked(path)) {
             return false;
         }

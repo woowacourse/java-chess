@@ -1,14 +1,15 @@
 package domain;
 
+import domain.type.Turn;
 import java.util.HashMap;
 
 public class ChessGame {
 
     private Board board;
-    private boolean isWhite;
+    private Turn turn;
 
     public ChessGame() {
-        this.isWhite = true;
+        this.turn = Turn.WHITE;
     }
 
     public void initialize() {
@@ -17,13 +18,13 @@ public class ChessGame {
     }
 
     public void move(final Location start, final Location end) {
-        if (isWhite) {
+        if (turn.equals(Turn.WHITE)) {
             board.moveWhite(start, end);
-            isWhite = false;
+            turn = Turn.BLACK;
             return;
         }
         board.moveBlack(start, end);
-        isWhite = true;
+        turn = Turn.WHITE;
     }
 
     public Board getBoard() {
