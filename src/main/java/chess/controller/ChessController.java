@@ -35,10 +35,10 @@ public class ChessController {
         final Command firstCommand = repeat(this::readCommand);
         chessGame.receiveCommand(firstCommand);
 
-        while (!chessGame.isEnd()) {
-            final List<String> movePositions = new ArrayList<>();
+        while (chessGame.isProcessing()) {
             renderChessBoard();
 
+            final List<String> movePositions = new ArrayList<>();
             final Command command = readMoveCommand(movePositions);
             if (command == Command.END) {
                 break;
@@ -47,6 +47,17 @@ public class ChessController {
             final Position to = PositionConvertor.convert(movePositions.get(1));
             chessGame.movePiece(from, to);
         }
+    }
+
+    private Command readCommand() {
+        final List<String> commands = inputView.readGameCommand();
+        return Command.from(commands.get(0));
+    }
+
+    private void renderChessBoard() {
+        final ChessBoard chessBoard = chessGame.getChessBoard();
+        final ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
+        outputView.printChessBoard(chessBoardDto);
     }
 
     private Command readMoveCommand(final List<String> movePositions) {
@@ -60,17 +71,6 @@ public class ChessController {
             movePositions.add(commands.get(2));
             return result;
         });
-    }
-
-    private Command readCommand() {
-        final List<String> commands = inputView.readGameCommand();
-        return Command.from(commands.get(0));
-    }
-
-    private void renderChessBoard() {
-        final ChessBoard chessBoard = chessGame.getChessBoard();
-        final ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
-        outputView.printChessBoard(chessBoardDto);
     }
 
     private <T> T repeat(final Supplier<T> function) {

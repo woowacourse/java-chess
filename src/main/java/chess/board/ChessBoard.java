@@ -10,10 +10,7 @@ import chess.piece.Queen;
 import chess.piece.Rook;
 import chess.piece.Team;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -52,8 +49,8 @@ public class ChessBoard {
     }
 
     public void movePiece(final Position from, final Position to) {
-        Piece fromPiece = piecePosition.get(from);
-        Piece toPiece = piecePosition.get(to);
+        final Piece fromPiece = piecePosition.get(from);
+        final Piece toPiece = piecePosition.get(to);
 
         if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
             validateFileAndRank(from, to);
@@ -96,18 +93,18 @@ public class ChessBoard {
     }
 
     private void validateDiagonal(final Position from, final Position to) {
-        List<File> files = File.sliceBetween(from.getFile(), to.getFile());
-        List<Rank> ranks = Rank.sliceBetween(from.getRank(), to.getRank());
+        final List<File> files = File.sliceBetween(from.getFile(), to.getFile());
+        final List<Rank> ranks = Rank.sliceBetween(from.getRank(), to.getRank());
 
         if (files.size() != ranks.size()) {
             return;
         }
 
-        List<Rank> cutRanks = IntStream.range(1, ranks.size() - 1)
+        final List<Rank> cutRanks = IntStream.range(1, ranks.size() - 1)
                 .mapToObj(ranks::get)
                 .collect(Collectors.toList());
 
-        List<File> cutFiles = IntStream.range(1, files.size() - 1)
+        final List<File> cutFiles = IntStream.range(1, files.size() - 1)
                 .mapToObj(files::get)
                 .collect(Collectors.toList());
 
@@ -146,7 +143,7 @@ public class ChessBoard {
         final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
+            final Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
 
             validateBlockedRoute(validationPiece);
         }
@@ -165,7 +162,7 @@ public class ChessBoard {
         final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
+            final Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
             validateBlockedRoute(validationPiece);
         }
     }
@@ -176,17 +173,14 @@ public class ChessBoard {
         }
     }
 
-    // === createBoard ===
     private static void createPawn(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
-            for (final File file : File.values()) {
-                piecePosition.put(new Position(file, Rank.TWO), new Pawn(team));
-            }
+            Arrays.stream(File.values())
+                    .forEach(file -> piecePosition.put(new Position(file, Rank.TWO), new Pawn(team)));
         }
         if (team == Team.BLACK) {
-            for (final File file : File.values()) {
-                piecePosition.put(new Position(file, Rank.SEVEN), new Pawn(team));
-            }
+            Arrays.stream(File.values())
+                    .forEach(file -> piecePosition.put(new Position(file, Rank.SEVEN), new Pawn(team)));
         }
     }
 
