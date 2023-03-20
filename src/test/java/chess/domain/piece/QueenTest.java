@@ -13,7 +13,7 @@ class QueenTest {
 
     @ParameterizedTest
     @CsvSource(value = {"a:1", "h:8", "a:3", "c:1", "e:1", "a:5", "c:8", "h:3"}, delimiter = ':')
-    void should_true반환_when_움직일_수_있는_위치라면(String rank, String file) {
+    void 기물이_움직일_수_있는_위치라면_true반환(String rank, String file) {
         //given
         Position startPosition = Position.of(Rank.from(rank), File.from(file));
         Position endPosition = Position.of(Rank.C, File.THREE);
@@ -28,7 +28,7 @@ class QueenTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:3", "d:6", "h:4"}, delimiter = ':')
-    void should_false반환_when_움직일_수_없는_위치라면(String rank, String file) {
+    void 기물이_움직일_수_없는_위치라면_false반환(String rank, String file) {
         //given
         Position startPosition = Position.of(Rank.from(rank), File.from(file));
         Position endPosition = Position.of(Rank.C, File.THREE);
@@ -40,6 +40,4 @@ class QueenTest {
         //then
         assertThat(actual).isFalse();
     }
-
-
 }

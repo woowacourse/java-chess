@@ -24,7 +24,7 @@ class ChessBoardTest {
     }
 
     @Test
-    void should_체스판을초기화해반환한다_when_create호출시() {
+    void create메서드를_호출하면_체스판을_초기화하여_반환한다() {
         //given
 
         //when
@@ -36,7 +36,7 @@ class ChessBoardTest {
     }
 
     @Test
-    void should_체스_기물을_이동시킨다_when_장애물이_없는_상황에서_이동_명령을_받았을_때() {
+    void 경로에_장애물이_없는_상황에서_이동_명령을_받았을_때_체스_기물을_이동시킨다() {
         //given
         Position startPosition = Position.of(Rank.C, File.TWO);
         Position endPosition = Position.of(Rank.C, File.FOUR);
@@ -59,7 +59,7 @@ class ChessBoardTest {
     class 이동불가 {
 
         @Test
-        void should_체스_기물을_이동시키지못한다_when_장애물이_있는_상황일때() {
+        void 경로에_장애물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
             Position startPosition = Position.of(Rank.A, File.ONE);
             Position endPosition = Position.of(Rank.A, File.FOUR);
@@ -73,7 +73,7 @@ class ChessBoardTest {
         }
 
         @Test
-        void should_체스_기물을_이동시키지못한다_when_도착지에_내_기물이_있는_상황일때() {
+        void 도착지에_내_기물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
             Position startPosition = Position.of(Rank.A, File.ONE);
             Position endPosition = Position.of(Rank.A, File.TWO);
@@ -87,7 +87,7 @@ class ChessBoardTest {
         }
 
         @Test
-        void should_체스_기물을_이동시키지못한다_when_상대방의_기물을_이동시키려고_할_때() {
+        void 상대방의_기물을_이동시키려고_할_때_체스_기물을_이동시키지못한다() {
             //given
             Position startPosition = Position.of(Rank.C, File.SEVEN);
             Position endPosition = Position.of(Rank.C, File.SIX);
@@ -105,7 +105,7 @@ class ChessBoardTest {
     class 공격가능 {
 
         @Test
-        void should_폰을_이동시킨다_when_폰이_공격가능할때() {
+        void 폰이_공격가능할때_폰을_이동시킨다() {
             //given
             Position startPosition = Position.of(Rank.C, File.TWO);
             Position middlePosition = Position.of(Rank.C, File.FOUR);
@@ -123,7 +123,7 @@ class ChessBoardTest {
         }
 
         @Test
-        void should_퀸을_이동시킨다_when_퀸이_공격가능할때() {
+        void 퀸이_공격가능할때_퀸을_이동시킨다() {
             //given
             Position pawnStart = Position.of(Rank.D, File.TWO);
             Position pawnMiddle = Position.of(Rank.D, File.FOUR);
@@ -147,7 +147,7 @@ class ChessBoardTest {
         }
 
         @Test
-        void should_true반환_when_킹이죽었을시() {
+        void 킹이죽었을시_true반환() {
             //given
             Position pawnStart = Position.of(Rank.D, File.TWO);
             Position pawnMiddle = Position.of(Rank.D, File.FOUR);

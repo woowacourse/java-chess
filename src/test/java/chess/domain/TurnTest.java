@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class TurnTest {
 
     @Test
-    void should_white팀을반환한다_when_turn이짝수라면() {
+    void turn이_짝수라면_white팀을_반환한다() {
         //given
         Turn turn = new Turn();
         Team expected = Team.WHITE;
@@ -21,7 +21,7 @@ class TurnTest {
     }
 
     @Test
-    void should_white팀을반환한다_when_turn이홀수라면() {
+    void turn이_홀수라면_black팀을_반환한다() {
         //given
         Turn turn = new Turn();
         Team expected = Team.BLACK;
@@ -33,5 +33,4 @@ class TurnTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
-
 }

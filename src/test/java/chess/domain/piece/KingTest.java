@@ -13,7 +13,7 @@ class KingTest {
 
     @ParameterizedTest
     @CsvSource(value = {"b:2", "b:3", "b:4", "d:2", "d:3", "d:4", "c:4", "c:2"}, delimiter = ':')
-    void should_true반환_when_움직일_수_있는_위치라면(String rank, String file) {
+    void 기물이_움직일_수_있는_위치라면_true반환(String rank, String file) {
         //given
         Position startPosition = Position.of(Rank.C, File.THREE);
         Position endPosition = Position.of(Rank.from(rank), File.from(file));
@@ -28,7 +28,7 @@ class KingTest {
 
     @ParameterizedTest
     @CsvSource(value = {"c:3", "c:5", "a:3"}, delimiter = ':')
-    void should_false반환_when_움직일_수_없는_위치라면(String rank, String file) {
+    void 기물이_움직일_수_없는_위치라면_false반환(String rank, String file) {
         //given
         Position startPosition = Position.of(Rank.from(rank), File.from(file));
         Position endPosition = Position.of(Rank.C, File.THREE);

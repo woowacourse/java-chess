@@ -23,7 +23,7 @@ class ChessGameTest {
     class 게임시작 {
 
         @Test
-        void should_게임을시작한다_when_시작명령이전달되면() {
+        void startNewGame메서드를_호출하면_게임을시작한다() {
             //given
 
             //when

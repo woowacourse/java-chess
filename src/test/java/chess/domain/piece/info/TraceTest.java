@@ -13,9 +13,10 @@ import org.junit.jupiter.api.Test;
 public class TraceTest {
 
     @Nested
-    class 기록추가 {
+    class Log추가 {
+
         @Test
-        void should_새_포지션_정보가_추가된다_when_add메서드를_호출하면() {
+        void add메서드를_호출하면_새_포지션_정보가_추가된다() {
             //given
             Trace trace = new Trace();
 
@@ -23,16 +24,18 @@ public class TraceTest {
             trace.add(new Turn(), Position.of(Rank.A, File.TWO));
 
             //then
-            assertThat(trace).extracting("logs", InstanceOfAssertFactories.collection(Position.class))
-                    .hasSize(1);
+            assertThat(trace).extracting("logs",
+                    InstanceOfAssertFactories.collection(Position.class))
+                .hasSize(1);
         }
     }
 
 
     @Nested
-    class 기록확인 {
+    class Log조회 {
+
         @Test
-        void should_true반환_when_움직인기록이있다면() {
+        void 기물을_움직인_Log가_있다면_true반환() {
             //given
             Trace trace = new Trace();
             trace.add(new Turn(), Position.of(Rank.A, File.TWO));
@@ -45,7 +48,7 @@ public class TraceTest {
         }
 
         @Test
-        void should_false반환_when_움직인기록이없다면() {
+        void 기물을_움직인_Log가_없다면_false반환() {
             //given
             Trace trace = new Trace();
 
