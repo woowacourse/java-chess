@@ -6,6 +6,10 @@ import chess.domain.piece.move.piece.MoveRule;
 import java.util.Objects;
 
 public class Piece {
+    private static final int PAWN_FIRST_MOVE = 1;
+    private static final int WHITE_PAWN_FIRST_MOVE = 1;
+    private static final int BLACK_PAWN_FIRST_MOVE = 6;
+
     private final PieceType pieceType;
     private final CampType campType;
     protected final MoveRule moveRule;
@@ -20,16 +24,26 @@ public class Piece {
         return campType == other.campType;
     }
 
-    public boolean isPawn() {
-        return pieceType == PieceType.PAWN;
-    }
-
     public boolean isSameCamp(final CampType diffType) {
         return campType == diffType;
     }
 
     public boolean canMove(final Position source, final Position target) {
+        if (pieceType == PieceType.PAWN && moveRule.canMove(source, target)) {
+            return validatePawnFirstMove(source, target);
+        }
         return moveRule.canMove(source, target);
+    }
+
+    private boolean validatePawnFirstMove(final Position source, final Position target) {
+        if ((isSameCamp(CampType.WHITE) && source.isRankSame(WHITE_PAWN_FIRST_MOVE)) ||
+                (isSameCamp(CampType.BLACK) && source.isRankSame(BLACK_PAWN_FIRST_MOVE))) {
+            return true;
+        }
+        if (Math.abs(target.calculateRankGap(source)) != PAWN_FIRST_MOVE) {
+            throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
+        }
+        return true;
     }
 
     public boolean canAttack(final Position source, final Position target) {

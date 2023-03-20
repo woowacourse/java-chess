@@ -7,10 +7,6 @@ import chess.domain.piece.Position;
 import java.util.Map;
 
 public final class ChessGame {
-    private static final int WHITE_PAWN_FIRST_MOVE = 1;
-    private static final int BLACK_PAWN_FIRST_MOVE = 6;
-    private static final int PAWN_FIRST_MOVE = 1;
-
     private final ChessBoard chessBoard;
     private CampType currentCamp;
 
@@ -31,10 +27,7 @@ public final class ChessGame {
         if (validateAttack(source, target, piece)) {
             return;
         }
-        if (checkPawnMove(source, target, piece)) {
-            return;
-        }
-        movePiece(source, target, piece);
+        validateMove(source, target, piece);
     }
 
     private void validateObstacle(final Position source, final Position target, final Piece piece) {
@@ -64,24 +57,10 @@ public final class ChessGame {
         return false;
     }
 
-    private boolean checkPawnMove(final Position source, final Position target, final Piece piece) {
-        if (piece.isPawn() && piece.canMove(source, target)) {
-            validatePawnMove(source, target, piece);
-            return true;
-        }
-        return false;
-    }
-
-    private void validatePawnMove(final Position source, final Position target, final Piece piece) {
-        if ((piece.isSameCamp(CampType.WHITE) && source.isRankSame(WHITE_PAWN_FIRST_MOVE)) ||
-                (piece.isSameCamp(CampType.BLACK) && source.isRankSame(BLACK_PAWN_FIRST_MOVE))) {
+    private void validateMove(final Position source, final Position target, final Piece piece) {
+        if (piece.canMove(source, target)) {
             movePiece(source, target, piece);
-            return;
         }
-        if (Math.abs(target.calculateRankGap(source)) != PAWN_FIRST_MOVE) {
-            throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
-        }
-        movePiece(source, target, piece);
     }
 
     private void movePiece(final Position source, final Position target, final Piece piece) {
