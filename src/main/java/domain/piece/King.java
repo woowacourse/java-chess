@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class King extends Piece {
 
-    public static final List<Direction> KING_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
+    private static final List<Direction> KING_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
 
     public King(Color color) {
         super(PieceName.KING, color);

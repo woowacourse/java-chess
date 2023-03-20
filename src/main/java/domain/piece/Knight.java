@@ -16,7 +16,7 @@ public final class Knight extends Piece {
         return isKnightMovablePosition(start.calculateRowGap(end), start.calculateColumnGap(end));
     }
 
-    private static boolean isKnightMovablePosition(int rowGap, int columnGap) {
+    private boolean isKnightMovablePosition(int rowGap, int columnGap) {
         return Math.abs(rowGap) * Math.abs(columnGap) == 2;
     }
 

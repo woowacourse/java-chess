@@ -31,8 +31,7 @@ public final class ChessController {
 
     private GameCommand receiveGameCommand() {
         List<String> userInput = InputView.readUserInput();
-        GameCommand gameCommand = GameCommand.of(userInput.get(0));
-        return gameCommand;
+        return GameCommand.of(userInput.get(0));
     }
 
     private void startGame() {
