@@ -14,8 +14,6 @@ import java.util.List;
 public final class ChessController {
 
     public static final int RANK_SIZE = 8;
-    public static final int FROM_INDEX = 0;
-    public static final int TO_INDEX = 1;
     private ChessBoard chessBoard;
     private GameState state = GameState.READY;
 
@@ -62,10 +60,9 @@ public final class ChessController {
     }
 
     private void movePiece() {
-        final List<String> coordinates = InputView.getCoordinates();
         try {
-            final Coordinate from = Coordinate.of(coordinates.get(FROM_INDEX));
-            final Coordinate to = Coordinate.of(coordinates.get(TO_INDEX));
+            final Coordinate from = Coordinate.of(InputView.getCoordinate());
+            final Coordinate to = Coordinate.of(InputView.getCoordinate());
             chessBoard.move(from, to);
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
