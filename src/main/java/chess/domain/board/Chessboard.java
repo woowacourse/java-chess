@@ -36,6 +36,10 @@ public class Chessboard {
         }
     }
 
+    public void putPiece(Square square, Piece piece) {
+        board.put(square, piece);
+    }
+
     public Piece getPieceAt(Square square) {
         return board.get(square);
     }

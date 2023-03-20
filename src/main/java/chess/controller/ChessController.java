@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.piece.PieceType;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -46,6 +47,8 @@ public class ChessController {
             commands = retryOnInvalidUserInput(this::handleCommand);
 
             commands.ifPresent(command -> movePiece(chessGame, command));
+            commands.ifPresent(command -> checkPromotion(chessGame, command));
+
         } while (commands.isPresent());
     }
 
@@ -68,7 +71,7 @@ public class ChessController {
         Square source = getSquare(command.get(Index.SOURCE_SQUARE.value));
         Square target = getSquare(command.get(Index.TARGET_SQUARE.value));
 
-        chessGame.move(source, target);
+        retryOnInvalidAction(() -> chessGame.move(source, target));
     }
 
     private Square getSquare(String command) {
@@ -78,12 +81,59 @@ public class ChessController {
         return Square.getInstanceOf(file, rank);
     }
 
+    private void checkPromotion(ChessGame chessGame, List<String> command) {
+        Square movedSquare = getSquare(command.get(Index.TARGET_SQUARE.value));
+
+        if (chessGame.canPromotion(movedSquare)) {
+            PieceType pieceType = requestPieceType();
+
+            chessGame.promotePawn(movedSquare, pieceType);
+        }
+    }
+
+    private PieceType requestPieceType() {
+        String input = retryOnInvalidUserInput(inputView::requestPiece);
+
+        return PromotionPiece.renderToPieceType(input);
+    }
+
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
             return request.get();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return retryOnInvalidUserInput(request);
+        }
+    }
+
+    private void retryOnInvalidAction(ActionFunction request) {
+        try {
+            request.run();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+        }
+    }
+
+    private enum PromotionPiece {
+        QUEEN("q", PieceType.QUEEN),
+        BISHOP("b", PieceType.BISHOP),
+        KNIGHT("n", PieceType.KNIGHT),
+        ROOK("r", PieceType.ROOK);
+
+        private final String command;
+        private final PieceType pieceType;
+
+        PromotionPiece(String command, PieceType pieceType) {
+            this.command = command;
+            this.pieceType = pieceType;
+        }
+
+        private static PieceType renderToPieceType(String input) {
+            return Arrays.stream(values())
+                    .filter(value -> value.command.equals(input))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."))
+                    .pieceType;
         }
     }
 

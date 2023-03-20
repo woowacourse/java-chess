@@ -60,6 +60,16 @@ public class InputView {
         }
     }
 
+    public String requestPiece() {
+        System.out.println("Pawn이 Promotion 가능합니다.");
+        System.out.println("[Quuen : q, Bishop : b, Knight : n, Rook : r]을 입력해주세요");
+        String input = scanner.nextLine();
+
+        PromotionPiece.validate(input);
+
+        return input;
+    }
+
     private enum Command {
         START("start"),
         END("end"),
@@ -76,6 +86,26 @@ public class InputView {
                     .filter(value -> value.command.equals(input))
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
+        }
+    }
+
+    private enum PromotionPiece {
+        QUEEN("q"),
+        BISHOP("b"),
+        KNIGHT("n"),
+        ROOK("r");
+
+        private final String command;
+
+        PromotionPiece(String command) {
+            this.command = command;
+        }
+
+        private static void validate(String input) {
+            Arrays.stream(values())
+                    .filter(value -> value.command.equals(input))
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
         }
     }
 

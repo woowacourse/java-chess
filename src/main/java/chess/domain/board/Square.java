@@ -87,6 +87,10 @@ public class Square {
         return rank == Rank.TWO;
     }
 
+    public boolean reachedEndRank() {
+        return rank == Rank.ONE || rank == Rank.EIGHT;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

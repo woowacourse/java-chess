@@ -92,6 +92,24 @@ public class ChessGame {
         return false;
     }
 
+    public void promotePawn(Square currentSquare, PieceType pieceType) {
+        Piece pawn = chessboard.getPieceAt(currentSquare);
+
+        if (pawn.isWhite()) {
+            chessboard.putPiece(currentSquare, pieceType.createPiece(Camp.WHITE));
+            return;
+        }
+
+        chessboard.putPiece(currentSquare, pieceType.createPiece(Camp.BLACK));
+    }
+
+    public boolean canPromotion(Square currentSquare) {
+        Piece piece = chessboard.getPieceAt(currentSquare);
+
+        return piece.getPieceType() == PieceType.PAWN
+                && currentSquare.reachedEndRank();
+    }
+
     public Chessboard getChessboard() {
         return chessboard;
     }
