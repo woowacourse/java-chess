@@ -17,26 +17,25 @@ public class Board {
     }
 
     public void move(Position from, Position to, final Color nextTurn) {
-        validateMoveFromEmpty(from);
-        validateTurn(from, nextTurn);
-
         final Piece currentMovePiece = findPieceFrom(from);
-        Path path = currentMovePiece.searchPathTo(from, to, Optional.ofNullable(findPieceFrom(to)));
+
+        validateMoveFromEmpty(currentMovePiece);
+        validateTurn(currentMovePiece, nextTurn);
+
+        final Path path = currentMovePiece.searchPathTo(from, to, Optional.ofNullable(findPieceFrom(to)));
 
         validateObstacle(path);
         movePiece(from, to);
     }
 
-    private void validateTurn(final Position from, final Color nextTurn) {
-        final Piece currentTurnPiece = findPieceFrom(from);
-
+    private void validateTurn(final Piece currentTurnPiece, final Color nextTurn) {
         if (currentTurnPiece.isDifferentColor(nextTurn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }
 
-    private void validateMoveFromEmpty(final Position from) {
-        if (!chessBoard.containsKey(from)) {
+    private void validateMoveFromEmpty(final Piece piece) {
+        if (piece == null) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
     }
@@ -47,12 +46,12 @@ public class Board {
         }
     }
 
-    private void movePiece(Position from, Position to) {
+    private void movePiece(final Position from, final Position to) {
         final Piece movingPiece = chessBoard.remove(from);
         chessBoard.put(to, movingPiece);
     }
 
-    private Piece findPieceFrom(Position position) {
+    private Piece findPieceFrom(final Position position) {
         return chessBoard.get(position);
     }
 
