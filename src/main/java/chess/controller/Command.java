@@ -2,7 +2,7 @@ package chess.controller;
 
 import java.util.Arrays;
 
-public enum Command {
+enum Command {
     START("start"),
     MOVE("move"),
     END("end"),
