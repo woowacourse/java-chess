@@ -6,6 +6,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +15,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class QueenTest {
 
+    private Piece blackTarget;
+    private Piece emptyTarget;
+
+    @BeforeEach
+    void setUp() {
+        blackTarget = new Pawn(Team.BLACK);
+        emptyTarget = new Empty(Team.EMPTY);
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"4:3", "5:4", "3:5"}, delimiter = ':')
     @DisplayName("퀸은 상하좌우, 대각선으로 움직일 수 있다.")
@@ -21,7 +31,7 @@ class QueenTest {
         Piece queen = new Queen(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
-        assertThat(queen.isMovable(source, target)).isTrue();
+        assertThat(queen.isMovable(source, target, emptyTarget)).isTrue();
     }
 
     @ParameterizedTest
@@ -31,7 +41,17 @@ class QueenTest {
         Piece queen = new Queen(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
-        assertThat(queen.isMovable(source, target)).isFalse();
+        assertThat(queen.isMovable(source, target, emptyTarget)).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"2:3", "7:5", "3:1"}, delimiter = ':')
+    @DisplayName("퀸은 타겟 지점에 상대팀이 있으면 움직일 수 없다.")
+    void isUnmovableToOppositeTeam(int rank, int file) {
+        Piece queen = new Queen(Team.WHITE);
+        Position source = new Position(4, 4);
+        Position target = new Position(rank, file);
+        assertThat(queen.isMovable(source, target, blackTarget)).isFalse();
     }
 
     @ParameterizedTest

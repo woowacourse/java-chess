@@ -14,21 +14,36 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        if (team == Team.BLACK) {
-            return isBlackMovable(source, target);
+    public boolean isMovable(Position source, Position target, Piece pieceInTarget) {
+        if (this.isSameTeam(pieceInTarget)) {
+            return false;
         }
-        return isWhiteMovable(source, target);
+        if (team == Team.BLACK) {
+            return isBlackMovable(source, target, pieceInTarget);
+        }
+        return isWhiteMovable(source, target, pieceInTarget);
     }
 
-    private boolean isBlackMovable(Position source, Position target) {
-        return MoveStrategy.BLACK_PAWN.isMovable(source, target)
-                || (source.isSameRank(BLACK_INIT_RANK) && MoveStrategy.BLACK_PAWN_FIRST.isMovable(source, target));
+    private boolean isBlackMovable(Position source, Position target, Piece pieceInTarget) {
+        if (source.isSameRank(BLACK_INIT_RANK)) {
+            return (MoveStrategy.BLACK_PAWN_FIRST.isMovable(source, target) && pieceInTarget.isSameTeam(Team.EMPTY))
+                    || (MoveStrategy.BLACK_PAWN_CROSS.isMovable(source, target) && pieceInTarget.isSameTeam(Team.WHITE));
+        }
+        if (pieceInTarget.isSameTeam(Team.WHITE)) {
+            return MoveStrategy.BLACK_PAWN_CROSS.isMovable(source, target);
+        }
+        return MoveStrategy.BLACK_PAWN_STRAIGHT.isMovable(source, target);
     }
 
-    private boolean isWhiteMovable(Position source, Position target) {
-        return MoveStrategy.WHITE_PAWN.isMovable(source, target)
-                || (source.isSameRank(WHITE_INIT_RANK) && MoveStrategy.WHITE_PAWN_FIRST.isMovable(source, target));
+    private boolean isWhiteMovable(Position source, Position target, Piece pieceInTarget) {
+        if (source.isSameRank(WHITE_INIT_RANK)) {
+            return (MoveStrategy.WHITE_PAWN_FIRST.isMovable(source, target) && pieceInTarget.isSameTeam(Team.EMPTY))
+                    || (MoveStrategy.WHITE_PAWN_CROSS.isMovable(source, target) && pieceInTarget.isSameTeam(Team.BLACK));
+        }
+        if (pieceInTarget.isSameTeam(Team.BLACK)) {
+            return MoveStrategy.WHITE_PAWN_CROSS.isMovable(source, target);
+        }
+        return MoveStrategy.WHITE_PAWN_STRAIGHT.isMovable(source, target);
     }
 
     @Override
@@ -37,10 +52,5 @@ public class Pawn extends Piece {
             return Math.abs(fileDiff);
         }
         return Math.abs(fileDiff + rankDiff);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 }

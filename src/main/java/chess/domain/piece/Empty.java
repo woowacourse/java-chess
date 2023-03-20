@@ -1,23 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
 
-public class Rook extends Piece {
+public class Empty extends Piece {
 
-    public Rook(Team team) {
+    public Empty(Team team) {
         super(team);
     }
 
     @Override
     public boolean isMovable(Position source, Position target, Piece pieceInTarget) {
-        return MoveStrategy.ROOK.isMovable(source, target)
-                && !this.isSameTeam(pieceInTarget);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected int calculateCount(int fileDiff, int rankDiff) {
-        return Math.abs(fileDiff + rankDiff);
+        throw new UnsupportedOperationException();
     }
 }

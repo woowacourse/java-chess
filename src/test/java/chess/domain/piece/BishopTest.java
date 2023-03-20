@@ -6,6 +6,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +15,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
+    private Piece blackTarget;
+    private Piece emptyTarget;
+
+    @BeforeEach
+    void setUp() {
+        blackTarget = new Pawn(Team.BLACK);
+        emptyTarget = new Empty(Team.EMPTY);
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"3:3", "5:5", "3:5"}, delimiter = ':')
     @DisplayName("비숍은 대각선으로 움직일 수 있다.")
@@ -21,7 +31,7 @@ class BishopTest {
         Piece bishop = new Bishop(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
-        assertThat(bishop.isMovable(source, target)).isTrue();
+        assertThat(bishop.isMovable(source, target, emptyTarget)).isTrue();
     }
 
     @ParameterizedTest
@@ -31,7 +41,17 @@ class BishopTest {
         Piece bishop = new Bishop(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
-        assertThat(bishop.isMovable(source, target)).isFalse();
+        assertThat(bishop.isMovable(source, target, emptyTarget)).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"3:3", "5:5", "3:5"}, delimiter = ':')
+    @DisplayName("비숍은 타겟 지점에 상대팀이 있으면 움직일 수 없다.")
+    void isUnmovableToOppositeTeam(int rank, int file) {
+        Piece bishop = new Bishop(Team.WHITE);
+        Position source = new Position(4, 4);
+        Position target = new Position(rank, file);
+        assertThat(bishop.isMovable(source, target, blackTarget)).isTrue();
     }
 
     @ParameterizedTest

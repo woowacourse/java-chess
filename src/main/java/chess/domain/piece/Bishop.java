@@ -11,8 +11,9 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return MoveStrategy.BISHOP.isMovable(source, target);
+    public boolean isMovable(Position source, Position target, Piece pieceInTarget) {
+        return MoveStrategy.BISHOP.isMovable(source, target)
+                && !this.isSameTeam(pieceInTarget);
     }
 
     @Override

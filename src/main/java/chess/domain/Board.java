@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,14 @@ public class Board {
 
     public static Board init() {
         Map<Position, Piece> setting = new HashMap<>();
-        
+
         for (PieceSettings pieceSetting : PieceSettings.values()) {
             setting.put(pieceSetting.getPosition(), pieceSetting.getPiece());
+        }
+        for (int rank = 3; rank <= 6; rank++) {
+            for (int file = 1; file <= 8; file++) {
+                setting.put(new Position(rank, file), new Empty(Team.EMPTY));
+            }
         }
         return new Board(setting);
     }
@@ -27,28 +33,19 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        validateSource(source);
         validateMovable(source, target);
+
         Piece sourcePiece = board.get(source);
-        if (sourcePiece.isPawn()) {
-            validatePawnMoving(source, target);
-        }
-        validateSameTeam(source, target);
         validatePathBeforeTarget(sourcePiece.findPath(source, target));
 
         movePiece(source, target);
     }
 
-    private void validateSource(Position source) {
-        if (!isTherePiece(source)) {
-            throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
-        }
-    }
-
     private void validateMovable(Position source, Position target) {
         Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
 
-        if (!sourcePiece.isMovable(source, target)) {
+        if (!sourcePiece.isMovable(source, target, targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
     }
@@ -60,42 +57,25 @@ public class Board {
     }
 
     private void validateBlocked(List<Position> path, int index) {
-        if (isTherePiece(path.get(index))) {
+        if (!isEmptyPiece(path.get(index))) {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 있습니다.");
         }
     }
 
-    private void validateSameTeam(Position source, Position target) {
-        if (!isTherePiece(target)) {
-            return;
-        }
-
+    private void movePiece(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        if (targetPiece.isSameTeam(sourcePiece)) {
-            throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 팀 기물이 있습니다.");
+        board.put(target, sourcePiece);
+        if (!targetPiece.isSameTeam(Team.EMPTY)) {
+            board.put(source, new Empty(Team.EMPTY));
+            return;
         }
+        board.put(source, targetPiece);
     }
 
-    private void validatePawnMoving(Position source, Position target) {
-        if (!isTherePiece(target) && !MoveStrategy.PAWN_STRAIGHT.isMovable(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 상대 기물이 없을 경우, 대각선으로 움직일 수 없습니다.");
-        }
-
-        if (isTherePiece(target) && MoveStrategy.PAWN_STRAIGHT.isMovable(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 기물이 있는 곳으로 직진할 수 없습니다.");
-        }
-    }
-
-    private void movePiece(Position source, Position target) {
-        Piece piece = board.get(source);
-        board.remove(source);
-        board.put(target, piece);
-    }
-
-    public boolean isTherePiece(Position source) {
-        return board.containsKey(source);
+    public boolean isEmptyPiece(Position source) {
+        return board.get(source).getClass() == Empty.class;
     }
 
     public Map<Position, Piece> getBoard() {

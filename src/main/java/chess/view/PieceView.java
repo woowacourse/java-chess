@@ -9,7 +9,8 @@ public enum PieceView {
     ROOK("R", "r"),
     BISHOP("B", "b"),
     KNIGHT("N", "n"),
-    PAWN("P", "p");
+    PAWN("P", "p"),
+    EMPTY(".", ".");
 
     private final String black;
     private final String white;

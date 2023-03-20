@@ -11,8 +11,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return MoveStrategy.QUEEN.isMovable(source, target);
+    public boolean isMovable(Position source, Position target, Piece pieceInTarget) {
+        return MoveStrategy.QUEEN.isMovable(source, target)
+                && !this.isSameTeam(pieceInTarget);
     }
 
     @Override

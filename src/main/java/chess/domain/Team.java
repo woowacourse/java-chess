@@ -3,7 +3,8 @@ package chess.domain;
 public enum Team {
 
     BLACK,
-    WHITE;
+    WHITE,
+    EMPTY;
 
     public boolean isSameTeam(Team team) {
         return this == team;

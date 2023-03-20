@@ -11,11 +11,17 @@ public class ChessGame {
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
-        if (board.isTherePiece(source)) {
-            validateTurn(source);
-        }
+        validateEmpty(source);
+        validateTurn(source);
+        validateTurn(source);
         board.move(source, target);
         turn = turn.reverse();
+    }
+
+    private void validateEmpty(Position source) {
+        if (board.isEmptyPiece(source)) {
+            throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
+        }
     }
 
     private void validateTurn(Position source) {

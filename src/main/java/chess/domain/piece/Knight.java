@@ -12,8 +12,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return MoveStrategy.KNIGHT.isMovable(source, target);
+    public boolean isMovable(Position source, Position target, Piece pieceInTarget) {
+        return MoveStrategy.KNIGHT.isMovable(source, target)
+                && !this.isSameTeam(pieceInTarget);
     }
 
     @Override

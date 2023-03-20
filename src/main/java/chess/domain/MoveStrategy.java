@@ -10,11 +10,12 @@ public enum MoveStrategy {
     KING((fileDiff, rankDiff) -> Math.abs(fileDiff) <= 1 && Math.abs(rankDiff) <= 1),
     QUEEN((fileDiff, rankDiff) -> ROOK.moveStrategy.apply(fileDiff, rankDiff)
             || BISHOP.moveStrategy.apply(fileDiff, rankDiff)),
-    BLACK_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == -2),
-    BLACK_PAWN((fileDiff, rankDiff) -> rankDiff == -1 && Math.abs(fileDiff) <= 1),
-    WHITE_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff == 2),
-    WHITE_PAWN((fileDiff, rankDiff) -> rankDiff == 1 && Math.abs(fileDiff) <= 1),
-    PAWN_STRAIGHT(ROOK.moveStrategy);
+    BLACK_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff >= -2 && rankDiff < 0),
+    BLACK_PAWN_CROSS((fileDiff, rankDiff) -> rankDiff == -1 && Math.abs(fileDiff) == 1),
+    BLACK_PAWN_STRAIGHT((fileDiff, rankDiff) -> rankDiff == -1 && fileDiff == 0),
+    WHITE_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff <= 2 && rankDiff > 0),
+    WHITE_PAWN_CROSS((fileDiff, rankDiff) -> rankDiff == 1 && Math.abs(fileDiff) == 1),
+    WHITE_PAWN_STRAIGHT((fileDiff, rankDiff) -> rankDiff == 1 && fileDiff == 0);
 
     private final BiFunction<Integer, Integer, Boolean> moveStrategy;
 

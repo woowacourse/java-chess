@@ -13,7 +13,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Position source, Position target);
+    public abstract boolean isMovable(Position source, Position target, Piece pieceInTarget);
 
     protected abstract int calculateCount(int fileDiff, int rankDiff);
 
@@ -23,14 +23,6 @@ public abstract class Piece {
 
     public boolean isSameTeam(Team team) {
         return this.team.isSameTeam(team);
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public Team getTeam() {
-        return team;
     }
 
     public List<Position> findPath(Position source, Position target) {
@@ -53,5 +45,9 @@ public abstract class Piece {
         }
 
         return path;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

@@ -7,6 +7,7 @@ import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,13 +16,24 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
+    private Piece whiteTarget;
+    private Piece blackTarget;
+    private Piece emptyTarget;
+
+    @BeforeEach
+    void setUp() {
+        whiteTarget = new Pawn(Team.WHITE);
+        blackTarget = new Pawn(Team.BLACK);
+        emptyTarget = new Empty(Team.EMPTY);
+    }
+
     @Test
     @DisplayName("흰팀 폰은 처음 움직일 때(rank 2일때) rank가 증가하는 방향으로 최대 2칸 움직일 수 있다.")
     void isMovableWhiteFirstTime() {
         Piece pawn = new Pawn(Team.WHITE);
         Position source = new Position(2, 4);
         Position target = new Position(4, 4);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isTrue();
     }
 
     @Test
@@ -30,7 +42,7 @@ class PawnTest {
         Piece pawn = new Pawn(Team.BLACK);
         Position source = new Position(7, 4);
         Position target = new Position(5, 4);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isTrue();
     }
 
     @Test
@@ -39,7 +51,7 @@ class PawnTest {
         Piece pawn = new Pawn(Team.WHITE);
         Position source = new Position(3, 4);
         Position target = new Position(5, 4);
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isFalse();
     }
 
     @Test
@@ -48,25 +60,43 @@ class PawnTest {
         Piece pawn = new Pawn(Team.BLACK);
         Position source = new Position(6, 4);
         Position target = new Position(4, 4);
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isFalse();
     }
 
     @Test
-    @DisplayName("흰팀 폰은 위 대각선으로 한 칸 움직일 수 있다.")
+    @DisplayName("흰팀 폰은 상대팀이 있으면 위 대각선으로 한 칸 움직일 수 있다.")
     void isCrossMovableWhite() {
         Piece pawn = new Pawn(Team.WHITE);
         Position source = new Position(2, 4);
         Position target = new Position(3, 5);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target, blackTarget)).isTrue();
     }
 
     @Test
-    @DisplayName("검은팀 폰은 아래 대각선으로 한 칸 움직일 수 있다.")
+    @DisplayName("검은팀 폰은 상대팀이 있으면 아래 대각선으로 한 칸 움직일 수 있다.")
     void isCrossMovableBlack() {
         Piece pawn = new Pawn(Team.BLACK);
         Position source = new Position(6, 4);
         Position target = new Position(5, 3);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target, whiteTarget)).isTrue();
+    }
+
+    @Test
+    @DisplayName("흰팀 폰은 상대팀이 없으면 위 일직선으로 한 칸 움직일 수 있다.")
+    void isStraightMovableWhite() {
+        Piece pawn = new Pawn(Team.WHITE);
+        Position source = new Position(2, 4);
+        Position target = new Position(3, 4);
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isTrue();
+    }
+
+    @Test
+    @DisplayName("검은팀 폰은 상대팀이 없으면 아래 일직선으로 한 칸 움직일 수 있다.")
+    void isStraightMovableBlack() {
+        Piece pawn = new Pawn(Team.BLACK);
+        Position source = new Position(6, 4);
+        Position target = new Position(5, 4);
+        assertThat(pawn.isMovable(source, target, emptyTarget)).isTrue();
     }
 
     @Test
@@ -77,8 +107,8 @@ class PawnTest {
         Position backTarget = new Position(1, 4);
         Position besideTarget = new Position(2, 5);
         Assertions.assertAll(
-                () -> assertThat(pawn.isMovable(source, backTarget)).isFalse(),
-                () -> assertThat(pawn.isMovable(source, besideTarget)).isFalse()
+                () -> assertThat(pawn.isMovable(source, backTarget, emptyTarget)).isFalse(),
+                () -> assertThat(pawn.isMovable(source, besideTarget, emptyTarget)).isFalse()
         );
     }
 
@@ -90,8 +120,8 @@ class PawnTest {
         Position backTarget = new Position(7, 4);
         Position besideTarget = new Position(6, 3);
         Assertions.assertAll(
-                () -> assertThat(pawn.isMovable(source, backTarget)).isFalse(),
-                () -> assertThat(pawn.isMovable(source, besideTarget)).isFalse()
+                () -> assertThat(pawn.isMovable(source, backTarget, emptyTarget)).isFalse(),
+                () -> assertThat(pawn.isMovable(source, besideTarget, emptyTarget)).isFalse()
         );
     }
 
