@@ -1,24 +1,24 @@
 package domain;
 
-import domain.piece.LocationInfo;
+import domain.piece.PieceLocations;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import java.util.List;
 
 public class ChessBoard {
 
-    private final LocationInfo locationInfo;
+    private final PieceLocations pieceLocations;
 
     public ChessBoard() {
-        locationInfo = new LocationInfo();
+        pieceLocations = new PieceLocations();
     }
 
     public Piece find(Square square) {
-        return locationInfo.find(square);
+        return pieceLocations.find(square);
     }
 
     public void move(Square src, Square dest) {
-        Piece piece = locationInfo.find(src);
+        Piece piece = pieceLocations.find(src);
         validateNotExist(piece);
 
         List<Square> routes = piece.findRoutes(src, dest);
@@ -58,14 +58,14 @@ public class ChessBoard {
     }
 
     private boolean canKill(Square dest, Piece piece, Square route) {
-        return route == dest && hasPiece(route) && locationInfo.find(dest).isDifferentTeam(piece);
+        return route == dest && hasPiece(route) && pieceLocations.find(dest).isDifferentTeam(piece);
     }
 
     private void go(Square src, Square dest, Piece piece, List<Square> routes) {
         for (Square route : routes) {
             validateSameTeamNoKill(dest, piece, route);
         }
-        locationInfo.update(src, dest);
+        pieceLocations.update(src, dest);
     }
 
     private void validateSameTeamNoKill(Square dest, Piece piece, Square route) {
@@ -75,6 +75,6 @@ public class ChessBoard {
     }
 
     private boolean hasPiece(Square route) {
-        return locationInfo.containsKey(route);
+        return pieceLocations.containsKey(route);
     }
 }
