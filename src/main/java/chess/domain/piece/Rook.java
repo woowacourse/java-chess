@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.MoveRange;
 import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
 
@@ -14,10 +15,7 @@ public class Rook extends Piece {
         if (source.equals(destination)) {
             return false;
         }
-        int diffFile = destination.calculateFileDistance(source);
-        int diffRank = destination.calculateRankDistance(source);
-
-        return (diffFile * diffRank == 0);
+        return MoveRange.CROSS.validate(source,destination);
     }
 
     @Override

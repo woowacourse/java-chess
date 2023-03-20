@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.MoveRange;
 import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
 
@@ -14,10 +15,8 @@ public class Queen extends Piece {
         if (source.equals(destination)) {
             return false;
         }
-        int diffFile = destination.calculateFileDistance(source);
-        int diffRank = destination.calculateRankDistance(source);
-
-        return (Math.abs(diffFile) == Math.abs(diffRank)) || (diffFile * diffRank == 0);
+        return MoveRange.CROSS.validate(source, destination)
+            || MoveRange.DIAGONAL.validate(source, destination);
     }
 
     @Override
