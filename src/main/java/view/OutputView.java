@@ -4,21 +4,26 @@ import domain.piece.Piece;
 import domain.piece.Position;
 import domain.piece.Rank;
 import domain.piece.Side;
-
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     public void printChessBoard(Map<Position, Piece> chessBoard) {
         Rank currentRank = Rank.EIGHT;
         for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
-            if (!currentRank.equals(positionPieceEntry.getKey().getRank())) {
-                currentRank = currentRank.getPrevious();
-                System.out.println();
-            }
+            currentRank = moveNextRankIfLast(currentRank, positionPieceEntry);
             System.out.print(positionPieceEntry.getValue().getCategory().getPieceValue());
         }
         System.out.println();
         System.out.println();
+    }
+
+    private static Rank moveNextRankIfLast(Rank currentRank, Entry<Position, Piece> positionPieceEntry) {
+        if (!currentRank.equals(positionPieceEntry.getKey().getRank())) {
+            currentRank = currentRank.getPrevious();
+            System.out.println();
+        }
+        return currentRank;
     }
 
     public void printGameGuideMessage() {
