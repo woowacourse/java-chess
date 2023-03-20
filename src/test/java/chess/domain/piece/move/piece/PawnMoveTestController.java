@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PawnMoveTest {
+public class PawnMoveTestController {
 
     @Test
     @DisplayName("source의 rank 위치보다 target의 rank 위치가 더 클 때 위로 이동할 수 있으면 true를 반환한다.")

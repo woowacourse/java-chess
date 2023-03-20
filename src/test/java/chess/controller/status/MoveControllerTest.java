@@ -15,17 +15,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class MoveTest {
+class MoveControllerTest {
 
     @Test
     @DisplayName(value = "게임이 움직임 상태일 때 start를 입력하면 예외가 발생한다.")
     void checkCommandStart() {
         // given
-        final Move move = new Move(new ChessGame(), CampType.WHITE);
+        final MoveController moveController = new MoveController(new ChessGame(), CampType.WHITE);
         final Command command = new Command(CommandType.START, List.of("start"));
 
         // when, then
-        assertThatThrownBy(() -> move.checkCommand(command, () -> {
+        assertThatThrownBy(() -> moveController.checkCommand(command, () -> {
         }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이미 시작이 완료되었습니다.");
@@ -35,27 +35,27 @@ class MoveTest {
     @DisplayName(value = "게임이 움직임 상태일 때 end를 입력하면 게임이 종료된다.")
     void checkCommandEnd() {
         // given
-        final Move move = new Move(new ChessGame(), CampType.WHITE);
+        final MoveController moveController = new MoveController(new ChessGame(), CampType.WHITE);
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = move.checkCommand(command, () -> {
+        Status status = moveController.checkCommand(command, () -> {
         });
 
         // then
         assertThat(status)
-                .isInstanceOf(End.class);
+                .isInstanceOf(EndController.class);
     }
 
     @ParameterizedTest(name = "게임이 움직임 상태일 때 올바르지 않은 명령어 형식을 입력하면 예외가 발생한다.")
     @ValueSource(strings = {"move", "move a2", "", " move ", "move a2 a3 a5", "move a2a3"})
     void checkCommandValidate(final String commands) {
         // given
-        final Move move = new Move(new ChessGame(), CampType.WHITE);
+        final MoveController moveController = new MoveController(new ChessGame(), CampType.WHITE);
         final Command command = new Command(CommandType.MOVE, Arrays.asList(commands.split(" ")));
 
         // when, then
-        assertThatThrownBy(() -> move.checkCommand(command, () -> {
+        assertThatThrownBy(() -> moveController.checkCommand(command, () -> {
         }))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("'move source위치 target위치 - 예. move b2 b3'와 같은 형태로 입력해 주세요.");
@@ -65,10 +65,10 @@ class MoveTest {
     @DisplayName(value = "게임이 움직임 상태일 때 실행 중인지 체크하면 true 반환한다")
     void isRun() {
         // given
-        final Move move = new Move(new ChessGame(), CampType.WHITE);
+        final MoveController moveController = new MoveController(new ChessGame(), CampType.WHITE);
 
         // when
-        boolean isRun = move.isRun();
+        boolean isRun = moveController.isRun();
 
         // then
         assertThat(isRun)

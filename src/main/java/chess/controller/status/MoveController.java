@@ -8,11 +8,11 @@ import chess.domain.piece.PositionConverter;
 
 import java.util.List;
 
-public final class Move implements Status {
+public final class MoveController implements Status {
     private final ChessGame chessGame;
     private final CampType campType;
 
-    public Move(final ChessGame chessGame, final CampType campType) {
+    public MoveController(final ChessGame chessGame, final CampType campType) {
         this.chessGame = chessGame;
         this.campType = campType;
     }
@@ -24,7 +24,7 @@ public final class Move implements Status {
         final Position target = PositionConverter.convert(commands.get(2));
         chessGame.setUp(source, target, campType);
         runnable.run();
-        return new Move(chessGame, campType.changeTurn());
+        return new MoveController(chessGame, campType.changeTurn());
     }
 
     private void validateCommand(final Command command) {
@@ -39,7 +39,7 @@ public final class Move implements Status {
             throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
         }
         if (command.isEnd()) {
-            return new End();
+            return new EndController();
         }
         return move(command, runnable);
     }

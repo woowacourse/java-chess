@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class KingMoveTest {
+class KingMoveTestController {
 
     @ParameterizedTest(name = "source에서 target으로 킹이 이동할 수 있으면 true를 반환한다.")
     @CsvSource(value = {"0:1", "1:0", "1:2", "2:1", "0:2", "0:0", "2:0", "2:2"}, delimiter = ':')

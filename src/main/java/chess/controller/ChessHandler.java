@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.status.Start;
+import chess.controller.status.StartController;
 import chess.controller.status.Status;
 import chess.domain.chess.ChessGame;
 import chess.view.InputView;
@@ -9,7 +9,7 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public final class ChessController {
+public final class ChessHandler {
 
     public void run() {
         OutputView.printStartMessage();
@@ -18,7 +18,7 @@ public final class ChessController {
     }
 
     private void start(final ChessGame chessGame) {
-        Status gameStatus = new Start(chessGame);
+        Status gameStatus = new StartController(chessGame);
         while (gameStatus.isRun()) {
             gameStatus = play(chessGame, gameStatus);
         }
