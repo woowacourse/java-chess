@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.Position;
 import chess.domain.dto.res.PiecesResponse;
 import chess.domain.Pieces;
 import chess.domain.Player;
@@ -16,7 +15,7 @@ public final class ChessGameController {
         Players players = initializeChessBoard();
         List<String> command;
         while (true) {
-            command = InputView.getCommand();
+            command = InputView.getCommands();
             if(command.get(0).equals("end")) {
                 break;
             }
@@ -27,13 +26,14 @@ public final class ChessGameController {
                 players.movePiece(inputMovablePiece, inputTargetPosition);
                 OutputView.printChessBoardStatus(new PiecesResponse(players.getWhitePlayer(), players.getBlackPlayer()));
             } catch (IllegalArgumentException e) {
+                e.printStackTrace();
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
 
     }
 
-    private Players initializeChessGame() {
+    private Players initializeChessBoard() {
         Pieces whitePieces = Pieces.createWhitePieces();
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
 

@@ -17,7 +17,9 @@ public class KnightStrategy implements PieceStrategy {
             throw new IllegalArgumentException("나이트가 움직일 수 있는 곳이 아닙니다.");
         }
     }
+
     boolean isValid(int rankDistance, int fileDistance) {
         return rankDistance == 1 && fileDistance == 2 || rankDistance == 2 && fileDistance == 1;
     }
+
 }

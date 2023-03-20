@@ -4,20 +4,20 @@ import java.util.List;
 
 public class Player {
 
-    private final String color;
+    private final Color color;
     private final Pieces pieces;
 
-    private Player(final String color, final Pieces pieces) {
+    private Player(final Color color, final Pieces pieces) {
         this.color = color;
         this.pieces = pieces;
     }
 
     public static Player fromWhitePlayer(final Pieces pieces) {
-        return new Player("white", pieces);
+        return new Player(Color.WHITE, pieces);
     }
 
     public static Player fromBlackPlayer(final Pieces pieces) {
-        return new Player("black", pieces);
+        return new Player(Color.BLACK, pieces);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Player {
         return pieces.getPieces();
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -47,12 +47,8 @@ public class Player {
     public Position movePieceByInput(
             final List<Position> allPosition,
             final Position findPosition,
-            final String inputTargetPosition
+            final Position targetPosition
     ) {
-        char file = inputTargetPosition.charAt(0);
-        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1))) - 1;
-        Position targetPosition = Position.from(rank, file);
-
         if (pieces.hasPosition(targetPosition)) {
             throw new IllegalArgumentException("상대 기물 위치로만 이동할 수 있습니다.");
         }

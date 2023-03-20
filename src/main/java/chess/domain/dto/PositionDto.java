@@ -10,8 +10,8 @@ public class PositionDto {
     private final char file;
 
     public PositionDto(Position position) {
-        this.rank = position.getRank();
-        this.file = position.getFile();
+        this.rank = position.getRankValue();
+        this.file = position.getFileValue();
     }
 
     public int getRank() {

@@ -1,5 +1,6 @@
 package chess.domain.strategy.pawn;
 
+import chess.domain.Color;
 import chess.domain.Pieces;
 import chess.domain.Player;
 import chess.domain.Players;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static chess.domain.Color.*;
+import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,7 +33,7 @@ class PawnStrategyTest {
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
         request = MoveRequest.from(
                 players.getAllPosition(),
-                "white",
+                WHITE,
                 new PositionDto(Position.from(1, 'a')),
                 new PositionDto(Position.from(3, 'a'))
         );

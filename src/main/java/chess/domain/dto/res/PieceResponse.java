@@ -1,6 +1,7 @@
 package chess.domain.dto.res;
 
 import chess.domain.Piece;
+import chess.domain.Color;
 
 public class PieceResponse {
 
@@ -8,7 +9,7 @@ public class PieceResponse {
     private final char file;
     private final char name;
 
-    public PieceResponse(Piece piece, String color) {
+    public PieceResponse(Piece piece, Color color) {
         this.rank = piece.getRank();
         this.file = piece.getFile();
         this.name = piece.getName(color);

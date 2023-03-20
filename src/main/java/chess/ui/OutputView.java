@@ -26,6 +26,8 @@ public final class OutputView {
         for (int rank = FIRST_FILE_OF_BLACK; rank >= FIRST_FILE_OF_WHITE; rank--) {
             printChessBoardByRankAndFile(piecesResponse, rank);
         }
+
+        System.out.println("\nabcdefgh");
         System.out.println(System.lineSeparator());
     }
 
@@ -33,6 +35,7 @@ public final class OutputView {
         for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
             printChessBoard(piecesResponse, rank, file);
         }
+        System.out.print(" " + (rank + 1));
         System.out.println();
     }
 

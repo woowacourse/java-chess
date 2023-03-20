@@ -1,11 +1,15 @@
 package chess.domain.strategy.pawn;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 
 import java.util.List;
+
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 
 public class PawnStrategy implements PieceStrategy {
 
@@ -25,7 +29,7 @@ public class PawnStrategy implements PieceStrategy {
         judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
     }
 
-    private void judgeColor(String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private void judgeColor(Color movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (isWhitePiece(movablePieceColor)) {
             validateWhiteMoveFront(movablePiecePosition, targetPosition);
         }
@@ -72,15 +76,15 @@ public class PawnStrategy implements PieceStrategy {
 
     private boolean canMoveWhitePosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
         validateWhiteMoveBackWard(movablePiecePosition, targetPosition);
-        return moveDistanceIsTwoStep("white", movablePiecePosition, targetPosition);
+        return moveDistanceIsTwoStep(WHITE, movablePiecePosition, targetPosition);
     }
 
     private boolean canMoveBlackPosition(PositionDto movablePiecePosition, PositionDto targetPosition) {
         validateBlackMoveBackWard(movablePiecePosition, targetPosition);
-        return moveDistanceIsTwoStep("black", movablePiecePosition, targetPosition);
+        return moveDistanceIsTwoStep(BLACK, movablePiecePosition, targetPosition);
     }
 
-    private boolean moveDistanceIsTwoStep(String color, PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private boolean moveDistanceIsTwoStep(Color color, PositionDto movablePiecePosition, PositionDto targetPosition) {
         int rankDistance = getRankDistance(targetPosition.getRank(), movablePiecePosition.getRank());
         if (rankDistance == 2) {
             return canMoveTwoStep(color, movablePiecePosition);
@@ -91,7 +95,7 @@ public class PawnStrategy implements PieceStrategy {
         return true;
     }
 
-    private boolean canMoveTwoStep(String color, PositionDto movablePiecePosition) {
+    private boolean canMoveTwoStep(Color color, PositionDto movablePiecePosition) {
         if (isWhitePiece(color)) {
             return validateWhiteFirstStep(movablePiecePosition.getRank());
         }
@@ -127,12 +131,12 @@ public class PawnStrategy implements PieceStrategy {
         throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
-    private boolean isWhitePiece(String color) {
-        return color.equals("white");
+    private boolean isWhitePiece(Color color) {
+        return color.isWhite();
     }
 
-    private boolean isBlackPiece(String color) {
-        return color.equals("black");
+    private boolean isBlackPiece(Color color) {
+        return color.isBlack();
     }
 
     private int getRankDistance(int targetRank, int movableRank) {

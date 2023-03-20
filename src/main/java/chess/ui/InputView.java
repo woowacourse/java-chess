@@ -19,29 +19,29 @@ public final class InputView {
         String inputCommand;
         try {
             inputCommand = SCANNER.nextLine();
-            validateInputCommand(inputCommand);
-            return isInputCommandStart(inputCommand);
+            return isNotInputCommandStart(inputCommand);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getStartCommandResult();
         }
     }
 
+    private static boolean isNotInputCommandStart(final String inputCommand) {
+        validateInputCommand(inputCommand);
+        return inputCommand.equals("start");
+    }
+
     private static void validateInputCommand(final String inputCommand) {
-        if (!isInputCommandStart(inputCommand) && !isInputCommandEnd(inputCommand)) {
+        if (!inputCommand.equals("start") && isNotInputCommandEnd(inputCommand)) {
             throw new IllegalArgumentException("start 또는 end만 입력할 수 있습니다.");
         }
     }
 
-    private static boolean isInputCommandStart(final String inputCommand) {
-        return inputCommand.equals("start");
+    private static boolean isNotInputCommandEnd(final String inputCommand) {
+        return !inputCommand.equals("end");
     }
 
-    private static boolean isInputCommandEnd(final String inputCommand) {
-        return inputCommand.equals("end");
-    }
-
-    public static List<String> getCommand() {
+    public static List<String> getCommands() {
         return Arrays.stream(SCANNER.nextLine().split(" "))
                 .collect(toList());
     }

@@ -1,6 +1,6 @@
 package chess.domain.dto.req;
 
-import chess.domain.Players;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.dto.PositionDto;
 
@@ -9,13 +9,13 @@ import java.util.List;
 public class MoveRequest {
 
     private final List<Position> positions;
-    private final String movablePieceColor;
+    private final Color movablePieceColor;
     private final PositionDto movablePieceDto;
     private final PositionDto targetPositionDto;
 
     private MoveRequest(
             final List<Position> positions,
-            final String movablePieceColor,
+            final Color movablePieceColor,
             final PositionDto movablePieceDto,
             final PositionDto targetPosition
     ) {
@@ -27,7 +27,7 @@ public class MoveRequest {
 
     public static MoveRequest from(
             final List<Position> positions,
-            final String movablePieceColor,
+            final Color movablePieceColor,
             final PositionDto movablePieceDto,
             final PositionDto targetPosition
     ) {
@@ -46,7 +46,7 @@ public class MoveRequest {
         return targetPositionDto;
     }
 
-    public String getMovablePieceColor() {
+    public Color getMovablePieceColor() {
         return movablePieceColor;
     }
 }

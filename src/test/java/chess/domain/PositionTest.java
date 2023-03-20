@@ -50,10 +50,10 @@ final class PositionTest {
         assertAll(
                 () -> assertThat(Position.from(rank, file))
                         .extracting("rank")
-                        .isEqualTo(rank),
+                        .isEqualTo(Rank.from(rank)),
                 () -> assertThat(Position.from(rank, file))
                         .extracting("file")
-                        .isEqualTo(file)
+                        .isEqualTo(File.from(file))
         );
     }
 
