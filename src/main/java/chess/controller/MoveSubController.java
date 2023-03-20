@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import java.util.List;
@@ -10,7 +9,6 @@ public class MoveSubController implements SubController {
 
     public static final String POSITION_LENGTH_VALIDATE = "올바른 체스 좌표를 입력해주십시오";
     private final Board board;
-    private Color turn = Color.WHITE;
 
     public MoveSubController(final Board board) {
         this.board = board;
@@ -19,8 +17,7 @@ public class MoveSubController implements SubController {
     public void run(boolean isStart) {
         validateIsGameStart(isStart);
         final List<Position> positions = readPositions();
-        board.move(positions.get(0), positions.get(1), turn);
-        turn = turn.opposite();
+        board.move(positions.get(0), positions.get(1));
     }
 
     private void validateIsGameStart(final boolean isStart) {
