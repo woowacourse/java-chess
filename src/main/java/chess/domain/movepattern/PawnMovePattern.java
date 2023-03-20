@@ -17,6 +17,10 @@ public enum PawnMovePattern implements MovePattern {
         this.rankVector = rankVector;
     }
 
+    public boolean isDiagonalMove() {
+        return this != UP && this != DOWN;
+    }
+
     @Override
     public int getFileVector() {
         return fileVector;
