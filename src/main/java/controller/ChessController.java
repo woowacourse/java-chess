@@ -104,7 +104,7 @@ public class ChessController {
         try {
             runnable.run();
             return runnable;
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             this.outputView.printErrorMessage(e.getMessage());
             return repeatByRunnable(runnable);
         }
@@ -113,7 +113,7 @@ public class ChessController {
     private GameCommand repeatBySupplier(Supplier<GameCommand> supplier) {
         try {
             return supplier.get();
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             this.outputView.printErrorMessage(e.getMessage());
             return repeatBySupplier(supplier);
         }
