@@ -18,7 +18,10 @@ class PieceTest {
 
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
-            super(color, piecePosition, new PieceMovement() {
+            super(color, piecePosition, new AbstractPieceMovement() {
+                @Override
+                protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+                }
             });
         }
     }
@@ -35,9 +38,10 @@ class PieceTest {
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new PieceMovement() {
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new AbstractPieceMovement() {
+
             @Override
-            public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+            protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
                 throw new IllegalArgumentException();
             }
         });
@@ -62,9 +66,10 @@ class PieceTest {
     @Test
     void 이동할_수_없는_경로로_이동하면_오류() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), new PieceMovement() {
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), new AbstractPieceMovement() {
+
             @Override
-            public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
+            protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
                 throw new IllegalArgumentException();
             }
         });

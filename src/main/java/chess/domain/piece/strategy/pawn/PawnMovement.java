@@ -1,15 +1,14 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.AbstractPieceMovement;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceMovement;
 import chess.domain.piece.position.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PawnMovement implements PieceMovement {
+public class PawnMovement extends AbstractPieceMovement {
 
     private final List<PawnMoveConstraint> constraints;
 
@@ -22,8 +21,7 @@ public class PawnMovement implements PieceMovement {
     }
 
     @Override
-    public void validateMove(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
-        validateAllyKill(currentPieceColor, nullableEnemy);
+    protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
         validateDefaultMove(path);
         validateDiagonalKill(path, nullableEnemy);
         validateVerticalMove(path, nullableEnemy);
