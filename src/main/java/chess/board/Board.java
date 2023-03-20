@@ -9,20 +9,23 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Color turn;
 
     public Board(final Map<Position, Piece> board) {
         this.board = board;
+        this.turn = Color.WHITE;
     }
 
-    public void move(final Position from, final Position to, final Color turn) {
-        validateCanMove(from, to, turn);
+    public void move(final Position from, final Position to) {
+        validateCanMove(from, to);
         movePiece(from, to);
+        turn = turn.opposite();
     }
 
-    private void validateCanMove(final Position from, final Position to, final Color turn) {
+    private void validateCanMove(final Position from, final Position to) {
         validateSamePosition(from, to);
         validateIsFromEmpty(from);
-        validateIsDifferentColor(from, turn);
+        validateIsDifferentColor(from);
 
         Piece destination = board.getOrDefault(to, null);
 
@@ -43,7 +46,7 @@ public class Board {
         }
     }
 
-    private void validateIsDifferentColor(final Position from, final Color turn) {
+    private void validateIsDifferentColor(final Position from) {
         if (!board.get(from).isSameColor(turn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }

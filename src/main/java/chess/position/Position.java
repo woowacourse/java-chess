@@ -26,7 +26,6 @@ public class Position {
     }
 
     private static void validateGreatestCommonDivisor(final int greatestCommonDivisor) {
-        // TODO: Controller에서 이미 검증된 부분임.
         if (greatestCommonDivisor == 0) {
             throw new IllegalStateException("출발지와 목적지가 동일해 이동할 수 없음!");
         }

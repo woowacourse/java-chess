@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Board;
 import chess.board.BoardFactory;
-import chess.piece.Color;
 import chess.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +25,7 @@ class BoardTest {
     void test_moveEmptyFrom() {
         Position emptyPosition = new Position(4, 4);
 
-        assertThatThrownBy(() -> board.move(emptyPosition, new Position(1, 1), Color.WHITE))
+        assertThatThrownBy(() -> board.move(emptyPosition, new Position(1, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발점에 말이 없습니다.");
     }
@@ -40,7 +39,7 @@ class BoardTest {
         assertTrue(board.board().containsKey(from));
         assertFalse(board.board().containsKey(to));
 
-        board.move(from, to, Color.WHITE);
+        board.move(from, to);
 
         assertFalse(board.board().containsKey(from));
         assertTrue(board.board().containsKey(to));
