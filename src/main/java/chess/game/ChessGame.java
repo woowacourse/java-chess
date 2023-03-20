@@ -22,8 +22,10 @@ public class ChessGame {
     }
 
     public void move(Position source, Position target) {
-        validateBoard();
         validateTurn(source);
+        if (!board.canMove(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+        }
         board.move(source, target);
         changeTurn();
     }
@@ -44,15 +46,8 @@ public class ChessGame {
     }
 
     public List<SquareResponse> getBoard() {
-        validateBoard();
         return board.getBoard().entrySet().stream()
                 .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
                 .collect(toList());
-    }
-
-    private void validateBoard() {
-        if (board == null) {
-            throw new IllegalStateException("[ERROR] 보드가 세팅되지 않았습니다.");
-        }
     }
 }
