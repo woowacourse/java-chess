@@ -8,6 +8,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.EmptyPiece;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Piece;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,12 +69,11 @@ class ChessBoardTest {
     void 초기화된_체스보드의_Rank7과_Rank2에_예상한_Pawn이_초기화되어_있다(Rank rank, Color color) {
         chessBoard.initialize(initialBoardStrategy.generate());
         Map<Position, Piece> initializedChessBoard = chessBoard.getChessBoard();
-        PieceType secondRowPiece = PAWN;
 
         for(Column column :Column.getOrderedColumns()) {
             Piece piece = initializedChessBoard.get(Position.of(column, rank));
             assertThat(piece.getPieceType())
-                    .isEqualTo(secondRowPiece);
+                    .isEqualTo(PAWN);
             assertThat(piece.getColor())
                     .isEqualTo(color);
         }
@@ -90,7 +90,6 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("제자리로는 이동할 수 없습니다");
     }
-
 
     @Test
     void WHIGHT_턴인데_BLACK기물을_이동하면_예외() {
@@ -117,7 +116,7 @@ class ChessBoardTest {
 
     /**
      * mock
-     *
+
      * ........ 8
      * ........ 7
      * .....p.. 6
@@ -126,7 +125,7 @@ class ChessBoardTest {
      * ........ 3
      * ........ 2
      * ........ 1
-     *
+
      * abcdefgh
      */
     @ParameterizedTest
@@ -160,4 +159,18 @@ class ChessBoardTest {
                 .hasMessageContaining("이동할 수 있는 기물이 없습니다");
     }
 
+    @Test
+    void 조건을_모두_충족하고_기물이_이동가능한_거리이면_기물을_이동한다() {
+        chessBoard.initialize(initialBoardStrategy.generate());
+        Position startPosition = Position.of(Column.B, Rank.TWO);
+        Position endPosition = Position.of(Column.B, Rank.THREE);
+        Piece pieceAtStartPoint = chessBoard.getChessBoard().get(startPosition);
+
+        chessBoard.move(startPosition, endPosition);
+
+        assertThat(chessBoard.getChessBoard())
+                .containsEntry(endPosition, pieceAtStartPoint)
+                .containsEntry(startPosition, EmptyPiece.of());
+
+    }
 }
