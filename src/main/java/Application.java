@@ -1,4 +1,3 @@
-import controller.Command;
 import domain.board.Board;
 import domain.board.InitialChessAlignment;
 import domain.position.Position;

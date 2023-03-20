@@ -32,9 +32,7 @@ public final class Positions {
     }
 
     public static List<Position> between(final Position source, final Position destination) {
-        final int rankDifference = source.getRankDifference(destination);
-        final int fileDifference = source.getFileDifference(destination);
-        final Direction direction = Direction.of(rankDifference, fileDifference);
+        final Direction direction = Direction.of(source, destination);
 
         if (Direction.NOTHING.equals(direction)) {
             return Collections.emptyList();

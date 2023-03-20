@@ -1,5 +1,3 @@
-package controller;
-
 public enum Command {
     START,
     END,
