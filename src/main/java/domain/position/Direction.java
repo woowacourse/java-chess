@@ -23,6 +23,10 @@ public enum Direction {
     }
 
     public static Direction of(final Position from, final Position to) {
+        if (isNotEightDirection(from, to)) {
+            return NOTHING;
+        }
+
         final int rankDifference = from.getRankDifference(to);
         final int fileDifference = from.getFileDifference(to);
 
@@ -30,10 +34,6 @@ public enum Direction {
     }
 
     public static Direction of(final int rankDifference, final int fileDifference) {
-        if (isNotEightDirection(rankDifference, fileDifference)) {
-            return NOTHING;
-        }
-
         final int rank = Integer.compare(rankDifference, 0);
         final int file = Integer.compare(fileDifference, 0);
 
@@ -43,7 +43,10 @@ public enum Direction {
                 .orElse(NOTHING);
     }
 
-    private static boolean isNotEightDirection(final int rankDifference, final int fileDifference) {
+    private static boolean isNotEightDirection(final Position from, final Position to) {
+        final int rankDifference = from.getRankDifference(to);
+        final int fileDifference = from.getFileDifference(to);
+
         if (rankDifference == 0 || fileDifference == 0) {
             return false;
         }
