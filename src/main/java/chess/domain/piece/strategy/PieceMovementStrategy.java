@@ -12,14 +12,14 @@ public interface PieceMovementStrategy {
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
-    List<PiecePosition> waypoints(final Color currentPieceColor,
-                                  final Path path,
+    List<PiecePosition> waypoints(final Path path,
                                   final Piece nullableEnemy) throws IllegalArgumentException;
 
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
-    void validateMove(final Color currentPieceColor,
-                      final Path path,
+    void validateMove(final Path path,
                       final Piece nullableEnemy) throws IllegalArgumentException;
+
+    Color color();
 }

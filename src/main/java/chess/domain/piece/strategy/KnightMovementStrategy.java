@@ -10,11 +10,14 @@ import java.util.List;
 
 public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
 
+    public KnightMovementStrategy(final Color color) {
+        super(color);
+    }
+
     @Override
-    public List<PiecePosition> waypoints(final Color currentPieceColor,
-                                         final Path path,
+    public List<PiecePosition> waypoints(final Path path,
                                          final Piece nullableEnemy) throws IllegalArgumentException {
-        validateMove(currentPieceColor, path, nullableEnemy);
+        validateMove(path, nullableEnemy);
         return Collections.emptyList();
     }
 

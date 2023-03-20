@@ -1,9 +1,14 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 
 public class BishopMovementStrategy extends AbstractPieceMovementStrategy {
+
+    public BishopMovementStrategy(final Color color) {
+        super(color);
+    }
 
     @Override
     protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {

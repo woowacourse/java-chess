@@ -30,7 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("BishopMovementStrategy 은")
 class BishopMovementTest {
 
-    private final PieceMovementStrategy movement = new BishopMovementStrategy();
+    private final Color myColor = Color.WHITE;
+    private final Color enemyColor = Color.BLACK;
+    private final PieceMovementStrategy movement = new BishopMovementStrategy(myColor);
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -53,7 +55,7 @@ class BishopMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, null));
+            assertDoesNotThrow(() -> movement.validateMove(path, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
@@ -63,7 +65,7 @@ class BishopMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(movement.waypoints(Color.WHITE, path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(movement.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> bishopDestinations() {
@@ -95,7 +97,7 @@ class BishopMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.validateMove(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.validateMove(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -111,7 +113,7 @@ class BishopMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.waypoints(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.waypoints(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -121,10 +123,10 @@ class BishopMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("d3");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece ally = new Piece(dest, new RookMovementStrategy(myColor));
 
         // when & then
-        assertThatThrownBy(() -> movement.validateMove(Color.BLACK, path, ally))
+        assertThatThrownBy(() -> movement.validateMove(path, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -133,9 +135,9 @@ class BishopMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("d3");
         final Path path = Path.of(source, dest);
-        final Piece enemy = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece enemy = new Piece(dest, new RookMovementStrategy(enemyColor));
 
         // when & then
-        assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, enemy));
+        assertDoesNotThrow(() -> movement.validateMove(path, enemy));
     }
 }

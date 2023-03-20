@@ -30,7 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("QueenMovementStrategy 은")
 class QueenMovementTest {
 
-    private final PieceMovementStrategy movement = new QueenMovementStrategy();
+    private final Color myColor = Color.WHITE;
+    private final Color enemyColor = Color.BLACK;
+    private final PieceMovementStrategy movement = new QueenMovementStrategy(myColor);
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -65,7 +67,7 @@ class QueenMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, null));
+            assertDoesNotThrow(() -> movement.validateMove(path, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
@@ -75,7 +77,7 @@ class QueenMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(movement.waypoints(Color.WHITE, path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(movement.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> queenDestinations() {
@@ -119,7 +121,7 @@ class QueenMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.validateMove(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.validateMove(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -135,7 +137,7 @@ class QueenMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.waypoints(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.waypoints(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -145,10 +147,10 @@ class QueenMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece ally = new Piece(dest, new RookMovementStrategy(myColor));
 
         // when & then
-        assertThatThrownBy(() -> movement.validateMove(Color.BLACK, path, ally))
+        assertThatThrownBy(() -> movement.validateMove(path, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -157,9 +159,9 @@ class QueenMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece enemy = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece enemy = new Piece(dest, new RookMovementStrategy(enemyColor));
 
         // when & then
-        assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, enemy));
+        assertDoesNotThrow(() -> movement.validateMove(path, enemy));
     }
 }

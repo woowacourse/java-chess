@@ -1,9 +1,14 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 
 public class KingMovementStrategy extends AbstractPieceMovementStrategy {
+
+    public KingMovementStrategy(final Color color) {
+        super(color);
+    }
 
     @Override
     protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {

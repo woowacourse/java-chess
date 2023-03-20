@@ -30,7 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("RookMovementStrategy 은")
 class RookMovementTest {
 
-    private final PieceMovementStrategy movement = new RookMovementStrategy();
+    private final Color myColor = Color.WHITE;
+    private final Color enemyColor = Color.BLACK;
+    private final PieceMovementStrategy movement = new RookMovementStrategy(myColor);
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -57,7 +59,7 @@ class RookMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, null));
+            assertDoesNotThrow(() -> movement.validateMove(path, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
@@ -67,7 +69,7 @@ class RookMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(movement.waypoints(Color.WHITE, path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(movement.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> rookDestinations() {
@@ -103,7 +105,7 @@ class RookMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.validateMove(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.validateMove(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -119,7 +121,7 @@ class RookMovementTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> movement.waypoints(Color.WHITE, path, null))
+            assertThatThrownBy(() -> movement.waypoints(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -129,10 +131,10 @@ class RookMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece ally = new Piece(dest, new RookMovementStrategy(myColor));
 
         // when & then
-        assertThatThrownBy(() -> movement.validateMove(Color.BLACK, path, ally))
+        assertThatThrownBy(() -> movement.validateMove(path, ally))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -141,9 +143,9 @@ class RookMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece enemy = new Piece(Color.BLACK, dest, new RookMovementStrategy());
+        final Piece enemy = new Piece(dest, new RookMovementStrategy(enemyColor));
 
         // when & then
-        assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, enemy));
+        assertDoesNotThrow(() -> movement.validateMove(path, enemy));
     }
 }

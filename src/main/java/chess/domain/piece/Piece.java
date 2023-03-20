@@ -8,12 +8,10 @@ import java.util.List;
 
 public class Piece {
 
-    protected final Color color;
-    protected final PiecePosition piecePosition;
-    protected final PieceMovementStrategy pieceMovementStrategy;
+    private final PiecePosition piecePosition;
+    private final PieceMovementStrategy pieceMovementStrategy;
 
-    public Piece(final Color color, final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
-        this.color = color;
+    public Piece(final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
         this.piecePosition = piecePosition;
         this.pieceMovementStrategy = pieceMovementStrategy;
     }
@@ -22,7 +20,7 @@ public class Piece {
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
     public List<PiecePosition> waypoints(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
-        return pieceMovementStrategy.waypoints(color, path(destination), nullablePiece);
+        return pieceMovementStrategy.waypoints(path(destination), nullablePiece);
     }
 
     /**
@@ -30,8 +28,8 @@ public class Piece {
      */
     public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         final Path path = path(destination);
-        pieceMovementStrategy.validateMove(color, path, nullablePiece);
-        return new Piece(color, destination, pieceMovementStrategy);
+        pieceMovementStrategy.validateMove(path, nullablePiece);
+        return new Piece(destination, pieceMovementStrategy);
     }
 
     public boolean existIn(final PiecePosition piecePosition) {
@@ -43,7 +41,7 @@ public class Piece {
     }
 
     public Color color() {
-        return color;
+        return pieceMovementStrategy.color();
     }
 
     public PiecePosition piecePosition() {

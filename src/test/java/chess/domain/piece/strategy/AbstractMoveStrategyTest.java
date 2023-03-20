@@ -22,7 +22,7 @@ class AbstractMoveStrategyTest {
     @Test
     void 올바른_경로가_아니면_예외가_발생한다() {
         // given
-        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy() {
+        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
 
             @Override
             protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
@@ -33,14 +33,14 @@ class AbstractMoveStrategyTest {
 
         // when & then
         assertThatThrownBy(() ->
-                strategy.waypoints(Color.BLACK, path, null)
+                strategy.waypoints(path, null)
         );
     }
 
     @Test
     void 올바른_경로라면_경유지를_반환한다() {
         // given
-        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy() {
+        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
             @Override
             protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
 
@@ -49,7 +49,7 @@ class AbstractMoveStrategyTest {
         final Path path = Path.of(PiecePosition.of("d2"), PiecePosition.of("d4"));
 
         // when
-        final List<PiecePosition> waypoints = strategy.waypoints(Color.BLACK, path, null);
+        final List<PiecePosition> waypoints = strategy.waypoints(path, null);
 
         // then
         assertThat(waypoints).containsOnly(PiecePosition.of("d3"));
