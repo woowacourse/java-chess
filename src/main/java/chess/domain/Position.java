@@ -29,7 +29,6 @@ public class Position {
 		return MIN_COORDINATE > row || MAX_COORDINATE < row;
 	}
 
-
 	public Position move(final RelativePosition relativePosition) {
 		int column = this.column + relativePosition.getX();
 		int row = this.row + relativePosition.getY();
