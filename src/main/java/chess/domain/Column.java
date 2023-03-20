@@ -41,4 +41,9 @@ public enum Column {
     public int direction(Column column) {
         return Integer.compare(this.index, column.index);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(index);
+    }
 }
