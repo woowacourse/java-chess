@@ -64,8 +64,8 @@ class BishopTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("아래로 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(1, 7);
-                final Location end = Location.of(1, 0);
+                final Location start = Location.of(1, 8);
+                final Location end = Location.of(1, 1);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),

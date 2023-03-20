@@ -32,11 +32,11 @@ public class Queen extends Piece {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
         final int totalCount = Math.max(
-            Math.abs(start.getCol() - end.getCol()), Math.abs(start.getRow() - end.getRow()));
+            Math.abs(start.getColumn() - end.getColumn()), Math.abs(start.getRow() - end.getRow()));
         return IntStream.range(1, totalCount + 1)
             .mapToObj(
                 count -> Location.of(
-                    start.getCol() + (direction.getColDiff() * count),
+                    start.getColumn() + (direction.getColumnDiff() * count),
                     start.getRow() + (direction.getRowDiff()) * count))
             .collect(Collectors.toList());
     }

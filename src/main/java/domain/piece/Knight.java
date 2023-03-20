@@ -19,11 +19,11 @@ public class Knight extends Piece {
     }
 
     private boolean isNotMovable(final Location start, final Location end) {
-        if (Math.abs(start.getCol() - end.getCol()) == 1) {
+        if (Math.abs(start.getColumn() - end.getColumn()) == 1) {
             return Math.abs(start.getRow() - end.getRow()) != 2;
         }
         if (Math.abs(start.getRow() - end.getRow()) == 1) {
-            return Math.abs(start.getCol() - end.getCol()) != 2;
+            return Math.abs(start.getColumn() - end.getColumn()) != 2;
         }
         return true;
     }

@@ -16,13 +16,13 @@ public enum Direction {
     UP(0, 1, Direction::isUp),
     ELSE(0, 0, (start, end) -> false);
 
-    private final int colDiff;
+    private final int columnDiff;
 
     private final int rowDiff;
     private final BiPredicate<Location, Location> condition;
 
-    Direction(final int colDiff, final int rowDiff, final BiPredicate<Location, Location> condition) {
-        this.colDiff = colDiff;
+    Direction(final int columnDiff, final int rowDiff, final BiPredicate<Location, Location> condition) {
+        this.columnDiff = columnDiff;
         this.rowDiff = rowDiff;
         this.condition = condition;
     }
@@ -74,8 +74,8 @@ public enum Direction {
             .orElse(ELSE);
     }
 
-    public int getColDiff() {
-        return colDiff;
+    public int getColumnDiff() {
+        return columnDiff;
     }
 
     public int getRowDiff() {
