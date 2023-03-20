@@ -22,8 +22,8 @@ public enum Movement {
     }
 
     public static Movement of(int fileInterval, int rankInterval) {
-        final Continuity continuity = Continuity.of(fileInterval, rankInterval);
-        final Direction direction =  Direction.of(fileInterval, rankInterval);
+        Continuity continuity = Continuity.of(fileInterval, rankInterval);
+        Direction direction =  Direction.of(fileInterval, rankInterval);
         return findMovement(continuity, direction);
     }
 

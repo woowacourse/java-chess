@@ -13,7 +13,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public abstract void canMove(int fileInterval, int rankInterval, boolean canAttack);
+    public abstract void canMove(final int fileInterval, final int rankInterval, final boolean canAttack);
 
     public Team getColor() {
         return team;

@@ -17,7 +17,7 @@ public final class Knight extends Piece {
         validateMovement(movement);
     }
 
-    private void validateMovement(Movement movement) {
+    private void validateMovement(final Movement movement) {
         if (CONTINUOUS_L_SHAPE != movement) {
             throw new IllegalArgumentException("나이트가 이동할 수 없는 방향입니다.");
         }

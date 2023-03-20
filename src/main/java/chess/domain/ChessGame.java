@@ -19,7 +19,7 @@ public class ChessGame {
         this.team = team;
     }
 
-    public void movePiece(String sourceInput, String targetInput) {
+    public void movePiece(final String sourceInput, final String targetInput) {
         Square source = getSquare(sourceInput);
         Square target = getSquare(targetInput);
 

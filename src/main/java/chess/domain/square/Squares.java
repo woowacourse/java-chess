@@ -31,7 +31,7 @@ public class Squares {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 위치가 아닙니다."));
     }
 
-    public static int getIndex(Square square) {
+    public static int getIndex(final Square square) {
         return squares.indexOf(square);
     }
 }

@@ -23,7 +23,7 @@ public final class Pawn extends Piece {
         validateDiagonal(movement, canAttack);
     }
 
-    private void validateMovement(Movement movement) {
+    private void validateMovement(final Movement movement) {
         if (movement != DISCONTINUOUS_DIAGONAL && movement != DISCONTINUOUS_STRAIGHT) {
             throw new IllegalArgumentException("폰은 첫 이동이 아니면 조건에 따라 대각선 또는 앞으로 한 칸만 이동 가능합니다.");
         }

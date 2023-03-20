@@ -30,7 +30,7 @@ public final class InitialPawn extends Piece {
         validateAdvance(rankInterval);
     }
 
-    private void validateMovement(Movement movement) {
+    private void validateMovement(final Movement movement) {
         final List<Movement> movements = List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL,
                 CONTINUOUS_STRAIGHT);
 

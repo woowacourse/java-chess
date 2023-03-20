@@ -16,7 +16,7 @@ public class InputView {
         return Arrays.asList(gameCommand.split(DELIMITER));
     }
 
-    private void validateNull(String input) {
+    private void validateNull(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("공백이 아니여야 합니다.");
         }

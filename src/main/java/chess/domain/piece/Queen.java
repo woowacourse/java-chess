@@ -21,7 +21,7 @@ public final class Queen extends Piece {
         validateMovement(movement);
     }
 
-    private void validateMovement(Movement movement) {
+    private void validateMovement(final Movement movement) {
         final List<Movement> movements = List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL,
                 CONTINUOUS_STRAIGHT, CONTINUOUS_DIAGONAL);
 

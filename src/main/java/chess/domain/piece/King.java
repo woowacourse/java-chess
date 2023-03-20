@@ -19,7 +19,7 @@ public final class King extends Piece {
         validateMovement(movement);
     }
 
-    private void validateMovement(Movement movement) {
+    private void validateMovement(final Movement movement) {
         if (movement != DISCONTINUOUS_DIAGONAL && movement != DISCONTINUOUS_STRAIGHT) {
             throw new IllegalArgumentException("킹은 한 칸만 이동 가능합니다.");
         }

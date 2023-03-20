@@ -16,7 +16,7 @@ public class OutputView {
         System.out.println(GAME_START_NOTICE);
     }
 
-    public void printChessBoard(Map<Integer, String> pieces) {
+    public void printChessBoard(final Map<Integer, String> pieces) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < CHESS_BOARD_AREA; i++) {
             addNextLine(result, i);

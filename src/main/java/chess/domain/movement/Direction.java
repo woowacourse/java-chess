@@ -16,15 +16,12 @@ public enum Direction {
         if (isStraight(fileInterval, rankInterval)) {
             return STRAIGHT;
         }
-
         if (isDiagonal(fileInterval, rankInterval)) {
             return DIAGONAL;
         }
-
         if (isLShape(fileInterval, rankInterval)) {
             return L_SHAPE;
         }
-
         return OTHER;
     }
 
