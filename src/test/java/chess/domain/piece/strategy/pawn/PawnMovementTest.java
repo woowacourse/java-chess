@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.RookMovement;
+import chess.domain.piece.strategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("PawnMovement 은")
+@DisplayName("PawnMovementStrategy 은")
 class PawnMovementTest {
 
-    private final PawnMovement pawnMovement = new PawnMovement();
+    private final PawnMovementStrategy pawnMovement = new PawnMovementStrategy();
 
     public Piece piece(final Color color, final PiecePosition piecePosition) {
-        return new Piece(color, piecePosition, new PawnMovement());
+        return new Piece(color, piecePosition, new PawnMovementStrategy());
     }
 
     @Test
@@ -132,7 +132,7 @@ class PawnMovementTest {
             // given
             final PiecePosition dest = PiecePosition.of("e3");
             final Path path = Path.of(PiecePosition.of("d2"), dest);
-            final PawnMovement pawnMovement = new PawnMovement();
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy();
 
             // when & then
             assertThatThrownBy(() -> pawnMovement.validateMove(Color.WHITE, path, null))
@@ -144,7 +144,7 @@ class PawnMovementTest {
             // given
             final PiecePosition dest = PiecePosition.of("c2");
             final Path path = Path.of(PiecePosition.of("d2"), dest);
-            final PawnMovement pawnMovement = new PawnMovement();
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy();
 
             // when & then
             assertThatThrownBy(() -> pawnMovement.validateMove(Color.WHITE, path, null))
@@ -155,7 +155,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지키지_않았다면_예외() {
         // given
-        final PawnMovement pawnMovement = new PawnMovement(path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(path -> {
             throw new IllegalArgumentException();
         });
         final PiecePosition dest = PiecePosition.of("d3");
@@ -169,7 +169,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지켰다면_기본_이동에_대해서는_가능() {
         // given
-        final PawnMovement pawnMovement = new PawnMovement(path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(path -> {
         });
         final PiecePosition dest = PiecePosition.of("d3");
         final Path path = Path.of(PiecePosition.of("d2"), dest);
@@ -181,7 +181,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지켰더라도_기본_이동_수칙을_지키지_않으면_예외() {
         // given
-        final PawnMovement pawnMovement = new PawnMovement(path -> {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(path -> {
             throw new IllegalArgumentException();
         });
         final PiecePosition dest = PiecePosition.of("d5");
@@ -198,7 +198,7 @@ class PawnMovementTest {
         final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("c3");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovement());
+        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
 
         // when & then
         assertThatThrownBy(() -> pawnMovement.validateMove(Color.BLACK, path, ally))
@@ -211,7 +211,7 @@ class PawnMovementTest {
         final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("c3");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovement());
+        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
 
         // when & then
         assertDoesNotThrow(() -> pawnMovement.validateMove(Color.WHITE, path, ally));

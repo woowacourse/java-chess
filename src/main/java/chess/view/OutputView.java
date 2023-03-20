@@ -5,12 +5,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.strategy.BishopMovement;
-import chess.domain.piece.strategy.KingMovement;
-import chess.domain.piece.strategy.KnightMovement;
-import chess.domain.piece.strategy.QueenMovement;
-import chess.domain.piece.strategy.RookMovement;
-import chess.domain.piece.strategy.pawn.PawnMovement;
+import chess.domain.piece.strategy.BishopMovementStrategy;
+import chess.domain.piece.strategy.KingMovementStrategy;
+import chess.domain.piece.strategy.KnightMovementStrategy;
+import chess.domain.piece.strategy.QueenMovementStrategy;
+import chess.domain.piece.strategy.RookMovementStrategy;
+import chess.domain.piece.strategy.pawn.PawnMovementStrategy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,19 +28,19 @@ public class OutputView {
     private static final String EMPTY_PIECE_ICON = ".";
 
     static {
-        whitePieceIcons.put(RookMovement.class, "r");
-        whitePieceIcons.put(PawnMovement.class, "p");
-        whitePieceIcons.put(BishopMovement.class, "b");
-        whitePieceIcons.put(KingMovement.class, "k");
-        whitePieceIcons.put(KnightMovement.class, "n");
-        whitePieceIcons.put(QueenMovement.class, "q");
+        whitePieceIcons.put(RookMovementStrategy.class, "r");
+        whitePieceIcons.put(PawnMovementStrategy.class, "p");
+        whitePieceIcons.put(BishopMovementStrategy.class, "b");
+        whitePieceIcons.put(KingMovementStrategy.class, "k");
+        whitePieceIcons.put(KnightMovementStrategy.class, "n");
+        whitePieceIcons.put(QueenMovementStrategy.class, "q");
 
-        blackPieceIcons.put(RookMovement.class, "R");
-        blackPieceIcons.put(PawnMovement.class, "P");
-        blackPieceIcons.put(BishopMovement.class, "B");
-        blackPieceIcons.put(KingMovement.class, "K");
-        blackPieceIcons.put(KnightMovement.class, "N");
-        blackPieceIcons.put(QueenMovement.class, "Q");
+        blackPieceIcons.put(RookMovementStrategy.class, "R");
+        blackPieceIcons.put(PawnMovementStrategy.class, "P");
+        blackPieceIcons.put(BishopMovementStrategy.class, "B");
+        blackPieceIcons.put(KingMovementStrategy.class, "K");
+        blackPieceIcons.put(KnightMovementStrategy.class, "N");
+        blackPieceIcons.put(QueenMovementStrategy.class, "Q");
 
         colorIconMapping.put(Color.WHITE, whitePieceIcons);
         colorIconMapping.put(Color.BLACK, blackPieceIcons);

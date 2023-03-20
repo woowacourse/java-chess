@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.PieceMovement;
+import chess.domain.piece.strategy.PieceMovementStrategy;
 
 import java.util.List;
 
@@ -10,19 +10,19 @@ public class Piece {
 
     protected final Color color;
     protected final PiecePosition piecePosition;
-    protected final PieceMovement pieceMovement;
+    protected final PieceMovementStrategy pieceMovementStrategy;
 
-    public Piece(final Color color, final PiecePosition piecePosition, final PieceMovement pieceMovement) {
+    public Piece(final Color color, final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
         this.color = color;
         this.piecePosition = piecePosition;
-        this.pieceMovement = pieceMovement;
+        this.pieceMovementStrategy = pieceMovementStrategy;
     }
 
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
     public List<PiecePosition> waypoints(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
-        return pieceMovement.waypoints(color, path(destination), nullablePiece);
+        return pieceMovementStrategy.waypoints(color, path(destination), nullablePiece);
     }
 
     /**
@@ -30,8 +30,8 @@ public class Piece {
      */
     public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         final Path path = path(destination);
-        pieceMovement.validateMove(color, path, nullablePiece);
-        return new Piece(color, destination, pieceMovement);
+        pieceMovementStrategy.validateMove(color, path, nullablePiece);
+        return new Piece(color, destination, pieceMovementStrategy);
     }
 
     public boolean existIn(final PiecePosition piecePosition) {
@@ -50,7 +50,7 @@ public class Piece {
         return piecePosition;
     }
 
-    public PieceMovement pieceMovement() {
-        return pieceMovement;
+    public PieceMovementStrategy pieceMovement() {
+        return pieceMovementStrategy;
     }
 }

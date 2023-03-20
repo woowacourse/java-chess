@@ -7,7 +7,7 @@ import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
 
-public abstract class AbstractPieceMovement implements PieceMovement {
+public abstract class AbstractPieceMovementStrategy implements PieceMovementStrategy {
 
     @Override
     public List<PiecePosition> waypoints(final Color currentPieceColor, final Path path, final Piece nullableEnemy) throws IllegalArgumentException {

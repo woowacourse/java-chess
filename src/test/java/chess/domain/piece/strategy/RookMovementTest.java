@@ -27,10 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("RookMovement 은")
+@DisplayName("RookMovementStrategy 은")
 class RookMovementTest {
 
-    private final PieceMovement movement = new RookMovement();
+    private final PieceMovementStrategy movement = new RookMovementStrategy();
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -129,7 +129,7 @@ class RookMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece ally = new Piece(Color.BLACK, dest, new RookMovement());
+        final Piece ally = new Piece(Color.BLACK, dest, new RookMovementStrategy());
 
         // when & then
         assertThatThrownBy(() -> movement.validateMove(Color.BLACK, path, ally))
@@ -141,7 +141,7 @@ class RookMovementTest {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
         final Path path = Path.of(source, dest);
-        final Piece enemy = new Piece(Color.BLACK, dest, new RookMovement());
+        final Piece enemy = new Piece(Color.BLACK, dest, new RookMovementStrategy());
 
         // when & then
         assertDoesNotThrow(() -> movement.validateMove(Color.WHITE, path, enemy));

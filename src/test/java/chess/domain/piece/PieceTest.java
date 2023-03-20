@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
-import chess.domain.piece.strategy.AbstractPieceMovement;
+import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Piece 은")
 class PieceTest {
 
-    static class SuccessMovement extends AbstractPieceMovement {
+    static class SuccessMovementStrategy extends AbstractPieceMovementStrategy {
 
         @Override
         protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
@@ -24,7 +24,7 @@ class PieceTest {
         }
     }
 
-    static class FailMovement extends AbstractPieceMovement {
+    static class FailMovementStrategy extends AbstractPieceMovementStrategy {
 
         @Override
         protected void validateMoveWithNoAlly(final Path path, final Piece nullableEnemy) throws IllegalArgumentException {
@@ -35,7 +35,7 @@ class PieceTest {
     @Test
     void 경유지탐색_시_같은_위치면_예외() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new SuccessMovement());
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new SuccessMovementStrategy());
         // when & then
         assertThatThrownBy(() -> myPiece.waypoints(of(1, 'a'), null))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -44,7 +44,7 @@ class PieceTest {
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new FailMovement());
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), new FailMovementStrategy());
 
         // when & then
         assertThatThrownBy(() -> myPiece.waypoints(of(1, 'b'), null))
@@ -54,7 +54,7 @@ class PieceTest {
     @Test
     void 단순_이동할_수_있다() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), new SuccessMovement());
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), new SuccessMovementStrategy());
 
         // when
         final Piece next = pawn.move(of("b5"), null);
@@ -66,7 +66,7 @@ class PieceTest {
     @Test
     void 이동할_수_없는_경로로_이동하면_오류() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), new FailMovement());
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), new FailMovementStrategy());
         // when & then
         assertThatThrownBy(() -> pawn.move(of("b5"), null))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -75,14 +75,14 @@ class PieceTest {
     @Test
     void 죽이기_위해_이동할_수_있따() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), new SuccessMovement());
-        final Piece enemy = new Piece(Color.WHITE, of("b7"), new SuccessMovement());
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), new SuccessMovementStrategy());
+        final Piece enemy = new Piece(Color.WHITE, of("b7"), new SuccessMovementStrategy());
 
         // when
         final Piece next = pawn.move(enemy.piecePosition, enemy);
 
         // then
         assertThat(next.piecePosition()).isEqualTo(of("b7"));
-        assertThat(next.pieceMovement()).isInstanceOf(SuccessMovement.class);
+        assertThat(next.pieceMovement()).isInstanceOf(SuccessMovementStrategy.class);
     }
 }

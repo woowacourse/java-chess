@@ -8,7 +8,7 @@ import chess.domain.piece.position.PiecePosition;
 import java.util.Collections;
 import java.util.List;
 
-public class KnightMovement extends AbstractPieceMovement {
+public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
 
     @Override
     public List<PiecePosition> waypoints(final Color currentPieceColor,

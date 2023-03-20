@@ -7,7 +7,7 @@ import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
 
-public interface PieceMovement {
+public interface PieceMovementStrategy {
 
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우

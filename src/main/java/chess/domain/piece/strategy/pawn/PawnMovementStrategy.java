@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy.pawn;
 
-import chess.domain.piece.strategy.AbstractPieceMovement;
+import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 
@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PawnMovement extends AbstractPieceMovement {
+public class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 
     private final List<PawnMoveConstraint> constraints;
 
-    public PawnMovement(final List<PawnMoveConstraint> constraints) {
+    public PawnMovementStrategy(final List<PawnMoveConstraint> constraints) {
         this.constraints = new ArrayList<>(constraints);
     }
 
-    public PawnMovement(final PawnMoveConstraint... constraints) {
+    public PawnMovementStrategy(final PawnMoveConstraint... constraints) {
         this(Arrays.asList(constraints));
     }
 
