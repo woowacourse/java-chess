@@ -41,4 +41,14 @@ public final class Empty implements SquareStatus {
         throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
     }
 
+    @Override
+    public boolean isSameType(final Type type) {
+        return this.emptyType.isSame(type);
+    }
+
+    @Override
+    public boolean isDifferentType(final Type type) {
+        return this.emptyType.isDifferent(type);
+    }
+
 }

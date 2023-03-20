@@ -17,4 +17,8 @@ public interface SquareStatus {
 
     boolean isDifferentColor(final Color color);
 
+    boolean isSameType(final Type type);
+
+    boolean isDifferentType (final Type type);
+
 }

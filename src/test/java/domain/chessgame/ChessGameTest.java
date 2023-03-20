@@ -52,7 +52,7 @@ class ChessGameTest {
         chessGame.move(source, target);
 
         // then
-        final boolean isPawn = chessBoard.isEqualType(target, PieceType.PAWN);
+        final boolean isPawn = chessBoard.isSameType(target, PieceType.PAWN);
         assertThat(isPawn).isTrue();
     }
 
