@@ -24,7 +24,7 @@ public class ChessBoard {
         List<Square> routes = piece.findRoutes(src, dest);
         validateNoRoutes(routes);
 
-        managePawn(src, dest, piece);
+        validatePawn(src, dest, piece);
         go(src, dest, piece, routes);
     }
 
@@ -40,7 +40,7 @@ public class ChessBoard {
         }
     }
 
-    private void managePawn(Square src, Square dest, Piece piece) {
+    private void validatePawn(Square src, Square dest, Piece piece) {
         if (piece instanceof Pawn) {
             Pawn pawn = (Pawn) piece;
             validatePawnMove(pawn, src, dest);
