@@ -2,11 +2,13 @@ package chess.controller;
 
 import static chess.view.Command.END;
 import static chess.view.Command.START;
+import static chess.view.InputView.readCommand;
+import static chess.view.InputView.readPositions;
+import static chess.view.OutputView.printFinishMessage;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.view.Command;
-import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
@@ -21,20 +23,18 @@ public class MainController {
     public void run() {
         OutputView.printGameStart();
 
-        Command firstCommand = InputView.readCommand();
-
+        Command firstCommand = readCommand();
         if (firstCommand == START) {
             OutputView.printBoard(chessGame.getBoard());
-
             playChess();
         }
 
-        OutputView.printFinishMessage();
+        printFinishMessage();
     }
 
     private void playChess() {
         while (true) {
-            List<String> input = InputView.readPositions();
+            List<String> input = readPositions();
 
             if (Command.of(input.get(0)) == END) {
                 break;

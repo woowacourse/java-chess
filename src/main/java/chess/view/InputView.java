@@ -11,8 +11,6 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static Command readCommand() {
-        OutputView.printGameStart();
-
         String input = scanner.nextLine();
         return Command.of(input);
     }
