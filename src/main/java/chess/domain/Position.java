@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-        public static final Position IS_NULL = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
+    public static final Position IS_NULL = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
     private final int row;
     private final int column;
 
@@ -53,13 +53,21 @@ public class Position implements Comparable<Position> {
         return slope != slopeOfOne;
     }
 
-    public boolean isNotConstantFunction(Position end) {
-        return this.row != end.getRow() && this.column != end.column;
+    public boolean isSameRow(int row) {
+        return this.row == row;
     }
 
-    public boolean isNotDistanceTwo(Position end) {
+    public boolean isSameColumn(int column) {
+        return this.column == column;
+    }
+
+    public boolean isNotConstantFunction(Position position) {
+        return this.row != position.getRow() && this.column != position.column;
+    }
+
+    public boolean isNotDistanceTwo(Position position) {
         int distanceTwo = 2;
-        return distanceTwo != Math.abs(this.row - end.row) + Math.abs(this.column - end.column);
+        return distanceTwo != Math.abs(this.row - position.row) + Math.abs(this.column - position.column);
     }
 
     public int getRow() {

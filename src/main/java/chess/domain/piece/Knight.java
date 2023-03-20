@@ -5,7 +5,6 @@ import chess.domain.PieceType;
 import chess.domain.Position;
 
 import java.util.List;
-import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,14 +22,15 @@ public final class Knight extends Piece {
 
     @Override
     public List<Position> findPositions(final Position source, final Position target) {
-        int maxCases = 8;
-        return IntStream.range(0, maxCases)
-                .filter(canKnightMove(source, target))
-                .mapToObj(i -> target)
+        int maxCase = 8;
+
+        return IntStream.range(0, maxCase)
+                .filter(moveCase -> canMove(source, target, moveCase))
+                .mapToObj(moveCase -> target)
                 .collect(Collectors.toList());
     }
 
-    private static IntPredicate canKnightMove(final Position source, final Position target) {
-        return i -> target.getRow() == source.getRow() + moveX.get(i) && target.getColumn() == source.getColumn() + moveY.get(i);
+    private boolean canMove(final Position source, final Position target, final int moveCase) {
+        return target.isSameRow(source.getRow() + moveX.get(moveCase)) && target.isSameColumn(source.getColumn() + moveY.get(moveCase));
     }
 }
