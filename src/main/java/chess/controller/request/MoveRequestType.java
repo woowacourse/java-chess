@@ -1,30 +1,29 @@
 package chess.controller.request;
 
 import chess.controller.ChessController;
-import java.util.List;
 import java.util.regex.Pattern;
 
-public final class MoveRequestType implements RequestType {
+public abstract class MoveRequestType implements RequestType {
 
     private static final Pattern POSITION = Pattern.compile("[a-h][1-8]");
 
-    @Override
-    public boolean isMatch(List<String> commands) {
-        if (commands.size() != 3) {
-            return false;
+    private final String origin;
+    private final String destination;
+
+    protected MoveRequestType(String origin, String destination) {
+        if (isNotPosition(origin) || isNotPosition(destination)) {
+            throw new IllegalArgumentException("올바른 위치가 아닙니다.");
         }
-        if (!"move".equalsIgnoreCase(commands.get(0))) {
-            return false;
-        }
-        return isPosition(commands.get(1)) && isPosition(commands.get(2));
+        this.origin = origin;
+        this.destination = destination;
+    }
+
+    private boolean isNotPosition(String command) {
+        return !POSITION.matcher(command).matches();
     }
 
     @Override
-    public final void execute(ChessController chessController, List<String> commands) {
-        chessController.move(commands);
-    }
-
-    private boolean isPosition(String command) {
-        return POSITION.matcher(command).matches();
+    public final void execute(ChessController chessController) {
+        chessController.move(origin, destination);
     }
 }
