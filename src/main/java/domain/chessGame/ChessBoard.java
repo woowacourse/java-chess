@@ -89,7 +89,10 @@ public final class ChessBoard {
     }
 
     private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
-        return startPiece.isBlack() == endPiece.isBlack();
+        if (startPiece.isBlack() == endPiece.isBlack()) {
+            throw new IllegalArgumentException("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
+        }
+        return false;
     }
 
     public Map<Position, Piece> getChessBoard() {

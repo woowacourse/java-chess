@@ -123,7 +123,7 @@ class ChessBoardTest {
             // then
             assertThatThrownBy(() -> chessBoard.movePiece(start, end))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
+                    .hasMessageContaining("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
         }
     }
 
