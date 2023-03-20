@@ -25,13 +25,13 @@ public class Bishop extends Piece {
 
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("bishop이 이동할 수 있는 방향이 아닙니다");
+            throw new IllegalArgumentException("Bishop이 이동할 수 있는 방향이 아닙니다");
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
         if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException("목적지에 아군이 있으므로 bishop는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("Bishop은 도착점에 아군이 있으면 이동할 수 없습니다");
         }
     }
 }
