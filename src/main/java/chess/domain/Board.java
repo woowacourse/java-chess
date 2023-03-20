@@ -41,6 +41,24 @@ public class Board {
         board.put(source, Empty.create());
     }
 
+    private void validateInvalidBoundary(final Position source, final Position target) {
+        final int boardMinIndex = 0;
+        final int boardMaxIndex = (int) Math.sqrt(board.size());
+        if (source.isOverBoundary(boardMinIndex, boardMaxIndex) || target.isOverBoundary(boardMinIndex, boardMaxIndex)) {
+            throw new IllegalArgumentException("입력 값이 보드의 범위를 초과하였습니다.");
+        }
+    }
+
+    private void validateInvalidColor(final Color currentPlayer, final Piece sourcePiece, final Piece targetPiece) {
+        if (sourcePiece.isNotSameColor(currentPlayer)) {
+            throw new IllegalArgumentException("자신의 기물을 선택해야 합니다.");
+        }
+
+        if (targetPiece.isSameColor(currentPlayer)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
+    }
+
     private void validateInvalidPosition(final Position source, final Position target, final Piece sourcePiece) {
         final List<Position> positions = sourcePiece.findPositions(source, target);
 
@@ -65,16 +83,6 @@ public class Board {
         return board.getOrDefault(position, Empty.create()).isNotSamePieceType(PieceType.EMPTY);
     }
 
-    private void validateInvalidColor(final Color currentPlayer, final Piece sourcePiece, final Piece targetPiece) {
-        if (sourcePiece.isNotSameColor(currentPlayer)) {
-            throw new IllegalArgumentException("자신의 기물을 선택해야 합니다.");
-        }
-
-        if (targetPiece.isSameColor(currentPlayer)) {
-            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
-        }
-    }
-
     private void validateInvalidMovePawn(final Position source, final Position target, final Piece sourcePiece) {
         if (sourcePiece.isSamePieceType(PieceType.PAWN)
                 && isNotMovablePawn(source, target)
@@ -97,14 +105,6 @@ public class Board {
         return !(source.calculateRowDistance(target.getRow()) == 1
                 && source.calculateColumnDistance(target.getColumn()) == 1
                 && piece(target).isNotSamePieceType(PieceType.EMPTY));
-    }
-
-    private void validateInvalidBoundary(final Position source, final Position target) {
-        final int boardMinIndex = 0;
-        final int boardMaxIndex = (int) Math.sqrt(board.size());
-        if (source.isOverBoundary(boardMinIndex, boardMaxIndex) || target.isOverBoundary(boardMinIndex, boardMaxIndex)) {
-            throw new IllegalArgumentException("입력 값이 보드의 범위를 초과하였습니다.");
-        }
     }
 
     private Piece piece(final Position position) {
