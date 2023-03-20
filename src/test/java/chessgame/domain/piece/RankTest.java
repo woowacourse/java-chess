@@ -1,4 +1,4 @@
-package chessgame.domain;
+package chessgame.domain.piece;
 
 import chessgame.domain.board.Rank;
 import org.junit.jupiter.api.DisplayName;

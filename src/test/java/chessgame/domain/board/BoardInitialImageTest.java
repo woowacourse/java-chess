@@ -1,12 +1,6 @@
-package chessgame.domain;
+package chessgame.domain.board;
 
-import chessgame.domain.board.BoardInitialImage;
-import chessgame.domain.piece.Bishop;
-import chessgame.domain.piece.King;
-import chessgame.domain.piece.Knight;
-import chessgame.domain.piece.Pawn;
-import chessgame.domain.piece.Queen;
-import chessgame.domain.piece.Rook;
+import chessgame.domain.piece.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
