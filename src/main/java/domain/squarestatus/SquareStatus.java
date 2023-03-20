@@ -13,4 +13,8 @@ public interface SquareStatus {
 
     Route findRoute(final Position source, final Position target);
 
+    boolean isSameColor(final Color color);
+
+    boolean isDifferentColor(final Color color);
+
 }
