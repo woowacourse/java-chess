@@ -44,6 +44,7 @@ public class ChessController {
         do {
             outputView.printChessBoard(chessGame.getChessboard());
             commands = retryOnInvalidUserInput(this::handleCommand);
+
             commands.ifPresent(command -> movePiece(chessGame, command));
         } while (commands.isPresent());
     }
@@ -51,6 +52,10 @@ public class ChessController {
     private Optional<List<String>> handleCommand() {
         List<String> commands = requestCommand();
         String mainCommand = commands.get(Index.MAIN_COMMAND.value);
+
+        if (Command.isStartCommand(mainCommand)) {
+            throw new IllegalArgumentException("이미 게임이 실행중입니다.");
+        }
 
         if (Command.isEndCommand(mainCommand)) {
             return Optional.empty();
