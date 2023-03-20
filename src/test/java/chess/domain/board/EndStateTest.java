@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class EndTest {
+class EndStateTest {
 
     @Test
     void 왕이_잡히는_경우_게임이_종료된다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         board = board.move("e2", "e4");
         board = board.move("e7", "e5");

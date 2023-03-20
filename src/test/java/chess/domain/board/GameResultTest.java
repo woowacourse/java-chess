@@ -14,7 +14,7 @@ public class GameResultTest {
     @Test
     void 기물의_총_점수를_반환한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         final GameResult result = board.getResult();
 
@@ -28,7 +28,7 @@ public class GameResultTest {
     @Test
     void 하나의_File에_여러_개의_폰이_존재하는_경우_각폰의_점수가_반이_된다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         board = board.move("e2", "e4");
         board = board.move("d7", "d5");
@@ -45,7 +45,7 @@ public class GameResultTest {
     @Test
     void 왕이_잡힌_경우_왕을_잡은쪽이_승리한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         board = board.move("e2", "e4");
         board = board.move("e7", "e5");
@@ -64,7 +64,7 @@ public class GameResultTest {
     @Test
     void 왕이_잡히지_않은_경우_점수를_비교하여_결과를_계산한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         board = board.move("d2", "d4");
         board = board.move("b8", "c6");
@@ -82,7 +82,7 @@ public class GameResultTest {
     @Test
     void 양쪽다_왕이_살아있고_점수가_동일할_경우_EMPTY를_반환한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
         final GameResult result = board.getResult();
 

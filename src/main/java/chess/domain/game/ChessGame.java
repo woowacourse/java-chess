@@ -2,13 +2,13 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.GameResult;
-import chess.domain.board.Start;
+import chess.domain.board.InitialState;
 
 public class ChessGame {
     private Board board;
 
     public ChessGame() {
-        this.board = new Start();
+        this.board = new InitialState();
     }
 
     public void initialize() {

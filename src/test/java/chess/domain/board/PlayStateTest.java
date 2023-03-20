@@ -15,12 +15,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class PlayTest {
+public class PlayStateTest {
 
     @Test
     void 불가능한_이동_커맨드를_입력받는_경우_예외를_던진다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // expect
@@ -33,7 +33,7 @@ public class PlayTest {
     @Test
     void 이동_가능한_커맨드를_입력받는_경우_기물을_이동한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // when
@@ -47,7 +47,7 @@ public class PlayTest {
     @Test
     void 상대편의_기물을_이동하려는_경우_예외를_던진다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // expect
@@ -60,7 +60,7 @@ public class PlayTest {
     @Test
     void 이동_경로에_기물이_있는_경우_예외를_던진다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // expect
@@ -73,7 +73,7 @@ public class PlayTest {
     @Test
     void 게임이_종료_되었는지_확인한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // when

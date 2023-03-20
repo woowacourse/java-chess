@@ -6,9 +6,9 @@ import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.Map;
 
-public abstract class Initialized extends AbstractBoard {
+public abstract class InitializedState extends AbstractBoard {
 
-    protected Initialized(final Map<Position, Piece> board, final Color turn) {
+    protected InitializedState(final Map<Position, Piece> board, final Color turn) {
         super(board, turn);
     }
 

@@ -26,12 +26,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class StartTest {
+class InitialStateTest {
 
     @Test
     void 체스판을_초기화한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
 
         // when
         board = board.initialize();
@@ -59,7 +59,7 @@ class StartTest {
     @Test
     void 보드가_초기화_되었는지_확인한다() {
         // given
-        Board board = new Start();
+        final Board board = new InitialState();
 
         // when
         final boolean result = board.isInitialized();
@@ -71,7 +71,7 @@ class StartTest {
     @Test
     void 게임이_종료_되었는지_확인한다() {
         // given
-        Board board = new Start();
+        final Board board = new InitialState();
 
         // when
         final boolean result = board.isEnd();
@@ -83,10 +83,10 @@ class StartTest {
     @Test
     void 초기화_되지_않은_상태에서_기물을_움직이려는_경우_예외를_던진다() {
         // given
-        final Start start = new Start();
+        final Board board = new InitialState();
 
         // expect
-        assertThatThrownBy(() -> start.move("b2", "b3"))
+        assertThatThrownBy(() -> board.move("b2", "b3"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -94,10 +94,10 @@ class StartTest {
     @Test
     void 초기화_되지_않은_상태에서_게임_결과를_반환하려는_경우_예외를_던진다() {
         // given
-        final Start start = new Start();
+        final Board board = new InitialState();
 
         // expect
-        assertThatThrownBy(start::getResult)
+        assertThatThrownBy(board::getResult)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }

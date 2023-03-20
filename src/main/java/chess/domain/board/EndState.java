@@ -5,9 +5,9 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public final class End extends Initialized {
+public final class EndState extends InitializedState {
 
-    protected End(final Map<Position, Piece> board, final Color turn) {
+    protected EndState(final Map<Position, Piece> board, final Color turn) {
         super(board, turn);
     }
 

@@ -7,11 +7,11 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public final class Play extends Initialized {
+public final class PlayState extends InitializedState {
 
     private static final int VALID_KING_COUNT = 2;
 
-    protected Play(final Map<Position, Piece> board, final Color turn) {
+    protected PlayState(final Map<Position, Piece> board, final Color turn) {
         super(board, turn);
     }
 
@@ -29,9 +29,9 @@ public final class Play extends Initialized {
         validate(sourcePosition, targetPosition, piece);
         movePiece(sourcePosition, targetPosition, piece);
         if (isGameOver()) {
-            return new End(board, turn.nextTurn());
+            return new EndState(board, turn.nextTurn());
         }
-        return new Play(board, turn.nextTurn());
+        return new PlayState(board, turn.nextTurn());
     }
 
     private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {

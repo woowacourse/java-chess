@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class InitializedTest {
+public class InitializedStateTest {
 
     @Test
     void 이미_초기화된_보드를_초기화를_하는_경우_예외를_던진다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // expect
@@ -27,7 +27,7 @@ public class InitializedTest {
     @Test
     void 보드가_초기화_되었는지_확인한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // when
@@ -40,7 +40,7 @@ public class InitializedTest {
     @Test
     void 게임의_결과를_반환한다() {
         // given
-        Board board = new Start();
+        Board board = new InitialState();
         board = board.initialize();
 
         // when

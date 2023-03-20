@@ -3,18 +3,18 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import java.util.HashMap;
 
-public final class Start extends AbstractBoard {
+public final class InitialState extends AbstractBoard {
 
     private static final String INVALID_GAME_STATE_MESSAGE = "게임이 시작되지 않았습니다.";
 
-    public Start() {
+    public InitialState() {
         super(new HashMap<>(), Color.WHITE);
     }
 
     @Override
     public Board initialize() {
         board.putAll(BoardGenerator.generate());
-        return new Play(board, turn);
+        return new PlayState(board, turn);
     }
 
     @Override
