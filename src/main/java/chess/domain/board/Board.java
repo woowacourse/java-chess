@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int ONE_OF_KING_IS_DEAD = 1;
+    private static final int PAWNS_ARE_BEING_SAME_COLUMN = 2;
     private final Map<Position, Piece> board;
 
     public Board(final Map<Position, Piece> board) {
@@ -127,7 +129,6 @@ public class Board {
         }
     }
 
-    // todo: 점수 계산
     public double getScoreOfLowerTeam() {
         board.keySet().stream()
                 .filter(this::isLowerTeamOfPawn)
@@ -142,17 +143,22 @@ public class Board {
     }
 
     private void calculatePawnScoreOfLowerTeam(final Column column) {
-        List<Position> positions = Position.getAllPositionsByColumn(column);
+        List<Position> positions = getPositionsByColumn(column);
 
         int count = (int) positions.stream()
                 .filter(this::isLowerTeamOfPawn)
                 .count();
 
-        if (count >= 2) {
+        if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
             positions.stream()
                     .filter(position -> findPieceFromPosition(position).isPawn())
                     .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
         }
+    }
+
+    private List<Position> getPositionsByColumn(final Column column) {
+        List<Position> positions = Position.getAllPositionsByColumn(column);
+        return positions;
     }
 
     private boolean isLowerTeamOfPawn(final Position position) {
@@ -179,7 +185,7 @@ public class Board {
                 .filter(this::isUpperTeamOfPawn)
                 .count();
 
-        if (count >= 2) {
+        if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
             positions.stream()
                     .filter(position -> findPieceFromPosition(position).isPawn())
                     .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
@@ -195,7 +201,7 @@ public class Board {
                 .filter(piece -> piece.isKing())
                 .count();
 
-        return countOfKing == 1;
+        return countOfKing == ONE_OF_KING_IS_DEAD;
     }
 
     public boolean isUpperTeamWin() {
