@@ -23,9 +23,7 @@ public final class ChessGameController {
 
     private void playGame(List<String> inputs) {
         gameStatus = gameStatus.setGameStatus(inputs);
-        gameStatus.playTurn(inputs);
-
-        final ChessBoardDTO chessBoardDTO = ChessBoardDTO.from(gameStatus.getChessBoard());
+        final ChessBoardDTO chessBoardDTO = gameStatus.playTurn(inputs);
 
         OutputView.printChessBoard(chessBoardDTO);
     }

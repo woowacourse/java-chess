@@ -15,8 +15,10 @@ public final class Move extends GameStatus {
     }
 
     @Override
-    public void playTurn(final List<String> inputs) {
+    public ChessBoardDTO playTurn(final List<String> inputs) {
         chessGame.move(PositionFactory.createPosition(inputs.get(SOURCE_INDEX)), PositionFactory.createPosition(inputs.get(TARGET_INDEX)));
+
+        return ChessBoardDTO.from(chessGame.getChessBoard());
     }
 
     @Override
