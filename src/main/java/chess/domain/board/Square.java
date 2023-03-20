@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Square {
-    private static final Map<File, Map<Rank, Square>> CACHE;
+    private static final Map<String, Square> CACHE;
 
     static {
         CACHE = new LinkedHashMap<>();
         for (File file : File.values()) {
-            CACHE.put(file, createFile(file));
+            for (Rank rank : Rank.values()) {
+                String squareName = convertToFormat(file, rank);
+                Square square = new Square(file, rank);
+                CACHE.put(squareName, square);
+            }
         }
     }
 
@@ -26,31 +31,16 @@ public class Square {
         this.rank = rank;
     }
 
-    private static Map<Rank, Square> createFile(final File file) {
-        Map<Rank, Square> ranks = new LinkedHashMap<>();
-        for (Rank rank : Rank.values()) {
-            ranks.put(rank, new Square(file, rank));
-        }
-        return ranks;
-    }
-
-    public static Square from(String fileAndRank) {
-        int fileValue = fileAndRank.charAt(0) - 'a' + 1;
-        int rankValue = fileAndRank.charAt(1) - '1' + 1;
-        File file = File.from(fileValue);
-        Rank rank = Rank.from(rankValue);
-        return Square.of(file, rank);
+    public static Square from(final String fileAndRank) {
+        return CACHE.get(fileAndRank);
     }
 
     public static Square of(final File file, final Rank rank) {
-        Map<Rank, Square> rankSquareMap = CACHE.get(file);
-        return rankSquareMap.get(rank);
+        return CACHE.get(convertToFormat(file, rank));
     }
 
     public static List<Square> getAllSquares() {
-        List<Square> squares = new ArrayList<>();
-        CACHE.values().forEach(file -> squares.addAll(file.values()));
-        return squares;
+        return new ArrayList<>(CACHE.values());
     }
 
     public int calculateDistance(final Square target) {
@@ -65,6 +55,10 @@ public class Square {
 
     public int calculateFileDifference(final Square target) {
         return file.calculateDifference(target.file);
+    }
+
+    private static String convertToFormat(final File file, final Rank rank) {
+        return String.format("%s%s", file, rank);
     }
 
     public Square next(final Direction direction) {
