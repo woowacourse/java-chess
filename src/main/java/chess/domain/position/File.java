@@ -12,8 +12,8 @@ public enum File {
     G("g", 6),
     H("h", 7);
     public static final String INVALID_FILE_ERROR_MESSAGE = "잘못된 좌표입니다.";
+
     private final String label;
-    
     private final int index;
     
     File(final String label, final int index) {

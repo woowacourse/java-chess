@@ -92,7 +92,7 @@ public class Board {
         if (direction == Direction.N || direction == Direction.S) {
             checkOtherPieceInRoute(destination);
         }
-        if (List.of(Direction.NE, Direction.SE, Direction.NW, Direction.SW).contains(direction)) {
+        if (Direction.isDiagonal(direction)) {
             checkDiagonalPiece(destination);
             checkSameColor(destination, color);
         }

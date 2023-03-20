@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public enum Direction {
     N(0, 1),
@@ -19,8 +21,9 @@ public enum Direction {
     WSW(-2, -1),
     WNW(-2, 1),
     NNW(-1, 2);
-    
-    
+
+    private static final List<Direction> DIAGONAL_DIRECTIONS = List.of(Direction.NE, Direction.SE, Direction.NW, Direction.SW);
+
     private final int x;
     private final int y;
     
@@ -29,12 +32,16 @@ public enum Direction {
         this.y = y;
     }
     
-    static Direction findByVector(int x, int y) {
+    static Direction findByUnitVector(int x, int y) {
         return Arrays.stream(values())
                 .filter(value -> value.x == x)
                 .filter(value -> value.y == y)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("해당 방향이 존재하지 않습니다"));
+    }
+
+    public static boolean isDiagonal(Direction direction) {
+        return DIAGONAL_DIRECTIONS.contains(direction);
     }
     
     public int getX() {
