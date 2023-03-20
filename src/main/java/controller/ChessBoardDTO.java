@@ -3,7 +3,6 @@ package controller;
 import domain.chessboard.ChessBoard;
 import domain.coordinate.PositionFactory;
 import domain.squarestatus.SquareStatus;
-import view.ChessBoardElement;
 
 import java.util.ArrayList;
 import java.util.List;
