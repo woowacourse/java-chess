@@ -50,7 +50,7 @@ public class Player {
             final String inputTargetPosition
     ) {
         char file = inputTargetPosition.charAt(0);
-        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1)));
+        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1))) - 1;
         Position targetPosition = Position.from(rank, file);
 
         if (pieces.hasPosition(targetPosition)) {

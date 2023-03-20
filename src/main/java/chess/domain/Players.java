@@ -73,8 +73,7 @@ public class Players {
 
     public Position findPositionByInputPoint(String point) {
         char file = point.charAt(0);
-        int rank = Integer.parseInt(String.valueOf(point.charAt(1)));
-
+        int rank = Integer.parseInt(String.valueOf(point.charAt(1))) - 1;
         return getAllPosition().stream()
                 .filter(position -> position.isSame(file, rank))
                 .findFirst()
@@ -82,7 +81,6 @@ public class Players {
     }
 
     public Player findPlayerByPosition(Position findPosition) {
-
         return players.stream()
                 .filter(player -> player.hasPositionPiece(findPosition))
                 .findFirst()
