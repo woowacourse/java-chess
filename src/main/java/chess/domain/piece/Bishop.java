@@ -16,6 +16,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
         final Movement movement = to.convertMovement(from);

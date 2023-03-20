@@ -34,6 +34,11 @@ public class Pawn extends Piece {
         super(color);
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
     public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
         destination.ifPresent(super::validateSameColor);
         final Movement movement = to.convertMovement(from);

@@ -50,5 +50,14 @@ public abstract class Piece {
         return new Path(positions);
     }
 
+    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
+        if (!destination.isEmpty()) {
+            validateSameColor(destination);
+        }
+        
+    }
+
+    public abstract boolean isEmpty();
+
     public abstract Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination);
 }
