@@ -10,6 +10,8 @@ import java.util.List;
 
 public class OutputView {
 
+    private static final String ERROR_PREFIX = "[ERROR] ";
+
     public static void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -53,6 +55,14 @@ public class OutputView {
     }
 
     public static void printFinishMessage() {
-        System.out.println(System.lineSeparator() + "end");
+        System.out.println(System.lineSeparator() + "체스 게임을 종료합니다.");
+    }
+
+    public static void printError(final String errorMessage) {
+        System.out.println(ERROR_PREFIX + errorMessage);
+    }
+
+    public static void printCommandLine() {
+        System.out.print("> ");
     }
 }
