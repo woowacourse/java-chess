@@ -8,7 +8,7 @@ import chess.domain.position.move.PieceMove;
 public final class Queen extends Piece {
 
     public Queen(Camp camp) {
-        super(camp, PieceSymbol.QUEEN);
+        super(camp);
     }
 
     @Override

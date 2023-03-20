@@ -7,11 +7,9 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Camp camp;
-    private final PieceSymbol pieceSymbol;
 
-    Piece(Camp camp, PieceSymbol pieceSymbol) {
+    protected Piece(Camp camp) {
         this.camp = camp;
-        this.pieceSymbol = pieceSymbol;
     }
 
     public boolean isBlack() {
@@ -49,9 +47,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(camp);
-    }
-
-    public PieceSymbol getPieceSymbol() {
-        return pieceSymbol;
     }
 }

@@ -11,7 +11,7 @@ public final class Pawn extends Piece {
     private boolean isMoved = false;
 
     public Pawn(Camp camp) {
-        super(camp, PieceSymbol.PAWN);
+        super(camp);
     }
 
     @Override

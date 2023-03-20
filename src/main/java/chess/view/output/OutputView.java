@@ -41,10 +41,10 @@ public final class OutputView {
 
     private String getViewSymbolOfPiece(Piece piece) {
         if (piece.isBlack()) {
-            return BlackPieceSymbolView.getViewSymbolBy(piece.getPieceSymbol());
+            return BlackPieceSymbolView.getViewSymbolBy(piece);
         }
 
-        return WhitePieceSymbolView.getViewSymbolBy(piece.getPieceSymbol());
+        return WhitePieceSymbolView.getViewSymbolBy(piece);
     }
 
     private void checkLineBreak(StringBuilder chessBoardView) {

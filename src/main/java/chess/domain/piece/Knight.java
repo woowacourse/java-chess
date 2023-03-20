@@ -8,7 +8,7 @@ import chess.domain.position.move.PieceMove;
 public final class Knight extends Piece {
 
     public Knight(Camp camp) {
-        super(camp, PieceSymbol.KNIGHT);
+        super(camp);
     }
 
     @Override
