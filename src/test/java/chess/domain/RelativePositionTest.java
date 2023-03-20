@@ -140,5 +140,4 @@ class RelativePositionTest {
 			assertThat(relativePosition.isDiagonal()).isEqualTo(false);
 		}
 	}
-
 }
