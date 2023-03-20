@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.move.enums.DiagonalMove;
-import chess.domain.move.enums.KnightMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.piece.Direction.LEFT_DOWN_DOWN;
+import static chess.domain.piece.Direction.LEFT_UP;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +17,7 @@ class KingTest {
         final King king = new King(Team.WHITE);
 
         // then
-        assertTrue(king.movable(DiagonalMove.LEFT_UP));
+        assertTrue(king.movable(LEFT_UP));
     }
 
     @Test
@@ -27,7 +27,7 @@ class KingTest {
         final King king = new King(Team.WHITE);
 
         // then
-        assertFalse(king.movable(KnightMove.LEFT_DOWN_DOWN));
+        assertFalse(king.movable(LEFT_DOWN_DOWN));
     }
 
     @Test

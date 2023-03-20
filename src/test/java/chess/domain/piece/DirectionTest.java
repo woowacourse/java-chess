@@ -1,6 +1,5 @@
-package chess.domain.move;
+package chess.domain.piece;
 
-import chess.domain.move.enums.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -8,9 +7,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static chess.domain.piece.Direction.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class MoveHandlerTest {
+class DirectionTest {
 
     @Nested
     class 상하좌우_테스트 {
@@ -20,10 +21,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.ONE);
             final Position target = Position.of(File.B, Rank.ONE);
-            final MoveEnum expected = HorizontalMove.RIGHT;
+            final Direction expected = RIGHT;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -35,10 +36,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.B, Rank.ONE);
             final Position target = Position.of(File.A, Rank.ONE);
-            final MoveEnum expected = HorizontalMove.LEFT;
+            final Direction expected = LEFT;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -50,10 +51,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.ONE);
             final Position target = Position.of(File.A, Rank.TWO);
-            final MoveEnum expected = VerticalMove.UP;
+            final Direction expected = UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -65,10 +66,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.TWO);
             final Position target = Position.of(File.A, Rank.ONE);
-            final MoveEnum expected = VerticalMove.DOWN;
+            final Direction expected = DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -84,10 +85,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.ONE);
             final Position target = Position.of(File.B, Rank.TWO);
-            final MoveEnum expected = DiagonalMove.RIGHT_UP;
+            final Direction expected = RIGHT_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -99,10 +100,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.B, Rank.ONE);
             final Position target = Position.of(File.A, Rank.TWO);
-            final MoveEnum expected = DiagonalMove.LEFT_UP;
+            final Direction expected = LEFT_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -114,10 +115,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.TWO);
             final Position target = Position.of(File.B, Rank.ONE);
-            final MoveEnum expected = DiagonalMove.RIGHT_DOWN;
+            final Direction expected = RIGHT_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -129,10 +130,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.B, Rank.TWO);
             final Position target = Position.of(File.A, Rank.ONE);
-            final MoveEnum expected = DiagonalMove.LEFT_DOWN;
+            final Direction expected = LEFT_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -147,10 +148,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.B, Rank.ONE);
             final Position target = Position.of(File.A, Rank.THREE);
-            final MoveEnum expected = KnightMove.LEFT_UP_UP;
+            final Direction expected = LEFT_UP_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -162,10 +163,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.ONE);
             final Position target = Position.of(File.B, Rank.THREE);
-            final MoveEnum expected = KnightMove.RIGHT_UP_UP;
+            final Direction expected = RIGHT_UP_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -177,10 +178,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.ONE);
             final Position target = Position.of(File.C, Rank.TWO);
-            final MoveEnum expected = KnightMove.RIGHT_RIGHT_UP;
+            final Direction expected = RIGHT_RIGHT_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -192,10 +193,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.TWO);
             final Position target = Position.of(File.C, Rank.ONE);
-            final MoveEnum expected = KnightMove.RIGHT_RIGHT_DOWN;
+            final Direction expected = RIGHT_RIGHT_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -207,10 +208,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.A, Rank.THREE);
             final Position target = Position.of(File.B, Rank.ONE);
-            final MoveEnum expected = KnightMove.RIGHT_DOWN_DOWN;
+            final Direction expected = RIGHT_DOWN_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -222,10 +223,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.B, Rank.THREE);
             final Position target = Position.of(File.A, Rank.ONE);
-            final MoveEnum expected = KnightMove.LEFT_DOWN_DOWN;
+            final Direction expected = LEFT_DOWN_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -237,10 +238,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.C, Rank.TWO);
             final Position target = Position.of(File.A, Rank.ONE);
-            final MoveEnum expected = KnightMove.LEFT_LEFT_DOWN;
+            final Direction expected = LEFT_LEFT_DOWN;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -252,10 +253,10 @@ class MoveHandlerTest {
             // given
             final Position source = Position.of(File.C, Rank.ONE);
             final Position target = Position.of(File.A, Rank.TWO);
-            final MoveEnum expected = KnightMove.LEFT_LEFT_UP;
+            final Direction expected = LEFT_LEFT_UP;
 
             // when
-            final MoveEnum actual = MoveHandler.findByPosition(source, target);
+            final Direction actual = findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -269,8 +270,8 @@ class MoveHandlerTest {
         final Position target = Position.of(File.H, Rank.SEVEN);
 
         // then
-        assertThatThrownBy(() -> MoveHandler.findByPosition(source, target))
+        assertThatThrownBy(() -> findByPosition(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 방향입니다.");
+                .hasMessage("이동할 수 없는 방향입니다");
     }
 }

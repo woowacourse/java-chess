@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.move.enums.DiagonalMove;
-import chess.domain.move.enums.HorizontalMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.piece.Direction.LEFT;
+import static chess.domain.piece.Direction.LEFT_UP;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +18,7 @@ class RookTest {
         final Rook rook = new Rook(Team.WHITE);
 
         // then
-        assertTrue(rook.movable(HorizontalMove.LEFT));
+        assertTrue(rook.movable(LEFT));
     }
 
     @Test
@@ -28,7 +28,7 @@ class RookTest {
         final Rook rook = new Rook(Team.WHITE);
 
         // then
-        assertFalse(rook.movable(DiagonalMove.LEFT_UP));
+        assertFalse(rook.movable(LEFT_UP));
     }
 
     @Test

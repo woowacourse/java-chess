@@ -1,7 +1,6 @@
 package chess.domain;
 
-import chess.domain.move.MoveHandler;
-import chess.domain.move.enums.MoveEnum;
+import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -33,9 +32,9 @@ public class Board {
     public void move(final Position source, final Position target) {
         validateNotSamePosition(source, target);
         validateSourceNotEmpty(source);
-        validateNotSameColor(source, target);
+        validateNotSameTeam(source, target);
 
-        MoveEnum unitVector = MoveHandler.findByPosition(source, target);
+        Direction unitVector = Direction.findByPosition(source, target);
 
         Piece piece = board.get(source);
 
@@ -65,7 +64,7 @@ public class Board {
         return board.get(source).equals(new Empty(Team.NONE));
     }
 
-    private void validateNotSameColor(final Position source, final Position target) {
+    private void validateNotSameTeam(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
@@ -74,25 +73,25 @@ public class Board {
         }
     }
 
-    private void validateMovable(final Piece piece, final MoveEnum unit) {
+    private void validateMovable(final Piece piece, final Direction unit) {
         if (!piece.movable(unit)) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validatePath(final Position source, final Position target, final MoveEnum unit, final Piece piece) {
+    private void validatePath(final Position source, final Position target, final Direction unit, final Piece piece) {
         List<Position> path = calculatePath(source, target, unit);
         validatePathIsEmpty(path);
         validateMovableByCount(piece, path.size() + 1);
     }
 
-    private List<Position> calculatePath(Position source, Position target, MoveEnum unit) {
+    private List<Position> calculatePath(Position source, Position target, Direction unit) {
         char file = source.file();
         int rank = source.rank();
         return searchPath(target, unit, file, rank);
     }
 
-    private static List<Position> searchPath(final Position target, final MoveEnum unit, char file, int rank) {
+    private static List<Position> searchPath(final Position target, final Direction unit, char file, int rank) {
         List<Position> path = new ArrayList<>();
 
         while (file != target.file() || rank != target.rank()) {

@@ -99,7 +99,7 @@ class BoardTest {
 
     @Test
     @DisplayName("체스말이 성공적으로 이동하는지 확인하는 테스트")
-    void movePiece(){
+    void movePiece() {
         final Position source = Position.of(File.B, Rank.ONE);
         final Position target = Position.of(File.C, Rank.THREE);
 

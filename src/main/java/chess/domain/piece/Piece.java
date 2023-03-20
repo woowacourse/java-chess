@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.move.enums.MoveEnum;
 import chess.domain.team.Team;
+
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -11,7 +12,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean movable(final MoveEnum move);
+    public abstract boolean movable(final Direction direction);
 
     public abstract boolean movableByCount(final int count);
 
@@ -21,5 +22,18 @@ public abstract class Piece {
 
     public Team team() {
         return team;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Piece piece = (Piece) o;
+        return team == piece.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team);
     }
 }

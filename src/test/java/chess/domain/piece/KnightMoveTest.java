@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.move.enums.KnightMove;
-import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.piece.Direction.DOWN;
+import static chess.domain.piece.Direction.LEFT_UP_UP;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +17,7 @@ class KnightMoveTest {
         final Knight knight = new Knight(Team.WHITE);
 
         // then
-        assertTrue(knight.movable(KnightMove.LEFT_UP_UP));
+        assertTrue(knight.movable(LEFT_UP_UP));
     }
 
     @Test
@@ -27,7 +27,7 @@ class KnightMoveTest {
         final Knight knight = new Knight(Team.WHITE);
 
         // then
-        assertFalse(knight.movable(VerticalMove.DOWN));
+        assertFalse(knight.movable(DOWN));
     }
 
     @Test

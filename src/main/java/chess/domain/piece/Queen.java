@@ -1,29 +1,23 @@
 package chess.domain.piece;
 
-import chess.domain.move.enums.DiagonalMove;
-import chess.domain.move.enums.HorizontalMove;
-import chess.domain.move.enums.MoveEnum;
-import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Queen extends Piece {
-    private static final List<MoveEnum> moves = new ArrayList<>();
+import static chess.domain.piece.Direction.*;
 
-    static {
-        moves.addAll(List.of(HorizontalMove.values()));
-        moves.addAll(List.of(VerticalMove.values()));
-        moves.addAll(List.of(DiagonalMove.values()));
-    }
+public final class Queen extends Piece {
+    private static final List<Direction> moves = List.of(
+            RIGHT, LEFT, UP, DOWN,
+            RIGHT_UP, RIGHT_DOWN, LEFT_UP, LEFT_DOWN
+    );
 
     public Queen(final Team team) {
         super(team);
     }
 
     @Override
-    public boolean movable(final MoveEnum move) {
+    public boolean movable(final Direction move) {
         return moves.contains(move);
     }
 
