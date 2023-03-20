@@ -1,5 +1,7 @@
 package chess.domain.chess;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -18,4 +20,22 @@ class CampTypeTest {
                 .isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("기존의 진영에서 다른 진영으로 턴을 변경한다.")
+    void changeTurn() {
+        // given
+        CampType white = CampType.WHITE;
+        CampType black = CampType.BLACK;
+
+        // when
+        CampType whiteActual = white.changeTurn();
+        CampType blackActual = black.changeTurn();
+
+        // then
+        assertThat(whiteActual)
+                .isEqualTo(black);
+
+        assertThat(blackActual)
+                .isEqualTo(white);
+    }
 }
