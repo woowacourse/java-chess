@@ -6,6 +6,8 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import static chess.view.GameCommand.END;
+import static chess.view.PositionConverter.convertToSourcePosition;
+import static chess.view.PositionConverter.convertToTargetPosition;
 
 public class ChessController {
 
@@ -65,7 +67,7 @@ public class ChessController {
     }
 
     private boolean startGame(ChessGame chessGame, String command) {
-        chessGame.progress(command);
+        chessGame.progress(convertToSourcePosition(command), convertToTargetPosition(command));
         return true;
     }
 }

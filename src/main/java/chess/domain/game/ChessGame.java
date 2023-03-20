@@ -2,9 +2,6 @@ package chess.domain.game;
 
 import chess.domain.piece.Team;
 
-import static chess.view.PositionConverter.convertToSourcePosition;
-import static chess.view.PositionConverter.convertToTargetPosition;
-
 public class ChessGame {
 
     private final Board board;
@@ -15,9 +12,7 @@ public class ChessGame {
         this.turn = Team.getStartTeam();
     }
 
-    public void progress(String command) {
-        Position source = convertToSourcePosition(command);
-        Position target = convertToTargetPosition(command);
+    public void progress(Position source, Position target) {
         if (board.isCorrectTeam(source, turn)) {
             board.move(source, target);
             turn = turn.reverse();
