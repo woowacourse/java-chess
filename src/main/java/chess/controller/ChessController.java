@@ -7,6 +7,7 @@ import chess.board.Rank;
 import chess.board.dto.BoardDto;
 import chess.game.GameCommand;
 import chess.game.GameStatus;
+import chess.piece.AllPiecesGenerator;
 import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -43,7 +44,7 @@ public class ChessController {
     }
 
     private Board setUp() {
-        Board board = new Board(new Pieces());
+        Board board = new Board(new Pieces(new AllPiecesGenerator()));
         OutputView.printGameStartMessage();
         OutputView.printGameCommandInputMessage();
         return board;

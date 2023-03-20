@@ -2,6 +2,7 @@ package chess.board;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.piece.AllPiecesGenerator;
 import chess.piece.Pieces;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ class BoardTest {
 
     @BeforeEach
     void init() {
-        board = new Board(new Pieces());
+        board = new Board(new Pieces(new AllPiecesGenerator()));
     }
 
     @Test
