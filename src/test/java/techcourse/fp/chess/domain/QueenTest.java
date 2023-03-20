@@ -52,12 +52,4 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("행마법상 이동 불가능한 지역입니다.");
     }
-
-    @DisplayName("목적 지점에 아군의 기물이 있으면 예외가 발생한다.")
-    @Test
-    void fail_by_same_color_piece() {
-        assertThatThrownBy(() -> queen.findPath(A1, H8, Color.BLACK))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
-    }
 }

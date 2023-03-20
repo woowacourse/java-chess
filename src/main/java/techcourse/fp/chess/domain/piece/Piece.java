@@ -16,6 +16,10 @@ public abstract class Piece {
 
     public abstract List<Position> findPath(final Position source, final Position target, final Color targetColor);
 
+    public boolean isAlly(Piece otherPiece) {
+        return color.isSameColor(otherPiece.color);
+    }
+
     public boolean isEmpty() {
         return color.isEmpty();
     }

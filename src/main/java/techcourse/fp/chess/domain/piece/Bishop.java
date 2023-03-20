@@ -29,11 +29,6 @@ public final class Bishop extends MovablePiece {
     public List<Position> findPath(final Position source, final Position target,
                                    final Color targetColor) {
         final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
-
-        if (targetColor.isSameColor(this.color)) {
-            throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
-        }
-
         return createPath(source, target, movingStrategy);
     }
 
