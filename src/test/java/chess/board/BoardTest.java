@@ -21,7 +21,7 @@ class BoardTest {
 
     @BeforeEach
     void init() {
-        board = new Board(new Pieces(new AllPiecesGenerator()));
+        board = new Board(new Pieces(new AllPiecesGenerator()), Side.WHITE);
     }
 
     @Test
@@ -83,7 +83,7 @@ class BoardTest {
         Board fixedBoard = new Board(new Pieces(() -> List.of(
                 new Rook(sourcePosition, Side.WHITE),
                 new Pawn(targetPosition, Side.BLACK)
-        )));
+        )), Side.WHITE);
         final int beforeMoveSize = fixedBoard.getPieces().size();
 
         // when
@@ -104,7 +104,7 @@ class BoardTest {
         Board fixedBoard = new Board(new Pieces(() -> List.of(
                 new Rook(sourcePosition, Side.WHITE),
                 new Pawn(pawnPosition, Side.BLACK)
-        )));
+        )), Side.WHITE);
         final int beforeMoveSize = fixedBoard.getPieces().size();
 
         // when
@@ -124,7 +124,7 @@ class BoardTest {
         Board fixedBoard = new Board(new Pieces(() -> List.of(
                 new Pawn(sourcePosition, Side.WHITE),
                 new Pawn(targetPosition, Side.BLACK)
-        )));
+        )), Side.WHITE);
         final int beforeMoveSize = fixedBoard.getPieces().size();
 
         // when
@@ -143,7 +143,7 @@ class BoardTest {
         final Position targetPosition = new Position(File.C, Rank.FIVE);
         Board fixedBoard = new Board(new Pieces(() -> List.of(
                 new Pawn(sourcePosition, Side.WHITE)
-        )));
+        )), Side.WHITE);
 
         // when, then
         assertThatThrownBy(() -> fixedBoard.movePiece(sourcePosition, targetPosition))
@@ -151,4 +151,30 @@ class BoardTest {
                 .hasMessage("[ERROR] 폰은 대각 방향에 적이 있을 때만 대각으로 이동할 수 있습니다.");
     }
 
+    @Test
+    @DisplayName("흰색 진영이 기물을 옮길 차례일 때, 검은색 진영의 기물을 옮기면 예외가 발생한다.")
+    void checkTurnToMove_whiteTurn_throws() {
+        // given
+        final Position blackPiecePosition = new Position(File.A, Rank.SEVEN);
+        final Position targetPosition = new Position(File.A, Rank.SIX);
+
+        // when, then
+        assertThatThrownBy(() -> board.movePiece(blackPiecePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("검은색 진영이 기물을 옮길 차례일 때, 흰색 진영의 기물을 옮기면 예외가 발생한다.")
+    void checkTurnToMove_blackTurn_throws() {
+        // given
+        final Board blackFirstBoard = new Board(new Pieces(new AllPiecesGenerator()), Side.BLACK);
+        final Position whitePiecePosition = new Position(File.A, Rank.TWO);
+        final Position targetPosition = new Position(File.A, Rank.THREE);
+
+        // when, then
+        assertThatThrownBy(() -> blackFirstBoard.movePiece(whitePiecePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
+    }
 }
