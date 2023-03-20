@@ -17,7 +17,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         inputView.printStartChess();
-        boolean keepPlaying = commend.operate(chessGame);
+        boolean keepPlaying = catchException(chessGame);
         while (keepPlaying) {
             keepPlaying = catchException(chessGame);
         }
