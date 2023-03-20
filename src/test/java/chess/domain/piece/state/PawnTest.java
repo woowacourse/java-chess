@@ -92,7 +92,7 @@ class PawnTest {
 
 
     @Test
-    void 폰는_도착지_스퀘어에_같은_팀이_있으면_갈_수_없다는_예외가_발생() {
+    void 폰은_도착지_스퀘어에_같은_팀이_있으면_갈_수_없다는_예외가_발생() {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
@@ -104,7 +104,7 @@ class PawnTest {
     }
 
     @Test
-    void 폰는_도착지가_비어있으면_예외가_발생하지_않는다() {
+    void 폰은_도착지가_비어있으면_예외가_발생하지_않는다() {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
