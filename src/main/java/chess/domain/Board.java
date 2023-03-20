@@ -26,15 +26,16 @@ public class Board {
         return new Board(board);
     }
 
-    public void move(final Position source, final Position target, final Color currentPlayer) {
-        validateRange(source, target);
+    public void move(final Position source, final Position target, final Color color) {
+        validateInvalidBoundary(source, target);
+
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
-        validateInvalidColor(currentPlayer, sourcePiece, targetPiece);
+        validateInvalidColor(color, sourcePiece, targetPiece);
         validateInvalidPosition(source, target, sourcePiece);
-        validateBlockedPosition(source, target, sourcePiece);
-        validateIfPawnUnmovable(source, target, sourcePiece);
+        validateInvalidMove(source, target, sourcePiece);
+        validateInvalidMovePawn(source, target, sourcePiece);
 
         board.put(target, sourcePiece);
         board.put(source, Empty.create());
@@ -48,19 +49,19 @@ public class Board {
         }
     }
 
-    private void validateBlockedPosition(final Position source, final Position target, final Piece sourcePiece) {
+    private void validateInvalidMove(final Position source, final Position target, final Piece sourcePiece) {
         final List<Position> positions = sourcePiece.findPositions(source, target);
 
-        final boolean isCrossed = positions.subList(0, positions.indexOf(target))
+        final boolean isMoveAble = positions.subList(0, positions.indexOf(target))
                 .stream()
-                .anyMatch(this::isCrossed);
+                .anyMatch(this::isBlocked);
 
-        if (isCrossed) {
+        if (isMoveAble) {
             throw new IllegalArgumentException("이동 위치가 다른 기물에 의해 막혀 있습니다.");
         }
     }
 
-    private boolean isCrossed(final Position position) {
+    private boolean isBlocked(final Position position) {
         return board.getOrDefault(position, Empty.create()).isNotSamePieceType(PieceType.EMPTY);
     }
 
@@ -74,40 +75,40 @@ public class Board {
         }
     }
 
-    private void validateIfPawnUnmovable(final Position source, final Position target, final Piece sourcePiece) {
-        if (sourcePiece.isSamePieceType(PieceType.PAWN) && isPawnUnmovable(source, target)) {
+    private void validateInvalidMovePawn(final Position source, final Position target, final Piece sourcePiece) {
+        if (sourcePiece.isSamePieceType(PieceType.PAWN)
+                && isNotMovablePawn(source, target)
+                && isNotDiagonalMoveAblePawn(source, target)) {
             throw new IllegalArgumentException("폰이 이동할 수 없는 위치입니다.");
         }
     }
 
-    private boolean isPawnUnmovable(final Position source, final Position target) {
-        return !(isFrontMove(source, target, PAWN_SINGLE_MOVE)
-                || isFrontMove(source, target, PAWN_DOUBLE_MOVE)
-                || isDiagonalMove(source, target));
+    private boolean isNotMovablePawn(final Position source, final Position target) {
+        return !(isMoveAble(source, target, PAWN_SINGLE_MOVE) || isMoveAble(source, target, PAWN_DOUBLE_MOVE));
     }
 
-    private boolean isFrontMove(final Position source, final Position target, final int moveCount) {
-        return source.getRow() == target.getRow()
-                && Math.abs(source.getColumn() - target.getColumn()) == moveCount
-                && board.get(target).isSamePieceType(PieceType.EMPTY);
+    private boolean isMoveAble(final Position source, final Position target, final int move) {
+        return source.isSameRow(target.getRow())
+                && source.calculateColumnDistance(target.getColumn()) == move
+                && piece(target).isSamePieceType(PieceType.EMPTY);
     }
 
-    private boolean isDiagonalMove(final Position source, final Position target) {
-        return Math.abs(source.getRow() - target.getRow()) == 1
-                && Math.abs(source.getColumn() - target.getColumn()) == 10
-                && board.get(target).isNotSamePieceType(PieceType.EMPTY);
+    private boolean isNotDiagonalMoveAblePawn(final Position source, final Position target) {
+        return !(source.calculateRowDistance(target.getRow()) == 1
+                && source.calculateColumnDistance(target.getColumn()) == 1
+                && piece(target).isNotSamePieceType(PieceType.EMPTY));
     }
 
-    private void validateRange(final Position source, final Position target) {
-        final int maxRange = (int) Math.sqrt(board.size());
-        if (isRangeOver(source, maxRange) || isRangeOver(target, maxRange)) {
+    private void validateInvalidBoundary(final Position source, final Position target) {
+        final int boardMinIndex = 0;
+        final int boardMaxIndex = (int) Math.sqrt(board.size());
+        if (source.isOverBoundary(boardMinIndex, boardMaxIndex) || target.isOverBoundary(boardMinIndex, boardMaxIndex)) {
             throw new IllegalArgumentException("입력 값이 보드의 범위를 초과하였습니다.");
         }
     }
 
-    private boolean isRangeOver(final Position position, final int maxRange) {
-        return 0 > position.getColumn() || position.getColumn() > maxRange
-                || 0 > position.getRow() || position.getRow() > maxRange;
+    private Piece piece(final Position position) {
+        return board.get(position);
     }
 
     public Map<Position, Piece> getBoard() {

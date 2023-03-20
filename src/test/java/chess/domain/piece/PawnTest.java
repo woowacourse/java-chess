@@ -38,7 +38,8 @@ class PawnTest {
                         List.of(
                                 Position.of(0, 5),
                                 Position.of(2, 5),
-                                Position.of(1, 4)
+                                Position.of(1, 4),
+                                Position.of(1, 5)
                         )
                 ),
                 // 1칸 앞으로 전진
@@ -56,7 +57,8 @@ class PawnTest {
                         List.of(
                                 Position.of(2, 5),
                                 Position.of(0, 5),
-                                Position.of(1, 4)
+                                Position.of(1, 4),
+                                Position.of(1, 5)
                         )
                 )
         );

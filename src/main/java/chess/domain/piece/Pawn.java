@@ -27,10 +27,15 @@ public final class Pawn extends Piece {
     }
 
     private List<Position> createMovablePositions(final Position source, final Position target) {
+        final List<Position> result = new ArrayList<>();
+
+        result.add(Position.of(source.getRow(), source.getColumn() + directionDecider()));
         if (source.isNotDistanceTwo(target)) {
-            return List.of(Position.of(source.getRow(), source.getColumn() + directionDecider()));
+            return result;
         }
-        return calculateDistanceTwoCases(source);
+
+        result.addAll(calculateDistanceTwoCases(source));
+        return result;
     }
 
     private int directionDecider() {
@@ -42,17 +47,17 @@ public final class Pawn extends Piece {
 
     private List<Position> calculateDistanceTwoCases(final Position source) {
         final List<Position> result = new ArrayList<>();
-        result.add(createPawnCaptureLeft(source));
-        result.add(createPawnCaptureRight(source));
         if (isStartPosition(source)) {
             result.add(createPawnDoubleMove(source));
         }
+        result.add(createPawnCaptureLeft(source));
+        result.add(createPawnCaptureRight(source));
         return result;
     }
 
     private boolean isStartPosition(final Position source) {
-        int blackColorStartIndex = 1;
-        int whiteColorStartIndex = 6;
+        final int blackColorStartIndex = 1;
+        final int whiteColorStartIndex = 6;
         return source.getColumn() == blackColorStartIndex || source.getColumn() == whiteColorStartIndex;
     }
 
@@ -67,7 +72,7 @@ public final class Pawn extends Piece {
     }
 
     private Position createPawnDoubleMove(final Position source) {
-        int twoMove = 2;
+        final int twoMove = 2;
         final int pawnDirection = directionDecider();
         return Position.of(source.getRow(), source.getColumn() + twoMove * pawnDirection);
     }
