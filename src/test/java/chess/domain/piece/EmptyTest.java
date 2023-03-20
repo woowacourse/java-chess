@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.move.enums.DiagonalMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class EmptyTest {
         final Empty empty = new Empty(Team.NONE);
 
         // then
-        assertFalse(empty.movable(Direction.LEFT_UP));
+        assertFalse(empty.movable(DiagonalMove.LEFT_UP));
     }
 
     @Test

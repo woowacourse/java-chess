@@ -36,9 +36,6 @@ public enum Direction {
         int dx = diffFile(source, target);
         int dy = diffRank(source, target);
 
-        if (dx == 0 && dy == 0) {
-            throw new IllegalArgumentException("출발점과 도착점은 같을 수 없습니다.");
-        }
         if (dx == 0) {
             return calculateVertical(dx, dy);
         }

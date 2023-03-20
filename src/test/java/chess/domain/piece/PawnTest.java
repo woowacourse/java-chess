@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.BLACK);
 
         // then
-        assertTrue(pawn.movable(Direction.DOWN));
+        assertTrue(pawn.movable(VerticalMove.DOWN));
     }
 
     @Test
@@ -27,7 +28,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.WHITE);
 
         // then
-        assertTrue(pawn.movable(Direction.UP));
+        assertTrue(pawn.movable(VerticalMove.UP));
     }
 
     @Test

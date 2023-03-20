@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.move.Direction;
+import chess.domain.move.DirectionHandler;
+import chess.domain.move.enums.MoveEnum;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -32,7 +34,8 @@ public class Board {
         validateSourceNotEmpty(source);
         validateNotSameColor(source, target);
 
-        Direction unit = Direction.calculateUnitDirection(source, target);
+        MoveEnum unit = DirectionHandler.findByPosition(source, target);
+
         Piece piece = board.get(source);
 
         validateMovable(piece, unit);
@@ -70,25 +73,25 @@ public class Board {
         }
     }
 
-    private void validateMovable(final Piece piece, final Direction unit) {
+    private void validateMovable(final Piece piece, final MoveEnum unit) {
         if (!piece.movable(unit)) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validatePath(final Position source, final Position target, final Direction unit, final Piece piece) {
+    private void validatePath(final Position source, final Position target, final MoveEnum unit, final Piece piece) {
         List<Position> path = calculatePath(source, target, unit);
         validatePathIsEmpty(path);
         validateMovableByCount(piece, path.size() + 1);
     }
 
-    private List<Position> calculatePath(Position source, Position target, Direction unit) {
+    private List<Position> calculatePath(Position source, Position target, MoveEnum unit) {
         char file = source.file();
         int rank = source.rank();
         return searchPath(target, unit, file, rank);
     }
 
-    private static List<Position> searchPath(final Position target, final Direction unit, char file, int rank) {
+    private static List<Position> searchPath(final Position target, final MoveEnum unit, char file, int rank) {
         List<Position> path = new ArrayList<>();
 
         while (file != target.file() || rank != target.rank()) {

@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.move.enums.MoveEnum;
+import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 
-import static chess.domain.move.Direction.DOWN;
-import static chess.domain.move.Direction.UP;
+import static chess.domain.move.enums.VerticalMove.*;
 
 public final class Pawn extends Piece {
 
@@ -23,11 +24,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction direction) {
+    public boolean movable(final MoveEnum move) {
         if (name().equals(name().toUpperCase())) {
-            return DOWN.equals(direction);
+            return DOWN.equals(move);
         }
-        return UP.equals(direction);
+        return UP.equals(move);
     }
 
     @Override

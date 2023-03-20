@@ -1,15 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
+import chess.domain.move.enums.DiagonalMove;
+import chess.domain.move.enums.MoveEnum;
 import chess.domain.team.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-
-import static chess.domain.move.Direction.*;
 
 public final class Bishop extends Piece {
 
-    private static final Set<Direction> directions = Set.of(LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);
+    private static final List<MoveEnum> moves = new ArrayList<>();
+
+    static {
+        moves.addAll(List.of(DiagonalMove.values()));
+    }
 
     public Bishop(final Team team) {
         super(team);
@@ -24,8 +29,8 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction direction) {
-        return directions.contains(direction);
+    public boolean movable(final MoveEnum move) {
+        return moves.contains(move);
     }
 
     @Override

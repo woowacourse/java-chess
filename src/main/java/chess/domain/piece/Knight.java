@@ -1,15 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.move.enums.KnightMove;
+import chess.domain.move.enums.MoveEnum;
 import chess.domain.team.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-
-import static chess.domain.move.Direction.*;
 
 public final class Knight extends Piece {
 
-    private static final Set<Direction> directions = Set.of(KNIGHT_DOWN_LEFT, KNIGHT_DOWN_RIGHT, KNIGHT_UP_LEFT, KNIGHT_UP_RIGHT, KNIGHT_LEFT_UP, KNIGHT_LEFT_DOWN);
+    private static final List<MoveEnum> moves = new ArrayList<>();
+
+    static {
+        moves.addAll(List.of(KnightMove.values()));
+    }
 
     public Knight(final Team team) {
         super(team);
@@ -24,8 +30,8 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction direction) {
-        return directions.contains(direction);
+    public boolean movable(final MoveEnum move) {
+        return moves.contains(move);
     }
 
     @Override

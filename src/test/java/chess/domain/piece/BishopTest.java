@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
+import chess.domain.move.enums.DiagonalMove;
+import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Team.WHITE);
 
         // then
-        assertTrue(bishop.movable(Direction.LEFT_UP));
+        assertTrue(bishop.movable(DiagonalMove.LEFT_UP));
     }
 
     @Test
@@ -27,7 +28,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Team.WHITE);
 
         // then
-        assertFalse(bishop.movable(Direction.DOWN));
+        assertFalse(bishop.movable(VerticalMove.DOWN));
     }
 
     @Test

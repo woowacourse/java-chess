@@ -1,14 +1,22 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
+import chess.domain.move.enums.HorizontalMove;
+import chess.domain.move.enums.MoveEnum;
+import chess.domain.move.enums.VerticalMove;
 import chess.domain.team.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-import static chess.domain.move.Direction.*;
-
 public final class Rook extends Piece {
-    private static final Set<Direction> directions = Set.of(UP, DOWN, LEFT, RIGHT);
+    private static final List<MoveEnum> moves = new ArrayList<>();
+
+    static {
+        moves.addAll(List.of(HorizontalMove.values()));
+        moves.addAll(List.of(VerticalMove.values()));
+    }
 
     public Rook(final Team team) {
         super(team);
@@ -23,8 +31,8 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction direction) {
-        return directions.contains(direction);
+    public boolean movable(final MoveEnum move) {
+        return moves.contains(move);
     }
 
     @Override
