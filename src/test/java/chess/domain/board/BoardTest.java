@@ -19,7 +19,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = new Board(new BoardMaker());
     }
 
     @Test

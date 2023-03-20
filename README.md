@@ -10,9 +10,15 @@
 
 ```mermaid
 graph TD
+    subgraph View
+        GameController --> OutputView
+        GameController --> InputView
+        OutputView --> PieceRender
+        Command
+    end
+
     subgraph domain
-        GameController --> ChessGame
-        ChessGame --> Board
+        GameController --> Board
         Board --> Rank
         Rank --> Square
         Square --> Position
@@ -20,13 +26,6 @@ graph TD
         Piece --> Team
         Direction
         UnitVector
-    end
-
-    subgraph View
-        GameController --> OutputView
-        GameController --> InputView
-        OutputView --> PieceRender
-        Command
     end
 ```
 

@@ -21,9 +21,7 @@ public class BoardMaker {
     private static final int START_MIDDLE_ROW = 2;
     private static final int END_MIDDLE_ROW = 5;
 
-    private BoardMaker() {}
-
-    public static List<Rank> create() {
+    public List<Rank> createBoard() {
         List<Rank> ranks = new ArrayList<>();
 
         ranks.add(createFirstRank());
@@ -37,7 +35,7 @@ public class BoardMaker {
         return ranks;
     }
 
-    private static Rank createFirstRank() {
+    private Rank createFirstRank() {
         List<Square> squares = new ArrayList<>(List.of(
                 new Square(new Position(0, 0), new Rook(Team.BLACK)),
                 new Square(new Position(0, 1), new Knight(Team.BLACK)),
@@ -52,7 +50,7 @@ public class BoardMaker {
         return new Rank(squares);
     }
 
-    private static Rank createSecondRank() {
+    private Rank createSecondRank() {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(1, column), new Pawn(Team.BLACK)))
                 .collect(toList());
@@ -60,7 +58,7 @@ public class BoardMaker {
         return new Rank(squares);
     }
 
-    private static Rank createMiddleRank(int row) {
+    private Rank createMiddleRank(int row) {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(row, column), new EmptyPiece(NEUTRALITY)))
                 .collect(toList());
@@ -68,7 +66,7 @@ public class BoardMaker {
         return new Rank(squares);
     }
 
-    private static Rank createSecondLastRank() {
+    private Rank createSecondLastRank() {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(6, column), new Pawn(Team.WHITE)))
                 .collect(toList());
@@ -76,7 +74,7 @@ public class BoardMaker {
         return new Rank(squares);
     }
 
-    private static Rank createLastRank() {
+    private Rank createLastRank() {
         List<Square> squares = new ArrayList<>(List.of(
                 new Square(new Position(7, 0), new Rook(Team.WHITE)),
                 new Square(new Position(7, 1), new Knight(Team.WHITE)),

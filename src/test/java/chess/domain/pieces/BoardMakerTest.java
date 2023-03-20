@@ -7,17 +7,22 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.BoardMaker;
 import chess.domain.board.Rank;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 class BoardMakerTest {
 
-    private final List<Rank> ranks = BoardMaker.create();
+    private final List<Rank> ranks = new BoardMaker().createBoard();
 
     @Test
     @DisplayName("생성된 board의 사이즈는 8x8이다.")
     void createTest_size() {
+        Assertions.assertAll(
+                () -> assertThat(ranks.size()).isEqualTo(8),
+                () -> assertThat(ranks.get(0).getRank().size()).isEqualTo(8)
+        );
     }
 
     @Test

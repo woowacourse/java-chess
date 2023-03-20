@@ -20,12 +20,8 @@ public class Board {
 
     private final List<Rank> board;
 
-    private Board(List<Rank> ranks) {
-        this.board = ranks;
-    }
-
-    public static Board create() {
-        return new Board(BoardMaker.create());
+    public Board(BoardMaker boardMaker) {
+        this.board = boardMaker.createBoard();
     }
 
     public void movePiece(Position current, Position target) {
