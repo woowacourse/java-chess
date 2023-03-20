@@ -7,6 +7,6 @@ import chess.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         ChessController chessController = new ChessController(new OutputView(), new InputView());
-        chessController.run();
+        chessController.init();
     }
 }

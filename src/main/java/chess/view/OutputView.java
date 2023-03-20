@@ -29,10 +29,6 @@ public class OutputView {
         return pieceType;
     }
 
-    public void printError(Exception e) {
-        System.out.println(e.getMessage());
-    }
-
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -43,5 +39,9 @@ public class OutputView {
     public void printUnsuitableCommand() {
         System.out.println("해당 상황에서 입력할 수 없는 커맨드 입니다.");
         System.out.println();
+    }
+
+    public void printError(Exception e) {
+        System.out.println(e.getMessage());
     }
 }

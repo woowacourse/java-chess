@@ -1,77 +1,55 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.Position;
-import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.BoardGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class ChessController {
 
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
-    private static final int ORIGIN_INDEX = 1;
-    private static final int DEST_INDEX = 2;
     private final OutputView outputView;
     private final InputView inputView;
+
+    private final Map<GameCommand, Controller> controllers;
     private Board board;
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
+        controllers = makeControllers(outputView);
+        board = BoardGenerator.emtpyBoard();
     }
 
-    public void run() {
+    private Map<GameCommand, Controller> makeControllers(OutputView outputView) {
+        Map<GameCommand, Controller> controllers = new HashMap<>();
+        controllers.put(GameCommand.START, new StartController(outputView));
+        controllers.put(GameCommand.MOVE, new MoveController(outputView));
+        controllers.put(GameCommand.END, new EndController(outputView));
+
+        return controllers;
+    }
+
+    public void init() {
         outputView.printInitialMessage();
-        while (true) {
-            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
-            if (requestInfo.gameCommand == GameCommand.END) {
-                return;
-            }
-            if (requestInfo.gameCommand == GameCommand.START) {
-                gameStart();
-                return;
-            }
-            outputView.printUnsuitableCommand();
+        playUntilEnd();
+    }
+
+    public void playUntilEnd() {
+        RequestInfo requestInfo = readRequest();
+        if (requestInfo.getGameCommand() == GameCommand.END) {
+            return;
         }
+        Controller controller = controllers.get(requestInfo.getGameCommand());
+        board = controller.execute(requestInfo, board);
+        playUntilEnd();
     }
 
-    private void gameStart() {
-        board = new Board();
-        printBoard();
-        while (true) {
-            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
-            if (requestInfo.gameCommand == GameCommand.END) {
-                return;
-            }
-            if (requestInfo.gameCommand == GameCommand.MOVE) {
-                move(requestInfo.input);
-                continue;
-            }
-            outputView.printUnsuitableCommand();
-        }
-    }
-
-    private void move(String input) {
-        List<String> command = Arrays.asList(input.split(" "));
-        try {
-            board.movePiece(makePosition(command.get(ORIGIN_INDEX)), makePosition(command.get(DEST_INDEX)));
-        } catch (IllegalPieceMoveException e) {
-            outputView.printError(e);
-        }
-        printBoard();
-    }
-
-    private Position makePosition(String input) {
-        return Position.of(input.charAt(FILE_INDEX), input.charAt(RANK_INDEX));
-    }
-
-    private void printBoard() {
-        outputView.printBoard(board.getPiecePosition());
+    private RequestInfo readRequest() {
+        return repeat(() -> new RequestInfo(inputView.inputGameCommand()));
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -81,16 +59,6 @@ public class ChessController {
             } catch (Exception e) {
                 outputView.printError(e);
             }
-        }
-    }
-
-    private static class RequestInfo {
-        private final GameCommand gameCommand;
-        private final String input;
-
-        private RequestInfo(String input) {
-            gameCommand = GameCommand.from(input);
-            this.input = input;
         }
     }
 }
