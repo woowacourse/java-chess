@@ -72,6 +72,6 @@ public class Piece {
     }
 
     public boolean isSamePosition(Position findPosition) {
-        return position.isSamePosition(findPosition);
+        return position.equals(findPosition);
     }
 }

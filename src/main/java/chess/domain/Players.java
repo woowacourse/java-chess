@@ -48,7 +48,7 @@ public class Players {
 
     private boolean isAlreadyExistPiece(Position tempPosition) {
         return getAllPosition().stream()
-                .anyMatch(position -> position.isSamePosition(tempPosition));
+                .anyMatch(position -> position.equals(tempPosition));
     }
 
     public List<Position> getAllPosition() {
@@ -73,8 +73,7 @@ public class Players {
     }
 
     public Position findPositionByInputPoint(String point) {
-        char file = point.charAt(0);
-        int rank = Integer.parseInt(String.valueOf(point.charAt(1))) - 1;
+        Position foundPosition = Position.from(point);
         return getAllPosition().stream()
                 .filter(position -> position.isSame(file, rank))
                 .findFirst()
