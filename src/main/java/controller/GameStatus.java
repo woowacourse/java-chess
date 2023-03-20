@@ -1,6 +1,5 @@
 package controller;
 
-import domain.chessboard.ChessBoard;
 import domain.chessboard.ChessBoardFactory;
 import domain.chessgame.ChessGame;
 
@@ -16,7 +15,7 @@ public abstract class GameStatus {
         this.chessGame = chessGame;
     }
 
-    public abstract void playTurn(final List<String> inputs);
+    public abstract ChessBoardDTO playTurn(final List<String> inputs);
 
     public abstract boolean isKeepGaming();
 
@@ -30,10 +29,6 @@ public abstract class GameStatus {
             return new Move(chessGame);
         }
         return new End(chessGame);
-    }
-
-    public final ChessBoard getChessBoard() {
-        return chessGame.getChessBoard();
     }
 
 }

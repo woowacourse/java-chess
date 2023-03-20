@@ -12,8 +12,10 @@ public final class Start extends GameStatus {
     }
 
     @Override
-    public void playTurn(final List<String> inputs) {
+    public ChessBoardDTO playTurn(final List<String> inputs) {
         OutputView.printNotice("게임을 시작합니다.");
+
+        return ChessBoardDTO.from(chessGame.getChessBoard());
     }
 
     @Override

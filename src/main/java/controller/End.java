@@ -12,8 +12,10 @@ public final class End extends GameStatus {
     }
 
     @Override
-    public void playTurn(final List<String> inputs) {
+    public ChessBoardDTO playTurn(final List<String> inputs) {
         OutputView.printNotice("> 최종 결과");
+
+        return ChessBoardDTO.from(chessGame.getChessBoard());
     }
 
     @Override
