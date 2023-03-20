@@ -29,17 +29,21 @@ public final class Pawn extends Piece {
         if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) <= 2) {
             result.add(createMove(source, 1));
         }
-        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) == 1) {
-            return result;
-        }
         if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) == 2 && isStartPosition(source)) {
             result.add(createMove(source, 2));
             return result;
         }
-        if (source.calculateRowDistance(target.getRow()) == 1 && source.calculateColumnDistance(target.getColumn()) == 1) {
+        if (isDiagonalMove(source, target)) {
             return List.of(target);
         }
-        throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
+        if (!result.contains(target)) {
+            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
+        }
+        return result;
+    }
+
+    private static boolean isDiagonalMove(final Position source, final Position target) {
+        return source.calculateRowDistance(target.getRow()) == 1 && source.calculateColumnDistance(target.getColumn()) == 1;
     }
 
     private int directionDecider() {

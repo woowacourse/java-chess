@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static final int PAWN_SINGLE_MOVE = 1;
-    private static final int PAWN_DOUBLE_MOVE = 2;
-
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -75,20 +72,9 @@ public class Board {
 
     private void validateInvalidMovePawn(final Position source, final Position target, final Piece sourcePiece) {
         if (sourcePiece.isSamePieceType(PieceType.PAWN)
-                && isNotMovablePawn(source, target)
                 && isNotDiagonalMoveAblePawn(source, target)) {
             throw new IllegalArgumentException("폰이 이동할 수 없는 위치입니다.");
         }
-    }
-
-    private boolean isNotMovablePawn(final Position source, final Position target) {
-        return !(isMoveAble(source, target, PAWN_SINGLE_MOVE) || isMoveAble(source, target, PAWN_DOUBLE_MOVE));
-    }
-
-    private boolean isMoveAble(final Position source, final Position target, final int move) {
-        return source.isSameRow(target.getRow())
-                && source.calculateColumnDistance(target.getColumn()) == move
-                && piece(target).isSamePieceType(PieceType.EMPTY);
     }
 
     private boolean isNotDiagonalMoveAblePawn(final Position source, final Position target) {
