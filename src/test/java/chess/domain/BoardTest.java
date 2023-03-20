@@ -8,7 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
 
-import static chess.domain.PositionFixture.*;
+import static chess.domain.PositionFixture.A3;
+import static chess.domain.PositionFixture.A5;
+import static chess.domain.PositionFixture.A7;
+import static chess.domain.PositionFixture.B2;
+import static chess.domain.PositionFixture.B4;
+import static chess.domain.PositionFixture.C1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,7 +24,7 @@ public class BoardTest {
     @Test
     void 첫_뻔쨰_줄_테스트() {
         //given
-        Board board = new Board();
+        Board board = BoardGenerator.makeBoard();
 
         //when
         var result = board.getPiecePosition().get(0);
@@ -34,7 +39,7 @@ public class BoardTest {
     @Test
     void 두_뻔쨰_줄_테스트() {
         //given
-        Board board = new Board();
+        Board board = BoardGenerator.makeBoard();
 
         //when
         var result = board.getPiecePosition().get(1);
@@ -49,7 +54,7 @@ public class BoardTest {
     @Test
     void 같은편_말이_있는_곳으로_이동할_수_없다() {
         //given
-        Board board = new Board();
+        Board board = BoardGenerator.makeBoard();
 
         //expect
         assertThatThrownBy(() -> board.movePiece(C1, A3))
@@ -59,7 +64,7 @@ public class BoardTest {
     @Test
     void 같은편_말이_없는_곳으로_이동할_수_있다() {
         //given
-        Board board = new Board();
+        Board board = BoardGenerator.makeBoard();
         board.movePiece(B2, B4);
         board.movePiece(A7, A5);
         board.movePiece(C1, A3);
