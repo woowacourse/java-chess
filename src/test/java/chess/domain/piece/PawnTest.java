@@ -27,7 +27,7 @@ class PawnTest {
 
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Path path = pawn.searchPathTo(INITIAL_POSITION, new Position(1, 3), Optional.empty());
+        Path path = pawn.searchPathTo(INITIAL_POSITION, new Position(1, 3), null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -66,7 +66,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.WHITE);
 
         //when & then
-        assertThatThrownBy(() -> pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
+        assertThatThrownBy(() -> pawn.searchPathTo(INITIAL_POSITION, to, new Pawn(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("이(가) 이동할 수 없는 경로입니다.");
     }

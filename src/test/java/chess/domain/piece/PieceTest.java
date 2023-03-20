@@ -5,8 +5,6 @@ import chess.domain.board.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,7 +46,7 @@ class PieceTest {
     private static Piece createPiece(Color color) {
         return new Piece(color) {
             @Override
-            public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+            public Path searchPathTo(final Position from, final Position to, final Piece destination) {
                 return null;
             }
         };

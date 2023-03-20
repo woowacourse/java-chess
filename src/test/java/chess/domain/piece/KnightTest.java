@@ -6,8 +6,6 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,7 +21,7 @@ class KnightTest {
         final Position to = new Position(3, 3);
 
         //when
-        final Path path = piece.searchPathTo(from, to, Optional.empty());
+        final Path path = piece.searchPathTo(from, to, null);
 
         //then
         assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -40,7 +38,7 @@ class KnightTest {
         final Position to = new Position(4, 5);
 
         //when & then
-        assertThatThrownBy(() -> piece.searchPathTo(from, to, Optional.empty()))
+        assertThatThrownBy(() -> piece.searchPathTo(from, to, null))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

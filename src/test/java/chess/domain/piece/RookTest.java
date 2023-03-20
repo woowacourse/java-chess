@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +21,7 @@ class RookTest {
     @MethodSource("searchPathTo")
     @DisplayName("searchPathTo() : Rook이 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
     void test_searchPathTo(final Position from, final Position to,
-                           final Optional<Piece> destination, final List<Position> possiblePositions) {
+                           final Piece destination, final List<Position> possiblePositions) {
 
         //given
         Piece Rook = new Rook(Color.WHITE);
@@ -38,7 +37,7 @@ class RookTest {
 
         final Position from1 = new Position(5, 1);
         final Position to1 = new Position(5, 8);
-        final Optional<Piece> destination1 = Optional.empty();
+        final Piece destination1 = null;
 
         final List<Position> path1 = List.of(new Position(5, 2), new Position(5, 3),
                                              new Position(5, 4), new Position(5, 5),
@@ -46,7 +45,7 @@ class RookTest {
 
         final Position from2 = new Position(5, 5);
         final Position to2 = new Position(5, 1);
-        final Optional<Piece> destination2 = Optional.empty();
+        final Piece destination2 = null;
 
         final List<Position> path2 = List.of(new Position(5, 4),
                                              new Position(5, 3),
@@ -66,7 +65,7 @@ class RookTest {
         final Piece piece = new Rook(Color.WHITE);
         final Position from = new Position(5, 5);
         final Position to = new Position(6, 4);
-        final Optional<Piece> destination = Optional.of(new King(Color.BLACK));
+        final Piece destination = new King(Color.BLACK);
 
         //when & then
         assertThatThrownBy(() -> piece.searchPathTo(from, to, destination))

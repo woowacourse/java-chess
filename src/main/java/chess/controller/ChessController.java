@@ -4,12 +4,10 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class ChessController {
 
@@ -34,10 +32,8 @@ public class ChessController {
 
     private void startGame(final Board board, Color turn) {
 
-        final Map<Position, Piece> boardMap = board.chessBoard();
-
         while (true) {
-            OutputView.printBoard(boardMap);
+            OutputView.printBoard(board.chessBoard());
 
             final List<String> moveCommand = InputView.readMoveCommand();
             final Position fromPosition = convertPositionFrom(moveCommand.get(0));

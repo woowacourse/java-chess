@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
-import java.util.Optional;
 
 public class Board {
 
@@ -22,21 +21,21 @@ public class Board {
         validateMoveFromEmpty(currentMovePiece);
         validateTurn(currentMovePiece, nextTurn);
 
-        final Path path = currentMovePiece.searchPathTo(from, to, Optional.ofNullable(findPieceFrom(to)));
+        final Path path = currentMovePiece.searchPathTo(from, to, findPieceFrom(to));
 
         validateObstacle(path);
         movePiece(from, to);
     }
 
-    private void validateTurn(final Piece currentTurnPiece, final Color nextTurn) {
-        if (currentTurnPiece.isDifferentColor(nextTurn)) {
-            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
-        }
-    }
-
     private void validateMoveFromEmpty(final Piece piece) {
         if (piece == null) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
+        }
+    }
+
+    private void validateTurn(final Piece currentTurnPiece, final Color nextTurn) {
+        if (currentTurnPiece.isDifferentColor(nextTurn)) {
+            throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }
 

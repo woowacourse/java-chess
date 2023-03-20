@@ -5,7 +5,6 @@ import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 
 import java.util.List;
-import java.util.Optional;
 
 import static chess.domain.board.position.Movement.D;
 import static chess.domain.board.position.Movement.DL;
@@ -25,8 +24,8 @@ public class King extends Piece {
     }
 
     @Override
-    public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-        destination.ifPresent(super::validateSameColor);
+    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
+        super.validateSameColor(destination);
 
         Movement movement = to.convertMovement(from);
 

@@ -6,7 +6,6 @@ import chess.domain.board.position.Position;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static chess.domain.board.position.Movement.D;
 import static chess.domain.board.position.Movement.DL;
@@ -35,7 +34,7 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public Path searchPathTo(Position from, Position to, Optional<Piece> destination) {
+    public Path searchPathTo(Position from, Position to, Piece destination) {
         Movement movement = to.convertMovement(from);
 
         if (canMove(destination, movement)) {
@@ -62,12 +61,12 @@ public class Pawn extends Piece {
         throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
     }
 
-    private boolean canMove(final Optional<Piece> destination, final Movement movement) {
-        return destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color);
+    private boolean canMove(final Piece destination, final Movement movement) {
+        return destination == null && movement == CAN_MOVE_EMPTY_DESTINATION.get(color);
     }
 
-    private boolean canMoveDiagonal(final Optional<Piece> destination, final Movement movement) {
-        return destination.isPresent() && destination.get().color.isDifferentColor(color)
+    private boolean canMoveDiagonal(final Piece destination, final Movement movement) {
+        return destination != null && destination.color.isDifferentColor(color)
                 && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement);
     }
 
