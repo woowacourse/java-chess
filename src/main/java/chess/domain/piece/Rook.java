@@ -5,13 +5,16 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Rook extends Piece {
-    
-    private Rook(final Color color) {
-        super(color, PieceType.ROOK, List.of(Direction.N, Direction.E, Direction.S, Direction.W));
+
+    public static final List<Direction> MOVABLE_DIRECTIONS = List.of(
+            Direction.N, Direction.E, Direction.S, Direction.W);
+
+    private Rook(final Color color, final PieceType pieceType, List<Direction> movableDirections) {
+        super(color, pieceType, movableDirections);
     }
     
     public static Rook create(final Color color) {
-        return new Rook(color);
+        return new Rook(color, PieceType.ROOK, MOVABLE_DIRECTIONS);
     }
     
     @Override

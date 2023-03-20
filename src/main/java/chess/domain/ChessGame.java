@@ -12,6 +12,7 @@ public class ChessGame {
     
     public static final String GAME_CANNOT_EXECUTE_MESSAGE = "실행할 수 없는 명령입니다.";
     public static final String GAME_HAS_NOT_STARTED = "게임이 시작되지 않았습니다.";
+
     private final Board board;
     private Color turn;
     private GameStatus status;

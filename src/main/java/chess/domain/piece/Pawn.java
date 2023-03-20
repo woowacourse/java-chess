@@ -7,14 +7,17 @@ import java.util.List;
 
 public class Pawn extends Piece {
     
-    
     public static final List<Integer> FIRST_MOVABLE_DISTANCES = List.of(1, 2, 4);
-    public static final List<Integer> DEFAULT_MOVABLE_DISTANCE = List.of(1, 2);
-    
-    private Pawn(final Color color) {
-        super(color, PieceType.PAWN, getPawnDirectionBy(color));
+    public static final List<Integer> DEFAULT_MOVABLE_DISTANCES = List.of(1, 2);
+
+    private Pawn(final Color color, final PieceType pieceType, List<Direction> movableDirections) {
+        super(color, pieceType, movableDirections);
     }
-    
+
+    public static Pawn create(Color color) {
+        return new Pawn(color, PieceType.PAWN, getPawnDirectionBy(color));
+    }
+
     private static List<Direction> getPawnDirectionBy(Color color) {
         if (color == Color.WHITE) {
             return List.of(Direction.N, Direction.NE, Direction.NW);
@@ -23,10 +26,6 @@ public class Pawn extends Piece {
             return List.of(Direction.S, Direction.SE, Direction.SW);
         }
         return List.of();
-    }
-    
-    public static Pawn create(Color color) {
-        return new Pawn(color);
     }
     
     @Override
@@ -38,6 +37,6 @@ public class Pawn extends Piece {
             checkDistance(start, end, FIRST_MOVABLE_DISTANCES);
             return;
         }
-        checkDistance(start, end, DEFAULT_MOVABLE_DISTANCE);
+        checkDistance(start, end, DEFAULT_MOVABLE_DISTANCES);
     }
 }
