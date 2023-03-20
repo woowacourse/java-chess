@@ -9,9 +9,9 @@ import static chess.controller.Command.MOVE_COMMAND_SIZE;
 import static chess.controller.Command.MOVE_SOURCE_INDEX;
 import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
+import static chess.controller.Command.STATUS;
 import static chess.controller.Command.validateCommandSize;
 
-import chess.domain.board.GameResult;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,6 +27,7 @@ public class ChessGameController {
         this.chessGame = chessGame;
         commandMapper.put(START, this::start);
         commandMapper.put(MOVE, this::move);
+        commandMapper.put(STATUS, this::status);
         commandMapper.put(END, ChessGameAction.EMPTY);
     }
 
@@ -58,8 +59,7 @@ public class ChessGameController {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
         chessGame.initialize();
-        final GameResult result = chessGame.getResult();
-        OutputView.printBoard(result.getBoard());
+        OutputView.printBoard(chessGame.getResult());
     }
 
     private void move(final List<String> commands) {
@@ -70,7 +70,14 @@ public class ChessGameController {
         final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
         chessGame.move(source, target);
-        final GameResult result = chessGame.getResult();
-        OutputView.printBoard(result.getBoard());
+        OutputView.printBoard(chessGame.getResult());
+    }
+
+    private void status(final List<String> commands) {
+        validateCommandSize(commands.size(), DEFAULT_COMMAND_SIZE);
+        if (!chessGame.isInitialized()) {
+            throw new IllegalArgumentException("START를 입력해주세요.");
+        }
+        OutputView.printStatus(chessGame.getResult());
     }
 }
