@@ -1,7 +1,6 @@
 package chess.domain.piece.coordinate;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum Row {
     ONE(1),
@@ -44,6 +43,10 @@ public enum Row {
     
     public boolean isPawnStartRow(int pawnStartRow) {
         return row == pawnStartRow;
+    }
+    
+    public int row() {
+        return row;
     }
     
     @Override

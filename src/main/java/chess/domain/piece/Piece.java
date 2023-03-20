@@ -65,6 +65,10 @@ public abstract class Piece {
         return this.coordinate.equals(coordinate);
     }
     
+    public int row() {
+        return coordinate.row();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

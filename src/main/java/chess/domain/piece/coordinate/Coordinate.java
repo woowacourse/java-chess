@@ -66,6 +66,10 @@ public class Coordinate {
         return row.isPawnStartRow(pawnStartRow);
     }
     
+    public int row() {
+        return row.row();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
