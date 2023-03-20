@@ -36,7 +36,7 @@ public class QueenTest {
     }
 
     @Test
-    @DisplayName("Queen의 이동정책에 맞지 않으면, Queen은 움직일 수 없다.")
+    @DisplayName("Queen이 좌우상하대각선외에 움직인다면, Queen은 움직일 수 없다.")
     void Should_NotMove_When_Unmovable() {
         Queen queen = Queen.from(Team.BLACK);
         boolean result = queen.isMovable(A1, F8);

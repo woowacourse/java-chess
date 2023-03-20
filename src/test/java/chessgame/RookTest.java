@@ -28,7 +28,7 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("Rook의 이동정책에 맞지 않으면, Rook은 움직일 수 없다.")
+    @DisplayName("Rook의 상하좌우외에 움직인다면, Rook은 움직일 수 없다.")
     void Should_NotMove_When_Unmovable() {
         Rook rook = Rook.from(Team.BLACK);
         boolean result = rook.isMovable(A1, F8);

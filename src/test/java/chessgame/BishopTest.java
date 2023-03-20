@@ -28,7 +28,7 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("Bishop의 이동정책에 맞지 않으면, Bishop은 움직일 수 없다.")
+    @DisplayName("Bishop이 대각선으로 이동하지 않는다면, Bishop은 움직일 수 없다.")
     void Should_NotMove_When_Unmovable() {
         Bishop bishop = Bishop.from(Team.BLACK);
         boolean result = bishop.isMovable(A1, H1);
