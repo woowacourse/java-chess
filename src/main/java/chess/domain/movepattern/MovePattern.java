@@ -2,7 +2,7 @@ package chess.domain.movepattern;
 
 public interface MovePattern {
 
-    int getFileVector();
+    int fileVector();
 
-    int getRankVector();
+    int rankVector();
 }

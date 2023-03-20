@@ -16,12 +16,12 @@ public enum BishopMovePattern implements MovePattern {
     }
 
     @Override
-    public int getFileVector() {
+    public int fileVector() {
         return fileVector;
     }
 
     @Override
-    public int getRankVector() {
+    public int rankVector() {
         return rankVector;
     }
 }

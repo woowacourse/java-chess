@@ -38,8 +38,8 @@ public class Position {
     }
 
     public Position move(final MovePattern movePattern) {
-        final int nextFileIndex = this.file.index() + movePattern.getFileVector();
-        final int nextRankIndex = this.rank.index() + movePattern.getRankVector();
+        final int nextFileIndex = this.file.index() + movePattern.fileVector();
+        final int nextRankIndex = this.rank.index() + movePattern.rankVector();
 
         final File nextFile = File.getFile(nextFileIndex);
         final Rank nextRank = Rank.getRank(nextRankIndex);
