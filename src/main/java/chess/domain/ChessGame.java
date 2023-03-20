@@ -30,10 +30,17 @@ public class ChessGame {
 
     private Square getSquare(final String movePosition) {
         List<String> position = Arrays.asList(movePosition.split(""));
+        validatePosition(position);
+
+        File file = File.findFileBy(position.get(FILE_INDEX));
+        Rank rank = Rank.findRankBy(position.get(RANK_INDEX));
+        return Square.of(file, rank);
+    }
+
+    private void validatePosition(final List<String> position) {
         if (position.size() != POSITION_SIZE) {
             throw new IllegalArgumentException("source위치, target 위치는 알파벳(a~h)과 숫자(1~8)로 입력해주세요. 예) a1");
         }
-        return Square.of(File.findFileBy(position.get(FILE_INDEX)), Rank.findRankBy(position.get(RANK_INDEX)));
     }
 
     private void validateSameTeam(final Square source) {
@@ -42,7 +49,7 @@ public class ChessGame {
         }
     }
 
-    public void changeTeam() {
+    private void changeTeam() {
         team = Team.change(team);
     }
 

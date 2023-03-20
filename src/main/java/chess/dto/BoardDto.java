@@ -6,6 +6,7 @@ import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import chess.domain.square.Squares;
+import java.util.Collections;
 import java.util.Map;
 
 public class BoardDto {
@@ -20,10 +21,10 @@ public class BoardDto {
         return new BoardDto(boardPieces.entrySet().stream()
                         .collect(toUnmodifiableMap(
                                 entry -> Squares.getIndex(entry.getKey()),
-                                entry -> entry.getValue().getPieceTypeName())));
+                                entry -> entry.getValue().getName())));
     }
 
     public Map<Integer, String> getPieces() {
-        return pieces;
+        return Collections.unmodifiableMap(pieces);
     }
 }

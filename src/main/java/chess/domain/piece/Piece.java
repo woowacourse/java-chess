@@ -15,19 +15,19 @@ public abstract class Piece {
 
     public abstract void canMove(final int fileInterval, final int rankInterval, final boolean canAttack);
 
-    public Team getColor() {
+    public final boolean isSameType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
+    public final Team getTeam() {
         return team;
     }
 
-    public String getPieceTypeName() {
+    public final String getName() {
         String name = pieceType.getName();
         if (team == BLACK) {
             return name.toUpperCase();
         }
         return name;
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
     }
 }
