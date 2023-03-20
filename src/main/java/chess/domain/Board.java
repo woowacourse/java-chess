@@ -8,9 +8,11 @@ import chess.domain.piece.Piece;
 public class Board {
 
 	private static final String EMPTY_PIECE_IN_SOURCE_ERROR_MESSAGE = "source 위치에 조작할 수 있는 말이 없습니다.";
-	private static final String CANNOT_MOVE_PIECE_IN_SOURCE_ERROR_MESSAGE = "현재 차례의 source 위치의 말을 조작할 수 없습니다.";
+	private static final String SOURCE_TEAM_INCORRECT_ERROR_MESSAGE = "다른 팀의 말을 조작할 수 없습니다.";
 	private static final String SAME_TEAM_IN_TARGET_ERROR_MESSAGE = "같은 팀의 말의 위치로 이동할 수 없습니다.";
 	private static final String CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE = "말이 해당 방향으로 이동할 수 없습니다.";
+	private static final String CANNOT_MOVE_THROUGH_OBSTACLE_ERROR_MESSAGE = "말이 이동하려는 방향에 장애물이 있습니다.";
+	private static final String CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE = "폰은 적이 존재할 때만 대각선으로 이동할 수 있습니다.";
 
 	private final Map<Position, Piece> board;
 
@@ -53,7 +55,7 @@ public class Board {
 	private void checkIsSourceCorrectTeam(final Team team, final Position source) {
 		Piece piece = board.get(source);
 		if (!piece.isGivenTeam(team)) {
-			throw new IllegalArgumentException(CANNOT_MOVE_PIECE_IN_SOURCE_ERROR_MESSAGE);
+			throw new IllegalArgumentException(SOURCE_TEAM_INCORRECT_ERROR_MESSAGE);
 		}
 	}
 
@@ -76,16 +78,7 @@ public class Board {
 	private void checkIsThereAnyObstacle(final Position source, final Position target) {
 		Piece piece = board.get(source);
 		if (!piece.isKnight() && hasObstacle(source, target)) {
-			throw new IllegalArgumentException(CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE);
-		}
-	}
-
-	private void checkIsSourcePawnMovingProperDiagonal(final Position source, final Position target) {
-		Piece sourcePiece = board.get(source);
-		Piece targetPiece = board.get(target);
-		RelativePosition relativePosition = RelativePosition.of(source, target);
-		if (sourcePiece.isPawn() && relativePosition.isDiagonal() && targetPiece.isEmpty()) {
-			throw new IllegalArgumentException(CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE);
+			throw new IllegalArgumentException(CANNOT_MOVE_THROUGH_OBSTACLE_ERROR_MESSAGE);
 		}
 	}
 
@@ -103,7 +96,16 @@ public class Board {
 	}
 
 	private boolean isPieceExists(final Position position) {
-		return board.get(position).isEmpty();
+		return !board.get(position).isEmpty();
+	}
+
+	private void checkIsSourcePawnMovingProperDiagonal(final Position source, final Position target) {
+		Piece sourcePiece = board.get(source);
+		Piece targetPiece = board.get(target);
+		RelativePosition relativePosition = RelativePosition.of(source, target);
+		if (sourcePiece.isPawn() && relativePosition.isDiagonal() && targetPiece.isEmpty()) {
+			throw new IllegalArgumentException(CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE);
+		}
 	}
 
 	public Map<Position, Piece> getBoard() {
