@@ -13,6 +13,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
+        OutputView.printCommandMessage();
         start();
         play();
     }
