@@ -148,4 +148,16 @@ class ChessBoardTest {
 
     }
 
+    @Test
+    void 이동하려는_위치에_기물이_없으면_예외() {
+        chessBoard.initialize(emptyBoardStrategy.generate());
+
+        Position startPosition = Position.of(Column.D, Rank.FOUR);
+        Position endPosition = Position.of(Column.D, Rank.FIVE);
+
+        assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이동할 수 있는 기물이 없습니다");
+    }
+
 }
