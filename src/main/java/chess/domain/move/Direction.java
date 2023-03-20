@@ -32,18 +32,6 @@ public enum Direction {
         this.dy = dy;
     }
 
-    public boolean isHorizontal() {
-        return List.of(RIGHT, LEFT).contains(this);
-    }
-
-    public boolean isVertical() {
-        return List.of(UP, DOWN).contains(this);
-    }
-
-    public boolean isDiagonal() {
-        return List.of(RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP).contains(this);
-    }
-
     public static Direction calculateUnitDirection(Position source, Position target) {
         int dx = diffFile(source, target);
         int dy = diffRank(source, target);

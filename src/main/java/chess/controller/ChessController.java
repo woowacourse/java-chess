@@ -17,12 +17,12 @@ public class ChessController {
         playGame(board);
     }
 
-    private static void startGame(final Board board) {
+    private void startGame(final Board board) {
         Order.ofStart(InputView.askStart());
         OutputView.printBoard(board);
     }
 
-    private static void playGame(final Board board) {
+    private void playGame(final Board board) {
         Order order = Order.ofMoveOrEnd(InputView.askNext());
         if (order.isEnd()) {
             return;
