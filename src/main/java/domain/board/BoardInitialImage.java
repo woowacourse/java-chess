@@ -75,7 +75,7 @@ public final class BoardInitialImage {
                 .collect(Collectors.toList());
     }
 
-    public static Square getPieceByCoordinate(final int row, final int col) {
+    public static Square getSquareByCoordinate(final int row, final int col) {
         return boardImage.get(row)
                 .get(col);
     }
