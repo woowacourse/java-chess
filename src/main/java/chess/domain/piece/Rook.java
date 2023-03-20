@@ -24,4 +24,9 @@ public class Rook extends Piece {
     public boolean canAttack(final Position source, final Position destination) {
         return canMove(source, destination);
     }
+
+    @Override
+    public PieceType findType() {
+        return PieceType.ROOK;
+    }
 }

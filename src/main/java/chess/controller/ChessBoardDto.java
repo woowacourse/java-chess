@@ -7,6 +7,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.info.Team;
@@ -33,11 +34,12 @@ public class ChessBoardDto {
         }
         chessBoardView.add("");
         chessBoardView.add(Arrays.stream(Rank.values())
-                .map(Rank::toString)
-                .collect(Collectors.joining("")));
+            .map(Rank::toString)
+            .collect(Collectors.joining("")));
     }
 
-    private StringBuilder addOneFile(StringBuilder tempChessBoard, final int chessBoardWidth, final int index) {
+    private StringBuilder addOneFile(StringBuilder tempChessBoard, final int chessBoardWidth,
+        final int index) {
         if (index % chessBoardWidth == chessBoardWidth - 1) {
             tempChessBoard.append(" ").append((index + 1) / chessBoardWidth);
             chessBoardView.add(0, tempChessBoard.toString());
@@ -48,33 +50,11 @@ public class ChessBoardDto {
 
     private String generateSquareView(final Square square) {
         Piece piece = square.getPiece();
-        String view = generatePieceView(piece);
+        String view = piece.findType().getSymbol();
         if (piece.getTeam() == Team.BLACK) {
             view = view.toUpperCase(Locale.ROOT);
         }
         return view;
-    }
-
-    private String generatePieceView(final Piece piece) {
-        if (piece.getClass() == Pawn.class) {
-            return "p";
-        }
-        if (piece.getClass() == Rook.class) {
-            return "r";
-        }
-        if (piece.getClass() == Bishop.class) {
-            return "b";
-        }
-        if (piece.getClass() == Knight.class) {
-            return "n";
-        }
-        if (piece.getClass() == King.class) {
-            return "k";
-        }
-        if (piece.getClass() == Queen.class) {
-            return "q";
-        }
-        return ".";
     }
 
     public List<String> getBoard() {

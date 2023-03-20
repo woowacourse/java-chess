@@ -32,5 +32,10 @@ public class Pawn extends Piece {
         }
         return Math.abs(diffRank) == 1 && diffFile == -1;
     }
+
+    @Override
+    public PieceType findType() {
+        return PieceType.PAWN;
+    }
 }
 

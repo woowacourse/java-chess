@@ -24,4 +24,9 @@ public class NoPiece extends Piece {
     public boolean canAttack(final Position source, final Position destination) {
         throw new UnsupportedOperationException("칸에 기물이 없습니다.");
     }
+
+    @Override
+    public PieceType findType() {
+        return PieceType.NOPIECE;
+    }
 }

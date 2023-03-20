@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.King;
 import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
 
@@ -21,7 +22,7 @@ public class Square {
     }
 
     public boolean isEmpty() {
-        return piece.getClass() == NoPiece.class;
+        return piece.findType() == PieceType.NOPIECE;
     }
 
     public boolean isSameTeam(final Team team) {
@@ -29,7 +30,7 @@ public class Square {
     }
 
     public boolean isKing() {
-        return piece.getClass() == King.class;
+        return piece.findType() == PieceType.KING;
     }
 
     public boolean canAttack(final Position endPosition) {

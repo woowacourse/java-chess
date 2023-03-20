@@ -21,11 +21,16 @@ public class King extends Piece {
         int diffRank = destination.calculateRankDistance(source);
 
         return Math.abs(diffFile) <= UPPER_BOUND_OF_MOVABLE_DISTANCE
-                && Math.abs(diffRank) <= UPPER_BOUND_OF_MOVABLE_DISTANCE;
+            && Math.abs(diffRank) <= UPPER_BOUND_OF_MOVABLE_DISTANCE;
     }
 
     @Override
     public boolean canAttack(final Position source, final Position destination) {
         return canMove(source, destination);
+    }
+
+    @Override
+    public PieceType findType() {
+        return PieceType.KING;
     }
 }

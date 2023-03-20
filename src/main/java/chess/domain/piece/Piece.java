@@ -30,4 +30,5 @@ public abstract class Piece {
     public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
+    public abstract PieceType findType();
 }
