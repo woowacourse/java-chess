@@ -18,11 +18,15 @@ graph TD
         Square --> Position
         Square --> Piece
         Piece --> Team
+        Direction
+        UnitVector
     end
 
     subgraph View
         GameController --> OutputView
+        GameController --> InputView
         OutputView --> PieceRender
+        Command
     end
 ```
 
@@ -35,7 +39,3 @@ graph TD
 - [x] 체스 게임을 할 수 있는 기능을 구현한다.
 - [x] 체스 규칙에 따라 기물들을 이동한다.
 - [x] `move source위치 target위치`를 실행해 이동한다.
-
-# 미션을 진행하며 노력한 점
-
-# 미션을 진행하며 궁금한 점
