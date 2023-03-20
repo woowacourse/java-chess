@@ -16,7 +16,7 @@ public abstract class Piece {
         return color == Color.BLACK;
     }
 
-    public Path searchPathTo(Position from, Position to, Piece locatedPiece) {
+    public Path searchPathTo(final Position from, final Position to, final Piece locatedPiece) {
         validateSameColor(locatedPiece);
         final Movement movement = calculateUnitMovement(from, to);
 
@@ -24,10 +24,11 @@ public abstract class Piece {
             throw new IllegalStateException(getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
         }
 
-        return moveToLocatedPiece(from, to, movement);
+        return moveToLocatedPiece(from, to, movement, locatedPiece);
     }
 
-    protected abstract Path moveToLocatedPiece(final Position from, final Position to, final Movement movement);
+    protected abstract Path moveToLocatedPiece(final Position from, final Position to,
+                                               final Movement movement, final Piece locatedPiece);
 
     protected abstract boolean canNotMoveToLocatedPiece(final Movement movement);
 

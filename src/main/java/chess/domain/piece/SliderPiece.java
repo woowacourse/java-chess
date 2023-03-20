@@ -30,7 +30,8 @@ public abstract class SliderPiece extends Piece {
     }
 
     @Override
-    protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+    protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement,
+                                      final Piece locatedPiece) {
         Position next = from;
         List<Position> positions = new ArrayList<>();
 

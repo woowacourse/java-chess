@@ -24,6 +24,8 @@ public class Pawn extends Piece {
             Color.BLACK, List.of(DR, DL),
             Color.WHITE, List.of(UR, UL)
     );
+
+    private static final List<Movement> MOVEMENT_CANDIDATES = List.of(D, U, DR, DL, UR, UL);
     
     private static final int WHITE_PAWN_START_RANK = 2;
     private static final int BLACK_PAWN_START_RANK = 7;
@@ -34,9 +36,9 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public Path searchPathTo(Position from, Position to, Piece locatedPiece) {
-        Movement movement = to.convertMovement(from);
-
+    @Override
+    protected Path moveToLocatedPiece(final Position from, final Position to,
+                                      final Movement movement, final Piece locatedPiece) {
         if (canMove(locatedPiece, movement)) {
 
             if (canMoveWhitePawn(from, to)) {
@@ -54,21 +56,16 @@ public class Pawn extends Piece {
             return new Path();
         }
 
-        // 상대 말인 경우
         if (canMoveDiagonal(locatedPiece, movement)) {
             return new Path();
         }
-        throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
-    }
 
-    @Override
-    protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
-        return null;
+        throw new IllegalStateException(getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
     }
 
     @Override
     protected boolean canNotMoveToLocatedPiece(final Movement movement) {
-        return false;
+        return !MOVEMENT_CANDIDATES.contains(movement);
     }
 
     private boolean canMove(final Piece destination, final Movement movement) {

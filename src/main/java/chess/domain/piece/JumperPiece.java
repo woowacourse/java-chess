@@ -44,7 +44,8 @@ public abstract class JumperPiece extends Piece {
     }
 
     @Override
-    public Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+    public Path moveToLocatedPiece(final Position from, final Position to, final Movement movement,
+                                   final Piece locatedPiece) {
 
         if (canNotMovable(from, to, movement)) {
             throw new IllegalStateException(this.getClass().getSimpleName() + "은 한 칸만 이동할 수 있습니다.");

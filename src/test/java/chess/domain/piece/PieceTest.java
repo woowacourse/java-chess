@@ -47,12 +47,8 @@ class PieceTest {
     private static Piece createPiece(Color color) {
         return new Piece(color) {
             @Override
-            public Path searchPathTo(final Position from, final Position to, final Piece locatedPiece) {
-                return null;
-            }
-
-            @Override
-            protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+            protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement,
+                                              final Piece locatedPiece) {
                 return null;
             }
 
