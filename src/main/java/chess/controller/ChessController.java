@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,10 +12,12 @@ import java.util.List;
 
 public class ChessController {
 
-    private static final String START_COMMAND = "start";
     private static final int STARTING_VALUE_OF_FILE = 1;
     private static final char STARTING_CHARACTER_OF_FILE = 'a';
     private static final char STARTING_VALUE_OF_RANK = '0';
+    private static final int START_COMMAND_INDEX = 0;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
@@ -22,7 +25,7 @@ public class ChessController {
 
         final String command = InputView.readStartCommand();
 
-        if (canNotStart(command)) {
+        if (Command.isNotStart(command)) {
             return;
         }
 
@@ -36,13 +39,28 @@ public class ChessController {
             OutputView.printBoard(board.chessBoard());
 
             final List<String> moveCommand = InputView.readMoveCommand();
-            final Position fromPosition = convertPositionFrom(moveCommand.get(0));
-            final Position toPosition = convertPositionFrom(moveCommand.get(1));
+
+            final String startCommand = moveCommand.get(START_COMMAND_INDEX);
+
+            if (Command.isEnd(startCommand)) {
+                break;
+            }
+
+            turn = movePiece(board, turn, moveCommand, startCommand);
+        }
+    }
+
+    private Color movePiece(final Board board, Color turn, final List<String> moveCommand, final String startCommand) {
+        if (Command.isMove(startCommand)) {
+            final Position fromPosition = convertPositionFrom(moveCommand.get(SOURCE_POSITION_INDEX));
+            final Position toPosition = convertPositionFrom(moveCommand.get(TARGET_POSITION_INDEX));
 
             board.move(fromPosition, toPosition, turn);
 
             turn = turn.opposite();
         }
+
+        return turn;
     }
 
     private Position convertPositionFrom(String position) {
@@ -50,9 +68,5 @@ public class ChessController {
         final int rank = position.charAt(1) - STARTING_VALUE_OF_RANK;
 
         return new Position(file, rank);
-    }
-
-    private static boolean canNotStart(final String command) {
-        return !command.equals(START_COMMAND);
     }
 }
