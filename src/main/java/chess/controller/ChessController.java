@@ -60,7 +60,7 @@ public final class ChessController {
 
     private ChessCommand playTurn(ChessGame chessGame) {
         List<String> commands = inputView.readCommand();
-        ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands.get(COMMAND_INDEX));
+        ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands);
         if (chessCommand.isEnd()) {
             return chessCommand;
         }
