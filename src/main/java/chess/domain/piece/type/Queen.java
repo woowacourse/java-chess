@@ -1,8 +1,8 @@
 package chess.domain.piece.type;
 
 import chess.domain.chess.CampType;
-import chess.domain.move.piece.QueenMove;
 import chess.domain.piece.Position;
+import chess.domain.piece.move.piece.QueenMove;
 
 public class Queen extends Piece {
 

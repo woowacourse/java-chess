@@ -1,22 +1,22 @@
-package chess.domain.move.piece;
+package chess.domain.piece.move.piece;
 
-import chess.domain.move.Direction;
-import chess.domain.move.Location;
-import chess.domain.move.LocationHelper;
 import chess.domain.piece.Position;
+import chess.domain.piece.move.Direction;
+import chess.domain.piece.move.Location;
+import chess.domain.piece.move.LocationHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static chess.domain.move.Direction.DOWN;
-import static chess.domain.move.Direction.DOWN_LEFT;
-import static chess.domain.move.Direction.DOWN_RIGHT;
-import static chess.domain.move.Direction.LEFT;
-import static chess.domain.move.Direction.RIGHT;
-import static chess.domain.move.Direction.UP;
-import static chess.domain.move.Direction.UP_LEFT;
-import static chess.domain.move.Direction.UP_RIGHT;
+import static chess.domain.piece.move.Direction.DOWN;
+import static chess.domain.piece.move.Direction.DOWN_LEFT;
+import static chess.domain.piece.move.Direction.DOWN_RIGHT;
+import static chess.domain.piece.move.Direction.LEFT;
+import static chess.domain.piece.move.Direction.RIGHT;
+import static chess.domain.piece.move.Direction.UP;
+import static chess.domain.piece.move.Direction.UP_LEFT;
+import static chess.domain.piece.move.Direction.UP_RIGHT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class MoveTest {

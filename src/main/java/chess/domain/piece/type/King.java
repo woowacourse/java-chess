@@ -1,8 +1,8 @@
 package chess.domain.piece.type;
 
 import chess.domain.chess.CampType;
-import chess.domain.move.piece.KingMove;
 import chess.domain.piece.Position;
+import chess.domain.piece.move.piece.KingMove;
 
 public class King extends Piece {
     private static final KingMove kingMove = new KingMove();

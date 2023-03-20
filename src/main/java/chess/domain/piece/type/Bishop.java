@@ -1,8 +1,8 @@
 package chess.domain.piece.type;
 
 import chess.domain.chess.CampType;
-import chess.domain.move.piece.BishopMove;
 import chess.domain.piece.Position;
+import chess.domain.piece.move.piece.BishopMove;
 
 public class Bishop extends Piece {
 
