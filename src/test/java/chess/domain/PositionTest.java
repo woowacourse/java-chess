@@ -14,7 +14,7 @@ class PositionTest {
     void validateRange() {
         assertThatThrownBy(() -> new Position(0, 9))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 잘못된 위치입니다.");
+                .hasMessage("[ERROR] 위치는 1이상, 8이하여야 합니다.");
     }
 
     @Test
@@ -29,7 +29,7 @@ class PositionTest {
     void validateAddedPositionRange() {
         assertThatThrownBy(() -> new Position(8, 8).moveBy(1, 1))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 잘못된 위치입니다.");
+                .hasMessage("[ERROR] 위치는 1이상, 8이하여야 합니다.");
     }
 
     @Test

@@ -19,7 +19,9 @@ public final class Position {
 
     private void validateRange(int position) {
         if (position < MIN_POSITION || position > MAX_POSITION) {
-            throw new IllegalArgumentException("[ERROR] 잘못된 위치입니다.");
+            throw new IllegalArgumentException(
+                    "[ERROR] 위치는 " + MIN_POSITION + "이상, " + MAX_POSITION + "이하여야 합니다."
+            );
         }
     }
 
