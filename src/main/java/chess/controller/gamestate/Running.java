@@ -1,6 +1,7 @@
 package chess.controller.gamestate;
 
 import chess.domain.ChessBoard;
+import chess.domain.Position;
 import chess.dto.CommandRequest;
 
 public class Running implements GameState {
@@ -14,7 +15,8 @@ public class Running implements GameState {
 
     @Override
     public GameState play(final ChessBoard chessBoard, final CommandRequest commandRequest) {
-        chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate());
+        chessBoard.move(Position.from(commandRequest.getSourceCoordinate()),
+                Position.from(commandRequest.getDestinationCoordinate()));
         return new Running();
     }
 

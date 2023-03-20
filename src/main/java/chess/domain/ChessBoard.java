@@ -24,14 +24,10 @@ public class ChessBoard {
         this.campSwitcher = campSwitcher;
     }
 
-    public void move(List<Integer> sourceCoords, List<Integer> destinationCoords) {
-        Position source = Position.from(sourceCoords);
-        Position destination = Position.from(destinationCoords);
-
-        Piece movingPiece = findPieceAtSourcePosition(Position.from(sourceCoords));
+    public void move(Position source, Position destination) {
+        Piece movingPiece = findPieceAtSourcePosition(source);
         CheckablePaths checkablePaths = movingPiece.findCheckablePaths(source);
         Path pathToDestination = checkablePaths.findPathContainingPosition(destination);
-
         progressIfPossible(pathToDestination, source, destination, movingPiece);
         switchCampTurn();
     }
@@ -64,6 +60,7 @@ public class ChessBoard {
         piecesByPosition.remove(source);
     }
 
+    // TODO 폰에 대한 로직 폰에게로 책임 이동시키기
     private void validatePath(final Path path, final Position source, final Position destination,
                               final Piece movingPeace) {
         validateObstacleInPath(path, destination);
