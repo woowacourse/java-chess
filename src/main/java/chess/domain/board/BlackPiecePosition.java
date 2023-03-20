@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-public enum Black {
+public enum BlackPiecePosition {
 
     LEFT_KNIGHT_RANK(8),
     LEFT_KNIGHT_FILE(7),
@@ -29,7 +29,7 @@ public enum Black {
 
     private final int value;
 
-    Black(final int value) {
+    BlackPiecePosition(final int value) {
         this.value = value;
     }
 
