@@ -71,19 +71,19 @@ public final class Square {
         return rank.equals(Rank.SEVEN);
     }
 
-    @Override
-    public String toString() {
-        return "Square{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
-    }
-
     public int getFileDifference(final Square other) {
         return file.getDifference(other.file);
     }
 
     public int getRankDifference(final Square other) {
         return rank.getDifference(other.rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
