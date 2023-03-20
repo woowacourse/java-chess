@@ -1,6 +1,5 @@
 package chess.controller.gamestate;
 
-import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.dto.CommandRequest;
 
@@ -14,10 +13,8 @@ public class Running implements GameState {
     }
 
     @Override
-    public GameState play(final ChessBoard chessBoard, final CommandRequest commandRequest,
-                          final Camp currentTurnCamp) {
-        chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate(),
-                currentTurnCamp);
+    public GameState play(final ChessBoard chessBoard, final CommandRequest commandRequest) {
+        chessBoard.move(commandRequest.getSourceCoordinate(), commandRequest.getDestinationCoordinate());
         return new Running();
     }
 

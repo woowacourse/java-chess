@@ -121,7 +121,7 @@ sequenceDiagram
 - 설계 관련
     - [ ] 게임 상태 관리를 위한 패턴 검토 (상태 패턴 vs 커맨드 패턴)
         - 각 상태에 따라 다른 행동을 한다기보다는 각 상태가 다음 상태를 전달해준다?
-    - [ ] ChessController의 진영 전환 책임을 ChessBoard로 위임하여 이동 로직과 결합
+    - [x] ChessController의 진영 전환 책임을 ChessBoard로 위임하여 이동 로직과 결합
     - [ ] 체스판 뷰 변환을 위한 클래스 util 패키지에서 controller 패키지로 이동
     - [ ] ChessBoard 의 폰 공격 검사 책임 Pawn이 스스로 하도록 위임
 - 클린 코드 관련

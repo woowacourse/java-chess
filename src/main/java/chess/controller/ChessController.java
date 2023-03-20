@@ -15,12 +15,10 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private ChessBoard chessBoard;
-    private Camp currentTurnCamp;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.currentTurnCamp = Camp.WHITE;
     }
 
     public void run() {
@@ -32,19 +30,18 @@ public class ChessController {
     }
 
     // TODO 조건문 리팩터링, 중복 코드 없애기
-    // TODO 진영 전환 로직 체스보드로 이동(현재는 버그 발생)
+    // TODO 상태 패턴 쓰는 의미가 있나?
     private GameState executeCampPlay(final GameState state) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.START) {
             GameState nextState = state.start();
-            chessBoard = new ChessBoard();
+            chessBoard = new ChessBoard(Camp.WHITE, Camp::transfer);
             outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
             return nextState;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            GameState nextState = state.play(chessBoard, commandRequest, currentTurnCamp);
+            GameState nextState = state.play(chessBoard, commandRequest);
             outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-            currentTurnCamp = currentTurnCamp.transfer();
             return nextState;
         }
         return state.end();

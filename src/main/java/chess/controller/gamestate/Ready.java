@@ -1,6 +1,5 @@
 package chess.controller.gamestate;
 
-import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.dto.CommandRequest;
 
@@ -14,8 +13,7 @@ public class Ready implements GameState {
     }
 
     @Override
-    public GameState play(final ChessBoard chessBoard, final CommandRequest commandRequest,
-                          final Camp currentTurnCamp) {
+    public GameState play(final ChessBoard chessBoard, final CommandRequest commandRequest) {
         throw new IllegalStateException(WRONG_CALLING_ERROR_MESSAGE);
     }
 
