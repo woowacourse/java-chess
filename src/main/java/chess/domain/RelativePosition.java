@@ -50,6 +50,10 @@ public class RelativePosition {
 		return new RelativePosition(x, -1 * y);
 	}
 
+	public boolean isVertical() {
+		return x == 0 && y != 0;
+	}
+
 	public boolean isDiagonal() {
 		return Math.abs(x) == Math.abs(y);
 	}

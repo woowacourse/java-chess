@@ -12,6 +12,7 @@ public class Board {
 	private static final String SAME_TEAM_IN_TARGET_ERROR_MESSAGE = "같은 팀의 말의 위치로 이동할 수 없습니다.";
 	private static final String CANNOT_MOVE_TO_TARGET_DIRECTION_ERROR_MESSAGE = "말이 해당 방향으로 이동할 수 없습니다.";
 	private static final String CANNOT_MOVE_THROUGH_OBSTACLE_ERROR_MESSAGE = "말이 이동하려는 방향에 장애물이 있습니다.";
+	private static final String CANNOT_MOVE_PAWN_VERTICAL_ERROR_MESSAGE = "폰은 적을 수직 방향으로 공격할 수 없습니다.";
 	private static final String CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE = "폰은 적이 존재할 때만 대각선으로 이동할 수 있습니다.";
 	private static final int INITIAL_BLACK_PAWN_ROW = 6;
 	private static final int INITIAL_WHITE_PAWN_ROW = 1;
@@ -45,6 +46,7 @@ public class Board {
 		checkIsSameTeamExistOnTarget(source, target);
 		checkIsMovableDirection(source, target);
 		checkIsThereAnyObstacle(source, target);
+		checkIsSourcePawnTargetingForwardEnemy(source, target);
 		checkIsSourcePawnMovingProperDiagonal(source, target);
 	}
 
@@ -102,15 +104,30 @@ public class Board {
 		return !board.get(position).isEmpty();
 	}
 
+	private void checkIsSourcePawnTargetingForwardEnemy(final Position source, final Position target) {
+		Piece sourcePiece = board.get(source);
+		Piece targetPiece = board.get(target);
+		RelativePosition relativePosition = RelativePosition.of(source, target);
+		if (isPawn(sourcePiece) && relativePosition.isVertical() && isDifferentTeam(sourcePiece, targetPiece)) {
+			throw new IllegalArgumentException(CANNOT_MOVE_PAWN_VERTICAL_ERROR_MESSAGE);
+		}
+	}
+
+	private boolean isDifferentTeam(final Piece sourcePiece, final Piece targetPiece) {
+		return Team.isNotEmptyDifferentTeam(sourcePiece.getTeam(), targetPiece.getTeam());
+	}
+
 	private void checkIsSourcePawnMovingProperDiagonal(final Position source, final Position target) {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
 		RelativePosition relativePosition = RelativePosition.of(source, target);
-		if ((sourcePiece.isInitialPawn() || sourcePiece.isNormalPawn())
-			&& relativePosition.isDiagonal()
-			&& targetPiece.isEmpty()) {
+		if (isPawn(sourcePiece) && relativePosition.isDiagonal() && targetPiece.isEmpty()) {
 			throw new IllegalArgumentException(CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE);
 		}
+	}
+
+	private boolean isPawn(final Piece piece) {
+		return piece.isInitialPawn() || piece.isNormalPawn();
 	}
 
 	private boolean isMovingInitialPawn(final Piece piece, final Team team, final Position source) {

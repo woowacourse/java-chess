@@ -108,6 +108,20 @@ class BoardTest {
 
 			assertDoesNotThrow(() -> board.movePiece(Team.WHITE, b4, a5));
 		}
+
+		@Test
+		@DisplayName("적이 있는 상태에선 폰이 앞으로 이동할 수 없다.")
+		void checkIsSourcePawnTargetingForwardEnemyTest() {
+			Position a7 = new Position(0, 6);
+			Position a5 = new Position(0, 4);
+			Position a2 = new Position(0, 1);
+			Position a4 = new Position(0, 3);
+
+			board.movePiece(Team.BLACK, a7, a5);
+			board.movePiece(Team.WHITE, a2, a4);
+
+			assertThrows(IllegalArgumentException.class, () -> board.movePiece(Team.WHITE, a4, a5));
+		}
 	}
 
 	@Nested
