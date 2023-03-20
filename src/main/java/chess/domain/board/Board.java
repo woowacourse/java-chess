@@ -61,7 +61,7 @@ public class Board {
     private static Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
         return ranks.stream()
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
-                .collect(toMap(Function.identity(), ignore -> Empty.create()));
+                .collect(toMap(Function.identity(), ignore -> Empty.get()));
     }
 
     public void move(final String source, final String target) {
@@ -91,12 +91,12 @@ public class Board {
     }
 
     private boolean isPieceExists(final Position position) {
-        return !board.get(position).equals(Empty.create());
+        return !board.get(position).equals(Empty.get());
     }
 
     private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
         board.put(targetPosition, piece);
-        board.put(sourcePosition, Empty.create());
+        board.put(sourcePosition, Empty.get());
         turn = turn.nextTurn();
     }
 

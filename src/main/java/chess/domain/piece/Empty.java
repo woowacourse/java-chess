@@ -10,7 +10,7 @@ public class Empty extends Piece {
         super(Color.EMPTY, PieceType.EMPTY);
     }
 
-    public static Empty create() {
+    public static Empty get() {
         return EMPTY;
     }
 
