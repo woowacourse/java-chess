@@ -7,6 +7,8 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,6 +113,39 @@ class ChessBoardTest {
         assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물을 움직일 수 없습니다");
+    }
+
+    /**
+     * mock
+     *
+     * ........ 8
+     * ........ 7
+     * .....p.. 6
+     * ..B..... 5
+     * ...b.... 4
+     * ........ 3
+     * ........ 2
+     * ........ 1
+     *
+     * abcdefgh
+     */
+    @ParameterizedTest
+    @CsvSource(value = {"A,SEVEN","H,EIGHT"})
+    void 이동_경로에_기물이_있으면_예외(Column columnToMove, Rank rankToMove) {
+        Map<Position, Piece> mockBoard = emptyBoardStrategy.generate();
+        mockBoard.put(Position.of(Column.D, Rank.FOUR), new Bishop(Color.WHITE));
+        mockBoard.put(Position.of(Column.C, Rank.FIVE), new Bishop(Color.BLACK));
+        mockBoard.put(Position.of(Column.F, Rank.SIX), new Pawn(Color.WHITE));
+
+        chessBoard.initialize(mockBoard);
+
+        Position startPosition = Position.of(Column.D, Rank.FOUR);
+        Position endPosition = Position.of(columnToMove, rankToMove);
+
+        assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이동 경로에 기물이 있으므로 이동할 수 없습니다");
+
     }
 
 }
