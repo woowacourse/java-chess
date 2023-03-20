@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.domain.RelativePosition;
+import chess.domain.position.RelativePosition;
 import chess.domain.Team;
 
 class RookTest {

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.RelativePosition;
+import chess.domain.position.RelativePosition;
 import chess.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

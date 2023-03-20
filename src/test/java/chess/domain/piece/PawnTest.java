@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.RelativePosition;
+import chess.domain.position.RelativePosition;
 import chess.domain.Team;
 
 class PawnTest {

@@ -1,7 +1,9 @@
-package chess.domain;
+package chess.domain.movement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.domain.movement.Movement;
+import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
