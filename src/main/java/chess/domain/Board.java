@@ -51,9 +51,9 @@ public class Board {
 
     public Map<Position, String> getPrintingBoard() {
         Map<Position, String> pieceNames = new HashMap<>();
-        for (Position position : board.keySet()) {
-            Piece piece = board.get(position);
-            pieceNames.put(position, piece.formatName());
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            Piece piece = entry.getValue();
+            pieceNames.put(entry.getKey(), piece.formatName());
         }
         return pieceNames;
     }
