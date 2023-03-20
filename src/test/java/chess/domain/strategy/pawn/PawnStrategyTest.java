@@ -10,6 +10,8 @@ import chess.domain.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -156,8 +158,8 @@ class PawnStrategyTest {
         request = MoveRequest.from(
                 players.getAllPosition(),
                 "black",
-                new PositionDto(Position.from(7, 'a')),
-                new PositionDto(Position.from(6, 'a')));
+                new PositionDto(Position.from(6, 'a')),
+                new PositionDto(Position.from(5, 'a')));
 
         // when, then
         assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
@@ -183,7 +185,7 @@ class PawnStrategyTest {
     }
 
     @Test
-    @DisplayName("대각선 앞에 블랙 진영 기물이 존재할 경우 이동하고 잡을 수 있다.")
+    @DisplayName("화이트 진영 기물이 대각선으로 이동할 수 있다.")
     void moveWhiteDiagonal() {
         // given
         pawnStrategy = new PawnStrategy();
@@ -191,35 +193,10 @@ class PawnStrategyTest {
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
         Players players = Players.from(Player.fromWhitePlayer(whitePieces), Player.fromBlackPlayer(blackPieces));
 
-        MoveRequest blackMoveFront1 = MoveRequest.from(
-                players.getAllPosition(),
-                "black", // 이동할 기물 진영
-                new PositionDto(Position.from(6, 'b')), // movablePiecePosition
-                new PositionDto(Position.from(4, 'b')) // targetPosition
-        );
-
-        MoveRequest blackMoveFront2 = MoveRequest.from(
-                players.getAllPosition(),
-                "black", // 이동할 기물 진영
-                new PositionDto(Position.from(4, 'b')), // movablePiecePosition
-                new PositionDto(Position.from(3, 'b')) // targetPosition
-        );
-
-        MoveRequest blackMoveFront3 = MoveRequest.from(
-                players.getAllPosition(),
-                "black", // 이동할 기물 진영
-                new PositionDto(Position.from(3, 'b')), // movablePiecePosition
-                new PositionDto(Position.from(2, 'b')) // targetPosition
-        );
-
-        pawnStrategy.validateDirection(blackMoveFront1);
-        pawnStrategy.validateDirection(blackMoveFront2);
-        pawnStrategy.validateDirection(blackMoveFront3);
-
         // when, then
         request = MoveRequest.from(
-                players.getAllPosition(),
-                "white", // 이동할 기물 진영
+                List.of(Position.from(3, 'b')),
+                "white",
                 new PositionDto(Position.from(2, 'a')), // movablePiecePosition
                 new PositionDto(Position.from(3, 'b')) // targetPosition
         );
