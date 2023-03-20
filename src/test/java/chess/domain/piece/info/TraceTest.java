@@ -38,10 +38,10 @@ public class TraceTest {
             trace.add(new Turn(), Position.of(Rank.A, File.TWO));
 
             //when
-            boolean actual = trace.hasLog();
+            boolean actual = trace.isEmpty();
 
             //then
-            assertThat(actual).isTrue();
+            assertThat(actual).isFalse();
         }
 
         @Test
@@ -50,10 +50,10 @@ public class TraceTest {
             Trace trace = new Trace();
 
             //when
-            boolean actual = trace.hasLog();
+            boolean actual = trace.isEmpty();
 
             //then
-            assertThat(actual).isFalse();
+            assertThat(actual).isTrue();
         }
     }
 }

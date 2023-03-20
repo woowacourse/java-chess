@@ -17,7 +17,7 @@ public class Trace {
         logs.add(new Log(turn, position));
     }
 
-    public boolean hasLog() {
-        return !logs.isEmpty();
+    public boolean isEmpty() {
+        return logs.isEmpty();
     }
 }

@@ -20,9 +20,9 @@ public class Pawn extends Piece {
             return false;
         }
         if (team == Team.BLACK) {
-            return diffFile == -DEFAULT_MOVE_RANGE || (!trace.hasLog() && diffFile == -INITIAL_MOVE_RANGE);
+            return diffFile == -DEFAULT_MOVE_RANGE || (trace.isEmpty() && diffFile == -INITIAL_MOVE_RANGE);
         }
-        return diffFile == DEFAULT_MOVE_RANGE || (!trace.hasLog() && diffFile == INITIAL_MOVE_RANGE);
+        return diffFile == DEFAULT_MOVE_RANGE || (trace.isEmpty() && diffFile == INITIAL_MOVE_RANGE);
     }
 
     @Override
