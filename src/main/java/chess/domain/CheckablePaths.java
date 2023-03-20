@@ -12,15 +12,10 @@ public class CheckablePaths {
     }
 
     public Path findPathContainingPosition(final Position position) {
-        boolean isPathNotFound = true;
-        int pathIndex = 0;
-        while (pathIndex < paths.size() && (isPathNotFound = !paths.get(pathIndex).hasPosition(position))) {
-            pathIndex++;
-        }
-        if (isPathNotFound) {
-            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
-        }
-        return paths.get(pathIndex);
+        return paths.stream()
+                .filter(path -> path.hasPosition(position))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE));
     }
 
     public int positionsSize() {
