@@ -28,7 +28,9 @@ public class InputView {
 
     public List<String> getCommand() {
         final String[] inputs = scanner.nextLine().split(" ");
-        checkExpectedInput(inputs[0], "move", "start", "end");
+        if (inputs.length > 3) {
+            throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
+        }
         return Arrays.stream(inputs).collect(Collectors.toList());
     }
 
