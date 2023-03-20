@@ -31,6 +31,7 @@ public enum Direction {
 
     private final int dy;
     private final BiPredicate<Integer, Integer> isMatch;
+
     Direction(final int dx, final int dy, final BiPredicate<Integer, Integer> isMatch) {
         this.dx = dx;
         this.dy = dy;
