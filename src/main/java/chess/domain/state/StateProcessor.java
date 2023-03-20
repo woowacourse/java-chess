@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.cache.PieceCache;
 import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
@@ -15,7 +16,7 @@ public class StateProcessor {
     }
 
     public static StateProcessor create() {
-        final State state = new Ready(Board.create());
+        final State state = new Ready(Board.from(PieceCache.create()));
 
         return new StateProcessor(state);
     }

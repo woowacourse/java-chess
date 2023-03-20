@@ -21,13 +21,18 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target) {
         int maxCase = 8;
 
-        return IntStream.range(0, maxCase)
+        List<Position> positions = IntStream.range(0, maxCase)
                 .filter(moveCase -> canMove(source, target, moveCase))
                 .mapToObj(moveCase -> target)
                 .collect(Collectors.toList());
+
+        if (positions.size() == 0) {
+            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
+        }
+        return positions;
     }
 
     private boolean canMove(final Position source, final Position target, final int moveCase) {

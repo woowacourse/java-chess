@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -25,7 +24,7 @@ class KnightTest {
         // given
         final Piece knight = Knight.from(Color.WHITE);
         // when
-        List<Position> result = knight.findPositions(source, target);
+        List<Position> result = knight.findMoveAblePositions(source, target);
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -38,11 +37,6 @@ class KnightTest {
                         List.of(
                                 Position.of(3, 2)
                         )
-                ),
-                Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 4),
-                        Collections.emptyList()
                 )
         );
     }

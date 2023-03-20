@@ -4,7 +4,6 @@ import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Queen extends Piece {
@@ -17,9 +16,9 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target) {
         if (source.isNotLinearFunction(target) && source.isNotConstantFunction(target)) {
-            return new ArrayList<>();
+            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
         }
         return source.calculateBetweenPoints(target);
     }

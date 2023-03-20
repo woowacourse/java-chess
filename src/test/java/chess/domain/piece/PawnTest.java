@@ -24,7 +24,7 @@ class PawnTest {
         // given
         final Piece pawn = Pawn.from(Color.WHITE);
         // when
-        List<Position> result = pawn.findPositions(source, target);
+        List<Position> result = pawn.findMoveAblePositions(source, target);
         // then
         assertThat(result).containsExactlyInAnyOrderElementsOf(expectedResult);
     }
@@ -36,8 +36,6 @@ class PawnTest {
                         Position.of(1, 6),
                         Position.of(1, 4),
                         List.of(
-                                Position.of(0, 5),
-                                Position.of(2, 5),
                                 Position.of(1, 4),
                                 Position.of(1, 5)
                         )
@@ -55,10 +53,7 @@ class PawnTest {
                         Position.of(1, 6),
                         Position.of(2, 5),
                         List.of(
-                                Position.of(2, 5),
-                                Position.of(0, 5),
-                                Position.of(1, 4),
-                                Position.of(1, 5)
+                                Position.of(2, 5)
                         )
                 )
         );

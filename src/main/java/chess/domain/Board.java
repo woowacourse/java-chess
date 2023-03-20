@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.cache.BoardCache;
-import chess.cache.PieceCache;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
@@ -19,10 +18,10 @@ public class Board {
         this.board = board;
     }
 
-    public static Board create() {
+    public static Board from(Map<Position, Piece> piece) {
         final Map<Position, Piece> board = new HashMap<>();
         board.putAll(BoardCache.create());
-        board.putAll(PieceCache.create());
+        board.putAll(piece);
         return new Board(board);
     }
 
@@ -33,7 +32,6 @@ public class Board {
         final Piece targetPiece = board.get(target);
 
         validateInvalidColor(color, sourcePiece, targetPiece);
-        validateInvalidPosition(source, target, sourcePiece);
         validateInvalidMove(source, target, sourcePiece);
         validateInvalidMovePawn(source, target, sourcePiece);
 
@@ -59,16 +57,8 @@ public class Board {
         }
     }
 
-    private void validateInvalidPosition(final Position source, final Position target, final Piece sourcePiece) {
-        final List<Position> positions = sourcePiece.findPositions(source, target);
-
-        if (!positions.contains(target)) {
-            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
-        }
-    }
-
     private void validateInvalidMove(final Position source, final Position target, final Piece sourcePiece) {
-        final List<Position> positions = sourcePiece.findPositions(source, target);
+        final List<Position> positions = sourcePiece.findMoveAblePositions(source, target);
 
         final boolean isMoveAble = positions.subList(0, positions.indexOf(target))
                 .stream()

@@ -10,8 +10,6 @@ import java.util.List;
 public final class Pawn extends Piece {
     private static final int DIRECTION_DOWN = 1;
     private static final int DIRECTION_UP = -1;
-    private static final int DIRECTION_RIGHT = 1;
-    private static final int DIRECTION_LEFT = -1;
 
     private Pawn(final PieceType pieceType, final Color color) {
         super(pieceType, color);
@@ -22,20 +20,26 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target) {
         return createMovablePositions(source, target);
     }
 
     private List<Position> createMovablePositions(final Position source, final Position target) {
         final List<Position> result = new ArrayList<>();
-
-        result.add(Position.of(source.getRow(), source.getColumn() + directionDecider()));
-        if (source.isNotDistanceTwo(target)) {
+        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) <= 2) {
+            result.add(createMove(source, 1));
+        }
+        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) == 1) {
             return result;
         }
-
-        result.addAll(calculateDistanceTwoCases(source));
-        return result;
+        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) == 2 && isStartPosition(source)) {
+            result.add(createMove(source, 2));
+            return result;
+        }
+        if (source.calculateRowDistance(target.getRow()) == 1 && source.calculateColumnDistance(target.getColumn()) == 1) {
+            return List.of(target);
+        }
+        throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
     }
 
     private int directionDecider() {
@@ -45,35 +49,14 @@ public final class Pawn extends Piece {
         return DIRECTION_DOWN;
     }
 
-    private List<Position> calculateDistanceTwoCases(final Position source) {
-        final List<Position> result = new ArrayList<>();
-        if (isStartPosition(source)) {
-            result.add(createPawnDoubleMove(source));
-        }
-        result.add(createPawnCaptureLeft(source));
-        result.add(createPawnCaptureRight(source));
-        return result;
-    }
-
     private boolean isStartPosition(final Position source) {
         final int blackColorStartIndex = 1;
         final int whiteColorStartIndex = 6;
         return source.getColumn() == blackColorStartIndex || source.getColumn() == whiteColorStartIndex;
     }
 
-    private Position createPawnCaptureRight(final Position source) {
+    private Position createMove(final Position source, final int count) {
         final int pawnDirection = directionDecider();
-        return Position.of(source.getRow() + DIRECTION_RIGHT, source.getColumn() + pawnDirection);
-    }
-
-    private Position createPawnCaptureLeft(final Position source) {
-        final int pawnDirection = directionDecider();
-        return Position.of(source.getRow() + DIRECTION_LEFT, source.getColumn() + pawnDirection);
-    }
-
-    private Position createPawnDoubleMove(final Position source) {
-        final int twoMove = 2;
-        final int pawnDirection = directionDecider();
-        return Position.of(source.getRow(), source.getColumn() + twoMove * pawnDirection);
+        return Position.of(source.getRow(), source.getColumn() + count * pawnDirection);
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.cache.PieceCache;
 import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Position;
@@ -22,7 +23,7 @@ public class Black extends State {
 
     @Override
     public State start() {
-        return new White(Board.create());
+        return new White(Board.from(PieceCache.create()));
     }
 
     @Override

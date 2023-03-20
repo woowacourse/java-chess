@@ -24,7 +24,7 @@ class BishopTest {
         // given
         final Piece bishop = Bishop.from(Color.WHITE);
         // when
-        List<Position> result = bishop.findPositions(source, target);
+        List<Position> result = bishop.findMoveAblePositions(source, target);
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -49,11 +49,6 @@ class BishopTest {
                                 Position.of(1, 1),
                                 Position.of(0, 0)
                         )
-                ),
-                Arguments.arguments(
-                        Position.of(1, 4),
-                        Position.of(0, 0),
-                        List.of()
                 )
         );
     }

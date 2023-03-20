@@ -24,7 +24,7 @@ class QueenTest {
         // given
         final Piece queen = Queen.from(Color.WHITE);
         // when
-        List<Position> result = queen.findPositions(source, target);
+        List<Position> result = queen.findMoveAblePositions(source, target);
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -70,16 +70,6 @@ class QueenTest {
                                 Position.of(1, 1),
                                 Position.of(0, 0)
                         )
-                ),
-                Arguments.arguments(
-                        Position.of(3, 3),
-                        Position.of(0, 4),
-                        List.of()
-                ),
-                Arguments.arguments(
-                        Position.of(1, 4),
-                        Position.of(0, 0),
-                        List.of()
                 )
         );
     }

@@ -24,7 +24,7 @@ class KingTest {
         // given
         final Piece king = King.from(Color.WHITE);
         // when
-        List<Position> result = king.findPositions(source, target);
+        List<Position> result = king.findMoveAblePositions(source, target);
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -35,11 +35,6 @@ class KingTest {
                         Position.of(1, 1),
                         Position.of(2, 2),
                         List.of(Position.of(2, 2))
-                ),
-                Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 0),
-                        List.of(Position.of(3, 3))
                 )
         );
     }
