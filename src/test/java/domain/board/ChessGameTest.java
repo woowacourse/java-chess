@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Coordinate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +10,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ChessGameTest {
 
+    private ChessGame chessGame;
+
+    @BeforeEach
+    void setup() {
+        chessGame = new ChessGame();
+    }
+
     @Test
     @DisplayName("기물의 이동규칙 밖인 경우, 이동할 수 없다")
     void moveImpossible() {
-        ChessGame chessGame = new ChessGame();
-
         Coordinate start = new Coordinate(1, 0);
         Coordinate end = new Coordinate(0, 0);
 
@@ -24,8 +30,6 @@ class ChessGameTest {
     @Test
     @DisplayName("목적지에 기물이 이미 존재하는 경우, 이동할 수 없다")
     void moveImpossibleWhenExistsAtEnd() {
-        ChessGame chessGame = new ChessGame();
-
         Coordinate start = new Coordinate(0, 0);
         Coordinate end = new Coordinate(1, 0);
 
@@ -36,8 +40,6 @@ class ChessGameTest {
     @Test
     @DisplayName("경로상에 기물이 존재하는 경우, reap이 불가능한 기물은 이동할 수 없다")
     void moveImpossibleWhenBlockedAndCantReap() {
-        ChessGame chessGame = new ChessGame();
-
         Coordinate start = new Coordinate(0, 0);
         Coordinate end = new Coordinate(2, 0);
 
@@ -48,8 +50,6 @@ class ChessGameTest {
     @Test
     @DisplayName("경로상에 기물이 존재하는 경우, reap이 가능한 기물은 이동할 수 있다")
     void moveImpossibleWhenBlockedAndCanReap() {
-        ChessGame chessGame = new ChessGame();
-
         Coordinate start = new Coordinate(0, 1);
         Coordinate end = new Coordinate(2, 0);
 
@@ -60,10 +60,78 @@ class ChessGameTest {
     @Test
     @DisplayName("일반적인 경우, 기물은 이동할 수 있다")
     void movePossible() {
-        ChessGame chessGame = new ChessGame();
-
         Coordinate start = new Coordinate(1, 0);
         Coordinate end = new Coordinate(3, 0);
+
+        assertThatCode(() -> chessGame.move(start, end))
+                .doesNotThrowAnyException();
+    }
+
+
+    @Test
+    @DisplayName("블랙 팀은 처음에 기물을 움직일 수 없다")
+    void moveImpossibleWhenTurnIsNotForBlack() {
+        Coordinate start = new Coordinate(6, 0);
+        Coordinate end = new Coordinate(5, 0);
+
+        assertThatThrownBy(() -> chessGame.move(start, end))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("화이트 팀은 처음에 기물을 움직일 수 있다")
+    void movePossibleWhenTurnIsForWhite() {
+        Coordinate start = new Coordinate(1, 0);
+        Coordinate end = new Coordinate(2, 0);
+
+        assertThatCode(() -> chessGame.move(start, end))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("두번째 턴에는 블랙 팀이 기물을 움직일 수 있다")
+    void movePossibleWhenTurnTwoForBlack() {
+        Coordinate start = new Coordinate(6, 0);
+        Coordinate end = new Coordinate(5, 0);
+
+        chessGame.move(
+                new Coordinate(1, 0),
+                new Coordinate(2, 0)
+        );
+
+        assertThatCode(() -> chessGame.move(start, end))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("두번째 턴에는 화이트 팀이 기물을 움직일 수 없다")
+    void moveImPossibleWhenTurnTwoForWhite() {
+        Coordinate start = new Coordinate(1, 0);
+        Coordinate end = new Coordinate(3, 0);
+
+        chessGame.move(
+                new Coordinate(1, 0),
+                new Coordinate(2, 0)
+        );
+
+        assertThatCode(() -> chessGame.move(start, end))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("세번째 턴에는 화이트 팀이 기물을 움직일 수 있다")
+    void movePossibleWhenTurnThreeForWhite() {
+        Coordinate start = new Coordinate(1, 1);
+        Coordinate end = new Coordinate(2, 1);
+
+        chessGame.move(
+                new Coordinate(1, 0),
+                new Coordinate(2, 0)
+        );
+        chessGame.move(
+                new Coordinate(6, 1),
+                new Coordinate(5, 1)
+        );
 
         assertThatCode(() -> chessGame.move(start, end))
                 .doesNotThrowAnyException();

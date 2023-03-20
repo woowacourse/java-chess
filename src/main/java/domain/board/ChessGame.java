@@ -1,21 +1,34 @@
 package domain.board;
 
+import domain.square.Camp;
 import domain.square.Square;
 import domain.piece.Coordinate;
 
 public final class ChessGame {
 
+    private static final Camp PRIORITY_GIVEN_CAMP = Camp.WHITE;
+
     private final Board board;
+    private final Turn turn;
 
     public ChessGame() {
         this.board = new Board();
+        this.turn = new Turn(PRIORITY_GIVEN_CAMP);
     }
 
     public void move(final Coordinate start, final Coordinate end) {
         validateMove(start, end);
         Square findSquare = board.findSquare(start);
+        validateTurn(findSquare);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
+        turn.invert();
+    }
+
+    private void validateTurn(final Square findSquare) {
+        if (findSquare.getCamp() != turn.getTurn()) {
+            throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
+        }
     }
 
     private void validateMove(final Coordinate start, final Coordinate end) {

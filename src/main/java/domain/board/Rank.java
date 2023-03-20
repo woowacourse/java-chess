@@ -17,7 +17,7 @@ public final class Rank {
     private List<Square> initialize(final int row, final int totalColCount) {
         final List<Square> squares = new ArrayList<>();
         for (int col = 0; col < totalColCount; col++) {
-            squares.add(BoardInitialImage.getPieceByCoordinate(row, col));
+            squares.add(BoardInitialImage.getSquareByCoordinate(row, col));
         }
         return squares;
     }
