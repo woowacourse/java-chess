@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.Row;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -19,8 +21,13 @@ public class OutputView {
     }
 
     public static void printChessBoard(final Map<Position, Piece> board) {
-        final String chessBoard = BoardViewForm.createChessBoard(board);
-        System.out.println(chessBoard + System.lineSeparator());
+        System.out.println();
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                System.out.print(PieceViewForm.parseToName(board.get(Position.of(row, column))));
+            }
+            System.out.println();
+        }
     }
 
     public static void printExceptionMessage(String errorMessage) {
