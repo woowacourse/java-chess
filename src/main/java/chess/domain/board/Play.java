@@ -3,13 +3,21 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Map;
 
 public final class Play extends Initialized {
 
+    private static final int VALID_KING_COUNT = 2;
+
     protected Play(final Map<Position, Piece> board, final Color turn) {
         super(board, turn);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 
     @Override
@@ -20,6 +28,9 @@ public final class Play extends Initialized {
 
         validate(sourcePosition, targetPosition, piece);
         movePiece(sourcePosition, targetPosition, piece);
+        if (isGameOver()) {
+            return new End(board, turn.nextTurn());
+        }
         return new Play(board, turn.nextTurn());
     }
 
@@ -47,5 +58,11 @@ public final class Play extends Initialized {
     private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.instance());
+    }
+
+    private boolean isGameOver() {
+        return VALID_KING_COUNT != board.values().stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .count();
     }
 }

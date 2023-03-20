@@ -70,6 +70,18 @@ class StartTest {
     }
 
     @Test
+    void 게임이_종료_되었는지_확인한다() {
+        // given
+        Board board = new Start();
+
+        // when
+        final boolean result = board.isEnd();
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
     void 초기화_되지_않은_상태에서_기물을_움직이려는_경우_예외를_던진다() {
         // given
         final Start start = new Start();

@@ -22,6 +22,9 @@ public abstract class AbstractBoard implements Board {
     public abstract boolean isInitialized();
 
     @Override
+    public abstract boolean isEnd();
+
+    @Override
     public abstract Board move(final String source, final String target);
 
     @Override

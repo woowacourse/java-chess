@@ -36,7 +36,7 @@ public class PieceTest {
 
     @ParameterizedTest(name = "색을 입력받아 같은 색인지 확인한다. 현재 타입: PAWN, 입력: {0}, 결과: {1}")
     @CsvSource({"PAWN, true", "KING, false"})
-    void 카입을_입력받아_같은_타입인지_확인한다(final PieceType type, final boolean result) {
+    void 타입을_입력받아_같은_타입인지_확인한다(final PieceType type, final boolean result) {
         // given
         final Piece piece = generatePiece(Color.WHITE, PieceType.PAWN);
 

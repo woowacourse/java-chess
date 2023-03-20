@@ -45,7 +45,7 @@ public class ChessGameController {
             final ChessGameAction chessGameAction = commandMapper.get(command);
             chessGameAction.execute(commands);
             return command;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printException(e.getMessage());
             return EMPTY;
         }

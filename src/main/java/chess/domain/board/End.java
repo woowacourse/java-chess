@@ -12,6 +12,11 @@ public final class End extends Initialized {
     }
 
     @Override
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
     public Board move(final String source, final String target) {
         throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }

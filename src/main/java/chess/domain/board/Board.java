@@ -11,6 +11,8 @@ public interface Board {
 
     boolean isInitialized();
 
+    boolean isEnd();
+
     Board move(final String source, final String target);
 
     double score(final Color color);

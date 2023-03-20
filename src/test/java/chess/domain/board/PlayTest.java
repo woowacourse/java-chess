@@ -34,7 +34,7 @@ public class PlayTest {
         board = board.initialize();
 
         // when
-        board.move("e2", "e4");
+        board = board.move("e2", "e4");
 
         // then
         assertThat(board.getBoard().get(E4)).isEqualTo(Pawn.from(Color.WHITE));
@@ -64,5 +64,18 @@ public class PlayTest {
         assertThatThrownBy(() -> finalBoard.move("d1", "d4"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있을 수 없습니다.");
+    }
+
+    @Test
+    void 게임이_종료_되었는지_확인한다() {
+        // given
+        Board board = new Start();
+        board = board.initialize();
+
+        // when
+        final boolean result = board.isEnd();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

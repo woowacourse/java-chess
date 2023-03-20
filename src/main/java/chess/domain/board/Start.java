@@ -21,6 +21,11 @@ public final class Start extends AbstractBoard {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public Board move(final String source, final String target) {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
     }
