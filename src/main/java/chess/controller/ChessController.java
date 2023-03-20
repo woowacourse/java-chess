@@ -18,18 +18,29 @@ public class ChessController {
     }
 
     private void startGame(final Board board) {
-        Order.ofStart(InputView.askStart());
-        OutputView.printBoard(board);
+        try {
+            Order.ofStart(InputView.askStart());
+            OutputView.printBoard(board);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            startGame(board);
+        }
     }
 
     private void playGame(final Board board) {
-        Order order = Order.ofMoveOrEnd(InputView.askNext());
-        if (order.isEnd()) {
-            return;
-        }
-        if (order.isMove()) {
-            board.move(order.getSource(), order.getTarget());
-            OutputView.printBoard(board);
+        try {
+            Order order = Order.ofMoveOrEnd(InputView.askNext());
+
+            if (order.isEnd()) {
+                return;
+            }
+            if (order.isMove()) {
+                board.move(order.getSource(), order.getTarget());
+                OutputView.printBoard(board);
+                playGame(board);
+            }
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
             playGame(board);
         }
     }
