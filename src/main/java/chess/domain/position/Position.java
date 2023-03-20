@@ -41,8 +41,8 @@ public class Position implements Comparable<Position> {
     }
     
     public Direction calculateDirection(Position destination) {
-        int sourceFIleIndex = this.getFile().getIndex();
-        int sourceRankIndex = this.getRank().getIndex();
+        int sourceFIleIndex = getFile().getIndex();
+        int sourceRankIndex = getRank().getIndex();
         int destinationFIleIndex = destination.getFile().getIndex();
         int destinationRankIndex = destination.getRank().getIndex();
         
@@ -89,15 +89,15 @@ public class Position implements Comparable<Position> {
     }
     
     public Position addDirection(Direction direction) {
-        int fileIndex = this.file.getIndex();
-        int rankIndex = this.rank.getIndex();
+        int fileIndex = file.getIndex();
+        int rankIndex = rank.getIndex();
         
         return new Position(fileIndex + direction.getX(), rankIndex + direction.getY());
     }
     
     public int calculateDistance(Position destination) {
-        int sourceFIleIndex = this.getFile().getIndex();
-        int sourceRankIndex = this.getRank().getIndex();
+        int sourceFIleIndex = getFile().getIndex();
+        int sourceRankIndex = getRank().getIndex();
         int destinationFIleIndex = destination.getFile().getIndex();
         int destinationRankIndex = destination.getRank().getIndex();
         

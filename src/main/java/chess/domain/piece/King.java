@@ -21,7 +21,7 @@ public class King extends Piece {
     @Override
     public void canMove(final Position start, final Position end) {
         Direction direction = start.calculateDirection(end);
-        this.checkDirection(direction);
-        this.checkDistance(start, end, MOVABLE_DISTANCES);
+        checkDirection(direction);
+        checkDistance(start, end, MOVABLE_DISTANCES);
     }
 }

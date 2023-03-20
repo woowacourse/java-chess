@@ -25,6 +25,7 @@ public class Board {
     public static final int WHITE_PAWNS_RANK = 1;
     public static final int BLACK_PAWNS_RANK = 6;
     public static final int BLACK_GENERALS_RANK = 7;
+
     private final Map<Position, Piece> board;
     
     private Board(final Map<Position, Piece> board) {
@@ -47,41 +48,41 @@ public class Board {
         List<Piece> whitePawns = PieceFactory.createWhitePawns();
         List<Piece> blackPawns = PieceFactory.createBlackPawns();
         List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
-        for (Position position : this.board.keySet()) {
-            this.placePieceAtPosition(whiteGenerals, position, WHITE_GENERALS_RANK);
-            this.placePieceAtPosition(whitePawns, position, WHITE_PAWNS_RANK);
-            this.placePieceAtPosition(blackPawns, position, BLACK_PAWNS_RANK);
-            this.placePieceAtPosition(blackGenerals, position, BLACK_GENERALS_RANK);
+        for (Position position : board.keySet()) {
+            placePieceAtPosition(whiteGenerals, position, WHITE_GENERALS_RANK);
+            placePieceAtPosition(whitePawns, position, WHITE_PAWNS_RANK);
+            placePieceAtPosition(blackPawns, position, BLACK_PAWNS_RANK);
+            placePieceAtPosition(blackGenerals, position, BLACK_GENERALS_RANK);
         }
     }
     
     private void placePieceAtPosition(final List<Piece> pieces, final Position position, int rank) {
         if (position.isRank(rank)) {
-            this.board.put(position, pieces.get(position.getFile().getIndex()));
+            board.put(position, pieces.get(position.getFile().getIndex()));
         }
     }
     
     public Piece getValidSourcePiece(final Position source, final Color color) {
-        if (this.isEmpty(source)) {
+        if (isEmpty(source)) {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE);
         }
-        if (!this.isSameColor(source, color)) {
+        if (!isSameColor(source, color)) {
             throw new IllegalArgumentException(OTHER_COLOR_PIECE_ERROR_MESSAGE);
         }
-        return this.board.get(source);
+        return board.get(source);
     }
     
     public void checkBetweenRoute(final Position source, final Position destination) {
         Direction direction = source.calculateDirection(destination);
         Position move = source.addDirection(direction);
         while (!destination.equals(move)) {
-            this.checkOtherPieceInRoute(move);
+            checkOtherPieceInRoute(move);
             move = move.addDirection(direction);
         }
     }
     
     private void checkOtherPieceInRoute(final Position move) {
-        if (!this.isEmpty(move)) {
+        if (!isEmpty(move)) {
             throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
         }
     }
@@ -89,41 +90,41 @@ public class Board {
     public void checkRestrictionForPawn(final Position source, final Position destination, final Color color) {
         Direction direction = source.calculateDirection(destination);
         if (direction == Direction.N || direction == Direction.S) {
-            this.checkOtherPieceInRoute(destination);
+            checkOtherPieceInRoute(destination);
         }
         if (List.of(Direction.NE, Direction.SE, Direction.NW, Direction.SW).contains(direction)) {
-            this.checkDiagonalPiece(destination);
-            this.checkSameColor(destination, color);
+            checkDiagonalPiece(destination);
+            checkSameColor(destination, color);
         }
     }
     
     private void checkDiagonalPiece(final Position destination) {
-        if (this.isEmpty(destination)) {
+        if (isEmpty(destination)) {
             throw new IllegalArgumentException(PAWN_CANNOT_MOVE_EMPTY_DIAGONAL);
         }
     }
     
     public void checkSameColor(final Position destination, Color color) {
-        if (this.isSameColor(destination, color)) {
+        if (isSameColor(destination, color)) {
             throw new IllegalArgumentException(PIECE_CANNOT_MOVE_SAME_COLOR);
         }
     }
     
     public void replace(final Position source, final Position destination) {
-        this.board.put(destination, this.board.get(source));
-        this.board.put(source, Empty.create());
+        board.put(destination, board.get(source));
+        board.put(source, Empty.create());
     }
     
     private boolean isEmpty(final Position position) {
-        return this.board.get(position).isEmpty();
+        return board.get(position).isEmpty();
     }
     
     private boolean isSameColor(final Position position, final Color color) {
-        return this.board.get(position).isSameColor(color);
+        return board.get(position).isSameColor(color);
     }
     
     public List<Piece> getPiecesAt(Rank rank) {
-        return this.board.entrySet().stream()
+        return board.entrySet().stream()
                 .filter(e -> e.getKey().isRank(rank.getIndex()))
                 .map(Entry::getValue)
                 .collect(Collectors.toList());

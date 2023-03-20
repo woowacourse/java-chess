@@ -19,6 +19,6 @@ public class Queen extends Piece {
     @Override
     public void canMove(final Position start, final Position end) {
         Direction direction = start.calculateDirection(end);
-        this.checkDirection(direction);
+        checkDirection(direction);
     }
 }

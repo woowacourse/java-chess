@@ -32,12 +32,12 @@ public class Pawn extends Piece {
     @Override
     public void canMove(final Position start, final Position end) {
         Direction direction = start.calculateDirection(end);
-        this.checkDirection(direction);
+        checkDirection(direction);
         Rank rank = start.getRank();
         if (rank == Rank.TWO || rank == Rank.SEVEN) {
-            this.checkDistance(start, end, FIRST_MOVABLE_DISTANCES);
+            checkDistance(start, end, FIRST_MOVABLE_DISTANCES);
             return;
         }
-        this.checkDistance(start, end, DEFAULT_MOVABLE_DISTANCE);
+        checkDistance(start, end, DEFAULT_MOVABLE_DISTANCE);
     }
 }

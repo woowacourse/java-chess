@@ -23,15 +23,15 @@ public abstract class Piece {
     public abstract void canMove(Position start, Position end);
     
     protected void checkDirection(Direction direction) {
-        if (!this.movableDirections.contains(direction)) {
-            throw new IllegalArgumentException(this.type.name() + PIECE_CANNOT_MOVE_ERROR_MESSAGE);
+        if (!movableDirections.contains(direction)) {
+            throw new IllegalArgumentException(type.name() + PIECE_CANNOT_MOVE_ERROR_MESSAGE);
         }
     }
     
     protected void checkDistance(final Position start, final Position end, final List<Integer> movableDistances) {
         int distance = start.calculateDistance(end);
         if (!movableDistances.contains(distance)) {
-            throw new IllegalArgumentException(this.type.name() + OUT_OF_DISTANCE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(type.name() + OUT_OF_DISTANCE_ERROR_MESSAGE);
         }
     }
     
@@ -57,15 +57,15 @@ public abstract class Piece {
     }
     
     public PieceType getType() {
-        return this.type;
+        return type;
     }
     
     public boolean isWhite() {
-        return this.color == Color.WHITE;
+        return color == Color.WHITE;
     }
     
     public boolean isEmpty() {
-        return this.type == PieceType.EMPTY;
+        return type == PieceType.EMPTY;
     }
     
     

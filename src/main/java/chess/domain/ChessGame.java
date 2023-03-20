@@ -17,64 +17,64 @@ public class ChessGame {
     private GameStatus status;
     
     public ChessGame() {
-        this.status = GameStatus.START;
-        this.board = Board.create();
-        this.turn = Color.WHITE;
+        status = GameStatus.START;
+        board = Board.create();
+        turn = Color.WHITE;
     }
     
     public void start() {
-        if (this.status != GameStatus.START) {
+        if (status != GameStatus.START) {
             throw new IllegalStateException(GAME_CANNOT_EXECUTE_MESSAGE);
         }
-        this.board.initialize();
-        this.status = GameStatus.MOVE;
+        board.initialize();
+        status = GameStatus.MOVE;
     }
     
     public void move(final List<String> arguments) {
-        if (this.status != GameStatus.MOVE) {
+        if (status != GameStatus.MOVE) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
     
-        this.checkPieceMove(source, destination);
-        this.board.replace(source, destination);
-        this.turn = Color.reverse(this.turn);
+        checkPieceMove(source, destination);
+        board.replace(source, destination);
+        turn = Color.reverse(turn);
     }
     
     private void checkPieceMove(final Position source, final Position destination) {
-        Piece sourcePiece = this.board.getValidSourcePiece(source, this.turn);
+        Piece sourcePiece = board.getValidSourcePiece(source, turn);
         sourcePiece.canMove(source, destination);
-        this.board.checkSameColor(destination, this.turn);
-        this.checkRoute(source, destination, sourcePiece);
-        this.checkPawnMove(source, destination, sourcePiece);
+        board.checkSameColor(destination, turn);
+        checkRoute(source, destination, sourcePiece);
+        checkPawnMove(source, destination, sourcePiece);
     }
     
     private void checkPawnMove(final Position source, final Position destination, final Piece sourcePiece) {
         if (sourcePiece.getType() == PieceType.PAWN) {
-            this.board.checkRestrictionForPawn(source, destination, this.turn);
+            board.checkRestrictionForPawn(source, destination, turn);
         }
     }
     
     private void checkRoute(final Position source, final Position destination, final Piece sourcePiece) {
         if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
-            this.board.checkBetweenRoute(source, destination);
+            board.checkBetweenRoute(source, destination);
         }
     }
     
     public void end() {
-        if (this.status != GameStatus.MOVE) {
+        if (status != GameStatus.MOVE) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
         }
-        this.status = GameStatus.END;
+        status = GameStatus.END;
     }
     
     public boolean isGameEnd() {
-        return this.status == GameStatus.END;
+        return status == GameStatus.END;
     }
     
     public Board getBoard() {
-        return this.board;
+        return board;
     }
 }
 
