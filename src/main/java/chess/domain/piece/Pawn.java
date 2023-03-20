@@ -1,10 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.MoveStrategy.BLACK_PAWN;
-import static chess.domain.MoveStrategy.BLACK_PAWN_FIRST;
-import static chess.domain.MoveStrategy.WHITE_PAWN;
-import static chess.domain.MoveStrategy.WHITE_PAWN_FIRST;
-
+import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
 
@@ -26,13 +22,13 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackMovable(Position source, Position target) {
-        return BLACK_PAWN.isMovable(source, target)
-                || (source.isSameRank(BLACK_INIT_RANK) && BLACK_PAWN_FIRST.isMovable(source, target));
+        return MoveStrategy.BLACK_PAWN.isMovable(source, target)
+                || (source.isSameRank(BLACK_INIT_RANK) && MoveStrategy.BLACK_PAWN_FIRST.isMovable(source, target));
     }
 
     private boolean isWhiteMovable(Position source, Position target) {
-        return WHITE_PAWN.isMovable(source, target)
-                || (source.isSameRank(WHITE_INIT_RANK) && WHITE_PAWN_FIRST.isMovable(source, target));
+        return MoveStrategy.WHITE_PAWN.isMovable(source, target)
+                || (source.isSameRank(WHITE_INIT_RANK) && MoveStrategy.WHITE_PAWN_FIRST.isMovable(source, target));
     }
 
     @Override

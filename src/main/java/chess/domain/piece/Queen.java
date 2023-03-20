@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.MoveStrategy.*;
-
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -14,7 +12,7 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return QUEEN.isMovable(source, target);
+        return MoveStrategy.QUEEN.isMovable(source, target);
     }
 
     @Override

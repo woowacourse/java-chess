@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.MoveStrategy.BISHOP;
-
+import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Team;
 
@@ -13,7 +12,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return BISHOP.isMovable(source, target);
+        return MoveStrategy.BISHOP.isMovable(source, target);
     }
 
     @Override
