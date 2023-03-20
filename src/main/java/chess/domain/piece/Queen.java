@@ -1,21 +1,18 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.path.Movement.DOWN;
-import static chess.path.Movement.LEFT;
-import static chess.path.Movement.RIGHT;
-import static chess.path.Movement.UP;
-
-import chess.path.Movement;
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Movement;
+import chess.domain.path.Path;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Queen extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP, DOWN, RIGHT, LEFT);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(
+            Movement.UP, Movement.DOWN, Movement.RIGHT, Movement.LEFT,
+            Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
-    public Rook(final Color color) {
+    public Queen(final Color color) {
         super(color);
     }
 
@@ -34,6 +31,7 @@ public class Rook extends Piece {
     private Path trackPath(final Position from, final Position to, final Movement movement) {
         Position next = from;
         List<Position> positions = new ArrayList<>();
+
         while (true) {
             next = next.moveBy(movement);
             if (next.equals(to)) {
@@ -41,6 +39,7 @@ public class Rook extends Piece {
             }
             positions.add(next);
         }
+
         return new Path(positions);
     }
 }

@@ -1,19 +1,15 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.path.Movement.DOWN_LEFT;
-import static chess.path.Movement.DOWN_RIGHT;
-import static chess.path.Movement.UP_LEFT;
-import static chess.path.Movement.UP_RIGHT;
-
-import chess.path.Movement;
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Movement;
+import chess.domain.path.Path;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(
+            Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
     public Bishop(final Color color) {
         super(color);

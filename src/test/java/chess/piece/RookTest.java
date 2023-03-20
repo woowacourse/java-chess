@@ -3,8 +3,12 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.board.Board;
-import chess.board.BoardFactory;
-import chess.position.Position;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

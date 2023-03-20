@@ -1,9 +1,9 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.path.Path;
-import chess.piece.Color;
-import chess.piece.Piece;
-import chess.position.Position;
+import chess.domain.path.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {

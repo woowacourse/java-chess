@@ -11,11 +11,11 @@ import static chess.ChessGameCommand.START;
 import static chess.ChessGameCommand.TO_INDEX;
 
 import chess.ChessGameCommand;
-import chess.board.Board;
-import chess.board.BoardFactory;
-import chess.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.position.Position;
+import chess.domain.view.InputView;
+import chess.domain.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
@@ -53,16 +53,12 @@ public class ChessController {
     }
 
     private void start(final List<String> commands) {
-        if (commands.size() != DEFAULT_COMMAND_SIZE) {
-            throw new IllegalArgumentException("start 하나만 입력해주셈!");
-        }
+        validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
         OutputView.printBoard(board.board());
     }
 
     private void movePiece(final List<String> commands) {
-        if (commands.size() != MOVE_COMMAND_SIZE) {
-            throw new IllegalArgumentException("move b2 b3 이런식으로 입력해주셈!");
-        }
+        validateCommandsSize(commands, MOVE_COMMAND_SIZE);
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
 
@@ -71,8 +67,12 @@ public class ChessController {
     }
 
     private void end(final List<String> strings) {
-        if (strings.size() != DEFAULT_COMMAND_SIZE) {
-            throw new IllegalArgumentException("end 하나만 입력해 주셈!");
+        validateCommandsSize(strings, DEFAULT_COMMAND_SIZE);
+    }
+
+    private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {
+        if (commands.size() != moveCommandSize) {
+            throw new IllegalArgumentException("명령을 형식에 맞게 입력해 주세요!");
         }
     }
 

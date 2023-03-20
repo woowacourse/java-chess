@@ -1,27 +1,20 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.path.Movement.DOWN;
-import static chess.path.Movement.DOWN_LEFT;
-import static chess.path.Movement.DOWN_RIGHT;
-import static chess.path.Movement.UP;
-import static chess.path.Movement.UP_LEFT;
-import static chess.path.Movement.UP_RIGHT;
-
-import chess.path.Movement;
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Movement;
+import chess.domain.path.Path;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
 
     private static final Map<Color, Movement> CAN_MOVE_EMPTY_DESTINATION = Map.of(
-            Color.BLACK, DOWN,
-            Color.WHITE, UP
+            Color.BLACK, Movement.DOWN,
+            Color.WHITE, Movement.UP
     );
     private static final Map<Color, List<Movement>> CAN_MOVE_ENEMY_DESTINATION = Map.of(
-            Color.BLACK, List.of(DOWN_RIGHT, DOWN_LEFT),
-            Color.WHITE, List.of(UP_RIGHT, UP_LEFT)
+            Color.BLACK, List.of(Movement.DOWN_RIGHT, Movement.DOWN_LEFT),
+            Color.WHITE, List.of(Movement.UP_RIGHT, Movement.UP_LEFT)
     );
     private static final Map<Color, Integer> INITIAL_POSITION_RANK = Map.of(
             Color.BLACK, 7,

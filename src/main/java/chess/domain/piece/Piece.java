@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.path.Movement;
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Movement;
+import chess.domain.path.Path;
+import chess.domain.position.Position;
 import java.util.List;
 
 public abstract class Piece {

@@ -1,4 +1,4 @@
-package chess.position;
+package chess.domain.position;
 
 public class InitialPositionFixtures {
     public static final Position WHITE_KING_POSITION = new Position(5, 1);

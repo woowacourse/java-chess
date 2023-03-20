@@ -3,8 +3,10 @@ package chess.piece;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

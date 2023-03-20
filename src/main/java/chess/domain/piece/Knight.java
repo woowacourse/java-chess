@@ -1,25 +1,16 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.path.Movement.DOWN_DOWN_LEFT;
-import static chess.path.Movement.DOWN_DOWN_RIGHT;
-import static chess.path.Movement.LEFT_LEFT_DOWN;
-import static chess.path.Movement.LEFT_LEFT_UP;
-import static chess.path.Movement.RIGHT_RIGHT_DOWN;
-import static chess.path.Movement.RIGHT_RIGHT_UP;
-import static chess.path.Movement.UP_UP_LEFT;
-import static chess.path.Movement.UP_UP_RIGHT;
-
-import chess.path.Movement;
-import chess.path.Path;
-import chess.position.Position;
+import chess.domain.path.Movement;
+import chess.domain.path.Path;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class Knight extends Piece {
 
     private static final List<Movement> CAN_MOVE_DESTINATION =
             List.of(
-                    UP_UP_RIGHT, UP_UP_LEFT, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN,
-                    DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, LEFT_LEFT_UP, LEFT_LEFT_DOWN
+                    Movement.UP_UP_RIGHT, Movement.UP_UP_LEFT, Movement.RIGHT_RIGHT_UP, Movement.RIGHT_RIGHT_DOWN,
+                    Movement.DOWN_DOWN_RIGHT, Movement.DOWN_DOWN_LEFT, Movement.LEFT_LEFT_UP, Movement.LEFT_LEFT_DOWN
             );
     private static final int POSITION_DIFFERENCE = 3;
 
