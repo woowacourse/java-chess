@@ -42,7 +42,7 @@ class PieceTest {
                 .isTrue();
     }
 
-    @ParameterizedTest(name = "체스말이 입력받은 체스말과 동일한 진영인지 판단한다.")
+    @ParameterizedTest(name = "체스말이 입력받은 pieceType과 동일한 진영인지 판단한다.")
     @CsvSource(value = {"WHITE:true", "BLACK:false"}, delimiter = ':')
     void isSameCamp(final CampType campType, final boolean expected) {
         // given

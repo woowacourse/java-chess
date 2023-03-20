@@ -2,7 +2,7 @@ package chess.domain.move.piece;
 
 import chess.domain.piece.Position;
 
-public class KnightMove implements Movable {
+public class KnightMove implements MoveRule {
     private static final int KNIGHT_MOVE_GAP = 2;
 
     @Override

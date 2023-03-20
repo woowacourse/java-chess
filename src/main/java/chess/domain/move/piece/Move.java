@@ -14,7 +14,7 @@ public final class Move {
     static final int PAWN_MAX_MOVE_COUNT = 2;
     static final int MAX_MOVE_COUNT = 8;
 
-    static Location getAllPositions(final Position source, final List<Direction> allDirections, final int moveCount) {
+    static Location getLocation(final Position source, final List<Direction> allDirections, final int moveCount) {
         final Location location = new Location();
         for (Direction direction : allDirections) {
             location.add(addByEachDirection(moveCount, direction, source));

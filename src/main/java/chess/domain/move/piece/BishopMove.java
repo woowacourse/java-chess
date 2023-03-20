@@ -6,11 +6,11 @@ import chess.domain.piece.Position;
 
 import static chess.domain.move.piece.Move.MAX_MOVE_COUNT;
 
-public class BishopMove implements Movable {
+public class BishopMove implements MoveRule {
 
     @Override
     public boolean canMove(final Position source, final Position target) {
-        final Location allPositions = Move.getAllPositions(source, Direction.getDiagonalDirections(), MAX_MOVE_COUNT);
+        final Location allPositions = Move.getLocation(source, Direction.getDiagonalDirections(), MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
 

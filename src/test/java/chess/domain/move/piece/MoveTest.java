@@ -31,7 +31,7 @@ public class MoveTest {
         final Location expected = LocationHelper.getBishopLocation();
 
         // when
-        final Location actual = Move.getAllPositions(source, directions, moveCount);
+        final Location actual = Move.getLocation(source, directions, moveCount);
 
         // then
         assertThat(actual)
@@ -48,7 +48,7 @@ public class MoveTest {
         final Location expected = LocationHelper.getRookLocation();
 
         // when
-        final Location actual = Move.getAllPositions(source, directions, moveCount);
+        final Location actual = Move.getLocation(source, directions, moveCount);
 
         // then
         assertThat(actual)
@@ -65,7 +65,7 @@ public class MoveTest {
         final Location expected = LocationHelper.getQueenLocation();
 
         // when
-        final Location actual = Move.getAllPositions(source, directions, moveCount);
+        final Location actual = Move.getLocation(source, directions, moveCount);
 
         // then
         assertThat(actual)
@@ -82,7 +82,7 @@ public class MoveTest {
         final Location expected = LocationHelper.getKingLocation();
 
         // when
-        final Location actual = Move.getAllPositions(source, directions, moveCount);
+        final Location actual = Move.getLocation(source, directions, moveCount);
 
         // then
         assertThat(actual)
@@ -101,8 +101,8 @@ public class MoveTest {
         final Location blackExpected = LocationHelper.getBlackPawnLocation();
 
         // when
-        final Location whiteActual = Move.getAllPositions(source, whiteDirections, moveCount);
-        final Location blackActual = Move.getAllPositions(source, blackDirections, moveCount);
+        final Location whiteActual = Move.getLocation(source, whiteDirections, moveCount);
+        final Location blackActual = Move.getLocation(source, blackDirections, moveCount);
 
         // then
         assertThat(whiteExpected)
