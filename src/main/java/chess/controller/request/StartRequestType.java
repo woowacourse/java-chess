@@ -14,7 +14,7 @@ public class StartRequestType implements RequestType {
     }
 
     @Override
-    public void execute(ChessController chessController, List<String> commands) {
+    public final void execute(ChessController chessController, List<String> commands) {
         chessController.start();
     }
 }

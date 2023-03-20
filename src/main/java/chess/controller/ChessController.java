@@ -41,7 +41,7 @@ public class ChessController {
         }
     }
 
-    public void execute(List<String> request) {
+    private void execute(List<String> request) {
         RequestType type = requestTypes.stream()
                 .filter(requestType -> requestType.isMatch(request))
                 .findFirst()

@@ -14,7 +14,7 @@ public class EndRequestType implements RequestType {
     }
 
     @Override
-    public void execute(ChessController chessController, List<String> request) {
+    public final void execute(ChessController chessController, List<String> request) {
         chessController.finish();
     }
 }

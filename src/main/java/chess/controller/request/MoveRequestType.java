@@ -8,9 +8,6 @@ public final class MoveRequestType implements RequestType {
 
     private static final Pattern POSITION = Pattern.compile("[a-h][1-8]");
 
-    public MoveRequestType() {
-    }
-
     @Override
     public boolean isMatch(List<String> commands) {
         if (commands.size() != 3) {
@@ -23,7 +20,7 @@ public final class MoveRequestType implements RequestType {
     }
 
     @Override
-    public void execute(ChessController chessController, List<String> commands) {
+    public final void execute(ChessController chessController, List<String> commands) {
         chessController.move(commands);
     }
 
