@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.File;
-import chess.domain.Piece;
+import chess.domain.chesspiece.Piece;
 import chess.domain.Square;
 
 import java.util.ArrayList;

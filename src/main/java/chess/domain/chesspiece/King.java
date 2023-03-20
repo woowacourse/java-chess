@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.domain.chesspiece;
+
+import chess.domain.Side;
+import chess.domain.Square;
 
 public class King extends Piece {
 
@@ -22,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return this.isNotSameSide(piece) && from.inKingsRange(to);
     }
 }

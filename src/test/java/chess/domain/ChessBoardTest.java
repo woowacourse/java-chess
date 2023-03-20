@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.chesspiece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

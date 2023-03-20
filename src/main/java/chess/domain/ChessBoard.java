@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.chesspiece.EmptyPiece;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Piece;
+
 import java.util.Map;
 
 public class ChessBoard {

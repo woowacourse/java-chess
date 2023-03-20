@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.domain.chesspiece;
+
+import chess.domain.Side;
+import chess.domain.Square;
 
 import java.util.ArrayList;
 import java.util.List;

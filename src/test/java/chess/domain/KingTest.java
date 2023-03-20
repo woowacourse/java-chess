@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.chesspiece.EmptyPiece;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

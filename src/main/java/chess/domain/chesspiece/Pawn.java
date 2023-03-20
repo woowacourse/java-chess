@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.domain.chesspiece;
+
+import chess.domain.Side;
+import chess.domain.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return canMoveForward(from, to, piece) ||
                 isCatchable(from, to, piece);
     }

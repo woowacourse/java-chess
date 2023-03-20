@@ -19,11 +19,11 @@ public class ChessGameController {
 
     public void run() {
         outputView.printInitialMessage();
-        GameStatus gamestatus = repeatUntilNoException(this::startGame);
+        GameStatus gameStatus = repeatUntilNoException(this::startGame);
         ChessBoard chessBoard = new ChessBoardFactory().generate();
-        while (gamestatus.isPlaying()) {
+        while (gameStatus.isPlaying()) {
             outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
-            gamestatus = repeatUntilNoException(this::playTurn, chessBoard);
+            gameStatus = repeatUntilNoException(this::playTurn, chessBoard);
         }
     }
 

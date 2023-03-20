@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.domain.chesspiece;
 
-// TODO: Piece에 속하는 클래스는 ChessPiece 패키지에 저장하기
+import chess.domain.Side;
+import chess.domain.Square;
+
 public abstract class Piece {
     final Side side;
 
@@ -24,7 +26,7 @@ public abstract class Piece {
         return side.toString();
     }
 
-    abstract boolean isMovable(Square from, Square to, Piece piece);
+    public abstract boolean isMovable(Square from, Square to, Piece piece);
 
     public boolean isWhite() {
         return side == Side.WHITE;

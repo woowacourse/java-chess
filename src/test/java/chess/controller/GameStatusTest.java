@@ -51,7 +51,7 @@ public class GameStatusTest {
         void it_throws_exception2(String code) {
             assertThatThrownBy(() -> GameStatus.changeStatus(code))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("잘못된 명령어입니다");
+                    .hasMessage("잘못된 명령어입니다.");
         }
 
         @Nested
