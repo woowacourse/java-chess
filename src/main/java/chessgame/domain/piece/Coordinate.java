@@ -52,16 +52,10 @@ public class Coordinate {
         return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
 
-    public boolean hasDistanceLessThanOne(Coordinate otherCoordinate) {
+    public boolean hasDistanceLessThan(Coordinate otherCoordinate, double distance) {
         double x = otherCoordinate.col - this.col;
         double y = otherCoordinate.row - this.row;
-        return Math.abs(x) <= 1.0 && Math.abs(y) <= 1.0;
-    }
-
-    public boolean hasDistanceLessThanTwo(Coordinate otherCoordinate) {
-        double x = otherCoordinate.col - this.col;
-        double y = otherCoordinate.row - this.row;
-        return Math.abs(x) <= 2.0 && Math.abs(y) <= 2.0;
+        return Math.abs(x) <= distance && Math.abs(y) <= distance;
     }
 
     public int getRow() {

@@ -32,7 +32,7 @@ class CoordinateTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(1, 1);
 
-        assertThat(startCoordinate.hasDistanceLessThanOne(endCoordinate)).isTrue();
+        assertThat(startCoordinate.hasDistanceLessThan(endCoordinate, 1)).isTrue();
     }
 
     @Test

@@ -20,7 +20,8 @@ public class King implements Piece {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        return isMovable(startCoordinate, endCoordinate) && startCoordinate.hasDistanceLessThanOne(endCoordinate);
+        return isMovable(startCoordinate, endCoordinate)
+                && startCoordinate.hasDistanceLessThan(endCoordinate, 1);
     }
 
     private static boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {

@@ -5,7 +5,7 @@ public class BlackPawn extends Pawn {
     @Override
     public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0 &&
-                startCoordinate.hasDistanceLessThanTwo(endCoordinate);
+                startCoordinate.hasDistanceLessThan(endCoordinate, 2);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class BlackPawn extends Pawn {
         }
 
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0 &&
-                startCoordinate.hasDistanceLessThanOne(endCoordinate);
+                startCoordinate.hasDistanceLessThan(endCoordinate, 1);
     }
 
     @Override
