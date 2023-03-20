@@ -9,6 +9,8 @@ public final class PositionConverter {
     private static final int RANK_INDEX = 1;
     private static final int POSITION_LENGTH = 2;
 
+    private PositionConverter() {
+    }
 
     public static Position convert(final String position) {
         validate(position);
