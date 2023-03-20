@@ -111,4 +111,13 @@ class GameTest {
         assertThat(chessBoard.get(Position.of("c", "3"))).isEqualTo(sourcePieceOfWhiteKnight);
     }
 
+    @DisplayName("source position에 emptyPiece가 위치할 경우 예외가 발생한다.")
+    @Test
+    void throwExceptionWhenMoveEmptyPiece() {
+        Position sourcePosition = Position.of("c", "3");
+        assertThatThrownBy(() -> game.move(Side.WHITE, sourcePosition, Position.of("d", "5")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(sourcePosition + "에 움직일 수 있는 말이 없습니다.");
+    }
+    
 }
