@@ -5,15 +5,18 @@ import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.ResultView;
 
 public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ResultView resultView;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView) {
+    public ChessGameController(final InputView inputView, final OutputView outputView, final ResultView resultView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.resultView = resultView;
     }
 
     public void run() {
@@ -25,8 +28,8 @@ public class ChessGameController {
 
         playChess(chessGame, command);
 
-        System.out.println(chessGame.calculateScoreOfLowerTeam());
-        System.out.println(chessGame.calculateScoreOfUpperTeam());
+        resultView.printScore(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
+        resultView.printWinner(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
     }
 
     private void playChess(ChessGame chessGame, Command command) {
@@ -35,7 +38,7 @@ public class ChessGameController {
                 chessGame = createNewChessGame(chessGame, command);
                 tryChessMove(chessGame, command);
                 outputView.printBoard(chessGame.getBoard());
-                if(chessGame.isGameDone()) {
+                if (chessGame.isGameDone()) {
                     break;
                 }
                 command = inputView.readGameCommand();
@@ -54,7 +57,7 @@ public class ChessGameController {
 
     private ChessGame createNewChessGame(ChessGame chessGame, final Command command) {
         if (command.isCreateNewGame()) {
-            chessGame = new ChessGame(BoardFactory.createBoard());
+            chessGame.initBoard();
         }
         return chessGame;
     }

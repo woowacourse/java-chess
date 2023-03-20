@@ -4,12 +4,13 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
 import chess.exception.PieceMessage;
+import chess.factory.BoardFactory;
 import java.util.Collections;
 import java.util.Map;
 
 public class ChessGame {
 
-    private final Board board;
+    private Board board;
     private boolean isLowerTeamTurn;
 
     public ChessGame(final Board board) {
@@ -47,5 +48,9 @@ public class ChessGame {
 
     public boolean isGameDone() {
         return board.isGameDone();
+    }
+
+    public void initBoard() {
+        this.board = BoardFactory.createBoard();
     }
 }
