@@ -50,20 +50,20 @@ public final class Position {
 
     private File getDirectionOfFile(Movement direction) {
         if (direction.isRight()) {
-            return this.file.getNext();
+            return this.file.nextFile();
         }
         if (direction.isLeft()) {
-            return this.file.getPrevious();
+            return this.file.previousFile();
         }
         return this.file;
     }
 
     private Rank getDirectionOfRank(Movement direction) {
         if (direction.isUpward()) {
-            return this.rank.getNext();
+            return this.rank.nextRank();
         }
         if (direction.isDownward()) {
-            return this.rank.getPrevious();
+            return this.rank.previousRank();
         }
         return this.rank;
     }

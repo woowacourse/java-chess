@@ -34,13 +34,13 @@ public class FileTest {
     @DisplayName("source file의 오른쪽 값을 반환한다.")
     @Test
     void shouldReturnNextFileWhenRequest() {
-        assertThat(File.B.getNext()).isEqualTo(File.C);
+        assertThat(File.B.nextFile()).isEqualTo(File.C);
     }
 
     @DisplayName("file이 h에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenLastFileRequestGetNext() {
-        assertThatThrownBy(() -> File.H.getNext())
+        assertThatThrownBy(() -> File.H.nextFile())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인덱스를 벗어난 움직임입니다.");
     }
@@ -48,13 +48,13 @@ public class FileTest {
     @DisplayName("source file의 왼쪽 값을 반환한다.")
     @Test
     void shouldReturnPreviousFileWhenRequest() {
-        assertThat(File.B.getPrevious()).isEqualTo(File.A);
+        assertThat(File.B.previousFile()).isEqualTo(File.A);
     }
 
     @DisplayName("file이 h에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenFirstFileRequestGetPrevious() {
-        assertThatThrownBy(() -> File.A.getPrevious())
+        assertThatThrownBy(() -> File.A.previousFile())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인덱스를 벗어난 움직임입니다.");
     }

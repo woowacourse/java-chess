@@ -27,14 +27,14 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file입니다."));
     }
 
-    public File getNext() {
+    public File nextFile() {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order + 1)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
     }
 
-    public File getPrevious() {
+    public File previousFile() {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order - 1)
                 .findFirst()
