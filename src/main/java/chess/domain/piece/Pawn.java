@@ -61,6 +61,16 @@ public class Pawn extends Piece {
         throw new IllegalStateException(this.getClass().getSimpleName() + "이(가) 이동할 수 없는 경로입니다.");
     }
 
+    @Override
+    protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+        return null;
+    }
+
+    @Override
+    protected boolean canNotMoveToLocatedPiece(final Movement movement) {
+        return false;
+    }
+
     private boolean canMove(final Piece destination, final Movement movement) {
         return destination == null && movement == CAN_MOVE_EMPTY_DESTINATION.get(color);
     }

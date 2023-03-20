@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.position.Movement;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +49,16 @@ class PieceTest {
             @Override
             public Path searchPathTo(final Position from, final Position to, final Piece locatedPiece) {
                 return null;
+            }
+
+            @Override
+            protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+                return null;
+            }
+
+            @Override
+            protected boolean canNotMoveToLocatedPiece(final Movement movement) {
+                return false;
             }
         };
     }

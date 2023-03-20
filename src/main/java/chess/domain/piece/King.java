@@ -39,4 +39,14 @@ public class King extends Piece {
 
         return new Path();
     }
+
+    @Override
+    protected Path moveToLocatedPiece(final Position from, final Position to, final Movement movement) {
+        return null;
+    }
+
+    @Override
+    protected boolean canNotMoveToLocatedPiece(final Movement movement) {
+        return false;
+    }
 }
