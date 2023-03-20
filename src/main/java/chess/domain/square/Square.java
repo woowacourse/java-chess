@@ -1,32 +1,26 @@
 package chess.domain.square;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class Square {
 
     private static final int TOTAL_SQUARE_COUNT = 8 * 8;
 
-    private static final Map<String, Square> cache = new HashMap<>(TOTAL_SQUARE_COUNT);
+    private static final Map<String, Square> cache = new ConcurrentHashMap<>(TOTAL_SQUARE_COUNT);
     private final File file;
     private final Rank rank;
 
-    private Square(File file, Rank rank) {
+    private Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Square of(File file, Rank rank) {
-        // TODO: 나중에 key 방식 변경해야함
-        final String cardKey = String.valueOf(List.of(file.getValue(), rank.getValue()));
-        if (cache.containsKey(cardKey)) {
-            return cache.get(cardKey);
-        }
-        Square square = new Square(file, rank);
-        cache.put(cardKey, square);
-        return square;
+    public static Square of(final File file, final Rank rank) {
+        final String key = String.valueOf(List.of(file.getValue(), rank.getValue()));
+        return cache.computeIfAbsent(key, ignored -> new Square(file, rank));
     }
 
     public boolean isSameFile(final Square other) {
