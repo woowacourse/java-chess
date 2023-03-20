@@ -26,8 +26,8 @@ public class ChessGame {
         }
     }
 
-    public boolean isEnd() {
-        return !processStatus;
+    public boolean isProcessing() {
+        return processStatus;
     }
 
     public ChessBoard getChessBoard() {
