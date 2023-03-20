@@ -26,7 +26,7 @@ public final class BoardDto {
                 final Position position = Position.of(File.of(fileOrder), Rank.of(rankOrder));
                 final Piece piece = board.get(position);
 
-                names.add(PieceRender.renderName(piece));
+                names.add(PieceRender.renderName2(piece.getPiece(), piece.getColor()));
             }
         }
 

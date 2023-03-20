@@ -3,7 +3,7 @@ package chess.domain.piece;
 public enum PieceType {
     ROOK("R"),
     BISHOP("B"),
-    KNIGHT("K"),
+    KNIGHT("N"),
     QUEEN("Q"),
     KING("K"),
     PAWN("P"),
