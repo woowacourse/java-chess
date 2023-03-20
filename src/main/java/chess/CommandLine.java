@@ -11,6 +11,7 @@ public class CommandLine {
     private static final int TWO_ARGUMENT_SIZE = 3;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 3;
+    private static final int MAIN_COMMAND_INDEX = 0;
     private static final List<String> VALID_COMMANDS = List.of(START, MOVE, END);
     private final List<String> tokens;
     
@@ -20,7 +21,7 @@ public class CommandLine {
     }
     
     private void validate(final List<String> tokens) {
-        String command = tokens.get(0);
+        String command = tokens.get(MAIN_COMMAND_INDEX);
         if (!VALID_COMMANDS.contains(command)) {
             throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
@@ -44,7 +45,7 @@ public class CommandLine {
     }
     
     public String getCommand() {
-        return this.tokens.get(0);
+        return this.tokens.get(MAIN_COMMAND_INDEX);
     }
     
     public boolean isMove() {

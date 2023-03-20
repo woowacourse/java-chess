@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.BoardDto;
+import chess.controller.RankDto;
 
 public class OutputView {
     
@@ -16,8 +17,8 @@ public class OutputView {
     }
     
     public void printBoard(final BoardDto boardDto) {
-        for (String stringRank : boardDto.getStringPieces()) {
-            System.out.println(stringRank);
+        for (RankDto rank : boardDto.getRanks()) {
+            System.out.println(rank.getStringRank());
         }
         System.out.println();
     }
