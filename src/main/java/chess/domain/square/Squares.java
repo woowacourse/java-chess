@@ -1,6 +1,7 @@
 package chess.domain.square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Squares {
@@ -14,11 +15,10 @@ public class Squares {
     }
 
     private static void createSquares() {
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                squares.add(Square.of(file, rank));
-            }
-        }
+        Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> Square.of(file, rank)))
+                .forEach(squares::add);
     }
 
     public static Square getSquare(final File file, final Rank rank) {
