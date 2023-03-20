@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionCache.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
@@ -28,27 +29,27 @@ class PositionTest {
     static Stream<Arguments> rookMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(4, 4),
+                        POSITION_1_1,
+                        POSITION_4_4,
                         List.of(
-                                Position.of(2, 2),
-                                Position.of(3, 3),
-                                Position.of(4, 4)
+                                POSITION_2_2,
+                                POSITION_3_3,
+                                POSITION_4_4
                         )
                 ),
                 Arguments.arguments(
-                        Position.of(3, 3),
-                        Position.of(2, 2),
-                        List.of(Position.of(2, 2))
+                        POSITION_3_3,
+                        POSITION_2_2,
+                        List.of(POSITION_2_2)
                 ),
                 Arguments.arguments(
-                        Position.of(3, 6),
-                        Position.of(7, 2),
+                        POSITION_3_6,
+                        POSITION_7_2,
                         List.of(
-                                Position.of(4, 5),
-                                Position.of(5, 4),
-                                Position.of(6, 3),
-                                Position.of(7, 2)
+                                POSITION_4_5,
+                                POSITION_5_4,
+                                POSITION_6_3,
+                                POSITION_7_2
                         )
                 )
         );

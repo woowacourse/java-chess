@@ -5,91 +5,93 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Position implements Comparable<Position> {
-    public static final Position IS_NULL = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
-    private final int row;
-    private final int column;
+public class Position {
+    public static final Position IS_NULL = new Position(null, null);
+    private final Row row;
+    private final Column column;
 
-    private Position(final int row, final int column) {
+    private Position(final Row row, final Column column) {
         this.row = row;
         this.column = column;
     }
 
-    public static Position of(final int row, final int column) {
+    public static Position of(final Row row, final Column column) {
         return new Position(row, column);
     }
 
     public static Position from(final String rowColumn) {
-        final int row = Row.findIndex(String.valueOf(rowColumn.charAt(0)));
-        final int column = Column.findIndex(String.valueOf(rowColumn.charAt(1)));
+        final Row row = Row.from(String.valueOf(rowColumn.charAt(0)));
+        final Column column = Column.from(String.valueOf(rowColumn.charAt(1)));
 
         return new Position(row, column);
     }
 
-    private int rowDirection(Position end) {
-        return Integer.compare(end.row, this.row);
+    public int calculateRowDistance(Row row) {
+        return this.row.distance(row);
     }
 
-    private int columnDirection(Position end) {
-        return Integer.compare(end.column, this.column);
-    }
-
-    public int calculateRowDistance(int row) {
-        return Math.abs(this.row - row);
-    }
-
-    public int calculateColumnDistance(int column) {
-        return Math.abs(this.column - column);
+    public int calculateColumnDistance(Column column) {
+        return this.column.distance(column);
     }
 
     public List<Position> calculateBetweenPoints(Position end) {
-        int rowDirection = rowDirection(end);
-        int columnDirection = columnDirection(end);
-        int maxDistance = Math.max(Math.abs(row - end.row), Math.abs(column - end.column));
+        int rowDirection = end.row.direction(row);
+        int columnDirection = end.column.direction(column);
+        int maxDistance = Math.max(this.row.distance(end.row), this.column.distance(end.column));
 
         return IntStream.rangeClosed(1, maxDistance)
-                .mapToObj(distance -> Position.of(row + distance * rowDirection, column + distance * columnDirection))
+                .mapToObj(distance -> Position.of(
+                        row.move(distance * rowDirection),
+                        column.move(distance * columnDirection)
+                ))
                 .collect(Collectors.toList());
     }
 
-    public boolean isNotLinearFunction(Position end) {
+    public boolean isNotLinearFunction(Position position) {
         final int slopeOfOne = 1;
-        if ((end.column - this.column) == 0 || (end.row - this.row) == 0) {
+
+        if (isSameColumn(position.getColumn()) || isSameRow(position.row)) {
             return true;
         }
-        final int slope = Math.abs((end.column - this.column) / (end.row - this.row));
+        final int slope = column.distance(position.column) / row.distance(position.row);
+
         return slope != slopeOfOne;
     }
 
-    public boolean isSameRow(int row) {
+    public boolean isSameRow(Row row) {
         return this.row == row;
     }
 
-    public boolean isSameColumn(int column) {
+    public boolean isNotSameRow(Row row) {
+        return this.row != row;
+    }
+
+    public boolean isSameColumn(Column column) {
         return this.column == column;
     }
 
-    public boolean isNotConstantFunction(Position position) {
-        return this.row != position.getRow() && this.column != position.column;
+    public boolean isNotSameColumn(Column column) {
+        return this.column != column;
     }
 
-    public int getRow() {
+    public boolean isNotConstantFunction(Position position) {
+        return isNotSameRow(position.getRow()) && isNotSameColumn(position.column);
+    }
+
+    public int getRowDistance(Position position) {
+        return row.distance(position.row);
+    }
+
+    public int getColumnDistance(Position position) {
+        return column.distance(position.column);
+    }
+
+    public Row getRow() {
         return row;
     }
 
-    public int getColumn() {
+    public Column getColumn() {
         return column;
-    }
-
-    @Override
-    public int compareTo(final Position position) {
-        final int columnCompare = Integer.compare(this.column, position.column);
-
-        if (columnCompare == 0) {
-            return Integer.compare(this.row, position.row);
-        }
-
-        return columnCompare;
     }
 
     @Override
@@ -99,13 +101,9 @@ public class Position implements Comparable<Position> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Position position = (Position) o;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
         return row == position.row && column == position.column;
     }
 
