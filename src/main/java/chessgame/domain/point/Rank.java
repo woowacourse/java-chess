@@ -1,9 +1,7 @@
 package chessgame.domain.point;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public enum Rank {
     EIGHT(8),

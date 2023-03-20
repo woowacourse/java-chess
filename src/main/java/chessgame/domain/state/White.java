@@ -12,11 +12,11 @@ public class White implements State {
 
     @Override
     public State run(Command command, Board board) {
-        if(command.isStart()){
+        if (command.isStart()) {
             throw new IllegalArgumentException("시작을 입력할 수 없습니다.");
         }
         if (command.isMove()) {
-            board.move(command.makePoints().get(0),command.makePoints().get(1), Team.WHITE);
+            board.move(command.makePoints().get(0), command.makePoints().get(1), Team.WHITE);
             return new Black();
         }
         if (command.isEnd()) {

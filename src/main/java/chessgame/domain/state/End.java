@@ -13,7 +13,7 @@ public class End implements State {
     @Override
     public State run(Command command, Board board) {
         if (!command.isEnd()) {
-            throw new IllegalArgumentException("start만 가능 합니다.");
+            throw new IllegalArgumentException("start만 입력 가능 합니다.");
         }
         return this;
     }

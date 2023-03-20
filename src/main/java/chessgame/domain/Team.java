@@ -18,13 +18,6 @@ public enum Team {
         return name.apply(convertedName);
     }
 
-    public Team changeTurn() {
-        if (this == Team.BLACK) {
-            return Team.WHITE;
-        }
-        return Team.BLACK;
-    }
-
     public String color() {
         return color;
     }

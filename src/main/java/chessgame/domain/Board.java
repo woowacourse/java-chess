@@ -24,16 +24,16 @@ public class Board {
         checkSamePoint(source, target);
         checkSource(source, turn);
         boolean hasTarget = checkTarget(target, turn);
-        if(piece instanceof Pawn) {
-            excutePawnMove(source, target, piece, hasTarget);
+        if (piece instanceof Pawn) {
+            executePawnMove(source, target, piece, hasTarget);
             return;
         }
         executeMove(source, target, piece);
     }
 
-    private void excutePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
-        if(piece.isMovable(source,target)){
-            checkPawnMove(piece,hasTarget);
+    private void executePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
+        if (piece.isMovable(source, target)) {
+            checkPawnMove(piece, hasTarget);
             followPieceRoute(source, target, piece);
             return;
         }
@@ -94,7 +94,7 @@ public class Board {
     }
 
     private boolean checkRoute(Point source, Point target) {
-        Point point=source;
+        Point point = source;
         int eachFileMove = target.eachFileMove(source);
         int eachRankMove = target.eachRankMove(source);
         int distance = target.calculateDistance(source);
