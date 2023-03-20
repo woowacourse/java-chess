@@ -19,31 +19,30 @@ public class ChessGameController {
 
     public void run() {
         outputView.printInitialMessage();
-        GameStatus gameStatus = repeatUntilNoException(this::startGame);
+        Command command = repeatUntilNoException(this::startGame);
         ChessBoard chessBoard = new ChessBoardFactory().generate();
-        while (gameStatus.isPlaying()) {
+        while (command.isPlaying()) {
             outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
-            gameStatus = repeatUntilNoException(this::playTurn, chessBoard);
+            command = repeatUntilNoException(this::playTurn, chessBoard);
         }
     }
 
-    private GameStatus startGame() {
+    private Command startGame() {
         CommandDto commandDto = inputView.readCommand();
-        GameStatus gamestatus = GameStatus.startGame(commandDto.getCommand());
-        return gamestatus;
+        return Command.startGame(commandDto.getCommand());
     }
 
-    private GameStatus playTurn(final ChessBoard chessBoard) {
+    private Command playTurn(final ChessBoard chessBoard) {
         CommandDto commandDto = inputView.readCommand();
-        GameStatus gamestatus = GameStatus.changeStatus(commandDto.getCommand());
-        if (gamestatus.isPlaying()) {
+        Command command = Command.changeStatus(commandDto.getCommand());
+        if (command.isPlaying()) {
             final Square from = toSquare(commandDto.getSourceRank(), commandDto.getSourceFile());
             final Square to = toSquare(commandDto.getDestinationRank(), commandDto.getDestinationFile());
             if (!chessBoard.move(from, to)) {
                 outputView.printInvalidMoveMessage();
             }
         }
-        return gamestatus;
+        return command;
     }
 
     private Square toSquare(final String rankSymbol, final String fileSymbol) {

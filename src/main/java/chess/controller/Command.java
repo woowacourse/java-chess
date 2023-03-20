@@ -2,30 +2,30 @@ package chess.controller;
 
 import java.util.Objects;
 
-public enum GameStatus {
+public enum Command {
     START("start"),
-    PLAYING("move"),
+    MOVE("move"),
     END("end");
 
     private final String code;
 
-    GameStatus(final String code) {
+    Command(final String code) {
         this.code = code;
     }
 
-    public static GameStatus startGame(String code) {
+    public static Command startGame(String code) {
         if (Objects.equals(START.code, code)) {
             return START;
         }
         throw new IllegalArgumentException("게임을 시작하기 위해서는 start를 입력하세요");
     }
 
-    public static GameStatus changeStatus(String code) {
+    public static Command changeStatus(String code) {
         if (Objects.equals(START.code, code)) {
             throw new IllegalArgumentException("게임 도중에는 다시 시작할 수 없습니다.");
         }
-        if (Objects.equals(PLAYING.code, code)) {
-            return PLAYING;
+        if (Objects.equals(MOVE.code, code)) {
+            return MOVE;
         }
         if (Objects.equals(END.code, code)) {
             return END;
@@ -34,6 +34,6 @@ public enum GameStatus {
     }
 
     public boolean isPlaying() {
-        return this != GameStatus.END;
+        return this != Command.END;
     }
 }
