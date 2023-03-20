@@ -12,7 +12,7 @@ public class KnightMoveValidator implements ValidateMove {
 
     @Override
     public boolean validate(ValidateData validateData) {
-        if (validateData.isTypeOf(PieceType.KNIGHT)) {
+        if (validateData.isSourceNotTypeOf(PieceType.KNIGHT)) {
             setNext(new PawnMoveValidator());
             return next.validate(validateData);
         }

@@ -28,8 +28,12 @@ public class ValidateData {
         return getSourcePiece().canMove(source, target);
     }
 
-    public boolean isTypeOf(PieceType pieceType) {
-        return getSourcePiece().getPieceType() != pieceType;
+    public boolean isSourceNotTypeOf(PieceType pieceType) {
+        return !getSourcePiece().getPieceType().equals(pieceType);
+    }
+
+    public boolean isTargetTypeOf(PieceType pieceType) {
+        return getTargetPiece().getPieceType().equals(pieceType);
     }
 
     public boolean isSameFile() {

@@ -1,6 +1,6 @@
 package chess.domain.validateMove;
 
-public class NotPawnAndKnightMoveValidator implements ValidateMove {
+public class EtcMoveValidator implements ValidateMove {
     @Override
     public void setNext(ValidateMove validateMove) {
     }

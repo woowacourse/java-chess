@@ -12,8 +12,8 @@ public class PawnMoveValidator implements ValidateMove {
 
     @Override
     public boolean validate(ValidateData validateData) {
-        if (validateData.isTypeOf(PieceType.PAWN)) {
-            setNext(new NotPawnAndKnightMoveValidator());
+        if (validateData.isSourceNotTypeOf(PieceType.PAWN)) {
+            setNext(new EtcMoveValidator());
             return next.validate(validateData);
         }
         if (validateData.isSameFile()) {
@@ -24,6 +24,6 @@ public class PawnMoveValidator implements ValidateMove {
 
     private static boolean isPossibleToMove(ValidateData validateData) {
         return validateData.isEmptyInRoute()
-                && validateData.isTypeOf(PieceType.EMPTY);
+                && validateData.isTargetTypeOf(PieceType.EMPTY);
     }
 }
