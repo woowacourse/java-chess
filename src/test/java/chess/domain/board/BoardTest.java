@@ -106,7 +106,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_있으면_true_반환한다() {
                 final Board board = BoardFactory.create();
-                //Knight
                 final Square source = new Square(File.B, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.C, Rank.THREE));
 
@@ -116,7 +115,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = BoardFactory.create();
-                //Knight
                 final Square source = new Square(File.G, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.E, Rank.TWO));
 
@@ -130,7 +128,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = BoardFactory.create();
-                //Rook
                 final Square source = new Square(File.A, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
 
@@ -144,7 +141,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = BoardFactory.create();
-                //Bishop
                 final Square source = new Square(File.C, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.D, Rank.TWO), new Square(File.E, Rank.THREE));
 
@@ -158,7 +154,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = BoardFactory.create();
-                //Queen
                 final Square source = new Square(File.D, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.C, Rank.TWO), new Square(File.B, Rank.THREE));
 
@@ -172,7 +167,6 @@ class BoardTest {
             @Test
             void 이동경로로_이동할_수_없으면_false_반환한다() {
                 final Board board = BoardFactory.create();
-                //King
                 final Square source = new Square(File.E, Rank.ONE);
                 final List<Square> routes = List.of(new Square(File.F, Rank.TWO));
 
