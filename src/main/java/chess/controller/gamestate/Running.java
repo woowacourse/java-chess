@@ -23,11 +23,7 @@ public class Running implements GameState {
 
     @Override
     public GameState end() {
-        return new End();
+        return new Ready();
     }
 
-    @Override
-    public boolean shouldRequestUserInput() {
-        return true;
-    }
 }

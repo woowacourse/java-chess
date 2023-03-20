@@ -14,6 +14,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private ChessBoard chessBoard;
     private Camp currentTurnCamp;
 
     public ChessController() {
@@ -23,35 +24,38 @@ public class ChessController {
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
         GameState state = new Ready();
         outputView.printStartMessage();
-        while (state.shouldRequestUserInput()) {
-            state = retryCampPlayIfCommandIllegal(chessBoard, state);
+        while (true) {
+            state = retryCampPlayIfCommandIllegal(state);
         }
     }
 
-    private GameState executeCampPlay(final ChessBoard chessBoard, final GameState state) {
+    // TODO 조건문 리팩터링, 중복 코드 없애기
+    // TODO 진영 전환 로직 체스보드로 이동(현재는 버그 발생)
+    private GameState executeCampPlay(final GameState state) {
         CommandRequest commandRequest = inputView.requestGameCommand();
-        if (commandRequest.getCommand() == Command.END) {
-            return state.end();
-        }
-        if (commandRequest.getCommand() == Command.MOVE) {
-            GameState nextState = state.play(chessBoard, commandRequest, currentTurnCamp);
-            currentTurnCamp = currentTurnCamp.transfer();
+        if (commandRequest.getCommand() == Command.START) {
+            GameState nextState = state.start();
+            chessBoard = new ChessBoard();
             outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
             return nextState;
         }
-        outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-        return state.start();
+        if (commandRequest.getCommand() == Command.MOVE) {
+            GameState nextState = state.play(chessBoard, commandRequest, currentTurnCamp);
+            outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+            currentTurnCamp = currentTurnCamp.transfer();
+            return nextState;
+        }
+        return state.end();
     }
 
-    private GameState retryCampPlayIfCommandIllegal(final ChessBoard chessBoard, final GameState state) {
+    private GameState retryCampPlayIfCommandIllegal(final GameState state) {
         try {
-            return executeCampPlay(chessBoard, state);
+            return executeCampPlay(state);
         } catch (final IllegalStateException | IllegalArgumentException exception) {
             outputView.printInputErrorMessage(exception.getMessage());
-            return retryCampPlayIfCommandIllegal(chessBoard, state);
+            return retryCampPlayIfCommandIllegal(state);
         }
     }
 }

@@ -12,5 +12,4 @@ public interface GameState {
 
     GameState end();
 
-    boolean shouldRequestUserInput();
 }
