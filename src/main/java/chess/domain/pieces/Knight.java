@@ -9,8 +9,8 @@ public class Knight extends Piece {
     private static final int ROW = 1;
     private static final int COLUMN = 0;
 
-    public Knight(final Name name) {
-        super(name);
+    public Knight(final Team team) {
+        super(team);
     }
 
     @Override

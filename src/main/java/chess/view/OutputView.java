@@ -26,7 +26,7 @@ public class OutputView {
     private void printLine(final Map<Position, Piece> board, final char row) {
         for (char col = 'a'; col <= 'h'; col++) {
             String position = String.valueOf(col) + String.valueOf(row);
-            System.out.print(board.get(Position.from(position)).getName());
+            System.out.print(ViewPiece.getName(board.get(Position.from(position))));
         }
     }
 }

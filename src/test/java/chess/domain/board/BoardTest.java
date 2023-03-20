@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.pieces.Team;
 import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,8 @@ class BoardTest {
         board.switchPosition("a2", "a3");
 
         // then
-        assertThat(board.findPiece("a3").getName()).isEqualTo("p");
+        assertThat(board.findPiece("a3").getTeam()).isEqualTo(Team.WHITE);
+        assertThat(board.findPiece("a2").getTeam()).isEqualTo(Team.EMPTY);
     }
 
     @Test

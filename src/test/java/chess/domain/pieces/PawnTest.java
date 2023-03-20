@@ -15,7 +15,7 @@ class PawnTest {
     @DisplayName("white 폰은 위로 한 칸 혹은 두 칸 움직일 수 있다.")
     void move_success_lower_case(final String start, final String end) {
         // given
-        Pawn pawn = new Pawn(new Name("p"));
+        Pawn pawn = new Pawn(Team.WHITE);
 
         // when & then
         Assertions.assertDoesNotThrow(() -> pawn.canMove(start, end));
@@ -26,7 +26,7 @@ class PawnTest {
     @DisplayName("white폰이 위로 한 칸 혹은 두 칸으로 움직이지 않으면 오류를 발생시킨다.")
     void throws_exception_when_lower_pawn_moves_invalid(final String start, final String end) {
         // given
-        Pawn pawn = new Pawn(new Name("p"));
+        Pawn pawn = new Pawn(Team.WHITE);
 
         // when & then
         assertThatThrownBy(
@@ -39,7 +39,7 @@ class PawnTest {
     @DisplayName("black폰은 아래로 한 칸 혹은 두 칸을 움직인다.")
     void move_success_upper_case(final String start, final String end) {
         // given
-        Pawn pawn = new Pawn(new Name("P"));
+        Pawn pawn = new Pawn(Team.BLACK);
 
         // when & then
         Assertions.assertDoesNotThrow(() -> pawn.canMove(start, end));
@@ -50,7 +50,7 @@ class PawnTest {
     @DisplayName("black폰이 아래로 한 칸 혹은 두 칸으로 움직이지 않으면 에러를 발생한다.")
     void throws_exception_when_upper_pawn_moves_invalid(final String start, final String end) {
         // given
-        Pawn pawn = new Pawn(new Name("P"));
+        Pawn pawn = new Pawn(Team.BLACK);
 
         // when & then
         assertThatThrownBy(
@@ -62,7 +62,7 @@ class PawnTest {
     @DisplayName("모든 폰은 처음에만 두 번 움직일 수 있다.")
     void throws_exception_when_pawn_move_double_after_first() {
         // given
-        Pawn pawn = new Pawn(new Name("p"));
+        Pawn pawn = new Pawn(Team.WHITE);
 
         // when
         pawn.canMove("a2", "a3");

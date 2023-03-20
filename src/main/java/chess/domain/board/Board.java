@@ -5,6 +5,7 @@ import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Empty;
+import chess.domain.pieces.Team;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class Board {
     public void switchPosition(final String start, final String end) {
         validateMove(start, end);
         board.replace(Position.from(end), findPiece(start));
-        board.replace(Position.from(start), new Empty());
+        board.replace(Position.from(start), new Empty(Team.EMPTY));
     }
 
     private void validateMove(final String start, final String end) {
@@ -64,7 +65,7 @@ public class Board {
             return;
         }
 
-        if (piece.isNameLowerCase()) {
+        if (piece.isWhiteTeam()) {
             validateLowercasePawnMove(start, end);
             return;
         }
@@ -82,7 +83,7 @@ public class Board {
 
     private void validateLowercasePawnAttack(final String end) {
         Piece upperEnemy = findPiece(end);
-        if (upperEnemy.isNameLowerCase() || upperEnemy instanceof Empty) {
+        if (upperEnemy.isWhiteTeam() || upperEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
@@ -105,18 +106,18 @@ public class Board {
     private void validateMoveMyTeam(final String start, final String end) {
         Piece selectedPiece = findPiece(start);
         Piece destinationPiece = findPiece(end);
-        if (isSameTeam(selectedPiece, destinationPiece) && !destinationPiece.isPlace()) {
+        if (isSameTeam(selectedPiece, destinationPiece) && !destinationPiece.isEmpty()) {
             throw new IllegalArgumentException("우리팀 말에게 이동할 수 없습니다.");
         }
     }
 
     private boolean isSameTeam(final Piece selectedPiece, final Piece destinationPiece) {
-        return selectedPiece.isNameLowerCase() == destinationPiece.isNameLowerCase();
+        return selectedPiece.isWhiteTeam() == destinationPiece.isWhiteTeam();
     }
 
     private void validateUppercasePawnAttack(final String end) {
         Piece lowerEnemy = findPiece(end);
-        if (lowerEnemy.isNameUpperCase() || lowerEnemy instanceof Empty) {
+        if (lowerEnemy.isBlackTeam() || lowerEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }

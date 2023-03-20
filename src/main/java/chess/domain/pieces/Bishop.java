@@ -8,8 +8,8 @@ public class Bishop extends Piece {
     private static final int ROW = 1;
     private static final int COLUMN = 0;
 
-    public Bishop(final Name name) {
-        super(name);
+    public Bishop(final Team team) {
+        super(team);
     }
 
     @Override

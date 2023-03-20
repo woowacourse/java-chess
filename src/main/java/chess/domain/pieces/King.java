@@ -10,8 +10,8 @@ public class King extends Piece{
     private static final int ROW = 1;
     private static final int COLUMN = 0;
 
-    public King(final Name name) {
-        super(name);
+    public King(final Team team) {
+        super(team);
     }
 
     @Override

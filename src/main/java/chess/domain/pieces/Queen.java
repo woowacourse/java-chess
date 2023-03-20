@@ -8,8 +8,8 @@ public class Queen extends Piece {
     private static final int ROW = 1;
     private static final int COLUMN = 0;
 
-    public Queen(final Name name) {
-        super(name);
+    public Queen(final Team team) {
+        super(team);
     }
 
     @Override

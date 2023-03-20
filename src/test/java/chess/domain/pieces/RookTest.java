@@ -15,7 +15,7 @@ class RookTest {
     @DisplayName("Rook은 사방으로 여러칸 이동이 가능하다.")
     void move_success(final String start, final String end) {
         // given
-        Rook rook = new Rook(new Name("r"));
+        Rook rook = new Rook(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(
@@ -28,7 +28,7 @@ class RookTest {
     @DisplayName("Rook이 사방이 아닌 다른 곳으로 이동하면 예외를 발생시킨다.")
     void throws_exception_when_move_position_invalid(final String start, final String end) {
         // given
-        Rook rook = new Rook(new Name("r"));
+        Rook rook = new Rook(Team.WHITE);
 
         // when & then
         assertThatThrownBy(

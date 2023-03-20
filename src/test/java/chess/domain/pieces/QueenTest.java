@@ -15,7 +15,7 @@ class QueenTest {
     @DisplayName("Queen은 사방으로 여러 칸 이동이 가능하다.")
     void move_success_like_rook(final String start, final String end) {
         // given
-        Queen queen = new Queen(new Name("q"));
+        Queen queen = new Queen(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(
@@ -29,7 +29,7 @@ class QueenTest {
     @DisplayName("Queen은 대각선으로 여러칸 이동이 가능하다.")
     void move_success_like_bishop(final String start, final String end) {
         // given
-        Queen queen = new Queen(new Name("q"));
+        Queen queen = new Queen(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(() -> queen.canMove(start, end));
@@ -40,7 +40,7 @@ class QueenTest {
     @DisplayName("Queen은 팔방이 아닌 칸으로 이동하면 에러를 발생시킨다.")
     void throws_exception_when_move_position_invalid(final String start, final String end) {
         // given
-        Queen queen = new Queen(new Name("q"));
+        Queen queen = new Queen(Team.WHITE);
 
         // when & then
         assertThatThrownBy(

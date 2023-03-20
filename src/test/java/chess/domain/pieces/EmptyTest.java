@@ -10,7 +10,7 @@ class EmptyTest {
     @DisplayName("빈공간은 움직이면 에러를 발생시킨다.")
     void throws_exceptions_when_place_move() {
         // given
-        Empty empty = new Empty();
+        Empty empty = new Empty(Team.EMPTY);
 
         // when & then
         Assertions.assertThatThrownBy(

@@ -2,10 +2,8 @@ package chess.domain.pieces;
 
 public class Empty extends Piece {
 
-    private static final String PLACE = ".";
-
-    public Empty() {
-        super(new Name(PLACE));
+    public Empty(Team team) {
+        super(team);
     }
 
     @Override

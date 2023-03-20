@@ -15,7 +15,7 @@ class BishopTest {
     @DisplayName("bishop은 대각선으로만 움직인다.")
     void move_success(final String start, final String end) {
         // given
-        Bishop bishop = new Bishop(new Name("b"));
+        Bishop bishop = new Bishop(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(() -> bishop.canMove(start, end));
@@ -26,7 +26,7 @@ class BishopTest {
     @DisplayName("bishop이 대각선으로 움직이지 않으면 예외를 발생시킨다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
-        Bishop bishop = new Bishop(new Name("b"));
+        Bishop bishop = new Bishop(Team.WHITE);
 
         // when & then
         assertThatThrownBy(

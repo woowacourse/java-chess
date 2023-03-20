@@ -8,8 +8,8 @@ public class Rook extends Piece {
     private static final int ROW = 1;
     private static final int COLUMN = 0;
 
-    public Rook(final Name name) {
-        super(name);
+    public Rook(final Team team) {
+        super(team);
     }
 
     @Override

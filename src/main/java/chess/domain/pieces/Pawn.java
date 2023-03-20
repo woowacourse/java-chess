@@ -17,8 +17,8 @@ public class Pawn extends Piece {
 
     private boolean isFirstMove;
 
-    public Pawn(final Name name) {
-        super(name);
+    public Pawn(final Team team) {
+        super(team);
         this.isFirstMove = true;
     }
 
@@ -41,14 +41,14 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveAtFirst(final int subRow, final int subCol) {
-        if (isNameLowerCase()) {
+        if (isWhiteTeam()) {
             return isLowerPawnMoveAtFirst(subRow, subCol) || isLowerPawnAttack(subRow, subCol);
         }
         return isUpperPawnMoveAtFirst(subRow, subCol) || isUpperPawnAttack(subRow, subCol);
     }
 
     private boolean canMoveAfterFirst(final int subRow, final int subCol) {
-        if (isNameLowerCase()) {
+        if (isWhiteTeam()) {
             return isLowerPawnMoveAfterFirst(subRow, subCol) || isLowerPawnAttack(subRow, subCol);
         }
         return isUpperPawnMoveAfterFirst(subRow, subCol) || isUpperPawnAttack(subRow, subCol);

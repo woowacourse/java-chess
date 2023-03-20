@@ -9,21 +9,21 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
-    private boolean isLowerTeamTurn;
+    private boolean isWhiteTeamTurn;
 
     public ChessGame(final Board board) {
-        this.isLowerTeamTurn = true;
+        this.isWhiteTeamTurn = true;
         this.board = board;
     }
 
     public void move(final String start, final String end) {
         validateTurn(start);
         board.switchPosition(start, end);
-        isLowerTeamTurn = !isLowerTeamTurn;
+        isWhiteTeamTurn = !isWhiteTeamTurn;
     }
 
     private void validateTurn(final String start) {
-        if (board.findPiece(start).isNameLowerCase() != isLowerTeamTurn) {
+        if (board.findPiece(start).isWhiteTeam() != isWhiteTeamTurn) {
             throw new IllegalArgumentException("상대편 말은 움직일 수 없습니다.");
         }
     }

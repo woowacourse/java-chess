@@ -16,7 +16,7 @@ class KingTest {
     @DisplayName("king은 팔방으로 한칸만 움직인다.")
     void move_success(final String start, final String end) {
         // given
-        King king = new King(new Name("k"));
+        King king = new King(Team.WHITE);
 
         // when & then
         assertDoesNotThrow(() -> king.canMove(start, end));
@@ -27,7 +27,7 @@ class KingTest {
     @DisplayName("King이 팔방으로 한칸만 움직이지 않으면 예외를 발생시킨다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
-        King king = new King(new Name("k"));
+        King king = new King(Team.WHITE);
 
         // when & then
         assertThatThrownBy(
