@@ -43,7 +43,7 @@ public class Pawn extends Piece {
             return false;
         }
 
-        if (source.isRankTwo()) {
+        if (source.isWhitePawnInitialRank()) {
             return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == MIN_MOVABLE_FILE ||
                     rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == MAX_MOVABLE_FILE;
         }
@@ -59,7 +59,7 @@ public class Pawn extends Piece {
             return false;
         }
 
-        if (source.isRankSeven()) {
+        if (source.isBlackPawnInitialRank()) {
             return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == MIN_MOVABLE_FILE ||
                     rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == MAX_MOVABLE_FILE;
         }

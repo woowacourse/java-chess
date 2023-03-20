@@ -79,11 +79,11 @@ public class Square {
         return squares;
     }
 
-    public boolean isRankSeven() {
+    public boolean isBlackPawnInitialRank() {
         return rank == Rank.SEVEN;
     }
 
-    public boolean isRankTwo() {
+    public boolean isWhitePawnInitialRank() {
         return rank == Rank.TWO;
     }
 
