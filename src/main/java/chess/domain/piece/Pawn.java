@@ -10,10 +10,10 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position startPosition, final Position endPosition) {
-        int diffFile = endPosition.calculateFileDistance(startPosition);
-        int diffRank = endPosition.calculateRankDistance(startPosition);
-        if (startPosition.equals(endPosition) || diffRank != 0) {
+    public boolean canMove(final Position source, final Position destination) {
+        int diffFile = destination.calculateFileDistance(source);
+        int diffRank = destination.calculateRankDistance(source);
+        if (source.equals(destination) || diffRank != 0) {
             return false;
         }
         if (team == Team.BLACK) {
@@ -23,9 +23,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canAttack(final Position startPosition, final Position endPosition) {
-        int diffFile = endPosition.calculateFileDistance(startPosition);
-        int diffRank = endPosition.calculateRankDistance(startPosition);
+    public boolean canAttack(final Position source, final Position destination) {
+        int diffFile = destination.calculateFileDistance(source);
+        int diffRank = destination.calculateRankDistance(source);
 
         if (team == Team.WHITE) {
             return Math.abs(diffRank) == 1 && diffFile == 1;

@@ -16,12 +16,12 @@ public class NoPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position source, final Position destination) {
         throw new UnsupportedOperationException("칸에 기물이 없습니다.");
     }
 
     @Override
-    public boolean canAttack(final Position startPosition, final Position endPosition) {
+    public boolean canAttack(final Position source, final Position destination) {
         throw new UnsupportedOperationException("칸에 기물이 없습니다.");
     }
 }

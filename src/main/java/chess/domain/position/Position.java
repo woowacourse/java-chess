@@ -38,12 +38,12 @@ public class Position {
     }
 
 
-    public int calculateFileDistance(final Position startPosition) {
-        return file.calculateDistance(startPosition.file);
+    public int calculateFileDistance(final Position start) {
+        return file.calculateDistance(start.file);
     }
 
-    public int calculateRankDistance(final Position startPosition) {
-        return rank.calculateDistance(startPosition.rank);
+    public int calculateRankDistance(final Position start) {
+        return rank.calculateDistance(start.rank);
     }
 
     public Position move(final int rankDirection, final int fileDirection) {

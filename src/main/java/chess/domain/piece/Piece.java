@@ -15,12 +15,12 @@ public abstract class Piece {
         this.trace = new Trace();
     }
 
-    public abstract boolean canMove(Position startPosition, Position endPosition);
+    public abstract boolean canMove(Position source, Position destination);
 
-    public abstract boolean canAttack(Position startPosition, Position endPosition);
+    public abstract boolean canAttack(Position source, Position destination);
 
-    public void addTrace(final Turn turn, final Position lastPosition) {
-        trace.add(turn, lastPosition);
+    public void addTrace(final Turn turn, final Position last) {
+        trace.add(turn, last);
     }
 
     public Team getTeam() {

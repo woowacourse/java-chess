@@ -30,8 +30,9 @@ class ChessBoardTest {
         //when
 
         //then
-        assertThat(chessBoard).extracting("squares", InstanceOfAssertFactories.collection(Square.class))
-                .hasSize(64);
+        assertThat(chessBoard).extracting("squares",
+                InstanceOfAssertFactories.collection(Square.class))
+            .hasSize(64);
     }
 
     @Test
@@ -43,19 +44,20 @@ class ChessBoardTest {
         //when
         chessBoard.move(startPosition, endPosition);
         boolean isEmpty = chessBoard.getSquares().stream()
-                .filter(square -> square.isSamePosition(startPosition))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
-                .isEmpty();
+            .filter(square -> square.isSamePosition(startPosition))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+            .isEmpty();
 
         //then
         assertAll(
-                () -> assertThat(isEmpty).isTrue()
+            () -> assertThat(isEmpty).isTrue()
         );
     }
 
     @Nested
     class 이동불가 {
+
         @Test
         void should_체스_기물을_이동시키지못한다_when_장애물이_있는_상황일때() {
             //given
@@ -66,8 +68,8 @@ class ChessBoardTest {
 
             //then
             assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동 경로에 다른 기물이 있습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로에 다른 기물이 있습니다.");
         }
 
         @Test
@@ -80,8 +82,8 @@ class ChessBoardTest {
 
             //then
             assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("도착지에 아군 기물이 있습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착지에 아군 기물이 있습니다.");
         }
 
         @Test
@@ -94,8 +96,8 @@ class ChessBoardTest {
 
             //then
             assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("상대방의 기물은 이동시킬 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상대방의 기물은 이동시킬 수 없습니다.");
         }
     }
 
