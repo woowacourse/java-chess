@@ -12,14 +12,14 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class Board {
-    private final Map<Square, Piece> pieces;
+    private final Map<Square, Piece> board;
 
     public Board() {
-        this.pieces = Pieces.init();
+        this.board = Pieces.init();
     }
 
-    public boolean isSameColor(Square src, Team team) {
-        Piece piece = findPieceBy(src);
+    public boolean isSameColor(Square source, Team team) {
+        Piece piece = findPieceBy(source);
         return piece.getColor() == team;
     }
 
@@ -28,40 +28,40 @@ public class Board {
             throw new IllegalArgumentException("이동할 수 없는 칸입니다.");
         }
 
-        Piece piece = findPieceBy(src);
+        Piece piece = findPieceBy(source);
         if (piece.getPieceType() == INITIAL_PAWN) {
             piece = new Pawn(piece.getColor());
         }
-        pieces.put(dst, piece);
-        pieces.remove(src);
+        board.put(target, piece);
+        board.remove(source);
     }
 
-    private boolean canMove(final Square src, final Square dst) {
-        final Piece piece = findPieceBy(src);
-        final int fileInterval = File.calculate(src.getFile(), dst.getFile());
-        final int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
-        final boolean canAttack = canAttack(dst, piece);
+    private boolean canMove(final Square source, final Square target) {
+        final Piece piece = findPieceBy(source);
+        final int fileInterval = File.calculate(source.getFile(), target.getFile());
+        final int rankInterval = Rank.calculate(source.getRank(), target.getRank());
+        final boolean canAttack = canAttack(target, piece);
 
         piece.canMove(fileInterval, rankInterval, canAttack);
 
         if (piece.getPieceType() == KNIGHT) {
-            return !pieces.containsKey(dst);
+            return !board.containsKey(target);
         }
-        return canMoveNextSquare(src, fileInterval, rankInterval);
+        return canMoveNextSquare(source, fileInterval, rankInterval);
     }
 
-    private boolean canAttack(final Square dst, final Piece piece) {
-        if (pieces.containsKey(dst)) {
-            return pieces.get(dst).getColor() != piece.getColor();
+    private boolean canAttack(final Square target, final Piece piece) {
+        if (board.containsKey(target)) {
+            return board.get(target).getColor() != piece.getColor();
         }
         return false;
     }
 
     private Piece findPieceBy(Square square) {
-        if (!pieces.containsKey(square)) {
+        if (!board.containsKey(square)) {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }
-        return pieces.get(square);
+        return board.get(square);
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
@@ -74,16 +74,16 @@ public class Board {
         boolean notContainPiece = true;
         while (interval > 0 && notContainPiece) {
             nextSquare = nextSquare.next(fileMoveDirection, rankMoveDirection);
-            notContainPiece = isNotContainPiece(src, nextSquare);
+            notContainPiece = isNotContainPiece(source, nextSquare);
             interval--;
         }
         return notContainPiece;
     }
 
-    private boolean isNotContainPiece(Square src, Square nextSquare) {
-        Piece piece = pieces.get(src);
-        if (pieces.containsKey(nextSquare)) {
-            return pieces.get(nextSquare).getColor() != piece.getColor();
+    private boolean isNotContainPiece(Square source, Square nextSquare) {
+        Piece piece = board.get(source);
+        if (board.containsKey(nextSquare)) {
+            return board.get(nextSquare).getColor() != piece.getColor();
         }
         return true;
     }
@@ -96,7 +96,7 @@ public class Board {
         return max(abs(fileInterval), abs(rankInterval));
     }
 
-    public Map<Square, Piece> getPieces() {
-        return pieces;
+    public Map<Square, Piece> getBoard() {
+        return board;
     }
 }

@@ -12,7 +12,7 @@ public enum Direction {
     private static final int EXPONENT = 2;
     private static final int EXPONENTIATION = 5;
 
-    public static Direction from(final int fileInterval, final int rankInterval) {
+    public static Direction of(final int fileInterval, final int rankInterval) {
         if (isStraight(fileInterval, rankInterval)) {
             return STRAIGHT;
         }

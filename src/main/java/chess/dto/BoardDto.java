@@ -16,7 +16,7 @@ public class BoardDto {
     }
 
     public static BoardDto of(final Board board) {
-        final Map<Square, Piece> boardPieces = board.getPieces();
+        final Map<Square, Piece> boardPieces = board.getBoard();
         return new BoardDto(boardPieces.entrySet().stream()
                         .collect(toUnmodifiableMap(
                                 entry -> Squares.getIndex(entry.getKey()),

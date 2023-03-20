@@ -14,6 +14,6 @@ class DirectionTest {
             "2,0,STRAIGHT",
             "4,8,OTHER"})
     void checkDirection(int fileInterval, int rankInterval, Direction direction) {
-        assertThat(Direction.from(fileInterval, rankInterval)).isEqualTo(direction);
+        assertThat(Direction.of(fileInterval, rankInterval)).isEqualTo(direction);
     }
 }

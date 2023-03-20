@@ -24,45 +24,45 @@ class BoardTest {
     @DisplayName("보드가 생성되면 32개의 Piece를 가진다.")
     void containsPieces() {
         Board board = new Board();
-        assertThat(board.getPieces()).hasSize(32);
+        assertThat(board.getBoard()).hasSize(32);
     }
 
     @Test
     @DisplayName("말은 규칙에 따라 움직인다.")
     void move() {
         Board board = new Board();
-        Square src = Square.of(A, TWO);
-        Square dst = Square.of(A, THREE);
+        Square source = Square.of(A, TWO);
+        Square target = Square.of(A, THREE);
 
-        board.move(src, dst);
+        board.move(source, target);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(target);
     }
 
     @Test
     @DisplayName("knight는 가는 길목에 말이 있어도 움직일 수 있다.")
     void knight_can_move() {
         Board board = new Board();
-        Square src = Square.of(B, ONE);
-        Square dst = Square.of(A, THREE);
+        Square source = Square.of(B, ONE);
+        Square target = Square.of(A, THREE);
 
-        board.move(src, dst);
+        board.move(source, target);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(target);
     }
 
     @Test
     @DisplayName("knight는 이동할 칸에 말이 있으면 이동할 수 없다.")
     void knight_cannot_move() {
         Board board = new Board();
-        Square src = Square.of(A, TWO);
-        Square dst = Square.of(A, THREE);
-        board.move(src, dst);
+        Square source = Square.of(A, TWO);
+        Square target = Square.of(A, THREE);
+        board.move(source, target);
 
-        Square src1 = Square.of(B, ONE);
-        Square dst1 = Square.of(A, THREE);
+        Square source2 = Square.of(B, ONE);
+        Square target2 = Square.of(A, THREE);
 
-        assertThrows(IllegalArgumentException.class, () -> board.move(src1, dst1));
+        assertThrows(IllegalArgumentException.class, () -> board.move(source2, target2));
     }
 
 }

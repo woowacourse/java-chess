@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ChessGame {
-
     private static final int POSITION_SIZE = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
@@ -20,12 +19,12 @@ public class ChessGame {
         this.team = team;
     }
 
-    public void movePiece(String source, String destination) {
-        Square src = getSquare(source);
-        Square dst = getSquare(destination);
+    public void movePiece(String sourceInput, String targetInput) {
+        Square source = getSquare(sourceInput);
+        Square target = getSquare(targetInput);
 
-        validateSameTeam(src);
-        board.move(src, dst);
+        validateSameTeam(source);
+        board.move(source, target);
         changeTeam();
     }
 
@@ -37,9 +36,8 @@ public class ChessGame {
         return Square.of(File.findFileBy(position.get(FILE_INDEX)), Rank.findRankBy(position.get(RANK_INDEX)));
     }
 
-
-    private void validateSameTeam(final Square src) {
-        if (!board.isSameColor(src, team)) {
+    private void validateSameTeam(final Square source) {
+        if (!board.isSameColor(source, team)) {
             throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
         }
     }
