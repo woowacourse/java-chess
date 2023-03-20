@@ -18,19 +18,19 @@ public class MainController {
         this.outputView = new OutputView();
     }
 
-    private <T> T repeat(Supplier<T> inputReader) {
+    private <T> T repeatInputReader(Supplier<T> inputReader) {
         try {
             return inputReader.get();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return repeat(inputReader);
+            return repeatInputReader(inputReader);
         }
     }
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
         inputView.printStartMessage();
-        Command command = repeat(inputView::readCommand);
+        Command command = repeatInputReader(inputView::readCommand);
         if (command instanceof Start) {
             printChessBoard(chessBoard);
             do {
@@ -49,7 +49,7 @@ public class MainController {
                 printChessBoard(chessBoard);
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
-                command = repeat(inputView::readCommand);
+                command = repeatInputReader(inputView::readCommand);
                 executeMoveCommand(chessBoard, command);
             }
         }
