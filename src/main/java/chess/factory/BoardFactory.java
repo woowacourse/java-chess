@@ -77,6 +77,4 @@ public class BoardFactory {
         chessBoard.put(Position.of(Row.ONE, Column.G), new Knight(new Name("n")));
         chessBoard.put(Position.of(Row.ONE, Column.H), new Rook(new Name("r")));
     }
-
-
 }
