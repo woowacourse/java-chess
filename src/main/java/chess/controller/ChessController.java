@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Square;
 import chess.dto.GameStatusDto;
 import chess.dto.SquareDto;

@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.piece.PieceDirection;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import org.junit.jupiter.api.DisplayName;
@@ -8,9 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PieceDirectionTest {
 

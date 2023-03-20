@@ -1,16 +1,15 @@
 package chess.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import chess.domain.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-import org.w3c.dom.ls.LSOutput;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class GameStatusDto {
 

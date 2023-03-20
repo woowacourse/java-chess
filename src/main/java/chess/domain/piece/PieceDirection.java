@@ -1,12 +1,27 @@
 package chess.domain.piece;
 
-import chess.domain.piece.exception.WrongDirectionException;
-import chess.domain.square.Direction;
+import static chess.domain.square.Direction.DOWN;
+import static chess.domain.square.Direction.DOWN_DOWN_LEFT;
+import static chess.domain.square.Direction.DOWN_DOWN_RIGHT;
+import static chess.domain.square.Direction.DOWN_LEFT;
+import static chess.domain.square.Direction.DOWN_LEFT_LEFT;
+import static chess.domain.square.Direction.DOWN_RIGHT;
+import static chess.domain.square.Direction.DOWN_RIGHT_RIGHT;
+import static chess.domain.square.Direction.LEFT;
+import static chess.domain.square.Direction.RIGHT;
+import static chess.domain.square.Direction.UP;
+import static chess.domain.square.Direction.UP_LEFT;
+import static chess.domain.square.Direction.UP_LEFT_LEFT;
+import static chess.domain.square.Direction.UP_RIGHT;
+import static chess.domain.square.Direction.UP_RIGHT_RIGHT;
+import static chess.domain.square.Direction.UP_UP_LEFT;
+import static chess.domain.square.Direction.UP_UP_RIGHT;
 
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.square.Direction.*;
+import chess.domain.piece.exception.WrongDirectionException;
+import chess.domain.square.Direction;
 
 public enum PieceDirection {
 
@@ -22,6 +37,13 @@ public enum PieceDirection {
 
     PieceDirection(final List<Direction> pieceDirections) {
         this.pieceDirections = pieceDirections;
+    }
+
+    private static int divideByAbs(final int number) {
+        if (number == 0) {
+            return number;
+        }
+        return number / Math.abs(number);
     }
 
     public boolean contains(Direction direction) {
@@ -61,13 +83,6 @@ public enum PieceDirection {
         final int fileDirection = divideByAbs(fileDifference);
         final int rankDirection = divideByAbs(rankDifference);
         return getDirection(fileDirection, rankDirection);
-    }
-
-    private static int divideByAbs(final int number) {
-        if (number == 0) {
-            return number;
-        }
-        return number / Math.abs(number);
     }
 
     private Direction getDirection(final int fileDirection, final int rankDirection) {

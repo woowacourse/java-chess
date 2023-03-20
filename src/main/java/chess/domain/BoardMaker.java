@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -11,9 +14,6 @@ import chess.domain.piece.Rook;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BoardMaker {
 

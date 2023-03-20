@@ -1,13 +1,13 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Board {
 

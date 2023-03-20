@@ -1,5 +1,9 @@
 package chess.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Map;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -12,10 +16,6 @@ import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardMakerTest {
 
@@ -57,5 +57,4 @@ class BoardMakerTest {
         assertThat(board.get(Square.of(File.G, Rank.EIGHT))).isInstanceOf(Knight.class);
         assertThat(board.get(Square.of(File.H, Rank.EIGHT))).isInstanceOf(Rook.class);
     }
-
 }

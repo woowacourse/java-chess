@@ -2,7 +2,6 @@ package chess.dto;
 
 import chess.domain.square.File;
 import chess.domain.square.Rank;
-import chess.domain.square.Square;
 
 public class SquareDto {
 
