@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.dto;
 
 import chess.domain.Board;
 import chess.domain.position.Rank;

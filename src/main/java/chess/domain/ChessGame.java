@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.GameStatus;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
