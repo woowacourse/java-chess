@@ -1,11 +1,12 @@
 package chess.domain.position;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Position implements Comparable<Position> {
+public final class Position implements Comparable<Position> {
     
     private final File file;
     private final Rank rank;
@@ -41,51 +42,36 @@ public class Position implements Comparable<Position> {
     }
     
     public Direction calculateDirection(Position destination) {
-        int sourceFIleIndex = this.getFile().getIndex();
-        int sourceRankIndex = this.getRank().getIndex();
-        int destinationFIleIndex = destination.getFile().getIndex();
-        int destinationRankIndex = destination.getRank().getIndex();
+        int sourceFIleIndex = this.getFileIndex();
+        int sourceRankIndex = this.getRankIndex();
+        int destinationFIleIndex = destination.getFileIndex();
+        int destinationRankIndex = destination.getRankIndex();
         
         int fileGap = destinationFIleIndex - sourceFIleIndex;
         int sourceGap = destinationRankIndex - sourceRankIndex;
         
-        try {
-            return Direction.findByVector(fileGap, sourceGap);
-        } catch (Exception ignored) {
-        }
+        int unit = this.getUnit(fileGap, sourceGap);
+        int fileUnit = fileGap / unit;
+        int sourceUnit = sourceGap / unit;
         
-        if (fileGap > 0) {
-            if (sourceGap > 0) {
-                return Direction.NE;
-            }
-            if (sourceGap < 0) {
-                return Direction.SE;
-            }
-            return Direction.E;
-        }
-        if (fileGap < 0) {
-            if (sourceGap > 0) {
-                return Direction.NW;
-            }
-            if (sourceGap < 0) {
-                return Direction.SW;
-            }
-            return Direction.W;
-        }
-        
-        if (sourceGap > 0) {
-            return Direction.N;
-        }
-        return Direction.S;
+        return Direction.findByVector(fileUnit, sourceUnit);
         
     }
     
-    public File getFile() {
-        return this.file;
+    public int getFileIndex() {
+        return this.file.getIndex();
     }
     
-    public Rank getRank() {
-        return this.rank;
+    public int getRankIndex() {
+        return this.rank.getIndex();
+    }
+    
+    private int getUnit(final int fileGap, final int sourceGap) {
+        BigInteger fileGapBigInteger = BigInteger.valueOf(fileGap);
+        BigInteger sourceGapBigInteger = BigInteger.valueOf(sourceGap);
+        BigInteger gcd = fileGapBigInteger.gcd(sourceGapBigInteger);
+        
+        return gcd.intValue();
     }
     
     public Position addDirection(Direction direction) {
@@ -96,10 +82,10 @@ public class Position implements Comparable<Position> {
     }
     
     public int calculateDistance(Position destination) {
-        int sourceFIleIndex = this.getFile().getIndex();
-        int sourceRankIndex = this.getRank().getIndex();
-        int destinationFIleIndex = destination.getFile().getIndex();
-        int destinationRankIndex = destination.getRank().getIndex();
+        int sourceFIleIndex = this.getFileIndex();
+        int sourceRankIndex = this.getRankIndex();
+        int destinationFIleIndex = destination.getFileIndex();
+        int destinationRankIndex = destination.getRankIndex();
         
         int fileGap = destinationFIleIndex - sourceFIleIndex;
         int rankGap = destinationRankIndex - sourceRankIndex;
@@ -134,16 +120,20 @@ public class Position implements Comparable<Position> {
     
     @Override
     public int compareTo(final Position o) {
-        int thisRank = this.getRank().getIndex();
-        int otherRank = o.getRank().getIndex();
+        int thisRank = this.getRankIndex();
+        int otherRank = o.getRankIndex();
         if (thisRank < otherRank) {
             return -1;
         }
         if (thisRank > otherRank) {
             return 1;
         }
-        int thisFile = this.getFile().getIndex();
-        int otherFile = o.getFile().getIndex();
+        int thisFile = this.getFileIndex();
+        int otherFile = o.getFileIndex();
         return Integer.compare(thisFile, otherFile);
+    }
+    
+    public Rank getRank() {
+        return this.rank;
     }
 }

@@ -17,8 +17,8 @@ class PositionTest {
     @DisplayName("생성 테스트")
     void create() {
         Position position = Position.from("a1");
-        assertThat(position.getFile()).isEqualTo(File.A);
-        assertThat(position.getRank()).isEqualTo(Rank.ONE);
+        assertThat(position.getFileIndex()).isEqualTo(File.A.getIndex());
+        assertThat(position.getRankIndex()).isEqualTo(Rank.ONE.getIndex());
     }
     
     @Test

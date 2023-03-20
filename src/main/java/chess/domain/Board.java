@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class Board {
+public final class Board {
     
     public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
     public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
@@ -57,7 +57,7 @@ public class Board {
     
     private void placePieceAtPosition(final List<Piece> pieces, final Position position, int rank) {
         if (position.isRank(rank)) {
-            this.board.put(position, pieces.get(position.getFile().getIndex()));
+            this.board.put(position, pieces.get(position.getFileIndex()));
         }
     }
     
@@ -69,6 +69,14 @@ public class Board {
             throw new IllegalArgumentException(OTHER_COLOR_PIECE_ERROR_MESSAGE);
         }
         return this.board.get(source);
+    }
+    
+    private boolean isEmpty(final Position position) {
+        return this.board.get(position).isEmpty();
+    }
+    
+    private boolean isSameColor(final Position position, final Color color) {
+        return this.board.get(position).isSameColor(color);
     }
     
     public void checkBetweenRoute(final Position source, final Position destination) {
@@ -112,14 +120,6 @@ public class Board {
     public void replace(final Position source, final Position destination) {
         this.board.put(destination, this.board.get(source));
         this.board.put(source, Empty.create());
-    }
-    
-    private boolean isEmpty(final Position position) {
-        return this.board.get(position).isEmpty();
-    }
-    
-    private boolean isSameColor(final Position position, final Color color) {
-        return this.board.get(position).isSameColor(color);
     }
     
     public List<Piece> getPiecesAt(Rank rank) {
