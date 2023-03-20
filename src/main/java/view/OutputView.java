@@ -1,10 +1,6 @@
 package view;
 
-import domain.chessboard.ChessBoard;
-import domain.chessboard.Row;
-import domain.chessboard.Square;
-import domain.piece.Color;
-import domain.type.EmptyType;
+import controller.ChessBoardDTO;
 
 import java.util.List;
 
@@ -28,40 +24,29 @@ public final class OutputView {
                 "abcdefgh\n");
     }
 
-    public static void printNotice(String message) {
+    public static void printNotice(final String message) {
         System.out.println(message);
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.printf("[ERROR] : %s%n", message);
     }
 
-    public static void printChessBoard(ChessBoard chessBoard) {
-        final List<Row> rows = chessBoard.getChessBoard();
+    public static void printChessBoard(final ChessBoardDTO chessBoard) {
+        final List<List<String>> rowDTOs = chessBoard.getRowDTOs();
 
         System.out.print(System.lineSeparator());
-        for (Row row : rows) {
+        for (List<String> row : rowDTOs) {
             printRow(row);
         }
         System.out.print(System.lineSeparator());
     }
 
-    private static void printRow(final Row row) {
-        final List<Square> squares = row.getRow();
-
-        for (Square square : squares) {
-            System.out.print(convertPieceToElement(square));
+    private static void printRow(final List<String> chessBoardElements) {
+        for (String chessBoardElement : chessBoardElements) {
+            System.out.print(chessBoardElement);
         }
         System.out.println();
-    }
-
-    private static String convertPieceToElement(final Square square) {
-        final String elementName = ChessBoardElement.getElementName(square.getType());
-
-        if (square.isDifferentType(EmptyType.EMPTY) && square.isSameColor(Color.BLACK)) {
-            return elementName.toUpperCase();
-        }
-        return elementName;
     }
 
 }

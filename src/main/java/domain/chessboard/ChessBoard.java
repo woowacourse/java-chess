@@ -1,40 +1,74 @@
 package domain.chessboard;
 
 import domain.coordinate.Position;
+import domain.coordinate.Route;
+import domain.piece.Color;
+import domain.piece.Pawn;
+import domain.squarestatus.Empty;
+import domain.squarestatus.SquareStatus;
+import domain.type.EmptyType;
+import domain.type.PieceType;
+import domain.type.Type;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class ChessBoard {
+public class ChessBoard {
 
-    private static final int NUMBER_OF_NONE_LINES = 4;
+    private static final Empty EMPTY = new Empty(EmptyType.EMPTY);
 
-    private final List<Row> rows;
+    private final Map<Position, SquareStatus> chessBoard;
 
-    public ChessBoard(final List<Row> rows) {
-        this.rows = rows;
+    protected ChessBoard(final Map<Position, SquareStatus> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    public static ChessBoard generate() {
-        final List<Row> chessBoard = new ArrayList<>();
-        chessBoard.add(Row.from(RowFactory.OTHERS_BLACK));
-        chessBoard.add(Row.from(RowFactory.PAWN_BLACK));
-        for (int i = 0; i < NUMBER_OF_NONE_LINES; i++) {
-            chessBoard.add(Row.from(RowFactory.EMPTY));
+    public SquareStatus findPosition(final Position position) {
+        return chessBoard.getOrDefault(position, EMPTY);
+    }
+
+    public void move(final Position source, final Position target) {
+        final SquareStatus squareStatus = chessBoard.remove(source);
+
+        if (squareStatus.getType() == PieceType.PAWN) {
+            chessBoard.put(target, new Pawn(squareStatus.getColor()));
+            return;
         }
-        chessBoard.add(Row.from(RowFactory.PAWN_WHITE));
-        chessBoard.add(Row.from(RowFactory.OTHERS_WHITE));
-
-        return new ChessBoard(new ArrayList<>(chessBoard));
+        chessBoard.put(target, squareStatus);
     }
 
-    public List<Row> getChessBoard() {
-        return new ArrayList<>(rows);
+    public Route findRoute(final Position source, final Position target) {
+        final SquareStatus squareStatus = chessBoard.getOrDefault(source, EMPTY);
+
+        return squareStatus.findRoute(source, target);
     }
 
-    public Square findSquare(Position position) {
-        return rows.get(position.getY())
-                .getSquare(position.getX());
+    public boolean isSameColor(final Position position, final Color color) {
+        final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
+
+        return squareStatus.getColor() == color;
     }
 
+    public boolean isDifferentColor(final Position position, final Color color) {
+        final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
+
+
+        return squareStatus.getColor() != color;
+    }
+
+    public boolean isEqualType(final Position position, final Type type) {
+        final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
+
+        return squareStatus.getType() == type;
+    }
+
+    public boolean isDifferentType(final Position position, final Type type) {
+        final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
+
+        return squareStatus.getType() != type;
+    }
+
+    public Map<Position, SquareStatus> getChessBoard() {
+        return new HashMap<>(chessBoard);
+    }
 }

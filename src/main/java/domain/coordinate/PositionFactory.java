@@ -1,6 +1,8 @@
 package domain.coordinate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 public enum PositionFactory {
@@ -14,31 +16,52 @@ public enum PositionFactory {
     SIX('g', '2', 6),
     SEVEN('h', '1', 7);
 
-    private static final int INDEX_X = 0;
-    private static final int INDEX_Y = 1;
+    private static final int INDEX_COLUMN = 0;
+    private static final int INDEX_ROW = 1;
+    private static final int MAX_SIZE = 8;
 
-    private final char x;
-    private final char y;
+    private final char column;
+    private final char row;
     private final int value;
 
-    PositionFactory(char x, char y, int value) {
-        this.x = x;
-        this.y = y;
+    PositionFactory(char column, char row, int value) {
+        this.column = column;
+        this.row = row;
         this.value = value;
     }
 
     public static Position createPosition(String command) {
-        return Position.of(findCoordinateX(command), findCoordinateY(command));
+        return Position.of(findColumn(command), findRow(command));
     }
 
-    private static int findCoordinateX(String command) {
-        final char coordinate = command.charAt(INDEX_X);
-        return PositionFactory.from(coordinate, value -> value.x).value;
+    public static List<Position> findRow(final int row) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int column = 0; column < MAX_SIZE; column++) {
+            positions.add(Position.of(column, row));
+        }
+
+        return positions;
     }
 
-    private static int findCoordinateY(String command) {
-        final char coordinate = command.charAt(INDEX_Y);
-        return PositionFactory.from(coordinate, value -> value.y).value;
+    public static List<Position> findColumn(final int column) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int row = 0; row < MAX_SIZE; row++) {
+            positions.add(Position.of(column, row));
+        }
+
+        return positions;
+    }
+
+    private static int findColumn(String command) {
+        final char coordinate = command.charAt(INDEX_COLUMN);
+        return PositionFactory.from(coordinate, value -> value.column).value;
+    }
+
+    private static int findRow(String command) {
+        final char coordinate = command.charAt(INDEX_ROW);
+        return PositionFactory.from(coordinate, value -> value.row).value;
     }
 
     private static PositionFactory from(char coordinate, Function<PositionFactory, Character> findCoordinate) {
