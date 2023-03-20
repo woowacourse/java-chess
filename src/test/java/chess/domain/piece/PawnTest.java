@@ -68,6 +68,6 @@ class PawnTest {
         //when & then
         assertThatThrownBy(() -> pawn.searchPathTo(INITIAL_POSITION, to, new Pawn(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("이(가) 이동할 수 없는 경로입니다.");
+                .hasMessageContaining("같은 색 말의 위치로 이동할 수 없습니다.");
     }
 }
