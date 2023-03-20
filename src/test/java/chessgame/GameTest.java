@@ -20,7 +20,7 @@ class GameTest {
 
     @BeforeEach
     void before() {
-        game = new Game(new Board(ChessBoardFactory.create()));
+        game = new Game();
         game.setButton(Command.of("start"));
     }
 

@@ -17,7 +17,7 @@ public class ChessController {
     }
 
     public void run() {
-        Game game = new Game(new Board(ChessBoardFactory.create()));
+        Game game = new Game();
         playGame(game);
     }
 

@@ -2,6 +2,7 @@ package chessgame.domain;
 
 import chessgame.domain.point.Point;
 import chessgame.domain.state.Button;
+import chessgame.util.ChessBoardFactory;
 
 import java.util.List;
 
@@ -10,8 +11,8 @@ public class Game {
     private final Button button = new Button();
     private Team turn = Team.WHITE;
 
-    public Game(Board board) {
-        this.board = board;
+    public Game() {
+        this.board = new Board(ChessBoardFactory.create());
     }
 
     public Board board() {
