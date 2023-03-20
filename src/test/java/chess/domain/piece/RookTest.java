@@ -24,7 +24,7 @@ class RookTest {
         // given
         final Piece rook = Rook.from(Color.WHITE);
         // when
-        List<Position> result = rook.findMoveAblePositions(source, target);
+        List<Position> result = rook.findMoveAblePositions(source, target,Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }

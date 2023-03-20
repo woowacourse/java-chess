@@ -24,7 +24,7 @@ class PawnTest {
         // given
         final Piece pawn = Pawn.from(Color.WHITE);
         // when
-        List<Position> result = pawn.findMoveAblePositions(source, target);
+        List<Position> result = pawn.findMoveAblePositions(source, target, Empty.create());
         // then
         assertThat(result).containsExactlyInAnyOrderElementsOf(expectedResult);
     }
@@ -46,14 +46,6 @@ class PawnTest {
                         Position.of(1, 5),
                         List.of(
                                 Position.of(1, 5)
-                        )
-                ),
-                // 대각선 왼쪽으로 한칸 전진
-                Arguments.arguments(
-                        Position.of(1, 6),
-                        Position.of(2, 5),
-                        List.of(
-                                Position.of(2, 5)
                         )
                 )
         );

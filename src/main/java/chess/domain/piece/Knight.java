@@ -21,7 +21,10 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public List<Position> findMoveAblePositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
         int maxCase = 8;
 
         List<Position> positions = IntStream.range(0, maxCase)

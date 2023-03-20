@@ -20,20 +20,19 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findMoveAblePositions(final Position source, final Position target) {
-        return createMovablePositions(source, target);
-    }
-
-    private List<Position> createMovablePositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
         final List<Position> result = new ArrayList<>();
-        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) <= 2) {
+        if (source.isSameRow(target.getRow()) && targetPiece.isSamePieceType(PieceType.EMPTY) && source.calculateColumnDistance(target.getColumn()) <= 2) {
             result.add(createMove(source, 1));
         }
-        if (source.isSameRow(target.getRow()) && source.calculateColumnDistance(target.getColumn()) == 2 && isStartPosition(source)) {
+        if (source.isSameRow(target.getRow()) && targetPiece.isSamePieceType(PieceType.EMPTY) && source.calculateColumnDistance(target.getColumn()) == 2 && isStartPosition(source)) {
             result.add(createMove(source, 2));
             return result;
         }
-        if (isDiagonalMove(source, target)) {
+        if (isDiagonalMove(source, target) && targetPiece.isNotSamePieceType(PieceType.EMPTY)) {
             return List.of(target);
         }
         if (!result.contains(target)) {
@@ -42,7 +41,7 @@ public final class Pawn extends Piece {
         return result;
     }
 
-    private static boolean isDiagonalMove(final Position source, final Position target) {
+    private boolean isDiagonalMove(final Position source, final Position target) {
         return source.calculateRowDistance(target.getRow()) == 1 && source.calculateColumnDistance(target.getColumn()) == 1;
     }
 

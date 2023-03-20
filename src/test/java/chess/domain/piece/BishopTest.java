@@ -24,7 +24,7 @@ class BishopTest {
         // given
         final Piece bishop = Bishop.from(Color.WHITE);
         // when
-        List<Position> result = bishop.findMoveAblePositions(source, target);
+        List<Position> result = bishop.findMoveAblePositions(source, target,Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }

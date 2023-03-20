@@ -16,7 +16,7 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public List<Position> findMoveAblePositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
         throw new UnsupportedOperationException("비어있는 위치입니다.");
     }
 }

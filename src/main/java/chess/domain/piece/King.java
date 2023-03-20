@@ -16,7 +16,10 @@ public final class King extends Piece {
     }
 
     @Override
-    public List<Position> findMoveAblePositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
         final int rowDirection = Integer.compare(target.getRow(), source.getRow());
         final int columnDirection = Integer.compare(target.getColumn(), source.getColumn());
 

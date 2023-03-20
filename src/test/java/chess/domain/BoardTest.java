@@ -16,7 +16,6 @@ class BoardTest {
     public static final Pawn BLACK_PIECE = Pawn.from(Color.BLACK);
     public static final Pawn WHITE_PIECE = Pawn.from(Color.WHITE);
     public static final Position POSITION_1_4 = Position.of(1, 4);
-    public static final Position POSITION_2_5 = Position.of(2, 5);
     public static final Position POSITION_1_5 = Position.of(1, 5);
     public static final Position POSITION_1_6 = Position.of(1, 6);
     public static final Position POSITION_1_1 = Position.of(1, 1);
@@ -30,9 +29,9 @@ class BoardTest {
         Map<Position, Piece> pieces = Map.of(POSITION_1_4, BLACK_PIECE);
         Board board = Board.from(pieces);
         //when
-        board.move(POSITION_1_4, POSITION_1_5, Color.BLACK);
+        board.move(POSITION_1_4, Position.of(1,5), Color.BLACK);
         //then
-        Assertions.assertThat(board.getBoard().get(POSITION_1_5)).isInstanceOf(Pawn.class);
+        Assertions.assertThat(board.getBoard().get(Position.of(1,5))).isInstanceOf(Pawn.class);
         Assertions.assertThat(board.getBoard().get(POSITION_1_4)).isInstanceOf(Empty.class);
     }
 
@@ -40,14 +39,14 @@ class BoardTest {
     @DisplayName("검정 폰이 대각선으로 이동하는 경우 테스트")
     void PawnSingleMoveSuccessTest2() {
         //given
-        Map<Position, Piece> pieces = Map.of(POSITION_1_4, BLACK_PIECE
-                , POSITION_2_5, WHITE_PIECE);
+        Map<Position, Piece> pieces = Map.of(Position.of(1,1), BLACK_PIECE
+                , Position.of(2,0), WHITE_PIECE);
         Board board = Board.from(pieces);
         //when
-        board.move(POSITION_1_4, POSITION_2_5, Color.BLACK);
+        board.move(Position.of(1,1), Position.of(2,0), Color.BLACK);
         //then
-        Assertions.assertThat(board.getBoard().get(POSITION_2_5)).isInstanceOf(Pawn.class);
-        Assertions.assertThat(board.getBoard().get(POSITION_1_4)).isInstanceOf(Empty.class);
+        Assertions.assertThat(board.getBoard().get(Position.of(2,0))).isInstanceOf(Pawn.class);
+        Assertions.assertThat(board.getBoard().get(Position.of(1,1))).isInstanceOf(Empty.class);
     }
 
     @Test
@@ -76,7 +75,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("검정 폰이 한 칸 이동하는 경우 실패 테스트 (폰이 이동할 수 없는 위치입니다.)")
+    @DisplayName("검정 폰이 한 칸 이동하는 경우 실패 테스트 (이동 할 수 없는 위치 입니다.)")
     void PawnInvalidPositionFailTest3() {
         //given
         Map<Position, Piece> pieces = Map.of(POSITION_1_4, BLACK_PIECE
@@ -85,7 +84,7 @@ class BoardTest {
         //then
         assertThatThrownBy(() -> board.move(POSITION_1_4, POSITION_1_5, Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰이 이동할 수 없는 위치입니다.");
+                .hasMessage("이동 할 수 없는 위치 입니다.");
     }
 
     @Test

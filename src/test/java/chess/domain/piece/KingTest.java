@@ -24,7 +24,7 @@ class KingTest {
         // given
         final Piece king = King.from(Color.WHITE);
         // when
-        List<Position> result = king.findMoveAblePositions(source, target);
+        List<Position> result = king.findMoveAblePositions(source, target,Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }

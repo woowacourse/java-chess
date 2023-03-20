@@ -16,7 +16,10 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public List<Position> findMoveAblePositions(final Position source, final Position target) {
+    public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
         if (source.isNotConstantFunction(target)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
         }

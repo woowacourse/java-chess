@@ -42,11 +42,6 @@ public class Position implements Comparable<Position> {
         return Math.abs(this.column - column);
     }
 
-    public boolean isOverBoundary(int min, int max) {
-        return min > column || column > max
-                || min > row || row > max;
-    }
-
     public List<Position> calculateBetweenPoints(Position end) {
         int rowDirection = rowDirection(end);
         int columnDirection = columnDirection(end);

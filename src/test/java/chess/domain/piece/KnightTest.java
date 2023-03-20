@@ -24,7 +24,7 @@ class KnightTest {
         // given
         final Piece knight = Knight.from(Color.WHITE);
         // when
-        List<Position> result = knight.findMoveAblePositions(source, target);
+        List<Position> result = knight.findMoveAblePositions(source, target, Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }

@@ -24,7 +24,7 @@ class QueenTest {
         // given
         final Piece queen = Queen.from(Color.WHITE);
         // when
-        List<Position> result = queen.findMoveAblePositions(source, target);
+        List<Position> result = queen.findMoveAblePositions(source, target,Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
