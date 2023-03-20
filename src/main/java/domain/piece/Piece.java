@@ -3,7 +3,6 @@ package domain.piece;
 import domain.chessboard.SquareStatus;
 import domain.chessboard.Type;
 import domain.coordinate.Position;
-import domain.coordinate.Route;
 
 public abstract class Piece implements SquareStatus {
 
@@ -14,9 +13,6 @@ public abstract class Piece implements SquareStatus {
         this.color = color;
         this.pieceType = pieceType;
     }
-
-    @Override
-    public abstract Route findRoute(final Position source, final Position target);
 
     @Override
     public final Type getType() {
