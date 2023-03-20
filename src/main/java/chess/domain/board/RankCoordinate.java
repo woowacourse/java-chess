@@ -23,12 +23,12 @@ public enum RankCoordinate {
 
     private final int rowNumber;
     private final RankType rankType;
-    private final Color color;
+    private final Color initColor;
 
-    RankCoordinate(int rowNumber, RankType rankType, Color color) {
+    RankCoordinate(int rowNumber, RankType rankType, Color initColor) {
         this.rowNumber = rowNumber;
         this.rankType = rankType;
-        this.color = color;
+        this.initColor = initColor;
     }
 
     public static RankCoordinate findBy(int rowNumber) {
@@ -57,7 +57,7 @@ public enum RankCoordinate {
         return rankType;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getInitColor() {
+        return initColor;
     }
 }

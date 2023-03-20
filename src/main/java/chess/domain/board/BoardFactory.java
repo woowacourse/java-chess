@@ -26,13 +26,9 @@ public class BoardFactory {
 
     static {
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
-            Color color = rankCoordinate.getColor();
-            createRank(INIT_CHESS_BOARD, rankCoordinate, color);
+            Color initColor = rankCoordinate.getInitColor();
+            createRank(INIT_CHESS_BOARD, rankCoordinate, initColor);
         }
-    }
-
-    public static Board createBoard() {
-        return new Board(new HashMap<>(INIT_CHESS_BOARD));
     }
 
     private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
@@ -63,5 +59,9 @@ public class BoardFactory {
         for (FileCoordinate value : FileCoordinate.values()) {
             boards.put(new Position(value, rankCoordinate), piece);
         }
+    }
+
+    public static Board createBoard() {
+        return new Board(new HashMap<>(INIT_CHESS_BOARD));
     }
 }
