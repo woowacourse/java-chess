@@ -4,24 +4,39 @@ import chess.piece.Direction;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
+import chess.piece.Side;
 import java.util.List;
 
 public class Board {
 
     private final Pieces pieces;
+    private Side turnToMove;
 
-    public Board(final Pieces pieces) {
+    public Board(final Pieces pieces, Side firstTurn) {
         this.pieces = pieces;
+        this.turnToMove = firstTurn;
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
+        checkTurnToMoveBySide(sourcePiece.getSide());
         checkSameSidePieceOnTargetPosition(sourcePiece, targetPosition);
         checkPath(targetPosition, sourcePiece);
         checkPieceMovable(sourcePosition, targetPosition);
         checkOppositeSidePieceOnTargetPosition(sourcePiece, targetPosition);
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
+    }
+
+    private void checkTurnToMoveBySide(final Side sourcePieceSide) {
+        if (sourcePieceSide != turnToMove) {
+            throw new IllegalArgumentException("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
+        }
+        if (turnToMove == Side.BLACK) {
+            turnToMove = Side.WHITE;
+            return;
+        }
+        turnToMove = Side.BLACK;
     }
 
     private void checkPieceMovable(final Position sourcePosition, final Position targetPosition) {

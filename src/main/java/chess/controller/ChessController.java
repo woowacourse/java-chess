@@ -9,6 +9,7 @@ import chess.game.GameCommand;
 import chess.game.GameStatus;
 import chess.piece.AllPiecesGenerator;
 import chess.piece.Pieces;
+import chess.piece.Side;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import java.util.function.Supplier;
 public class ChessController {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
+
     private final InputView inputView;
 
     public ChessController(final InputView inputView) {
@@ -44,7 +46,7 @@ public class ChessController {
     }
 
     private Board setUp() {
-        Board board = new Board(new Pieces(new AllPiecesGenerator()));
+        Board board = new Board(new Pieces(new AllPiecesGenerator()), Side.WHITE);
         OutputView.printGameStartMessage();
         OutputView.printGameCommandInputMessage();
         return board;
