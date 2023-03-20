@@ -28,11 +28,12 @@ public class Players {
         int diffFile = toPosition.calculateFileDistance(fromPosition.getFile());
         int diffRank = toPosition.calculateRankDistance(fromPosition.getRank());
 
-        BigInteger gcd = BigInteger.valueOf(diffFile).gcd(BigInteger.valueOf(diffRank));
+        BigInteger gcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
         int fileDirection = diffFile / gcd.intValue();
         int rankDirection = diffRank / gcd.intValue();
 
         Position tempPosition = fromPosition.move(fileDirection, rankDirection);
+
         while (!tempPosition.equals(toPosition)) {
             validateIsEmpty(tempPosition);
             tempPosition = tempPosition.move(fileDirection, rankDirection);
@@ -85,7 +86,6 @@ public class Players {
                 .filter(player -> player.hasPositionPiece(findPosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
-
     }
 
     public Player getAnotherPlayer(Player findPlayer) {
