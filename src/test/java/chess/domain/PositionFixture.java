@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.domain.board.FileCoordinate.A;
 import static chess.domain.board.FileCoordinate.B;
 import static chess.domain.board.FileCoordinate.C;
 import static chess.domain.board.FileCoordinate.D;
@@ -17,6 +18,9 @@ import chess.domain.board.Position;
 
 public class PositionFixture {
     public static final Position C_4 = new Position(C, FOUR);
+    public static final Position A_1 = new Position(A, ONE);
+    public static final Position A_2 = new Position(A, TWO);
+    public static final Position A_3 = new Position(A, THREE);
     public static final Position D_4 = new Position(D, FOUR);
     public static final Position E_4 = new Position(E, FOUR);
     public static final Position F_4 = new Position(F, FOUR);

@@ -17,12 +17,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class RankCoordinateViewTest {
+class RankCoordinateTest {
 
     @ParameterizedTest
     @CsvSource(value = {"ONE:WHITE", "TWO:WHITE", "THREE:EMPTY", "EIGHT:BLACK"}, delimiter = ':')
     void 랭크로_어느_팀인지_확인할_수_있다(RankCoordinate rankCoordinate, Color expect) {
-        assertThat(rankCoordinate.getColor()).isEqualTo(expect);
+        assertThat(rankCoordinate.getInitColor()).isEqualTo(expect);
     }
 
     @ParameterizedTest
@@ -33,9 +33,6 @@ class RankCoordinateViewTest {
 
     @Test
     void 랭크와_랭크_사이의_좌표들을_반환한다() {
-        RankCoordinate one = ONE;
-        RankCoordinate six = SIX;
-
-        assertThat(one.betweenRanks(six)).containsExactly(TWO, THREE, FOUR, FIVE);
+        assertThat(ONE.betweenRanks(SIX)).containsExactly(TWO, THREE, FOUR, FIVE);
     }
 }
