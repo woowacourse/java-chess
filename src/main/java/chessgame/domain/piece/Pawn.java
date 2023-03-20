@@ -25,7 +25,7 @@ public class Pawn implements Piece {
         return isPawnAttack(source, target, team);
     }
 
-    public boolean isPawnAttack(Point source, Point target, Team team) {
+    private boolean isPawnAttack(Point source, Point target, Team team) {
         if (team == Team.BLACK) {
             return canPawnAttack(source, target, BLACK_DISTANCE);
         }
@@ -35,7 +35,7 @@ public class Pawn implements Piece {
         return false;
     }
 
-    public boolean isPawnMove(Point source, Point target, Team team) {
+    private boolean isPawnMove(Point source, Point target, Team team) {
         if (team == Team.BLACK && source.fileDistance(target) == 0) {
             return canPawnMove(source, target, BLACK_DISTANCE, BLACK_INITIAL_RANK);
         }

@@ -27,7 +27,7 @@ public class King implements Piece {
         return isKingMove(source, target);
     }
 
-    public boolean isKingMove(Point source, Point target) {
+    private boolean isKingMove(Point source, Point target) {
         if (source.isHorizontal(target) && Math.abs(source.fileDistance(target)) == DISTANCE) {
             return true;
         }

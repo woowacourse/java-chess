@@ -28,7 +28,7 @@ public class Knight implements Piece {
         return isKnightMove(source, target);
     }
 
-    public boolean isKnightMove(Point source, Point target) {
+    private boolean isKnightMove(Point source, Point target) {
         int fileDistance = Math.abs(source.fileDistance(target));
         int rankDistance = Math.abs(source.rankDistance(target));
 
