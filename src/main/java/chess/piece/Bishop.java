@@ -45,5 +45,4 @@ public class Bishop extends Piece {
 
         return new Path(positions);
     }
-
 }
