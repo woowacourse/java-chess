@@ -31,4 +31,14 @@ public final class Empty implements SquareStatus {
         throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
     }
 
+    @Override
+    public boolean isSameColor(final Color color) {
+        throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
+    }
+
+    @Override
+    public boolean isDifferentColor(final Color color) {
+        throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
+    }
+
 }

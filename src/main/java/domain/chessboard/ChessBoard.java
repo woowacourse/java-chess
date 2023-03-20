@@ -46,14 +46,14 @@ public class ChessBoard {
     public boolean isSameColor(final Position position, final Color color) {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
 
-        return squareStatus.getColor() == color;
+        return squareStatus.isSameColor(color);
     }
 
     public boolean isDifferentColor(final Position position, final Color color) {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
 
 
-        return squareStatus.getColor() != color;
+        return squareStatus.isDifferentColor(color);
     }
 
     public boolean isEqualType(final Position position, final Type type) {
