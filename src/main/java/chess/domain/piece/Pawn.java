@@ -8,12 +8,10 @@ import static chess.domain.position.Movement.UL;
 import static chess.domain.position.Movement.UR;
 
 import chess.domain.position.Movement;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -39,25 +37,24 @@ public class Pawn extends Piece {
         return false;
     }
 
-    public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-        destination.ifPresent(super::validateSameColor);
+    @Override
+    public Movement searchMovement(final Position from, final Position to, final Piece destination) {
         final Movement movement = to.convertMovement(from);
         if (destination.isEmpty() && movement == CAN_MOVE_EMPTY_DESTINATION.get(color)) {
             return searchPathIfDestinationEmpty(from, to, movement);
         }
-        if (destination.isPresent() && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
-            return new Path();
+        if (!destination.isEmpty() && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement)) {
+            return movement;
         }
         throw new IllegalArgumentException();
     }
 
-    private Path searchPathIfDestinationEmpty(final Position from, final Position to, final Movement movement) {
+    private Movement searchPathIfDestinationEmpty(final Position from, final Position to, final Movement movement) {
         if (from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color)) && rankDifference(from, to) == 2) {
-            final Position wayPoint = from.moveBy(movement);
-            return new Path(wayPoint);
+            return movement;
         }
         if (rankDifference(from, to) == 1) {
-            return new Path();
+            return movement;
         }
         throw new IllegalArgumentException();
     }

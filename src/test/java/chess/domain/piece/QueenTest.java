@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ class QueenTest {
         Piece queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 8), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(5, 8), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -33,7 +32,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = queen.searchPathTo(initialPosition, new Position(8, 4), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(8, 4), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -46,7 +45,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
 
         Position initialPosition = new Position(5, 5);
-        Path path = queen.searchPathTo(initialPosition, new Position(5, 1), Optional.empty());
+        Path path = queen.searchPathTo(initialPosition, new Position(5, 1), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -66,7 +65,7 @@ class QueenTest {
         assertThatThrownBy(
                 () -> queen.searchPathTo(initialPosition,
                         new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+                        new King(Color.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

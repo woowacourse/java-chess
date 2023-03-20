@@ -10,10 +10,8 @@ import static chess.domain.position.Movement.UL;
 import static chess.domain.position.Movement.UR;
 
 import chess.domain.position.Movement;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Optional;
 
 public class King extends Piece {
 
@@ -30,13 +28,16 @@ public class King extends Piece {
     }
 
     @Override
-    public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
-        destination.ifPresent(super::validateSameColor);
+    public Movement searchMovement(final Position from, final Position to, final Piece destination) {
         final Movement movement = to.convertMovement(from);
         validateMovable(movement, CAN_MOVE_DESTINATION);
+        validateMoveCount(from, to, movement);
+        return movement;
+    }
+
+    private void validateMoveCount(final Position from, final Position to, final Movement movement) {
         if (!from.moveBy(movement).equals(to)) {
             throw new IllegalArgumentException(KING_MOVE_OVER_ONE_MESSAGE);
         }
-        return new Path();
     }
 }

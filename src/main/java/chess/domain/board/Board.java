@@ -1,10 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import java.util.Map;
-import java.util.Optional;
 
 public class Board {
 
@@ -22,7 +22,7 @@ public class Board {
         turn.validateStartPieceColor(board.get(from));
         final Piece movingPiece = board.get(from);
         final Path path = movingPiece
-                .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
+                .searchPathTo(from, to, board.getOrDefault(to, Empty.getInstance()));
         path.validateObstacle(board.keySet());
         board.remove(from);
         board.put(to, movingPiece);

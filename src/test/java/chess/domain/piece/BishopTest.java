@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ class BishopTest {
         Piece bishop = new Bishop(Color.WHITE);
 
         Position initialPosition = new Position(1, 1);
-        Path path = bishop.searchPathTo(initialPosition, new Position(5, 5), Optional.empty());
+        Path path = bishop.searchPathTo(initialPosition, new Position(5, 5), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -32,7 +31,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE);
 
         Position initialPosition = new Position(5, 1);
-        Path path = bishop.searchPathTo(initialPosition, new Position(8, 4), Optional.empty());
+        Path path = bishop.searchPathTo(initialPosition, new Position(8, 4), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -49,7 +48,7 @@ class BishopTest {
         assertThatThrownBy(
                 () -> bishop.searchPathTo(initialPosition,
                         new Position(5, 1),
-                        Optional.of(new King(Color.WHITE))))
+                        new King(Color.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

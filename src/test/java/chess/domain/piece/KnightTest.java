@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.Optional;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ class KnightTest {
         Piece piece = new Knight(Color.WHITE);
 
         Position initialPosition = new Position(2, 1);
-        Path path = piece.searchPathTo(initialPosition, new Position(3, 3), Optional.empty());
+        Path path = piece.searchPathTo(initialPosition, new Position(3, 3), Empty.getInstance());
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -34,7 +33,7 @@ class KnightTest {
         assertThatThrownBy(() ->
                 piece.searchPathTo(initialPosition,
                         new Position(4, 5),
-                        Optional.empty()))
+                        Empty.getInstance()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

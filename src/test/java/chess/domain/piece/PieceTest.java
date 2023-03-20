@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.domain.position.Path;
+import chess.domain.position.Movement;
 import chess.domain.position.Position;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,12 @@ class PieceTest {
         }
 
         @Override
-        public Path searchPathTo(final Position from, final Position to, final Optional<Piece> destination) {
+        public boolean isEmpty() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Movement searchMovement(final Position from, final Position to, final Piece destination) {
             throw new UnsupportedOperationException();
         }
     }
