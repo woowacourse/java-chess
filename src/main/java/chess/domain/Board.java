@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
 import chess.domain.piece.exception.WrongDirectionException;
@@ -85,5 +86,10 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return new HashMap<>(board);
+    }
+
+    public boolean isPieceTurn(Square current, Color color) {
+        Piece piece = getPiece(current);
+        return piece.isAlly(color);
     }
 }

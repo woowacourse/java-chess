@@ -3,10 +3,12 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,6 +21,30 @@ class BoardTest {
     @BeforeEach
     void setup() {
         board = Board.create();
+    }
+
+    @Test
+    @DisplayName("흰색 기물의 위치와 흰색을 입력받으면 true를 리턴한다.")
+    void return_true_when_white_piece_and_white_color() {
+        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Color.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("흰색 기물의 위치와 검은색을 입력받으면 false를 리턴한다.")
+    void return_false_when_white_piece_and_black_color() {
+        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Color.BLACK)).isFalse();
+    }
+
+    @Test
+    @DisplayName("검은색 기물의 위치와 검은색을 입력받으면 true를 리턴한다.")
+    void return_true_when_black_piece_and_black_color() {
+        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Color.BLACK)).isTrue();
+    }
+
+    @Test
+    @DisplayName("검은색 기물의 위치와 흰색을 입력받으면 false를 리턴한다.")
+    void return_false_when_black_piece_and_white_color() {
+        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Color.WHITE)).isFalse();
     }
 
     @Test

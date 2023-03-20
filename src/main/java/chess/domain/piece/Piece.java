@@ -17,6 +17,10 @@ abstract public class Piece {
         return piece.color != color;
     }
 
+    public boolean isAlly(final Color color) {
+        return this.color == color;
+    }
+
     // TODO: override 할까? (Pawn만 true 반환)
     public boolean isPawn() {
         return this instanceof Pawn;
