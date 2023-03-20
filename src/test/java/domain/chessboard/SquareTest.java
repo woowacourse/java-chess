@@ -1,4 +1,4 @@
-package domain;
+package domain.chessboard;
 
 import domain.chessboard.Empty;
 import domain.chessboard.EmptyType;

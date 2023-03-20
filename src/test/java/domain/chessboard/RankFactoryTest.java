@@ -1,4 +1,4 @@
-package domain;
+package domain.chessboard;
 
 import domain.chessboard.RankFactory;
 import domain.piece.Color;

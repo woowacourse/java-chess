@@ -1,4 +1,4 @@
-package domain;
+package domain.chessboard;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.Rank;

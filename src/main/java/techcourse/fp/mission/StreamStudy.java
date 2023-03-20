@@ -44,7 +44,6 @@ public class StreamStudy {
     public static long sumAll(List<Integer> numbers) {
         return numbers.stream().reduce(0, Integer::sum);
 
-//
 //        int result = 0;
 //
 //        for (Integer number : numbers) {
