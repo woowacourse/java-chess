@@ -1,70 +1,73 @@
 package chess.cache;
 
 import chess.domain.Color;
+import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.Row;
 import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PieceCache {
-    public static final int FIRST_INDEX = 0;
-    public static final int MAX_SIZE = 8;
-    public static final int KING_ROW_INDEX = 4;
-    public static final int QUEEN_ROW_INDEX = 3;
-    public static final int BISHOP_LEFT_ROW_INDEX = 2;
-    public static final int BISHOP_RIGHT_ROW_INDEX = 5;
-    public static final int KNIGHT_LEFT_ROW_INDEX = 1;
-    public static final int KNIGHT_RIGHT_ROW_INDEX = 6;
-    public static final int ROOK_LEFT_ROW_INDEX = 0;
-    public static final int ROOK_RIGHT_ROW_INDEX = 7;
+    public static final Row ROOK_LEFT_ROW_INDEX = Row.ROW_A;
+    public static final Row KNIGHT_LEFT_ROW_INDEX = Row.ROW_B;
+    public static final Row BISHOP_LEFT_ROW_INDEX = Row.ROW_C;
+    public static final Row QUEEN_ROW_INDEX = Row.ROW_D;
+    public static final Row KING_ROW_INDEX = Row.ROW_E;
+    public static final Row BISHOP_RIGHT_ROW_INDEX = Row.ROW_F;
+    public static final Row KNIGHT_RIGHT_ROW_INDEX = Row.ROW_G;
+    public static final Row ROOK_RIGHT_ROW_INDEX = Row.ROW_H;
+    public static final Column BLACK_PIECE_COLUMN = Column.COLUMN_8;
+    public static final Column BLACK_PAWN_COLUMN = Column.COLUMN_7;
+    public static final Column WHITE_PAWN_COLUMN = Column.COLUMN_2;
+    public static final Column WHITE_PIECE_COLUMN = Column.COLUMN_1;
     private static final Map<Position, Piece> board = new HashMap<>();
 
     private PieceCache() {
     }
 
     static {
-        addPawn(1, Color.BLACK);
-        addRook(0, Color.BLACK);
-        addKnight(0, Color.BLACK);
-        addBishop(0, Color.BLACK);
-        addQueen(0, Color.BLACK);
-        addKing(0, Color.BLACK);
+        addPawn(BLACK_PAWN_COLUMN, Color.BLACK);
+        addRook(BLACK_PIECE_COLUMN, Color.BLACK);
+        addKnight(BLACK_PIECE_COLUMN, Color.BLACK);
+        addBishop(BLACK_PIECE_COLUMN, Color.BLACK);
+        addQueen(BLACK_PIECE_COLUMN, Color.BLACK);
+        addKing(BLACK_PIECE_COLUMN, Color.BLACK);
 
-        addPawn(6, Color.WHITE);
-        addRook(7, Color.WHITE);
-        addKnight(7, Color.WHITE);
-        addBishop(7, Color.WHITE);
-        addQueen(7, Color.WHITE);
-        addKing(7, Color.WHITE);
+        addPawn(WHITE_PAWN_COLUMN, Color.WHITE);
+        addRook(WHITE_PIECE_COLUMN, Color.WHITE);
+        addKnight(WHITE_PIECE_COLUMN, Color.WHITE);
+        addBishop(WHITE_PIECE_COLUMN, Color.WHITE);
+        addQueen(WHITE_PIECE_COLUMN, Color.WHITE);
+        addKing(WHITE_PIECE_COLUMN, Color.WHITE);
     }
 
-    private static void addKing(final int column, final Color color) {
+    private static void addKing(final Column column, final Color color) {
         board.put(Position.of(KING_ROW_INDEX, column), Knight.from(color));
-
     }
 
-    private static void addQueen(final int column, final Color color) {
+    private static void addQueen(final Column column, final Color color) {
         board.put(Position.of(QUEEN_ROW_INDEX, column), Queen.from(color));
     }
 
-    private static void addBishop(final int column, final Color color) {
+    private static void addBishop(final Column column, final Color color) {
         board.put(Position.of(BISHOP_LEFT_ROW_INDEX, column), Bishop.from(color));
         board.put(Position.of(BISHOP_RIGHT_ROW_INDEX, column), Bishop.from(color));
     }
 
-    private static void addKnight(final int column, final Color color) {
+    private static void addKnight(final Column column, final Color color) {
         board.put(Position.of(KNIGHT_LEFT_ROW_INDEX, column), Knight.from(color));
         board.put(Position.of(KNIGHT_RIGHT_ROW_INDEX, column), Knight.from(color));
     }
 
-    private static void addRook(final int column, final Color color) {
+    private static void addRook(final Column column, final Color color) {
         board.put(Position.of(ROOK_LEFT_ROW_INDEX, column), Rook.from(color));
         board.put(Position.of(ROOK_RIGHT_ROW_INDEX, column), Rook.from(color));
     }
 
-    private static void addPawn(final int column, final Color color) {
-        for (int row = FIRST_INDEX; row < MAX_SIZE; row++) {
+    private static void addPawn(final Column column, final Color color) {
+        for (Row row : Row.values()) {
             board.put(Position.of(row, column), Pawn.from(color));
         }
     }

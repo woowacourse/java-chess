@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionCache.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
@@ -33,19 +34,19 @@ class PawnTest {
         return Stream.of(
                 // 2칸 앞으로 전진
                 Arguments.arguments(
-                        Position.of(1, 6),
-                        Position.of(1, 4),
+                        POSITION_1_6,
+                        POSITION_1_4,
                         List.of(
-                                Position.of(1, 4),
-                                Position.of(1, 5)
+                                POSITION_1_4,
+                                POSITION_1_5
                         )
                 ),
                 // 1칸 앞으로 전진
                 Arguments.arguments(
-                        Position.of(1, 6),
-                        Position.of(1, 5),
+                        POSITION_1_6,
+                        POSITION_1_5,
                         List.of(
-                                Position.of(1, 5)
+                                POSITION_1_5
                         )
                 )
         );

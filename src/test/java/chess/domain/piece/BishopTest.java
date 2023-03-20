@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionCache.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
@@ -24,7 +25,7 @@ class BishopTest {
         // given
         final Piece bishop = Bishop.from(Color.WHITE);
         // when
-        List<Position> result = bishop.findMoveAblePositions(source, target,Pawn.from(Color.BLACK));
+        List<Position> result = bishop.findMoveAblePositions(source, target, Pawn.from(Color.BLACK));
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -32,22 +33,22 @@ class BishopTest {
     static Stream<Arguments> bishopMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(4, 4),
+                        POSITION_1_1,
+                        POSITION_4_4,
                         List.of(
-                                Position.of(2, 2),
-                                Position.of(3, 3),
-                                Position.of(4, 4)
+                                POSITION_2_2,
+                                POSITION_3_3,
+                                POSITION_4_4
                         )
                 ),
                 Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 0),
+                        POSITION_4_4,
+                        POSITION_0_0,
                         List.of(
-                                Position.of(3, 3),
-                                Position.of(2, 2),
-                                Position.of(1, 1),
-                                Position.of(0, 0)
+                                POSITION_3_3,
+                                POSITION_2_2,
+                                POSITION_1_1,
+                                POSITION_0_0
                         )
                 )
         );

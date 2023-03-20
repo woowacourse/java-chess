@@ -22,24 +22,37 @@ public final class Knight extends Piece {
 
     @Override
     public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
-        if (targetPiece.isSameColor(color)) {
-            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
-        }
-        int maxCase = 8;
+        final int lastIndexOfCase = 8;
+        final int fastIndexOfCase = 0;
 
-        List<Position> positions = IntStream.range(0, maxCase)
-                .filter(moveCase -> canMove(source, target, moveCase))
+        List<Position> positions = IntStream.range(fastIndexOfCase, lastIndexOfCase)
+                .filter(moveCase -> isMoveAble(source, target, moveCase))
                 .mapToObj(moveCase -> target)
                 .collect(Collectors.toList());
 
-        if (positions.size() == 0) {
-            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
-        }
+        validateInvalidColor(targetPiece);
+        validateInvalidPosition(positions);
         return positions;
     }
 
-    private boolean canMove(final Position source, final Position target, final int moveCase) {
-        return target.isSameRow(source.getRow() + moveX.get(moveCase))
-                && target.isSameColumn(source.getColumn() + moveY.get(moveCase));
+    private boolean isMoveAble(final Position source, final Position target, final int moveCase) {
+        try {
+            return target.isSameRow(source.getRow().move(moveX.get(moveCase)))
+                    && target.isSameColumn(source.getColumn().move(moveY.get(moveCase)));
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+    }
+
+    private void validateInvalidColor(final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
+    }
+
+    private void validateInvalidPosition(final List<Position> positions) {
+        if (positions.isEmpty()) {
+            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
+        }
     }
 }

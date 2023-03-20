@@ -26,6 +26,10 @@ public class Position {
         return new Position(row, column);
     }
 
+    public Position move(int row, int column) {
+        return new Position(this.row.move(row), this.column.move(column));
+    }
+
     public int calculateRowDistance(Row row) {
         return this.row.distance(row);
     }
@@ -78,12 +82,12 @@ public class Position {
         return isNotSameRow(position.getRow()) && isNotSameColumn(position.column);
     }
 
-    public int getRowDistance(Position position) {
-        return row.distance(position.row);
+    public int getRowDirection(Position position) {
+        return row.direction(position.row);
     }
 
-    public int getColumnDistance(Position position) {
-        return column.distance(position.column);
+    public int getColumnDirection(Position position) {
+        return column.direction(position.column);
     }
 
     public Row getRow() {

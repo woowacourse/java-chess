@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionCache.POSITION_1_1;
+import static chess.PositionCache.POSITION_3_2;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
@@ -32,10 +34,10 @@ class KnightTest {
     static Stream<Arguments> knightMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(3, 2),
+                        POSITION_1_1,
+                        POSITION_3_2,
                         List.of(
-                                Position.of(3, 2)
+                                POSITION_3_2
                         )
                 )
         );

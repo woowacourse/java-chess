@@ -17,17 +17,27 @@ public final class King extends Piece {
 
     @Override
     public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
+        validateInvalidColor(targetPiece);
+        validateInvalidPosition(source, target);
+
+        final int rowDirection = target.getRowDirection(source);
+        final int columnDirection = target.getColumnDirection(source);
+
+        return List.of(source.move(rowDirection, columnDirection));
+    }
+
+    private void validateInvalidColor(final Piece targetPiece) {
         if (targetPiece.isSameColor(color)) {
             throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
         }
-        final int rowDirection = Integer.compare(target.getRow(), source.getRow());
-        final int columnDirection = Integer.compare(target.getColumn(), source.getColumn());
+    }
 
-        if (source.calculateRowDistance(target.getRow()) >= 2
-                && source.calculateColumnDistance(target.getColumn()) >= 2) {
+    private void validateInvalidPosition(final Position source, final Position target) {
+        final int kingMaxMoveDistance = 1;
+
+        if (source.calculateRowDistance(target.getRow()) > kingMaxMoveDistance &&
+                source.calculateColumnDistance(target.getColumn()) > kingMaxMoveDistance) {
             throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
         }
-
-        return List.of(Position.of(source.getRow() + rowDirection, source.getColumn() + columnDirection));
     }
 }
