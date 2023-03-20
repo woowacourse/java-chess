@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.game.exception.ChessGameException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,14 +31,14 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(it -> it.rankName == rankName)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
+                .orElseThrow(() -> new ChessGameException("존재하지 않는 rank 입니다"));
     }
 
     public static Rank from(int rankOrder) {
         return Arrays.stream(Rank.values())
                 .filter(it -> it.order == rankOrder)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
+                .orElseThrow(() -> new ChessGameException("존재하지 않는 rank 입니다"));
     }
 
     public int getDifference(Rank other) {

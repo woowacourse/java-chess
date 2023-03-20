@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.game.exception.ChessGameException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,14 +31,14 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(it -> it.fileName == fileName)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
+                .orElseThrow(() -> new ChessGameException("존재하지 않는 file 입니다"));
     }
 
     public static File from(int order) {
         return Arrays.stream(File.values())
                 .filter(it -> it.order == order)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
+                .orElseThrow(() -> new ChessGameException("존재하지 않는 file 입니다"));
     }
 
     public int getDifference(File other) {
