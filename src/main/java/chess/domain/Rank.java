@@ -39,7 +39,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
     }
 
-    public int getDifference(Rank other) {
+    public int calculateDifference(Rank other) {
         return other.order - order;
     }
 

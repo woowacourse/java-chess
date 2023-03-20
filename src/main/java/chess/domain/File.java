@@ -39,7 +39,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
     }
 
-    public int getDifference(File other) {
+    public int calculateDifference(File other) {
         return other.order - order;
     }
 

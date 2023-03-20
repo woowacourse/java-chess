@@ -66,8 +66,8 @@ public class Position {
     }
 
     private boolean isDiagonal(Position destination) {
-        int rankDifference = rank.getDifference(destination.rank);
-        int fileDifference = file.getDifference(destination.file);
+        int rankDifference = rank.calculateDifference(destination.rank);
+        int fileDifference = file.calculateDifference(destination.file);
         return Math.abs(rankDifference) == Math.abs(fileDifference);
     }
 
@@ -111,10 +111,10 @@ public class Position {
     }
 
     public int getRankDifference(Position other) {
-        return rank.getDifference(other.rank);
+        return rank.calculateDifference(other.rank);
     }
 
     public int getFileDifference(Position other) {
-        return file.getDifference(other.file);
+        return file.calculateDifference(other.file);
     }
 }
