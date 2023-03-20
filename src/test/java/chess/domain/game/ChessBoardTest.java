@@ -88,4 +88,29 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("제자리로는 이동할 수 없습니다");
     }
+
+
+    @Test
+    void WHIGHT_턴인데_BLACK기물을_이동하면_예외() {
+        chessBoard.initialize(initialBoardStrategy.generate());
+        Position startPosition = Position.of(Column.D, Rank.SEVEN);
+        Position endPosition = Position.of(Column.D, Rank.SIX);
+
+        assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("상대편의 기물을 움직일 수 없습니다");
+    }
+
+    @Test
+    void BLACK턴인데_WHIGHT기물을_이동하면_예외() {
+        chessBoard.initialize(initialBoardStrategy.generate());
+        chessBoard.move(Position.of(Column.D, Rank.TWO), Position.of(Column.D, Rank.THREE));
+        Position startPosition = Position.of(Column.C, Rank.TWO);
+        Position endPosition = Position.of(Column.C, Rank.THREE);
+
+        assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("상대편의 기물을 움직일 수 없습니다");
+    }
+
 }
