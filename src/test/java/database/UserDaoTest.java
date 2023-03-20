@@ -2,8 +2,6 @@ package database;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.database.User;
-import chess.database.UserDao;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 

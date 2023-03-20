@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameController {
+    public static final int COMMAND_HEAD_INDEX = 0;
     public static final int CURRENT_POSITION_INDEX = 1;
     public static final int NEXT_POSITION_INDEX = 2;
-    public static final int COMMAND_HEAD_INDEX = 0;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();

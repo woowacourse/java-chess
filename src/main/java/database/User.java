@@ -1,4 +1,4 @@
-package chess.database;
+package database;
 
 import java.sql.SQLException;
 import java.util.Objects;

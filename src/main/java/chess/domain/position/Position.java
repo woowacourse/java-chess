@@ -12,8 +12,8 @@ public class Position {
 
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
-    public static final int TWO_SQUARE = 2;
     public static final int ONE_SQUARE = 1;
+    public static final int TWO_SQUARE = 2;
     private static final Map<Integer, Position> cache;
 
     static {
