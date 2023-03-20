@@ -13,36 +13,55 @@ import chess.domain.square.Square;
 
 public class GameStatusDto {
 
+    private static final char FIRST_FILE = 'a';
+    private static final char LAST_RANK = '8';
+    private static final String EMPTY_SQUARE = ".";
+
     private final List<String> gameStatus;
 
     private GameStatusDto(List<String> gameStatus) {
         this.gameStatus = gameStatus;
     }
 
-    // TODO: 죄송합니다. 심각함ㅠㅠ
     public static GameStatusDto from(final Board board) {
-        Map<Square, Piece> domainBoard = board.getBoard();
+        List<String> gameStatus = makeGameStatus(board.getBoard());
+        return new GameStatusDto(gameStatus);
+    }
+
+    private static List<String> makeGameStatus(Map<Square, Piece> board) {
         List<String> gameStatus = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            char rank = (char) ('8' - i);
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < 8; j++) {
-                char file = (char) ('a' + j);
-                Square now = Square.of(File.from(file), Rank.from(rank));
-                if (domainBoard.containsKey(now)) {
-                    Piece piece = domainBoard.get(now);
-                    String name = piece.getName();
-                    if (piece.getColor() == Color.BLACK) {
-                        name = name.toUpperCase();
-                    }
-                    row.append(name);
-                    continue;
-                }
-                row.append(".");
-            }
-            gameStatus.add(row.toString());
+            char rank = (char) (LAST_RANK - i);
+            gameStatus.add(makeRankStatus(board, rank));
         }
-        return new GameStatusDto(gameStatus);
+        return gameStatus;
+    }
+
+    private static String makeRankStatus(Map<Square, Piece> board, char rank) {
+        StringBuilder rankStatus = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            char file = (char) (FIRST_FILE + i);
+            Square square = Square.of(File.from(file), Rank.from(rank));
+            rankStatus.append(makeSquareStatus(board, square));
+        }
+        return rankStatus.toString();
+    }
+
+    private static String makeSquareStatus(Map<Square, Piece> board, Square square) {
+        if (board.containsKey(square)) {
+            Piece piece = board.get(square);
+            String name = piece.getName();
+            Color color = piece.getColor();
+            return makeNameToUpperCaseWhenBlack(name, color);
+        }
+        return EMPTY_SQUARE;
+    }
+
+    private static String makeNameToUpperCaseWhenBlack(String name, Color color) {
+        if (color == Color.BLACK) {
+            return name.toUpperCase();
+        }
+        return name;
     }
 
     public List<String> getGameStatus() {
