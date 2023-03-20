@@ -16,7 +16,7 @@ public enum File {
     G("g", 7),
     H("h", 8);
 
-    public static final int SKIP_FIRST = 1;
+    private static final int SKIP_FIRST = 1;
     private final String fileName;
     private final int order;
 

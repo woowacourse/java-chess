@@ -12,10 +12,10 @@ import java.util.function.Supplier;
 
 public class ChessController {
 
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
-    public static final int ORIGIN_INDEX = 1;
-    public static final int DEST_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+    private static final int ORIGIN_INDEX = 1;
+    private static final int DEST_INDEX = 2;
     private final OutputView outputView;
     private final InputView inputView;
     private Board board;
