@@ -21,7 +21,6 @@ public class Piece {
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
     public List<PiecePosition> waypoints(final PiecePosition destination) throws IllegalArgumentException {
-        validatePath(path(destination));
         return moveStrategy.waypoints(path(destination));
     }
 
