@@ -13,43 +13,42 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("WhitePawnMoveStrategy 은")
-class WhitePawnMoveStrategyTest {
+@DisplayName("BlackPawnMoveConstraint 은")
+class BlackPawnMoveConstraintTest {
 
-    @ParameterizedTest(name = "북쪽을 향해 [직진 2칸] 혹은 [직진 1칸] 혹은 [대각선 1칸] 이동할 수 있다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 이동가능하다")
+    @ParameterizedTest(name = "남쪽을 향해 이동할 수 있다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 이동가능하다")
     @CsvSource({
-            "b2,b3",
-            "b2,b4",
-            "b2,a3",
-            "b2,c3",
+            "b7,b6",
+            "b7,b5",
+            "b7,c6",
+            "b7,a6",
+            "b7,b4",
+            "b7,d5",
     })
-    void 북쪽으로_이동할_수_있다(final PiecePosition from, final PiecePosition to) {
+    void 남쪽으로_이동할_수_있다(final PiecePosition from, final PiecePosition to) {
         // given
-        final WhitePawnMoveStrategy whitePawnMoveStrategy = new WhitePawnMoveStrategy();
+        final PawnMoveConstraint blackPawnMoveConstraint = new BlackPawnMoveConstraint();
         final Path path = Path.of(from, to);
-        ;
 
         // when & then
-        assertDoesNotThrow(() -> whitePawnMoveStrategy.validatePath(path));
+        assertDoesNotThrow(() -> blackPawnMoveConstraint.validateConstraint(path));
     }
 
     @ParameterizedTest(name = "이외의 경우 오류이다. 예를 들어 [{0}] 에서 [{1}] 로의 경로는 불가능하다.")
     @CsvSource({
-            "b2,a2",
-            "b2,c2",
-            "b2,b1",
-            "b2,a1",
-            "b2,c1",
-            "b2,b5",
-            "b2,c4",
+            "b7,b8",
+            "b7,a8",
+            "b7,c8",
+            "b7,a7",
+            "b7,c7",
     })
     void 이외의_경우_오류(final PiecePosition from, final PiecePosition to) {
         // given
-        final WhitePawnMoveStrategy whitePawnMoveStrategy = new WhitePawnMoveStrategy();
+        final PawnMoveConstraint blackPawnMoveConstraint = new BlackPawnMoveConstraint();
         final Path path = Path.of(from, to);
 
         // when & then
-        assertThatThrownBy(() -> whitePawnMoveStrategy.validatePath(path))
+        assertThatThrownBy(() -> blackPawnMoveConstraint.validateConstraint(path))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

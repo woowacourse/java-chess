@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.piece.MoveStrategy;
+import chess.domain.piece.PieceMovement;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
@@ -25,10 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("BishopMoveStrategy 은")
-class BishopMoveStrategyTest {
+@DisplayName("BishopMovement 은")
+class BishopMovementTest {
 
-    private final MoveStrategy strategy = new BishopMoveStrategy();
+    private final PieceMovement strategy = new BishopMovement();
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -51,7 +51,7 @@ class BishopMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertDoesNotThrow(() -> strategy.validatePath(path));
+            assertDoesNotThrow(() -> strategy.validateMove(path, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
@@ -61,7 +61,7 @@ class BishopMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.waypoints(path)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(strategy.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> bishopDestinations() {
@@ -93,7 +93,7 @@ class BishopMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> strategy.validatePath(path))
+            assertThatThrownBy(() -> strategy.validateMove(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -109,7 +109,7 @@ class BishopMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> strategy.waypoints(path))
+            assertThatThrownBy(() -> strategy.waypoints(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

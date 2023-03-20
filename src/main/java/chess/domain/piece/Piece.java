@@ -9,23 +9,20 @@ public class Piece {
 
     protected final Color color;
     protected final PiecePosition piecePosition;
-    protected final MoveStrategy moveStrategy;
+    protected final PieceMovement pieceMovement;
 
-    public Piece(final Color color, final PiecePosition piecePosition, final MoveStrategy moveStrategy) {
+    public Piece(final Color color, final PiecePosition piecePosition, final PieceMovement pieceMovement) {
         this.color = color;
         this.piecePosition = piecePosition;
-        this.moveStrategy = moveStrategy;
+        this.pieceMovement = pieceMovement;
     }
 
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
-    public List<PiecePosition> waypoints(final PiecePosition destination) throws IllegalArgumentException {
-        return moveStrategy.waypoints(path(destination));
-    }
-
-    protected void validatePath(final Path path) {
-        moveStrategy.validatePath(path);
+    public List<PiecePosition> waypoints(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
+        validateKill(nullablePiece);
+        return pieceMovement.waypoints(path(destination), nullablePiece);
     }
 
     /**
@@ -33,20 +30,21 @@ public class Piece {
      */
     public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         final Path path = path(destination);
-        validatePath(path);
-        if (nullablePiece != null) {
-            validateKill(nullablePiece);
-        }
-        return new Piece(color, destination, moveStrategy);
+        pieceMovement.validateMove(path, nullablePiece);
+        validateKill(nullablePiece);
+        return new Piece(color, destination, pieceMovement);
     }
 
-    protected void validateKill(final Piece enemy) {
+    private void validateKill(final Piece enemy) {
         if (isAlly(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
     }
 
-    public boolean isAlly(final Piece enemy) {
+    private boolean isAlly(final Piece enemy) {
+        if (enemy == null) {
+            return false;
+        }
         return color == enemy.color;
     }
 
@@ -66,7 +64,7 @@ public class Piece {
         return piecePosition;
     }
 
-    public MoveStrategy moveStrategy() {
-        return moveStrategy;
+    public PieceMovement pieceMovement() {
+        return pieceMovement;
     }
 }

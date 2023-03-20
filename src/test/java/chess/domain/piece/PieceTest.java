@@ -10,32 +10,17 @@ import org.junit.jupiter.api.Test;
 import static chess.domain.piece.position.PiecePosition.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("Piece 은")
 class PieceTest {
 
-    @Test
-    void 위치와_색상_전략을_가지고_생성된다() {
-        // when & then
-        assertDoesNotThrow(() -> new Piece(Color.WHITE, of(1, 'a'), path -> {
-        }) {
-
-            @Override
-            protected void validatePath(final Path path) {
-            }
-        });
-    }
-
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
-            super(color, piecePosition, null);
-        }
+            super(color, piecePosition, (path, nullableEnemy) -> {
 
-        @Override
-        protected void validatePath(final Path path) {
+            });
         }
     }
 
@@ -44,19 +29,19 @@ class PieceTest {
         // given
         Piece myPiece = new MyPiece(Color.BLACK, of(1, 'a'));
         // when & then
-        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'a')))
+        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'a'), null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 경유지탐색_시_도달불가능하면_오류() {
         // given
-        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), path -> {
+        Piece myPiece = new Piece(Color.BLACK, of(1, 'a'), (path, nullableEnemy) -> {
             throw new IllegalArgumentException();
         });
 
         // when & then
-        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'b')))
+        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'b'), null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -75,13 +60,9 @@ class PieceTest {
     @Test
     void 이동할_수_없는_경로로_이동하면_오류() {
         // given
-        final Piece pawn = new Piece(Color.BLACK, of("b6"), new MoveStrategy() {
-            @Override
-            public void validatePath(final Path path) {
-                throw new IllegalArgumentException();
-            }
+        final Piece pawn = new Piece(Color.BLACK, of("b6"), (path, nullableEnemy) -> {
+            throw new IllegalArgumentException();
         });
-
         // when & then
         assertThatThrownBy(() -> pawn.move(of("b5"), null))
                 .isInstanceOf(IllegalArgumentException.class);

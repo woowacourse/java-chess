@@ -21,9 +21,10 @@ public class ChessBoard {
 
     public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {
         final Piece from = findByPosition(source);
+        final Piece to = optGet(destination).orElse(null);
         validateMissMatchSelect(turn, from);
-        validateNonBlock(from, destination);
-        move(from, destination);
+        validateNonBlock(from, destination, to);
+        move(from, destination, to);
     }
 
     private void validateMissMatchSelect(final Turn turn, final Piece from) {
@@ -32,8 +33,8 @@ public class ChessBoard {
         }
     }
 
-    private void validateNonBlock(final Piece from, final PiecePosition destination) {
-        final List<PiecePosition> waypoints = from.waypoints(destination);
+    private void validateNonBlock(final Piece from, final PiecePosition destination, final Piece to) {
+        final List<PiecePosition> waypoints = from.waypoints(destination, to);
         if (isBlocking(waypoints)) {
             throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
         }
@@ -44,8 +45,7 @@ public class ChessBoard {
                 .anyMatch(this::existByPosition);
     }
 
-    private void move(final Piece from, final PiecePosition destination) {
-        final Piece to = optGet(destination).orElse(null);
+    private void move(final Piece from, final PiecePosition destination, final Piece to) {
         final Piece move = from.move(destination, to);
         pieces.remove(from);
         if (to != null) {

@@ -4,16 +4,16 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.BishopMoveStrategy;
-import chess.domain.piece.strategy.KingMoveStrategy;
-import chess.domain.piece.strategy.KnightMoveStrategy;
-import chess.domain.piece.strategy.QueenMoveStrategy;
-import chess.domain.piece.strategy.RookMoveStrategy;
-import chess.domain.piece.strategy.pawn.BlackPawnMoveStrategy;
-import chess.domain.piece.strategy.pawn.PawnMoveStrategy;
-import chess.domain.piece.strategy.pawn.WhitePawnMoveStrategy;
-import chess.domain.piece.type.pawn.Pawn;
-import chess.domain.piece.type.pawn.state.InitialPawn;
+import chess.domain.piece.position.Rank;
+import chess.domain.piece.strategy.BishopMovement;
+import chess.domain.piece.strategy.KingMovement;
+import chess.domain.piece.strategy.KnightMovement;
+import chess.domain.piece.strategy.QueenMovement;
+import chess.domain.piece.strategy.RookMovement;
+import chess.domain.piece.strategy.pawn.BlackPawnMoveConstraint;
+import chess.domain.piece.strategy.pawn.PawnMovement;
+import chess.domain.piece.strategy.pawn.VerticalTwoMoveAsRankConstraint;
+import chess.domain.piece.strategy.pawn.WhitePawnMoveConstraint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,27 +33,28 @@ public class ChessBoardFactory {
 
     private List<Piece> createPawns(final int rank, final Color color) {
         return IntStream.rangeClosed(File.MIN, File.MAX)
-                .mapToObj(file -> new Pawn(color, PiecePosition.of(rank, (char) file), byColor(color), new InitialPawn()))
+                .mapToObj(file -> new Piece(color, PiecePosition.of(rank, (char) file), byColor(color, rank)))
                 .collect(Collectors.toList());
     }
 
-    private PawnMoveStrategy byColor(final Color color) {
+    private PawnMovement byColor(final Color color, final int rank) {
         if (color.isWhite()) {
-            return new WhitePawnMoveStrategy();
+            return new PawnMovement(new WhitePawnMoveConstraint(), new VerticalTwoMoveAsRankConstraint(Rank.from(rank)));
         }
-        return new BlackPawnMoveStrategy();
+
+        return new PawnMovement(new BlackPawnMoveConstraint(), new VerticalTwoMoveAsRankConstraint(Rank.from(rank)));
     }
 
     private List<Piece> createExcludePawn(final int rank, final Color color) {
         List<Piece> pieces = new ArrayList<>(8);
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'a'), new RookMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'b'), new KnightMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'c'), new BishopMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'd'), new QueenMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'e'), new KingMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'f'), new BishopMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'g'), new KnightMoveStrategy()));
-        pieces.add(new Piece(color, PiecePosition.of(rank, 'h'), new RookMoveStrategy()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'a'), new RookMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'b'), new KnightMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'c'), new BishopMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'd'), new QueenMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'e'), new KingMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'f'), new BishopMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'g'), new KnightMovement()));
+        pieces.add(new Piece(color, PiecePosition.of(rank, 'h'), new RookMovement()));
         return pieces;
     }
 }

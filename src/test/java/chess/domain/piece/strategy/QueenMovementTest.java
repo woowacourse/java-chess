@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.piece.MoveStrategy;
+import chess.domain.piece.PieceMovement;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
@@ -25,18 +25,26 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("RookMoveStrategy 은")
-class RookMoveStrategyTest {
+@DisplayName("QueenMovement 은")
+class QueenMovementTest {
 
-    private final MoveStrategy strategy = new RookMoveStrategy();
+    private final PieceMovement strategy = new QueenMovement();
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class 직선_경로로_움직이는_경우 {
+    class 직선_혹은_대각선_경로로_움직이는_경우 {
 
         @ParameterizedTest(name = "움직일 수 있다. [e4] -> [{1}]")
         @CsvSource({
+                "f5",
+                "f3",
+                "d5",
+                "d3",
+                "g6",
+                "g2",
+                "c6",
+                "c2",
                 "f4",
                 "d4",
                 "e5",
@@ -55,21 +63,29 @@ class RookMoveStrategyTest {
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertDoesNotThrow(() -> strategy.validatePath(path));
+            assertDoesNotThrow(() -> strategy.validateMove(path, null));
         }
 
         @ParameterizedTest(name = "경유지를 반환한다. 출발: [e4] -> 경유지: [{1}] -> 도착: [{0}]")
-        @MethodSource("rookDestinations")
+        @MethodSource("queenDestinations")
         void 경유지를_반환한다(final PiecePosition destination, final List<PiecePosition> waypoints) {
             // given
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThat(strategy.waypoints(path)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(strategy.waypoints(path, null)).containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
-        Stream<Arguments> rookDestinations() {
+        Stream<Arguments> queenDestinations() {
             return Stream.of(
+                    Arguments.of("f5", Named.of("없다", Collections.emptyList())),
+                    Arguments.of("f3", Named.of("없다", Collections.emptyList())),
+                    Arguments.of("d5", Named.of("없다", Collections.emptyList())),
+                    Arguments.of("d3", Named.of("없다", Collections.emptyList())),
+                    Arguments.of("g6", Named.of("f5", piecePositions("f5"))),
+                    Arguments.of("g2", Named.of("f3", piecePositions("f3"))),
+                    Arguments.of("c6", Named.of("d5", piecePositions("d5"))),
+                    Arguments.of("c2", Named.of("d3", piecePositions("d3"))),
                     Arguments.of("f4", Named.of("없다", Collections.emptyList())),
                     Arguments.of("d4", Named.of("없다", Collections.emptyList())),
                     Arguments.of("e5", Named.of("없다", Collections.emptyList())),
@@ -81,43 +97,43 @@ class RookMoveStrategyTest {
                     Arguments.of("h4", Named.of("f4, g4", piecePositions("f4", "g4"))),
                     Arguments.of("a4", Named.of("d4, c4, b4", piecePositions("d4", "c4", "b4"))),
                     Arguments.of("e8", Named.of("e5, e6, e7", piecePositions("e5", "e6", "e7"))),
-                    Arguments.of("e1", Named.of("e3, e2", piecePositions("e3", "e2")))
+                    Arguments.of("e1", Named.of("e2, e3", piecePositions("e2", "e3")))
             );
         }
     }
 
     @Nested
-    class 룩선이_아닌_경로로_움직이는_경우 {
+    class 직선_혹은_대각선이_아닌_경로로_움직이는_경우 {
 
         @ParameterizedTest(name = "움직일 수 없다. [e4] -> [{1}]")
         @CsvSource({
-                "f5",
-                "f3",
-                "d5",
-                "d3",
+                "g5",
+                "c5",
+                "h6",
+                "a2",
         })
         void 움직일_수_없다(final PiecePosition destination) {
             // given
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> strategy.validatePath(path))
+            assertThatThrownBy(() -> strategy.validateMove(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest(name = "경유지를 조회하면 예외. [e4] -> [{1}]")
         @CsvSource({
-                "f5",
-                "f3",
-                "d5",
-                "d3",
+                "g5",
+                "c5",
+                "h6",
+                "a2",
         })
         void 경유지를_조회하면_예외(final PiecePosition destination) {
             // given
             final Path path = Path.of(source, destination);
 
             // when & then
-            assertThatThrownBy(() -> strategy.waypoints(path))
+            assertThatThrownBy(() -> strategy.waypoints(path, null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

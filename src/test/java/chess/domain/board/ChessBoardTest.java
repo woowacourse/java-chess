@@ -3,13 +3,12 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.BishopMoveStrategy;
-import chess.domain.piece.strategy.KingMoveStrategy;
-import chess.domain.piece.strategy.KnightMoveStrategy;
-import chess.domain.piece.strategy.QueenMoveStrategy;
-import chess.domain.piece.strategy.RookMoveStrategy;
-import chess.domain.piece.strategy.pawn.PawnMoveStrategy;
-import chess.domain.piece.type.pawn.Pawn;
+import chess.domain.piece.strategy.BishopMovement;
+import chess.domain.piece.strategy.KingMovement;
+import chess.domain.piece.strategy.KnightMovement;
+import chess.domain.piece.strategy.QueenMovement;
+import chess.domain.piece.strategy.RookMovement;
+import chess.domain.piece.strategy.pawn.PawnMovement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -53,32 +52,32 @@ class ChessBoardTest {
     @Test
     void 기본_체스_규칙에_맞게_생성된다() {
         // then
-        assertPiece(chessBoard, 1, 'a', WHITE, RookMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'b', WHITE, KnightMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'c', WHITE, BishopMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'd', WHITE, QueenMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'e', WHITE, KingMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'f', WHITE, BishopMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'g', WHITE, KnightMoveStrategy.class);
-        assertPiece(chessBoard, 1, 'h', WHITE, RookMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'a', Color.BLACK, RookMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'b', Color.BLACK, KnightMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'c', Color.BLACK, BishopMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'd', Color.BLACK, QueenMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'e', Color.BLACK, KingMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'f', Color.BLACK, BishopMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'g', Color.BLACK, KnightMoveStrategy.class);
-        assertPiece(chessBoard, 8, 'h', Color.BLACK, RookMoveStrategy.class);
+        assertPiece(chessBoard, 1, 'a', WHITE, RookMovement.class);
+        assertPiece(chessBoard, 1, 'b', WHITE, KnightMovement.class);
+        assertPiece(chessBoard, 1, 'c', WHITE, BishopMovement.class);
+        assertPiece(chessBoard, 1, 'd', WHITE, QueenMovement.class);
+        assertPiece(chessBoard, 1, 'e', WHITE, KingMovement.class);
+        assertPiece(chessBoard, 1, 'f', WHITE, BishopMovement.class);
+        assertPiece(chessBoard, 1, 'g', WHITE, KnightMovement.class);
+        assertPiece(chessBoard, 1, 'h', WHITE, RookMovement.class);
+        assertPiece(chessBoard, 8, 'a', Color.BLACK, RookMovement.class);
+        assertPiece(chessBoard, 8, 'b', Color.BLACK, KnightMovement.class);
+        assertPiece(chessBoard, 8, 'c', Color.BLACK, BishopMovement.class);
+        assertPiece(chessBoard, 8, 'd', Color.BLACK, QueenMovement.class);
+        assertPiece(chessBoard, 8, 'e', Color.BLACK, KingMovement.class);
+        assertPiece(chessBoard, 8, 'f', Color.BLACK, BishopMovement.class);
+        assertPiece(chessBoard, 8, 'g', Color.BLACK, KnightMovement.class);
+        assertPiece(chessBoard, 8, 'h', Color.BLACK, RookMovement.class);
         for (char file = 'a'; file <= 'h'; file++) {
-            assertPiece(chessBoard, 2, file, WHITE, PawnMoveStrategy.class);
-            assertPiece(chessBoard, 7, file, Color.BLACK, PawnMoveStrategy.class);
+            assertPiece(chessBoard, 2, file, WHITE, PawnMovement.class);
+            assertPiece(chessBoard, 7, file, Color.BLACK, PawnMovement.class);
         }
     }
 
     private static void assertPiece(final ChessBoard chessBoard, final int rank, final char file, final Color color, final Class<?> type) {
         final Piece piece = chessBoard.findByPosition(of(rank, file));
         assertThat(piece.color()).isEqualTo(color);
-        assertThat(piece.moveStrategy()).isInstanceOf(type);
+        assertThat(piece.pieceMovement()).isInstanceOf(type);
     }
 
     @Test
@@ -91,7 +90,7 @@ class ChessBoardTest {
                 .stream()
                 .collect(toMap(Piece::piecePosition, Function.identity()));
         assertThat(pieceMap.get(of(2, 'b'))).isNull();
-        assertThat(pieceMap.get(of(3, 'b'))).isInstanceOf(Pawn.class);
+        assertThat(pieceMap.get(of(3, 'b')).pieceMovement()).isInstanceOf(PawnMovement.class);
     }
 
     @Test

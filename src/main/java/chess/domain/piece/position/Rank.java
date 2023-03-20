@@ -7,15 +7,15 @@ public class Rank {
     public static final int MAX = 8;
     public static final int MIN = 1;
 
-    private final int rank;
+    private final int value;
 
-    private Rank(final int rank) {
-        validateRange(rank);
-        this.rank = rank;
+    private Rank(final int value) {
+        validateRange(value);
+        this.value = value;
     }
 
-    private void validateRange(final int rank) {
-        if (rank < MIN || rank > MAX) {
+    private void validateRange(final int value) {
+        if (value < MIN || value > MAX) {
             throw new IllegalArgumentException(
                     String.format("Rank 의 범위는 %s 부터 %s 까지입니다.", MIN, MAX)
             );
@@ -27,11 +27,11 @@ public class Rank {
     }
 
     public int interval(final Rank rank) {
-        return rank.rank - this.rank;
+        return rank.value - this.value;
     }
 
     public Rank plus(final int amount) {
-        return Rank.from(rank + amount);
+        return Rank.from(value + amount);
     }
 
     @Override
@@ -39,11 +39,15 @@ public class Rank {
         if (this == o) return true;
         if (!(o instanceof Rank)) return false;
         final Rank rank1 = (Rank) o;
-        return rank == rank1.rank;
+        return value == rank1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank);
+        return Objects.hash(value);
+    }
+
+    public int value() {
+        return value;
     }
 }

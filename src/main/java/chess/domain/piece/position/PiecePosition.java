@@ -64,4 +64,8 @@ public class PiecePosition {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    public int rankValue() {
+        return rank.value();
+    }
 }

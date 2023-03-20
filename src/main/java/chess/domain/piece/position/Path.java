@@ -74,4 +74,8 @@ public class Path {
                 .skip(1)
                 .collect(Collectors.toList());
     }
+
+    public PiecePosition source() {
+        return source;
+    }
 }
