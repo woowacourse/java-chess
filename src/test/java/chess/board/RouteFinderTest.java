@@ -34,13 +34,13 @@ import static chess.fixture.PositionFixture.F5;
 import static chess.fixture.PositionFixture.G1;
 import static chess.fixture.PositionFixture.H1;
 
-class FinderTest {
+class RouteFinderTest {
 
     @ParameterizedTest(name = "{0}과 {1}사이의 경로는 {2}")
     @MethodSource("routes")
     void 두_지점_사이_경로를_반환한다(final Position from, final Position to, final List<Position> expected) {
         //given
-        List<Position> route = Finder.findRoute(from, to);
+        List<Position> route = RouteFinder.findRoute(from, to);
 
         //when & then
         Assertions.assertThat(route).containsAnyElementsOf(expected);
@@ -48,7 +48,7 @@ class FinderTest {
 
     @Test
     void 갈_수_없는_경로인_경우_빈_배열을_반환한다() {
-        Assertions.assertThat(Finder.findRoute(A1, C5))
+        Assertions.assertThat(RouteFinder.findRoute(A1, C5))
                 .isEmpty();
     }
 

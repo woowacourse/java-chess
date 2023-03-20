@@ -49,7 +49,7 @@ public class ChessBoard {
     }
 
     private void validateRoute(final Position from, final Position to) {
-        Finder.findRoute(from, to).stream()
+        RouteFinder.findRoute(from, to).stream()
                 .filter(position -> !piecePosition.get(position).isEmpty())
                 .forEach(position -> {
                     throw new IllegalArgumentException("이동하려는 경로에 말이 존재합니다.");
