@@ -2,12 +2,19 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.BoardGenerator;
+import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.Rank;
+import chess.domain.dto.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.Piece;
 import chess.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MoveController implements Controller {
     private final OutputView outputView;
@@ -21,12 +28,29 @@ public class MoveController implements Controller {
         try {
             validate(requestInfo, board);
             board.movePiece(makeStartingPosition(requestInfo), makeDestinationPosition(requestInfo));
-            outputView.printBoard(board.getPiecePosition());
+            printBoard(board);
             return board;
         } catch (IllegalArgumentException | IllegalPieceMoveException e) {
             outputView.printError(e);
             return board;
         }
+    }
+
+    private void printBoard(Board board) {
+        outputView.printBoard(makePieceResponse(board.getBoard()));
+    }
+
+    public List<List<PieceResponse>> makePieceResponse(Map<Position, Piece> data) {
+        List<List<PieceResponse>> response = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            List<PieceResponse> pieceResponses = Arrays.stream(File.values())
+                    .map(file -> Position.of(file, rank))
+                    .map(data::get)
+                    .map(PieceResponse::from)
+                    .collect(Collectors.toList());
+            response.add(pieceResponses);
+        }
+        return response;
     }
 
     private Position makeStartingPosition(RequestInfo requestInfo) {
