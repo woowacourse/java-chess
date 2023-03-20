@@ -1,23 +1,17 @@
 package domain.board;
 
+import domain.piece.*;
+import domain.position.Position;
+import domain.position.Positions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
+
 import static domain.board.ChessAlignmentMock.testStrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.Team;
-import domain.position.Position;
-import domain.position.Positions;
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class BoardTest {
     @DisplayName("Board를 초기화해 생성할 수 있다.")
