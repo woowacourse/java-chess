@@ -21,7 +21,6 @@ class PositionTest {
         Position from = new Position(fromFile, fromRank);
         Position to = new Position(toFile, toRank);
 
-
         //then
         Movement targetMoveMent = to.convertMovement(from);
 
