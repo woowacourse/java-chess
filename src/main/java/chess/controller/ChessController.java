@@ -16,9 +16,6 @@ import java.util.function.Function;
 
 public final class ChessController {
 
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
     private final Map<GameStatus, Function<List<String>, GameStatus>> gameStatusMap;
@@ -57,15 +54,21 @@ public final class ChessController {
     }
 
     private GameStatus start(final List<String> input) {
+        if (board != null) {
+            throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
+        }
         board = BoardFactory.generate();
         outputView.printBoard(BoardDto.create(board.getBoard()));
         return GameStatus.MOVE;
     }
 
     private GameStatus move(final List<String> input) {
+        if (board == null) {
+            throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
+        }
         board.move(
-                parseToPosition(input.get(SOURCE_INDEX)),
-                parseToPosition(input.get(TARGET_INDEX)));
+                parseToPosition(input.get(GameStatus.SOURCE_INDEX)),
+                parseToPosition(input.get(GameStatus.TARGET_INDEX)));
         outputView.printBoard(BoardDto.create(board.getBoard()));
         return GameStatus.MOVE;
     }

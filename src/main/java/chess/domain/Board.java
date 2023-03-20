@@ -27,13 +27,11 @@ public final class Board {
     public void move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
-
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece.getColor());
 
         if (cannotMoveToTheTarget(path)) {
             throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
         }
-
         board.put(target, sourcePiece);
         board.put(source, UnMovablePiece.create());
     }

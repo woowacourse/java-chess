@@ -10,6 +10,8 @@ public enum GameStatus {
     END;
 
     public static final String INVALID_COMMAND_MESSAGE = "잘못된 커맨드를 입력하였습니다.";
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
     private static final int DEFAULT_COMMAND_INDEX = 0;
 
     public static boolean isStart(final String input) {
