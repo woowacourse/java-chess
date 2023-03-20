@@ -56,6 +56,6 @@ public class Board {
     }
 
     public Map<Position, Piece> chessBoard() {
-        return chessBoard;
+        return Map.copyOf(chessBoard);
     }
 }
