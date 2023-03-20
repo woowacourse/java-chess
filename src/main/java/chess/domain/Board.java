@@ -63,7 +63,7 @@ public class Board {
         int rankMoveDirection = getMoveDirection(rankInterval);
         int interval = getMoveInterval(fileInterval, rankInterval);
 
-        boolean notContainPiece = true;
+        boolean notContainPiece = true; // TODO: 같은 팀 일때만 확인하기
         while (interval > 0 && notContainPiece) {
             nextSquare = nextSquare.next(fileMoveDirection, rankMoveDirection);
             notContainPiece = !pieces.containsKey(nextSquare);

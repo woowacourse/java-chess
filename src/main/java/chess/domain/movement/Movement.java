@@ -26,7 +26,7 @@ public enum Movement {
 
     public static Movement of(final int fileInterval, final int rankInterval) {
         Continuity continuity = Continuity.of(fileInterval, rankInterval);
-        Direction direction =  Direction.from(fileInterval, rankInterval);
+        Direction direction =  Direction.of(fileInterval, rankInterval);
         return Arrays.stream(Movement.values())
                 .filter(movement -> movement.continuity == continuity)
                 .filter(movement -> movement.direction == direction)
