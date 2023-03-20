@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static chess.domain.piece.PieceType.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters","SpellCheckingInspection"})
 class ChessBoardTest {
@@ -76,4 +77,15 @@ class ChessBoardTest {
         }
     }
 
+
+    @Test
+    void 출발위치와_도착위치가_같으면_예외() {
+        chessBoard.initialize(initialBoardStrategy.generate());
+        Position startPosition = Position.of(Column.D, Rank.TWO);
+        Position endPosition = Position.of(Column.D, Rank.TWO);
+
+        assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("제자리로는 이동할 수 없습니다");
+    }
 }
