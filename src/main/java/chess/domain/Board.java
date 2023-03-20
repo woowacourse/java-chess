@@ -28,9 +28,9 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        validateDifferentPosition(source, target);
+        validateNotSamePosition(source, target);
         validateSourceNotEmpty(source);
-        validateTargetNotSameColor(source, target);
+        validateNotSameColor(source, target);
 
         Direction unit = Direction.calculateUnitDirection(source, target);
         Piece piece = board.get(source);
@@ -41,7 +41,7 @@ public class Board {
         movePiece(source, target, piece);
     }
 
-    private void validateDifferentPosition(final Position source, final Position target) {
+    private void validateNotSamePosition(final Position source, final Position target) {
         if (isSamePosition(source, target)) {
             throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
         }
@@ -61,7 +61,7 @@ public class Board {
         return board.get(source).getClass().equals(Empty.class);
     }
 
-    private void validateTargetNotSameColor(final Position source, final Position target) {
+    private void validateNotSameColor(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
