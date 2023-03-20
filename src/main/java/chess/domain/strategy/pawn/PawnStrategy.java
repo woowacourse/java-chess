@@ -14,8 +14,6 @@ public class PawnStrategy implements PieceStrategy {
 
     @Override
     public void validateDirection(final MoveRequest request) {
-        List<Position> positions = request.getPositions();
-        String movablePieceColor = request.getMovablePieceColor();
         PositionDto movablePiecePosition = request.getMovablePieceDto();
         PositionDto targetPosition = request.getTargetPositionDto();
 
@@ -23,9 +21,12 @@ public class PawnStrategy implements PieceStrategy {
             validateMoveDiagonal(movablePiecePosition, targetPosition);
             return;
         }
+        validateAlreadyExistFront(request.getPositions(), targetPosition);
+        judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
 
-        validateAlreadyExistFront(positions, targetPosition);
+    }
 
+    private void judgeColor(String movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
         if (isWhitePiece(movablePieceColor)) {
             validateWhiteMoveFront(movablePiecePosition, targetPosition);
         }
@@ -33,7 +34,6 @@ public class PawnStrategy implements PieceStrategy {
         if (isBlackPiece(movablePieceColor)) {
             validateBlackMoveFront(movablePiecePosition, targetPosition);
         }
-
     }
 
     private void validateWhiteMoveFront(PositionDto movablePiecePosition, PositionDto targetPosition) {
