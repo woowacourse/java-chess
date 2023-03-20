@@ -48,6 +48,13 @@ public class Position {
         return this;
     }
 
+    public boolean isDiagonal(final Position other) {
+        final int deltaFile = this.fileIndex() - other.fileIndex();
+        final int deltaRank = this.rankIndex() - other.rankIndex();
+
+        return Math.abs(deltaFile) == Math.abs(deltaRank);
+    }
+
     public File getFile() {
         return file;
     }
