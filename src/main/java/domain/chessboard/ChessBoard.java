@@ -13,13 +13,13 @@ import domain.type.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoard {
+public final class ChessBoard {
 
     private static final Empty EMPTY = new Empty(EmptyType.EMPTY);
 
     private final Map<Position, SquareStatus> chessBoard;
 
-    protected ChessBoard(final Map<Position, SquareStatus> chessBoard) {
+    ChessBoard(final Map<Position, SquareStatus> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
