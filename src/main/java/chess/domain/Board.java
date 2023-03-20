@@ -35,12 +35,12 @@ public class Board {
         validateSourceNotEmpty(source);
         validateNotSameColor(source, target);
 
-        MoveEnum unit = MoveHandler.findByPosition(source, target);
+        MoveEnum unitVector = MoveHandler.findByPosition(source, target);
 
         Piece piece = board.get(source);
 
-        validateMovable(piece, unit);
-        validatePath(source, target, unit, piece);
+        validateMovable(piece, unitVector);
+        validatePath(source, target, unitVector, piece);
 
         movePiece(source, target, piece);
     }
@@ -62,7 +62,7 @@ public class Board {
     }
 
     private boolean isEmptyPosition(final Position source) {
-        return board.get(source).getClass().equals(Empty.class);
+        return board.get(source).equals(new Empty(Team.NONE));
     }
 
     private void validateNotSameColor(final Position source, final Position target) {
