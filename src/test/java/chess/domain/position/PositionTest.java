@@ -11,7 +11,7 @@ class PositionTest {
     @DisplayName("위치는 파일을 가진다")
     void hasFileInPosition() {
         // given
-        final var position = Position.from("a1");
+        final var position = Position.of(File.A, Rank.ONE);
         final var expected = 'a';
 
         // when
@@ -25,7 +25,7 @@ class PositionTest {
     @DisplayName("위치는 랭크를 가진다")
     void hasRankInPosition() {
         // given
-        final var position = Position.from("a1");
+        final var position = Position.of(File.A, Rank.ONE);
         final var expected = 1;
 
         // when

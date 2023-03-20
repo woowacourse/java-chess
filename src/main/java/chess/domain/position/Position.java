@@ -4,30 +4,24 @@ import java.util.Objects;
 
 public final class Position {
 
-    private final char file;
-    private final int rank;
+    private final File file;
+    private final Rank rank;
 
-    private Position(final char file, final int rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(final char file, final int rank) {
-        return new Position(file, rank);
-    }
-
-    public static Position from(final String value) {
-        final char file = value.charAt(0);
-        final int rank = value.charAt(1) - '0';
+    public static Position of(final File file, final Rank rank) {
         return new Position(file, rank);
     }
 
     public char file() {
-        return file;
+        return file.value();
     }
 
     public int rank() {
-        return rank;
+        return rank.value();
     }
 
     @Override

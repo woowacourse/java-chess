@@ -1,6 +1,8 @@
 package chess.domain.order;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,8 +43,8 @@ class OrderTest {
         final Order order = Order.ofMoveOrEnd(input);
 
         // then
-        assertEquals(Position.from("a2"), order.getSource());
-        assertEquals(Position.from("a3"), order.getTarget());
+        assertEquals(Position.of(File.A, Rank.TWO), order.getSource());
+        assertEquals(Position.of(File.A, Rank.THREE), order.getTarget());
     }
 
     @Test

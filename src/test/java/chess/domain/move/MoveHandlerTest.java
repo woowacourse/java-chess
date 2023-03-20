@@ -1,7 +1,9 @@
 package chess.domain.move;
 
 import chess.domain.move.enums.*;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,8 +18,8 @@ class MoveHandlerTest {
         @DisplayName("→로 이동시 RIGHT를 반환")
         void findByPosition_Horizontal_RIGHT() {
             // given
-            final Position source = Position.from("a1");
-            final Position target = Position.from("b1");
+            final Position source = Position.of(File.A, Rank.ONE);
+            final Position target = Position.of(File.B, Rank.ONE);
             final MoveEnum expected = HorizontalMove.RIGHT;
 
             // when
@@ -31,8 +33,8 @@ class MoveHandlerTest {
         @DisplayName("←로 이동시 LEFT를 반환")
         void findByPosition_Horizontal_LEFT() {
             // given
-            final Position source = Position.from("b1");
-            final Position target = Position.from("a1");
+            final Position source = Position.of(File.B, Rank.ONE);
+            final Position target = Position.of(File.A, Rank.ONE);
             final MoveEnum expected = HorizontalMove.LEFT;
 
             // when
@@ -46,8 +48,8 @@ class MoveHandlerTest {
         @DisplayName("↑로 이동시 UP을 반환")
         void findByPosition_Vertical_UP() {
             // given
-            final Position source = Position.from("a1");
-            final Position target = Position.from("a2");
+            final Position source = Position.of(File.A, Rank.ONE);
+            final Position target = Position.of(File.A, Rank.TWO);
             final MoveEnum expected = VerticalMove.UP;
 
             // when
@@ -61,8 +63,8 @@ class MoveHandlerTest {
         @DisplayName("↓로 이동시 DOWN을 반환")
         void findByPosition_Vertical_DOWN() {
             // given
-            final Position source = Position.from("a2");
-            final Position target = Position.from("a1");
+            final Position source = Position.of(File.A, Rank.TWO);
+            final Position target = Position.of(File.A, Rank.ONE);
             final MoveEnum expected = VerticalMove.DOWN;
 
             // when
@@ -80,8 +82,8 @@ class MoveHandlerTest {
         @DisplayName("↗로 이동시 RIGHT_UP을 반환")
         void findByPosition_Diagonal_RIGHT_UP() {
             // given
-            final Position source = Position.from("a1");
-            final Position target = Position.from("b2");
+            final Position source = Position.of(File.A, Rank.ONE);
+            final Position target = Position.of(File.B, Rank.TWO);
             final MoveEnum expected = DiagonalMove.RIGHT_UP;
 
             // when
@@ -95,8 +97,8 @@ class MoveHandlerTest {
         @DisplayName("↖로 이동시 LEFT_UP을 반환")
         void findByPosition_Diagonal_LEFT_UP() {
             // given
-            final Position source = Position.from("b1");
-            final Position target = Position.from("a2");
+            final Position source = Position.of(File.B, Rank.ONE);
+            final Position target = Position.of(File.A, Rank.TWO);
             final MoveEnum expected = DiagonalMove.LEFT_UP;
 
             // when
@@ -110,8 +112,8 @@ class MoveHandlerTest {
         @DisplayName("↘로 이동시 RIGHT_DOWN을 반환")
         void findByPosition_Diagonal_RIGHT_DOWN() {
             // given
-            final Position source = Position.from("a2");
-            final Position target = Position.from("b1");
+            final Position source = Position.of(File.A, Rank.TWO);
+            final Position target = Position.of(File.B, Rank.ONE);
             final MoveEnum expected = DiagonalMove.RIGHT_DOWN;
 
             // when
@@ -125,8 +127,8 @@ class MoveHandlerTest {
         @DisplayName("↙로 이동시 LEFT_DOWN을 반환")
         void findByPosition_Diagonal_LEFT_DOWN() {
             // given
-            final Position source = Position.from("b2");
-            final Position target = Position.from("a1");
+            final Position source = Position.of(File.B, Rank.TWO);
+            final Position target = Position.of(File.A, Rank.ONE);
             final MoveEnum expected = DiagonalMove.LEFT_DOWN;
 
             // when
@@ -143,8 +145,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (-1, 2)로 이동시 LEFT_UP_UP을 반환")
         void findByPosition_Knight_LEFT_UP_UP() {
             // given
-            final Position source = Position.from("b1");
-            final Position target = Position.from("a3");
+            final Position source = Position.of(File.B, Rank.ONE);
+            final Position target = Position.of(File.A, Rank.THREE);
             final MoveEnum expected = KnightMove.LEFT_UP_UP;
 
             // when
@@ -158,8 +160,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (1, 2)로 이동시 RIGHT_UP_UP을 반환")
         void findByPosition_Knight_RIGHT_UP_UP() {
             // given
-            final Position source = Position.from("a1");
-            final Position target = Position.from("b3");
+            final Position source = Position.of(File.A, Rank.ONE);
+            final Position target = Position.of(File.B, Rank.THREE);
             final MoveEnum expected = KnightMove.RIGHT_UP_UP;
 
             // when
@@ -173,8 +175,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (2, 1)로 이동시 RIGHT_RIGHT_UP을 반환")
         void findByPosition_Knight_RIGHT_RIGHT_UP() {
             // given
-            final Position source = Position.from("a1");
-            final Position target = Position.from("c2");
+            final Position source = Position.of(File.A, Rank.ONE);
+            final Position target = Position.of(File.C, Rank.TWO);
             final MoveEnum expected = KnightMove.RIGHT_RIGHT_UP;
 
             // when
@@ -188,8 +190,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (2, -1)로 이동시 RIGHT_RIGHT_DOWN을 반환")
         void findByPosition_Knight_RIGHT_RIGHT_DOWN() {
             // given
-            final Position source = Position.from("a2");
-            final Position target = Position.from("c1");
+            final Position source = Position.of(File.A, Rank.TWO);
+            final Position target = Position.of(File.C, Rank.ONE);
             final MoveEnum expected = KnightMove.RIGHT_RIGHT_DOWN;
 
             // when
@@ -203,8 +205,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (1, -2)로 이동시 RIGHT_DOWN_DOWN을 반환")
         void findByPosition_Knight_RIGHT_DOWN_DOWN() {
             // given
-            final Position source = Position.from("a3");
-            final Position target = Position.from("b1");
+            final Position source = Position.of(File.A, Rank.THREE);
+            final Position target = Position.of(File.B, Rank.ONE);
             final MoveEnum expected = KnightMove.RIGHT_DOWN_DOWN;
 
             // when
@@ -218,8 +220,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (-1, -2)로 이동시 LEFT_DOWN_DOWN을 반환")
         void findByPosition_Knight_LEFT_DOWN_DOWN() {
             // given
-            final Position source = Position.from("b3");
-            final Position target = Position.from("a1");
+            final Position source = Position.of(File.B, Rank.THREE);
+            final Position target = Position.of(File.A, Rank.ONE);
             final MoveEnum expected = KnightMove.LEFT_DOWN_DOWN;
 
             // when
@@ -233,8 +235,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (-2, -1)로 이동시 LEFT_LEFT_DOWN을 반환")
         void findByPosition_Knight_LEFT_LEFT_DOWN() {
             // given
-            final Position source = Position.from("c2");
-            final Position target = Position.from("a1");
+            final Position source = Position.of(File.C, Rank.TWO);
+            final Position target = Position.of(File.A, Rank.ONE);
             final MoveEnum expected = KnightMove.LEFT_LEFT_DOWN;
 
             // when
@@ -248,8 +250,8 @@ class MoveHandlerTest {
         @DisplayName("(0, 0) → (-2, 1)로 이동시 LEFT_LEFT_UP을 반환")
         void findByPosition_Knight_LEFT_LEFT_UP() {
             // given
-            final Position source = Position.from("c1");
-            final Position target = Position.from("a2");
+            final Position source = Position.of(File.C, Rank.ONE);
+            final Position target = Position.of(File.A, Rank.TWO);
             final MoveEnum expected = KnightMove.LEFT_LEFT_UP;
 
             // when
@@ -263,8 +265,8 @@ class MoveHandlerTest {
     @Test
     void 방향을_구할_수_없는_경우_예외를_발생한다() {
         // given
-        final Position source = Position.from("a1");
-        final Position target = Position.from("h7");
+        final Position source = Position.of(File.A, Rank.ONE);
+        final Position target = Position.of(File.H, Rank.SEVEN);
 
         // then
         assertThatThrownBy(() -> MoveHandler.findByPosition(source, target))

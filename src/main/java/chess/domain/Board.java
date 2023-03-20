@@ -4,7 +4,9 @@ import chess.domain.move.MoveHandler;
 import chess.domain.move.enums.MoveEnum;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.team.Team;
 import chess.initial.BoardFactory;
 
@@ -96,7 +98,7 @@ public class Board {
         while (file != target.file() || rank != target.rank()) {
             file += unit.getDx();
             rank += unit.getDy();
-            path.add(Position.of(file, rank));
+            path.add(Position.of(File.of(file), Rank.of(rank)));
         }
 
         return path.subList(0, path.size() - 1);

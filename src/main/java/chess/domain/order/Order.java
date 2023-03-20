@@ -1,6 +1,8 @@
 package chess.domain.order;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +19,8 @@ public final class Order {
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int START_POSITION_INDEX = 1;
     private static final int END_POSITION_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final OrderCase orderCase;
     private final List<Position> moves;
@@ -89,8 +93,9 @@ public final class Order {
         List<Position> positions = new ArrayList<>();
 
         for (int i = START_POSITION_INDEX; i <= END_POSITION_INDEX; i++) {
-            positions.add(Position.from(value.get(i)));
+            positions.add(Position.of(File.of(value.get(i).charAt(FILE_INDEX)), Rank.of(value.get(i).charAt(RANK_INDEX))));
         }
+
         return positions;
     }
 

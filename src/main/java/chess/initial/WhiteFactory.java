@@ -3,6 +3,7 @@ package chess.initial;
 import chess.domain.piece.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.team.Team;
 
 import java.util.Map;
@@ -24,31 +25,31 @@ public final class WhiteFactory {
     }
 
     private static void fillWhiteRook(final Map<Position, Piece> board) {
-        board.put(Position.from("a1"), new Rook(Team.WHITE));
-        board.put(Position.from("h1"), new Rook(Team.WHITE));
+        board.put(Position.of(File.A, Rank.ONE), new Rook(Team.WHITE));
+        board.put(Position.of(File.H, Rank.ONE), new Rook(Team.WHITE));
     }
 
     private static void fillWhiteKnight(final Map<Position, Piece> board) {
-        board.put(Position.from("g1"), new Knight(Team.WHITE));
-        board.put(Position.from("b1"), new Knight(Team.WHITE));
+        board.put(Position.of(File.G, Rank.ONE), new Knight(Team.WHITE));
+        board.put(Position.of(File.B, Rank.ONE), new Knight(Team.WHITE));
     }
 
     private static void fillWhiteBishop(final Map<Position, Piece> board) {
-        board.put(Position.from("c1"), new Bishop(Team.WHITE));
-        board.put(Position.from("f1"), new Bishop(Team.WHITE));
+        board.put(Position.of(File.C, Rank.ONE), new Bishop(Team.WHITE));
+        board.put(Position.of(File.F, Rank.ONE), new Bishop(Team.WHITE));
     }
 
     private static void fillWhiteQueen(final Map<Position, Piece> board) {
-        board.put(Position.from("d1"), new Queen(Team.WHITE));
+        board.put(Position.of(File.D, Rank.ONE), new Queen(Team.WHITE));
     }
 
     private static void fillWhiteKing(final Map<Position, Piece> board) {
-        board.put(Position.from("e1"), new King(Team.WHITE));
+        board.put(Position.of(File.E, Rank.ONE), new King(Team.WHITE));
     }
 
     private static void fillWhitePawn(final Map<Position, Piece> board) {
         for (final File file : File.values()) {
-            board.put(Position.of(file.value(), 2), new Pawn(Team.WHITE));
+            board.put(Position.of(file, Rank.TWO), new Pawn(Team.WHITE));
         }
     }
 }
