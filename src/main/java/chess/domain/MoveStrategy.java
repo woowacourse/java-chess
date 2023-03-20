@@ -8,8 +8,8 @@ public enum MoveStrategy {
     BISHOP((fileDiff, rankDiff) -> Math.abs(fileDiff) == Math.abs(rankDiff)),
     KNIGHT((fileDiff, rankDiff) -> Math.abs(fileDiff * rankDiff) == 2),
     KING((fileDiff, rankDiff) -> Math.abs(fileDiff) <= 1 && Math.abs(rankDiff) <= 1),
-    QUEEN((fileDiff, rankDiff) -> ROOK.moveStrategy.apply(fileDiff, rankDiff)
-            || BISHOP.moveStrategy.apply(fileDiff, rankDiff)),
+    QUEEN((fileDiff, rankDiff) -> (fileDiff == 0 || rankDiff == 0)
+            || (Math.abs(fileDiff) == Math.abs(rankDiff))),
     BLACK_PAWN_FIRST((fileDiff, rankDiff) -> fileDiff == 0 && rankDiff >= -2 && rankDiff < 0),
     BLACK_PAWN_CROSS((fileDiff, rankDiff) -> rankDiff == -1 && Math.abs(fileDiff) == 1),
     BLACK_PAWN_STRAIGHT((fileDiff, rankDiff) -> rankDiff == -1 && fileDiff == 0),
