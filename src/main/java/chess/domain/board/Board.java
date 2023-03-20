@@ -4,7 +4,7 @@ import chess.domain.direction.Direction;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Place;
+import chess.domain.pieces.Empty;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class Board {
     public void switchPosition(final String start, final String end) {
         validateMove(start, end);
         board.replace(Position.from(end), findPiece(start));
-        board.replace(Position.from(start), new Place());
+        board.replace(Position.from(start), new Empty());
     }
 
     private void validateMove(final String start, final String end) {
@@ -52,7 +52,7 @@ public class Board {
 
         boolean isObstacleExist = routes.stream()
                 .map(this::findPiece)
-                .anyMatch(piece -> !(piece instanceof Place));
+                .anyMatch(piece -> !(piece instanceof Empty));
 
         if (isObstacleExist) {
             throw new IllegalArgumentException("장애물이 존재합니다.");
@@ -82,14 +82,14 @@ public class Board {
 
     private void validateLowercasePawnAttack(final String end) {
         Piece upperEnemy = findPiece(end);
-        if (upperEnemy.isNameLowerCase() || upperEnemy instanceof Place) {
+        if (upperEnemy.isNameLowerCase() || upperEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
     private void validateLowercasePawnMoveForward(final String end) {
         Piece destination = findPiece(end);
-        if (!(destination instanceof Place)) {
+        if (!(destination instanceof Empty)) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
@@ -116,14 +116,14 @@ public class Board {
 
     private void validateUppercasePawnAttack(final String end) {
         Piece lowerEnemy = findPiece(end);
-        if (lowerEnemy.isNameUpperCase() || lowerEnemy instanceof Place) {
+        if (lowerEnemy.isNameUpperCase() || lowerEnemy instanceof Empty) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }
 
     private void validateUppercasePawnMoveForward(final String end) {
         Piece destination = findPiece(end);
-        if (!(destination instanceof Place)) {
+        if (!(destination instanceof Empty)) {
             throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
         }
     }

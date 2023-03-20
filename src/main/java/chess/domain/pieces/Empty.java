@@ -1,10 +1,10 @@
 package chess.domain.pieces;
 
-public class Place extends Piece {
+public class Empty extends Piece {
 
     private static final String PLACE = ".";
 
-    public Place() {
+    public Empty() {
         super(new Name(PLACE));
     }
 

@@ -10,7 +10,7 @@ import chess.domain.pieces.Knight;
 import chess.domain.pieces.Name;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Place;
+import chess.domain.pieces.Empty;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class BoardFactory {
 
     private static void fillChessBoard(final Map<Position, Piece> chessBoard, final Position position) {
         if (position.isPlacePositionAtFirst()) {
-            chessBoard.put(position, new Place());
+            chessBoard.put(position, new Empty());
         }
         if (position.isLowerPawnPositionAtFirst()) {
             chessBoard.put(position, new Pawn(new Name("p")));
