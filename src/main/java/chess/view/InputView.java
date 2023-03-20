@@ -2,7 +2,10 @@ package chess.view;
 
 import chess.controller.GameStatus;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public final class InputView {
 
@@ -12,20 +15,8 @@ public final class InputView {
         this.scanner = scanner;
     }
 
-    public String readLine() {
+    private String readLine() {
         return scanner.nextLine().trim();
-    }
-
-    public String readCommand() {
-        final String input = readLine();
-        final GameStatus gameStatus = GameStatus.from(input);
-        if (gameStatus.isMove()) {
-            return input;
-        }
-        if (gameStatus.isStart() || gameStatus.isEnd()) {
-            return gameStatus.name();
-        }
-        throw new AssertionError();
     }
 
     public String readStartCommand() {
@@ -40,4 +31,9 @@ public final class InputView {
         }
     }
 
+    public List<String> readCommand() {
+        final String input = readLine();
+        return Arrays.stream(input.split(" "))
+                .collect(Collectors.toList());
+    }
 }
