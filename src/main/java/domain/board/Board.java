@@ -4,74 +4,69 @@ import domain.piece.Coordinate;
 import domain.square.EmptySquare;
 import domain.square.Square;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Board {
 
     public static final int RANK_SIZE = 8;
     public static final int FILE_SIZE = 8;
 
-    private final List<Rank> ranks;
+    private final Map<Coordinate, Square> squareLocations;
 
     public Board() {
-        this.ranks = initializeRanks();
+        this.squareLocations = fillBoard();
     }
 
-    private List<Rank> initializeRanks() {
-        List<Rank> ranks = new ArrayList<>();
-        for (int row = 0; row < RANK_SIZE; row++) {
-            ranks.add(new Rank(row, FILE_SIZE));
+    private Map<Coordinate, Square> fillBoard() {
+        Map<Coordinate, Square> board = new HashMap<>();
+        for (int rank = 0; rank < RANK_SIZE; rank++) {
+            board.putAll(fillSquaresForOneRank(rank));
         }
-        return ranks;
+        return board;
     }
-    
+
+    private Map<Coordinate, Square> fillSquaresForOneRank(final int rankNumber) {
+        Map<Coordinate, Square> rank = new HashMap<>();
+        for (int fileNumber = 0; fileNumber < FILE_SIZE; fileNumber++) {
+            rank.put(
+                    new Coordinate(rankNumber, fileNumber),
+                    BoardInitialImage.getSquareByCoordinate(rankNumber, fileNumber)
+            );
+        }
+        return rank;
+    }
+
     public Square findSquare(final Coordinate target) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        return rankWithTargetSquare.findSquare(target.getCol());
+        return squareLocations.get(target);
     }
 
     public void replaceSquare(final Coordinate target, final Square square) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        rankWithTargetSquare.replaceSquare(target.getCol(), square);
+        squareLocations.put(target, square);
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        rankWithTargetSquare.replaceSquare(target.getCol(), new EmptySquare());
+        squareLocations.put(target, new EmptySquare());
     }
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-        return ranks.get(start.getRow())
-                .isMovableAt(start, end);
+        return squareLocations.get(start).isMovable(start, end);
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {
-        validateOverRankSize(start);
-        validateOverFileSize(start);
-        validateOverRankSize(end);
-        validateOverFileSize(end);
+        if (squareLocations.containsKey(start) && squareLocations.containsKey(end)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 보드 좌표 범위를 벗어났습니다.");
     }
 
-    private static void validateOverRankSize(final Coordinate target) {
-        if (target.getRow() >= RANK_SIZE || target.getRow() < 0) {
-            throw new IllegalArgumentException("[ERROR] 보드 Y축 좌표 범위를 벗어났습니다.");
-        }
-    }
-
-    private static void validateOverFileSize(final Coordinate target) {
-        if (target.getCol() >= FILE_SIZE || target.getCol() < 0) {
-            throw new IllegalArgumentException("[ERROR] 보드 X축 좌표 범위를 벗어났습니다.");
-        }
-    }
 
     public boolean isSquareEmptyAt(final Coordinate target) {
-        return !ranks.get(target.getRow())
-                .isExistSquare(target.getCol());
+        return !squareLocations.get(target).isExist();
     }
 
-    public List<Rank> getRanks() {
-        return ranks;
+    public Map<Coordinate, Square> getSquareLocations() {
+        return squareLocations;
     }
 }
