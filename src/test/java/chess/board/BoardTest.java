@@ -1,9 +1,14 @@
 package chess.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.AllPiecesGenerator;
+import chess.piece.Pawn;
 import chess.piece.Pieces;
+import chess.piece.Rook;
+import chess.piece.Side;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,5 +71,46 @@ class BoardTest {
 
         // when, then
         assertDoesNotThrow(() -> board.movePiece(knightPosition, targetPosition));
+    }
+
+    @Test
+    @DisplayName("흰색 기물이 이동한 곳에 검은색 기물이 있다면 검은색 기물을 게임에서 제거한다.")
+    void checkEnemyPieceOnTargetPosition_exist() {
+        // given
+        final Position sourcePosition = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.A, Rank.SEVEN);
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Rook(sourcePosition, Side.WHITE),
+                new Pawn(targetPosition, Side.BLACK)
+        )));
+        final int beforeMoveSize = fixedBoard.getPieces().size();
+
+        // when
+        fixedBoard.movePiece(sourcePosition, targetPosition);
+        final int afterMoveSize = fixedBoard.getPieces().size();
+
+        // then
+        assertThat(afterMoveSize).isEqualTo(beforeMoveSize - 1);
+    }
+
+    @Test
+    @DisplayName("흰색 기물이 이동한 곳에 검은색 기물이 존재하지 않는다면 어떠한 기물도 제거되지 않는다.")
+    void checkEnemyPieceOnTargetPosition_nonExist() {
+        // given
+        final Position sourcePosition = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.A, Rank.SIX);
+        final Position pawnPosition = new Position(File.A, Rank.SEVEN);
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Rook(sourcePosition, Side.WHITE),
+                new Pawn(pawnPosition, Side.BLACK)
+        )));
+        final int beforeMoveSize = fixedBoard.getPieces().size();
+
+        // when
+        fixedBoard.movePiece(sourcePosition, targetPosition);
+        final int afterMoveSize = fixedBoard.getPieces().size();
+
+        // then
+        assertThat(afterMoveSize).isEqualTo(beforeMoveSize);
     }
 }
