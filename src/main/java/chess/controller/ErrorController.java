@@ -7,9 +7,9 @@ import java.util.function.Supplier;
 public class ErrorController {
 
     public <T> T RetryIfThrowsException(final Supplier<T> strategy) {
-        T result = null;
+        T result = tryCatchStrategy(strategy);
         while (result == null) {
-            result = tryCatchStrategy(strategy, null);
+            result = tryCatchStrategy(strategy);
         }
         return result;
     }
@@ -22,13 +22,13 @@ public class ErrorController {
         }
     }
 
-    public <T> T tryCatchStrategy(final Supplier<T> strategy, T result) {
+    public <T> T tryCatchStrategy(final Supplier<T> strategy) {
         try {
-            result = strategy.get();
+            return strategy.get();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }
-        return result;
+        return null;
     }
 
 }

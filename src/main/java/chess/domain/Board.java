@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.*;
 import chess.domain.position.Position;
-import chess.domain.position.RelativePosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,57 +61,11 @@ public class Board {
     }
 
     public void movePiece(Position source, Position target) {
-        if (isEmpty(source)) {
-            throw new IllegalArgumentException("source 위치에 조작할 수 있는 말이 없습니다.");
-        }
-        if (isSameTeam(source, target)) {
-            throw new IllegalArgumentException("target 위치에 같은 팀의 말이 존재합니다.");
-        }
-        if (isInvalidDirection(source, target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
-        }
+        MoveValidator.validate(board, source, target);
+
         Piece piece = board.get(source);
-        if (!piece.isKnight() && hasObstacle(source, target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
-        }
-        RelativePosition relativePosition = RelativePosition.of(source, target);
-        if (piece.isPawn() && relativePosition.isDiagonal() && isEmpty(target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
-        }
         board.put(target, piece);
         board.put(source, new Empty());
-    }
-
-    private boolean isEmpty(Position source) {
-        return board.get(source).isEmpty();
-    }
-
-    private boolean isSameTeam(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-        if (sourcePiece.isBlack() && targetPiece.isBlack()) {
-            return true;
-        }
-        return sourcePiece.isWhite() && targetPiece.isWhite();
-    }
-
-    private boolean isInvalidDirection(Position source, Position target) {
-        RelativePosition relativePosition = RelativePosition.of(source, target);
-        Piece piece = board.get(source);
-        return !piece.isMobile(relativePosition);
-    }
-
-    private boolean hasObstacle(Position source, Position target) {
-        RelativePosition relativePosition = RelativePosition.of(source, target);
-        RelativePosition unitPosition = relativePosition.toUnit();
-        Position currentPosition = source.move(unitPosition);
-        while (!currentPosition.equals(target)) {
-            if (!isEmpty(currentPosition)) {
-                return true;
-            }
-            currentPosition = currentPosition.move(unitPosition);
-        }
-        return false;
     }
 
     public List<List<Piece>> getBoard() {
