@@ -5,6 +5,7 @@ import static chess.view.PositionConverter.convertToSourcePosition;
 import static chess.view.PositionConverter.convertToTargetPosition;
 
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.view.InputView;
@@ -22,43 +23,49 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        start();
-        Board board = Board.init();
-        progress(board);
+        inputStartCommand();
+        ChessGame chessGame = new ChessGame(Board.init(), Team.getStartTeam());
+        progress(chessGame);
     }
 
-    private void start() {
+    private void inputStartCommand() {
         try {
             inputView.readStart();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
-            start();
+            inputStartCommand();
         }
     }
 
-    private void progress(Board board) {
-        boolean isPlay = true;
-        Team turn = Team.getStartTeam();
-        while (isPlay) {
-            outputView.printBoard(board);
-            isPlay = play(board, turn);
-            turn = turn.reverse();
+    private void progress(ChessGame chessGame) {
+        boolean onGoing = true;
+        while (onGoing) {
+            outputView.printBoard(chessGame.getBoard());
+            String command = inputCommand();
+            onGoing = !isOver(command);
+            movePiece(chessGame, command);
         }
     }
 
-    private boolean play(Board board, Team turn) {
-        String command = inputCommand();
-        if (command.equals(END)) {
-            return false;
+    private boolean isOver(String command) {
+        return END.equals(command);
+    }
+
+    private void movePiece(ChessGame chessGame, String command) {
+        if (isOver(command)) {
+            return;
         }
         Position source = convertToSourcePosition(command);
         Position target = convertToTargetPosition(command);
-        if (isWrongInputTeam(board, turn, source)) {
-            return play(board, turn);
-        }
+        movePiece(chessGame, source, target);
+    }
 
-        board.move(source, target);
-        return true;
+    private void movePiece(ChessGame chessGame, Position source, Position target) {
+        try {
+            chessGame.movePiece(source, target);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+        }
     }
 
     private String inputCommand() {
@@ -68,13 +75,5 @@ public class ChessController {
             outputView.printExceptionMessage(e);
             return inputCommand();
         }
-    }
-
-    private boolean isWrongInputTeam(Board board, Team turn, Position source) {
-        if (!board.isTurn(source, turn)) {
-            outputView.printWrongTurnMessage(turn);
-            return true;
-        }
-        return false;
     }
 }

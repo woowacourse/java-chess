@@ -24,6 +24,10 @@ public class Board {
         return new Board(setting);
     }
 
+    public boolean isNotTurn(Position source, Team turn) {
+        return !board.get(source).isSameTeam(turn);
+    }
+
     public void move(Position source, Position target) {
         validateSource(source);
         validateMovable(source, target);
@@ -38,7 +42,7 @@ public class Board {
     }
 
     private void validateSource(Position source) {
-        if (!board.containsKey(source)) {
+        if (!isTherePiece(source)) {
             throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
         }
     }
@@ -58,13 +62,13 @@ public class Board {
     }
 
     private void validateBlocked(List<Position> path, int index) {
-        if (board.containsKey(path.get(index))) {
+        if (isTherePiece(path.get(index))) {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 있습니다.");
         }
     }
 
     private void validateSameTeam(Position source, Position target) {
-        if (!board.containsKey(target)) {
+        if (!isTherePiece(target)) {
             return;
         }
 
@@ -77,11 +81,11 @@ public class Board {
     }
 
     private void validatePawnMoving(Position source, Position target) {
-        if (!board.containsKey(target) && !PAWN_STRAIGHT.isMovable(source, target)) {
+        if (!isTherePiece(target) && !PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대 기물이 없을 경우, 대각선으로 움직일 수 없습니다.");
         }
 
-        if (board.containsKey(target) && PAWN_STRAIGHT.isMovable(source, target)) {
+        if (isTherePiece(target) && PAWN_STRAIGHT.isMovable(source, target)) {
             throw new IllegalArgumentException("[ERROR] 폰은 기물이 있는 곳으로 직진할 수 없습니다.");
         }
     }
@@ -92,11 +96,11 @@ public class Board {
         board.put(target, piece);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    public boolean isTherePiece(Position source) {
+        return board.containsKey(source);
     }
 
-    public boolean isTurn(Position source, Team turn) {
-        return board.get(source).isSameTeam(turn);
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
     }
 }

@@ -100,10 +100,6 @@ public class OutputView {
         }
     }
 
-    public void printWrongTurnMessage(Team turn) {
-        System.out.println("[ERROR] 지금은 " + turn + "차례입니다.");
-    }
-
     public void printExceptionMessage(Exception exception) {
         System.out.println(exception.getMessage());
     }
