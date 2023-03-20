@@ -16,7 +16,8 @@ public class Board {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
         checkPieceMovable(targetPosition, sourcePiece);
         checkPath(targetPosition, sourcePiece);
-        checkTargetPosition(targetPosition, sourcePiece);
+        checkSameSidePieceOnTargetPosition(sourcePiece, targetPosition);
+        checkOppositeSidePieceOnTargetPosition(sourcePiece, targetPosition);
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
     }
@@ -40,7 +41,7 @@ public class Board {
         }
     }
 
-    private void checkTargetPosition(final Position targetPosition, final Piece sourcePiece) {
+    private void checkSameSidePieceOnTargetPosition(final Piece sourcePiece, final Position targetPosition) {
         if (pieces.isPieceExistOnPosition(targetPosition)) {
             final Piece targetPiece = pieces.findPieceByPosition(targetPosition);
             checkSameSidePiece(sourcePiece, targetPiece);
@@ -50,6 +51,19 @@ public class Board {
     private void checkSameSidePiece(final Piece sourcePiece, final Piece targetPiece) {
         if (targetPiece.isSameSide(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
+        }
+    }
+
+    private void checkOppositeSidePieceOnTargetPosition(Piece sourcePiece, Position targetPosition) {
+        if (pieces.isPieceExistOnPosition(targetPosition)) {
+            final Piece targertPiece = pieces.findPieceByPosition(targetPosition);
+            checkOppositeSidePiece(sourcePiece, targertPiece);
+        }
+    }
+
+    private void checkOppositeSidePiece(final Piece sourcePiece, final Piece targetPiece) {
+        if (targetPiece.isOppositeSide(sourcePiece)) {
+            pieces.remove(targetPiece);
         }
     }
 

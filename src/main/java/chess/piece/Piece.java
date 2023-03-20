@@ -27,6 +27,10 @@ public abstract class Piece {
         return this.side == piece.side;
     }
 
+    public boolean isOppositeSide(Piece piece) {
+        return this.side != piece.side;
+    }
+
     public int getFile() {
         return position.getFile();
     }
