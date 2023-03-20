@@ -13,7 +13,7 @@ class CoordinateTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(1, 1);
 
-        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(1);
+        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(Inclination.ONE);
     }
 
     @Test
@@ -22,7 +22,7 @@ class CoordinateTest {
         Coordinate startCoordinate = new Coordinate(0, 1);
         Coordinate endCoordinate = new Coordinate(1, 0);
 
-        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(-1);
+        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(Inclination.MINUS_ONE);
     }
 
     @Test

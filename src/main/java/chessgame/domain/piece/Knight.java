@@ -2,11 +2,13 @@ package chessgame.domain.piece;
 
 import java.util.List;
 
+import static chessgame.domain.piece.Inclination.*;
+
 public class Knight implements Piece {
 
     private static final PieceType pieceType = PieceType.KNIGHT;
-    private static final List<Double> availableInclinations = List.of(
-            0.5, -0.5, 2.0, -2.0
+    private static final List<Inclination> availableInclinations = List.of(
+            TWO, MINUS_TWO, HALF, MINUS_HALF
     );
     private static final List<Coordinate> availableCoordinateDifferences = List.of(
             new Coordinate(1, 2),

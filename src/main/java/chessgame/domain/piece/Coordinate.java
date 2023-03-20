@@ -48,8 +48,9 @@ public class Coordinate {
         return col == 0;
     }
 
-    public double getInclination(Coordinate otherCoordinate) {
-        return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+    public Inclination getInclination(Coordinate otherCoordinate) {
+        double inclination = ((double) this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+        return Inclination.of(inclination);
     }
 
     public boolean hasDistanceLessThan(Coordinate otherCoordinate, double distance) {

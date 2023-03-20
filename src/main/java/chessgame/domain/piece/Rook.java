@@ -2,11 +2,13 @@ package chessgame.domain.piece;
 
 import java.util.List;
 
+import static chessgame.domain.piece.Inclination.*;
+
 public class Rook implements Piece {
 
     private static final PieceType pieceType = PieceType.ROOK;
-    private static final List<Double> availableInclinations = List.of(
-            Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
+    private static final List<Inclination> availableInclinations = List.of(
+            POSITIVE_INFINITY, NEGATIVE_INFINITY, ZERO, MINUS_ZERO
     );
 
     @Override

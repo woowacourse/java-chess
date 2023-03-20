@@ -2,10 +2,13 @@ package chessgame.domain.piece;
 
 import java.util.List;
 
+import static chessgame.domain.piece.Inclination.MINUS_ONE;
+import static chessgame.domain.piece.Inclination.ONE;
+
 public class Bishop implements Piece {
 
     private static final PieceType pieceType = PieceType.BISHOP;
-    private static final List<Double> availableInclinations = List.of(1.0, -1.0);
+    private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
     @Override
     public boolean isSameTypeWith(final PieceType otherType) {

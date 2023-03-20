@@ -2,12 +2,13 @@ package chessgame.domain.piece;
 
 import java.util.List;
 
+import static chessgame.domain.piece.Inclination.*;
+
 public class King implements Piece {
 
     private static final PieceType pieceType = PieceType.KING;
-    // TODO: 매직 넘버 ENUM 지정
-    private static final List<Double> availableInclinations = List.of(
-            1.0, -1.0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
+    private static final List<Inclination> availableInclinations = List.of(
+            POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
     @Override
