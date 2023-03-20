@@ -46,6 +46,13 @@ public final class ChessController {
         }
     }
 
+    private ChessBoard setUpChessBoard() {
+        ChessBoardGenerator generator = new ChessBoardGenerator();
+        ChessBoard chessBoard = new ChessBoard(generator.generate());
+        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+        return chessBoard;
+    }
+
     private void executePlayingCommand(ChessBoard chessBoard, List<String> userInput) {
         GameCommand gameCommand = GameCommand.of(userInput.get(0));
 
@@ -71,12 +78,5 @@ public final class ChessController {
         int column = ColumnToNumber.of(input.charAt(0));
 
         return Position.of(row, column);
-    }
-
-    private ChessBoard setUpChessBoard() {
-        ChessBoardGenerator generator = new ChessBoardGenerator();
-        ChessBoard chessBoard = new ChessBoard(generator.generate());
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
-        return chessBoard;
     }
 }

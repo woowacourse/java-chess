@@ -54,14 +54,6 @@ public final class ChessBoard {
         }
     }
 
-    private void checkMovableToDiagonal(Position startPosition, Position endPosition) {
-        Piece startPiece = chessBoard.get(startPosition);
-        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
-                (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
-        }
-    }
-
     private void checkPassablePathToForward(Position startPosition, List<Position> path) {
         if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
             path.stream()
@@ -70,6 +62,21 @@ public final class ChessBoard {
                         throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
                     });
         }
+    }
+
+    private void checkMovableToDiagonal(Position startPosition, Position endPosition) {
+        Piece startPiece = chessBoard.get(startPosition);
+        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
+                (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
+        }
+    }
+
+    private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
+        if (startPiece.isBlack() == endPiece.isBlack()) {
+            throw new IllegalArgumentException("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
+        }
+        return false;
     }
 
     private boolean isPassablePath(List<Position> path) {
@@ -86,13 +93,6 @@ public final class ChessBoard {
             return !isSameColorPiece(startPiece, chessBoard.get(endPosition));
         }
         return true;
-    }
-
-    private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
-        if (startPiece.isBlack() == endPiece.isBlack()) {
-            throw new IllegalArgumentException("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
-        }
-        return false;
     }
 
     public Map<Position, Piece> getChessBoard() {
