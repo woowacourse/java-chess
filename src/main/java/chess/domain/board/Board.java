@@ -27,6 +27,10 @@ public class Board {
         movePiece(from, to);
     }
 
+    private Piece findPieceFrom(final Position position) {
+        return chessBoard.get(position);
+    }
+
     private void validateMoveFromEmpty(final Piece piece) {
         if (piece == null) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
@@ -48,10 +52,6 @@ public class Board {
     private void movePiece(final Position from, final Position to) {
         final Piece movingPiece = chessBoard.remove(from);
         chessBoard.put(to, movingPiece);
-    }
-
-    private Piece findPieceFrom(final Position position) {
-        return chessBoard.get(position);
     }
 
     public Map<Position, Piece> chessBoard() {

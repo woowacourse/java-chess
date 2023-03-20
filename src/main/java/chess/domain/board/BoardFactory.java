@@ -45,7 +45,8 @@ public class BoardFactory {
     private Map<Position, Piece> createKing() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whitePosition = new Position(WhitePiecePosition.KING_FILE.value(), WhitePiecePosition.KING_RANK.value());
+        final Position whitePosition = new Position(WhitePiecePosition.KING_FILE.value(),
+                                                    WhitePiecePosition.KING_RANK.value());
         pieceMap.put(whitePosition, new King(Color.WHITE));
 
         final Position blackPosition = new Position(5, 8);
@@ -57,8 +58,10 @@ public class BoardFactory {
     private Map<Position, Piece> createQueen() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whitePosition = new Position(WhitePiecePosition.QUEEN_FILE.value(), WhitePiecePosition.QUEEN_RANK.value());
-        final Position blackPosition = new Position(BlackPiecePosition.QUEEN_FILE.value(), BlackPiecePosition.QUEEN_RANK.value());
+        final Position whitePosition = new Position(WhitePiecePosition.QUEEN_FILE.value(),
+                                                    WhitePiecePosition.QUEEN_RANK.value());
+        final Position blackPosition = new Position(BlackPiecePosition.QUEEN_FILE.value(),
+                                                    BlackPiecePosition.QUEEN_RANK.value());
 
         pieceMap.put(whitePosition, new Queen(Color.WHITE));
         pieceMap.put(blackPosition, new Queen(Color.BLACK));
@@ -93,11 +96,14 @@ public class BoardFactory {
     private Map<Position, Piece> createRook() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        final Position whiteLeftPosition = new Position(WhitePiecePosition.LEFT_ROOK_FILE.value(), WhitePiecePosition.LEFT_ROOK_RANK.value());
+        final Position whiteLeftPosition = new Position(WhitePiecePosition.LEFT_ROOK_FILE.value(),
+                                                        WhitePiecePosition.LEFT_ROOK_RANK.value());
         final Position whiteRightPosition = new Position(WhitePiecePosition.RIGHT_ROOK_FILE.value(),
                                                          WhitePiecePosition.RIGHT_ROOK_RANK.value());
-        final Position blackLeftPosition = new Position(BlackPiecePosition.LEFT_ROOK_FILE.value(), BlackPiecePosition.LEFT_ROOK_RANK.value());
-        final Position blackRightPosition = new Position(BlackPiecePosition.RIGHT_ROOK_FILE.value(), BlackPiecePosition.RIGHT_ROOK_RANK.value());
+        final Position blackLeftPosition = new Position(BlackPiecePosition.LEFT_ROOK_FILE.value(),
+                                                        BlackPiecePosition.LEFT_ROOK_RANK.value());
+        final Position blackRightPosition = new Position(BlackPiecePosition.RIGHT_ROOK_FILE.value(),
+                                                         BlackPiecePosition.RIGHT_ROOK_RANK.value());
 
         pieceMap.put(whiteLeftPosition, new Rook(Color.WHITE));
         pieceMap.put(whiteRightPosition, new Rook(Color.WHITE));

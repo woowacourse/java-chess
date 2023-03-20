@@ -16,17 +16,17 @@ public enum Command {
 
     public static boolean isEnd(String command) {
         return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals("end"));
+                     .anyMatch(it -> it.value.equals(command) && command.equals(END.name()));
     }
 
     public static boolean isMove(String command) {
         return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals("move"));
+                     .anyMatch(it -> it.value.equals(command) && command.equals(MOVE.name()));
     }
 
     public static boolean isNotStart(String command) {
         return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && !command.equals("start"));
+                     .anyMatch(it -> it.value.equals(command) && !command.equals(START.name()));
     }
 
     public static boolean isNotAppropriate(String command) {

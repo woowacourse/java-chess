@@ -25,7 +25,7 @@ public class Pawn extends Piece {
             Color.WHITE, List.of(UR, UL)
     );
     private static final List<Movement> MOVEMENT_CANDIDATES = List.of(D, U, DR, DL, UR, UL);
-    
+
     private static final int WHITE_PAWN_START_RANK = 2;
     private static final int BLACK_PAWN_START_RANK = 7;
     private static final int MAXIMUM_WHITE_PAWN_MANHATTAN_DISTANCE = 2;
@@ -80,7 +80,7 @@ public class Pawn extends Piece {
         return color.isBlack() && isBlackPawnStartRank(from) && hasBlackPawnMovedTwice(from, to);
     }
 
-    private static boolean isBlackPawnStartRank(final Position from) {
+    private boolean isBlackPawnStartRank(final Position from) {
         return from.rank().value() == BLACK_PAWN_START_RANK;
     }
 
@@ -96,7 +96,7 @@ public class Pawn extends Piece {
         return color.isWhite() && isWhitePawnStartRank(from) && hasWhitePawnMovedTwice(from, to);
     }
 
-    private static boolean isWhitePawnStartRank(final Position from) {
+    private boolean isWhitePawnStartRank(final Position from) {
         return from.rank().value() == WHITE_PAWN_START_RANK;
     }
 

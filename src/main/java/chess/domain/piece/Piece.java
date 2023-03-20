@@ -27,27 +27,23 @@ public abstract class Piece {
         return moveToLocatedPiece(from, to, movement, locatedPiece);
     }
 
-    protected abstract Path moveToLocatedPiece(final Position from, final Position to,
-                                               final Movement movement, final Piece locatedPiece);
-
-    protected abstract boolean canNotMoveToLocatedPiece(final Movement movement);
-
-    private Movement calculateUnitMovement(final Position from, final Position to) {
-        return to.convertMovement(from);
-    }
-
-    public void validateSameColor(Piece other) {
+    private void validateSameColor(Piece other) {
         if (other != null && color.isSameColor(other.color)) {
             throw new IllegalStateException("같은 색 말의 위치로 이동할 수 없습니다.");
         }
     }
 
-    public boolean isDifferentColor(Color color) {
-        return this.color.isDifferentColor(color);
+    private Movement calculateUnitMovement(final Position from, final Position to) {
+        return to.convertMovement(from);
     }
 
-    public boolean isSameColor(Piece other) {
-        return color.isSameColor(other.color);
+    protected abstract boolean canNotMoveToLocatedPiece(final Movement movement);
+
+    protected abstract Path moveToLocatedPiece(final Position from, final Position to,
+                                               final Movement movement, final Piece locatedPiece);
+
+    public boolean isDifferentColor(Color color) {
+        return this.color.isDifferentColor(color);
     }
 
     public boolean isDifferentColor(Piece other) {

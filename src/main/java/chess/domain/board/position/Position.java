@@ -49,10 +49,6 @@ public class Position {
         return file.differenceBetween(from.file);
     }
 
-    public boolean isSameRank(int rank) {
-        return this.rank.value() == rank;
-    }
-
     public File file() {
         return file;
     }

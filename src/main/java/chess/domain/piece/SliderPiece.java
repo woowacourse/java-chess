@@ -37,9 +37,11 @@ public abstract class SliderPiece extends Piece {
 
         while (true) {
             next = next.moveBy(movement);
+
             if (next.equals(to)) {
                 break;
             }
+
             positions.add(next);
         }
 
