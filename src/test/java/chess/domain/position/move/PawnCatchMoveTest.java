@@ -1,11 +1,8 @@
 package chess.domain.position.move;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +12,12 @@ class PawnCatchMoveTest {
     @DisplayName("도착지점에 기물이 존재하는 경우에만 이동할 수 있다.")
     void movableTest() {
         PieceMove pawnCatchMove = new PawnCatchMove();
+        boolean isExistPiece = true;
+        boolean isEmpty = false;
+
         assertAll(() -> {
-            assertThat(pawnCatchMove.isMovable(new Pawn(Camp.WHITE), true)).isTrue();
-            assertThat(pawnCatchMove.isMovable(new Empty(), true)).isFalse();
+            assertThat(pawnCatchMove.isMovable(isExistPiece, true)).isTrue();
+            assertThat(pawnCatchMove.isMovable(isEmpty, true)).isFalse();
         });
     }
 }

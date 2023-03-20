@@ -21,38 +21,19 @@ public final class ChessGame {
     }
 
     public void move(Position fromPosition, Position toPosition) {
-        validateEqualPosition(fromPosition, toPosition);
-        Piece fromPiece = piecesPosition.choicePiece(fromPosition);
-        Piece toPiece = piecesPosition.choicePiece(toPosition);
-        validateBeforeMoveTo(fromPiece, toPiece);
-
+        validateBeforeMove(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
-        validateMovable(toPiece, pieceMove);
+        validateMovable(piecesPosition.isPieceExist(toPosition), pieceMove);
         piecesPosition.movePieceBy(fromPosition, toPosition);
-        piecesPosition.cleanUpPosition(fromPosition);
         changeTurn();
     }
 
-    private void validateBeforeMoveTo(Piece fromPiece, Piece toPiece) {
-        validateFromPiece(fromPiece);
-        validateSameCamp(fromPiece, toPiece);
-    }
-
-    private void validateFromPiece(Piece fromPiece) {
-        if (fromPiece.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_CHOICE);
-        }
-    }
-
-    private void validateSameCamp(Piece fromPiece, Piece toPiece) {
-        if (fromPiece.isMismatchedCamp(turnCamp)) {
-            throw new IllegalArgumentException(TURN_MISMATCHED);
-        }
-
-        if (fromPiece.isSameCamp(toPiece)) {
-            throw new IllegalArgumentException(UNABLE_TO_MOVE);
-        }
+    private void validateBeforeMove(Position fromPosition, Position toPosition) {
+        validateEqualPosition(fromPosition, toPosition);
+        validatePickExistPiece(fromPosition);
+        validateNotMoveToSameCampPiece(fromPosition, toPosition);
+        validateTurn(fromPosition);
     }
 
     private void validateEqualPosition(Position fromPosition, Position toPosition) {
@@ -61,8 +42,34 @@ public final class ChessGame {
         }
     }
 
+    private void validatePickExistPiece(Position fromPosition) {
+        if (!piecesPosition.isPieceExist(fromPosition)) {
+            throw new IllegalArgumentException(EMPTY_CHOICE);
+        }
+    }
+
+    private void validateNotMoveToSameCampPiece(Position fromPosition, Position toPosition) {
+        if (!piecesPosition.isPieceExist(toPosition)) {
+            return;
+        }
+
+        Piece fromPiece = piecesPosition.peekPiece(fromPosition);
+        Piece toPiece = piecesPosition.peekPiece(toPosition);
+        if (fromPiece.isSameCamp(toPiece)) {
+            throw new IllegalArgumentException(UNABLE_TO_MOVE);
+        }
+    }
+
+    private void validateTurn(Position fromPosition) {
+        Piece fromPiece = piecesPosition.peekPiece(fromPosition);
+
+        if (fromPiece.isMismatchedCamp(turnCamp)) {
+            throw new IllegalArgumentException(TURN_MISMATCHED);
+        }
+    }
+
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
-        Piece fromPiece = piecesPosition.choicePiece(fromPosition);
+        Piece fromPiece = piecesPosition.peekPiece(fromPosition);
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
 
         List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
@@ -73,15 +80,15 @@ public final class ChessGame {
         return pieceMove;
     }
 
-    private void validateMovable(Piece toPiece, PieceMove pieceMove) {
-        if (!pieceMove.isMovable(toPiece, true)) {
+    private void validateMovableBetween(PieceMove pieceMove, Position position) {
+        boolean isEmpty = piecesPosition.isPieceExist(position);
+        if (!pieceMove.isMovable(isEmpty, false)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
     }
 
-    private void validateMovableBetween(PieceMove pieceMove, Position position) {
-        Piece betweenPiece = piecesPosition.choicePiece(position);
-        if (!pieceMove.isMovable(betweenPiece, false)) {
+    private void validateMovable(boolean isEmpty, PieceMove pieceMove) {
+        if (!pieceMove.isMovable(isEmpty, true)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
     }

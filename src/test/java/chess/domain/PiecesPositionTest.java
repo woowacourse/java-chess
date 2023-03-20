@@ -5,7 +5,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -30,11 +29,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PiecesPositionTest {
 
     @Test
-    @DisplayName("64개의 기물이 생성된다.")
+    @DisplayName("32개의 기물만 생성된다.")
     void initialChessBoardTest() {
         PiecesPosition piecesPosition = new PiecesPosition();
 
-        assertThat(piecesPosition.getPiecesPosition()).hasSize(64);
+        assertThat(piecesPosition.getPiecesPosition()).hasSize(32);
     }
 
     @Nested
@@ -106,8 +105,7 @@ class PiecesPositionTest {
 
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(piecesPosition.getPiecesPosition().get(position))
-                    .isEqualTo(new Empty());
+            assertThat(piecesPosition.isPieceExist(position)).isFalse();
         }
     }
 
@@ -121,17 +119,18 @@ class PiecesPositionTest {
 
         piecesPosition.movePieceBy(whitePawnPosition, emptyPosition);
 
-        assertThat(piecesPosition.choicePiece(emptyPosition)).isInstanceOf(Pawn.class);
+        assertThat(piecesPosition.peekPiece(emptyPosition)).isInstanceOf(Pawn.class);
     }
 
     @Test
-    @DisplayName("지정한 위치를 빈 공간으로 변경할 수 있다.")
+    @DisplayName("기물이 이동한 뒤, 이전 위치에는 빈 값이 된다.")
     void cleanUpPositionTest() {
         Position whitePawnPosition = Position.of(File.A, Rank.TWO);
         PiecesPosition piecesPosition = new PiecesPosition();
-        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Pawn.class);
+        assertThat(piecesPosition.peekPiece(whitePawnPosition)).isInstanceOf(Pawn.class);
 
-        piecesPosition.cleanUpPosition(whitePawnPosition);
-        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Empty.class);
+        piecesPosition.movePieceBy(whitePawnPosition, Position.of(File.A, Rank.FOUR));
+
+        assertThat(piecesPosition.isPieceExist(whitePawnPosition)).isFalse();
     }
 }

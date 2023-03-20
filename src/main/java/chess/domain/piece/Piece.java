@@ -23,10 +23,6 @@ public abstract class Piece {
     }
 
     public boolean isSameCamp(Piece other) {
-        if (other.camp == Camp.NEUTRAL) {
-            return false;
-        }
-
         return camp == other.camp;
     }
 

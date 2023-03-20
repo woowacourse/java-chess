@@ -11,7 +11,6 @@ public enum BlackPieceSymbolView {
     KNIGHT(PieceSymbol.KNIGHT, "N"),
     QUEEN(PieceSymbol.QUEEN, "Q"),
     ROOK(PieceSymbol.ROOK, "R"),
-    EMPTY(PieceSymbol.EMPTY, "."),
     ;
 
     private final PieceSymbol pieceSymbol;

@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -22,11 +21,6 @@ public final class PiecesPosition {
     public PiecesPosition() {
         setUpNobilityPiece(Rank.EIGHT, Camp.BLACK);
         setUpPawn(Rank.SEVEN, Camp.BLACK);
-
-        setUpBlank(Rank.SIX);
-        setUpBlank(Rank.FIVE);
-        setUpBlank(Rank.FOUR);
-        setUpBlank(Rank.THREE);
 
         setUpPawn(Rank.TWO, Camp.WHITE);
         setUpNobilityPiece(Rank.ONE, Camp.WHITE);
@@ -49,22 +43,17 @@ public final class PiecesPosition {
         }
     }
 
-    private void setUpBlank(Rank rank) {
-        for (File file : File.values()) {
-            piecesPosition.put(Position.of(file, rank), new Empty());
-        }
+    public Piece peekPiece(Position position) {
+        return piecesPosition.get(position);
     }
 
-    public Piece choicePiece(Position position) {
-        return piecesPosition.get(position);
+    public boolean isPieceExist(Position position) {
+        return piecesPosition.containsKey(position);
     }
 
     public void movePieceBy(Position fromPosition, Position toPosition) {
         piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
-    }
-
-    public void cleanUpPosition(Position position) {
-        piecesPosition.put(position, new Empty());
+        piecesPosition.remove(fromPosition);
     }
 
     public Map<Position, Piece> getPiecesPosition() {
