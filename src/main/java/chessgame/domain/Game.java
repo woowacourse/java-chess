@@ -1,17 +1,15 @@
 package chessgame.domain;
 
-import chessgame.domain.point.Point;
-import chessgame.domain.state.Button;
+import chessgame.domain.state.Ready;
+import chessgame.domain.state.State;
 import chessgame.factory.ChessBoardFactory;
-
-import java.util.List;
 
 public class Game {
     private final Board board;
-    private final Button button = new Button();
     private Team turn = Team.WHITE;
-
+    private State state;
     public Game() {
+        this.state = new Ready();
         this.board = new Board(ChessBoardFactory.create());
     }
 
@@ -19,18 +17,11 @@ public class Game {
         return board;
     }
 
-    public void setButton(Command command) {
-        button.click(command);
+    public void setState(Command command) {
+        state = state.click(command,board);
     }
 
-    public void movePiece(List<Point> points) {
-        if (button.isStart()) {
-            board.move(points.get(0), points.get(1), turn);
-        }
-        turn = turn.changeTurn();
-    }
-
-    public boolean isStart() {
-        return button.isStart();
+    public boolean isEnd() {
+        return state.isEnd();
     }
 }

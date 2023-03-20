@@ -23,22 +23,15 @@ public class ChessController {
         outputView.printStartMessage();
         do {
             eachTurn(game);
-            outputView.printChessBoard(game.board());
-        } while (game.isStart());
+            printResult(game);
+        } while (!game.isEnd());
     }
 
     private void eachTurn(Game game) {
-        Command command = readCommand();
-        command = setButton(game, command);
-        if (command.isMove()) {
-            movePiece(game, command);
-        }
-    }
-
-    private void movePiece(Game game, Command command) {
         try {
-            game.movePiece(command.makePoints());
-        } catch (IllegalArgumentException e) {
+            Command command = readCommand();
+            setButton(game, command);
+        }catch (IllegalArgumentException e){
             outputView.printErrorMsg(e.getMessage());
             eachTurn(game);
         }
@@ -46,7 +39,7 @@ public class ChessController {
 
     private Command setButton(Game game, Command command) {
         try {
-            game.setButton(command);
+            game.setState(command);
             return command;
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
@@ -60,6 +53,12 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
             return readCommand();
+        }
+    }
+
+    private void printResult(Game game){
+        if(!game.isEnd()) {
+            outputView.printChessBoard(game.board());
         }
     }
 }

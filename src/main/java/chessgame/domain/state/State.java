@@ -1,7 +1,9 @@
 package chessgame.domain.state;
 
+import chessgame.domain.Board;
 import chessgame.domain.Command;
 
 public interface State {
-    void click(Button button, Command command);
+    boolean isEnd();
+    State click(Command command, Board board);
 }

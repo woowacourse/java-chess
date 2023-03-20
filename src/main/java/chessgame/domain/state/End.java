@@ -1,13 +1,20 @@
 package chessgame.domain.state;
 
+import chessgame.domain.Board;
 import chessgame.domain.Command;
 
 public class End implements State {
+
     @Override
-    public void click(Button button, Command command) {
-        if (!command.isStart()) {
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
+    public State click(Command command, Board board) {
+        if (!command.isEnd()) {
             throw new IllegalArgumentException("start만 가능 합니다.");
         }
-        button.setState(new Start());
+        return this;
     }
 }
