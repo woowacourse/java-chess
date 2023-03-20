@@ -18,7 +18,7 @@ public class RelativePosition {
 		return new RelativePosition(x, y);
 	}
 
-	public RelativePosition toUnit() {
+	public RelativePosition getGcdDivided() {
 		if (x == 0 && y == 0) {
 			return new RelativePosition(0, 0);
 		}
@@ -28,10 +28,10 @@ public class RelativePosition {
 		if (y == 0) {
 			return new RelativePosition(x / Math.abs(x), 0);
 		}
-		return toUnitNoneZeroPosition();
+		return divideByGcd();
 	}
 
-	private RelativePosition toUnitNoneZeroPosition() {
+	private RelativePosition divideByGcd() {
 		int gcd = getGreatestCommonDivisor(Math.abs(x), Math.abs(y));
 		return new RelativePosition(x / gcd, y / gcd);
 	}

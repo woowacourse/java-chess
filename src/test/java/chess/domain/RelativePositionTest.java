@@ -17,7 +17,7 @@ class RelativePositionTest {
 		void toUnitTest1() {
 			RelativePosition relativePosition = new RelativePosition(0, 0);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(0, 0));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(0, 0));
 		}
 
 		@Test
@@ -25,7 +25,7 @@ class RelativePositionTest {
 		void toUnitTest2() {
 			RelativePosition relativePosition = new RelativePosition(0, 3);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(0, 1));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(0, 1));
 		}
 
 		@Test
@@ -33,7 +33,7 @@ class RelativePositionTest {
 		void toUnitTest3() {
 			RelativePosition relativePosition = new RelativePosition(3, 0);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(1, 0));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(1, 0));
 		}
 
 		@Test
@@ -41,7 +41,7 @@ class RelativePositionTest {
 		void toUnitTest4() {
 			RelativePosition relativePosition = new RelativePosition(2, 4);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(1, 2));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(1, 2));
 		}
 
 		@Test
@@ -49,7 +49,7 @@ class RelativePositionTest {
 		void toUnitTest5() {
 			RelativePosition relativePosition = new RelativePosition(3, 5);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(3, 5));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(3, 5));
 		}
 
 		@Test
@@ -57,7 +57,7 @@ class RelativePositionTest {
 		void toUnitTest6() {
 			RelativePosition relativePosition = new RelativePosition(-2, -4);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(-1, -2));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(-1, -2));
 		}
 
 		@Test
@@ -65,7 +65,7 @@ class RelativePositionTest {
 		void toUnitTest7() {
 			RelativePosition relativePosition = new RelativePosition(-2, 4);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(-1, 2));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(-1, 2));
 		}
 
 		@Test
@@ -73,7 +73,7 @@ class RelativePositionTest {
 		void toUnitTest8() {
 			RelativePosition relativePosition = new RelativePosition(2, -4);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(1, -2));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(1, -2));
 		}
 
 		@Test
@@ -81,7 +81,7 @@ class RelativePositionTest {
 		void toUnitTest9() {
 			RelativePosition relativePosition = new RelativePosition(-3, 7);
 
-			assertThat(relativePosition.toUnit()).isEqualTo(new RelativePosition(-3, 7));
+			assertThat(relativePosition.getGcdDivided()).isEqualTo(new RelativePosition(-3, 7));
 		}
 	}
 }

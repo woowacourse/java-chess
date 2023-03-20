@@ -23,7 +23,7 @@ public enum Movement {
 	}
 
 	public boolean isMobile(final RelativePosition relativePosition) {
-		RelativePosition unitPosition = relativePosition.toUnit();
+		RelativePosition unitPosition = relativePosition.getGcdDivided();
 		if (isMovedTooFar(relativePosition, unitPosition)) {
 			return false;
 		}

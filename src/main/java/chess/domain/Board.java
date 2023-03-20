@@ -84,7 +84,7 @@ public class Board {
 
 	private boolean hasObstacle(final Position source, final Position target) {
 		RelativePosition relativePosition = RelativePosition.of(source, target);
-		RelativePosition unitPosition = relativePosition.toUnit();
+		RelativePosition unitPosition = relativePosition.getGcdDivided();
 		Position currentPosition = source.move(unitPosition);
 		while (!currentPosition.equals(target)) {
 			if (isPieceExists(currentPosition)) {

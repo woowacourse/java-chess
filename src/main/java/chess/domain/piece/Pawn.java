@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isMobile(RelativePosition relativePosition) {
 		if (!hasMoved && relativePosition.isZeroAbsTwo()) {
-			relativePosition = relativePosition.toUnit();
+			relativePosition = relativePosition.getGcdDivided();
 		}
 		if (isMovementMobile(relativePosition)) {
 			hasMoved = true;
