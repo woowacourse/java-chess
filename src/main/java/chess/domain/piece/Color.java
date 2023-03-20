@@ -15,4 +15,12 @@ public enum Color {
     public String formatName(String name) {
         return this.formatConverter.apply(name);
     }
+
+    public boolean isDifferent(Color other) {
+        return this != other;
+    }
+
+    public boolean isEqual(Color other) {
+        return this == other;
+    }
 }

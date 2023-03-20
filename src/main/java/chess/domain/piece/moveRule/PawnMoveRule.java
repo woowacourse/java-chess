@@ -84,7 +84,7 @@ public class PawnMoveRule extends UnJumpableMoveRule {
                                             Map<Position, Piece> board) {
         Piece nextPiece = board.get(nextPosition);
         Piece curPiece = board.get(currentPosition);
-        if (!curPiece.isOpponent(nextPiece)) {
+        if (curPiece.isSameColor(nextPiece)) {
             throw new IllegalArgumentException("폰은 아군 기물이 있는 칸으로 대각선 이동하라 수 없습니다.");
         }
     }

@@ -6,24 +6,28 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class Piece {
-    private final PieceState pieceState;
-    private final Color color;
+    private final PieceData pieceData;
+    private final MoveRule moveRule;
 
     public Piece(MoveRule moveRule, Color color) {
-        this.pieceState = new PieceState(moveRule);
-        this.color = color;
+        this.moveRule = moveRule;
+        this.pieceData = new PieceData(color, moveRule.pieceType());
     }
 
     public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
-        pieceState.move(currentPosition, nextPosition, board);
+        moveRule.move(currentPosition, nextPosition, board);
     }
 
     public boolean isOpponent(Piece other) {
-        return this.color != other.color;
+        return pieceData.isDifferentColor(other.pieceData);
+    }
+
+    public boolean isSameColor(Piece other){
+        return pieceData.isSameColor(other.pieceData);
     }
 
     public String formatName() {
-        return pieceState.formatName(color);
+        return pieceData.formatName();
     }
 
     @Override
@@ -35,19 +39,19 @@ public final class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return Objects.equals(pieceState, piece.pieceState) && color == piece.color;
+        return Objects.equals(pieceData, piece.pieceData);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceState, color);
+        return Objects.hash(pieceData);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
-                "pieceState=" + pieceState +
-                ", color=" + color +
+                "pieceData=" + pieceData +
+                ", moveRule=" + moveRule +
                 '}';
     }
 }

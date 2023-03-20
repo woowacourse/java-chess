@@ -13,7 +13,7 @@ public interface MoveRule {
     default void validateDestination(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
         Piece pieceOfCurrentPosition = board.get(currentPosition);
         Piece pieceOfNextPosition = board.get(nextPosition);
-        if (board.containsKey(nextPosition) && !pieceOfCurrentPosition.isOpponent(pieceOfNextPosition)) {
+        if (board.containsKey(nextPosition) && pieceOfCurrentPosition.isSameColor(pieceOfNextPosition)) {
             throw new IllegalArgumentException("도착 지점에 아군 기물이 있어 움직일 수 없습니다.");
         }
     }
