@@ -3,10 +3,10 @@ package chess.domain.board;
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Position;
-import chess.domain.piece.type.Pawn;
+import chess.domain.piece.move.piece.PawnMove;
+import chess.domain.piece.move.piece.RookMove;
 import chess.domain.piece.type.Piece;
 import chess.domain.piece.type.PieceType;
-import chess.domain.piece.type.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -52,7 +52,7 @@ class ChessBoardTest {
 
         // when, then
         assertThat(chessBoard.checkPiece(new Position(0, 0)))
-                .isEqualTo(new Rook(PieceType.ROOK, CampType.WHITE));
+                .isEqualTo(new Piece(PieceType.ROOK, CampType.WHITE, new RookMove()));
     }
 
     @Test
@@ -88,7 +88,7 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position putPosition = new Position(2, 0);
-        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE);
+        final Piece piece = new Piece(PieceType.PAWN, CampType.WHITE, new PawnMove());
 
         // when
         chessBoard.putPiece(putPosition, piece);
