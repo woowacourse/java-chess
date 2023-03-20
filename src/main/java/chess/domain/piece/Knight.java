@@ -31,6 +31,7 @@ public final class Knight extends Piece {
     }
 
     private boolean canMove(final Position source, final Position target, final int moveCase) {
-        return target.isSameRow(source.getRow() + moveX.get(moveCase)) && target.isSameColumn(source.getColumn() + moveY.get(moveCase));
+        return target.isSameRow(source.getRow() + moveX.get(moveCase))
+                && target.isSameColumn(source.getColumn() + moveY.get(moveCase));
     }
 }
