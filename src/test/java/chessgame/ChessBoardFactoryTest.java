@@ -4,7 +4,7 @@ import chessgame.domain.Board;
 import chessgame.domain.Team;
 import chessgame.domain.piece.Pawn;
 import chessgame.domain.piece.Rook;
-import chessgame.util.ChessBoardFactory;
+import chessgame.factory.ChessBoardFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import chessgame.domain.Board;
 import chessgame.domain.Team;
-import chessgame.util.ChessBoardFactory;
+import chessgame.factory.ChessBoardFactory;
 
 class BoardTest {
     @Test

@@ -2,7 +2,7 @@ package chessgame.domain;
 
 import chessgame.domain.point.Point;
 import chessgame.domain.state.Button;
-import chessgame.util.ChessBoardFactory;
+import chessgame.factory.ChessBoardFactory;
 
 import java.util.List;
 

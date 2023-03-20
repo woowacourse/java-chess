@@ -1,4 +1,4 @@
-package chessgame.util;
+package chessgame.factory;
 
 import chessgame.domain.Team;
 import chessgame.domain.piece.*;
