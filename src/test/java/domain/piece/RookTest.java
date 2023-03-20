@@ -1,11 +1,10 @@
 package domain.piece;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class RookTest {
 
@@ -45,7 +44,7 @@ class RookTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("Rook이 수직 위로 이동하면 해당 결로를 반환한다.")
+    @DisplayName("Rook이 수직 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveUpward() {
         Rook whiteRook = Rook.createOfWhite();
@@ -54,7 +53,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "2"), Position.of("c", "3"));
     }
 
-    @DisplayName("Rook이 수직 아래로 이동하면 해당 결로를 반환한다.")
+    @DisplayName("Rook이 수직 아래로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveDownward() {
         Rook whiteRook = Rook.createOfWhite();
@@ -63,7 +62,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("c", "2"));
     }
 
-    @DisplayName("Rook이 왼쪽으로 이동하면 해당 결로를 반환한다.")
+    @DisplayName("Rook이 왼쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveLeft() {
         Rook whiteRook = Rook.createOfWhite();
@@ -72,7 +71,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("c", "3"));
     }
 
-    @DisplayName("Rook이 오른쪽으로 이동하면 해당 결로를 반환한다.")
+    @DisplayName("Rook이 오른쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveRight() {
         Rook whiteRook = Rook.createOfWhite();
