@@ -1,11 +1,11 @@
 package chess.controller;
 
+import chess.controller.converter.BoardConverter;
 import chess.controller.gamestate.GameState;
 import chess.controller.gamestate.Ready;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.dto.CommandRequest;
-import chess.util.BoardConverter;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

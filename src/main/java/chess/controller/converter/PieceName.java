@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.converter;
 
 import chess.domain.Camp;
 import chess.domain.piece.Piece;

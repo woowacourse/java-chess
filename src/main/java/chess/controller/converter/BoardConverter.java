@@ -1,8 +1,7 @@
-package chess.util;
+package chess.controller.converter;
 
-import chess.domain.piece.Piece;
 import chess.domain.Position;
-import chess.view.PieceName;
+import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
