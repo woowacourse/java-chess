@@ -30,7 +30,7 @@ public class ChessBoard {
     public void move(final Position source, final Position target) {
         final SquareStatus squareStatus = chessBoard.remove(source);
 
-        if (squareStatus.getType() == PieceType.PAWN) {
+        if (squareStatus.isSameType(PieceType.PAWN)) {
             chessBoard.put(target, new Pawn(squareStatus.getColor()));
             return;
         }
@@ -51,7 +51,6 @@ public class ChessBoard {
 
     public boolean isDifferentColor(final Position position, final Color color) {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
-
 
         return squareStatus.isDifferentColor(color);
     }
