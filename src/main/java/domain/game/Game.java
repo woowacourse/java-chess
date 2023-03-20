@@ -24,7 +24,6 @@ public class Game {
     private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece, Side side) {
         validateSourcePositionIsEmpty(sourcePosition, sourcePiece);
         validateTurn(side, sourcePiece);
-        validateExistPieceOnSourcePosition(sourcePiece);
         validateIsMovable(sourcePosition, targetPosition);
         validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece);
     }
@@ -59,12 +58,6 @@ public class Game {
         Piece targetPiece = this.chessBoard.get(targetPosition);
         if (!sourcePiece.isMovable(targetPiece, sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("올바른 움직임이 아닙니다.");
-        }
-    }
-
-    private static void validateExistPieceOnSourcePosition(Piece sourcePiece) {
-        if (sourcePiece.isEmptyPiece()) {
-            throw new IllegalArgumentException("source위치에 말이 없습니다.");
         }
     }
 
