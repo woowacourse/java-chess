@@ -24,12 +24,7 @@ public class MovingState implements GameState {
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
-    public void move(Runnable runnable) {
-        runnable.run();
+    public GameState move() {
+        return this;
     }
 }

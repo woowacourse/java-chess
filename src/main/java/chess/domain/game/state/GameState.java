@@ -6,7 +6,5 @@ public interface GameState {
 
     GameState end();
 
-    boolean isRunning();
-
-    void move(Runnable runnable);
+    GameState move();
 }

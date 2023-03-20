@@ -16,7 +16,7 @@ public class EndState implements GameState {
 
     @Override
     public GameState start() {
-        throw new ChessGameException(GAME_ALREADY_OVER_MESSAGE);
+        return StartState.getInstance();
     }
 
     @Override
@@ -25,12 +25,7 @@ public class EndState implements GameState {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
-    public void move(Runnable runnable) {
+    public GameState move() {
         throw new ChessGameException(GAME_ALREADY_OVER_MESSAGE);
     }
 }
