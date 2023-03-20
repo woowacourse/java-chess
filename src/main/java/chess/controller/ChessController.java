@@ -1,74 +1,57 @@
 package chess.controller;
 
+import chess.controller.request.EndRequestType;
+import chess.controller.request.MoveRequestType;
+import chess.controller.request.RequestType;
+import chess.controller.request.StartRequestType;
 import chess.domain.game.ChessGame;
-import chess.domain.game.exception.ChessGameException;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.request.CommandType;
-import chess.view.request.RequestInfo;
 import chess.view.response.PieceResponse;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ChessController {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final List<RequestType> requestTypes;
     private final ChessGame chessGame;
-    private final Map<CommandType, Consumer<List<String>>> commandTypeToAction = Map.of(
-            CommandType.START, ignored -> start(),
-            CommandType.END, ignored -> end(),
-            CommandType.MOVE, this::move
-    );
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
         chessGame = new ChessGame();
-    }
-
-    private void start() {
-        chessGame.start();
-        printBoard();
-    }
-
-    private void end() {
-        chessGame.end();
+        requestTypes = List.of(
+                new MoveRequestType(),
+                new StartRequestType(),
+                new EndRequestType()
+        );
     }
 
     public void run() {
         outputView.printInitialMessage();
-        while (chessGame.isRunning()) {
-            play();
+        while (true) {
+            try {
+                List<String> commands = inputView.inputGameCommand();
+                execute(commands);
+            } catch (Exception e) {
+                outputView.printError(e);
+            }
         }
     }
 
-    private void play() {
-        try {
-            RequestInfo requestInfo = repeat(inputView::inputGameCommand);
-            Consumer<List<String>> action = commandTypeToAction.get(requestInfo.getCommandType());
-            action.accept(requestInfo.getCommands());
-        } catch (ChessGameException e) {
-            outputView.printError(e);
-        }
+    public void execute(List<String> request) {
+        RequestType type = requestTypes.stream()
+                .filter(requestType -> requestType.isMatch(request))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
+        type.execute(this, request);
     }
 
-    private void move(List<String> command) {
-        try {
-            chessGame.move(command);
-            printBoard();
-        } catch (ChessGameException e) {
-            outputView.printError(e);
-        }
-    }
-
-    private void printBoard() {
-        List<List<PieceResponse>> boardResponse = makeBoardResponse();
-        outputView.printBoard(boardResponse);
+    public void move(List<String> request) {
+        chessGame.move(request.get(1), request.get(2));
+        outputView.printBoard(makeBoardResponse());
     }
 
     private List<List<PieceResponse>> makeBoardResponse() {
@@ -80,22 +63,12 @@ public class ChessController {
                 .collect(Collectors.toList());
     }
 
-    private <T> T repeat(Supplier<T> supplier) {
-        Optional<T> result = Optional.empty();
-        while (result.isEmpty()) {
-            result = returnIfNoError(supplier);
-        }
-        return result.get();
+    public void start() {
+        chessGame.start();
+        outputView.printBoard(makeBoardResponse());
     }
 
-    private <T> Optional<T> returnIfNoError(Supplier<T> supplier) {
-        Optional<T> result;
-        try {
-            result = Optional.of(supplier.get());
-        } catch (Exception e) {
-            outputView.printError(e);
-            result = Optional.empty();
-        }
-        return result;
+    public void finish() {
+        chessGame.end();
     }
 }
