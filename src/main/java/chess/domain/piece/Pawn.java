@@ -4,7 +4,7 @@ import chess.domain.movement.Movement;
 import chess.domain.position.RelativePosition;
 import chess.domain.Team;
 
-public class Pawn extends Piece {
+public class Pawn extends NoneEmptyPiece {
 
     private boolean hasMoved;
 

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.NoneEmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
@@ -54,7 +55,7 @@ public class MoveValidator {
     }
 
     private static void validateObstacle(Map<Position, Piece> board, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
+        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(source);
         if (!sourcePiece.isKnight() && hasObstacle(board, source, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
         }
@@ -74,7 +75,7 @@ public class MoveValidator {
     }
 
     private static void validateDiagonalImpossible(Map<Position, Piece> board, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
+        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(source);
         RelativePosition relativePosition = RelativePosition.of(source, target);
         if (sourcePiece.isPawn() && relativePosition.isDiagonal() && isEmpty(board, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");

@@ -2,7 +2,6 @@ package chess.domain.movement;
 
 import chess.domain.position.RelativePosition;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum Direction {
@@ -49,10 +48,6 @@ public enum Direction {
 
     public static List<Direction> getNorthern() {
         return List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    }
-
-    public static List<Direction> getEmpty() {
-        return Collections.emptyList();
     }
 
     public boolean matches(RelativePosition relativePosition) {

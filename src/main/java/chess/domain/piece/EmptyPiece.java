@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.movement.Movement;
 import chess.domain.position.RelativePosition;
-import chess.domain.Team;
 
-public class Empty extends Piece {
+public class EmptyPiece implements Piece {
 
-    public Empty() {
-        super(Team.EMPTY, Movement.EMPTY);
+    public EmptyPiece() {
+        super();
     }
 
     @Override
@@ -18,6 +16,16 @@ public class Empty extends Piece {
     @Override
     public boolean isEmpty() {
         return true;
+    }
+
+    @Override
+    public boolean isBlack() {
+        return false;
+    }
+
+    @Override
+    public boolean isWhite() {
+        return false;
     }
 
     @Override

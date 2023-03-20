@@ -42,7 +42,7 @@ public class Board {
     private static void initializeEmptyPieces(HashMap<Position, Piece> board) {
         for (int i = 0; i < LINE_SIZE; i++) {
             for (int j = 2; j < 6; j++) {
-                board.put(new Position(i, j), new Empty());
+                board.put(new Position(i, j), new EmptyPiece());
             }
         }
     }
@@ -65,7 +65,7 @@ public class Board {
 
         Piece piece = board.get(source);
         board.put(target, piece);
-        board.put(source, new Empty());
+        board.put(source, new EmptyPiece());
     }
 
     public List<List<Piece>> getBoard() {

@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.movement.Movement;
 import chess.domain.Team;
+import chess.domain.movement.Movement;
 
-public class Bishop extends Piece {
+public class Bishop extends NoneEmptyPiece {
 
     public Bishop(final Team team) {
         super(team, Movement.BISHOP);
