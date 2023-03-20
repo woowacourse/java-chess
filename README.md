@@ -1,7 +1,42 @@
-# java-chess
+# 기능 요구 사항
 
-체스 미션 저장소
+---
 
-## 우아한테크코스 코드리뷰
+## 체스판 초기화
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+- [X] 8x8 크기의 보드 생성
+- [X] 피스 위치 초기화
+    - [X] 검정색 피스 초기화
+    - [X] 흰색 피스 초기화
+
+- [X] Piece 경로 계산
+    - [X] 퀸
+    - [X] 킹
+    - [X] 룩
+    - [X] 비숍
+    - [X] 나이트
+    - [X] 폰
+
+- [X] Piece 이동 가능 계산
+    - [X] 퀸
+    - [X] 킹
+    - [X] 룩
+    - [X] 비숍
+    - [X] 나이트
+    - [X] 폰
+
+- [X] Square
+    - [X] 인스턴스로 Piece를 가짐
+- [X] Squares
+    - [X] Square의 일급 컬렉션
+- [X] Board
+    - [X] Squares의 일급 컬렉션
+    - [X] source와 target이 같은 색이면 예외 발생
+
+## 출력
+
+- [X] 게임 시작을 입력받는다
+- [X] 게임 종료를 입력받는다
+- [X] 보드 출력
+    - [X] 검은색 피스는 대문자로 출력
+    - [X] 하얀색 피스는 소문자로 출력
