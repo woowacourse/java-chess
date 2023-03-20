@@ -1,5 +1,5 @@
 package domain.piece;
 
-public enum State {
+public enum PawnState {
     INIT, RUNNING
 }

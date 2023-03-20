@@ -19,12 +19,12 @@ public class Pawn extends Piece {
 
     private List<Vector> directions;
 
-    private State state;
+    private PawnState state;
 
     public Pawn(TeamColor teamColor) {
         super(teamColor);
         initDirection();
-        state = State.INIT;
+        state = PawnState.INIT;
     }
 
     private void initDirection() {
@@ -64,7 +64,7 @@ public class Pawn extends Piece {
     }
 
     public void start() {
-        state = State.RUNNING;
+        state = PawnState.RUNNING;
         if (isBlack()) {
             directions = List.of(BOTTOM, BOTTOM_RIGHT, BOTTOM_LEFT);
             return;
