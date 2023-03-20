@@ -8,12 +8,13 @@ import java.util.List;
 public class Piece {
 
     private Position position;
-    private Shape shape;
+    private final Shape shape;
 
     private Piece(final Position position, final Shape shape) {
         this.position = position;
         this.shape = shape;
     }
+
     public static Piece from(final int rank, final char file, final Shape shape) {
          return new Piece(Position.from(rank, file), shape);
     }
@@ -31,10 +32,10 @@ public class Piece {
         int rank = inputTargetPosition.getRank();
 
         shape.move(MoveRequest.from(
-                positions, // 모든 기물들의 위치
-                movablePieceColor, // 이동할 기물 진영
-                new PositionDto(position), // 이동할 기물의 위치
-                new PositionDto(Position.from(rank, file)) // 이동할 위치
+                positions,
+                movablePieceColor,
+                new PositionDto(position),
+                new PositionDto(Position.from(rank, file))
         ));
 
         Position changedPosition = Position.from(rank, file);
@@ -67,7 +68,7 @@ public class Piece {
     }
 
     public char getName(String color) {
-        return this.shape.findNameByColor(color);
+        return this.shape.getNameByColor(color);
     }
 
     public boolean isSamePosition(Position findPosition) {
