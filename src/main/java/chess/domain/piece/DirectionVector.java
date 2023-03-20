@@ -13,7 +13,8 @@ public enum DirectionVector {
     SOUTHEAST(1, -1, (file, rank) -> file > 0 && rank < 0 && Math.abs(file) == Math.abs(rank)),
     SOUTHWEST(-1, -1, (file, rank) -> file < 0 && rank < 0 && Math.abs(file) == Math.abs(rank)),
     NORTHEAST(1, 1, (file, rank) -> file > 0 && rank > 0 && Math.abs(file) == Math.abs(rank)),
-    NORTHWEST(-1, 1, (file, rank) -> file < 0 && rank > 0 && Math.abs(file) == Math.abs(rank));
+    NORTHWEST(-1, 1, (file, rank) -> file < 0 && rank > 0 && Math.abs(file) == Math.abs(rank)),
+    ;
 
     private final int unitFile;
     private final int unitRank;

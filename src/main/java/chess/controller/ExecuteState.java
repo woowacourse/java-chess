@@ -6,9 +6,9 @@ public enum ExecuteState {
 
     INIT,
     START,
-
     MOVE,
-    END;
+    END,
+    ;
 
     public static ExecuteState from(final String input) {
         return Arrays.stream(ExecuteState.values())

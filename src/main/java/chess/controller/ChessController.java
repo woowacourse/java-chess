@@ -20,12 +20,12 @@ public class ChessController {
     private static final OutputView outputView = new OutputView();
 
     private final ChessGame chessGame;
+    private ExecuteState executeState = INIT;
     private final Map<ExecuteState, Consumer<List<String>>> actions = Map.of(
             START, this::start,
             MOVE, this::move,
             END, this::end
     );
-    private ExecuteState executeState = INIT;
 
     public ChessController(final ChessGame chessGame) {
         this.chessGame = chessGame;

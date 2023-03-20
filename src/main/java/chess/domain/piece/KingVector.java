@@ -11,7 +11,8 @@ public enum KingVector {
     SOUTHEAST(1, -1),
     SOUTHWEST(-1, -1),
     NORTHEAST(1, 1),
-    NORTHWEST(-1, 1);
+    NORTHWEST(-1, 1),
+    ;
 
     private final int unitFile;
     private final int unitRank;

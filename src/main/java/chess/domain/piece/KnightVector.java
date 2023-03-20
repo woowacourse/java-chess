@@ -11,7 +11,8 @@ public enum KnightVector {
     TWO_SOUTH_ONE_EAST(1, -2),
     TWO_SOUTH_ONE_WEST(-1, -2),
     TWO_WEST_ONE_NORTH(-2, 1),
-    TWO_WEST_ONE_SOUTH(-2, -1);
+    TWO_WEST_ONE_SOUTH(-2, -1),
+    ;
 
     private final int unitFile;
     private final int unitRank;

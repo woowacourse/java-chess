@@ -11,7 +11,8 @@ public enum PawnVector {
     SOUTH(0, -1),
     TWO_SOUTH(0, -2),
     SOUTH_WEST(-1, -1),
-    SOUTH_EAST(1, -1);
+    SOUTH_EAST(1, -1),
+    ;
 
     private final int unitFile;
     private final int unitRank;
