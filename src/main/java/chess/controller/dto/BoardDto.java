@@ -1,7 +1,7 @@
 package chess.controller.dto;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.piece.type.Piece;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece;
 
 public enum PieceType {
     QUEEN,

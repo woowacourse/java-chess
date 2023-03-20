@@ -1,7 +1,6 @@
-package chess.domain.piece.type;
+package chess.domain.piece;
 
 import chess.domain.chess.CampType;
-import chess.domain.piece.Position;
 import chess.domain.piece.move.piece.MoveRule;
 
 import java.util.Objects;

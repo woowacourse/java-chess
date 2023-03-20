@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.piece.move.piece.BishopMove;
 import chess.domain.piece.move.piece.KingMove;
@@ -9,18 +10,17 @@ import chess.domain.piece.move.piece.KnightMove;
 import chess.domain.piece.move.piece.PawnMove;
 import chess.domain.piece.move.piece.QueenMove;
 import chess.domain.piece.move.piece.RookMove;
-import chess.domain.piece.type.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static chess.domain.piece.type.PieceType.BISHOP;
-import static chess.domain.piece.type.PieceType.KING;
-import static chess.domain.piece.type.PieceType.KNIGHT;
-import static chess.domain.piece.type.PieceType.PAWN;
-import static chess.domain.piece.type.PieceType.QUEEN;
-import static chess.domain.piece.type.PieceType.ROOK;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoardFactory {
 

@@ -1,8 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.piece.type.Piece;
 
 import java.util.Map;
 

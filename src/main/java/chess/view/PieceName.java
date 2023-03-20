@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.controller.dto.PieceDto;
 import chess.domain.chess.CampType;
-import chess.domain.piece.type.PieceType;
+import chess.domain.piece.PieceType;
 
 import java.util.Map;
 import java.util.stream.Collectors;

@@ -1,8 +1,8 @@
 package chess.controller.dto;
 
 import chess.domain.chess.CampType;
-import chess.domain.piece.type.Piece;
-import chess.domain.piece.type.PieceType;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public final class PieceDto {
     private final PieceType pieceType;
