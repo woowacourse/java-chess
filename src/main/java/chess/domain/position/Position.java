@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
+
     private final Rank rank;
     private final File file;
 
@@ -31,6 +32,11 @@ public class Position {
     public static Position of(Rank rank, File file) {
         return CACHE.get(rank.name() + file.name());
     }
+
+    public static Position from(String positionCommand) {
+        return CACHE.get(positionCommand);
+    }
+
 
     public int calculateFileDistance(final Position startPosition) {
         return file.calculateDistance(startPosition.file);
