@@ -1,10 +1,10 @@
-package chess.controller.commend;
+package chess.controller.command;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 
-public class EndCommend extends Commend {
-    public EndCommend(ChessController chessController) {
+public class EndCommand extends Command {
+    public EndCommand(ChessController chessController) {
         super(chessController);
     }
 

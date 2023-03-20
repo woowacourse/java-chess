@@ -1,17 +1,17 @@
 package chess.controller;
 
-import chess.controller.commend.Commend;
-import chess.controller.commend.StartCommend;
+import chess.controller.command.Command;
+import chess.controller.command.StartCommand;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 
 public class ChessController {
     private final InputView inputView;
-    private Commend commend;
+    private Command command;
 
     public ChessController() {
         this.inputView = new InputView();
-        this.commend = new StartCommend(this);
+        this.command = new StartCommand(this);
     }
 
     public void run() {
@@ -25,14 +25,14 @@ public class ChessController {
 
     private boolean catchException(ChessGame chessGame) {
         try {
-            return commend.operate(chessGame);
+            return command.operate(chessGame);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
         return true;
     }
 
-    public void setCommend(Commend commend) {
-        this.commend = commend;
+    public void setCommend(Command command) {
+        this.command = command;
     }
 }

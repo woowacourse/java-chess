@@ -1,4 +1,4 @@
-package chess.controller.commend;
+package chess.controller.command;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
@@ -12,8 +12,8 @@ import chess.view.validator.ValidateType;
 
 import java.util.List;
 
-public class RunningCommend extends Commend {
-    public RunningCommend(ChessController chessController) {
+public class RunningCommand extends Command {
+    public RunningCommand(ChessController chessController) {
         super(chessController);
     }
 
@@ -22,8 +22,8 @@ public class RunningCommend extends Commend {
         List<String> commend = inputView.requestCommend(List.of(ValidateType.PLAY,
                 ValidateType.MOVE_SIZE,
                 ValidateType.OUT_OF_RANGE));
-        if (CommendRenderer.render(commend.get(0)).equals(CommendType.END)) {
-            this.chessController.setCommend(new EndCommend(chessController));
+        if (CommendRenderer.render(commend.get(0)).equals(CommandType.END)) {
+            this.chessController.setCommend(new EndCommand(chessController));
             return true;
         }
         chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));

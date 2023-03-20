@@ -1,26 +1,26 @@
 package chess.renderer;
 
-import chess.controller.commend.CommendType;
+import chess.controller.command.CommandType;
 
 import java.util.Arrays;
 
 public enum CommendRenderer {
-    START("start", CommendType.START),
-    END("end", CommendType.END),
-    MOVE("move", CommendType.MOVE);
+    START("start", CommandType.START),
+    END("end", CommandType.END),
+    MOVE("move", CommandType.MOVE);
     private final String value;
-    private final CommendType commendType;
+    private final CommandType commandType;
 
-    CommendRenderer(String value, CommendType commendType) {
+    CommendRenderer(String value, CommandType commandType) {
         this.value = value;
-        this.commendType = commendType;
+        this.commandType = commandType;
     }
 
-    public static CommendType render(String input) {
+    public static CommandType render(String input) {
         return Arrays.stream(values())
                 .filter(commendType -> commendType.value.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException())
-                .commendType;
+                .commandType;
     }
 }
