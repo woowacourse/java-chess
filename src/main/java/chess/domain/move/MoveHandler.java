@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public class DirectionHandler {
+public class MoveHandler {
 
     public static MoveEnum findByPosition(final Position source, final Position target) {
         final int dx = diffFile(source, target);

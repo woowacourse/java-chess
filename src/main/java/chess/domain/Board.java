@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.move.DirectionHandler;
+import chess.domain.move.MoveHandler;
 import chess.domain.move.enums.MoveEnum;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -33,7 +33,7 @@ public class Board {
         validateSourceNotEmpty(source);
         validateNotSameColor(source, target);
 
-        MoveEnum unit = DirectionHandler.findByPosition(source, target);
+        MoveEnum unit = MoveHandler.findByPosition(source, target);
 
         Piece piece = board.get(source);
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class DirectionHandlerTest {
+class MoveHandlerTest {
 
     @Nested
     class 상하좌우_테스트 {
@@ -21,7 +21,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = HorizontalMove.RIGHT;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -36,7 +36,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = HorizontalMove.LEFT;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -51,7 +51,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = VerticalMove.UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -66,7 +66,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = VerticalMove.DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -85,7 +85,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = DiagonalMove.RIGHT_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -100,7 +100,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = DiagonalMove.LEFT_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -115,7 +115,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = DiagonalMove.RIGHT_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -130,7 +130,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = DiagonalMove.LEFT_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -148,7 +148,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.LEFT_UP_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -163,7 +163,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.RIGHT_UP_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -178,7 +178,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.RIGHT_RIGHT_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -193,7 +193,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.RIGHT_RIGHT_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -208,7 +208,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.RIGHT_DOWN_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -223,7 +223,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.LEFT_DOWN_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -238,7 +238,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.LEFT_LEFT_DOWN;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -253,7 +253,7 @@ class DirectionHandlerTest {
             final MoveEnum expected = KnightMove.LEFT_LEFT_UP;
 
             // when
-            final MoveEnum actual = DirectionHandler.findByPosition(source, target);
+            final MoveEnum actual = MoveHandler.findByPosition(source, target);
 
             // then
             assertThat(actual).isEqualTo(expected);
@@ -267,7 +267,7 @@ class DirectionHandlerTest {
         final Position target = Position.from("h7");
 
         // then
-        assertThatThrownBy(() -> DirectionHandler.findByPosition(source, target))
+        assertThatThrownBy(() -> MoveHandler.findByPosition(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 방향입니다.");
     }
