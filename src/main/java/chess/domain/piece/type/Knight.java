@@ -6,13 +6,10 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
 import java.util.List;
-import java.util.Map;
 
 public class Knight extends Piece {
     public static final String DIRECTION_ERROR_MESSAGE = "Knight가 이동할 수 있는 방향이 아닙니다";
-    public static final String DISTANCE_ERROR_MESSAGE = "Knight가 한 번에 이동할 수 있는 거리가 아닙니다";
-    public static final String MOVE_ERROR_MESSAGE = "Knight는 도착점에 아군이 있으면 이동할 수 없습니다.";
-    private static final Map<Integer, Integer> movableDistance = Map.of(1, 2, 2, 1);
+    public static final String MOVE_ERROR_MESSAGE = "Knight는 도착점에 아군이 있으면 이동할 수 없습니다";
     private static final List<Direction> movableDirection = List.of(
             Direction.KNIGHT_TOP_LEFT,
             Direction.KNIGHT_TOP_RIGHT,
@@ -33,7 +30,6 @@ public class Knight extends Piece {
         Direction direction = Direction.findDirectionByGap(start, end);
 
         checkMovableDirection(direction);
-        checkMovableDistance(start, end);
         checkMovableToDestination(colorOfDestination);
         return true;
     }
@@ -43,21 +39,6 @@ public class Knight extends Piece {
         if(!movableDirection.contains(direction)){
             throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
         }
-    }
-
-    public void checkMovableDistance(Position start, Position end) {
-        int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
-        int distanceOfRanks = Math.abs(start.findGapOfRank(end));
-
-        if(!isMovableDistance(distanceOfColumns, distanceOfRanks)) {
-            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
-        }
-    }
-
-    private boolean isMovableDistance(int absGapOfColumn, int absGapOfRank) {
-        return movableDistance.entrySet()
-         .stream()
-         .anyMatch(entry -> entry.getKey() == absGapOfColumn && entry.getValue() == absGapOfRank);
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
