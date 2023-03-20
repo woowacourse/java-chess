@@ -10,27 +10,27 @@ class ShapeTest {
 
     @Test
     @DisplayName("white 플레이어가 가진 기물의 이름을 입력받아 해당 기물의 모양을 반환한다.")
-    void findByWhiteName() {
+    void findShapeByWhiteName() {
         // given, when, then
         Assertions.assertAll(
-                () -> assertThat(Shape.findByWhiteName('p'))
+                () -> assertThat(Shape.findShapeByWhiteName('p'))
                         .isEqualTo(Shape.PAWN),
 
-                () -> assertThat(Shape.findByWhiteName('k'))
+                () -> assertThat(Shape.findShapeByWhiteName('k'))
                         .isEqualTo(Shape.KING),
 
-                () -> assertThat(Shape.findByWhiteName('q'))
+                () -> assertThat(Shape.findShapeByWhiteName('q'))
                         .isEqualTo(Shape.QUEEN),
 
-                () -> assertThat(Shape.findByWhiteName('r'))
+                () -> assertThat(Shape.findShapeByWhiteName('r'))
                         .isEqualTo(Shape.ROOK),
 
-                () -> assertThat(Shape.findByWhiteName('b'))
+                () -> assertThat(Shape.findShapeByWhiteName('b'))
                         .isEqualTo(Shape.BISHOP),
 
-                () -> assertThat(Shape.findByWhiteName('n'))
+                () -> assertThat(Shape.findShapeByWhiteName('n'))
                         .isEqualTo(Shape.KNIGHT)
         );
-
     }
+
 }
