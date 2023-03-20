@@ -25,7 +25,11 @@ public abstract class Piece {
         }
     }
 
-    public boolean isSameColor(Color turn) {
-        return color.isSameColor(turn);
+    public boolean isSameColor(Color color) {
+        return this.color.isSameColor(color);
+    }
+
+    public boolean isDifferentColor(Color color) {
+        return this.color.isDifferentColor(color);
     }
 }

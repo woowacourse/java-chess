@@ -30,7 +30,7 @@ public class Board {
     private void validateTurn(final Position from, final Color nextTurn) {
         final Piece currentTurnPiece = findPieceFrom(from);
 
-        if (!currentTurnPiece.isSameColor(nextTurn)) {
+        if (currentTurnPiece.isDifferentColor(nextTurn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }
