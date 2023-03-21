@@ -4,17 +4,27 @@ import domain.piece.move.Coordinate;
 
 public interface Piece {
 
-    boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
+    private boolean isNeverMoved = true;
 
-    default boolean canReap() {
+    public abstract boolean isReachableByRule(final Coordinate start, final Coordinate end);
+
+    public boolean canJump() {
         return false;
     }
 
-    default boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 
-    default boolean isKing() {
+    public boolean isKing() {
         return false;
+    }
+
+    protected boolean isFirstMove() {
+        return isNeverMoved;
+    }
+
+    public void checkMoved() {
+        isNeverMoved = false;
     }
 }

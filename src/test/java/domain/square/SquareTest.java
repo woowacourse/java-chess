@@ -16,9 +16,9 @@ class SquareTest {
     void propertyTest() {
         Square square = new Square(new Bishop(), Color.BLACK);
 
-        assertThat(square.canReap()).isFalse();
-        assertThat(square.getCamp()).isEqualTo(Color.BLACK);
-        assertThat(square.getPieceType()).isInstanceOf(Piece.class);
+        assertThat(square.hasPieceCanJump()).isFalse();
+        assertThat(square.getColor()).isEqualTo(Color.BLACK);
+        assertThat(square.getPiece()).isInstanceOf(Piece.class);
     }
 
     @Test

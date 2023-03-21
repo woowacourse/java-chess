@@ -22,11 +22,13 @@ public final class ChessGame {
     }
 
     public void move(final Coordinate start, final Coordinate end) {
+        Square findSquare = board.findSquare(start);
         validateMove(start, end);
         Square findSquare = board.findSquare(start);
         validateTurn(findSquare);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
+        findSquare.checkPieceMoved();
         turn.invert();
     }
 

@@ -13,18 +13,20 @@ public final class WhitePawn extends Pawn {
     ));
 
     @Override
-    public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
-
-        return DIRECTION.canBeDirectionOf(inclination) &&
-                startCoordinate.hasDistanceLessThanTwo(endCoordinate);
-    }
-
-    @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (isFirstMove()) {
+            return isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
+        }
         Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
 
         return DIRECTION.canBeDirectionOf(inclination) &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
+    }
+
+    private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+
+        return DIRECTION.canBeDirectionOf(inclination) &&
+                startCoordinate.hasDistanceLessThanTwo(endCoordinate);
     }
 }

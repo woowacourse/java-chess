@@ -23,7 +23,8 @@ class BoardInitialImageTest {
         Square firstSquare = BoardInitialImage.getSquareByCoordinate(0, 0);
         Square secondSquare = BoardInitialImage.getSquareByCoordinate(0 , 0);
 
-        assertThat(firstSquare == secondSquare).isFalse();
+        assertThat(firstSquare != secondSquare).isTrue();
+        assertThat(firstSquare.getPiece() != secondSquare.getPiece()).isTrue();
     }
 
     @ParameterizedTest(name = "{0}행 {1}열의 록을 가져온다")

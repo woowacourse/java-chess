@@ -11,23 +11,17 @@ public final class Square implements Cloneable {
 
     private final Piece piece;
     private final Color color;
-    private boolean isFirstMove;
 
     public Square(final Piece piece, final Color color) {
         this.piece = piece;
         this.color = color;
-        this.isFirstMove = true;
     }
 
     public static Square ofEmpty() {
         return new Square(new EmptyPiece(), Color.NEUTRAL);
     }
 
-    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (isFirstMove && piece.isPawn()) {
-            Pawn pawn = (Pawn) piece;
-            return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
-        }
+    public boolean isPieceMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return piece.isReachableByRule(startCoordinate, endCoordinate);
     }
 
