@@ -5,7 +5,7 @@ import chess.controller.dto.ChessCommandDto;
 import chess.domain.PiecesPosition;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameCommand;
-import chess.domain.game.ReadyChessGame;
+import chess.domain.game.state.ReadyChessGame;
 import chess.view.input.InputView;
 import chess.view.output.OutputView;
 import java.util.function.Supplier;

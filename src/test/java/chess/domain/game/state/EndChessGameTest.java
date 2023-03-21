@@ -1,10 +1,12 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.PiecesPosition;
-import chess.domain.piece.Camp;
+import chess.domain.game.ChessCommandType;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameCommand;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -19,7 +21,7 @@ class EndChessGameTest {
     @BeforeEach
     void setRunningGame() {
         PiecesPosition piecesPosition = new PiecesPosition();
-        endGame = new EndChessGame(piecesPosition, Camp.WHITE);
+        endGame = new EndChessGame(piecesPosition);
     }
 
     @Test

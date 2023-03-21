@@ -1,9 +1,12 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.PiecesPosition;
+import chess.domain.game.ChessCommandType;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

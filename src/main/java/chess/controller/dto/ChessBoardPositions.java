@@ -6,6 +6,7 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: 2023/03/21 DTO가 맞는지?
 public class ChessBoardPositions {
     private static ChessBoardPositions chessBoardPositions;
 

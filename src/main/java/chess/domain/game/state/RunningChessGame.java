@@ -1,21 +1,27 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.PiecesPosition;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameCommand;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
 import java.util.List;
 
-public class RunningChessGame extends ChessGame {
+public class RunningChessGame implements ChessGame {
 
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
+    protected final PiecesPosition piecesPosition;
+    protected final Camp turnCamp;
+
     public RunningChessGame(PiecesPosition piecesPosition, Camp turnCamp) {
-        super(piecesPosition, turnCamp);
+        this.piecesPosition = piecesPosition;
+        this.turnCamp = turnCamp;
     }
 
     @Override
@@ -31,7 +37,7 @@ public class RunningChessGame extends ChessGame {
             return new RunningChessGame(piecesPosition, turnCamp.convert());
         }
 
-        return new EndChessGame(piecesPosition, turnCamp.convert());
+        return new EndChessGame(piecesPosition);
     }
 
     private void validateRunningCommand(ChessGameCommand gameCommand) {
@@ -110,5 +116,10 @@ public class RunningChessGame extends ChessGame {
         if (!pieceMove.isMovable(isEmpty, true)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
+    }
+
+    @Override
+    public PiecesPosition getPiecesPosition() {
+        return this.piecesPosition;
     }
 }
