@@ -15,7 +15,7 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void moveOrNot(final Position source, final Position target) {
+    public void movePiece(final Position source, final Position target) {
         checkPlayable();
         final Piece sourcePiece = board.findPieceByPosition(source);
         final List<Position> movablePositions = sourcePiece.findMovablePosition(source, board);

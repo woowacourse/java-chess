@@ -12,7 +12,7 @@ public enum Command {
     START("start", (chessGame, ignored) -> chessGame.start()),
 
     END("end", (chessGame, ignored) -> chessGame.end()),
-    MOVE("move", moveOrNot());
+    MOVE("move", movePiece());
 
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
@@ -27,7 +27,7 @@ public enum Command {
         this.consumer = consumer;
     }
 
-    private static BiConsumer<ChessGame, String[]> moveOrNot() {
+    private static BiConsumer<ChessGame, String[]> movePiece() {
         return (chessGame, splitCommand) -> {
             final String[] source = splitPosition(splitCommand, SOURCE_INDEX);
             final String[] target = splitPosition(splitCommand, TARGET_INDEX);
@@ -37,7 +37,7 @@ public enum Command {
             final Position targetPosition = Position.of(File.findBySymbol(target[FILE_INDEX]),
                     Rank.findByIndex(Integer.parseInt(target[RANK_INDEX])));
 
-            chessGame.moveOrNot(sourcePosition, targetPosition);
+            chessGame.movePiece(sourcePosition, targetPosition);
         };
     }
 
