@@ -54,10 +54,10 @@ public class Board {
         }
     }
 
-    public boolean isEmptyPosition(List<Position> paths) {
-        return paths.stream()
+    boolean isEmptyPosition(List<Position> paths) {
+        return paths.isEmpty() || paths.stream()
                 .map(boards::get)
-                .allMatch(Piece::isEmpty) || paths.isEmpty();
+                .allMatch(Piece::isEmpty);
     }
 
     public Map<Position, Piece> getBoards() {
