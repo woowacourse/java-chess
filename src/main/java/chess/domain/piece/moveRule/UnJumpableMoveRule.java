@@ -12,7 +12,7 @@ public abstract class UnJumpableMoveRule implements MoveRule {
         }
     }
 
-    private boolean isExistAnotherPiece(Map<Position, Piece> board, List<Position> route){
+    private boolean isExistAnotherPiece(Map<Position, Piece> board, List<Position> route) {
         return route.stream().anyMatch(position -> board.containsKey(position));
     }
 }

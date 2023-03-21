@@ -1,24 +1,22 @@
 package chess.domain.chessGame;
 
-import chess.domain.Board;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class ReadyChessGame implements ChessGame {
+public class EndChessGame implements ChessGame {
     @Override
     public ChessGame start() {
-        Board board = new Board();
-        return new PlayingChessGame(board);
+        throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 
     @Override
     public ChessGame move(String currentPosition, String nextPosition) {
-        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+        throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 
     @Override
     public ChessGame end() {
-        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+        throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 
     @Override
@@ -28,6 +26,6 @@ public class ReadyChessGame implements ChessGame {
 
     @Override
     public Map<Position, String> getPrintingBoard() {
-        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+        throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 }

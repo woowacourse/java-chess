@@ -3,11 +3,9 @@ package chess.controller;
 import chess.domain.Command;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.ReadyChessGame;
-import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGameController {
     public static final int COMMAND_HEAD_INDEX = 0;
@@ -37,12 +35,12 @@ public class ChessGameController {
             outputView.printBoard(chessGame.getPrintingBoard());
         }
         if (command == Command.MOVE) {
-            Map<Position, String> board = chessGame.move(inputCommand.get(CURRENT_POSITION_INDEX),
+            chessGame = chessGame.move(inputCommand.get(CURRENT_POSITION_INDEX),
                     inputCommand.get(NEXT_POSITION_INDEX));
-            outputView.printBoard(board);
+            outputView.printBoard(chessGame.getPrintingBoard());
         }
         if (command == Command.END) {
-            chessGame.end();
+            chessGame = chessGame.end();
         }
         return chessGame;
     }
