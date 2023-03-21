@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.position.Move;
 
 public class King extends Piece {
 
@@ -9,11 +9,11 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Position source, Position target, Piece targetPiece) {
-        if (!(source.isStraight(target) || source.isDiagonal(target))) {
+    public boolean isValidMove(Move move, Piece targetPiece) {
+        if (!(move.isStraight() || move.isDiagonal())) {
             return false;
         }
-        return isUnitMove(source.getDeltaFile(target), source.getDeltaRank(target));
+        return isUnitMove(move.getDeltaFile(), move.getDeltaRank());
     }
 
     private boolean isUnitMove(int deltaFile, int deltaRank) {

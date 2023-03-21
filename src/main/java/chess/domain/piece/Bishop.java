@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.position.Move;
 
 public class Bishop extends Piece {
 
@@ -8,9 +8,10 @@ public class Bishop extends Piece {
         super(color);
     }
 
+
     @Override
-    public boolean isValidMove(Position source, Position target, Piece targetPiece) {
-        return source.isDiagonal(target);
+    public boolean isValidMove(Move move, Piece targetPiece) {
+        return move.isDiagonal();
     }
 
     @Override

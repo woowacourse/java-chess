@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Move;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,8 @@ public class Board {
     private void checkPieceReachable(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
         Piece targetPiece = pieces.get(target);
-        if (!sourcePiece.isValidMove(source, target, targetPiece)) {
+        Move move = new Move(source, target);
+        if (!sourcePiece.isValidMove(move, targetPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
@@ -54,7 +56,8 @@ public class Board {
     }
 
     private void checkNotCrossOtherPiece(Position source, Position target) {
-        Set<Position> route = source.findRoute(target);
+        Move move = new Move(source, target);
+        Set<Position> route = move.findRoute();
         for (Position position : route) {
             checkEmpty(position);
         }

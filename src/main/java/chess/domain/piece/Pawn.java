@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.position.Move;
 import java.util.Set;
 
 public class Pawn extends Piece {
@@ -18,41 +18,43 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Position source, Position target, Piece targetPiece) {
+    public boolean isValidMove(Move move, Piece targetPiece) {
         if (isAttack(targetPiece)) {
-            return canAttack(source, target);
+            return canAttack(move);
         }
-        int deltaFile = source.getDeltaFile(target);
-        int deltaRank = source.getDeltaRank(target);
         if (!isTouched) {
-            return canInitialMove(deltaFile, deltaRank);
+            return canInitialMove(move);
         }
-        return canMove(deltaFile, deltaRank);
+        return canMove(move);
     }
 
     private boolean isAttack(Piece targetPiece) {
         return targetPiece != null;
     }
 
-    private boolean canAttack(Position source, Position target) {
-        if (!source.isDiagonal(target)) {
+    private boolean canAttack(Move move) {
+        if (!move.isDiagonal()) {
             return false;
         }
-        int deltaRank = source.getDeltaRank(target);
+        int deltaRank = move.getDeltaRank();
         if (isUpward()) {
             return deltaRank == 1;
         }
         return deltaRank == -1;
     }
 
-    private boolean canInitialMove(int deltaFile, int deltaRank) {
+    private boolean canInitialMove(Move move) {
+        int deltaFile = move.getDeltaFile();
+        int deltaRank = move.getDeltaRank();
         if (isUpward()) {
             return deltaFile == 0 && Set.of(1, 2).contains(deltaRank);
         }
         return deltaFile == 0 && Set.of(-1, -2).contains(deltaRank);
     }
 
-    private boolean canMove(int deltaFile, int deltaRank) {
+    private boolean canMove(Move move) {
+        int deltaFile = move.getDeltaFile();
+        int deltaRank = move.getDeltaRank();
         if (isUpward()) {
             return deltaFile == 0 && deltaRank == 1;
         }

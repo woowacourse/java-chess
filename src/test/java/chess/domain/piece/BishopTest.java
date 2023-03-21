@@ -4,6 +4,7 @@ package chess.domain.piece;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.position.Move;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +17,9 @@ public class BishopTest {
     @ValueSource(strings = {"c2", "b1", "c4", "b5", "e2", "f1", "e4", "f5"})
     void canMove_Diagonal_Infinite(String position) {
         Bishop bishop = new Bishop(WHITE);
+        Move move = new Move(new Position("d3"), new Position(position));
 
-        assertThat(bishop.isValidMove(new Position("d3"), new Position(position), null)).isTrue();
+        assertThat(bishop.isValidMove(move, null)).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -25,7 +27,8 @@ public class BishopTest {
     @ValueSource(strings = {"c3", "b2"})
     void canNotMove(String position) {
         Bishop bishop = new Bishop(WHITE);
+        Move move = new Move(new Position("d3"), new Position(position));
 
-        assertThat(bishop.isValidMove(new Position("d3"), new Position(position), null)).isFalse();
+        assertThat(bishop.isValidMove(move, null)).isFalse();
     }
 }
