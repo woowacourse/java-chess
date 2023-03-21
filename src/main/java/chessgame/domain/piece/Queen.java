@@ -17,13 +17,13 @@ public class Queen implements Piece {
     }
 
     @Override
-    public Team team() {
-        return team;
+    public boolean isMovable(Point source, Point target) {
+        return source.isHorizontal(target) || source.isVertical(target) || source.isDiagonal(target);
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
-        return source.isHorizontal(target) || source.isVertical(target) || source.isDiagonal(target);
+    public Team team() {
+        return team;
     }
 
     @Override

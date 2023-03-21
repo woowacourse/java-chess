@@ -16,13 +16,17 @@ public class ChessBoardFactory {
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
-                if (initialPiece != null) {
-                    initialBoard.put(Point.of(file, rank), initialPiece);
-                }
+                makeBoard(initialBoard, rank, file);
             }
         }
         return initialBoard;
+    }
+
+    private static void makeBoard(Map<Point, Piece> initialBoard, Rank rank, File file) {
+        Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
+        if (initialPiece != null) {
+            initialBoard.put(Point.of(file, rank), initialPiece);
+        }
     }
 
     private static Piece generateInitialPiece(Rank rank, int idx) {

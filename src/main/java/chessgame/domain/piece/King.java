@@ -17,16 +17,6 @@ public class King implements Piece {
         return new King(team);
     }
 
-    @Override
-    public String toString() {
-        return team.convertTeamName(ORIGINAL_NAME);
-    }
-
-    @Override
-    public boolean isMovable(Point source, Point target) {
-        return isKingMove(source, target);
-    }
-
     private boolean isKingMove(Point source, Point target) {
         if (source.isHorizontal(target) && Math.abs(source.fileDistance(target)) == DISTANCE) {
             return true;
@@ -39,7 +29,17 @@ public class King implements Piece {
     }
 
     @Override
-    public Team team() {
+    public boolean isMovable(Point source, Point target) {
+        return isKingMove(source, target);
+    }
+
+    @Override
+    public Team team()  {
         return team;
+    }
+
+    @Override
+    public String toString() {
+        return team.convertTeamName(ORIGINAL_NAME);
     }
 }

@@ -17,8 +17,8 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public String toString() {
-        return team.convertTeamName(ORIGINAL_NAME);
+    public Team team() {
+        return team;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public Team team() {
-        return team;
+    public String toString() {
+        return team.convertTeamName(ORIGINAL_NAME);
     }
 }

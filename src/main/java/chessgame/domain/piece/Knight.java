@@ -19,13 +19,13 @@ public class Knight implements Piece {
     }
 
     @Override
-    public String toString() {
-        return team.convertTeamName(ORIGINAL_NAME);
+    public boolean isMovable(Point source, Point target) {
+        return isKnightMove(source, target);
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
-        return isKnightMove(source, target);
+    public Team team() {
+        return team;
     }
 
     private boolean isKnightMove(Point source, Point target) {
@@ -39,7 +39,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public Team team() {
-        return team;
+    public String toString() {
+        return team.convertTeamName(ORIGINAL_NAME);
     }
 }

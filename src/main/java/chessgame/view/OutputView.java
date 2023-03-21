@@ -32,7 +32,8 @@ public class OutputView {
     private void printPoint(Map<Point, Piece> chessBoard, Point point) {
         if (chessBoard.containsKey(point)) {
             System.out.print(chessBoard.get(point));
-        } else {
+        }
+        if (!chessBoard.containsKey(point)) {
             System.out.print(".");
         }
     }

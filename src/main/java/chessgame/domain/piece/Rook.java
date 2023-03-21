@@ -21,12 +21,13 @@ public class Rook implements Piece {
         return team;
     }
 
-    public String toString() {
-        return team.convertTeamName(ORIGINAL_NAME);
-    }
-
     @Override
     public boolean isMovable(Point source, Point target) {
         return source.isHorizontal(target) || source.isVertical(target);
+    }
+
+    @Override
+    public String toString() {
+        return team.convertTeamName(ORIGINAL_NAME);
     }
 }

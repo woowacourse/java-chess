@@ -13,7 +13,7 @@ public class Black implements State {
     @Override
     public State run(Command command, Board board) {
         if (command.isStart()) {
-            throw new IllegalArgumentException("시작을 입력할 수 없습니다.");
+            throw new IllegalArgumentException("start를 입력할 수 없습니다.");
         }
         if (command.isMove()) {
             board.move(command.makePoints().get(0), command.makePoints().get(1), Team.BLACK);

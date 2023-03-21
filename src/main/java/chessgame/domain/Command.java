@@ -19,10 +19,10 @@ public class Command {
     }
 
     public static Command of(String command) {
-        return validateStartOrEnd(command);
+        return validateCommand(command);
     }
 
-    private static Command validateStartOrEnd(String command) {
+    private static Command validateCommand(String command) {
         if (command.isBlank()) {
             throw new IllegalArgumentException("빈값을 입력하면 안됩니다.");
         }
@@ -45,7 +45,7 @@ public class Command {
     }
 
     private static void validatePoint(String source, String target) {
-        String pattern = "[a-h]{1}[1-8]{1}";
+        String pattern = "[a-h][1-8]";
         if (!(source.matches(pattern) && target.matches(pattern))) {
             throw new IllegalArgumentException("이동 좌표는 a-h 1-8 로 입력하여야합니다.");
         }

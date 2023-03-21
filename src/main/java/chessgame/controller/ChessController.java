@@ -30,20 +30,10 @@ public class ChessController {
     private void eachTurn(Game game) {
         try {
             Command command = readCommand();
-            setButton(game, command);
+            setState(game, command);
         }catch (IllegalArgumentException e){
             outputView.printErrorMsg(e.getMessage());
             eachTurn(game);
-        }
-    }
-
-    private Command setButton(Game game, Command command) {
-        try {
-            game.setState(command);
-            return command;
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMsg(e.getMessage());
-            return setButton(game, readCommand());
         }
     }
 
@@ -53,6 +43,15 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
             return readCommand();
+        }
+    }
+
+    private void setState(Game game, Command command) {
+        try {
+            game.setState(command);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMsg(e.getMessage());
+            setState(game, readCommand());
         }
     }
 
