@@ -55,13 +55,20 @@ public class ChessService {
 		this.state = state;
 	}
 
-	private void assertState(ChessState state) {
-		if (this.state != state) {
-			throw new IllegalStateException(SERVICE_STATE_ERROR_MESSAGE);
-		}
+	public Map<Position, Piece> getBoard() {
+		assertState(ChessState.GAME_RUNNING);
+		return board.getBoard();
 	}
 
-	public Map<Position, Piece> getBoard() {
-		return board.getBoard();
+	private void assertState(ChessState validState1, ChessState... validStates) {
+		if (this.state == validState1) {
+			return;
+		}
+		for (ChessState validState : validStates) {
+			if (this.state == validState) {
+				return;
+			}
+		}
+		throw new IllegalStateException(SERVICE_STATE_ERROR_MESSAGE);
 	}
 }
