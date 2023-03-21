@@ -7,6 +7,7 @@ public enum Command {
     START(1),
     MOVE(3),
     STATUS(1),
+    CLEAR(1),
     END(1),
     EMPTY(0),
     ;

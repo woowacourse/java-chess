@@ -36,11 +36,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class ChessGameTest {
 
-    private ChessDao chessDao;
+    private ChessDao mockChessDao;
 
     @BeforeEach
     void setUp() {
-        chessDao = new ChessDao() {
+        mockChessDao = new ChessDao() {
             @Override
             public void save(final MoveDto moveDto) {
             }
@@ -48,6 +48,10 @@ public class ChessGameTest {
             @Override
             public List<MoveDto> findAll() {
                 return List.of();
+            }
+
+            @Override
+            public void deleteAll() {
             }
         };
     }
@@ -64,7 +68,7 @@ public class ChessGameTest {
     @Test
     void 체스_게임을_생성한다() {
         // given
-        final ChessGame chessGame = new ChessGame(chessDao);
+        final ChessGame chessGame = new ChessGame(mockChessDao);
 
         // when
         chessGame.initialize();
@@ -86,7 +90,7 @@ public class ChessGameTest {
     @Test
     void 기물을_움직인다() {
         // given
-        final ChessGame chessGame = new ChessGame(chessDao);
+        final ChessGame chessGame = new ChessGame(mockChessDao);
         chessGame.initialize();
 
         // when
@@ -100,7 +104,7 @@ public class ChessGameTest {
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final ChessGame chessGame = new ChessGame(chessDao);
+        final ChessGame chessGame = new ChessGame(mockChessDao);
         chessGame.initialize();
 
         // when
@@ -131,7 +135,7 @@ public class ChessGameTest {
     @ValueSource(booleans = {true, false})
     void 체스게임이_초기화_되었는지_확인한다(final boolean initialize) {
         // given
-        final ChessGame chessGame = new ChessGame(chessDao);
+        final ChessGame chessGame = new ChessGame(mockChessDao);
         if (initialize) {
             chessGame.initialize();
         }
@@ -141,5 +145,19 @@ public class ChessGameTest {
 
         // then
         assertThat(result).isEqualTo(initialize);
+    }
+
+    @Test
+    void 체스게임을_초기상태로_되돌린다() {
+        // given
+        final ChessGame chessGame = new ChessGame(mockChessDao);
+        chessGame.initialize();
+        chessGame.move("d2", "d4");
+
+        // when
+        chessGame.clear();
+
+        // then
+        assertThat(chessGame.isInitialized()).isFalse();
     }
 }

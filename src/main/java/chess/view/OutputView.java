@@ -5,6 +5,8 @@ import chess.domain.piece.Color;
 
 public class OutputView {
 
+    private static final String NEXT_LINE = System.lineSeparator();
+
     private OutputView() {
     }
 
@@ -12,6 +14,7 @@ public class OutputView {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 상태 : status");
+        System.out.println("> 게임 초기화 : clear");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
@@ -35,6 +38,11 @@ public class OutputView {
             return "검은색 승";
         }
         return "무승부";
+    }
+
+    public static void printGameClear() {
+        System.out.println("체스 게임을 초기화합니다." + NEXT_LINE);
+        printGameStart();
     }
 
     public static void printGameEnd() {

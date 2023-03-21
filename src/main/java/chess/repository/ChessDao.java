@@ -8,4 +8,6 @@ public interface ChessDao {
     void save(MoveDto moveDto);
 
     List<MoveDto> findAll();
+
+    void deleteAll();
 }

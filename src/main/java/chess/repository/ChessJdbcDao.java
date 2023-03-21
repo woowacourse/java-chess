@@ -30,7 +30,7 @@ public class ChessJdbcDao implements ChessDao {
 
     @Override
     public List<MoveDto> findAll() {
-        final String query = "SELECT * from move";
+        final String query = "SELECT * FROM move";
         try (final Connection connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final List<MoveDto> result = new ArrayList<>();
@@ -43,6 +43,16 @@ public class ChessJdbcDao implements ChessDao {
             }
 
             return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteAll() {
+        final String query = "DELETE FROM move";
+        try (final Connection connection = connectionGenerator.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

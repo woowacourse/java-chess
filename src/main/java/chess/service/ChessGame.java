@@ -42,6 +42,11 @@ public class ChessGame {
         chessDao.save(new MoveDto(source, target));
     }
 
+    public void clear() {
+        board = new InitialState();
+        chessDao.deleteAll();
+    }
+
     public GameResult getResult() {
         return board.getResult();
     }

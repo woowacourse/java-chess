@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static chess.controller.Command.CLEAR;
 import static chess.controller.Command.EMPTY;
 import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
@@ -21,9 +22,10 @@ public class ChessGameController {
 
     public ChessGameController(final ChessGame chessGame) {
         this.chessGame = chessGame;
-        commandMapper.put(START, this::start);
+        commandMapper.put(START, ignore -> start());
         commandMapper.put(MOVE, this::move);
-        commandMapper.put(STATUS, this::status);
+        commandMapper.put(STATUS, ignore -> status());
+        commandMapper.put(CLEAR, ignore -> clear());
         commandMapper.put(END, ChessGameAction.EMPTY);
     }
 
@@ -50,7 +52,7 @@ public class ChessGameController {
         }
     }
 
-    private void start(final List<String> commands) {
+    private void start() {
         if (chessGame.isInitialized()) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
@@ -68,10 +70,18 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getResult());
     }
 
-    private void status(final List<String> commands) {
+    private void status() {
         if (!chessGame.isInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
         OutputView.printStatus(chessGame.getResult());
+    }
+
+    private void clear() {
+        if (!chessGame.isInitialized()) {
+            throw new IllegalArgumentException("START를 입력해주세요.");
+        }
+        chessGame.clear();
+        OutputView.printGameClear();
     }
 }
