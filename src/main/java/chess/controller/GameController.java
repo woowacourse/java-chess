@@ -46,7 +46,7 @@ public class GameController {
     private Command inputCommand() {
         List<String> gameCommand = inputView.readGameCommand();
         Command command = Command.from(gameCommand.get(0));
-        checkWrongCommand(command, MOVE);
+        validateWrongCommand(command, MOVE);
         return command;
     }
 
@@ -56,7 +56,7 @@ public class GameController {
         if (command == END) {
             return command;
         }
-        checkWrongCommand(command, START);
+        validateWrongCommand(command, START);
         validateMoveCommandFormat(gameCommand);
 
         chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
@@ -73,7 +73,7 @@ public class GameController {
         return boardResult;
     }
 
-    private void checkWrongCommand(final Command userCommand, final Command notExpected) {
+    private void validateWrongCommand(final Command userCommand, final Command notExpected) {
         if (userCommand == notExpected) {
             throw new IllegalArgumentException(
                     "올바른 command를 입력해주세요. 게임 시작은 start로, 게임 진행은 move로, 게임 종료는 end로 할 수 있습니다.");
