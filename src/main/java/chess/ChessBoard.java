@@ -73,7 +73,7 @@ public class ChessBoard {
     }
 
     private static void circuitVertical(Map<Position, ChessPiece> chessBoard, int i) {
-        for (int vertical = 1; vertical <= 8; vertical++) {
+        for (int vertical = 3; vertical <= 6; vertical++) {
             initBlank(chessBoard, i, vertical);
         }
     }

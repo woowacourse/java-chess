@@ -29,9 +29,11 @@ public class MovablePosition {
         ChessPiece sourcePiece = chessBoard.getChessPieceByPosition(sourcePosition);
         if (sourcePiece.getShape().equals(Shape.PAWN) && sourcePiece.getSide().equals(Side.WHITE)) {
             addPawnPosition(chessBoard, sourcePosition, Direction.WHITE_PAWN_MOVE_DIRECTION, 2);
+            addPawnCatchPosition(chessBoard, sourcePosition, Direction.WHITE_PAWN_CATCH_DIRECTION);
         }
         if (sourcePiece.getShape().equals(Shape.PAWN) && sourcePiece.getSide().equals(Side.BLACK)) {
             addPawnPosition(chessBoard, sourcePosition, Direction.BLACK_PAWN_MOVE_DIRECTION, 7);
+            addPawnCatchPosition(chessBoard, sourcePosition, Direction.BLACK_PAWN_CATCH_DIRECTION);
         }
         if (sourcePiece.getShape().equals(Shape.ROOK)) {
             addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.CROSS_DIRECTION, true);
@@ -84,6 +86,30 @@ public class MovablePosition {
             return;
         }
         findRoute(chessBoard, pawnPosition, sourcePosition, ONE_STEP_MOVEMENT);
+    }
+
+    public void addPawnCatchPosition(ChessBoard chessBoard, Position sourcePosition, List<Position> moveVector) {
+        for (Position pawnPosition : moveVector) {
+            findPawnCatchRoute(chessBoard, pawnPosition, sourcePosition);
+        }
+    }
+
+    private void findPawnCatchRoute(ChessBoard chessBoard, Position movingPosition, Position sourcePosition) {
+        int newX = sourcePosition.getXPosition() + movingPosition.getXPosition();
+        int newY = sourcePosition.getYPosition() + movingPosition.getYPosition();
+        ChessPiece targetPiece = chessBoard.getChessPieceByPosition(Position.initPosition(newX, newY));
+        if ((newX >= MIN_CHESS_BOUNDARY && newX <= MAX_CHESS_BOUNDARY) && (newY >= MIN_CHESS_BOUNDARY
+                && newY <= MAX_CHESS_BOUNDARY)) {
+            addPawnCatchRoute(chessBoard, sourcePosition, newX, newY, targetPiece);
+        }
+    }
+
+    private void addPawnCatchRoute(ChessBoard chessBoard, Position sourcePosition, int newX, int newY, ChessPiece targetPiece) {
+        if (targetPiece.getSide().equals(Side.BLANK) || targetPiece.getSide()
+                .equals(chessBoard.getChessPieceByPosition(sourcePosition).getSide())) {
+            return;
+        }
+        movablePosition.add(Position.initPosition(newX, newY));
     }
 
     private void findRoute(ChessBoard chessBoard, Position movingPosition, Position sourcePosition, int limit) {
