@@ -23,7 +23,6 @@ public enum File {
     }
 
     public static File of(int number) {
-        System.out.println(number);
         return Arrays.stream(values())
                 .filter(file -> file.index == number)
                 .findAny()

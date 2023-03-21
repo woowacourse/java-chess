@@ -23,9 +23,20 @@ public class ChessGameController {
     private void playChessGame(ChessGame chessGame) {
         outputView.printStartMessage();
         do {
-            List<String> inputCommand = inputView.inputCommand();
-            chessGame = executeCommand(chessGame, inputCommand);
+            chessGame = executeCorrectCommand(chessGame);
         } while (chessGame.isPlaying());
+    }
+
+    private ChessGame executeCorrectCommand(ChessGame chessGame){
+        ChessGame newChessGame = null;
+        try {
+            List<String> inputCommand = inputView.inputCommand();
+            newChessGame = executeCommand(chessGame, inputCommand);
+        } catch (IllegalArgumentException e){
+            outputView.printErrorMessage(e.getMessage());
+            return executeCorrectCommand(chessGame);
+        }
+        return newChessGame;
     }
 
     private ChessGame executeCommand(ChessGame chessGame, List<String> inputCommand) {
@@ -44,4 +55,6 @@ public class ChessGameController {
         }
         return chessGame;
     }
+
+
 }

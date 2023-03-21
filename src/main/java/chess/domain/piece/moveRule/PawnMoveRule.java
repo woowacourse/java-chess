@@ -39,7 +39,9 @@ public class PawnMoveRule extends UnJumpableMoveRule {
         }
         if (isDiagonalMove(currentPosition, nextPosition)) {
             moveDiagonal(currentPosition, nextPosition, board);
+            return;
         }
+        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
     }
 
     private boolean isInitPawn(Position currentPosition) {

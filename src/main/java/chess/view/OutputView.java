@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    public void printErrorMessage(String message) {
+        System.out.println("[ERROR] " + message);
+    }
+
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
