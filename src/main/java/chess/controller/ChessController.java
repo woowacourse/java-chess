@@ -1,12 +1,14 @@
 package chess.controller;
 
-import chess.CommandLine;
+import chess.CommandFactory;
+import chess.command.Command;
+import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
-    
     
     private final InputView inputView;
     private final OutputView outputView;
@@ -16,37 +18,35 @@ public class ChessController {
         this.outputView = outputView;
     }
     
-    public void execute() {
+    public void run() {
         this.outputView.printGameStartMessage();
         ChessGame chessGame = new ChessGame();
-        while (!chessGame.isGameEnd()) {
+        while (chessGame.isNotEnd()) {
             this.runGame(chessGame);
         }
     }
     
     private void runGame(final ChessGame chessGame) {
         try {
-            CommandLine commandLine = this.getCommandLine();
-            this.handleCommandLine(chessGame, commandLine);
-            this.outputView.printBoard2(BoardDTO.create(BoardMapper.map(chessGame.getBoard())));
+            Command command = this.parseCommand();
+            command.execute(chessGame);
+            this.printBoard(command, chessGame);
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
         }
     }
     
-    private CommandLine getCommandLine() {
-        return new CommandLine(this.inputView.readCommand());
+    private Command parseCommand() {
+        List<String> commandLineLiteral = this.inputView.readCommand();
+        return CommandFactory.generateCommand(commandLineLiteral);
     }
     
-    private void handleCommandLine(final ChessGame chessGame, final CommandLine commandLine) {
-        if (commandLine.isStart()) {
-            chessGame.start();
-        }
-        if (commandLine.isMove()) {
-            chessGame.move(commandLine.getArguments());
-        }
-        if (commandLine.isEnd()) {
-            chessGame.end();
+    private void printBoard(Command command, ChessGame chessGame) {
+        if (command.isNotEnd()) {
+            Board board = chessGame.getBoard();
+            String boardString = BoardMapper.map(board);
+            this.outputView.printBoard(BoardDTO.create(boardString));
         }
     }
+    
 }

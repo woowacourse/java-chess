@@ -1,13 +1,14 @@
 package chess.domain;
 
 import chess.GameStatus;
+import chess.action.Action;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class ChessGame {
+public class ChessGame implements Action {
     
     
     public static final String GAME_CANNOT_EXECUTE_MESSAGE = "실행할 수 없는 명령입니다.";
@@ -22,13 +23,6 @@ public class ChessGame {
         this.turn = Color.WHITE;
     }
     
-    public void start() {
-        if (this.status != GameStatus.START) {
-            throw new IllegalStateException(GAME_CANNOT_EXECUTE_MESSAGE);
-        }
-        this.board.initialize();
-        this.status = GameStatus.MOVE;
-    }
     
     public void move(final List<String> arguments) {
         if (this.status != GameStatus.MOVE) {
@@ -36,7 +30,7 @@ public class ChessGame {
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
-    
+        
         this.checkPieceMove(source, destination);
         this.board.replace(source, destination);
         this.turn = Color.reverse(this.turn);
@@ -50,18 +44,38 @@ public class ChessGame {
         this.checkPawnMove(source, destination, sourcePiece);
     }
     
-    private void checkPawnMove(final Position source, final Position destination, final Piece sourcePiece) {
-        if (sourcePiece.getType() == PieceType.PAWN) {
-            this.board.checkRestrictionForPawn(source, destination, this.turn);
-        }
-    }
-    
     private void checkRoute(final Position source, final Position destination, final Piece sourcePiece) {
         if (!(sourcePiece.getType() == PieceType.KNIGHT)) {
             this.board.checkBetweenRoute(source, destination);
         }
     }
     
+    private void checkPawnMove(final Position source, final Position destination, final Piece sourcePiece) {
+        if (sourcePiece.getType() == PieceType.PAWN) {
+            this.board.checkRestrictionForPawn(source, destination, this.turn);
+        }
+    }
+    
+    @Override
+    public void start() {
+        if (this.status != GameStatus.START) {
+            throw new IllegalStateException(GAME_CANNOT_EXECUTE_MESSAGE);
+        }
+        this.board.initialize();
+        this.status = GameStatus.MOVE;
+    }
+    
+    @Override
+    public void move(final Position from, final Position to) {
+        if (this.status != GameStatus.MOVE) {
+            throw new IllegalStateException(GAME_HAS_NOT_STARTED);
+        }
+        this.checkPieceMove(from, to);
+        this.board.replace(from, to);
+        this.turn = Color.reverse(this.turn);
+    }
+    
+    @Override
     public void end() {
         if (this.status != GameStatus.MOVE) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
@@ -69,9 +83,10 @@ public class ChessGame {
         this.status = GameStatus.END;
     }
     
-    public boolean isGameEnd() {
-        return this.status == GameStatus.END;
+    public boolean isNotEnd() {
+        return this.status != GameStatus.END;
     }
+    
     
     public Board getBoard() {
         return this.board;

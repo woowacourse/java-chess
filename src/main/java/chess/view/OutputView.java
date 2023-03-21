@@ -16,7 +16,7 @@ public class OutputView {
     }
     
     
-    public void printBoard2(final BoardDTO boardDTO) {
+    public void printBoard(final BoardDTO boardDTO) {
         System.out.println(boardDTO.getBoard());
         System.out.println();
     }
