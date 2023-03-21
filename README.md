@@ -10,30 +10,31 @@
 ## 기능 목록
 
 ### 입력
+
 - [x] 게임 시작 혹은 종료 명령을 입력한다
 - [x] 게임 이동 명령을 입력한다
 
 ### 출력
+
 - [x] 체스판을 출력한다
   - [x] 체스판의 각 행을 출력한다
 
 ### 도메인
 
+- 게임
+  - [ ] 체스판을 초기화할 수 있다
+  - [ ] 차례를 초기화할 수 있다
+  - [ ] 차례를 판단할 수 있다
+    - [ ] 차례가 맞다면 말을 움직이는 명령을 한다
+
 - 체스판
-- [x] 랭크를 초기화할 수 있다
-- [x] 랭크들을 알고 있다
+- [x] 칸들을 알고 있다
 - [x] 말이 움직일지 말지 결정할 수 있다
   - [x] 말이 움직일 수 없는 경우를 판단할 수 있다
+    - [x] 말이 특정 좌표로 움직일 수 있는지 여부를 묻는다
     - [x] 특정 위치로부터 다른 위치까지의 경로에 말이 존재하는지 확인한다
   - [x] 움직일 수 있는 경우, 해당 위치로 말을 이동시킨다
 - [x] 특정 좌표까지의 경로를 반환한다
-
-- 랭크
-- [x] 칸을 초기화할 수 있다
-- [x] 칸들을 알고 있다
-- [x] 특정 위치에 있는 말을 찾을 수 있다
-- [x] 특정 위치에 있는 말을 바꿔줄 수 있다
-- [x] 말이 특정 좌표로 움직일 수 있는지 여부를 묻는다
 
 - 말
 - [x] 자신의 진영을 알고 있다
@@ -57,18 +58,17 @@
 
 ```mermaid
 classDiagram
-    ChessController --> Command
-    ChessController --> InputView
-    ChessController --> OutputView
-    ChessController --> Board
-    Board --> Rank
-    Board --> DirectionVector
-    Rank --> BoardInitialImage
-    Rank --> Square
-    Square --> Piece
-    Square --> Camp
-    Piece --> PieceType
-    PieceType --> Coordinate
+  ChessController --> Command
+  ChessController --> InputView
+  ChessController --> OutputView
+  ChessController --> Board
+  Board --> Coordinate
+  Board --> Square
+  Board --> DirectionVector
+  Board --> BoardInitialImage
+  Square --> Piece
+  Square --> Camp
+  Piece --> PieceType
 ```
 
 
