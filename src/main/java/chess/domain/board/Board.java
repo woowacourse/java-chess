@@ -50,17 +50,13 @@ public class Board {
     }
 
     private void processMoving(final Piece pieceToMove, final Position targetPosition) {
-        final Piece pieceInTargetPosition = findPieceOrElseBlankPieceIn(targetPosition);
+        final Piece pieceInTargetPosition = findPieceOptionalIn(targetPosition)
+                .orElseGet(() -> new BlankPiece(targetPosition));
         final Piece movedPiece = pieceToMove.move(pieceInTargetPosition);
 
         existingPieces.remove(pieceToMove);
         existingPieces.remove(pieceInTargetPosition);
         existingPieces.add(movedPiece);
-    }
-
-    private Piece findPieceOrElseBlankPieceIn(final Position position) {
-        return findPieceOptionalIn(position)
-                .orElseGet(() -> new BlankPiece(position));
     }
 
     public boolean isSameColor(final Position position, final Color otherColor) {
