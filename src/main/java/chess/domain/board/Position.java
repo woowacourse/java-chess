@@ -8,6 +8,9 @@ import java.util.stream.IntStream;
 
 public class Position {
 
+    private static final int START_PATH_RANGE = 1;
+    private static final int ZERO_DIFFERENCE = 0;
+
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
 
@@ -24,7 +27,7 @@ public class Position {
         if (isNotStraight(targetPosition)) {
             return Collections.emptyList();
         }
-        return IntStream.range(1, difference)
+        return IntStream.range(START_PATH_RANGE, difference)
                 .mapToObj(coordinate -> createPosition(columnStep, rowStep, coordinate))
                 .collect(Collectors.toList());
     }
@@ -43,7 +46,7 @@ public class Position {
     private boolean isNotStraight(Position targetPosition) {
         int columnDifference = Math.abs(targetPosition.getColumn() - this.getColumn());
         int rowDifference = Math.abs(targetPosition.getRow() - this.getRow());
-        return columnDifference != 0 && rowDifference != 0 && columnDifference != rowDifference;
+        return columnDifference != ZERO_DIFFERENCE && rowDifference != ZERO_DIFFERENCE && columnDifference != rowDifference;
     }
 
     public int calculateColumnDifferenceWith(Position targetPosition) {

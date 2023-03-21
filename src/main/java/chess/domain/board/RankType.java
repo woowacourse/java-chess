@@ -21,6 +21,6 @@ public enum RankType {
         return Arrays.stream(values())
                 .filter(rankType -> rankType.rankCoordinates.contains(rankCoordinate))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 }

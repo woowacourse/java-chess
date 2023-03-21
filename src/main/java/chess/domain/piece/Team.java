@@ -24,7 +24,7 @@ public enum Team {
         return Arrays.stream(values())
                 .filter(team -> team.rankCoordinates.contains(rankCoordinate))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 
     public boolean isOpposite(Team team) {

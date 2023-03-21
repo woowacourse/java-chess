@@ -13,6 +13,8 @@ public enum FileCoordinate {
     H(8),
     ;
 
+    public static final String INVALID_FILE_COORDINATE_MESSAGE = "올바른 열 번호를 입력해주세요.";
+
     private final int columnNumber;
 
     FileCoordinate(int columnNumber) {
@@ -23,7 +25,7 @@ public enum FileCoordinate {
         return Arrays.stream(values())
                 .filter(it -> it.columnNumber == columnNumber)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
     }
 
     public int getColumnNumber() {

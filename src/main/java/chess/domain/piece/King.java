@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 public class King extends Piece {
 
-    public static final int BOUND = 1;
+    private static final int BOUND = 1;
 
     public King(Team team) {
         super(team);

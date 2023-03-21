@@ -13,6 +13,7 @@ public enum RankCoordinate {
     ONE(1),
     ;
 
+    public static final String INVALID_RANK_COORDINATE_MESSAGE = "올바른 행 번호를 입력해주세요.";
     private final int rowNumber;
 
     RankCoordinate(int rowNumber) {
@@ -23,7 +24,7 @@ public enum RankCoordinate {
         return Arrays.stream(values())
                 .filter(it -> it.rowNumber == rowNumber)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 
     public int getRowNumber() {

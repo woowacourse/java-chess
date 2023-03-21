@@ -4,6 +4,8 @@ import chess.domain.board.RankCoordinate;
 
 import java.util.Arrays;
 
+import static chess.domain.board.RankCoordinate.INVALID_RANK_COORDINATE_MESSAGE;
+
 public enum RankCoordinateMapper {
     EIGHT("8", RankCoordinate.EIGHT),
     SEVEN("7", RankCoordinate.SEVEN),
@@ -14,8 +16,6 @@ public enum RankCoordinateMapper {
     TWO("2", RankCoordinate.TWO),
     ONE("1", RankCoordinate.ONE),
     ;
-
-    public static final String INVALID_RANK_MESSAGE = "올바른 행 번호를 입력해주세요.";
 
     private final String rowView;
     private final RankCoordinate rankCoordinate;
@@ -30,12 +30,12 @@ public enum RankCoordinateMapper {
                 .filter(it -> it.rowView.equals(rowView))
                 .map(it -> it.rankCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 
     static void validate(String rowView) {
         if (isNotContain(rowView)) {
-            throw new IllegalArgumentException(INVALID_RANK_MESSAGE);
+            throw new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE);
         }
     }
 

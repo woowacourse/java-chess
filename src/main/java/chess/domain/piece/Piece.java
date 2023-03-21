@@ -4,6 +4,9 @@ import chess.domain.board.Position;
 
 public abstract class Piece {
 
+    private static final String INVALID_POSITION_MESSAGE = "잘못된 위치를 입력했습니다.";
+    private static final String INVALID_PIECE_MOVE_MESSAGE = "본인의 말만 옮길 수 있습니다.";
+
     private final Team team;
 
     protected Piece(Team team) {
@@ -22,13 +25,13 @@ public abstract class Piece {
 
     public void validateCanMove(Position sourcePosition, Position targetPosition, Team team) {
         if (!canMove(sourcePosition, targetPosition, team)) {
-            throw new IllegalArgumentException("잘못된 위치를 입력했습니다.");
+            throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
     }
 
     public void validateTeam(Team team) {
         if (!isSameTeam(team)) {
-            throw new IllegalArgumentException("본인의 말만 옮길 수 있습니다.");
+            throw new IllegalArgumentException(INVALID_PIECE_MOVE_MESSAGE);
         }
     }
 

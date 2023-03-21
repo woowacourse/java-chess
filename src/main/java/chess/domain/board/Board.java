@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class Board {
 
+    private static final String INVALID_POSITION_INDEX = "잘못된 위치를 입력했습니다";
+    private static final String INVALID_PATH_MESSAGE = "경로가 없습니다.";
+
     private final Map<Position, Piece> boards;
 
     public Board(Map<Position, Piece> boards) {
@@ -19,7 +22,7 @@ public class Board {
         if (boards.containsKey(position)) {
             return boards.get(position);
         }
-        throw new IllegalArgumentException("잘못된 위치를 입력했습니다");
+        throw new IllegalArgumentException(INVALID_POSITION_INDEX);
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition, Team nowPlayingTeam) {
@@ -50,7 +53,7 @@ public class Board {
 
     private void validatePath(List<Position> paths) {
         if (!isEmptyPosition(paths)) {
-            throw new IllegalArgumentException("경로가 없습니다.");
+            throw new IllegalArgumentException(INVALID_PATH_MESSAGE);
         }
     }
 

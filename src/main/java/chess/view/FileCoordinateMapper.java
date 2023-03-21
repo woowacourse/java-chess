@@ -4,6 +4,8 @@ import chess.domain.board.FileCoordinate;
 
 import java.util.Arrays;
 
+import static chess.domain.board.FileCoordinate.INVALID_FILE_COORDINATE_MESSAGE;
+
 public enum FileCoordinateMapper {
     A("a", FileCoordinate.A),
     B("b", FileCoordinate.B),
@@ -14,8 +16,6 @@ public enum FileCoordinateMapper {
     G("g", FileCoordinate.G),
     H("h", FileCoordinate.H),
     ;
-
-    public static final String INVALID_FILE_MESSAGE = "올바른 열 번호를 입력해주세요.";
 
     private final String columnView;
     private final FileCoordinate fileCoordinate;
@@ -30,12 +30,12 @@ public enum FileCoordinateMapper {
                 .filter(it -> it.columnView.equals(columnView))
                 .map(it -> it.fileCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
     }
 
     static void validate(String columnView) {
         if (isNotContain(columnView)) {
-            throw new IllegalArgumentException(INVALID_FILE_MESSAGE);
+            throw new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE);
         }
     }
 

@@ -4,10 +4,15 @@ import chess.domain.board.Position;
 
 public class Pawn extends Piece {
 
+    private static final int INIT_MOVE_COUNT = 0;
+    private static final int FIRST_STEP = 2;
+    private static final int ONE_DIFFERENCE = 1;
+    private static final int MOVE_COUNT_STEP = 1;
+
     private final int moveCount;
 
     public Pawn(Team team) {
-        this(team, 0);
+        this(team, INIT_MOVE_COUNT);
     }
 
     private Pawn(Team team, int moveCount) {
@@ -41,7 +46,7 @@ public class Pawn extends Piece {
 
     private int getNextRankNumber(int sourceRankNumber, int direction) {
         if (isFirstMove()) {
-            return sourceRankNumber + (2 * direction);
+            return sourceRankNumber + (FIRST_STEP * direction);
         }
         return sourceRankNumber + direction;
     }
@@ -57,7 +62,7 @@ public class Pawn extends Piece {
 
         int diagonalRankNumber = sourcePosition.getRow() + this.getTeam().getDirection();
 
-        return sourcePosition.calculateColumnDifferenceWith(targetPosition) == 1
+        return sourcePosition.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE
                 && diagonalRankNumber == targetPosition.getRow()
                 && isNotSameTeam(team);
     }
@@ -69,6 +74,6 @@ public class Pawn extends Piece {
 
     @Override
     public Piece move() {
-        return new Pawn(this.getTeam(), moveCount + 1);
+        return new Pawn(this.getTeam(), moveCount + MOVE_COUNT_STEP);
     }
 }

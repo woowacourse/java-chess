@@ -10,6 +10,10 @@ import java.util.List;
 
 public class ChessController {
 
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
+    
     private final OutputView outputView;
     private final InputView inputView;
     private final ChessGame chessGame;
@@ -47,7 +51,7 @@ public class ChessController {
     }
 
     /**
-        return: 사용자에게 입력된 GameCommand에 해당하는 기능을 동작하고 반환
+     * return: 사용자에게 입력된 GameCommand에 해당하는 기능을 동작하고 반환
      */
     private GameCommand readCommand() {
         try {
@@ -71,10 +75,11 @@ public class ChessController {
     }
 
     private GameCommand executeCommand(List<String> input) {
-        if (GameCommand.of(input.get(0)) == GameCommand.MOVE) {
-            chessGame.movePiece(PositionMapper.from(input.get(1)), PositionMapper.from(input.get(2)));
+        if (GameCommand.of(input.get(COMMAND_INDEX)) == GameCommand.MOVE) {
+            chessGame.movePiece(PositionMapper.from(input.get(SOURCE_POSITION_INDEX)),
+                    PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
         }
-        return GameCommand.of(input.get(0));
+        return GameCommand.of(input.get(COMMAND_INDEX));
     }
 
     private void validateCommand(List<String> input) {

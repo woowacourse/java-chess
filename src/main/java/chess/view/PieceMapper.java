@@ -14,6 +14,8 @@ public enum PieceMapper {
     EMPTY(Empty.class, ".", "."),
     ;
 
+    private static final String INVALID_PIECE_MESSAGE = "잘못된 말을 입력했습니다.";
+
     private final Class<? extends Piece> piece;
     private final String whiteTeamView;
     private final String blackTeamView;
@@ -28,7 +30,7 @@ public enum PieceMapper {
         return Arrays.stream(values())
                 .filter(it -> it.piece.equals(piece))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 말을 입력했습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
     }
 
     String getMessage(Team team) {

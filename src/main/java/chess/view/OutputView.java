@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String ERROR_START_MESSAGE = "[ERROR]: ";
+
     public void printStart() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
@@ -35,6 +37,6 @@ public class OutputView {
     }
 
     public void printError(String message) {
-        System.out.println("[ERROR]: " + message);
+        System.out.println(ERROR_START_MESSAGE + message);
     }
 }
