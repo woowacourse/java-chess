@@ -1,7 +1,9 @@
 package chess.board;
 
+import java.util.List;
 import java.util.stream.Stream;
 
+import chess.piece.Piece;
 import chess.piece.Pieces;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +89,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("폰이 대각선에 적팀 기물이 없을 때 대각선으로 이동하면 예외를 던진다.")
+    @DisplayName("폰이 직선 상의 도착 위치 기물이 적군일 때 한칸 전진하려고 하면 예외를 던진다.")
     void movePiece_Pawn_throws2() {
         // given
         Position sourcePosition = new Position(File.B, Rank.TWO);
@@ -102,5 +104,51 @@ class BoardTest {
         Assertions.assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] Pawn은 직선 상의 도착 위치 기물이 적군이어도 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("타겟 위치에 말이 없을 때 기물을 이동시킨다.")
+    void movePiece_onlyMove() {
+        // given
+        Position sourcePosition = new Position(File.B, Rank.ONE);
+        Position targetPosition = new Position(File.C, Rank.THREE);
+        Piece pieceBeforeMove = board.findPieceByPosition(sourcePosition);
+
+        // when
+        board.movePiece(sourcePosition, targetPosition);
+        Piece findTargetPiece = board.findPieceByPosition(targetPosition);
+        List<Piece> pieces = board.getPieces();
+        int targetPieceIndex = pieces.indexOf(findTargetPiece);
+
+        // then
+        Assertions.assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
+        Assertions.assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
+    }
+
+    @Test
+    @DisplayName("타겟 위치 말이 적군일 때 기물을 잡고 이동한다.")
+    void movePiece_takePiece() {
+        // given
+        Position sourcePosition = new Position(File.B, Rank.ONE);
+        Position targetPosition = new Position(File.C, Rank.THREE);
+        Position oppositeTargetPosition = new Position(File.C, Rank.THREE);
+        Piece pieceBeforeMove = board.findPieceByPosition(sourcePosition);
+
+        // when
+        board.movePiece(new Position(File.C, Rank.SEVEN), new Position(File.C, Rank.FIVE));
+        board.movePiece(new Position(File.C, Rank.FIVE), new Position(File.C, Rank.FOUR));
+        board.movePiece(new Position(File.C, Rank.FOUR), oppositeTargetPosition);
+        Piece oppositePiece = board.findPieceByPosition(oppositeTargetPosition);
+
+        board.movePiece(sourcePosition, targetPosition);
+        Piece findTargetPiece = board.findPieceByPosition(targetPosition);
+        List<Piece> pieces = board.getPieces();
+        int targetPieceIndex = pieces.indexOf(findTargetPiece);
+        int oppositeTargetPieceIndex = pieces.indexOf(oppositePiece);
+
+        // then
+        Assertions.assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
+        Assertions.assertThatThrownBy(() -> pieces.get(oppositeTargetPieceIndex));
+        Assertions.assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
     }
 }
