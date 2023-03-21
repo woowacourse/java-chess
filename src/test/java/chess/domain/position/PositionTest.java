@@ -155,7 +155,7 @@ class PositionTest {
     @MethodSource("getPathToTestCase")
     @DisplayName("목적지가 8방향 직선 상에 있을 경우 목적지 Position까지의 경로를 반환할 수 있다.")
     void getPathToTest_EightDirections(Position start, Position end, List<Position> route) {
-        assertThat(Position.getRouteOf(start, end)).containsAll(route);
+        assertThat(Position.getRouteOf(start, end)).containsExactlyElementsOf(route);
     }
 
     @Test
@@ -255,14 +255,14 @@ class PositionTest {
 
     static Stream<Arguments> getPathToTestCase() {
         return Stream.of(
-                Arguments.arguments(Position.of(3, 3), Position.of(5, 3), List.of(Position.of(4, 3), Position.of(5, 3))),
-                Arguments.arguments(Position.of(3, 3), Position.of(5, 5), List.of(Position.of(4, 4), Position.of(5, 5))),
-                Arguments.arguments(Position.of(3, 3), Position.of(3, 5), List.of(Position.of(3, 4), Position.of(3, 5))),
-                Arguments.arguments(Position.of(3, 3), Position.of(1, 5), List.of(Position.of(2, 4), Position.of(1, 5))),
-                Arguments.arguments(Position.of(3, 3), Position.of(1, 3), List.of(Position.of(2, 3), Position.of(1, 3))),
-                Arguments.arguments(Position.of(3, 3), Position.of(1, 1), List.of(Position.of(2, 2), Position.of(1, 1))),
-                Arguments.arguments(Position.of(3, 3), Position.of(3, 1), List.of(Position.of(3, 2), Position.of(3, 1))),
-                Arguments.arguments(Position.of(3, 3), Position.of(5, 1), List.of(Position.of(4, 2), Position.of(5, 1)))
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 3), List.of(Position.of(3, 3), Position.of(4, 3), Position.of(5, 3))),
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 5), List.of(Position.of(3, 3), Position.of(4, 4), Position.of(5, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(3, 5), List.of(Position.of(3, 3), Position.of(3, 4), Position.of(3, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 5), List.of(Position.of(3, 3), Position.of(2, 4), Position.of(1, 5))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 3), List.of(Position.of(3, 3), Position.of(2, 3), Position.of(1, 3))),
+                Arguments.arguments(Position.of(3, 3), Position.of(1, 1), List.of(Position.of(3, 3), Position.of(2, 2), Position.of(1, 1))),
+                Arguments.arguments(Position.of(3, 3), Position.of(3, 1), List.of(Position.of(3, 3), Position.of(3, 2), Position.of(3, 1))),
+                Arguments.arguments(Position.of(3, 3), Position.of(5, 1), List.of(Position.of(3, 3), Position.of(4, 2), Position.of(5, 1)))
         );
     }
 }

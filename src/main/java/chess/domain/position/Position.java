@@ -47,10 +47,28 @@ public final class Position {
         if (Direction.of(start, end) == Direction.OTHER) {
             return new ArrayList<>(List.of(start, end));
         }
-        List<Position> route = new ArrayList<>();
-        route.add(start);
-        route.addAll(start.calculateRoute(start.calculateRowGap(end), start.calculateColumnGap(end)));
+        return calculateRoute(start, end);
+    }
+
+    private static List<Position> calculateRoute(Position start, Position end) {
+        int moveCount = calculateMoveCount(start, end);
+        int rowIncrement = start.calculateRowGap(end) / moveCount;
+        int columnIncrement = start.calculateColumnGap(end) / moveCount;
+
+        Position previousPosition = start;
+        List<Position> route = new ArrayList<>(List.of(start));
+        for (int i = 0; i < moveCount; i++) {
+            Position nextPosition = previousPosition.add(rowIncrement, columnIncrement);
+            route.add(nextPosition);
+            previousPosition = nextPosition;
+        }
         return route;
+    }
+
+    private static int calculateMoveCount(Position start, Position end) {
+        int rowGap = start.calculateRowGap(end);
+        int columnGap = start.calculateColumnGap(end);
+        return Math.max(Math.abs(rowGap), Math.abs(columnGap));
     }
 
     public int calculateRowGap(Position other) {
@@ -61,15 +79,8 @@ public final class Position {
         return other.column - this.column;
     }
 
-    private List<Position> calculateRoute(int rowGap, int columnGap) {
-        List<Position> route = new ArrayList<>();
-        int unit = Math.max(Math.abs(rowGap), Math.abs(columnGap));
-        int rowCoefficient = rowGap / unit;
-        int columnCoefficient = columnGap / unit;
-        for (int i = 1; i <= unit; i++) {
-            route.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
-        }
-        return route;
+    private Position add(int rowIncrement, int columnIncrement) {
+        return Position.of(row + rowIncrement, column + columnIncrement);
     }
 
     public Position moveUp() {
