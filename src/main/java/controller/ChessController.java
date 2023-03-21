@@ -1,5 +1,6 @@
 package controller;
 
+import dto.ChessBoardDto;
 import view.GameCommand;
 import domain.chessGame.ChessBoard;
 import domain.chessGame.ChessBoardGenerator;
@@ -36,7 +37,7 @@ public final class ChessController {
     private ChessBoard setUpChessBoard() {
         ChessBoardGenerator generator = new ChessBoardGenerator();
         ChessBoard chessBoard = new ChessBoard(generator.generate());
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
         return chessBoard;
     }
 
@@ -45,7 +46,7 @@ public final class ChessController {
         Position end = convertInputToPosition(userInput.get(2));
 
         chessBoard.movePiece(start, end);
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
     }
 
     private Position convertInputToPosition(String input) {

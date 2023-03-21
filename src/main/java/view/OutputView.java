@@ -1,10 +1,8 @@
 package view;
 
-import domain.piece.Piece;
-import domain.position.Position;
+import dto.ChessBoardDto;
 
 import java.util.List;
-import java.util.Map;
 
 public final class OutputView {
 
@@ -20,31 +18,16 @@ public final class OutputView {
         System.out.println(START_MESSAGE);
     }
 
-    public static void printChessBoard(List<Position> allPosition, Map<Position, Piece> chessBoard) {
-        System.out.println();
-        int lineBreak = 0;
-        for (Position position : allPosition) {
-            lineBreak++;
-            printFigureOrDot(chessBoard, position);
-            lineBreakByRow(lineBreak);
-        }
-        System.out.println();
-    }
-
-    private static void lineBreakByRow(int lineBreak) {
-        if (lineBreak % 8 == 0)
-            System.out.println();
-    }
-
-    private static void printFigureOrDot(Map<Position, Piece> chessBoard, Position position) {
-        if (chessBoard.containsKey(position)) {
-            System.out.print(chessBoard.get(position).getName());
-            return;
-        }
-        System.out.print(".");
-    }
-
     public static void printNotStartedGameMessage() {
         System.out.println("아직 게임이 시작되지 않았습니다.");
+    }
+
+    public static void printChessBoard(ChessBoardDto chessBoardDto) {
+        List<String> chessBoard = chessBoardDto.getChessBoard();
+        System.out.println();
+        for (String oneRow : chessBoard) {
+            System.out.println(oneRow);
+        }
+        System.out.println();
     }
 }
