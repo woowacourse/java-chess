@@ -33,6 +33,13 @@ public class Square {
         this.rank = rank;
     }
 
+    public static Square from(final String square) {
+        if (!CACHE.containsKey(square)) {
+            throw new IllegalArgumentException("해당 칸은 존재하지 않습니다.");
+        }
+        return CACHE.get(square);
+    }
+
     public static Square of(final File file, final Rank rank) {
         return CACHE.get(file.toString() + rank.toString());
     }

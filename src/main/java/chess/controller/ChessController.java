@@ -78,12 +78,8 @@ public class ChessController {
         showBoard();
     }
 
-    private Square convertSquare(final String command) {
-        int fileValue = command.charAt(0) - 'a' + 1;
-        int rankValue = command.charAt(1) - '1' + 1;
-        File file = File.from(fileValue);
-        Rank rank = Rank.from(rankValue);
-        return Square.of(file, rank);
+    private Square convertSquare(final String square) {
+        return Square.from(square);
     }
 
     private void showStartMessage() {
