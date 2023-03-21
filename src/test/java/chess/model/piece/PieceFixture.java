@@ -1,11 +1,10 @@
 package chess.model.piece;
 
-import chess.model.piece.type.Bishop;
-import chess.model.piece.type.King;
-import chess.model.piece.type.Knight;
-import chess.model.piece.type.Piece;
-import chess.model.piece.type.Queen;
-import chess.model.piece.type.Rook;
+import chess.model.piece.sliding.Bishop;
+import chess.model.piece.nonsliding.King;
+import chess.model.piece.nonsliding.Knight;
+import chess.model.piece.sliding.Queen;
+import chess.model.piece.sliding.Rook;
 
 public class PieceFixture {
 

@@ -1,4 +1,4 @@
-package chess.model.piece.type;
+package chess.model.piece.pawn;
 
 import static chess.model.position.Direction.NORTH;
 import static chess.model.position.Direction.NORTH_EAST;
@@ -8,24 +8,33 @@ import static chess.model.position.Direction.SOUTH_EAST;
 import static chess.model.position.Direction.SOUTH_WEST;
 
 import chess.model.Color;
-import chess.model.piece.PieceType;
+import chess.model.piece.Piece;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.Set;
 
-public class Pawn extends Piece {
+public class InitialPawn extends Piece {
 
     private static final Set<Direction> WHITE = Set.of(NORTH, NORTH_EAST, NORTH_WEST);
     private static final Set<Direction> BLACK = Set.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int MINIMUM_DISTANCE = 1;
+    private static final int MAXIMUM_DISTANCE = 2;
 
-    public Pawn(final Color color) {
-        super(color, PieceType.PAWN);
+    private final Piece pawn;
+
+    public InitialPawn(final Piece pawn) {
+        super(pawn.getColor(), pawn.getType());
+        this.pawn = pawn;
     }
 
     @Override
-    boolean isRightDirection(final Direction direction) {
-        if (color.isWhite()) {
+    public Piece update() {
+        return pawn;
+    }
+
+    @Override
+    protected boolean isRightDirection(final Direction direction) {
+        if (getColor().isWhite()) {
             return WHITE.contains(direction);
         }
 
@@ -36,7 +45,7 @@ public class Pawn extends Piece {
     protected boolean isRightDistance(final Distance distance) {
         final int rank = Math.abs(distance.rank());
 
-        return rank == MINIMUM_DISTANCE;
+        return rank >= MINIMUM_DISTANCE && rank <= MAXIMUM_DISTANCE;
     }
 
     @Override
@@ -61,8 +70,8 @@ public class Pawn extends Piece {
         return hasEnemy(targetColor) && isDiagonalAttack(distance);
     }
 
-    private boolean hasEnemy(final Color color) {
-        return color.isNotEmpty() && color.isDifferent(this.color);
+    private boolean hasEnemy(final Color targetColor) {
+        return targetColor.isNotEmpty() && targetColor.isDifferent(getColor());
     }
 
     private boolean isDiagonalAttack(final Distance distance) {

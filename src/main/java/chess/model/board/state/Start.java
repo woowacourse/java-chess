@@ -2,7 +2,7 @@ package chess.model.board.state;
 
 import chess.controller.GameCommand;
 import chess.model.ChessGame;
-import chess.model.piece.type.Piece;
+import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Map;
 

@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import chess.model.Color;
 import chess.model.Type;
-import chess.model.piece.type.Piece;
+import chess.model.piece.Piece;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Positions;

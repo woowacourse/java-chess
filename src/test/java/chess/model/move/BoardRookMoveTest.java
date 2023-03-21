@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
 import chess.model.board.PawnBoard;
-import chess.model.piece.type.Piece;
+import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

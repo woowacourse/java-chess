@@ -3,7 +3,7 @@ package chess.model.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.board.DefaultColor;
-import chess.model.piece.type.Pawn;
+import chess.model.piece.pawn.Pawn;
 import chess.model.position.Distance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

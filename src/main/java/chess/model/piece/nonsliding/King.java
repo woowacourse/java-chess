@@ -1,6 +1,7 @@
-package chess.model.piece.type;
+package chess.model.piece.nonsliding;
 
 import chess.model.Color;
+import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
@@ -16,7 +17,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean isRightDirection(final Direction direction) {
+    protected boolean isRightDirection(final Direction direction) {
         return directions.stream()
                 .anyMatch(it -> it.match(direction.rank(), direction.file()));
     }

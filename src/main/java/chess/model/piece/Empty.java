@@ -1,4 +1,4 @@
-package chess.model.piece.type;
+package chess.model.piece;
 
 import chess.model.board.DefaultColor;
 import chess.model.board.DefaultType;
@@ -17,7 +17,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    boolean isRightDirection(final Direction direction) {
+    protected boolean isRightDirection(final Direction direction) {
         return false;
     }
 

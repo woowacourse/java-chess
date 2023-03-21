@@ -1,4 +1,4 @@
-package chess.model.piece.type;
+package chess.model.piece;
 
 import chess.model.Color;
 import chess.model.Type;
@@ -7,10 +7,10 @@ import chess.model.position.Distance;
 
 public abstract class Piece {
 
-    final Color color;
-    final Type type;
+    private final Color color;
+    private final Type type;
 
-    Piece(final Color color, final Type type) {
+    protected Piece(final Color color, final Type type) {
         this.color = color;
         this.type = type;
     }
@@ -25,7 +25,7 @@ public abstract class Piece {
                 && isSatisfySpecialCondition(distance, targetColor);
     }
 
-    abstract boolean isRightDirection(final Direction direction);
+    protected abstract boolean isRightDirection(final Direction direction);
 
     protected boolean isRightDistance(final Distance distance) {
         return true;

@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Type;
-import chess.model.piece.type.Piece;
+import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.position.Positions;
 import chess.model.position.Rank;
