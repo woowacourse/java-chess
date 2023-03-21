@@ -2,7 +2,6 @@ package chess.model.game;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
-import chess.model.piece.Camp;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.view.ChessBoardResponse;
@@ -18,10 +17,10 @@ public class ChessGame {
         this.turn = new Turn();
     }
 
-    public void move(final Position source, final Position target, final Camp camp) {
+    public void move(final Position source, final Position target) {
         validateInitialChessGame();
         validatePosition(source, target);
-        chessBoard.move(source, target, camp);
+        chessBoard.move(source, target, turn.findNextPlayer());
     }
 
     private void validateInitialChessGame() {
@@ -37,8 +36,12 @@ public class ChessGame {
     }
 
     public ChessBoardResponse getChessBoard() {
-        final Map<Position, Piece> square = chessBoard.getBoard();
+        try {
+            final Map<Position, Piece> square = chessBoard.getBoard();
 
-        return new ChessBoardResponse(square);
+            return new ChessBoardResponse(square);
+        } catch (NullPointerException e) {
+            throw new IllegalStateException("게임을 시작하지 않았습니다.");
+        }
     }
 }
