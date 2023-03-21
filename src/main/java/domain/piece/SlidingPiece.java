@@ -7,8 +7,8 @@ import domain.type.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class VariableMover extends Piece {
-    protected VariableMover(final Color color, final PieceType pieceType) {
+public abstract class SlidingPiece extends Piece {
+    protected SlidingPiece(final Color color, final PieceType pieceType) {
         super(color, pieceType);
     }
 
