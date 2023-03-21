@@ -14,7 +14,6 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private ChessBoard chessBoard;
 
     public ChessController() {
         this.inputView = new InputView();
@@ -23,27 +22,26 @@ public class ChessController {
 
     public void run() {
         GameState state = new Ready();
-        outputView.printStartMessage();
+        outputView.printGuideMessage();
         while (true) {
             state = retryCampPlayIfCommandIllegal(state);
         }
     }
 
     // TODO 조건문 리팩터링, 중복 코드 없애기
-    // TODO 상태 패턴 쓰는 의미가 있나?
     private GameState executeCampPlay(final GameState state) {
         CommandRequest commandRequest = inputView.requestGameCommand();
         if (commandRequest.getCommand() == Command.START) {
-            GameState nextState = state.start();
-            chessBoard = new ChessBoard(Camp.WHITE, Camp::transfer);
-            outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-            return nextState;
+            GameState running = state.start(new ChessBoard(Camp.WHITE, Camp::transfer));
+            outputView.printBoard(BoardConverter.convertToBoard(running.read()));
+            return running;
         }
         if (commandRequest.getCommand() == Command.MOVE) {
-            GameState nextState = state.play(chessBoard, commandRequest);
-            outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-            return nextState;
+            GameState running = state.play(commandRequest);
+            outputView.printBoard(BoardConverter.convertToBoard(running.read()));
+            return running;
         }
+        outputView.printGuideMessage();
         return state.end();
     }
 
@@ -55,4 +53,5 @@ public class ChessController {
             return retryCampPlayIfCommandIllegal(state);
         }
     }
+
 }

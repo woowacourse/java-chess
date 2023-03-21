@@ -10,7 +10,7 @@ public class OutputView {
             Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION);
     private static final String ERROR_MESSAGE_FORMAT = "[입력 오류] %s" + System.lineSeparator();
 
-    public void printStartMessage() {
+    public void printGuideMessage() {
         System.out.println(GAME_START);
         System.out.println(GAME_COMMAND_REQUEST);
     }
