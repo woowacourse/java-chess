@@ -58,8 +58,8 @@ public final class ChessController {
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
             return request.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
+        } catch (IllegalArgumentException | IllegalStateException illegalArgumentException) {
+            outputView.printErrorMessage(illegalArgumentException.getMessage());
             return retryOnInvalidUserInput(request);
         }
     }
