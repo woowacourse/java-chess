@@ -44,7 +44,7 @@ public class PawnMoveTest {
 
     @ParameterizedTest(name = "source에서 target으로 폰이 갈 수 없는 위치면 false를 반환한다.")
     @CsvSource(value = {"0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
-    void canMoveFailWhenWrongTarget(final int targetRank, final int targetFile) {
+    void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final PawnMove pawnMove = new PawnMove();
         final int sourceRank = 1, sourceFile = 1;
@@ -56,5 +56,21 @@ public class PawnMoveTest {
         // then
         assertThat(actual)
                 .isFalse();
+    }
+
+    @ParameterizedTest(name = "source에서 target으로 폰이 공격할 수 있는 위치인지 판단한다.")
+    @CsvSource(value = {"2:2:true", "1:2:false", "0:2:true", "1:3:false"}, delimiter = ':')
+    void canAttack(final int targetRank, final int targetFile, final boolean expected) {
+        // given
+        final PawnMove pawnMove = new PawnMove();
+        final int sourceRank = 1, sourceFile = 1;
+        final Position source = new Position(sourceRank, sourceFile);
+
+        // when
+        boolean actual = pawnMove.canMove(source, new Position(targetRank, targetFile));
+
+        // then
+        assertThat(actual)
+                .isSameAs(expected);
     }
 }
