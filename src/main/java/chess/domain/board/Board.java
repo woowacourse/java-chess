@@ -15,8 +15,7 @@ public class Board {
     private final Map<Square, Piece> board;
 
     public Board() {
-        final BoardFactory boardFactory = new BoardFactory();
-        this.board = boardFactory.createBoard();
+        this.board = BoardFactory.createBoard();
     }
 
     public void move(final Square source, final Square target) {

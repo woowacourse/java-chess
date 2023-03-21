@@ -93,7 +93,7 @@
 
 - [x] 패키지 분리
 
-- [ ] `BoardFactory`를 정적 팩토리로 선언
+- [x] `BoardFactory`를 정적 팩토리로 선언
 
 - [ ] `moveIfPawn` 매서드명 수정
 

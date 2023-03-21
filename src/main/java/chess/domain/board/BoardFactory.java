@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public final class BoardFactory {
     private static final int BOARD_LINE_SIZE = 8;
 
-    public Map<Square, Piece> createBoard() {
+    public static Map<Square, Piece> createBoard() {
         final LinkedHashMap<Square, Piece> board = new LinkedHashMap<>();
         final List<Square> squares = createSquares();
         final List<Piece> pieces = createPieces();
@@ -32,7 +32,7 @@ public final class BoardFactory {
         return board;
     }
 
-    private List<Square> createSquares() {
+    private static List<Square> createSquares() {
         return Arrays.stream(Rank.values())
                 .flatMap(BoardFactory::createFilesByRank)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public final class BoardFactory {
                 .map(file -> new Square(file, rank));
     }
 
-    private List<Piece> createPieces() {
+    private static List<Piece> createPieces() {
         final List<Piece> pieces = new ArrayList<>();
 
         pieces.addAll(createFirstLine(Camp.BLACK));
@@ -58,7 +58,7 @@ public final class BoardFactory {
         return pieces;
     }
 
-    private List<Piece> createFirstLine(final Camp camp) {
+    private static List<Piece> createFirstLine(final Camp camp) {
         final List<Piece> pieces = new ArrayList<>();
 
         pieces.add(new Rook(camp));
@@ -73,7 +73,7 @@ public final class BoardFactory {
         return pieces;
     }
 
-    private List<Piece> createSecondLine(final Camp camp) {
+    private static List<Piece> createSecondLine(final Camp camp) {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
@@ -83,7 +83,7 @@ public final class BoardFactory {
         return pieces;
     }
 
-    private List<Piece> createEmptyLine() {
+    private static List<Piece> createEmptyLine() {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
