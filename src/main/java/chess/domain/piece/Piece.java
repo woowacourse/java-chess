@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
@@ -19,7 +21,7 @@ abstract public class Piece {
 
     // TODO: override 할까? (Pawn만 true 반환)
     public boolean isPawn() {
-        return this instanceof Pawn;
+        return getClass().equals(WhitePawn.class) || getClass().equals(BlackPawn.class);
     }
 
     public boolean isWhite() {

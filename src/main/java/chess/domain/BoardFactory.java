@@ -4,10 +4,11 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -26,25 +27,25 @@ public class BoardFactory {
 
     private Map<Square, Piece> makePawns() {
         Map<Square, Piece> pawns = new HashMap<>();
-        pawns.putAll(makePawn(Color.WHITE));
-        pawns.putAll(makePawn(Color.BLACK));
+        pawns.putAll(makeWhitePawn());
+        pawns.putAll(makeBlackPawn());
         return new HashMap<>(pawns);
     }
 
-    private Map<Square, Piece> makePawn(final Color color) {
+    private Map<Square, Piece> makeWhitePawn() {
         Map<Square, Piece> pawns = new HashMap<>();
-        Rank rank = getPawnRankByColor(color);
         for (File file : File.values()) {
-            pawns.put(Square.of(file, rank), new Pawn(color));
+            pawns.put(Square.of(file, Rank.TWO), new WhitePawn());
         }
         return new HashMap<>(pawns);
     }
 
-    private Rank getPawnRankByColor(final Color color) {
-        if (color.equals(Color.WHITE)) {
-            return Rank.TWO;
+    private Map<Square, Piece> makeBlackPawn() {
+        Map<Square, Piece> pawns = new HashMap<>();
+        for (File file : File.values()) {
+            pawns.put(Square.of(file, Rank.SEVEN), new BlackPawn());
         }
-        return Rank.SEVEN;
+        return new HashMap<>(pawns);
     }
 
     private Map<Square, Piece> makeMajorPieces() {
