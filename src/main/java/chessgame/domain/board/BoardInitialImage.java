@@ -3,6 +3,7 @@ package chessgame.domain.board;
 import chessgame.domain.piece.*;
 import chessgame.domain.square.Camp;
 import chessgame.domain.square.ConcreteSquare;
+import chessgame.domain.square.EmptySquare;
 import chessgame.domain.square.Square;
 
 import java.util.HashMap;
@@ -16,6 +17,8 @@ public class BoardInitialImage {
     private static final int BOARD_FILE = 8;
     private static final int WHITE_BACK_RANK = 0;
     private static final int WHITE_FRONT_RANK = 1;
+    private static final int START_EMPTY_RANK = 2;
+    private static final int END_EMPTY_RANK = 5;
     private static final int BLACK_FRONT_RANK = 6;
     private static final int BLACK_BACK_RANK = 7;
 
@@ -32,6 +35,7 @@ public class BoardInitialImage {
         Map<Coordinate, Square> boardImage = new HashMap<>();
 
         addWhiteRanks(boardImage);
+        addEmptyRanks(boardImage);
         addBlackRanks(boardImage);
         return boardImage;
     }
@@ -62,6 +66,18 @@ public class BoardInitialImage {
         return IntStream.range(0, 8)
                         .mapToObj(i -> new ConcreteSquare(new WhitePawn(), Camp.WHITE))
                         .collect(Collectors.toList());
+    }
+
+    private static void addEmptyRanks(Map<Coordinate, Square> boardImage) {
+        for (int rank = START_EMPTY_RANK; rank <= END_EMPTY_RANK; rank++) {
+            addEachEmptyRank(boardImage, rank);
+        }
+    }
+
+    private static void addEachEmptyRank(Map<Coordinate, Square> boardImage, int rank) {
+        for (int file = 0; file < BOARD_FILE; file++) {
+            boardImage.put(new Coordinate(rank, file), new EmptySquare());
+        }
     }
 
     private static void addBlackRanks(Map<Coordinate, Square> boardImage) {
