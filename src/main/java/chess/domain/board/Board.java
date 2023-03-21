@@ -196,7 +196,7 @@ public class Board {
         return board.get(position).isNameUpperCase() && board.get(position).isPawn();
     }
 
-    public boolean isGameDone() {
+    public boolean isKingDead() {
         int countOfKing = (int) board.values().stream()
                 .filter(piece -> piece.isKing())
                 .count();

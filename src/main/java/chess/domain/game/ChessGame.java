@@ -13,9 +13,9 @@ public class ChessGame {
     private Board board;
     private boolean isLowerTeamTurn;
 
-    public ChessGame(final Board board) {
-        this.isLowerTeamTurn = true;
+    public ChessGame(final Board board, final boolean isLowerTeamTurn) {
         this.board = board;
+        this.isLowerTeamTurn = isLowerTeamTurn;
     }
 
     public void move(final String start, final String end) {
@@ -46,15 +46,16 @@ public class ChessGame {
         return board.getScoreOfUpperTeam();
     }
 
-    public boolean isGameDone() {
-        return board.isGameDone();
+    public boolean isKingDead() {
+        return board.isKingDead();
     }
 
     public boolean isUpperTeamWin() {
         return board.isUpperTeamWin();
     }
 
-    public void initBoard() {
+    public void initGame() {
         this.board = BoardFactory.createBoard();
+        this.isLowerTeamTurn = true;
     }
 }

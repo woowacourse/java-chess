@@ -29,38 +29,43 @@ public class ChessGameController {
 
         String savingGame = inputView.readSavingGame();
 
-        ChessGame chessGame;
         if (savingGame.equals("1")) {
-            // 새로운 게임 하기
-            chessGame = new ChessGame(BoardFactory.createBoard());
-            outputView.printStartMessage();
-
-            Command command = inputView.readGameCommand();
-
-            playChess(chessGame, command);
-
-            resultView.printGameEnd();
+            playNewGame();
         }
 
         if (savingGame.equals("2")) {
-            // 저장된 게임 하기
-            chessGame = new ChessGame(boardService.findById(1));
-            outputView.printStartMessage();
-            outputView.printBoard(chessGame.getBoard());
-
-            Command command = inputView.readGameCommand();
-
-            playChess(chessGame, command);
-
-            resultView.printGameEnd();
+            playSavedGame();
         }
     }
 
+    private void playNewGame() {
+        boardService.delete(1);
+
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(), true);
+        outputView.printStartMessage();
+
+        Command command = inputView.readGameCommand();
+        playChess(chessGame, command);
+
+        resultView.printGameEnd();
+    }
+
+    private void playSavedGame() {
+        ChessGame chessGame = new ChessGame(boardService.findById(1), true);
+
+        outputView.printStartMessage();
+        outputView.printBoard(chessGame.getBoard());
+
+        Command command = inputView.readGameCommand();
+        playChess(chessGame, command);
+
+        resultView.printGameEnd();
+    }
+
+
     private void playChess(ChessGame chessGame, Command command) {
         while (true) {
-            if (isGameEnd(chessGame, command)) {
-                System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
-                boardService.save(1, chessGame.getBoard());
+            if (isGameEndCase(chessGame, command)) {
                 return;
             }
 
@@ -68,14 +73,31 @@ public class ChessGameController {
             tryChessMove(chessGame, command);
             outputView.printBoard(chessGame.getBoard());
 
-            if (isGameDone(chessGame)) {
-                System.out.println("게임이 끝났습니다. 기존 게임은 삭제됩니다.");
-                boardService.delete(1);
+            if (isGameDoneCase(chessGame)) {
                 break;
             }
 
             command = inputView.readGameCommand();
         }
+    }
+
+    private boolean isGameDoneCase(final ChessGame chessGame) {
+        if (isKingDead(chessGame)) {
+            System.out.println("게임이 끝났습니다. 기존 게임은 삭제됩니다.");
+            boardService.delete(1);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isGameEndCase(final ChessGame chessGame, final Command command) {
+        if (isGameEnd(chessGame, command)) {
+            System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
+            boardService.delete(1);
+            boardService.save(1, chessGame.getBoard());
+            return true;
+        }
+        return false;
     }
 
     private boolean isGameEnd(final ChessGame chessGame, final Command command) {
@@ -96,13 +118,13 @@ public class ChessGameController {
         return false;
     }
 
-    private boolean isGameDone(final ChessGame chessGame) {
-        if (chessGame.isGameDone() && chessGame.isUpperTeamWin()) {
+    private boolean isKingDead(final ChessGame chessGame) {
+        if (chessGame.isKingDead() && chessGame.isUpperTeamWin()) {
             resultView.printWinnerIsUpperTeam();
             return true;
         }
 
-        if (chessGame.isGameDone()) {
+        if (chessGame.isKingDead() && !chessGame.isUpperTeamWin()) {
             resultView.printWinnerIsLowerTeam();
             return true;
         }
@@ -124,7 +146,7 @@ public class ChessGameController {
 
     private ChessGame createNewChessGame(ChessGame chessGame, final Command command) {
         if (command.isCreateNewGame()) {
-            chessGame.initBoard();
+            chessGame.initGame();
         }
         return chessGame;
     }

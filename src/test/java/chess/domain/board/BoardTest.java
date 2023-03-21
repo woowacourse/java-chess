@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import static chess.factory.BoardFactoryForTest.createBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -255,7 +254,7 @@ class BoardTest {
          board.switchPosition(Position.from("e5"), Position.from("e1"));
 
          // when
-         boolean isKingDead = board.isGameDone();
+         boolean isKingDead = board.isKingDead();
 
          // then
          assertThat(isKingDead).isTrue();
