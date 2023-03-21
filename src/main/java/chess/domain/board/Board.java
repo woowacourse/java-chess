@@ -2,11 +2,10 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Move;
 import chess.domain.position.Position;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 
@@ -23,13 +22,13 @@ public class Board {
 
     public void move(Position source, Position target) {
         Piece sourcePiece = findPieceToMove(source);
-        Move move = new Move(source, target);
+        Piece targetPiece = pieces.get(target);
 
-        MoveType moveType = checkType(sourcePiece, target);
-        checkPieceReachable(sourcePiece, moveType, move);
-        checkNotCrossOtherPiece(source, move);
+        checkRightTarget(sourcePiece, targetPiece);
+        checkPieceReachable(source, target);
+        checkNotCrossOtherPiece(source, target);
 
-        movePiece(source, target, sourcePiece);
+        movePiece(source, target);
     }
 
     private Piece findPieceToMove(Position position) {
@@ -40,27 +39,24 @@ public class Board {
         return piece;
     }
 
-    private MoveType checkType(Piece sourcePiece, Position target) {
+    private void checkPieceReachable(Position source, Position target) {
+        Piece sourcePiece = pieces.get(source);
         Piece targetPiece = pieces.get(target);
-        if (isEmpty(target)) {
-            return MoveType.MOVE;
-        }
-        if (!sourcePiece.isRightTarget(targetPiece)) {
-            throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
-        }
-        return MoveType.ATTACK;
-    }
-
-    private void checkPieceReachable(Piece sourcePiece, MoveType moveType, Move move) {
-        if (!sourcePiece.isValidMove(move, moveType)) {
+        if (!sourcePiece.isValidMove(source, target, targetPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
 
-    private void checkNotCrossOtherPiece(Position position, Move move) {
-        List<Move> moves = move.findRoute();
-        for (Move route : moves) {
-            checkEmpty(position.move(route));
+    private void checkRightTarget(Piece sourcePiece, Piece targetPiece) {
+        if (!sourcePiece.isRightTarget(targetPiece)) {
+            throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
+        }
+    }
+
+    private void checkNotCrossOtherPiece(Position source, Position target) {
+        Set<Position> route = source.findRoute(target);
+        for (Position position : route) {
+            checkEmpty(position);
         }
     }
 
@@ -74,7 +70,8 @@ public class Board {
         return pieces.get(position) == null;
     }
 
-    private void movePiece(Position source, Position target, Piece sourcePiece) {
+    private void movePiece(Position source, Position target) {
+        Piece sourcePiece = pieces.get(source);
         pieces.remove(source);
         pieces.put(target, sourcePiece.touch());
     }

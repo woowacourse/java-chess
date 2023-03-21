@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.MoveType;
-import chess.domain.position.Move;
+import chess.domain.position.Position;
 
 public abstract class Piece {
 
@@ -11,9 +10,12 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean isValidMove(Move move, MoveType moveType);
+    public abstract boolean isValidMove(Position source, Position target, Piece targetPiece);
 
     public boolean isRightTarget(Piece target) {
+        if (target == null) {
+            return true;
+        }
         return color != target.color;
     }
 

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.MoveType;
-import chess.domain.position.Move;
+import chess.domain.position.Position;
 
 public class Queen extends Piece {
 
@@ -10,8 +9,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Move move, MoveType moveType) {
-        return move.isStraight() || move.isDiagonal();
+    public boolean isValidMove(Position source, Position target, Piece targetPiece) {
+        return source.isStraight(target) || source.isDiagonal(target);
     }
 
     @Override

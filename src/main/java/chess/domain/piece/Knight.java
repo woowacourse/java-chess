@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.MoveType;
-import chess.domain.position.Move;
+import chess.domain.position.Position;
 
 public class Knight extends Piece {
 
@@ -12,8 +11,10 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Move move, MoveType moveType) {
-        return move.isRightProductOfChange(PRODUCT_OF_CHANGE);
+    public boolean isValidMove(Position source, Position target, Piece targetPiece) {
+        int deltaFile = source.getDeltaFile(target);
+        int deltaRank = source.getDeltaRank(target);
+        return Math.abs(deltaFile) * Math.abs(deltaRank) == PRODUCT_OF_CHANGE;
     }
 
     @Override

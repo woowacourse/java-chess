@@ -4,8 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.MoveType;
-import chess.domain.position.Move;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ public class PieceTest {
         }
 
         @Override
-        public boolean isValidMove(Move move, MoveType moveType) {
+        public boolean isValidMove(Position source, Position target, Piece targetPiece) {
             return false;
         }
 

@@ -1,6 +1,9 @@
 package chess.domain.position;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Position {
 
@@ -40,18 +43,50 @@ public class Position {
         }
     }
 
-    public Position move(Move move) {
-        File newFile = file.move(move.getDeltaFile());
-        Rank newRank = rank.move(move.getDeltaRank());
+    public Set<Position> findRoute(Position other) {
+        if (!(isStraight(other) || isDiagonal(other))) {
+            return Collections.emptySet();
+        }
+        int unit = findUnit(other);
+        Set<Position> route = new HashSet<>();
+        for (int i = 1; i < unit; i++) {
+            route.add(calculateEachRoute(unit, i, other));
+        }
+        return route;
+    }
+
+    private int findUnit(Position other) {
+        int deltaFile = getDeltaFile(other);
+        int deltaRank = getDeltaRank(other);
+        return Math.max(Math.abs(deltaFile), Math.abs(deltaRank));
+    }
+
+    private Position calculateEachRoute(int unit, int index, Position other) {
+        int deltaFile = getDeltaFile(other) / unit * index;
+        int deltaRank = getDeltaRank(other) / unit * index;
+        return move(deltaFile, deltaRank);
+    }
+
+    private Position move(int deltaFile, int deltaRank) {
+        File newFile = file.move(deltaFile);
+        Rank newRank = rank.move(deltaRank);
         return new Position(newFile, newRank);
     }
 
-    public static int getDeltaFile(Position source, Position target) {
-        return target.getFileIndex() - source.getFileIndex();
+    public boolean isStraight(Position other) {
+        return getDeltaFile(other) * getDeltaRank(other) == 0;
     }
 
-    public static int getDeltaRank(Position source, Position target) {
-        return target.getRankIndex() - source.getRankIndex();
+    public boolean isDiagonal(Position other) {
+        return Math.abs(getDeltaFile(other)) == Math.abs(getDeltaRank(other));
+    }
+
+    public int getDeltaFile(Position other) {
+        return other.getFileIndex() - getFileIndex();
+    }
+
+    public int getDeltaRank(Position other) {
+        return other.getRankIndex() - getRankIndex();
     }
 
     public int getFileIndex() {
