@@ -26,6 +26,9 @@ public enum Direction {
 
     private static final List<Direction> STRAIGHT_DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);
     private static final List<Direction> DIAGONAL_DIRECTIONS = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    private static final List<Direction> KNIGHT_DIRECTIONS = List.of(
+            NORTH_NORTH_EAST, NORTH_EAST_EAST, NORTH_NORTH_WEST, NORTH_WEST_WEST,
+            SOUTH_SOUTH_EAST, SOUTH_EAST_EAST, SOUTH_SOUTH_WEST, SOUTH_WEST_WEST);
 
     private final int fileUnit;
     private final int rankUnit;
@@ -60,6 +63,10 @@ public enum Direction {
 
     public boolean isStraight() {
         return STRAIGHT_DIRECTIONS.contains(this);
+    }
+
+    public boolean isKnightDirection() {
+        return KNIGHT_DIRECTIONS.contains(this);
     }
 
     public int getFileUnit() {
