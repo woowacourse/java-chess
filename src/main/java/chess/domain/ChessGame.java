@@ -3,8 +3,9 @@ package chess.domain;
 import chess.controller.GameState;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Coordinate;
+import chess.dto.ChessBoardDto;
 
-public class ChessGame {
+public final class ChessGame {
 
     private ChessBoard chessBoard;
     private GameState state = GameState.READY;
@@ -18,7 +19,7 @@ public class ChessGame {
         chessBoard = new ChessBoard();
     }
 
-    public void move(Coordinate from, Coordinate to) {
+    public void move(final Coordinate from, final Coordinate to) {
         if (state != GameState.RUNNING) {
             throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
         }
@@ -34,7 +35,7 @@ public class ChessGame {
         return state != GameState.END;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public ChessBoardDto getChessBoard() {
+        return ChessBoardDto.from(chessBoard);
     }
 }
