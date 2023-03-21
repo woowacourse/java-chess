@@ -363,7 +363,7 @@ class InitialPawnTest {
         @ParameterizedTest(name = "목적지가 적군일 때 방향이 대각선이고 움직이는 거리가 1 보다 큰 ({0},{1})이라면 목적지와 무관하게 움직일 수 없다.")
         @DisplayName("movable() 유효한 공격 이동 방향, 유효하지 않은 공격 이동 거리 테스트")
         @CsvSource(value = {"2:2", "-2:2"}, delimiter = ':')
-        void tesT(final int invalidFile, final int invalidRank) {
+        void movable_givenInvalidDirection_thenReturnFalse(final int invalidFile, final int invalidRank) {
             // given
             final Distance invalidDistance = new Distance(invalidFile, invalidRank);
 
@@ -425,5 +425,20 @@ class InitialPawnTest {
             // then
             assertThat(actual).isFalse();
         }
+
+        @ParameterizedTest(name = "({0}, {1})과 같이 유효하지 않은 거리일 경우 목적지와 상관 없이 움직일 수 없다.")
+        @DisplayName("movable() 유효하지 않은 거리")
+        @CsvSource(value = {"0:0", "3:0", "2:2"}, delimiter = ':')
+        void movable_givenInvalidDistance_thenReturnFalse(final int invalidFile, final int invalidRank) {
+            // given
+            final Distance invalidDistance = new Distance(invalidFile, invalidRank);
+
+            // when
+            final boolean actual = whiteInitialPawn.movable(invalidDistance, enemy);
+
+            // then
+            assertThat(actual).isFalse();
+        }
+
     }
 }
