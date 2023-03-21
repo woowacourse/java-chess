@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.service.BoardService;
 import chess.domain.commnad.Command;
 import chess.domain.commnad.GameStatusCommand;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
+import chess.service.BoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.ResultView;
@@ -81,18 +81,9 @@ public class ChessGameController {
         }
     }
 
-    private boolean isGameDoneCase(final ChessGame chessGame) {
-        if (isKingDead(chessGame)) {
-            System.out.println("게임이 끝났습니다. 기존 게임은 삭제됩니다.");
-            boardService.delete(1);
-            return true;
-        }
-        return false;
-    }
-
     private boolean isGameEndCase(final ChessGame chessGame, final Command command) {
         if (isGameEnd(chessGame, command)) {
-            System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
+            resultView.printGameEndWithSaving();
             boardService.delete(1);
             boardService.save(1, chessGame.getBoard(), chessGame.isLowerTeamTurn());
             return true;
@@ -113,6 +104,15 @@ public class ChessGameController {
             resultView.printScore(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
             resultView.printWinner(chessGame.calculateScoreOfUpperTeam(),
                     chessGame.calculateScoreOfLowerTeam());
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isGameDoneCase(final ChessGame chessGame) {
+        if (isKingDead(chessGame)) {
+            resultView.printGameEndWithDeleting();
+            boardService.delete(1);
             return true;
         }
         return false;
@@ -144,7 +144,7 @@ public class ChessGameController {
         }
     }
 
-    private ChessGame createNewChessGame(ChessGame chessGame, final Command command) {
+    private ChessGame createNewChessGame(final ChessGame chessGame, final Command command) {
         if (command.isCreateNewGame()) {
             chessGame.initGame();
         }

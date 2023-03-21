@@ -35,4 +35,12 @@ public class ResultView {
     public void printWinnerIsLowerTeam() {
         System.out.println(LINE_SEPARATOR + "대문자팀 킹이 잡혀서, 소문자팀이 체스 게임에서 승리하였습니다.");
     }
+
+    public void printGameEndWithSaving() {
+        System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
+    }
+
+    public void printGameEndWithDeleting() {
+        System.out.println("게임이 끝났습니다. 기존 게임은 삭제됩니다.");
+    }
 }
