@@ -56,9 +56,10 @@ public class PawnStrategy implements PieceStrategy {
         return isNotSameFile(movablePiecePosition, targetPosition);
     }
 
-    private void validateMoveDiagonal(PositionDto movablePiecePosition, PositionDto targetPosition) {
-        if (isNotDiagonal(movablePiecePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동하려는 위치가 대각선이 아닙니다.");
+    private void validateMoveDiagonal(List<Position> positions, PositionDto movablePiecePosition, PositionDto targetPosition) {
+        boolean isNotExistPosition = !positions.contains(Position.from(targetPosition.getRank(), targetPosition.getFile()));
+        if (isNotExistPosition || isNotDiagonal(movablePiecePosition, targetPosition)) {
+            throw new IllegalArgumentException("대각선으로 이동할 수 없습니다.");
         }
     }
 

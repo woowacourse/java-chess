@@ -27,7 +27,7 @@ public final class OutputView {
             printChessBoardByRankAndFile(piecesResponse, rank);
         }
 
-        System.out.println("\nabcdefgh");
+        System.out.println(System.lineSeparator() + "abcdefgh");
         System.out.println(System.lineSeparator());
     }
 

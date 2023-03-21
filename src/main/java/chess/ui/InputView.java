@@ -10,11 +10,6 @@ public final class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static boolean getStartCommand() {
-        OutputView.printStartGame();
-        return getStartCommandResult();
-    }
-
     private static boolean getStartCommandResult() {
         String inputCommand;
         try {

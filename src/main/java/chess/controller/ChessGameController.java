@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Color;
 import chess.domain.dto.res.PiecesResponse;
 import chess.domain.Pieces;
 import chess.domain.Player;
@@ -8,6 +9,7 @@ import chess.ui.InputView;
 import chess.ui.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public final class ChessGameController {
 
@@ -43,15 +45,16 @@ public final class ChessGameController {
         String inputMovablePiece = command.get(1);
         String inputTargetPosition = command.get(2);
 
-            try {
-                players.movePiece(inputMovablePiece, inputTargetPosition);
-                OutputView.printChessBoardStatus(new PiecesResponse(players.getWhitePlayer(), players.getBlackPlayer()));
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        try {
+            players.movePiece(inputMovablePiece, inputTargetPosition);
+            OutputView.printChessBoardStatus(
+                    new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
+    }
 
+    private void end(final List<String> strings) {
     }
 
     private Players initializeChessBoard() {
@@ -63,5 +66,4 @@ public final class ChessGameController {
 
         return Players.from(whitePlayer, blackPlayer);
     }
-
 }

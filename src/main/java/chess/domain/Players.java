@@ -55,19 +55,12 @@ public class Players {
                 .anyMatch(position -> position.equals(tempPosition));
     }
 
-    public List<Position> getAllPosition() {
+    private List<Position> getAllPosition() {
         List<Piece> whitePieces = players.get(0).getPieces();
         List<Piece> blackPieces = players.get(1).getPieces();
 
-        List<Position> whitePositions = whitePieces.stream()
-                .map(Piece::getPosition)
-                .collect(toList());
-
-        List<Position> blackPositions = blackPieces.stream()
-                .map(Piece::getPosition)
-                .collect(toList());
-
-        return Stream.concat(whitePositions.stream(), blackPositions.stream())
+        return Stream.concat(whitePieces.stream().map(Piece::getPosition),
+                        blackPieces.stream().map(Piece::getPosition))
                 .collect(toList());
     }
 
