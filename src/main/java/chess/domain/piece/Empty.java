@@ -19,6 +19,11 @@ public final class Empty implements PieceState {
     }
 
     @Override
+    public boolean isSameTeam(final Team team) {
+        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+    }
+
+    @Override
     public Team getTeam() {
         throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }

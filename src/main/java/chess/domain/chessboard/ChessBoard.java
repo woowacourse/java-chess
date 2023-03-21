@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.Team;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,10 @@ public final class ChessBoard {
 
     public ChessBoard() {
         this.squares = ChessFactory.getInstance().create();
+    }
+
+    public boolean isRightTeam(Team team, SquareCoordinate from) {
+        return squares.get(from).isSameTeam(team);
     }
 
     public void move(final SquareCoordinate from, final SquareCoordinate to) {
