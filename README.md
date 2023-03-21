@@ -117,7 +117,7 @@ Board
 test
 
 - [ ] test에서 given, when, then 사용하기
-- [ ] test에서 inner class Nested
+- [x] test에서 inner class Nested
 - [ ] test에서 Fixture 활용해보기
 - [ ] test 메서드 네이밍 일관성 지키기
 

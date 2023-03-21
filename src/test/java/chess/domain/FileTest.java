@@ -8,14 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.File.E;
-import static chess.domain.File.F;
-import static chess.domain.File.G;
-import static chess.domain.File.H;
+import static chess.domain.File.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FileTest {
@@ -31,31 +24,30 @@ class FileTest {
         assertThat(actualDistance).isEqualTo(expectedDistance);
     }
 
-}
+    @Nested
+    @DisplayName("두 파일 사이의 파일들을 구한다")
+    class GetFilesToTest {
 
-@Nested
-@DisplayName("두 파일 사이의 파일들을 구한다")
-class GetFilesToTest {
+        @Test
+        @DisplayName("오름차순 파일들을 반환한다")
+        void get_ascending_test() {
+            final File startFile = A;
+            final File endFile = H;
 
-    @Test
-    @DisplayName("오름차순 파일들을 반환한다")
-    void get_ascending_test() {
-        final File startFile = A;
-        final File endFile = H;
+            final List<File> betweenFiles = startFile.getFilesTo(endFile);
 
-        final List<File> betweenFiles = startFile.getFilesTo(endFile);
+            assertThat(betweenFiles).containsExactly(B, C, D, E, F, G);
+        }
 
-        assertThat(betweenFiles).containsExactly(B, C, D, E, F, G);
-    }
+        @Test
+        @DisplayName("내림차순 파일들을 반환한다")
+        void get_descending_test() {
+            final File startFile = H;
+            final File endFile = A;
 
-    @Test
-    @DisplayName("내림차순 파일들을 반환한다")
-    void get_descending_test() {
-        final File startFile = H;
-        final File endFile = A;
+            final List<File> betweenFiles = startFile.getFilesTo(endFile);
 
-        final List<File> betweenFiles = startFile.getFilesTo(endFile);
-
-        assertThat(betweenFiles).containsExactly(G, F, E, D, C, B);
+            assertThat(betweenFiles).containsExactly(G, F, E, D, C, B);
+        }
     }
 }
