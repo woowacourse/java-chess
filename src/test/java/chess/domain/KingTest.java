@@ -1,13 +1,14 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
 
@@ -34,7 +35,7 @@ class KingTest {
     void fail_by_move_length() {
         assertThatThrownBy(() -> king.findPath(PositionFixtures.A1, PositionFixtures.A3, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("킹은 한 칸만 이동 가능합니다.");
+                .hasMessage("한 칸만 이동 가능합니다.");
     }
 
     @DisplayName("목적 지점이 행마법상 이동 불가능한 지역이면 예외가 발생한다.")

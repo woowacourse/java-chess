@@ -1,7 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.piece.UnMovablePiece;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public final class Board {
             throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
         }
         board.put(target, sourcePiece);
-        board.put(source, UnMovablePiece.create());
+        board.put(source, Blank.create());
     }
 
     private boolean cannotMoveToTheTarget(final List<Position> path) {

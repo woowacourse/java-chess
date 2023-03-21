@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
 import chess.domain.movingStrategy.MoveDown;
 import chess.domain.movingStrategy.MoveLeft;
 import chess.domain.movingStrategy.MoveLeftDown;
@@ -12,10 +11,9 @@ import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Queen extends MovablePiece {
+public final class Queen extends SlidingPiece {
 
     private Queen(final Color color, final MovingStrategies strategies) {
         super(color, strategies, PieceType.QUEEN);
@@ -30,16 +28,5 @@ public final class Queen extends MovablePiece {
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Queen(color, strategies);
-    }
-
-    @Override
-    public List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
-        List<Position> path = new ArrayList<>();
-        Position currentPosition = movingStrategy.move(source);
-        while (!currentPosition.equals(target)) {
-            path.add(currentPosition);
-            currentPosition = movingStrategy.move(currentPosition);
-        }
-        return path;
     }
 }

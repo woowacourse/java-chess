@@ -10,25 +10,24 @@ import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
 
-import java.util.Collections;
 import java.util.List;
 
-public final class Pawn extends MovablePiece {
+public final class FirstPawn extends Piece {
 
     private static final int INITIAL_WHITE_RANK = 2;
     private static final int INITIAL_BLACK_RANK = 7;
 
-    private Pawn(final Color color, final MovingStrategies strategies) {
+    private FirstPawn(final Color color, final MovingStrategies strategies) {
         super(color, strategies, PieceType.PAWN);
     }
 
-    public static Pawn createByColor(final Color color) {
+    public static FirstPawn createByColor(final Color color) {
         if (color == Color.BLACK) {
-            return new Pawn(color, initBlackPawnStrategies());
+            return new FirstPawn(color, initBlackPawnStrategies());
         }
 
         if (color == Color.WHITE) {
-            return new Pawn(color, initWhitePawnStrategies());
+            return new FirstPawn(color, initWhitePawnStrategies());
         }
 
         throw new AssertionError();
@@ -48,6 +47,11 @@ public final class Pawn extends MovablePiece {
 
 
     @Override
+    public List<Position> createPath(final Position source, final Position target, final MovingStrategy strategy) {
+        return null;
+    }
+
+    /*@Override
     public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
         final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
 
@@ -61,12 +65,7 @@ public final class Pawn extends MovablePiece {
             return getTwoStepPath(source, movingStrategy);
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
-    }
-
-    @Override
-    protected List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
-        return Collections.emptyList();
-    }
+    }*/
 
     private boolean isAttack(final Position source, final Position target, final Color targetColor) {
         return source.isOnDiagonal(target) && targetColor.isOpponent(this.color);

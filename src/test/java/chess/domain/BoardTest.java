@@ -1,10 +1,10 @@
 package chess.domain;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.FirstPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
-import chess.domain.piece.UnMovablePiece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class BoardTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), UnMovablePiece.create());
+                board.put(Position.of(file, rank), Blank.create());
             }
         }
         return board;
@@ -108,7 +108,7 @@ class BoardTest {
 
     @DisplayName("Pawn의 이동을 테스트한다. ")
     @Nested
-    public class PawnMoveTest {
+    public class FirstPawnMoveTest {
 
         @DisplayName("폰이 초기 위치가 아니면 두 칸 이동 시 예외가 발생한다.")
         @Test
@@ -117,7 +117,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
@@ -135,10 +135,10 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.A4;
-            rawBoard.put(givenTargetPosition, Pawn.createByColor(Color.BLACK));
+            rawBoard.put(givenTargetPosition, FirstPawn.createByColor(Color.BLACK));
 
             final Board board = Board.from(rawBoard);
             //when  && then
@@ -154,7 +154,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.B4;
 
