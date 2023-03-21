@@ -1,10 +1,12 @@
 package chess.view;
 
+import chess.controller.resposne.Output;
 import chess.view.response.PieceResponse;
 import java.util.List;
 
-public class OutputView {
+public class OutputView implements Output {
 
+    @Override
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -12,6 +14,7 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    @Override
     public void printBoard(List<List<PieceResponse>> piecePosition) {
         for (int i = piecePosition.size() - 1; i >= 0; i--) {
             printRank(piecePosition.get(i));
@@ -35,6 +38,7 @@ public class OutputView {
         return pieceType;
     }
 
+    @Override
     public void printError(Exception e) {
         System.out.println(e.getMessage());
     }

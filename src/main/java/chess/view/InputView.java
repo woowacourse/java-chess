@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.controller.request.Input;
 import chess.controller.request.RequestType;
 import chess.view.request.EndRequest;
 import chess.view.request.MoveRequest;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-public class InputView {
+public class InputView implements Input {
 
     private static final Scanner scanner = new Scanner(System.in);
     private final Map<Pattern, Function<List<String>, RequestType>> requests;
@@ -24,6 +25,7 @@ public class InputView {
         );
     }
 
+    @Override
     public RequestType inputGameCommand() {
         String input = scanner.nextLine();
         return requests.entrySet().stream()

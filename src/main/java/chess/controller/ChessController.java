@@ -1,40 +1,40 @@
 package chess.controller;
 
+import chess.controller.request.Input;
 import chess.controller.request.RequestType;
+import chess.controller.resposne.Output;
 import chess.domain.game.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
 import chess.view.response.PieceResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessController {
 
-    private final OutputView outputView;
-    private final InputView inputView;
+    private final Output output;
+    private final Input input;
     private final ChessGame chessGame;
 
-    public ChessController(OutputView outputView, InputView inputView) {
-        this.outputView = outputView;
-        this.inputView = inputView;
+    public ChessController(Output output, Input input) {
+        this.output = output;
+        this.input = input;
         chessGame = new ChessGame();
     }
 
     public void run() {
-        outputView.printInitialMessage();
+        output.printInitialMessage();
         while (true) {
             try {
-                RequestType requestType = inputView.inputGameCommand();
+                RequestType requestType = input.inputGameCommand();
                 requestType.execute(this);
             } catch (Exception e) {
-                outputView.printError(e);
+                output.printError(e);
             }
         }
     }
 
     public void move(String origin, String destination) {
         chessGame.move(origin, destination);
-        outputView.printBoard(makeBoardResponse());
+        output.printBoard(makeBoardResponse());
     }
 
     private List<List<PieceResponse>> makeBoardResponse() {
@@ -48,7 +48,7 @@ public class ChessController {
 
     public void start() {
         chessGame.start();
-        outputView.printBoard(makeBoardResponse());
+        output.printBoard(makeBoardResponse());
     }
 
     public void finish() {
