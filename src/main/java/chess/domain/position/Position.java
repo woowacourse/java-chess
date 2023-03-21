@@ -4,12 +4,21 @@ import java.util.Objects;
 
 public final class Position {
 
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private final File file;
     private final Rank rank;
 
     private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position from(final String input) {
+        File file = File.of(input.charAt(FILE_INDEX));
+        Rank rank = Rank.of(input.charAt(RANK_INDEX));
+
+        return new Position(file, rank);
     }
 
     public static Position of(final File file, final Rank rank) {
