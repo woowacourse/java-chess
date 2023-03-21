@@ -1,4 +1,4 @@
-package chess.view.response;
+package chess.controller.resposne;
 
 import chess.domain.piece.Piece;
 
@@ -13,7 +13,8 @@ public class PieceResponse {
     }
 
     public static PieceResponse from(Piece piece) {
-        return new PieceResponse(piece.getType().getName(), piece.getColor().name());
+        return new PieceResponse(PieceMapper.getPieceName(piece.getType()),
+                ColorMapper.getColorName(piece.getColor()));
     }
 
     @Override

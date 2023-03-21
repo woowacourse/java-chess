@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.controller.resposne.Output;
-import chess.view.response.PieceResponse;
+import chess.controller.resposne.PieceResponse;
 import java.util.List;
 
 public class OutputView implements Output {

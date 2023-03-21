@@ -3,8 +3,8 @@ package chess.controller;
 import chess.controller.request.Input;
 import chess.controller.request.RequestType;
 import chess.controller.resposne.Output;
+import chess.controller.resposne.PieceResponse;
 import chess.domain.game.ChessGame;
-import chess.view.response.PieceResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 

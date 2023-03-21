@@ -1,6 +1,5 @@
 package chess.controller.resposne;
 
-import chess.view.response.PieceResponse;
 import java.util.List;
 
 public interface Output {
