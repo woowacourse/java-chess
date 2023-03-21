@@ -1,63 +1,81 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Position;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PositionMapper;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
+    private static final int GAME_ACTION_COMMAND = 0;
+    private static final int START_COMMAND_SIZE = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
+    private final Map<GameCommand, GameAction> commandMapper = new EnumMap<>(GameCommand.class);
     private final OutputView outputView;
     private final InputView inputView;
     private final ChessGame chessGame;
+
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
         this.chessGame = new ChessGame(BoardFactory.createBoard());
+        initController();
+    }
+
+    private void initController() {
+        commandMapper.put(GameCommand.START, this::start);
+        commandMapper.put(GameCommand.MOVE, this::move);
+        commandMapper.put(GameCommand.END, ignored -> {
+        });
     }
 
     public void run() {
         outputView.printStart();
-        if (isStartCommand()) {
-            outputView.printBoard(chessGame.getBoard());
-            play();
+        GameCommand gameCommand = GameCommand.EMPTY;
+        while (gameCommand != GameCommand.END) {
+            gameCommand = play();
         }
     }
 
-    private boolean isStartCommand() {
+    private GameCommand play() {
         try {
-            return inputView.readStartCommand();
+            List<String> commands = inputView.readGameCommand();
+            GameCommand command = GameCommand.of(commands.get(GAME_ACTION_COMMAND));
+            GameAction gameAction = commandMapper.get(command);
+            gameAction.execute(commands);
+            return command;
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return isStartCommand();
+            return GameCommand.EMPTY;
         }
     }
 
-    private void play() {
-        boolean isPlaying = true;
-        while (isPlaying) {
-            isPlaying = move();
-            outputView.printBoard(chessGame.getBoard());
-        }
-    }
-
-    private boolean move() {
+    private void start(List<String> commands) {
         try {
-            List<String> input = inputView.readGameCommand();
-            GameCommand gameCommand = GameCommand.of(input.get(0));
-            if (gameCommand == GameCommand.END) {
-                return false;
-            }
-            List<Position> positions = PositionMapper.from(input);
-            chessGame.movePieceTo(positions.get(0), positions.get(1));
-            return true;
+            GameCommand.validateCommandSize(commands.size(), START_COMMAND_SIZE);
+            outputView.printBoard(chessGame.getBoard());
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return move();
+        }
+    }
+
+
+    private void move(List<String> commands) {
+        try {
+            GameCommand.validateCommandSize(commands.size(), MOVE_COMMAND_SIZE);
+            String source = commands.get(SOURCE_INDEX);
+            String target = commands.get(TARGET_INDEX);
+            chessGame.movePieceTo(GameCommand.getPosition(source), GameCommand.getPosition(target));
+            outputView.printBoard(chessGame.getBoard());
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
         }
     }
 }
