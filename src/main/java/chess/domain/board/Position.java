@@ -40,14 +40,6 @@ public class Position {
         return CACHE.get(position.toUpperCase());
     }
 
-    public int calculateFileGap(final Position target) {
-        return file.calculateGap(target.file);
-    }
-
-    public int calculateRankGap(final Position target) {
-        return rank.calculateGap(target.rank);
-    }
-
     public List<Position> between(final Position other) {
         final List<Rank> ranks = rank.between(other.rank);
         final List<File> files = file.between(other.file);
@@ -59,6 +51,14 @@ public class Position {
             return Collections.emptyList();
         }
         return betweenDiagonal(ranks, files);
+    }
+
+    public int calculateFileGap(final Position target) {
+        return file.calculateGap(target.file);
+    }
+
+    public int calculateRankGap(final Position target) {
+        return rank.calculateGap(target.rank);
     }
 
     private List<Position> betweenStraight(final List<Rank> ranks, final List<File> files) {
