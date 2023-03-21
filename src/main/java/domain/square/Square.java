@@ -10,17 +10,17 @@ import java.util.Objects;
 public final class Square implements Cloneable {
 
     private final Piece piece;
-    private final Camp camp;
+    private final Color color;
     private boolean isFirstMove;
 
-    public Square(final Piece piece, final Camp camp) {
+    public Square(final Piece piece, final Color color) {
         this.piece = piece;
-        this.camp = camp;
+        this.color = color;
         this.isFirstMove = true;
     }
 
     public static Square ofEmpty() {
-        return new Square(new EmptyPiece(), Camp.NEUTRAL);
+        return new Square(new EmptyPiece(), Color.NEUTRAL);
     }
 
     public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
@@ -36,7 +36,7 @@ public final class Square implements Cloneable {
     }
 
     public boolean isNotSameCampWith(final Square other) {
-        return this.camp == other.getCamp();
+        return this.color == other.getCamp();
     }
 
     public boolean isKing() {
@@ -51,8 +51,8 @@ public final class Square implements Cloneable {
         return piece;
     }
 
-    public Camp getCamp() {
-        return camp;
+    public Color getCamp() {
+        return color;
     }
 
     @Override
@@ -61,13 +61,13 @@ public final class Square implements Cloneable {
         if (o == null || getClass() != o.getClass()) return false;
         Square that = (Square) o;
         return piece.getClass() == that.piece.getClass() &&
-                camp == that.camp &&
+                color == that.color &&
                 isFirstMove == that.isFirstMove;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(piece, camp);
+        return Objects.hash(piece, color);
     }
 
     @Override

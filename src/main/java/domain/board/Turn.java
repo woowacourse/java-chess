@@ -1,24 +1,24 @@
 package domain.board;
 
-import domain.square.Camp;
+import domain.square.Color;
 
 public class Turn {
 
-    private Camp turn;
+    private Color turn;
 
-    public Turn(final Camp turn) {
+    public Turn(final Color turn) {
         this.turn = turn;
     }
 
     public void invert() {
-        if (turn == Camp.BLACK) {
-            turn = Camp.WHITE;
+        if (turn == Color.BLACK) {
+            turn = Color.WHITE;
             return;
         }
-        turn = Camp.BLACK;
+        turn = Color.BLACK;
     }
 
-    public boolean isNotFor(final Camp camp) {
-        return turn != camp;
+    public boolean isNotFor(final Color color) {
+        return turn != color;
     }
 }

@@ -1,6 +1,6 @@
 package view;
 
-import domain.square.Camp;
+import domain.square.Color;
 import domain.square.Square;
 import domain.piece.sliding.Bishop;
 import domain.piece.nonsliding.King;
@@ -32,12 +32,12 @@ public final class PieceTypeMapper {
                 .filter(pieceType -> pieceType.isInstance(square.getPieceType()))
                 .map(mapper::get)
                 .findAny()
-                .orElseGet(() -> ".");
+                .orElse(".");
         return makeUpperCaseIfCampIsBlack(square, message);
     }
 
     private static String makeUpperCaseIfCampIsBlack(final Square square, final String message) {
-        if (square.getCamp() != null && square.getCamp().equals(Camp.BLACK)) {
+        if (square.getCamp() != null && square.getCamp().equals(Color.BLACK)) {
             return message.toUpperCase();
         }
         return message;

@@ -1,19 +1,19 @@
 package domain.board;
 
-import domain.square.Camp;
+import domain.square.Color;
 import domain.piece.move.Coordinate;
 import domain.square.Square;
 
 public final class ChessGame {
 
-    private static final Camp PRIORITY_GIVEN_CAMP = Camp.WHITE;
+    private static final Color PRIORITY_GIVEN_COLOR = Color.WHITE;
 
     private final Board board;
     private final Turn turn;
 
     public ChessGame() {
         this.board = new Board();
-        this.turn = new Turn(PRIORITY_GIVEN_CAMP);
+        this.turn = new Turn(PRIORITY_GIVEN_COLOR);
     }
 
     // TODO: 테스트를 위한 생성자 유연성 증가

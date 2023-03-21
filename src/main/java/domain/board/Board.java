@@ -1,7 +1,7 @@
 package domain.board;
 
 import domain.piece.move.Coordinate;
-import domain.square.Camp;
+import domain.square.Color;
 import domain.square.Square;
 
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public final class Board {
 
     public boolean isSquareEmptyAt(final Coordinate target) {
         return squareLocations.get(target)
-                .getCamp() == Camp.NEUTRAL;
+                .getCamp() == Color.NEUTRAL;
     }
 
     public Map<Coordinate, Square> getSquareLocations() {

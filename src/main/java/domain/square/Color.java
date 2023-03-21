@@ -1,6 +1,6 @@
 package domain.square;
 
-public enum Camp {
+public enum Color {
 
     WHITE,
     BLACK,

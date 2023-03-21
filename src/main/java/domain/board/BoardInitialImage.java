@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.square.Camp;
+import domain.square.Color;
 import domain.piece.sliding.Bishop;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.nonsliding.King;
@@ -29,11 +29,11 @@ public final class BoardInitialImage {
 
     private static List<List<Square>> makeBoardImage() {
         List<List<Square>> boardImage = new ArrayList<>();
-        boardImage.add(makeFrontRank(Camp.WHITE));
+        boardImage.add(makeFrontRank(Color.WHITE));
         boardImage.add(makeWhiteBackRank());
         boardImage.addAll(makeEmptyRanks());
         boardImage.add(makeBlackBackRank());
-        boardImage.add(makeFrontRank(Camp.BLACK));
+        boardImage.add(makeFrontRank(Color.BLACK));
         return boardImage;
     }
 
@@ -43,7 +43,7 @@ public final class BoardInitialImage {
                 .collect(Collectors.toList());
     }
 
-    private static List<Square> makeFrontRank(final Camp camp) {
+    private static List<Square> makeFrontRank(final Color color) {
         List<Piece> frontPieces = List.of(
                 new Rook(), new Knight(), new Bishop(),
                 new Queen(), new King(), new Bishop(),
@@ -51,7 +51,7 @@ public final class BoardInitialImage {
         );
 
         return frontPieces.stream()
-                .map(pieceType -> new Square(pieceType, camp))
+                .map(pieceType -> new Square(pieceType, color))
                 .collect(Collectors.toList());
     }
 
@@ -63,13 +63,13 @@ public final class BoardInitialImage {
 
     private static List<Square> makeWhiteBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new Square(new WhitePawn(), Camp.WHITE))
+                .mapToObj(i -> new Square(new WhitePawn(), Color.WHITE))
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeBlackBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new Square(new BlackPawn(), Camp.BLACK))
+                .mapToObj(i -> new Square(new BlackPawn(), Color.BLACK))
                 .collect(Collectors.toList());
     }
 
