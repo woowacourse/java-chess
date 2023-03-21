@@ -7,10 +7,10 @@ import java.sql.SQLException;
 public final class UserDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+    private static final String OPTION = "?useSSL=false&serverTimezone=UTC&&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-    
+
     public Connection getConnection() {
         // 드라이버 연결
         try {
@@ -21,62 +21,60 @@ public final class UserDao {
             return null;
         }
     }
-    
-    public int addUser(final User user) {
-        final var query = "INSERT INTO user VALUES(?, ?)";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, user.userId());
-            preparedStatement.setString(2, user.name());
-            return preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
+
+    public void insert(final User user) {
+        //쿼리 날림
+        String sql = "INSERT INTO user (user_id,name) VALUES (?,?)";
+        try (final Connection connection = getConnection();
+            final var preparedStatement = connection.prepareStatement(sql)) {
+            //setString 통해 위 쿼리문 ? 부분에 변수 넣음
+            preparedStatement.setString(1, user.getUserId());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    
-    public int deleteUser(final User user) {
-        final var query = "DELETE FROM user WHERE user_id = ? AND name = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, user.userId());
-            preparedStatement.setString(2, user.name());
-            return preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    public int updateUser(User user, User user1) {
-        final var query = "UPDATE user SET user_id = ?, name = ? WHERE user_id = ? AND name = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, user1.userId());
-            preparedStatement.setString(2, user1.name());
-            preparedStatement.setString(3, user.userId());
-            preparedStatement.setString(4, user.name());
-            return preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    public User findByUserId(final String userId) {
-        final var query = "SELECT * FROM user WHERE user_id = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+
+    public User findByUserId(String userId) {
+        String sql = "SELECT * FROM user WHERE user_id = ?";
+        try (final Connection connection = getConnection();
+            final var preparedStatement = connection.prepareStatement(sql)) {
+            //setString 통해 위 쿼리문 ? 부분에 변수 넣음
             preparedStatement.setString(1, userId);
-            
-            final var resultSet = preparedStatement.executeQuery();
+
+            var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new User(
-                        resultSet.getString("user_id"),
-                        resultSet.getString("name")
-                );
+                return new User(resultSet.getString("user_id"),
+                    resultSet.getString("name"));
             }
-        } catch (final SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
         return null;
     }
+
+    public void updateUser(User user){
+        String sql = "UPDATE user SET name = ? WHERE user_id = ?";
+        try (final Connection connection = getConnection();
+            final var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteUser(User user){
+        String sql = "DELETE FROM user WHERE user_id = ?";
+        try (final Connection connection = getConnection();
+            final var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
