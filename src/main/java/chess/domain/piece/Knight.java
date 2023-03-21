@@ -13,8 +13,10 @@ public class Knight extends Piece {
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(Direction.EAST_DOWN, Direction.EAST_UP, Direction.SOUTH_LEFT, Direction.SOUTH_RIGHT,
-                Direction.WEST_DOWN, Direction.WEST_UP, Direction.NORTH_LEFT, Direction.NORTH_RIGHT);
+        directions = List.of(Direction.EAST_EAST_SOUTH, Direction.EAST_EAST_NORTH, Direction.WEST_SOUTH_SOUTH,
+                Direction.EAST_SOUTH_SOUTH,
+                Direction.WEST_WEST_SOUTH, Direction.WEST_WEST_NORTH, Direction.WEST_NORTH_NORTH,
+                Direction.EAST_NORTH_NORTH);
     }
 
     public Knight(final Camp camp) {

@@ -15,14 +15,14 @@ public enum Direction {
     NORTH_WEST(-1, 1),
     SOUTH_WEST(-1, -1),
 
-    EAST_UP(2, 1),
-    EAST_DOWN(2, -1),
-    WEST_UP(-2, 1),
-    WEST_DOWN(-2, -1),
-    NORTH_RIGHT(1, 2),
-    NORTH_LEFT(-1, 2),
-    SOUTH_RIGHT(1, -2),
-    SOUTH_LEFT(-1, -2);
+    EAST_EAST_NORTH(2, 1),
+    EAST_EAST_SOUTH(2, -1),
+    WEST_WEST_NORTH(-2, 1),
+    WEST_WEST_SOUTH(-2, -1),
+    EAST_NORTH_NORTH(1, 2),
+    WEST_NORTH_NORTH(-1, 2),
+    EAST_SOUTH_SOUTH(1, -2),
+    WEST_SOUTH_SOUTH(-1, -2);
 
     private final int fileDisplacement;
     private final int rankDisplacement;

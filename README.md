@@ -121,12 +121,12 @@ sequenceDiagram
 - 설계 관련
     - [ ] 게임 상태 관리를 위한 패턴 검토 (상태 패턴 vs 커맨드 패턴)
         - 각 상태에 따라 다른 행동을 한다기보다는 각 상태가 다음 상태를 전달해준다?
-    - [x] ChessController의 진영 전환 책임을 ChessBoard로 위임하여 이동 로직과 결합
+    - [x] ChessController 의 진영 전환 책임을 ChessBoard 로 위임하여 이동 로직과 결합
     - [x] 체스판 뷰 변환을 위한 클래스 util 패키지에서 controller 패키지로 이동
-    - [ ] ChessBoard 의 폰 공격 검사 책임 Pawn이 스스로 하도록 위임
+    - [ ] ChessBoard 의 폰 공격 검사 책임 Pawn 이 스스로 하도록 위임
 - 클린 코드 관련
-    - [ ] 테스트 하드코딩 개선
+    - [x] 테스트 하드코딩 개선
     - [x] 의미하는 바를 알기 어려운 매개변수 개선
         - [x] move 메서드의 매개변수명, 데이터 유형 수정
     - [x] 조건문 가독성 개선
-        - [x] CheckablePaths의 특정 위치 포함한 경로 탐색 메서드 stream으로 변경
+        - [x] CheckablePaths 의 특정 위치 포함한 경로 탐색 메서드 stream 으로 변경
