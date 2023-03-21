@@ -35,29 +35,18 @@ public class ChessBoard {
             throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
         }
         Piece piece = piecesByPosition.get(source);
-        validateSourceColor(piece);
-        return piece;
-    }
-
-    private void validateSourceColor(final Piece piece) {
         if (piece.isDifferentCamp(currentTurnCamp)) {
             throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
         }
+        return piece;
     }
 
     private void progressIfPossible(final Path pathToDestination, final Position source, final Position destination,
                                     final Piece movingPiece) {
         validateObstacle(pathToDestination, destination);
-        validateMoveToEmpty(source, destination, movingPiece);
-        validateAttack(source, destination, movingPiece);
+        validateMove(source, destination, movingPiece);
         piecesByPosition.put(destination, movingPiece);
         piecesByPosition.remove(source);
-    }
-
-    private void validateMoveToEmpty(final Position source, final Position destination, final Piece movingPiece) {
-        if (isEmptyPosition(destination) && !movingPiece.canMoveToEmpty(source, destination)) {
-            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
-        }
     }
 
     private void validateObstacle(final Path path, final Position destination) {
@@ -68,22 +57,31 @@ public class ChessBoard {
 
     private boolean hasObstacleInPath(final Path path, final Position destination) {
         return IntStream.range(0, path.findPositionIndex(destination))
-                .anyMatch(index -> hasPieceAtPosition(path.findByIndex(index)));
+                .anyMatch(index -> piecesByPosition.containsKey((path.findByIndex(index))));
+    }
+
+    private void validateMove(final Position source, final Position destination, final Piece movingPiece) {
+        if (isEmptyPosition(destination)) {
+            validateMoveToEmpty(source, destination, movingPiece);
+            return;
+        }
+        validateAttack(source, destination, movingPiece);
+    }
+
+    private void validateMoveToEmpty(final Position source, final Position destination, final Piece movingPiece) {
+        if (!movingPiece.canMoveToEmpty(source, destination)) {
+            throw new IllegalArgumentException(WRONG_DESTINATION_ERROR_MESSAGE);
+        }
     }
 
     private void validateAttack(final Position source, final Position destination, final Piece movingPiece) {
-        if (hasPieceAtPosition(destination) && notAbleToAttack(source, destination, movingPiece)) {
+        if (notAbleToAttack(source, destination, movingPiece)) {
             throw new IllegalArgumentException(WRONG_ATTACK_ERROR_MESSAGE);
         }
     }
 
-    private boolean notAbleToAttack(final Position source, final Position destination,
-                                    final Piece movingPiece) {
+    private boolean notAbleToAttack(final Position source, final Position destination, final Piece movingPiece) {
         return !movingPiece.canAttack(source, destination, piecesByPosition.get(destination));
-    }
-
-    private boolean hasPieceAtPosition(final Position position) {
-        return piecesByPosition.containsKey(position);
     }
 
     private boolean isEmptyPosition(final Position position) {
