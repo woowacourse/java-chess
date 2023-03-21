@@ -1,13 +1,12 @@
 package chess.controller;
 
-import static chess.domain.Command.END;
-import static chess.domain.Command.MOVE;
-import static chess.domain.Command.START;
+import static chess.controller.Command.END;
+import static chess.controller.Command.MOVE;
+import static chess.controller.Command.START;
 import static chess.domain.Team.WHITE;
 
 import chess.domain.ChessGame;
 import chess.domain.Board;
-import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
