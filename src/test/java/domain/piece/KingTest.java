@@ -44,12 +44,14 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("isMovablePathTest_SuccessCase")
     @DisplayName("모든 방향으로 1칸 이동할 수 있다.")
-    void isMovablePathTest_Success(List<Position> path) {
+    void isMovablePathTest_Success(Position end) {
         // given
         King king = new King(Color.WHITE);
+        Position start = Position.of(3, 3);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // when
-        boolean result = king.isMovablePath(Position.of(3, 3), path);
+        boolean result = king.isMovableRoute(routeFromStartToEnd);
 
         // then
         assertThat(result).isTrue();
@@ -58,12 +60,14 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("isMovablePathTest_FailCase")
     @DisplayName("2칸 이상 이동할 수 없다.")
-    void isMovablePathTest_Fail(List<Position> path) {
+    void isMovablePathTest_Fail(Position end) {
         // given
         King king = new King(Color.WHITE);
+        Position start = Position.of(3, 3);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // when
-        boolean result = king.isMovablePath(Position.of(3, 3), path);
+        boolean result = king.isMovableRoute(routeFromStartToEnd);
 
         // then
         assertThat(result).isFalse();
@@ -71,27 +75,27 @@ class KingTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(4, 3))),
-                Arguments.of(List.of(Position.of(3, 4))),
-                Arguments.of(List.of(Position.of(2, 3))),
-                Arguments.of(List.of(Position.of(3, 2))),
-                Arguments.of(List.of(Position.of(4, 4))),
-                Arguments.of(List.of(Position.of(2, 4))),
-                Arguments.of(List.of(Position.of(2, 2))),
-                Arguments.of(List.of(Position.of(4, 2)))
+                Arguments.of(Position.of(4, 3)),
+                Arguments.of(Position.of(3, 4)),
+                Arguments.of(Position.of(2, 3)),
+                Arguments.of(Position.of(3, 2)),
+                Arguments.of(Position.of(4, 4)),
+                Arguments.of(Position.of(2, 4)),
+                Arguments.of(Position.of(2, 2)),
+                Arguments.of(Position.of(4, 2))
         );
     }
 
     static Stream<Arguments> isMovablePathTest_FailCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(4, 3), Position.of(5, 3))),
-                Arguments.of(List.of(Position.of(3, 4), Position.of(3, 5))),
-                Arguments.of(List.of(Position.of(2, 3), Position.of(1, 3))),
-                Arguments.of(List.of(Position.of(3, 2), Position.of(3, 1))),
-                Arguments.of(List.of(Position.of(4, 4), Position.of(5, 5))),
-                Arguments.of(List.of(Position.of(2, 4), Position.of(1, 5))),
-                Arguments.of(List.of(Position.of(2, 2), Position.of(1, 1))),
-                Arguments.of(List.of(Position.of(4, 2), Position.of(5, 1)))
+                Arguments.of(Position.of(5, 3)),
+                Arguments.of(Position.of(3, 5)),
+                Arguments.of(Position.of(1, 3)),
+                Arguments.of(Position.of(3, 1)),
+                Arguments.of(Position.of(5, 5)),
+                Arguments.of(Position.of(1, 5)),
+                Arguments.of(Position.of(1, 1)),
+                Arguments.of(Position.of(5, 1))
         );
     }
 }

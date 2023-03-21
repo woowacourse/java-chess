@@ -154,22 +154,22 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("getPathToTestCase")
     @DisplayName("목적지가 8방향 직선 상에 있을 경우 목적지 Position까지의 경로를 반환할 수 있다.")
-    void getPathToTest_EightDirections(Position start, Position end, List<Position> path) {
-        assertThat(start.getPathTo(end)).containsAll(path);
+    void getPathToTest_EightDirections(Position start, Position end, List<Position> route) {
+        assertThat(Position.getRouteOf(start, end)).containsAll(route);
     }
 
     @Test
-    @DisplayName("목적지가 8방향 직선 상에 없을 경우 목적지 Position만 경로에 넣어준다.")
+    @DisplayName("목적지가 8방향 직선 상에 없을 경우 출발지와 목적지 Position만 경로에 넣어준다.")
     void getPathToTest_NonEightDirections() {
         // given
         Position start = Position.of(3, 3);
         Position end = Position.of(6, 8);
 
         // when
-        List<Position> path = start.getPathTo(end);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // then
-        assertThat(path).containsExactly(end);
+        assertThat(routeFromStartToEnd).containsExactly(start, end);
     }
 
 

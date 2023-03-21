@@ -43,11 +43,14 @@ public final class Position {
                 .collect(Collectors.toList());
     }
 
-    public List<Position> getPathTo(Position end) {
-        if (Direction.of(this, end) != Direction.OTHER) {
-            return calculatePath(calculateRowGap(end), calculateColumnGap(end));
+    public static List<Position> getRouteOf(Position start, Position end) {
+        if (Direction.of(start, end) == Direction.OTHER) {
+            return new ArrayList<>(List.of(start, end));
         }
-        return new ArrayList<>(List.of(end));
+        List<Position> route = new ArrayList<>();
+        route.add(start);
+        route.addAll(start.calculateRoute(start.calculateRowGap(end), start.calculateColumnGap(end)));
+        return route;
     }
 
     public int calculateRowGap(Position other) {
@@ -58,15 +61,15 @@ public final class Position {
         return other.column - this.column;
     }
 
-    private List<Position> calculatePath(int rowGap, int columnGap) {
-        List<Position> path = new ArrayList<>();
+    private List<Position> calculateRoute(int rowGap, int columnGap) {
+        List<Position> route = new ArrayList<>();
         int unit = Math.max(Math.abs(rowGap), Math.abs(columnGap));
         int rowCoefficient = rowGap / unit;
         int columnCoefficient = columnGap / unit;
         for (int i = 1; i <= unit; i++) {
-            path.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
+            route.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
         }
-        return path;
+        return route;
     }
 
     public Position moveUp() {

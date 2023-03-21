@@ -47,12 +47,14 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("isMovablePathTest_SuccessCase")
     @DisplayName("상하 중 한 방향으로 2칸 이동 후 좌우로 1칸 또는 좌우 중 한 방향으로 2칸 이동 후 상하로 1칸 이동할 수 있다.")
-    void isMovablePathTest_Success(List<Position> path) {
+    void isMovablePathTest_Success(Position end) {
         // given
         Knight knight = new Knight(Color.WHITE);
+        Position start = Position.of(4, 4);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // when
-        boolean result = knight.isMovablePath(Position.of(4, 4), path);
+        boolean result = knight.isMovableRoute(routeFromStartToEnd);
 
         // then
         assertThat(result).isTrue();
@@ -63,10 +65,12 @@ class KnightTest {
     void isMovablePathTest_Fail() {
         // given
         Knight knight = new Knight(Color.WHITE);
-        List<Position> path = List.of(Position.of(5, 5));
+        Position start = Position.of(4, 4);
+        Position end = Position.of(5, 5);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // when
-        boolean result = knight.isMovablePath(Position.of(4, 4), path);
+        boolean result = knight.isMovableRoute(routeFromStartToEnd);
 
         // then
         assertThat(result).isFalse();
@@ -74,14 +78,14 @@ class KnightTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(6, 3))),
-                Arguments.of(List.of(Position.of(6, 5))),
-                Arguments.of(List.of(Position.of(5, 2))),
-                Arguments.of(List.of(Position.of(5, 6))),
-                Arguments.of(List.of(Position.of(3, 2))),
-                Arguments.of(List.of(Position.of(3, 6))),
-                Arguments.of(List.of(Position.of(2, 3))),
-                Arguments.of(List.of(Position.of(2, 5)))
+                Arguments.of(Position.of(6, 3)),
+                Arguments.of(Position.of(6, 5)),
+                Arguments.of(Position.of(5, 2)),
+                Arguments.of(Position.of(5, 6)),
+                Arguments.of(Position.of(3, 2)),
+                Arguments.of(Position.of(3, 6)),
+                Arguments.of(Position.of(2, 3)),
+                Arguments.of(Position.of(2, 5))
         );
     }
 }

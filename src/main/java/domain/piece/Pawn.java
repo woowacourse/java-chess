@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
@@ -11,36 +12,45 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        if (isBlack() && start.isBlackPawnInitialRow()) {
-            return isMovableNonInitialRowPawn(start, path) ||
-                    path.contains(start.moveDown().moveDown()) && path.size() == 2;
-        }
-        if (isWhite() && start.isWhitePawnInitialRow()) {
-            return isMovableNonInitialRowPawn(start, path) ||
-                    path.contains(start.moveUp().moveUp()) && path.size() == 2;
-        }
-        return isMovableNonInitialRowPawn(start, path);
+    public boolean isMovableRoute(List<Position> routeFromStartToEnd) {
+        Position start = routeFromStartToEnd.get(0);
+        Position end = routeFromStartToEnd.get(routeFromStartToEnd.size() - 1);
+        List<Position> movablePositions = getMovablePositions(start);
+        return movablePositions.contains(end);
     }
 
-    private boolean isMovableNonInitialRowPawn(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0)) && isMovableDistance(path.size());
+    private List<Position> getMovablePositions(Position start) {
+        if (start.isBlackPawnInitialRow() || start.isWhitePawnInitialRow()) {
+            return getInitialMovablePositions(start);
+        }
+        return getNonInitialMovablePosition(start);
     }
 
-    @Override
-    protected boolean isMovableDirection(Position start, Position nextPosition) {
+    private List<Position> getInitialMovablePositions(Position start) {
         if (isBlack()) {
-            return start.moveDown() == nextPosition ||
-                    start.moveDownRight() == nextPosition ||
-                    start.moveDownLeft() == nextPosition;
+            return new ArrayList<>(List.of(
+                    start.moveDown(),
+                    start.moveDown().moveDown(),
+                    start.moveDownLeft(),
+                    start.moveDownRight()));
         }
-        return start.moveUp() == nextPosition ||
-                start.moveUpRight() == nextPosition ||
-                start.moveUpLeft() == nextPosition;
+        return new ArrayList<>(List.of(
+                start.moveUp(),
+                start.moveUp().moveUp(),
+                start.moveUpLeft(),
+                start.moveUpRight()));
     }
 
-    @Override
-    protected boolean isMovableDistance(int distance) {
-        return distance == 1;
+    private List<Position> getNonInitialMovablePosition(Position start) {
+        if (isBlack()) {
+            return new ArrayList<>(List.of(
+                    start.moveDown(),
+                    start.moveDownLeft(),
+                    start.moveDownRight()));
+        }
+        return new ArrayList<>(List.of(
+                start.moveUp(),
+                start.moveUpLeft(),
+                start.moveUpRight()));
     }
 }

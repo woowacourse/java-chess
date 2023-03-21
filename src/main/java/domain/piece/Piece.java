@@ -33,9 +33,5 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public abstract boolean isMovablePath(Position start, List<Position> path);
-
-    protected abstract boolean isMovableDirection(Position start, Position nextPosition);
-
-    protected abstract boolean isMovableDistance(int distance);
+    public abstract boolean isMovableRoute(List<Position> routeFromStartToEnd);
 }

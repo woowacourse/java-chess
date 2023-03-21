@@ -11,22 +11,13 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        Position end = path.get(0);
+    public boolean isMovableRoute(List<Position> routeFromStartToEnd) {
+        Position start = routeFromStartToEnd.get(0);
+        Position end = routeFromStartToEnd.get(routeFromStartToEnd.size() - 1);
         return isKnightMovablePosition(start.calculateRowGap(end), start.calculateColumnGap(end));
     }
 
     private boolean isKnightMovablePosition(int rowGap, int columnGap) {
         return Math.abs(rowGap) * Math.abs(columnGap) == 2;
-    }
-
-    @Override
-    protected boolean isMovableDirection(Position start, Position nextPosition) {
-        throw new UnsupportedOperationException("[ERROR] Knight 객체에서는 지원하지 않는 기능입니다.");
-    }
-
-    @Override
-    protected boolean isMovableDistance(int distance) {
-        throw new UnsupportedOperationException("[ERROR] Knight 객체에서는 지원하지 않는 기능입니다.");
     }
 }

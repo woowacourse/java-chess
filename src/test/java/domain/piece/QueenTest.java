@@ -44,12 +44,14 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("isMovablePathTest_SuccessCase")
     @DisplayName("모든 방향에 위치한 모든 칸으로 이동할 수 있다.")
-    void isMovablePathTest_Success(List<Position> path) {
+    void isMovablePathTest_Success(Position end) {
         // given
         Queen queen = new Queen(Color.WHITE);
+        Position start = Position.of(3, 3);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
 
         // when
-        boolean result = queen.isMovablePath(Position.of(3, 3), path);
+        boolean result = queen.isMovableRoute(routeFromStartToEnd);
 
         // then
         assertThat(result).isTrue();
@@ -57,14 +59,14 @@ class QueenTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(4, 3), Position.of(5, 3))),
-                Arguments.of(List.of(Position.of(3, 4), Position.of(3, 5))),
-                Arguments.of(List.of(Position.of(2, 3), Position.of(1, 3))),
-                Arguments.of(List.of(Position.of(3, 2), Position.of(3, 1))),
-                Arguments.of(List.of(Position.of(4, 4), Position.of(5, 5))),
-                Arguments.of(List.of(Position.of(2, 4), Position.of(1, 5))),
-                Arguments.of(List.of(Position.of(2, 2), Position.of(1, 1))),
-                Arguments.of(List.of(Position.of(4, 2), Position.of(5, 1)))
+                Arguments.of(Position.of(5, 3)),
+                Arguments.of(Position.of(3, 5)),
+                Arguments.of(Position.of(1, 3)),
+                Arguments.of(Position.of(3, 1)),
+                Arguments.of(Position.of(5, 5)),
+                Arguments.of(Position.of(1, 5)),
+                Arguments.of(Position.of(1, 1)),
+                Arguments.of(Position.of(5, 1))
         );
     }
 }

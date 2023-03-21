@@ -14,19 +14,9 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0)) &&
-                isMovableDistance(path.size());
-    }
-
-    @Override
-    protected boolean isMovableDirection(Position start, Position nextPosition) {
-        Direction nextDirection = Direction.of(start, nextPosition);
-        return BISHOP_MOVABLE_DIRECTIONS.contains(nextDirection);
-    }
-
-    @Override
-    protected boolean isMovableDistance(int distance) {
-        return true;
+    public boolean isMovableRoute(List<Position> routeFromStartToEnd) {
+        Position start = routeFromStartToEnd.get(0);
+        Position end = routeFromStartToEnd.get(routeFromStartToEnd.size() - 1);
+        return BISHOP_MOVABLE_DIRECTIONS.contains(Direction.of(start, end));
     }
 }
