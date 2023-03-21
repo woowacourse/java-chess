@@ -22,7 +22,7 @@ public final class InputView {
         List<String> commands = Arrays.stream(scanner.nextLine().split(MOVE_DELIMITER))
                 .collect(Collectors.toList());
 
-        ChessCommandType gameCommand = ChessCommandInput.from(commands.get(COMMAND_INDEX));
+        ChessCommandType gameCommand = ViewChessCommandType.from(commands.get(COMMAND_INDEX));
         if (gameCommand == ChessCommandType.MOVE) {
             return moveCommand(commands, gameCommand);
         }

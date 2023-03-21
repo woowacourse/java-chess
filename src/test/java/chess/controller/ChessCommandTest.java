@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.game.ChessCommandType;
-import chess.domain.game.ChessGameCommand;
-import chess.view.input.ChessCommandInput;
+import chess.view.input.ViewChessCommandType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,7 +17,7 @@ class ChessCommandTest {
             "move, MOVE",
             "end, END",})
     void fromUserInputStartTest(String userInput, ChessCommandType expectedChessCommand) {
-        ChessCommandType chessCommandType = ChessCommandInput.from(userInput);
+        ChessCommandType chessCommandType = ViewChessCommandType.from(userInput);
 
         assertThat(chessCommandType).isEqualTo(expectedChessCommand);
     }
@@ -26,7 +25,7 @@ class ChessCommandTest {
     @ParameterizedTest(name = "유효하지 않은 입력인 경우 예외가 발생합니다. - {0}")
     @ValueSource(strings = {"Start", "END", "ada", "Hello"})
     void fromUserInputExceptionTest(String userInput) {
-        assertThatThrownBy(() -> ChessCommandInput.from(userInput))
+        assertThatThrownBy(() -> ViewChessCommandType.from(userInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

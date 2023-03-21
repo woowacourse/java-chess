@@ -3,7 +3,7 @@ package chess.view.input;
 import chess.domain.game.ChessCommandType;
 import java.util.Arrays;
 
-public enum ChessCommandInput {
+public enum ViewChessCommandType {
     START(ChessCommandType.START,"start"),
     MOVE(ChessCommandType.MOVE,"move"),
     END(ChessCommandType.END,"end"),
@@ -13,13 +13,13 @@ public enum ChessCommandInput {
     private final String commandInput;
 
 
-    ChessCommandInput(ChessCommandType command, String commandInput) {
+    ViewChessCommandType(ChessCommandType command, String commandInput) {
         this.command = command;
         this.commandInput = commandInput;
     }
 
     public static ChessCommandType from(String inputCommand) {
-        return Arrays.stream(ChessCommandInput.values())
+        return Arrays.stream(ViewChessCommandType.values())
                 .filter(it -> it.commandInput.equals(inputCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어 입니다."))
