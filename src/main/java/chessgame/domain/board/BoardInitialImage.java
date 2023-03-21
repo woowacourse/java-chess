@@ -28,10 +28,10 @@ public class BoardInitialImage {
     }
 
     static {
-        boardImage = makeBoardImage2();
+        boardImage = makeBoardImage();
     }
 
-    private static Map<Coordinate, Square> makeBoardImage2() {
+    private static Map<Coordinate, Square> makeBoardImage() {
         Map<Coordinate, Square> boardImage = new HashMap<>();
 
         addWhiteRanks(boardImage);
