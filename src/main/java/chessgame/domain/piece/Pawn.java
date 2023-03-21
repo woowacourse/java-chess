@@ -62,17 +62,17 @@ public class Pawn implements Piece {
     }
 
     private boolean canPawnAttack(Point source, Point target, int distance) {
-        if (checkRankLengthOne(source,target,distance) && checkFileLengthOne(source, target, distance)) {
+        if (checkRankLengthOne(source, target, distance) && checkFileLengthOne(source, target, distance)) {
             return true;
         }
-        return checkRankLengthOne(source,target,distance) && checkFileLengthOne(source, target, -distance);
+        return checkRankLengthOne(source, target, distance) && checkFileLengthOne(source, target, -distance);
     }
 
-    private boolean checkRankLengthOne(Point source, Point target, int distance){
+    private boolean checkRankLengthOne(Point source, Point target, int distance) {
         return source.rankDistance(target) == distance;
     }
 
-    private boolean checkFileLengthOne(Point source, Point target, int distance){
+    private boolean checkFileLengthOne(Point source, Point target, int distance) {
         return source.fileDistance(target) == distance;
     }
 

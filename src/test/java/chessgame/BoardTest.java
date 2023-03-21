@@ -1,16 +1,16 @@
 package chessgame;
 
-import static chessgame.point.PointFixture.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import chessgame.domain.Board;
+import chessgame.domain.Team;
+import chessgame.factory.ChessBoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import chessgame.domain.Board;
-import chessgame.domain.Team;
-import chessgame.factory.ChessBoardFactory;
+import static chessgame.point.PointFixture.*;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
     @Test

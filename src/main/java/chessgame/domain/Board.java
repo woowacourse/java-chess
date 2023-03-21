@@ -1,6 +1,5 @@
 package chessgame.domain;
 
-import chessgame.domain.piece.Knight;
 import chessgame.domain.piece.Pawn;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.Point;
@@ -29,7 +28,7 @@ public class Board {
     }
 
     private void executePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
-        if(!piece.isPawn()){
+        if (!piece.isPawn()) {
             return;
         }
         if (piece.isMovable(source, target)) {
@@ -41,7 +40,7 @@ public class Board {
     }
 
     private void executeMove(Point source, Point target, Piece piece) {
-        if(piece.isPawn()){
+        if (piece.isPawn()) {
             return;
         }
         if (piece.isMovable(source, target)) {

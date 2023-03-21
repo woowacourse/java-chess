@@ -1,13 +1,12 @@
 package chessgame.piece;
 
-import static chessgame.point.PointFixture.*;
-
+import chessgame.domain.Team;
+import chessgame.domain.piece.Knight;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chessgame.domain.Team;
-import chessgame.domain.piece.Knight;
+import static chessgame.point.PointFixture.*;
 
 class KnightTest {
     @Test

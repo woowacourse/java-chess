@@ -1,6 +1,7 @@
 package chessgame.domain.point;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum File {
     A('a'),

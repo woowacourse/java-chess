@@ -34,7 +34,7 @@ public class King implements Piece {
     }
 
     @Override
-    public Team team()  {
+    public Team team() {
         return team;
     }
 

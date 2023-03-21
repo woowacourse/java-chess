@@ -1,17 +1,17 @@
 package chessgame;
 
-import static chessgame.point.PointFixture.*;
-
-import java.util.List;
-
+import chessgame.domain.Command;
+import chessgame.domain.point.Point;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import chessgame.domain.Command;
-import chessgame.domain.point.Point;
+import java.util.List;
+
+import static chessgame.point.PointFixture.A1;
+import static chessgame.point.PointFixture.A2;
 
 public class CommandTest {
     @Test

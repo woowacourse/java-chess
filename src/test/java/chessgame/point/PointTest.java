@@ -1,14 +1,13 @@
 package chessgame.point;
 
-import static chessgame.point.PointFixture.*;
-
+import chessgame.domain.point.File;
+import chessgame.domain.point.Point;
+import chessgame.domain.point.Rank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chessgame.domain.point.File;
-import chessgame.domain.point.Point;
-import chessgame.domain.point.Rank;
+import static chessgame.point.PointFixture.*;
 
 class PointTest {
 

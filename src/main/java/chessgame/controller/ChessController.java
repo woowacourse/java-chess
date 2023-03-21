@@ -31,7 +31,7 @@ public class ChessController {
         try {
             Command command = readCommand();
             setState(game, command);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
             eachTurn(game);
         }
@@ -55,8 +55,8 @@ public class ChessController {
         }
     }
 
-    private void printResult(Game game){
-        if(!game.isEnd()) {
+    private void printResult(Game game) {
+        if (!game.isEnd()) {
             outputView.printChessBoard(game.board());
         }
     }
