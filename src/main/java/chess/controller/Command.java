@@ -1,6 +1,7 @@
 package chess.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 enum Command {
     START("start"),
@@ -18,14 +19,20 @@ enum Command {
         this.value = value;
     }
 
-    public static Command getValidate(
-            final String inputCommand, final Command firstCommand, final Command secondCommand
-    ) {
+    public static Command createInitCommand(final String inputCommand) {
+        return getCommand(START, inputCommand);
+    }
+
+    public static Command createPlayingCommand(final String inputCommand) {
+        return getCommand(MOVE, inputCommand);
+    }
+
+    private static Command getCommand(final Command possibleCommand, final String inputCommand) {
         return Arrays.stream(values())
-                .filter(command -> command == firstCommand || command == secondCommand)
+                .filter(command -> command == possibleCommand || command == END)
                 .filter(command -> command.value.equals(inputCommand))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        firstCommand.value + " 또는 " + secondCommand.value + " 를 입력해주세요."));
+                        possibleCommand.value + " 또는 " + END.value + " 를 입력해주세요."));
     }
 }

@@ -25,7 +25,7 @@ public class ChessGameController {
     }
 
     private Command getInitialCommand(final Board board) {
-        final Command command = Command.getValidate(InputView.readCommand(), START, END);
+        final Command command = Command.createInitCommand(InputView.readCommand());
         if (command == START) {
             OutputView.printBoard(board.getBoard());
         }
@@ -34,7 +34,7 @@ public class ChessGameController {
 
     private Command play(final Board board) {
         final List<String> commands = InputView.readMoveCommand();
-        final Command command = Command.getValidate(commands.get(MOVE_COMMAND_INDEX), MOVE, END);
+        final Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
         if (command == MOVE) {
             board.move(commands.get(MOVE_SOURCE_INDEX), commands.get(MOVE_TARGET_INDEX));
             OutputView.printBoard(board.getBoard());
