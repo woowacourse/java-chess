@@ -26,8 +26,8 @@ public class JdbcTemplate {
     }
 
     public <T> T query(final String query, final RowMapper<T> rowMapper) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (final Connection connection = connectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet, resultSet.getRow());
         } catch (SQLException e) {
