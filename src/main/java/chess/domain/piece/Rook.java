@@ -1,39 +1,40 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.MovePattern;
+import chess.domain.board.Board;
 import chess.domain.movepattern.RookMovePattern;
-import java.util.Arrays;
+import chess.domain.position.Position;
 import java.util.List;
 
-public class Rook extends LinearPiece {
+public class Rook implements Piece {
 
-    private final List<MovePattern> movePatterns;
+    private final LinearPiece linearPiece;
 
-    public Rook(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = Arrays.asList(RookMovePattern.values());
+    public Rook(final Side side) {
+        this.linearPiece = new LinearPiece(Type.ROOK, side, List.of(RookMovePattern.values()));
     }
 
     @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
+    public List<Position> findMovablePosition(final Position source, final Board board) {
+        return linearPiece.findMovablePosition(source, board);
     }
 
     @Override
-    protected void validate(final Type type, final Side side) {
-        validateType(type);
-        validateSide(side);
+    public String name() {
+        return linearPiece.name();
     }
 
-    private void validateType(final Type type) {
-        if (type != Type.ROOK) {
-            throw new IllegalArgumentException("룩의 타입이 잘못되었습니다.");
-        }
+    @Override
+    public Side side() {
+        return linearPiece.side();
     }
 
-    private void validateSide(final Side side) {
-        if (side == Side.NEUTRALITY) {
-            throw new IllegalArgumentException("룩은 중립적인 기물이 아닙니다.");
-        }
+    @Override
+    public boolean isPawn() {
+        return linearPiece.isPawn();
+    }
+
+    @Override
+    public void changePawnMoveState() {
+        linearPiece.changePawnMoveState();
     }
 }

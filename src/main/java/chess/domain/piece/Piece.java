@@ -1,46 +1,18 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.MovePattern;
 import chess.domain.position.Position;
 import java.util.List;
 
-public abstract class Piece {
+public interface Piece {
 
-    protected final Type type;
-    protected final Side side;
+    List<Position> findMovablePosition(final Position source, final Board board);
 
-    public Piece(final Type type, final Side side) {
-        validate(type, side);
-        this.type = type;
-        this.side = side;
-    }
+    String name();
 
-    protected boolean isRangeValid(final Position position, final MovePattern movePattern) {
-        final int nextRank = position.rankIndex() + movePattern.getRankVector();
-        final int nextFile = position.fileIndex() + movePattern.getFileVector();
-        return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
-    }
+    Side side();
 
-    public boolean isPawn() {
-        return false;
-    }
+    boolean isPawn();
 
-    public void changePawnMoved() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
-    }
-
-    public String getName() {
-        return type.getSymbol(side);
-    }
-
-    public Side getSide() {
-        return side;
-    }
-
-    protected abstract void validate(final Type type, final Side side);
-
-    protected abstract List<MovePattern> getMovePatterns();
-
-    public abstract List<Position> findMovablePositions(final Position source, final Board board);
+    void changePawnMoveState();
 }

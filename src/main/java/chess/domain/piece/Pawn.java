@@ -1,54 +1,135 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.PawnMovePattern;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn implements Piece {
 
-    private final List<MovePattern> movePatterns;
-    private boolean moved;
+    private final Type type;
+    private final Side side;
+    private final List<PawnMovePattern> movePatterns;
+    private boolean notMoved;
 
-    public Pawn(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = initMovePatterns(side);
-        this.moved = false;
-    }
-
-    private List<MovePattern> initMovePatterns(final Side side) {
-        List<MovePattern> movePatterns = new ArrayList<>();
-        if (side.isWhite()) {
-            movePatterns.add(PawnMovePattern.UP);
-            movePatterns.add(PawnMovePattern.LEFT_TOP);
-            movePatterns.add(PawnMovePattern.RIGHT_TOP);
-        }
-        if (side.isBlack()) {
-            movePatterns.add(PawnMovePattern.DOWN);
-            movePatterns.add(PawnMovePattern.LEFT_BOTTOM);
-            movePatterns.add(PawnMovePattern.RIGHT_BOTTOM);
-        }
-        return movePatterns;
+    public Pawn(final Side side) {
+        this.type = Type.PAWN;
+        this.side = side;
+        this.movePatterns = List.of(PawnMovePattern.values());
+        this.notMoved = true;
     }
 
     @Override
-    protected void validate(final Type type, final Side side) {
-        validateType(type);
-        validateSide(side);
+    public List<Position> findMovablePosition(final Position source, final Board board) {
+        final List<Position> movablePositions = new ArrayList<>();
+
+        for (final PawnMovePattern movePattern : movePatterns) {
+            movablePositions.addAll(
+                    findMovablePositionByMovePattern(source, movePattern, board)
+            );
+        }
+
+        return movablePositions;
     }
 
-    private void validateType(final Type type) {
-        if (type != Type.PAWN) {
-            throw new IllegalArgumentException("폰의 타입이 잘못되었습니다.");
+    private List<Position> findMovablePositionByMovePattern(
+            final Position source,
+            final PawnMovePattern movePattern,
+            final Board board
+    ) {
+        if (movePattern.isDiagonalMove()) {
+            return findMovablePositionByDiagonalMovePattern(source, movePattern, board);
         }
+        return findMovablePositionByNonDiagonalMovePattern(source, movePattern, board);
     }
 
-    private void validateSide(final Side side) {
-        if (side == Side.NEUTRALITY) {
-            throw new IllegalArgumentException("폰은 중립적인 기물이 아닙니다.");
+    private List<Position> findMovablePositionByDiagonalMovePattern(
+            final Position source,
+            final PawnMovePattern movePattern,
+            final Board board
+    ) {
+        List<Position> movablePosition = new ArrayList<>();
+        if (canMoveMore(source, movePattern, board)) {
+            final Position nextPosition = source.move(movePattern);
+            movablePosition.add(nextPosition);
         }
+        return movablePosition;
+    }
+
+    private boolean canMoveMore(final Position currentPosition, final PawnMovePattern movePattern, final Board board) {
+        final Position nextPosition = currentPosition.move(movePattern);
+        final Side currentSide = board.findSideByPosition(currentPosition);
+        final Side nextSide = board.findSideByPosition(nextPosition);
+
+        if (movePattern.isDiagonalMove()) {
+            return canDiagonalMoveMore(currentPosition, nextPosition, currentSide, nextSide);
+        }
+        return canNonDiagonalMoveMore(currentPosition, nextPosition, nextSide);
+    }
+
+    private boolean canDiagonalMoveMore(
+            final Position currentPosition,
+            final Position nextPosition,
+            final Side currentSide,
+            final Side nextSide
+    ) {
+        return isInRange(currentPosition, nextPosition) && isEnemySide(currentSide, nextSide);
+    }
+
+    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
+        return currentPosition != nextPosition;
+    }
+
+    private boolean isEnemySide(final Side currentSide, final Side nextSide) {
+        return !isNeutralitySide(nextSide) && currentSide != nextSide;
+    }
+
+    private boolean isNeutralitySide(final Side side) {
+        return side.isNeutrality();
+    }
+
+    private boolean canNonDiagonalMoveMore(
+            final Position currentPosition,
+            final Position nextPosition,
+            final Side nextSide
+    ) {
+        return isInRange(currentPosition, nextPosition) && isNeutralitySide(nextSide);
+    }
+
+    private List<Position> findMovablePositionByNonDiagonalMovePattern(
+            final Position source,
+            final PawnMovePattern movePattern,
+            final Board board
+    ) {
+        List<Position> movablePosition = new ArrayList<>();
+        if (canMoveMore(source, movePattern, board)) {
+            final Position nextPosition = source.move(movePattern);
+            movablePosition.add(nextPosition);
+        }
+        if (notMoved && canMoveMoreSpecial(source, movePattern, board)) {
+            final Position specialPosition = source.move(movePattern).move(movePattern);
+            movablePosition.add(specialPosition);
+        }
+        return movablePosition;
+    }
+
+    private boolean canMoveMoreSpecial(final Position currentPosition, final PawnMovePattern movePattern,
+                                       final Board board) {
+        if (!canMoveMore(currentPosition, movePattern, board)) {
+            return false;
+        }
+        return canMoveMore(currentPosition.move(movePattern), movePattern, board);
+    }
+
+    @Override
+    public String name() {
+        return type.getSymbol(side);
+    }
+
+    @Override
+    public Side side() {
+        return side;
     }
 
     @Override
@@ -57,60 +138,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void changePawnMoved() {
-        moved = true;
-    }
-
-
-    @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
-        final List<Position> movablePositions = new ArrayList<>();
-        final List<MovePattern> movePatterns = getMovePatterns();
-        for (MovePattern movePattern : movePatterns) {
-            Position nextPosition = source;
-            if (isRangeValid(nextPosition, movePattern)) {
-                nextPosition = nextPosition.move(movePattern);
-                checkSide(movablePositions, source, nextPosition, board);
-            }
-            if (!isDiagonal(source, source.move(movePattern)) && isRangeValid(source, movePattern) && isRangeValid(
-                    source.move(movePattern), movePattern) && !moved) {
-                movablePositions.add(source.move(movePattern).move(movePattern));
-            }
-        }
-        return movablePositions;
-    }
-
-    private void checkSide(final List<Position> movablePositions, final Position source, final Position nextPosition,
-                           final Board board) {
-        final Side nextSide = board.findSideByPosition(nextPosition);
-        if (isDiagonal(source, nextPosition)) {
-            checkDiagonalSide(movablePositions, nextPosition, nextSide);
-            return;
-        }
-        checkFrontSide(movablePositions, nextPosition, nextSide);
-    }
-
-    private boolean isDiagonal(Position source, Position nextPosition) {
-        return Math.abs((source.rankIndex() - nextPosition.rankIndex())) == Math.abs(
-                (source.fileIndex() - nextPosition.fileIndex()));
-    }
-
-    private void checkDiagonalSide(final List<Position> movablePositions, final Position nextPosition,
-                                   final Side nextSide) {
-        if (nextSide != this.side && nextSide != Side.NEUTRALITY) {
-            movablePositions.add(nextPosition);
-        }
-    }
-
-    private void checkFrontSide(final List<Position> movablePositions, final Position nextPosition,
-                                final Side nextSide) {
-        if (nextSide == Side.NEUTRALITY) {
-            movablePositions.add(nextPosition);
-        }
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
+    public void changePawnMoveState() {
+        notMoved = false;
     }
 }

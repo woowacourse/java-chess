@@ -1,39 +1,40 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.movepattern.KingMovePattern;
-import chess.domain.movepattern.MovePattern;
-import java.util.Arrays;
+import chess.domain.position.Position;
 import java.util.List;
 
-public class King extends ImmediatePiece {
+public class King implements Piece {
 
-    private final List<MovePattern> movePatterns;
+    private final ImmediatePiece immediatePiece;
 
-    public King(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = Arrays.asList(KingMovePattern.values());
+    public King(final Side side) {
+        this.immediatePiece = new ImmediatePiece(Type.KING, side, List.of(KingMovePattern.values()));
     }
 
     @Override
-    protected void validate(final Type type, final Side side) {
-        validateType(type);
-        validateSide(side);
-    }
-
-    private void validateType(final Type type) {
-        if (type != Type.KING) {
-            throw new IllegalArgumentException("킹의 타입이 잘못되었습니다.");
-        }
-    }
-
-    private void validateSide(final Side side) {
-        if (side == Side.NEUTRALITY) {
-            throw new IllegalArgumentException("킹은 중립적인 기물이 아닙니다.");
-        }
+    public List<Position> findMovablePosition(final Position source, final Board board) {
+        return immediatePiece.findMovablePosition(source, board);
     }
 
     @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
+    public String name() {
+        return immediatePiece.name();
+    }
+
+    @Override
+    public Side side() {
+        return immediatePiece.side();
+    }
+
+    @Override
+    public boolean isPawn() {
+        return immediatePiece.isPawn();
+    }
+
+    @Override
+    public void changePawnMoveState() {
+        immediatePiece.changePawnMoveState();
     }
 }

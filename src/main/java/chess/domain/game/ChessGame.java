@@ -18,11 +18,11 @@ public class ChessGame {
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
         final Piece sourcePiece = board.getPiece(source.getFile(), source.getRank());
-        final List<Position> movablePositions = sourcePiece.findMovablePositions(source, board);
+        final List<Position> movablePositions = sourcePiece.findMovablePosition(source, board);
         checkMovable(movablePositions, target);
         board.move(source, target);
         if (sourcePiece.isPawn()) {
-            sourcePiece.changePawnMoved();
+            sourcePiece.changePawnMoveState();
         }
     }
 

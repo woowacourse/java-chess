@@ -9,7 +9,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Side;
-import chess.domain.piece.Type;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -39,25 +38,25 @@ public class BoardFactory {
     private static void initEmpty(final Map<Position, Piece> board) {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                board.put(Position.of(file, rank), new Empty(Type.EMPTY, Side.NEUTRALITY));
+                board.put(Position.of(file, rank), new Empty());
             }
         }
     }
 
     private static void initPawns(final Rank rank, final Side side, final Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file, rank), new Pawn(Type.PAWN, side));
+            board.put(Position.of(file, rank), new Pawn(side));
         }
     }
 
     private static void initNonPawns(final Rank rank, final Side side, final Map<Position, Piece> board) {
-        board.put(Position.of(File.A, rank), new Rook(Type.ROOK, side));
-        board.put(Position.of(File.B, rank), new Knight(Type.KNIGHT, side));
-        board.put(Position.of(File.C, rank), new Bishop(Type.BISHOP, side));
-        board.put(Position.of(File.D, rank), new Queen(Type.QUEEN, side));
-        board.put(Position.of(File.E, rank), new King(Type.KING, side));
-        board.put(Position.of(File.F, rank), new Bishop(Type.BISHOP, side));
-        board.put(Position.of(File.G, rank), new Knight(Type.KNIGHT, side));
-        board.put(Position.of(File.H, rank), new Rook(Type.ROOK, side));
+        board.put(Position.of(File.A, rank), new Rook(side));
+        board.put(Position.of(File.B, rank), new Knight(side));
+        board.put(Position.of(File.C, rank), new Bishop(side));
+        board.put(Position.of(File.D, rank), new Queen(side));
+        board.put(Position.of(File.E, rank), new King(side));
+        board.put(Position.of(File.F, rank), new Bishop(side));
+        board.put(Position.of(File.G, rank), new Knight(side));
+        board.put(Position.of(File.H, rank), new Rook(side));
     }
 }

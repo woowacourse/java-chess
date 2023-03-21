@@ -26,7 +26,7 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 final Piece piece = boardMap.get(Position.of(file, rank));
-                stringBuilder.append(piece.getName());
+                stringBuilder.append(piece.name());
             }
             stringBuilder.append(LINE_SEPARATOR);
         }

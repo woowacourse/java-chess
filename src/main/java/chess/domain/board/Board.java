@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
-import chess.domain.piece.Type;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -23,12 +22,12 @@ public class Board {
     public void move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
-        board.put(source, new Empty(Type.EMPTY, Side.NEUTRALITY));
+        board.put(source, new Empty());
     }
 
     public Side findSideByPosition(final Position position) {
         final Piece piece = board.get(position);
-        return piece.getSide();
+        return piece.side();
     }
 
     public static boolean isInRange(final int fileIndex, final int rankIndex) {
