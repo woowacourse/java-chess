@@ -20,18 +20,18 @@ public enum File {
         this.x = x;
     }
 
-    public int getX() {
-        return x;
-    }
-
     public static File findFileByLetter(final char letter) {
         return findFile(letter - OFFSET_LETTER);
     }
 
     public static File findFile(final int fileIndex) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getX() == fileIndex)
+                .filter(file -> file.getFile() == fileIndex)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public int getFile() {
+        return x;
     }
 }

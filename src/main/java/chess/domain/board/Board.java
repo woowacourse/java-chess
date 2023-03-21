@@ -28,21 +28,28 @@ public class Board {
         board.put(source, Empty.of());
     }
 
-    private void updateIfPawn(final Square source) {
-        if (board.get(source).isSameRole(Role.PAWN)) {
-            board.put(source, new Pawn(board.get(source).getCamp(), MOVED));
-        }
-    }
-
     private boolean isMovable(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
         final Move move = Move.calculateMove(source, target);
         final boolean isPathBlocked = isPathBlocked(source, target, move);
 
-        if (isTargetSameCamp(source, target)) {
+        if (isSourceAndTargetSameCamp(source, target)) {
             return false;
         }
         return sourcePiece.isMovable(source, target, move, isPathBlocked);
+    }
+
+    private boolean isSourceAndTargetSameCamp(final Square source, final Square target) {
+        final Piece sourcePiece = board.get(source);
+        final Camp targetCamp = board.get(target).getCamp();
+
+        return sourcePiece.isSameCamp(targetCamp);
+    }
+
+    private void updateIfPawn(final Square source) {
+        if (board.get(source).isSameRole(Role.PAWN)) {
+            board.put(source, new Pawn(board.get(source).getCamp(), MOVED));
+        }
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
@@ -57,19 +64,12 @@ public class Board {
         return true;
     }
 
-    private boolean isTargetSameCamp(final Square source, final Square target) {
-        final Piece sourcePiece = board.get(source);
-        final Camp targetCamp = board.get(target).getCamp();
-
-        return sourcePiece.isSameCamp(targetCamp);
-    }
-
-    public boolean isTargetSameCamp(final Square square, final Camp camp) {
-        return board.get(square).isSameCamp(camp);
-    }
-
-    public boolean isEmptyPiece(final Square source) {
+    private boolean isEmptyPiece(final Square source) {
         return board.get(source).equals(Empty.of());
+    }
+
+    public boolean isSameCamp(final Square square, final Camp camp) {
+        return board.get(square).isSameCamp(camp);
     }
 
     public List<Piece> getPieces() {

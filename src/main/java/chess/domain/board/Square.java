@@ -36,10 +36,10 @@ public class Square {
     }
 
     public int getFile() {
-        return file.getX();
+        return file.getFile();
     }
 
     public int getRank() {
-        return rank.getY();
+        return rank.getRank();
     }
 }

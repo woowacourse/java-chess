@@ -26,12 +26,12 @@ public enum Rank {
 
     public static Rank findRank(final int rankIndex) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getY() == rankIndex)
+                .filter(rank -> rank.getRank() == rankIndex)
                 .findFirst()
                 .orElseThrow();
     }
 
-    public int getY() {
+    public int getRank() {
         return y;
     }
 }
