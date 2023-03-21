@@ -1,7 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.*;
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Board {
         validateCanNotMove(targetSquare, direction, sourcePiece, distance);
         validateIsNotEmptyPath(sourceSquare, direction, distance);
 
-        movePiece(sourceSquare, targetSquare, sourcePiece);
+        move(sourceSquare, targetSquare, sourcePiece);
     }
 
     private void validate(final Square sourceSquare, final Square targetSquare) {
@@ -60,7 +61,7 @@ public class Board {
 
     private void validateSideWrongTurn(final Square sourceSquare) {
         Piece sourcePiece = board.get(sourceSquare);
-        if (!sourcePiece.isSameSide(turn)) {
+        if (sourcePiece.isOpposite(turn)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
@@ -69,7 +70,7 @@ public class Board {
         boolean possible = isPossibleMove(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
-            throw new IllegalArgumentException("상대 기물이나 빈 공간으로만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
@@ -87,12 +88,8 @@ public class Board {
         }
     }
 
-    private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
-        Piece piece = sourcePiece;
-        if (sourcePiece.getRole().equals(Role.INITIAL_PAWN)) {
-            piece = ((InitialPawn) sourcePiece).changeState();
-        }
-        board.put(targetSquare, piece);
+    private void move(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
+        board.put(targetSquare, sourcePiece.currentState());
         board.remove(sourceSquare);
         turn = turn.findOpponent();
     }
@@ -107,7 +104,7 @@ public class Board {
         List<Square> squares = new ArrayList<>();
         Square nextSquare = sourceSquare;
         for (int i = 0; i < distance - 1; i++) {
-            nextSquare = nextSquare.next(direction);
+            nextSquare = nextSquare.nextSquare(direction);
             squares.add(nextSquare);
         }
         return squares;
