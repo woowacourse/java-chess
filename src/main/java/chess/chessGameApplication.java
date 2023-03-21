@@ -1,3 +1,5 @@
+package chess;
+
 import chess.ChessBoard;
 import chess.ChessController;
 import chess.ChessGame;
