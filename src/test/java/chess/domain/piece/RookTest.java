@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.coordinate.Coordinate;
+import chess.view.PieceSymbolConverter;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,9 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RookTest {
     @Test
-    void Rook은_자신의_심볼을_반환한다() {
+    void Rook은_자신의_pieceType을_반환한다() {
         Piece rook = new Rook(Team.WHITE, A_ONE);
-        assertThat(rook.symbol()).isEqualTo('r');
+        assertThat(PieceSymbolConverter.convert(rook.pieceType())).isEqualTo("r");
     }
     
     @ParameterizedTest(name = "targetRow : {0}, targetColumn : {1}, expectedResult : {2}")

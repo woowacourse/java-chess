@@ -13,8 +13,8 @@ public class Pawn extends Piece {
     }
     
     @Override
-    public char symbol() {
-        return 'p';
+    public PieceType pieceType() {
+        return PieceType.PAWN;
     }
     
     @Override

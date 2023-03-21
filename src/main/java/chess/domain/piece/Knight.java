@@ -8,8 +8,8 @@ public class Knight extends Piece {
     }
     
     @Override
-    public char symbol() {
-        return 'n';
+    public PieceType pieceType() {
+        return PieceType.KNIGHT;
     }
     
     @Override

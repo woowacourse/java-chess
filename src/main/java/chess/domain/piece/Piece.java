@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.InitialPieceTypes;
 import chess.domain.piece.coordinate.Coordinate;
 
 import java.util.List;
@@ -18,12 +19,20 @@ public abstract class Piece {
         this.coordinate = coordinate;
     }
     
-    public abstract char symbol();
+    public static Piece from(Coordinate coordinate) {
+        Team team = Team.from(coordinate);
+        InitialPieceTypes initialPieceTypes = InitialPieceTypes.from(coordinate);
+        
+        return initialPieceTypes.findPieceTypeByColumn(coordinate)
+                .makePiece(team, coordinate);
+    }
+    
+    public abstract PieceType pieceType();
     
     public abstract boolean isMovable(Piece targetPiece);
     
     public Piece movedSourcePiece(Coordinate coordinate) {
-        return PieceMatcher.of(symbol(), team, coordinate);
+        return pieceType().makePiece(team, coordinate);
     }
     
     public boolean isSameTeam(Team otherTeam) {

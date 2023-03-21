@@ -32,7 +32,7 @@ public class King extends Piece {
         return rowDistance > MAX_DIFFERENCE_OF_KING || columnDistance > MAX_DIFFERENCE_OF_KING;
     }
     
-    public char symbol() {
-        return 'k';
+    public PieceType pieceType() {
+        return PieceType.KING;
     }
 }

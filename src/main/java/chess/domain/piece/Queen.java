@@ -8,8 +8,8 @@ public class Queen extends Piece {
     }
     
     @Override
-    public char symbol() {
-        return 'q';
+    public PieceType pieceType() {
+        return PieceType.QUEEN;
     }
     
     @Override

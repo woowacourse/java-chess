@@ -8,8 +8,8 @@ public class Empty extends Piece {
     }
     
     @Override
-    public char symbol() {
-        return 'e';
+    public PieceType pieceType() {
+        return PieceType.EMPTY;
     }
     
     @Override

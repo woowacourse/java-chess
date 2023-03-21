@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceMatcher;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 
@@ -15,7 +14,6 @@ public class RowPieces implements Comparable<RowPieces> {
     private static final int MIN_COLUMN_INDEX = 0;
     private static final int MAX_COLUMN_INDEX = 7;
     private static final int FIRST_PIECE_INDEX = 0;
-    private static final char MIN_COLUMN_CHAR = 'a';
     
     private final List<Piece> pieces;
     
@@ -29,21 +27,12 @@ public class RowPieces implements Comparable<RowPieces> {
     
     private static List<Piece> initRowPieces(int rowNum) {
         return IntStream.rangeClosed(MIN_COLUMN_INDEX, MAX_COLUMN_INDEX)
-                .mapToObj(columnIndex -> parsePiece(rowNum, columnIndex))
+                .mapToObj(column -> Piece.from(new Coordinate(parseColumn(column), rowNum)))
                 .collect(Collectors.toList());
     }
     
-    private static Piece parsePiece(int rowNum, int columnIndex) {
-        InitialSymbols initialSymbols = InitialSymbols.from(rowNum);
-        Character symbol = initialSymbols.findSymbolByColumnIndex(columnIndex);
-        Team team = Team.from(rowNum);
-        Coordinate coordinate = new Coordinate(parseColumn(columnIndex), rowNum);
-        
-        return PieceMatcher.of(symbol, team, coordinate);
-    }
-    
-    private static char parseColumn(int columnIndex) {
-        return (char) (columnIndex + MIN_COLUMN_CHAR);
+    private static char parseColumn(int column) {
+        return (char) (column + 'a');
     }
     
     @Override

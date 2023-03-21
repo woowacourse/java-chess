@@ -39,7 +39,7 @@ public class OutputView {
     }
     
     private static String parsePieceToDisplay(Piece piece) {
-        String symbol = String.valueOf(piece.symbol());
+        String symbol = PieceSymbolConverter.convert(piece.pieceType());
         if (piece.isSameTeam(Team.WHITE)) {
             return symbol.toUpperCase();
         }

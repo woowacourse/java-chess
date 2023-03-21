@@ -45,6 +45,14 @@ public enum Row {
         return row == pawnStartRow;
     }
     
+    public boolean isLessOrEqualTo(int otherRow) {
+        return row <= otherRow;
+    }
+    
+    public boolean isOverOrEqualTo(int otherRow) {
+        return row >= otherRow;
+    }
+    
     public int row() {
         return row;
     }

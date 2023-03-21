@@ -47,6 +47,10 @@ public enum Column {
         return this.column - targetColumn.column;
     }
     
+    public int columnIndex() {
+        return column - 'a';
+    }
+    
     @Override
     public String toString() {
         return "Column{" +

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.coordinate.Coordinate;
+import chess.view.PieceSymbolConverter;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,9 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PawnTest {
     @Test
-    void Pawn은_자신의_심볼을_반환한다() {
+    void Pawn은_자신의_pieceType을_반환한다() {
         Piece pawn = new Pawn(Team.WHITE, A_ONE);
-        assertThat(pawn.symbol()).isEqualTo('p');
+        assertThat(PieceSymbolConverter.convert(pawn.pieceType())).isEqualTo("p");
     }
     
     @ParameterizedTest(name = "team : {0}, targetRow : {1}, targetColumn : {2}, expectedResult : {3}")

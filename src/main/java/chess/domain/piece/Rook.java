@@ -8,8 +8,8 @@ public class Rook extends Piece {
     }
     
     @Override
-    public char symbol() {
-        return 'r';
+    public PieceType pieceType() {
+        return PieceType.ROOK;
     }
     
     @Override

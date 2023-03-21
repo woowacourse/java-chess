@@ -7,10 +7,9 @@ public class Bishop extends Piece {
         super(team, coordinate);
     }
     
-    
     @Override
-    public char symbol() {
-        return 'b';
+    public PieceType pieceType() {
+        return PieceType.BISHOP;
     }
     
     @Override

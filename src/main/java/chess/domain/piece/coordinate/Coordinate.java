@@ -66,6 +66,18 @@ public class Coordinate {
         return row.isPawnStartRow(pawnStartRow);
     }
     
+    public boolean isRowNumLessOrEqualTo(int otherRow) {
+        return row.isLessOrEqualTo(otherRow);
+    }
+    
+    public boolean isRowNumOverOrEqualTo(int otherRow) {
+        return row.isOverOrEqualTo(otherRow);
+    }
+    
+    public boolean isSameRow(Row otherRow) {
+        return row.equals(otherRow);
+    }
+    
     public int row() {
         return row.row();
     }
