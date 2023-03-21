@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.commnad.Command;
-import chess.domain.commnad.GameStatusCommand;
+import chess.domain.commnad.LoadGameCommand;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
 import chess.service.BoardService;
@@ -29,17 +29,17 @@ public class ChessGameController {
     }
 
     public void run() {
-        GameStatusCommand statusCommand = inputView.readStatusOfGame();
-        outputView.printStartMessage();
+        LoadGameCommand loadGameCommand = inputView.readStatusOfGame();
+        ChessGame chessGame = loadGame(loadGameCommand);
 
-        ChessGame chessGame = loadChessGame(statusCommand);
+        outputView.printStartMessage();
         playChess(chessGame);
 
         resultView.printGameEnd();
     }
 
-    private ChessGame loadChessGame(final GameStatusCommand statusCommand) {
-        if (statusCommand.isSavedGame()) {
+    private ChessGame loadGame(final LoadGameCommand loadCommand) {
+        if (loadCommand.isSavedGame()) {
             ChessGame chessGame = new ChessGame(boardService.findById(BOARD_ID), boardService.isLowerTeamTurnByBoardId(BOARD_ID));
             outputView.printBoard(chessGame.getBoard());
             return chessGame;
@@ -73,6 +73,7 @@ public class ChessGameController {
             boardService.save(BOARD_ID, chessGame.getBoard(), chessGame.isLowerTeamTurn());
             return true;
         }
+
         return false;
     }
 
@@ -91,6 +92,7 @@ public class ChessGameController {
                     chessGame.calculateScoreOfLowerTeam());
             return true;
         }
+
         return false;
     }
 
@@ -98,6 +100,7 @@ public class ChessGameController {
         if (command.isCreateNewGame()) {
             chessGame.initGame();
         }
+
         return chessGame;
     }
 
@@ -107,6 +110,7 @@ public class ChessGameController {
             boardService.delete(BOARD_ID);
             return true;
         }
+
         return false;
     }
 

@@ -2,18 +2,18 @@ package chess.domain.commnad;
 
 import chess.exception.CommandException;
 
-public enum GameStatusCommand {
+public enum LoadGameCommand {
 
     NEW_GAME("1"),
     SAVED_GAME("2");
 
     private final String command;
 
-    GameStatusCommand(final String command) {
+    LoadGameCommand(final String command) {
         this.command = command;
     }
 
-    public static GameStatusCommand from(final String command) {
+    public static LoadGameCommand from(final String command) {
         validate(command);
         if (command.equals("1")) {
             return NEW_GAME;

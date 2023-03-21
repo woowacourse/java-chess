@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class GameStatusCommandTest {
+class LoadGameCommandTest {
 
     @Test
     @DisplayName("new_game 커맨드를 생성한다.")
@@ -18,10 +18,10 @@ class GameStatusCommandTest {
         String input = "1";
 
         // when
-        GameStatusCommand gameStatusCommand = GameStatusCommand.from(input);
+        LoadGameCommand loadGameCommand = LoadGameCommand.from(input);
 
         // then
-        assertThat(gameStatusCommand.isNewGame()).isTrue();
+        assertThat(loadGameCommand.isNewGame()).isTrue();
     }
 
     @Test
@@ -31,10 +31,10 @@ class GameStatusCommandTest {
         String input = "2";
 
         // when
-        GameStatusCommand gameStatusCommand = GameStatusCommand.from(input);
+        LoadGameCommand loadGameCommand = LoadGameCommand.from(input);
 
         // then
-        assertThat(gameStatusCommand.isSavedGame()).isTrue();
+        assertThat(loadGameCommand.isSavedGame()).isTrue();
     }
 
     @ParameterizedTest(name = "잘못된 input : {0}")
@@ -44,7 +44,7 @@ class GameStatusCommandTest {
         // given
 
         // when & then
-        assertThatThrownBy(() -> GameStatusCommand.from(input))
+        assertThatThrownBy(() -> LoadGameCommand.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(CommandException.STATUS_COMMAND_INVALID.getMessage());
     }
