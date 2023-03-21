@@ -16,7 +16,7 @@ import java.util.List;
 public final class Queen extends SlidingPiece {
 
     private Queen(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.QUEEN);
+        super(color, PieceType.QUEEN, strategies);
     }
 
     public static Queen create(final Color color) {

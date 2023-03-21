@@ -16,7 +16,7 @@ import java.util.List;
 public final class Knight extends NonSlidingPiece {
 
     private Knight(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.KNIGHT);
+        super(color, PieceType.KNIGHT, strategies);
     }
 
     public static Knight create(final Color color) {

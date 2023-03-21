@@ -3,9 +3,9 @@ package chess.domain;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
-import chess.domain.piece.FirstPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -41,8 +41,8 @@ public final class BoardFactory {
 
     private static void initPawn(final Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file, Rank.TWO), FirstPawn.createByColor(Color.WHITE));
-            board.put(Position.of(file, Rank.SEVEN), FirstPawn.createByColor(Color.BLACK));
+            board.put(Position.of(file, Rank.TWO), Pawn.createByColor(Color.WHITE));
+            board.put(Position.of(file, Rank.SEVEN), Pawn.createByColor(Color.BLACK));
         }
     }
 

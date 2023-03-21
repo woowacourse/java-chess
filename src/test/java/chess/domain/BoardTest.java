@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
-import chess.domain.piece.FirstPawn;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
@@ -117,7 +117,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
@@ -135,10 +135,10 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.A4;
-            rawBoard.put(givenTargetPosition, FirstPawn.createByColor(Color.BLACK));
+            rawBoard.put(givenTargetPosition, Pawn.createByColor(Color.BLACK));
 
             final Board board = Board.from(rawBoard);
             //when  && then
@@ -154,7 +154,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, FirstPawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.B4;
 

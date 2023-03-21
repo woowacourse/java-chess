@@ -16,7 +16,7 @@ import java.util.List;
 public final class King extends NonSlidingPiece {
 
     private King(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.KING);
+        super(color, PieceType.KING, strategies);
     }
 
     public static King create(final Color color) {

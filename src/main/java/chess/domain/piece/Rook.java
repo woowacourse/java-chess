@@ -12,7 +12,7 @@ import java.util.List;
 public final class Rook extends SlidingPiece {
 
     private Rook(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.ROOK);
+        super(color, PieceType.ROOK, strategies);
     }
 
     public static Rook create(final Color color) {

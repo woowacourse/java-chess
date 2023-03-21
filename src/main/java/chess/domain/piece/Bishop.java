@@ -12,7 +12,7 @@ import java.util.List;
 public final class Bishop extends SlidingPiece {
 
     private Bishop(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.BISHOP);
+        super(color, PieceType.BISHOP, strategies);
     }
 
     public static Bishop create(final Color color) {

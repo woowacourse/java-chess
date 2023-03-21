@@ -7,10 +7,10 @@ import chess.domain.movingStrategy.MovingStrategy;
 import java.util.Collections;
 import java.util.List;
 
-public class NonSlidingPiece extends Piece {
+public abstract class NonSlidingPiece extends Piece {
 
-    public NonSlidingPiece(final Color color, final MovingStrategies strategies, final PieceType pieceType) {
-        super(color, strategies, pieceType);
+    public NonSlidingPiece(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
+        super(color, pieceType, strategies);
     }
 
     @Override

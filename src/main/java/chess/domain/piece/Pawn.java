@@ -10,24 +10,25 @@ import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
 
+import java.util.Collections;
 import java.util.List;
 
-public final class FirstPawn extends Piece {
+public final class Pawn extends NonSlidingPiece {
 
     private static final int INITIAL_WHITE_RANK = 2;
     private static final int INITIAL_BLACK_RANK = 7;
 
-    private FirstPawn(final Color color, final MovingStrategies strategies) {
-        super(color, strategies, PieceType.PAWN);
+    private Pawn(final Color color, final MovingStrategies strategies) {
+        super(color, PieceType.PAWN, strategies);
     }
 
-    public static FirstPawn createByColor(final Color color) {
+    public static Pawn createByColor(final Color color) {
         if (color == Color.BLACK) {
-            return new FirstPawn(color, initBlackPawnStrategies());
+            return new Pawn(color, initBlackPawnStrategies());
         }
 
         if (color == Color.WHITE) {
-            return new FirstPawn(color, initWhitePawnStrategies());
+            return new Pawn(color, initWhitePawnStrategies());
         }
 
         throw new AssertionError();
@@ -47,11 +48,6 @@ public final class FirstPawn extends Piece {
 
 
     @Override
-    public List<Position> createPath(final Position source, final Position target, final MovingStrategy strategy) {
-        return null;
-    }
-
-    /*@Override
     public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
         final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
 
@@ -65,7 +61,12 @@ public final class FirstPawn extends Piece {
             return getTwoStepPath(source, movingStrategy);
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
-    }*/
+    }
+
+    @Override
+    public List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
+        return Collections.emptyList();
+    }
 
     private boolean isAttack(final Position source, final Position target, final Color targetColor) {
         return source.isOnDiagonal(target) && targetColor.isOpponent(this.color);

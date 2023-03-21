@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.FirstPawn;
+import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ class FirstPawnTest {
 
     @Nested
     public class WhiteFirstPawnTest {
-        private final FirstPawn firstPawn = FirstPawn.createByColor(Color.WHITE);
+        private final Pawn firstPawn = Pawn.createByColor(Color.WHITE);
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
@@ -105,7 +105,7 @@ class FirstPawnTest {
 
     @Nested
     public class BlackFirstPawnTest {
-        private final FirstPawn firstPawn = FirstPawn.createByColor(Color.BLACK);
+        private final Pawn firstPawn = Pawn.createByColor(Color.BLACK);
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
