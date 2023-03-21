@@ -68,14 +68,16 @@ public class Pieces {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 존재하는 기물이 없습니다."));
     }
 
-    public void synchronizeMovedPiece(final Piece pieceBeforeMove, final Piece movedPiece) {
-        final int pieceBeforeMoveIndex = pieces.indexOf(pieceBeforeMove);
-        pieces.set(pieceBeforeMoveIndex, movedPiece);
-    }
-
     public boolean isPieceExistOnPosition(final Position position) {
         return pieces.stream()
                 .anyMatch(piece -> piece.isSamePosition(position));
+    }
+    public void changePiece(final Piece pieceBeforeChange, final Piece pieceToChange) {
+        pieces.set(pieces.indexOf(pieceBeforeChange), pieceToChange);
+    }
+
+    public void removePiece(Piece pieceToRemove) {
+        pieces.remove(pieceToRemove);
     }
 
     public List<Piece> getPieces() {
