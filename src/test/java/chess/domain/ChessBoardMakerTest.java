@@ -26,7 +26,7 @@ class ChessBoardMakerTest {
     ChessBoard board;
 
     @BeforeAll
-    @DisplayName("64개의 기물이 생성된다.")
+    @DisplayName("32개의 기물이 생성된다.")
     void setUp() {
         board = ChessBoardMaker.create();
     }
@@ -85,16 +85,6 @@ class ChessBoardMakerTest {
             Position position = Position.of(file, rank);
             assertThat(board.getBoard().get(position))
                     .isEqualTo(new Pawn(camp));
-        }
-    }
-
-    @ParameterizedTest(name = "빈공간이 존재한다.")
-    @EnumSource(names = {"THREE", "FOUR", "FIVE", "SIX"})
-    void judgePiecesTest5(Rank rank) {
-        for (File file : File.values()) {
-            Position position = Position.of(file, rank);
-            assertThat(board.getBoard().get(position))
-                    .isEqualTo(new Empty());
         }
     }
 }

@@ -18,16 +18,12 @@ public abstract class Piece {
         return camp == Camp.BLACK;
     }
 
-    public boolean isEmpty() {
-        return camp==Camp.NEUTRAL;
+    public boolean isSameCamp(Piece other) {
+        return camp == other.camp;
     }
 
-    public boolean isSameCamp(Piece other) {
-        if (other.camp == Camp.NEUTRAL) {
-            return false;
-        }
-
-        return camp == other.camp;
+    public boolean isMyTurn(Camp other) {
+        return camp != other;
     }
 
     public abstract PieceMove getMovement(Position from, Position to);

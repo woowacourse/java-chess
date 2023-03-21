@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.PieceSymbol;
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -11,7 +12,7 @@ public enum ViewPieceSymbol {
     KNIGHT(PieceSymbol.KNIGHT, "n"),
     QUEEN(PieceSymbol.QUEEN, "q"),
     ROOK(PieceSymbol.ROOK, "r"),
-    EMPTY(PieceSymbol.EMPTY, "."),
+    EMPTY(null, "."),
     ;
 
     private final PieceSymbol pieceSymbol;

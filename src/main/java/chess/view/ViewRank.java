@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.position.Rank;
+
 import java.util.Arrays;
 
 public enum ViewRank {

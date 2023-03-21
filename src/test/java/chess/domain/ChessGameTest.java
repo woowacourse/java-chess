@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.position.File;
 import chess.domain.position.Path;
@@ -65,7 +64,7 @@ class ChessGameTest {
 
         chessGame.move(whitePawnPosition, emptyPosition, new Path());
 
-        assertThat(chessBoard.getBoard().get(whitePawnPosition)).isInstanceOf(Empty.class);
+        assertThat(chessBoard.getBoard().get(whitePawnPosition)).isEqualTo(null);
         assertThat(chessBoard.getBoard().get(emptyPosition)).isInstanceOf(Pawn.class);
     }
 }
