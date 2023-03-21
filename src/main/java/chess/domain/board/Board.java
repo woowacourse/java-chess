@@ -31,8 +31,8 @@ public class Board {
     private void validateMove(final Position source, final Position destination) {
         Piece piece = findPiece(source);
         validateMoveSamePosition(source, destination);
-        validateObstacle(piece, source, destination);
         piece.canMove(source, destination, isAttackMove(source, destination));
+        validateObstacle(piece, source, destination);
         validateMoveMyTeam(source, destination);
     }
 
