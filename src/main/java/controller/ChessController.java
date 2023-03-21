@@ -1,62 +1,71 @@
 package controller;
 
+
+import static controller.Command.COMMAND_INDEX;
+import static controller.Command.CURRENT_SQUARE_INDEX;
+import static controller.Command.EMPTY;
+import static controller.Command.END;
+import static controller.Command.MOVE;
+import static controller.Command.MOVE_COMMAND_LENGTH;
+import static controller.Command.STANDARD_COMMAND_LENGTH;
+import static controller.Command.START;
+import static controller.Command.TARGET_SQUARE_INDEX;
+
+import java.util.EnumMap;
+import java.util.List;
+
 import service.ChessService;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    private final ChessService chessService = new ChessService();
+    private final ChessService chessService;
+    private final EnumMap<Command, Action> actions = new EnumMap<>(Command.class);
+
+    public ChessController(ChessService chessService) {
+        this.chessService = chessService;
+        actions.put(START, this::start);
+        actions.put(MOVE, this::move);
+        actions.put(END, this::end);
+    }
 
     public void run() {
         OutputView.printChessInfo();
-        play();
+        Command command = EMPTY;
+        while (command != END) {
+            command = play();
+        }
     }
 
-    private void play() {
+    private Command play() {
         try {
-            playEachTurn();
+            List<String> inputs = InputView.requestCommand();
+            Command command = Command.find(inputs.get(COMMAND_INDEX));
+            Action action = actions.get(command);
+            action.execute(inputs);
+            return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e);
-            play();
+            return EMPTY;
         }
     }
 
-    private void playEachTurn() {
-        while (true) {
-            String commandRequest = InputView.requestCommand();
-            String[] inputs = commandRequest.split(" ");
-            validateCommandRequest(inputs);
-            chessService.execute(inputs);
-            if (!chessService.isOngoing()) {
-                break;
-            }
-            OutputView.printChessBoard(chessService.getChessBoard());
-        }
+    private void start(List<String> inputs) {
+        Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
+        chessService.setUp();
+        OutputView.printChessBoard(chessService.getChessBoard());
     }
 
-    private void validateCommandRequest(String[] inputs) {
-        String command = inputs[0];
-        validateStartEndCommand(inputs, command);
-        validateMoveCommand(inputs, command);
+    private void move(List<String> inputs) {
+        Command.validateCommandLength(inputs.size(), MOVE_COMMAND_LENGTH);
+        String currentSquareInput = inputs.get(CURRENT_SQUARE_INDEX);
+        String targetSquareInput = inputs.get(TARGET_SQUARE_INDEX);
+        chessService.move(currentSquareInput, targetSquareInput);
+        OutputView.printChessBoard(chessService.getChessBoard());
     }
 
-    private static void validateMoveCommand(String[] inputs, String command) {
-        if (Command.findRunCommand(command).equals(Command.MOVE)) {
-            if (inputs.length != 3) {
-                throw new IllegalArgumentException("잘못된 입력입니다.");
-            }
-            if (inputs[1].length() != 2 || inputs[2].length() != 2) {
-                throw new IllegalArgumentException("잘못된 입력입니다.");
-            }
-        }
-    }
-
-    private static void validateStartEndCommand(String[] inputs, String command) {
-        if (Command.findRunCommand(command).equals(Command.START)
-                || Command.findRunCommand(command).equals(Command.END)) {
-            if (inputs.length != 1) {
-                throw new IllegalArgumentException("잘못된 입력입니다.");
-            }
-        }
+    private void end(List<String> inputs) {
+        Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
+        chessService.end();
     }
 }
