@@ -31,7 +31,7 @@ public class ChessBoardDto {
 
     private static List<List<PieceDto>> initChessBoard() {
         List<List<PieceDto>> chessBoard = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < File.values().length; i++) {
             chessBoard.add(new ArrayList<>(Collections.nCopies(8, null)));
         }
         return chessBoard;

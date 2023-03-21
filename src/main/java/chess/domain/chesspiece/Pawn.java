@@ -1,5 +1,6 @@
 package chess.domain.chesspiece;
 
+import chess.domain.File;
 import chess.domain.Side;
 import chess.domain.Square;
 
@@ -23,7 +24,7 @@ public final class Pawn extends Piece {
     }
 
     private static void addPawns(final List<Pawn> pawns, final Side side) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < File.values().length; i++) {
             pawns.add(new Pawn(side));
         }
     }
