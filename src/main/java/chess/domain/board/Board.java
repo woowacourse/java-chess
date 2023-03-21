@@ -27,7 +27,7 @@ public final class Board {
         currentPointPiece.validateDirection(legalDirection);
         currentPointPiece.validateSameTeam(findPiece(target));
 
-        runLogic(current, target, legalDirection);
+        runLogic(current, target);
     }
 
     private Piece findPiece(final Position position) {
@@ -37,7 +37,7 @@ public final class Board {
         return square.getPiece();
     }
 
-    private void runLogic(final Position current, final Position target, final Direction legalDirection) {
+    private void runLogic(final Position current, final Position target) {
         Piece currentPointPiece = findPiece(current);
 
         if (currentPointPiece instanceof King) {
@@ -45,8 +45,6 @@ public final class Board {
         }
 
         if (currentPointPiece instanceof Pawn) {
-            currentPointPiece.validateDirection(legalDirection);
-
             Pawn pawn = (Pawn) currentPointPiece;
 
             pawn.validateDistance(current, target);
