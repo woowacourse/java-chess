@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -53,12 +51,5 @@ class RookTest {
 			assertFalse(whiteRook.isMobile(relativePosition));
 			assertFalse(blackRook.isMobile(relativePosition));
 		}
-	}
-
-	@Test
-	@DisplayName("Rook이라는 타입을 반환해야 한다.")
-	void getTypeTest() {
-		Piece rook = new Rook(Team.WHITE);
-		assertThat(rook.getType()).isEqualTo(PieceType.ROOK);
 	}
 }

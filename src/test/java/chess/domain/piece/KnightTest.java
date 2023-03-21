@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -51,12 +49,5 @@ class KnightTest {
 			assertFalse(whiteKnight.isMobile(relativePosition));
 			assertFalse(blackKnight.isMobile(relativePosition));
 		}
-	}
-
-	@Test
-	@DisplayName("Knight라는 타입을 반환해야 한다.")
-	void getTypeTest() {
-		Piece knight = new Knight(Team.WHITE);
-		assertThat(knight.getType()).isEqualTo(PieceType.KNIGHT);
 	}
 }

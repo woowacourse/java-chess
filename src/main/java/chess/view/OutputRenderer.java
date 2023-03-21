@@ -66,7 +66,7 @@ public class OutputRenderer {
 	}
 
 	private static String stringifySign(final Piece piece) {
-		String sign = PIECE_TO_STRING.get(piece.getType());
+		String sign = PIECE_TO_STRING.get(piece.getPieceType());
 		if (piece.isGivenTeam(Team.WHITE)) {
 			sign = sign.toLowerCase();
 		}

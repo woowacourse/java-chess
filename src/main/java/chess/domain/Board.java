@@ -2,8 +2,10 @@ package chess.domain;
 
 import java.util.Map;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class Board {
 
@@ -33,11 +35,11 @@ public class Board {
 		Piece piece = board.get(source);
 		if (isMovingInitialPawn(piece, team, source)) {
 			board.put(target, new Pawn(team));
-			board.put(source, Piece.empty());
+			board.put(source, new Empty());
 			return;
 		}
 		board.put(target, piece);
-		board.put(source, Piece.empty());
+		board.put(source, new Empty());
 	}
 
 	public void checkIsMovable(final Team team, final Position source, final Position target) {
@@ -67,9 +69,16 @@ public class Board {
 	private void checkIsSameTeamExistOnTarget(final Position source, final Position target) {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
-		if (sourcePiece.getTeam() == targetPiece.getTeam()) {
+		if (isSameTeam(sourcePiece, targetPiece)) {
+			System.out.println("srcTeam.team, White, Black, Empty = " + sourcePiece.isGivenTeam(Team.WHITE) + " " + sourcePiece.isGivenTeam(Team.BLACK) + " " + sourcePiece.isGivenTeam(Team.EMPTY));
+			System.out.println("dstTeam.team, White, Black, Empty = " + targetPiece.isGivenTeam(Team.WHITE) + " " + targetPiece.isGivenTeam(Team.BLACK) + " " + targetPiece.isGivenTeam(Team.EMPTY));
 			throw new IllegalArgumentException(SAME_TEAM_IN_TARGET_ERROR_MESSAGE);
 		}
+	}
+
+	private boolean isSameTeam(final Piece sourcePiece, final Piece targetPiece) {
+		return (sourcePiece.isGivenTeam(Team.WHITE) && targetPiece.isGivenTeam(Team.WHITE))
+			|| (sourcePiece.isGivenTeam(Team.BLACK) && targetPiece.isGivenTeam(Team.BLACK));
 	}
 
 	private void checkIsMovableDirection(final Position source, final Position target) {
@@ -82,7 +91,7 @@ public class Board {
 
 	private void checkIsThereAnyObstacle(final Position source, final Position target) {
 		Piece piece = board.get(source);
-		if (!piece.isKnight() && hasObstacle(source, target)) {
+		if (!piece.isGivenType(PieceType.KNIGHT) && hasObstacle(source, target)) {
 			throw new IllegalArgumentException(CANNOT_MOVE_THROUGH_OBSTACLE_ERROR_MESSAGE);
 		}
 	}
@@ -92,7 +101,7 @@ public class Board {
 		RelativePosition unitPosition = relativePosition.getGcdDivided();
 		Position currentPosition = source.move(unitPosition);
 		while (!currentPosition.equals(target)) {
-			if (isPieceExists(currentPosition)) {
+			if (doesPieceExists(currentPosition)) {
 				return true;
 			}
 			currentPosition = currentPosition.move(unitPosition);
@@ -100,8 +109,9 @@ public class Board {
 		return false;
 	}
 
-	private boolean isPieceExists(final Position position) {
-		return !board.get(position).isEmpty();
+	private boolean doesPieceExists(final Position position) {
+		Piece piece = board.get(position);
+		return !piece.isGivenType(PieceType.EMPTY);
 	}
 
 	private void checkIsSourcePawnTargetingForwardEnemy(final Position source, final Position target) {
@@ -114,24 +124,25 @@ public class Board {
 	}
 
 	private boolean isDifferentTeam(final Piece sourcePiece, final Piece targetPiece) {
-		return Team.isNotEmptyDifferentTeam(sourcePiece.getTeam(), targetPiece.getTeam());
+		return (sourcePiece.isGivenTeam(Team.WHITE) && targetPiece.isGivenTeam(Team.BLACK))
+			|| (sourcePiece.isGivenTeam(Team.BLACK) && targetPiece.isGivenTeam(Team.WHITE));
 	}
 
 	private void checkIsSourcePawnMovingProperDiagonal(final Position source, final Position target) {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
 		RelativePosition relativePosition = RelativePosition.of(source, target);
-		if (isPawn(sourcePiece) && relativePosition.isDiagonal() && targetPiece.isEmpty()) {
+		if (isPawn(sourcePiece) && relativePosition.isDiagonal() && targetPiece.isGivenType(PieceType.EMPTY)) {
 			throw new IllegalArgumentException(CANNOT_MOVE_PAWN_DIAGONAL_ERROR_MESSAGE);
 		}
 	}
 
 	private boolean isPawn(final Piece piece) {
-		return piece.isInitialPawn() || piece.isNormalPawn();
+		return piece.isGivenType(PieceType.INITIAL_PAWN) || piece.isGivenType(PieceType.PAWN);
 	}
 
 	private boolean isMovingInitialPawn(final Piece piece, final Team team, final Position source) {
-		return piece.isInitialPawn() && isInitialPawnPosition(team, source);
+		return piece.isGivenType(PieceType.INITIAL_PAWN) && isInitialPawnPosition(team, source);
 	}
 
 	private boolean isInitialPawnPosition(final Team team, final Position position) {

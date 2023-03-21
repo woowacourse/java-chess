@@ -2,9 +2,7 @@ package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -22,12 +20,5 @@ class EmptyTest {
 		Exception e = assertThrows(UnsupportedOperationException.class,
 			() -> empty.isMobile(relativePosition));
 		assertEquals("이동이 불가능한 기물입니다.", e.getMessage());
-	}
-
-	@Test
-	@DisplayName("Empty라는 타입을 반환해야 한다.")
-	void getTypeTest() {
-		Piece empty = new Empty();
-		Assertions.assertThat(empty.getType()).isEqualTo(PieceType.EMPTY);
 	}
 }

@@ -5,11 +5,6 @@ import chess.domain.Team;
 public class Rook extends Piece {
 
 	public Rook(final Team team) {
-		super(team, Movement.ROOK);
-	}
-
-	@Override
-	public PieceType getType() {
-		return PieceType.ROOK;
+		super(team, Movement.ROOK, PieceType.ROOK);
 	}
 }

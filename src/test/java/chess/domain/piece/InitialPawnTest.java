@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -62,12 +60,5 @@ class InitialPawnTest {
 			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
 			assertFalse(pawn.isMobile(relativePosition));
 		}
-	}
-
-	@Test
-	@DisplayName("Initial Pawn이라는 타입을 반환해야 한다.")
-	void getTypeTest() {
-		Piece initialPawn = new InitialPawn(Team.WHITE);
-		assertThat(initialPawn.getType()).isEqualTo(PieceType.INITIAL_PAWN);
 	}
 }

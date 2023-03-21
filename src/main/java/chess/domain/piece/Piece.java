@@ -7,43 +7,27 @@ public abstract class Piece {
 
 	protected final Team team;
 	protected final Movement movement;
+	private final PieceType pieceType;
 
-	public Piece(final Team team, final Movement movement) {
+	public Piece(final Team team, final Movement movement, final PieceType pieceType) {
 		this.team = team;
 		this.movement = movement;
-	}
-
-	public static Piece empty() {
-		return new Empty();
-	}
-
-	public boolean isMobile(RelativePosition relativePosition) {
-		return movement.isMobile(relativePosition);
+		this.pieceType = pieceType;
 	}
 
 	public boolean isGivenTeam(Team team) {
 		return this.team == team;
 	}
 
-	public boolean isEmpty() {
-		return false;
+	public boolean isMobile(RelativePosition relativePosition) {
+		return movement.isMobile(relativePosition);
 	}
 
-	public boolean isKnight() {
-		return false;
+	public boolean isGivenType(PieceType pieceType) {
+		return this.pieceType == pieceType;
 	}
 
-	public boolean isNormalPawn() {
-		return false;
+	public PieceType getPieceType() {
+		return pieceType;
 	}
-
-	public boolean isInitialPawn() {
-		return false;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public abstract PieceType getType();
 }

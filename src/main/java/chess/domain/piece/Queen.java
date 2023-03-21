@@ -5,11 +5,6 @@ import chess.domain.Team;
 public class Queen extends Piece {
 
 	public Queen(final Team team) {
-		super(team, Movement.QUEEN);
-	}
-
-	@Override
-	public PieceType getType() {
-		return PieceType.QUEEN;
+		super(team, Movement.QUEEN, PieceType.QUEEN);
 	}
 }

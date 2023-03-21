@@ -6,7 +6,7 @@ import chess.domain.Team;
 public class InitialPawn extends Piece {
 
 	public InitialPawn(final Team team) {
-		super(team, Movement.INITIAL_PAWN);
+		super(team, Movement.INITIAL_PAWN, PieceType.INITIAL_PAWN);
 	}
 
 	@Override
@@ -19,15 +19,5 @@ public class InitialPawn extends Piece {
 			relativePosition = relativePosition.inverseByXAxis();
 		}
 		return movement.isMobile(relativePosition);
-	}
-
-	@Override
-	public boolean isInitialPawn() {
-		return true;
-	}
-
-	@Override
-	public PieceType getType() {
-		return PieceType.INITIAL_PAWN;
 	}
 }
