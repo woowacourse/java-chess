@@ -19,18 +19,31 @@ public class InputView {
     }
 
     private void validate(List<String> parsedCommandInput) {
-        if (parsedCommandInput.size() != 1 && parsedCommandInput.size() != 3) {
+        if (parsedCommandInput.size() == 1) {
+            validateFormatWithoutArguments(parsedCommandInput);
+            return;
+        }
+        if (parsedCommandInput.size() == 3) {
+            validateFormatWithArguments(parsedCommandInput);
+            return;
+        }
+        throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
+    }
+
+    private void validateFormatWithoutArguments(final List<String> parsedCommandInput) {
+        if (!Objects.equals("start", parsedCommandInput.get(0))
+                && !Objects.equals("end", parsedCommandInput.get(0))) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
         }
-        if (parsedCommandInput.size() == 3 &&
-                (parsedCommandInput.get(1)
-                        .length() != 2 || parsedCommandInput.get(2)
-                        .length() != 2)) {
+    }
+
+    private void validateFormatWithArguments(final List<String> parsedCommandInput) {
+        if ((parsedCommandInput.get(1).length() != 2
+                || parsedCommandInput.get(2).length() != 2)) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
         }
-        if ((Objects.equals(parsedCommandInput.get(0), "start") || Objects.equals(parsedCommandInput.get(0), "end")) &&
-                parsedCommandInput.size() != 1) {
-            throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
+        if (Objects.equals(parsedCommandInput.get(1), parsedCommandInput.get(2))) {
+            throw new IllegalArgumentException("같은 지점이 들어왔습니다.");
         }
     }
 }

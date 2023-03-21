@@ -56,7 +56,7 @@ public class ChessBoard {
     }
 
     private boolean hasObstacleAlongPath(final Square from, final Square to) {
-        return from.squaresOfPath(to)
+        return from.calculatePath(to)
                 .stream()
                 .anyMatch(square -> pieces.get(square) != EmptyPiece.getInstance());
     }

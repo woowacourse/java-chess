@@ -37,16 +37,43 @@ public final class Pawn extends Piece {
     }
 
     private boolean canMoveForward(final Square from, final Square to, final Piece piece) {
-        boolean targetInMovableRange = from.inPawnsMovableRange(to, side);
+        boolean targetInMovableRange = isPawnsMovableRange(from, to);
         if (atInitialPosition) {
-            targetInMovableRange = from.inPawnsInitialMovableRange(to, side);
+            targetInMovableRange = isPawnsInitialMovableRange(from, to);
         }
         return targetInMovableRange && piece.isEmpty();
+    }
 
+    private boolean isPawnsInitialMovableRange(final Square from, final Square to) {
+        final int rankDistance = from.rankDistanceTo(to);
+        return isBackOf(from, to) &&
+                (rankDistance == 1 || rankDistance == 2) &&
+                from.fileDistanceTo(to) == 0;
+    }
+
+    private boolean isPawnsMovableRange(final Square from, final Square to) {
+        final int rankDistance = from.rankDistanceTo(to);
+        return isBackOf(from, to) &&
+                rankDistance == 1 &&
+                from.fileDistanceTo(to) == 0;
     }
 
     private boolean isCatchable(final Square from, final Square to, final Piece piece) {
-        return isOppositeSide(piece) && from.inPawnsCatchableRange(to, side);
+        return isOppositeSide(piece) && isPawnsCatchableRange(from, to);
+    }
+
+    private boolean isPawnsCatchableRange(final Square from, final Square to) {
+        final int rankDistance = from.rankDistanceTo(to);
+        return isBackOf(from, to) &&
+                rankDistance == 1 &&
+                from.fileDistanceTo(to) == 1;
+    }
+
+    private boolean isBackOf(final Square from, final Square to) {
+        if (side == Side.WHITE) {
+            return to.hasBiggerRankThan(from);
+        }
+        return from.hasBiggerRankThan(to);
     }
 
     public void move() {

@@ -21,6 +21,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isNotSameSide(piece) && (from.inLine(to) || from.inDiagonal(to));
+        return isNotSameSide(piece) && (from.isStraight(to) || from.isDiagonal(to));
     }
 }

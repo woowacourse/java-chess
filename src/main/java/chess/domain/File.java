@@ -37,7 +37,6 @@ public enum File {
         List<File> files = Arrays.stream(values())
                 .filter(file -> file.position > min && file.position < max)
                 .collect(Collectors.toList());
-
         if (from.position == max) {
             Collections.reverse(files);
         }

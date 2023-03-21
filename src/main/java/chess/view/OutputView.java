@@ -27,6 +27,7 @@ public class OutputView {
         for (List<PieceDto> rank : pieceDtos) {
             printRank(rank);
         }
+        System.out.println();
     }
 
     public void printInvalidMoveMessage() {

@@ -20,6 +20,15 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isNotSameSide(piece) && from.inLShape(to);
+        return isNotSameSide(piece) && isLShape(from, to);
+    }
+
+    private boolean isLShape(final Square from, final Square to) {
+        final int rankDistance = from.rankDistanceTo(to);
+        final int fileDistance = from.fileDistanceTo(to);
+        if (rankDistance == 0 || fileDistance == 0) {
+            return false;
+        }
+        return rankDistance + fileDistance == 3;
     }
 }
