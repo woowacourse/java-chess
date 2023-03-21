@@ -63,16 +63,16 @@ public class ChessGameController {
 
     private CommandType playOnce(Game game) {
         Request request = inputView.askCommand(game.getTurn());
-        CommandType command = request.getCommandType();
-        if (command == CommandType.START) {
+        CommandType commandType = request.getCommandType();
+        if (commandType == CommandType.START) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
         }
-        if (command == CommandType.MOVE) {
+        if (commandType == CommandType.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();
             Position source = new Position(moveRequest.getSource());
             Position target = new Position(moveRequest.getTarget());
             game.movePiece(source, target);
         }
-        return command;
+        return commandType;
     }
 }

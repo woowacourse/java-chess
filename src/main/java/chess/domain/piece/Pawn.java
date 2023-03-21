@@ -24,18 +24,6 @@ public class Pawn extends Piece {
         return canMove(move);
     }
 
-    private boolean isFirstMove(Move move) {
-        Position source = move.getSource();
-        return source.getRankIndex() == getInitialRankIndex();
-    }
-
-    private int getInitialRankIndex() {
-        if (color == Color.WHITE) {
-            return INITIAL_WHITE_RANK;
-        }
-        return INITIAL_BLACK_RANK;
-    }
-
     private boolean isAttack(Piece targetPiece) {
         return targetPiece != null;
     }
@@ -49,6 +37,18 @@ public class Pawn extends Piece {
             return deltaRank == 1;
         }
         return deltaRank == -1;
+    }
+
+    private boolean isFirstMove(Move move) {
+        Position source = move.getSource();
+        return source.getRankIndex() == getInitialRankIndex();
+    }
+
+    private int getInitialRankIndex() {
+        if (color == Color.WHITE) {
+            return INITIAL_WHITE_RANK;
+        }
+        return INITIAL_BLACK_RANK;
     }
 
     private boolean canInitialMove(Move move) {
