@@ -16,8 +16,23 @@ public class Pawn implements Piece {
     public Pawn(final Side side) {
         this.type = Type.PAWN;
         this.side = side;
-        this.movePatterns = List.of(PawnMovePattern.values());
+        this.movePatterns = initMovePatterns();
         this.notMoved = true;
+    }
+
+    private List<PawnMovePattern> initMovePatterns() {
+        List<PawnMovePattern> movePatterns = new ArrayList<>();
+        if (side.isWhite()) {
+            movePatterns.add(PawnMovePattern.UP);
+            movePatterns.add(PawnMovePattern.LEFT_TOP);
+            movePatterns.add(PawnMovePattern.RIGHT_TOP);
+        }
+        if (side.isBlack()) {
+            movePatterns.add(PawnMovePattern.DOWN);
+            movePatterns.add(PawnMovePattern.LEFT_BOTTOM);
+            movePatterns.add(PawnMovePattern.RIGHT_BOTTOM);
+        }
+        return movePatterns;
     }
 
     @Override
