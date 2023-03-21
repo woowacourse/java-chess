@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -32,29 +31,23 @@ public class ChessBoard {
     }
 
     private Piece findPieceAtSourcePosition(final Position source) {
-        validatePieceAtSourcePosition(source);
+        if (isEmptyPosition(source)) {
+            throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
+        }
         Piece piece = piecesByPosition.get(source);
-        validatePieceColor(piece);
+        validateSourceColor(piece);
         return piece;
     }
 
-    private void validatePieceAtSourcePosition(final Position start) {
-        if (piecesByPosition.containsKey(start)) {
-            return;
+    private void validateSourceColor(final Piece piece) {
+        if (piece.isDifferentCamp(currentTurnCamp)) {
+            throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
         }
-        throw new IllegalArgumentException(WRONG_START_ERROR_MESSAGE);
-    }
-
-    private void validatePieceColor(final Piece piece) {
-        if (piece.isSameCamp(currentTurnCamp)) {
-            return;
-        }
-        throw new IllegalArgumentException(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
 
     private void progressIfPossible(final Path pathToDestination, final Position source, final Position destination,
                                     final Piece movingPiece) {
-        validateObstacleInPath(pathToDestination, destination);
+        validateObstacle(pathToDestination, destination);
         validateMoveToEmpty(source, destination, movingPiece);
         validateAttack(source, destination, movingPiece);
         piecesByPosition.put(destination, movingPiece);
@@ -67,27 +60,34 @@ public class ChessBoard {
         }
     }
 
-    private void validateObstacleInPath(final Path path, final Position destination) {
+    private void validateObstacle(final Path path, final Position destination) {
         if (hasObstacleInPath(path, destination)) {
             throw new IllegalArgumentException(OBSTACLE_IN_PATH_ERROR_MESSAGE);
         }
     }
 
     private boolean hasObstacleInPath(final Path path, final Position destination) {
-        List<Position> positions = path.positions();
         return IntStream.range(0, path.findPositionIndex(destination))
-                .anyMatch(index -> piecesByPosition.containsKey(positions.get(index)));
+                .anyMatch(index -> hasPieceAtPosition(path.findByIndex(index)));
     }
 
     private void validateAttack(final Position source, final Position destination, final Piece movingPiece) {
-        if (piecesByPosition.containsKey(destination) && !movingPiece.canAttack(source, destination,
-                piecesByPosition.get(destination))) {
+        if (hasPieceAtPosition(destination) && notAbleToAttack(source, destination, movingPiece)) {
             throw new IllegalArgumentException(WRONG_ATTACK_ERROR_MESSAGE);
         }
     }
 
-    private boolean isEmptyPosition(final Position destination) {
-        return !piecesByPosition.containsKey(destination);
+    private boolean notAbleToAttack(final Position source, final Position destination,
+                                    final Piece movingPiece) {
+        return !movingPiece.canAttack(source, destination, piecesByPosition.get(destination));
+    }
+
+    private boolean hasPieceAtPosition(final Position position) {
+        return piecesByPosition.containsKey(position);
+    }
+
+    private boolean isEmptyPosition(final Position position) {
+        return !piecesByPosition.containsKey(position);
     }
 
     private void switchCampTurn() {

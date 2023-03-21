@@ -49,6 +49,13 @@ public class Path {
         throw new IllegalArgumentException("경로에 존재하지 않는 위치입니다.");
     }
 
+    public Position findByIndex(int index) {
+        if (index < 0 || index >= positions.size()) {
+            throw new IllegalArgumentException("잘못된 범위의 인덱스로 위치를 조회할 수 없습니다.");
+        }
+        return positions.get(index);
+    }
+
     public List<Position> positions() {
         return new ArrayList<>(positions);
     }

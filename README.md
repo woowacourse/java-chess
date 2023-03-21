@@ -135,3 +135,4 @@ sequenceDiagram
         - [x] move 메서드의 매개변수명, 데이터 유형 수정
     - [x] 조건문 가독성 개선
         - [x] CheckablePaths 의 특정 위치 포함한 경로 탐색 메서드 stream 으로 변경
+        - [x] ChessBoard 의 조건 관련 연산 메서드 분리
