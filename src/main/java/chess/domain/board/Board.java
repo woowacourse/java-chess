@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.factory.BoardFactory;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;

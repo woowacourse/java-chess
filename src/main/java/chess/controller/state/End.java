@@ -1,4 +1,4 @@
-package chess.domain.state;
+package chess.controller.state;
 
 import chess.domain.piece.Camp;
 

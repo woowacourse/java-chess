@@ -1,11 +1,11 @@
 package chess.controller;
 
+import chess.controller.state.End;
+import chess.controller.state.Ready;
+import chess.controller.state.State;
 import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
-import chess.domain.state.End;
-import chess.domain.state.Ready;
-import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

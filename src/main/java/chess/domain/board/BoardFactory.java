@@ -1,8 +1,5 @@
-package chess.domain.factory;
+package chess.domain.board;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
