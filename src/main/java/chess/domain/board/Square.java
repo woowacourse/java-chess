@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.strategy.vector.DirectionVector;
+import chess.domain.piece.strategy.vector.SlidingVector;
 import java.util.Objects;
 
 public class Square {
@@ -26,7 +26,7 @@ public class Square {
         }
     }
 
-    public Square next(final DirectionVector direction) {
+    public Square next(final SlidingVector direction) {
         return new Square(direction.next(file), direction.next(rank));
     }
 

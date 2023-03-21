@@ -2,9 +2,10 @@ package chess.domain.piece.strategy.vector;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
+import java.util.List;
 import java.util.function.BiFunction;
 
-public enum DirectionVector {
+public enum SlidingVector {
 
     NORTH(0, 1, (file, rank) -> file == 0 && rank > 0),
     SOUTH(0, -1, (file, rank) -> file == 0 && rank < 0),
@@ -20,10 +21,22 @@ public enum DirectionVector {
     private final int unitRank;
     private final BiFunction<Integer, Integer, Boolean> way;
 
-    DirectionVector(final int x, final int unitRank, final BiFunction<Integer, Integer, Boolean> way) {
+    SlidingVector(final int x, final int unitRank, final BiFunction<Integer, Integer, Boolean> way) {
         this.unitFile = x;
         this.unitRank = unitRank;
         this.way = way;
+    }
+
+    public static List<SlidingVector> ofBishop() {
+        return List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    public static List<SlidingVector> ofQueen() {
+        return List.of(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    public static List<SlidingVector> ofRook() {
+        return List.of(NORTH, SOUTH, EAST, WEST);
     }
 
     public boolean isOnMyWay(final int distanceFile, final int distanceRank) {

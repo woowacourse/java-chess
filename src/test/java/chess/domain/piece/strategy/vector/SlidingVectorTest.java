@@ -4,19 +4,23 @@ import static chess.domain.board.File.D;
 import static chess.domain.board.File.E;
 import static chess.domain.board.Rank.FOUR;
 import static chess.domain.board.Rank.THREE;
-import static chess.domain.piece.strategy.vector.DirectionVector.EAST;
-import static chess.domain.piece.strategy.vector.DirectionVector.NORTH;
-import static chess.domain.piece.strategy.vector.DirectionVector.NORTHEAST;
-import static chess.domain.piece.strategy.vector.DirectionVector.NORTHWEST;
-import static chess.domain.piece.strategy.vector.DirectionVector.SOUTH;
-import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHEAST;
-import static chess.domain.piece.strategy.vector.DirectionVector.SOUTHWEST;
-import static chess.domain.piece.strategy.vector.DirectionVector.WEST;
+import static chess.domain.piece.strategy.vector.SlidingVector.EAST;
+import static chess.domain.piece.strategy.vector.SlidingVector.NORTH;
+import static chess.domain.piece.strategy.vector.SlidingVector.NORTHEAST;
+import static chess.domain.piece.strategy.vector.SlidingVector.NORTHWEST;
+import static chess.domain.piece.strategy.vector.SlidingVector.SOUTH;
+import static chess.domain.piece.strategy.vector.SlidingVector.SOUTHEAST;
+import static chess.domain.piece.strategy.vector.SlidingVector.SOUTHWEST;
+import static chess.domain.piece.strategy.vector.SlidingVector.WEST;
+import static chess.domain.piece.strategy.vector.SlidingVector.ofBishop;
+import static chess.domain.piece.strategy.vector.SlidingVector.ofQueen;
+import static chess.domain.piece.strategy.vector.SlidingVector.ofRook;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -28,7 +32,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class DirectionVectorTest {
+class SlidingVectorTest {
 
     private static Stream<Arguments> generateDirections() {
         return Stream.of(
@@ -53,8 +57,29 @@ class DirectionVectorTest {
 
     @ParameterizedTest
     @MethodSource("generateDirections")
-    void 가는_경로인지_확인한다(final DirectionVector directionVector, final int file, final int rank, final boolean result) {
-        assertThat(directionVector.isOnMyWay(file, rank)).isEqualTo(result);
+    void 가는_경로인지_확인한다(final SlidingVector slidingVector, final int file, final int rank, final boolean result) {
+        assertThat(slidingVector.isOnMyWay(file, rank)).isEqualTo(result);
+    }
+
+    @Test
+    void 비숍에_해당하는_벡터들을_반환한다() {
+        final List<SlidingVector> vectors = ofBishop();
+
+        assertThat(vectors).containsExactly(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    @Test
+    void 퀸에_해당하는_벡터들을_반환한다() {
+        final List<SlidingVector> vectors = ofQueen();
+
+        assertThat(vectors).containsExactly(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    @Test
+    void 룩에_해당하는_벡터들을_반환한다() {
+        final List<SlidingVector> vectors = ofRook();
+
+        assertThat(vectors).containsExactly(NORTH, SOUTH, EAST, WEST);
     }
 
     @Test
@@ -64,9 +89,9 @@ class DirectionVectorTest {
 
     @ParameterizedTest
     @CsvSource(value = {"EAST:H", "WEST:A"}, delimiter = ':')
-    void 다음_파일로_갈_수_없으면_예외를_던진다(final DirectionVector directionVector, final File file) {
+    void 다음_파일로_갈_수_없으면_예외를_던진다(final SlidingVector slidingVector, final File file) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> directionVector.next(file));
+                .isThrownBy(() -> slidingVector.next(file));
     }
 
     @Test
@@ -76,8 +101,8 @@ class DirectionVectorTest {
 
     @ParameterizedTest
     @CsvSource(value = {"NORTH:EIGHT", "SOUTH:ONE"}, delimiter = ':')
-    void 다음_랭크로_갈_수_없으면_예외를_던진다(final DirectionVector directionVector, final Rank rank) {
+    void 다음_랭크로_갈_수_없으면_예외를_던진다(final SlidingVector slidingVector, final Rank rank) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> directionVector.next(rank));
+                .isThrownBy(() -> slidingVector.next(rank));
     }
 }

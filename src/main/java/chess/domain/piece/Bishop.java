@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.BishopStrategy;
+import chess.domain.piece.strategy.SlidingStrategy;
+import chess.domain.piece.strategy.vector.SlidingVector;
 
 public class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(color, new BishopStrategy());
+        super(color, new SlidingStrategy(SlidingVector.ofBishop()));
     }
 
     @Override

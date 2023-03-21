@@ -1,26 +1,25 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.piece.strategy.vector.DirectionVector.EAST;
-import static chess.domain.piece.strategy.vector.DirectionVector.NORTH;
-import static chess.domain.piece.strategy.vector.DirectionVector.SOUTH;
-import static chess.domain.piece.strategy.vector.DirectionVector.WEST;
-
 import chess.domain.board.Square;
-import chess.domain.piece.strategy.vector.DirectionVector;
+import chess.domain.piece.strategy.vector.SlidingVector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RookStrategy implements Strategy {
+public class SlidingStrategy implements Strategy {
 
-    private static final List<DirectionVector> directions = List.of(NORTH, SOUTH, EAST, WEST);
+    private final List<SlidingVector> directions;
+
+    public SlidingStrategy(final List<SlidingVector> directions) {
+        this.directions = directions;
+    }
 
     @Override
     public List<Square> findRoute(final Square source, final Square destination) {
-        final DirectionVector directionVector = findDirectionVector(source, destination);
-        return generateRoute(directionVector, source, destination);
+        final SlidingVector slidingVector = findDirectionVector(source, destination);
+        return generateRoute(slidingVector, source, destination);
     }
 
-    private DirectionVector findDirectionVector(final Square source, final Square destination) {
+    private SlidingVector findDirectionVector(final Square source, final Square destination) {
         final int distanceFile = destination.calculateDistanceFile(source);
         final int distanceRank = destination.calculateDistanceRank(source);
         return directions.stream()
@@ -29,7 +28,7 @@ public class RookStrategy implements Strategy {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 움직일 수 있는 경로가 아닙니다."));
     }
 
-    private List<Square> generateRoute(final DirectionVector direction, final Square source, final Square destination) {
+    private List<Square> generateRoute(final SlidingVector direction, final Square source, final Square destination) {
         final List<Square> route = new ArrayList<>();
         Square currentSquare = source;
         while (!currentSquare.equals(destination)) {
