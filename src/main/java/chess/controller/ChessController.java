@@ -36,7 +36,7 @@ public class ChessController {
 
             processMoveCommand(commandInputs);
 
-            if (GameCommand.findBy(commandInputs.get(COMMAND_INDEX)) == GameCommand.END) {
+            if (GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX)) == GameState.END) {
                 break;
             }
         }
@@ -44,8 +44,8 @@ public class ChessController {
     }
 
     private void processStartCommand(final List<String> commandInputs) {
-        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
-        if (command == GameCommand.START) {
+        final GameState command = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
+        if (command == GameState.READY) {
             validateWithStartCommand();
             chessGame = ChessGame.createWith(new StartingPiecesFactory());
             outputView.printBoard(chessGame.getExistingPieces());
@@ -59,8 +59,8 @@ public class ChessController {
     }
 
     private void processMoveCommand(final List<String> commandInputs) {
-        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
-        if ((command == GameCommand.MOVE)) {
+        final GameState command = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
+        if ((command == GameState.RUNNING)) {
             validateWithMoveCommand();
             final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
             final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
