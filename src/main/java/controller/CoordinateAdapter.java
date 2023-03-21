@@ -2,7 +2,7 @@ package controller;
 
 import domain.piece.move.Coordinate;
 
-public class CoordinateAdapter {
+public final class CoordinateAdapter {
 
     private static final char ASCII_ALPHABET_A = 'a';
     public static final int COMMAND_SIZE = 2;
