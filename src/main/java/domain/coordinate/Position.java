@@ -1,23 +1,16 @@
 package domain.coordinate;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Position {
 
-    private static final List<List<Position>> CACHE;
-    private static final int COLUMN_SIZE = 8;
-    private static final int ROW_SIZE = 8;
+    private static final Map<Integer, Map<Integer, Position>> CACHE = new HashMap<>();
 
     private final int x;
     private final int y;
-
-    static {
-        CACHE = new ArrayList<>();
-        addColumn();
-    }
 
     private Position(final int x, final int y) {
         this.x = x;
@@ -25,21 +18,11 @@ public final class Position {
     }
 
     public static Position of(final int x, final int y) {
+        CACHE.computeIfAbsent(y, k -> new HashMap<>())
+                .putIfAbsent(x, new Position(x, y));
+
         return CACHE.get(y)
                 .get(x);
-    }
-
-    private static void addColumn() {
-        for (int y = 0; y < COLUMN_SIZE; y++) {
-            CACHE.add(new ArrayList<>());
-            addRow(y);
-        }
-    }
-
-    private static void addRow(final int y) {
-        for (int x = 0; x < ROW_SIZE; x++) {
-            CACHE.get(y).add(new Position(x, y));
-        }
     }
 
     public int diffY(Position otherPosition) {
