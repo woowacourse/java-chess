@@ -1,7 +1,9 @@
 package chessgame.controller;
 
 import chessgame.domain.board.ChessGame;
+import chessgame.domain.piece.Column;
 import chessgame.domain.piece.Coordinate;
+import chessgame.domain.piece.Row;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 

@@ -6,69 +6,74 @@ import java.util.Arrays;
 
 public enum DirectionVector {
 
-    N(new Coordinate(1, 0)) {
+    N(1, 0) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.isColZero();
         }
     },
-    NE(new Coordinate(1, 1)) {
+    NE(1, 1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.hasPositiveColValue();
         }
     },
-    E(new Coordinate(0, 1)) {
+    E(0, 1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.isRowZero() && coordinate.hasPositiveColValue();
         }
     },
-    SE(new Coordinate(-1, 1)) {
+    SE(-1, 1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.hasPositiveColValue();
         }
     },
-    S(new Coordinate(-1, 0)) {
+    S(-1, 0) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.isColZero();
         }
     },
-    SW(new Coordinate(-1, -1)) {
+    SW(-1, -1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasNegativeRowValue() && coordinate.hasNegativeColValue();
         }
     },
-    W(new Coordinate(0, -1)) {
+    W(0, -1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.isRowZero() && coordinate.hasNegativeColValue();
         }
     },
-    NW(new Coordinate(1, -1)) {
+    NW(1, -1) {
         @Override
         boolean isExist(Coordinate coordinate) {
             return coordinate.hasPositiveRowValue() && coordinate.hasNegativeColValue();
         }
     };
 
-    private final Coordinate directionVector;
+    private final int row;
+    private final int column;
 
-    DirectionVector(final Coordinate directionVector) {
-        this.directionVector = directionVector;
+    DirectionVector(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
-    public static Coordinate calculate(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public static DirectionVector calculate(Coordinate startCoordinate, Coordinate endCoordinate) {
         Coordinate minusCoordinate = startCoordinate.minus(endCoordinate);
 
         return Arrays.stream(DirectionVector.values())
                 .filter(directionVector -> directionVector.isExist(minusCoordinate))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 방향을 찾을 수 없습니다."))
-                .directionVector;
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 방향을 찾을 수 없습니다."));
+    }
+
+    public Coordinate moveToDirection(Coordinate coordinate) {
+        return coordinate.add(row, column);
     }
 
     abstract boolean isExist(Coordinate coordinate);

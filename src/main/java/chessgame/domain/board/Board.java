@@ -63,12 +63,12 @@ public class Board {
     }
 
     private boolean isNotBlockedWhenNotReap(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
-        Coordinate indexCoordinate = startCoordinate.add(directionVector);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        Coordinate indexCoordinate = directionVector.moveToDirection(startCoordinate);
 
         while (!board.get(indexCoordinate)
                      .isExist() && !indexCoordinate.equals(endCoordinate)) {
-            indexCoordinate = indexCoordinate.add(directionVector);
+            indexCoordinate = directionVector.moveToDirection(indexCoordinate);
         }
         return indexCoordinate.equals(endCoordinate);
     }

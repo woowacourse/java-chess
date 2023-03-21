@@ -4,67 +4,66 @@ import java.util.Objects;
 
 public class Coordinate {
 
-    private final int row;
-    private final int col;
+    private final Row row;
+    private final Column column;
 
-    public Coordinate(final int row, final int col) {
-        this.row = row;
-        this.col = col;
+    public Coordinate(final int row, final int column) {
+        this.row = Row.from(row);
+        this.column = Column.from(column);
     }
 
     public Coordinate add(Coordinate otherCoordinate) {
-        return new Coordinate(this.row + otherCoordinate.row, this.col + otherCoordinate.col);
+        return new Coordinate(this.row.add(otherCoordinate.row), this.column.add(otherCoordinate.column));
+    }
+
+    public Coordinate add(int row, int column) {
+        return new Coordinate(this.row.add(row), this.column.add(column));
     }
 
     public Coordinate minus(Coordinate otherCoordinate) {
-        return new Coordinate(otherCoordinate.row - this.row, otherCoordinate.col - this.col);
+        return new Coordinate(this.row.minus(otherCoordinate.row), otherCoordinate.column.minus(this.column));
     }
 
     public Coordinate minusWithAbsoluteValue(Coordinate otherCoordinate) {
-        return new Coordinate(Math.abs(otherCoordinate.row - this.row), Math.abs(otherCoordinate.col - this.col));
+        return new Coordinate(this.row.absoluteOfMinus(otherCoordinate.row),
+                this.column.absoluteOfMinus(otherCoordinate.column));
     }
 
     public boolean hasPositiveRowValue() {
-        return row > 0;
+        return row.isPositive();
     }
 
     public boolean hasNegativeRowValue() {
-        return row < 0;
+        return row.isNegative();
     }
 
     public boolean isRowZero() {
-        return row == 0;
+        return row.isZero();
     }
 
     public boolean hasPositiveColValue() {
-        return col > 0;
+        return column.isPositive();
     }
 
     public boolean hasNegativeColValue() {
-        return col < 0;
+        return column.isNegative();
     }
 
     public boolean isColZero() {
-        return col == 0;
+        return column.isZero();
     }
 
     public Inclination getInclination(Coordinate otherCoordinate) {
-        double inclination = ((double) this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+        int differenceRow = this.row.minus(otherCoordinate.row);
+        int differenceColumn = this.column.minus(otherCoordinate.column);
+        double inclination = (double) differenceRow / differenceColumn;
         return Inclination.of(inclination);
     }
 
     public boolean hasDistanceLessThan(Coordinate otherCoordinate, double distance) {
-        double x = otherCoordinate.col - this.col;
-        double y = otherCoordinate.row - this.row;
-        return Math.abs(x) <= distance && Math.abs(y) <= distance;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
+        int differenceRow = this.row.minus(otherCoordinate.row);
+        int differenceColumn = this.column.minus(otherCoordinate.column);
+        return Math.abs(differenceRow) <= distance && Math.abs(differenceColumn) <= distance;
     }
 
     @Override
@@ -72,11 +71,11 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate coordinate = (Coordinate) o;
-        return row == coordinate.row && col == coordinate.col;
+        return row == coordinate.row && column == coordinate.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(row, column);
     }
 }

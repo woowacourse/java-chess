@@ -1,7 +1,9 @@
 package chessgame.view;
 
 import chessgame.domain.board.Board;
+import chessgame.domain.piece.Column;
 import chessgame.domain.piece.Coordinate;
+import chessgame.domain.piece.Row;
 import chessgame.domain.square.Square;
 
 import java.util.Map;

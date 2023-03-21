@@ -1,6 +1,8 @@
 package chessgame.domain.board;
 
+import chessgame.domain.piece.Column;
 import chessgame.domain.piece.Coordinate;
+import chessgame.domain.piece.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +16,9 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(3, 0);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(1, 0));
+        assertThat(directionVector).isEqualTo(DirectionVector.N);
     }
 
     @Test
@@ -25,9 +27,9 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(3, 3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(1, 1));
+        assertThat(directionVector).isEqualTo(DirectionVector.NE);
     }
 
     @Test
@@ -36,9 +38,9 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(0, 3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(0, 1));
+        assertThat(directionVector).isEqualTo(DirectionVector.E);
     }
 
     @Test
@@ -47,9 +49,9 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(-3, 3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(-1, 1));
+        assertThat(directionVector).isEqualTo(DirectionVector.SW);
     }
 
     @Test
@@ -58,20 +60,20 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(-3, 0);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(-1, 0));
+        assertThat(directionVector).isEqualTo(DirectionVector.S);
     }
 
     @Test
-    @DisplayName("남으로 이동하는 경우에 방향 벡터를 찾을 수 있다")
+    @DisplayName("남서로 이동하는 경우에 방향 벡터를 찾을 수 있다")
     void calculateSW() {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(-3, -3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(-1, -1));
+        assertThat(directionVector).isEqualTo(DirectionVector.SW);
     }
 
     @Test
@@ -80,9 +82,9 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(0, -3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(0, -1));
+        assertThat(directionVector).isEqualTo(DirectionVector.W);
     }
 
     @Test
@@ -91,8 +93,8 @@ class DirectionVectorTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(-3, 3);
 
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(new Coordinate(-1, 1));
+        assertThat(directionVector).isEqualTo(DirectionVector.SW);
     }
 }
