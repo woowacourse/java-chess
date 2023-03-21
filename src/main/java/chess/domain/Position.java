@@ -1,44 +1,68 @@
 package chess.domain;
 
+import chess.domain.direction.Direction;
+
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
-    public static final Position NOT_ABLE = new Position(-1, -1);
-    private final int row;
-    private final int column;
+    private final Row row;
+    private final Column column;
 
-    private Position(final int row, final int column) {
+    private Position(final Row row, final Column column) {
         this.row = row;
         this.column = column;
     }
 
-    public static Position of(final int row, final int column) {
+    public static Position of(final Row row, final Column column) {
         return new Position(row, column);
     }
 
-    public static Position from(final String rowColumn) {
-        final int row = Row.findIndex(String.valueOf(rowColumn.charAt(0)));
-        final int column = Column.findIndex(String.valueOf(rowColumn.charAt(1)));
+    public static Position from(final String command) {
+        final Row row = Row.from(String.valueOf(command.charAt(0)));
+        final Column column = Column.from(String.valueOf(command.charAt(1)));
+
         return new Position(row, column);
     }
 
-    public Position move(final Position position) {
-        return new Position(this.row + position.row, this.column + position.column);
+    public Position move(final Direction direction) {
+        final Row movedRow = row.move(direction);
+        final Column movedColumn = column.move(direction);
+
+        return Position.of(movedRow, movedColumn);
     }
 
-    public int getRow() {
+    public int diff(final Row otherRow) {
+        return this.row.diff(otherRow);
+    }
+
+    public int diff(final Column otherColumn) {
+        return this.column.diff(otherColumn);
+    }
+
+    public int findDirection(final Row otherRow) {
+        return row.findDirection(otherRow);
+    }
+
+    public int findDirection(final Column othreColumn) {
+        return column.findDirection(othreColumn);
+    }
+    public boolean isRangeOk(final Direction direction) {
+        return row.isMovable(direction) && column.isMovable(direction);
+    }
+
+    public Row getRow() {
         return row;
     }
 
-    public int getColumn() {
+    public Column getColumn() {
         return column;
     }
 
     @Override
-    public int compareTo(final Position position) {
-        final int columnCompare = Integer.compare(this.column, position.column);
+    public int compareTo(final Position otherPosition) {
+        final int columnCompare = otherPosition.column.findDirection(column);
         if (columnCompare == 0) {
-            return Integer.compare(this.row, position.row);
+            return otherPosition.row.findDirection(row);
         }
         return columnCompare;
     }
