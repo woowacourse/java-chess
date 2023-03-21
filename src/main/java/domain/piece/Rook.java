@@ -5,7 +5,7 @@ import domain.coordinate.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-public final class Rook extends Piece implements VariableMover {
+public final class Rook extends Piece {
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);

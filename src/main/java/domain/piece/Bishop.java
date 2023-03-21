@@ -5,9 +5,7 @@ import domain.coordinate.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-import java.util.List;
-
-public final class Bishop extends Piece implements VariableMover {
+public final class Bishop extends Piece {
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
@@ -17,19 +15,15 @@ public final class Bishop extends Piece implements VariableMover {
     public Route findRoute(final Position source, final Position target) {
         validateMovable(source, target);
 
-        return new Route(getPositions(source, target));
+        int moveX = getMoveCoordinate(target.diffX(source));
+        int moveY = getMoveCoordinate(target.diffY(source));
+
+        return new Route(findPositions(source, target, moveX, moveY));
     }
 
     @Override
     protected boolean isMovable(final Position source, final Position target) {
         return source.isDiagonally(target);
-    }
-
-    private List<Position> getPositions(final Position source, final Position target) {
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
-
-        return findPositions(source, target, moveX, moveY);
     }
 
     private int getMoveCoordinate(final int diff) {

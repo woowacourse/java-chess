@@ -5,7 +5,7 @@ import domain.coordinate.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-public final class Queen extends Piece implements VariableMover {
+public final class Queen extends Piece {
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);
