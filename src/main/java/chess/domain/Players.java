@@ -20,7 +20,7 @@ public class Players {
         return new Players(List.of(whitePlayer, blackPlayer));
     }
 
-    public void validateMovingRoute(final Position fromPosition, final Position toPosition) {
+    private void validateMovingRoute(final Position fromPosition, final Position toPosition) {
         List<Integer> directionVector = calculateDirectionVector(fromPosition, toPosition);
         validateEachPositions(fromPosition, toPosition, directionVector);
     }
@@ -94,7 +94,6 @@ public class Players {
         }
         current = Color.WHITE;
     }
-
 
     private void move(final Position sourcePosition, final Position targetPosition) {
         validateMovingRoute(sourcePosition, targetPosition);
