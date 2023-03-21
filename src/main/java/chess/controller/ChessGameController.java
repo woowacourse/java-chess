@@ -58,7 +58,7 @@ public class ChessGameController {
             checkMovePiece(chessGame, command);
             outputView.printBoard(chessGame.getBoard());
 
-            if (isGameDoneCase(chessGame)) {
+            if (isGameDone(chessGame)) {
                 break;
             }
 
@@ -104,7 +104,7 @@ public class ChessGameController {
         return chessGame;
     }
 
-    private boolean isGameDoneCase(final ChessGame chessGame) {
+    private boolean isGameDone(final ChessGame chessGame) {
         if (isKingDead(chessGame)) {
             resultView.printGameEndWithDeleting();
             boardService.delete(BOARD_ID);
