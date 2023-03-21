@@ -18,6 +18,22 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class BoardTest {
     private Board board;
 
+    @BeforeEach
+    void setup() {
+        board = BoardFactory.create();
+    }
+
+    @ParameterizedTest
+    @MethodSource("pieceDummy")
+    @DisplayName("초기 세팅 후 위치를 확인한다.")
+    void create(final File file, final Rank rank, final Role expectedRole, final Side side) {
+        // expected
+        Piece piece = board.findPiece(file, rank);
+
+        assertThat(piece).isInstanceOf(expectedRole.create(side).getClass());
+
+    }
+
     static Stream<Arguments> pieceDummy() {
         return Stream.of(
                 // 폰을 제외한 백의 기물
@@ -57,29 +73,6 @@ class BoardTest {
                 Arguments.arguments(File.G, Rank.EIGHT, Role.KNIGHT, Side.from(Color.BLACK)),
                 Arguments.arguments(File.H, Rank.EIGHT, Role.ROOK, Side.from(Color.BLACK))
         );
-    }
-
-    static Stream<Arguments> squareDummy() {
-        return Stream.of(
-                Arguments.of(File.A, Rank.TWO, File.A, Rank.FOUR, Role.PAWN),
-                Arguments.of(File.B, Rank.ONE, File.C, Rank.THREE, Role.KNIGHT)
-        );
-    }
-
-    @BeforeEach
-    void setup() {
-        board = BoardFactory.create();
-    }
-
-    @ParameterizedTest
-    @MethodSource("pieceDummy")
-    @DisplayName("초기 세팅 후 위치를 확인한다.")
-    void create(final File file, final Rank rank, final Role expectedRole, final Side side) {
-        // expected
-        Piece piece = board.findPiece(file, rank);
-
-        assertThat(piece).isInstanceOf(expectedRole.create(side).getClass());
-
     }
 
     @Test
@@ -156,5 +149,12 @@ class BoardTest {
         Piece piece = board.findPiece(targetFile, targetRank);
 
         assertThat(piece.getRole()).isEqualTo(expectedRole);
+    }
+
+    static Stream<Arguments> squareDummy() {
+        return Stream.of(
+                Arguments.of(File.A, Rank.TWO, File.A, Rank.FOUR, Role.PAWN),
+                Arguments.of(File.B, Rank.ONE, File.C, Rank.THREE, Role.KNIGHT)
+        );
     }
 }
