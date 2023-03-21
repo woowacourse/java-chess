@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.piece.moveRule.TestFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,7 +38,7 @@ public class BishopMoveRuleTest {
         board.put(A1, blackPiece);
         board.put(B3, whitePiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, B3, board))
+        assertThatThrownBy(() -> moveRule.move(A1, B3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("비숍은 대각선상으로만 움직일 수 있습니다.");
     }
@@ -49,8 +50,6 @@ public class BishopMoveRuleTest {
         board.put(A1, whitePiece);
         board.put(D4, blackPiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, D4, board))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로상에 다른 기물이 있어 움직일 수 없습니다.");
+        assertThat(moveRule.move(A1, D4)).containsExactly(B2, C3);
     }
 }

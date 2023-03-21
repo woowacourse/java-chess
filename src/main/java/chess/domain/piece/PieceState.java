@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.moveRule.MoveRule;
 import chess.domain.position.Position;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 public class PieceState {
@@ -15,12 +15,16 @@ public class PieceState {
         this.pieceType = moveRule.pieceType();
     }
 
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
-        moveRule.move(currentPosition, nextPosition, board);
+    public List<Position> move(Position currentPosition, Position nextPosition) {
+        return moveRule.move(currentPosition, nextPosition);
     }
 
     public String formatName(Color color) {
         return pieceType.formatName(color);
+    }
+
+    public boolean isPawn() {
+        return  moveRule.isPawnMove();
     }
 
     @Override

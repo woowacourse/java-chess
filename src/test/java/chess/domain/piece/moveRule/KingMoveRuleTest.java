@@ -2,12 +2,7 @@ package chess.domain.piece.moveRule;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.moveRule.KingMoveRule;
-import chess.domain.piece.moveRule.MoveRule;
-import chess.domain.piece.moveRule.QueenMoveRule;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +23,7 @@ public class KingMoveRuleTest {
     private Map<Position, Piece> board;
 
     @BeforeAll
-    void setUp(){
+    void setUp() {
         blackPiece = new Piece(moveRule, Color.BLACK);
         whitePiece = new Piece(moveRule, Color.WHITE);
     }
@@ -43,7 +38,7 @@ public class KingMoveRuleTest {
         board.put(A1, blackPiece);
         board.put(A3, whitePiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, A3, board))
+        assertThatThrownBy(() -> moveRule.move(A1, A3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 인접한 칸으로만 이동할 수 있습니다.");
     }

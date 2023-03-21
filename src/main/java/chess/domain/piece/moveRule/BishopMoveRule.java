@@ -1,17 +1,16 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Map;
 
-public class BishopMoveRule extends UnJumpableMoveRule {
+public class BishopMoveRule implements MoveRule {
 
     private static BishopMoveRule instance;
 
-    private BishopMoveRule() {}
+    private BishopMoveRule() {
+    }
 
     public static BishopMoveRule getInstance() {
         if (instance == null) {
@@ -21,22 +20,23 @@ public class BishopMoveRule extends UnJumpableMoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public List<Position> move(Position currentPosition, Position nextPosition) {
         validateDiagonal(currentPosition, nextPosition);
-        List<Position> route = currentPosition.getRoute(nextPosition);
-        validateRoute(board, route);
-        validateDestination(currentPosition, nextPosition, board);
+        return currentPosition.getRoute(nextPosition);
+    }
 
-        updatePiecePosition(currentPosition, nextPosition, board);
+    public PieceType pieceType() {
+        return PieceType.BISHOP;
+    }
+
+    @Override
+    public boolean isPawnMove() {
+        return false;
     }
 
     private void validateDiagonal(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isDiagonalEqual(nextPosition)) {
             throw new IllegalArgumentException("비숍은 대각선상으로만 움직일 수 있습니다.");
         }
-    }
-
-    public PieceType pieceType() {
-        return PieceType.BISHOP;
     }
 }

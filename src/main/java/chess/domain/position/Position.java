@@ -11,17 +11,14 @@ import static java.util.Objects.hash;
 
 public class Position {
 
-    private static final Map<Integer, Position> cache;
+    private static final Map<Integer, Position> cache = new HashMap<>();
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
     public static final int TWO_SQUARE = 2;
     public static final int ONE_SQUARE = 1;
+
     private final File file;
     private final Rank rank;
-
-    static {
-        cache = new HashMap<>();
-    }
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -91,10 +88,6 @@ public class Position {
         return route;
     }
 
-    public Position moveRank(Direction direction, int distance) {
-        return Position.of(file, direction.move(this.rank, distance));
-    }
-
     public Position move(Direction fileDirection, Direction rankDirection) {
         return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
     }
@@ -109,6 +102,10 @@ public class Position {
 
     public boolean isSameRank(Rank other) {
         return rank.equals(other);
+    }
+
+    public boolean isSameRank(Position other) {
+        return rank.equals(other.rank);
     }
 
     @Override

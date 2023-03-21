@@ -1,17 +1,16 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Map;
 
-public class RookMoveRule extends UnJumpableMoveRule {
-
+public class RookMoveRule implements MoveRule {
 
     private static RookMoveRule instance;
-    private RookMoveRule() {}
+
+    private RookMoveRule() {
+    }
 
     public static RookMoveRule getInstance() {
         if (instance == null) {
@@ -21,19 +20,9 @@ public class RookMoveRule extends UnJumpableMoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public List<Position> move(Position currentPosition, Position nextPosition) {
         validateStraight(currentPosition, nextPosition);
-        List<Position> route = currentPosition.getRoute(nextPosition);
-        validateRoute(board, route);
-        validateDestination(currentPosition, nextPosition, board);
-
-        updatePiecePosition(currentPosition, nextPosition, board);
-    }
-
-    private void validateStraight(Position currentPosition, Position nextPosition) {
-        if (!currentPosition.isStraightEqual(nextPosition)) {
-            throw new IllegalArgumentException("룩은 직선상으로만 움직일 수 있습니다.");
-        }
+        return currentPosition.getRoute(nextPosition);
     }
 
     @Override
@@ -41,4 +30,14 @@ public class RookMoveRule extends UnJumpableMoveRule {
         return PieceType.ROOK;
     }
 
+    @Override
+    public boolean isPawnMove() {
+        return false;
+    }
+
+    private void validateStraight(Position currentPosition, Position nextPosition) {
+        if (!currentPosition.isStraightEqual(nextPosition)) {
+            throw new IllegalArgumentException("룩은 직선상으로만 움직일 수 있습니다.");
+        }
+    }
 }

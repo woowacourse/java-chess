@@ -1,16 +1,16 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Map;
 
-public class QueenMoveRule extends UnJumpableMoveRule {
+public class QueenMoveRule implements MoveRule {
 
     private static QueenMoveRule instance;
-    private QueenMoveRule() {}
+
+    private QueenMoveRule() {
+    }
 
     public static QueenMoveRule getInstance() {
         if (instance == null) {
@@ -20,23 +20,24 @@ public class QueenMoveRule extends UnJumpableMoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public List<Position> move(Position currentPosition, Position nextPosition) {
         validateStraightOrDiagonal(currentPosition, nextPosition);
-        List<Position> route = currentPosition.getRoute(nextPosition);
-        validateRoute(board, route);
-        validateDestination(currentPosition, nextPosition, board);
+        return currentPosition.getRoute(nextPosition);
+    }
 
-        updatePiecePosition(currentPosition, nextPosition, board);
+    @Override
+    public PieceType pieceType() {
+        return PieceType.QUEEN;
+    }
+
+    @Override
+    public boolean isPawnMove() {
+        return false;
     }
 
     private void validateStraightOrDiagonal(Position currentPosition, Position nextPosition) {
         if (!(currentPosition.isDiagonalEqual(nextPosition) || currentPosition.isStraightEqual(nextPosition))) {
             throw new IllegalArgumentException("퀸은 대각선 또는 직선 상으로만 움직일 수 있습니다.");
         }
-    }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.QUEEN;
     }
 }

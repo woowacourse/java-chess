@@ -1,16 +1,17 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 public class KingMoveRule implements MoveRule {
 
     private static KingMoveRule instance;
 
-    private KingMoveRule() {}
+    private KingMoveRule() {
+    }
 
     public static KingMoveRule getInstance() {
         if (instance == null) {
@@ -20,21 +21,24 @@ public class KingMoveRule implements MoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public List<Position> move(Position currentPosition, Position nextPosition) {
         validateNear(currentPosition, nextPosition);
-        validateDestination(currentPosition, nextPosition, board);
+        return Collections.emptyList();
+    }
 
-        updatePiecePosition(currentPosition, nextPosition, board);
+    @Override
+    public PieceType pieceType() {
+        return PieceType.KING;
+    }
+
+    @Override
+    public boolean isPawnMove() {
+        return false;
     }
 
     private void validateNear(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isNear(nextPosition)) {
             throw new IllegalArgumentException("킹은 인접한 칸으로만 이동할 수 있습니다.");
         }
-    }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.KING;
     }
 }

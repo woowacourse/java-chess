@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -16,6 +17,49 @@ public class Board {
     public Board() {
         board = new HashMap<>();
         initializePiece();
+    }
+
+    public Map<Position, String> move(Position currentPosition, Position nextPosition) {
+        Piece piece = board.get(currentPosition);
+        List<Position> routePositions = piece.move(currentPosition, nextPosition);
+
+        if (piece.isPawn()) {
+            return movePawn(currentPosition, nextPosition, routePositions);
+        }
+
+        return moveGeneralPiece(nextPosition, piece, routePositions);
+    }
+
+    private Map<Position, String> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
+        validateMiddlePathConflict(routePositions);
+        if (piece.isOpponent(board.get(nextPosition))) {
+            throw new IllegalArgumentException("이동 위치에 아군기물이 있어 이동할 수 없습니다.");
+        }
+        return getPrintingBoard();
+    }
+
+    private Map<Position, String> movePawn(Position currentPosition, Position nextPosition, List<Position> routePositions) {
+        Piece currentPiece = board.get(currentPosition);
+        Piece destinationPiece = board.get(nextPosition);
+        validateMiddlePathConflict(routePositions);
+        if (currentPosition.isDiagonalEqual(nextPosition) && currentPiece.isOpponent(destinationPiece)) {
+            updateMovedPiece(currentPosition, nextPosition, currentPiece);
+            return getPrintingBoard();
+        }
+        if (currentPosition.isStraightEqual(nextPosition) && board.containsKey(nextPosition) == false) {
+            updateMovedPiece(currentPosition, nextPosition, currentPiece);
+            return getPrintingBoard();
+        }
+        throw new IllegalArgumentException("해당위치에 이동할 수 없습니다. 폰은 적군 기물이 있어야 대각선 이동이, 다른 기물이 없어야 직선이동이 가능합니다.");
+    }
+
+    public Map<Position, String> getPrintingBoard() {
+        Map<Position, String> pieceNames = new HashMap<>();
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            Piece piece = entry.getValue();
+            pieceNames.put(entry.getKey(), piece.formatName());
+        }
+        return pieceNames;
     }
 
     private void initializePiece() {
@@ -43,18 +87,14 @@ public class Board {
         board.put(Position.of(File.FILE_H, rank), new Piece(RookMoveRule.getInstance(), color));
     }
 
-    public Map<Position, String> move(Position currentPosition, Position nextPosition) {
-        Piece piece = board.get(currentPosition);
-        piece.move(currentPosition, nextPosition, this.board);
-        return getPrintingBoard();
+    private void validateMiddlePathConflict(List<Position> routePositions) {
+        if (routePositions.stream().anyMatch(board::containsKey)) {
+            throw new IllegalArgumentException("이동경로 중간에 다른 기물이 있어 이동할 수 없습니다.");
+        }
     }
 
-    public Map<Position, String> getPrintingBoard() {
-        Map<Position, String> pieceNames = new HashMap<>();
-        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-            Piece piece = entry.getValue();
-            pieceNames.put(entry.getKey(), piece.formatName());
-        }
-        return pieceNames;
+    private void updateMovedPiece(Position currentPosition, Position nextPosition, Piece piece) {
+        board.remove(currentPosition);
+        board.put(nextPosition, piece);
     }
 }
