@@ -8,7 +8,7 @@ import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
 
-import chess.domain.game.ChessGame;
+import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;

@@ -18,10 +18,14 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.dto.MoveDto;
+import chess.repository.ChessDao;
+import chess.service.ChessGame;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -31,6 +35,22 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class ChessGameTest {
+
+    private ChessDao chessDao;
+
+    @BeforeEach
+    void setUp() {
+        chessDao = new ChessDao() {
+            @Override
+            public void save(final MoveDto moveDto) {
+            }
+
+            @Override
+            public List<MoveDto> findAll() {
+                return List.of();
+            }
+        };
+    }
 
     private static List<PieceType> toPieceTypes(final Map<Position, Piece> board) {
         return Arrays.stream(Rank.values())
@@ -44,7 +64,7 @@ public class ChessGameTest {
     @Test
     void 체스_게임을_생성한다() {
         // given
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame(chessDao);
 
         // when
         chessGame.initialize();
@@ -66,7 +86,7 @@ public class ChessGameTest {
     @Test
     void 기물을_움직인다() {
         // given
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame(chessDao);
         chessGame.initialize();
 
         // when
@@ -80,7 +100,7 @@ public class ChessGameTest {
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame(chessDao);
         chessGame.initialize();
 
         // when
@@ -111,7 +131,7 @@ public class ChessGameTest {
     @ValueSource(booleans = {true, false})
     void 체스게임이_초기화_되었는지_확인한다(final boolean initialize) {
         // given
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame(chessDao);
         if (initialize) {
             chessGame.initialize();
         }
