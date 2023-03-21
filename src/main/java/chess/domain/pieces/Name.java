@@ -6,6 +6,7 @@ public class Name {
 
     private static final int ROW = 0;
     private static final String PLACE = ".";
+
     private final String name;
 
     public Name(final String name) {

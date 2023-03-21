@@ -11,6 +11,7 @@ public class Position {
     private static final char EMPTY_PLACE_END_INDEX = '6';
     private static final char LOWER_PAWN_INDEX = '2';
     private static final char UPPER_PAWN_INDEX = '7';
+
     private final Row row;
     private final Column column;
 

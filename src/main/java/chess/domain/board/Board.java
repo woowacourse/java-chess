@@ -11,6 +11,7 @@ public class Board {
 
     private static final int ONE_OF_KING_IS_DEAD = 1;
     private static final int PAWNS_ARE_BEING_SAME_COLUMN = 2;
+
     private final Map<Position, Piece> board;
 
     public Board(final Map<Position, Piece> board) {
