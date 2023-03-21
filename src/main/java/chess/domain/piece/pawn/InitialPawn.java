@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
@@ -6,6 +6,7 @@ import static chess.domain.piece.PieceType.INITIAL_PAWN;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.piece.Piece;
 
 public class InitialPawn extends Piece {
 
@@ -18,7 +19,7 @@ public class InitialPawn extends Piece {
     }
 
     @Override
-    public void validateMovement(final int fileInterval, final int rankInterval) {
+    public void validateSpecialMovement(final int fileInterval, final int rankInterval) {
         if (Math.abs(rankInterval) > IMMOVABLE_RANK_BOUNDARY) {
             throw new IllegalArgumentException("폰은 한 칸 또는 두 칸만 이동할 수 있습니다.");
         }

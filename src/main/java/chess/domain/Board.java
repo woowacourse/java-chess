@@ -3,7 +3,7 @@ package chess.domain;
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
 
-import chess.domain.piece.Pawn;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;

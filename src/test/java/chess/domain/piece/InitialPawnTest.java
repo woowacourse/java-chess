@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Team;
+import chess.domain.piece.pawn.InitialPawn;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
