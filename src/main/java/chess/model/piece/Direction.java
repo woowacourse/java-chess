@@ -46,7 +46,7 @@ public enum Direction {
     public boolean match(final int file, final int rank) {
         int gcd = gcd(Math.abs(rank), Math.abs(file));
 
-        return this.rank == (rank / gcd) && this.file == (file / gcd);
+        return this.rank == calculateDirection(rank, gcd) && this.file == calculateDirection(file, gcd);
     }
 
     private int gcd(final int a, final int b) {
@@ -55,6 +55,13 @@ public enum Direction {
         }
 
         return gcd(b, a % b);
+    }
+
+    private int calculateDirection(final int target, final int gcd) {
+        if (target == 0) {
+            return 0;
+        }
+        return (target / gcd);
     }
 
     public Rank findNextRank(final Rank rank) {
