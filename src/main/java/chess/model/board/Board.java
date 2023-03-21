@@ -20,36 +20,36 @@ public class Board {
         return new Board(BoardFactory.create());
     }
 
-    public void move(final Position source, final Position target, final PieceColor myTurn) {
-        validateMove(source, target, myTurn);
+    public void move(final Position source, final Position target, final PieceColor myColor) {
+        validateMove(source, target, myColor);
         updateBoard(source, target);
     }
 
-    private void validateMove(final Position source, final Position target, final PieceColor myTurn) {
-        validateSource(source, myTurn);
+    private void validateMove(final Position source, final Position target, final PieceColor myColor) {
+        validateSource(source, myColor);
         validatePieceMovable(source, target);
         validateWaypoint(source, target);
-        validateTarget(target, myTurn);
+        validateTarget(target, myColor);
     }
 
-    private void validateSource(final Position source, final PieceColor myTurn) {
+    private void validateSource(final Position source, final PieceColor myColor) {
         if (isEmpty(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
 
-        if (isOtherTeam(source, myTurn)) {
+        if (isOtherTeam(source, myColor)) {
             throw new IllegalArgumentException("자신의 기물이 아닙니다.");
         }
     }
 
-    private boolean isOtherTeam(final Position position, final PieceColor myTurn) {
-        return !isEmpty(position) && isDifferentColor(position, myTurn);
+    private boolean isOtherTeam(final Position position, final PieceColor myColor) {
+        return !isEmpty(position) && isDifferentColor(position, myColor);
     }
 
-    private boolean isDifferentColor(final Position position, final PieceColor myTurn) {
+    private boolean isDifferentColor(final Position position, final PieceColor myColor) {
         final Piece piece = squares.get(position);
 
-        return piece.isDifferentColor(myTurn);
+        return piece.isDifferentColor(myColor);
     }
 
     private void validateWaypoint(final Position source, final Position target) {
@@ -66,8 +66,8 @@ public class Board {
         }
     }
 
-    private void validateTarget(final Position target, final PieceColor myTurn) {
-        if (isFull(target) && isSameColor(target, myTurn)) {
+    private void validateTarget(final Position target, final PieceColor myColor) {
+        if (isFull(target) && isSameColor(target, myColor)) {
             throw new IllegalArgumentException("해당 좌표로 이동할 수 없습니다.");
         }
     }
@@ -82,8 +82,8 @@ public class Board {
         return piece.isEmpty();
     }
 
-    private boolean isSameColor(final Position target, final PieceColor myTurn) {
-        return !squares.get(target).isDifferentColor(myTurn);
+    private boolean isSameColor(final Position target, final PieceColor myColor) {
+        return !squares.get(target).isDifferentColor(myColor);
     }
 
     private void validatePieceMovable(final Position source, final Position target) {
