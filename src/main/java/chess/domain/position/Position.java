@@ -34,7 +34,7 @@ public class Position {
     }
 
     public Position moveBy(final Movement movement) {
-        return movement.nextPosition(file, rank);
+        return movement.move(file, rank);
     }
 
     public int rankDifference(final Position other) {

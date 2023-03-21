@@ -40,7 +40,7 @@ public enum Movement {
                 .orElseThrow(() -> new IllegalArgumentException(MOVEMENT_NOT_FOUND_MESSAGE));
     }
 
-    public Position nextPosition(final File file, final Rank rank) {
+    public Position move(final File file, final Rank rank) {
         return new Position(file.addValue(this.file), rank.addValue(this.rank));
     }
 }
