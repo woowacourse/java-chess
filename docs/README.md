@@ -40,6 +40,7 @@
     - `PieceDirection.KING_AND_QUEEN`
 
 - Color: 체스말의 색상에 관한 Enum
+- PieceType: 체스 말의 종류에 관한 Enum
 
 - Turn: 차례 관련 객체
   - [x] 첫 차례는 백팀의 차례이다.

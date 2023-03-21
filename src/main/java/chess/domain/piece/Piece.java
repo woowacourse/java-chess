@@ -5,11 +5,11 @@ import chess.domain.square.Square;
 
 abstract public class Piece {
 
-    private char name;
+    private PieceType pieceType;
     protected Color color;
 
-    protected Piece(final Color color, final char name) {
-        this.name = name;
+    protected Piece(final Color color, final PieceType pieceType) {
+        this.pieceType = pieceType;
         this.color = color;
     }
 
@@ -39,7 +39,11 @@ abstract public class Piece {
                 '}';
     }
 
-    public char getName() {
-        return name;
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

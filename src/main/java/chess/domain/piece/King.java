@@ -9,7 +9,7 @@ public class King extends Piece {
     private final static int MOVE_RANGE = 1;
 
     public King(final Color color) {
-        super(color, 'k');
+        super(color, PieceType.KING);
     }
 
     @Override

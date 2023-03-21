@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.view.PieceTypeConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Map;
 public class GameStatusDto {
 
     private static final int BOARD_WIDTH = 8;
-    private static final char EMPTY_SPACE = '·';
 
     private final List<String> gameStatus;
 
@@ -44,17 +44,10 @@ public class GameStatusDto {
 
     private static char getSquareStatus(final Map<Square, Piece> board, final Square square) {
         if (board.containsKey(square)) {
-            return getSquareStatusAppliedColor(board.get(square));
+            final Piece piece = board.get(square);
+            return PieceTypeConverter.getSymbol(piece.getPieceType(), piece.getColor());
         }
-        return EMPTY_SPACE;
-    }
-
-    private static char getSquareStatusAppliedColor(final Piece piece) {
-        final char name = piece.getName();
-        if (piece.isBlack()) {
-            return Character.toUpperCase(name);
-        }
-        return name;
+        return PieceTypeConverter.getEmptySymbol();
     }
 
     public List<String> getGameStatus() {

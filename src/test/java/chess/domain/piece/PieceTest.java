@@ -34,7 +34,6 @@ class PieceTest {
     @DisplayName("폰이 아니면 false를 반환한다.")
     void is_pawn_false() {
         Piece rook = new Rook(Color.WHITE);
-        System.out.println(rook.getName());
         assertThat(rook.isPawn()).isFalse();
     }
 }

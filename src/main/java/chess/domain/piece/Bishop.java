@@ -6,7 +6,7 @@ import chess.domain.square.Square;
 public class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(color, 'b');
+        super(color, PieceType.BISHOP);
     }
 
     @Override
