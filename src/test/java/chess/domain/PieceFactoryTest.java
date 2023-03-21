@@ -1,18 +1,18 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +24,7 @@ class PieceFactoryTest {
         List<Piece> pawns = PieceFactory.createWhitePawns();
         assertThat(pawns.size()).isEqualTo(8);
         for (Piece piece : pawns) {
-            assertDoesNotThrow(() -> {
-                Pawn pawn = (Pawn) piece;
-            });
+            Assertions.assertThat(piece.getType()).isEqualTo(PieceType.PAWN);
             assertThat(piece.isWhite()).isTrue();
         }
     }
