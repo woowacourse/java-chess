@@ -45,13 +45,6 @@ public class Board {
         validateSideWrongTurn(sourceSquare);
     }
 
-    private void validateSideWrongTurn(final Square sourceSquare) {
-        MovablePiece sourcePiece = board.get(sourceSquare);
-        if (!sourcePiece.isSameSide(turn)) {
-            throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
-        }
-    }
-
     private void validateEmptySourceSquare(final Square sourceSquare) {
         if (!board.containsKey(sourceSquare)) {
             throw new IllegalArgumentException("해당 칸에 기물이 없습니다.");
@@ -61,6 +54,13 @@ public class Board {
     private void validateSourceEqualsTarget(final Square sourceSquare, final Square targetSquare) {
         if (sourceSquare.equals(targetSquare)) {
             throw new IllegalArgumentException("동일한 칸으로는 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateSideWrongTurn(final Square sourceSquare) {
+        MovablePiece sourcePiece = board.get(sourceSquare);
+        if (!sourcePiece.isSameSide(turn)) {
+            throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
 
@@ -86,11 +86,12 @@ public class Board {
         }
     }
 
-    private void movePiece(final Square sourceSquare, final Square targetSquare, MovablePiece sourcePiece) {
+    private void movePiece(final Square sourceSquare, final Square targetSquare, final MovablePiece sourcePiece) {
+        MovablePiece piece = sourcePiece;
         if (sourcePiece.getRole().equals(Role.INITIAL_PAWN)) {
-            sourcePiece = ((InitialPawn) sourcePiece).changeState();
+            piece = ((InitialPawn) sourcePiece).changeState();
         }
-        board.put(targetSquare, sourcePiece);
+        board.put(targetSquare, piece);
         board.remove(sourceSquare);
         turn = turn.findOpponent();
     }
