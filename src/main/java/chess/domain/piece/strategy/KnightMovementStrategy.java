@@ -25,10 +25,12 @@ public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
                                           final Piece nullableEnemy) throws IllegalArgumentException {
-        if (Math.abs(source.fileInterval(destination)) == 1 && Math.abs(source.rankInterval(destination)) == 2) {
+        if (Math.abs(source.fileInterval(destination)) == 1
+                && Math.abs(source.rankInterval(destination)) == 2) {
             return;
         }
-        if (Math.abs(source.fileInterval(destination)) == 2 && Math.abs(source.rankInterval(destination)) == 1) {
+        if (Math.abs(source.fileInterval(destination)) == 2
+                && Math.abs(source.rankInterval(destination)) == 1) {
             return;
         }
         throw new IllegalArgumentException("나이트는 그렇게 이동할 수 없습니다.");

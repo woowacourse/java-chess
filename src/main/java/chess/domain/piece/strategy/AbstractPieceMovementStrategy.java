@@ -16,13 +16,17 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     }
 
     @Override
-    public List<PiecePosition> waypoints(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
+    public List<PiecePosition> waypoints(final PiecePosition source,
+                                         final PiecePosition destination,
+                                         final Piece nullableEnemy) throws IllegalArgumentException {
         validateMove(source, destination, nullableEnemy);
         return waypoints(source, destination);
     }
 
     @Override
-    public void validateMove(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
+    public void validateMove(final PiecePosition source,
+                             final PiecePosition destination,
+                             final Piece nullableEnemy) throws IllegalArgumentException {
         validateSourceAndDestinationSame(source, destination);
         validateAllyKill(nullableEnemy);
         validateMoveWithNoAlly(source, destination, nullableEnemy);
@@ -46,7 +50,9 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
         }
     }
 
-    protected abstract void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException;
+    protected abstract void validateMoveWithNoAlly(final PiecePosition source,
+                                                   final PiecePosition destination,
+                                                   final Piece nullableEnemy) throws IllegalArgumentException;
 
     protected List<PiecePosition> waypoints(final PiecePosition source, final PiecePosition destination) {
         final List<PiecePosition> waypoints = new ArrayList<>();
@@ -65,7 +71,8 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     }
 
     protected boolean isDiagonal(final PiecePosition source, final PiecePosition destination) {
-        return Math.abs(source.rankInterval(destination)) == Math.abs(source.fileInterval(destination));
+        return Math.abs(source.rankInterval(destination))
+                == Math.abs(source.fileInterval(destination));
     }
 
     protected boolean isUnitDistance(final PiecePosition source, final PiecePosition destination) {
