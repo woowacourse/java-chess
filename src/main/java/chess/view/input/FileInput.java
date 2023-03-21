@@ -3,7 +3,7 @@ package chess.view.input;
 import chess.domain.position.File;
 import java.util.Arrays;
 
-public enum ViewFile {
+public enum FileInput {
     A(File.A, "A"),
     B(File.B, "B"),
     C(File.C, "C"),
@@ -17,13 +17,13 @@ public enum ViewFile {
     private final File file;
     private final String viewFile;
 
-    ViewFile(File file, String viewFile) {
+    FileInput(File file, String viewFile) {
         this.file = file;
         this.viewFile = viewFile;
     }
 
-    public static File from(String viewFile) {
-        return Arrays.stream(ViewFile.values())
+    public static File toFile(String viewFile) {
+        return Arrays.stream(FileInput.values())
                 .filter(it -> it.viewFile.equalsIgnoreCase(viewFile))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))

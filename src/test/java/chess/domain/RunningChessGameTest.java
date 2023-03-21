@@ -1,13 +1,10 @@
-package chess.domain.game.state;
+package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.PiecesPosition;
-import chess.domain.game.ChessCommandType;
 import chess.domain.game.ChessGame;
-import chess.domain.game.ChessGameCommand;
 import chess.domain.piece.Camp;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -18,12 +15,13 @@ import org.junit.jupiter.api.Test;
 
 class RunningChessGameTest {
 
-    private ChessGame runningGame;
+    private ChessGame chessGame;
 
     @BeforeEach
     void setRunningGame() {
         PiecesPosition piecesPosition = new PiecesPosition();
-        runningGame = new RunningChessGame(piecesPosition, Camp.WHITE);
+        chessGame = new ChessGame(piecesPosition);
+        chessGame.startGame();
     }
 
     @Test
@@ -32,8 +30,7 @@ class RunningChessGameTest {
         Position whiteRookPosition = Position.of(File.A, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        ChessGameCommand gameCommand = new ChessGameCommand(ChessCommandType.MOVE, whiteRookPosition, toPosition);
-        assertThatThrownBy(() -> runningGame.playByCommand(gameCommand))
+        assertThatThrownBy(() -> chessGame.move(whiteRookPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -43,8 +40,7 @@ class RunningChessGameTest {
         Position whiteKnightPosition = Position.of(File.B, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        ChessGameCommand gameCommand = new ChessGameCommand(ChessCommandType.MOVE, whiteKnightPosition, toPosition);
-        assertDoesNotThrow(() -> runningGame.playByCommand(gameCommand));
+        assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition));
     }
 
     @Test
@@ -53,9 +49,7 @@ class RunningChessGameTest {
         Position emptyPosition = Position.of(File.A, Rank.THREE);
         Position toPosition = Position.of(File.A, Rank.FOUR);
 
-        ChessGameCommand gameCommand = new ChessGameCommand(ChessCommandType.MOVE, emptyPosition, toPosition);
-
-        assertThatThrownBy(() -> runningGame.playByCommand(gameCommand))
+        assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -64,29 +58,27 @@ class RunningChessGameTest {
     void moveEqualPositionTest() {
         Position toPosition = Position.of(File.A, Rank.FOUR);
 
-        ChessGameCommand gameCommand = new ChessGameCommand(ChessCommandType.MOVE, toPosition, toPosition);
-        assertThatThrownBy(() -> runningGame.playByCommand(gameCommand))
+        assertThatThrownBy(() -> chessGame.move(toPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("게임의 현재 턴과 다른 진영의 기물을 선택할 수 없다.")
     void moveDifferentCampPieceAndTurnTest() {
-        assertThat(runningGame).extracting("turnCamp")
+        assertThat(chessGame).extracting("turnCamp")
                 .isEqualTo(Camp.WHITE);
 
         Position blackPawnPosition = Position.of(File.A, Rank.SEVEN);
         Position toPosition = Position.of(File.A, Rank.SIX);
-        ChessGameCommand gameCommand = new ChessGameCommand(ChessCommandType.MOVE, blackPawnPosition, toPosition);
 
-        assertThatThrownBy(() -> runningGame.playByCommand(gameCommand))
+        assertThatThrownBy(() -> chessGame.move(blackPawnPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("게임 실행 여부 확인.")
     void isRunnableGameTest() {
-        assertThat(runningGame.isRunnableGame())
+        assertThat(chessGame.isRunnableGame())
                 .isTrue();
     }
 }

@@ -117,7 +117,7 @@ class PiecesPositionTest {
 
         PiecesPosition piecesPosition = new PiecesPosition();
 
-        piecesPosition.movePieceBy(whitePawnPosition, emptyPosition);
+        piecesPosition.movePiece(whitePawnPosition, emptyPosition);
 
         assertThat(piecesPosition.peekPiece(emptyPosition)).isInstanceOf(Pawn.class);
     }
@@ -129,7 +129,7 @@ class PiecesPositionTest {
         PiecesPosition piecesPosition = new PiecesPosition();
         assertThat(piecesPosition.peekPiece(whitePawnPosition)).isInstanceOf(Pawn.class);
 
-        piecesPosition.movePieceBy(whitePawnPosition, Position.of(File.A, Rank.FOUR));
+        piecesPosition.movePiece(whitePawnPosition, Position.of(File.A, Rank.FOUR));
 
         assertThat(piecesPosition.isPieceExist(whitePawnPosition)).isFalse();
     }

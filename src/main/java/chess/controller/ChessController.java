@@ -1,13 +1,12 @@
 package chess.controller;
 
-import chess.controller.dto.ChessCommandDto;
+import chess.controller.mapper.ChessCommandMapper;
 import chess.domain.PiecesPosition;
 import chess.domain.game.ChessGame;
-import chess.domain.game.ChessGameCommand;
-import chess.domain.game.state.ReadyChessGame;
+import chess.domain.game.command.ChessGameCommand;
 import chess.view.input.InputView;
 import chess.view.output.OutputView;
-import java.util.function.Supplier;
+import java.util.List;
 
 public final class ChessController {
 
@@ -22,45 +21,46 @@ public final class ChessController {
     public void run() {
         outputView.printStartPrefix();
 
-        ChessGame chessGame = retryOnInvalidUserInput(this::startChessGame);
+        ChessGame chessGame = startChessGame();
         printChessGameBoard(chessGame);
         play(chessGame);
     }
 
     private ChessGame startChessGame() {
-        ChessCommandDto chessCommands = inputView.readCommands();
-        PiecesPosition piecesPosition = new PiecesPosition();
-        ChessGame chessGame = new ReadyChessGame(piecesPosition);
+        try {
+            List<String> commandInputs = inputView.readCommands();
+            PiecesPosition piecesPosition = new PiecesPosition();
+            ChessGame chessGame = new ChessGame(piecesPosition);
 
-        ChessGameCommand gameCommand = chessCommands.toChessGameCommand();
-        return chessGame.playByCommand(gameCommand);
+            ChessGameCommand command = ChessCommandMapper.convertToChessGameCommand(commandInputs);
+            command.execute(chessGame);
+            return chessGame;
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return startChessGame();
+        }
     }
 
     private void play(ChessGame chessGame) {
         while (chessGame.isRunnableGame()) {
-            ChessGame recentGame = chessGame;
-            chessGame = retryOnInvalidUserInput(() -> playTurn(recentGame));
+            playTurn(chessGame);
             printChessGameBoard(chessGame);
         }
     }
 
-    private ChessGame playTurn(ChessGame chessGame) {
-        ChessCommandDto chessCommandDto = inputView.readCommands();
-        ChessGameCommand chessGameCommand = chessCommandDto.toChessGameCommand();
-        return chessGame.playByCommand(chessGameCommand);
+    private void playTurn(ChessGame chessGame) {
+        try {
+            List<String> commandInputs = inputView.readCommands();
+            ChessGameCommand command = ChessCommandMapper.convertToChessGameCommand(commandInputs);
+            command.execute(chessGame);
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            playTurn(chessGame);
+        }
     }
 
     private void printChessGameBoard(ChessGame chessGame) {
         PiecesPosition piecesPosition = chessGame.getPiecesPosition();
         outputView.printChessState(piecesPosition.getPiecesPosition());
-    }
-
-    private <T> T retryOnInvalidUserInput(Supplier<T> request) {
-        try {
-            return request.get();
-        } catch (IllegalArgumentException | IllegalStateException illegalArgumentException) {
-            outputView.printErrorMessage(illegalArgumentException.getMessage());
-            return retryOnInvalidUserInput(request);
-        }
     }
 }

@@ -51,7 +51,7 @@ public final class PiecesPosition {
         return piecesPosition.containsKey(position);
     }
 
-    public void movePieceBy(Position fromPosition, Position toPosition) {
+    public void movePiece(Position fromPosition, Position toPosition) {
         piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
         piecesPosition.remove(fromPosition);
     }
