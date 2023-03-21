@@ -1,22 +1,12 @@
 package domain.piece;
 
 import domain.coordinate.Position;
-import domain.coordinate.Route;
-import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-import java.util.Collections;
-
-public final class Knight extends Piece {
+public final class Knight extends JumperPiece {
 
     public Knight(final Color color) {
         super(color, PieceType.KNIGHT);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-        return new Route(Collections.emptyList());
     }
 
     @Override
