@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.PAWN;
+
 import chess.domain.path.Movement;
 import chess.domain.path.Path;
 import chess.domain.position.Position;
@@ -26,7 +28,7 @@ public class Pawn extends Piece {
     );
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, PAWN);
     }
 
     @Override

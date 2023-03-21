@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.KNIGHT;
+
 import chess.domain.path.Movement;
 import chess.domain.path.Path;
 import chess.domain.position.Position;
@@ -15,7 +17,7 @@ public class Knight extends Piece {
     private static final int POSITION_DIFFERENCE = 3;
 
     public Knight(final Color color) {
-        super(color);
+        super(color, KNIGHT);
     }
 
     @Override

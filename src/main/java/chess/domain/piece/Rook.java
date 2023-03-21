@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.ROOK;
+
 import chess.domain.path.Movement;
 import chess.domain.path.Path;
 import chess.domain.position.Position;
@@ -8,10 +10,11 @@ import java.util.List;
 
 public class Rook extends Piece {
 
-    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(Movement.UP, Movement.DOWN, Movement.RIGHT, Movement.LEFT);
+    private static final List<Movement> CAN_MOVE_DESTINATION = List.of(Movement.UP, Movement.DOWN, Movement.RIGHT,
+            Movement.LEFT);
 
     public Rook(final Color color) {
-        super(color);
+        super(color, ROOK);
     }
 
     @Override

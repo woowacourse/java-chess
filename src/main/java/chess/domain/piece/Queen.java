@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.QUEEN;
+
 import chess.domain.path.Movement;
 import chess.domain.path.Path;
 import chess.domain.position.Position;
@@ -13,7 +15,7 @@ public class Queen extends Piece {
             Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
     public Queen(final Color color) {
-        super(color);
+        super(color, QUEEN);
     }
 
     @Override

@@ -8,9 +8,11 @@ import java.util.List;
 public abstract class Piece {
 
     protected final Color color;
+    private final PieceType pieceType;
 
-    public Piece(final Color color) {
+    public Piece(final Color color, PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     public boolean isBlack() {
