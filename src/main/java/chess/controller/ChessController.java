@@ -67,7 +67,7 @@ public class ChessController {
         GameCommand.validateCommandSize(commands.size(), MOVE_COMMAND_SIZE);
         String source = commands.get(SOURCE_INDEX);
         String target = commands.get(TARGET_INDEX);
-        chessGame.movePieceTo(GameCommand.getPosition(source), GameCommand.getPosition(target));
+        chessGame.movePieceTo(GameCommand.createPosition(source), GameCommand.createPosition(target));
         outputView.printBoard(chessGame.getBoard());
     }
 }

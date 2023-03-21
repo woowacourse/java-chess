@@ -33,7 +33,7 @@ public enum GameCommand {
         }
     }
 
-    public static Position getPosition(String input) {
+    public static Position createPosition(String input) {
         List<String> position = Arrays.stream(input.split(""))
                 .collect(Collectors.toList());
         return parseToPosition(position);
