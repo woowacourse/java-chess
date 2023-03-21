@@ -4,7 +4,7 @@ import domain.piece.move.Coordinate;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 
-public final class Square implements Cloneable {
+public final class Square {
 
     private final Piece piece;
     private final Color color;
@@ -40,16 +40,5 @@ public final class Square implements Cloneable {
 
     public Color getColor() {
         return color;
-    }
-
-    @Override
-    public Object clone() {
-        Object obj = null;
-        try {
-            obj = super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return obj;
     }
 }
