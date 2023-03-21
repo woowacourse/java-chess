@@ -18,14 +18,14 @@ public class Pawn extends Piece {
         if (this.isSameTeam(team)) {
             throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 팀 기물이 있습니다.");
         }
-        if (team == Team.EMPTY) {
+        if (team.isEmpty()) {
             return isMovableToEmpty(source, target);
         }
         return isMovableToEnemy(source, target);
     }
 
     private boolean isMovableToEmpty(Position source, Position target) {
-        if (team == Team.BLACK) {
+        if (team.isBlack()) {
             return isBlackMovableToEmpty(source, target);
         }
         return isWhiteMovableToEmpty(source, target);
@@ -50,7 +50,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovableToEnemy(Position source, Position target) {
-        if (team == Team.BLACK) {
+        if (team.isBlack()) {
             return isBlackMovableToEnemy(source, target);
         }
         return isWhiteMovableToEnemy(source, target);

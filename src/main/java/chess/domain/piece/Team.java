@@ -17,6 +17,14 @@ public enum Team {
         return WHITE;
     }
 
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
+
     public static Team getStartTeam() {
         return WHITE;
     }
