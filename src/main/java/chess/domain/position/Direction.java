@@ -21,6 +21,7 @@ public enum Direction {
     NNW(-1, 2);
     
     
+    public static final String NO_SUCH_DIRECTION_ERROR_MESSAGE = "해당하는 방향이 없습니다.";
     private final int x;
     private final int y;
     
@@ -34,7 +35,7 @@ public enum Direction {
                 .filter(value -> value.x == x)
                 .filter(value -> value.y == y)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_DIRECTION_ERROR_MESSAGE));
     }
     
     public int getX() {

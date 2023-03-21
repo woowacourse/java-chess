@@ -42,12 +42,12 @@ public final class Position implements Comparable<Position> {
     }
     
     public Direction calculateDirection(Position destination) {
-        int sourceFIleIndex = this.getFileIndex();
+        int sourceFileIndex = this.getFileIndex();
         int sourceRankIndex = this.getRankIndex();
         int destinationFIleIndex = destination.getFileIndex();
         int destinationRankIndex = destination.getRankIndex();
         
-        int fileGap = destinationFIleIndex - sourceFIleIndex;
+        int fileGap = destinationFIleIndex - sourceFileIndex;
         int sourceGap = destinationRankIndex - sourceRankIndex;
         
         int unit = this.getUnit(fileGap, sourceGap);
@@ -82,12 +82,12 @@ public final class Position implements Comparable<Position> {
     }
     
     public int calculateDistance(Position destination) {
-        int sourceFIleIndex = this.getFileIndex();
+        int sourceFileIndex = this.getFileIndex();
         int sourceRankIndex = this.getRankIndex();
         int destinationFIleIndex = destination.getFileIndex();
         int destinationRankIndex = destination.getRankIndex();
         
-        int fileGap = destinationFIleIndex - sourceFIleIndex;
+        int fileGap = destinationFIleIndex - sourceFileIndex;
         int rankGap = destinationRankIndex - sourceRankIndex;
         
         return fileGap * fileGap + rankGap * rankGap;
