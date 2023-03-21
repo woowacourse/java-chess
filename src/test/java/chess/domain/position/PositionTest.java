@@ -1,11 +1,14 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.Position.from;
+import static chess.domain.position.Position.from;
 import static chess.fixture.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

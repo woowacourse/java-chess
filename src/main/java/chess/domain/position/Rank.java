@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
@@ -9,15 +9,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public enum File {
-    A("A", 1),
-    B("B", 2),
-    C("C", 3),
-    D("D", 4),
-    E("E", 5),
-    F("F", 6),
-    G("G", 7),
-    H("H", 8),
+public enum Rank {
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
     ;
 
     private static final int START_EXCLUSIVE = 1;
@@ -25,30 +25,30 @@ public enum File {
     private final String command;
     private final int position;
 
-    File(final String command, final int position) {
+    Rank(final String command, final int position) {
         this.command = command;
         this.position = position;
     }
 
-    private static File from(final int position) {
+    private static Rank from(final int position) {
         return Arrays.stream(values())
                 .filter(value -> value.position == position)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("위치 값은 1 ~ 8 사이의 값이어야 합니다."));
     }
 
-    public List<File> between(final File file) {
-        final List<File> result = IntStream.range(min(position, file.position), max(position, file.position))
+    public List<Rank> between(final Rank rank) {
+        final List<Rank> result = IntStream.range(min(position, rank.position), max(position, rank.position))
                 .skip(START_EXCLUSIVE)
-                .mapToObj(File::from)
+                .mapToObj(Rank::from)
                 .collect(toList());
-        if (position > file.position) {
+        if (position > rank.position) {
             Collections.reverse(result);
         }
         return result;
     }
 
-    public int calculateGap(final File target) {
+    public int calculateGap(final Rank target) {
         return position - target.position;
     }
 

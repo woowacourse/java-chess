@@ -1,23 +1,23 @@
 package chess.fixture;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.File.H;
-import static chess.domain.board.Rank.EIGHT;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.FOUR;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.THREE;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
+import static chess.domain.position.File.G;
+import static chess.domain.position.File.H;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.THREE;
+import static chess.domain.position.Rank.TWO;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public class PositionFixture {
 

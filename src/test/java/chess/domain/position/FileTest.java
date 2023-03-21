@@ -1,15 +1,16 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.File.H;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
+import static chess.domain.position.File.G;
+import static chess.domain.position.File.H;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.position.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

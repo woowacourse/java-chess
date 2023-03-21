@@ -47,6 +47,8 @@ graph TD
     ChessController --> OutputView
 
     ChessController --> Board
+    
+    BoardFactory
 
     Position --> Rank
     Position --> File
@@ -67,3 +69,7 @@ graph TD
         Empty -.-> Piece
     end
 ```
+
+## 고민거리
+- Commands에서 필드를 가지고 있는 것?
+  - names()로 처리할 수 있는데 너무 길어지고, 소문자 글 자체가 명령어라고 생각할 수 있어서 나쁘지 않은 듯 

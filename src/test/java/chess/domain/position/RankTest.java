@@ -1,15 +1,16 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.Rank.EIGHT;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.FOUR;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.THREE;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.FOUR;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Rank.THREE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

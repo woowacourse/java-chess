@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.KNIGHT;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public class Knight extends Piece {
 
