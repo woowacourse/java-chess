@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class EmptyTest {
 
-    private final Piece empty = Empty.EMPTY;
+    private final Piece empty = Empty.EMPTY_PIECE;
 
     @Test
     @DisplayName("pick()을 호출하면 자기 자신을 반환한다")

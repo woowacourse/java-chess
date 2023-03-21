@@ -61,7 +61,7 @@ class InitialPawnTest {
     @DisplayName("movable() 검은색 폰 테스트")
     class BlackInitialPawnMovableMethodTest {
 
-        private final Piece empty = Empty.EMPTY;
+        private final Piece empty = Empty.EMPTY_PIECE;
         private Piece blackInitialPawn;
         private Piece ally;
         private Piece enemy;
@@ -246,7 +246,7 @@ class InitialPawnTest {
     @DisplayName("movable() 흰색 폰 테스트")
     class WhiteInitialPawnMovableMethodTest {
 
-        private final Piece empty = Empty.EMPTY;
+        private final Piece empty = Empty.EMPTY_PIECE;
         private Piece whiteInitialPawn;
         private Piece ally;
         private Piece enemy;

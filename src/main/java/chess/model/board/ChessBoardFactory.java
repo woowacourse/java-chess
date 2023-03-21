@@ -92,7 +92,7 @@ public final class ChessBoardFactory {
         for (final File targetFile : File.values()) {
             final Position targetPosition = Position.of(targetFile, targetRank);
 
-            initialChessBoard.put(targetPosition, Empty.EMPTY);
+            initialChessBoard.put(targetPosition, Empty.EMPTY_PIECE);
         }
     }
 

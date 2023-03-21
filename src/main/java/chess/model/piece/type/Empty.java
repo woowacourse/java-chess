@@ -6,7 +6,7 @@ import chess.model.position.Distance;
 
 public class Empty extends Piece {
 
-    public static final Piece EMPTY = new Empty(Camp.BLACK);
+    public static final Piece EMPTY_PIECE = new Empty(Camp.BLACK);
 
     private Empty(final Camp camp) {
         super(camp);

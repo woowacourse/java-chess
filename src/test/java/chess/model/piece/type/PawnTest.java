@@ -51,7 +51,7 @@ class PawnTest {
     class BlackPawnMovableMethodTest {
         private final Piece blackPawn = new Pawn(Camp.BLACK);
         private final Piece ally = new Pawn(Camp.BLACK);
-        private final Piece empty = Empty.EMPTY;
+        private final Piece empty = Empty.EMPTY_PIECE;
         private final Piece enemy = new Pawn(Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0}, {1})일 때 움직일 수 있다.")
@@ -210,7 +210,7 @@ class PawnTest {
     class WhitePawnMovableMethodTest {
         private final Piece whitePawn = new Pawn(Camp.WHITE);
         private final Piece ally = new Pawn(Camp.WHITE);
-        private final Piece empty = Empty.EMPTY;
+        private final Piece empty = Empty.EMPTY_PIECE;
         private final Piece enemy = new Pawn(Camp.BLACK);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0},{1})일 때 움직일 수 있다.")

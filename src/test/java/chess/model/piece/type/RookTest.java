@@ -50,7 +50,7 @@ class RookTest {
     @DisplayName("movable() 테스트")
     class RookMovableMethodTest {
         private final Piece ally = new Rook(Camp.BLACK);
-        private final Piece empty = Empty.EMPTY;
+        private final Piece empty = Empty.EMPTY_PIECE;
         private final Piece enemy = new Rook(Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")

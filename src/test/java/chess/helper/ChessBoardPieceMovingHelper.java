@@ -22,7 +22,7 @@ public final class ChessBoardPieceMovingHelper {
             final Piece sourcePiece = squares.get(source);
 
             squares.put(target, sourcePiece.pick());
-            squares.put(source, Empty.EMPTY);
+            squares.put(source, Empty.EMPTY_PIECE);
 
             board.set(chessBoard, squares);
         } catch (Exception e) {

@@ -17,12 +17,12 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target, final Camp camp) {
-        final Piece sourcePiece = board.getOrDefault(source, Empty.EMPTY);
+        final Piece sourcePiece = board.getOrDefault(source, Empty.EMPTY_PIECE);
 
         validateSource(sourcePiece, camp);
         validateTotalWayPoint(source, target);
 
-        final Piece targetPiece = board.getOrDefault(target, Empty.EMPTY);
+        final Piece targetPiece = board.getOrDefault(target, Empty.EMPTY_PIECE);
         final Distance distance = target.differ(source);
 
         validateMovable(sourcePiece, targetPiece, distance);
@@ -53,7 +53,7 @@ public class ChessBoard {
     }
 
     private void validateTargetWayPoint(final Position wayPoint) {
-        final Piece wayPointPiece = board.getOrDefault(wayPoint, Empty.EMPTY);
+        final Piece wayPointPiece = board.getOrDefault(wayPoint, Empty.EMPTY_PIECE);
 
         if (wayPointPiece.isNotPassable()) {
             throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다.");
@@ -68,7 +68,7 @@ public class ChessBoard {
 
     private void updateBoard(final Position source, final Piece sourcePiece, final Position target) {
         board.put(target, sourcePiece.pick());
-        board.put(source, Empty.EMPTY);
+        board.put(source, Empty.EMPTY_PIECE);
     }
 
     public Map<Position, Piece> getBoard() {
