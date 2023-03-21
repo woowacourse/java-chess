@@ -15,7 +15,7 @@ public class ChessBoard {
     
     private final List<RowPieces> chessBoard;
     
-    public ChessBoard(List<RowPieces> chessBoard) {
+    private ChessBoard(List<RowPieces> chessBoard) {
         this.chessBoard = chessBoard;
     }
     
