@@ -58,7 +58,7 @@ public class CommandTest {
         @DisplayName("사용자 입력으로")
         class given_code {
             @ParameterizedTest(name = "{0}가 주어지면 객체 {1}을 반환한다")
-            @CsvSource({"move,PLAYING", "end,END"})
+            @CsvSource({"move,MOVE", "end,END"})
             void it_returns_command(String code, Command command) {
                 assertThat(Command.changeStatus(code)).isEqualTo(command);
             }

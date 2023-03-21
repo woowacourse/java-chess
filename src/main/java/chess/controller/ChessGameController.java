@@ -36,19 +36,13 @@ public class ChessGameController {
         CommandDto commandDto = inputView.readCommand();
         Command command = Command.changeStatus(commandDto.getCommand());
         if (command.isPlaying()) {
-            final Square from = toSquare(commandDto.getSourceRank(), commandDto.getSourceFile());
-            final Square to = toSquare(commandDto.getDestinationRank(), commandDto.getDestinationFile());
+            final Square from = Square.of(Rank.from(commandDto.getSourceRank()), File.from(commandDto.getSourceFile()));
+            final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
             if (!chessBoard.canMove(from, to)) {
                 outputView.printInvalidMoveMessage();
             }
         }
         return command;
-    }
-
-    private Square toSquare(final String rankSymbol, final String fileSymbol) {
-        final Rank rank = Rank.from(rankSymbol);
-        final File file = File.from(fileSymbol);
-        return Square.of(rank, file);
     }
 
     private <T> T repeatUntilNoException(Supplier<T> supplier) {
