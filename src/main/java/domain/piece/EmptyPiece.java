@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.piece.move.Coordinate;
+
 public class EmptyPiece implements Piece {
 
     @Override

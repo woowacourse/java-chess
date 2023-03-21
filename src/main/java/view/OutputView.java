@@ -2,7 +2,7 @@ package view;
 
 import domain.board.Board;
 import domain.board.ChessGame;
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import domain.square.Square;
 
 import java.util.Map;

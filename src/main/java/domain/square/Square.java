@@ -1,8 +1,8 @@
 package domain.square;
 
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import domain.piece.EmptyPiece;
-import domain.piece.Pawn;
+import domain.piece.pawn.Pawn;
 import domain.piece.Piece;
 
 import java.util.Objects;

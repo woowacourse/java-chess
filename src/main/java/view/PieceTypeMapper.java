@@ -2,13 +2,13 @@ package view;
 
 import domain.square.Camp;
 import domain.square.Square;
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
+import domain.piece.sliding.Bishop;
+import domain.piece.nonsliding.King;
+import domain.piece.nonsliding.Knight;
+import domain.piece.pawn.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.sliding.Queen;
+import domain.piece.sliding.Rook;
 
 import java.util.HashMap;
 

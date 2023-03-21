@@ -1,12 +1,12 @@
 package domain.board;
 
-import domain.piece.Bishop;
+import domain.piece.sliding.Bishop;
 import domain.piece.EmptyPiece;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.nonsliding.King;
+import domain.piece.nonsliding.Knight;
+import domain.piece.pawn.Pawn;
+import domain.piece.sliding.Queen;
+import domain.piece.sliding.Rook;
 import domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

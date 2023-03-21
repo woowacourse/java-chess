@@ -1,4 +1,9 @@
-package domain.piece;
+package domain.piece.nonsliding;
+
+import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.move.Direction;
+import domain.piece.move.Inclination;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import domain.square.Camp;
 import domain.square.Square;
 

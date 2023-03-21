@@ -1,11 +1,17 @@
-package domain.piece;
+package domain.piece.sliding;
+
+import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.move.Direction;
+import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class Bishop implements Piece {
+public final class Queen implements Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
-            Inclination.ONE, Inclination.MINUS_ONE
+            Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,
+            Inclination.ZERO, Inclination.MINUS_ZERO
     ));
 
     @Override

@@ -1,5 +1,7 @@
-package domain.piece;
+package domain.piece.nonsliding;
 
+import domain.piece.Piece;
+import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,8 @@
 package domain.square;
 
-import domain.piece.Bishop;
-import domain.piece.BlackPawn;
-import domain.piece.Coordinate;
+import domain.piece.sliding.Bishop;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.move.Coordinate;
 import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

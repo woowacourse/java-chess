@@ -1,14 +1,14 @@
 package domain.board;
 
 import domain.square.Camp;
-import domain.piece.Bishop;
-import domain.piece.BlackPawn;
-import domain.piece.King;
-import domain.piece.Knight;
+import domain.piece.sliding.Bishop;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.nonsliding.King;
+import domain.piece.nonsliding.Knight;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.WhitePawn;
+import domain.piece.sliding.Queen;
+import domain.piece.sliding.Rook;
+import domain.piece.pawn.WhitePawn;
 import domain.square.Square;
 
 import java.util.ArrayList;

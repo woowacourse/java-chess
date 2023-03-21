@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.move;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

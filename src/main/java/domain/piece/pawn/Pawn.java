@@ -1,4 +1,7 @@
-package domain.piece;
+package domain.piece.pawn;
+
+import domain.piece.move.Coordinate;
+import domain.piece.Piece;
 
 public abstract class Pawn implements Piece {
 

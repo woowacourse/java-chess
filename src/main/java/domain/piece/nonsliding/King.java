@@ -1,8 +1,13 @@
-package domain.piece;
+package domain.piece.nonsliding;
+
+import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.move.Direction;
+import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class Queen implements Piece {
+public final class King implements Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,
@@ -13,6 +18,12 @@ public final class Queen implements Piece {
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
 
-        return DIRECTION.canBeDirectionOf(inclination);
+        return DIRECTION.canBeDirectionOf(inclination) &&
+                startCoordinate.hasDistanceLessThanOne(endCoordinate);
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

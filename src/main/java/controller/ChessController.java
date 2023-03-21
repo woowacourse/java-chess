@@ -1,7 +1,7 @@
 package controller;
 
 import domain.board.ChessGame;
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import view.InputView;
 import view.OutputView;
 

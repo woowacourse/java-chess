@@ -1,7 +1,7 @@
 package domain.board;
 
 import domain.square.Camp;
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import domain.square.Square;
 
 public final class ChessGame {

@@ -1,6 +1,6 @@
 package controller;
 
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 
 public class CoordinateAdapter {
 
