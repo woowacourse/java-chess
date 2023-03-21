@@ -37,8 +37,8 @@ public final class ChessController {
 
     private void requestStartCommand() {
         retryOnInvalidUserInput(() -> {
-            List<String> strings = inputView.readCommand();
-            return ChessCommand.getStart(strings.get(COMMAND_INDEX));
+            List<String> commands = inputView.readCommand();
+            return ChessCommand.getStart(commands.get(COMMAND_INDEX));
         });
     }
 
