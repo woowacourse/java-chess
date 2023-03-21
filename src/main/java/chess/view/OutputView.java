@@ -27,6 +27,7 @@ public class OutputView {
         for (String[] row : board) {
             System.out.println(String.join(ROW_DELIMITER, row));
         }
+        System.out.println();
     }
 
     private static String[][] createBoard(List<SquareResponse> responses) {
