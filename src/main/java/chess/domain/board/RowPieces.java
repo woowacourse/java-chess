@@ -50,25 +50,25 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     public boolean isMovable(RowPieces targetRowPieces, Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
-        Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
-        Piece destinationPiece = findPieceByCoordinate(targetRowPieces, destinationCoordinate);
+        Piece sourcePiece = findPieceByCoordinate(sourceCoordinate);
+        Piece destinationPiece = targetRowPieces.findPieceByCoordinate(destinationCoordinate);
     
         return sourcePiece.isMovable(destinationPiece);
     }
     
-    private Piece findPieceByCoordinate(RowPieces rowPieces, Coordinate coordinate) {
-        return rowPieces.pieces.stream()
+    private Piece findPieceByCoordinate(Coordinate coordinate) {
+        return pieces.stream()
                 .filter(piece -> piece.isSameCoordinate(coordinate))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
     
     public boolean isPieceByCoordinateNotEmpty(Coordinate researchCoordinate) {
-        return !findPieceByCoordinate(this, researchCoordinate).isSameTeam(Team.EMPTY);
+        return !findPieceByCoordinate(researchCoordinate).isSameTeam(Team.EMPTY);
     }
     
     public boolean isPieceByCoordinateKnight(Coordinate coordinate) {
-        return findPieceByCoordinate(this, coordinate)
+        return findPieceByCoordinate(coordinate)
                 .isKnight();
     }
     
@@ -77,7 +77,7 @@ public class RowPieces implements Comparable<RowPieces> {
             Coordinate sourceCoordinate,
             Coordinate destinationCoordinate
     ) {
-        Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
+        Piece sourcePiece = findPieceByCoordinate(sourceCoordinate);
         Piece movedPiece = sourcePiece.movedSourcePiece(destinationCoordinate);
     
         rowPiecesContainsDestinationPiece.switchPiece(movedPiece, destinationCoordinate);
@@ -93,7 +93,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     public boolean isCorrectOrderTeam(Coordinate coordinate, Team currentOrderTeam) {
-        return findPieceByCoordinate(this, coordinate).isSameTeam(currentOrderTeam);
+        return findPieceByCoordinate(coordinate).isSameTeam(currentOrderTeam);
     }
     
     public int row() {
