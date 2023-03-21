@@ -1,6 +1,7 @@
-package domain.piece;
+package domain.piece.abstractpiece;
 
-import domain.coordinate.Position;
+import domain.piece.Color;
+import domain.position.Position;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SlidingPiece extends Piece {
+
     protected SlidingPiece(final Color color, final PieceType pieceType) {
         super(color, pieceType);
     }
@@ -31,4 +33,5 @@ public abstract class SlidingPiece extends Piece {
     }
 
     protected abstract int getMoveCoordinate(final int diffY);
+
 }

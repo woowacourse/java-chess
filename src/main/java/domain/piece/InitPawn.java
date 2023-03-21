@@ -1,7 +1,8 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
+import domain.piece.abstractpiece.PawnFeature;
+import domain.position.Position;
+import domain.position.Route;
 
 import java.util.Collections;
 import java.util.List;

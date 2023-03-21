@@ -1,6 +1,6 @@
 package domain.squarestatus;
 
-import domain.coordinate.Position;
+import domain.position.Position;
 import domain.piece.Color;
 import domain.type.PieceType;
 import domain.type.Type;

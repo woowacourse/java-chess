@@ -1,7 +1,7 @@
 package controller;
 
 import domain.chessboard.ChessBoard;
-import domain.coordinate.PositionFactory;
+import domain.position.PositionFactory;
 import domain.piece.Color;
 import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;

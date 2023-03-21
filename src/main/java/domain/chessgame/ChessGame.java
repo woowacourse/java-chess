@@ -1,8 +1,8 @@
 package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
-import domain.coordinate.Position;
-import domain.coordinate.Route;
+import domain.position.Position;
+import domain.position.Route;
 import domain.piece.Color;
 import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;

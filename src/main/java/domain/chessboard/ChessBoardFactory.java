@@ -1,6 +1,6 @@
 package domain.chessboard;
 
-import domain.coordinate.Position;
+import domain.position.Position;
 import domain.piece.*;
 import domain.squarestatus.SquareStatus;
 

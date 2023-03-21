@@ -2,8 +2,8 @@ package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.ChessBoardFactory;
-import domain.coordinate.Position;
-import domain.coordinate.PositionFactory;
+import domain.position.Position;
+import domain.position.PositionFactory;
 import domain.piece.Color;
 import domain.type.PieceType;
 import org.junit.jupiter.api.DisplayName;

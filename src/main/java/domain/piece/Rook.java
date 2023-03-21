@@ -1,7 +1,8 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
+import domain.piece.abstractpiece.SlidingPiece;
+import domain.position.Position;
+import domain.position.Route;
 import domain.type.PieceType;
 
 public final class Rook extends SlidingPiece {

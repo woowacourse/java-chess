@@ -1,6 +1,7 @@
 package domain.piece;
 
-import domain.coordinate.Position;
+import domain.piece.abstractpiece.JumperPiece;
+import domain.position.Position;
 import domain.type.PieceType;
 
 public final class Knight extends JumperPiece {
