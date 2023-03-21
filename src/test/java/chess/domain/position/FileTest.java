@@ -29,7 +29,7 @@ class FileTest {
 
     @Test
     @DisplayName("File를 받아 두 수의 차를 반환한다.")
-    void calculateFileGap() {
+    void test_calculateFileGap() {
         int[] fileValues = {1, 5};
         final File value = File.from(fileValues[0]);
         final File subtrahend = File.from(fileValues[1]);
@@ -38,5 +38,14 @@ class FileTest {
 
         assertThat(result)
                 .isEqualTo(fileValues[0] - fileValues[1]);
+    }
+
+    @Test
+    @DisplayName("값을 더한 Rank를 반환한다.")
+    void test_addValue() {
+        final int addition = 1;
+        final File b = File.B;
+
+        assertSame(b.addValue(addition), File.C);
     }
 }

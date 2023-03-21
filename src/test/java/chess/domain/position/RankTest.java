@@ -29,7 +29,7 @@ class RankTest {
 
     @Test
     @DisplayName("Rank를 받아 두 수의 차를 반환한다.")
-    void calculateRankGap() {
+    void test_calculateRankGap() {
         int[] rankValues = {1, 5};
         final Rank value = Rank.from(rankValues[0]);
         final Rank subtrahend = Rank.from(rankValues[1]);
@@ -38,5 +38,14 @@ class RankTest {
 
         assertThat(result)
                 .isEqualTo(rankValues[0] - rankValues[1]);
+    }
+
+    @Test
+    @DisplayName("값을 더한 Rank를 반환한다.")
+    void test_addValue() {
+        final int addition = 1;
+        final Rank two = Rank.TWO;
+
+        assertSame(two.addValue(addition), Rank.THREE);
     }
 }

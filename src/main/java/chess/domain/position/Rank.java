@@ -35,4 +35,8 @@ public enum Rank {
     public int calculateRankGap(final Rank subtrahend) {
         return value - subtrahend.value;
     }
+
+    public Rank addValue(final int addition) {
+        return from(value + addition);
+    }
 }

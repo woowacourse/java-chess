@@ -35,4 +35,8 @@ public enum File {
     public int calculateFileGap(final File subtrahend) {
         return value - subtrahend.value;
     }
+
+    public File addValue(final int addition) {
+        return from(value + addition);
+    }
 }
