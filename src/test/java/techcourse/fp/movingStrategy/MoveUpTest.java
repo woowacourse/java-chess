@@ -1,16 +1,16 @@
 package techcourse.fp.movingStrategy;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import chess.domain.movingStrategy.MoveUp;
+import chess.domain.movingStrategy.MovingStrategy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
 import static chess.domain.PositionFixtures.B1;
 import static chess.domain.PositionFixtures.B2;
 import static chess.domain.PositionFixtures.B8;
 import static chess.domain.PositionFixtures.H2;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import chess.movingStrategy.MoveUp;
-import chess.movingStrategy.MovingStrategy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MoveUpTest {
 

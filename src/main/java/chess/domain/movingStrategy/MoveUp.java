@@ -1,4 +1,4 @@
-package chess.movingStrategy;
+package chess.domain.movingStrategy;
 
 import chess.domain.Position;
 import chess.domain.Rank;

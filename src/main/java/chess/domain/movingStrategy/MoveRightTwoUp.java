@@ -1,4 +1,4 @@
-package chess.movingStrategy;
+package chess.domain.movingStrategy;
 
 public final class MoveRightTwoUp extends KnightMovingStrategy {
 

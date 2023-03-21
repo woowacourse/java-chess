@@ -1,7 +1,11 @@
 package techcourse.fp.movingStrategy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import chess.domain.movingStrategy.MoveLeftTwoDown;
+import chess.domain.movingStrategy.MovingStrategy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
 import static chess.domain.PositionFixtures.A2;
 import static chess.domain.PositionFixtures.B1;
 import static chess.domain.PositionFixtures.B2;
@@ -11,12 +15,8 @@ import static chess.domain.PositionFixtures.C2;
 import static chess.domain.PositionFixtures.C3;
 import static chess.domain.PositionFixtures.D1;
 import static chess.domain.PositionFixtures.D3;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import chess.movingStrategy.MoveLeftTwoDown;
-import chess.movingStrategy.MovingStrategy;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LeftTwoMoveDownTest {
 

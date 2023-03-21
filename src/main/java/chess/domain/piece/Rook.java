@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.movingStrategy.MoveDown;
-import chess.movingStrategy.MoveLeft;
-import chess.movingStrategy.MoveRight;
-import chess.movingStrategy.MoveUp;
-import chess.movingStrategy.MovingStrategies;
-import chess.movingStrategy.MovingStrategy;
+import chess.domain.movingStrategy.MoveDown;
+import chess.domain.movingStrategy.MoveLeft;
+import chess.domain.movingStrategy.MoveRight;
+import chess.domain.movingStrategy.MoveUp;
+import chess.domain.movingStrategy.MovingStrategies;
+import chess.domain.movingStrategy.MovingStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
