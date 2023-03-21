@@ -27,7 +27,8 @@ public class InitialPawn extends Pawn {
         return super.canAttack(direction, distance, targetPiece);
     }
 
-    public Pawn changeState() {
-        return (Pawn) Role.PAWN.create(side);
+    @Override
+    public Piece currentState() {
+        return Role.PAWN.create(side);
     }
 }

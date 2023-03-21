@@ -25,6 +25,10 @@ public abstract class Piece {
         return this.role == role;
     }
 
+    public Piece currentState() {
+        return this;
+    }
+
     public Side getSide() {
         return side;
     }
