@@ -9,6 +9,8 @@ public enum Command {
     MOVE,
     END;
 
+    private static final int MOVE_COMMAND_SIZE = 3;
+
     public static Command from(List<String> input) {
         Command command = Arrays.stream(values())
                 .filter(s -> input.get(0).equalsIgnoreCase(s.name()))
@@ -23,7 +25,7 @@ public enum Command {
     }
 
     private static void validateMoveCommands(List<String> input) {
-        if (input.size() != 3) {
+        if (input.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("source와 target이 필요합니다.");
         }
     }
