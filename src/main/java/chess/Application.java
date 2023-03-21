@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.ChessGameController;
+import chess.controller.service.BoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.ResultView;
@@ -11,7 +12,8 @@ public class Application {
         ChessGameController chessGameController = new ChessGameController(
                 new InputView(),
                 new OutputView(),
-                new ResultView()
+                new ResultView(),
+                new BoardService()
         );
 
         chessGameController.run();

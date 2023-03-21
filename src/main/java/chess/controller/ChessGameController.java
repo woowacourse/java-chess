@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.service.BoardService;
 import chess.domain.commnad.Command;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
@@ -12,33 +13,64 @@ public class ChessGameController {
     private final InputView inputView;
     private final OutputView outputView;
     private final ResultView resultView;
+    private final BoardService boardService;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView, final ResultView resultView) {
+    public ChessGameController(final InputView inputView,
+                               final OutputView outputView,
+                               final ResultView resultView,
+                               final BoardService boardService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.resultView = resultView;
+        this.boardService = boardService;
     }
 
     public void run() {
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
 
-        outputView.printStartMessage();
+        String savingGame = inputView.readSavingGame();
 
-        Command command = inputView.readGameCommand();
+        ChessGame chessGame;
+        if (savingGame.equals("1")) {
+            // 새로운 게임 하기
+            chessGame = new ChessGame(BoardFactory.createBoard());
+            outputView.printStartMessage();
 
-        playChess(chessGame, command);
+            Command command = inputView.readGameCommand();
 
-        resultView.printGameEnd();
+            playChess(chessGame, command);
+
+            resultView.printGameEnd();
+        }
+
+        if (savingGame.equals("2")) {
+            // 저장된 게임 하기
+            chessGame = new ChessGame(boardService.findById(1));
+            outputView.printStartMessage();
+            outputView.printBoard(chessGame.getBoard());
+
+            Command command = inputView.readGameCommand();
+
+            playChess(chessGame, command);
+
+            resultView.printGameEnd();
+        }
     }
 
     private void playChess(ChessGame chessGame, Command command) {
-        while (!isGameEnd(chessGame, command)) {
+        while (true) {
+            if (isGameEnd(chessGame, command)) {
+                System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
+                boardService.save(1, chessGame.getBoard());
+                return;
+            }
 
             chessGame = createNewChessGame(chessGame, command);
             tryChessMove(chessGame, command);
             outputView.printBoard(chessGame.getBoard());
 
             if (isGameDone(chessGame)) {
+                System.out.println("게임이 끝났습니다. 기존 게임은 삭제됩니다.");
+                boardService.delete(1);
                 break;
             }
 

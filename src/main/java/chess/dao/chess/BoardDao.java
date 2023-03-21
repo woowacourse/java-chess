@@ -8,5 +8,5 @@ public interface BoardDao {
 
     Map<String, String> findById(final int boardId);
 
-    void remove(int chess);
+    void remove(int boardId);
 }
