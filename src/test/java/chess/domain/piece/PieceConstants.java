@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.team.Team;
-
 import static chess.domain.team.Team.*;
 
 public class PieceConstants {

@@ -1,8 +1,8 @@
 package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
-import chess.domain.position.Position;
 import chess.domain.game.ChessGame;
+import chess.domain.position.Position;
 import chess.view.OutputView;
 
 import java.util.List;

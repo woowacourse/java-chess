@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.Direction.LEFT_DOWN_DOWN;
 import static chess.domain.piece.Direction.LEFT_UP;
-import static chess.domain.piece.PieceConstants.*;
-import static chess.domain.team.Team.*;
+import static chess.domain.piece.PieceConstants.EMPTY;
+import static chess.domain.team.Team.WHITE;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

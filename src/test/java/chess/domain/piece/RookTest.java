@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.Direction.LEFT;
 import static chess.domain.piece.Direction.LEFT_UP;
-import static chess.domain.piece.PieceConstants.*;
+import static chess.domain.piece.PieceConstants.EMPTY;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
