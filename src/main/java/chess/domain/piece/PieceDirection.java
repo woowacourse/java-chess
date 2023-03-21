@@ -17,6 +17,7 @@ import static chess.domain.square.Direction.UP_RIGHT_RIGHT;
 import static chess.domain.square.Direction.UP_UP_LEFT;
 import static chess.domain.square.Direction.UP_UP_RIGHT;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,18 +26,18 @@ import chess.domain.square.Direction;
 
 public enum PieceDirection {
 
-    WHITE_PAWN(List.of(UP, UP_LEFT, UP_RIGHT)),
-    BLACK_PAWN(List.of(DOWN, DOWN_LEFT, DOWN_RIGHT)),
-    KNIGHT(List.of(UP_UP_RIGHT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT, DOWN_DOWN_RIGHT,
-            DOWN_DOWN_LEFT, DOWN_LEFT_LEFT, UP_LEFT_LEFT, UP_UP_LEFT)),
-    STRAIGHT(List.of(UP, RIGHT, DOWN, LEFT)),
-    DIAGONAL(List.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT)),
-    KING_AND_QUEEN(Collections.emptyList());
+    WHITE_PAWN(UP, UP_LEFT, UP_RIGHT),
+    BLACK_PAWN(DOWN, DOWN_LEFT, DOWN_RIGHT),
+    KNIGHT(UP_UP_RIGHT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT, DOWN_DOWN_RIGHT,
+            DOWN_DOWN_LEFT, DOWN_LEFT_LEFT, UP_LEFT_LEFT, UP_UP_LEFT),
+    STRAIGHT(UP, RIGHT, DOWN, LEFT),
+    DIAGONAL(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT),
+    KING_AND_QUEEN;
 
     private final List<Direction> pieceDirections;
 
-    PieceDirection(final List<Direction> pieceDirections) {
-        this.pieceDirections = pieceDirections;
+    PieceDirection(final Direction... pieceDirections) {
+        this.pieceDirections = Arrays.asList(pieceDirections);
     }
 
     private static int divideByAbs(final int number) {
