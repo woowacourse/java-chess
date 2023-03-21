@@ -5,11 +5,10 @@ import chess.controller.GameCommand;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessService {
 
-    private final Map<GameCommand, Consumer<CommandRequest>> commandMapper = Map.of(
+    private final Map<GameCommand, CommandAction> commandMapper = Map.of(
             GameCommand.START, ignored -> start(),
             GameCommand.MOVE, this::move,
             GameCommand.END, ignored -> end()
@@ -23,7 +22,7 @@ public class ChessService {
 
     public void execute(final CommandRequest request) {
         final GameCommand gameCommand = request.getGameCommand();
-        commandMapper.get(gameCommand).accept(request);
+        commandMapper.get(gameCommand).action(request);
     }
 
     private void start() {
