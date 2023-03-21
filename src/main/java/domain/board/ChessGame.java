@@ -24,7 +24,6 @@ public final class ChessGame {
     public void move(final Coordinate start, final Coordinate end) {
         Square findSquare = board.findSquare(start);
         validateMove(start, end);
-        Square findSquare = board.findSquare(start);
         validateTurn(findSquare);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
@@ -33,7 +32,7 @@ public final class ChessGame {
     }
 
     private void validateTurn(final Square findSquare) {
-        if (turn.isNotFor(findSquare.getCamp())) {
+        if (turn.isNotFor(findSquare.getColor())) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }
@@ -52,14 +51,14 @@ public final class ChessGame {
     }
 
     private void validateIsNotSameCamp(final Coordinate start, final Coordinate end) {
-        if (board.isSameCamp(start, end)) {
+        if (board.isSameColor(start, end)) {
             throw new IllegalArgumentException("[ERROR] 같은 팀 기물은 잡을 수 없습니다.");
         }
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {
         Square square = board.findSquare(start);
-        if (square.canReap() || isNotBlockedWhenCantReap(start, end)) {
+        if (square.hasPieceCanJump() || isNotBlockedWhenCantReap(start, end)) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 해당 위치로 가는 길에 다른 기물이 존재합니다.");

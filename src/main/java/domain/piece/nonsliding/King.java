@@ -7,7 +7,7 @@ import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class King implements Piece {
+public final class King extends Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,

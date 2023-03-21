@@ -7,7 +7,7 @@ import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class Knight implements Piece {
+public final class Knight extends Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ZERO_POINT_FIVE, Inclination.MINUS_ZERO_POINT_FIVE,
@@ -29,7 +29,7 @@ public final class Knight implements Piece {
     }
 
     @Override
-    public boolean canReap() {
+    public boolean canJump() {
         return true;
     }
 }

@@ -14,7 +14,7 @@ class KingTest {
     void propertyTest() {
         Piece king = new King();
 
-        assertThat(king.canReap()).isFalse();
+        assertThat(king.canJump()).isFalse();
         assertThat(king.isPawn()).isFalse();
     }
 

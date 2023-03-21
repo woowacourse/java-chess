@@ -57,7 +57,7 @@ public final class BoardInitialImage {
 
     private static List<Square> makeEmptyRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> Square.ofEmpty())
+                .mapToObj(i -> Square.ofEmptyPiece())
                 .collect(Collectors.toList());
     }
 

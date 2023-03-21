@@ -15,10 +15,10 @@ class PawnTest {
         Piece whitePawn = new WhitePawn();
         Piece blackPawn = new BlackPawn();
 
-        assertThat(whitePawn.canReap()).isFalse();
+        assertThat(whitePawn.canJump()).isFalse();
         assertThat(whitePawn.isPawn()).isTrue();
 
-        assertThat(blackPawn.canReap()).isFalse();
+        assertThat(blackPawn.canJump()).isFalse();
         assertThat(blackPawn.isPawn()).isTrue();
     }
 
@@ -39,7 +39,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(3, 0);
         Pawn pawn = new WhitePawn();
 
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ class PawnTest {
         Pawn pawn = new WhitePawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
 
     }
 
@@ -81,7 +81,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(4, 0);
         Pawn pawn = new BlackPawn();
 
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
     @Test
@@ -92,7 +92,7 @@ class PawnTest {
         Pawn pawn = new BlackPawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
 
     @Test

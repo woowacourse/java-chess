@@ -16,7 +16,7 @@ class BishopTest {
     void propertyTest() {
         Piece bishop = new Bishop();
 
-        assertThat(bishop.canReap()).isFalse();
+        assertThat(bishop.canJump()).isFalse();
         assertThat(bishop.isPawn()).isFalse();
     }
 

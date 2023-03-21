@@ -29,7 +29,7 @@ public final class PieceTypeMapper {
 
     public static String getTarget(final Square square) {
         String message = mapper.keySet().stream()
-                .filter(pieceType -> pieceType.isInstance(square.getPieceType()))
+                .filter(pieceType -> pieceType.isInstance(square.getPiece()))
                 .map(mapper::get)
                 .findAny()
                 .orElse(".");
@@ -37,7 +37,7 @@ public final class PieceTypeMapper {
     }
 
     private static String makeUpperCaseIfCampIsBlack(final Square square, final String message) {
-        if (square.getCamp() != null && square.getCamp().equals(Color.BLACK)) {
+        if (square.getColor() != null && square.getColor().equals(Color.BLACK)) {
             return message.toUpperCase();
         }
         return message;

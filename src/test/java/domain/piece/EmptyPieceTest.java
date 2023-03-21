@@ -14,7 +14,7 @@ class EmptyPieceTest {
     void constructorTest() {
         Piece emptyPiece = new EmptyPiece();
 
-        assertThat(emptyPiece.canReap()).isFalse();
+        assertThat(emptyPiece.canJump()).isFalse();
         assertThat(emptyPiece.isKing()).isFalse();
         assertThat(emptyPiece.isPawn()).isFalse();
     }

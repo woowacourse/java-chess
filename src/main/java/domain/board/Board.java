@@ -48,12 +48,12 @@ public final class Board {
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
-        squareLocations.put(target, Square.ofEmpty());
+        squareLocations.put(target, Square.ofEmptyPiece());
     }
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-        return squareLocations.get(start).isMovable(start, end);
+        return squareLocations.get(start).isPieceMovable(start, end);
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {
@@ -65,23 +65,23 @@ public final class Board {
 
     public boolean isSquareEmptyAt(final Coordinate target) {
         return squareLocations.get(target)
-                .getCamp() == Color.NEUTRAL;
+                .getColor() == Color.NEUTRAL;
     }
 
     public Map<Coordinate, Square> getSquareLocations() {
         return squareLocations;
     }
 
-    public boolean isSameCamp(final Coordinate start, final Coordinate end) {
+    public boolean isSameColor(final Coordinate start, final Coordinate end) {
         Square startSquare = findSquare(start);
         Square endSquare = findSquare(end);
 
-        return startSquare.isNotSameCampWith(endSquare);
+        return startSquare.hasPieceNotSameColorWith(endSquare);
     }
 
     public boolean allKingAlive() {
         return squareLocations.values().stream()
-                .filter(Square::isKing)
+                .filter(Square::hasKing)
                 .count() == KING_COUNT;
     }
 }

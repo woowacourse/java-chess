@@ -16,7 +16,7 @@ class KnightTest {
     void propertyTest() {
         Piece knight = new Knight();
 
-        assertThat(knight.canReap()).isTrue();
+        assertThat(knight.canJump()).isTrue();
         assertThat(knight.isPawn()).isFalse();
     }
 

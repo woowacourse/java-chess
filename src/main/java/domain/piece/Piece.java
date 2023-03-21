@@ -2,7 +2,7 @@ package domain.piece;
 
 import domain.piece.move.Coordinate;
 
-public interface Piece {
+public abstract class Piece {
 
     private boolean isNeverMoved = true;
 

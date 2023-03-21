@@ -27,9 +27,9 @@ class SquareTest {
         Piece pawn = new BlackPawn();
         Square square = new Square(pawn, Color.BLACK);
 
-        square.checkMoved();
+        square.checkPieceMoved();
 
-        assertThat(square.isMovable(
+        assertThat(square.isPieceMovable(
                 new Coordinate(2, 0),
                 new Coordinate(1, 0)
         )).isTrue();
@@ -41,9 +41,9 @@ class SquareTest {
         Piece pawn = new BlackPawn();
         Square square = new Square(pawn, Color.WHITE);
 
-        square.checkMoved();
+        square.checkPieceMoved();
 
-        assertThat(square.isMovable(
+        assertThat(square.isPieceMovable(
                 new Coordinate(3, 0),
                 new Coordinate(1, 0)
         )).isFalse();

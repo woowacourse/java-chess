@@ -16,7 +16,7 @@ class RookTest {
     void propertyTest() {
         Piece rook = new Rook();
 
-        assertThat(rook.canReap()).isFalse();
+        assertThat(rook.canJump()).isFalse();
         assertThat(rook.isPawn()).isFalse();
     }
 

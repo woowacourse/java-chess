@@ -7,7 +7,7 @@ import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class Rook implements Piece {
+public final class Rook extends Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,

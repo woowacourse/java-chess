@@ -7,7 +7,7 @@ import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class Bishop implements Piece {
+public final class Bishop extends Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.ONE, Inclination.MINUS_ONE

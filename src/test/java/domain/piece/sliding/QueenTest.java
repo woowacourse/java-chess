@@ -16,7 +16,7 @@ class QueenTest {
     void propertyTest() {
         Piece queen = new Queen();
 
-        assertThat(queen.canReap()).isFalse();
+        assertThat(queen.canJump()).isFalse();
         assertThat(queen.isPawn()).isFalse();
     }
 

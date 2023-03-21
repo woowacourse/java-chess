@@ -2,7 +2,6 @@ package domain.square;
 
 import domain.piece.move.Coordinate;
 import domain.piece.EmptyPiece;
-import domain.piece.pawn.Pawn;
 import domain.piece.Piece;
 
 import java.util.Objects;
@@ -17,7 +16,7 @@ public final class Square implements Cloneable {
         this.color = color;
     }
 
-    public static Square ofEmpty() {
+    public static Square ofEmptyPiece() {
         return new Square(new EmptyPiece(), Color.NEUTRAL);
     }
 
@@ -25,29 +24,30 @@ public final class Square implements Cloneable {
         return piece.isReachableByRule(startCoordinate, endCoordinate);
     }
 
-    public boolean canReap() {
-        return piece.canReap();
+    public boolean hasPieceCanJump() {
+        return piece.canJump();
     }
 
-    public boolean isNotSameCampWith(final Square other) {
-        return this.color == other.getCamp();
+    public boolean hasPieceNotSameColorWith(final Square other) {
+        return this.color == other.getColor();
     }
 
-    public boolean isKing() {
+    public boolean hasKing() {
         return piece.isKing();
     }
 
-    public void checkMoved() {
-        isFirstMove = false;
+    public void checkPieceMoved() {
+        piece.checkMoved();
     }
 
-    public Piece getPieceType() {
+    public Piece getPiece() {
         return piece;
     }
 
-    public Color getCamp() {
+    public Color getColor() {
         return color;
     }
+
 
     @Override
     public boolean equals(final Object o) {
@@ -55,8 +55,7 @@ public final class Square implements Cloneable {
         if (o == null || getClass() != o.getClass()) return false;
         Square that = (Square) o;
         return piece.getClass() == that.piece.getClass() &&
-                color == that.color &&
-                isFirstMove == that.isFirstMove;
+                color == that.color;
     }
 
     @Override
