@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.game.Command;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -10,9 +11,9 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readGameCommand() {
-        final String input = scanner.nextLine();
-        return splitAsList(input);
+    public Command readCommand() {
+        final List<String> commands = splitAsList(scanner.nextLine());
+        return new Command(commands);
     }
 
     private static List<String> splitAsList(final String input) {

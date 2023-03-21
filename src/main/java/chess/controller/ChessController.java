@@ -3,17 +3,12 @@ package chess.controller;
 import chess.controller.state.End;
 import chess.controller.state.Ready;
 import chess.controller.state.State;
-import chess.domain.board.Square;
+import chess.domain.game.Command;
 import chess.domain.game.Game;
-import chess.domain.game.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessController {
-    private static final int SOURCE_INDEX = 0;
-    private static final int TARGET_INDEX = 1;
-
     private final InputView inputView;
     private final OutputView outputView;
     private Game game;
@@ -36,43 +31,40 @@ public class ChessController {
 
     private void executeState() {
         try {
-            final GameCommand gameCommand = generateGameCommand();
-            executeGameCommand(gameCommand);
+            final Command command = inputCommand();
+            executeCommand(command);
         } catch (final IllegalStateException e) {
             System.err.println("[ERROR] " + e.getMessage());
         }
     }
 
-    private GameCommand generateGameCommand() {
+    private Command inputCommand() {
         try {
-            return new GameCommand(inputView.readGameCommand());
+            return inputView.readCommand();
         } catch (final IllegalArgumentException e) {
             System.err.println("[ERROR] " + e.getMessage());
-            return generateGameCommand();
+            return inputCommand();
         }
     }
 
-    private void executeGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
+    private void executeCommand(final Command command) {
+        if (command.isStart()) {
             state = state.start();
             game = new Game();
             outputView.printChessBoard(game.getPieces());
         }
-        if (gameCommand.isMove()) {
+        if (command.isMove()) {
             state = state.next();
-            play(gameCommand);
+            play(command);
         }
-        if (gameCommand.isEnd()) {
+        if (command.isEnd()) {
             state = state.end();
         }
     }
 
-    private void play(final GameCommand gameCommand) {
+    private void play(final Command command) {
         try {
-            final List<Square> squares = gameCommand.convertToSquare();
-            final Square source = squares.get(SOURCE_INDEX);
-            final Square target = squares.get(TARGET_INDEX);
-            game.move(source, target);
+            game.move(command.getSource(), command.getTarget());
             outputView.printChessBoard(game.getPieces());
         } catch (final IllegalArgumentException e) {
             System.err.println("[ERROR] " + e.getMessage());
