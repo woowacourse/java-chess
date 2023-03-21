@@ -9,6 +9,8 @@ import java.util.List;
 
 public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
 
+    private static final double KNIGHT_VALUE = 2.5;
+
     public KnightMovementStrategy(final Color color) {
         super(color);
     }
@@ -19,6 +21,11 @@ public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
                                          final Piece nullableEnemy) throws IllegalArgumentException {
         validateMove(source, destination, nullableEnemy);
         return Collections.emptyList();
+    }
+
+    @Override
+    public double judgeValue() {
+        return KNIGHT_VALUE;
     }
 
     @Override

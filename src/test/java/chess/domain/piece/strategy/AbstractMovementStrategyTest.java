@@ -16,12 +16,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("AbstractMoveStrategy 은")
-class AbstractMoveStrategyTest {
+class AbstractMovementStrategyTest {
 
     @Test
     void 올바른_경로가_아니면_예외가_발생한다() {
         // given
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
+
+            @Override
+            public double judgeValue() {
+                return 0;
+            }
 
             @Override
             protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
@@ -39,6 +44,11 @@ class AbstractMoveStrategyTest {
     void 올바른_경로라면_경유지를_반환한다() {
         // given
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
+            @Override
+            public double judgeValue() {
+                return 0;
+            }
+
             @Override
             protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
             }

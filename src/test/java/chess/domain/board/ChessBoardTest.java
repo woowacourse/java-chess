@@ -3,12 +3,15 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.Rank;
 import chess.domain.piece.strategy.BishopMovementStrategy;
 import chess.domain.piece.strategy.KingMovementStrategy;
 import chess.domain.piece.strategy.KnightMovementStrategy;
 import chess.domain.piece.strategy.QueenMovementStrategy;
 import chess.domain.piece.strategy.RookMovementStrategy;
+import chess.domain.piece.strategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.strategy.pawn.PawnMovementStrategy;
+import chess.domain.piece.strategy.pawn.WhitePawnMovementStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -224,5 +227,61 @@ class ChessBoardTest {
                 () -> assertThat(chessBoard.existKingByColor(WHITE)).isFalse(),
                 () -> assertThat(chessBoard.existKingByColor(BLACK)).isTrue()
         );
+    }
+
+    @Test
+    void 남아있는_피스들을_대상으로_계산을_진행한다() {
+        // when
+        final Map<Color, Double> colorDoubleMap = chessBoard.calculateScore();
+
+        // then
+        // 퀸(9) + 나이트(2.5 * 2) + 비숍(3 * 2) + 룩(5 * 2) + 폰(1 * 8) = 38
+        assertThat(colorDoubleMap.get(WHITE)).isEqualTo(38.0);
+        assertThat(colorDoubleMap.get(BLACK)).isEqualTo(38.0);
+    }
+
+    /**
+     * .KR.....
+     * P.PB....
+     * .P..Qp..
+     * .....p..
+     * .....nq.
+     * ..P..p..
+     * .....pp.
+     * ....rk..
+     * <p>
+     * 흰 : 룩(5) + [File f]의 폰 4개 (2) + 폰(1) + 퀸(9) + 나이트 (2.5) = 19.5
+     * 검 : 룩(5) + 폰 2개(2) + [File c]의 폰 2개 (1) + 퀸(9) + 비숍(3)= 20
+     */
+    @Test
+    @DisplayName("같은 색의 폰이 같은 File 에 존재하면 해당 폰들은 0.5점으로 계산한다")
+    void sameFilePawnScore() {
+        // given
+        ChessBoard chessBoard = ChessBoard.from(List.of(
+                new Piece(PiecePosition.of("b8"), new KingMovementStrategy(BLACK)),
+                new Piece(PiecePosition.of("c8"), new RookMovementStrategy(BLACK)),
+                new Piece(PiecePosition.of("a7"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
+                new Piece(PiecePosition.of("c7"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
+                new Piece(PiecePosition.of("d7"), new BishopMovementStrategy(BLACK)),
+                new Piece(PiecePosition.of("b6"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
+                new Piece(PiecePosition.of("e6"), new QueenMovementStrategy(BLACK)),
+                new Piece(PiecePosition.of("f5"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
+                new Piece(PiecePosition.of("f6"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
+                new Piece(PiecePosition.of("f4"), new KnightMovementStrategy(WHITE)),
+                new Piece(PiecePosition.of("g4"), new QueenMovementStrategy(WHITE)),
+                new Piece(PiecePosition.of("c3"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
+                new Piece(PiecePosition.of("f3"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
+                new Piece(PiecePosition.of("f2"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
+                new Piece(PiecePosition.of("g2"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
+                new Piece(PiecePosition.of("e1"), new RookMovementStrategy(WHITE)),
+                new Piece(PiecePosition.of("f1"), new KingMovementStrategy(WHITE))
+        ));
+
+        // when
+        final Map<Color, Double> colorDoubleMap = chessBoard.calculateScore();
+
+        // then
+        assertThat(colorDoubleMap.get(WHITE)).isEqualTo(19.5);
+        assertThat(colorDoubleMap.get(BLACK)).isEqualTo(20);
     }
 }

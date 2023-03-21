@@ -24,7 +24,13 @@ public interface PieceMovementStrategy {
 
     Color color();
 
+    double judgeValue();
+
     default boolean isKing() {
+        return false;
+    }
+
+    default boolean isPawn() {
         return false;
     }
 }

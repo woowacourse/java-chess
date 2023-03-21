@@ -34,6 +34,18 @@ public class Piece {
         return this.piecePosition.equals(piecePosition);
     }
 
+    public boolean isKing() {
+        return pieceMovementStrategy.isKing();
+    }
+
+    public boolean isPawn() {
+        return pieceMovementStrategy.isPawn();
+    }
+
+    public double value() {
+        return pieceMovementStrategy.judgeValue();
+    }
+
     public Color color() {
         return pieceMovementStrategy.color();
     }
@@ -44,9 +56,5 @@ public class Piece {
 
     public PieceMovementStrategy pieceMovement() {
         return pieceMovementStrategy;
-    }
-
-    public boolean isKing() {
-        return pieceMovementStrategy.isKing();
     }
 }

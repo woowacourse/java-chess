@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("PawnMovementStrategy 은")
-class PawnMovementTest {
+class PawnMovementStrategyTest {
 
     private final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(4)) {
         @Override
@@ -182,7 +182,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지키지_않았다면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)){
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
                 throw new IllegalArgumentException();
@@ -199,7 +199,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지켰다면_기본_이동에_대해서는_가능() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)){
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
             }
@@ -214,7 +214,7 @@ class PawnMovementTest {
     @Test
     void 추가_제약조건을_지켰더라도_기본_이동_수칙을_지키지_않으면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(2)){
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(2)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
             }

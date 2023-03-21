@@ -2,10 +2,14 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.*;
 
 public class ChessBoard {
 
@@ -85,5 +89,25 @@ public class ChessBoard {
 
     public List<Piece> pieces() {
         return new ArrayList<>(pieces);
+    }
+
+    public Map<Color, Double> calculateScore() {
+        final Map<Color, Double> defaultScores = pieces.stream()
+                .collect(groupingBy(Piece::color, summingDouble(Piece::value)));
+        return defaultScores.entrySet()
+                .stream()
+                .collect(toMap(Map.Entry::getKey, entry -> entry.getValue() - minusSameFilePawnValue(entry.getKey())));
+    }
+
+    private double minusSameFilePawnValue(final Color color) {
+        final Map<File, Long> sameFilePawnCounts = pieces.stream()
+                .filter(Piece::isPawn)
+                .filter(it -> it.color() == color)
+                .collect(groupingBy(it -> it.piecePosition().file(), counting()));
+        return sameFilePawnCounts.values()
+                .stream()
+                .filter(it -> it >= 2)
+                .mapToDouble(it -> it.intValue() * 0.5)
+                .sum();
     }
 }

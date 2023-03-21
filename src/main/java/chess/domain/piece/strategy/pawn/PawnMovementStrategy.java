@@ -9,11 +9,23 @@ import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
 
 public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 
+    private static final double PAWN_VALUE = 1;
+
     private final PiecePosition permitTwoMoveRankPosition;
 
     protected PawnMovementStrategy(final Color color, final Rank permitTwoMoveRank) {
         super(color);
         this.permitTwoMoveRankPosition = PiecePosition.of(permitTwoMoveRank, File.from(File.MIN));
+    }
+
+    @Override
+    public double judgeValue() {
+        return PAWN_VALUE;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("BishopMovementStrategy 은")
-class BishopMovementTest {
+class BishopMovementStrategyTest {
 
     private final Color myColor = Color.WHITE;
     private final Color enemyColor = Color.BLACK;
