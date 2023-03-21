@@ -91,7 +91,7 @@ class SquareTest {
         Square sourceSquare = Square.of(C, THREE);
 
         // expected
-        assertThat(sourceSquare.next(direction)).isEqualTo(expectedSquare);
+        assertThat(sourceSquare.nextSquare(direction)).isEqualTo(expectedSquare);
 
     }
 }

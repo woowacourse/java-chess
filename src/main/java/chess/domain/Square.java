@@ -62,7 +62,7 @@ public class Square {
         return file.calculateDifference(target.file);
     }
 
-    public Square next(final Direction direction) {
+    public Square nextSquare(final Direction direction) {
         int fileUnit = direction.getFileUnit();
         int rankUnit = direction.getRankUnit();
         File nextFile = file.getNextFile(fileUnit);
