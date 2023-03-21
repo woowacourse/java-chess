@@ -8,39 +8,35 @@ import org.junit.jupiter.api.Test;
 
 class RookTest {
 
-    @DisplayName("source position이 target position까지 수직 위 방향이면 true를 반환한다. ")
+    @DisplayName("Source position이 Target position까지 수직 위 방향이면 true를 반환한다. ")
     @Test
     void shouldReturnTrueWhenRookDirectionIsPerpendicular() {
         Rook whiteRook = Rook.createOfWhite();
         boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("c", "4"));
-
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("source position이 target position까지 수직 방향이 아니면 false를 반환한다. ")
+    @DisplayName("Source position이 Target position까지 수직 방향이 아니면 false를 반환한다. ")
     @Test
     void shouldReturnFalseWhenRookDirectionIsNotPerpendicular() {
         Rook whiteRook = Rook.createOfWhite();
         boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("d", "4"));
-
         assertThat(movable).isFalse();
     }
 
-    @DisplayName("source position이 target position까지 수직 방향이고, target piece가 같은 진영이면 false를 반환한다. ")
+    @DisplayName("Source position이 Target position까지 수직 방향이고, Target piece가 같은 진영이면 false를 반환한다. ")
     @Test
     void shouldReturnFalseWhenRookDirectionIsPerpendicularButTargetPieceIsSameSide() {
         Rook whiteRook = Rook.createOfWhite();
         boolean movable = whiteRook.isMovable(Bishop.createOfWhite(), Position.of("c", "2"), Position.of("c", "4"));
-
         assertThat(movable).isFalse();
     }
 
-    @DisplayName("source position이 target position까지 수직 방향이고, target piece가 다른 진영이면 true를 반환한다. ")
+    @DisplayName("Source position이 Target position까지 수직 방향이고, Target piece가 다른 진영이면 true를 반환한다. ")
     @Test
     void shouldReturnTrueWhenRookDirectionIsPerpendicularAndTargetPieceIsOpponentSide() {
         Rook blackRook = Rook.createOfBlack();
         boolean movable = blackRook.isMovable(Bishop.createOfWhite(), Position.of("c", "2"), Position.of("c", "4"));
-
         assertThat(movable).isTrue();
     }
 
@@ -49,7 +45,6 @@ class RookTest {
     void shouldReturnPathWhenRookMoveUpward() {
         Rook whiteRook = Rook.createOfWhite();
         List<Position> path = whiteRook.collectPath(Position.of("c", "1"), Position.of("c", "4"));
-
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "2"), Position.of("c", "3"));
     }
 
@@ -58,7 +53,6 @@ class RookTest {
     void shouldReturnPathWhenRookMoveDownward() {
         Rook whiteRook = Rook.createOfWhite();
         List<Position> path = whiteRook.collectPath(Position.of("c", "4"), Position.of("c", "1"));
-
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("c", "2"));
     }
 
@@ -67,7 +61,6 @@ class RookTest {
     void shouldReturnPathWhenRookMoveLeft() {
         Rook whiteRook = Rook.createOfWhite();
         List<Position> path = whiteRook.collectPath(Position.of("e", "3"), Position.of("b", "3"));
-
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("c", "3"));
     }
 
@@ -76,7 +69,6 @@ class RookTest {
     void shouldReturnPathWhenRookMoveRight() {
         Rook whiteRook = Rook.createOfWhite();
         List<Position> path = whiteRook.collectPath(Position.of("c", "3"), Position.of("f", "3"));
-
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "3"));
     }
 }

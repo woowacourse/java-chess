@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 
 public class FileTest {
 
-    @DisplayName("text에 맞는 domain.piece.File 인스턴스를 반환한다.")
+    @DisplayName("사용자 입력 텍스트에 맞는 File을 반환한다.")
     @Test
-    void shouldReturnAppropriateFileWhenIncomeText() {
+    void shouldReturnAppropriateFileWhenInputText() {
         File file = File.from("a");
         assertThat(file).isEqualTo(File.A);
     }
 
-    @DisplayName("유효하지 않은 domain.piece.File 텍스트 입력 시 예외가 발생한다.")
+    @DisplayName("유효하지 않은 File 텍스트 입력 시 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenInvalidFileText() {
         assertThatThrownBy(() -> File.from("q"))
@@ -23,21 +23,21 @@ public class FileTest {
                 .hasMessage("존재하지 않는 file입니다.");
     }
 
-    @DisplayName("source file과 target file의 거리 차이를 반환한다.")
+    @DisplayName("Source file과 Target file의 거리 차이를 반환한다.")
     @Test
-    void shouldReturnDifferenceBetweenSourceAndTargetWhenInputTargetToSource() {
+    void shouldReturnDistanceBetweenSourceAndTargetWhenInput() {
         File sourceFile = File.from("d");
         File targetFile = File.from("g");
         assertThat(sourceFile.calculateIncrement(targetFile)).isEqualTo(3);
     }
 
-    @DisplayName("source file의 오른쪽 값을 반환한다.")
+    @DisplayName("Source file의 오른쪽 값을 반환한다.")
     @Test
     void shouldReturnNextFileWhenRequest() {
         assertThat(File.B.getNext()).isEqualTo(File.C);
     }
 
-    @DisplayName("file이 h에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
+    @DisplayName("File이 H에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenLastFileRequestGetNext() {
         assertThatThrownBy(() -> File.H.getNext())
@@ -45,13 +45,13 @@ public class FileTest {
                 .hasMessage("서버 내부 에러 - 다음 File은 존재하지 않습니다.");
     }
 
-    @DisplayName("source file의 왼쪽 값을 반환한다.")
+    @DisplayName("Source file의 왼쪽 값을 반환한다.")
     @Test
     void shouldReturnPreviousFileWhenRequest() {
         assertThat(File.B.getPrevious()).isEqualTo(File.A);
     }
 
-    @DisplayName("file이 h에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
+    @DisplayName("File이 H에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenFirstFileRequestGetPrevious() {
         assertThatThrownBy(() -> File.A.getPrevious())

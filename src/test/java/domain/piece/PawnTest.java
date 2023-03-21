@@ -1,17 +1,16 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class PawnTest {
 
-    @DisplayName("White 진영인 경우 - target position이 source position보다 rank가 1높고, target position이 비어있으면 true를 반환한다.")
+    @DisplayName("White 진영인 경우 - Target position이 Source position보다 rank가 1높고, Target position이 비어있으면 true를 반환한다.")
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsWhiteSide() {
         Pawn whitePawn = Pawn.createOfWhite();
@@ -19,7 +18,7 @@ public class PawnTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("Black 진영인 경우 - target position이 source position보다 rank가 1낮고, target position이 비어있으면 true를 반환한다.")
+    @DisplayName("Black 진영인 경우 - Target position이 Source position보다 rank가 1낮고, Target position이 비어있으면 true를 반환한다.")
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsBlackSide() {
         Pawn blackPawn = Pawn.createOfBlack();
@@ -27,25 +26,33 @@ public class PawnTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("White 진영인 경우 - 처음 움직일 때 target position이 source position의 rank보다 2높으면 true를 반환한다.")
+    @DisplayName("White 진영인 경우 - 처음 움직일 때 Target position이 Source position의 rank보다 2높으면 true를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"2, 4, true", "2,3,true", "2,5,false", "3,4,true", "3,5,false"})
-    void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsWhiteSideAndFirstMoving(String sourceRank, String targetRank, boolean result) {
+    void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsWhiteSideAndFirstMoving(
+            String sourceRank,
+            String targetRank,
+            boolean result) {
         Pawn whitePawn = Pawn.createOfWhite();
-        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
+        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank),
+                Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
 
-    @DisplayName("Black 진영인 경우 - 처음 움직일 때 target position이 source position의 rank보다 2낮으면 true를 반환한다.")
+    @DisplayName("Black 진영인 경우 - 처음 움직일 때 Target position이 Source position의 rank보다 2낮으면 true를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"7, 5, true", "7,6,true", "7,4,false", "6,5,true", "6,4,false"})
-    void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsBlackSideAndFirstMoving(String sourceRank, String targetRank, boolean result) {
+    void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsBlackSideAndFirstMoving(
+            String sourceRank,
+            String targetRank,
+            boolean result) {
         Pawn blackPawn = Pawn.createOfBlack();
-        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
+        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank),
+                Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
 
-    @DisplayName("targetPiece와 동일한 팀이라면 true를 반환한다.")
+    @DisplayName("Target piece와 동일한 팀이라면 true를 반환한다.")
     @Test
     void shouldReturnIfSameSideWhenTargetIsWhiteSideAndSourceSideIsWhite() {
         Pawn sourcePawn = Pawn.createOfWhite();
@@ -54,7 +61,7 @@ public class PawnTest {
         assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(true);
     }
 
-    @DisplayName("targetPiece와 다른 팀이라면 false를 반환한다.")
+    @DisplayName("Target piece와 다른 팀이라면 false를 반환한다.")
     @Test
     void shouldReturnIfDifferentSideWhenTargetIsWhiteSideAndSourceSideIsBlack() {
         Pawn sourcePawn = Pawn.createOfWhite();
@@ -63,7 +70,7 @@ public class PawnTest {
         assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(false);
     }
 
-    @DisplayName("targetPiece의 상대 팀이라면 true를 반환한다.")
+    @DisplayName("Target piece의 상대 팀이라면 true를 반환한다.")
     @Test
     void shouldReturnTrueWhenTargetPieceIsOpponentSide() {
         Pawn sourcePawn = Pawn.createOfWhite();
@@ -72,7 +79,7 @@ public class PawnTest {
         assertThat(sourcePawn.isOpponentSideWith(targetPawn)).isEqualTo(true);
     }
 
-    @DisplayName("targetPiece의 같은 팀이라면 false를 반환한다.")
+    @DisplayName("Target piece의 같은 팀이라면 false를 반환한다.")
     @Test
     void shouldReturnFalseWhenTargetPieceIsSameSide() {
         Pawn sourcePawn = Pawn.createOfWhite();
