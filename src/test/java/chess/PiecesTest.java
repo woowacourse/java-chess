@@ -78,7 +78,7 @@ class PiecesTest {
         final int pieceBeforeMoveIndex = beforeMovePieces.indexOf(pieceBeforeMove);
 
         // when
-        pieces.synchronizeMovedPiece(pieceBeforeMove, movedPiece);
+        pieces.changePiece(pieceBeforeMove, movedPiece);
         final List<Piece> afterMovePieces = pieces.getPieces();
 
 
