@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import chess.domain.piece.state.Bishop;
 import chess.domain.piece.state.Pawn;
 import chess.domain.piece.state.Rook;
@@ -10,6 +7,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PieceTest {

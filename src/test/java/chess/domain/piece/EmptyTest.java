@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.piece.state.Bishop;
 import chess.domain.piece.state.Rook;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class EmptyTest {

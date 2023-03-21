@@ -1,15 +1,17 @@
 package chess.domain.piece.state;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
+import chess.domain.piece.Empty;
+import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KingTest {
@@ -66,7 +68,7 @@ class KingTest {
         //given
         final Team team = Team.BLACK;
         final King king = new King(team);
-        final List<Square> route = List.of(new Square(new Pawn(team)));
+        final List<PieceState> route = List.of(new Pawn(team));
 
         //when & then
         Assertions.assertThatThrownBy(() -> king.validateRoute(route))
@@ -78,7 +80,7 @@ class KingTest {
         //given
         final Team team = Team.BLACK;
         final King king = new King(team);
-        final List<Square> route = List.of(new Square());
+        final List<PieceState> route = List.of(new Empty());
 
         //when & then
         assertDoesNotThrow(() -> king.validateRoute(route));
@@ -88,7 +90,7 @@ class KingTest {
     void 킹은_도착지에_다른팀의_기물이_있으면_예외가_발생하지_않는다() {
         //given
         final King king = new King(Team.BLACK);
-        final List<Square> route = List.of(new Square(new Pawn(Team.WHITE)));
+        final List<PieceState> route = List.of(new Pawn(Team.WHITE));
 
         //when & then
         assertDoesNotThrow(() -> king.validateRoute(route));

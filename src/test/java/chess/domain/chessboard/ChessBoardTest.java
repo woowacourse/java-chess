@@ -1,12 +1,13 @@
 package chess.domain.chessboard;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import chess.domain.piece.PieceState;
 import chess.domain.piece.state.Rook;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ChessBoardTest {
@@ -15,7 +16,7 @@ class ChessBoardTest {
     void 체스판은_64개의_스퀘어를_가진다() {
         assertThat(new ChessBoard())
                 .extracting("squares")
-                .asInstanceOf(InstanceOfAssertFactories.list(Square.class))
+                .asInstanceOf(InstanceOfAssertFactories.list(PieceState.class))
                 .hasSize(64);
     }
 
@@ -23,9 +24,8 @@ class ChessBoardTest {
     void 체스판은_각_기물을_규칙에_맞게_배치한다() {
         assertThat(new ChessBoard())
                 .extracting("squares")
-                .asInstanceOf(InstanceOfAssertFactories.list(Square.class))
+                .asInstanceOf(InstanceOfAssertFactories.list(PieceState.class))
                 .first()
-                .extracting("pieceState")
                 .isInstanceOf(Rook.class);
     }
 }
