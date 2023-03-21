@@ -14,10 +14,10 @@ public enum Command {
     END("end", (chessGame, ignored) -> chessGame.end()),
     MOVE("move", moveOrNot());
 
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final String name;
     private final BiConsumer<ChessGame, String[]> consumer;
