@@ -24,7 +24,7 @@ class BoardTest {
     @DisplayName("보드가 생성되면 32개의 Piece를 가진다.")
     void containsPieces() {
         Board board = new Board();
-        assertThat(board.getPieces()).hasSize(32);
+        assertThat(board.getValue()).hasSize(32);
     }
 
     @Test
@@ -36,7 +36,7 @@ class BoardTest {
 
         board.move(src, dst);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getValue().keySet()).contains(dst);
     }
 
     @Test
@@ -48,7 +48,7 @@ class BoardTest {
 
         board.move(src, dst);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getValue().keySet()).contains(dst);
     }
 
     @Test

@@ -8,15 +8,14 @@ import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-import chess.domain.square.Squares;
-import java.util.LinkedHashMap;
+
 import java.util.Map;
 
 public class Board {
-    private final Map<Square, Piece> pieces;
+    private final Map<Square, Piece> value;
 
     public Board() {
-        this.pieces = Pieces.init();
+        this.value = Pieces.init();
     }
 
     public boolean isSameTeam(final Square src, final Team team) {
@@ -33,8 +32,8 @@ public class Board {
         if (piece.getPieceType() == INITIAL_PAWN) {
             piece = new Pawn(piece.getTeam());
         }
-        pieces.put(dst, piece);
-        pieces.remove(src);
+        value.put(dst, piece);
+        value.remove(src);
     }
 
     private boolean canMove(final Square src, final Square dst) {
@@ -45,16 +44,16 @@ public class Board {
         piece.validateMovement(fileInterval, rankInterval);
 
         if (piece.getPieceType() == KNIGHT) {
-            return !pieces.containsKey(dst);
+            return !value.containsKey(dst);
         }
         return canMoveNextSquare(src, fileInterval, rankInterval);
     }
 
     private Piece findPieceBy(final Square square) {
-        if (!pieces.containsKey(square)) {
+        if (!value.containsKey(square)) {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }
-        return pieces.get(square);
+        return value.get(square);
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
@@ -66,7 +65,7 @@ public class Board {
         boolean notContainPiece = true; // TODO: 같은 팀 일때만 확인하기
         while (interval > 0 && notContainPiece) {
             nextSquare = nextSquare.next(fileMoveDirection, rankMoveDirection);
-            notContainPiece = !pieces.containsKey(nextSquare);
+            notContainPiece = !value.containsKey(nextSquare);
             interval--;
         }
         return notContainPiece;
@@ -80,7 +79,7 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public Map<Square, Piece> getPieces() {
-        return pieces;
+    public Map<Square, Piece> getValue() {
+        return value;
     }
 }
