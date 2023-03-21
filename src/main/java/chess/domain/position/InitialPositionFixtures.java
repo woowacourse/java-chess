@@ -9,10 +9,8 @@ public class InitialPositionFixtures {
     public static final Position WHITE_KNIGHT_RIGHT_POSITION = new Position(7, 1);
     public static final Position BLACK_KNIGHT_LEFT_POSITION = new Position(2, 8);
     public static final Position BLACK_KNIGHT_RIGHT_POSITION = new Position(7, 8);
-    public static final Position WHITE_BISHOP_LEFT_POSITION = new Position(3, 1);
     public static final Position WHITE_BISHOP_RIGHT_POSITION = new Position(6, 1);
     public static final Position BLACK_BISHOP_LEFT_POSITION = new Position(3, 8);
-    public static final Position BLACK_BISHOP_RIGHT_POSITION = new Position(6, 8);
     public static final Position WHITE_ROOK_LEFT_POSITION = new Position(1, 1);
     public static final Position WHITE_ROOK_RIGHT_POSITION = new Position(8, 1);
     public static final Position BLACK_ROOK_LEFT_POSITION = new Position(1, 8);

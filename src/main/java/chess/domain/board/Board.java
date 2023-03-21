@@ -1,10 +1,16 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceType.PAWN;
+
 import chess.domain.path.Path;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -59,5 +65,31 @@ public class Board {
 
     public Map<Position, Piece> board() {
         return Map.copyOf(board);
+    }
+
+    public Map<Color, Double> calculateScore() {
+        final Map<File, List<Position>> piecesInFile = board.keySet().stream()
+                .collect(Collectors.groupingBy(Position::file));
+
+        final Map<Color, Double> score = new HashMap<>(
+                Map.of(
+                        Color.BLACK, 0.0,
+                        Color.WHITE, 0.0
+                ));
+
+        for (File file : piecesInFile.keySet()) {
+            for (Position position : piecesInFile.get(file)) {
+                final Piece piece = board.get(position);
+                final boolean hasOtherPieceInSameFile = piecesInFile.get(file)
+                        .stream()
+                        .filter(it -> board.get(it).isTypeOf(PAWN))
+                        .count() >= 2;
+                final Color color = piece.color();
+                final double addedScore = piece.calculateScore(hasOtherPieceInSameFile);
+                score.put(color, score.get(color) + addedScore);
+            }
+        }
+
+        return Map.copyOf(score);
     }
 }
