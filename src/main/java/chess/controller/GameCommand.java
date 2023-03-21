@@ -23,4 +23,12 @@ public enum GameCommand {
     private boolean match(final String input) {
         return this.command.equalsIgnoreCase(input);
     }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
+
+    public boolean isEnd() {
+        return this == END;
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Pawn extends Piece {
 
     private static final List<Direction> WHITE = List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    private static final List<Direction> BLACK =List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final List<Direction> BLACK = List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int MINIMUM_DISTANCE = 1;
 
     public Pawn(final Color color) {

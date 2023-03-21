@@ -1,10 +1,9 @@
 package chess.controller;
 
-import chess.model.board.Board;
-import chess.model.position.Position;
+import chess.model.board.state.GameState;
+import chess.model.board.state.Start;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -19,30 +18,29 @@ public class ChessController {
     }
 
     public void start() {
-        final Optional<Board> chessBoard = retry(this::createChessBoard);
-
-        chessBoard.ifPresent(board -> retry(this::move, board));
+        inputView.printGameStartMessage();
+        doGame();
     }
 
-    private Optional<Board> createChessBoard() {
-        final GameCommand gameCommand = inputView.printGameStartMessage();
+    private void doGame() {
+        GameState state = retry(this::getGameState);
+        retry(this::move, state);
+    }
 
-        if (GameCommand.END.equals(gameCommand)) {
-            return Optional.empty();
+    private GameState getGameState() {
+        final GameCommand gameCommand = retry(inputView::readGameCommand);
+        return getGameState(gameCommand);
+    }
+
+    private GameState getGameState(final GameCommand gameCommand) {
+        GameState state = Start.from(gameCommand);
+        if (state.isNotEnd()) {
+            outputView.printChessBoard(new BoardResponse(state.getBoard()));
         }
-        final Board board = Board.create();
-
-        printChessBoard(board);
-        return Optional.of(board);
+        return state;
     }
 
-    private void printChessBoard(final Board board) {
-        final BoardResponse boardResponse = new BoardResponse(board.getSquares());
-
-        outputView.printChessBoard(boardResponse);
-    }
-
-    private <T> T retry(final Supplier<T> supplier){
+    private <T> T retry(final Supplier<T> supplier) {
         while (true) {
             try {
                 return supplier.get();
@@ -52,14 +50,17 @@ public class ChessController {
         }
     }
 
-    private void move(final Board board) {
-        GameCommand gameCommand = GameCommand.MOVE;
-
-        Turn turn = new Turn();
-
-        while (!GameCommand.END.equals(gameCommand)) {
-            gameCommand = processMove(board, turn);
+    private void move(GameState state) {
+        while (state.isNotEnd()) {
+            final MoveRequest moveRequest = inputView.readPlayCommand();
+            state = updateState(state, moveRequest);
         }
+    }
+
+    private GameState updateState(GameState state, final MoveRequest moveRequest) {
+        state = state.execute(moveRequest.getGameCommand(), moveRequest.getSource(), moveRequest.getTarget());
+        outputView.printChessBoard(new BoardResponse(state.getBoard()));
+        return state;
     }
 
     private <T> void retry(final Consumer<T> consumer, T input) {
@@ -70,33 +71,6 @@ public class ChessController {
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
-        }
-    }
-
-    private GameCommand processMove(final Board board, final Turn turn) {
-        final MoveRequest moveRequest = inputView.readPlayCommand();
-
-        if (GameCommand.MOVE.equals(moveRequest.getGameCommand())) {
-            doMove(board, turn, moveRequest);
-        }
-
-        validatePlayCommand(moveRequest);
-
-        return moveRequest.getGameCommand();
-    }
-
-    private void doMove(final Board board, final Turn turn, final MoveRequest moveRequest) {
-        final Position source = moveRequest.getSource();
-        final Position target = moveRequest.getTarget();
-
-        board.move(source, target, turn.findNextPlayer());
-
-        printChessBoard(board);
-    }
-
-    private void validatePlayCommand(final MoveRequest moveRequest) {
-        if (GameCommand.START.equals(moveRequest.getGameCommand())) {
-            throw new IllegalArgumentException("게임 중에는 새 게임을 시작할 수 없습니다.");
         }
     }
 }

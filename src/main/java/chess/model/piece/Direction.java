@@ -35,7 +35,7 @@ public enum Direction {
             NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
     );
     private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
-    
+
     private final int file;
     private final int rank;
 

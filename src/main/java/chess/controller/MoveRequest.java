@@ -9,7 +9,7 @@ public class MoveRequest {
     private final Position target;
 
     public MoveRequest(final GameCommand gameCommand, final Position source,
-            final Position target) {
+                       final Position target) {
         this.gameCommand = gameCommand;
         this.source = source;
         this.target = target;

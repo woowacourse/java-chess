@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.model.board;
 
 import static chess.model.piece.PieceColor.BLACK;
 import static chess.model.piece.PieceColor.WHITE;
@@ -21,5 +21,9 @@ public class Turn {
         final int colorIndex = count++ % PLAYER_COUNT;
 
         return COLORS.get(colorIndex);
+    }
+
+    public void beforePlayer() {
+        count--;
     }
 }
