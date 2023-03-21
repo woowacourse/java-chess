@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class ChessGame {
         return new ChessGame();
     }
 
-    public static ChessGame createWith(final PiecesGenerator piecesGenerator) {
-        return new ChessGame(Board.createBoardWith(piecesGenerator));
+    public static ChessGame createWith(final PiecesFactory piecesFactory) {
+        return new ChessGame(Board.createBoardWith(piecesFactory));
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {

@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 
 import java.util.List;
 
-public interface PiecesGenerator {
+public interface PiecesFactory {
 
     List<Piece> generate();
 }

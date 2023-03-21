@@ -1,16 +1,16 @@
 package chess;
 
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestPiecesGenerator implements PiecesGenerator {
+public class TestPiecesFactory implements PiecesFactory {
 
     private final List<Piece> pieces;
 
-    public TestPiecesGenerator(final List<Piece> pieces) {
+    public TestPiecesFactory(final List<Piece> pieces) {
         this.pieces = new ArrayList<>(pieces);
     }
 

@@ -4,7 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.board.maker.StartingPiecesGenerator;
+import chess.domain.board.maker.StartingPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -47,7 +47,7 @@ public class ChessController {
         final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
         if (command == GameCommand.START) {
             validateWithStartCommand();
-            chessGame = ChessGame.createWith(new StartingPiecesGenerator());
+            chessGame = ChessGame.createWith(new StartingPiecesFactory());
             outputView.printBoard(chessGame.getExistingPieces());
         }
     }

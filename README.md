@@ -105,7 +105,7 @@ Controller
 
 Board
 
-- [ ] PiecesGenerator 네이밍 수정
+- [x] PiecesGenerator 네이밍 수정
     - factory 를 만들어 보기
 
 기타

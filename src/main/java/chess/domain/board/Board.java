@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.board.maker.PiecesGenerator;
+import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 
@@ -17,8 +17,8 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public static Board createBoardWith(final PiecesGenerator piecesGenerator) {
-        return new Board(piecesGenerator.generate());
+    public static Board createBoardWith(final PiecesFactory piecesFactory) {
+        return new Board(piecesFactory.generate());
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {

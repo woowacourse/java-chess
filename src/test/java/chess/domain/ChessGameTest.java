@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.TestPiecesGenerator;
+import chess.TestPiecesFactory;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,7 @@ import java.util.List;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static chess.domain.File.A;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.TWO;
+import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,7 +19,7 @@ class ChessGameTest {
     @Test
     @DisplayName("턴이 바뀌었는지 확인한다")
     void change_turn_test() {
-        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(new TestPiecesFactory(List.of(
                 new Pawn(A, TWO, WHITE)
         )));
 
@@ -35,7 +32,7 @@ class ChessGameTest {
     @Test
     @DisplayName("입력 받은 현재 위치 말 색상이 이동할 차례가 아니면, 예외를 던진다.")
     void throws_exception_if_current_turn_color_is_different_with_piece_color_in_current_position() {
-        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(new TestPiecesFactory(List.of(
                 new Pawn(A, TWO, WHITE),
                 new Pawn(A, SEVEN, BLACK)
         )));

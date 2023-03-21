@@ -4,13 +4,7 @@ import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +13,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
-class StartingPiecesGeneratorTest {
+class StartingPiecesFactoryTest {
 
     @Test
     @DisplayName("초기 체스판이 정상적으로 생성된다")
-    void initTest() {
-        final List<Piece> pieces = new StartingPiecesGenerator().generate();
+    void succeeds_creation() {
+        final List<Piece> pieces = new StartingPiecesFactory().generate();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .containsExactlyInAnyOrder(

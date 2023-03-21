@@ -3,13 +3,7 @@ package chess.domain.board.maker;
 import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Rank;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +11,10 @@ import java.util.Map;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.File.E;
-import static chess.domain.File.F;
-import static chess.domain.File.G;
-import static chess.domain.File.H;
-import static chess.domain.Rank.EIGHT;
-import static chess.domain.Rank.ONE;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.TWO;
+import static chess.domain.File.*;
+import static chess.domain.Rank.*;
 
-public class StartingPiecesGenerator implements PiecesGenerator {
+public class StartingPiecesFactory implements PiecesFactory {
 
     private static final Map<Color, Rank> INITIAL_PAWN_RANKS_BY_COLOR = Map.of(BLACK, SEVEN,
             WHITE, TWO);
