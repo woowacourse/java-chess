@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 import static chess.domain.game.Command.END;
 import static chess.domain.game.Command.MOVE;
 import static chess.domain.game.Command.START;
-import static chess.domain.game.Command.from;
 import static chess.domain.game.Command.validateCommandSize;
 
 public class ChessController {
@@ -48,10 +47,10 @@ public class ChessController {
         final Command firstCommand = readValidateInput(this::readCommand);
         chessGame.receiveCommand(firstCommand);
 
-        Command command = END;
         while (!chessGame.isEnd()) {
             renderChessBoard();
-            command = readValidateInput(this::readCommand);
+            Command command = readValidateInput(this::readCommand);
+            chessGame.receiveCommand(command);
         }
     }
 
@@ -63,22 +62,21 @@ public class ChessController {
 
     private Command readCommand() {
         final List<String> commands = inputView.readGameCommand();
-        Command command = from(commands.get(0));
+        Command command = Command.from(commands.get(0));
         GameAction gameAction = commandMapper.get(command);
-        gameAction.execute(command, commands);
+        gameAction.execute(commands);
 
         return command;
     }
 
-    private void start(final Command command, final List<String> commands) {
+    private void start(final List<String> commands) {
         validateCommandSize(commands.size(), START);
         if (!chessGame.isEnd()) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
-        chessGame.receiveCommand(command);
     }
 
-    private void move(final Command command, final List<String> commands) {
+    private void move(final List<String> commands) {
         validateCommandSize(commands.size(), MOVE);
         if (chessGame.isEnd()) {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
@@ -90,12 +88,11 @@ public class ChessController {
         chessGame.movePiece(PositionConvertor.convert(from), PositionConvertor.convert(to));
     }
 
-    private void end(final Command command, final List<String> commands) {
+    private void end(final List<String> commands) {
         validateCommandSize(commands.size(), END);
         if (chessGame.isEnd()) {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
         }
-        chessGame.receiveCommand(command);
     }
 
     private <T> T readValidateInput(final Supplier<T> function) {

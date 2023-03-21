@@ -17,7 +17,7 @@ public class ChessBoard {
         return new ChessBoard(piecePosition);
     }
 
-    static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
+    public static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
         return new ChessBoard(piecePosition);
     }
 
