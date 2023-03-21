@@ -1,4 +1,4 @@
-package chess.service;
+package chess.domain.game;
 
 import chess.domain.Board;
 import chess.domain.position.Position;
@@ -6,12 +6,12 @@ import chess.domain.team.Team;
 
 import java.util.HashMap;
 
-public class ChessService {
+public class ChessGame {
 
     private final Board board;
     private Team turn;
 
-    public ChessService() {
+    public ChessGame() {
         this.board = Board.create(new HashMap<>());
         this.turn = Team.WHITE;
     }
