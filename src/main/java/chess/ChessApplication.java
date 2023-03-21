@@ -1,9 +1,9 @@
 package chess;
 
-import chess.controller.MainController;
+import chess.controller.ChessController;
 
 public class ChessApplication {
     public static void main(String[] args) {
-        new MainController().run();
+        new ChessController().run();
     }
 }

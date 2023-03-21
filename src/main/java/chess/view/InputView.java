@@ -21,6 +21,12 @@ public class InputView {
         return positions;
     }
 
+    public static void clearBuffer() {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+    }
+
     private static void validatePositionsSize(final List<String> positions) {
         if (positions.size() != 2) {
             throw new IllegalArgumentException(POSITION_FORMAT_VALIDATE_MESSAGE);

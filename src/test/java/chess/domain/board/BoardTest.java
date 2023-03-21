@@ -14,7 +14,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new BoardFactory());
+        board = new BoardFactory().createInitialBoard();
     }
 
     @Test

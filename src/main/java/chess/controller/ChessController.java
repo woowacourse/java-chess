@@ -43,6 +43,7 @@ public class ChessController {
     private static void start(final ChessService chessService) {
         chessService.start();
         OutputView.printBoard(chessService.getBoard());
+        InputView.clearBuffer();
     }
 
     private static void move(final ChessService chessService) {
