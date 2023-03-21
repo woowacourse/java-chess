@@ -21,7 +21,6 @@ public class InputView {
     public List<String> readCommands() {
         return Arrays.stream(scanner.nextLine()
                         .trim()
-                        .toLowerCase()
                         .split(" "))
                 .collect(Collectors.toUnmodifiableList());
     }
