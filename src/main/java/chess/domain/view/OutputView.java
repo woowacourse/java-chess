@@ -1,15 +1,19 @@
 package chess.domain.view;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -72,5 +76,10 @@ public class OutputView {
 
     public static void printExceptionMessage(final String message) {
         System.out.println("[ERROR] " + message);
+    }
+
+    public static void printScore(final Map<Color, Double> score) {
+        System.out.println("BLACK팀(대문자) 점수 : " + score.get(BLACK));
+        System.out.println("WHITE팀(소문자) 점수 : " + score.get(WHITE));
     }
 }

@@ -13,6 +13,7 @@ import static chess.ChessGameCommand.TO_INDEX;
 import chess.ChessGameCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.view.InputView;
 import chess.domain.view.OutputView;
@@ -68,6 +69,8 @@ public class ChessController {
 
     private void end(final List<String> strings) {
         validateCommandsSize(strings, DEFAULT_COMMAND_SIZE);
+
+        OutputView.printScore(board.calculateScore());
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {

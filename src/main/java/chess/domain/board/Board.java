@@ -63,10 +63,6 @@ public class Board {
         board.put(to, piece);
     }
 
-    public Map<Position, Piece> board() {
-        return Map.copyOf(board);
-    }
-
     public Map<Color, Double> calculateScore() {
         final Map<File, List<Position>> piecesByFile = collectPiecesByFile();
         final Map<Color, Double> score = new HashMap<>();
@@ -97,5 +93,9 @@ public class Board {
                 .filter(it -> board.get(it).isTypeOf(PAWN))
                 .count() >= 2;
         return piece.calculateScore(hasOtherPieceInSameFile);
+    }
+
+    public Map<Position, Piece> board() {
+        return Map.copyOf(board);
     }
 }
