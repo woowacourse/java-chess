@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.service;
 
 import static chess.domain.piece.PieceType.BISHOP;
 import static chess.domain.piece.PieceType.EMPTY;
@@ -20,7 +20,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.MoveDto;
 import chess.repository.ChessDao;
-import chess.service.ChessGame;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -94,7 +93,7 @@ public class ChessGameTest {
         chessGame.initialize();
 
         // when
-        chessGame.move("e2", "e4");
+        chessGame.move(new MoveDto("e2", "e4"));
 
         // then
         final Map<Position, Piece> board = chessGame.getResult().getBoard();
@@ -108,14 +107,14 @@ public class ChessGameTest {
         chessGame.initialize();
 
         // when
-        chessGame.move("e2", "e4");
-        chessGame.move("e7", "e5");
-        chessGame.move("g1", "f3");
-        chessGame.move("b8", "c6");
-        chessGame.move("f1", "b5");
-        chessGame.move("a7", "a6");
-        chessGame.move("b5", "a4");
-        chessGame.move("d7", "d6");
+        chessGame.move(new MoveDto("e2", "e4"));
+        chessGame.move(new MoveDto("e7", "e5"));
+        chessGame.move(new MoveDto("g1", "f3"));
+        chessGame.move(new MoveDto("b8", "c6"));
+        chessGame.move(new MoveDto("f1", "b5"));
+        chessGame.move(new MoveDto("a7", "a6"));
+        chessGame.move(new MoveDto("b5", "a4"));
+        chessGame.move(new MoveDto("d7", "d6"));
 
         // then
         final List<PieceType> result = toPieceTypes(chessGame.getResult().getBoard());
@@ -152,7 +151,7 @@ public class ChessGameTest {
         // given
         final ChessGame chessGame = new ChessGame(mockChessDao);
         chessGame.initialize();
-        chessGame.move("d2", "d4");
+        chessGame.move(new MoveDto("d2", "d4"));
 
         // when
         chessGame.clear();

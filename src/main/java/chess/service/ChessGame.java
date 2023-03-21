@@ -35,11 +35,11 @@ public class ChessGame {
         return board.isInitialized();
     }
 
-    public void move(final String source, final String target) {
-        final Position sourcePosition = Position.from(source);
-        final Position targetPosition = Position.from(target);
+    public void move(final MoveDto moveDto) {
+        final Position sourcePosition = Position.from(moveDto.getSource());
+        final Position targetPosition = Position.from(moveDto.getTarget());
         board = board.move(sourcePosition, targetPosition);
-        chessDao.save(new MoveDto(source, target));
+        chessDao.save(moveDto);
     }
 
     public void clear() {

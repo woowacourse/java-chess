@@ -9,6 +9,7 @@ import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
 
+import chess.dto.MoveDto;
 import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -64,9 +65,8 @@ public class ChessGameController {
         if (!chessGame.isInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
-        final String source = commands.get(MOVE_SOURCE_INDEX);
-        final String target = commands.get(MOVE_TARGET_INDEX);
-        chessGame.move(source, target);
+        final MoveDto moveDto = new MoveDto(commands.get(MOVE_SOURCE_INDEX), commands.get(MOVE_TARGET_INDEX));
+        chessGame.move(moveDto);
         OutputView.printBoard(chessGame.getResult());
     }
 
