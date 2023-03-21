@@ -38,7 +38,7 @@ public class ChessController {
         playUntilEnd();
     }
 
-    public void playUntilEnd() {
+    private void playUntilEnd() {
         RequestInfo requestInfo = readRequest();
         if (requestInfo.getGameCommand() == GameCommand.END) {
             return;
