@@ -26,9 +26,17 @@ public class InputView {
     private Command convertUserInputToMoveCommand(String userInput) {
         List<String> userInputWords = Arrays.asList(userInput.split(" "));
         if (userInputWords.get(0).equals("move")) {
-            return Move.of(userInputWords.get(1), userInputWords.get(2));
+            return getMoveCommandBy(userInputWords);
         }
         throw new IllegalArgumentException("잘못된 입력입니다.");
+    }
+
+    private Move getMoveCommandBy(List<String> userInputWords) {
+        try {
+            return Move.of(userInputWords.get(1), userInputWords.get(2));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("올바른 움직임을 입력해주세요. 예) move b2 b4");
+        }
     }
 
 }
