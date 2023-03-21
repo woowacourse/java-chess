@@ -36,7 +36,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("canMoveDummy")
-    @DisplayName("이동할 수 있는지 확인한다.")
+    @DisplayName("비숍이 해당 위치로 이동할 수 있는지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
         Bishop bishop = new Bishop(Side.from(Color.BLACK), Role.BISHOP);
@@ -47,7 +47,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("canNotMoveDummy")
-    @DisplayName("이동할 수 없는지 확인한다.")
+    @DisplayName("비숍이 해당 위치로 이동할 수 없는지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
         Bishop bishop = new Bishop(Side.from(Color.BLACK), Role.BISHOP);
@@ -58,7 +58,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("canMoveDummy")
-    @DisplayName("공격할 수 있는지 확인한다.")
+    @DisplayName("다른 팀 기물은 공격할 수 있다.")
     void canAttack(final Direction direction, final int distance) {
         // when
         Bishop bishop = new Bishop(Side.from(Color.BLACK), Role.BISHOP);
@@ -70,7 +70,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("canNotMoveDummy")
-    @DisplayName("공격할 수 없는지 확인한다.")
+    @DisplayName("같은 팀 기물은 공격할 수 없다.")
     void canNotAttack(final Direction direction, final int distance) {
         // when
         Bishop bishop = new Bishop(Side.from(Color.BLACK), Role.BISHOP);

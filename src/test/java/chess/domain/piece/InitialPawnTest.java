@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class InitialPawnTest {
     @Test
-    @DisplayName("이동할 수 있는지 확인한다.")
+    @DisplayName("처음 폰이 2칸을 이동할 수 있는지 확인한다.")
     void isMovable() {
         // when
         InitialPawn blackInitialPawn = new InitialPawn(Side.from(Color.BLACK), Role.INITIAL_PAWN);
@@ -24,7 +24,7 @@ class InitialPawnTest {
     }
 
     @Test
-    @DisplayName("이동할 수 없는지 확인한다.")
+    @DisplayName("처음 폰이 이동할 수 없는 위치인지 확인한다.")
     void canNotMove() {
         // when
         InitialPawn blackInitialPawn = new InitialPawn(Side.from(Color.BLACK), Role.INITIAL_PAWN);

@@ -40,7 +40,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("이동할 수 있는지 확인한다.")
+    @DisplayName("폰이 이동할 수 있는 위치인지 확인한다.")
     void isMovable() {
         // when
         Pawn blackPawn = new Pawn(Side.from(Color.BLACK), Role.PAWN);
@@ -52,7 +52,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("이동할 수 없는지 확인한다.")
+    @DisplayName("폰이 이동할 수 없는 위치인지 확인한다.")
     void canNotMove() {
         // when
         Pawn blackPawn = new Pawn(Side.from(Color.BLACK), Role.PAWN);
@@ -65,7 +65,7 @@ class PawnTest {
 
     @ParameterizedTest
     @MethodSource("canAttackDummy")
-    @DisplayName("공격할 수 있는지 확인한다.")
+    @DisplayName("다른 팀은 공격할 수 있다.")
     void canAttack(final Direction direction, final int distance, final Side side, final Side opponentSide) {
         // when
         Pawn pawn = new Pawn(side, Role.PAWN);
@@ -77,7 +77,7 @@ class PawnTest {
 
     @ParameterizedTest
     @MethodSource("canNotAttackDummy")
-    @DisplayName("공격할 수 없는지 확인한다.")
+    @DisplayName("같은 팀은 공격할 수 없다.")
     void canNotAttack(final Direction direction, final int distance, final Side side, final Side opponentSide) {
         // when
         Pawn pawn = new Pawn(side, Role.PAWN);
