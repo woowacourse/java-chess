@@ -59,7 +59,7 @@ public class BoardService {
     }
 
     private Piece parsePiece(final String name) {
-        if (name.equals('r') || name.equals("R")) {
+        if (name.equals("r") || name.equals("R")) {
             return new Rook(new Name(name));
         }
 
