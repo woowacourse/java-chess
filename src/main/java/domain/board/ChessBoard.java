@@ -114,8 +114,8 @@ public class ChessBoard {
     }
 
     public Square toSquare(int fileCoordinate, int rankCoordinate) {
-        File targetFile = File.findFile(fileCoordinate);
-        Rank targetRank = Rank.findRank(rankCoordinate);
+        File targetFile = File.find(fileCoordinate);
+        Rank targetRank = Rank.find(rankCoordinate);
         return new Square(targetFile, targetRank);
     }
 
@@ -137,7 +137,7 @@ public class ChessBoard {
     }
 
     public Square findSquare(String file, String rank) {
-        return new Square(File.findFile(file.charAt(0)), Rank.findRank(rank.charAt(0)));
+        return new Square(File.find(file.charAt(0)), Rank.find(rank.charAt(0)));
     }
 
     public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {

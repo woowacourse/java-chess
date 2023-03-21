@@ -57,7 +57,7 @@ public class ChessService {
     }
 
     private Square convertToSquare(String squareName) {
-        return new Square(File.findFile(squareName.charAt(FILE_INDEX)), Rank.findRank(squareName.charAt(RANK_INDEX)));
+        return new Square(File.find(squareName.charAt(FILE_INDEX)), Rank.find(squareName.charAt(RANK_INDEX)));
     }
 
     private void validateTurn(Square currentSquare) {

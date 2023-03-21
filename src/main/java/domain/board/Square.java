@@ -14,8 +14,8 @@ public class Square {
     }
 
     public Square(int fileCoordinate, int rankCoordinate) {
-        this.file = File.findFile(fileCoordinate);
-        this.rank = Rank.findRank(rankCoordinate);
+        this.file = File.find(fileCoordinate);
+        this.rank = Rank.find(rankCoordinate);
     }
 
     public List<Integer> toCoordinate() {

@@ -1,7 +1,6 @@
 package domain.board;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum File {
     A('a'),
@@ -19,22 +18,14 @@ public enum File {
         this.value = value;
     }
 
-    public File convertToOpposite() {
-        List<File> values = List.of(File.values());
-
-        int index = values.indexOf(this);
-
-        return values.get(values.size() - index);
-    }
-
-    public static File findFile(int fileCoordinate) {
+    public static File find(int fileCoordinate) {
         return Arrays.stream(File.values())
                 .filter(file -> file.ordinal() == fileCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
-    public static File findFile(char value) {
+    public static File find(char value) {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == value)
                 .findFirst()
