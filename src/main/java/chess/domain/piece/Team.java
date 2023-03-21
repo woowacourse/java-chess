@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-public enum Color {
+public enum Team {
 
     WHITE,
     BLACK;
 
-    public Color getCounter() {
+    public Team getEnemy() {
         if (this == WHITE) {
             return BLACK;
         }

@@ -5,18 +5,18 @@ import chess.domain.square.Square;
 
 abstract public class Piece {
 
-    protected Color color;
+    protected Team team;
 
-    protected Piece(final Color color) {
-        this.color = color;
+    protected Piece(final Team team) {
+        this.team = team;
     }
 
     public boolean isEnemy(final Piece piece) {
-        return piece.color != color;
+        return piece.team != team;
     }
 
-    public boolean isAlly(final Color color) {
-        return this.color == color;
+    public boolean isAlly(final Team team) {
+        return this.team == team;
     }
 
     // TODO: override 할까? (Pawn만 true 반환)
@@ -29,11 +29,11 @@ abstract public class Piece {
     @Override
     public String toString() {
         return "Piece{" +
-                "color=" + color +
+                "color=" + team +
                 '}';
     }
 
-    public Color getColor() {
-        return color;
+    public Team getColor() {
+        return team;
     }
 }

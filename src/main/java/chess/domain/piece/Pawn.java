@@ -5,8 +5,8 @@ import chess.domain.square.Square;
 
 public class Pawn extends Piece {
 
-    public Pawn(final Color color) {
-        super(color);
+    public Pawn(final Team team) {
+        super(team);
     }
 
     // TODO: 코드 개선 시급
@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     public Direction findDirection(Square current, Square destination) {
         int fileDifference = current.getFileDifference(destination);
         int rankDifference = current.getRankDifference(destination);
-        if (color == Color.WHITE) {
+        if (team == Team.WHITE) {
             if (current.isRankTwo() && fileDifference == 0 && rankDifference == 2) {
                 return Direction.UP;
             }

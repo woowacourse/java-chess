@@ -5,8 +5,8 @@ import chess.domain.square.Square;
 
 public class Knight extends Piece {
 
-    public Knight(final Color color) {
-        super(color);
+    public Knight(final Team team) {
+        super(team);
     }
 
     @Override

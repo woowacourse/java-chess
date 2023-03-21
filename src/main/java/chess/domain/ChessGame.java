@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.square.Square;
 import chess.dto.GameStatusDto;
 import chess.dto.SquareDto;
@@ -8,10 +8,10 @@ import chess.dto.SquareDto;
 public class ChessGame {
 
     private final Board board = Board.create();
-    private Color turn;
+    private Team turn;
 
     public ChessGame() {
-        turn = Color.WHITE;
+        turn = Team.WHITE;
     }
 
     public void move(SquareDto currentDto, SquareDto destinationDto) {
@@ -19,7 +19,7 @@ public class ChessGame {
         Square destination = destinationDto.getSquare();
         checkTurn(current);
         board.move(current, destination);
-        turn = turn.getCounter();
+        turn = turn.getEnemy();
     }
 
     private void checkTurn(Square square) {

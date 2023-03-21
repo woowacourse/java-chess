@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -26,22 +26,22 @@ public class BoardMaker {
 
     private Map<Square, Piece> makePawns() {
         Map<Square, Piece> pawns = new HashMap<>();
-        pawns.putAll(makePawn(Color.WHITE));
-        pawns.putAll(makePawn(Color.BLACK));
+        pawns.putAll(makePawn(Team.WHITE));
+        pawns.putAll(makePawn(Team.BLACK));
         return new HashMap<>(pawns);
     }
 
-    private Map<Square, Piece> makePawn(final Color color) {
+    private Map<Square, Piece> makePawn(final Team team) {
         Map<Square, Piece> pawns = new HashMap<>();
-        Rank rank = getPawnRankByColor(color);
+        Rank rank = getPawnRankByTeam(team);
         for (File file : File.values()) {
-            pawns.put(Square.of(file, rank), new Pawn(color));
+            pawns.put(Square.of(file, rank), new Pawn(team));
         }
         return new HashMap<>(pawns);
     }
 
-    private Rank getPawnRankByColor(final Color color) {
-        if (color == Color.WHITE) {
+    private Rank getPawnRankByTeam(final Team team) {
+        if (team == Team.WHITE) {
             return Rank.TWO;
         }
         return Rank.SEVEN;
@@ -59,42 +59,42 @@ public class BoardMaker {
 
     private Map<Square, Piece> makeRooks() {
         Map<Square, Piece> rooks = new HashMap<>();
-        rooks.put(Square.of(File.A, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Square.of(File.H, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Square.of(File.A, Rank.EIGHT), new Rook(Color.BLACK));
-        rooks.put(Square.of(File.H, Rank.EIGHT), new Rook(Color.BLACK));
+        rooks.put(Square.of(File.A, Rank.ONE), new Rook(Team.WHITE));
+        rooks.put(Square.of(File.H, Rank.ONE), new Rook(Team.WHITE));
+        rooks.put(Square.of(File.A, Rank.EIGHT), new Rook(Team.BLACK));
+        rooks.put(Square.of(File.H, Rank.EIGHT), new Rook(Team.BLACK));
         return new HashMap<>(rooks);
     }
 
     private Map<Square, Piece> makeKnights() {
         Map<Square, Piece> knights = new HashMap<>();
-        knights.put(Square.of(File.B, Rank.ONE), new Knight(Color.WHITE));
-        knights.put(Square.of(File.G, Rank.ONE), new Knight(Color.WHITE));
-        knights.put(Square.of(File.B, Rank.EIGHT), new Knight(Color.BLACK));
-        knights.put(Square.of(File.G, Rank.EIGHT), new Knight(Color.BLACK));
+        knights.put(Square.of(File.B, Rank.ONE), new Knight(Team.WHITE));
+        knights.put(Square.of(File.G, Rank.ONE), new Knight(Team.WHITE));
+        knights.put(Square.of(File.B, Rank.EIGHT), new Knight(Team.BLACK));
+        knights.put(Square.of(File.G, Rank.EIGHT), new Knight(Team.BLACK));
         return new HashMap<>(knights);
     }
 
     private Map<Square, Piece> makeBishops() {
         Map<Square, Piece> bishops = new HashMap<>();
-        bishops.put(Square.of(File.C, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Square.of(File.F, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Square.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
-        bishops.put(Square.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
+        bishops.put(Square.of(File.C, Rank.ONE), new Bishop(Team.WHITE));
+        bishops.put(Square.of(File.F, Rank.ONE), new Bishop(Team.WHITE));
+        bishops.put(Square.of(File.C, Rank.EIGHT), new Bishop(Team.BLACK));
+        bishops.put(Square.of(File.F, Rank.EIGHT), new Bishop(Team.BLACK));
         return new HashMap<>(bishops);
     }
 
     private Map<Square, Piece> makeQueens() {
         Map<Square, Piece> queens = new HashMap<>();
-        queens.put(Square.of(File.D, Rank.ONE), new Queen(Color.WHITE));
-        queens.put(Square.of(File.D, Rank.EIGHT), new Queen(Color.BLACK));
+        queens.put(Square.of(File.D, Rank.ONE), new Queen(Team.WHITE));
+        queens.put(Square.of(File.D, Rank.EIGHT), new Queen(Team.BLACK));
         return new HashMap<>(queens);
     }
 
     private Map<Square, Piece> makeKings() {
         Map<Square, Piece> kings = new HashMap<>();
-        kings.put(Square.of(File.E, Rank.ONE), new King(Color.WHITE));
-        kings.put(Square.of(File.E, Rank.EIGHT), new King(Color.BLACK));
+        kings.put(Square.of(File.E, Rank.ONE), new King(Team.WHITE));
+        kings.put(Square.of(File.E, Rank.EIGHT), new King(Team.BLACK));
         return new HashMap<>(kings);
     }
 }

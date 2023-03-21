@@ -3,10 +3,9 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
@@ -23,9 +22,9 @@ public class Board {
         return new Board(boardMaker.make());
     }
 
-    public boolean isPieceTurn(Square current, Color color) {
+    public boolean isPieceTurn(Square current, Team team) {
         Piece piece = getPiece(current);
-        return piece.isAlly(color);
+        return piece.isAlly(team);
     }
 
     public void move(Square current, Square destination) {

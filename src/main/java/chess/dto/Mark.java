@@ -3,7 +3,7 @@ package chess.dto;
 import java.util.Arrays;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -30,17 +30,17 @@ public enum Mark {
 
     public static String from(Piece piece) {
         Class<? extends Piece> pieceClass = piece.getClass();
-        Color color = piece.getColor();
+        Team team = piece.getColor();
         String mark = Arrays.stream(Mark.values())
                 .filter(it -> it.pieceClass == pieceClass)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 클래스는 존재하지 않습니다."))
                 .mark;
-        return makeMarkByColor(mark, color);
+        return makeMarkByColor(mark, team);
     }
 
-    private static String makeMarkByColor(String mark, Color color) {
-        if (color == Color.BLACK) {
+    private static String makeMarkByColor(String mark, Team team) {
+        if (team == Team.BLACK) {
             return mark.toUpperCase();
         }
         return mark;
