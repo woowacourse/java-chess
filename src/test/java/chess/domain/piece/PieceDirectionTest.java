@@ -3,40 +3,41 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.stream.Stream;
+
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceDirectionTest {
 
-    // TODO: Nested 하면 static 못 씀. 알아보기.
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("폰의 이동 가능 방향 테스트")
-    class Pawn {
+    class PawnTest {
 
         private final PieceDirection whitePawnDirection = PieceDirection.WHITE_PAWN;
         private final PieceDirection blackPawnDirection = PieceDirection.BLACK_PAWN;
 
-        @Test
-        @DisplayName("흰 폰 위로 가기 성공")
-        void up_white() {
-            assertThat(whitePawnDirection.findDirection(0, 1)).isEqualTo(Direction.UP);
+        @ParameterizedTest
+        @MethodSource("makeWhitePawnDirection")
+        @DisplayName("흰색 폰 이동 가능 방향 테스트")
+        void white_pawn_find_direction(int fileDifference, int rankDifference, Direction direction) {
+            assertThat(whitePawnDirection.findDirection(fileDifference, rankDifference)).isEqualTo(direction);
         }
 
-        @Test
-        @DisplayName("흰 폰 왼쪽위로 가기 성공")
-        void up_left_white() {
-            assertThat(whitePawnDirection.findDirection(-1, 1)).isEqualTo(Direction.UP_LEFT);
-        }
-
-        @Test
-        @DisplayName("흰 폰 오른쪽위로 가기 성공")
-        void up_right_white() {
-            assertThat(whitePawnDirection.findDirection(1, 1)).isEqualTo(Direction.UP_RIGHT);
+        private Stream<Arguments> makeWhitePawnDirection() {
+            return Stream.of(
+                    Arguments.of(0, 1, Direction.UP),
+                    Arguments.of(-1, 1, Direction.UP_LEFT),
+                    Arguments.of(1, 1, Direction.UP_RIGHT)
+            );
         }
 
         @ParameterizedTest
@@ -47,22 +48,19 @@ class PieceDirectionTest {
                     .isInstanceOf(WrongDirectionException.class);
         }
 
-        @Test
-        @DisplayName("검정 폰 아래로 가기 성공")
-        void down_black() {
-            assertThat(blackPawnDirection.findDirection(0, -1)).isEqualTo(Direction.DOWN);
+        @ParameterizedTest
+        @MethodSource("makeBlackPawnDirection")
+        @DisplayName("검은색 폰 이동 가능 방향 테스트")
+        void black_pawn_find_direction(int fileDifference, int rankDifference, Direction direction) {
+            assertThat(blackPawnDirection.findDirection(fileDifference, rankDifference)).isEqualTo(direction);
         }
 
-        @Test
-        @DisplayName("검정 폰 왼쪽아래로 가기 성공")
-        void down_left_black() {
-            assertThat(blackPawnDirection.findDirection(-1, -1)).isEqualTo(Direction.DOWN_LEFT);
-        }
-
-        @Test
-        @DisplayName("검정 폰 오른쪽아래로 가기 성공")
-        void down_right_black() {
-            assertThat(blackPawnDirection.findDirection(1, -1)).isEqualTo(Direction.DOWN_RIGHT);
+        private Stream<Arguments> makeBlackPawnDirection() {
+            return Stream.of(
+                    Arguments.of(0, -1, Direction.DOWN),
+                    Arguments.of(-1, -1, Direction.DOWN_LEFT),
+                    Arguments.of(1, -1, Direction.DOWN_RIGHT)
+            );
         }
 
         @ParameterizedTest
@@ -160,58 +158,31 @@ class PieceDirectionTest {
         }
     }
 
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("나이트의 이동 가능 방향 테스트")
     class Knight {
 
         private final PieceDirection knightDirection = PieceDirection.KNIGHT;
 
-        @Test
-        @DisplayName("위로 두칸, 오른쪽으로 한칸 이동")
-        void up_up_right() {
-            assertThat(knightDirection.findDirection(1, 2)).isEqualTo(Direction.UP_UP_RIGHT);
+        @ParameterizedTest
+        @MethodSource("makeKnightDirection")
+        @DisplayName("나이트 이동 가능 방향 테스트")
+        void white_pawn_find_direction(int fileDifference, int rankDifference, Direction direction) {
+            assertThat(knightDirection.findDirection(fileDifference, rankDifference)).isEqualTo(direction);
         }
 
-        @Test
-        @DisplayName("위로 한칸, 오른쪽으로 두칸 이동")
-        void up_right_right() {
-            assertThat(knightDirection.findDirection(2, 1)).isEqualTo(Direction.UP_RIGHT_RIGHT);
-        }
-
-        @Test
-        @DisplayName("아래로 한칸, 오른쪽으로 두칸 이동")
-        void down_right_right() {
-            assertThat(knightDirection.findDirection(2, -1)).isEqualTo(Direction.DOWN_RIGHT_RIGHT);
-        }
-
-        @Test
-        @DisplayName("아래로 두칸, 오른쪽으로 한칸 이동")
-        void down_down_right() {
-            assertThat(knightDirection.findDirection(1, -2)).isEqualTo(Direction.DOWN_DOWN_RIGHT);
-        }
-
-        @Test
-        @DisplayName("아래로 두칸, 왼쪽으로 한칸 이동")
-        void down_down_left() {
-            assertThat(knightDirection.findDirection(-1, -2)).isEqualTo(Direction.DOWN_DOWN_LEFT);
-        }
-
-        @Test
-        @DisplayName("아래로 한칸, 왼쪽으로 두칸 이동")
-        void down_left_left() {
-            assertThat(knightDirection.findDirection(-2, -1)).isEqualTo(Direction.DOWN_LEFT_LEFT);
-        }
-
-        @Test
-        @DisplayName("위로 한칸, 왼쪽으로 두칸 이동")
-        void up_left_left() {
-            assertThat(knightDirection.findDirection(-2, 1)).isEqualTo(Direction.UP_LEFT_LEFT);
-        }
-
-        @Test
-        @DisplayName("위로 두칸, 왼쪽으로 한칸 이동")
-        void up_up_left() {
-            assertThat(knightDirection.findDirection(-1, 2)).isEqualTo(Direction.UP_UP_LEFT);
+        private Stream<Arguments> makeKnightDirection() {
+            return Stream.of(
+                    Arguments.of(1, 2, Direction.UP_UP_RIGHT),
+                    Arguments.of(2, 1, Direction.UP_RIGHT_RIGHT),
+                    Arguments.of(2, -1, Direction.DOWN_RIGHT_RIGHT),
+                    Arguments.of(1, -2, Direction.DOWN_DOWN_RIGHT),
+                    Arguments.of(-1, -2, Direction.DOWN_DOWN_LEFT),
+                    Arguments.of(-2, -1, Direction.DOWN_LEFT_LEFT),
+                    Arguments.of(-2, 1, Direction.UP_LEFT_LEFT),
+                    Arguments.of(-1, 2, Direction.UP_UP_LEFT)
+            );
         }
 
         @ParameterizedTest
