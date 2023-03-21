@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
+
     private final Rank rank;
     private final File file;
 

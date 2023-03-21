@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+
     private final Scanner scanner;
 
     public InputView(final Scanner scanner) {
@@ -18,7 +19,7 @@ public class InputView {
                 .toLowerCase();
     }
 
-    public List<String> readCommands() {
+    public List<String> readCommandAndParameters() {
         return Arrays.stream(scanner.nextLine()
                         .trim()
                         .split(" "))

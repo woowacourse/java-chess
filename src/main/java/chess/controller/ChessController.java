@@ -6,6 +6,7 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -36,8 +37,8 @@ public class ChessController {
 
     private void executeTurn(final ChessGame chessGame) {
         try {
-            List<String> commands = inputView.readCommands();
-            chessGame.executeCommand(commands);
+            List<String> commandAndParameters = inputView.readCommandAndParameters();
+            chessGame.executeCommand(commandAndParameters);
             outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
         }
         catch (IllegalArgumentException | UnsupportedOperationException e) {

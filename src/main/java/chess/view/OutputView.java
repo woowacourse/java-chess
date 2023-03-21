@@ -14,9 +14,7 @@ public class OutputView {
     }
 
     public void printChessBoard(ChessBoardDto chessBoardDto) {
-        for (String oneFile : chessBoardDto.getBoard()) {
-            System.out.println(oneFile);
-        }
+        chessBoardDto.getBoard().forEach(System.out::println);
     }
 
     public void printError(final String message) {
