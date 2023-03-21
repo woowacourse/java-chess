@@ -1,12 +1,11 @@
 package techcourse.fp.chess.controller;
 
-import java.util.List;
+import java.util.EnumMap;
+import java.util.Map;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
-import techcourse.fp.chess.domain.File;
-import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.domain.Rank;
 import techcourse.fp.chess.dto.BoardDto;
+import techcourse.fp.chess.dto.CommandRequest;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
@@ -14,55 +13,61 @@ public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final Board board = BoardFactory.generate();
+    private final Map<Command, CommandRunner> commandMapper = new EnumMap<>(Command.class);
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+
+        commandMapper.put(Command.START, this::start);
+        commandMapper.put(Command.MOVE, this::move);
+        commandMapper.put(Command.END, this::end);
     }
 
     public void run() {
-        final Board board = BoardFactory.generate();
-
         outputView.printInitialMessage();
-        final Command initCommand = getInitCommand();
 
-        if (initCommand.isStart()) {
-            outputView.printBoard(BoardDto.create(board.getBoard()));
-            move(board);
-        }
-
-        outputView.printEndMessage();
-    }
-
-    private Command getInitCommand() {
-        try {
-            final String rawCommand = inputView.readInitCommand();
-            return Command.createInitMessage(rawCommand);
-        } catch (IllegalArgumentException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return getInitCommand();
+        Command command = Command.EMPTY;
+        while (command != Command.END) {
+            command = play();
         }
     }
 
-    private void move(final Board board) {
+    private Command play() {
         try {
-            List<String> commands = inputView.readCommand();
+            final CommandRequest commandRequest = inputView.readCommand();
+            Command command = Command.from(commandRequest.getMessage());
 
-            while (!Command.createMoveOrEndMessage(commands.get(0)).isEnd()) {
-                board.move(parseToPosition(commands.get(1)), parseToPosition(commands.get(2)));
-                outputView.printBoard(BoardDto.create(board.getBoard()));
-                commands = inputView.readCommand();
-            }
+            final CommandRunner commandRunner = commandMapper.get(command);
+            commandRunner.execute(commandRequest);
+
+            return command;
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
-            move(board);
+            return Command.EMPTY;
         }
     }
 
-    private Position parseToPosition(final String command) {
-        final int fileOrder = command.charAt(0) - 96;
-        final int rankOrder = command.charAt(1) - '0';
+    private void start(CommandRequest commandRequest) {
+        try {
+            Board board = BoardFactory.generate();
+            outputView.printBoard(BoardDto.create(board.getBoard()));
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+        }
+    }
 
-        return Position.of(File.of(fileOrder), Rank.of(rankOrder));
+    private void move(final CommandRequest commandRequest) {
+        try {
+            board.move(commandRequest.getSource(), commandRequest.getTarget());
+            outputView.printBoard(BoardDto.create(board.getBoard()));
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+        }
+    }
+
+    private void end(final CommandRequest commandRequest) {
+        outputView.printEndMessage();
     }
 }

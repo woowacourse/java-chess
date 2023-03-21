@@ -24,5 +24,4 @@ public enum Color {
     public boolean isEmpty() {
         return this == EMPTY;
     }
-
 }

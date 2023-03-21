@@ -6,6 +6,7 @@ public final class Position {
 
     private static final int ONE_SPACE = 1;
     private static final int TWO_SPACES = 2;
+
     private final File file;
     private final Rank rank;
 
