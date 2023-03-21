@@ -13,25 +13,25 @@ public class BoardFactory {
         Map<Position, Piece> boards = new HashMap<>();
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
             Team team = Team.of(rankCoordinate);
-            createRank(boards, rankCoordinate, team);
+            addRank(boards, rankCoordinate, team);
         }
         return new Board(boards);
     }
 
-    private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
+    private static void addRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
         RankType rankType = RankType.of(rankCoordinate);
         if (rankType.isSideRank()) {
-            createSidePieces(boards, rankCoordinate, team);
+            addSidePieces(boards, rankCoordinate, team);
         }
         if (rankType.isPawnRank()) {
-            createPiecesBy(boards, rankCoordinate, new Pawn(team));
+            addPiecesBy(boards, rankCoordinate, new Pawn(team));
         }
         if (rankType.isEmptyRank()) {
-            createPiecesBy(boards, rankCoordinate, Empty.create());
+            addPiecesBy(boards, rankCoordinate, Empty.create());
         }
     }
 
-    private static void createSidePieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
+    private static void addSidePieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
         boards.put(new Position(A, rankCoordinate), new Rook(team));
         boards.put(new Position(B, rankCoordinate), new Knight(team));
         boards.put(new Position(C, rankCoordinate), new Bishop(team));
@@ -42,7 +42,7 @@ public class BoardFactory {
         boards.put(new Position(H, rankCoordinate), new Rook(team));
     }
 
-    private static void createPiecesBy(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Piece piece) {
+    private static void addPiecesBy(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Piece piece) {
         for (FileCoordinate value : FileCoordinate.values()) {
             boards.put(new Position(value, rankCoordinate), piece);
         }

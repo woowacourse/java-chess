@@ -10,15 +10,6 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static void printRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate) {
-        for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
-            Position position = new Position(fileCoordinate, rankCoordinate);
-            Piece piece = boards.get(position);
-            String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getTeam());
-            System.out.print(message);
-        }
-    }
-
     public void printStart() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
@@ -31,6 +22,15 @@ public class OutputView {
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
             printRank(boards, rankCoordinate);
             System.out.println();
+        }
+    }
+
+    private void printRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate) {
+        for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
+            Position position = new Position(fileCoordinate, rankCoordinate);
+            Piece piece = boards.get(position);
+            String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getTeam());
+            System.out.print(message);
         }
     }
 
