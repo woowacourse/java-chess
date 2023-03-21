@@ -17,30 +17,38 @@ public class Board {
     }
 
     public boolean checkTurn(Position position, Color turn) {
-        Piece piece = findPieceToMove(position);
-        return piece.isRightTurn(turn);
+        validatePieceToMove(position);
+        return pieces.get(position).isRightTurn(turn);
     }
 
     public void move(Position source, Position target) {
-        Piece sourcePiece = findPieceToMove(source);
-        Piece targetPiece = pieces.get(target);
-
-        checkRightTarget(sourcePiece, targetPiece);
-        checkPieceReachable(source, target);
-        checkNotCrossOtherPiece(source, target);
-
+        validateMove(source, target);
         movePiece(source, target);
     }
 
-    private Piece findPieceToMove(Position position) {
+    private void validateMove(Position source, Position target) {
+        validatePieceToMove(source);
+        validateRightTarget(source, target);
+        validatePieceReachable(source, target);
+        validateNotCrossOtherPiece(source, target);
+    }
+
+    private void validatePieceToMove(Position position) {
         Piece piece = pieces.get(position);
         if (piece == null) {
             throw new IllegalArgumentException("움직일 기물이 없습니다");
         }
-        return piece;
     }
 
-    private void checkPieceReachable(Position source, Position target) {
+    private void validateRightTarget(Position source, Position target) {
+        Piece sourcePiece = pieces.get(source);
+        Piece targetPiece = pieces.get(target);
+        if (!sourcePiece.isRightTarget(targetPiece)) {
+            throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
+        }
+    }
+
+    private void validatePieceReachable(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
         Piece targetPiece = pieces.get(target);
         Move move = new Move(source, target);
@@ -49,21 +57,15 @@ public class Board {
         }
     }
 
-    private void checkRightTarget(Piece sourcePiece, Piece targetPiece) {
-        if (!sourcePiece.isRightTarget(targetPiece)) {
-            throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
-        }
-    }
-
-    private void checkNotCrossOtherPiece(Position source, Position target) {
+    private void validateNotCrossOtherPiece(Position source, Position target) {
         Move move = new Move(source, target);
         Set<Position> route = move.findRoute();
         for (Position position : route) {
-            checkEmpty(position);
+            validateEmpty(position);
         }
     }
 
-    private void checkEmpty(Position position) {
+    private void validateEmpty(Position position) {
         if (!isEmpty(position)) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
