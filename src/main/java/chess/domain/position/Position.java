@@ -33,9 +33,16 @@ public class Position {
     }
 
     public static Position from(String positionCommand) {
+        validatePositionCommandLength(positionCommand);
         char fileCommand = positionCommand.charAt(FILE_INDEX);
         char rankCommand = positionCommand.charAt(RANK_INDEX);
         return of(File.of(fileCommand), Rank.of(rankCommand));
+    }
+
+    private static void validatePositionCommandLength(String positionCommand){
+        if(positionCommand.length() != 2){
+            throw new IllegalArgumentException("올바르지 않은 포지션 이름입니다.");
+        }
     }
 
     public boolean isNear(Position other) {
@@ -103,6 +110,13 @@ public class Position {
 
     public boolean isSameRank(Rank other) {
         return rank.equals(other);
+    }
+
+    public boolean isInvalid() {
+        if (rank == null || file == null) {
+            return true;
+        }
+        return false;
     }
 
     @Override

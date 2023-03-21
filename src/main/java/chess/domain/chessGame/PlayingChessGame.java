@@ -22,11 +22,25 @@ public class PlayingChessGame implements ChessGame {
     @Override
     public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) { //b1
         Position currentPosition = Position.from(currentPositionSymbol);
-        checkTurn(currentPosition);
         Position nextPosition = Position.from(nextPositionSymbol);
+        checkCurrentAndNextPosition(currentPosition, nextPosition);
+        checkTurn(currentPosition);
         board.move(currentPosition, nextPosition);
         turnColor = turnColor.getOppositeColor();
         return this;
+    }
+
+    //TODO 포지션 null체크, piece null 체크
+
+    private void checkCurrentAndNextPosition(Position currentPosition, Position nextPosition){
+        checkInvalidPosition(currentPosition);
+        checkInvalidPosition(nextPosition);
+    }
+
+    private void checkInvalidPosition(Position position) {
+        if(position.isInvalid()){
+            throw new IllegalArgumentException("기물이 이동할 수 없는 위치입니다.");
+        }
     }
 
     private void checkTurn(Position currentPosition) {
