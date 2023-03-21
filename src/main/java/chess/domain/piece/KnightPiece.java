@@ -24,6 +24,6 @@ public class KnightPiece extends Piece {
 
     @Override
     public boolean canJump() {
-        return false;
+        return true;
     }
 }
