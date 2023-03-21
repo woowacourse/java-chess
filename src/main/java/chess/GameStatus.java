@@ -1,7 +1,7 @@
 package chess;
 
 public enum GameStatus {
-    START,
+    READY,
     END,
-    MOVE
+    RUN
 }

@@ -1,10 +1,5 @@
-package chess;
+package chess.command;
 
-import chess.command.Command;
-import chess.command.CommandType;
-import chess.command.EndCommand;
-import chess.command.MoveCommand;
-import chess.command.StartCommand;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Function;
