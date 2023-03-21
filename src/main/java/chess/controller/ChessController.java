@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.command.*;
 import chess.domain.File;
 import chess.domain.Rank;
 import chess.domain.Square;
@@ -10,12 +11,17 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ChessController {
-    private static final int MOVE_COMMAND_LENGTH = 3;
+    private static final Map<String, CommandAction> commands = new HashMap<>();
+    private static final int SOURCE_SQUARE_INDEX = 0;
+    private static final int TARGET_SQUARE_INDEX = 1;
+
     private final InputView inputView;
     private final OutputView outputView;
     private Board board;
@@ -23,35 +29,32 @@ public class ChessController {
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.board = BoardFactory.create();
+        commands.put("start", new StartCommandAction(ignored -> initializeBoard()));
+        commands.put("move", new MoveCommandAction(this::movePiece));
+        commands.put("end", new EndCommandAction());
     }
 
     public void run() {
         showStartMessage();
-        boolean isContinue = true;
-        while (isContinue) {
-            isContinue = repeat(this::playGame);
+        CommandAction currentAction = new WaitingCommandAction();
+
+        while (currentAction.isRunnable()) {
+            currentAction = repeat(this::play);
         }
     }
 
-    private boolean playGame() {
-        String command = inputView.readCommand();
-        if (command.equals("end")) {
-            return false;
-        }
-        if (command.equals("start")) {
-            initializeBoard();
-            return true;
-        }
-        if (command.contains("move")) {
-            String[] commands = command.split(" ");
-            validateMoveCommand(commands);
-            movePiece(commands);
-            return true;
-        }
-        throw new IllegalArgumentException("해당 명령어는 존재하지 않습니다.");
+    private CommandAction play() {
+        CommandAction currentAction;
+        String inputCommand = inputView.readCommand();
+        Command command = new Command(inputCommand);
+        CommandAction action = commands.get(command.getName());
+        action.execute(command);
+        currentAction = action;
+        return currentAction;
     }
 
-    private Boolean repeat(Supplier<Boolean> supplier) {
+    private CommandAction repeat(Supplier<CommandAction> supplier) {
         try {
             return supplier.get();
         } catch (Exception e) {
@@ -60,20 +63,14 @@ public class ChessController {
         }
     }
 
-    private void initializeBoard() {
+    public void initializeBoard() {
         board = BoardFactory.create();
         showBoard();
     }
 
-    private void validateMoveCommand(final String[] commands) {
-        if (commands.length != MOVE_COMMAND_LENGTH) {
-            throw new IllegalArgumentException("이동할 기물과 이동할 위치를 입력해주세요.");
-        }
-    }
-
-    private void movePiece(final String[] commands) {
-        Square sourceSquare = convertSquare(commands[1]);
-        Square targetSquare = convertSquare(commands[2]);
+    private void movePiece(final List<String> parameters) {
+        Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
+        Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
         board.makeMove(sourceSquare, targetSquare);
         showBoard();
     }
