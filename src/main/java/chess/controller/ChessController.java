@@ -6,8 +6,11 @@ import chess.view.OutputView;
 
 public class ChessController {
 
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
+
     public void run() {
-        OutputView.printGameStartInfo();
+        outputView.printGameStartInfo();
         final ChessService chessService = new ChessService();
 
         while (!chessService.isEnd()) {
@@ -16,9 +19,9 @@ public class ChessController {
         }
     }
 
-    private static void printBoard(final ChessService chessService) {
+    private void printBoard(final ChessService chessService) {
         if (!chessService.isEnd()) {
-            OutputView.printBoard(chessService.getBoard());
+            outputView.printBoard(chessService.getBoard());
         }
     }
 
@@ -27,16 +30,16 @@ public class ChessController {
         try {
             chessService.execute(commandRequest);
         } catch (Exception e) {
-            OutputView.printExceptionMessage(e);
+            outputView.printExceptionMessage(e);
             playChess(chessService);
         }
     }
 
     private CommandRequest readRequest() {
         try {
-            return InputView.readRequest();
+            return inputView.readRequest();
         } catch (IllegalArgumentException e) {
-            OutputView.printExceptionMessage(e);
+            outputView.printExceptionMessage(e);
             return readRequest();
         }
     }

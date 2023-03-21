@@ -47,7 +47,7 @@ public class ChessService {
     }
 
     public Map<Position, Piece> getBoard() {
-        assert (state != NotStarted.getInstance());
+        assert (state == NotStarted.getInstance());
         return board.getBoard();
     }
 }
