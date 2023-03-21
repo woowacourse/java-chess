@@ -21,14 +21,14 @@ public final class ChessGameController {
         }
     }
 
-    private void playGame(List<String> inputs) {
+    private void playGame(final List<String> inputs) {
         gameStatus = gameStatus.transition(inputs);
         final ChessBoardDTO chessBoardDTO = gameStatus.playTurn(inputs);
 
         OutputView.printChessBoard(chessBoardDTO);
     }
 
-    private void retryOnError(Consumer<List<String>> playGame) {
+    private void retryOnError(final Consumer<List<String>> playGame) {
         try {
             playGame.accept(InputView.readline());
         } catch (IllegalStateException exception) {

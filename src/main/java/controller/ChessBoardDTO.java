@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public final class ChessBoardDTO {
 
+    private static final int ROW_SIZE = 8;
     private final List<List<String>> rowDTOs;
 
     private ChessBoardDTO(final List<List<String>> rowDTOs) {
@@ -21,7 +22,7 @@ public final class ChessBoardDTO {
     public static ChessBoardDTO from(final ChessBoard chessBoard) {
         List<List<String>> rowDTOs = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < ROW_SIZE; i++) {
             rowDTOs.add(convertRowToChessBoardElement(chessBoard, i));
         }
 

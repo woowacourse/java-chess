@@ -19,7 +19,7 @@ public abstract class GameStatus {
 
     public abstract boolean isKeepGaming();
 
-    public final GameStatus transition(List<String> inputs) {
+    public final GameStatus transition(final List<String> inputs) {
         final Command command = Command.from(inputs.get(COMMAND_INDEX));
 
         if (command == Command.START) {

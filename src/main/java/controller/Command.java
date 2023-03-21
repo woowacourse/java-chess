@@ -6,7 +6,7 @@ public enum Command {
 
     START, END, MOVE;
 
-    public static Command from(String input) {
+    public static Command from(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(input.toUpperCase()))
                 .findFirst()
