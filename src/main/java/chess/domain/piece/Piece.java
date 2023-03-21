@@ -8,11 +8,11 @@ import java.util.List;
 public abstract class Piece {
 
     protected final Color color;
-    private final PieceType pieceType;
+    private final PieceType type;
 
-    public Piece(final Color color, PieceType pieceType) {
+    public Piece(final Color color, PieceType type) {
         this.color = color;
-        this.pieceType = pieceType;
+        this.type = type;
     }
 
     public abstract Path searchPathTo(Position from, Position to, Piece destination);
@@ -48,6 +48,6 @@ public abstract class Piece {
     }
 
     public boolean isTypeOf(PieceType pieceType) {
-        return this.pieceType == pieceType;
+        return this.type == pieceType;
     }
 }
