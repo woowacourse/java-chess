@@ -25,15 +25,15 @@ public abstract class Piece {
         return team;
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
     public String getPieceTypeName() {
         String name = pieceType.getName();
         if (team == BLACK) {
             return name.toUpperCase();
         }
         return name;
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
     }
 }

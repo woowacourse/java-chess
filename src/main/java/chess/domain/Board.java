@@ -57,18 +57,29 @@ public class Board {
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
-        Square nextSquare = src;
+        Square square = src;
         int fileMoveDirection = getMoveDirection(fileInterval);
         int rankMoveDirection = getMoveDirection(rankInterval);
         int interval = getMoveInterval(fileInterval, rankInterval);
 
-        boolean notContainPiece = true; // TODO: 같은 팀 일때만 확인하기
-        while (interval > 0 && notContainPiece) {
-            nextSquare = nextSquare.next(fileMoveDirection, rankMoveDirection);
-            notContainPiece = !value.containsKey(nextSquare);
+        boolean notContainPiece = true;
+        while (interval > 1 && notContainPiece) {
+            square = square.next(fileMoveDirection, rankMoveDirection);
+            notContainPiece = !value.containsKey(square);
             interval--;
         }
-        return notContainPiece;
+
+        Square dst = src.next(fileMoveDirection, rankMoveDirection);
+        return notContainPiece && isDifferentTeam(src, dst);
+    }
+
+    public boolean isDifferentTeam(final Square src, final Square dst) {
+        if (!value.containsKey(dst)) {
+            return true;
+        }
+        Team dstTeam = findPieceBy(dst).getTeam();
+        Team srcTeam = findPieceBy(src).getTeam();
+        return dstTeam != srcTeam;
     }
 
     private int getMoveDirection(final int interval) {
