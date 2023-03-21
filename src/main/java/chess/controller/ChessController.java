@@ -1,73 +1,67 @@
 package chess.controller;
 
+import chess.domain.ChessGame;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
-import chess.util.Retryable;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public final class ChessController {
 
     public static final int RANK_SIZE = 8;
-    private ChessBoard chessBoard;
-    private GameState state = GameState.READY;
 
     public void run() {
-        startGame();
-        if (state == GameState.RUNNING) {
-            playGame();
-        }
-    }
-
-    private void startGame() {
         OutputView.printWelcomeMessage();
-        if (getCommand() == Command.START) {
-            state = GameState.RUNNING;
-            chessBoard = new ChessBoard();
-            OutputView.printChessBoard(getChessBoardMark(chessBoard));
-            return;
-        }
-        state = GameState.END;
+        ChessGame chessGame = new ChessGame();
+
+        do {
+            checkException(this::playGame, chessGame);
+        } while (chessGame.isNotEnd());
     }
 
-    private Command getCommand() {
-        return Retryable.retryWhenException(this::requestCommand);
-    }
-
-    private Command requestCommand() {
-        final Command command = InputView.readCommand();
-        if (state == GameState.READY && command == Command.MOVE) {
-            throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
-        }
-
-        if (state == GameState.RUNNING && command == Command.START) {
-            throw new IllegalArgumentException("게임을 진행 중에는 새로운 게임을 시작할 수 없습니다.");
-        }
-
-        return command;
-    }
-
-    private void playGame() {
-        while (getCommand() != Command.END) {
-            movePiece();
-        }
-        state = GameState.END;
-    }
-
-    private void movePiece() {
+    private <T> void checkException(Consumer<T> consumer, T parameter) {
         try {
-            final Coordinate from = Coordinate.of(InputView.getCoordinate());
-            final Coordinate to = Coordinate.of(InputView.getCoordinate());
-            chessBoard.move(from, to);
+            consumer.accept(parameter);
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-        OutputView.printChessBoard(getChessBoardMark(chessBoard));
+    }
+
+    private void playGame(ChessGame chessGame) {
+        Command command = InputView.readCommand();
+        processCommand(chessGame, command);
+    }
+
+    private void processCommand(ChessGame chessGame, Command command) {
+        if (command == Command.START) {
+            startGame(chessGame);
+        }
+        if (command == Command.MOVE) {
+            movePiece(chessGame);
+        }
+        if (command == Command.END) {
+            chessGame.end();
+        }
+    }
+
+    private void startGame(ChessGame chessGame) {
+        chessGame.start();
+        OutputView.printChessBoard(getChessBoardMark(chessGame.getChessBoard()));
+    }
+
+    private void movePiece(ChessGame chessGame) {
+        final Coordinate from = Coordinate.of(InputView.getCoordinate());
+        final Coordinate to = Coordinate.of(InputView.getCoordinate());
+
+        chessGame.move(from, to);
+        OutputView.printChessBoard(getChessBoardMark(chessGame.getChessBoard()));
     }
 
     private List<List<String>> getChessBoardMark(final ChessBoard chessBoard) {
