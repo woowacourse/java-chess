@@ -1,20 +1,36 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.strategy.PawnDirection;
+import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final int MOVE_UP_TWO = 2;
-    private static final int MOVE_DOWN_TWO = -2;
-    private static final int MOVE_UP_ONE = 1;
-    private static final int MOVE_DOWN_ONE = -1;
-    private static final int MOVE_RIGHT = 1;
-    private static final int MOVE_LEFT = -1;
-    private static final int SAME_POSITION = 0;
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
+    private static final List<PawnDirection> WHITE_PAWN_FIRST_MOVE_DIRECTION = List.of(
+        PawnDirection.WHITE_PAWN_MOVE,
+        PawnDirection.WHITE_PAWN_DOUBLE_MOVE,
+        PawnDirection.WHITE_PAWN_RIGHT_DIAGONAL_ATTACK,
+        PawnDirection.WHITE_PAWN_LEFT_DIAGONAL_ATTACK
+    );
+
+    private static final List<PawnDirection> WHITE_PAWN_MOVE_DIRECTION = List.of(
+        PawnDirection.WHITE_PAWN_MOVE,
+        PawnDirection.WHITE_PAWN_RIGHT_DIAGONAL_ATTACK,
+        PawnDirection.WHITE_PAWN_LEFT_DIAGONAL_ATTACK
+    );
+
+    private static final List<PawnDirection> BLACK_PAWN_FIRST_MOVE_DIRECTION = List.of(
+        PawnDirection.BLACK_PAWN_MOVE,
+        PawnDirection.BLACK_PAWN_DOUBLE_MOVE,
+        PawnDirection.BLACK_PAWN_RIGHT_DIAGONAL_ATTACK,
+        PawnDirection.BLACK_PAWN_LEFT_DIAGONAL_ATTACK
+    );
+
+    private static final List<PawnDirection> BLACK_PAWN_MOVE_DIRECTION = List.of(
+        PawnDirection.BLACK_PAWN_MOVE,
+        PawnDirection.BLACK_PAWN_RIGHT_DIAGONAL_ATTACK,
+        PawnDirection.BLACK_PAWN_LEFT_DIAGONAL_ATTACK
+    );
 
     private boolean isFirstMove;
 
@@ -25,57 +41,58 @@ public class Pawn extends Piece {
 
     @Override
     public void canMove(final Position source, final Position destination) {
-        if (!validatePosition(source, destination)) {
-            throw new IllegalArgumentException("Pawn의 움직임 범위가 올바르지 않습니다.");
+        if (!this.isFirstMove) {
+            validateAfterMove(source, destination);
         }
-    }
-
-    private boolean validatePosition(final Position source, final Position destination) {
-        int subRow = destination.calculateDistanceOfRow(source);
-        int subCol = destination.calculateDistanceOfCol(source);
-
         if (this.isFirstMove) {
             this.isFirstMove = false;
-            return canMoveAtFirst(subRow, subCol);
+            validateFirstMove(source, destination);
         }
-        return canMoveAfterFirst(subRow, subCol);
     }
 
-    private boolean canMoveAtFirst(final int subRow, final int subCol) {
+    private void validateFirstMove(final Position source, final Position destination) {
         if (isWhiteTeam()) {
-            return isLowerPawnMoveAtFirst(subRow, subCol) || isLowerPawnAttack(subRow, subCol);
+            validateWhiteTeamFirstMoveDirection(source, destination);
         }
-        return isUpperPawnMoveAtFirst(subRow, subCol) || isUpperPawnAttack(subRow, subCol);
+        if (isBlackTeam()) {
+            validateBlackTeamFirstMoveDirection(source, destination);
+        }
     }
 
-    private boolean canMoveAfterFirst(final int subRow, final int subCol) {
+    private void validateAfterMove(final Position source, final Position destination) {
         if (isWhiteTeam()) {
-            return isLowerPawnMoveAfterFirst(subRow, subCol) || isLowerPawnAttack(subRow, subCol);
+            validateWhiteTeamMoveDirectionAfterFirst(source, destination);
         }
-        return isUpperPawnMoveAfterFirst(subRow, subCol) || isUpperPawnAttack(subRow, subCol);
+        if (isBlackTeam()) {
+            validateBlackTeamMoveDirectionAfterFirst(source, destination);
+        }
     }
 
-    private boolean isUpperPawnAttack(final int subRow, final int subCol) {
-        return (subCol == MOVE_RIGHT && subRow == MOVE_DOWN_ONE) || (subCol == MOVE_LEFT && subRow == MOVE_DOWN_ONE);
+    private void validateWhiteTeamFirstMoveDirection(final Position source, final Position destination) {
+        WHITE_PAWN_FIRST_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("White Pawn의 첫 움직임으로 올바르지 않습니다."));
     }
 
-    private boolean isLowerPawnAttack(final int subRow, final int subCol) {
-        return (subCol == MOVE_RIGHT && subRow == MOVE_UP_ONE) || (subCol == MOVE_LEFT && subRow == MOVE_UP_ONE);
+    private void validateWhiteTeamMoveDirectionAfterFirst(final Position source, final Position destination) {
+        WHITE_PAWN_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("White Pawn의 움직임으로 올바르지 않습니다."));
     }
 
-    private boolean isUpperPawnMoveAtFirst(final int subRow, final int subCol) {
-        return subCol == SAME_POSITION && (subRow == MOVE_DOWN_ONE || subRow == MOVE_DOWN_TWO);
+    private void validateBlackTeamFirstMoveDirection(final Position source, final Position destination) {
+        BLACK_PAWN_FIRST_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Black Pawn의 첫 움직임으로 올바르지 않습니다."));
     }
 
-    private boolean isLowerPawnMoveAtFirst(final int subRow, final int subCol) {
-        return subCol == SAME_POSITION && (subRow == MOVE_UP_ONE || subRow == MOVE_UP_TWO);
-    }
-
-    private boolean isUpperPawnMoveAfterFirst(final int subRow, final int subCol) {
-        return subCol == SAME_POSITION && subRow == MOVE_DOWN_ONE;
-    }
-
-    private boolean isLowerPawnMoveAfterFirst(final int subRow, final int subCol) {
-        return subCol == SAME_POSITION && subRow == MOVE_UP_ONE;
+    private void validateBlackTeamMoveDirectionAfterFirst(final Position source, final Position destination) {
+        BLACK_PAWN_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Black Pawn의 움직임으로 올바르지 않습니다."));
     }
 }

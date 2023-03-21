@@ -1,13 +1,22 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.strategy.Vector;
+import java.util.List;
 
 public class Queen extends Piece {
 
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
+    private static final int MOVE_MAX_RANGE = 8;
+    private static final List<Vector> QUEEN_MOVE_VECTOR = List.of(
+        Vector.NORTH,
+        Vector.EAST,
+        Vector.SOUTH,
+        Vector.WEST,
+        Vector.NORTH_EAST,
+        Vector.NORTH_WEST,
+        Vector.SOUTH_EAST,
+        Vector.SOUTH_WEST
+    );
 
     public Queen(final Team team) {
         super(team);
@@ -19,19 +28,22 @@ public class Queen extends Piece {
     }
 
     private void validateMove(final Position source, final Position destination) {
-        int subRow = destination.calculateDistanceOfRow(source);
-        int subCol = destination.calculateDistanceOfCol(source);
+        validateMoveDirection(source, destination);
+        validateRangeOfMove(source, destination);
+    }
 
-        if (!validateMoveLikeBishop(subRow, subCol) && !validateMoveLikeRook(subRow, subCol)) {
-            throw new IllegalArgumentException("Queen의 이동 범위가 올바르지 않습니다.");
+    private void validateMoveDirection(final Position source, final Position destination) {
+        QUEEN_MOVE_VECTOR.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("QUEEN은 대각선으로만 움직일 수 있습니다."));
+    }
+
+    private void validateRangeOfMove(final Position source, final Position destination) {
+        int absSubOfCol = Math.abs(destination.calculateDistanceOfCol(source));
+        int absSubOfRow = Math.abs(destination.calculateDistanceOfRow(source));
+        if (!(absSubOfRow < MOVE_MAX_RANGE && absSubOfCol < MOVE_MAX_RANGE)) {
+            throw new IllegalArgumentException("QUEEN의 이동범위는 최대 8칸 입니다.");
         }
-    }
-
-    private boolean validateMoveLikeBishop(final int subRow, final int subCol) {
-        return Math.abs(subCol) == Math.abs(subRow);
-    }
-
-    private boolean validateMoveLikeRook(final int subRow, final int subCol) {
-        return subRow == 0 || subCol == 0;
     }
 }

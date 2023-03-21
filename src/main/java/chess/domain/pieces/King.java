@@ -1,14 +1,22 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.strategy.Vector;
 import java.util.List;
 
-public class King extends Piece{
+public class King extends Piece {
 
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
+    private static final int MOVE_MAX_RANGE = 1;
+    private static final List<Vector> KING_MOVE_VECTOR = List.of(
+        Vector.NORTH,
+        Vector.EAST,
+        Vector.SOUTH,
+        Vector.WEST,
+        Vector.NORTH_EAST,
+        Vector.NORTH_WEST,
+        Vector.SOUTH_EAST,
+        Vector.SOUTH_WEST
+    );
 
     public King(final Team team) {
         super(team);
@@ -16,15 +24,22 @@ public class King extends Piece{
 
     @Override
     public void canMove(final Position source, final Position destination) {
-        List<List<Integer>> possiblePosition = List.of(List.of(1,0), List.of(0,1), List.of(1,1));
+        validateMoveDirection(source, destination);
+        validateRangeOfMove(source, destination);
+    }
 
-        int absSubRow = Math.abs(destination.calculateDistanceOfRow(source));
-        int absSubCol = Math.abs(destination.calculateDistanceOfCol(source));
+    private void validateMoveDirection(final Position source, final Position destination) {
+        KING_MOVE_VECTOR.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("KING은 팔방으로 움직일 수 있습니다."));
+    }
 
-        List<Integer> subPosition = List.of(absSubRow, absSubCol);
-
-        if (!possiblePosition.contains(subPosition)) {
-            throw new IllegalArgumentException("올바른 위치가 아닙니다.");
+    private void validateRangeOfMove(final Position source, final Position destination) {
+        int absSubOfCol = Math.abs(destination.calculateDistanceOfCol(source));
+        int absSubOfRow = Math.abs(destination.calculateDistanceOfRow(source));
+        if (!(absSubOfRow <= MOVE_MAX_RANGE && absSubOfCol <= MOVE_MAX_RANGE)) {
+            throw new IllegalArgumentException("KING의 이동범위는 최대 1칸 입니다.");
         }
     }
 }

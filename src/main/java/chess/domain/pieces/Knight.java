@@ -1,14 +1,21 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.strategy.KnightDirection;
 import java.util.List;
 
 public class Knight extends Piece {
 
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
+    private static final List<KnightDirection> KNIGHT_DIRECTIONS = List.of(
+        KnightDirection.KNIGHT_UP_RIGHT,
+        KnightDirection.KNIGHT_UP_LEFT,
+        KnightDirection.KNIGHT_RIGHT_UP,
+        KnightDirection.KNIGHT_RIGHT_DOWN,
+        KnightDirection.KNIGHT_DOWN_RIGHT,
+        KnightDirection.KNIGHT_DOWN_LEFT,
+        KnightDirection.KNIGHT_LEFT_UP,
+        KnightDirection.KNIGHT_LEFT_DOWN
+    );
 
     public Knight(final Team team) {
         super(team);
@@ -16,14 +23,22 @@ public class Knight extends Piece {
 
     @Override
     public void canMove(final Position source, final Position destination) {
-        List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
+        validateMoveDirection(source, destination);
+        validateRangeOfMove(source, destination);
+    }
 
-        int absOfRow = Math.abs(destination.calculateDistanceOfRow(source));
-        int absOfCol = Math.abs(destination.calculateDistanceOfCol(source));
-        List<Integer> newPosition = List.of(absOfCol, absOfRow);
+    private void validateMoveDirection(final Position source, final Position destination) {
+        KNIGHT_DIRECTIONS.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Knight는 "));
+    }
 
-        if (!possibleSubPosition.contains(newPosition)) {
-            throw new IllegalArgumentException("Knight의 이동 범위가 올바르지 않습니다.");
+    private void validateRangeOfMove(final Position source, final Position destination) {
+        int absSubOfCol = Math.abs(destination.calculateDistanceOfCol(source));
+        int absSubOfRow = Math.abs(destination.calculateDistanceOfRow(source));
+        if ((absSubOfRow == 2 && absSubOfCol != 1) || (absSubOfRow == 1 && absSubOfCol != 2)) {
+            throw new IllegalArgumentException("Knight의 올바른 이동범위가 아닙니다.");
         }
     }
 }
