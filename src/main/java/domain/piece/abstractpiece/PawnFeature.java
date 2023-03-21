@@ -1,5 +1,6 @@
-package domain.piece;
+package domain.piece.abstractpiece;
 
+import domain.piece.Color;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
@@ -8,7 +9,7 @@ public abstract class PawnFeature extends Piece {
     private static final int WHITE_DIRECTION = -1;
     private static final int BLACK_DIRECTION = 1;
 
-    public PawnFeature(final Color color) {
+    protected PawnFeature(final Color color) {
         super(color, PieceType.PAWN);
     }
 

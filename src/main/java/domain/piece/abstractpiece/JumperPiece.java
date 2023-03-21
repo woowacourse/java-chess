@@ -1,7 +1,8 @@
-package domain.piece;
+package domain.piece.abstractpiece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
+import domain.piece.Color;
+import domain.position.Position;
+import domain.position.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 

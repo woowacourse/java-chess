@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.PositionFactory;
+import domain.position.Position;
+import domain.position.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

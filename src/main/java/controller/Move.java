@@ -1,7 +1,7 @@
 package controller;
 
 import domain.chessgame.ChessGame;
-import domain.coordinate.PositionFactory;
+import domain.position.PositionFactory;
 
 import java.util.List;
 

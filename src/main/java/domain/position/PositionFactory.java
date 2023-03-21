@@ -1,4 +1,4 @@
-package domain.coordinate;
+package domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
