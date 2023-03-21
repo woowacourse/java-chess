@@ -29,7 +29,7 @@ public enum ChessCommand {
         if (chessCommand == START) {
             throw new IllegalArgumentException("게임 중에는 시작 명령을 입력 할 수 없습니다.");
         }
-        if (inputCommand.size() != MOVE_INPUT_SIZE) {
+        if (chessCommand == MOVE && inputCommand.size() != MOVE_INPUT_SIZE) {
             throw new IllegalArgumentException("move를 하기 위해서는 형식의 맞는 입력 해야합니다. 예) move b2 b3");
         }
 
