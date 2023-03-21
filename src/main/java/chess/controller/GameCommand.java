@@ -8,6 +8,8 @@ public enum GameCommand {
     END("end"),
     MOVE("move");
 
+    public static final int MOVE_COMMAND_SIZE = 3;
+    public static final int DEFAULT_COMMAND_SIZE = 1;
     private static final String COMMAND_NOT_FOUND_MESSAGE = "해당하는 명령어가 없습니다.";
 
     private final String value;
