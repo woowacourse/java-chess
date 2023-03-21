@@ -12,7 +12,7 @@ public enum Move {
     UP_RIGHT(1, 1),
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(1, -1),
-    
+
     UP_UP(0, 2),
     DOWN_DOWN(0, -2),
 
@@ -72,7 +72,10 @@ public enum Move {
     }
 
     public static boolean isMoveDiagonal(final Move move) {
-        return move == Move.UP_RIGHT || move == Move.DOWN_RIGHT || move == Move.UP_LEFT || move == Move.DOWN_LEFT;
+        return move == Move.UP_RIGHT
+                || move == Move.DOWN_RIGHT
+                || move == Move.UP_LEFT
+                || move == Move.DOWN_LEFT;
     }
 
     public int getFile() {

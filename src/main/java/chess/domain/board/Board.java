@@ -75,7 +75,7 @@ public class Board {
     }
 
     private boolean isBlocked(final Square source, final Square target, final Move move) {
-        final Square nextSquare = source.nextSquare(source, move.getFile(), move.getRank());
+        final Square nextSquare = source.nextSquare(source, move);
 
         if (nextSquare.equals(target)) {
             return false;

@@ -11,26 +11,11 @@ public class Square {
         this.rank = rank;
     }
 
-    public boolean isMovableToTarget(final Square target, final int fileWeight, final int rankWeight) {
-        final int targetFile = target.getFile();
-        final int targetRank = target.getRank();
+    public Square nextSquare(final Square source, final Move move) {
+        final int nextFile = source.getFile() + move.getFile();
+        final int nextRank = source.getRank() + move.getRank();
 
-        return isMovableToTargetFile(targetFile, fileWeight) && isMovableToTargetRank(targetRank, rankWeight);
-    }
-
-    private boolean isMovableToTargetFile(final int targetFile, final int fileWeight) {
-        return getFile() + fileWeight == targetFile;
-    }
-
-    private boolean isMovableToTargetRank(final int targetRank, final int rankWeight) {
-        return getRank() + rankWeight == targetRank;
-    }
-
-    public Square nextSquare(final Square source, final int fileWeight, final int rankWeight) {
-        final int sourceFile = source.getFile() + fileWeight;
-        final int sourceRank = source.getRank() + rankWeight;
-
-        return new Square(File.findFile(sourceFile), Rank.findRank(sourceRank));
+        return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
     }
 
     @Override
