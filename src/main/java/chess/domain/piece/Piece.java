@@ -23,6 +23,10 @@ public final class Piece {
         return this.color != other.color;
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public String formatName() {
         return pieceState.formatName(color);
     }

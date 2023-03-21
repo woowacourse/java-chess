@@ -19,15 +19,22 @@ public class Board {
         initializePiece();
     }
 
-    public Map<Position, String> move(Position currentPosition, Position nextPosition) {
+    public Map<Position, String> move(Position currentPosition, Position nextPosition, Color thisTurn) {
         Piece piece = board.get(currentPosition);
         List<Position> routePositions = piece.move(currentPosition, nextPosition);
+        validateThisTurnColor(thisTurn, piece);
 
         if (piece.isPawn()) {
             return movePawn(currentPosition, nextPosition, routePositions);
         }
 
         return moveGeneralPiece(nextPosition, piece, routePositions);
+    }
+
+    private void validateThisTurnColor(Color thisTurn, Piece piece) {
+        if (piece.isSameColor(thisTurn)) {
+            throw new IllegalArgumentException("이번 차례에 움직일 수 있는 색의 기물이 아닙니다.");
+        }
     }
 
     private Map<Position, String> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
