@@ -1,8 +1,11 @@
 package view;
 
+import domain.board.Board;
 import domain.board.ChessGame;
+import domain.piece.Coordinate;
 import domain.square.Square;
-import domain.board.Rank;
+
+import java.util.Map;
 
 public final class OutputView {
 
@@ -13,20 +16,33 @@ public final class OutputView {
     public static final String GAME_END_MESSAGE = "게임을 종료합니다.";
 
     public void printBoard(final ChessGame chessGame) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Rank rank : chessGame.getBoard().getRanks()) {
-            stringBuilder.insert(0, makeRank(rank));
-        }
-        System.out.println(stringBuilder);
+        Board board = chessGame.getBoard();
+        Map<Coordinate, Square> squareLocations = board.getSquareLocations();
+
+        printSquares(squareLocations);
     }
 
-    private StringBuilder makeRank(final Rank rank) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Square square : rank.getSquares()) {
-            stringBuilder.append(PieceTypeMapper.getTarget(square));
+    // TODO: 뷰가 도메인에 직접적으로 의존하지 않도록 변경
+    private void printSquares(final Map<Coordinate, Square> squareLocations) {
+        StringBuilder allSquares = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            StringBuilder oneRank = makeRank(squareLocations, i);
+            allSquares.insert(0, oneRank);
+            allSquares.insert(0, System.lineSeparator());
         }
-        stringBuilder.append(System.lineSeparator());
-        return stringBuilder;
+        System.out.println(allSquares);
+    }
+
+    private static StringBuilder makeRank(
+            final Map<Coordinate, Square> squareLocations,
+            final int rankNumber
+    ) {
+        StringBuilder rank = new StringBuilder();
+        for (int col = 0; col < 8; col++) {
+            Coordinate coordinate = new Coordinate(rankNumber, col);
+            rank.append(PieceTypeMapper.getTarget(squareLocations.get(coordinate)));
+        }
+        return rank;
     }
 
     public void printGameStartMessage() {
