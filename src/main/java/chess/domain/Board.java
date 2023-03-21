@@ -74,7 +74,7 @@ public class Board {
     private void validateSameTeamPieceAndPlayer(final Position source, final Player player) {
         Piece piece = board.get(source);
 
-        if(!player.containPiece(piece)) {
+        if (!player.containPiece(piece)) {
             throw new IllegalArgumentException("상대방 기물을 움직이려고 시도하고 있습니다. 다른 체스말을 선택해주세요");
         }
     }

@@ -5,7 +5,8 @@ import chess.domain.team.Team;
 import java.util.List;
 
 import static chess.domain.piece.Direction.*;
-import static chess.domain.team.Team.*;
+import static chess.domain.team.Team.BLACK;
+import static chess.domain.team.Team.WHITE;
 
 public final class Pawn extends Piece {
 

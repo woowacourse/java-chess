@@ -5,7 +5,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static chess.domain.order.OrderCase.*;

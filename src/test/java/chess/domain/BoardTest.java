@@ -6,7 +6,6 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.team.Team;
-import chess.domain.team.player.BlackPieceGenerator;
 import chess.domain.team.player.Player;
 import chess.domain.team.player.WhitePieceGenerator;
 import org.junit.jupiter.api.BeforeEach;
