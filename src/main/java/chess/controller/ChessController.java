@@ -24,7 +24,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
 
     public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame) {
         this.inputView = inputView;
@@ -42,13 +42,22 @@ public class ChessController {
     }
 
     private GameState play() {
-        final List<String> commandInputs = inputView.readGameCommand();
-        final GameState gameState = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
-        stateConsumerMap.get(gameState).accept(commandInputs);
-        return gameState;
+        try {
+            final List<String> commandInputs = inputView.readGameCommand();
+            final GameState gameState = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
+            stateConsumerMap.get(gameState).accept(commandInputs);
+            return gameState;
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println(e.getMessage());
+            return GameState.EMPTY;
+        }
     }
 
     private void start(final List<String> commandInputs) {
+        if (chessGame.hasRun()) {
+            throw new IllegalArgumentException("게임이 이미 실행되고 있습니다.");
+        }
+        chessGame = ChessGame.createWithSetBoard();
         outputView.printBoard(chessGame.getExistingPieces());
     }
 
