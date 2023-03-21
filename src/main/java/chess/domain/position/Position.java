@@ -4,56 +4,64 @@ import java.util.Objects;
 
 public final class Position {
 
-	private final char file;
-	private final int rank;
+	private final File file;
+	private final Rank rank;
 
-	private Position(final char file, final int rank) {
+	private Position(final File file, final Rank rank) {
 		this.file = file;
 		this.rank = rank;
 	}
 
-	public static Position of(final char file, final int rank) {
+	public static Position of(final File file, final Rank rank) {
 		return new Position(file, rank);
 	}
 
 	public static Position from(final String value) {
-		final char file = value.charAt(0);
-		final int rank = value.charAt(1) - '0';
+		final File file = File.from(value.charAt(0));
+		final Rank rank = Rank.from(value.charAt(1) - '0');
 		return new Position(file, rank);
 	}
 
 	public static Position side(final String value) {
-		final char file = convertFile(value.charAt(0));
-		final int rank = value.charAt(1) - '0';
+		final File file = convertFile(value);
+		final Rank rank = Rank.from(value.charAt(1) - '0');
 		return new Position(file, rank);
 	}
 
 	public static Position oppsite(final String value) {
-		final char file = value.charAt(0);
-		final int rank = convertRank(value.charAt(1));
+		final File file = File.from(value.charAt(0));
+		final Rank rank = convertRank(value);
 		return new Position(file, rank);
 	}
 
 	public static Position diagonal(final String value) {
-		final char file = convertFile(value.charAt(0));
-		final int rank = convertRank(value.charAt(1));
+		final File file = convertFile(value);
+		final Rank rank = convertRank(value);
 		return new Position(file, rank);
 	}
 
-	private static char convertFile(final char file) {
-		return (char)('h' - file + 'a');
+	private static File convertFile(final String value) {
+		return File.from((char)('h' - value.charAt(0) + 'a'));
 	}
 
-	private static int convertRank(final int rank) {
-		return 9 - (rank - '0');
+	private static Rank convertRank(final String value) {
+		return Rank.from(9 - (value.charAt(1) - '0'));
 	}
 
-	public char file() {
+	public File file() {
 		return file;
 	}
 
-	public int rank() {
+	public char fileValue(){
+		return file.fileValue();
+	}
+
+	public Rank rank() {
 		return rank;
+	}
+
+	public int rankValue(){
+		return rank.rankValue();
 	}
 
 	@Override

@@ -7,7 +7,9 @@ import java.util.Map;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.team.Team;
 import chess.initial.BoardFactory;
 
@@ -75,12 +77,12 @@ public class Board {
 
 	private List<Position> calculatePath(Position source, Position target, Direction unit) {
 		List<Position> path = new ArrayList<>();
-		char file = source.file();
-		int rank = source.rank();
-		while (file != target.file() || rank != target.rank()) {
-			file += unit.getDx();
-			rank += unit.getDy();
-			path.add(Position.of(file, rank));
+		char dFile = source.file().fileValue();
+		int dRank = source.rank().rankValue();
+		while (dFile != target.fileValue() || dRank != target.rankValue()) {
+			dFile += unit.getDx();
+			dRank += unit.getDy();
+			path.add(Position.of(File.from(dFile), Rank.from(dRank)));
 		}
 
 		return path.subList(0, path.size() - 1);

@@ -15,7 +15,7 @@ class PositionTest {
         final var expected = 'a';
 
         // when
-        final var actual = position.file();
+        final var actual = position.fileValue();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -29,7 +29,7 @@ class PositionTest {
         final var expected = 1;
 
         // when
-        final var actual = position.rank();
+        final var actual = position.rankValue();
 
         // then
         assertThat(actual).isEqualTo(expected);

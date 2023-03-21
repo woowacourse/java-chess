@@ -90,11 +90,11 @@ public enum Direction {
     }
 
     private static int diffFile(Position source, Position target) {
-        return target.file() - source.file();
+        return target.fileValue() - source.fileValue();
     }
 
     private static int diffRank(Position source, Position target) {
-        return target.rank() - source.rank();
+        return target.rankValue() - source.rankValue();
     }
 
     public int getDx() {

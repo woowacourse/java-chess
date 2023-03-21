@@ -59,8 +59,8 @@ public final class BoardFactory {
 
 	private static void fillPawn(final Map<Position, Piece> board) {
 		for (final File file : File.values()) {
-			board.put(Position.of(file.value(), 2), new Pawn(WHITE));
-			board.put(Position.of(file.value(), 7), new Pawn(BLACK));
+			board.put(Position.of(file, Rank.TWO), new Pawn(WHITE));
+			board.put(Position.of(file, Rank.SEVEN), new Pawn(BLACK));
 		}
 	}
 
@@ -77,8 +77,8 @@ public final class BoardFactory {
 	}
 
 	private static void fill(final Map<Position, Piece> board, final Rank rank, final File file) {
-		if (board.get(Position.of(file.value(), rank.value())) == null) {
-			board.put(Position.of(file.value(), rank.value()), new Empty(NONE));
+		if (board.get(Position.of(file, rank)) == null) {
+			board.put(Position.of(file, rank), new Empty(NONE));
 		}
 	}
 }
