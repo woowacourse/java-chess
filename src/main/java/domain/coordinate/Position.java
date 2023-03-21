@@ -25,26 +25,26 @@ public final class Position {
                 .get(x);
     }
 
-    public int diffY(Position otherPosition) {
+    public int diffY(final Position otherPosition) {
         return this.y - otherPosition.y;
     }
 
-    public int diffX(Position otherPosition) {
+    public int diffX(final Position otherPosition) {
         return this.x - otherPosition.x;
     }
 
-    public Position move(int moveX, int moveY) {
-        return Position.of(x + moveX, y + moveY);
+    public Position move(final Position direction) {
+        return Position.of(this.x + direction.x, this.y + direction.y);
     }
 
-    public boolean isDiagonally(Position otherPosition) {
+    public boolean isDiagonally(final Position otherPosition) {
         final int diffX = getDiffX(otherPosition);
         final int diffY = getDiffY(otherPosition);
 
         return (diffX != 0 || diffY != 0) && (diffX == diffY);
     }
 
-    public boolean isStraight(Position otherPosition) {
+    public boolean isStraight(final Position otherPosition) {
         final int diffX = getDiffX(otherPosition);
         final int diffY = getDiffY(otherPosition);
 

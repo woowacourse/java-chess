@@ -5,9 +5,6 @@ import domain.piece.Color;
 import domain.type.PieceType;
 import domain.type.Type;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Piece implements SquareStatus {
 
     protected final Color color;
@@ -16,16 +13,6 @@ public abstract class Piece implements SquareStatus {
     public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
         this.pieceType = pieceType;
-    }
-
-    @Override
-    public final Type getType() {
-        return pieceType;
-    }
-
-    @Override
-    public final Color getColor() {
-        return color;
     }
 
     @Override
@@ -48,18 +35,6 @@ public abstract class Piece implements SquareStatus {
         return this.pieceType.isDifferent(type);
     }
 
-    protected final List<Position> findPositions(final Position source, final Position target, final int moveX, final int moveY) {
-        List<Position> positions = new ArrayList<>();
-        Position position = source.move(moveX, moveY);
-
-        while (position != target) {
-            positions.add(position);
-            position = position.move(moveX, moveY);
-        }
-        return positions;
-    }
-
-
     protected final void validateMovable(final Position source, final Position target) {
         if (isMovable(source, target)) {
             return;
@@ -68,5 +43,15 @@ public abstract class Piece implements SquareStatus {
     }
 
     protected abstract boolean isMovable(final Position source, final Position target);
+
+    @Override
+    public final Type getType() {
+        return pieceType;
+    }
+
+    @Override
+    public final Color getColor() {
+        return color;
+    }
 
 }

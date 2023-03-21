@@ -2,10 +2,9 @@ package domain.piece;
 
 import domain.coordinate.Position;
 import domain.coordinate.Route;
-import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-public final class Bishop extends Piece {
+public final class Bishop extends VariableMover {
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
@@ -15,10 +14,9 @@ public final class Bishop extends Piece {
     public Route findRoute(final Position source, final Position target) {
         validateMovable(source, target);
 
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
+        final Position direction = findDirection(source, target);
 
-        return new Route(findPositions(source, target, moveX, moveY));
+        return new Route(findPositions(source, target, direction));
     }
 
     @Override
@@ -26,7 +24,8 @@ public final class Bishop extends Piece {
         return source.isDiagonally(target);
     }
 
-    private int getMoveCoordinate(final int diff) {
+    @Override
+    protected int getMoveCoordinate(final int diff) {
         if (diff < 0) {
             return -1;
         }
