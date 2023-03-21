@@ -2,13 +2,12 @@ package chess.service;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import java.util.List;
 
 public interface State {
 
     State start();
 
-    State move(Board board, List<Position> positions);
+    State move(final Board board, final Position from, final Position to);
 
     State end();
 }

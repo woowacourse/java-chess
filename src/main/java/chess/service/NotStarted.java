@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class NotStarted implements State {
 
@@ -23,7 +22,7 @@ public class NotStarted implements State {
     }
 
     @Override
-    public State move(final Board board, final List<Position> positions) {
+    public State move(final Board board, final Position from, final Position to) {
         throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
     }
 

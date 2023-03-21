@@ -10,7 +10,6 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,18 +28,17 @@ class StartedTest {
     @Test
     @DisplayName("move메서드는 board.move를 실행시켜준다.")
     void move() {
-        final List<Position> positions =
-                List.of(new Position(2, 2), new Position(2, 4));
-
+        final Position from = new Position(2, 2);
+        final Position to = new Position(2, 4);
         final Board board = new BoardFactory().createInitialBoard();
-        final State state = started.move(board, positions);
+        final State state = started.move(board, from, to);
 
         final Map<Position, Piece> pieceMap = board.getBoard();
 
         assertAll(
                 () -> assertSame(state, Started.getInstance()),
-                () -> assertFalse(pieceMap.containsKey(positions.get(0))),
-                () -> assertTrue(pieceMap.containsKey(positions.get(1)))
+                () -> assertFalse(pieceMap.containsKey(from)),
+                () -> assertTrue(pieceMap.containsKey(to))
         );
     }
 

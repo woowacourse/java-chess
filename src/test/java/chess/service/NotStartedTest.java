@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,14 +22,12 @@ class NotStartedTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("시작되지 않은 상태에서는 말을 움직일 수 없습니다.")
     void test_move() {
-        final List<Position> positions =
-                List.of(new Position(2, 2), new Position(2, 4));
-
-        final Board board = new BoardFactory().createInitialBoard();
-
-        assertThatThrownBy(() -> notStarted.move(board, positions))
+        final Board initialBoard = new BoardFactory().createInitialBoard();
+        final Position from = new Position(2, 2);
+        final Position to = new Position(2, 4);
+        assertThatThrownBy(() -> notStarted.move(initialBoard, from, to))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

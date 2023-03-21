@@ -61,18 +61,14 @@ public class Pawn extends Piece {
     }
 
     private boolean checkMove1Square(final Position from, final Position to) {
-        return rankDifference(from, to) == 1;
+        return to.rankDifference(from) == 1;
     }
 
     private boolean checkMove2Square(final Position from, final Position to) {
-        return from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color)) && rankDifference(from, to) == 2;
+        return from.isEqualRank(CAN_MOVE_TWO_BLOCK_RANK.get(color)) && to.rankDifference(from) == 2;
     }
 
     private boolean canMoveDiagonal(final Piece destination, final Movement movement) {
         return !destination.isEmpty() && CAN_MOVE_ENEMY_DESTINATION.get(color).contains(movement);
-    }
-
-    private int rankDifference(final Position from, final Position to) {
-        return Math.abs(to.rankDifference(from));
     }
 }
