@@ -1,30 +1,73 @@
 package domain.square;
 
 import domain.piece.Coordinate;
+import domain.piece.EmptyPiece;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 
-public abstract class Square implements Cloneable {
+import java.util.Objects;
 
+public final class Square implements Cloneable {
+
+    private final Piece piece;
+    private final Camp camp;
     private boolean isFirstMove;
 
-    public Square() {
-        isFirstMove = true;
+    public Square(final Piece piece, final Camp camp) {
+        this.piece = piece;
+        this.camp = camp;
+        this.isFirstMove = true;
     }
 
-    public abstract Piece getPieceType();
-    public abstract Camp getCamp();
-    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
-    public abstract boolean isExist();
-    public abstract boolean canReap();
-    public abstract boolean isNotSameCampWith(Square other);
-    public abstract boolean isKing();
+    public static Square ofEmpty() {
+        return new Square(new EmptyPiece(), Camp.NEUTRAL);
+    }
 
-    protected boolean isFirstMove() {
-        return isFirstMove;
+    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (isFirstMove && piece.isPawn()) {
+            Pawn pawn = (Pawn) piece;
+            return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
+        }
+        return piece.isReachableByRule(startCoordinate, endCoordinate);
+    }
+
+    public boolean canReap() {
+        return piece.canReap();
+    }
+
+    public boolean isNotSameCampWith(final Square other) {
+        return this.camp == other.getCamp();
+    }
+
+    public boolean isKing() {
+        return piece.isKing();
     }
 
     public void checkMoved() {
         isFirstMove = false;
+    }
+
+    public Piece getPieceType() {
+        return piece;
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square that = (Square) o;
+        return piece.getClass() == that.piece.getClass() &&
+                camp == that.camp &&
+                isFirstMove == that.isFirstMove;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(piece, camp);
     }
 
     @Override

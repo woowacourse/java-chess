@@ -1,8 +1,8 @@
 package domain.board;
 
 import domain.square.Camp;
-import domain.square.Square;
 import domain.piece.Coordinate;
+import domain.square.Square;
 
 public final class ChessGame {
 

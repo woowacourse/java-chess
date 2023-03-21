@@ -1,9 +1,6 @@
 package domain.board;
 
 import domain.square.Camp;
-import domain.square.ConcreteSquare;
-import domain.square.EmptySquare;
-import domain.square.Square;
 import domain.piece.Bishop;
 import domain.piece.BlackPawn;
 import domain.piece.King;
@@ -12,6 +9,7 @@ import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.WhitePawn;
+import domain.square.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,25 +51,25 @@ public final class BoardInitialImage {
         );
 
         return frontPieces.stream()
-                .map(pieceType -> new ConcreteSquare(pieceType, camp))
+                .map(pieceType -> new Square(pieceType, camp))
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeEmptyRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new EmptySquare())
+                .mapToObj(i -> Square.ofEmpty())
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeWhiteBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new ConcreteSquare(new WhitePawn(), Camp.WHITE))
+                .mapToObj(i -> new Square(new WhitePawn(), Camp.WHITE))
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeBlackBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new ConcreteSquare(new BlackPawn(), Camp.BLACK))
+                .mapToObj(i -> new Square(new BlackPawn(), Camp.BLACK))
                 .collect(Collectors.toList());
     }
 

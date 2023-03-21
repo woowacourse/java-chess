@@ -1,7 +1,7 @@
 package domain.board;
 
 import domain.piece.Coordinate;
-import domain.square.EmptySquare;
+import domain.square.Camp;
 import domain.square.Square;
 
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public final class Board {
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
-        squareLocations.put(target, new EmptySquare());
+        squareLocations.put(target, Square.ofEmpty());
     }
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
@@ -63,9 +63,9 @@ public final class Board {
         throw new IllegalArgumentException("[ERROR] 보드 좌표 범위를 벗어났습니다.");
     }
 
-
     public boolean isSquareEmptyAt(final Coordinate target) {
-        return !squareLocations.get(target).isExist();
+        return squareLocations.get(target)
+                .getCamp() == Camp.NEUTRAL;
     }
 
     public Map<Coordinate, Square> getSquareLocations() {

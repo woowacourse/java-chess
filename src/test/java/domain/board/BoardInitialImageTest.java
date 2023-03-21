@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Bishop;
+import domain.piece.EmptyPiece;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
@@ -72,6 +73,6 @@ class BoardInitialImageTest {
     @CsvSource(value = {"2,0", "2,7", "5,0", "5,7"})
     void getPieceByCoordinateWhenNull(int row, int col) {
         assertThat(BoardInitialImage.getSquareByCoordinate(row,col).getPieceType())
-                .isNull();
+                .isInstanceOf(EmptyPiece.class);
     }
 }
