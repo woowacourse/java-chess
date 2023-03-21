@@ -8,14 +8,16 @@ import java.util.List;
 import static chess.domain.board.RankCoordinate.*;
 
 public enum Team {
-    BLACK(List.of(SEVEN, EIGHT)),
-    WHITE(List.of(ONE, TWO)),
-    EMPTY(List.of(THREE, FOUR, FIVE, SIX));
+    BLACK(List.of(SEVEN, EIGHT), -1),
+    WHITE(List.of(ONE, TWO), 1),
+    EMPTY(List.of(THREE, FOUR, FIVE, SIX), 0);
 
     private final List<RankCoordinate> rankCoordinates;
+    private final int direction;
 
-    Team(List<RankCoordinate> rankCoordinates) {
+    Team(List<RankCoordinate> rankCoordinates, int direction) {
         this.rankCoordinates = rankCoordinates;
+        this.direction = direction;
     }
 
     public static Team of(RankCoordinate rankCoordinate) {
@@ -40,9 +42,6 @@ public enum Team {
     }
 
     public int getDirection() {
-        if (this == BLACK) {
-            return Direction.DOWN.getDirection();
-        }
-        return Direction.UP.getDirection();
+        return this.direction;
     }
 }

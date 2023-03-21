@@ -49,7 +49,7 @@ class PawnTest {
     @Test
     void 폰은_직선방향에_적이_있어도_그_방향으로_이동할_수_없다() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertThat(pawn.canMove(B_1, B_2, Team.BLACK)).isFalse();
+        assertThat(pawn.canMove(B_2, B_3, Team.BLACK)).isFalse();
     }
 
     @Test

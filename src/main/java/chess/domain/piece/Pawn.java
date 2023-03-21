@@ -57,7 +57,7 @@ public class Pawn extends Piece {
 
         int diagonalRankNumber = sourcePosition.getRow() + this.getTeam().getDirection();
 
-        return sourcePosition.calculateRowDifferenceWith(targetPosition) == 1
+        return sourcePosition.calculateColumnDifferenceWith(targetPosition) == 1
                 && diagonalRankNumber == targetPosition.getRow()
                 && isNotSameTeam(team);
     }
