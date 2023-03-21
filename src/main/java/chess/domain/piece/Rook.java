@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.movement.Movement;
 import chess.domain.Team;
+import chess.domain.movement.Movement;
 
 public class Rook extends NoneEmptyPiece {
 

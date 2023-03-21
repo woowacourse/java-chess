@@ -1,6 +1,13 @@
 package chess.domain;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
