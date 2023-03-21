@@ -51,7 +51,7 @@ public class CommandTest {
     @MethodSource("CommandsSource")
     void 실행_명령의_크기가_1_혹은_3이_아니라면_예외가_발생한다(final List<String> inputCommands) {
         // expect
-        assertThatThrownBy(() -> Command.validateCommandSize(inputCommands))
+        assertThatThrownBy(() -> Command.validateMoveCommandForm(inputCommands))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("명령어 형식을 확인해주세요.");
     }
@@ -67,7 +67,7 @@ public class CommandTest {
 
     @Test
     void 게임_실행_중_명령은_크기가_1_혹은_3이면_예외가_발생하지_않는다() {
-        Command.validateCommandSize(List.of("move", "b7", "b8"));
-        Command.validateCommandSize(List.of("end"));
+        Command.validateMoveCommandForm(List.of("move", "b7", "b8"));
+        Command.validateMoveCommandForm(List.of("end"));
     }
 }
