@@ -1,10 +1,9 @@
 package chess.controller;
 
 import chess.controller.converter.BoardConverter;
-import chess.controller.gamestate.GameState;
-import chess.controller.gamestate.Ready;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
+import chess.domain.Position;
 import chess.dto.CommandRequest;
 import chess.view.Command;
 import chess.view.InputView;
@@ -14,6 +13,8 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private ChessBoard chessBoard;
+    private boolean isReady = true;
 
     public ChessController() {
         this.inputView = new InputView();
@@ -21,37 +22,60 @@ public class ChessController {
     }
 
     public void run() {
-        GameState state = new Ready();
         outputView.printGuideMessage();
         while (true) {
-            state = retryCampPlayIfCommandIllegal(state);
+            isReady = retryPlayIfCommandIllegal();
         }
     }
 
-    // TODO 조건문 리팩터링, 중복 코드 없애기
-    private GameState executeCampPlay(final GameState state) {
-        CommandRequest commandRequest = inputView.requestGameCommand();
-        if (commandRequest.getCommand() == Command.START) {
-            GameState running = state.start(new ChessBoard(Camp.WHITE, Camp::transfer));
-            outputView.printBoard(BoardConverter.convertToBoard(running.read()));
-            return running;
-        }
-        if (commandRequest.getCommand() == Command.MOVE) {
-            GameState running = state.play(commandRequest);
-            outputView.printBoard(BoardConverter.convertToBoard(running.read()));
-            return running;
-        }
-        outputView.printGuideMessage();
-        return state.end();
-    }
-
-    private GameState retryCampPlayIfCommandIllegal(final GameState state) {
+    private boolean retryPlayIfCommandIllegal() {
         try {
-            return executeCampPlay(state);
+            return executeInputCommand();
         } catch (final IllegalStateException | IllegalArgumentException exception) {
             outputView.printInputErrorMessage(exception.getMessage());
-            return retryCampPlayIfCommandIllegal(state);
+            return retryPlayIfCommandIllegal();
         }
+    }
+
+    private boolean executeInputCommand() {
+        CommandRequest commandRequest = inputView.requestGameCommand();
+        Command command = commandRequest.getCommand();
+        validateRunningStatus(command);
+        if (command == Command.START) {
+            return start();
+        }
+        if (command == Command.MOVE) {
+            return move(commandRequest);
+        }
+        initializeChessBoard();
+        outputView.printGuideMessage();
+        return true;
+    }
+
+    private void validateRunningStatus(Command command) {
+        if (isReady && (command != Command.START)) {
+            throw new IllegalArgumentException("아직 게임이 실행중이지 않습니다.");
+        }
+        if (!isReady && (command == Command.START)) {
+            throw new IllegalArgumentException("이미 게임이 실행중입니다.");
+        }
+    }
+
+    private boolean start() {
+        initializeChessBoard();
+        outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+        return false;
+    }
+
+    private boolean move(CommandRequest commandRequest) {
+        chessBoard.move(Position.from(commandRequest.getSourceCoordinate()),
+                Position.from(commandRequest.getDestinationCoordinate()));
+        outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+        return false;
+    }
+
+    private void initializeChessBoard() {
+        chessBoard = new ChessBoard(Camp.WHITE, Camp::transfer);
     }
 
 }
