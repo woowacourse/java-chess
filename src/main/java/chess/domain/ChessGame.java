@@ -23,7 +23,7 @@ public final class ChessGame {
             throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
         }
 
-        if(!chessBoard.isRightTeam(state.getCurrentTeam(), from)){
+        if (!chessBoard.isRightTeam(state.getCurrentTeam(), from)) {
             throw new IllegalArgumentException("잘못된 팀의 말을 선택하였습니다.");
         }
 

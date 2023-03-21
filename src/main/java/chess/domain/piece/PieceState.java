@@ -9,6 +9,7 @@ public interface PieceState {
     boolean isEmpty();
 
     boolean isSameTeam(final Piece piece);
+
     boolean isSameTeam(final Team team);
 
     Team getTeam();
