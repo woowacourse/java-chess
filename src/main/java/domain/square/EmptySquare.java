@@ -3,7 +3,7 @@ package domain.square;
 import domain.piece.Coordinate;
 import domain.piece.Piece;
 
-public final class EmptySquare extends Square {
+public final class EmptySquare extends Square implements Cloneable {
 
     @Override
     public boolean canReap() {
@@ -28,5 +28,10 @@ public final class EmptySquare extends Square {
     @Override
     public Camp getCamp() {
         return null;
+    }
+
+    @Override
+    public Object clone() {
+        return super.clone();
     }
 }

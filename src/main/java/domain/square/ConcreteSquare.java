@@ -6,7 +6,7 @@ import domain.piece.Piece;
 
 import java.util.Objects;
 
-public final class ConcreteSquare extends Square {
+public final class ConcreteSquare extends Square implements Cloneable {
 
     private final Piece piece;
     private final Camp camp;
@@ -14,11 +14,6 @@ public final class ConcreteSquare extends Square {
     public ConcreteSquare(final Piece piece, final Camp camp) {
         this.piece = piece;
         this.camp = camp;
-    }
-
-    public ConcreteSquare(final ConcreteSquare other) {
-        this.piece = other.piece;
-        this.camp = other.camp;
     }
 
     @Override
@@ -61,5 +56,10 @@ public final class ConcreteSquare extends Square {
     @Override
     public int hashCode() {
         return Objects.hash(piece, camp);
+    }
+
+    @Override
+    public Object clone() {
+        return super.clone();
     }
 }

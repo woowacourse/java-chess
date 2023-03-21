@@ -3,7 +3,7 @@ package domain.square;
 import domain.piece.Coordinate;
 import domain.piece.Piece;
 
-public abstract class Square {
+public abstract class Square implements Cloneable {
 
     private boolean isFirstMove;
 
@@ -17,11 +17,22 @@ public abstract class Square {
     public abstract boolean isExist();
     public abstract boolean canReap();
 
-    protected Boolean isFirstMove() {
+    protected boolean isFirstMove() {
         return isFirstMove;
     }
 
     public void checkMoved() {
         isFirstMove = false;
+    }
+
+    @Override
+    public Object clone() {
+        Object obj = null;
+        try {
+            obj = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 }
