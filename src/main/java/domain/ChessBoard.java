@@ -36,7 +36,7 @@ public class ChessBoard {
 
     private void validateNoRoutes(List<Square> routes) {
         if (routes.isEmpty()) {
-            throw new IllegalArgumentException("갈 수 없습니다!");
+            throw new IllegalArgumentException("행마가 달라 갈 수 없습니다!");
         }
     }
 
@@ -70,7 +70,7 @@ public class ChessBoard {
 
     private void validateSameTeamNoKill(Square dest, Piece piece, Square route) {
         if (hasPiece(route) && !canKill(dest, piece, route)) {
-            throw new IllegalArgumentException("갈 수 없습니다!");
+            throw new IllegalArgumentException("기물에 막혀 있어 갈 수 없습니다!");
         }
     }
 
