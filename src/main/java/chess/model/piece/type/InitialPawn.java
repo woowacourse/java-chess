@@ -38,16 +38,16 @@ public class InitialPawn extends Piece {
 
     @Override
     public boolean movable(final Distance distance, final Piece target) {
-        if (isUnMovable(distance, target)) {
+        if (isNotAvailableStraightMove(distance, target)) {
             return false;
         }
         if (isAttackAble(distance, target)) {
             return true;
         }
-        return movable(distance);
+        return isAvailableDirection(distance);
     }
 
-    private boolean isUnMovable(final Distance distance, final Piece target) {
+    private boolean isNotAvailableStraightMove(final Distance distance, final Piece target) {
         return target.isNotPassable() && distance.matchByDirection(straightDirectionByCamp());
     }
 
@@ -74,18 +74,18 @@ public class InitialPawn extends Piece {
     }
 
     @Override
-    protected boolean movable(final Distance distance) {
+    protected boolean isAvailableDirection(final Distance distance) {
         if (isUnStraightDirection(distance)) {
             return false;
         }
-        return isMovableDistance(distance);
+        return isAvailableTravelDistance(distance);
     }
 
     private boolean isUnStraightDirection(final Distance distance) {
         return !distance.matchByDirection(straightDirectionByCamp());
     }
 
-    public boolean isMovableDistance(final Distance distance) {
+    private boolean isAvailableTravelDistance(final Distance distance) {
         final int rank = Math.abs(distance.rank());
 
         return rank >= MINIMUM_DISTANCE && rank <= MAXIMUM_DISTANCE;

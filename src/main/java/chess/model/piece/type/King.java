@@ -23,7 +23,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean movable(final Distance distance) {
+    public boolean isAvailableDirection(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }

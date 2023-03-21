@@ -10,17 +10,14 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    protected abstract boolean movable(final Distance distance);
+    protected abstract boolean isAvailableDirection(final Distance distance);
 
     public boolean movable(final Distance distance, final Piece target) {
-        if (isUnAttackAble(target)) {
-            return false;
-        }
-        return movable(distance);
+        return isAttackAble(target) && isAvailableDirection(distance);
     }
 
-    private boolean isUnAttackAble(final Piece target) {
-        return target.isSameTeam(this.camp);
+    private boolean isAttackAble(final Piece target) {
+        return !target.isSameTeam(this.camp);
     }
 
     public Piece pick() {

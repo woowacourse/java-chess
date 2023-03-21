@@ -33,16 +33,16 @@ public class Pawn extends Piece {
 
     @Override
     public boolean movable(final Distance distance, final Piece target) {
-        if (isUnMovable(distance, target)) {
+        if (isNotAvailableStraightMove(distance, target)) {
             return false;
         }
         if (isAttackAble(distance, target)) {
             return true;
         }
-        return movable(distance);
+        return isAvailableDirection(distance);
     }
 
-    private boolean isUnMovable(final Distance distance, final Piece target) {
+    private boolean isNotAvailableStraightMove(final Distance distance, final Piece target) {
         return target.isNotPassable() && isMovableDirection(distance);
     }
 
@@ -67,7 +67,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean movable(final Distance distance) {
+    public boolean isAvailableDirection(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }

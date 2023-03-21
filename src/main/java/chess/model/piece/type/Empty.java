@@ -14,7 +14,7 @@ public class Empty extends Piece {
 
     @Override
     public boolean movable(final Distance ignoredDistance, final Piece ignoredTarget) {
-        return movable(ignoredDistance);
+        return isAvailableDirection(ignoredDistance);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected boolean movable(final Distance ignoredDistance) {
+    protected boolean isAvailableDirection(final Distance ignoredDistance) {
         return false;
     }
 }

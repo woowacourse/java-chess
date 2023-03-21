@@ -15,7 +15,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean movable(final Distance distance) {
+    protected boolean isAvailableDirection(final Distance distance) {
         return availableDirections.stream()
                 .anyMatch(distance::matchByDirection);
     }
