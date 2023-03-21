@@ -33,17 +33,10 @@ public class ChessGame {
 
     private void moveToDestination(final Piece piece, final Square source, final Square destination) {
         final List<Square> route = piece.findRoute(source, destination);
-        if (!isMovable(piece, source, route)) {
+        if (!piece.isMovable(source, route, board.getBoardSnapShot())) {
             throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
         }
         board.move(source, destination);
-    }
-
-    private boolean isMovable(final Piece piece, final Square source, final List<Square> route) {
-        if (piece.isPawn()) {
-            return board.canMovePawn(source, route);
-        }
-        return board.canMove(source, route);
     }
 
     private void nextTurn() {

@@ -10,6 +10,10 @@ public enum Color {
         return this == BLACK;
     }
 
+    public boolean isSame(final Color color) {
+        return this == color;
+    }
+
     public Color reverse() {
         if (this == BLACK) {
             return WHITE;

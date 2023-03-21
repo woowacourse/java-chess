@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.BoardSnapShot;
 import chess.domain.board.Square;
 import chess.domain.piece.strategy.Strategy;
 import java.util.List;
@@ -30,5 +31,9 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public abstract boolean isPawn();
+    public Color getColor() {
+        return color;
+    }
+
+    public abstract boolean isMovable(final Square source, final List<Square> route, final BoardSnapShot boardSnapShot);
 }
