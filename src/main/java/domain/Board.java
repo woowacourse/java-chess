@@ -65,7 +65,7 @@ public class Board {
     }
 
     private List<Piece> getPiecesInPath(final Section start, final Section end) {
-        final Piece piece = findPiece(start.getLocation());
+        final Piece piece = start.getPiece();
         final List<Location> paths = piece.searchPath(start, end);
         return paths.stream()
             .map(this::findPiece)

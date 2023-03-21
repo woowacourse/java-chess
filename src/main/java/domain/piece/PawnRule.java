@@ -18,8 +18,7 @@ public enum PawnRule {
     private final BiPredicate<Section, Section> condition;
     private final BiPredicate<Section, Section> judge;
 
-    PawnRule(BiPredicate<Section, Section> condition,
-        BiPredicate<Section, Section> judge) {
+    PawnRule(final BiPredicate<Section, Section> condition, final BiPredicate<Section, Section> judge) {
         this.condition = condition;
         this.judge = judge;
     }
@@ -56,8 +55,8 @@ public enum PawnRule {
     }
 
     private static boolean judgePawnMoveTwice(final Section start, final Section end) {
-        Piece piece = start.getPiece();
-        Direction direction = Direction.find(start.getLocation(), end.getLocation());
+        final Piece piece = start.getPiece();
+        final Direction direction = Direction.find(start.getLocation(), end.getLocation());
         if (piece.isWhite()) {
             return judgeWhitePawnMoveTwice(start, end, direction);
         }
@@ -85,7 +84,7 @@ public enum PawnRule {
     }
 
     private static boolean judgePawnAttack(final Section start, final Section end) {
-        Piece piece = start.getPiece();
+        final Piece piece = start.getPiece();
         if (piece.isWhite()) {
             return judgeWhitePawnAttack(start, end);
         }

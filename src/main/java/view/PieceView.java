@@ -25,8 +25,10 @@ public enum PieceView {
     }
 
     public static String findSign(final Piece piece) {
-        final PieceView pieceView = Arrays.stream(PieceView.values()).filter(view -> piece.isSameType(view.pieceType))
-            .findAny().orElseThrow(IllegalArgumentException::new);
+        final PieceView pieceView = Arrays.stream(PieceView.values())
+            .filter(view -> piece.isSameType(view.pieceType))
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
         if (piece.isBlack()) {
             return pieceView.blackSign;
         }
