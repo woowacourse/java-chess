@@ -44,6 +44,10 @@ public abstract class Piece {
         return team;
     }
 
+    public double getScore() {
+        return role.getScore();
+    }
+
     public abstract boolean canMove(Position source, Position target);
 
     @Override

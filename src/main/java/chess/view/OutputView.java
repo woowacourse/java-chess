@@ -11,6 +11,7 @@ public class OutputView {
     private static final String COMMAND_START_MESSAGE = "> 게임 시작 : start";
     private static final String COMMAND_END_MESSAGE = "> 게임 종료 : end";
     private static final String COMMAND_MOVE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String COMMAND_STATUS_MESSAGE = "> 현재 점수 : status";
 
     private OutputView() {
     }
@@ -20,6 +21,7 @@ public class OutputView {
         System.out.println(COMMAND_START_MESSAGE);
         System.out.println(COMMAND_END_MESSAGE);
         System.out.println(COMMAND_MOVE_MESSAGE);
+        System.out.println(COMMAND_STATUS_MESSAGE);
     }
 
     public static void printBoard(List<SquareResponse> responses) {
@@ -46,5 +48,23 @@ public class OutputView {
 
     public static void printErrorMessage(String message) {
         System.out.println(message);
+    }
+
+    public static void printGameStatus(double blackTeamScore, double whiteTeamScore) {
+        System.out.println("게임 상태");
+        System.out.println("Black 팀: " + blackTeamScore + "점");
+        System.out.println("White 팀: " + whiteTeamScore + "점");
+        System.out.println(getWinnerTeam(blackTeamScore, whiteTeamScore));
+        System.out.println();
+    }
+
+    private static String getWinnerTeam(double blackTeamScore, double whiteTeamScore) {
+        if (blackTeamScore > whiteTeamScore) {
+            return "Black 팀 승리";
+        }
+        if (whiteTeamScore > blackTeamScore) {
+            return "White 팀 승리";
+        }
+        return "무승부";
     }
 }

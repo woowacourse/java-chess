@@ -2,6 +2,7 @@ package chess.game.state;
 
 import chess.dto.SquareResponse;
 import java.util.List;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class RunningState implements GameState {
@@ -29,5 +30,10 @@ public class RunningState implements GameState {
     @Override
     public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
         return supplier.get();
+    }
+
+    @Override
+    public double getTeamScore(DoubleSupplier doubleSupplier) {
+        return doubleSupplier.getAsDouble();
     }
 }

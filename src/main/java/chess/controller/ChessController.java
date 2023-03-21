@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Team;
 import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
 import chess.game.GameCommand;
@@ -16,6 +17,7 @@ import java.util.function.Supplier;
 public class ChessController {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final String END_COMMAND = "end";
     private final Map<String, Action> actionMap = new HashMap<>();
     private final ChessGame chessGame;
@@ -24,6 +26,7 @@ public class ChessController {
         this.chessGame = chessGame;
         actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
         actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
+        actionMap.put(STATUS_COMMAND, new Action(ignore -> getGameStatus()));
         actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
     }
 
@@ -37,6 +40,12 @@ public class ChessController {
         PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
         chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void getGameStatus() {
+        double blackTeamScore = chessGame.getTeamScore(Team.BLACK);
+        double whiteTeamScore = chessGame.getTeamScore(Team.WHITE);
+        OutputView.printGameStatus(blackTeamScore, whiteTeamScore);
     }
 
     private void endGame() {

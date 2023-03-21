@@ -2,6 +2,7 @@ package chess.game.state;
 
 import chess.dto.SquareResponse;
 import java.util.List;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class WaitingState implements GameState {
@@ -28,6 +29,11 @@ public class WaitingState implements GameState {
 
     @Override
     public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public double getTeamScore(DoubleSupplier doubleSupplier) {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }

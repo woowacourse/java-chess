@@ -3,16 +3,20 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
@@ -213,5 +217,57 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(target, nextTarget))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("각 팀별 점수가 정확하게 계산되어야 한다.")
+    void getTeamScore_Success() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(0, 6), new Pawn(Team.BLACK));
+        squares.put(Position.of(1, 5), new Pawn(Team.BLACK));
+        squares.put(Position.of(1, 7), new Pawn(Team.BLACK));
+        squares.put(Position.of(2, 7), new Rook(Team.BLACK));
+        squares.put(Position.of(2, 6), new Pawn(Team.BLACK));
+        squares.put(Position.of(3, 6), new Bishop(Team.BLACK));
+        squares.put(Position.of(4, 5), new Queen(Team.BLACK));
+
+        squares.put(Position.of(4, 0), new Rook(Team.WHITE));
+        squares.put(Position.of(5, 0), new King(Team.WHITE));
+        squares.put(Position.of(5, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(5, 2), new Pawn(Team.WHITE));
+        squares.put(Position.of(5, 3), new Knight(Team.WHITE));
+        squares.put(Position.of(6, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(6, 3), new Queen(Team.WHITE));
+        squares.put(Position.of(7, 2), new Pawn(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // when
+        double blackScore = board.getTeamScore(Team.BLACK);
+        double whiteScore = board.getTeamScore(Team.WHITE);
+
+        // then
+        assertThat(blackScore)
+                .isEqualTo(20);
+        assertThat(whiteScore)
+                .isEqualTo(19.5);
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"1,1","2,1","3,1.5","4,2","5,2.5"})
+    @DisplayName("같은 세로줄에 폰이 있으면 각 0.5점씩 계산되어야 한다.")
+    void getTeamScore_Same_X_Pawn(int pawnCount, double expect) {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        for (int i = 1; i <= pawnCount; i++) {
+            squares.put(Position.of(0, i), new Pawn(Team.WHITE));
+        }
+        Board board = new Board(squares, Team.WHITE);
+        // when
+        double whiteScore = board.getTeamScore(Team.WHITE);
+
+        // then
+        assertThat(whiteScore)
+                .isEqualTo(expect);
     }
 }

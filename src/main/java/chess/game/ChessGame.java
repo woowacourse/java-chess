@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.dto.SquareResponse;
 import chess.game.state.EndState;
 import chess.game.state.GameState;
@@ -43,5 +44,9 @@ public class ChessGame {
         return gameState.getBoard(() -> board.getBoard().entrySet().stream()
                 .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
                 .collect(toList()));
+    }
+
+    public double getTeamScore(Team team) {
+        return gameState.getTeamScore(() -> board.getTeamScore(team));
     }
 }
