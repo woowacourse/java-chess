@@ -8,11 +8,10 @@ import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -118,10 +117,12 @@ public class Board {
         return board.get(position).isSameColor(color);
     }
 
-    public List<Piece> getPiecesAt(Rank rank) {
-        return board.entrySet().stream()
-                .filter(e -> e.getKey().isRank(rank.getIndex()))
-                .map(Entry::getValue)
-                .collect(Collectors.toList());
+    public List<Piece> findAllByRank(Rank rank) {
+        List<Piece> result = new ArrayList<>();
+        for (File file : File.values()) {
+            Position position = Position.from(file, rank);
+            result.add(board.get(position));
+        }
+        return result;
     }
 }

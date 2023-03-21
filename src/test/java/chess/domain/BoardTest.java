@@ -21,11 +21,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
-    
+
     @Nested
     @DisplayName("생성 테스트")
     class CreateBoard {
-        
+
         @ParameterizedTest
         @ValueSource(strings = {"a1", "d2", "h8"})
         @DisplayName("빈 보드 생성 테스트")
@@ -34,7 +34,7 @@ class BoardTest {
             assertThat(board).extracting("board").asInstanceOf(InstanceOfAssertFactories.MAP)
                     .containsEntry(Position.from(position), Empty.create());
         }
-        
+
         @Test
         @DisplayName("보드 피스 생성 테스트")
         void initialize() {
@@ -49,12 +49,12 @@ class BoardTest {
             }
         }
     }
-    
-    
+
+
     @Nested
     @DisplayName("특정 위치 피스 반환 테스트")
     class PieceAtPosition {
-        
+
         @Test
         @DisplayName("특정 위치의 같은 색깔 피스 가져오는 테스트")
         void get_piece() {
@@ -66,7 +66,7 @@ class BoardTest {
             assertThat(piece.getType()).isEqualTo(PieceType.KING);
             assertThat(piece.isSameColor(white)).isTrue();
         }
-        
+
         @Test
         @DisplayName("특정 위치에 피스가 없을 경우")
         void no_piece() {
@@ -77,7 +77,7 @@ class BoardTest {
             assertThatThrownBy(() -> board.getValidSourcePiece(source, white)).isInstanceOf(
                     IllegalArgumentException.class);
         }
-        
+
         @Test
         @DisplayName("특정 위치의 피스가 색깔이 다른 경우")
         void not_same_color_piece() {
@@ -88,14 +88,12 @@ class BoardTest {
             assertThatThrownBy(() -> board.getValidSourcePiece(source, black)).isInstanceOf(
                     IllegalArgumentException.class);
         }
-        
-        
     }
-    
+
     @Nested
     @DisplayName("피스 이동경로 테스트")
     class CheckPiece {
-        
+
         @Test
         @DisplayName("이동 경로에 다른 피스가 존재하지 않는 경우 에러가 발생하지 않는다")
         void check_route() {
@@ -103,7 +101,7 @@ class BoardTest {
             board.initialize();
             assertDoesNotThrow(() -> board.checkBetweenRoute(Position.from("a2"), Position.from("a3")));
         }
-        
+
         @Test
         @DisplayName("이동 경로에 다른 피스가 존재하는 경우 에러가 발생한다")
         void other_piece_in_route_error() {
@@ -112,7 +110,7 @@ class BoardTest {
             assertThatThrownBy(() -> board.checkBetweenRoute(Position.from("a1"), Position.from("a3")))
                     .isInstanceOf(IllegalArgumentException.class);
         }
-        
+
         @Test
         @DisplayName("목적지에 같은 색깔의 피스가 있습니다.")
         void same_color_piece_in_destination() {
@@ -122,11 +120,11 @@ class BoardTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
-    
+
     @Nested
     @DisplayName("폰 움직임 제한사항")
     class PawnRestriction {
-        
+
         @Test
         @DisplayName("위나 아래로 움직이는데, 경로에 다른 피스가 있을 경우")
         void checkOtherPieceInRoute() {
@@ -137,9 +135,9 @@ class BoardTest {
             assertThatThrownBy(() -> {
                 board.checkRestrictionForPawn(Position.from("a4"), Position.from("a5"), Color.WHITE);
             }).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(Board.OTHER_PIECE_IN_ROUTE);
+                    .hasMessage("경로에 다른 피스가 존재합니다.");
         }
-        
+
         @Test
         @DisplayName("대각선 방향으로 움직이는데, 상대편 피스가 없는 경우 - 비어있는 경우")
         void checkOtherPieceInDiagonal1() {
@@ -148,9 +146,9 @@ class BoardTest {
             assertThatThrownBy(() -> {
                 board.checkRestrictionForPawn(Position.from("a2"), Position.from("b3"), Color.WHITE);
             }).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(Board.PAWN_CANNOT_MOVE_EMPTY_DIAGONAL);
+                    .hasMessage("비어있기 때문에 대각선으로 이동할 수 없습니다.");
         }
-        
+
         @Test
         @DisplayName("대각선 방향으로 움직이는데, 상대편 피스가 없는 경우 - 같은편 피스가 있는 경우")
         void checkOtherPieceInDiagonal2() {
@@ -160,7 +158,7 @@ class BoardTest {
             assertThatThrownBy(() -> {
                 board.checkRestrictionForPawn(Position.from("a2"), Position.from("b3"), Color.WHITE);
             }).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(Board.PIECE_CANNOT_MOVE_SAME_COLOR);
+                    .hasMessage("목적지에 같은 색깔의 피스가 있습니다.");
         }
     }
 }

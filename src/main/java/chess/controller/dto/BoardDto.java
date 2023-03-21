@@ -17,7 +17,7 @@ public class BoardDto {
     public static BoardDto create(Board board) {
         List<RankDto> rankDtos = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            RankDto rankDto = RankDto.create(board.getPiecesAt(rank));
+            RankDto rankDto = RankDto.create(board.findAllByRank(rank));
             rankDtos.add(rankDto);
         }
         Collections.reverse(rankDtos);
