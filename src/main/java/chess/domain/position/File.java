@@ -13,7 +13,7 @@ public enum File {
     G(7),
     H(8);
 
-    private static final String FILE_NOT_FOUND_EXCEPTION = "일치하는 File을 찾을 수 없습니다.";
+    static final String FILE_NOT_FOUND_EXCEPTION = "일치하는 File을 찾을 수 없습니다.";
 
     private final int value;
 
@@ -25,10 +25,14 @@ public enum File {
         return Arrays.stream(values())
                 .filter(it -> it.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException(FILE_NOT_FOUND_EXCEPTION));
+                .orElseThrow(() -> new IllegalArgumentException(FILE_NOT_FOUND_EXCEPTION));
     }
 
     public int value() {
         return value;
+    }
+
+    public int calculateFileGap(final File subtrahend) {
+        return value - subtrahend.value;
     }
 }

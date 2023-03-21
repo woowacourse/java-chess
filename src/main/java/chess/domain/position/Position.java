@@ -12,9 +12,9 @@ public class Position {
         this.rank = Rank.from(rank);
     }
 
-    public Movement convertMovement(Position from) {
-        int rankGap = rank.value() - from.rank.value();
-        int fileGap = file.value() - from.file.value();
+    public Movement convertMovement(final Position from) {
+        int rankGap = rank.calculateRankGap(from.rank);
+        int fileGap = file.calculateFileGap(from.file);
 
         int greatestCommonDivisor = findGreatestCommonDivisor(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
 
@@ -33,8 +33,8 @@ public class Position {
         return movement.nextPosition(file, rank);
     }
 
-    public int rankDifference(final Position from) {
-        return Math.abs(this.rank.value() - from.rank.value());
+    public int rankDifference(final Position other) {
+        return Math.abs(this.rank.value() - other.rank.value());
     }
 
     public int fileDifference(final Position from) {
