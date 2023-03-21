@@ -1,6 +1,5 @@
 package chess.position;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +7,6 @@ public class Position {
 
     private static final String POSITION_REGEX = "[a-h][1-8]";
     private static final String INCORRECT_MOVE_POSITION_ERROR = "[ERROR] 이동 방향이 체스판 형식에 맞지 않습니다.";
-    public static final int INT_A_MAKER = 96;
     private final List<Integer> position;
 
     private Position(List<Integer> position) {
@@ -17,8 +15,7 @@ public class Position {
 
     public static Position of(String command) {
         validatePositionRegex(command);
-        List<Integer> convertPosition = convertCommand(command);
-        return new Position(convertPosition);
+        return PositionCache.findPosition(command);
     }
 
     public static Position initPosition(Integer x, Integer y) {
@@ -29,13 +26,6 @@ public class Position {
         if (!command.matches(POSITION_REGEX)) {
             throw new IllegalArgumentException(INCORRECT_MOVE_POSITION_ERROR);
         }
-    }
-
-    public static List<Integer> convertCommand(String command) {
-        List<Integer> convertCommand = new ArrayList<>();
-        convertCommand.add(command.charAt(0) - INT_A_MAKER);
-        convertCommand.add(Character.getNumericValue(command.charAt(1)));
-        return convertCommand;
     }
 
     public List<Integer> getPosition() {
