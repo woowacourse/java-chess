@@ -38,8 +38,8 @@ public class Board {
         return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
     }
 
-    public Piece getPiece(final File file, final Rank rank) {
-        return board.get(Position.of(file, rank));
+    public Piece findPieceByPosition(final Position position) {
+        return board.get(position);
     }
 
     public Map<Position, Piece> getBoard() {

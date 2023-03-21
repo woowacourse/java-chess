@@ -17,7 +17,7 @@ public class ChessGame {
 
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
-        final Piece sourcePiece = board.getPiece(source.getFile(), source.getRank());
+        final Piece sourcePiece = board.findPieceByPosition(source);
         final List<Position> movablePositions = sourcePiece.findMovablePosition(source, board);
         checkMovable(movablePositions, target);
         board.move(source, target);
