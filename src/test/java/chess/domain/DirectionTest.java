@@ -60,10 +60,6 @@ class DirectionTest {
         var current = new Position(1, 0);
         var target = new Position(0, 1);
 
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getColumn() - target.getColumn();
-        System.out.println(rowDifferent + " " + colDifferent);
-
         assertThat(findDirection(current, target)).isEqualTo(UP_RIGHT);
     }
 
