@@ -3,16 +3,16 @@ package chess.domain.piece;
 import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
 
-public class NoPiece extends Piece {
+public class Blank extends Piece {
 
-    private static final Piece piece = new NoPiece();
+    private static final Piece BLANK = new Blank();
 
-    private NoPiece() {
+    private Blank() {
         super(Team.EMPTY);
     }
 
     public static Piece getInstance() {
-        return piece;
+        return BLANK;
     }
 
     @Override

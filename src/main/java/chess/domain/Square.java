@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.King;
-import chess.domain.piece.NoPiece;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
@@ -21,7 +21,7 @@ public class Square {
     }
 
     public boolean isEmpty() {
-        return piece.getClass() == NoPiece.class;
+        return piece.getClass() == Blank.class;
     }
 
     public boolean isSameTeam(final Team team) {
@@ -43,7 +43,7 @@ public class Square {
     public void moveTo(Turn turn, final Square destination) {
         piece.addTrace(turn, position);
         destination.changePiece(piece);
-        changePiece(NoPiece.getInstance());
+        changePiece(Blank.getInstance());
     }
 
     private void changePiece(Piece piece) {

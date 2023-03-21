@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.NoPiece;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -38,7 +38,7 @@ public class ChessBoardFactory {
         if (file == File.ONE || file == File.EIGHT) {
             return createHeavyPiece(rank, team);
         }
-        return NoPiece.getInstance();
+        return Blank.getInstance();
     }
 
     private static Piece createHeavyPiece(final Rank rank, final Team team) {
@@ -54,6 +54,9 @@ public class ChessBoardFactory {
         if (rank == Rank.D) {
             return new Queen(team);
         }
-        return new King(team);
+        if (rank == Rank.E) {
+            return new King(team);
+        }
+        throw new IllegalStateException("올바른 Rank가 아닙니다.");
     }
 }
