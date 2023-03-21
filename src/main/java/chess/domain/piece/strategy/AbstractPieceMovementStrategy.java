@@ -20,7 +20,18 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
                                          final PiecePosition destination,
                                          final Piece nullableEnemy) throws IllegalArgumentException {
         validateMove(source, destination, nullableEnemy);
-        return waypoints(source, destination);
+        return waypoint(source, destination);
+    }
+
+    private List<PiecePosition> waypoint(final PiecePosition source, final PiecePosition destination) {
+        final List<PiecePosition> waypoints = new ArrayList<>();
+        PiecePosition current = source;
+        while (!current.equals(destination)) {
+            current = current.move(current.direction(destination));
+            waypoints.add(current);
+        }
+        waypoints.remove(destination);
+        return waypoints;
     }
 
     @Override
@@ -53,17 +64,6 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     protected abstract void validateMoveWithNoAlly(final PiecePosition source,
                                                    final PiecePosition destination,
                                                    final Piece nullableEnemy) throws IllegalArgumentException;
-
-    protected List<PiecePosition> waypoints(final PiecePosition source, final PiecePosition destination) {
-        final List<PiecePosition> waypoints = new ArrayList<>();
-        PiecePosition current = source;
-        while (!current.equals(destination)) {
-            current = current.move(current.direction(destination));
-            waypoints.add(current);
-        }
-        waypoints.remove(destination);
-        return waypoints;
-    }
 
     protected boolean isStraight(final PiecePosition source, final PiecePosition destination) {
         return !(Math.abs(source.rankInterval(destination)) > 0
