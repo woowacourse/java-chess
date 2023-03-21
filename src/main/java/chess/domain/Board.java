@@ -23,19 +23,29 @@ public class Board {
         return new Board(boardMaker.make());
     }
 
+    public boolean isPieceTurn(Square current, Color color) {
+        Piece piece = getPiece(current);
+        return piece.isAlly(color);
+    }
+
     public void move(Square current, Square destination) {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
+
         validateRoute(current, destination, direction);
-        if (hasPiece(destination)) {
-            checkEnemy(current, destination);
-            catchEnemy(current, destination);
-            return;
-        }
-        if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
-            throw new WrongDirectionException();
-        }
+        checkDestination(current, destination, direction);
         movePiece(current, destination);
+    }
+
+    private Piece getPiece(final Square current) {
+        if (isEmptySquare(current)) {
+            throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
+        }
+        return board.get(current);
+    }
+
+    private boolean isEmptySquare(final Square square) {
+        return !hasPiece(square);
     }
 
     private void validateRoute(Square current, Square destination, Direction direction) {
@@ -47,6 +57,19 @@ public class Board {
             throw new WrongDirectionException();
         }
         validateRoute(next, destination, direction);
+    }
+
+    private boolean hasPiece(final Square square) {
+        return board.containsKey(square);
+    }
+
+    private void checkDestination(Square current, Square destination, Direction direction) {
+        if (hasPiece(destination)) {
+            checkEnemy(current, destination);
+            killEnemy(destination);
+            return;
+        }
+        checkPawn(current, direction);
     }
 
     private void checkEnemy(Square current, Square destination) {
@@ -61,24 +84,25 @@ public class Board {
         return !currentPiece.isEnemy(destinationPiece);
     }
 
-    private void catchEnemy(final Square current, final Square destination) {
+    private void killEnemy(final Square destination) {
         board.remove(destination);
-        movePiece(current, destination);
     }
 
-    private Piece getPiece(final Square current) {
-        if (isEmptySquare(current)) {
-            throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
+    private void checkPawn(Square current, Direction direction) {
+        if (isPawn(current)) {
+            checkDiagonal(direction);
         }
-        return board.get(current);
     }
 
-    private boolean hasPiece(final Square square) {
-        return board.containsKey(square);
+    private boolean isPawn(Square square) {
+        Piece piece = getPiece(square);
+        return piece.isPawn();
     }
 
-    private boolean isEmptySquare(final Square square) {
-        return !hasPiece(square);
+    private void checkDiagonal(Direction direction) {
+        if (PieceDirection.DIAGONAL.contains(direction)) {
+            throw new IllegalArgumentException("폰은 적이 있을 때만 대각선으로 이동할 수 있습니다.");
+        }
     }
 
     private void movePiece(final Square current, final Square destination) {
@@ -88,10 +112,5 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return new HashMap<>(board);
-    }
-
-    public boolean isPieceTurn(Square current, Color color) {
-        Piece piece = getPiece(current);
-        return piece.isAlly(color);
     }
 }

@@ -86,10 +86,11 @@ class BoardTest {
         }
 
         @Test
-        @DisplayName("적이 없는 경우에만 대각 이동 불가능")
+        @DisplayName("적이 없는 경우에는 대각 이동 불가능")
         void pawn_cannot_move_diagonal_when_enemy_exist() {
             assertThatThrownBy(() -> board.move(Square.of(File.B, Rank.TWO), Square.of(File.A, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("폰은 적이 있을 때만 대각선으로 이동할 수 있습니다.");
         }
 
         @Test
