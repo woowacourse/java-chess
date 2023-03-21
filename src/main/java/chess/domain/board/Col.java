@@ -34,10 +34,6 @@ public enum Col {
         return fromByInput((char) (columNumber + next + INT_TO_CHAR));
     }
 
-    public int getCol() {
-        return this.column;
-    }
-
     public int subPositionFromArrivePosition(final Col colOfSource) {
         return this.column - colOfSource.column;
     }
