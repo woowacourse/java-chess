@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
 import chess.domain.piece.Camp;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.view.*;
 
@@ -72,7 +73,7 @@ public final class ChessController {
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
 
-        chessGame.move(toPosition(fromInput), toPosition(toInput));
+        chessGame.move(toPosition(fromInput), toPosition(toInput), new Path());
     }
 
     private Position toPosition(String positionInput) {

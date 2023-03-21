@@ -1,8 +1,6 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -37,26 +35,6 @@ public final class Position {
 
     public boolean isSamePosition(Position toPosition) {
         return this.file == toPosition.file && this.rank == toPosition.rank;
-    }
-
-    public List<Position> getBetweenPositions(Position other) {
-        int fileGap = this.calculateFileGap(other);
-        int rankGap = this.calculateRankGap(other);
-
-        return getBetweenPositions(other, fileGap, rankGap);
-    }
-
-    private List<Position> getBetweenPositions(Position other, int fileGap, int rankGap) {
-        int distance = Math.max(Math.abs(fileGap), Math.abs(rankGap));
-        int fileUnitGap = fileGap / distance;
-        int rankUnitGap = rankGap / distance;
-
-        List<Position> between = new ArrayList<>();
-        for (int i = 1; i < distance; i++) {
-            other = other.move(fileUnitGap, rankUnitGap);
-            between.add(other);
-        }
-        return between;
     }
 
     @Override

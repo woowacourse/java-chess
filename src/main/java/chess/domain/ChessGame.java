@@ -2,10 +2,9 @@ package chess.domain;
 
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
-
-import java.util.List;
 
 public final class ChessGame {
 
@@ -22,26 +21,23 @@ public final class ChessGame {
         this.chessBoard = chessBoard;
     }
 
-    public void move(Position fromPosition, Position toPosition) {
+    public void move(Position fromPosition, Position toPosition, Path path) {
         validateBeforeMoveTo(fromPosition, toPosition, turnCamp);
-
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
-        validateMovable(toPosition, pieceMove,true);
+        path.judgeBetweenStuck(
+                chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
+                pieceMove);
+        validateMovable(chessBoard.choicePiece(toPosition), pieceMove, true);
+
         chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
         Piece fromPiece = chessBoard.choicePiece(fromPosition);
-        PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
 
-        List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
-        for (Position position : pathPositions) {
-            validateMovable(position, pieceMove, false);
-        }
-
-        return pieceMove;
+        return fromPiece.getMovement(fromPosition, toPosition);
     }
 
     public void validateBeforeMoveTo(Position fromPosition, Position toPosition, Camp turnCamp) {
@@ -73,8 +69,8 @@ public final class ChessGame {
         }
     }
 
-    public void validateMovable(Position position, PieceMove pieceMove,boolean lastPiece) {
-        if (!pieceMove.isMovable(chessBoard.choicePiece(position), lastPiece)) {
+    public void validateMovable(Piece piece, PieceMove pieceMove, boolean lastPiece) {
+        if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }
