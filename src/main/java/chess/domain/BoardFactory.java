@@ -21,7 +21,6 @@ public final class BoardFactory {
 
     public static Board generate() {
         Map<Position, Piece> board = new HashMap<>();
-
         initializeBoard(board);
         initPawn(board);
         initRook(board);
@@ -29,8 +28,7 @@ public final class BoardFactory {
         initBishop(board);
         initQueen(board);
         initKing(board);
-
-        return new Board(board);
+        return Board.from(board);
     }
 
     private static void initializeBoard(final Map<Position, Piece> board) {

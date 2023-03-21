@@ -1,27 +1,39 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.UnMovablePiece;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
     @DisplayName("보드의 사이즈가 8 x 8이 아니라면 생성시 예외를 반환한다.")
     @Test
     void create_fail() {
-        assertThatThrownBy(() -> new Board(Map.of()))
+        assertThatThrownBy(() -> Board.from(Collections.emptyMap()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스판의 사이즈는 8 x 8 여야합니다.");
+    }
+
+    private Map<Position, Piece> createEmptyBoard() {
+        final Map<Position, Piece> board = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                board.put(Position.of(file, rank), UnMovablePiece.create());
+            }
+        }
+        return board;
     }
 
     @DisplayName("일반적인 기물들의 이동 테스트 ")
@@ -37,7 +49,7 @@ class BoardTest {
             final Position givenPosition = PositionFixtures.A1;
             rawBoard.put(givenPosition, Rook.create(Color.WHITE));
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when && then
             assertThatNoException().isThrownBy(() -> board.move(givenPosition, PositionFixtures.A3));
         }
@@ -49,7 +61,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenPosition = PositionFixtures.A1;
             rawBoard.put(givenPosition, Rook.create(Color.WHITE));
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when && then
             assertThatThrownBy(() -> board.move(givenPosition, PositionFixtures.B2))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -67,7 +79,7 @@ class BoardTest {
             final Position givenTargetPosition = PositionFixtures.A2;
             rawBoard.put(givenTargetPosition, Rook.create(Color.WHITE));
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when && then
             assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalStateException.class)
@@ -86,7 +98,7 @@ class BoardTest {
             final Position givenPathPosition = PositionFixtures.A2;
             rawBoard.put(givenPathPosition, Rook.create(Color.WHITE));
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when && then
             assertThatThrownBy(() -> board.move(givenPosition, PositionFixtures.A3))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -109,7 +121,7 @@ class BoardTest {
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when  && then
             assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -128,7 +140,7 @@ class BoardTest {
             final Position givenTargetPosition = PositionFixtures.A4;
             rawBoard.put(givenTargetPosition, Pawn.createByColor(Color.BLACK));
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when  && then
             assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -146,22 +158,11 @@ class BoardTest {
 
             final Position givenTargetPosition = PositionFixtures.B4;
 
-            final Board board = new Board(rawBoard);
+            final Board board = Board.from(rawBoard);
             //when  && then
             assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
-    }
-
-    private Map<Position, Piece> createEmptyBoard() {
-        final Map<Position, Piece> board = new HashMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), UnMovablePiece.create());
-            }
-        }
-
-        return board;
     }
 }
