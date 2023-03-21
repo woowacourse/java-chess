@@ -4,7 +4,7 @@ import chess.domain.board.RankCoordinate;
 
 import java.util.Arrays;
 
-public enum RankCoordinateView {
+public enum RankCoordinateMapper {
     EIGHT("8", RankCoordinate.EIGHT),
     SEVEN("7", RankCoordinate.SEVEN),
     SIX("6", RankCoordinate.SIX),
@@ -20,7 +20,7 @@ public enum RankCoordinateView {
     private final String rowView;
     private final RankCoordinate rankCoordinate;
 
-    RankCoordinateView(String rowView, RankCoordinate rankCoordinate) {
+    RankCoordinateMapper(String rowView, RankCoordinate rankCoordinate) {
         this.rowView = rowView;
         this.rankCoordinate = rankCoordinate;
     }

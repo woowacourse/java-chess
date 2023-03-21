@@ -4,7 +4,7 @@ import chess.domain.piece.*;
 
 import java.util.Arrays;
 
-public enum PieceTypeView {
+public enum PieceMapper {
     BISHOP(Bishop.class, "b", "B"),
     KING(King.class, "k", "K"),
     KNIGHT(Knight.class, "n", "N"),
@@ -18,13 +18,13 @@ public enum PieceTypeView {
     private final String whiteTeamView;
     private final String blackTeamView;
 
-    PieceTypeView(Class<? extends Piece> piece, String whiteTeamView, String blackTeamView) {
+    PieceMapper(Class<? extends Piece> piece, String whiteTeamView, String blackTeamView) {
         this.piece = piece;
         this.whiteTeamView = whiteTeamView;
         this.blackTeamView = blackTeamView;
     }
 
-    public static PieceTypeView of(Class<? extends Piece> piece) {
+    public static PieceMapper of(Class<? extends Piece> piece) {
         return Arrays.stream(values())
                 .filter(it -> it.piece.equals(piece))
                 .findFirst()

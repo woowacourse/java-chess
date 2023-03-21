@@ -4,7 +4,7 @@ import chess.domain.board.FileCoordinate;
 
 import java.util.Arrays;
 
-public enum FileCoordinateView {
+public enum FileCoordinateMapper {
     A("a", FileCoordinate.A),
     B("b", FileCoordinate.B),
     C("c", FileCoordinate.C),
@@ -20,7 +20,7 @@ public enum FileCoordinateView {
     private final String columnView;
     private final FileCoordinate fileCoordinate;
 
-    FileCoordinateView(String columnView, FileCoordinate fileCoordinate) {
+    FileCoordinateMapper(String columnView, FileCoordinate fileCoordinate) {
         this.columnView = columnView;
         this.fileCoordinate = fileCoordinate;
     }
