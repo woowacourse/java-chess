@@ -12,6 +12,8 @@ enum Command {
     public static final int MOVE_COMMAND_INDEX = 0;
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_TARGET_INDEX = 2;
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int END_COMMAND_SIZE = 1;
 
     private final String value;
 
@@ -34,5 +36,12 @@ enum Command {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         possibleCommand.value + " 또는 " + END.value + " 를 입력해주세요."));
+    }
+
+    public static void validateCommandSize(final List<String> commands) {
+        int size = commands.size();
+        if (!(size == END_COMMAND_SIZE || size == MOVE_COMMAND_SIZE)) {
+            throw new IllegalArgumentException("명령어 형식을 확인해주세요.");
+        }
     }
 }
