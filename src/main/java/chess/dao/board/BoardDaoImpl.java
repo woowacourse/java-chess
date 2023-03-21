@@ -28,8 +28,8 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void save(final int boardId, final Map<String, String> board) {
-        final String query = "INSERT INTO board (board_id, position, piece) VALUES (?, ?,?)";
+    public void save(final int boardId, final Map<String, String> board, final boolean isLowerTeamTurn) {
+        final String query = "INSERT INTO board (board_id, position, piece, isLowerTeamTurn) VALUES (?, ?, ?, ?)";
 
         try (final PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
@@ -40,6 +40,7 @@ public class BoardDaoImpl implements BoardDao {
                 preparedStatement.setInt(1, boardId);
                 preparedStatement.setString(2, position);
                 preparedStatement.setString(3, piece);
+                preparedStatement.setBoolean(4, isLowerTeamTurn);
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -67,6 +68,26 @@ public class BoardDaoImpl implements BoardDao {
         }
 
         return board;
+    }
+
+    @Override
+    public boolean isLowerTeamTurnByBoardId(final int boardId) {
+        final String query = "SELECT isLowerTeamTurn FROM board WHERE board_id = ?";
+
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, String.valueOf(boardId));
+
+            final ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                return result.getBoolean("isLowerTeamTurn");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override

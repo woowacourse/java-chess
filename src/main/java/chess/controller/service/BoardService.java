@@ -22,9 +22,9 @@ public class BoardService {
 
     private final BoardDao boardDao = new BoardDaoImpl();
 
-    public void save(final int boardId, final Map<Position, Piece> board) {
+    public void save(final int boardId, final Map<Position, Piece> board, final boolean isLowerTeamTurn) {
         Map<String, String> boardToSave = parseBoardToSavingIntoDatabase(board);
-        boardDao.save(boardId, boardToSave);
+        boardDao.save(boardId, boardToSave, isLowerTeamTurn);
     }
 
     private Map<String, String> parseBoardToSavingIntoDatabase(final Map<Position, Piece> board) {
@@ -46,6 +46,10 @@ public class BoardService {
 
         Map<Position, Piece> board = parseBoardToJava(databaseBoard);
         return new Board(board);
+    }
+
+    public boolean isLowerTeamTurnByBoardId(final int boardId) {
+        return boardDao.isLowerTeamTurnByBoardId(boardId);
     }
 
     private Map<Position, Piece> parseBoardToJava(final Map<String, String> databaseBoard) {

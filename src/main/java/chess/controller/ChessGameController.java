@@ -51,7 +51,7 @@ public class ChessGameController {
     }
 
     private void playSavedGame() {
-        ChessGame chessGame = new ChessGame(boardService.findById(1), true);
+        ChessGame chessGame = new ChessGame(boardService.findById(1), boardService.isLowerTeamTurnByBoardId(1));
 
         outputView.printStartMessage();
         outputView.printBoard(chessGame.getBoard());
@@ -94,7 +94,7 @@ public class ChessGameController {
         if (isGameEnd(chessGame, command)) {
             System.out.println("게임을 중단했습니다. 현재 게임은 저장됩니다.");
             boardService.delete(1);
-            boardService.save(1, chessGame.getBoard());
+            boardService.save(1, chessGame.getBoard(), chessGame.isLowerTeamTurn());
             return true;
         }
         return false;

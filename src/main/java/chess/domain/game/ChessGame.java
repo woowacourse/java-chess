@@ -58,4 +58,8 @@ public class ChessGame {
         this.board = BoardFactory.createBoard();
         this.isLowerTeamTurn = true;
     }
+
+    public boolean isLowerTeamTurn() {
+        return isLowerTeamTurn;
+    }
 }
