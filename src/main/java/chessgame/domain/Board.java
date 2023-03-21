@@ -29,7 +29,7 @@ public class Board {
     }
 
     private void executePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
-        if(!(piece instanceof Pawn)){
+        if(!piece.isPawn()){
             return;
         }
         if (piece.isMovable(source, target)) {
@@ -41,7 +41,7 @@ public class Board {
     }
 
     private void executeMove(Point source, Point target, Piece piece) {
-        if(piece instanceof Pawn){
+        if(piece.isPawn()){
             return;
         }
         if (piece.isMovable(source, target)) {
@@ -74,7 +74,7 @@ public class Board {
     }
 
     private void checkPawnMove(Piece piece, boolean hasTarget) {
-        if (piece instanceof Pawn && hasTarget) {
+        if (piece.isPawn() && hasTarget) {
             throw new IllegalArgumentException("폰은 직진으로 적을 잡을수 없습니다.");
         }
     }
@@ -88,7 +88,7 @@ public class Board {
     }
 
     private void followPieceRoute(Point source, Point target, Piece piece) {
-        if (piece instanceof Knight) {
+        if (piece.isKnight()) {
             movePiece(source, target, piece);
             return;
         }

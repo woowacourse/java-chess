@@ -28,6 +28,16 @@ public class Knight implements Piece {
         return team;
     }
 
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
+
     private boolean isKnightMove(Point source, Point target) {
         int fileDistance = Math.abs(source.fileDistance(target));
         int rankDistance = Math.abs(source.rankDistance(target));

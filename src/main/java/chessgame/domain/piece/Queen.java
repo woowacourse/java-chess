@@ -27,6 +27,16 @@ public class Queen implements Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKnight() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return team.convertTeamName(ORIGINAL_NAME);
     }

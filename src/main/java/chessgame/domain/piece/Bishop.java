@@ -17,13 +17,23 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public boolean isMovable(Point source, Point target) {
+        return source.isDiagonal(target);
+    }
+
+    @Override
     public Team team() {
         return team;
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
-        return source.isDiagonal(target);
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKnight() {
+        return false;
     }
 
     @Override

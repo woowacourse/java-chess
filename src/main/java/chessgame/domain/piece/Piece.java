@@ -7,4 +7,8 @@ public interface Piece {
     boolean isMovable(Point source, Point target);
 
     Team team();
+
+    boolean isPawn();
+
+    boolean isKnight();
 }
