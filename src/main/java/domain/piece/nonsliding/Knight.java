@@ -20,9 +20,9 @@ public final class Knight extends Piece {
     );
 
     @Override
-    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
-        Coordinate coordinateDifference = startCoordinate.minusWithAbsoluteValue(endCoordinate);
+    public boolean isReachableByRule(final Coordinate start, final Coordinate end) {
+        Inclination inclination = Inclination.of(start.getInclination(end));
+        Coordinate coordinateDifference = start.minusWithAbsoluteValue(end);
 
         return DIRECTION.canBeDirectionOf(inclination) &&
                 availableCoordinateDifferences.contains(coordinateDifference);

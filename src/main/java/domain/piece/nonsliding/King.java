@@ -10,16 +10,16 @@ import java.util.List;
 public final class King extends Piece {
 
     private static final Direction DIRECTION = new Direction(List.of(
-            Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY, Inclination.POSITIVE_INFINITY,
-            Inclination.ZERO, Inclination.MINUS_ZERO
+            Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY,
+            Inclination.POSITIVE_INFINITY, Inclination.ZERO, Inclination.MINUS_ZERO
     ));
 
     @Override
-    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+    public boolean isReachableByRule(final Coordinate start, final Coordinate end) {
+        Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination) &&
-                startCoordinate.hasDistanceLessThanOne(endCoordinate);
+                start.hasDistanceLessThanOne(end);
     }
 
     @Override

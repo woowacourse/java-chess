@@ -14,8 +14,8 @@ public final class Bishop extends Piece {
     ));
 
     @Override
-    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Inclination inclination = Inclination.of(startCoordinate.getInclination(endCoordinate));
+    public boolean isReachableByRule(final Coordinate start, final Coordinate end) {
+        Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination);
     }
