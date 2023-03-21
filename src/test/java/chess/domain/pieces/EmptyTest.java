@@ -15,7 +15,7 @@ class EmptyTest {
 
         // when & then
         Assertions.assertThatThrownBy(
-            () -> empty.canMove(Position.from("c3"), Position.from("c4"))
+            () -> empty.canMove(Position.from("c3"), Position.from("c4"), true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

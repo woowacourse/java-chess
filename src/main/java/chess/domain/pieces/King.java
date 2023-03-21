@@ -27,7 +27,7 @@ public class King extends Piece {
     }
 
     @Override
-    public void canMove(final Position source, final Position destination) {
+    public void canMove(final Position source, final Position destination, boolean isAttack) {
         validateMoveDirection(source, destination);
         validateRangeOfMove(source, destination);
     }

@@ -25,7 +25,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Team.WHITE);
 
         // when & then
-        assertDoesNotThrow(() -> bishop.canMove(source, destination));
+        assertDoesNotThrow(() -> bishop.canMove(source, destination, true));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -39,7 +39,7 @@ class BishopTest {
 
         // when & then
         assertThatThrownBy(
-            () -> bishop.canMove(source, destination)
+            () -> bishop.canMove(source, destination, true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

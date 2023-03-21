@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class KnightTest {
 
@@ -26,7 +25,7 @@ class KnightTest {
 
         // when  & then
         Assertions.assertDoesNotThrow(
-            () -> knight.canMove(source, destination)
+            () -> knight.canMove(source, destination, true)
         );
     }
 
@@ -41,7 +40,7 @@ class KnightTest {
 
         // when  & then
         assertThatThrownBy(
-            () -> knight.canMove(source, destination)
+            () -> knight.canMove(source, destination, true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

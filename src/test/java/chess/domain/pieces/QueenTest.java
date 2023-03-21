@@ -27,7 +27,7 @@ class QueenTest {
 
         // when & then
         assertDoesNotThrow(
-            () -> queen.canMove(source, destination)
+            () -> queen.canMove(source, destination, true)
         );
     }
 
@@ -42,7 +42,7 @@ class QueenTest {
         Queen queen = new Queen(Team.WHITE);
 
         // when & then
-        assertDoesNotThrow(() -> queen.canMove(source, destination));
+        assertDoesNotThrow(() -> queen.canMove(source, destination, true));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -56,7 +56,7 @@ class QueenTest {
 
         // when & then
         assertThatThrownBy(
-            () -> queen.canMove(source, destination)
+            () -> queen.canMove(source, destination, true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

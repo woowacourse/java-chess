@@ -11,7 +11,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void canMove(final Position start, final Position end) {
+    public void canMove(final Position start, final Position end, boolean isAttack) {
         throw new IllegalArgumentException("움직일 수 없는 말입니다.");
     }
 

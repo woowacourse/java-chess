@@ -25,7 +25,7 @@ class KingTest {
         King king = new King(Team.WHITE);
 
         // when & then
-        assertDoesNotThrow(() -> king.canMove(source, destination));
+        assertDoesNotThrow(() -> king.canMove(source, destination, true));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -39,7 +39,7 @@ class KingTest {
 
         // when & then
         assertThatThrownBy(
-            () -> king.canMove(source, destination)
+            () -> king.canMove(source, destination, true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -1,12 +1,8 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
-import chess.domain.direction.Direction;
 import chess.domain.strategy.Route;
 import chess.domain.strategy.Vector;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -28,7 +24,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void canMove(final Position source, final Position destination) {
+    public void canMove(final Position source, final Position destination, boolean isAttack) {
         validateMoveDirection(source, destination);
         validateRangeOfMove(source, destination);
     }

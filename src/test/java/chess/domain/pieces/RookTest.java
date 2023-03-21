@@ -26,7 +26,7 @@ class RookTest {
 
         // when & then
         assertDoesNotThrow(
-            () -> rook.canMove(source, destination)
+            () -> rook.canMove(source, destination, true)
         );
     }
 
@@ -41,7 +41,7 @@ class RookTest {
 
         // when & then
         assertThatThrownBy(
-            () -> rook.canMove(source, destination)
+            () -> rook.canMove(source, destination, true)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
