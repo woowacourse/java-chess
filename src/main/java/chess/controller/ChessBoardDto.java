@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.domain.File;
-import chess.domain.chesspiece.Piece;
 import chess.domain.Square;
+import chess.domain.chesspiece.Piece;
 
 import java.util.ArrayList;
 import java.util.Collections;

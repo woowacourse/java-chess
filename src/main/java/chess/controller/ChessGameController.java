@@ -20,7 +20,7 @@ public class ChessGameController {
     public void run() {
         outputView.printInitialMessage();
         Command command = repeatUntilNoException(this::startGame);
-        ChessBoard chessBoard = new ChessBoardFactory().generate();
+        ChessBoard chessBoard = ChessBoardFactory.generate();
         while (command.isPlaying()) {
             outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
             command = repeatUntilNoException(this::playTurn, chessBoard);
@@ -29,20 +29,27 @@ public class ChessGameController {
 
     private Command startGame() {
         CommandDto commandDto = inputView.readCommand();
-        return Command.startGame(commandDto.getCommand());
+        Command command = Command.from(commandDto.getCommand());
+        command.validateCommandInStart();
+        return command;
     }
 
     private Command playTurn(final ChessBoard chessBoard) {
         CommandDto commandDto = inputView.readCommand();
-        Command command = Command.changeStatus(commandDto.getCommand());
+        Command command = Command.from(commandDto.getCommand());
+        command.validateCommandInPlaying();
         if (command.isPlaying()) {
-            final Square from = Square.of(Rank.from(commandDto.getSourceRank()), File.from(commandDto.getSourceFile()));
-            final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
-            if (!chessBoard.canMove(from, to)) {
-                outputView.printInvalidMoveMessage();
-            }
+            updateChessBoard(chessBoard, commandDto);
         }
         return command;
+    }
+
+    private void updateChessBoard(final ChessBoard chessBoard, final CommandDto commandDto) {
+        final Square from = Square.of(Rank.from(commandDto.getSourceRank()), File.from(commandDto.getSourceFile()));
+        final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
+        if (!chessBoard.canMove(from, to)) {
+            outputView.printInvalidMoveMessage();
+        }
     }
 
     private <T> T repeatUntilNoException(Supplier<T> supplier) {

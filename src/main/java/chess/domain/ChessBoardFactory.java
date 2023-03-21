@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class ChessBoardFactory {
 
-    public ChessBoard generate() {
+    public static ChessBoard generate() {
         return new ChessBoard(makePieces());
     }
 
-    private Map<Square, Piece> makePieces() {
+    private static Map<Square, Piece> makePieces() {
         final HashMap<Square, Piece> pieces = new HashMap<>();
         addRooks(pieces);
         addKnights(pieces);
@@ -24,7 +24,7 @@ public class ChessBoardFactory {
         return pieces;
     }
 
-    private void addRooks(final HashMap<Square, Piece> pieces) {
+    private static void addRooks(final HashMap<Square, Piece> pieces) {
         final Rook blackRook = Rook.of(Side.BLACK);
         final Rook whiteRook = Rook.of(Side.WHITE);
         pieces.put(Square.of(Rank.EIGHT, File.A), blackRook);
@@ -33,7 +33,7 @@ public class ChessBoardFactory {
         pieces.put(Square.of(Rank.ONE, File.H), whiteRook);
     }
 
-    private void addKnights(final HashMap<Square, Piece> pieces) {
+    private static void addKnights(final HashMap<Square, Piece> pieces) {
         final Knight blackKnight = Knight.of(Side.BLACK);
         final Knight whiteKnight = Knight.of(Side.WHITE);
         pieces.put(Square.of(Rank.EIGHT, File.B), blackKnight);
@@ -42,7 +42,7 @@ public class ChessBoardFactory {
         pieces.put(Square.of(Rank.ONE, File.G), whiteKnight);
     }
 
-    private void addBishops(final HashMap<Square, Piece> pieces) {
+    private static void addBishops(final HashMap<Square, Piece> pieces) {
         final Bishop blackBishop = Bishop.of(Side.BLACK);
         final Bishop whiteBishop = Bishop.of(Side.WHITE);
         pieces.put(Square.of(Rank.EIGHT, File.C), blackBishop);
@@ -51,17 +51,17 @@ public class ChessBoardFactory {
         pieces.put(Square.of(Rank.ONE, File.F), whiteBishop);
     }
 
-    private void addQueens(final HashMap<Square, Piece> pieces) {
+    private static void addQueens(final HashMap<Square, Piece> pieces) {
         pieces.put(Square.of(Rank.EIGHT, File.D), Queen.of(Side.BLACK));
         pieces.put(Square.of(Rank.ONE, File.D), Queen.of(Side.WHITE));
     }
 
-    private void addKings(final HashMap<Square, Piece> pieces) {
+    private static void addKings(final HashMap<Square, Piece> pieces) {
         pieces.put(Square.of(Rank.EIGHT, File.E), King.of(Side.BLACK));
         pieces.put(Square.of(Rank.ONE, File.E), King.of(Side.WHITE));
     }
 
-    private void addPawns(final HashMap<Square, Piece> pieces) {
+    private static void addPawns(final HashMap<Square, Piece> pieces) {
         final List<Pawn> blackPawns = Pawn.of(Side.BLACK);
         final List<Pawn> whitePawns = Pawn.of(Side.WHITE);
         for (File file : File.values()) {
@@ -70,7 +70,7 @@ public class ChessBoardFactory {
         }
     }
 
-    private void addEmptyPieces(final HashMap<Square, Piece> pieces) {
+    private static void addEmptyPieces(final HashMap<Square, Piece> pieces) {
         for (File file : File.values()) {
             pieces.put(Square.of(Rank.THREE, file), EmptyPiece.getInstance());
             pieces.put(Square.of(Rank.FOUR, file), EmptyPiece.getInstance());

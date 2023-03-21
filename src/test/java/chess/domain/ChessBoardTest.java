@@ -20,7 +20,7 @@ class ChessBoardTest {
     @Nested
     @DisplayName("create 메서드로 생성된 chessBoard에서")
     class create {
-        ChessBoard chessBoard = new ChessBoardFactory().generate();
+        ChessBoard chessBoard = ChessBoardFactory.generate();
         Map<Square, Piece> pieces = chessBoard.getPieces();
 
         @Nested
