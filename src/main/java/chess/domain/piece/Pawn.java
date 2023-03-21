@@ -41,11 +41,16 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public boolean canMoveToEmpty(final Position source, final Position dest) {
+        return !isAttack(source, dest);
     }
 
-    public boolean isAttack(Position source, Position dest) {
+    @Override
+    public boolean canAttack(Position source, Position dest, Piece target) {
+        return isAttack(source, dest) && isDifferentCamp(target.camp);
+    }
+
+    private boolean isAttack(Position source, Position dest) {
         return Direction.find(source, dest)
                 .map(this::isRightAttackDirectionByCamp)
                 .orElse(false);

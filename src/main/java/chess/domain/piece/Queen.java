@@ -31,8 +31,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
+    public boolean canMoveToEmpty(final Position source, final Position dest) {
+        return true;
+    }
+
+    @Override
+    public boolean canAttack(Position source, Position dest, Piece target) {
+        return isDifferentCamp(target.camp);
     }
 
 }

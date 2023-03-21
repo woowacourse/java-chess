@@ -17,10 +17,16 @@ public abstract class Piece {
 
     public abstract CheckablePaths findCheckablePaths(Position current);
 
-    public abstract boolean isPawn();
+    public abstract boolean canMoveToEmpty(Position source, Position dest);
 
-    public boolean isSameColor(Camp camp) {
+    public abstract boolean canAttack(Position source, Position dest, Piece target);
+
+    public boolean isSameCamp(Camp camp) {
         return this.camp == camp;
+    }
+
+    public boolean isDifferentCamp(Camp other) {
+        return this.camp != other;
     }
 
     public Camp getColor() {
