@@ -22,11 +22,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.position == value)
                 .findFirst()
-                .orElseThrow(
-                        () -> {
-                            throw new IllegalArgumentException("해당 값의 파일이 없습니다.");
-                        }
-                );
+                .orElseThrow(() -> new IllegalArgumentException("해당 값의 파일이 없습니다."));
     }
 
     public int calculateDifference(final File target) {
