@@ -111,8 +111,8 @@ Board
 기타
 
 - [ ] Readme 기능 목록 체크
-- [ ] Color 클래스에서 isBlack 메서드 삭제하기
-- [x] File, Rank 클래스에서 index 상태를 ordinal()로 수정
+- [x] Color 클래스에서 isBlack 메서드 삭제하기
+- [x] File, Rank 클래스에서 index 상태를 ordinal()로 수동
 
 test
 

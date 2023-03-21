@@ -25,7 +25,7 @@ public abstract class Piece {
     }
 
     public final boolean isBlack() {
-        return color.isBlack();
+        return color == Color.BLACK;
     }
 
     protected final void validateSamePosition(final Position targetPosition) {
