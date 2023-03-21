@@ -16,7 +16,9 @@ public class Playing implements GameState {
 
     @Override
     public GameState execute(final GameCommand gameCommand, final Position source, final Position target) {
-        chessGame.move(source, target);
+        if (gameCommand.isMove()) {
+            chessGame.move(source, target);
+        }
         return this;
     }
 
