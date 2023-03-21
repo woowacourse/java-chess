@@ -4,7 +4,6 @@ import chess.piece.ChessPiece;
 import chess.piece.Shape;
 import chess.piece.Side;
 import chess.position.Position;
-import chess.position.PositionCache;
 import java.util.HashMap;
 import java.util.Map;
 
