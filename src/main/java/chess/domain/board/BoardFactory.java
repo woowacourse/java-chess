@@ -49,7 +49,9 @@ public class BoardFactory {
                                                     WhitePiecePositionConstant.KING_ROW.value());
         pieceMap.put(whitePosition, new King(Color.WHITE));
 
-        final Position blackPosition = new Position(5, 8);
+        final Position blackPosition = new Position(BlackPiecePositionConstant.KING_COLUMN.value(),
+                                                    BlackPiecePositionConstant.KING_ROW.value());
+
         pieceMap.put(blackPosition, new King(Color.BLACK));
 
         return pieceMap;

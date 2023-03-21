@@ -61,7 +61,8 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("searchPathToBlackPawn")
     @DisplayName("searchPathTo() : Pawn이 아래로 움직일 수 있다면, 그 이동 경로를 구할 수 있다.")
-    void test_searchPathTo_black(final Position to, final Piece locatedPiece, final List<Position> pathResult) throws Exception {
+    void test_searchPathTo_black(final Position to, final Piece locatedPiece,
+                                 final List<Position> pathResult) throws Exception {
         //given
         final Pawn pawn = new Pawn(Color.BLACK);
 
