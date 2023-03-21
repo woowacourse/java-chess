@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
@@ -14,12 +14,12 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
+    public List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to) {
         validatePossibleDestination(from, to);
         return List.of(to);
     }
 
-    private void validatePossibleDestination(final Coordinate from, final Coordinate to) {
+    private void validatePossibleDestination(final SquareCoordinate from, final SquareCoordinate to) {
         final int fileDistance = Math.abs(from.calculateFileDistance(to));
         final int rankDistance = Math.abs(from.calculateRankDistance(to));
 

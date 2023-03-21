@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface PieceState {
 
     Team getTeam();
 
-    List<Coordinate> findRoute(final Coordinate from, final Coordinate to);
+    List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to);
 
     void validateRoute(final List<PieceState> routeSquares);
 }

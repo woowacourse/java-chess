@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -50,8 +50,8 @@ public final class ChessController {
     }
 
     private void movePiece(final ChessGame chessGame) {
-        final Coordinate from = Coordinate.of(InputView.getCoordinate());
-        final Coordinate to = Coordinate.of(InputView.getCoordinate());
+        final SquareCoordinate from = SquareCoordinate.of(InputView.getCoordinate());
+        final SquareCoordinate to = SquareCoordinate.of(InputView.getCoordinate());
 
         chessGame.move(from, to);
         OutputView.printChessBoard(chessGame.getChessBoard());

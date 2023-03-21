@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
@@ -20,17 +20,17 @@ class KnightTest {
     void 나이트는_같은_랭크의_좌표로_움직일_수_있다() {
         //given
         final Knight knight = new Knight(Team.BLACK);
-        final Coordinate c3 = Coordinate.of("c3");
-        final Coordinate a4 = Coordinate.of("a4");
-        final Coordinate b1 = Coordinate.of("b1");
-        final Coordinate d5 = Coordinate.of("d5");
-        final Coordinate e2 = Coordinate.of("e2");
+        final SquareCoordinate c3 = SquareCoordinate.of("c3");
+        final SquareCoordinate a4 = SquareCoordinate.of("a4");
+        final SquareCoordinate b1 = SquareCoordinate.of("b1");
+        final SquareCoordinate d5 = SquareCoordinate.of("d5");
+        final SquareCoordinate e2 = SquareCoordinate.of("e2");
 
         //when & then
-        Assertions.assertThat(knight.findRoute(c3, a4)).containsExactly(Coordinate.of("a4"));
-        Assertions.assertThat(knight.findRoute(c3, b1)).containsExactly(Coordinate.of("b1"));
-        Assertions.assertThat(knight.findRoute(c3, d5)).containsExactly(Coordinate.of("d5"));
-        Assertions.assertThat(knight.findRoute(c3, e2)).containsExactly(Coordinate.of("e2"));
+        Assertions.assertThat(knight.findRoute(c3, a4)).containsExactly(SquareCoordinate.of("a4"));
+        Assertions.assertThat(knight.findRoute(c3, b1)).containsExactly(SquareCoordinate.of("b1"));
+        Assertions.assertThat(knight.findRoute(c3, d5)).containsExactly(SquareCoordinate.of("d5"));
+        Assertions.assertThat(knight.findRoute(c3, e2)).containsExactly(SquareCoordinate.of("e2"));
 
     }
 
@@ -38,8 +38,8 @@ class KnightTest {
     void 나이트가_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Knight knight = new Knight(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b8 = Coordinate.of("b8");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate b8 = SquareCoordinate.of("b8");
 
         //when & then
         Assertions.assertThatThrownBy(() -> knight.findRoute(a1, b8)).isInstanceOf(IllegalArgumentException.class);

@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.controller.GameState;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.dto.ChessBoardDto;
 
 public final class ChessGame {
@@ -19,7 +19,7 @@ public final class ChessGame {
         chessBoard = new ChessBoard();
     }
 
-    public void move(final Coordinate from, final Coordinate to) {
+    public void move(final SquareCoordinate from, final SquareCoordinate to) {
         if (state != GameState.RUNNING) {
             throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
         }

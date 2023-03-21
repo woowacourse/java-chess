@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
@@ -21,8 +21,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate c2 = Coordinate.of("c2");
+        final SquareCoordinate c1 = SquareCoordinate.of("c1");
+        final SquareCoordinate c2 = SquareCoordinate.of("c2");
         final List<PieceState> route = List.of(new Pawn(Team.BLACK));
         pawn.findRoute(c1, c2);
 
@@ -35,8 +35,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate c2 = Coordinate.of("c2");
+        final SquareCoordinate c1 = SquareCoordinate.of("c1");
+        final SquareCoordinate c2 = SquareCoordinate.of("c2");
         final List<PieceState> route = List.of(new Empty());
         pawn.findRoute(c1, c2);
 
@@ -49,8 +49,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate b2 = Coordinate.of("b2");
+        final SquareCoordinate c1 = SquareCoordinate.of("c1");
+        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<PieceState> route = List.of(new Empty());
         pawn.findRoute(c1, b2);
 
@@ -63,8 +63,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate b2 = Coordinate.of("b2");
+        final SquareCoordinate c1 = SquareCoordinate.of("c1");
+        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<PieceState> route = List.of(new Pawn(Team.BLACK));
         pawn.findRoute(c1, b2);
 
@@ -77,11 +77,11 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final Coordinate b1 = Coordinate.of("b1");
-        final Coordinate b2 = Coordinate.of("b2");
+        final SquareCoordinate b1 = SquareCoordinate.of("b1");
+        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<PieceState> route1 = List.of(new Empty());
 
-        final Coordinate b4 = Coordinate.of("b4");
+        final SquareCoordinate b4 = SquareCoordinate.of("b4");
 
         //when
         pawn.findRoute(b1, b2);

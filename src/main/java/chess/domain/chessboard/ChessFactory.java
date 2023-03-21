@@ -24,8 +24,8 @@ public final class ChessFactory {
         return INSTANCE;
     }
 
-    public Map<Coordinate, PieceState> create() {
-        Map<Coordinate, PieceState> squares = new LinkedHashMap<>();
+    public Map<SquareCoordinate, PieceState> create() {
+        Map<SquareCoordinate, PieceState> squares = new LinkedHashMap<>();
 
         createSideRankByTeam(squares, FIRST.index, Team.WHITE);
         createPawnRankByTeam(squares, SECOND.index, Team.WHITE);
@@ -36,12 +36,12 @@ public final class ChessFactory {
         return squares;
     }
 
-    private void createSideRankByTeam(Map<Coordinate, PieceState> squares, final char rank, final Team team) {
+    private void createSideRankByTeam(Map<SquareCoordinate, PieceState> squares, final char rank, final Team team) {
         final List<PieceState> sideSquares = createSideSquaresByTeam(team);
 
         char file = A.index;
         for (PieceState pieceState : sideSquares) {
-            squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), pieceState);
+            squares.put(SquareCoordinate.of(makeAlphanumeric(file++, rank)), pieceState);
         }
     }
 
@@ -61,21 +61,21 @@ public final class ChessFactory {
         return String.valueOf(file) + rank;
     }
 
-    private void createPawnRankByTeam(Map<Coordinate, PieceState> squares, final char rank, final Team team) {
+    private void createPawnRankByTeam(Map<SquareCoordinate, PieceState> squares, final char rank, final Team team) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Pawn(team));
+            squares.put(SquareCoordinate.of(makeAlphanumeric(file, rank)), new Pawn(team));
         }
     }
 
-    private void createBlankRanks(Map<Coordinate, PieceState> squares) {
+    private void createBlankRanks(Map<SquareCoordinate, PieceState> squares) {
         for (char rank = THIRD.index; rank <= SIXTH.index; rank++) {
             createBlankRank(squares, rank);
         }
     }
 
-    private void createBlankRank(Map<Coordinate, PieceState> squares, final char rank) {
+    private void createBlankRank(Map<SquareCoordinate, PieceState> squares, final char rank) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Empty());
+            squares.put(SquareCoordinate.of(makeAlphanumeric(file, rank)), new Empty());
         }
     }
 }

@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
@@ -20,11 +20,11 @@ class QueenTest {
     void 퀸은_같은_파일의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate a3 = Coordinate.of("a3");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate a3 = SquareCoordinate.of("a3");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, a3)).containsExactly(Coordinate.of("a2"), Coordinate.of("a3"));
+        Assertions.assertThat(queen.findRoute(a1, a3)).containsExactly(SquareCoordinate.of("a2"), SquareCoordinate.of("a3"));
     }
 
 
@@ -32,20 +32,20 @@ class QueenTest {
     void 퀸은_같은_랭크의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate e1 = Coordinate.of("e1");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate e1 = SquareCoordinate.of("e1");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, e1)).containsExactly(Coordinate.of("b1"), Coordinate.of("c1")
-                , Coordinate.of("d1"), Coordinate.of("e1"));
+        Assertions.assertThat(queen.findRoute(a1, e1)).containsExactly(SquareCoordinate.of("b1"), SquareCoordinate.of("c1")
+                , SquareCoordinate.of("d1"), SquareCoordinate.of("e1"));
     }
 
     @Test
     void 퀸이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate b3 = SquareCoordinate.of("b3");
 
         //when & then
         Assertions.assertThatThrownBy(() -> queen.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
@@ -55,11 +55,11 @@ class QueenTest {
     void 퀸은_우상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate c3 = Coordinate.of("c3");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate c3 = SquareCoordinate.of("c3");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(a1, c3)).containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
+        Assertions.assertThat(queen.findRoute(a1, c3)).containsExactly(SquareCoordinate.of("b2"), SquareCoordinate.of("c3"));
     }
 
 
@@ -67,11 +67,11 @@ class QueenTest {
     void 퀸은_좌상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate c3 = Coordinate.of("c3");
-        final Coordinate e1 = Coordinate.of("e1");
+        final SquareCoordinate c3 = SquareCoordinate.of("c3");
+        final SquareCoordinate e1 = SquareCoordinate.of("e1");
 
         //when & then
-        Assertions.assertThat(queen.findRoute(c3, e1)).containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
+        Assertions.assertThat(queen.findRoute(c3, e1)).containsExactly(SquareCoordinate.of("d2"), SquareCoordinate.of("e1"));
     }
 
     @Test

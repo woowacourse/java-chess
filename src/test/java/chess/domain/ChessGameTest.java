@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -27,7 +27,7 @@ class ChessGameTest {
 
     @Test
     void 게임을_시작하기_전에_말을_움직이는_예외_테스트() {
-        assertThatThrownBy(() -> chessGame.move(Coordinate.of("a2"), Coordinate.of("a3"))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessGame.move(SquareCoordinate.of("a2"), SquareCoordinate.of("a3"))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

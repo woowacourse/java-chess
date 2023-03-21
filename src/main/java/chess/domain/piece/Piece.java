@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,33 +29,33 @@ public abstract class Piece implements PieceState {
         return team;
     }
 
-    protected final List<Coordinate> horizontalRoute(final Coordinate from, final Coordinate to) {
+    protected final List<SquareCoordinate> horizontalRoute(final SquareCoordinate from, final SquareCoordinate to) {
         final int distance = from.calculateFileDistance(to);
 
         return makeRouteCoordinates(distance, from::horizontalMove);
     }
 
-    protected final List<Coordinate> verticalRoute(final Coordinate from, final Coordinate to) {
+    protected final List<SquareCoordinate> verticalRoute(final SquareCoordinate from, final SquareCoordinate to) {
         final int distance = from.calculateRankDistance(to);
 
         return makeRouteCoordinates(distance, from::verticalMove);
     }
 
-    protected final List<Coordinate> positiveDiagonalRoute(final Coordinate from, final Coordinate to) {
+    protected final List<SquareCoordinate> positiveDiagonalRoute(final SquareCoordinate from, final SquareCoordinate to) {
         final int distance = from.calculateFileDistance(to);
 
         return makeRouteCoordinates(distance, from::positiveDiagonalMove);
     }
 
-    protected final List<Coordinate> negativeDiagonalRoute(final Coordinate from, final Coordinate to) {
+    protected final List<SquareCoordinate> negativeDiagonalRoute(final SquareCoordinate from, final SquareCoordinate to) {
         final int distance = from.calculateRankDistance(to);
 
         return makeRouteCoordinates(distance, from::negativeDiagonalMove);
     }
 
-    private List<Coordinate> makeRouteCoordinates(final int distance,
-                                                  final IntFunction<Coordinate> coordinateFunction) {
-        final List<Coordinate> route = new ArrayList<>();
+    private List<SquareCoordinate> makeRouteCoordinates(final int distance,
+                                                        final IntFunction<SquareCoordinate> coordinateFunction) {
+        final List<SquareCoordinate> route = new ArrayList<>();
         final int direction = directionByDistance(distance);
         for (int i = 1; i <= direction * distance; i++) {
             route.add(coordinateFunction.apply(direction * i));

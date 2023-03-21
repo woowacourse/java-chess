@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public final class Coordinate {
+public final class SquareCoordinate {
     private static final String ALPHANUMERIC_REGEX = "^[a-h][1-8]$";
     private static final int FILE_PARSE_INDEX = 0;
     private static final int RANK_PARSE_INDEX = 1;
 
-    private static final Map<String, Coordinate> cache = new HashMap<>();
+    private static final Map<String, SquareCoordinate> cache = new HashMap<>();
 
     private final char fileIndex;
     private final char rankIndex;
 
-    private Coordinate(final String alphanumeric) {
+    private SquareCoordinate(final String alphanumeric) {
         validateAlphanumeric(alphanumeric);
         this.fileIndex = parsingFileIndex(alphanumeric);
         this.rankIndex = parsingRankIndex(alphanumeric);
     }
 
-    public static Coordinate of(final String alphanumeric) {
-        return cache.computeIfAbsent(alphanumeric, key -> new Coordinate(alphanumeric));
+    public static SquareCoordinate of(final String alphanumeric) {
+        return cache.computeIfAbsent(alphanumeric, key -> new SquareCoordinate(alphanumeric));
     }
 
     private void validateAlphanumeric(final String alphanumeric) {
@@ -38,22 +38,22 @@ public final class Coordinate {
         return alphanumeric.charAt(RANK_PARSE_INDEX);
     }
 
-    public boolean isSameRank(final Coordinate other) {
+    public boolean isSameRank(final SquareCoordinate other) {
         return this.rankIndex == other.rankIndex;
     }
 
-    public boolean isSameFile(final Coordinate other) {
+    public boolean isSameFile(final SquareCoordinate other) {
         return this.fileIndex == other.fileIndex;
     }
 
-    public boolean isPositiveDiagonal(final Coordinate other) {
+    public boolean isPositiveDiagonal(final SquareCoordinate other) {
         final int rankDistance = other.rankIndex - this.rankIndex;
         final int fileDistance = other.fileIndex - this.fileIndex;
 
         return rankDistance == fileDistance;
     }
 
-    public boolean isNegativeDiagonal(final Coordinate other) {
+    public boolean isNegativeDiagonal(final SquareCoordinate other) {
         final int rankDistance = other.rankIndex - this.rankIndex;
         final int fileDistance = other.fileIndex - this.fileIndex;
 
@@ -68,27 +68,27 @@ public final class Coordinate {
         return Character.toString(index - step);
     }
 
-    public int calculateFileDistance(final Coordinate other) {
+    public int calculateFileDistance(final SquareCoordinate other) {
         return other.fileIndex - this.fileIndex;
     }
 
-    public int calculateRankDistance(final Coordinate other) {
+    public int calculateRankDistance(final SquareCoordinate other) {
         return other.rankIndex - this.rankIndex;
     }
 
-    public Coordinate horizontalMove(final int step) {
-        return Coordinate.of(addIndex(fileIndex, step) + rankIndex);
+    public SquareCoordinate horizontalMove(final int step) {
+        return SquareCoordinate.of(addIndex(fileIndex, step) + rankIndex);
     }
 
-    public Coordinate verticalMove(final int step) {
-        return Coordinate.of(fileIndex + addIndex(rankIndex, step));
+    public SquareCoordinate verticalMove(final int step) {
+        return SquareCoordinate.of(fileIndex + addIndex(rankIndex, step));
     }
 
-    public Coordinate positiveDiagonalMove(final int step) {
-        return Coordinate.of(addIndex(fileIndex, step) + addIndex(rankIndex, step));
+    public SquareCoordinate positiveDiagonalMove(final int step) {
+        return SquareCoordinate.of(addIndex(fileIndex, step) + addIndex(rankIndex, step));
     }
 
-    public Coordinate negativeDiagonalMove(final int step) {
-        return Coordinate.of(subtractIndex(fileIndex, step) + addIndex(rankIndex, step));
+    public SquareCoordinate negativeDiagonalMove(final int step) {
+        return SquareCoordinate.of(subtractIndex(fileIndex, step) + addIndex(rankIndex, step));
     }
 }

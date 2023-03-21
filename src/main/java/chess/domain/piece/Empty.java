@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
+    public List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to) {
         throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }
 

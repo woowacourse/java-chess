@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
@@ -20,34 +20,34 @@ class KingTest {
     void 킹은_한칸_위_아래_좌_우로_움직일_수_있다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate b1 = Coordinate.of("b1");
-        final Coordinate b2 = Coordinate.of("b2");
-        final Coordinate b3 = Coordinate.of("b3");
-        final Coordinate a2 = Coordinate.of("a2");
-        final Coordinate c2 = Coordinate.of("c2");
+        final SquareCoordinate b1 = SquareCoordinate.of("b1");
+        final SquareCoordinate b2 = SquareCoordinate.of("b2");
+        final SquareCoordinate b3 = SquareCoordinate.of("b3");
+        final SquareCoordinate a2 = SquareCoordinate.of("a2");
+        final SquareCoordinate c2 = SquareCoordinate.of("c2");
 
         //when & then
-        Assertions.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
-        Assertions.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
-        Assertions.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.of("a2"));
-        Assertions.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c2"));
+        Assertions.assertThat(king.findRoute(b2, b3)).containsExactly(SquareCoordinate.of("b3"));
+        Assertions.assertThat(king.findRoute(b2, b1)).containsExactly(SquareCoordinate.of("b1"));
+        Assertions.assertThat(king.findRoute(b2, a2)).containsExactly(SquareCoordinate.of("a2"));
+        Assertions.assertThat(king.findRoute(b2, c2)).containsExactly(SquareCoordinate.of("c2"));
     }
 
     @Test
     void 킹은_한칸_대각선으로_움직일_수_있다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b2 = Coordinate.of("b2");
-        final Coordinate a3 = Coordinate.of("a3");
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate c3 = Coordinate.of("c3");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate b2 = SquareCoordinate.of("b2");
+        final SquareCoordinate a3 = SquareCoordinate.of("a3");
+        final SquareCoordinate c1 = SquareCoordinate.of("c1");
+        final SquareCoordinate c3 = SquareCoordinate.of("c3");
 
         //when & then
-        Assertions.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.of("a1"));
-        Assertions.assertThat(king.findRoute(b2, a3)).containsExactly(Coordinate.of("a3"));
-        Assertions.assertThat(king.findRoute(b2, c1)).containsExactly(Coordinate.of("c1"));
-        Assertions.assertThat(king.findRoute(b2, c3)).containsExactly(Coordinate.of("c3"));
+        Assertions.assertThat(king.findRoute(b2, a1)).containsExactly(SquareCoordinate.of("a1"));
+        Assertions.assertThat(king.findRoute(b2, a3)).containsExactly(SquareCoordinate.of("a3"));
+        Assertions.assertThat(king.findRoute(b2, c1)).containsExactly(SquareCoordinate.of("c1"));
+        Assertions.assertThat(king.findRoute(b2, c3)).containsExactly(SquareCoordinate.of("c3"));
     }
 
 
@@ -55,8 +55,8 @@ class KingTest {
     void 킹이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final SquareCoordinate a1 = SquareCoordinate.of("a1");
+        final SquareCoordinate b3 = SquareCoordinate.of("b3");
 
         //when & then
         Assertions.assertThatThrownBy(() -> king.findRoute(a1, b3)).isInstanceOf(IllegalArgumentException.class);
