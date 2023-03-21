@@ -37,7 +37,7 @@ public final class ChessBoard {
         board.put(position, piece);
     }
 
-    public boolean isPossibleRoute(final Position source, final Position target, final Piece piece) {
+    public boolean isPossibleRoute(final Position source, final Position target) {
         final Position unitPosition = source.computeUnitPosition(target);
         Position currentPosition = Position.copy(source);
         currentPosition = currentPosition.calculate(unitPosition);
@@ -45,10 +45,10 @@ public final class ChessBoard {
             return false;
         }
         final Piece targetPiece = board.get(target);
-        return targetPiece == null || !targetPiece.compareCamp(piece);
+        return targetPiece == null || !targetPiece.compareCamp(board.get(source));
     }
 
-    private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {
+    private boolean isObstructed(final Position target, final Position unitPosition, final Position currentPosition) {
         if (currentPosition.isSame(target)) {
             return false;
         }

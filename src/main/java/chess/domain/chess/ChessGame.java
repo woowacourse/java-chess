@@ -29,8 +29,7 @@ public final class ChessGame {
     }
 
     private void validateObstacle(final Position source, final Position target) {
-        final Piece piece = chessBoard.checkPiece(source);
-        boolean isPossibleRoute = chessBoard.isPossibleRoute(source, target, piece);
+        boolean isPossibleRoute = chessBoard.isPossibleRoute(source, target);
         if (!isPossibleRoute) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }

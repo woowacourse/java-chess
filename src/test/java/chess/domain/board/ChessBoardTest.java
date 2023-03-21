@@ -104,14 +104,13 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position source = new Position(0, 3);
-        final Piece piece = chessBoard.checkPiece(source);
         final Position target = new Position(rank, file);
 
         final Position obstacle = new Position(1, 4);
         chessBoard.removePiece(obstacle);
 
         // when
-        boolean actual = chessBoard.isPossibleRoute(source, target, piece);
+        boolean actual = chessBoard.isPossibleRoute(source, target);
 
         // then
         assertThat(actual)
