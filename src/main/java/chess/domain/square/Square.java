@@ -23,26 +23,6 @@ public final class Square {
         return cache.computeIfAbsent(key, ignored -> new Square(file, rank));
     }
 
-    public boolean isSameFile(final Square other) {
-        return file == other.file;
-    }
-
-    public boolean isSameRank(final Square other) {
-        return rank == other.rank;
-    }
-
-    public boolean isRankBiggerThan(final Square other) {
-        return rank.isBiggerThan(other.rank);
-    }
-
-    public boolean isRankLowerThan(final Square other) {
-        return rank.isLowerThan(other.rank);
-    }
-
-    public boolean isRankDifferenceOne(final Square other) {
-        return rank.isDifferenceOne(other.rank);
-    }
-
     public Square move(final Direction direction) {
         return move(direction.getFileDirection(), direction.getRankDirection());
     }
