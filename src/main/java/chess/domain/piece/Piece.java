@@ -22,6 +22,10 @@ abstract public class Piece {
         return this instanceof Pawn;
     }
 
+    public boolean isWhite() {
+        return color.equals(Color.WHITE);
+    }
+
     public boolean isBlack() {
         return color.equals(Color.BLACK);
     }

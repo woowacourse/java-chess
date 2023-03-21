@@ -1,7 +1,9 @@
 package chess.domain;
 
 import chess.domain.exception.EmptySquareException;
+import chess.domain.exception.InvalidTurnException;
 import chess.domain.exception.WrongDirectionException;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
 import chess.domain.square.Direction;
@@ -29,15 +31,25 @@ public class Board {
         board.putAll(boardFactory.make());
     }
 
+    public void validateTurn(final Turn turn, final Square current) {
+        final Piece piece = getPiece(current);
+        if (turn.isWhite() && piece.isBlack()) {
+            throw new InvalidTurnException(Color.WHITE);
+        }
+        if (turn.isBlack() && piece.isWhite()) {
+            throw new InvalidTurnException(Color.BLACK);
+        }
+    }
+
     public void move(final Square current, final Square destination) {
         final Direction direction = getDirectionOfPiece(current, destination);
         validateRoute(current, destination, direction);
-        if (!isEmptySquare(destination)) {
-            checkEnemy(current, destination);
+        if (isEmptySquare(destination)) {
+            validatePawnDiagonalMove(current, direction);
+            movePiece(current, destination);
             return;
         }
-        validatePawnDiagonalMove(current, direction);
-        movePiece(current, destination);
+        checkEnemy(current, destination);
     }
 
     private Direction getDirectionOfPiece(final Square current, final Square destination) {

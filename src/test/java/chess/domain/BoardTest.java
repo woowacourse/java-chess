@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.exception.EmptySquareException;
+import chess.domain.exception.InvalidTurnException;
 import chess.domain.exception.WrongDirectionException;
-import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -11,11 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 
@@ -359,5 +356,23 @@ class BoardTest {
                 .isInstanceOf(EmptySquareException.class);
         assertThatCode(() -> board.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE)))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("백팀 차례에 옮기려는 말이 흑팀 말이면 예외가 발생한다.")
+    void black_move_fail_when_white_turn() {
+        Turn whiteTurn = Turn.getFirstTurn();
+
+        assertThatThrownBy(() -> board.validateTurn(whiteTurn, Square.of(File.A, Rank.SEVEN)))
+                .isInstanceOf(InvalidTurnException.class);
+    }
+
+    @Test
+    @DisplayName("흑팀 차례에 옮기려는 말이 백팀 말이면 예외가 발생한다.")
+    void white_move_fail_when_black_turn() {
+        Turn blackTurn = Turn.next(Turn.getFirstTurn());
+
+        assertThatThrownBy(() -> board.validateTurn(blackTurn, Square.of(File.A, Rank.TWO)))
+                .isInstanceOf(InvalidTurnException.class);
     }
 }
