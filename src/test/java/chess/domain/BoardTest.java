@@ -156,7 +156,8 @@ class BoardTest {
         @DisplayName("아군 위치로는 이동 실패")
         void move_fail_when_ally_exists() {
             assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.B, Rank.ONE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
 
         @Test
@@ -206,7 +207,8 @@ class BoardTest {
         @DisplayName("아군 위치로는 이동 실패")
         void move_fail_when_ally_exists() {
             assertThatThrownBy(() -> board.move(whiteLeftKnight, Square.of(File.D, Rank.TWO)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
 
         @Test
@@ -248,7 +250,8 @@ class BoardTest {
         @DisplayName("아군 위치로는 이동 실패")
         void move_fail_when_ally_exists() {
             assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.B, Rank.TWO)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
 
         @Test
@@ -302,7 +305,8 @@ class BoardTest {
         @DisplayName("아군 위치로는 이동 실패")
         void move_fail_when_ally_exists() {
             assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.D, Rank.ONE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
 
         @Test
@@ -346,7 +350,8 @@ class BoardTest {
         @DisplayName("아군 위치로는 이동 실패")
         void move_fail_when_ally_exists() {
             assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.D, Rank.TWO)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
 
         @Test

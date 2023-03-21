@@ -23,13 +23,13 @@ public class Board {
         return new Board(boardMaker.make());
     }
 
-    // TODO: 코드 개선 시급
     public void move(Square current, Square destination) {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
         validateRoute(current, destination, direction);
         if (hasPiece(destination)) {
             checkEnemy(current, destination);
+            catchEnemy(current, destination);
             return;
         }
         if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
@@ -50,17 +50,15 @@ public class Board {
     }
 
     private void checkEnemy(Square current, Square destination) {
-        if (isEnemy(current, destination)) {
-            catchEnemy(current, destination);
-            return;
+        if (isAlly(current, destination)) {
+            throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
-        throw new WrongDirectionException();
     }
 
-    private boolean isEnemy(Square current, Square destination) {
+    private boolean isAlly(Square current, Square destination) {
         Piece currentPiece = getPiece(current);
         Piece destinationPiece = getPiece(destination);
-        return currentPiece.isEnemy(destinationPiece);
+        return !currentPiece.isEnemy(destinationPiece);
     }
 
     private void catchEnemy(final Square current, final Square destination) {
