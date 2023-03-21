@@ -17,9 +17,9 @@ public class Knight extends JumperPiece {
     }
 
     private int calculateManhattanDistanceBetween(Position from, Position to) {
-        final int rankDifference = Math.abs(to.calculateRankBetween(from));
-        final int fileDifference = Math.abs(to.calculateFileBetween(from));
+        final int rowDifference = Math.abs(to.calculateRowBetween(from));
+        final int columnDifference = Math.abs(to.calculateColumnBetween(from));
 
-        return rankDifference + fileDifference;
+        return rowDifference + columnDifference;
     }
 }

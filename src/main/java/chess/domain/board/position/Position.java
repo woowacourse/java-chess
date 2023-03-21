@@ -6,27 +6,27 @@ public class Position {
 
     private static final int GCD_LIMIT_MINIMUM = 0;
 
-    private final File file;
-    private final Rank rank;
+    private final Column column;
+    private final Row row;
 
-    public Position(final int file, final int rank) {
-        this.file = File.from(file);
-        this.rank = Rank.from(rank);
+    public Position(final int column, final int row) {
+        this.column = Column.from(column);
+        this.row = Row.from(row);
     }
 
-    public Position(final char file, final char rank) {
-        this.file = File.from(file);
-        this.rank = Rank.from(rank);
+    public Position(final char column, final char row) {
+        this.column = Column.from(column);
+        this.row = Row.from(row);
     }
 
     public Movement convertMovement(Position from) {
 
-        int rankGap = calculateRankBetween(from);
-        int fileGap = calculateFileBetween(from);
+        int rowGap = calculateRowBetween(from);
+        int columnGap = calculateColumnBetween(from);
 
-        int gcd = calculateGCD(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
+        int gcd = calculateGCD(Math.max(rowGap, columnGap), Math.min(rowGap, columnGap));
 
-        return Movement.of(fileGap / gcd, rankGap / gcd);
+        return Movement.of(columnGap / gcd, rowGap / gcd);
     }
 
     private int calculateGCD(int max, int min) {
@@ -38,23 +38,23 @@ public class Position {
     }
 
     public Position moveBy(Movement movement) {
-        return movement.nextPosition(file, rank);
+        return movement.nextPosition(column, row);
     }
 
-    public int calculateRankBetween(final Position from) {
-        return rank.differenceBetween(from.rank);
+    public int calculateRowBetween(final Position from) {
+        return row.differenceBetween(from.row);
     }
 
-    public int calculateFileBetween(final Position from) {
-        return file.differenceBetween(from.file);
+    public int calculateColumnBetween(final Position from) {
+        return column.differenceBetween(from.column);
     }
 
-    public File file() {
-        return file;
+    public Column column() {
+        return column;
     }
 
-    public Rank rank() {
-        return rank;
+    public Row row() {
+        return row;
     }
 
     @Override
@@ -66,11 +66,11 @@ public class Position {
             return false;
         }
         final Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, row);
     }
 }

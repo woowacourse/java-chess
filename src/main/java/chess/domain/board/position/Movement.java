@@ -25,26 +25,26 @@ public enum Movement {
     LLU(-2, 1),
     LLD(-2, -1);
 
-    private final int file;
-    private final int rank;
+    private final int column;
+    private final int row;
 
-    Movement(final int file, final int rank) {
-        this.file = file;
-        this.rank = rank;
+    Movement(final int column, final int row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public static Movement of(final int file, final int rank) {
+    public static Movement of(final int column, final int row) {
         return Arrays.stream(Movement.values())
-                     .filter(isEqualsMovementFrom(file, rank))
+                     .filter(isEqualsMovementFrom(column, row))
                      .findAny()
                      .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 방향입니다."));
     }
 
-    private static Predicate<Movement> isEqualsMovementFrom(final int file, final int rank) {
-        return movement -> movement.file == file && movement.rank == rank;
+    private static Predicate<Movement> isEqualsMovementFrom(final int column, final int row) {
+        return movement -> movement.column == column && movement.row == row;
     }
 
-    public Position nextPosition(File file, Rank rank) {
-        return new Position(file.value() + this.file, rank.value() + this.rank);
+    public Position nextPosition(Column column, Row row) {
+        return new Position(column.value() + this.column, row.value() + this.row);
     }
 }

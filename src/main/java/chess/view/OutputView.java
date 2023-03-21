@@ -1,8 +1,6 @@
 package chess.view;
 
-import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -47,10 +45,8 @@ public class OutputView {
         for (final Map.Entry<Position, Piece> positionPieceEntry : boardMap.entrySet()) {
             final Position position = positionPieceEntry.getKey();
             final Piece piece = positionPieceEntry.getValue();
-            final File file = position.file();
-            final Rank rank = position.rank();
-            final int column = file.value();
-            final int row = rank.value();
+            final int column = position.column().value();
+            final int row = position.row().value();
 
             String pieceDisplay = formatPieceDisplay(piece);
             chessBoard.get(8 - row).set(column - 1, pieceDisplay);

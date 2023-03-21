@@ -14,12 +14,12 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("convertMovement")
     @DisplayName("convertMovement() : Position 이 움직일 때, 움직임의 최소 단위를 알 수 있다.")
-    void test_convertMovement(final int fromFile, final int fromRank,
-                              final int toFile, final int toRank, final Movement sourceMovement) {
+    void test_convertMovement(final int fromColumn, final int fromRow,
+                              final int toColumn, final int toRow, final Movement sourceMovement) {
 
         //given
-        Position from = new Position(fromFile, fromRank);
-        Position to = new Position(toFile, toRank);
+        Position from = new Position(fromColumn, fromRow);
+        Position to = new Position(toColumn, toRow);
 
         //then
         Movement targetMoveMent = to.convertMovement(from);
@@ -30,30 +30,30 @@ class PositionTest {
 
     static Stream<Arguments> convertMovement() {
         // Knight
-        final int fromFile1 = 1;
-        final int fromRank1 = 1;
-        final int toFile1 = 3;
-        final int toRank1 = 5;
+        final int fromColumn1 = 1;
+        final int fromRow1 = 1;
+        final int toColumn1 = 3;
+        final int toRow1 = 5;
         Movement movement1 = Movement.UUR;
 
         //오른쪽 이동
-        final int fromFile2 = 1;
-        final int fromRank2 = 1;
-        final int toFile2 = 7;
-        final int toRank2 = 1;
+        final int fromColumn2 = 1;
+        final int fromRow2 = 1;
+        final int toColumn2 = 7;
+        final int toRow2 = 1;
         Movement movement2 = Movement.R;
 
         //대각선 위 이동
-        final int fromFile3 = 4;
-        final int fromRank3 = 2;
-        final int toFile3 = 5;
-        final int toRank3 = 3;
+        final int fromColumn3 = 4;
+        final int fromRow3 = 2;
+        final int toColumn3 = 5;
+        final int toRow3 = 3;
         Movement movement3 = Movement.UR;
 
         return Stream.of(
-                Arguments.of(fromFile1, fromRank1, toFile1, toRank1, movement1),
-                Arguments.of(fromFile2, fromRank2, toFile2, toRank2, movement2),
-                Arguments.of(fromFile3, fromRank3, toFile3, toRank3, movement3)
+                Arguments.of(fromColumn1, fromRow1, toColumn1, toRow1, movement1),
+                Arguments.of(fromColumn2, fromRow2, toColumn2, toRow2, movement2),
+                Arguments.of(fromColumn3, fromRow3, toColumn3, toRow3, movement3)
         );
     }
 
@@ -92,70 +92,70 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @MethodSource("calculateRank")
-    @DisplayName("calculateRankBetween() : from, to Position의 Rank 차이를 구할 수 있다.")
-    void test_calculateRankBetween(final Position from, final Position to, final int rankDiff) throws Exception {
+    @MethodSource("calculateRow")
+    @DisplayName("calculateRowBetween() : from, to Position의 row 차이를 구할 수 있다.")
+    void test_calculateRowBetween(final Position from, final Position to, final int rowDiff) throws Exception {
         //when & then
-        assertEquals(rankDiff, to.calculateRankBetween(from));
+        assertEquals(rowDiff, to.calculateRowBetween(from));
     }
 
-    static Stream<Arguments> calculateRank() {
+    static Stream<Arguments> calculateRow() {
 
         final Position from1 = new Position(1, 1);
         final Position to1 = new Position(3, 5);
-        final int rankDiff1 = 4;
+        final int rowDiff1 = 4;
 
         final Position from2 = new Position(1, 1);
         final Position to2 = new Position(7, 1);
-        final int rankDiff2 = 0;
+        final int rowDiff2 = 0;
 
         final Position from3 = new Position(4, 2);
         final Position to3 = new Position(5, 3);
-        final int rankDiff3 = 1;
+        final int rowDiff3 = 1;
 
         final Position from4 = new Position(4, 4);
         final Position to4 = new Position(5, 2);
-        final int rankDiff4 = -2;
+        final int rowDiff4 = -2;
 
         return Stream.of(
-                Arguments.of(from1, to1, rankDiff1),
-                Arguments.of(from2, to2, rankDiff2),
-                Arguments.of(from3, to3, rankDiff3),
-                Arguments.of(from4, to4, rankDiff4)
+                Arguments.of(from1, to1, rowDiff1),
+                Arguments.of(from2, to2, rowDiff2),
+                Arguments.of(from3, to3, rowDiff3),
+                Arguments.of(from4, to4, rowDiff4)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("calculateFile")
-    @DisplayName("calculateFileBetween() : from, to Position의 File 차이를 구할 수 있다.")
-    void test_calculateFileBetween(final Position from, final Position to, final int fileDiff) throws Exception {
+    @MethodSource("calculateColumn")
+    @DisplayName("calculateColumnBetween() : from, to Position의 column 차이를 구할 수 있다.")
+    void test_calculateColumnBetween(final Position from, final Position to, final int columnDiff) throws Exception {
         //when & then
-        assertEquals(fileDiff, to.calculateFileBetween(from));
+        assertEquals(columnDiff, to.calculateColumnBetween(from));
     }
 
-    static Stream<Arguments> calculateFile() {
+    static Stream<Arguments> calculateColumn() {
 
         final Position from1 = new Position(1, 1);
         final Position to1 = new Position(3, 5);
-        final int fileDiff1 = 2;
+        final int columnDiff1 = 2;
 
         final Position from2 = new Position(1, 1);
         final Position to2 = new Position(7, 1);
-        final int fileDiff2 = 6;
+        final int columnDiff2 = 6;
 
         final Position from3 = new Position(4, 2);
         final Position to3 = new Position(5, 3);
-        final int fileDiff3 = 1;
+        final int columnDiff3 = 1;
 
         final Position from4 = new Position(4, 4);
         final Position to4 = new Position(3, 2);
-        final int fileDiff4 = -1;
+        final int columnDiff4 = -1;
 
         return Stream.of(
-                Arguments.of(from1, to1, fileDiff1),
-                Arguments.of(from2, to2, fileDiff2),
-                Arguments.of(from3, to3, fileDiff3),
-                Arguments.of(from4, to4, fileDiff4)
+                Arguments.of(from1, to1, columnDiff1),
+                Arguments.of(from2, to2, columnDiff2),
+                Arguments.of(from3, to3, columnDiff3),
+                Arguments.of(from4, to4, columnDiff4)
         );
     }
 }

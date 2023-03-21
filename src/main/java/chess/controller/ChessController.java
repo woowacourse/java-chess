@@ -15,8 +15,8 @@ public class ChessController {
     private static final int START_COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION = 1;
     private static final int TARGET_POSITION = 2;
-    private static final int POSITION_FILE = 0;
-    private static final int POSITION_RANK = 1;
+    private static final int POSITION_COLUMN = 0;
+    private static final int POSITION_ROW = 1;
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
@@ -63,6 +63,6 @@ public class ChessController {
     }
 
     private Position convertPositionFrom(String moveCommand) {
-        return new Position(moveCommand.charAt(POSITION_FILE), moveCommand.charAt(POSITION_RANK));
+        return new Position(moveCommand.charAt(POSITION_COLUMN), moveCommand.charAt(POSITION_ROW));
     }
 }

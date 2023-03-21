@@ -3,7 +3,7 @@ package chess.domain.board.position;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public enum File {
+public enum Column {
 
     A(1),
     B(2),
@@ -17,29 +17,29 @@ public enum File {
     START(1),
     END(8);
 
-    private static final char STARTING_CHARACTER_OF_FILE = 'a';
+    private static final char STARTING_CHARACTER_OF_COLUMN = 'a';
 
     private final int value;
 
-    File(final int value) {
+    Column(final int value) {
         this.value = value;
     }
 
-    public static File from(int value) {
+    public static Column from(int value) {
         return Arrays.stream(values())
                      .filter(it -> it.value == value)
                      .findAny()
-                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 File 방향입니다."));
+                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 column 방향입니다."));
     }
 
-    public static File from(char value) {
+    public static Column from(char value) {
         return Arrays.stream(values())
-                     .filter(it -> it.value == value - STARTING_CHARACTER_OF_FILE + START.value)
+                     .filter(it -> it.value == value - STARTING_CHARACTER_OF_COLUMN + START.value)
                      .findAny()
-                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 File 방향입니다."));
+                     .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 column 방향입니다."));
     }
 
-    public int differenceBetween(File other) {
+    public int differenceBetween(Column other) {
         return value - other.value;
     }
 
