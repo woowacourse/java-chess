@@ -9,7 +9,7 @@ import static chess.domain.piece.Direction.LEFT_UP_UP;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class KnightMoveTest {
+class KnightTest {
     @Test
     @DisplayName("나이트가 이동할 수 있으면 true를 반환한다")
     void movable() {
