@@ -1,6 +1,7 @@
 package chess.view;
 
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -15,16 +16,12 @@ public class OutputView {
     }
 
     public void printChessBoard(final Map<Integer, String> pieces) {
-        for (int i = 0; i < MAP_SIZE; i++) {
+        IntStream.range(0, MAP_SIZE).forEach((i) -> {
             if (i % LINE_SIZE == 0) {
                 System.out.println();
             }
-            if (pieces.containsKey(i)) {
-                System.out.print(pieces.get(i));
-                continue;
-            }
-            System.out.print(".");
-        }
+            System.out.print(pieces.getOrDefault(i, "."));
+        });
         System.out.println();
     }
 
