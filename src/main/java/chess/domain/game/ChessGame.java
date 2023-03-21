@@ -1,8 +1,10 @@
 package chess.domain.game;
 
+import chess.domain.game.exception.ChessGameException;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartState;
 import chess.domain.piece.Piece;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import java.util.List;
 
 public class ChessGame {
@@ -21,7 +23,11 @@ public class ChessGame {
 
     public void move(String origin, String destination) {
         gameState = gameState.move();
-        board.movePiece(Position.from(origin), Position.from(destination));
+        try {
+            board.movePiece(Position.from(origin), Position.from(destination));
+        } catch (IllegalPieceMoveException e) {
+            throw new ChessGameException(e.getMessage(), e);
+        }
     }
 
     public List<List<Piece>> getPieces() {
