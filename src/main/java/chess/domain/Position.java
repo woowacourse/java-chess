@@ -13,6 +13,11 @@ public final class Position {
         this.column = column;
     }
 
+    public Position(final Position otherPosition) {
+        this.row = otherPosition.row;
+        this.column = otherPosition.column;
+    }
+
     public Position move(final UnitVector unitVector) {
         int nextRow = this.row + unitVector.getRow();
         int nextColumn = this.column + unitVector.getColumn();

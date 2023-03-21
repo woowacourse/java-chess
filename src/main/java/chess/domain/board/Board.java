@@ -3,7 +3,6 @@ package chess.domain.board;
 import static chess.domain.Team.NEUTRALITY;
 
 import chess.domain.Position;
-import chess.domain.Team;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
 import chess.domain.pieces.Bishop;
@@ -26,11 +25,11 @@ public final class Board {
 
     public void movePiece(final Position current, final Position target) {
         Piece currentPointPiece = findPiece(current);
-        Direction movableDirection = Direction.findDirection(current, target);
+        Direction legalDirection = Direction.findDirection(current, target);
 
-        currentPointPiece.validateDirection(movableDirection);
+        currentPointPiece.validateDirection(legalDirection);
 
-        runLogic(current, target, movableDirection);
+        runLogic(current, target, legalDirection);
     }
 
     private Piece findPiece(final Position position) {
@@ -40,7 +39,7 @@ public final class Board {
         return square.getPiece();
     }
 
-    private void runLogic(final Position current, final Position target, final Direction movableDirection) {
+    private void runLogic(final Position current, final Position target, final Direction legalDirection) {
         Piece currentPointPiece = findPiece(current);
 
         if (currentPointPiece instanceof Knight) {
@@ -53,28 +52,14 @@ public final class Board {
         }
 
         if (currentPointPiece instanceof Pawn) {
-//            isValidDirection(currentPointPiece, moveableDirection); // 팀에 따라 유효한 방향인지 확인
-            currentPointPiece.validateDirection(movableDirection);
+            currentPointPiece.validateDirection(legalDirection);
 
             Pawn pawn = (Pawn) currentPointPiece;
-            int targetStep = calculateDistance(current, target);
 
-            if (!pawn.isMoved()) { // 처음 움직임
-                if ((0 < targetStep && targetStep <= 2) && isEmptyPiece(target)) {
-                    checkPieceOfPawn(current, target, currentPointPiece);
-                    pawn.move();
-                    move(current, target);
-                    return;
-                }
-                throw new IllegalArgumentException("처음인데 2칸 이내 이동 x 또는 해당 위치 기물 존재");
-            }
+            pawn.validateDistance(current, target);
+            pawn.validateExistPiece(findPiece(target));
 
-            if (targetStep == 1 && isEmptyPiece(target)) {
-                pawn.move();
-                move(current, target);
-                return;
-            }
-            throw new IllegalArgumentException("폰은 첫 이동이 아니면 1칸만 가능 또는 해당 위치 기물 존재");
+            pawn.move();
         }
 
         if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
@@ -85,27 +70,14 @@ public final class Board {
         move(current, target);
     }
 
-    private void checkPieceOfPawn(final Position current, final Position target, final Piece currentPointPiece) {
-        if (currentPointPiece.getTeam() == Team.BLACK) {
-            checkExistPiece(current, target, UnitVector.DOWN);
-            return;
-        }
-        checkExistPiece(current, target, UnitVector.UP);
-    }
-
-    private boolean isEmptyPiece(final Position target) {
-        return findPiece(target) instanceof EmptyPiece;
-    }
-    // current -> target - 1까지 돌면서 기물이 존재하면 예외 터트리는 함수
-
     private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
-        Position iterator = new Position(current.getRow(), current.getColumn()).move(unitVector);
+        Position iterator = new Position(current).move(unitVector);
 
         while (!iterator.equals(target)) {
             Rank iteratorRank = board.get(iterator.getRow());
 
             if (!iteratorRank.isEmptyPiece(iterator.getColumn())) {
-                throw new IllegalArgumentException("가는 경로 도중에 다른 기물 존재");
+                throw new IllegalArgumentException("기물이 움직이는 경로에 다른 기물이 존재합니다.");
             }
             iterator = iterator.move(unitVector);
         }
@@ -123,13 +95,6 @@ public final class Board {
         Rank currentRank = board.get(current.getRow());
         Square newCurrentSquare = currentRank.replacePiece(current.getColumn(), new EmptyPiece(NEUTRALITY));
         currentRank.replaceSquare(current.getColumn(), newCurrentSquare);
-    }
-
-    private int calculateDistance(final Position current, final Position target) {
-        int rowDifferent = Math.abs(current.getRow() - target.getRow());
-        int colDifferent = Math.abs(current.getColumn() - target.getColumn());
-
-        return Math.max(rowDifferent, colDifferent);
     }
 
     public List<Rank> getBoard() {
