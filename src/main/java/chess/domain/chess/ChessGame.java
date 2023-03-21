@@ -51,15 +51,14 @@ public final class ChessGame {
 
     private boolean canAttack(final Position source, final Position target) {
         final Piece sourcePiece = chessBoard.checkPiece(source);
-        if (sourcePiece.isPawn() && sourcePiece.canAttack(source, target) && !chessBoard.contains(target)) {
-            throw new IllegalArgumentException("공격할 수 있는 위치가 아닙니다.");
-        }
-        return sourcePiece.canAttack(source, target);
+        final boolean isTargetExist = chessBoard.contains(target);
+        return sourcePiece.canAttack(source, target, isTargetExist);
     }
 
     private boolean canMove(final Position source, final Position target) {
         final Piece piece = chessBoard.checkPiece(source);
-        return piece.canMove(source, target);
+        boolean isTargetExist = chessBoard.contains(target);
+        return piece.canMove(source, target, isTargetExist);
     }
 
     private void movePiece(final Position source, final Position target) {

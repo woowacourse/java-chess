@@ -28,30 +28,37 @@ public class Piece {
         return campType == diffType;
     }
 
-    public boolean canMove(final Position source, final Position target) {
+    public boolean canMove(final Position source, final Position target, final boolean isTargetExist) {
         if (pieceType == PieceType.PAWN && moveRule.canMove(source, target)) {
-            return validatePawnFirstMove(source, target);
+            return validatePawnMove(source, target, isTargetExist);
         }
         return moveRule.canMove(source, target);
     }
 
-    private boolean validatePawnFirstMove(final Position source, final Position target) {
-        if ((isSameCamp(CampType.WHITE) && source.isRankSame(WHITE_PAWN_FIRST_MOVE)) ||
-                (isSameCamp(CampType.BLACK) && source.isRankSame(BLACK_PAWN_FIRST_MOVE))) {
-            return true;
+    public boolean canAttack(final Position source, final Position target, final boolean isTargetExist) {
+        if (pieceType == PieceType.PAWN && moveRule.canAttack(source, target) && !isTargetExist) {
+            throw new IllegalArgumentException("폰이 공격할 수 있는 위치가 아닙니다.");
         }
-        if (Math.abs(target.calculateRankGap(source)) != PAWN_FIRST_MOVE) {
-            throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
-        }
-        return true;
-    }
-
-    public boolean canAttack(final Position source, final Position target) {
         return moveRule.canAttack(source, target);
     }
 
-    public boolean isPawn() {
-        return pieceType == PieceType.PAWN;
+    private boolean validatePawnMove(final Position source, final Position target, final boolean isTargetExist) {
+        if (isPawnFirstMove(source)) {
+            return !isTargetExist;
+        }
+        return validatePawnOneMove(source, target, isTargetExist);
+    }
+
+    private boolean isPawnFirstMove(final Position source) {
+        return (isSameCamp(CampType.WHITE) && source.isRankSame(WHITE_PAWN_FIRST_MOVE)) ||
+                (isSameCamp(CampType.BLACK) && source.isRankSame(BLACK_PAWN_FIRST_MOVE));
+    }
+
+    private boolean validatePawnOneMove(final Position source, final Position target, final boolean isTargetExist) {
+        if (Math.abs(target.calculateRankGap(source)) != PAWN_FIRST_MOVE) {
+            throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
+        }
+        return !isTargetExist;
     }
 
     @Override
