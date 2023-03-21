@@ -47,7 +47,7 @@ public class CommandLine {
         return START.equals(this.getCommand());
     }
     
-    public String getCommand() {
+    private String getCommand() {
         return this.tokens.get(0);
     }
     

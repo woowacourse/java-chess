@@ -2,35 +2,27 @@ package chess.controller;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import java.util.EnumMap;
 
 public class PieceMapper {
     
+    private static final EnumMap<PieceType, String> pieceMap = new EnumMap<>(PieceType.class);
+    
+    static {
+        pieceMap.put(PieceType.PAWN, "p");
+        pieceMap.put(PieceType.BISHOP, "b");
+        pieceMap.put(PieceType.KNIGHT, "n");
+        pieceMap.put(PieceType.ROOK, "r");
+        pieceMap.put(PieceType.QUEEN, "q");
+        pieceMap.put(PieceType.KING, "k");
+        pieceMap.put(PieceType.EMPTY, ".");
+    }
+    
     public static String map(Piece piece) {
-        String defaultPiece = "";
-        if (piece.getType() == PieceType.EMPTY) {
-            return ".";
+        String literalPiece = pieceMap.get(piece.getType());
+        if (piece.isBlack()) {
+            return literalPiece.toUpperCase();
         }
-        if (piece.getType() == PieceType.PAWN) {
-            defaultPiece = "p";
-        }
-        if (piece.getType() == PieceType.BISHOP) {
-            defaultPiece = "b";
-        }
-        if (piece.getType() == PieceType.KNIGHT) {
-            defaultPiece = "n";
-        }
-        if (piece.getType() == PieceType.ROOK) {
-            defaultPiece = "r";
-        }
-        if (piece.getType() == PieceType.QUEEN) {
-            defaultPiece = "q";
-        }
-        if (piece.getType() == PieceType.KING) {
-            defaultPiece = "k";
-        }
-        if (!piece.isWhite()) {
-            return defaultPiece.toUpperCase();
-        }
-        return defaultPiece;
+        return literalPiece;
     }
 }
