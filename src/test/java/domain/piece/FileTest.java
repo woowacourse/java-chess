@@ -1,10 +1,10 @@
 package domain.piece;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class FileTest {
 
@@ -42,7 +42,7 @@ public class FileTest {
     void shouldThrowExceptionWhenLastFileRequestGetNext() {
         assertThatThrownBy(() -> File.H.getNext())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("인덱스를 벗어난 움직임입니다.");
+                .hasMessage("서버 내부 에러 - 다음 File은 존재하지 않습니다.");
     }
 
     @DisplayName("source file의 왼쪽 값을 반환한다.")
@@ -56,6 +56,6 @@ public class FileTest {
     void shouldThrowExceptionWhenFirstFileRequestGetPrevious() {
         assertThatThrownBy(() -> File.A.getPrevious())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("인덱스를 벗어난 움직임입니다.");
+                .hasMessage("서버 내부 에러 - 이전 File은 존재하지 않습니다.");
     }
 }

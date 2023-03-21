@@ -64,7 +64,7 @@ class GameTest {
         assertThatThrownBy(() ->
                 game.move(Position.of("e", "1"), Position.of("e", "3"))) // 2. King의 2칸 이동 시도로 인해 예외가 발생한다.
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 움직임이 아닙니다.");
+                .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
     }
 
     @DisplayName("이동 경로에 아군 말이 있을 경우 예외가 발생한다.")
@@ -80,13 +80,18 @@ class GameTest {
     @DisplayName("이동 경로에 적군 말이 있을 경우 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenPathIncludeOpponentSidePiece() {
-        // 1. e,7에 있는 Black pawn을 e,3로 이동시킨다.
-        game.move(Position.of("e", "7"), Position.of("e", "5"));
-        game.move(Position.of("e", "5"), Position.of("e", "4"));
-        game.move(Position.of("e", "4"), Position.of("e", "3"));
-
-        // 2. d,2에 있는 White pawn을 d,4로 이동시킨다.
+        // 1. d,2에 있는 White pawn을 d,4로 이동시킨다.
         game.move(Position.of("d", "2"), Position.of("d", "4"));
+        // 2. e,7에 있는 Black pawn을 e,5로 이동시킨다.
+        game.move(Position.of("e", "7"), Position.of("e", "5"));
+        // 3. d,4에 있는 White pawn을 d,5로 이동시킨다.
+        game.move(Position.of("d", "4"), Position.of("d", "5"));
+        // 4. e,5에 있는 Black pawn을 e,4로 이동시킨다.
+        game.move(Position.of("e", "5"), Position.of("e", "4"));
+        // 5. d,5에 있는 White pawn을 d,6로 이동시킨다.
+        game.move(Position.of("d", "5"), Position.of("d", "6"));
+        // 6. e,4에 있는 Black pawn을 e,3로 이동시킨다.
+        game.move(Position.of("e", "4"), Position.of("e", "3"));
 
         assertThatThrownBy(() ->
                 // 3. White bishop이 f,4로 가는 경로인 e,3에 black pawn이 존재하기 때문에 예외가 발생한다.
@@ -99,22 +104,14 @@ class GameTest {
     @Test
     void shouldMoveWhenExistPieceInPathOfKnightMovement() {
         Piece sourcePieceOfWhiteKnight = chessBoard.get(Position.of("b", "1"));
-        // 1. d,7에 있는 black pawn을 d,3로 이동시킨다.
-        game.move(Position.of("d", "7"), Position.of("d", "5"));
-        game.move(Position.of("d", "5"), Position.of("d", "4"));
-        game.move(Position.of("d", "4"), Position.of("d", "3"));
-        // 2. d,3에 있는 black pawn이 c,2에 있는 white pawn을 잡는다.
-        game.move(Position.of("d", "3"), Position.of("c", "2"));
-        // 3. b,1에 있는 white knight가 c,3로 이동할 때, b,2에 있는 white pawn과, c,2에 있는 black pawn을 뛰어 넘는다.
         game.move(Position.of("b", "1"), Position.of("c", "3"));
-
         assertThat(chessBoard.get(Position.of("c", "3"))).isEqualTo(sourcePieceOfWhiteKnight);
     }
 
     @DisplayName("상대편 말을 움직이면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenMovePieceOfOpponentSide() {
-        assertThatThrownBy(() -> game.move(Position.of("c", "2"), Position.of("c", "4")))
+        assertThatThrownBy(() -> game.move(Position.of("c", "7"), Position.of("c", "5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
     }
