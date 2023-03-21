@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.path.Movement;
@@ -9,26 +11,35 @@ import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
+    private static final Pawn WHITE_PAWN = new Pawn(WHITE);
+    private static final Pawn BLACK_PAWN = new Pawn(BLACK);
 
     private static final Map<Color, Movement> CAN_MOVE_EMPTY_DESTINATION = Map.of(
             Color.BLACK, Movement.DOWN,
-            Color.WHITE, Movement.UP
+            WHITE, Movement.UP
     );
     private static final Map<Color, List<Movement>> CAN_MOVE_ENEMY_DESTINATION = Map.of(
             Color.BLACK, List.of(Movement.DOWN_RIGHT, Movement.DOWN_LEFT),
-            Color.WHITE, List.of(Movement.UP_RIGHT, Movement.UP_LEFT)
+            WHITE, List.of(Movement.UP_RIGHT, Movement.UP_LEFT)
     );
     private static final Map<Color, Integer> INITIAL_POSITION_RANK = Map.of(
             Color.BLACK, 7,
-            Color.WHITE, 2
+            WHITE, 2
     );
     private static final Map<Color, Integer> INITIAL_RANK_DIFFERENCE = Map.of(
             Color.BLACK, -2,
-            Color.WHITE, 2
+            WHITE, 2
     );
 
     public Pawn(final Color color) {
         super(color, PAWN);
+    }
+
+    public static Pawn from(final Color color) {
+        if (color.isBlack()) {
+            return BLACK_PAWN;
+        }
+        return WHITE_PAWN;
     }
 
     @Override
@@ -40,6 +51,14 @@ public class Pawn extends Piece {
         }
 
         return searchPathToEnemyPosition(destination, movement);
+    }
+
+    @Override
+    public double calculateScore(final boolean hasOtherPieceInSameFile) {
+        if (hasOtherPieceInSameFile) {
+            return 0.5;
+        }
+        return 1;
     }
 
     private Path searchPathToEnemyPosition(final Piece destination, final Movement movement) {

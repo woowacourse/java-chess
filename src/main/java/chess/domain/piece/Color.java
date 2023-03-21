@@ -5,10 +5,6 @@ public enum Color {
     BLACK,
     WHITE;
 
-    public boolean isWhite() {
-        return this == WHITE;
-    }
-
     public boolean isDifferentColor(Color color) {
         return this != color;
     }
@@ -22,5 +18,13 @@ public enum Color {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
     }
 }

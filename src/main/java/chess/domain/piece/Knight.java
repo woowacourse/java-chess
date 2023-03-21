@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.KNIGHT;
 
 import chess.domain.path.Movement;
@@ -8,7 +10,8 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Knight extends Piece {
-
+    private static final Knight BLACK_KNIGHT = new Knight(BLACK);
+    private static final Knight WHITE_KNIGHT = new Knight(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION =
             List.of(
                     Movement.UP_UP_RIGHT, Movement.UP_UP_LEFT, Movement.RIGHT_RIGHT_UP, Movement.RIGHT_RIGHT_DOWN,
@@ -16,8 +19,15 @@ public class Knight extends Piece {
             );
     private static final int POSITION_DIFFERENCE = 3;
 
-    public Knight(final Color color) {
+    private Knight(final Color color) {
         super(color, KNIGHT);
+    }
+
+    public static Knight from(final Color color) {
+        if (color.isBlack()) {
+            return BLACK_KNIGHT;
+        }
+        return WHITE_KNIGHT;
     }
 
     @Override
@@ -31,6 +41,11 @@ public class Knight extends Piece {
         validatePositionDifference(from, to);
 
         return new Path();
+    }
+
+    @Override
+    public double calculateScore(final boolean ignored) {
+        return 2.5;
     }
 
     private void validatePositionDifference(final Position from, final Position to) {

@@ -9,7 +9,7 @@ import static chess.fixture.PositionFixture.E6;
 import static chess.fixture.PositionFixture.E7;
 import static chess.fixture.PositionFixture.E8;
 import static chess.fixture.PositionFixture.F2;
-import static chess.fixture.PositionFixture.F3;
+import static chess.fixture.PositionFixture.G3;
 import static chess.fixture.PositionFixture.H4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -49,7 +49,7 @@ class QueenTest {
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                .containsExactly(F2, F3);
+                .containsExactly(F2, G3);
     }
 
     @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")

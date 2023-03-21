@@ -15,11 +15,9 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
     public abstract Path searchPathTo(Position from, Position to, Piece destination);
+
+    public abstract double calculateScore(boolean hasOtherPieceInSameFile);
 
     protected void validateMovement(final Movement movement, List<Movement> availableMovements) {
         if (!availableMovements.contains(movement)) {
@@ -35,5 +33,21 @@ public abstract class Piece {
 
     public final boolean isSameColor(Color turn) {
         return this.color.equals(turn);
+    }
+
+    public boolean isBlack() {
+        return color.isBlack();
+    }
+
+    public boolean isWhite() {
+        return color.isWhite();
+    }
+
+    public Color color() {
+        return color;
+    }
+
+    public boolean isTypeOf(PieceType pieceType) {
+        return this.pieceType == pieceType;
     }
 }
