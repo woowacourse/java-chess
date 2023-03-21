@@ -8,8 +8,16 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다." + System.lineSeparator() +
+            "> 게임 시작 : start" + System.lineSeparator() +
+            "> 게임 종료 : end" + System.lineSeparator() +
+            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final int BOARD_RANK = 8;
     private static final int BOARD_FILE = 8;
+
+    public void printGameStartMessage() {
+        System.out.println(GAME_START_MESSAGE);
+    }
 
     public void printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
