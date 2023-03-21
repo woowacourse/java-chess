@@ -26,7 +26,7 @@ public class Board {
 
         moveIfPawn(source);
         board.put(target, board.get(source));
-        board.put(source, new Empty());
+        board.put(source, Empty.of());
     }
 
     private void moveIfPawn(final Square source) {
@@ -57,7 +57,7 @@ public class Board {
     }
 
     private boolean isPawnMovable(final Square source, final Square target, final Move move) {
-        final boolean isTargetEmpty = board.get(target).equals(new Empty());
+        final boolean isTargetEmpty = board.get(target).equals(Empty.of());
 
         if (Move.isMoveForward(move) && !isTargetEmpty) {
             return false;
@@ -105,7 +105,7 @@ public class Board {
     }
 
     public boolean isEmptyPiece(final Square source) {
-        return board.get(source).equals(new Empty());
+        return board.get(source).equals(Empty.of());
     }
 
     public List<Piece> getPieces() {

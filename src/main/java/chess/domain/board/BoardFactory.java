@@ -87,7 +87,7 @@ public final class BoardFactory {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Empty());
+            pieces.add(Empty.of());
         }
 
         return pieces;

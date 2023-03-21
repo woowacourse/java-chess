@@ -29,7 +29,7 @@ class BoardTest {
                 ),
                 Arguments.of(
                         30,
-                        new Empty()
+                        Empty.of()
 
                 ),
                 Arguments.of(
