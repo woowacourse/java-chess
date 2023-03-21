@@ -6,7 +6,7 @@ import chess.domain.strategy.PawnDirection;
 import chess.domain.strategy.Route;
 import java.util.List;
 
-public class BlackPawn extends Piece{
+public class BlackPawn extends Piece {
 
     private static final List<PawnDirection> BLACK_PAWN_FIRST_MOVE_DIRECTION = List.of(
         PawnDirection.BLACK_PAWN_MOVE,
@@ -23,7 +23,7 @@ public class BlackPawn extends Piece{
 
     private static final Row INIT_ROW_POSITION = Row.SEVEN;
 
-    public BlackPawn (Team team) {
+    public BlackPawn(Team team) {
         super(team);
     }
 

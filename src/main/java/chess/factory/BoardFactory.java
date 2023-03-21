@@ -33,9 +33,9 @@ public class BoardFactory {
 
     private static List<Position> makePosition() {
         List<Position> positions = Arrays.stream(Col.values())
-                .flatMap(col -> Arrays.stream(Row.values())
-                        .map(row -> Position.of(row, col)))
-                .collect(Collectors.toList());
+            .flatMap(col -> Arrays.stream(Row.values())
+                .map(row -> Position.of(row, col)))
+            .collect(Collectors.toList());
         return positions;
     }
 

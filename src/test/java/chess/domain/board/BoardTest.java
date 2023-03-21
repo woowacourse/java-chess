@@ -94,7 +94,8 @@ class BoardTest {
     @DisplayName("upper 폰은 빈공간에서는 대각선으로 움직일 수 없다.")
     void upper_pawn_does_not_move_diagonal_when_space_is_empty() {
         // given
-        Board board = BoardFactory.createBoard();board.switchPosition(Position.from("a2"), Position.from("a3"));
+        Board board = BoardFactory.createBoard();
+        board.switchPosition(Position.from("a2"), Position.from("a3"));
 
         // when & then
         assertThatThrownBy(() -> board.switchPosition(Position.from("a7"), Position.from("b6")))

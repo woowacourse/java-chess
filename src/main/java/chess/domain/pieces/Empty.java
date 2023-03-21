@@ -2,7 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.board.Position;
 import chess.domain.strategy.Route;
-import java.util.List;
 
 public class Empty extends Piece {
 

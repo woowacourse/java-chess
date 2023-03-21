@@ -23,9 +23,9 @@ public enum Col {
 
     public static Col fromByInput(final char input) {
         return Arrays.stream(Col.values())
-                .filter(col -> col.column == input)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
+            .filter(col -> col.column == input)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
     }
 
     public Col nextCol(final int next) {

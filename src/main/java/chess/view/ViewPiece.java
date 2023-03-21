@@ -25,8 +25,7 @@ enum ViewPiece {
     BLACK_BISHOP(new Bishop(Team.BLACK), "b"),
     BLACK_QUEEN(new Queen(Team.BLACK), "q"),
     BLACK_KING(new King(Team.BLACK), "k"),
-    EMPTY(new Empty(Team.EMPTY), ".");
-    ;
+    EMPTY(new Empty(Team.EMPTY), ".");;
 
 
     final Piece piece;

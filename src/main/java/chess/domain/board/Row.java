@@ -24,12 +24,12 @@ public enum Row {
 
     public static Row fromByInput(final char input) {
         return Arrays.stream(Row.values())
-                .filter(row -> row.row == input)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
+            .filter(row -> row.row == input)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
     }
 
-    public Row nextRow (final int next) {
+    public Row nextRow(final int next) {
         int RowNumer = this.row - CHAR_TO_INT;
         return fromByInput((char) (RowNumer + next + INT_TO_CHAR));
     }

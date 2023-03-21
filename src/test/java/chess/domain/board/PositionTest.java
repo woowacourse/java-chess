@@ -15,7 +15,7 @@ public class PositionTest {
     void throws_not_exception_when_case_is_normally() {
         // when & then
         assertDoesNotThrow(
-                () -> Position.from("b2")
+            () -> Position.from("b2")
         );
     }
 
@@ -25,7 +25,7 @@ public class PositionTest {
     void throws_exception_when_case_is_invalid(final String input) {
         // when & then
         assertThatThrownBy(
-                () -> Position.from(input)
+            () -> Position.from(input)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

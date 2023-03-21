@@ -3,8 +3,6 @@ package chess.domain.strategy;
 import chess.domain.board.Col;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
-import chess.domain.pieces.Knight;
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +11,7 @@ public class Route {
 
     List<Position> route;
 
-    private Route (List<Position> route) {
+    private Route(List<Position> route) {
         this.route = route;
     }
 
@@ -38,6 +36,7 @@ public class Route {
     public static Route generateRouteFromPawn(PawnDirection direction, Position source, Position destination) {
         return new Route(Collections.emptyList());
     }
+
     public static Route generateRouteFromWhitePawnDoubleMove(PawnDirection direction, Position source, Position destination) {
         List<Position> route = new ArrayList<>();
 
@@ -65,6 +64,7 @@ public class Route {
         }
         return new Route(route);
     }
+
     public List<Position> getRoute() {
         return route;
     }

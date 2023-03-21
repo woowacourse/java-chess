@@ -10,9 +10,9 @@ public class OutputView {
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다." + LINE_SEPARATOR
-                + "> 게임 시작 : start" + LINE_SEPARATOR
-                + "> 게임 종료 : end" + LINE_SEPARATOR
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+            + "> 게임 시작 : start" + LINE_SEPARATOR
+            + "> 게임 종료 : end" + LINE_SEPARATOR
+            + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
     public void printBoard(final Map<Position, Piece> board) {

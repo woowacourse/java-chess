@@ -12,8 +12,8 @@ public class InputViewValidator {
         List<String> commands = List.of(START, END, MOVE);
 
         commands.stream()
-                .filter(command -> gameCommand.startsWith(command))
-                .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+            .filter(command -> gameCommand.startsWith(command))
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
     }
 }
