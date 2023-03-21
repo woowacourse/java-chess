@@ -1,8 +1,6 @@
 package chess.domain;
 
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +9,6 @@ public class ChessGame {
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int DEST_POSITION_INDEX = 2;
-    private static final int FILE_RANK_DIVIDING_INDEX = 1;
 
     private final ChessBoard chessBoard;
     private GameState state;
@@ -58,8 +55,11 @@ public class ChessGame {
     }
 
     private void executeMove(final List<String> commandAndParameters) {
-        Position source = Position.from(commandAndParameters.get(SOURCE_POSITION_INDEX));
-        Position destination = Position.from(commandAndParameters.get(DEST_POSITION_INDEX));
+        String rawSource = commandAndParameters.get(SOURCE_POSITION_INDEX);
+        String rawDestination = commandAndParameters.get(DEST_POSITION_INDEX);
+        Position source = Position.from(rawSource);
+        Position destination = Position.from(rawDestination);
+
         chessBoard.move(source, destination);
     }
 
