@@ -80,14 +80,6 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public Map<Integer, String> getBoardResult() {
-        Map<Integer, String> boardResult = new LinkedHashMap<>();
-        for (Square key : pieces.keySet()) {
-            boardResult.put(Squares.getIndex(key), pieces.get(key).getPieceTypeName());
-        }
-        return boardResult;
-    }
-
     public Map<Square, Piece> getPieces() {
         return pieces;
     }
