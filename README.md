@@ -48,7 +48,7 @@ graph TD
 
     ChessController --> Board
     
-    BoardFactory
+    Board --> BoardFactory
 
     Position --> Rank
     Position --> File
