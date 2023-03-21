@@ -11,9 +11,12 @@ import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
@@ -149,5 +152,22 @@ class BoardTest {
         final boolean actual = board.isSameColor(new Position(D, EIGHT), color);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    void 빈_보드인지_확인한다(final List<Piece> pieces, final boolean expected) {
+        final Board board = Board.createBoardWith(new TestPiecesFactory(pieces));
+
+        final boolean actual = board.hasPieces();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> providePieces() {
+        return Stream.of(
+                Arguments.of(List.of(), false),
+                Arguments.of(List.of(new Queen(D, EIGHT, BLACK)), true)
+        );
     }
 }

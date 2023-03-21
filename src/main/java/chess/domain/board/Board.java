@@ -67,6 +67,10 @@ public class Board {
         return findPieceToMoveIn(position).isSameColor(otherColor);
     }
 
+    public boolean hasPieces() {
+        return !pieces.isEmpty();
+    }
+
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
