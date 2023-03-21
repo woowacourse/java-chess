@@ -3,7 +3,6 @@ package chess.model.board.move;
 import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.A8;
 import static chess.helper.PositionFixture.D2;
-import static chess.helper.PositionFixture.D6;
 import static chess.helper.PositionFixture.D7;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

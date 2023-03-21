@@ -3,7 +3,6 @@ package chess.view.messsage;
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
 import chess.model.piece.type.Bishop;
-import chess.model.piece.type.Empty;
 import chess.model.piece.type.InitialPawn;
 import chess.model.piece.type.King;
 import chess.model.piece.type.Knight;

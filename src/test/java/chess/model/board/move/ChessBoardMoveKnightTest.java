@@ -1,7 +1,6 @@
 package chess.model.board.move;
 
 import static chess.helper.PositionFixture.A1;
-import static chess.helper.PositionFixture.A2;
 import static chess.helper.PositionFixture.A3;
 import static chess.helper.PositionFixture.A4;
 import static chess.helper.PositionFixture.A5;

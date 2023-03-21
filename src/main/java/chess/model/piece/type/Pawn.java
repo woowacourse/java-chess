@@ -1,6 +1,7 @@
 package chess.model.piece.type;
 
-import static chess.model.piece.Camp.*;
+import static chess.model.piece.Camp.BLACK;
+import static chess.model.piece.Camp.WHITE;
 import static chess.model.piece.Direction.NORTH;
 import static chess.model.piece.Direction.NORTH_EAST;
 import static chess.model.piece.Direction.NORTH_WEST;
