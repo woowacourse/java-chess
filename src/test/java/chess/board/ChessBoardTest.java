@@ -1,8 +1,10 @@
 package chess.board;
 
-import chess.piece.*;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Rook;
+import chess.piece.Team;
 import chess.piece.coordinate.Coordinate;
-import chess.view.OutputView;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -35,7 +37,7 @@ class ChessBoardTest {
     void 경로에_기물이_없으면_이동_가능하다() {
         chessBoard.move("a2", "a4");
         Piece piece = chessBoard.chessBoard().get(4).pieces().get(0);
-        Assertions.assertThat(piece).isEqualTo(new Pawn(Team.BLACK, new Coordinate(4, 'a')));
+        Assertions.assertThat(piece).isEqualTo(new Pawn(Team.BLACK, Coordinate.createCoordinate(4, 'a')));
     }
     
     @Test
@@ -45,6 +47,6 @@ class ChessBoardTest {
         chessBoard.move("a3", "b3");
         chessBoard.move("b3", "b7");
         Piece piece = chessBoard.chessBoard().get(1).pieces().get(1);
-        Assertions.assertThat(piece).isEqualTo(new Rook(Team.BLACK, new Coordinate(7, 'b')));
+        Assertions.assertThat(piece).isEqualTo(new Rook(Team.BLACK, Coordinate.createCoordinate(7, 'b')));
     }
 }

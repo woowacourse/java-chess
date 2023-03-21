@@ -15,7 +15,7 @@ class PieceMatcherTest {
     
     @BeforeEach
     void setUp() {
-        coordinate = new Coordinate(1, 'a');
+        coordinate = Coordinate.createCoordinate(1, 'a');
     }
     
     @Test

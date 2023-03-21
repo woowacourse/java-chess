@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EmptyTest {
     @Test
     void Empty은_자신의_심볼을_반환한다() {
-        Piece empty = new Empty(Team.WHITE, new Coordinate(1, 'a'));
+        Piece empty = new Empty(Team.WHITE, Coordinate.createCoordinate(1, 'a'));
         assertThat(empty.symbol()).isEqualTo('e');
     }
 }

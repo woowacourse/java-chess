@@ -14,23 +14,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RookTest {
     @Test
     void Rook은_자신의_심볼을_반환한다() {
-        Piece rook = new Rook(Team.WHITE, new Coordinate(1, 'a'));
+        Piece rook = new Rook(Team.WHITE, Coordinate.createCoordinate(1, 'a'));
         assertThat(rook.symbol()).isEqualTo('r');
     }
     
     @ParameterizedTest(name = "targetRow : {0}, targetColumn : {1}, expectedResult : {2}")
     @CsvSource(value = {"3,a,true", "1,c,true", "3,c,false", "3,b,false", "1,a,false"})
     void 도착지를_제시하고_태생적으로_이동할_수_있는지_판단한다(int targetRow, char targetColumn, boolean expectedResult) {
-        Piece rook = new Rook(Team.WHITE, new Coordinate(1, 'a'));
-        Piece targetPiece = new Empty(Team.EMPTY, new Coordinate(targetRow,targetColumn));
+        Piece rook = new Rook(Team.WHITE, Coordinate.createCoordinate(1, 'a'));
+        Piece targetPiece = new Empty(Team.EMPTY, Coordinate.createCoordinate(targetRow,targetColumn));
         assertThat(rook.isMovable(targetPiece)).isEqualTo(expectedResult);
     }
     
     @ParameterizedTest(name = "targetTeam : {0}, expectedResult : {1}")
     @CsvSource(value = {"WHITE,false","EMPTY,true","BLACK,true"})
     void 도착지에_같은_팀이_있으면_이동할_수_없다(Team targetTeam, boolean expectedResult) {
-        Piece rook = new Rook(Team.WHITE, new Coordinate(1, 'a'));
-        Piece targetPiece = new Queen(targetTeam, new Coordinate(2, 'a'));
+        Piece rook = new Rook(Team.WHITE, Coordinate.createCoordinate(1, 'a'));
+        Piece targetPiece = new Queen(targetTeam, Coordinate.createCoordinate(2, 'a'));
         assertThat(rook.isMovable(targetPiece)).isEqualTo(expectedResult);
     }
 }
