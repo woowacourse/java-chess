@@ -9,8 +9,8 @@ public class Bishop extends Piece {
     
     
     @Override
-    public char symbol() {
-        return 'b';
+    public SymbolMatcher symbol() {
+        return SymbolMatcher.BISHOP;
     }
     
     @Override

@@ -36,9 +36,9 @@ public class RowPieces implements Comparable<RowPieces> {
         InitialSymbols initialSymbols = InitialSymbols.from(rowNum);
         Character symbol = initialSymbols.findSymbolByColumnIndex(columnIndex);
         Team team = Team.from(rowNum);
-        Coordinate coordinate = new Coordinate(rowNum, parseColumn(columnIndex));
+        Coordinate coordinate = Coordinate.createCoordinate(rowNum, parseColumn(columnIndex));
         
-        return PieceMatcher.of(symbol, team, coordinate);
+        return PieceMatcher.of(SymbolMatcher.sourceOf(symbol), team, coordinate);
     }
     
     private static char parseColumn(int columnIndex) {
@@ -97,7 +97,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     private Empty createEmpty(List<Integer> coordinate) {
-        return new Empty(Team.EMPTY, new Coordinate(findRow(coordinate), parseColumn(coordinate)));
+        return new Empty(Team.EMPTY, Coordinate.createCoordinate(findRow(coordinate), parseColumn(coordinate)));
     }
     
     private int findRow(List<Integer> coordinate) {

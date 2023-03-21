@@ -18,7 +18,7 @@ public abstract class Piece {
         this.coordinate = coordinate;
     }
     
-    public abstract char symbol();
+    public abstract SymbolMatcher symbol();
     
     public abstract boolean isMovable(Piece targetPiece);
     
@@ -66,11 +66,7 @@ public abstract class Piece {
     }
     
     public Piece movedSourcePiece(List<Integer> parsedDestinationCoordinate) {
-        return PieceMatcher.of(symbol(), team, createCoordinate(parsedDestinationCoordinate));
-    }
-    
-    private Coordinate createCoordinate(List<Integer> coordinate) {
-        return new Coordinate(findRow(coordinate), parseColumn(coordinate));
+        return PieceMatcher.of(symbol(), team, Coordinate.createCoordinate(findRow(parsedDestinationCoordinate),parseColumn(parsedDestinationCoordinate)));
     }
     
     private int findRow(List<Integer> splitedSourceCoordinate) {
