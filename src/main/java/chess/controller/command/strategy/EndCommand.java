@@ -1,8 +1,7 @@
 package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
-import chess.domain.Board;
-import chess.domain.team.Team;
+import chess.service.ChessService;
 
 public class EndCommand implements StrategyCommand {
 
@@ -14,7 +13,7 @@ public class EndCommand implements StrategyCommand {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final Board board, final Team team) {
+    public ChessState execute(final ChessState state, final ChessService chessService) {
         if (state == ChessState.START || state == ChessState.PROGRESS) {
             return ChessState.END;
         }

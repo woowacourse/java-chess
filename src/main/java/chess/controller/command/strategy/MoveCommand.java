@@ -1,9 +1,8 @@
 package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
-import chess.domain.Board;
 import chess.domain.position.Position;
-import chess.domain.team.Team;
+import chess.service.ChessService;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -29,10 +28,10 @@ public class MoveCommand implements StrategyCommand {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final Board board, final Team team) {
+    public ChessState execute(final ChessState state, final ChessService chessService) {
         if (state == ChessState.START || state == ChessState.PROGRESS) {
-            board.move(source, target, team);
-            OutputView.printBoard(board);
+            chessService.move(source, target);
+            OutputView.printBoard(chessService.getBoard());
             return ChessState.PROGRESS;
         }
 

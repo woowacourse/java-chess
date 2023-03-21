@@ -1,8 +1,7 @@
 package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
-import chess.domain.Board;
-import chess.domain.team.Team;
+import chess.service.ChessService;
 import chess.view.OutputView;
 
 public class StartCommand implements StrategyCommand {
@@ -15,9 +14,9 @@ public class StartCommand implements StrategyCommand {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final Board board, final Team team) {
+    public ChessState execute(final ChessState state, final ChessService chessService) {
         if (state == ChessState.INIT) {
-            OutputView.printBoard(board);
+            OutputView.printBoard(chessService.getBoard());
             return ChessState.START;
         }
 

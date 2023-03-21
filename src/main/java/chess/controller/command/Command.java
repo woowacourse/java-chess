@@ -1,10 +1,10 @@
 package chess.controller.command;
 
 import chess.controller.command.factory.ActionCommandFactory;
-import chess.controller.command.strategy.StrategyCommand;
 import chess.controller.command.factory.EndCommandFactory;
 import chess.controller.command.factory.MoveCommandFactory;
 import chess.controller.command.factory.StartCommandFactory;
+import chess.controller.command.strategy.StrategyCommand;
 
 import java.util.Arrays;
 import java.util.List;
