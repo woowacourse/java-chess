@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Random;
-
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.RelativePosition;
 import chess.domain.Team;
@@ -14,16 +14,37 @@ import chess.domain.Team;
 class QueenTest {
 
 	@ParameterizedTest
-	@DisplayName("퀸은 팀과 관계 없이 모든 방향으로 1칸 이동할 수 있다.")
-	@CsvSource({"0,1","1,1","1,0","1,-1","0,-1","-1,-1","-1,0","-1,1"})
-	void queenCanMoveEveryDirectionTest(int x, int y) {
-		Random random = new Random();
-		int randomMultiplier = random.nextInt(9) + 1;
-		Queen whiteQueen = new Queen(Team.WHITE);
-		Queen blackQueen = new Queen(Team.BLACK);
-		RelativePosition relativePosition = new RelativePosition(randomMultiplier * x, randomMultiplier * y);
+	@DisplayName("퀸은 거리와 팀과 관계 없이 십자와 대각 방향으로 이동할 수 있다.")
+	@MethodSource("chess.domain.piece.TestMethodSource#provideCrossAndDiagonalRelativePositionSource")
+	void queenCanMoveCrossAndDiagonalDirectionTest(int x, int y) {
+		Piece whiteQueen = new Queen(Team.WHITE);
+		Piece blackQueen = new Queen(Team.BLACK);
 
-		assertTrue(whiteQueen.isMobile(relativePosition));
-		assertTrue(blackQueen.isMobile(relativePosition));
+		for (int distance = 1; distance <= 8; distance++) {
+			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
+			assertTrue(whiteQueen.isMobile(relativePosition));
+			assertTrue(blackQueen.isMobile(relativePosition));
+		}
+	}
+
+	@ParameterizedTest
+	@DisplayName("퀸은 거리와 팀과 관계 L자 방향으로 이동할 수 없다.")
+	@MethodSource("chess.domain.piece.TestMethodSource#provideLShapedRelativePositionSource")
+	void queenCannotMoveLShapedDirectionTest(int x, int y) {
+		Piece whiteQueen = new Queen(Team.WHITE);
+		Piece blackQueen = new Queen(Team.BLACK);
+
+		for (int distance = 1; distance <= 8; distance++) {
+			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
+			assertFalse(whiteQueen.isMobile(relativePosition));
+			assertFalse(blackQueen.isMobile(relativePosition));
+		}
+	}
+
+	@Test
+	@DisplayName("Queen이라는 타입을 반환해야 한다.")
+	void getTypeTest() {
+		Piece queen = new Queen(Team.WHITE);
+		assertThat(queen.getType()).isEqualTo(PieceType.QUEEN);
 	}
 }

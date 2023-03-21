@@ -6,7 +6,7 @@ import chess.domain.Team;
 public class InitialPawn extends Piece {
 
 	public InitialPawn(final Team team) {
-		super(team, Movement.PAWN);
+		super(team, Movement.INITIAL_PAWN);
 	}
 
 	@Override

@@ -6,11 +6,12 @@ import chess.domain.RelativePosition;
 
 public enum Movement {
 
-	KING(Mobility.ONCE, Direction.getAll()),
-	QUEEN(Mobility.INFINITE, Direction.getAll()),
+	KING(Mobility.ONCE, Direction.getCrossAndDiagonal()),
+	QUEEN(Mobility.INFINITE, Direction.getCrossAndDiagonal()),
 	ROOK(Mobility.INFINITE, Direction.getCross()),
 	BISHOP(Mobility.INFINITE, Direction.getDiagonal()),
 	KNIGHT(Mobility.ONCE, Direction.getLShaped()),
+	INITIAL_PAWN(Mobility.ONCE, Direction.getNorth()),
 	PAWN(Mobility.ONCE, Direction.getNorthern()),
 	EMPTY(Mobility.EMPTY, Direction.getEmpty());
 

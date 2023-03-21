@@ -13,7 +13,7 @@ public class Empty extends Piece {
 
 	@Override
 	public boolean isMobile(RelativePosition relativePosition) {
-		throw new IllegalStateException(NOT_MOVABLE_PIECE_ERROR_MESSAGE);
+		throw new UnsupportedOperationException(NOT_MOVABLE_PIECE_ERROR_MESSAGE);
 	}
 
 	@Override

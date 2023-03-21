@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.RelativePosition;
 import chess.domain.Team;
@@ -12,26 +14,54 @@ import chess.domain.Team;
 class BishopTest {
 
 	@ParameterizedTest
-	@DisplayName("비숍은 팀과 관계 없이 대각선으로 거리 제한 없이 이동할 수 있다.")
-	@CsvSource({"1,1","1,-1","-1,-1","-1,1","100,100","100,-100","-100,-100","-100,100"})
+	@DisplayName("비숍은 팀과 거리에 관계 없이 대각선 방향으로 이동이 가능하다.")
+	@MethodSource("chess.domain.piece.TestMethodSource#provideDiagonalRelativePositionSource")
 	void bishopCanMoveDiagonalDirectionTest(int x, int y) {
-		Bishop whiteBishop = new Bishop(Team.WHITE);
-		Bishop blackBishop = new Bishop(Team.BLACK);
-		RelativePosition relativePosition = new RelativePosition(x, y);
+		Piece whiteBishop = new Bishop(Team.WHITE);
+		Piece blackBishop = new Bishop(Team.BLACK);
 
-		assertTrue(whiteBishop.isMobile(relativePosition));
-		assertTrue(blackBishop.isMobile(relativePosition));
+		for (int distance = 1; distance <= 8; distance++) {
+			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
+
+			assertTrue(whiteBishop.isMobile(relativePosition));
+			assertTrue(blackBishop.isMobile(relativePosition));
+		}
 	}
 
 	@ParameterizedTest
-	@DisplayName("비숍은 팀과 관계 없이 십자가 방향으로 이동할 수 없다.")
-	@CsvSource({"0,1","1,0","0,-1","-1,0"})
+	@DisplayName("비숍은 팀과 거리에 관계 없이 십자가 방향으로 이동이 불가하다.")
+	@MethodSource("chess.domain.piece.TestMethodSource#provideCrossRelativePositionSource")
 	void bishopCannotMoveCrossDirectionTest(int x, int y) {
-		Bishop whiteBishop = new Bishop(Team.WHITE);
-		Bishop blackBishop = new Bishop(Team.BLACK);
-		RelativePosition relativePosition = new RelativePosition(x, y);
+		Piece whiteBishop = new Bishop(Team.WHITE);
+		Piece blackBishop = new Bishop(Team.BLACK);
 
-		assertFalse(whiteBishop.isMobile(relativePosition));
-		assertFalse(blackBishop.isMobile(relativePosition));
+		for (int distance = 1; distance <= 8; distance++) {
+			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
+
+			assertFalse(whiteBishop.isMobile(relativePosition));
+			assertFalse(blackBishop.isMobile(relativePosition));
+		}
+	}
+
+	@ParameterizedTest
+	@DisplayName("비숍은 팀과 거리에 관계 없이 L자 방향으로 이동이 불가하다.")
+	@MethodSource("chess.domain.piece.TestMethodSource#provideLShapedRelativePositionSource")
+	void bishopCannotMoveLShapeDirectionTest(int x, int y) {
+		Piece whiteBishop = new Bishop(Team.WHITE);
+		Piece blackBishop = new Bishop(Team.BLACK);
+
+		for (int distance = 1; distance <= 8; distance++) {
+			RelativePosition relativePosition = new RelativePosition(x * distance, y * distance);
+
+			assertFalse(whiteBishop.isMobile(relativePosition));
+			assertFalse(blackBishop.isMobile(relativePosition));
+		}
+	}
+
+	@Test
+	@DisplayName("Bishop이라는 타입을 반환해야 한다.")
+	void getTypeTest() {
+		Piece bishop = new Bishop(Team.WHITE);
+		assertThat(bishop.getType()).isEqualTo(PieceType.BISHOP);
 	}
 }

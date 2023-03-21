@@ -30,8 +30,8 @@ public enum Direction {
 		this.unitRelativePosition = unitRelativePosition;
 	}
 
-	public static List<Direction> getAll() {
-		return List.of(values());
+	public static List<Direction> getCrossAndDiagonal() {
+		return List.of(NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST);
 	}
 
 	public static List<Direction> getCross() {
@@ -46,6 +46,11 @@ public enum Direction {
 		return List.of(NORTH_NORTH_EAST, NORTH_EAST_EAST, SOUTH_EAST_EAST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
 			SOUTH_WEST_WEST, NORTH_WEST_WEST, NORTH_NORTH_WEST);
 	}
+
+	public static List<Direction> getNorth() {
+		return List.of(NORTH);
+	}
+
 	public static List<Direction> getNorthern() {
 		return List.of(NORTH, NORTH_EAST, NORTH_WEST);
 	}
