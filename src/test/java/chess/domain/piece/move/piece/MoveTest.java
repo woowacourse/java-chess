@@ -19,7 +19,7 @@ import static chess.domain.piece.move.Direction.UP_LEFT;
 import static chess.domain.piece.move.Direction.UP_RIGHT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class MoveControllerTest {
+public class MoveTest {
 
     @Test
     @DisplayName("비숍이 이동할 수 있는 모든 위치를 반환한다")

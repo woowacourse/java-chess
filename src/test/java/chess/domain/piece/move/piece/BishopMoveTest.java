@@ -6,34 +6,34 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookMoveTestController {
+class BishopMoveTest {
 
-    @ParameterizedTest(name = "source에서 target으로 룩이 이동할 수 있으면 true를 반환한다.")
-    @CsvSource(value = {"0:1", "1:0", "2:1", "1:2", "7:1", "1:7"}, delimiter = ':')
+    @ParameterizedTest(name = "source에서 target으로 비숍이 이동할 수 있으면 true를 반환한다.")
+    @CsvSource(value = {"1:1", "7:7", "1:3", "3:1", "3:3"}, delimiter = ':')
     void canMoveSuccess(final int targetRank, final int targetFile) {
         // given
-        final RookMove rookMove = new RookMove();
-        final int sourceRank = 1, sourceFile = 1;
+        final BishopMove bishopMove = new BishopMove();
+        final int sourceRank = 2, sourceFile = 2;
         final Position source = new Position(sourceRank, sourceFile);
 
         // when
-        boolean actual = rookMove.canMove(source, new Position(targetRank, targetFile));
+        boolean actual = bishopMove.canMove(source, new Position(targetRank, targetFile));
 
         // then
         assertThat(actual)
                 .isTrue();
     }
 
-    @ParameterizedTest(name = "source에서 target으로 룩이 갈 수 없는 위치면 false를 반환한다.")
-    @CsvSource(value = {"1:2", "0:8", "-8:0", "8:0", "0:-8", "1:1", "-1:-1", "8:8"}, delimiter = ':')
+    @ParameterizedTest(name = "source에서 target으로 비숍이 갈 수 없는 위치면 false를 반환한다.")
+    @CsvSource(value = {"1:2", "0:8", "-8:0", "8:0", "0:-8", "0:1", "1:0", "8:8"}, delimiter = ':')
     void canMoveFailWhenWrongTarget(final int targetRank, final int targetFile) {
         // given
-        final RookMove rookMove = new RookMove();
+        final BishopMove bishopMove = new BishopMove();
         final int sourceRank = 0, sourceFile = 0;
         final Position source = new Position(sourceRank, sourceFile);
 
         // when
-        boolean actual = rookMove.canMove(source, new Position(targetRank, targetFile));
+        boolean actual = bishopMove.canMove(source, new Position(targetRank, targetFile));
 
         // then
         assertThat(actual)
