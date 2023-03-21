@@ -40,4 +40,12 @@ public abstract class Piece {
     public Side getSide() {
         return side;
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "position=" + position +
+                ", side=" + side +
+                '}';
+    }
 }
