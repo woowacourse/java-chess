@@ -23,16 +23,4 @@ public enum RankType {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
     }
-
-    public boolean isSideRank() {
-        return this == SIDE_RANK;
-    }
-
-    public boolean isPawnRank() {
-        return this == PAWN_RANK;
-    }
-
-    public boolean isEmptyRank() {
-        return this == EMPTY_RANK;
-    }
 }

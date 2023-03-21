@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.board.FileCoordinate.*;
+import static chess.domain.board.RankType.*;
 
 public class BoardFactory {
 
@@ -20,13 +21,13 @@ public class BoardFactory {
 
     private static void addRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
         RankType rankType = RankType.of(rankCoordinate);
-        if (rankType.isSideRank()) {
+        if (rankType == SIDE_RANK) {
             addSidePieces(boards, rankCoordinate, team);
         }
-        if (rankType.isPawnRank()) {
+        if (rankType == PAWN_RANK) {
             addPiecesBy(boards, rankCoordinate, new Pawn(team));
         }
-        if (rankType.isEmptyRank()) {
+        if (rankType == EMPTY_RANK) {
             addPiecesBy(boards, rankCoordinate, Empty.create());
         }
     }
