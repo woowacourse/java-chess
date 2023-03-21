@@ -1,10 +1,10 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.FileCoordinate;
-import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
+import chess.domain.position.FileCoordinate;
+import chess.domain.position.Position;
+import chess.domain.position.RankCoordinate;
 import java.util.Map;
 
 public class OutputView {

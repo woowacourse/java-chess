@@ -3,9 +3,9 @@ package chess.domain.piece;
 import static chess.domain.PositionFixture.C_4;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.FileCoordinate;
-import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
+import chess.domain.position.FileCoordinate;
+import chess.domain.position.Position;
+import chess.domain.position.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;

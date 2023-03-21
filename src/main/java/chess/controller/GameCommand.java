@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import chess.view.FileCoordinateView;
 import chess.view.RankCoordinateView;
 import java.util.Arrays;

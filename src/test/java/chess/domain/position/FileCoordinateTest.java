@@ -1,9 +1,9 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.FileCoordinate.B;
-import static chess.domain.board.FileCoordinate.C;
-import static chess.domain.board.FileCoordinate.D;
-import static chess.domain.board.FileCoordinate.E;
+import static chess.domain.position.FileCoordinate.B;
+import static chess.domain.position.FileCoordinate.C;
+import static chess.domain.position.FileCoordinate.D;
+import static chess.domain.position.FileCoordinate.E;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayNameGeneration;

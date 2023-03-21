@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

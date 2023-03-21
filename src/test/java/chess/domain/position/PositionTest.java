@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.B_2;

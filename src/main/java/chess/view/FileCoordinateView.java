@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.board.FileCoordinate;
+import chess.domain.position.FileCoordinate;
 import java.util.Arrays;
 
 public enum FileCoordinateView {

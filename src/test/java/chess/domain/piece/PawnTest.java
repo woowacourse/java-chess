@@ -4,9 +4,9 @@ import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.B_7;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.FileCoordinate;
-import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
+import chess.domain.position.FileCoordinate;
+import chess.domain.position.Position;
+import chess.domain.position.RankCoordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;

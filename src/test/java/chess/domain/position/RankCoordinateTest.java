@@ -1,11 +1,11 @@
-package chess.domain.board;
+package chess.domain.position;
 
-import static chess.domain.board.RankCoordinate.FIVE;
-import static chess.domain.board.RankCoordinate.FOUR;
-import static chess.domain.board.RankCoordinate.ONE;
-import static chess.domain.board.RankCoordinate.SIX;
-import static chess.domain.board.RankCoordinate.THREE;
-import static chess.domain.board.RankCoordinate.TWO;
+import static chess.domain.position.RankCoordinate.FIVE;
+import static chess.domain.position.RankCoordinate.FOUR;
+import static chess.domain.position.RankCoordinate.ONE;
+import static chess.domain.position.RankCoordinate.SIX;
+import static chess.domain.position.RankCoordinate.THREE;
+import static chess.domain.position.RankCoordinate.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
