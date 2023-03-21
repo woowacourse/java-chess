@@ -28,14 +28,11 @@ public class ChessController {
     }
 
     private void playEachTurn() {
-        while (true) {
+        do {
+            OutputView.printChessBoard(chessService.getChessBoard());
             CommandRequest commandRequest = new CommandRequest(InputView.requestCommand());
             chessService.execute(commandRequest);
-            if (!chessService.isOngoing()) {
-                break;
-            }
-            OutputView.printChessBoard(chessService.getChessBoard());
-        }
+        } while (chessService.isOngoing());
     }
 }
 

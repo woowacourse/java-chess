@@ -12,6 +12,9 @@ import domain.piece.Piece;
 
 public class OutputView {
     public static void printChessBoard(Map<Square, Piece> board) {
+        if (board.values().stream().allMatch(Piece::isEmpty)) {
+            return;
+        }
         List<String> messages = new ArrayList<>();
         for (Rank value : Rank.values()) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -19,7 +22,6 @@ public class OutputView {
             messages.add(stringBuilder.toString());
         }
         Collections.reverse(messages);
-
         for (String message : messages) {
             System.out.println(message);
         }

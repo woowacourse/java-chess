@@ -21,7 +21,7 @@ import domain.piece.type.Queen;
 import domain.piece.type.Rook;
 
 public class ChessBoard {
-    private Map<Square, Piece> board = new HashMap<>();
+    private final Map<Square, Piece> board = new HashMap<>();
 
     public ChessBoard() {
         for (File file : File.values()) {
