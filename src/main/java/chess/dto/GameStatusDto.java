@@ -12,6 +12,7 @@ import chess.domain.square.Square;
 
 public class GameStatusDto {
 
+    private static final int BOARD_SIZE = 8;
     private static final char FIRST_FILE = 'a';
     private static final char LAST_RANK = '8';
     private static final String EMPTY_MARK = ".";
@@ -29,7 +30,7 @@ public class GameStatusDto {
 
     private static List<String> makeGameStatus(Map<Square, Piece> board) {
         List<String> gameStatus = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
             char rank = (char) (LAST_RANK - i);
             gameStatus.add(makeRankStatus(board, rank));
         }
@@ -38,7 +39,7 @@ public class GameStatusDto {
 
     private static String makeRankStatus(Map<Square, Piece> board, char rank) {
         StringBuilder rankStatus = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
             char file = (char) (FIRST_FILE + i);
             Square square = Square.of(File.from(file), Rank.from(rank));
             rankStatus.append(makeSquareMark(board, square));
