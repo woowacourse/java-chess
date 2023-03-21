@@ -15,22 +15,23 @@ public class ChessService {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
-    private final ChessBoard chessBoard = new ChessBoard();
-    private Camp currentCamp = Camp.WHITE;
+    private final ChessBoard chessBoard;
+    private Camp currentCamp;
     private boolean isOngoing;
+    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(Command.START,
+        ignored -> start(), Command.END, ignored -> end(), Command.MOVE, this::move);
 
-    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(
-        Command.START, ignored -> commandIsStart(),
-        Command.END, ignored -> commandIsEnd(),
-        Command.MOVE, this::commandIsMove
-    );
+    public ChessService() {
+        this.chessBoard = new ChessBoard();
+        this.currentCamp = Camp.WHITE;
+    }
 
     public void execute(CommandRequest commandRequest) {
         Command command = Command.findRunCommand(commandRequest.getCommand());
         commandsAndExecutions.get(command).accept(commandRequest);
     }
 
-    private void commandIsStart() {
+    private void start() {
         if (!isOngoing) {
             chessBoard.initialize();
             isOngoing = true;
@@ -39,16 +40,15 @@ public class ChessService {
         throw new IllegalStateException("이미 게임이 실행중입니다.");
     }
 
-    private void commandIsEnd() {
+    private void end() {
         isOngoing = false;
     }
 
-    private void commandIsMove(CommandRequest commandRequest) {
+    private void move(CommandRequest commandRequest) {
         if (isOngoing) {
             Square currentSquare = convertToSquare(commandRequest.getCurrentSquareName());
             Square targetSquare = convertToSquare(commandRequest.getTargetSquareName());
-            validateCurrentCamp(currentSquare);
-
+            validateTurn(currentSquare);
             chessBoard.move(currentSquare, targetSquare);
             currentCamp = currentCamp.fetchOppositeCamp();
             return;
@@ -57,11 +57,10 @@ public class ChessService {
     }
 
     private Square convertToSquare(String squareName) {
-        return new Square(File.findFile(squareName.charAt(FILE_INDEX)),
-            Rank.findRank(squareName.charAt(RANK_INDEX)));
+        return new Square(File.findFile(squareName.charAt(FILE_INDEX)), Rank.findRank(squareName.charAt(RANK_INDEX)));
     }
 
-    private void validateCurrentCamp(Square currentSquare) {
+    private void validateTurn(Square currentSquare) {
         if (!chessBoard.isCorrectCamp(currentCamp, currentSquare)) {
             throw new IllegalStateException("같은 진영의 말만 움직일 수 있습니다.");
         }

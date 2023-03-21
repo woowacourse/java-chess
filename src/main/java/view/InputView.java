@@ -19,5 +19,4 @@ public class InputView {
             throw new IllegalArgumentException("명령을 입력해주세요.");
         }
     }
-
 }
