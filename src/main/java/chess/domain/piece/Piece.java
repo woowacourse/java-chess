@@ -6,13 +6,26 @@ import chess.domain.Position;
 
 import java.util.List;
 
-public abstract class Piece  {
-    private final PieceType pieceType;
+public abstract class Piece {
+    protected final PieceType pieceType;
     protected final Color color;
 
-    Piece(final PieceType pieceType, final Color color) {
+    protected Piece(final PieceType pieceType, final Color color) {
         this.pieceType = pieceType;
         this.color = color;
+    }
+
+    public List<Position> findPositions(final Position source, final Position target) {
+        final List<Position> movablePositions = createMovablePositions(source, target);
+        validateUnmovablePosition(movablePositions, target);
+
+        return movablePositions;
+    }
+
+    public void validateUnmovablePosition(final List<Position> positions, final Position target) {
+        if (!positions.contains(target)) {
+            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        }
     }
 
     public boolean isSameColor(final Color color) {
@@ -35,5 +48,5 @@ public abstract class Piece  {
         return pieceType;
     }
 
-    public abstract List<Position> findPositions(final Position source, final Position target);
+    protected abstract List<Position> createMovablePositions(final Position source, final Position target);
 }
