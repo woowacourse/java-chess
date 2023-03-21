@@ -7,8 +7,8 @@ import chess.domain.square.Square;
 
 abstract public class Piece {
 
-    private PieceType pieceType;
-    protected Color color;
+    private final PieceType pieceType;
+    private final Color color;
 
     protected Piece(final Color color, final PieceType pieceType) {
         this.pieceType = pieceType;
