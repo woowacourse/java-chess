@@ -73,7 +73,13 @@ public class ChessBoard {
     }
 
     private static void circuitVertical(Map<Position, ChessPiece> chessBoard, int i) {
-        for (int vertical = 3; vertical <= 6; vertical++) {
+        for (int vertical = 1; vertical <= 8; vertical++) {
+            initBlank(chessBoard, i, vertical);
+        }
+    }
+
+    private static void initBlank(Map<Position, ChessPiece> chessBoard, int i, int vertical) {
+        if(!chessBoard.containsKey(Position.initPosition(i, vertical))){
             chessBoard.put(Position.initPosition(i, vertical), new ChessPiece(Shape.BLANK, Side.BLANK));
         }
     }

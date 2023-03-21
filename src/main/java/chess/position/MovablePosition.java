@@ -1,7 +1,9 @@
 package chess.position;
 
 import chess.ChessBoard;
+import chess.piece.ChessPiece;
 import chess.piece.Shape;
+import chess.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,26 +26,26 @@ public class MovablePosition {
     }
 
     private void makeRoute(ChessBoard chessBoard, Position sourcePosition) {
-        String pieceName = chessBoard.getChessPieceByPosition(sourcePosition).getName();
-        if (pieceName.equals(Shape.PAWN.getWhiteName())) {
+        ChessPiece sourcePiece = chessBoard.getChessPieceByPosition(sourcePosition);
+        if (sourcePiece.getShape().equals(Shape.PAWN) && sourcePiece.getSide().equals(Side.WHITE)) {
             addPawnPosition(chessBoard, sourcePosition, Direction.WHITE_PAWN_MOVE_DIRECTION, 2);
         }
-        if (pieceName.equals(Shape.PAWN.getBlackName())) {
+        if (sourcePiece.getShape().equals(Shape.PAWN) && sourcePiece.getSide().equals(Side.BLACK)) {
             addPawnPosition(chessBoard, sourcePosition, Direction.BLACK_PAWN_MOVE_DIRECTION, 7);
         }
-        if (pieceName.equals(Shape.ROOK.getWhiteName()) || pieceName.equals(Shape.ROOK.getBlackName())) {
-            addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.DIAGONAL_DIRECTION, true);
-        }
-        if (pieceName.equals(Shape.BISHOP.getWhiteName()) || pieceName.equals(Shape.BISHOP.getBlackName())) {
+        if (sourcePiece.getShape().equals(Shape.ROOK)) {
             addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.CROSS_DIRECTION, true);
         }
-        if (pieceName.equals(Shape.KNIGHT.getWhiteName()) || pieceName.equals(Shape.KNIGHT.getBlackName())) {
+        if (sourcePiece.getShape().equals(Shape.BISHOP)) {
+            addCrossOrDiagonalPosition(chessBoard, sourcePosition, Direction.DIAGONAL_DIRECTION, true);
+        }
+        if (sourcePiece.getShape().equals(Shape.KNIGHT)) {
             addKnightPosition(chessBoard, sourcePosition);
         }
-        if (pieceName.equals(Shape.QUEEN.getWhiteName()) || pieceName.equals(Shape.QUEEN.getBlackName())) {
+        if (sourcePiece.getShape().equals(Shape.QUEEN)) {
             addRoyalPosition(chessBoard, sourcePosition, true);
         }
-        if (pieceName.equals(Shape.KING.getWhiteName()) || pieceName.equals(Shape.KING.getBlackName())) {
+        if (sourcePiece.getShape().equals(Shape.KING)) {
             addRoyalPosition(chessBoard, sourcePosition, false);
         }
     }
@@ -107,8 +109,8 @@ public class MovablePosition {
     }
 
     public boolean checkPieceSideInPosition(ChessBoard chessBoard, Position sourcePosition, Position checkPosition) {
-        String sourcePieceSide = chessBoard.getChessPieceByPosition(sourcePosition).getName();
-        String checkPieceSide = chessBoard.getChessPieceByPosition(checkPosition).getName();
+        Side sourcePieceSide = chessBoard.getChessPieceByPosition(sourcePosition).getSide();
+        Side checkPieceSide = chessBoard.getChessPieceByPosition(checkPosition).getSide();
         return sourcePieceSide.equals(checkPieceSide);
     }
 

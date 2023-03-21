@@ -1,5 +1,6 @@
-package chess;
+package chess.position;
 
+import chess.ChessBoard;
 import chess.position.MovablePosition;
 import chess.position.Position;
 import org.junit.jupiter.api.DisplayName;

@@ -67,6 +67,8 @@ public class ChessController {
         List<Position> movableRoute = movablePosition.findByShape(chessBoard, sourcePosition);
         if (chessGame.validateMovablePosition(targetPosition, movableRoute)) {
             chessGame.moveChessPiece(sourcePosition, targetPosition);
+            return;
         }
+        throw new IllegalArgumentException("[ERROR] 해당 위치로 움직일 수 없습니다.");
     }
 }
