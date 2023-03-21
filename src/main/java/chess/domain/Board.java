@@ -75,10 +75,6 @@ public class Board {
         board.put(source, new EmptyPiece());
     }
 
-    public List<List<Piece>> getBoard() {
-        return sortBoard();
-    }
-
     private List<List<Piece>> sortBoard() {
         List<Position> positions = sortPosition();
         List<List<Piece>> sortedBoard = new ArrayList<>();
@@ -107,6 +103,10 @@ public class Board {
             return p2.getRow() - p1.getRow();
         });
         return positions;
+    }
+
+    public List<List<Piece>> getBoard() {
+        return sortBoard();
     }
 
 }
