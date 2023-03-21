@@ -27,7 +27,7 @@
   - [x] 폰인지 알려준다.
 
   - Pawn: 폰
-    - `PieceDirection.WHITE_PAWN` & `PieceDirection.WHITE_PAWN`
+    - `PieceDirection.WHITE_PAWN` & `PieceDirection.BLACK_PAWN`
   - Bishop: 비숍
     - `PieceDirection.DIAGONAL`
   - Knight: 나이트
@@ -40,6 +40,11 @@
     - `PieceDirection.KING_AND_QUEEN`
 
 - Color: 체스말의 색상에 관한 Enum
+
+- Turn: 차례 관련 객체
+  - [x] 첫 차례는 백팀의 차례이다.
+  - [x] 백팀 다음 차례는 흑팀이다.
+  - [x] 흑팀 다음 차례는 백팀이다.
 
 ### UI
 
