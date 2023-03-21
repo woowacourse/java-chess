@@ -17,7 +17,9 @@ public class Game {
         this.board = BoardFactory.createBoard();
     }
 
-    public void movePiece(Position source, Position target) {
+    public void movePiece(String sourceRequest, String targetRequest) {
+        Position source = new Position(sourceRequest);
+        Position target = new Position(targetRequest);
         checkTurn(source);
         board.move(source, target);
         changeTurn();

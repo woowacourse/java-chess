@@ -69,9 +69,7 @@ public class ChessGameController {
         }
         if (commandType == CommandType.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();
-            Position source = new Position(moveRequest.getSource());
-            Position target = new Position(moveRequest.getTarget());
-            game.movePiece(source, target);
+            game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
         }
         return commandType;
     }

@@ -17,10 +17,10 @@ public class GameTest {
     void movePiece() {
         Game game = new Game();
 
-        game.movePiece(new Position("B2"), new Position("B3"));
+        game.movePiece("b2", "b3");
 
         Map<Position, Piece> pieces = game.getPieces();
-        assertThat(pieces.get(new Position("B3")))
+        assertThat(pieces.get(new Position("b3")))
                 .isNotNull()
                 .isInstanceOf(Pawn.class);
     }
@@ -30,7 +30,7 @@ public class GameTest {
     void moveBlackFirst_throws() {
         Game game = new Game();
 
-        assertThatThrownBy(() -> game.movePiece(new Position("B7"), new Position("B6")))
+        assertThatThrownBy(() -> game.movePiece("b7", "b6"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 움직일 수 있습니다");
     }
@@ -40,11 +40,11 @@ public class GameTest {
     void moveBlackSecond() {
         Game game = new Game();
 
-        game.movePiece(new Position("B2"), new Position("B3"));
-        game.movePiece(new Position("B7"), new Position("B6"));
+        game.movePiece("b2", "b3");
+        game.movePiece("b7", "b6");
 
         Map<Position, Piece> pieces = game.getPieces();
-        assertThat(pieces.get(new Position("B6")))
+        assertThat(pieces.get(new Position("b6")))
                 .isNotNull()
                 .isInstanceOf(Pawn.class);
     }
