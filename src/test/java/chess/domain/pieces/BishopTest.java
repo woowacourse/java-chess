@@ -6,8 +6,8 @@ import static chess.domain.math.Direction.UP;
 import static chess.domain.math.Direction.UP_LEFT;
 import static chess.domain.math.Direction.UP_RIGHT;
 import static chess.domain.pieces.Piece.INVALID_TEAM;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.domain.Team;
 import chess.domain.math.Direction;
@@ -24,7 +24,9 @@ class BishopTest {
         List<Direction> directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 
         for (Direction direction : directions) {
-            assertThat(bishop.hasDirection(direction)).isTrue();
+            assertThatNoException().isThrownBy(
+                    () -> bishop.validateDirection(direction)
+            );
         }
     }
 
@@ -33,7 +35,9 @@ class BishopTest {
     void hasPattern_fail() {
         Bishop bishop = new Bishop(Team.BLACK);
 
-        assertThat(bishop.hasDirection(UP)).isFalse();
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> bishop.validateDirection(UP)
+        );
     }
 
     @Test

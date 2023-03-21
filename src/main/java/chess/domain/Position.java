@@ -20,6 +20,13 @@ public final class Position {
         return new Position(nextRow, nextColumn);
     }
 
+    public int calculateDistance(final Position otherPosition) {
+        int rowDifferent = Math.abs(this.row - otherPosition.row);
+        int colDifferent = Math.abs(this.column - otherPosition.column);
+
+        return Math.max(rowDifferent, colDifferent);
+    }
+
     public int getRow() {
         return row;
     }

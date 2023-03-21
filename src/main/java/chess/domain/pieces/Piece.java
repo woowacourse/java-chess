@@ -1,5 +1,6 @@
 package chess.domain.pieces;
 
+import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.math.Direction;
 
@@ -19,7 +20,15 @@ public abstract class Piece {
         }
     }
 
-    abstract public boolean hasDirection(final Direction direction);
+    abstract public void validateDirection(final Direction direction);
+
+    abstract public void validateDistance(final Position current, final Position target);
+
+    public void validateSameTeam(final Piece otherPiece) {
+        if (this.getTeam() == otherPiece.getTeam()) {
+            throw new IllegalArgumentException("해당 위치에 같은 팀이 존재합니다. 이동할 수 없습니다.");
+        }
+    }
 
     public Team getTeam() {
         return this.team;

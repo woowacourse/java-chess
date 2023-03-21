@@ -26,41 +26,38 @@ public final class Board {
 
     public void movePiece(final Position current, final Position target) {
         Piece currentPointPiece = findPiece(current);
-        Direction moveableDirection = Direction.findDirection(current, target);
+        Direction movableDirection = Direction.findDirection(current, target);
 
-        if (currentPointPiece.hasDirection(moveableDirection)) {
-            runLogic(current, target, moveableDirection);
-            return;
-        }
-        throw new IllegalArgumentException("패턴에서 걸러진 예외");
+        currentPointPiece.validateDirection(movableDirection);
+
+        runLogic(current, target, movableDirection);
     }
 
     private Piece findPiece(final Position position) {
-        Rank rank = board.get(position.getRow());
+        Rank rank = this.board.get(position.getRow());
         Square square = rank.findSquare(position.getColumn());
 
         return square.getPiece();
     }
 
-    private void runLogic(final Position current, final Position target, final Direction moveableDirection) {
+    private void runLogic(final Position current, final Position target, final Direction movableDirection) {
         Piece currentPointPiece = findPiece(current);
 
         if (currentPointPiece instanceof Knight) {
-            validateSameTeam(current, target);
+            currentPointPiece.validateSameTeam(findPiece(target));
         }
 
         if (currentPointPiece instanceof King) {
-            if (calculateStep(current, target) != 1) {
-                throw new IllegalArgumentException("킹은 1만");
-            }
-            validateSameTeam(current, target);
+            currentPointPiece.validateDistance(current, target);
+            currentPointPiece.validateSameTeam(findPiece(target));
         }
 
         if (currentPointPiece instanceof Pawn) {
-            isValidDirection(currentPointPiece, moveableDirection); // 팀에 따라 유효한 방향인지 확인
+//            isValidDirection(currentPointPiece, moveableDirection); // 팀에 따라 유효한 방향인지 확인
+            currentPointPiece.validateDirection(movableDirection);
 
             Pawn pawn = (Pawn) currentPointPiece;
-            int targetStep = calculateStep(current, target);
+            int targetStep = calculateDistance(current, target);
 
             if (!pawn.isMoved()) { // 처음 움직임
                 if ((0 < targetStep && targetStep <= 2) && isEmptyPiece(target)) {
@@ -82,27 +79,10 @@ public final class Board {
 
         if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
             checkExistPiece(current, target, UnitVector.of(current, target));
-            validateSameTeam(current, target);
+            currentPointPiece.validateSameTeam(findPiece(target));
         }
 
         move(current, target);
-    }
-
-    private void validateSameTeam(final Position current, final Position target) {
-        if (findPiece(current).getTeam() == findPiece(target).getTeam()) {
-            throw new IllegalArgumentException("같은 팀이 존재하므로 이동할 수 없습니다.");
-        }
-    }
-
-    private void isValidDirection(final Piece piece, final Direction moveableDirection) {
-        if (piece.getTeam() == Team.BLACK && moveableDirection == Direction.DOWN) {
-            return;
-        }
-        if (piece.getTeam() == Team.WHITE && moveableDirection == Direction.UP) {
-            return;
-        }
-
-        throw new IllegalArgumentException("폰은 앞으로만 이동할 수 있습니다.");
     }
 
     private void checkPieceOfPawn(final Position current, final Position target, final Piece currentPointPiece) {
@@ -145,7 +125,7 @@ public final class Board {
         currentRank.replaceSquare(current.getColumn(), newCurrentSquare);
     }
 
-    private int calculateStep(final Position current, final Position target) {
+    private int calculateDistance(final Position current, final Position target) {
         int rowDifferent = Math.abs(current.getRow() - target.getRow());
         int colDifferent = Math.abs(current.getColumn() - target.getColumn());
 

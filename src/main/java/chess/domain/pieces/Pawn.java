@@ -8,6 +8,7 @@ import static chess.domain.math.Direction.UP;
 import static chess.domain.math.Direction.UP_LEFT;
 import static chess.domain.math.Direction.UP_RIGHT;
 
+import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.math.Direction;
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ public final class Pawn extends Piece {
         super(team);
         validateTeam(team);
         this.directions = initDirections(team);
+    }
+
+    @Override
+    public void validateDirection(final Direction direction) {
+        if (directions.contains(direction)) {
+            return;
+        }
+        throw new IllegalArgumentException("이동할 수 없는 위치입니다. 다시 입력해주세요.");
     }
 
     private List<Direction> initDirections(final Team team) {
@@ -40,7 +49,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean hasDirection(final Direction direction) {
-        return directions.contains(direction);
+    public void validateDistance(final Position current, final Position target) {
+
     }
 }
