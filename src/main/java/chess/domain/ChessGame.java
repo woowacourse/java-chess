@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -23,12 +22,10 @@ public class ChessGame {
     }
 
     private void validateMove(Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = board.findPiece(sourcePosition);
-        Piece targetPiece = board.findPiece(targetPosition);
-        sourcePiece.validateTeam(nowPlayingTeam);
-        sourcePiece.validateCanMove(sourcePosition, targetPosition, targetPiece.getTeam());
+        board.validateSourceTeam(sourcePosition, nowPlayingTeam);
+        board.validateCanMove(sourcePosition, targetPosition);
         List<Position> path = sourcePosition.findPath(targetPosition);
-        board.validatePosition(path);
+        board.validatePath(path);
     }
 
     private void move(Position sourcePosition, Position targetPosition) {
