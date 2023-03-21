@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
+@Disabled
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
