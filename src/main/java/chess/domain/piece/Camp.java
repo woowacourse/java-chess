@@ -5,8 +5,8 @@ public enum Camp {
     WHITE,
     ;
 
-    public static Camp convert(Camp turnCamp) {
-        if (turnCamp == BLACK) {
+    public Camp convert() {
+        if (this == BLACK) {
             return WHITE;
         }
 

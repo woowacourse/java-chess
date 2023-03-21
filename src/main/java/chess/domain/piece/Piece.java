@@ -16,10 +16,6 @@ public abstract class Piece {
         return camp == Camp.BLACK;
     }
 
-    public boolean isEmpty() {
-        return false;
-    }
-
     public boolean isSameCamp(Piece other) {
         return camp == other.camp;
     }

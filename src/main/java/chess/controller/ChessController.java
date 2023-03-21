@@ -1,10 +1,11 @@
 package chess.controller;
 
 import chess.controller.dto.ChessBoardPositions;
-import chess.domain.ChessGame;
+import chess.controller.dto.ChessCommandDto;
 import chess.domain.PiecesPosition;
-import chess.view.input.command.ChessCommand;
-import chess.view.input.command.ChessCommandDto;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameCommand;
+import chess.domain.game.ReadyChessGame;
 import chess.view.input.InputView;
 import chess.view.output.OutputView;
 import java.util.function.Supplier;
@@ -21,39 +22,37 @@ public final class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-        retryOnInvalidUserInput(inputView::readStartGame);
 
-        ChessGame chessGame = startChessGame();
+        ChessGame chessGame = retryOnInvalidUserInput(this::startChessGame);
+        printChessGameBoard(chessGame);
         play(chessGame);
     }
 
     private ChessGame startChessGame() {
+        ChessCommandDto chessCommands = inputView.readCommands();
         PiecesPosition piecesPosition = new PiecesPosition();
-        printBoard(piecesPosition);
+        ChessGame chessGame = new ReadyChessGame(piecesPosition);
 
-        return new ChessGame(piecesPosition);
+        ChessGameCommand gameCommand = chessCommands.toChessGameCommand();
+        return chessGame.playByCommand(gameCommand);
     }
 
     private void play(ChessGame chessGame) {
-        ChessCommand command;
-        do {
-            command = retryOnInvalidUserInput(() -> playTurn(chessGame));
-        } while (command == ChessCommand.MOVE);
-    }
-
-    private ChessCommand playTurn(ChessGame chessGame) {
-        ChessCommandDto chessCommandDto = inputView.readRunningCommand();
-        ChessCommand chessCommand = chessCommandDto.getChessCommand();
-        if (chessCommand == ChessCommand.END) {
-            return chessCommand;
+        while (chessGame.isGameRunnable()) {
+            ChessGame recentGame = chessGame;
+            chessGame = retryOnInvalidUserInput(() -> playTurn(recentGame));
+            printChessGameBoard(chessGame);
         }
-
-        chessGame.move(chessCommandDto.getFromPosition(), chessCommandDto.getToPosition());
-        printBoard(chessGame.getPiecesPosition());
-        return chessCommand;
     }
 
-    private void printBoard(PiecesPosition piecesPosition) {
+    private ChessGame playTurn(ChessGame chessGame) {
+        ChessCommandDto chessCommandDto = inputView.readCommands();
+        ChessGameCommand chessGameCommand = chessCommandDto.toChessGameCommand();
+        return chessGame.playByCommand(chessGameCommand);
+    }
+
+    private void printChessGameBoard(ChessGame chessGame) {
+        PiecesPosition piecesPosition = chessGame.getPiecesPosition();
         ChessBoardPositions chessBoardPositions = ChessBoardPositions.getInstance();
         outputView.printChessState(chessBoardPositions.getPositions(), piecesPosition.getPiecesPosition());
     }

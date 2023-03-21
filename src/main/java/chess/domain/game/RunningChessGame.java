@@ -1,32 +1,51 @@
-package chess.domain;
+package chess.domain.game;
 
+import chess.domain.PiecesPosition;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
 import java.util.List;
 
-public final class ChessGame {
+public class RunningChessGame extends ChessGame {
 
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
-    private final PiecesPosition piecesPosition;
-    private Camp turnCamp = Camp.WHITE;
-
-    public ChessGame(PiecesPosition piecesPosition) {
-        this.piecesPosition = piecesPosition;
+    public RunningChessGame(PiecesPosition piecesPosition, Camp turnCamp) {
+        super(piecesPosition, turnCamp);
     }
 
-    public void move(Position fromPosition, Position toPosition) {
+    @Override
+    public boolean isGameRunnable() {
+        return true;
+    }
+
+    @Override
+    public ChessGame playByCommand(ChessGameCommand gameCommand) {
+        validateRunningCommand(gameCommand);
+        if (gameCommand.isMove()) {
+            move(gameCommand.getFromPosition(), gameCommand.getToPosition());
+            return new RunningChessGame(piecesPosition, turnCamp.convert());
+        }
+
+        return new EndChessGame(piecesPosition, turnCamp.convert());
+    }
+
+    private void validateRunningCommand(ChessGameCommand gameCommand) {
+        if (gameCommand.isStart()) {
+            throw new IllegalStateException("게임 중에는 시작 명령을 입력 할 수 없습니다.");
+        }
+    }
+
+    private void move(Position fromPosition, Position toPosition) {
         validateBeforeMove(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
         validateMovable(piecesPosition.isPieceExist(toPosition), pieceMove);
         piecesPosition.movePieceBy(fromPosition, toPosition);
-        changeTurn();
     }
 
     private void validateBeforeMove(Position fromPosition, Position toPosition) {
@@ -92,13 +111,4 @@ public final class ChessGame {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
     }
-
-    private void changeTurn() {
-        this.turnCamp = Camp.convert(turnCamp);
-    }
-
-    public PiecesPosition getPiecesPosition() {
-        return piecesPosition;
-    }
 }
-

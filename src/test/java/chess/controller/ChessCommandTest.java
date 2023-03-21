@@ -3,7 +3,9 @@ package chess.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.view.input.command.ChessCommand;
+import chess.domain.game.ChessCommandType;
+import chess.domain.game.ChessGameCommand;
+import chess.view.input.ChessCommandInput;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,16 +17,16 @@ class ChessCommandTest {
             "start, START",
             "move, MOVE",
             "end, END",})
-    void fromUserInputStartTest(String userInput, ChessCommand expectedChessCommand) {
-        ChessCommand chessCommand = ChessCommand.from(userInput);
+    void fromUserInputStartTest(String userInput, ChessCommandType expectedChessCommand) {
+        ChessCommandType chessCommandType = ChessCommandInput.from(userInput);
 
-        assertThat(chessCommand).isEqualTo(expectedChessCommand);
+        assertThat(chessCommandType).isEqualTo(expectedChessCommand);
     }
 
     @ParameterizedTest(name = "유효하지 않은 입력인 경우 예외가 발생합니다. - {0}")
     @ValueSource(strings = {"Start", "END", "ada", "Hello"})
     void fromUserInputExceptionTest(String userInput) {
-        assertThatThrownBy(() -> ChessCommand.from(userInput))
+        assertThatThrownBy(() -> ChessCommandInput.from(userInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
