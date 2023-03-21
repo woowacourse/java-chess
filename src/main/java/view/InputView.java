@@ -9,7 +9,15 @@ public class InputView {
     private static final String DELIMITER = " ";
 
     public static List<String> requestCommand() {
-        return Arrays.asList(scanner.nextLine().split(DELIMITER));
+        String input = scanner.nextLine();
+        validate(input);
+        return Arrays.asList(input.split(DELIMITER));
+    }
+
+    private static void validate(String input) {
+        if (input.isEmpty() || input.isBlank()) {
+            throw new IllegalArgumentException("명령을 입력해주세요.");
+        }
     }
 
 }

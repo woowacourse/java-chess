@@ -6,7 +6,11 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    private final ChessService chessService = new ChessService();
+    private final ChessService chessService;
+
+    public ChessController() {
+        chessService = new ChessService();
+    }
 
     public void run() {
         OutputView.printChessInfo();
@@ -33,6 +37,5 @@ public class ChessController {
             OutputView.printChessBoard(chessService.getChessBoard());
         }
     }
-
 }
 
