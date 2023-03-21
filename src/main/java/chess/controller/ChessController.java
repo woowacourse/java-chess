@@ -21,6 +21,7 @@ public class ChessController {
     private static final Map<String, CommandAction> commands = new HashMap<>();
     private static final int SOURCE_SQUARE_INDEX = 0;
     private static final int TARGET_SQUARE_INDEX = 1;
+    private static final int MOVE_PARAMETER_SIZE = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -30,6 +31,10 @@ public class ChessController {
         this.inputView = inputView;
         this.outputView = outputView;
         this.board = BoardFactory.create();
+        putCommands();
+    }
+
+    private void putCommands() {
         commands.put("start", new StartCommandAction(ignored -> initializeBoard()));
         commands.put("move", new MoveCommandAction(this::movePiece));
         commands.put("end", new EndCommandAction());
@@ -44,16 +49,6 @@ public class ChessController {
         }
     }
 
-    private CommandAction play() {
-        CommandAction currentAction;
-        String inputCommand = inputView.readCommand();
-        Command command = new Command(inputCommand);
-        CommandAction action = commands.get(command.getName());
-        action.execute(command);
-        currentAction = action;
-        return currentAction;
-    }
-
     private CommandAction repeat(Supplier<CommandAction> supplier) {
         try {
             return supplier.get();
@@ -63,16 +58,31 @@ public class ChessController {
         }
     }
 
+    private CommandAction play() {
+        String inputCommand = inputView.readCommand();
+        Command command = new Command(inputCommand);
+        CommandAction action = commands.get(command.getName());
+        action.execute(command);
+        return action;
+    }
+
     public void initializeBoard() {
         board = BoardFactory.create();
         showBoard();
     }
 
     private void movePiece(final List<String> parameters) {
+        validate(parameters);
         Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
         board.makeMove(sourceSquare, targetSquare);
         showBoard();
+    }
+
+    private void validate(final List<String> parameters) {
+        if(parameters.size() != MOVE_PARAMETER_SIZE) {
+            throw new IllegalArgumentException("기물 위치와 이동 위치를 입력해주세요.");
+        }
     }
 
     private Square convertSquare(final String square) {
