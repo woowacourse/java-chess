@@ -19,15 +19,15 @@ public class Location {
         this.row = row;
     }
 
+    public static Location of(final int column, final int row) {
+        return new Location(column, row);
+    }
+
     private void validate(final int column, final int row) {
         if (column < MIN_COL || column > MAX_COL
             || row < MIN_ROW || row > MAX_ROW) {
             throw new IllegalArgumentException(INVALID_LOCATION_ERROR_MESSAGE);
         }
-    }
-
-    public static Location of(final int column, final int row) {
-        return new Location(column, row);
     }
 
     public boolean isSameCol(final Location location) {

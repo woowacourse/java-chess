@@ -5,7 +5,6 @@ import domain.Location;
 
 public class OutputView {
 
-
     public void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (int row = 8; row >= 1; row--) {
