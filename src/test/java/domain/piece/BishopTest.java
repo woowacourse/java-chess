@@ -2,6 +2,7 @@ package domain.piece;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -79,5 +80,17 @@ class BishopTest {
         List<Position> path = whiteBishop.collectPath(Position.of("g", "2"), Position.of("c", "6"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("f", "3"), Position.of("e", "4"), Position.of("d", "5"));
+    }
+
+    @DisplayName("blackBishop의 경우 black bishop카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(Bishop.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_BISHOP);
+    }
+
+    @DisplayName("white Bishop의 경우 white bishop카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(Bishop.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_BISHOP);
     }
 }

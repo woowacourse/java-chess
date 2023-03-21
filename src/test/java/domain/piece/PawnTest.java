@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -173,5 +174,17 @@ public class PawnTest {
         Pawn pawn = Pawn.createOfBlack();
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("a", "6"));
         assertThat(path).isEmpty();
+    }
+
+    @DisplayName("black pawn의 경우 black pawn카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(Pawn.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_PAWN);
+    }
+
+    @DisplayName("white pawn의 경우 white pawn카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(Pawn.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_PAWN);
     }
 }

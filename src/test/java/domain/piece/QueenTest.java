@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -95,5 +96,17 @@ class QueenTest {
         List<Position> path = whiteQueen.collectPath(Position.of("d", "5"), Position.of("a", "5"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("b", "5"));
+    }
+
+    @DisplayName("black queen의 경우 black queen카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(Queen.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_QUEEN);
+    }
+
+    @DisplayName("white queen의 경우 white queen카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(Queen.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_QUEEN);
     }
 }

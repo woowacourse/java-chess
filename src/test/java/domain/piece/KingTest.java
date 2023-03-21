@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -57,5 +58,17 @@ class KingTest {
         List<Position> path = whiteKing.collectPath(Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(path).isEmpty();
+    }
+
+    @DisplayName("black king의 경우 black king카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(King.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_KING);
+    }
+
+    @DisplayName("white king의 경우 white king카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(King.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_KING);
     }
 }

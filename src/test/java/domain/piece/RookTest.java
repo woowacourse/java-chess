@@ -2,6 +2,7 @@ package domain.piece;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -79,5 +80,17 @@ class RookTest {
         List<Position> path = whiteRook.collectPath(Position.of("c", "3"), Position.of("f", "3"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "3"));
+    }
+
+    @DisplayName("black rook의 경우 black rook카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(Rook.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_ROOK);
+    }
+
+    @DisplayName("white rook의 경우 white rook카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(Rook.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_ROOK);
     }
 }

@@ -2,8 +2,10 @@ package domain.piece;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import view.PieceCategory;
 
 import java.util.List;
 
@@ -68,5 +70,17 @@ class KnightTest {
         List<Position> path = whiteKnight.collectPath(Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(path).isEmpty();
+    }
+
+    @DisplayName("black knight의 경우 black knight카테고리를 반환한다.")
+    @Test
+    void blackBishopCategoryTest() {
+        assertThat(Knight.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_KNIGHT);
+    }
+
+    @DisplayName("white knight의 경우 white knight카테고리를 반환한다.")
+    @Test
+    void whiteBishopCategoryTest() {
+        assertThat(Knight.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_KNIGHT);
     }
 }
