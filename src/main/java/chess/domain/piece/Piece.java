@@ -50,6 +50,10 @@ public class Piece {
         return moveRule.canAttack(source, target);
     }
 
+    public boolean isPawn() {
+        return pieceType == PieceType.PAWN;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

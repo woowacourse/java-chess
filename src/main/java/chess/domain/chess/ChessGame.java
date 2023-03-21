@@ -23,9 +23,10 @@ public final class ChessGame {
         validateCamp(source);
         validateTargetSameCamp(target);
         validateObstacle(source, target);
-        if (validateAttack(source, target) || validateMove(source, target)) {
-            movePiece(source, target);
+        if (!canAttack(source, target) && !canMove(source, target)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
+        movePiece(source, target);
     }
 
     private void validateObstacle(final Position source, final Position target) {
@@ -48,12 +49,15 @@ public final class ChessGame {
         }
     }
 
-    private boolean validateAttack(final Position source, final Position target) {
-        final Piece piece = chessBoard.checkPiece(source);
-        return piece.canAttack(source, target) && chessBoard.contains(target);
+    private boolean canAttack(final Position source, final Position target) {
+        final Piece sourcePiece = chessBoard.checkPiece(source);
+        if (sourcePiece.isPawn() && sourcePiece.canAttack(source, target) && !chessBoard.contains(target)) {
+            throw new IllegalArgumentException("공격할 수 있는 위치가 아닙니다.");
+        }
+        return sourcePiece.canAttack(source, target);
     }
 
-    private boolean validateMove(final Position source, final Position target) {
+    private boolean canMove(final Position source, final Position target) {
         final Piece piece = chessBoard.checkPiece(source);
         return piece.canMove(source, target);
     }
