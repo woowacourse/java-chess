@@ -39,7 +39,7 @@ public class ChessController {
     private void play() {
         do {
             outputView.printBoard(chessGame.getBoard());
-        } while (isPlaying(executeCommand()));
+        } while (isPlaying(readCommand()));
     }
 
     private boolean isPlaying(GameCommand gameCommand) {
@@ -49,22 +49,14 @@ public class ChessController {
     /**
         return: 사용자에게 입력된 GameCommand에 해당하는 기능을 동작하고 반환
      */
-    private GameCommand executeCommand() {
+    private GameCommand readCommand() {
         try {
             List<String> input = readInput();
-            return move(input);
+            return executeCommand(input);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return executeCommand();
+            return readCommand();
         }
-    }
-
-    private GameCommand move(List<String> input) {
-        if (GameCommand.of(input.get(0)) == GameCommand.END) {
-            return GameCommand.END;
-        }
-        chessGame.movePiece(PositionMapper.from(input.get(1)), PositionMapper.from(input.get(2)));
-        return GameCommand.MOVE;
     }
 
     private List<String> readInput() {
@@ -76,6 +68,13 @@ public class ChessController {
             outputView.printError(e.getMessage());
             return readInput();
         }
+    }
+
+    private GameCommand executeCommand(List<String> input) {
+        if (GameCommand.of(input.get(0)) == GameCommand.MOVE) {
+            chessGame.movePiece(PositionMapper.from(input.get(1)), PositionMapper.from(input.get(2)));
+        }
+        return GameCommand.of(input.get(0));
     }
 
     private void validateCommand(List<String> input) {
