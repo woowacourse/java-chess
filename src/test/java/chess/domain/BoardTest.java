@@ -35,10 +35,11 @@ class BoardTest {
 
         var check = result.stream()
                 .map(Piece::getType)
-                .map(PieceType::getName)
+//                .map(PieceType::getName)
                 .collect(Collectors.toList());
         assertThat(check)
-                .containsExactly("r", "n", "b", "q", "k", "b", "n", "r")
+                .containsExactly(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+                        PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK)
                 .hasSize(8);
     }
 
@@ -53,10 +54,9 @@ class BoardTest {
 
         var check = result.stream()
                 .map(Piece::getType)
-                .map(PieceType::getName)
                 .collect(Collectors.toList());
         assertThat(check)
-                .containsOnly("p")
+                .containsOnly(PieceType.PAWN)
                 .hasSize(8);
     }
 

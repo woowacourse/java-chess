@@ -13,21 +13,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
-    ROOK("r", List.of(RookState.getInstance())),
-    KNIGHT("n", List.of(KnightState.getInstance())),
-    BISHOP("b", List.of(BishopState.getInstance())),
-    QUEEN("q", List.of(QueenState.getInstance())),
-    KING("k", List.of(KingState.getInstance())),
-    PAWN("p", List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
-    EMPTY(".", List.of(EmptyState.getInstance()));
+    ROOK(List.of(RookState.getInstance())),
+    KNIGHT(List.of(KnightState.getInstance())),
+    BISHOP(List.of(BishopState.getInstance())),
+    QUEEN(List.of(QueenState.getInstance())),
+    KING(List.of(KingState.getInstance())),
+    PAWN(List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
+    EMPTY(List.of(EmptyState.getInstance()));
 
     private static final int INITIAL_STATE = 0;
 
-    private final String name;
+
     private final List<MoveState> state;
 
-    PieceType(String name, List<MoveState> state) {
-        this.name = name;
+    PieceType(List<MoveState> state) {
         this.state = state;
     }
 
@@ -36,10 +35,6 @@ public enum PieceType {
                 .filter(it -> it.state.contains(moveState))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다"));
-    }
-
-    public String getName() {
-        return name;
     }
 
     public MoveState getState() {
