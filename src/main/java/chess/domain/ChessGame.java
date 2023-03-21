@@ -10,11 +10,11 @@ import java.util.List;
 public class ChessGame {
 
     private final Board board;
-    private Team team;
+    private Team nowPlayingTeam;
 
     public ChessGame(Board board) {
         this.board = board;
-        this.team = Team.WHITE;
+        this.nowPlayingTeam = Team.WHITE;
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
@@ -25,7 +25,7 @@ public class ChessGame {
     private void validateMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
-        sourcePiece.validateTeam(team);
+        sourcePiece.validateTeam(nowPlayingTeam);
         sourcePiece.validateCanMove(sourcePosition, targetPosition, targetPiece.getTeam());
         List<Position> path = sourcePosition.findPath(targetPosition);
         board.validatePosition(path);
@@ -33,7 +33,7 @@ public class ChessGame {
 
     private void move(Position sourcePosition, Position targetPosition) {
         board.movePiece(sourcePosition, targetPosition);
-        this.team = team.getReverseTeam();
+        this.nowPlayingTeam = nowPlayingTeam.getReverseTeam();
     }
 
     public Board getBoard() {
