@@ -5,6 +5,8 @@ import chessgame.domain.piece.Pawn;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
 
+import java.util.Optional;
+
 public class ConcreteSquare extends Square {
 
     private final Piece piece;
@@ -35,12 +37,12 @@ public class ConcreteSquare extends Square {
     }
 
     @Override
-    public Piece getPieceType() {
-        return piece;
+    public Optional<Piece> getPieceType() {
+        return Optional.of(piece);
     }
 
     @Override
-    public Camp getCamp() {
-        return camp;
+    public boolean isSameCamp(Camp camp) {
+        return this.camp.equals(camp);
     }
 }

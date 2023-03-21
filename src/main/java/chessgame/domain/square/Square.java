@@ -3,6 +3,8 @@ package chessgame.domain.square;
 import chessgame.domain.piece.Coordinate;
 import chessgame.domain.piece.Piece;
 
+import java.util.Optional;
+
 public abstract class Square {
 
     private boolean isFirstMove;
@@ -11,10 +13,14 @@ public abstract class Square {
         isFirstMove = true;
     }
 
-    public abstract Piece getPieceType();
-    public abstract Camp getCamp();
+    public abstract Optional<Piece> getPieceType();
+
+    public abstract boolean isSameCamp(Camp camp);
+
     public abstract boolean isMovable(Coordinate startCoordinate, Coordinate endCoordinate);
+
     public abstract boolean isExist();
+
     public abstract boolean canReap();
 
     protected boolean isFirstMove() {

@@ -3,6 +3,8 @@ package chessgame.domain.square;
 import chessgame.domain.piece.Coordinate;
 import chessgame.domain.piece.Piece;
 
+import java.util.Optional;
+
 public class EmptySquare extends Square {
 
     @Override
@@ -21,12 +23,12 @@ public class EmptySquare extends Square {
     }
 
     @Override
-    public Piece getPieceType() {
-        return null;
+    public Optional<Piece> getPieceType() {
+        return Optional.empty();
     }
 
     @Override
-    public Camp getCamp() {
-        return null;
+    public boolean isSameCamp(Camp camp) {
+        return false;
     }
 }
