@@ -9,17 +9,26 @@ public class Pawn extends Piece {
         super(team);
     }
 
-    // TODO: 코드 개선 시급
     @Override
     public Direction findDirection(Square current, Square destination) {
+        if (team == Team.WHITE) {
+            return findWhiteDirection(current, destination);
+        }
+        return findBlackDirection(current, destination);
+    }
+
+    private Direction findWhiteDirection(Square current, Square destination) {
         int fileDifference = current.getFileDifference(destination);
         int rankDifference = current.getRankDifference(destination);
-        if (team == Team.WHITE) {
-            if (current.isRankTwo() && fileDifference == 0 && rankDifference == 2) {
-                return Direction.UP;
-            }
-            return PieceDirection.WHITE_PAWN.findDirection(fileDifference, rankDifference);
+        if (current.isRankTwo() && fileDifference == 0 && rankDifference == 2) {
+            return Direction.UP;
         }
+        return PieceDirection.WHITE_PAWN.findDirection(fileDifference, rankDifference);
+    }
+
+    private Direction findBlackDirection(Square current, Square destination) {
+        int fileDifference = current.getFileDifference(destination);
+        int rankDifference = current.getRankDifference(destination);
         if (current.isRankSeven() && fileDifference == 0 && rankDifference == -2) {
             return Direction.DOWN;
         }
