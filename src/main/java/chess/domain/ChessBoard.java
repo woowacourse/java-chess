@@ -8,15 +8,15 @@ import java.util.Map;
 
 public class ChessBoard {
     private final Map<Square, Piece> pieces;
-    private boolean isWhiteTurn;
+    private Turn turn;
 
-    public ChessBoard(Map<Square, Piece> pieces, boolean isWhiteTurn) {
+    public ChessBoard(Map<Square, Piece> pieces, Turn turn) {
         this.pieces = pieces;
-        this.isWhiteTurn = isWhiteTurn;
+        this.turn = turn;
     }
 
     public ChessBoard(Map<Square, Piece> pieces) {
-        this(pieces, true);
+        this(pieces, Turn.WHITE_TURN);
     }
 
     public boolean canMove(Square from, Square to) {
@@ -25,7 +25,7 @@ public class ChessBoard {
         validateTurn(target);
         if (target.isMovable(from, to, pieces.get(to)) && !hasObstacleAlongPath(from, to)) {
             updateChessBoard(from, to, target);
-            isWhiteTurn = !isWhiteTurn;
+            turn = turn.changeTurn();
             return true;
         }
         return false;
@@ -38,10 +38,10 @@ public class ChessBoard {
     }
 
     private void validateTurn(Piece target) {
-        if (isWhiteTurn && target.isBlack()) {
+        if (turn == Turn.WHITE_TURN && target.isBlack()) {
             throw new IllegalArgumentException("백색 기물의 차례입니다");
         }
-        if (!isWhiteTurn && target.isWhite()) {
+        if (turn == Turn.BLACK_TURN && target.isWhite()) {
             throw new IllegalArgumentException("흑색 기물의 차례입니다");
         }
     }

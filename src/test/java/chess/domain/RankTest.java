@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Rank 클래스")
 class RankTest {
-
     @Nested
     @DisplayName("distanceTo 메서드는")
     class distanceTo {
