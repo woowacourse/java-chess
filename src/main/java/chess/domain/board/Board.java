@@ -68,28 +68,34 @@ public class Board {
     }
 
     public Map<Color, Double> calculateScore() {
-        final Map<File, List<Position>> piecesInFile = board.keySet().stream()
-                .collect(Collectors.groupingBy(Position::file));
+        final Map<File, List<Position>> piecesByFile = collectPiecesByFile();
+        final Map<Color, Double> score = new HashMap<>();
 
-        final Map<Color, Double> score = new HashMap<>(
-                Map.of(
-                        Color.BLACK, 0.0,
-                        Color.WHITE, 0.0
-                ));
-
-        for (File file : piecesInFile.keySet()) {
-            for (Position position : piecesInFile.get(file)) {
+        for (File file : piecesByFile.keySet()) {
+            for (Position position : piecesByFile.get(file)) {
                 final Piece piece = board.get(position);
-                final boolean hasOtherPieceInSameFile = piecesInFile.get(file)
-                        .stream()
-                        .filter(it -> board.get(it).isTypeOf(PAWN))
-                        .count() >= 2;
                 final Color color = piece.color();
-                final double addedScore = piece.calculateScore(hasOtherPieceInSameFile);
-                score.put(color, score.get(color) + addedScore);
+                final double addedScore = calculateAddedScore(piecesByFile, file, piece);
+                score.put(color, score.getOrDefault(color, 0.0) + addedScore);
             }
         }
 
         return Map.copyOf(score);
+    }
+
+    private Map<File, List<Position>> collectPiecesByFile() {
+        return board.keySet().stream()
+                .collect(Collectors.groupingBy(Position::file));
+    }
+
+    private double calculateAddedScore(
+            final Map<File, List<Position>> piecesByFile,
+            final File file,
+            final Piece piece) {
+        final boolean hasOtherPieceInSameFile = piecesByFile.get(file)
+                .stream()
+                .filter(it -> board.get(it).isTypeOf(PAWN))
+                .count() >= 2;
+        return piece.calculateScore(hasOtherPieceInSameFile);
     }
 }
