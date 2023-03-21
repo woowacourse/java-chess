@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     private String convertPiece(final Piece piece) {
-        if (piece.hasSameRole(PAWN)) {
+        if (piece.hasSameRole(PAWN) || piece.hasSameRole(INITIAL_PAWN)) {
             return convertSide(piece, "p");
         }
         if (piece.hasSameRole(ROOK)) {
