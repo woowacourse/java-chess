@@ -136,11 +136,7 @@ public class ChessBoard {
         return board;
     }
 
-    public Square findSquare(String file, String rank) {
-        return new Square(File.find(file.charAt(0)), Rank.find(rank.charAt(0)));
-    }
-
     public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {
-        return currentCamp.equals(board.get(currentSquare).getCamp());
+        return currentCamp == board.get(currentSquare).getCamp();
     }
 }
