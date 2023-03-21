@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.controller.service.BoardService;
+import chess.service.BoardService;
 import chess.domain.commnad.Command;
 import chess.domain.commnad.GameStatusCommand;
 import chess.domain.game.ChessGame;

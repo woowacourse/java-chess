@@ -1,4 +1,4 @@
-package chess.controller.service;
+package chess.service;
 
 import chess.dao.board.BoardDao;
 import chess.dao.board.BoardDaoImpl;
