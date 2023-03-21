@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.board.RowPieces;
 import chess.piece.Piece;
+import chess.piece.SymbolMatcher;
 import chess.piece.Team;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class OutputView {
     }
     
     private static String parsePieceToDisplay(Piece piece) {
-        String symbol = String.valueOf(piece.symbol());
+        String symbol = String.valueOf(SymbolMatcher.symbolOf(piece.symbol()));
         if (piece.isSameTeam(Team.WHITE)) {
             return symbol.toUpperCase();
         }
