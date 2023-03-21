@@ -10,47 +10,58 @@ public class Pawn extends Piece {
 
     public Pawn(final Camp camp) {
         super(camp, Role.PAWN);
-        this.possibleMoves = makePossibleMove();
         this.isMoved = false;
+        this.possibleMoves = generatePossibleMoves();
     }
 
     public Pawn(final Camp camp, final boolean isMoved) {
         super(camp, Role.PAWN);
-        this.possibleMoves = makePossibleMove();
         this.isMoved = isMoved;
+        this.possibleMoves = generatePossibleMoves();
     }
 
-    private List<Move> makePossibleMove() {
+    private List<Move> generatePossibleMoves() {
         if (camp.equals(Camp.WHITE)) {
+            return generateWhitePossibleMoves();
+        }
+
+        return generateBlackPossibleMoves();
+    }
+
+    private List<Move> generateWhitePossibleMoves() {
+        if (isMoved) {
             return List.of(
                     Move.UP,
                     Move.UP_RIGHT,
                     Move.UP_LEFT
             );
         }
+        return List.of(
+                Move.UP,
+                Move.UP_RIGHT,
+                Move.UP_LEFT,
+                Move.UP_UP
+        );
+    }
 
+    private List<Move> generateBlackPossibleMoves() {
+        if (isMoved) {
+            return List.of(
+                    Move.DOWN,
+                    Move.DOWN_RIGHT,
+                    Move.DOWN_LEFT
+            );
+        }
         return List.of(
                 Move.DOWN,
                 Move.DOWN_RIGHT,
-                Move.DOWN_LEFT
+                Move.DOWN_LEFT,
+                Move.DOWN_DOWN
         );
     }
 
     @Override
     public boolean isMovable(final Square source, final Square target, final Move move) {
-        if (possibleMoves.contains(move)) {
-            return isMovableContainPossibleMoves(source, target, move);
-        }
-        return false;
-    }
-
-    private boolean isMovableContainPossibleMoves(final Square source, final Square target, final Move move) {
-        final boolean isMovableOneStep = source.isMovableToTarget(target, move.getFile(), move.getRank());
-        final boolean isMovableTwoStep = source.isMovableToTarget(target, move.getFile(),
-                move.getRank() + camp.calculateDirection(1));
-        if (Move.isMoveForward(move) && !isMoved) {
-            return isMovableOneStep || isMovableTwoStep;
-        }
-        return isMovableOneStep;
+        return possibleMoves.contains(move);
     }
 }

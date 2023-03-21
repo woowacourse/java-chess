@@ -12,6 +12,10 @@ public enum Move {
     UP_RIGHT(1, 1),
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(1, -1),
+    
+    UP_UP(0, 2),
+    DOWN_DOWN(0, -2),
+
     UP_UP_LEFT(-1, 2),
     UP_UP_RIGHT(1, 2),
     DOWN_DOWN_LEFT(-1, -2),
