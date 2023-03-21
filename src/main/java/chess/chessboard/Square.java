@@ -58,28 +58,36 @@ public class Square {
         return verticalDistance == horizontalDistance;
     }
 
-    private List<Square> squaresOfLine(final Square to) {
-        if (!isLine(to)) {
+    private List<Square> squaresOfLine(final Square otherSquare) {
+        if (!isLine(otherSquare)) {
             throw new IllegalArgumentException("직선이 아닙니다");
         }
-        if (to.rank == this.rank) {
-            return File.filesBetween(this.file, to.file)
-                       .stream()
-                       .map(foundFile -> Square.of(rank, foundFile))
-                       .collect(Collectors.toUnmodifiableList());
+        if (otherSquare.rank == this.rank) {
+            return squaresOfRank(otherSquare);
         }
-        return Rank.ranksBetween(this.rank, to.rank)
+        return squaresOfFile(otherSquare);
+    }
+
+    private List<Square> squaresOfRank(final Square to) {
+        return File.filesBetween(this.file, to.file)
+                   .stream()
+                   .map(foundFile -> Square.of(rank, foundFile))
+                   .collect(Collectors.toUnmodifiableList());
+    }
+
+    private List<Square> squaresOfFile(final Square otherSquare) {
+        return Rank.ranksBetween(this.rank, otherSquare.rank)
                    .stream()
                    .map(foundRank -> Square.of(foundRank, file))
                    .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Square> squaresOfDiagonal(final Square to) {
-        if (!isDiagonal(to)) {
+    private List<Square> squaresOfDiagonal(final Square otherSquare) {
+        if (!isDiagonal(otherSquare)) {
             throw new IllegalArgumentException("대각선이 아닙니다");
         }
-        List<Rank> ranks = Rank.ranksBetween(this.rank, to.rank);
-        List<File> files = File.filesBetween(this.file, to.file);
+        List<Rank> ranks = Rank.ranksBetween(this.rank, otherSquare.rank);
+        List<File> files = File.filesBetween(this.file, otherSquare.file);
         List<Square> squares = new ArrayList<>();
         for (int i = 0; i < ranks.size(); i++) {
             squares.add(Square.of(ranks.get(i), files.get(i)));

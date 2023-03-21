@@ -13,24 +13,24 @@ public class PieceDto {
     }
 
     public static PieceDto from(final Piece piece) {
-        String type = "EMPTY_PIECE";
+        String type = ".";
         if (piece instanceof Pawn) {
-            type = "PAWN";
+            type = "p";
         }
         if (piece instanceof Knight) {
-            type = "KNIGHT";
+            type = "k";
         }
         if (piece instanceof Bishop) {
-            type = "BISHOP";
+            type = "b";
         }
         if (piece instanceof Rook) {
-            type = "ROOK";
+            type = "r";
         }
         if (piece instanceof Queen) {
-            type = "QUEEN";
+            type = "q";
         }
         if (piece instanceof King) {
-            type = "KING";
+            type = "k";
         }
         final Side side = piece.getSide();
         return new PieceDto(side.toString(), type);

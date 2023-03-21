@@ -12,15 +12,15 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public boolean isNotSameSide(final Piece piece) {
+    protected boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;
     }
 
-    public boolean isOppositeSide(final Piece piece) {
+    protected boolean isOppositeSide(final Piece piece) {
         return this.side != piece.side && !piece.isEmpty();
     }
 
-    public boolean isEmpty() {
+    protected boolean isEmpty() {
         return this.side == Side.NO_SIDE;
     }
 
