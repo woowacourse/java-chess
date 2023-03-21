@@ -47,21 +47,13 @@ public enum Direction {
     }
 
     public static Direction findByPosition(final Position source, final Position target) {
-        final int dx = diffFile(source, target);
-        final int dy = diffRank(source, target);
+        final int dx = source.diffFile(target);
+        final int dy = source.diffRank(target);
 
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.isMatch.test(dx, dy))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 방향입니다"));
-    }
-
-    private static int diffFile(final Position source, final Position target) {
-        return target.file() - source.file();
-    }
-
-    private static int diffRank(final Position source, final Position target) {
-        return target.rank() - source.rank();
     }
 
     public int getDx() {

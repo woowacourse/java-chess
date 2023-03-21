@@ -25,6 +25,14 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public int diffFile(final Position target) {
+        return target.file() - this.file();
+    }
+
+    public int diffRank(final Position target) {
+        return target.rank() - this.rank();
+    }
+
     public char file() {
         return file.value();
     }
