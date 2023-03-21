@@ -84,13 +84,6 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
         return source.rankInterval(destination) == 0;
     }
 
-    protected boolean isTwoVerticalMove(final PiecePosition source, final PiecePosition destination) {
-        if (Math.abs(source.rankInterval(destination)) != 2) {
-            return false;
-        }
-        return Math.abs(source.fileInterval(destination)) == 0;
-    }
-
     @Override
     public Color color() {
         return this.color;

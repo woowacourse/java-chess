@@ -10,10 +10,9 @@ import chess.domain.piece.strategy.KingMovementStrategy;
 import chess.domain.piece.strategy.KnightMovementStrategy;
 import chess.domain.piece.strategy.QueenMovementStrategy;
 import chess.domain.piece.strategy.RookMovementStrategy;
-import chess.domain.piece.strategy.pawn.BlackPawnMoveConstraint;
+import chess.domain.piece.strategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.strategy.pawn.PawnMovementStrategy;
-import chess.domain.piece.strategy.pawn.VerticalTwoMoveAsRankConstraint;
-import chess.domain.piece.strategy.pawn.WhitePawnMoveConstraint;
+import chess.domain.piece.strategy.pawn.WhitePawnMovementStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +38,9 @@ public class ChessBoardFactory {
 
     private PawnMovementStrategy byColor(final Color color, final int rank) {
         if (color.isWhite()) {
-            return new PawnMovementStrategy(color, new WhitePawnMoveConstraint(), new VerticalTwoMoveAsRankConstraint(Rank.from(rank)));
+            return new WhitePawnMovementStrategy(color, Rank.from(rank));
         }
-
-        return new PawnMovementStrategy(color, new BlackPawnMoveConstraint(), new VerticalTwoMoveAsRankConstraint(Rank.from(rank)));
+        return new BlackPawnMovementStrategy(color, Rank.from(rank));
     }
 
     private List<Piece> createExcludePawn(final int rank, final Color color) {

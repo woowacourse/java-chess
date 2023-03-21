@@ -10,7 +10,8 @@ import chess.domain.piece.strategy.KingMovementStrategy;
 import chess.domain.piece.strategy.KnightMovementStrategy;
 import chess.domain.piece.strategy.QueenMovementStrategy;
 import chess.domain.piece.strategy.RookMovementStrategy;
-import chess.domain.piece.strategy.pawn.PawnMovementStrategy;
+import chess.domain.piece.strategy.pawn.BlackPawnMovementStrategy;
+import chess.domain.piece.strategy.pawn.WhitePawnMovementStrategy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +30,14 @@ public class OutputView {
 
     static {
         whitePieceIcons.put(RookMovementStrategy.class, "r");
-        whitePieceIcons.put(PawnMovementStrategy.class, "p");
+        whitePieceIcons.put(WhitePawnMovementStrategy.class, "p");
         whitePieceIcons.put(BishopMovementStrategy.class, "b");
         whitePieceIcons.put(KingMovementStrategy.class, "k");
         whitePieceIcons.put(KnightMovementStrategy.class, "n");
         whitePieceIcons.put(QueenMovementStrategy.class, "q");
 
         blackPieceIcons.put(RookMovementStrategy.class, "R");
-        blackPieceIcons.put(PawnMovementStrategy.class, "P");
+        blackPieceIcons.put(BlackPawnMovementStrategy.class, "P");
         blackPieceIcons.put(BishopMovementStrategy.class, "B");
         blackPieceIcons.put(KingMovementStrategy.class, "K");
         blackPieceIcons.put(KnightMovementStrategy.class, "N");

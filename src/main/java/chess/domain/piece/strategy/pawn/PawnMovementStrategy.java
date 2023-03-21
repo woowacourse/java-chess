@@ -2,24 +2,18 @@ package chess.domain.piece.strategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.Rank;
 import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 
-public class PawnMovementStrategy extends AbstractPieceMovementStrategy {
+    private final PiecePosition permitTwoMoveRankPosition;
 
-    private final List<PawnMoveConstraint> constraints;
-
-    public PawnMovementStrategy(final Color color, final List<PawnMoveConstraint> constraints) {
+    protected PawnMovementStrategy(final Color color, final Rank permitTwoMoveRank) {
         super(color);
-        this.constraints = new ArrayList<>(constraints);
-    }
-
-    public PawnMovementStrategy(final Color color, final PawnMoveConstraint... constraints) {
-        this(color, Arrays.asList(constraints));
+        this.permitTwoMoveRankPosition = PiecePosition.of(permitTwoMoveRank, File.from(File.MIN));
     }
 
     @Override
@@ -29,20 +23,35 @@ public class PawnMovementStrategy extends AbstractPieceMovementStrategy {
         validateDefaultMove(source, destination);
         validateDiagonalKill(source, destination, nullableEnemy);
         validateVerticalMove(source, destination, nullableEnemy);
-
-        for (final PawnMoveConstraint constraint : constraints) {
-            constraint.validateConstraint(source, destination);
-        }
+        validateAdditionalConstraint(source, destination);
     }
+
+    protected abstract void validateAdditionalConstraint(final PiecePosition source,
+                                                         final PiecePosition destination);
 
     private void validateDefaultMove(final PiecePosition source,
                                      final PiecePosition destination) {
         if (isHorizontal(source, destination)) {
             throw new IllegalArgumentException("폰은 수평으로 움직일 수 없습니다.");
         }
-        if (!isUnitDistance(source, destination) && !isTwoVerticalMove(source, destination)) {
+        if (isUnitDistance(source, destination)) {
+            return;
+        }
+        if (!isTwoVerticalMove(source, destination)) {
             throw new IllegalArgumentException("폰은 그렇게 움직일 수 없습니다.");
         }
+        if (permitTwoMoveRankPosition.rankInterval(source) != 0) {
+            throw new IllegalArgumentException(
+                    String.format("%s 랭크에서만 두 칸 이동할 수 있습니다.", permitTwoMoveRankPosition.rankValue())
+            );
+        }
+    }
+
+    private boolean isTwoVerticalMove(final PiecePosition source, final PiecePosition destination) {
+        if (Math.abs(source.rankInterval(destination)) != 2) {
+            return false;
+        }
+        return Math.abs(source.fileInterval(destination)) == 0;
     }
 
     private void validateDiagonalKill(final PiecePosition source,
@@ -59,5 +68,13 @@ public class PawnMovementStrategy extends AbstractPieceMovementStrategy {
         if (nullableEnemy == null && isDiagonal(source, destination)) {
             throw new IllegalArgumentException("폰은 적이 없는 경우 대각선으로 이동할 수 없습니다.");
         }
+    }
+
+    protected boolean isDestinationRelativelySouth(final PiecePosition source, final PiecePosition destination) {
+        return source.rankInterval(destination) < 0;
+    }
+
+    protected boolean isDestinationRelativelyNorth(final PiecePosition source, final PiecePosition destination) {
+        return source.rankInterval(destination) > 0;
     }
 }
