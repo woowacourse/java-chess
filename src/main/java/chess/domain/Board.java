@@ -54,7 +54,7 @@ public class Board {
             return;
         }
         if (hasPiece(next)) {
-            throw new WrongDirectionException();
+            throw new IllegalArgumentException("해당 기물은 다른 기물을 뛰어 넘을 수 없습니다.");
         }
         validateRoute(next, destination, direction);
     }

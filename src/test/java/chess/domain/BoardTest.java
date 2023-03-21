@@ -172,7 +172,8 @@ class BoardTest {
         @DisplayName("길막인 경우 이동 실패")
         void move_fail_when_block() {
             assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.A, Rank.SIX)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물은 다른 기물을 뛰어 넘을 수 없습니다.");
         }
     }
 
@@ -266,7 +267,8 @@ class BoardTest {
         @DisplayName("길막인 경우 이동 실패")
         void move_fail_when_block() {
             assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.A, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물은 다른 기물을 뛰어 넘을 수 없습니다.");
         }
     }
 
@@ -366,7 +368,8 @@ class BoardTest {
         @DisplayName("길막인 경우 이동 실패")
         void move_fail_when_block() {
             assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.C, Rank.SIX)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물은 다른 기물을 뛰어 넘을 수 없습니다.");
         }
     }
 }
