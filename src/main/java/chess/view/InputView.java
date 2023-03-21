@@ -1,9 +1,6 @@
 package chess.view;
 
 import chess.controller.PlayRequest;
-import chess.model.position.File;
-import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +11,10 @@ public class InputView {
     private static final String DELIMITER = " ";
     private static final String DEFAULT_POSITION = "Z0";
     private static final int COMMAND_INDEX = 0;
-    private static final int POSITION_INDEX = 1;
+    private static final int MAXIMUM_COMMAND_SIZE = 3;
+    private static final int MINIMUM_COMMAND_SIZE = 1;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     private final Scanner scanner;
 
@@ -25,6 +25,8 @@ public class InputView {
     public PlayRequest readPlayCommand() {
         final String input = readInput();
 
+        validateBlank(input);
+
         final List<String> commands = Arrays.stream(input.split(DELIMITER))
                 .collect(Collectors.toList());
         validateInputCommand(commands);
@@ -33,40 +35,19 @@ public class InputView {
     }
 
     private void validateInputCommand(final List<String> commands) {
-        if (commands.size() > 3) {
-            throw new IllegalArgumentException("");
+        if (commands.size() > MAXIMUM_COMMAND_SIZE) {
+            throw new IllegalArgumentException("유효하지 않은 명령어입니다.");
         }
     }
 
     private PlayRequest createPlayRequest(final List<String> commands) {
-        if (commands.size() < 3) {
-            return new PlayRequest(commands.get(0), DEFAULT_POSITION, DEFAULT_POSITION);
+        if (commands.size() == MINIMUM_COMMAND_SIZE) {
+            return new PlayRequest(commands.get(COMMAND_INDEX), DEFAULT_POSITION, DEFAULT_POSITION);
         }
-        return new PlayRequest(commands.get(0), commands.get(1), commands.get(2));
-    }
-
-    private void validatePosition(final Position source, final Position target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("같은 위치로 이동할 수 없습니다.");
+        if (commands.size() == MAXIMUM_COMMAND_SIZE) {
+            return new PlayRequest(commands.get(COMMAND_INDEX), commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         }
-    }
-
-    private Position convertPosition(final String inputSquare) {
-        final String inputFile = inputSquare.substring(COMMAND_INDEX, POSITION_INDEX);
-        final String inputRank = inputSquare.substring(POSITION_INDEX);
-        final File file = File.findFile(inputFile);
-        final int rankValue = mapToRankValue(inputRank);
-        final Rank rank = Rank.findRank(rankValue);
-
-        return Position.of(file, rank);
-    }
-
-    private int mapToRankValue(final String inputRank) {
-        try {
-            return Integer.parseInt(inputRank);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("올바른 행을 입력해주세요.");
-        }
+        throw new IllegalArgumentException("유효하지 않은 명령어입니다.");
     }
 
     private void validateBlank(final String input) {
