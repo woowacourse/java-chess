@@ -4,11 +4,11 @@ import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
-import java.util.List;
+import java.util.Set;
 
 public class King extends Piece {
 
-    private static final List<Direction> directions = Direction.allDirections();
+    private static final Set<Direction> directions = Direction.allDirections();
     private static final int MAXIMUM_DISTANCE = 1;
 
     public King(final Color color) {

@@ -1,7 +1,7 @@
 package chess.model.position;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 public enum Direction {
 
@@ -25,14 +25,14 @@ public enum Direction {
 
     ILLEGAL_MOVE(100, 100);
 
-    private static final List<Direction> ALL_DIRECTIONS = List.of(
+    private static final Set<Direction> ALL_DIRECTIONS = Set.of(
             NORTH, WEST, SOUTH, EAST,
             NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
     );
-    private static final List<Direction> DIAGONAL = List.of(
+    private static final Set<Direction> DIAGONAL = Set.of(
             NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
     );
-    private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
+    private static final Set<Direction> ORTHOGONAL = Set.of(NORTH, WEST, SOUTH, EAST);
 
     private final int file;
     private final int rank;
@@ -42,15 +42,15 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> allDirections() {
+    public static Set<Direction> allDirections() {
         return ALL_DIRECTIONS;
     }
 
-    public static List<Direction> orthogonal() {
+    public static Set<Direction> orthogonal() {
         return ORTHOGONAL;
     }
 
-    public static List<Direction> diagonal() {
+    public static Set<Direction> diagonal() {
         return DIAGONAL;
     }
 
@@ -66,7 +66,7 @@ public enum Direction {
     }
 
     public static boolean isUpOrDown(final Direction direction) {
-        final List<Direction> upAndDown = List.of(SOUTH, NORTH);
+        final Set<Direction> upAndDown = Set.of(SOUTH, NORTH);
         return upAndDown.contains(direction);
     }
 

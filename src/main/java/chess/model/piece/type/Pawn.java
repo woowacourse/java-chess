@@ -11,12 +11,12 @@ import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
-import java.util.List;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
-    private static final List<Direction> WHITE = List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    private static final List<Direction> BLACK = List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final Set<Direction> WHITE = Set.of(NORTH, NORTH_EAST, NORTH_WEST);
+    private static final Set<Direction> BLACK = Set.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int MINIMUM_DISTANCE = 1;
 
     public Pawn(final Color color) {

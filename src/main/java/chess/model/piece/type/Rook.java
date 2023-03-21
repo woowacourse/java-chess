@@ -3,11 +3,11 @@ package chess.model.piece.type;
 import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
-import java.util.List;
+import java.util.Set;
 
 public class Rook extends Piece {
 
-    private static final List<Direction> directions = Direction.orthogonal();
+    private static final Set<Direction> directions = Direction.orthogonal();
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);

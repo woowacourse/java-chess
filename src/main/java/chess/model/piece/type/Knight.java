@@ -12,11 +12,11 @@ import static chess.model.position.Direction.SOUTH_WEST_WEST;
 import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
-import java.util.List;
+import java.util.Set;
 
 public class Knight extends Piece {
 
-    private static final List<Direction> directions = List.of(
+    private static final Set<Direction> directions = Set.of(
             NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
             NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
     );

@@ -3,11 +3,11 @@ package chess.model.piece.type;
 import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
-import java.util.List;
+import java.util.Set;
 
 public class Bishop extends Piece {
 
-    private static final List<Direction> directions = Direction.diagonal();
+    private static final Set<Direction> directions = Direction.diagonal();
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
