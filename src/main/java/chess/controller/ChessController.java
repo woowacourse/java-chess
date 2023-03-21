@@ -28,7 +28,7 @@ public class ChessController {
         try {
             CommandLine commandLine = this.getCommandLine();
             this.handleCommandLine(chessGame, commandLine);
-            this.outputView.printBoard(BoardDto.create(chessGame.getBoard()));
+            this.outputView.printBoard2(BoardDTO.create(BoardMapper.map(chessGame.getBoard())));
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
         }
