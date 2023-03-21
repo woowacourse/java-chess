@@ -5,14 +5,10 @@ import chess.piece.coordinate.Coordinate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class RowPieces implements Comparable<RowPieces> {
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
-    private static final int MIN_COLUMN_INDEX = 0;
-    private static final int MAX_COLUMN_INDEX = 7;
     private static final int FIRST_PIECE_INDEX = 0;
     private static final char MIN_COLUMN_CHAR = 'a';
     
@@ -27,22 +23,8 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     private static List<Piece> initRowPieces(int rowNum) {
-        return IntStream.rangeClosed(MIN_COLUMN_INDEX, MAX_COLUMN_INDEX)
-                .mapToObj(columnIndex -> parsePiece(rowNum, columnIndex))
-                .collect(Collectors.toList());
-    }
-    
-    private static Piece parsePiece(int rowNum, int columnIndex) {
-        InitialSymbols initialSymbols = InitialSymbols.from(rowNum);
-        Character symbol = initialSymbols.findSymbolByColumnIndex(columnIndex);
         Team team = Team.from(rowNum);
-        Coordinate coordinate = Coordinate.createCoordinate(rowNum, parseColumn(columnIndex));
-        
-        return PieceMatcher.of(SymbolMatcher.sourceOf(symbol), team, coordinate);
-    }
-    
-    private static char parseColumn(int columnIndex) {
-        return (char) (columnIndex + MIN_COLUMN_CHAR);
+        return InitialSymbols.from(rowNum,team);
     }
     
     @Override
