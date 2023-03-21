@@ -39,10 +39,17 @@ public class ChessController {
     private void play() {
         do {
             outputView.printBoard(chessGame.getBoard());
-        } while (executeCommand());
+        } while (isPlaying(executeCommand()));
     }
 
-    private boolean executeCommand() {
+    private boolean isPlaying(GameCommand gameCommand) {
+        return gameCommand == GameCommand.MOVE;
+    }
+
+    /**
+        return: 사용자에게 입력된 GameCommand에 해당하는 기능을 동작하고 반환
+     */
+    private GameCommand executeCommand() {
         try {
             List<String> input = readInput();
             return move(input);
@@ -52,12 +59,12 @@ public class ChessController {
         }
     }
 
-    private boolean move(List<String> input) {
+    private GameCommand move(List<String> input) {
         if (GameCommand.of(input.get(0)) == GameCommand.END) {
-            return false;
+            return GameCommand.END;
         }
         chessGame.movePiece(PositionMapper.from(input.get(1)), PositionMapper.from(input.get(2)));
-        return true;
+        return GameCommand.MOVE;
     }
 
     private List<String> readInput() {
