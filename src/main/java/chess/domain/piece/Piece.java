@@ -17,11 +17,11 @@ public abstract class Piece {
         return camp != otherPiece.camp;
     }
 
-    public boolean isMoveOrder(Piece otherPiece) {
+    public boolean isOpposite(Piece otherPiece) {
         return camp.isOpposite(otherPiece.camp);
     }
 
-    public boolean isMoveOrder(Camp otherCamp) {
+    public boolean isNotMoveOrder(Camp otherCamp) {
         return camp.isOpposite(otherCamp);
     }
 

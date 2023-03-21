@@ -31,7 +31,7 @@ public class ChessGame {
     private void validateTurn(Square square) {
         Piece pieceAtSquare = chessboard.getPieceAt(square);
 
-        if (pieceAtSquare.isMoveOrder(turn)) {
+        if (pieceAtSquare.isNotMoveOrder(turn)) {
             throw new IllegalArgumentException("해당 위치에는 당신의 Piece가 없습니다.");
         }
     }
@@ -78,7 +78,7 @@ public class ChessGame {
                     targetPiece.getPieceType() == PieceType.EMPTY;
         }
 
-        return sourcePiece.isMoveOrder(targetPiece);
+        return sourcePiece.isOpposite(targetPiece);
     }
 
     private boolean canMoveOtherPiece(Square source, Square target) {
