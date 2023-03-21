@@ -25,13 +25,13 @@ public class Position {
             return Collections.emptyList();
         }
         return IntStream.range(1, difference)
-                .mapToObj(x -> createPosition(columnStep, rowStep, x))
+                .mapToObj(coordinate -> createPosition(columnStep, rowStep, coordinate))
                 .collect(Collectors.toList());
     }
 
-    private Position createPosition(int columnStep, int rowStep, int x) {
-        return new Position(FileCoordinate.findBy(this.getColumn() + (columnStep * x)),
-                RankCoordinate.findBy(this.getRow() + (rowStep * x)));
+    private Position createPosition(int columnStep, int rowStep, int coordinate) {
+        return new Position(FileCoordinate.findBy(this.getColumn() + (columnStep * coordinate)),
+                RankCoordinate.findBy(this.getRow() + (rowStep * coordinate)));
     }
 
     private int getDifference(Position targetPosition) {
@@ -47,13 +47,7 @@ public class Position {
     }
 
     private int getStep(int nowCoordinate, int targetCoordinate) {
-        if (nowCoordinate > targetCoordinate) {
-            return -1;
-        }
-        if (nowCoordinate < targetCoordinate) {
-            return 1;
-        }
-        return 0;
+        return Integer.compare(targetCoordinate, nowCoordinate);
     }
 
     public FileCoordinate getFileCoordinate() {
