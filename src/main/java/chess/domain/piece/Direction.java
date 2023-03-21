@@ -4,6 +4,7 @@ import chess.domain.Square;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Direction {
     EAST(1, 0),
@@ -22,6 +23,9 @@ public enum Direction {
     SOUTH_WEST_WEST(-2, -1),
     NORTH_WEST_WEST(-2, 1),
     NORTH_NORTH_WEST(-1, 2);
+
+    private static final List<Direction> STRAIGHT_DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);
+    private static final List<Direction> DIAGONAL_DIRECTIONS = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
 
     private final int fileUnit;
     private final int rankUnit;
@@ -48,6 +52,14 @@ public enum Direction {
                 .orElseThrow(() -> {
                     throw new IllegalArgumentException("해당 방향으로 이동할 수 없습니다.");
                 });
+    }
+
+    public boolean isDiagonal() {
+        return DIAGONAL_DIRECTIONS.contains(this);
+    }
+
+    public boolean isStraight() {
+        return STRAIGHT_DIRECTIONS.contains(this);
     }
 
     public int getFileUnit() {

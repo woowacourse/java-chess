@@ -10,7 +10,7 @@ public class Bishop extends MovablePiece {
 
     @Override
     public boolean canMove(final Direction direction, final int distance) {
-        return isDiagonal(direction);
+        return direction.isDiagonal();
     }
 
     @Override

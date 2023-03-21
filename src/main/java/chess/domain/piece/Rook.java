@@ -10,7 +10,7 @@ public class Rook extends MovablePiece {
 
     @Override
     public boolean canMove(final Direction direction, final int distance) {
-        return isStraight(direction);
+        return direction.isStraight();
     }
 
     @Override

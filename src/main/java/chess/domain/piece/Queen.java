@@ -10,7 +10,7 @@ public class Queen extends MovablePiece {
 
     @Override
     public boolean canMove(final Direction direction, final int distance) {
-        return isDiagonal(direction) || isStraight(direction);
+        return direction.isDiagonal() || direction.isStraight();
     }
 
     @Override

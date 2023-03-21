@@ -12,7 +12,7 @@ public class King extends MovablePiece {
 
     @Override
     public boolean canMove(final Direction direction, final int distance) {
-        return (isDiagonal(direction) || isStraight(direction)) && distance == MAX_MOVE_DISTANCE;
+        return (direction.isDiagonal() || direction.isStraight()) && distance == MAX_MOVE_DISTANCE;
     }
 
     @Override
