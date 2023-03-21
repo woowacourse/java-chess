@@ -21,7 +21,7 @@ public class InputView {
     public String readCommand() {
         String input = scanner.nextLine();
 
-        if (END.equals(input)) {
+        if (END.getCommand().equals(input)) {
             return input;
         }
 

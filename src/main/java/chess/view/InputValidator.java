@@ -21,14 +21,14 @@ public class InputValidator {
     }
 
     public static void validateStartCommand(String input) {
-        if (!input.equals(START)) {
-            throw new IllegalArgumentException("[ERROR] 게임을 시작하기 위해서는 " + START + "를 입력해주세요.");
+        if (!input.equals(START.getCommand())) {
+            throw new IllegalArgumentException("[ERROR] 게임을 시작하기 위해서는 " + START.getCommand() + "를 입력해주세요.");
         }
     }
 
     public static void validateMoveCommand(String input) {
-        if (!input.equals(MOVE)) {
-            throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위해서는 " + MOVE + "를 입력해주세요.");
+        if (!input.equals(MOVE.getCommand())) {
+            throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위해서는 " + MOVE.getCommand() + "를 입력해주세요.");
         }
     }
 

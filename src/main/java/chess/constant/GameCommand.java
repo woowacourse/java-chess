@@ -1,8 +1,17 @@
 package chess.constant;
 
-public class GameCommand {
+public enum GameCommand {
+    START("start"),
+    END("end"),
+    MOVE("move");
 
-    public static final String START = "start";
-    public static final String MOVE = "move";
-    public static final String END = "end";
+    private final String command;
+
+    GameCommand(String command) {
+        this.command = command;
+    }
+
+    public String getCommand() {
+        return command;
+    }
 }

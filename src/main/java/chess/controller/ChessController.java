@@ -48,7 +48,7 @@ public class ChessController {
     }
 
     private boolean isOver(String command) {
-        return END.equals(command);
+        return END.getCommand().equals(command);
     }
 
     private void movePiece(ChessGame chessGame, String command) {
