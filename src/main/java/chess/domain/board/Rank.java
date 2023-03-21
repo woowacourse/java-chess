@@ -4,7 +4,7 @@ import chess.domain.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rank {
+public final class Rank {
 
     private static final int RANK_SIZE = 8;
     static final String INVALID_RANK_SIZE = "[ERROR] Square의 개수가 " + RANK_SIZE + "개가 아닌 List가 들어왔습니다. 입력된 사이즈: ";

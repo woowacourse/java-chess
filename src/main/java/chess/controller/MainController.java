@@ -15,7 +15,7 @@ import chess.view.Command;
 import chess.view.InputView;
 import java.util.List;
 
-public class MainController {
+public final class MainController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int CURRENT_POSITION_INDEX = 1;

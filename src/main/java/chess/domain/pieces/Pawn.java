@@ -13,7 +13,7 @@ import chess.domain.math.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     private final List<Direction> directions;
     private boolean isMoved = false;

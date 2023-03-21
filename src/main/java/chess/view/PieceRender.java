@@ -13,7 +13,7 @@ import chess.domain.pieces.Piece;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
 
-public class PieceRender {
+public final class PieceRender {
 
     private static final char PAWN = 'P';
     private static final char ROOK = 'R';

@@ -7,7 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.List;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 

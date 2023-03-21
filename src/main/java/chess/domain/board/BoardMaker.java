@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BoardMaker {
+public final class BoardMaker {
 
     private static final int START_MIDDLE_ROW = 2;
     private static final int END_MIDDLE_ROW = 5;

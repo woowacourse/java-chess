@@ -2,7 +2,7 @@ package chess.domain.math;
 
 import chess.domain.Position;
 
-public class PositionConverter {
+public final class PositionConverter {
 
     private static final int COLUMN_INDEX = 0;
     private static final int ASCII_SMALL_A = 97;

@@ -4,7 +4,6 @@ import chess.domain.Position;
 import java.util.Arrays;
 
 public enum UnitVector {
-
     UP(-1, 0),
     DOWN(1, 0),
     LEFT(0, -1),

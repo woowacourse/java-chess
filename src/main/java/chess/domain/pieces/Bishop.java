@@ -9,7 +9,7 @@ import chess.domain.Team;
 import chess.domain.math.Direction;
 import java.util.List;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     private final List<Direction> directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 

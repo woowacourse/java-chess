@@ -13,7 +13,7 @@ import chess.domain.Team;
 import chess.domain.math.Direction;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
 
     private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 

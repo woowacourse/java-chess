@@ -9,7 +9,7 @@ import chess.domain.Team;
 import chess.domain.math.Direction;
 import java.util.List;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT);
 

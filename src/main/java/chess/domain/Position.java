@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.math.UnitVector;
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
     private final int row;
     private final int column;

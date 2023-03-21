@@ -16,15 +16,15 @@ import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
 import java.util.List;
 
-public class Board {
+public final class Board {
 
     private final List<Rank> board;
 
-    public Board(BoardMaker boardMaker) {
+    public Board(final BoardMaker boardMaker) {
         this.board = boardMaker.createBoard();
     }
 
-    public void movePiece(Position current, Position target) {
+    public void movePiece(final Position current, final Position target) {
         Piece currentPointPiece = findPiece(current);
         Direction moveableDirection = Direction.findDirection(current, target);
 
@@ -33,6 +33,13 @@ public class Board {
             return;
         }
         throw new IllegalArgumentException("패턴에서 걸러진 예외");
+    }
+
+    private Piece findPiece(final Position position) {
+        Rank rank = board.get(position.getRow());
+        Square square = rank.findSquare(position.getColumn());
+
+        return square.getPiece();
     }
 
     private void runLogic(final Position current, final Position target, final Direction moveableDirection) {
@@ -109,8 +116,8 @@ public class Board {
     private boolean isEmptyPiece(final Position target) {
         return findPiece(target) instanceof EmptyPiece;
     }
-
     // current -> target - 1까지 돌면서 기물이 존재하면 예외 터트리는 함수
+
     private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
         Position iterator = new Position(current.getRow(), current.getColumn()).move(unitVector);
 
@@ -122,13 +129,6 @@ public class Board {
             }
             iterator = iterator.move(unitVector);
         }
-    }
-
-    private Piece findPiece(final Position position) {
-        Rank rank = board.get(position.getRow());
-        Square square = rank.findSquare(position.getColumn());
-
-        return square.getPiece();
     }
 
     private void move(final Position current, final Position target) {

@@ -6,7 +6,7 @@ import chess.domain.Team;
 import chess.domain.math.Direction;
 import java.util.List;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     private final List<Direction> directions = List.of(KNIGHT);
 

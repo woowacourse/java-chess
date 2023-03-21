@@ -5,7 +5,7 @@ import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
 import java.util.Objects;
 
-public class Square {
+public final class Square {
 
     private final Position position;
     private final Piece piece;
