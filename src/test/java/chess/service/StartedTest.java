@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -37,10 +36,9 @@ class StartedTest {
     void move() {
         final Position from = new Position(2, 2);
         final Position to = new Position(2, 4);
-        final Board board = new BoardFactory().createInitialBoard();
-        final State state = started.move(from, to);
 
-        final Map<Position, Piece> pieceMap = board.getBoard();
+        final State state = started.move(from, to);
+        final Map<Position, Piece> pieceMap = started.getBoard();
 
         assertAll(
                 () -> assertThat(state).isInstanceOf(Started.class),
