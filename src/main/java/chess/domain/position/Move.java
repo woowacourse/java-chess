@@ -51,4 +51,8 @@ public class Move {
         int deltaRank = getDeltaRank() / unit * index;
         return source.move(deltaFile, deltaRank);
     }
+
+    public Position getSource() {
+        return source;
+    }
 }

@@ -1,20 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.position.Move;
+import chess.domain.position.Position;
 import java.util.Set;
 
 public class Pawn extends Piece {
 
-    private final boolean isTouched;
+    private static final int INITIAL_WHITE_RANK = 2;
+    private static final int INITIAL_BLACK_RANK = 7;
 
     public Pawn(Color color) {
         super(color);
-        this.isTouched = false;
-    }
-
-    private Pawn(Color color, boolean isTouched) {
-        super(color);
-        this.isTouched = isTouched;
     }
 
     @Override
@@ -22,10 +18,22 @@ public class Pawn extends Piece {
         if (isAttack(targetPiece)) {
             return canAttack(move);
         }
-        if (!isTouched) {
+        if (isFirstMove(move)) {
             return canInitialMove(move);
         }
         return canMove(move);
+    }
+
+    private boolean isFirstMove(Move move) {
+        Position source = move.getSource();
+        return source.getRankIndex() == getInitialRankIndex();
+    }
+
+    private int getInitialRankIndex() {
+        if (color == Color.WHITE) {
+            return INITIAL_WHITE_RANK;
+        }
+        return INITIAL_BLACK_RANK;
     }
 
     private boolean isAttack(Piece targetPiece) {
@@ -59,18 +67,6 @@ public class Pawn extends Piece {
             return deltaFile == 0 && deltaRank == 1;
         }
         return deltaFile == 0 && deltaRank == -1;
-    }
-
-    @Override
-    public Piece touch() {
-        if (!isTouched) {
-            return createTouchedPawn();
-        }
-        return this;
-    }
-
-    private Pawn createTouchedPawn() {
-        return new Pawn(color, true);
     }
 
     private boolean isUpward() {

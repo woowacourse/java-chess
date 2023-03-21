@@ -76,7 +76,7 @@ public class Board {
     private void movePiece(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
         pieces.remove(source);
-        pieces.put(target, sourcePiece.touch());
+        pieces.put(target, sourcePiece);
     }
 
     public Map<Position, Piece> getPieces() {

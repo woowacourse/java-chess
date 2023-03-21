@@ -63,8 +63,8 @@ public class PawnTest {
     @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
     @Test
     void moveOnceAfterTouch() {
-        Piece touchedPawn = new Pawn(WHITE).touch();
-        Move move = new Move(new Position("c2"), new Position("c3"));
+        Piece touchedPawn = new Pawn(WHITE);
+        Move move = new Move(new Position("c3"), new Position("c4"));
 
         assertThat(touchedPawn.isValidMove(move, null)).isTrue();
     }
@@ -72,8 +72,8 @@ public class PawnTest {
     @DisplayName("첫 수 이후 앞으로 2칸 움직일 수 없다")
     @Test
     void canNotMove_moreThan2_AfterTouch() {
-        Piece touchedPawn = new Pawn(WHITE).touch();
-        Move move = new Move(new Position("c2"), new Position("c4"));
+        Piece touchedPawn = new Pawn(WHITE);
+        Move move = new Move(new Position("c3"), new Position("c5"));
 
         assertThat(touchedPawn.isValidMove(move, null)).isFalse();
     }
@@ -139,16 +139,5 @@ public class PawnTest {
         Move move = new Move(new Position("c2"), new Position("b1"));
 
         assertThat(pawn.isValidMove(move, null)).isFalse();
-    }
-
-    @DisplayName("처음으로 touch할때만 새로운 객체가 생성된다")
-    @Test
-    void touch() {
-        Piece pawn = new Pawn(WHITE);
-        Piece touchedPawn = pawn.touch();
-        Piece touchedPawn2 = touchedPawn.touch();
-
-        assertThat(touchedPawn).isNotSameAs(pawn);
-        assertThat(touchedPawn2).isSameAs(touchedPawn);
     }
 }

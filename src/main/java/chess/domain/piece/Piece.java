@@ -22,11 +22,7 @@ public abstract class Piece {
     public boolean isRightTurn(Color turn) {
         return this.color == turn;
     }
-
-    public Piece touch() {
-        return this;
-    }
-
+    
     public abstract PieceType getType();
 
     public Color getColor() {

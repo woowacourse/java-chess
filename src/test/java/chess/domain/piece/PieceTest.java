@@ -53,12 +53,4 @@ public class PieceTest {
         assertThat(piece.isRightTurn(WHITE)).isTrue();
         assertThat(piece.isRightTurn(BLACK)).isFalse();
     }
-
-    @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")
-    @Test
-    void touch_nothingHappens() {
-        Piece piece = new PieceImplement(WHITE);
-
-        assertThat(piece.touch()).isSameAs(piece);
-    }
 }
