@@ -24,39 +24,67 @@ public class ChessController {
     }
 
     public void run() {
+        Command command;
+
+        do {
+            command = getCommend();
+        } while (command.canContinue());
+    }
+
+    private Command getCommend() {
         try {
-            startChessGame();
-        } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e.getMessage());
-        }
-    }
-
-    private void startChessGame() {
-        ChessGame chessGame = new ChessGame();
-        Command command = Command.START;
-        inputView.printGameStartMessage();
-        while (command.canContinue()) {
+            outputView.printGameStartMessage();
             List<String> commands = inputView.readCommand();
-            command = Command.of(commands);
-            carryOutByCommand(chessGame, commands, command);
-            outputView.printBoard(chessGame.getBoard());
+            Command command = Command.of(commands);
+            processStartGame(command);
+            return command;
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception.getMessage());
+            return getCommend();
         }
     }
 
-    private void carryOutByCommand(ChessGame chessGame, List<String> commands, Command command) {
+    private void processStartGame(Command command) {
         if (command.isStart()) {
-            chessGame.getBoard()
-                     .initialize();
-            return;
+            playGame(new ChessGame());
         }
-        moveIfCommandIsNotEnd(chessGame, commands, command);
+        if (command.isMove()) {
+            throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
+        }
     }
 
-    private void moveIfCommandIsNotEnd(final ChessGame chessGame, final List<String> commands,
-                                       final Command command) {
-        if (command.isEnd()) {
-            return;
+    private void playGame(ChessGame chessGame) {
+        Command command;
+
+        do {
+            command = getPlayCommand(chessGame);
+            System.out.println(command);
+        } while (command.canContinue());
+    }
+
+    private Command getPlayCommand(ChessGame chessGame) {
+        try {
+            outputView.printBoard(chessGame.getBoard());
+            List<String> commands = inputView.readCommand();
+            Command command = Command.of(commands);
+            processPlayGame(command, commands, chessGame);
+            return command;
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception.getMessage());
+            return getPlayCommand(chessGame);
         }
+    }
+
+    private void processPlayGame(Command command, List<String> commands, ChessGame chessGame) {
+        if (command.isStart()) {
+            throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
+        }
+        if (command.isMove()) {
+            processMove(commands, chessGame);
+        }
+    }
+
+    private void processMove(final List<String> commands, final ChessGame chessGame) {
         Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
         chessGame.move(startCoordinate, endCoordinate);
