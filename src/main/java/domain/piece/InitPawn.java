@@ -34,7 +34,7 @@ public final class InitPawn extends PawnFeature {
             return Collections.emptyList();
         }
 
-        return List.of(source.move(0, chooseDirection()));
+        return List.of(source.move(Position.of(0, chooseDirection())));
     }
 
 }

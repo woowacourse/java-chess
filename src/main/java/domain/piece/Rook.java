@@ -2,10 +2,9 @@ package domain.piece;
 
 import domain.coordinate.Position;
 import domain.coordinate.Route;
-import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-public final class Rook extends Piece {
+public final class Rook extends VariableMover {
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
@@ -15,10 +14,9 @@ public final class Rook extends Piece {
     public Route findRoute(final Position source, final Position target) {
         validateMovable(source, target);
 
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
+        final Position direction = findDirection(source, target);
 
-        return new Route(findPositions(source, target, moveX, moveY));
+        return new Route(findPositions(source, target, direction));
     }
 
     @Override
