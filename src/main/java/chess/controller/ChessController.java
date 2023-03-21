@@ -29,10 +29,19 @@ public final class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-        requestStartCommand();
 
         ChessGame chessGame = startChessGame();
         play(chessGame);
+    }
+
+    private ChessGame startChessGame() {
+        requestStartCommand();
+
+        ChessBoard chessBoard = ChessBoardMaker.create();
+
+        printBoard(chessBoard);
+
+        return new ChessGame(chessBoard, Camp.WHITE);
     }
 
     private void requestStartCommand() {
@@ -40,14 +49,6 @@ public final class ChessController {
             List<String> commands = inputView.readCommand();
             return ChessCommand.getStart(commands.get(COMMAND_INDEX));
         });
-    }
-
-    private ChessGame startChessGame() {
-        ChessBoard chessBoard = ChessBoardMaker.create();
-
-        printBoard(chessBoard);
-
-        return new ChessGame(chessBoard, Camp.WHITE);
     }
 
     private void play(ChessGame chessGame) {

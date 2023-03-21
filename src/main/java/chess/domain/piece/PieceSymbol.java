@@ -7,6 +7,5 @@ public enum PieceSymbol {
     KNIGHT,
     QUEEN,
     ROOK,
-    EMPTY,
     ;
 }

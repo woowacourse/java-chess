@@ -8,6 +8,7 @@ public final class OutputView {
 
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final int LINE_BREAK_INDEX = 1;
+    public static final String EMPTY_SYMBOL = ".";
 
     ViewChessBoardPosition viewChessBoardPosition;
 
@@ -37,7 +38,7 @@ public final class OutputView {
 
     private String getViewSymbol(Map<Position, Piece> piecePoint, Position position,Piece piece) {
         if (!piecePoint.containsKey(position)) {
-            return ".";
+            return EMPTY_SYMBOL;
         }
         return ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbol(), piece.isBlack());
     }
