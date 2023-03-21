@@ -3,7 +3,6 @@ package chess.controller;
 import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.MOVE_COMMAND_INDEX;
-import static chess.controller.Command.MOVE_COMMAND_SIZE;
 import static chess.controller.Command.MOVE_SOURCE_INDEX;
 import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
@@ -47,14 +46,14 @@ public class ChessGameController {
         try {
             List<String> commands = InputView.readMoveCommand();
             validateMoveCommandForm(commands);
-            return playByCommand(board, commands);
+            return play(board, commands);
         } catch (IllegalArgumentException e) {
             OutputView.printException(e.getMessage());
             return start(board);
         }
     }
 
-    private Command playByCommand(final Board board, final List<String> commands) {
+    private Command play(final Board board, final List<String> commands) {
         Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
         if (command == MOVE) {
             move(board, commands);
