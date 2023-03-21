@@ -93,14 +93,14 @@ public class Board {
         return sourcePiece.isSameCamp(targetCamp);
     }
 
+    public boolean isSameCamp(final Square square, final Camp camp) {
+        return board.get(square).isSameCamp(camp);
+    }
+
     private boolean isSameRole(final Square source, final Role role) {
         final Piece sourcePiece = board.get(source);
 
         return sourcePiece.isSameRole(role);
-    }
-
-    public boolean isNotMyTurn(final Square source, final Camp turn) {
-        return board.get(source).isAnotherCamp(turn);
     }
 
     public boolean isEmptyPiece(final Square source) {

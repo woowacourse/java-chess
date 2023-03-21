@@ -89,7 +89,7 @@
 
 - [x] `GameCommand`의 뷰 의존성 제거
 
-- [ ] `Game`과 `Board` 사이의 턴 제어 역할 분리
+- [x] `Game`과 `Board` 사이의 턴 제어 역할 분리
 
 - [x] 패키지 분리
 
