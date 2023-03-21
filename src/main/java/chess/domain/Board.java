@@ -32,7 +32,7 @@ public class Board {
     }
 
     private void validateThisTurnColor(Color thisTurn, Piece piece) {
-        if (piece.isSameColor(thisTurn)) {
+        if (piece.isSameColor(thisTurn) == false) {
             throw new IllegalArgumentException("이번 차례에 움직일 수 있는 색의 기물이 아닙니다.");
         }
     }

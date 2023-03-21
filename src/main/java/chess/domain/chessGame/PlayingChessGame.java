@@ -9,18 +9,19 @@ import java.util.Map;
 public class PlayingChessGame implements ChessGame {
     private final Board board;
     private boolean isEnd = false;
-    private Color thisTurn;
+    private Color currentTurn;
 
     public PlayingChessGame(Board board) {
         this.board = board;
-        this.thisTurn = Color.WHITE;
+        this.currentTurn = Color.WHITE;
     }
 
     @Override
     public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) {
         Position currentPosition = Position.of(currentPositionSymbol);
         Position nextPosition = Position.of(nextPositionSymbol);
-        thisTurn = thisTurn.next();
+        Color thisTurn = currentTurn;
+        currentTurn = currentTurn.next();
         return board.move(currentPosition, nextPosition, thisTurn);
     }
 
