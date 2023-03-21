@@ -1,6 +1,5 @@
 package chess.domain.pieces;
 
-import static chess.domain.pieces.Piece.INVALID_TEAM;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.Team;
@@ -16,6 +15,6 @@ class RookTest {
 
         assertThatIllegalArgumentException().isThrownBy(
                 () -> new Rook(team)
-        ).withMessage(INVALID_TEAM);
+        ).withMessage("나이트는 중립일 수 없습니다.");
     }
 }
