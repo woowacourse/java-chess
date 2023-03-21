@@ -8,7 +8,6 @@ import chess.domain.math.UnitVector;
 import chess.domain.pieces.Bishop;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Queen;
@@ -28,6 +27,7 @@ public final class Board {
         Direction legalDirection = Direction.findDirection(current, target);
 
         currentPointPiece.validateDirection(legalDirection);
+        currentPointPiece.validateSameTeam(findPiece(target));
 
         runLogic(current, target, legalDirection);
     }
@@ -42,13 +42,8 @@ public final class Board {
     private void runLogic(final Position current, final Position target, final Direction legalDirection) {
         Piece currentPointPiece = findPiece(current);
 
-        if (currentPointPiece instanceof Knight) {
-            currentPointPiece.validateSameTeam(findPiece(target));
-        }
-
         if (currentPointPiece instanceof King) {
             currentPointPiece.validateDistance(current, target);
-            currentPointPiece.validateSameTeam(findPiece(target));
         }
 
         if (currentPointPiece instanceof Pawn) {
@@ -64,7 +59,6 @@ public final class Board {
 
         if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
             checkExistPiece(current, target, UnitVector.of(current, target));
-            currentPointPiece.validateSameTeam(findPiece(target));
         }
 
         move(current, target);
