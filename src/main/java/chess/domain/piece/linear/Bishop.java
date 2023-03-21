@@ -1,16 +1,19 @@
-package chess.domain.piece;
+package chess.domain.piece.linear;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.RookMovePattern;
+import chess.domain.movepattern.BishopMovePattern;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Rook implements Piece {
+public class Bishop implements Piece {
 
     private final LinearPiece linearPiece;
 
-    public Rook(final Side side) {
-        this.linearPiece = new LinearPiece(Type.ROOK, side, List.of(RookMovePattern.values()));
+    public Bishop(final Side side) {
+        this.linearPiece = new LinearPiece(Type.BISHOP, side, List.of(BishopMovePattern.values()));
     }
 
     @Override

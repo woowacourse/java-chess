@@ -1,16 +1,19 @@
-package chess.domain.piece;
+package chess.domain.piece.immediate;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.KingMovePattern;
+import chess.domain.movepattern.KnightMovePattern;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class King implements Piece {
+public class Knight implements Piece {
 
     private final ImmediatePiece immediatePiece;
 
-    public King(final Side side) {
-        this.immediatePiece = new ImmediatePiece(Type.KING, side, List.of(KingMovePattern.values()));
+    public Knight(final Side side) {
+        this.immediatePiece = new ImmediatePiece(Type.KNIGHT, side, List.of(KnightMovePattern.values()));
     }
 
     @Override

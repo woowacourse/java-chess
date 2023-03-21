@@ -1,16 +1,19 @@
-package chess.domain.piece;
+package chess.domain.piece.linear;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.BishopMovePattern;
+import chess.domain.movepattern.QueenMovePattern;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Bishop implements Piece {
+public class Queen implements Piece {
 
     private final LinearPiece linearPiece;
 
-    public Bishop(final Side side) {
-        this.linearPiece = new LinearPiece(Type.BISHOP, side, List.of(BishopMovePattern.values()));
+    public Queen(final Side side) {
+        this.linearPiece = new LinearPiece(Type.QUEEN, side, List.of(QueenMovePattern.values()));
     }
 
     @Override

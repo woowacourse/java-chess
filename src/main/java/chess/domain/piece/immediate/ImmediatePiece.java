@@ -1,18 +1,21 @@
-package chess.domain.piece;
+package chess.domain.piece.immediate;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LinearPiece implements Piece {
+public final class ImmediatePiece implements Piece {
 
     private final Type type;
     private final Side side;
     private final List<MovePattern> movePatterns;
 
-    public LinearPiece(final Type type, final Side side, final List<MovePattern> movePatterns) {
+    public ImmediatePiece(final Type type, final Side side, final List<MovePattern> movePatterns) {
         this.type = type;
         this.side = side;
         this.movePatterns = movePatterns;
@@ -37,11 +40,9 @@ public final class LinearPiece implements Piece {
             final Board board) {
 
         List<Position> movablePosition = new ArrayList<>();
-        Position currentPosition = source;
-        while (canMoveMore(currentPosition, movePattern, board)) {
-            Position nextPosition = currentPosition.move(movePattern);
+        if (canMoveMore(source, movePattern, board)) {
+            Position nextPosition = source.move(movePattern);
             movablePosition.add(nextPosition);
-            currentPosition = nextPosition;
         }
         return movablePosition;
     }
@@ -51,9 +52,7 @@ public final class LinearPiece implements Piece {
         final Side currentSide = board.findSideByPosition(currentPosition);
         final Side nextSide = board.findSideByPosition(nextPosition);
 
-        return isInRange(currentPosition, nextPosition) &&
-                isDifferentSide(currentSide, nextSide) &&
-                !hasCaptured(currentSide, nextSide);
+        return isInRange(currentPosition, nextPosition) && isDifferentSide(currentSide, nextSide);
     }
 
     private boolean isInRange(final Position currentPosition, final Position nextPosition) {
@@ -62,10 +61,6 @@ public final class LinearPiece implements Piece {
 
     private boolean isDifferentSide(final Side currentSide, final Side nextSide) {
         return currentSide != nextSide;
-    }
-
-    private boolean hasCaptured(final Side currentSide, final Side nextSide) {
-        return isDifferentSide(currentSide, nextSide) && nextSide != Side.NEUTRALITY;
     }
 
     @Override
