@@ -1,7 +1,7 @@
 package chess.controller.service;
 
-import chess.dao.chess.BoardDao;
-import chess.dao.chess.BoardDaoImpl;
+import chess.dao.board.BoardDao;
+import chess.dao.board.BoardDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.pieces.Bishop;

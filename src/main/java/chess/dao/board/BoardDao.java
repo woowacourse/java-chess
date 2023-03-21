@@ -1,4 +1,4 @@
-package chess.dao.chess;
+package chess.dao.board;
 
 import java.util.Map;
 

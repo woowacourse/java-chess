@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.chess.BoardDaoImpl;
+import chess.dao.board.BoardDaoImpl;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
