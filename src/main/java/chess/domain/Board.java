@@ -38,13 +38,16 @@ public class Board {
 
     private boolean canMove(final Square src, final Square dst) {
         Piece piece = findPieceBy(src);
+        if (value.containsKey(dst)) {
+            validateTeam(piece, dst);
+        }
 
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
         piece.validateMovement(fileInterval, rankInterval);
 
         if (piece.getPieceType() == KNIGHT) {
-            return !value.containsKey(dst);
+            return true;
         }
         return canMoveNextSquare(src, fileInterval, rankInterval);
     }
@@ -54,6 +57,13 @@ public class Board {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }
         return value.get(square);
+    }
+
+    private void validateTeam(final Piece piece, final Square dst) {
+        Piece target = findPieceBy(dst);
+        if (piece.isSameTeam(target)) {
+            throw new IllegalArgumentException("같은 팀 말을 공격할 수 없습니다.");
+        }
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
@@ -68,18 +78,7 @@ public class Board {
             notContainPiece = !value.containsKey(square);
             interval--;
         }
-
-        Square dst = src.next(fileMoveDirection, rankMoveDirection);
-        return notContainPiece && isDifferentTeam(src, dst);
-    }
-
-    public boolean isDifferentTeam(final Square src, final Square dst) {
-        if (!value.containsKey(dst)) {
-            return true;
-        }
-        Team dstTeam = findPieceBy(dst).getTeam();
-        Team srcTeam = findPieceBy(src).getTeam();
-        return dstTeam != srcTeam;
+        return notContainPiece;
     }
 
     private int getMoveDirection(final int interval) {

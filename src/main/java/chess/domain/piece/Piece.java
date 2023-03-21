@@ -24,6 +24,10 @@ public abstract class Piece {
 
     public abstract void validateSpecialMovement(final int fileInterval, final int rankInterval);
 
+    public final boolean isSameTeam(final Piece target) {
+        return team.equals(target.getTeam());
+    }
+
     public Team getTeam() {
         return team;
     }
