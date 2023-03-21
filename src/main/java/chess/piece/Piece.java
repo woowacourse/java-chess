@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.piece;
+
+import chess.chessboard.Side;
+import chess.chessboard.Square;
 
 // TODO: Piece에 속하는 클래스는 ChessPiece 패키지에 저장하기
 public abstract class Piece {

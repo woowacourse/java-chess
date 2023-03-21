@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.chessboard;
 
 public enum Side {
     WHITE,

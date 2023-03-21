@@ -1,14 +1,19 @@
-package chess.domain;
+package chess.piece;
+
+import chess.chessboard.Rank;
+import chess.chessboard.Side;
+import chess.chessboard.Square;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
     private static final int NUMBER_OF_PAWNS_EACH_SIDE = 8;
-    private static final int WHITE_PAWN_INITIAL_POSITION = 2;
 
     private static final List<Pawn> blackPawns = new ArrayList<>();
     private static final List<Pawn> whitePawns = new ArrayList<>();
+    private static final Rank WHITE_PAWN_INITIAL_RANK = Rank.TWO;
+    private static final Rank BLACK_PAWN_INITIAL_RANK = Rank.SEVEN;
 
     static {
         addPawns(blackPawns, Side.BLACK);
@@ -56,9 +61,9 @@ public final class Pawn extends Piece {
 
     private boolean isAtInitialPosition(final Square square) {
         if (isWhite()) {
-            return square.isAtRank(Rank.TWO);
+            return square.isAtRank(WHITE_PAWN_INITIAL_RANK);
         }
-        return square.isAtRank(Rank.SEVEN);
+        return square.isAtRank(BLACK_PAWN_INITIAL_RANK);
     }
 
     private boolean isMovableRange(final Square from, final Square to) {

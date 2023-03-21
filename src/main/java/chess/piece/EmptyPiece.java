@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.piece;
+
+import chess.chessboard.Side;
+import chess.chessboard.Square;
 
 public class EmptyPiece extends Piece {
     private static EmptyPiece emptyPiece;

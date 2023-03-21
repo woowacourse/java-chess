@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.chessboard;
 
 import java.util.*;
 import java.util.stream.Collectors;

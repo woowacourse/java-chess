@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.chessboard.*;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -29,8 +29,7 @@ public class ChessGameController {
 
     private GameStatus startGame() {
         CommandDto commandDto = inputView.readCommand();
-        GameStatus gamestatus = GameStatus.startGame(commandDto.getCommand());
-        return gamestatus;
+        return GameStatus.startGame(commandDto.getCommand());
     }
 
     private GameStatus playTurn(final ChessBoard chessBoard) {

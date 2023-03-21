@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.chessboard;
+
+import chess.piece.*;
 
 import java.util.HashMap;
 import java.util.List;

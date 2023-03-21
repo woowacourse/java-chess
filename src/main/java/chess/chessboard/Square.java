@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.chessboard;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,7 +43,7 @@ public class Square {
         if (isDiagonal(to)) {
             return squaresOfDiagonal(to);
         }
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     private boolean isLine(final Square to) {

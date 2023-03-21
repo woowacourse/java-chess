@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.piece;
 
 public enum PieceFixture {
     ROOK(Rook.class),

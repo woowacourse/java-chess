@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.chessboard.Side;
+import chess.piece.*;
 
 public class PieceDto {
     private final String team;
