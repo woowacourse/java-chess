@@ -17,11 +17,16 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction move) {
-        if (team().equals(BLACK)) {
-            return DOWN.equals(move);
+    public boolean movable(final Direction move, final Piece piece) {
+        if (team().equals(BLACK) && DOWN.equals(move) && piece.isEmpty()) {
+            return true;
         }
-        return UP.equals(move);
+
+        if (team().equals(WHITE) && UP.equals(move) && piece.isEmpty()) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -34,12 +39,12 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isAttack(final Direction direction, final Team targetTeam) {
-        if (isSameTeam(BLACK) && targetTeam.equals(WHITE)) {
+    public boolean isAttack(final Direction direction, final Piece targetPiece) {
+        if (isSameTeam(BLACK) && targetPiece.team().equals(WHITE)) {
             return List.of(LEFT_DOWN, RIGHT_DOWN).contains(direction);
         }
 
-        if (isSameTeam(WHITE) && targetTeam.equals(BLACK)) {
+        if (isSameTeam(WHITE) && targetPiece.team().equals(BLACK)) {
             return List.of(LEFT_UP, RIGHT_UP).contains(direction);
         }
 

@@ -15,7 +15,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction direction) {
+    public boolean movable(final Direction direction, final Piece targetPiece) {
         return moves.contains(direction);
     }
 

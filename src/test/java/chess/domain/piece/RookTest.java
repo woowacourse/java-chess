@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.Direction.LEFT;
 import static chess.domain.piece.Direction.LEFT_UP;
+import static chess.domain.piece.PieceConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +19,7 @@ class RookTest {
         final Rook rook = new Rook(Team.WHITE);
 
         // then
-        assertTrue(rook.movable(LEFT));
+        assertTrue(rook.movable(LEFT, EMPTY));
     }
 
     @Test
@@ -28,7 +29,7 @@ class RookTest {
         final Rook rook = new Rook(Team.WHITE);
 
         // then
-        assertFalse(rook.movable(LEFT_UP));
+        assertFalse(rook.movable(LEFT_UP, EMPTY));
     }
 
     @Test

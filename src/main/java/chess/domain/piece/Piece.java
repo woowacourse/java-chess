@@ -12,12 +12,12 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean movable(final Direction direction);
+    public abstract boolean movable(final Direction direction, final Piece piece);
 
     public abstract boolean movableByCount(final int count);
 
-    public boolean isAttack(final Direction direction, final Team team) {
-        return movable(direction);
+    public boolean isAttack(final Direction direction, final Piece targetPiece) {
+        return movable(direction, targetPiece);
     }
 
     public boolean isSameTeam(final Team team) {
@@ -26,6 +26,10 @@ public abstract class Piece {
 
     public Team team() {
         return team;
+    }
+
+    protected boolean isEmpty() {
+        return team == Team.NONE;
     }
 
     @Override

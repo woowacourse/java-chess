@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.domain.piece.Direction.*;
+import static chess.domain.piece.PieceConstants.BLACK_PAWN;
+import static chess.domain.piece.PieceConstants.EMPTY;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,8 +26,8 @@ class PieceTest {
             final List<Direction> moves = List.of(RIGHT, LEFT);
 
             @Override
-            public boolean movable(final Direction move) {
-                return moves.contains(move);
+            public boolean movable(final Direction direction, final Piece piece) {
+                return moves.contains(direction);
             }
 
             @Override
@@ -39,7 +41,7 @@ class PieceTest {
     @MethodSource("createHorizontalDirection")
     @DisplayName("오른쪽, 왼쪽으로 이동할 수 있는지 확인하다")
     void movable_true_horizontal(Direction direction) {
-        assertTrue(piece.movable(direction));
+        assertTrue(piece.movable(direction, EMPTY));
     }
 
     private static Stream<Arguments> createHorizontalDirection() {
@@ -53,7 +55,7 @@ class PieceTest {
     @MethodSource("createDirectionWithoutHorizontal")
     @DisplayName("오른쪽, 왼쪽이외의 방향으로는 이동할 수 없는지 확인하다")
     void movable_false_withoutHorizontal(Direction direction) {
-        assertFalse(piece.movable(LEFT_UP));
+        assertFalse(piece.movable(direction, EMPTY));
     }
 
     private static Stream<Arguments> createDirectionWithoutHorizontal() {
@@ -81,13 +83,13 @@ class PieceTest {
     @MethodSource("createHorizontalDirection")
     @DisplayName("오른쪽, 왼쪽으로 공격할 수 있는지 확인하다")
     void isAttack_true_horizontal(Direction direction) {
-        assertTrue(piece.isAttack(direction, Team.BLACK));
+        assertTrue(piece.isAttack(direction, BLACK_PAWN));
     }
 
     @ParameterizedTest
     @MethodSource("createDirectionWithoutHorizontal")
     @DisplayName("움직일 수 없는 방향으로 이동한다면 공격할 수 없는지 확인하다")
     void isAttack_false_withoutHorizontal(Direction direction) {
-        assertFalse(piece.isAttack(direction, Team.BLACK));
+        assertFalse(piece.isAttack(direction, BLACK_PAWN));
     }
 }

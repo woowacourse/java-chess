@@ -16,7 +16,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean movable(final Direction move) {
+    public boolean movable(final Direction move, final Piece targetPiece) {
         return moves.contains(move);
     }
 

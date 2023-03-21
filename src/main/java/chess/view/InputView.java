@@ -12,11 +12,6 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> askStart() {
-
-        return List.of(scanner.nextLine().split(DELIMETER, LIMIT));
-    }
-
     public static List<String> read() {
         return List.of(scanner.nextLine().split(DELIMETER, LIMIT));
     }

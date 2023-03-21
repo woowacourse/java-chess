@@ -84,7 +84,7 @@ public class Board {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
-        if (!sourcePiece.movable(unitVector) && !sourcePiece.isAttack(unitVector, targetPiece.team())) {
+        if (!sourcePiece.movable(unitVector, targetPiece) && !sourcePiece.isAttack(unitVector, targetPiece)) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }
