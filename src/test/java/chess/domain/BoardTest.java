@@ -1,6 +1,8 @@
 package chess.domain;
 
+import chess.domain.exception.EmptySquareException;
 import chess.domain.exception.WrongDirectionException;
+import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -9,8 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 
@@ -336,5 +341,23 @@ class BoardTest {
             assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.C, Rank.SIX)))
                     .isInstanceOf(WrongDirectionException.class);
         }
+    }
+
+    @Test
+    @DisplayName("게임이 리셋되면 판이 초기화 된다.")
+    void reset() {
+        board.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR));
+        board.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE));
+        board.reset();
+
+        assertThatThrownBy(() -> board.move(Square.of(File.A, Rank.FOUR), Square.of(File.A, Rank.FIVE)))
+                .isInstanceOf(EmptySquareException.class);
+        assertThatCode(() -> board.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR)))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> board.move(Square.of(File.A, Rank.FIVE), Square.of(File.A, Rank.FOUR)))
+                .isInstanceOf(EmptySquareException.class);
+        assertThatCode(() -> board.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE)))
+                .doesNotThrowAnyException();
     }
 }

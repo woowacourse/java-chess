@@ -57,7 +57,7 @@ public class ChessController {
 
     private void checkStart(final List<String> command) {
         if (Command.from(command).isStartCommand()) {
-            chessGame.reset();
+            chessGame.restart();
             OutputView.printGameStatus(chessGame.getGameStatus());
             playUntilEnd();
         }

@@ -23,6 +23,12 @@ public class Board {
         return new Board(boardFactory.make());
     }
 
+    public void reset() {
+        board.clear();
+        final BoardFactory boardFactory = new BoardFactory();
+        board.putAll(boardFactory.make());
+    }
+
     public void move(final Square current, final Square destination) {
         final Direction direction = getDirectionOfPiece(current, destination);
         validateRoute(current, destination, direction);

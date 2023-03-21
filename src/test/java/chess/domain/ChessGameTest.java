@@ -38,4 +38,11 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.start(Command.MOVE))
                 .isInstanceOf(StartCommandException.class);
     }
+
+    @Test
+    @DisplayName("게임 진행 중에 start를 입력하면 게임을 재실행한다.")
+    void start_command_success_when_restart() {
+        assertThatCode(() -> chessGame.restart())
+                .doesNotThrowAnyException();
+    }
 }
