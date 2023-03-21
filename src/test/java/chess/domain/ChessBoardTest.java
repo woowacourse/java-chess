@@ -28,7 +28,7 @@ class ChessBoardTest {
         class rank_is_one {
             Rank rank = Rank.ONE;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 {1}이 위치한다.")
             @CsvSource(value = {"A,ROOK", "B,KNIGHT", "C,BISHOP", "D,QUEEN", "E,KING", "F,BISHOP", "G,KNIGHT", "H,ROOK"})
             void it_returns_piece(final File file, final PieceFixture piece) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(piece.getPieceClass());
@@ -40,7 +40,7 @@ class ChessBoardTest {
         class rank_is_two {
             Rank rank = Rank.TWO;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 PAWN이 위치한다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(Pawn.class);
@@ -52,7 +52,7 @@ class ChessBoardTest {
         class rank_is_three {
             Rank rank = Rank.THREE;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 기물이 존재하지 않는다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(EmptyPiece.class);
@@ -64,7 +64,7 @@ class ChessBoardTest {
         class rank_is_four {
             Rank rank = Rank.FOUR;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 기물이 존재하지 않는다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(EmptyPiece.class);
@@ -76,7 +76,7 @@ class ChessBoardTest {
         class rank_is_five {
             Rank rank = Rank.FIVE;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 기물이 존재하지 않는다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(EmptyPiece.class);
@@ -88,7 +88,7 @@ class ChessBoardTest {
         class rank_is_six {
             Rank rank = Rank.SIX;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 기물이 존재하지 않는다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(EmptyPiece.class);
@@ -100,7 +100,7 @@ class ChessBoardTest {
         class rank_is_seven {
             Rank rank = Rank.SEVEN;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 PAWN이 위치한다.")
             @CsvSource(value = {"A", "B", "C", "D", "E", "F", "G", "H"})
             void it_returns_piece(final File file) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(Pawn.class);
@@ -112,7 +112,7 @@ class ChessBoardTest {
         class rank_is_eight {
             Rank rank = Rank.EIGHT;
 
-            @ParameterizedTest(name = "File이 {0}이면 {1}의 기물이 위치한다.")
+            @ParameterizedTest(name = "File이 {0}이면 {1}이 위치한다.")
             @CsvSource(value = {"A,ROOK", "B,KNIGHT", "C,BISHOP", "D,QUEEN", "E,KING", "F,BISHOP", "G,KNIGHT", "H,ROOK"})
             void it_returns_piece(final File file, final PieceFixture piece) {
                 assertThat(pieces.get(Square.of(rank, file))).isInstanceOf(piece.getPieceClass());
