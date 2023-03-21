@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class MoveTest {
+
+    @DisplayName("소스와 타겟 포지션이 일치할경우 예외가 발생한다")
+    @Test
+    void sourceEqualsTarget_throws() {
+        assertThatThrownBy(() -> new Move(new Position("c1"), new Position("c1")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("동일한 포지션으로의 움직임을 생성할 수 없습니다.");
+    }
 
     @DisplayName("대각선인지 판단한다")
     @ParameterizedTest

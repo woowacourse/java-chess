@@ -10,8 +10,15 @@ public class Move {
     private final Position target;
 
     public Move(Position source, Position target) {
+        validate(source, target);
         this.source = source;
         this.target = target;
+    }
+
+    private void validate(Position source, Position target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("동일한 포지션으로의 움직임을 생성할 수 없습니다.");
+        }
     }
 
     public boolean isStraight() {
