@@ -29,8 +29,8 @@ public enum Direction {
         this.unitRelativePosition = unitRelativePosition;
     }
 
-    public static List<Direction> getAll() {
-        return List.of(values());
+    public static List<Direction> getCrossAndDiagonal() {
+        return List.of(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
     }
 
     public static List<Direction> getCross() {
