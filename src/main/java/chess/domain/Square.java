@@ -4,17 +4,24 @@ import chess.domain.piece.Direction;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Square {
-    private static final Map<File, Map<Rank, Square>> CACHE;
+    private static final Map<String, Square> CACHE;
 
     static {
-        CACHE = new LinkedHashMap<>();
+        CACHE = new HashMap<>();
         for (File file : File.values()) {
-            CACHE.put(file, createFile(file));
+            createFile(file);
+        }
+    }
+
+    private static void createFile(final File file) {
+        for (Rank rank : Rank.values()) {
+            Square square = new Square(file, rank);
+            CACHE.put(square.toString(), square);
         }
     }
 
@@ -26,23 +33,12 @@ public class Square {
         this.rank = rank;
     }
 
-    private static Map<Rank, Square> createFile(final File file) {
-        Map<Rank, Square> ranks = new LinkedHashMap<>();
-        for (Rank rank : Rank.values()) {
-            ranks.put(rank, new Square(file, rank));
-        }
-        return ranks;
-    }
-
     public static Square of(final File file, final Rank rank) {
-        Map<Rank, Square> rankSquareMap = CACHE.get(file);
-        return rankSquareMap.get(rank);
+        return CACHE.get(file.toString() + rank.toString());
     }
 
     public static List<Square> getAllSquares() {
-        List<Square> squares = new ArrayList<>();
-        CACHE.values().forEach(file -> squares.addAll(file.values()));
-        return squares;
+        return new ArrayList<>(CACHE.values());
     }
 
     public int calculateDistance(final Square target) {
@@ -65,5 +61,10 @@ public class Square {
         File nextFile = file.getNextFile(fileUnit);
         Rank nextRank = rank.getNextRank(rankUnit);
         return of(nextFile, nextRank);
+    }
+
+    @Override
+    public String toString() {
+        return file.toString() + rank.toString();
     }
 }

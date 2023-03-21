@@ -37,4 +37,9 @@ public enum File {
         int nextPosition = this.position + fileDifference;
         return File.from(nextPosition);
     }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase();
+    }
 }
