@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import static chess.domain.Team.NEUTRALITY;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.Position;
@@ -60,7 +59,7 @@ public final class BoardMaker {
 
     private Rank createMiddleRank(int row) {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(column -> new Square(new Position(row, column), new EmptyPiece(NEUTRALITY)))
+                .mapToObj(column -> new Square(new Position(row, column), new EmptyPiece()))
                 .collect(toList());
 
         return new Rank(squares);

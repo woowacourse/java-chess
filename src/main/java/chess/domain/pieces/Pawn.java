@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import static chess.domain.Team.BLACK;
+import static chess.domain.Team.NEUTRALITY;
 import static chess.domain.math.Direction.DOWN;
 import static chess.domain.math.Direction.DOWN_LEFT;
 import static chess.domain.math.Direction.DOWN_RIGHT;
@@ -15,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
+
+    private static final int MIN_MOVABLE_DISTANCE = 0;
+    private static final int MOVABLE_DISTANCE_NORMAL = 1;
+    private static final int MOVABLE_MAX_DISTANCE_WHEN_FIRST = 2;
 
     private final List<Direction> directions;
     private boolean isMoved = false;
@@ -44,12 +49,31 @@ public final class Pawn extends Piece {
         this.isMoved = true;
     }
 
-    public boolean isMoved() {
-        return this.isMoved;
-    }
-
     @Override
     public void validateDistance(final Position current, final Position target) {
+        int distance = current.calculateDistance(target);
 
+        if (isMoved) {
+            validateOneDistance(distance);
+        }
+        validateUnderTwoDistance(distance);
+    }
+
+    private void validateOneDistance(final int distance) {
+        if (distance != MOVABLE_DISTANCE_NORMAL) {
+            throw new IllegalArgumentException("폰은 두 번째 이동부터 1칸만 이동할 수 있습니다.");
+        }
+    }
+
+    private void validateUnderTwoDistance(final int distance) {
+        if (distance < MIN_MOVABLE_DISTANCE || distance > MOVABLE_MAX_DISTANCE_WHEN_FIRST) {
+            throw new IllegalArgumentException("폰의 첫 번째 이동은 2칸 이내만 가능합니다.");
+        }
+    }
+
+    public void validateExistPiece(final Piece piece) {
+        if (piece.getTeam() != NEUTRALITY) {
+            throw new IllegalArgumentException("해당 위치에 기물이 존재합니다.");
+        }
     }
 }

@@ -21,26 +21,34 @@ public final class Rank {
             throw new IllegalArgumentException(INVALID_RANK_SIZE + rank.size());
         }
     }
-
-    public boolean isEmptyPiece(final int index) {
-        return findSquare(index).isEmptyPiece();
+    
+    public void validatePiece(final int column) {
+        if (isEmptyPiece(column)) {
+            return;
+        }
+        throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다. 다시 입력해주세요.");
     }
 
-    public Square findSquare(final int index) {
-        return rank.get(index);
+    public boolean isEmptyPiece(final int column) {
+        return findSquare(column).isEmptyPiece();
     }
 
-    public void replaceSquare(final int index, final Square square) {
-        rank.set(index, square);
+    public Square findSquare(final int column) {
+        return rank.get(column);
     }
 
-    public Square replacePiece(final int index, final Piece newPiece) {
-        Square square = findSquare(index);
-        return square.replacePiece(newPiece);
+    public void replaceSquare(final int column, final Square square) {
+        rank.set(column, square);
     }
 
-    public Piece findPiece(final int index) {
-        Square square = findSquare(index);
+    public void replacePiece(final int column, final Piece newPiece) {
+        Square square = findSquare(column);
+        Square replacedSquare = square.replacePiece(newPiece);
+        replaceSquare(column, replacedSquare);
+    }
+
+    public Piece findPiece(final int column) {
+        Square square = findSquare(column);
         return square.getPiece();
     }
 

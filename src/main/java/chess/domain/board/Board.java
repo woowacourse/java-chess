@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import static chess.domain.Team.NEUTRALITY;
-
 import chess.domain.Position;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
@@ -75,17 +73,12 @@ public final class Board {
     }
 
     private void move(final Position current, final Position target) {
-        Piece currentPointPiece = board.get(current.getRow()).findPiece(current.getColumn());
-        Rank targetRank = board.get(target.getRow());
-
-        Square replacedSquare = targetRank.replacePiece(target.getColumn(), currentPointPiece);
-        targetRank.replaceSquare(target.getColumn(), replacedSquare);
-
-        targetRank.replaceSquare(target.getColumn(), replacedSquare);
-
         Rank currentRank = board.get(current.getRow());
-        Square newCurrentSquare = currentRank.replacePiece(current.getColumn(), new EmptyPiece(NEUTRALITY));
-        currentRank.replaceSquare(current.getColumn(), newCurrentSquare);
+        Piece currentPositionPiece = currentRank.findPiece(current.getColumn());
+        currentRank.replacePiece(current.getColumn(), new EmptyPiece());
+
+        Rank targetRank = board.get(target.getRow());
+        targetRank.replacePiece(target.getColumn(), currentPositionPiece);
     }
 
     public List<Rank> getBoard() {
