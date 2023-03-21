@@ -1,8 +1,9 @@
 package chess.model.position;
 
+import chess.model.piece.Direction;
 import java.util.Objects;
 
-public class Position implements IndexConvertable {
+public class Position {
 
     private final File file;
     private final Rank rank;
@@ -19,9 +20,10 @@ public class Position implements IndexConvertable {
         return new Distance(differFile, differRank);
     }
 
-    @Override
-    public int convertToIndex() {
-        return ((rank.value() - 1) * FILE_MAX_SIZE) + (file.value() - 1);
+    public Position next(final Direction direction) {
+        final File nextFile = file.next(direction.file());
+        final Rank nextRank = rank.next(direction.rank());
+        return new Position(nextFile, nextRank);
     }
 
     @Override

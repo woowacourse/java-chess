@@ -14,13 +14,22 @@ import static chess.model.piece.PieceType.KNIGHT;
 import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.QUEEN;
 import static chess.model.piece.PieceType.ROOK;
+import static chess.model.position.Rank.EIGHTH;
+import static chess.model.position.Rank.FIRST;
+import static chess.model.position.Rank.SECOND;
+import static chess.model.position.Rank.SEVENTH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Type;
+import chess.model.piece.type.Piece;
+import chess.model.position.Position;
+import chess.model.position.Positions;
+import chess.model.position.Rank;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +56,7 @@ class BoardTest {
             assertAll(
                     () -> assertThat(board).isExactlyInstanceOf(Board.class),
                     () -> assertThat(board)
-                            .extracting("squares", InstanceOfAssertFactories.list(Square.class))
+                            .extracting("squares", InstanceOfAssertFactories.map(Position.class, Piece.class))
                             .hasSize(64)
             );
         }
@@ -62,13 +71,13 @@ class BoardTest {
         @DisplayName("체스판에 정상적으로 기물이 생성 되었는지 확인한다.")
         void constructor_whenCall_thenReturnPieces() {
             //given
-            final List<Square> squares = board.getSquares();
+            final Map<Position, Piece> squares = board.getSquares();
 
             //when
-            final List<Type> rank1 = getRank(squares, 0, 8);
-            final List<Type> rank2 = getRank(squares, 8, 16);
-            final List<Type> rank7 = getRank(squares, 48, 56);
-            final List<Type> rank8 = getRank(squares, 56, 64);
+            final List<Type> rank1 = getRank(squares, FIRST);
+            final List<Type> rank2 = getRank(squares, SECOND);
+            final List<Type> rank7 = getRank(squares, SEVENTH);
+            final List<Type> rank8 = getRank(squares, EIGHTH);
 
             //then
             assertAll(
@@ -81,9 +90,10 @@ class BoardTest {
             );
         }
 
-        private List<Type> getRank(final List<Square> squares, final int from, final int to) {
-            return squares.subList(from, to).stream()
-                    .map(Square::getType)
+        private List<Type> getRank(final Map<Position, Piece> squares, final Rank rank) {
+            return Positions.getPositionsBy(rank).stream()
+                    .map(squares::get)
+                    .map(Piece::getType)
                     .collect(Collectors.toList());
         }
     }
@@ -124,7 +134,7 @@ class BoardTest {
             // when, then
             assertThatThrownBy(() -> board.move(F1, H3, WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 경로로 이동할 수 없습니다");
+                    .hasMessage("해당 경로로 이동할 수 없습니다.");
         }
     }
 

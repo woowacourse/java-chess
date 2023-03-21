@@ -1,123 +1,110 @@
 package chess.model.board;
 
 import chess.model.piece.Direction;
-import chess.model.piece.IndexConverter;
 import chess.model.piece.PieceColor;
+import chess.model.piece.type.Empty;
+import chess.model.piece.type.Piece;
 import chess.model.position.Distance;
 import chess.model.position.Position;
-import java.util.List;
+import java.util.Map;
 
 public class Board {
 
-    private static final int MINIMUM_TRY = 1;
+    private final Map<Position, Piece> squares;
 
-    private final List<Square> squares;
-
-    private Board(final List<Square> squares) {
+    private Board(final Map<Position, Piece> squares) {
         this.squares = squares;
     }
 
     public static Board create() {
-        final List<Square> squares = BoardFactory.create();
-        return new Board(squares);
+        return new Board(BoardFactory.create());
     }
 
-    public void move(final Position source, final Position target, final PieceColor pieceColor) {
-        validateMove(source, target, pieceColor);
-
-        final int sourceIndex = source.convertToIndex();
-        final int targetIndex = target.convertToIndex();
-        updateBoard(sourceIndex, targetIndex);
+    public void move(final Position source, final Position target, final PieceColor myTurn) {
+        validateMove(source, target, myTurn);
+        updateBoard(source, target);
     }
 
-    private void validateMove(final Position source, final Position target, final PieceColor pieceColor) {
-        validateSource(source, pieceColor);
+    private void validateMove(final Position source, final Position target, final PieceColor myTurn) {
+        validateSource(source, myTurn);
+        validatePieceMovable(source, target);
         validateWaypoint(source, target);
-        validateTarget(target, pieceColor);
-        validatePieceMovable(source, target, pieceColor);
+        validateTarget(target, myTurn);
     }
 
-    private void validateSource(final Position source, final PieceColor pieceColor) {
-        final int sourceIndex = source.convertToIndex();
-        final Square sourceSquare = squares.get(sourceIndex);
+    private void validateSource(final Position source, final PieceColor myTurn) {
+        if (isEmpty(source)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
 
-        sourceSquare.validateExistence(pieceColor);
+        if (isOtherTeam(source, myTurn)) {
+            throw new IllegalArgumentException("자신의 기물이 아닙니다.");
+        }
+    }
+
+    private boolean isOtherTeam(final Position position, final PieceColor myTurn) {
+        return !isEmpty(position) && isDifferentColor(position, myTurn);
+    }
+
+    private boolean isDifferentColor(final Position position, final PieceColor myTurn) {
+        final Piece piece = squares.get(position);
+
+        return piece.isDifferentColor(myTurn);
     }
 
     private void validateWaypoint(final Position source, final Position target) {
+        final Direction direction = Direction.findDirection(source, target);
+
+        Position wayPoint = source.next(direction);
+        while (!wayPoint.equals(target)) {
+            if (isFull(wayPoint)) {
+                throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다.");
+            }
+
+            wayPoint = wayPoint.next(direction);
+        }
+    }
+
+    private void validateTarget(final Position target, final PieceColor myTurn) {
+        if (isFull(target) && isSameColor(target, myTurn)) {
+            throw new IllegalArgumentException("해당 좌표로 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean isFull(final Position target) {
+        return !isEmpty(target);
+    }
+
+    private boolean isEmpty(final Position position) {
+        final Piece piece = squares.get(position);
+
+        return piece.isEmpty();
+    }
+
+    private boolean isSameColor(final Position target, final PieceColor myTurn) {
+        return !squares.get(target).isDifferentColor(myTurn);
+    }
+
+    private void validatePieceMovable(final Position source, final Position target) {
+        final Piece piece = squares.get(source);
+
         final Distance distance = target.differ(source);
-        final Direction direction = distance.findDirection();
-        final int totalDistance = distance.convertToIndex();
-        final int sourceIndex = source.convertToIndex();
-        int count = IndexConverter.findCount(direction, totalDistance);
-
-        checkWaypointSquare(direction, count, sourceIndex);
-    }
-
-    private void checkWaypointSquare(final Direction direction, int count, final int sourceIndex) {
-        int nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
-
-        while (count-- > MINIMUM_TRY) {
-            final Square square = squares.get(nowIndex);
-
-            square.validateWaypoint();
-            nowIndex = IndexConverter.findNextIndex(direction, nowIndex);
-        }
-    }
-
-    private void validateTarget(final Position target, final PieceColor pieceColor) {
-        final int targetIndex = target.convertToIndex();
-        final Square targetSquare = squares.get(targetIndex);
-
-        targetSquare.validateEnemyPiece(pieceColor);
-    }
-
-    private void validatePieceMovable(final Position source, final Position target,
-            final PieceColor pieceColor) {
-        final Square sourceSquare = squares.get(source.convertToIndex());
-
-        final Distance distance = target.differ(source);
-        sourceSquare.validateMovable(distance);
-
-        final int targetIndex = target.convertToIndex();
-        if (sourceSquare.hasPawn()) {
-            validatePawn(pieceColor, squares.get(targetIndex), distance.findDirection());
-        }
-    }
-
-    private void updateBoard(final int sourceIndex, final int targetIndex) {
-        final Square sourceSquare = squares.get(sourceIndex);
-
-        final Square emptySquare = sourceSquare.removePiece();
-        updateSquare(sourceIndex, emptySquare);
-
-        final Square targetSquare = squares.get(targetIndex);
-        final Square resultSquare = targetSquare.receivePiece(sourceSquare.pick());
-        updateSquare(targetIndex, resultSquare);
-    }
-
-    private void validatePawn(final PieceColor pieceColor, final Square targetSquare,
-            final Direction direction) {
-        if (Direction.isDiagonal(direction)) {
-            validatePawnAttack(pieceColor, targetSquare);
-            return;
-        }
-
-        targetSquare.validateWaypoint();
-    }
-
-    private void validatePawnAttack(final PieceColor pieceColor, final Square targetSquare) {
-        if (targetSquare.isEmpty() || targetSquare.isSameTeam(pieceColor)) {
+        if (cannotMovePiece(target, piece, distance)) {
             throw new IllegalArgumentException("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
         }
     }
 
-    private void updateSquare(final int index, final Square square) {
-        squares.remove(index);
-        squares.add(index, square);
+    private boolean cannotMovePiece(final Position target, final Piece piece, final Distance distance) {
+        return !piece.isMovable(distance, squares.get(target).getColor());
     }
 
-    public List<Square> getSquares() {
-        return List.copyOf(squares);
+    private void updateBoard(final Position source, final Position target) {
+        final Piece movePiece = squares.get(source);
+        squares.put(target, movePiece.update());
+        squares.put(source, Empty.getInstance());
+    }
+
+    public Map<Position, Piece> getSquares() {
+        return Map.copyOf(squares);
     }
 }

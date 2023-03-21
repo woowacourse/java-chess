@@ -14,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
 import chess.model.board.PawnBoard;
-import chess.model.board.Square;
-import java.util.List;
+import chess.model.piece.type.Piece;
+import chess.model.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class BoardQueenMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(D1, D3, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 경로로 이동할 수 없습니다.");
     }
 
     @Test
@@ -49,14 +50,11 @@ class BoardQueenMoveTest {
         board.move(D1, D5, WHITE);
 
         // then
-        final List<Square> squares = board.getSquares();
-        final int sourceIndex = D1.convertToIndex();
-        final int targetIndex = D5.convertToIndex();
-
+        final Map<Position, Piece> squares = board.getSquares();
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(QUEEN)
+                () -> assertThat(squares.get(D5).isEmpty()).isFalse(),
+                () -> assertThat(squares.get(D1).isEmpty()).isTrue(),
+                () -> assertThat(squares.get(D5).getType()).isEqualTo(QUEEN)
         );
     }
 
@@ -66,7 +64,7 @@ class BoardQueenMoveTest {
         // when
         assertThatThrownBy(() -> board.move(D1, D2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 좌표로 이동할 수 없습니다.");
     }
 
     @Test
@@ -78,6 +76,6 @@ class BoardQueenMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(D1, D5, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 경로로 이동할 수 없습니다.");
     }
 }

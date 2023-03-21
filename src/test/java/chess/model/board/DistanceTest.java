@@ -20,14 +20,6 @@ class DistanceTest {
         assertThat(distance).isExactlyInstanceOf(Distance.class);
     }
 
-    @ParameterizedTest(name = "converToIndex()는 호출하면 거리를 인덱스로 변환한다.")
-    @CsvSource({"1,1,9", "5,3,43", "-1,-2,10"})
-    void convertToIndex_whenCall_thenReturnIndex(final int rank, final int file, final int result) {
-        final Distance distance = new Distance(file, rank);
-
-        assertThat(distance.convertToIndex()).isEqualTo(result);
-    }
-
     @ParameterizedTest(name = "findDirection()은 rank = {0}, file = {1}일 때 Direction.{2}를 반환한다")
     @CsvSource({
             "0,1,NORTH",

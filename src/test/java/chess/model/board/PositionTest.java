@@ -29,7 +29,7 @@ class PositionTest {
         final Distance result = A1.differ(B2);
 
         // then
-        assertThat(result).extracting("rank").isEqualTo(-1);
-        assertThat(result).extracting("file").isEqualTo(-1);
+        assertThat(result.rank()).isEqualTo(-1);
+        assertThat(result.file()).isEqualTo(-1);
     }
 }

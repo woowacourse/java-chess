@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
-import chess.model.board.Square;
+import chess.model.piece.type.Piece;
 import chess.model.position.Position;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,12 +39,11 @@ class BoardKnightMoveTest {
         board.move(B1, C3, WHITE);
 
         // then
-        final List<Square> squares = board.getSquares();
-        final int targetIndex = C3.convertToIndex();
+        final Map<Position, Piece> squares = board.getSquares();
 
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(KNIGHT)
+                () -> assertThat(squares.get(C3).isEmpty()).isFalse(),
+                () -> assertThat(squares.get(C3).update().getType()).isEqualTo(KNIGHT)
         );
     }
 
@@ -61,7 +60,7 @@ class BoardKnightMoveTest {
 
     private static Stream<Arguments> initialWrongMoveKnight() {
         return Stream.of(
-                Arguments.of(B1, C4, IllegalStateException.class),
+                Arguments.of(B1, C4, IllegalArgumentException.class),
                 Arguments.of(G1, E2, IllegalArgumentException.class)
         );
     }

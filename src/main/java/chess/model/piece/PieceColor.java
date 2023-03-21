@@ -5,5 +5,25 @@ import chess.model.Color;
 public enum PieceColor implements Color {
 
     BLACK,
-    WHITE
+    WHITE;
+
+    @Override
+    public boolean isWhite() {
+        return WHITE == this;
+    }
+
+    @Override
+    public boolean isDifferent(final Color color) {
+        return this != color;
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

@@ -1,6 +1,14 @@
 package chess.model.piece;
 
 import chess.model.Color;
+import chess.model.piece.type.Bishop;
+import chess.model.piece.type.InitialPawn;
+import chess.model.piece.type.King;
+import chess.model.piece.type.Knight;
+import chess.model.piece.type.Pawn;
+import chess.model.piece.type.Piece;
+import chess.model.piece.type.Queen;
+import chess.model.piece.type.Rook;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;

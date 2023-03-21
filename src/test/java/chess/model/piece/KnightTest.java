@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceFixture.BLACK_KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,7 +25,7 @@ class KnightTest {
         final Distance distance = new Distance(file, rank);
 
         // when
-        final boolean movable = BLACK_KNIGHT.movable(distance);
+        final boolean movable = BLACK_KNIGHT.isMovable(distance, WHITE);
 
         // then
         assertThat(movable).isEqualTo(result);

@@ -10,14 +10,15 @@ import static chess.model.board.PositionFixture.H5;
 import static chess.model.board.PositionFixture.H6;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.ROOK;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
 import chess.model.board.PawnBoard;
-import chess.model.board.Square;
-import java.util.List;
+import chess.model.piece.type.Piece;
+import chess.model.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class BoardRookMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(H1, H3, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 경로로 이동할 수 없습니다.");
     }
 
     @Test
@@ -50,14 +51,12 @@ class BoardRookMoveTest {
         board.move(H1, H2, WHITE);
 
         // then
-        final List<Square> squares = board.getSquares();
-        final int sourceIndex = H1.convertToIndex();
-        final int targetIndex = H2.convertToIndex();
+        final Map<Position, Piece> squares = board.getSquares();
 
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(ROOK)
+                () -> assertThat(squares.get(H2).isEmpty()).isFalse(),
+                () -> assertThat(squares.get(H1).isEmpty()).isTrue(),
+                () -> assertThat(squares.get(H2).getType()).isEqualTo(ROOK)
         );
     }
 
@@ -84,14 +83,12 @@ class BoardRookMoveTest {
         board.move(H1, H5, WHITE);
 
         // then
-        final List<Square> squares = board.getSquares();
-        final int sourceIndex = H1.convertToIndex();
-        final int targetIndex = H5.convertToIndex();
+        final Map<Position, Piece> squares = board.getSquares();
 
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(ROOK)
+                () -> assertThat(squares.get(H5).isEmpty()).isFalse(),
+                () -> assertThat(squares.get(H1).isEmpty()).isTrue(),
+                () -> assertThat(squares.get(H5).getType()).isEqualTo(ROOK)
         );
     }
 
@@ -101,7 +98,7 @@ class BoardRookMoveTest {
         // when
         assertThatThrownBy(() -> board.move(H1, H2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 좌표로 이동할 수 없습니다.");
     }
 
     @Test
@@ -113,6 +110,6 @@ class BoardRookMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(H1, H6, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 경로로 이동할 수 없습니다.");
     }
 }

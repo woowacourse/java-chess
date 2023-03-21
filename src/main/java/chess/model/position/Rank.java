@@ -25,6 +25,11 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
+    public Rank next(final int rank) {
+        final int nextValue = this.value + rank;
+        return findRank(nextValue);
+    }
+
     public int differ(final Rank other) {
         return this.value - other.value;
     }

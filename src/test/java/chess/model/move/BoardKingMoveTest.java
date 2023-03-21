@@ -1,13 +1,11 @@
 package chess.model.move;
 
-import static chess.model.board.PositionFixture.D5;
 import static chess.model.board.PositionFixture.E1;
 import static chess.model.board.PositionFixture.E2;
 import static chess.model.board.PositionFixture.E3;
 import static chess.model.board.PositionFixture.E4;
 import static chess.model.board.PositionFixture.E5;
 import static chess.model.board.PositionFixture.F5;
-import static chess.model.board.PositionFixture.G4;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.KING;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
 import chess.model.board.PawnBoard;
-import chess.model.board.Square;
-import java.util.List;
+import chess.model.piece.type.Piece;
+import chess.model.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,21 +35,18 @@ class BoardKingMoveTest {
     void move_king_givenValidEnemyTarget_thenSuccess() {
         // given
         final Board board = PawnBoard.create();
-        board.move(E4, D5, WHITE);
-        board.move(G4, F5, WHITE);
+        board.move(E4, F5, WHITE);
 
         // when
         kingMove(board);
 
         // then
-        final List<Square> squares = board.getSquares();
-        final int sourceIndex = E1.convertToIndex();
-        final int targetIndex = E5.convertToIndex();
+        final Map<Position, Piece> squares = board.getSquares();
 
         assertAll(
-                () -> assertThat(squares.get(targetIndex).isEmpty()).isFalse(),
-                () -> assertThat(squares.get(sourceIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetIndex).pick().getType()).isEqualTo(KING)
+                () -> assertThat(squares.get(E5).isEmpty()).isFalse(),
+                () -> assertThat(squares.get(E1).isEmpty()).isTrue(),
+                () -> assertThat(squares.get(E5).update().getType()).isEqualTo(KING)
         );
     }
 
@@ -67,7 +63,7 @@ class BoardKingMoveTest {
         // when
         assertThatThrownBy(() -> board.move(E1, E2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 좌표로 이동할 수 없습니다.");
     }
 
     @Test

@@ -10,12 +10,16 @@ import static chess.model.board.PositionFixture.B2;
 import static chess.model.board.PositionFixture.B3;
 import static chess.model.board.PositionFixture.B4;
 import static chess.model.board.PositionFixture.B5;
+import static chess.model.board.PositionFixture.B6;
 import static chess.model.board.PositionFixture.C1;
+import static chess.model.board.PositionFixture.C3;
 import static chess.model.board.PositionFixture.C4;
 import static chess.model.board.PositionFixture.C5;
+import static chess.model.board.PositionFixture.C6;
 import static chess.model.board.PositionFixture.C7;
 import static chess.model.board.PositionFixture.D2;
 import static chess.model.board.PositionFixture.D4;
+import static chess.model.board.PositionFixture.D7;
 import static chess.model.board.PositionFixture.H2;
 import static chess.model.board.PositionFixture.H3;
 import static chess.model.piece.PieceColor.BLACK;
@@ -28,10 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.board.Board;
 import chess.model.board.PawnBoard;
-import chess.model.board.Square;
 import chess.model.piece.PieceColor;
+import chess.model.piece.type.Piece;
 import chess.model.position.Position;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +58,7 @@ class BoardPawnMoveTest {
     @Nested
     @DisplayName("move() Pawn 성공 이후 테스트를 진행한다.")
     class MovePawnSuccessTest {
-        private List<Square> squares;
+        private Map<Position, Piece> squares;
 
         @BeforeEach
         void init() {
@@ -65,20 +69,18 @@ class BoardPawnMoveTest {
         @Test
         @DisplayName("source 위치의 Square는 비어 있게 된다.")
         void sourceSquare_isEmpty() {
-            final int emptyIndex = H2.convertToIndex();
-            final Square emptySquare = squares.get(emptyIndex);
+            final Piece piece = squares.get(H2);
 
-            assertThat(emptySquare.isEmpty()).isTrue();
+            assertThat(piece.isEmpty()).isTrue();
         }
 
         @Test
         @DisplayName("target 위치의 Square는 움직인 기물이 차지한다.")
         void targetSquare_hasPiece() {
-            final int targetIndex = H3.convertToIndex();
-            final Square targetSquare = squares.get(targetIndex);
+            final Piece piece = squares.get(H3);
 
-            assertThat(targetSquare.isEmpty()).isFalse();
-            assertThat(targetSquare.pick().getType()).isEqualTo(PAWN);
+            assertThat(piece.isEmpty()).isFalse();
+            assertThat(piece.getType()).isEqualTo(PAWN);
         }
 
     }
@@ -93,12 +95,11 @@ class BoardPawnMoveTest {
 
         // when, then
         assertAll(
-                () -> assertThatCode(
-                        () -> pawnBoard.move(source, target, color)).doesNotThrowAnyException(),
+                () -> assertThatCode(() -> pawnBoard.move(source, target, color)).doesNotThrowAnyException(),
                 () -> {
-                    final List<Square> squares = pawnBoard.getSquares();
-                    assertThat(squares.get(source.convertToIndex()).isEmpty()).isTrue();
-                    assertThat(squares.get(target.convertToIndex()).hasPawn()).isTrue();
+                    final Map<Position, Piece> squares = pawnBoard.getSquares();
+                    assertThat(squares.get(source).isEmpty()).isTrue();
+                    assertThat(squares.get(target).getType()).isEqualTo(PAWN);
                 }
         );
     }
@@ -114,7 +115,7 @@ class BoardPawnMoveTest {
 
     @ParameterizedTest(name = "{2}인 폰이 직진할 때, 도착지에 적의 기물이 있으면 실패한다.")
     @MethodSource("initialStraightPawn")
-    void move_pawn_givenMoveStraightEnemySquare_thenFail (
+    void move_pawn_givenMoveStraightEnemySquare_thenFail(
             final Position source,
             final Position target,
             final PieceColor color
@@ -125,7 +126,7 @@ class BoardPawnMoveTest {
         // when, then
         assertThatThrownBy(() -> pawnBoard.move(source, target, color))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
     }
 
     private static Stream<Arguments> initialStraightPawn() {
@@ -137,7 +138,7 @@ class BoardPawnMoveTest {
 
     @Test
     @DisplayName("폰이 직진할 때, 도착지에 아군의 기물이 있으면 예외가 발생한다.")
-    void move_pawn_givenMoveStraightAllySquare_thenFail () {
+    void move_pawn_givenMoveStraightAllySquare_thenFail() {
         // given
         final Board pawnBoard = PawnBoard.create();
 
@@ -147,7 +148,7 @@ class BoardPawnMoveTest {
         // then
         assertThatThrownBy(() -> pawnBoard.move(A4, A5, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
     }
 
     @Test
@@ -156,14 +157,13 @@ class BoardPawnMoveTest {
         // given
         assertThatCode(() -> board.move(A2, A4, WHITE)).doesNotThrowAnyException();
 
-        final List<Square> squares = board.getSquares();
+        // when
+        final Map<Position, Piece> squares = board.getSquares();
 
-        final int emptySquareIndex = A2.convertToIndex();
-        final int targetSquareIndex = A4.convertToIndex();
-
+        // then
         assertAll(
-                () -> assertThat(squares.get(emptySquareIndex).isEmpty()).isTrue(),
-                () -> assertThat(squares.get(targetSquareIndex).hasPawn()).isTrue()
+                () -> assertThat(squares.get(A2).isEmpty()).isTrue(),
+                () -> assertThat(squares.get(A4).getType()).isEqualTo(PAWN)
         );
     }
 
@@ -202,7 +202,7 @@ class BoardPawnMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(A2, A4, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
     }
 
     @Test
@@ -216,7 +216,7 @@ class BoardPawnMoveTest {
         // when, then
         assertThatThrownBy(() -> board.move(D2, D4, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 경로로 이동할 수 없습니다");
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
     }
 
     @Test
@@ -228,5 +228,29 @@ class BoardPawnMoveTest {
         assertThatThrownBy(() -> board.move(A2, C4, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
+    }
+
+    @ParameterizedTest(name = "폰은 적이 없으면 대각선으로 움직일 수 없다. {1} -> {2}")
+    @MethodSource("cannotMovePawnDiagonal")
+    void move_pawn_givenInvalidDistanceAndDirectionAtEmptyEnemy_thenFail(
+            final PieceColor pieceColor, final Position source, final Position target
+    ) {
+        // when, then
+        assertThatThrownBy(() -> board.move(source, target, pieceColor))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
+    }
+
+    private static Stream<Arguments> cannotMovePawnDiagonal() {
+        return Stream.of(
+                Arguments.of(WHITE, A2, B3),
+                Arguments.of(WHITE, D2, C3),
+                Arguments.of(WHITE, A2, C4),
+                Arguments.of(WHITE, D2, B4),
+                Arguments.of(BLACK, A7, B6),
+                Arguments.of(BLACK, D7, C6),
+                Arguments.of(BLACK, A7, C5),
+                Arguments.of(BLACK, D7, B5)
+        );
     }
 }

@@ -2,9 +2,10 @@ package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.model.board.DefaultColor;
+import chess.model.piece.type.InitialPawn;
+import chess.model.piece.type.Pawn;
 import chess.model.position.Distance;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -29,7 +30,7 @@ class InitialPawnTest {
         final Distance distance = new Distance(file, rank);
 
         // when
-        final boolean movable = initialPawn.movable(distance);
+        final boolean movable = initialPawn.isMovable(distance, DefaultColor.EMPTY);
 
         // then
         assertThat(movable).isEqualTo(result);

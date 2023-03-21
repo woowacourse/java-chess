@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceFixture.BLACK_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +21,7 @@ class QueenTest {
         final Distance distance = new Distance(file, rank);
 
         // when
-        final boolean movable = BLACK_QUEEN.movable(distance);
+        final boolean movable = BLACK_QUEEN.isMovable(distance, WHITE);
 
         // then
         assertThat(movable).isEqualTo(result);

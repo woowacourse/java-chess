@@ -1,7 +1,8 @@
-package chess.model.piece;
+package chess.model.piece.type;
 
 import chess.model.Color;
-import chess.model.position.Distance;
+import chess.model.piece.Direction;
+import chess.model.piece.PieceType;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -13,8 +14,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean movable(final Distance distance) {
+    boolean isRightDirection(final Direction direction) {
         return directions.stream()
-                .anyMatch(direction -> direction.match(distance.rank(), distance.file()));
+                .anyMatch(it -> it.match(direction.rank(), direction.file()));
     }
 }
