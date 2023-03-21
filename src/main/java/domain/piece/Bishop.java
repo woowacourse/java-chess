@@ -4,7 +4,7 @@ import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.type.PieceType;
 
-public final class Bishop extends VariableMover {
+public final class Bishop extends SlidingPiece {
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);

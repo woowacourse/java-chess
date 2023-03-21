@@ -4,7 +4,7 @@ import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.type.PieceType;
 
-public final class Rook extends VariableMover {
+public final class Rook extends SlidingPiece {
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
