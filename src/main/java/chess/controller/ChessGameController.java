@@ -11,6 +11,8 @@ import chess.view.ResultView;
 
 public class ChessGameController {
 
+    private static final int BOARD_ID = 1;
+
     private final InputView inputView;
     private final OutputView outputView;
     private final ResultView resultView;
@@ -28,49 +30,32 @@ public class ChessGameController {
 
     public void run() {
         GameStatusCommand statusCommand = inputView.readStatusOfGame();
+        outputView.printStartMessage();
 
-        if (statusCommand.isNewGame()) {
-            playNewGame();
-        }
+        ChessGame chessGame = loadChessGame(statusCommand);
+        playChess(chessGame);
 
+        resultView.printGameEnd();
+    }
+
+    private ChessGame loadChessGame(final GameStatusCommand statusCommand) {
         if (statusCommand.isSavedGame()) {
-            playSavedGame();
+            ChessGame chessGame = new ChessGame(boardService.findById(BOARD_ID), boardService.isLowerTeamTurnByBoardId(BOARD_ID));
+            outputView.printBoard(chessGame.getBoard());
+            return chessGame;
         }
+
+        return new ChessGame(BoardFactory.createBoard(), true);
     }
 
-    private void playNewGame() {
-        boardService.delete(1);
 
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(), true);
-        outputView.printStartMessage();
-
+    private void playChess(ChessGame chessGame) {
         Command command = inputView.readGameCommand();
-        playChess(chessGame, command);
 
-        resultView.printGameEnd();
-    }
+        while (!isGameEndCase(chessGame, command)) {
+            chessGame = checkCreateNewGame(chessGame, command);
 
-    private void playSavedGame() {
-        ChessGame chessGame = new ChessGame(boardService.findById(1), boardService.isLowerTeamTurnByBoardId(1));
-
-        outputView.printStartMessage();
-        outputView.printBoard(chessGame.getBoard());
-
-        Command command = inputView.readGameCommand();
-        playChess(chessGame, command);
-
-        resultView.printGameEnd();
-    }
-
-
-    private void playChess(ChessGame chessGame, Command command) {
-        while (true) {
-            if (isGameEndCase(chessGame, command)) {
-                return;
-            }
-
-            chessGame = createNewChessGame(chessGame, command);
-            tryChessMove(chessGame, command);
+            checkMovePiece(chessGame, command);
             outputView.printBoard(chessGame.getBoard());
 
             if (isGameDoneCase(chessGame)) {
@@ -84,8 +69,8 @@ public class ChessGameController {
     private boolean isGameEndCase(final ChessGame chessGame, final Command command) {
         if (isGameEnd(chessGame, command)) {
             resultView.printGameEndWithSaving();
-            boardService.delete(1);
-            boardService.save(1, chessGame.getBoard(), chessGame.isLowerTeamTurn());
+            boardService.delete(BOARD_ID);
+            boardService.save(BOARD_ID, chessGame.getBoard(), chessGame.isLowerTeamTurn());
             return true;
         }
         return false;
@@ -109,10 +94,17 @@ public class ChessGameController {
         return false;
     }
 
+    private ChessGame checkCreateNewGame(final ChessGame chessGame, final Command command) {
+        if (command.isCreateNewGame()) {
+            chessGame.initGame();
+        }
+        return chessGame;
+    }
+
     private boolean isGameDoneCase(final ChessGame chessGame) {
         if (isKingDead(chessGame)) {
             resultView.printGameEndWithDeleting();
-            boardService.delete(1);
+            boardService.delete(BOARD_ID);
             return true;
         }
         return false;
@@ -132,7 +124,7 @@ public class ChessGameController {
         return false;
     }
 
-    private void tryChessMove(final ChessGame chessGame, final Command command) {
+    private void checkMovePiece(final ChessGame chessGame, final Command command) {
         if (!command.isMove()) {
             return;
         }
@@ -142,12 +134,5 @@ public class ChessGameController {
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
         }
-    }
-
-    private ChessGame createNewChessGame(final ChessGame chessGame, final Command command) {
-        if (command.isCreateNewGame()) {
-            chessGame.initGame();
-        }
-        return chessGame;
     }
 }

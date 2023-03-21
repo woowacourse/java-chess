@@ -20,7 +20,7 @@ public class InputView {
 
     public GameStatusCommand readStatusOfGame() {
         try {
-            System.out.println("새로운 게임 하기 : 1 // 저장된 게임 불러오기 : 2");
+            System.out.println("새로운 게임 하기 : 1, 저장된 게임 불러오기 : 2");
             String command = input.nextLine();
             return GameStatusCommand.from(command);
         } catch (IllegalArgumentException exception) {
