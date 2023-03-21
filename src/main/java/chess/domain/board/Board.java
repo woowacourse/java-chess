@@ -19,12 +19,13 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        final Piece sourcePiece = board.get(source);
-        final List<Position> movablePosition = sourcePiece.findMovablePosition(source, this);
+        final List<Position> movablePosition = findMovablePosition(source);
 
         if (!movablePosition.contains(target)) {
             throw new IllegalArgumentException("해당 위치로 기물을 움직일 수 없습니다.");
         }
+
+        final Piece sourcePiece = board.get(source);
 
         if (sourcePiece.isPawn()) {
             sourcePiece.changePawnMoveState();
@@ -34,9 +35,13 @@ public class Board {
         board.put(source, new Empty());
     }
 
-    public Side findSideByPosition(final Position position) {
-        final Piece piece = board.get(position);
-        return piece.side();
+    private List<Position> findMovablePosition(final Position position) {
+        try {
+            final Piece piece = board.get(position);
+            return piece.findMovablePosition(position, this);
+        } catch (UnsupportedOperationException e) {
+            throw new IllegalArgumentException("기물이 있는 위치를 선택해주세요.", e);
+        }
     }
 
     public static boolean isInRange(final int fileIndex, final int rankIndex) {
@@ -45,6 +50,11 @@ public class Board {
 
     private static boolean isIndexInRange(final int index) {
         return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
+    }
+
+    public Side findSideByPosition(final Position position) {
+        final Piece piece = board.get(position);
+        return piece.side();
     }
 
     public Piece findPieceByPosition(final Position position) {
