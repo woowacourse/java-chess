@@ -13,7 +13,7 @@ public class EmptyTest {
     @Test
     void 빈_칸이_정상적으로_생성된다() {
         // given
-        final Empty empty = Empty.get();
+        final Empty empty = Empty.getInstance();
 
         // expect
         assertThat(empty.type()).isEqualTo(PieceType.EMPTY);

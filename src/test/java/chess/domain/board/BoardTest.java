@@ -41,28 +41,9 @@ public class BoardTest {
     }
 
     @Test
-    void 체스판을_초기화한다() {
-        // given
-        final Board board = Board.initialize();
-
-        // expect
-        final List<PieceType> result = generateResult(board);
-        assertThat(result).containsExactly(
-                ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
-                PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
-                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
-                ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
-        );
-    }
-
-    @Test
     void 불가능한_이동_커맨드를_입력받는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
 
         // expect
         assertThatThrownBy(() -> board.move("d2", "d5"))
@@ -73,7 +54,7 @@ public class BoardTest {
     @Test
     void 이동_가능한_커맨드를_입력받는_경우_기물을_이동한다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
 
         // when
         board.move("e2", "e4");
@@ -85,7 +66,7 @@ public class BoardTest {
     @Test
     void 상대편의_기물을_이동하려는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
 
         // expect
         assertThatThrownBy(() -> board.move("g7", "g6"))
@@ -96,7 +77,7 @@ public class BoardTest {
     @Test
     void 이동_경로에_기물이_있는_경우_예외를_던진다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
 
         // expect
         assertThatThrownBy(() -> board.move("d1", "d4"))
@@ -107,7 +88,7 @@ public class BoardTest {
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
 
         // when
         board.move("e2", "e4");

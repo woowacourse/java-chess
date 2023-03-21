@@ -268,7 +268,6 @@ class PlayGroundTest {
         IntStream stream = IntStream.of(1, 2);
         stream.forEach(System.out::println);
 
-//        리뷰어님 놀라시지 말라구 주석처리
 //        stream.forEach(System.out::println);
     }
 

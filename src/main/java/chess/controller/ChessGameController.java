@@ -8,6 +8,7 @@ import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ChessGameController {
 
     public void run() {
-        final Board board = Board.initialize();
+        final Board board = BoardFactory.create();
         OutputView.printGameStart();
         Command command = getInitialCommand(board);
         while (command != END) {
