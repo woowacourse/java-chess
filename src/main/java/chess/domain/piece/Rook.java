@@ -6,10 +6,9 @@ import static chess.domain.position.Movement.R;
 import static chess.domain.position.Movement.U;
 
 import chess.domain.position.Movement;
-import chess.domain.position.Position;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends SlidingPiece {
 
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L);
 
@@ -18,14 +17,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public Movement searchMovement(final Position from, final Position to, final Piece destination) {
-        final Movement movement = to.convertMovement(from);
-        validateMovable(movement, CAN_MOVE_DESTINATION);
-        return movement;
+    protected List<Movement> getCanMoveDestination() {
+        return CAN_MOVE_DESTINATION;
     }
 }
