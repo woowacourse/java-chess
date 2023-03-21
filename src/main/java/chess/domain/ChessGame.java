@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.maker.EmptyPiecesFactory;
-import chess.domain.board.maker.PiecesFactory;
+import chess.domain.board.maker.StartingPiecesFactory;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public class ChessGame {
         this.currentTurnColor = Color.WHITE;
     }
 
-    public static ChessGame from(final PiecesFactory piecesFactory) {
-        return new ChessGame(Board.createBoardWith(piecesFactory));
+    public static ChessGame createWithSetBoard() {
+        return new ChessGame(Board.createBoardWith(new StartingPiecesFactory()));
     }
 
     public static ChessGame createWithEmptyBoard() {
@@ -38,6 +38,10 @@ public class ChessGame {
 
     private void changeTurnColor() {
         currentTurnColor = currentTurnColor.getOppositeColor();
+    }
+
+    public boolean hasRun() {
+        return board.hasPieces();
     }
 
     public List<Piece> getExistingPieces() {
