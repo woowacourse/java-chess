@@ -12,7 +12,7 @@ public enum File {
     G(6),
     H(7);
 
-    private static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = 'a';
+    private static final char OFFSET_LETTER = 'a';
 
     private final int x;
 
@@ -25,7 +25,7 @@ public enum File {
     }
 
     public static File findFileByLetter(final char letter) {
-        return findFile(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
+        return findFile(letter - OFFSET_LETTER);
     }
 
     public static File findFile(final int fileIndex) {

@@ -3,7 +3,6 @@ package chess.controller.state;
 import chess.domain.piece.Camp;
 
 public class Ready extends State {
-
     public Ready() {
         super(Camp.WHITE);
     }

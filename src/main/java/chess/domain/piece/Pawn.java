@@ -11,16 +11,16 @@ public class Pawn extends Piece {
     public Pawn(final Camp camp) {
         super(camp, Role.PAWN);
         this.isMoved = false;
-        this.possibleMoves = generatePossibleMoves();
+        this.possibleMoves = makePossibleMoves();
     }
 
     public Pawn(final Camp camp, final boolean isMoved) {
         super(camp, Role.PAWN);
         this.isMoved = isMoved;
-        this.possibleMoves = generatePossibleMoves();
+        this.possibleMoves = makePossibleMoves();
     }
 
-    private List<Move> generatePossibleMoves() {
+    private List<Move> makePossibleMoves() {
         if (camp.equals(Camp.WHITE)) {
             return generateWhitePossibleMoves();
         }

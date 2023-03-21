@@ -12,7 +12,7 @@ public enum Rank {
     TWO(1),
     ONE(0);
 
-    public static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = '1';
+    public static final char OFFSET_LETTER = '1';
 
     private final int y;
 
@@ -21,7 +21,7 @@ public enum Rank {
     }
 
     public static Rank findRankByLetter(final char letter) {
-        return findRank(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
+        return findRank(letter - OFFSET_LETTER);
     }
 
     public static Rank findRank(final int rankIndex) {

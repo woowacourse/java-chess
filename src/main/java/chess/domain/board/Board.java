@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static final boolean IS_MOVED = true;
+    private static final boolean MOVED = true;
 
     private final Map<Square, Piece> board;
 
@@ -30,7 +30,7 @@ public class Board {
 
     private void updateIfPawn(final Square source) {
         if (isSameRole(source, Role.PAWN)) {
-            board.put(source, new Pawn(board.get(source).getCamp(), IS_MOVED));
+            board.put(source, new Pawn(board.get(source).getCamp(), MOVED));
         }
     }
 

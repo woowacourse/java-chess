@@ -16,17 +16,13 @@ public abstract class Piece {
     public boolean isMovable(final Square source, final Square target, final Move move) {
         throw new UnsupportedOperationException();
     }
-
+    
     public boolean isSameRole(final Role role) {
         return this.role == role;
     }
 
     public boolean isSameCamp(final Camp camp) {
         return this.camp == camp;
-    }
-
-    public boolean isAnotherCamp(final Camp camp) {
-        return this.camp != camp;
     }
 
     public Camp getCamp() {
