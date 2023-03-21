@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.GameStatus;
+import chess.controller.GameCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public final class InputView {
     }
 
     private void validateStartCommand(final String input) {
-        if (!GameStatus.START.name().equalsIgnoreCase(input)) {
+        if (!GameCommand.START.name().equalsIgnoreCase(input)) {
             throw new IllegalArgumentException("start를 입력해야 게임을 시작할 수 있습니다.");
         }
     }
