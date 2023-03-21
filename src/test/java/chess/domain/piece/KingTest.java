@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.mock.MockPosition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
@@ -23,8 +24,10 @@ class KingTest {
     ) {
         // given
         final Piece king = King.from(Color.WHITE);
+
         // when
-        List<Position> result = king.findPositions(source, target);
+        final List<Position> result = king.findPositions(source, target);
+
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -32,14 +35,44 @@ class KingTest {
     static Stream<Arguments> kingMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(2, 2),
-                        List.of(Position.of(2, 2))
+                        POSITION_3_3,
+                        POSITION_2_2,
+                        List.of(POSITION_2_2)
                 ),
                 Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 0),
-                        List.of(Position.of(3, 3))
+                        POSITION_3_3,
+                        POSITION_3_2,
+                        List.of(POSITION_3_2)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_4_2,
+                        List.of(POSITION_4_2)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_4_3,
+                        List.of(POSITION_4_3)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_4_4,
+                        List.of(POSITION_4_4)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_3_4,
+                        List.of(POSITION_3_4)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_2_4,
+                        List.of(POSITION_2_4)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_2_3,
+                        List.of(POSITION_2_3)
                 )
         );
     }

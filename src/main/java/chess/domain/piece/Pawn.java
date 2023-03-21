@@ -3,16 +3,13 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.direction.BasicDirection;
+import chess.domain.direction.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
-    private static final int DIRECTION_DOWN = 1;
-    private static final int DIRECTION_UP = -1;
-    private static final int DIRECTION_RIGHT = 1;
-    private static final int DIRECTION_LEFT = -1;
-
     private Pawn(final PieceType pieceType, final Color color) {
         super(pieceType, color);
     }
@@ -22,68 +19,30 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
-        return createMovablePositions(source, target);
-    }
+    protected List<Position> createMovablePositions(final Position source, final Position target) {
+        final List<Position> positions = new ArrayList<>();
+        final Direction direction = BasicDirection.from(source, target);
 
-    private int createPawnDirection() {
-        int direction = DIRECTION_DOWN;
-        if (Color.WHITE == color) {
-            direction = DIRECTION_UP;
+        Position current = source;
+        while (isMovable(current, target, direction)) {
+            current = addPositionAfterMove(positions, current, direction);
         }
-        return direction;
+        addLastPosition(positions, current, direction);
+
+        return positions;
     }
 
-    private List<Position> createMovablePositions(final Position source, final Position target) {
-        final List<Position> result = new ArrayList<>();
-
-        addPawnDoubleMoveAndDiagonal(source, target, result);
-        addPawnSingleMove(source, target, result);
-
-        return result;
+    private boolean isMovable(final Position current, final Position target, final Direction direction) {
+        return current.isRangeOk(direction) && !target.equals(current.move(direction));
     }
 
-    private void addPawnSingleMove(final Position source, final Position target, final List<Position> result) {
-        if (!isTwoSquareMove(source, target)) {
-            createFrontOneSquare(source, result);
-        }
+    private Position addPositionAfterMove(final List<Position> positions, Position current, final Direction direction) {
+        current = current.move(direction);
+        positions.add(current);
+        return current;
     }
 
-    private void addPawnDoubleMoveAndDiagonal(final Position source, final Position target, final List<Position> result) {
-        if (isTwoSquareMove(source, target)) {
-            result.add(createLeftDiagonal(source));
-            result.add(createRightDiagonal(source));
-            if (isStartPosition(source)) {
-                result.add(createFrontTwoSquares(source));
-            }
-        }
-    }
-
-    private void createFrontOneSquare(final Position source, final List<Position> result) {
-        final int pawnDirection = createPawnDirection();
-        result.add(Position.of(source.getRow(), source.getColumn() + pawnDirection));
-    }
-
-    private Position createFrontTwoSquares(final Position source) {
-        final int pawnDirection = createPawnDirection();
-        return Position.of(source.getRow(), source.getColumn() + 2 * pawnDirection);
-    }
-
-    private boolean isStartPosition(final Position source) {
-        return source.getColumn() == 1 || source.getColumn() == 6;
-    }
-
-    private Position createRightDiagonal(final Position source) {
-        final int pawnDirection = createPawnDirection();
-        return Position.of(source.getRow() + DIRECTION_RIGHT, source.getColumn() + pawnDirection);
-    }
-
-    private Position createLeftDiagonal(final Position source) {
-        final int pawnDirection = createPawnDirection();
-        return Position.of(source.getRow() + DIRECTION_LEFT, source.getColumn() + pawnDirection);
-    }
-
-    private boolean isTwoSquareMove(final Position source, final Position target) {
-        return 2 == Math.abs(source.getRow() - target.getRow()) + Math.abs(source.getColumn() - target.getColumn());
+    private void addLastPosition(final List<Position> positions, final Position current, final Direction direction) {
+        positions.add(current.move(direction));
     }
 }

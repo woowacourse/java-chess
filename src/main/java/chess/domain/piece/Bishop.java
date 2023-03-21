@@ -3,13 +3,13 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.direction.BasicDirection;
+import chess.domain.direction.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Bishop extends Piece {
-    private static final int MAX_DISTANCE = 8;
-
     private Bishop(final PieceType pieceType, final Color color) {
         super(pieceType, color);
     }
@@ -19,23 +19,30 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
-        final int rowDirection = Integer.compare(target.getRow(), source.getRow());
-        final int columnDirection = Integer.compare(target.getColumn(), source.getColumn());
-
-        return createMovablePositions(source, rowDirection, columnDirection);
-    }
-
-    private List<Position> createMovablePositions(final Position source, final int rowDirection, final int columnDirection) {
+    protected List<Position> createMovablePositions(final Position source, final Position target) {
         final List<Position> positions = new ArrayList<>();
-        int sourceRow = source.getRow();
-        int sourceColumn = source.getColumn();
-        for (int distance = 0; distance < MAX_DISTANCE; distance++) {
-            sourceRow += rowDirection;
-            sourceColumn += columnDirection;
-            positions.add(Position.of(sourceRow, sourceColumn));
+        final Direction direction = BasicDirection.from(source, target);
+
+        Position current = source;
+        while (isMovable(current, target, direction)) {
+            current = addPositionAfterMove(positions, current, direction);
         }
+        addLastPosition(positions, current, direction);
 
         return positions;
+    }
+
+    private boolean isMovable(final Position current, final Position target, final Direction direction) {
+        return current.isRangeOk(direction) && !target.equals(current.move(direction));
+    }
+
+    private Position addPositionAfterMove(final List<Position> positions, Position current, final Direction direction) {
+        current = current.move(direction);
+        positions.add(current);
+        return current;
+    }
+
+    private void addLastPosition(final List<Position> positions, final Position current, final Direction direction) {
+        positions.add(current.move(direction));
     }
 }

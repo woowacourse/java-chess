@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.domain.Column.*;
+import static chess.domain.Row.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
@@ -23,8 +25,10 @@ class RookTest {
     ) {
         // given
         final Piece rook = Rook.from(Color.WHITE);
+
         // when
-        List<Position> result = rook.findPositions(source, target);
+        final List<Position> result = rook.findPositions(source, target);
+
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -32,31 +36,36 @@ class RookTest {
     static Stream<Arguments> rookMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(1, 4),
+                        Position.of(ROW_1, COLUMN_1),
+                        Position.of(ROW_1, COLUMN_4),
                         List.of(
-                                Position.of(1, 2),
-                                Position.of(1, 3),
-                                Position.of(1, 4),
-                                Position.of(1, 5),
-                                Position.of(1, 6),
-                                Position.of(1, 7),
-                                Position.of(1, 8),
-                                Position.of(1, 9)
+                                Position.of(ROW_1, COLUMN_2),
+                                Position.of(ROW_1, COLUMN_3),
+                                Position.of(ROW_1, COLUMN_4)
                         )
                 ),
                 Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 4),
+                        Position.of(ROW_4, COLUMN_4),
+                        Position.of(ROW_0, COLUMN_4),
                         List.of(
-                                Position.of(3, 4),
-                                Position.of(2, 4),
-                                Position.of(1, 4),
-                                Position.of(0, 4),
-                                Position.of(-1, 4),
-                                Position.of(-2, 4),
-                                Position.of(-3, 4),
-                                Position.of(-4, 4)
+                                Position.of(ROW_3, COLUMN_4),
+                                Position.of(ROW_2, COLUMN_4),
+                                Position.of(ROW_1, COLUMN_4),
+                                Position.of(ROW_0, COLUMN_4)
+                        )
+                ),
+                Arguments.arguments(
+                        Position.of(ROW_4, COLUMN_4),
+                        Position.of(ROW_5, COLUMN_4),
+                        List.of(
+                                Position.of(ROW_5, COLUMN_4)
+                        )
+                ),
+                Arguments.arguments(
+                        Position.of(ROW_4, COLUMN_4),
+                        Position.of(ROW_4, COLUMN_3),
+                        List.of(
+                                Position.of(ROW_4, COLUMN_3)
                         )
                 )
         );

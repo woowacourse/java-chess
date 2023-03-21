@@ -3,7 +3,10 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.direction.BasicDirection;
+import chess.domain.direction.Direction;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class King extends Piece {
@@ -16,10 +19,13 @@ public final class King extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
-        final int rowDirection = Integer.compare(target.getRow(), source.getRow());
-        final int columnDirection = Integer.compare(target.getColumn(), source.getColumn());
+    protected List<Position> createMovablePositions(final Position source, final Position target) {
+        final Direction direction = BasicDirection.from(source, target);
 
-        return List.of(Position.of(source.getRow() + rowDirection, source.getColumn() + columnDirection));
+        if (source.isRangeOk(direction)) {
+            return List.of(source.move(direction));
+        }
+
+        return Collections.emptyList();
     }
 }

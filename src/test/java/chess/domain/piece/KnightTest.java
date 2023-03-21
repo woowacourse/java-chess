@@ -7,14 +7,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.mock.MockPosition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
-    @DisplayName("knight이 움직일수 있는 범위 테스트")
+    @DisplayName("knight가 움직일수 있는 범위 테스트")
     @ParameterizedTest
     @MethodSource("knightMovableSuccessTestDummy")
     void knightMovableSuccessTest(
@@ -24,8 +24,10 @@ class KnightTest {
     ) {
         // given
         final Piece knight = Knight.from(Color.WHITE);
+
         // when
-        List<Position> result = knight.findPositions(source, target);
+        final List<Position> result = knight.findPositions(source, target);
+
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -33,16 +35,44 @@ class KnightTest {
     static Stream<Arguments> knightMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Position.of(1, 1),
-                        Position.of(3, 2),
-                        List.of(
-                                Position.of(3, 2)
-                        )
+                        POSITION_3_3,
+                        POSITION_1_2,
+                        List.of(POSITION_1_2)
                 ),
                 Arguments.arguments(
-                        Position.of(4, 4),
-                        Position.of(0, 4),
-                        Collections.emptyList()
+                        POSITION_3_3,
+                        POSITION_2_1,
+                        List.of(POSITION_2_1)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_4_1,
+                        List.of(POSITION_4_1)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_5_2,
+                        List.of(POSITION_5_2)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_1_4,
+                        List.of(POSITION_1_4)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_2_5,
+                        List.of(POSITION_2_5)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_4_5,
+                        List.of(POSITION_4_5)
+                ),
+                Arguments.arguments(
+                        POSITION_3_3,
+                        POSITION_5_4,
+                        List.of(POSITION_5_4)
                 )
         );
     }

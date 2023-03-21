@@ -3,14 +3,13 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.direction.Direction;
+import chess.domain.direction.KnightDirection;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Knight extends Piece {
-    private static final List<Integer> moveY = List.of(2, 1, -1, -2, -2, -1, 1, 2);
-    private static final List<Integer> moveX = List.of(1, 2, 2, 1, -1, -2, -2, -1);
-
     private Knight(final PieceType pieceType, final Color color) {
         super(pieceType, color);
     }
@@ -20,23 +19,17 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public List<Position> findPositions(final Position source, final Position target) {
-        final List<Position> positions = new ArrayList<>();
-        for (int index = 0; index < 8; index++) {
-            final Position movePosition = Position.of(moveX.get(index), moveY.get(index));
-            final Position movedPosition = source.move(movePosition);
-            addPositionIfMovableArea(target, movedPosition, positions);
+    protected List<Position> createMovablePositions(final Position source, final Position target) {
+        final Direction direction = KnightDirection.from(source, target);
+
+        if (isMovable(source, target, direction)) {
+            return List.of(source.move(direction));
         }
-        return positions;
+
+        return Collections.emptyList();
     }
 
-    private void addPositionIfMovableArea(
-            final Position target,
-            final Position movedPosition,
-            final List<Position> positions
-    ) {
-        if (target.equals(movedPosition)) {
-            positions.add(target);
-        }
+    private boolean isMovable(final Position source, final Position target, final Direction direction) {
+        return source.isRangeOk(direction) && target.equals(source.move(direction));
     }
 }
