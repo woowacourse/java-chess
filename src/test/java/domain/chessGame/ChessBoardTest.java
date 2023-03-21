@@ -99,6 +99,20 @@ class ChessBoardTest {
         }
 
         @Test
+        @DisplayName("출발 좌표에 있는 말의 이동 로직에 부합하지 않는 경로로는 이동할 수 없다.")
+        void notMatchToPieceMovingLogicTest() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            Position start = Position.of(2,2);
+            Position end = Position.of(5,5);
+
+            // then
+            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
+        }
+
+        @Test
         @DisplayName("진행 경로 상에 말이 있는 경우 예외가 발생한다.")
         void blockedTest() {
             // given

@@ -73,6 +73,38 @@ class PawnTest {
         assertThat(result).isTrue();
     }
 
+    @ParameterizedTest
+    @MethodSource("isMovableNonInitialRowBlackPawnTestCase")
+    @DisplayName("검은색일 때 초기 위치가 아닐 경우 아래, 오른쪽 아래 대각선, 왼쪽 아래 대각선으로 한 칸만 이동할 수 있다.")
+    void isMovableNonInitialRowBlackPawnTest(Position end) {
+        // given
+        Pawn pawn = new Pawn(Color.BLACK);
+        Position start = Position.of(6, 5);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
+
+        // when
+        boolean result = pawn.isMovableRoute(routeFromStartToEnd);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMovableNonInitialRowWhitePawnTestCase")
+    @DisplayName("흰색일 때 초기 위치가 아닐 경우 위, 오른쪽 위 대각선, 왼쪽 위 대각선으로 한 칸만 이동할 수 있다.")
+    void isMovableNonInitialRowWhitePawnTest(Position end) {
+        // given
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position start = Position.of(3, 5);
+        List<Position> routeFromStartToEnd = Position.getRouteOf(start, end);
+
+        // when
+        boolean result = pawn.isMovableRoute(routeFromStartToEnd);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
     static Stream<Arguments> isMovableInitialRowBlackPawnTestCase() {
         return Stream.of(
                 Arguments.of(Position.of(6, 5)),
@@ -88,6 +120,22 @@ class PawnTest {
                 Arguments.of(Position.of(3, 4)),
                 Arguments.of(Position.of(3, 6)),
                 Arguments.of(Position.of(3, 5))
+        );
+    }
+
+    static Stream<Arguments> isMovableNonInitialRowBlackPawnTestCase() {
+        return Stream.of(
+                Arguments.of(Position.of(5, 5)),
+                Arguments.of(Position.of(5, 6)),
+                Arguments.of(Position.of(5, 5))
+        );
+    }
+
+    static Stream<Arguments> isMovableNonInitialRowWhitePawnTestCase() {
+        return Stream.of(
+                Arguments.of(Position.of(4, 5)),
+                Arguments.of(Position.of(4, 6)),
+                Arguments.of(Position.of(4, 5))
         );
     }
 }
