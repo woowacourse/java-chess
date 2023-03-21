@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class PositionTest {
+class PositionTest {
 
     static Stream<Arguments> generatePath() {
         return Stream.of(
@@ -41,11 +41,10 @@ public class PositionTest {
     @Test
     void 같은_File과_같은_Rank일_경우_동일한_객체가_반환된다() {
         //given
-        Position position1 = A1;
         Position position2 = Position.of(File.A, Rank.ONE);
 
         //when
-        boolean result = position2 == position1;
+        boolean result = position2 == A1;
 
         //then
         assertThat(result)
@@ -55,11 +54,8 @@ public class PositionTest {
     @Test
     void 포지션의_랭크_차이_계산_테스트() {
         //given
-        Position position1 = A1;
-        Position position2 = A3;
-
         //when
-        int result = position1.getRankDifference(position2);
+        int result = A1.getRankDifference(A3);
 
         //then
         assertThat(result).isEqualTo(2);
@@ -68,11 +64,8 @@ public class PositionTest {
     @Test
     void 포지션의_파일_차이_계산_테스트() {
         //given
-        Position position1 = A1;
-        Position position2 = F1;
-
         //when
-        int result = position1.getFileDifference(position2);
+        int result = A1.getFileDifference(F1);
 
         //then
         assertThat(result).isEqualTo(5);
@@ -82,22 +75,20 @@ public class PositionTest {
     @CsvSource(value = {"A, TWO", "F, SIX"})
     void 한_직선상의_Postion_은_Path_를_만들_수_있다(File file, Rank rank) {
         //given
-        Position origin = A1;
         Position destination = Position.of(file, rank);
 
         //expect
-        assertDoesNotThrow(() -> origin.createStraightPath(destination));
+        assertDoesNotThrow(() -> A1.createStraightPath(destination));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"B, THREE", "F, FIVE"})
     void 한_직선_위의_Position_이_아니라면_Path_빈_Path_를_반환한다(File file, Rank rank) {
         //given
-        Position origin = A1;
         Position destination = Position.of(file, rank);
 
         //expect
-        List<Position> result = origin.createStraightPath(destination);
+        List<Position> result = A1.createStraightPath(destination);
 
         assertThat(result)
                 .isEmpty();
@@ -107,8 +98,7 @@ public class PositionTest {
     @MethodSource("generatePath")
     void 이동_경로상의_포지션들을_반환한다(Position destination, List<Position> expected) {
         //given
-        Position origin = E5;
-        List<Position> result = origin.createStraightPath(destination);
+        List<Position> result = E5.createStraightPath(destination);
 
         //expected
         assertThat(result)
