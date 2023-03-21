@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.math;
 
 import static chess.domain.math.Direction.DOWN;
 import static chess.domain.math.Direction.DOWN_LEFT;
@@ -11,6 +11,7 @@ import static chess.domain.math.Direction.UP_RIGHT;
 import static chess.domain.math.Direction.findDirection;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Position;
 import org.junit.jupiter.api.Test;
 
 class DirectionTest {

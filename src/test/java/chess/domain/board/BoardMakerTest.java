@@ -1,12 +1,16 @@
-package chess.domain.pieces;
+package chess.domain.board;
 
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.BoardMaker;
-import chess.domain.board.Rank;
+import chess.domain.pieces.Bishop;
+import chess.domain.pieces.King;
+import chess.domain.pieces.Knight;
+import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Queen;
+import chess.domain.pieces.Rook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.math;
 
 import static chess.domain.math.UnitVector.DOWN;
 import static chess.domain.math.UnitVector.DOWN_LEFT;
@@ -10,7 +10,7 @@ import static chess.domain.math.UnitVector.UP_LEFT;
 import static chess.domain.math.UnitVector.UP_RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.math.UnitVector;
+import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
