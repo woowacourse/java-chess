@@ -37,7 +37,8 @@ class CommandTest {
         assertAll(
                 () -> assertThat(command.isCreateNewGame()).isTrue(),
                 () -> assertThat(command.isGameStop()).isFalse(),
-                () -> assertThat(command.isMove()).isFalse()
+                () -> assertThat(command.isMove()).isFalse(),
+                () -> assertThat(command.isStatus()).isFalse()
         );
     }
 
@@ -54,7 +55,26 @@ class CommandTest {
         assertAll(
                 () -> assertThat(command.isCreateNewGame()).isFalse(),
                 () -> assertThat(command.isGameStop()).isTrue(),
-                () -> assertThat(command.isMove()).isFalse()
+                () -> assertThat(command.isMove()).isFalse(),
+                () -> assertThat(command.isStatus()).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("status 인 경우 생성이 성공적으로 된다.")
+    void create_success_when_command_is_status() {
+        // given
+        String input = "status";
+
+        // when
+        Command command = Command.from(input);
+
+        // then
+        assertAll(
+                () -> assertThat(command.isCreateNewGame()).isFalse(),
+                () -> assertThat(command.isGameStop()).isFalse(),
+                () -> assertThat(command.isMove()).isFalse(),
+                () -> assertThat(command.isStatus()).isTrue()
         );
     }
 
