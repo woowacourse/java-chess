@@ -15,19 +15,24 @@ import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessBoardFactory {
     
     private ChessBoardFactory() {
-        throw new IllegalStateException("Factory 클래스를 인스턴스화할 수 없습니다!");
+        throw new IllegalStateException("Factory 클래스를 인스턴스화 할 수 없습니다!");
     }
 
     public static ChessBoard create() {
         List<Square> squares = Arrays.stream(File.values())
-                .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file))))
+                .flatMap(ChessBoardFactory::createSquaresFromOneFile)
                 .collect(Collectors.toUnmodifiableList());
         return new ChessBoard(squares);
+    }
+
+    private static Stream<Square> createSquaresFromOneFile(final File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file)));
     }
 
     private static Piece createPiece(Rank rank, File file) {

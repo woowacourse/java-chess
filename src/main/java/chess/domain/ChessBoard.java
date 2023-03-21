@@ -18,17 +18,18 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position destination) {
-        validateAllyPiece(source);
+        validateIsAllyPiece(source);
         validateNotExistAllyAt(destination);
         validateNotBlocked(source, destination);
         if (canAttack(source, destination) || canMove(source, destination)) {
             executeMove(source, destination);
+            turn = turn.next();
             return;
         }
         throw new IllegalArgumentException("기물의 이동 범위 밖입니다.");
     }
 
-    private void validateAllyPiece(final Position source) {
+    private void validateIsAllyPiece(final Position source) {
         if (findSquareByPosition(source).isSameTeam(turn.findCurrentEnemyTeam())) {
             throw new IllegalArgumentException("상대방의 기물은 이동시킬 수 없습니다.");
         }
@@ -90,7 +91,6 @@ public class ChessBoard {
 
     private void executeMove(final Position source, final Position destination) {
         findSquareByPosition(source).moveTo(turn, findSquareByPosition(destination));
-        turn = turn.next();
     }
 
     public boolean isKingDead() {
