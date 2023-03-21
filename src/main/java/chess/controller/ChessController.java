@@ -3,12 +3,11 @@ package chess.controller;
 import chess.domain.chessGame.ChessBoard;
 import chess.domain.chessGame.ChessBoardGenerator;
 import chess.domain.position.Position;
-import chess.dto.ChessBoardDto;
+import chess.dto.request.CommandDto;
+import chess.dto.response.ChessBoardDto;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
 
 public final class ChessController {
 
@@ -22,13 +21,11 @@ public final class ChessController {
 
     private void startGame() {
         ChessBoard chessBoard = setUpChessBoard();
-        List<String> userInput = InputView.readPlayingCommand();
-        GameCommand gameCommand = GameCommand.of(userInput.get(0));
+        CommandDto commandDto = InputView.readPlayingCommand();
 
-        while (gameCommand != GameCommand.END) {
-            executeMoveCommand(chessBoard, userInput);
-            userInput = InputView.readPlayingCommand();
-            gameCommand = GameCommand.of(userInput.get(0));
+        while (commandDto.getGameCommand() != GameCommand.END) {
+            executeMoveCommand(chessBoard, commandDto);
+            commandDto = InputView.readPlayingCommand();
         }
     }
 
@@ -39,18 +36,11 @@ public final class ChessController {
         return chessBoard;
     }
 
-    private void executeMoveCommand(ChessBoard chessBoard, List<String> userInput) {
-        Position start = convertInputToPosition(userInput.get(1));
-        Position end = convertInputToPosition(userInput.get(2));
+    private void executeMoveCommand(ChessBoard chessBoard, CommandDto commandDto) {
+        Position start = commandDto.getStartPosition();
+        Position end = commandDto.getEndPosition();
 
         chessBoard.movePiece(start, end);
         OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
-    }
-
-    private Position convertInputToPosition(String input) {
-        int row = RowToNumber.of(input.charAt(1));
-        int column = ColumnToNumber.of(input.charAt(0));
-
-        return Position.of(row, column);
     }
 }

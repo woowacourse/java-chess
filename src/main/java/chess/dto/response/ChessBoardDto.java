@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.response;
 
 import chess.domain.piece.Piece;
 import chess.controller.ColumnToNumber;
