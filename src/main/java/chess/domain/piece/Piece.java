@@ -6,10 +6,8 @@ import chess.domain.square.Square;
 abstract public class Piece {
 
     protected Color color;
-    private String name;
 
-    protected Piece(final Color color, final String name) {
-        this.name = name;
+    protected Piece(final Color color) {
         this.color = color;
     }
 
@@ -37,9 +35,5 @@ abstract public class Piece {
 
     public Color getColor() {
         return color;
-    }
-
-    public String getName() {
-        return name;
     }
 }

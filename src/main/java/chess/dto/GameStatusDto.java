@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.Board;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
@@ -15,7 +14,7 @@ public class GameStatusDto {
 
     private static final char FIRST_FILE = 'a';
     private static final char LAST_RANK = '8';
-    private static final String EMPTY_SQUARE = ".";
+    private static final String EMPTY_MARK = ".";
 
     private final List<String> gameStatus;
 
@@ -42,26 +41,17 @@ public class GameStatusDto {
         for (int i = 0; i < 8; i++) {
             char file = (char) (FIRST_FILE + i);
             Square square = Square.of(File.from(file), Rank.from(rank));
-            rankStatus.append(makeSquareStatus(board, square));
+            rankStatus.append(makeSquareMark(board, square));
         }
         return rankStatus.toString();
     }
 
-    private static String makeSquareStatus(Map<Square, Piece> board, Square square) {
+    private static String makeSquareMark(Map<Square, Piece> board, Square square) {
         if (board.containsKey(square)) {
             Piece piece = board.get(square);
-            String name = piece.getName();
-            Color color = piece.getColor();
-            return makeNameToUpperCaseWhenBlack(name, color);
+            return Mark.from(piece);
         }
-        return EMPTY_SQUARE;
-    }
-
-    private static String makeNameToUpperCaseWhenBlack(String name, Color color) {
-        if (color == Color.BLACK) {
-            return name.toUpperCase();
-        }
-        return name;
+        return EMPTY_MARK;
     }
 
     public List<String> getGameStatus() {
