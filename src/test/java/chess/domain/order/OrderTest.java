@@ -6,6 +6,8 @@ import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +17,7 @@ class OrderTest {
     @DisplayName("ofStart 메서드 정상 동작 테스트")
     void ofStart_validInput() {
         // given
-        final String input = "start";
+        final List<String> input = List.of("start");
 
         // then
         assertDoesNotThrow(() -> Order.ofStart(input));
@@ -25,7 +27,7 @@ class OrderTest {
     @DisplayName("명령어가 start가 아니면 예외가 발생한다")
     void ofStart_invalidInput() {
         // given
-        final String input = "end";
+        final List<String> input = List.of("end");
 
         // then
         assertThatThrownBy(() -> Order.ofStart(input))
@@ -37,7 +39,7 @@ class OrderTest {
     @DisplayName("ofMoveOrEnd 메서드 move 동작 테스트")
     void ofMoveOrEnd_move() {
         // given
-        final String input = "move a2 a3";
+        final List<String> input = List.of("move", "a2", "a3");
 
         // when
         final Order order = Order.ofMoveOrEnd(input);
@@ -51,7 +53,7 @@ class OrderTest {
     @DisplayName("ofMoveOrEnd 메서드 end 동작 테스트")
     void ofMoveOrEnd_end() {
         // given
-        final String input = "end";
+        final List<String> input = List.of("end");
 
         // then
         assertDoesNotThrow(() -> Order.ofMoveOrEnd(input));
@@ -61,7 +63,7 @@ class OrderTest {
     @DisplayName("명령어가 end 또는 move가 아니면 예외가 발생한다")
     void ofMoveOrEnd_invalidInput() {
         // given
-        final String input = "start";
+        final List<String> input = List.of("start");
 
         // when
         assertThatThrownBy(() -> Order.ofMoveOrEnd(input))
@@ -73,7 +75,7 @@ class OrderTest {
     @DisplayName("명령어가 end이면 true를 반한한다")
     void isEnd() {
         // given
-        final String input = "end";
+        final List<String> input = List.of("end");
         final Order order = Order.ofMoveOrEnd(input);
 
         // then
@@ -84,7 +86,7 @@ class OrderTest {
     @DisplayName("명령어가 move이면 true를 반환한다")
     void isMove() {
         // given
-        final String input = "move a2 a3";
+        final List<String> input = List.of("move", "a2", "a3");
         final Order order = Order.ofMoveOrEnd(input);
 
         // then

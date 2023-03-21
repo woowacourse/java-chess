@@ -11,11 +11,9 @@ import java.util.List;
 import static chess.domain.order.OrderCase.*;
 
 public final class Order {
-    private static final String DELIMITER = " ";
     private static final int SOURCE_POSITION_INDEX = 0;
     private static final int TARGET_POSITION_INDEX = 1;
     private static final int POSITION_SIZE = 2;
-    private static final int COMMAND_INDEX = 0;
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int START_POSITION_INDEX = 1;
     private static final int END_POSITION_INDEX = 2;
@@ -30,7 +28,7 @@ public final class Order {
         this.moves = moves;
     }
 
-    public static Order ofStart(final String input) {
+    public static Order ofStart(final List<String> input) {
         OrderCase value = OrderCase.from(input);
         validateStart(value);
         return new Order(value, new ArrayList<>());
@@ -42,20 +40,19 @@ public final class Order {
         }
     }
 
-    public static Order ofMoveOrEnd(final String input) {
-        List<String> inputs = Arrays.asList(input.split(DELIMITER));
-        OrderCase value = OrderCase.from(inputs.get(COMMAND_INDEX));
+    public static Order ofMoveOrEnd(final List<String> input) {
+        OrderCase value = OrderCase.from(input);
 
         if (value.equals(END)) {
             return ofEnd(input);
         }
         if (value.equals(MOVE)) {
-            return ofMove(value, inputs);
+            return ofMove(value, input);
         }
         throw new IllegalArgumentException("게임 진행중에는 end와 move 커맨드 입력만 가능합니다");
     }
 
-    private static Order ofEnd(final String input) {
+    private static Order ofEnd(final List<String> input) {
         OrderCase value = OrderCase.from(input);
 
         if (!value.equals(END)) {
