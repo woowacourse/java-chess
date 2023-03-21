@@ -59,7 +59,8 @@ class PawnTest {
 
             assertThatThrownBy(() ->
                     pawn.searchPathTo(INITIAL_POSITION, to, new Pawn(Color.WHITE)))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(Pawn.CANT_MOVE_TO_MESSAGE);
         }
     }
 }

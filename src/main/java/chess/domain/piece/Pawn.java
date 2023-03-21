@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
+    static final String CANT_MOVE_TO_MESSAGE = "움직일 수 없는 위치입니다.";
     private static final Map<Color, Movement> CAN_MOVE_EMPTY_DESTINATION = Map.of(
             Color.BLACK, D,
             Color.WHITE, U
@@ -46,7 +47,7 @@ public class Pawn extends Piece {
         if (canMoveDiagonal(destination, movement)) {
             return movement;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANT_MOVE_TO_MESSAGE);
     }
 
     private boolean canMoveFront(final Piece destination, final Movement movement) {
@@ -57,7 +58,7 @@ public class Pawn extends Piece {
         if (checkMove1Square(from, to) || checkMove2Square(from, to)) {
             return movement;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANT_MOVE_TO_MESSAGE);
     }
 
     private boolean checkMove1Square(final Position from, final Position to) {
