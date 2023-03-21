@@ -1,9 +1,5 @@
-package domain.piece;
+package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import chess.domain.piece.Color;
-import chess.domain.piece.Knight;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Knight는 ")
 class KnightTest {

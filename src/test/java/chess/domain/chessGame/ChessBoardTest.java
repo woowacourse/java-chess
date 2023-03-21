@@ -1,10 +1,5 @@
-package domain.chessGame;
+package chess.domain.chessGame;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.domain.chessGame.ChessBoard;
-import chess.domain.chessGame.ChessBoardGenerator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -15,6 +10,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("ChessBoard는 ")
 class ChessBoardTest {
