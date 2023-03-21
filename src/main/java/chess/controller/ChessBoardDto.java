@@ -55,22 +55,23 @@ public class ChessBoardDto {
         }
 
         private static String generatePieceView(final Piece piece) {
-            if (piece.getClass() == Pawn.class) {
+            final Class<? extends Piece> pieceClass = piece.getClass();
+            if (pieceClass == Pawn.class) {
                 return "p";
             }
-            if (piece.getClass() == Rook.class) {
+            if (pieceClass == Rook.class) {
                 return "r";
             }
-            if (piece.getClass() == Bishop.class) {
+            if (pieceClass == Bishop.class) {
                 return "b";
             }
-            if (piece.getClass() == Knight.class) {
+            if (pieceClass == Knight.class) {
                 return "n";
             }
-            if (piece.getClass() == King.class) {
+            if (pieceClass == King.class) {
                 return "k";
             }
-            if (piece.getClass() == Queen.class) {
+            if (pieceClass == Queen.class) {
                 return "q";
             }
             return ".";

@@ -26,6 +26,13 @@ public class Position {
         return CACHE.get(key);
     }
 
+    public static Position from(String rawPosition) {
+        Rank rank = Rank.from(rawPosition.substring(0, 1));
+        File file = File.from(Integer.parseInt(rawPosition.substring(1)));
+        CACHE.putIfAbsent(rawPosition.toUpperCase(), new Position(rank, file));
+        return CACHE.get(rawPosition.toUpperCase());
+    }
+
     public int calculateFileDistance(final Position source) {
         return file.calculateDistance(source.file);
     }

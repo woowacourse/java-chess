@@ -58,16 +58,8 @@ public class ChessGame {
     }
 
     private void executeMove(final List<String> commandAndParameters) {
-        String startRank = commandAndParameters.get(SOURCE_POSITION_INDEX)
-                .substring(0, FILE_RANK_DIVIDING_INDEX);
-        String startFile = commandAndParameters.get(SOURCE_POSITION_INDEX)
-                .substring(FILE_RANK_DIVIDING_INDEX);
-        String endRank = commandAndParameters.get(DEST_POSITION_INDEX)
-                .substring(0, FILE_RANK_DIVIDING_INDEX);
-        String endFile = commandAndParameters.get(DEST_POSITION_INDEX)
-                .substring(FILE_RANK_DIVIDING_INDEX);
-        Position source = Position.of(Rank.from(startRank), File.from(Integer.parseInt(startFile)));
-        Position destination = Position.of(Rank.from(endRank), File.from(Integer.parseInt(endFile)));
+        Position source = Position.from(commandAndParameters.get(SOURCE_POSITION_INDEX));
+        Position destination = Position.from(commandAndParameters.get(DEST_POSITION_INDEX));
         chessBoard.move(source, destination);
     }
 
