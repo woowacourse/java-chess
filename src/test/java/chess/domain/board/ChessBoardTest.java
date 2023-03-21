@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -24,6 +25,7 @@ import static chess.domain.piece.position.PiecePosition.of;
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -193,5 +195,34 @@ class ChessBoardTest {
 
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);
+    }
+
+    @Test
+    void existKingByColor_시_색깔에_해당하는_왕이_살아있는_경우_true() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.from(List.of(
+                new Piece(of("d1"), new KingMovementStrategy(BLACK)),
+                new Piece(of("d7"), new KingMovementStrategy(WHITE))
+        ));
+
+        // when & then
+        assertAll(
+                () -> assertThat(chessBoard.existKingByColor(WHITE)).isTrue(),
+                () -> assertThat(chessBoard.existKingByColor(BLACK)).isTrue()
+        );
+    }
+
+    @Test
+    void existKingByColor_시_색깔에_해당하는_왕이_없는_경우_false() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.from(List.of(
+                new Piece(of("d1"), new KingMovementStrategy(BLACK))
+        ));
+
+        // when & then
+        assertAll(
+                () -> assertThat(chessBoard.existKingByColor(WHITE)).isFalse(),
+                () -> assertThat(chessBoard.existKingByColor(BLACK)).isTrue()
+        );
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.strategy.KingMovementStrategy;
 import chess.domain.piece.strategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -70,5 +71,16 @@ class PieceTest {
         // then
         assertThat(next.piecePosition()).isEqualTo(PiecePosition.of("b7"));
         assertThat(next.pieceMovement()).isInstanceOf(RookMovementStrategy.class);
+    }
+
+    @Test
+    void 왕인지_여부를_판단한다() {
+        // given
+        final Piece king = new Piece(PiecePosition.of("b6"), new KingMovementStrategy(myColor));
+        final Piece rook = new Piece(PiecePosition.of("b7"), new RookMovementStrategy(enemyColor));
+
+        // when & then
+        assertThat(king.isKing()).isTrue();
+        assertThat(rook.isKing()).isFalse();
     }
 }

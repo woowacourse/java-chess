@@ -121,4 +121,10 @@ class KingMovementTest {
         // when & then
         assertDoesNotThrow(() -> movement.validateMove(source, dest, enemy));
     }
+
+    @Test
+    void 왕이다() {
+        // when & then
+        assertThat(movement.isKing()).isTrue();
+    }
 }

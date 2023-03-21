@@ -18,4 +18,9 @@ public class KingMovementStrategy extends AbstractPieceMovementStrategy {
             throw new IllegalArgumentException("왕은 한칸만 이동할 수 있습니다.");
         }
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

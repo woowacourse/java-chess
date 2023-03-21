@@ -23,4 +23,8 @@ public interface PieceMovementStrategy {
                       final Piece nullableEnemy) throws IllegalArgumentException;
 
     Color color();
+
+    default boolean isKing() {
+        return false;
+    }
 }

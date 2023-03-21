@@ -45,4 +45,8 @@ public class Piece {
     public PieceMovementStrategy pieceMovement() {
         return pieceMovementStrategy;
     }
+
+    public boolean isKing() {
+        return pieceMovementStrategy.isKing();
+    }
 }

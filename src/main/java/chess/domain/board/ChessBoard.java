@@ -1,11 +1,12 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.strategy.KingMovementStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ChessBoard {
 
@@ -70,11 +71,17 @@ public class ChessBoard {
                 .orElse(null);
     }
 
-    Piece findByPosition(final PiecePosition piecePosition) {
+    public Piece findByPosition(final PiecePosition piecePosition) {
         return pieces.stream()
                 .filter(piece -> piece.existIn(piecePosition))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
+    }
+
+    public boolean existKingByColor(final Color color) {
+        return pieces.stream()
+                .filter(it -> it.isKing())
+                .anyMatch(it -> it.color() == color);
     }
 
     public List<Piece> pieces() {
