@@ -5,11 +5,11 @@ public enum Color {
     BLACK,
     NONE;
     
-    public static Color reverse(Color color) {
-        if (color == WHITE) {
+    public Color reverse() {
+        if (this == WHITE) {
             return BLACK;
         }
-        if (color == BLACK) {
+        if (this == BLACK) {
             return WHITE;
         }
         return NONE;

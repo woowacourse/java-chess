@@ -35,7 +35,7 @@ public class ChessGame {
     
         checkPieceMove(source, destination);
         board.replace(source, destination);
-        turn = Color.reverse(turn);
+        turn = turn.reverse();
     }
     
     private void checkPieceMove(final Position source, final Position destination) {
