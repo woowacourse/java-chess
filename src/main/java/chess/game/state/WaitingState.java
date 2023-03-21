@@ -1,8 +1,8 @@
 package chess.game.state;
 
-import chess.domain.Board;
 import chess.dto.SquareResponse;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class WaitingState implements GameState {
     private static final String WAITING_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 대기중)";
@@ -27,7 +27,7 @@ public class WaitingState implements GameState {
     }
 
     @Override
-    public List<SquareResponse> getBoard(Board board) {
+    public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }

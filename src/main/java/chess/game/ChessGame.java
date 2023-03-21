@@ -1,5 +1,7 @@
 package chess.game;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
@@ -38,6 +40,8 @@ public class ChessGame {
     }
 
     public List<SquareResponse> getBoard() {
-        return gameState.getBoard(board);
+        return gameState.getBoard(() -> board.getBoard().entrySet().stream()
+                .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
+                .collect(toList()));
     }
 }
