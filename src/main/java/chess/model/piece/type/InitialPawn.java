@@ -1,7 +1,11 @@
 package chess.model.piece.type;
 
-import static chess.model.piece.Direction.blackPawn;
-import static chess.model.piece.Direction.whitePawn;
+import static chess.model.piece.Direction.NORTH;
+import static chess.model.piece.Direction.NORTH_EAST;
+import static chess.model.piece.Direction.NORTH_WEST;
+import static chess.model.piece.Direction.SOUTH;
+import static chess.model.piece.Direction.SOUTH_EAST;
+import static chess.model.piece.Direction.SOUTH_WEST;
 
 import chess.model.Color;
 import chess.model.piece.Direction;
@@ -10,8 +14,8 @@ import java.util.List;
 
 public class InitialPawn extends Piece {
 
-    private static final List<Direction> white = whitePawn();
-    private static final List<Direction> black = blackPawn();
+    private static final List<Direction> WHITE = List.of(NORTH, NORTH_EAST, NORTH_WEST);
+    private static final List<Direction> BLACK =List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int MINIMUM_DISTANCE = 1;
     private static final int MAXIMUM_DISTANCE = 2;
 
@@ -30,10 +34,10 @@ public class InitialPawn extends Piece {
     @Override
     boolean isRightDirection(final Direction direction) {
         if (color.isWhite()) {
-            return white.contains(direction);
+            return WHITE.contains(direction);
         }
 
-        return black.contains(direction);
+        return BLACK.contains(direction);
     }
 
     @Override

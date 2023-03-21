@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Queen extends Piece {
 
-    private static final List<Direction> directions = Direction.queen();
+    private static final List<Direction> directions = Direction.allDirections();
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);

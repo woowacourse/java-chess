@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Rook extends Piece {
 
-    private static final List<Direction> directions = Direction.rook();
+    private static final List<Direction> directions = Direction.orthogonal();
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);

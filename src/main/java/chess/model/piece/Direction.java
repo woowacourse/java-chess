@@ -44,34 +44,15 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> knight() {
-        return List.of(
-                NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
-                NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
-        );
-    }
-
-    public static List<Direction> whitePawn() {
-        return List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    }
-
-    public static List<Direction> blackPawn() {
-        return List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static List<Direction> king() {
+    public static List<Direction> allDirections() {
         return ALL_DIRECTIONS;
     }
 
-    public static List<Direction> queen() {
-        return ALL_DIRECTIONS;
-    }
-
-    public static List<Direction> rook() {
+    public static List<Direction> orthogonal() {
         return ORTHOGONAL;
     }
 
-    public static List<Direction> bishop() {
+    public static List<Direction> diagonal() {
         return DIAGONAL;
     }
 

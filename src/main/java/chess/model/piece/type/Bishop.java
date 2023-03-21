@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    private static final List<Direction> directions = Direction.bishop();
+    private static final List<Direction> directions = Direction.diagonal();
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);

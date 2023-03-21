@@ -8,7 +8,7 @@ import java.util.List;
 
 public class King extends Piece {
 
-    private static final List<Direction> directions = Direction.king();
+    private static final List<Direction> directions = Direction.allDirections();
     private static final int MAXIMUM_DISTANCE = 1;
 
     public King(final Color color) {
