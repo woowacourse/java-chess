@@ -86,6 +86,7 @@ public class Pawn extends Piece {
         return this.name.isPawn();
     }
 
+    @Override
     public void updateScoreByOtherPawnsBeingWithSameColumn() {
         this.score = new Score(HALF_SCORE_OF_PAWN);
     }

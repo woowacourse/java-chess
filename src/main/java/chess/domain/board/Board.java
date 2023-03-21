@@ -152,7 +152,7 @@ public class Board {
         if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
             positions.stream()
                     .filter(position -> findPieceFromPosition(position).isPawn())
-                    .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
+                    .forEach(position -> findPieceFromPosition(position).updateScoreByOtherPawnsBeingWithSameColumn());
         }
     }
 
@@ -188,7 +188,7 @@ public class Board {
         if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
             positions.stream()
                     .filter(position -> findPieceFromPosition(position).isPawn())
-                    .forEach(position -> findPieceFromPosition(position).updatePawnHalfScore());
+                    .forEach(position -> findPieceFromPosition(position).updateScoreByOtherPawnsBeingWithSameColumn());
         }
     }
 
