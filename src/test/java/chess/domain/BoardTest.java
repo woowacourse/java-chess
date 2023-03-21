@@ -60,7 +60,7 @@ class BoardTest {
 		}
 
 		@Test
-		@DisplayName("이동 방향으로 장애물이 존재하면 예외가 발생해야 한다. 초기 위치에서 비숍이 좌상단으로 두 칸 이동하려 하는 경우")
+		@DisplayName("이동 방향으로 장애물이 존재하면 예외가 발생해야 한다. 초기 위치에서 백팀 좌측 비숍이 좌상단으로 두 칸 이동하려 하는 경우")
 		void checkIsThereAnyObstacleTest1() {
 			Exception e = assertThrows(IllegalArgumentException.class, () -> board.movePiece(Team.WHITE, C1, A3));
 			assertEquals("말이 이동하려는 방향에 장애물이 있습니다.", e.getMessage());

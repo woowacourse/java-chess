@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RelativePositionTest {
 
 	@Nested
-	@DisplayName("단위 상대 위치로 변환하는 toUnit 메서드 테스트")
+	@DisplayName("단위 상대 위치로 변환하는 getGcdDivided 메서드 테스트")
 	class GetGcdDivided {
 
 		@Test
