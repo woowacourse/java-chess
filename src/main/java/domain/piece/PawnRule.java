@@ -1,24 +1,24 @@
-package domain.type;
+package domain.piece;
 
 import domain.Location;
 import domain.Section;
-import domain.piece.Piece;
-import domain.piece.PieceType;
+import domain.type.Direction;
+import domain.type.PieceType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-public enum SpecialRule {
+public enum PawnRule {
 
-    PAWN_ATTACK(SpecialRule::isPawnAttackCondition, SpecialRule::judgePawnAttack),
-    PAWN_MOVE_ONCE(SpecialRule::isPawnMoveOnce, SpecialRule::judgePawnMoveOnce),
-    PAWN_MOVE_TWICE(SpecialRule::isPawnMoveTwice, SpecialRule::judgePawnMoveTwice),
+    PAWN_ATTACK(PawnRule::isPawnAttackCondition, PawnRule::judgePawnAttack),
+    PAWN_MOVE_ONCE(PawnRule::isPawnMoveOnce, PawnRule::judgePawnMoveOnce),
+    PAWN_MOVE_TWICE(PawnRule::isPawnMoveTwice, PawnRule::judgePawnMoveTwice),
     NOT_EXIST((start, end) -> false, (start, end) -> false);
 
     private final BiPredicate<Section, Section> condition;
     private final BiPredicate<Section, Section> judge;
 
-    SpecialRule(BiPredicate<Section, Section> condition,
+    PawnRule(BiPredicate<Section, Section> condition,
         BiPredicate<Section, Section> judge) {
         this.condition = condition;
         this.judge = judge;
@@ -66,22 +66,22 @@ public enum SpecialRule {
 
     private static boolean judgeWhitePawnMoveTwice(final Section start, final Section end,
         final Direction direction) {
-        return start.getLocation().getRow() == 2
+        return start.getRow() == 2
             && direction.equals(Direction.UP)
             && end.getPiece().isSameType(PieceType.EMPTY);
     }
 
     private static boolean judgeBlackPawnMoveTwice(final Section start, final Section end,
         final Direction direction) {
-        return start.getLocation().getRow() == 7
+        return start.getRow() == 7
             && direction.equals(Direction.DOWN)
             && end.getPiece().isSameType(PieceType.EMPTY);
     }
 
     private static boolean isPawnAttackCondition(final Section start, final Section end) {
-        Piece startPiece = start.getPiece();
+        final Piece startPiece = start.getPiece();
         return startPiece.isSameType(PieceType.PAWN)
-            && start.getLocation().isDiagonal(end.getLocation());
+            && start.isDiagonal(end);
     }
 
     private static boolean judgePawnAttack(final Section start, final Section end) {
@@ -110,8 +110,8 @@ public enum SpecialRule {
             && start.getPiece().isEnemy(end.getPiece());
     }
 
-    public static SpecialRule getRuleBy(final Section start, final Section end) {
-        return Arrays.stream(SpecialRule.values())
+    public static PawnRule find(final Section start, final Section end) {
+        return Arrays.stream(PawnRule.values())
             .filter(rule -> rule.condition.test(start, end))
             .findAny()
             .orElse(NOT_EXIST);

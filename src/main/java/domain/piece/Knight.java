@@ -1,10 +1,10 @@
 package domain.piece;
 
-import domain.Location;
+import domain.Section;
 import domain.type.Color;
-import java.util.List;
+import domain.type.PieceType;
 
-public class Knight extends Piece {
+public class Knight extends NonSlidingPiece {
 
     private Knight(final Color color) {
         super(color, PieceType.KNIGHT);
@@ -18,21 +18,14 @@ public class Knight extends Piece {
         return new Knight(Color.WHITE);
     }
 
-    private boolean isNotMovable(final Location start, final Location end) {
+    @Override
+    protected boolean isNotMovable(final Section start, final Section end) {
         if (Math.abs(start.getColumn() - end.getColumn()) == 1) {
-            return Math.abs(start.getRow() - end.getRow()) != 2;
+            return Math.abs(start.getRow() - end.getRow()) != 2 && start.isDifferentColor(end);
         }
         if (Math.abs(start.getRow() - end.getRow()) == 1) {
-            return Math.abs(start.getColumn() - end.getColumn()) != 2;
+            return Math.abs(start.getColumn() - end.getColumn()) != 2 && start.isDifferentColor(end);
         }
-        return true;
-    }
-
-    @Override
-    public List<Location> searchPath(final Location start, final Location end) {
-        if (isNotMovable(start, end)) {
-            throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
-        }
-        return List.of(end);
+        return start.isDifferentColor(end);
     }
 }

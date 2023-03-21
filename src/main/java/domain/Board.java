@@ -34,16 +34,16 @@ public class Board {
     }
 
     public void moveWhite(final Location start, final Location end) {
-        final Piece square = findPiece(start);
-        if (square.isBlack()) {
+        final Piece piece = findPiece(start);
+        if (piece.isBlack()) {
             throw new IllegalArgumentException(WHITE_TURN_ERROR_MESSAGE);
         }
         move(start, end);
     }
 
     public void moveBlack(final Location start, final Location end) {
-        final Piece square = findPiece(start);
-        if (square.isWhite()) {
+        final Piece piece = findPiece(start);
+        if (piece.isWhite()) {
             throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
         move(start, end);
@@ -59,7 +59,7 @@ public class Board {
         final Piece endPiece = findPiece(endLocation);
         final Section start = Section.of(startLocation, startPiece);
         final Section end = Section.of(endLocation, endPiece);
-        final List<Piece> path = getPiecesInPath(startLocation, endLocation);
+        final List<Piece> path = getPiecesInPath(start, end);
         if (pathValidator.isValid(start, end, path)) {
             return;
         }
@@ -71,10 +71,12 @@ public class Board {
         board.replace(start, EmptyPiece.make());
     }
 
-    private List<Piece> getPiecesInPath(final Location start, final Location end) {
-        final Piece square = findPiece(start);
-        final List<Location> paths = square.searchPath(start, end);
-        return paths.stream().map(this::findPiece).collect(Collectors.toList());
+    private List<Piece> getPiecesInPath(final Section start, final Section end) {
+        final Piece piece = findPiece(start.getLocation());
+        final List<Location> paths = piece.searchPath(start, end);
+        return paths.stream()
+            .map(this::findPiece)
+            .collect(Collectors.toList());
     }
 
     public Piece findPiece(final Location location) {

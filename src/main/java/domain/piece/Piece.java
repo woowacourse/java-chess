@@ -1,7 +1,9 @@
 package domain.piece;
 
 import domain.Location;
+import domain.Section;
 import domain.type.Color;
+import domain.type.PieceType;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +18,9 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    abstract public List<Location> searchPath(final Location start, final Location end);
+    abstract public List<Location> searchPath(final Section start, final Section end);
+
+    abstract protected boolean isNotMovable(final Section start, final Section end);
 
     public boolean isSameType(final PieceType pieceType) {
         return this.pieceType.equals(pieceType);
@@ -31,7 +35,11 @@ public abstract class Piece {
     }
 
     public boolean isDifferentColor(final Piece piece) {
-        return !this.color.equals(piece.color);
+        return !color.equals(piece.color);
+    }
+
+    public boolean isSameColor(final Piece piece) {
+        return color.equals(piece.color);
     }
 
     public boolean isWhite() {

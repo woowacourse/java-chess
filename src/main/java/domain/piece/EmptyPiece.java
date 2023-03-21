@@ -1,7 +1,9 @@
 package domain.piece;
 
 import domain.Location;
+import domain.Section;
 import domain.type.Color;
+import domain.type.PieceType;
 import java.util.List;
 
 public class EmptyPiece extends Piece {
@@ -17,7 +19,12 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public List<Location> searchPath(Location start, Location end) {
+    public List<Location> searchPath(final Section start, final Section end) {
         throw new IllegalArgumentException(EMPTY_PIECE_CAN_NOT_MOVE_ERROR_MESSAGE);
+    }
+
+    @Override
+    protected boolean isNotMovable(final Section start, final Section end) {
+        return true;
     }
 }

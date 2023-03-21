@@ -1,7 +1,6 @@
 package domain;
 
 import domain.piece.Piece;
-import domain.type.SpecialRule;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -11,16 +10,12 @@ public class PathValidator {
         if (isBlocked(path)) {
             return false;
         }
-        final SpecialRule specialRule = SpecialRule.getRuleBy(start, end);
-        if (!specialRule.equals(SpecialRule.NOT_EXIST)) {
-            return specialRule.judge(start, end);
-        }
-        return start.getPiece().isDifferentColor(end.getPiece());
+        return start.isDifferentColor(end);
     }
 
-    private boolean isBlocked(final List<Piece> paths) {
-        return IntStream.range(0, paths.size() - 1)
-            .mapToObj(paths::get)
+    private boolean isBlocked(final List<Piece> path) {
+        return IntStream.range(0, path.size() - 1)
+            .mapToObj(path::get)
             .anyMatch(Piece::isNotEmpty);
     }
 }
