@@ -21,11 +21,11 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(
                         0,
-                        new Rook(Camp.BLACK)
+                        new Rook(Camp.BLACK, new Square(File.EMPTY, Rank.EMPTY))
                 ),
                 Arguments.of(
                         1,
-                        new Knight(Camp.BLACK)
+                        new Knight(Camp.BLACK, new Square(File.EMPTY, Rank.EMPTY))
                 ),
                 Arguments.of(
                         30,
@@ -34,7 +34,7 @@ class BoardTest {
                 ),
                 Arguments.of(
                         63,
-                        new Rook(Camp.WHITE)
+                        new Rook(Camp.WHITE, new Square(File.EMPTY, Rank.EMPTY))
                 )
         );
     }

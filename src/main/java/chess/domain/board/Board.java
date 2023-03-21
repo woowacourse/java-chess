@@ -4,7 +4,6 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class Board {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
 
-        updateIfPawn(source);
+        updateIfPawn(source, target);
         board.put(target, board.get(source));
         board.put(source, Empty.of());
     }
@@ -36,7 +35,7 @@ public class Board {
         if (isSourceAndTargetSameCamp(source, target)) {
             return false;
         }
-        return sourcePiece.isMovable(source, target, move, isPathBlocked);
+        return sourcePiece.isMovable(target, move, isPathBlocked);
     }
 
     private boolean isSourceAndTargetSameCamp(final Square source, final Square target) {
@@ -46,9 +45,9 @@ public class Board {
         return sourcePiece.isSameCamp(targetCamp);
     }
 
-    private void updateIfPawn(final Square source) {
-        if (board.get(source).isSameRole(Role.PAWN)) {
-            board.put(source, new Pawn(board.get(source).getCamp(), MOVED));
+    private void updateIfPawn(final Square source, final Square target) {
+        if (board.get(source).getClass() == Pawn.class) {
+            board.put(source, new Pawn(board.get(source).getCamp(), target, MOVED));
         }
     }
 

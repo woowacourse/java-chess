@@ -8,7 +8,6 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -63,9 +62,9 @@ class KingTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("successKingTestProvider")
     void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
-        final King king = new King(Camp.WHITE);
+        final King king = new King(Camp.WHITE, source);
 
-        assertThat(king.isMovable(source, target, move, false)).isTrue();
+        assertThat(king.isMovable(target, move, false)).isTrue();
     }
 
     private static Stream<Arguments> failKingTestProvider() {
@@ -117,19 +116,8 @@ class KingTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("failKingTestProvider")
     void Should_Fail_When_KingMove(final Square source, final Square target, final Move move) {
-        final King king = new King(Camp.WHITE);
+        final King king = new King(Camp.WHITE, source);
 
-        assertThat(king.isMovable(source, target, move, false)).isFalse();
-    }
-
-    @DisplayName("")
-    @Test()
-    void Should_Fail_When_KingMove() {
-        final King king = new King(Camp.WHITE);
-        final Square source = new Square(File.A, Rank.ONE);
-        final Square target = new Square(File.A, Rank.THREE);
-        final Move move = Move.UP_UP;
-
-        assertThat(king.isMovable(source, target, move, false)).isFalse();
+        assertThat(king.isMovable(target, move, false)).isFalse();
     }
 }

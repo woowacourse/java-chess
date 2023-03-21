@@ -7,8 +7,8 @@ import java.util.List;
 public class King extends Piece {
     private static final List<Move> possibleMoves = makePossibleMove();
 
-    public King(final Camp camp) {
-        super(camp, Role.KING);
+    public King(final Camp camp, final Square position) {
+        super(camp, position);
     }
 
     private static List<Move> makePossibleMove() {
@@ -25,12 +25,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && isNotSlidingMove(source, target, move);
+    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
+        return possibleMoves.contains(move) && isNotSlidingMove(target, move);
     }
 
-    private boolean isNotSlidingMove(final Square source, final Square target, final Move move) {
-        return move.getFile() == target.getFile() - source.getFile()
-                && move.getRank() == target.getRank() - source.getRank();
+    private boolean isNotSlidingMove(final Square target, final Move move) {
+        return move.getFile() == target.getFile() - position().getFile()
+                && move.getRank() == target.getRank() - position().getRank();
     }
 }

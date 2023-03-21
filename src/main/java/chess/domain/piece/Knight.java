@@ -7,8 +7,8 @@ import java.util.List;
 public class Knight extends Piece {
     private static final List<Move> possibleMoves = makePossibleMove();
 
-    public Knight(final Camp camp) {
-        super(camp, Role.KNIGHT);
+    public Knight(final Camp camp, final Square position) {
+        super(camp, position);
     }
 
     private static List<Move> makePossibleMove() {
@@ -25,7 +25,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move knightMove, final boolean isPathBlocked) {
-        return possibleMoves.contains(knightMove);
+    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
+        return possibleMoves.contains(move);
     }
 }

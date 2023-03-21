@@ -62,9 +62,9 @@ class KnightTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleKnightTestProvider")
     void Should_Success_When_Move(final Square source, final Square target, final Move knightMove) {
-        final Knight knight = new Knight(Camp.WHITE);
+        final Knight knight = new Knight(Camp.WHITE, source);
 
-        assertThat(knight.isMovable(source, target, knightMove,  false)).isTrue();
+        assertThat(knight.isMovable(target, knightMove, false)).isTrue();
     }
 
 }

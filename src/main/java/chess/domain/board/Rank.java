@@ -10,7 +10,8 @@ public enum Rank {
     FOUR(3),
     THREE(2),
     TWO(1),
-    ONE(0);
+    ONE(0),
+    EMPTY(-1);
 
     public static final char OFFSET_LETTER = '1';
 

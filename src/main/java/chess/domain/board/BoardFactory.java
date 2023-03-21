@@ -21,9 +21,9 @@ public final class BoardFactory {
     private static final int BOARD_LINE_SIZE = 8;
 
     public static Map<Square, Piece> createBoard() {
-        final LinkedHashMap<Square, Piece> board = new LinkedHashMap<>();
+        final Map<Square, Piece> board = new LinkedHashMap<>();
         final List<Square> squares = createSquares();
-        final List<Piece> pieces = createPieces();
+        final List<Piece> pieces = createPieces(squares);
 
         for (int i = 0; i < squares.size(); i++) {
             board.put(squares.get(i), pieces.get(i));
@@ -33,51 +33,53 @@ public final class BoardFactory {
     }
 
     private static List<Square> createSquares() {
-        return Arrays.stream(Rank.values())
+        final List<Rank> ranks = Arrays.asList(Rank.values()).subList(0, 8);
+
+        return ranks.stream()
                 .flatMap(BoardFactory::createFilesByRank)
                 .collect(Collectors.toList());
     }
 
     private static Stream<Square> createFilesByRank(final Rank rank) {
-        return Arrays.stream(File.values())
+        final List<File> files = Arrays.asList(File.values()).subList(0, 8);
+
+        return files.stream()
                 .map(file -> new Square(file, rank));
     }
 
-    private static List<Piece> createPieces() {
+    private static List<Piece> createPieces(final List<Square> squares) {
         final List<Piece> pieces = new ArrayList<>();
 
-        pieces.addAll(createFirstLine(Camp.BLACK));
-        pieces.addAll(createSecondLine(Camp.BLACK));
+        pieces.addAll(createFirstLine(Camp.BLACK, squares.subList(0, 8)));
+        pieces.addAll(createSecondLine(Camp.BLACK, squares.subList(8, 16)));
         pieces.addAll(createEmptyLine());
         pieces.addAll(createEmptyLine());
         pieces.addAll(createEmptyLine());
         pieces.addAll(createEmptyLine());
-        pieces.addAll(createSecondLine(Camp.WHITE));
-        pieces.addAll(createFirstLine(Camp.WHITE));
+        pieces.addAll(createSecondLine(Camp.WHITE, squares.subList(48, 56)));
+        pieces.addAll(createFirstLine(Camp.WHITE, squares.subList(56, 64)));
 
         return pieces;
     }
 
-    private static List<Piece> createFirstLine(final Camp camp) {
-        final List<Piece> pieces = new ArrayList<>();
-
-        pieces.add(new Rook(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Queen(camp));
-        pieces.add(new King(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Rook(camp));
-
-        return pieces;
+    private static List<Piece> createFirstLine(final Camp camp, final List<Square> squares) {
+        return List.of(
+                new Rook(camp, squares.get(0)),
+                new Knight(camp, squares.get(1)),
+                new Bishop(camp, squares.get(2)),
+                new Queen(camp, squares.get(3)),
+                new King(camp, squares.get(4)),
+                new Bishop(camp, squares.get(5)),
+                new Knight(camp, squares.get(6)),
+                new Rook(camp, squares.get(7))
+        );
     }
 
-    private static List<Piece> createSecondLine(final Camp camp) {
+    private static List<Piece> createSecondLine(final Camp camp, final List<Square> squares) {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Pawn(camp));
+            pieces.add(new Pawn(camp, squares.get(i)));
         }
 
         return pieces;

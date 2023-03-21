@@ -8,14 +8,14 @@ public class Pawn extends Piece {
     private final List<Move> possibleMoves;
     private final boolean isMoved;
 
-    public Pawn(final Camp camp) {
-        super(camp, Role.PAWN);
+    public Pawn(final Camp camp, final Square position) {
+        super(camp, position);
         this.isMoved = false;
         this.possibleMoves = makePossibleMoves();
     }
 
-    public Pawn(final Camp camp, final boolean isMoved) {
-        super(camp, Role.PAWN);
+    public Pawn(final Camp camp, final Square position, final boolean isMoved) {
+        super(camp, position);
         this.isMoved = isMoved;
         this.possibleMoves = makePossibleMoves();
     }
@@ -61,7 +61,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
+    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
         return possibleMoves.contains(move) && !isPathBlocked;
     }
 }

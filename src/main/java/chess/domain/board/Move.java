@@ -67,17 +67,6 @@ public enum Move {
         return move.file == Integer.signum(directionFile) && move.rank == Integer.signum(directionRank);
     }
 
-    public static boolean isMoveForward(final Move move) {
-        return move == Move.UP || move == Move.DOWN;
-    }
-
-    public static boolean isMoveDiagonal(final Move move) {
-        return move == Move.UP_RIGHT
-                || move == Move.DOWN_RIGHT
-                || move == Move.UP_LEFT
-                || move == Move.DOWN_LEFT;
-    }
-
     public int getFile() {
         return file;
     }

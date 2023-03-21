@@ -7,8 +7,8 @@ import java.util.List;
 public class Bishop extends Piece {
     private static final List<Move> possibleMoves = makePossibleMove();
 
-    public Bishop(final Camp camp) {
-        super(camp, Role.BISHOP);
+    public Bishop(final Camp camp, final Square position) {
+        super(camp, position);
     }
 
     private static List<Move> makePossibleMove() {
@@ -21,7 +21,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
+    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
         return possibleMoves.contains(move) && !isPathBlocked;
     }
 }
