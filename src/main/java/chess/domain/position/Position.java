@@ -58,12 +58,8 @@ public final class Position implements Comparable<Position> {
         
     }
     
-    public int getFileIndex() {
-        return this.file.getIndex();
-    }
-    
-    public int getRankIndex() {
-        return this.rank.getIndex();
+    public boolean isNotEqualTo(final Position move) {
+        return !this.equals(move);
     }
     
     private int getUnit(final int fileGap, final int sourceGap) {
@@ -131,6 +127,14 @@ public final class Position implements Comparable<Position> {
         int thisFile = this.getFileIndex();
         int otherFile = o.getFileIndex();
         return Integer.compare(thisFile, otherFile);
+    }
+    
+    public int getFileIndex() {
+        return this.file.getIndex();
+    }
+    
+    public int getRankIndex() {
+        return this.rank.getIndex();
     }
     
     public Rank getRank() {

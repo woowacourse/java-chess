@@ -12,6 +12,7 @@ public enum Rank {
     SEVEN("7", 6),
     EIGHT("8", 7);
     
+    public static final String INVALID_RANK_ERROR_MESSAGE = "[POSITION ERROR] 잘못된 좌표입니다.";
     private final String label;
     private final int index;
     
@@ -24,21 +25,18 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(value -> value.label.equals(label))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_ERROR_MESSAGE));
     }
     
     public static Rank findByIndex(int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_ERROR_MESSAGE));
     }
     
-    public String getLabel() {
-        return label;
-    }
     
     public int getIndex() {
-        return index;
+        return this.index;
     }
 }

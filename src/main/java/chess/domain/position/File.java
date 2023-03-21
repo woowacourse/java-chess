@@ -11,7 +11,7 @@ public enum File {
     F("f", 5),
     G("g", 6),
     H("h", 7);
-    public static final String INVALID_FILE_ERROR_MESSAGE = "잘못된 좌표입니다.";
+    public static final String INVALID_FILE_ERROR_MESSAGE = "[POSITION ERROR] 잘못된 좌표입니다.";
     private final String label;
     
     private final int index;
@@ -33,10 +33,6 @@ public enum File {
                 .filter(value -> value.index == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_ERROR_MESSAGE));
-    }
-    
-    public String getLabel() {
-        return this.label;
     }
     
     public int getIndex() {

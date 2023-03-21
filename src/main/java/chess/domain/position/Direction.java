@@ -21,7 +21,7 @@ public enum Direction {
     NNW(-1, 2);
     
     
-    public static final String NO_SUCH_DIRECTION_ERROR_MESSAGE = "해당하는 방향이 없습니다.";
+    public static final String NO_SUCH_DIRECTION_ERROR_MESSAGE = "[DIRECTION ERROR] 해당하는 방향이 없습니다.";
     private final int x;
     private final int y;
     

@@ -2,14 +2,12 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.List;
@@ -50,76 +48,20 @@ class BoardTest {
         }
     }
     
-    
     @Nested
-    @DisplayName("특정 위치 피스 반환 테스트")
-    class PieceAtPosition {
+    @DisplayName("Sliding Piece 움직임 제한사항")
+    class SlidingPiece {
         
         @Test
-        @DisplayName("특정 위치의 같은 색깔 피스 가져오는 테스트")
-        void get_piece() {
+        @DisplayName("경로에 다른 피스가 있을 경우")
+        void checkOtherPieceInRoute() {
             Board board = Board.create();
             board.initialize();
-            Position source = Position.from("e1");
-            Color white = Color.WHITE;
-            Piece piece = board.getValidSourcePiece(source, white);
-            assertThat(piece.getType()).isEqualTo(PieceType.KING);
-            assertThat(piece.isSameColor(white)).isTrue();
-        }
-        
-        @Test
-        @DisplayName("특정 위치에 피스가 없을 경우")
-        void no_piece() {
-            Board board = Board.create();
-            board.initialize();
-            Position source = Position.from("e4");
-            Color white = Color.WHITE;
-            assertThatThrownBy(() -> board.getValidSourcePiece(source, white)).isInstanceOf(
-                    IllegalArgumentException.class);
-        }
-        
-        @Test
-        @DisplayName("특정 위치의 피스가 색깔이 다른 경우")
-        void not_same_color_piece() {
-            Board board = Board.create();
-            board.initialize();
-            Position source = Position.from("e1");
-            Color black = Color.BLACK;
-            assertThatThrownBy(() -> board.getValidSourcePiece(source, black)).isInstanceOf(
-                    IllegalArgumentException.class);
-        }
-        
-        
-    }
-    
-    @Nested
-    @DisplayName("피스 이동경로 테스트")
-    class CheckPiece {
-        
-        @Test
-        @DisplayName("이동 경로에 다른 피스가 존재하지 않는 경우 에러가 발생하지 않는다")
-        void check_route() {
-            Board board = Board.create();
-            board.initialize();
-            assertDoesNotThrow(() -> board.checkBetweenRoute(Position.from("a2"), Position.from("a3")));
-        }
-        
-        @Test
-        @DisplayName("이동 경로에 다른 피스가 존재하는 경우 에러가 발생한다")
-        void other_piece_in_route_error() {
-            Board board = Board.create();
-            board.initialize();
-            assertThatThrownBy(() -> board.checkBetweenRoute(Position.from("a1"), Position.from("a3")))
-                    .isInstanceOf(IllegalArgumentException.class);
-        }
-        
-        @Test
-        @DisplayName("목적지에 같은 색깔의 피스가 있습니다.")
-        void same_color_piece_in_destination() {
-            Board board = Board.create();
-            board.initialize();
-            assertThatThrownBy(() -> board.checkSameColor(Position.from("a2"), Color.WHITE))
-                    .isInstanceOf(IllegalArgumentException.class);
+            board.move(Position.from("a2"), Position.from("a4"));
+            board.move(Position.from("a7"), Position.from("a5"));
+            assertThatThrownBy(() -> board.checkRoute(Position.from("a1"), Position.from("a5"))).isInstanceOf(
+                            IllegalArgumentException.class)
+                    .hasMessage(Board.OTHER_PIECE_IN_ROUTE);
         }
     }
     
@@ -132,11 +74,10 @@ class BoardTest {
         void checkOtherPieceInRoute() {
             Board board = Board.create();
             board.initialize();
-            board.replace(Position.from("a2"), Position.from("a4"));
-            board.replace(Position.from("a7"), Position.from("a5"));
-            assertThatThrownBy(() -> {
-                board.checkRestrictionForPawn(Position.from("a4"), Position.from("a5"), Color.WHITE);
-            }).isInstanceOf(IllegalArgumentException.class)
+            board.move(Position.from("a2"), Position.from("a4"));
+            board.move(Position.from("a7"), Position.from("a5"));
+            assertThatThrownBy(() -> board.checkRoute(Position.from("a4"), Position.from("a5"))).isInstanceOf(
+                            IllegalArgumentException.class)
                     .hasMessage(Board.OTHER_PIECE_IN_ROUTE);
         }
         
@@ -145,22 +86,32 @@ class BoardTest {
         void checkOtherPieceInDiagonal1() {
             Board board = Board.create();
             board.initialize();
-            assertThatThrownBy(() -> {
-                board.checkRestrictionForPawn(Position.from("a2"), Position.from("b3"), Color.WHITE);
-            }).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(Board.PAWN_CANNOT_MOVE_EMPTY_DIAGONAL);
+            assertThatThrownBy(() -> board.checkRoute(Position.from("a2"), Position.from("b3"))).isInstanceOf(
+                            IllegalArgumentException.class)
+                    .hasMessage(Board.NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION);
         }
         
-        @Test
-        @DisplayName("대각선 방향으로 움직이는데, 상대편 피스가 없는 경우 - 같은편 피스가 있는 경우")
-        void checkOtherPieceInDiagonal2() {
-            Board board = Board.create();
-            board.initialize();
-            board.replace(Position.from("b2"), Position.from("b3"));
-            assertThatThrownBy(() -> {
-                board.checkRestrictionForPawn(Position.from("a2"), Position.from("b3"), Color.WHITE);
-            }).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(Board.PIECE_CANNOT_MOVE_SAME_COLOR);
-        }
+    }
+    
+    @Test
+    @DisplayName("움직이는 대상이 다른 색깔인지 확인")
+    void checkColor() {
+        Board board = Board.create();
+        board.initialize();
+        assertThatThrownBy(() -> board.checkColor(Position.from("a2"), Position.from("a4"), Color.BLACK)).isInstanceOf(
+                        IllegalArgumentException.class)
+                .hasMessage(Board.OTHER_COLOR_IN_SOURCE);
+    }
+    
+    @Test
+    @DisplayName("목적지에 같은 색깔의 피스가 있는지 확인")
+    void checkDestination() {
+        Board board = Board.create();
+        board.initialize();
+        board.move(Position.from("b2"), Position.from("a4"));
+        assertThatThrownBy(
+                () -> board.checkColor(Position.from("a2"), Position.from("a4"), Color.WHITE)).isInstanceOf(
+                        IllegalArgumentException.class)
+                .hasMessage(Board.SAME_COLOR_IN_DESTINATION);
     }
 }
