@@ -5,6 +5,7 @@ import chess.domain.ChessGame;
 import chess.domain.CommandLine;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.NoSuchElementException;
 
 public class ChessController {
     
@@ -15,16 +16,16 @@ public class ChessController {
         OutputView.printGameStartMessage();
         ChessGame chessGame = new ChessGame();
         while (!chessGame.isGameEnd()) {
-            this.runGame(chessGame);
+            runGame(chessGame);
         }
     }
     
     private void runGame(final ChessGame chessGame) {
         try {
-            CommandLine commandLine = this.getCommandLine();
+            CommandLine commandLine = getCommandLine();
             handleCommandLine(chessGame, commandLine);
             OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
             OutputView.printError(e.getMessage());
         }
     }
