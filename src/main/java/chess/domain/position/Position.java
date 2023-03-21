@@ -7,9 +7,13 @@ public class Position {
     private final File file;
     private final Rank rank;
 
+    public Position(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
+    }
+
     public Position(final int file, final int rank) {
-        this.file = File.from(file);
-        this.rank = Rank.from(rank);
+        this(File.from(file), Rank.from(rank));
     }
 
     public Movement convertMovement(final Position from) {
@@ -29,7 +33,7 @@ public class Position {
         return findGreatestCommonDivisor(num2, num1 % num2);
     }
 
-    public Position moveBy(Movement movement) {
+    public Position moveBy(final Movement movement) {
         return movement.nextPosition(file, rank);
     }
 
