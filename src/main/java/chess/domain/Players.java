@@ -20,35 +20,37 @@ public class Players {
         return new Players(List.of(whitePlayer, blackPlayer));
     }
 
-    public void validateAlreadyExistPieceMovingRoute(
-            final Position movablePiecePosition,
-            final Position targetPosition
-    ) {
-        Position fromPosition = Position.from(movablePiecePosition.getRankValue(), movablePiecePosition.getFileValue());
-        Position toPosition = Position.from(targetPosition.getRankValue(), targetPosition.getFileValue());
+    public void validateMovingRoute(final Position fromPosition, final Position toPosition) {
+        List<Integer> directionVector = calculateDirectionVector(fromPosition, toPosition);
+        validateEachPositions(fromPosition, toPosition, directionVector);
+    }
 
+    private List<Integer> calculateDirectionVector(final Position fromPosition, final Position toPosition) {
         int diffFile = toPosition.calculateFileDistance(fromPosition.getFileValue());
         int diffRank = toPosition.calculateRankDistance(fromPosition.getRankValue());
 
         BigInteger rankAndFileGcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
         int fileDirection = diffFile / rankAndFileGcd.intValue();
         int rankDirection = diffRank / rankAndFileGcd.intValue();
+        return List.of(fileDirection, rankDirection);
+    }
 
-        Position tempPosition = fromPosition.move(fileDirection, rankDirection);
+    private void validateEachPositions(Position fromPosition, Position toPosition, List<Integer> directionVector) {
+        Position tempPosition = fromPosition.move(directionVector.get(0), directionVector.get(1));
 
         while (!tempPosition.equals(toPosition)) {
             validateIsEmpty(tempPosition);
-            tempPosition = tempPosition.move(fileDirection, rankDirection);
+            tempPosition = tempPosition.move(directionVector.get(0), directionVector.get(1));
         }
     }
 
-    private void validateIsEmpty(Position tempPosition) {
+    private void validateIsEmpty(final Position tempPosition) {
         if (isAlreadyExistPiece(tempPosition)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
     }
 
-    private boolean isAlreadyExistPiece(Position tempPosition) {
+    private boolean isAlreadyExistPiece(final Position tempPosition) {
         return getAllPosition().stream()
                 .anyMatch(position -> position.equals(tempPosition));
     }
@@ -69,12 +71,7 @@ public class Players {
                 .collect(toList());
     }
 
-    public boolean isPieceExistsInputPosition(char file, int rank) {
-        return getAllPosition().stream()
-                .anyMatch(position -> position.equals(Position.from(rank, file)));
-    }
-
-    public Position findPositionByInputPoint(String point) {
+    private Position findPositionByInputPoint(final String point) {
         Position foundPosition = Position.from(point);
         return getAllPosition().stream()
                 .filter(position -> position.equals(foundPosition))
@@ -82,39 +79,19 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
     }
 
-    public Player findPlayerByPosition(Position findPosition) {
+    private Player findPlayerByPosition(final Position findPosition) {
         return players.stream()
                 .filter(player -> player.hasPositionPiece(findPosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
     }
 
-    public Player getAnotherPlayer(Player findPlayer) {
-        for (Player player : players) {
-            if (!player.getColor().equals(findPlayer.getColor())) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    public void movePiece(String inputMovablePiece, String inputTargetPosition) {
+    public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Position targetPosition = Position.from(inputTargetPosition);
         validatePosition(inputMovablePiece);
         move(findPosition, targetPosition);
         changeTurn();
-    }
-
-
-    private void move(Position sourcePosition, Position targetPosition) {
-        validateAlreadyExistPieceMovingRoute(sourcePosition, targetPosition);
-
-        Player findPlayer = findPlayerByPosition(sourcePosition);
-        Position changedPosition = findPlayer.movePieceByInput(getAllPosition(), sourcePosition, targetPosition);
-
-        Player anotherPlayer = getAnotherPlayer(findPlayer);
-        anotherPlayer.removePiece(changedPosition);
     }
 
     private void changeTurn() {
@@ -125,7 +102,25 @@ public class Players {
         current = Color.WHITE;
     }
 
-    private void validatePosition(String inputMovablePiece) {
+
+    private void move(final Position sourcePosition, final Position targetPosition) {
+        validateMovingRoute(sourcePosition, targetPosition);
+
+        Player findPlayer = findPlayerByPosition(sourcePosition);
+        Position changedPosition = findPlayer.movePieceByInput(getAllPosition(), sourcePosition, targetPosition);
+
+        Player anotherPlayer = getAnotherPlayer(findPlayer);
+        anotherPlayer.removePiece(changedPosition);
+    }
+
+    private Player getAnotherPlayer(final Player findPlayer) {
+        return players.stream()
+                .filter(player -> !player.getColor().equals(findPlayer.getColor()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("상대 플레이어를 찾을 수 없습니다."));
+    }
+
+    private void validatePosition(final String inputMovablePiece) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Player findPlayer = findPlayerByPosition(findPosition);
         if (!current.equals(findPlayer.getColor())) {
@@ -133,12 +128,13 @@ public class Players {
         }
     }
 
-    public Player getWhitePlayer() {
-        return players.get(0);
+    private Player getPlayerByColor(Color color) {
+        return players.stream().filter(player -> player.getColor().equals(color))
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
-
-    public Player getBlackPlayer() {
-        return players.get(1);
+    public List<Piece> getPiecesByColor(Color color) {
+        return getPlayerByColor(color).getPieces();
     }
 
     @Override
