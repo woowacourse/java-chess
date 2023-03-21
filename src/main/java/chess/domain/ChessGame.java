@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.controller.GameState;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.dto.ChessBoardDto;

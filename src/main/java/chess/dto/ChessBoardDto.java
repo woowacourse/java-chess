@@ -1,6 +1,5 @@
 package chess.dto;
 
-import chess.controller.SquareMark;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.piece.PieceState;
 

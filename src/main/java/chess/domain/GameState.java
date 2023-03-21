@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.domain;
 
 public enum GameState {
     READY,
