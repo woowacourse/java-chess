@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.maker.EmptyPiecesFactory;
 import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
@@ -17,6 +18,10 @@ public class ChessGame {
 
     public static ChessGame from(final PiecesFactory piecesFactory) {
         return new ChessGame(Board.createBoardWith(piecesFactory));
+    }
+
+    public static ChessGame createWithEmptyBoard() {
+        return new ChessGame(Board.createBoardWith(new EmptyPiecesFactory()));
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
