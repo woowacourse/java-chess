@@ -33,7 +33,7 @@ public abstract class Piece {
         return side.getColor();
     }
 
-    public abstract boolean canAttack(final Direction direction, final int distance, final Piece piece);
+    public abstract boolean canAttack(final Direction direction, final int distance, final Piece targetPiece);
 
     public abstract boolean canMove(final Direction direction, final int distance);
 }

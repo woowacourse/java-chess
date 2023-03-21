@@ -31,8 +31,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
-        if (!isOpponentSide(target)) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece targetPiece) {
+        if (!isOpponentSide(targetPiece)) {
             return false;
         }
         if (this.side == Side.from(Color.WHITE)) {

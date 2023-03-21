@@ -16,7 +16,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
-        return canMove(direction, distance) && isOpponentSide(target);
+    public boolean canAttack(final Direction direction, final int distance, final Piece targetPiece) {
+        return canMove(direction, distance) && isOpponentSide(targetPiece);
     }
 }

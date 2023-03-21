@@ -19,7 +19,7 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final Piece piece) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece targetPiece) {
         throw new UnsupportedOperationException("빈 칸은 공격할 수 없습니다.");
     }
 
