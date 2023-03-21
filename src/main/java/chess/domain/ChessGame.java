@@ -37,11 +37,11 @@ public class ChessGame {
 
     private void validateSameTeam(final Square src) {
         if (!board.isSameTeam(src, team)) {
-            throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
+            throw new IllegalArgumentException("다른 팀 말을 움직여 주세요.");
         }
     }
 
-    public void changeTeam() {
+    private void changeTeam() {
         team = Team.change(team);
     }
 

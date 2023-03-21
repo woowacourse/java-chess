@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class DirectionTest {
 
-    @ParameterizedTest(name = "이동한 칸의 방향에 따라 Direction를 반환한다.")
+    @ParameterizedTest(name = "이동한 칸의 방향에 따라 Direction을 반환한다.")
     @CsvSource({
             "1,1,DIAGONAL",
             "2,1,L_SHAPE",

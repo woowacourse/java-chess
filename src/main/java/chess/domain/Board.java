@@ -1,15 +1,16 @@
 package chess.domain;
 
-import static chess.domain.piece.PieceType.INITIAL_PAWN;
-import static chess.domain.piece.PieceType.KNIGHT;
-
-import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
 import java.util.Map;
+
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
 
 public class Board {
     private final Map<Square, Piece> value;
@@ -25,28 +26,25 @@ public class Board {
 
     public void move(final Square src, final Square dst) {
         if (!canMove(src, dst)) {
-            throw new IllegalArgumentException("이동할 수 없는 칸입니다.");
+            throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
-
-        Piece piece = findPieceBy(src);
-        if (piece.getPieceType() == INITIAL_PAWN) {
-            piece = new Pawn(piece.getTeam());
+        Piece srcPiece = value.getOrDefault(src, new Empty());
+        if (srcPiece.getPieceType() == PAWN && srcPiece.isInitialPawn()) {
+            srcPiece = new Pawn(srcPiece.getTeam());
         }
-        value.put(dst, piece);
+        value.put(dst, srcPiece);
         value.remove(src);
     }
 
     private boolean canMove(final Square src, final Square dst) {
-        Piece piece = findPieceBy(src);
-        if (value.containsKey(dst)) {
-            validateTeam(piece, dst);
-        }
-
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
-        piece.validateMovement(fileInterval, rankInterval);
 
-        if (piece.getPieceType() == KNIGHT) {
+        Piece srcPiece = value.getOrDefault(src, new Empty());
+        Piece dstPiece = value.getOrDefault(dst, new Empty());
+        srcPiece.validateMovement(fileInterval, rankInterval, dstPiece);
+
+        if (srcPiece.getPieceType() == KNIGHT) {
             return true;
         }
         return canMoveNextSquare(src, fileInterval, rankInterval);
@@ -57,13 +55,6 @@ public class Board {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }
         return value.get(square);
-    }
-
-    private void validateTeam(final Piece piece, final Square dst) {
-        Piece target = findPieceBy(dst);
-        if (piece.isSameTeam(target)) {
-            throw new IllegalArgumentException("같은 팀 말을 공격할 수 없습니다.");
-        }
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {

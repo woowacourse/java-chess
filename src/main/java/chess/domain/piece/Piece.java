@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static chess.domain.Team.BLACK;
 
 import chess.domain.Team;
-import chess.domain.movement.Movement;
 
 public abstract class Piece {
     private final Team team;
@@ -14,19 +13,17 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public final void validateMovement(final int fileInterval, final int rankInterval) {
-        Movement movement = Movement.of(fileInterval, rankInterval);
-        if (!pieceType.getMovements().contains(movement)) {
-            throw new IllegalArgumentException("말이 이동할 수 없는 규칙입니다.");
+    public final void validateMovement(final int fileInterval, final int rankInterval, final Piece target) {
+        if (!isValidMove(fileInterval, rankInterval, target) || !isValidTeam(target)) {
+            throw new IllegalArgumentException("같은 팀 말은 공격할 수 없습니다.");
         }
-        validateSpecialMovement(fileInterval, rankInterval);
     }
 
-    public abstract void validateSpecialMovement(final int fileInterval, final int rankInterval);
+    public abstract boolean isValidMove(final int fileInterval, final int rankInterval, final Piece target);
 
-    public final boolean isSameTeam(final Piece target) {
-        return team.equals(target.getTeam());
-    }
+    public abstract boolean isValidTeam(final Piece target);
+
+    public abstract boolean isInitialPawn();
 
     public Team getTeam() {
         return team;

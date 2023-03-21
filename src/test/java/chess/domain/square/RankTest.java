@@ -19,7 +19,27 @@ class RankTest {
     void calculateRankInterval_fail(String src, String dst) {
         assertThatThrownBy(() -> Rank.calculate(Rank.findRankBy(src), Rank.findRankBy(dst)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 Rank을 입력했습니다.");
+                .hasMessage("잘못된 Rank를 입력했습니다.");
 
+    }
+
+    @ParameterizedTest(name = "rankInput으로 Rank를 찾는다.")
+    @CsvSource({"1,ONE", "3,THREE"})
+    void findRankByRankInput_success(String rankInput, Rank rank) {
+        assertThat(Rank.findRankBy(rankInput)).isEqualTo(rank);
+    }
+
+    @ParameterizedTest(name = "rankInput이 Rank에 존재하지 않는다면 예외가 발생한다.")
+    @CsvSource({"10", "0"})
+    void findRankByRankInput_fail(String rankInput) {
+        assertThatThrownBy(() -> Rank.findRankBy(rankInput))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 Rank를 입력했습니다.");
+    }
+
+    @ParameterizedTest(name = "방향을 이용하여 다음 Rank을 반환한다.")
+    @CsvSource({"2,THREE,ONE", "-1,SEVEN,EIGHT"})
+    void nextRank(int direction, Rank before, Rank next) {
+        assertThat(before.next(direction)).isEqualTo(next);
     }
 }

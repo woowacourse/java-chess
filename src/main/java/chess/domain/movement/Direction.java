@@ -11,6 +11,10 @@ public enum Direction {
     private static final int L_SHAPE_INCLINATION_DISTANCE = 5;
 
     public static Direction of(final int fileInterval, final int rankInterval) {
+        if (fileInterval == STRAIGHT_DISTANCE & rankInterval == STRAIGHT_DISTANCE) {
+            return OTHER;
+        }
+
         if (fileInterval == STRAIGHT_DISTANCE || rankInterval == STRAIGHT_DISTANCE) {
             return STRAIGHT;
         }

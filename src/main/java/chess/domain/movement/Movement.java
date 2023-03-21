@@ -31,6 +31,6 @@ public enum Movement {
                 .filter(movement -> movement.continuity == continuity)
                 .filter(movement -> movement.direction == direction)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 움직임입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("체스 규칙에서 존재하지 않는 움직임입니다."));
     }
 }
