@@ -11,6 +11,11 @@ public final class EmptySquare extends Square implements Cloneable {
     }
 
     @Override
+    public boolean isNotSameCampWith(final Square other) {
+        return false;
+    }
+
+    @Override
     public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return false;
     }

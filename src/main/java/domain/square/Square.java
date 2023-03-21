@@ -16,6 +16,7 @@ public abstract class Square implements Cloneable {
     public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
     public abstract boolean isExist();
     public abstract boolean canReap();
+    public abstract boolean isNotSameCampWith(Square other);
 
     protected boolean isFirstMove() {
         return isFirstMove;

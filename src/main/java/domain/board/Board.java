@@ -69,4 +69,11 @@ public final class Board {
     public Map<Coordinate, Square> getSquareLocations() {
         return squareLocations;
     }
+
+    public boolean isSameCamp(final Coordinate start, final Coordinate end) {
+        Square startSquare = findSquare(start);
+        Square endSquare = findSquare(end);
+
+        return startSquare.isNotSameCampWith(endSquare);
+    }
 }

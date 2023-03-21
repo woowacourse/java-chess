@@ -17,6 +17,15 @@ public final class ConcreteSquare extends Square implements Cloneable {
     }
 
     @Override
+    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (super.isFirstMove() && piece.isPawn()) {
+            Pawn pawn = (Pawn) piece;
+            return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
+        }
+        return piece.isReachableByRule(startCoordinate, endCoordinate);
+    }
+
+    @Override
     public boolean canReap() {
         return piece.canReap();
     }
@@ -27,12 +36,8 @@ public final class ConcreteSquare extends Square implements Cloneable {
     }
 
     @Override
-    public boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (super.isFirstMove() && piece.isPawn()) {
-            Pawn pawn = (Pawn) piece;
-            return pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
-        }
-        return piece.isReachableByRule(startCoordinate, endCoordinate);
+    public boolean isNotSameCampWith(final Square other) {
+        return this.camp == other.getCamp();
     }
 
     @Override

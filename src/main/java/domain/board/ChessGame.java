@@ -33,7 +33,7 @@ public final class ChessGame {
 
     private void validateMove(final Coordinate start, final Coordinate end) {
         validateMoveByRule(start, end);
-        validateIsEmptySquareAt(end);
+        validateIsNotSameCamp(start, end);
         validateNotBlocked(start, end);
     }
 
@@ -44,11 +44,10 @@ public final class ChessGame {
         throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 방향으로 이동할 수 없습니다.");
     }
 
-    private void validateIsEmptySquareAt(final Coordinate target) {
-        if (board.isSquareEmptyAt(target)) {
-            return;
+    private void validateIsNotSameCamp(final Coordinate start, final Coordinate end) {
+        if (board.isSameCamp(start, end)) {
+            throw new IllegalArgumentException("[ERROR] 같은 팀 기물은 잡을 수 없습니다.");
         }
-        throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 이미 존재합니다.");
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {

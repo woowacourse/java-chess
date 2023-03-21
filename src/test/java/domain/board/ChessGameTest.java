@@ -136,4 +136,33 @@ class ChessGameTest {
         assertThatCode(() -> chessGame.move(start, end))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("같은 팀이 아니라면 기물을 잡을 수 있다")
+    void catchPossibleWhenNotSameCamp() {
+        chessGame.move( // move Pawn
+                new Coordinate(1, 1),
+                new Coordinate(2, 1)
+        );
+
+        chessGame.move( // for change turn
+                new Coordinate(6, 0),
+                new Coordinate(5, 0)
+        );
+
+        chessGame.move( // move Bishop
+                new Coordinate(0, 2),
+                new Coordinate(2, 0)
+        );
+
+        chessGame.move( // for change turn
+                new Coordinate(6, 1),
+                new Coordinate(5, 1)
+        );
+
+        assertThatCode(() -> chessGame.move(
+                new Coordinate(2, 0),
+                new Coordinate(6, 4)
+        )).doesNotThrowAnyException();
+    }
 }
