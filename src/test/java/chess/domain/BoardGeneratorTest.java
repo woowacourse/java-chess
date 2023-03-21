@@ -14,11 +14,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-class PiecesTest {
+class BoardGeneratorTest {
     @Test
     @DisplayName("32개의 piece 위치를 초기화 한다.")
     void initPieces() {
-        Map<Square, Piece> pieces = Pieces.init();
+        Map<Square, Piece> pieces = BoardGenerator.init();
         Square square1 = Squares.getSquare(File.A, Rank.TWO);
         Square square2 = Squares.getSquare(File.G, Rank.EIGHT);
 

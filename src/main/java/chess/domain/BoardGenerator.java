@@ -30,19 +30,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pieces {
+public class BoardGenerator {
     private final Map<Square, Piece> pieces = new HashMap<>();
 
-    private Pieces() {
-        generatePieces();
+    private BoardGenerator() {
+        generateBoard();
     }
 
     public static Map<Square, Piece> init() {
-        Pieces pieces = new Pieces();
-        return new HashMap<>(pieces.pieces);
+        BoardGenerator boardGenerator = new BoardGenerator();
+        return new HashMap<>(boardGenerator.pieces);
     }
 
-    private void generatePieces() {
+    private void generateBoard() {
         initPieceExceptPawn(ONE, WHITE);
         initPawn(SEVEN, BLACK);
         initPieceExceptPawn(EIGHT, BLACK);

@@ -13,10 +13,10 @@ import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 
 public class Board {
-    private final Map<Square, Piece> value;
+    private final Map<Square, Piece> board;
 
     public Board() {
-        this.value = Pieces.init();
+        this.board = BoardGenerator.init();
     }
 
     public boolean isSameTeam(final Square src, final Team team) {
@@ -28,20 +28,20 @@ public class Board {
         if (!canMove(src, dst)) {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
-        Piece srcPiece = value.getOrDefault(src, new Empty());
+        Piece srcPiece = board.getOrDefault(src, new Empty());
         if (srcPiece.getPieceType() == PAWN && srcPiece.isInitialPawn()) {
             srcPiece = new Pawn(srcPiece.getTeam());
         }
-        value.put(dst, srcPiece);
-        value.remove(src);
+        board.put(dst, srcPiece);
+        board.remove(src);
     }
 
     private boolean canMove(final Square src, final Square dst) {
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
 
-        Piece srcPiece = value.getOrDefault(src, new Empty());
-        Piece dstPiece = value.getOrDefault(dst, new Empty());
+        Piece srcPiece = board.getOrDefault(src, new Empty());
+        Piece dstPiece = board.getOrDefault(dst, new Empty());
         srcPiece.validateMovement(fileInterval, rankInterval, dstPiece);
 
         if (srcPiece.getPieceType() == KNIGHT) {
@@ -51,10 +51,10 @@ public class Board {
     }
 
     private Piece findPieceBy(final Square square) {
-        if (!value.containsKey(square)) {
+        if (!board.containsKey(square)) {
             throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
         }
-        return value.get(square);
+        return board.get(square);
     }
 
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
@@ -66,7 +66,7 @@ public class Board {
         boolean notContainPiece = true;
         while (interval > 1 && notContainPiece) {
             square = square.next(fileMoveDirection, rankMoveDirection);
-            notContainPiece = !value.containsKey(square);
+            notContainPiece = !board.containsKey(square);
             interval--;
         }
         return notContainPiece;
@@ -80,7 +80,7 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public Map<Square, Piece> getValue() {
-        return value;
+    public Map<Square, Piece> getPieces() {
+        return board;
     }
 }
