@@ -28,7 +28,7 @@ public class Board {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
         validateRoute(current, destination, direction);
-        if (!isEmptySquare(destination)) {
+        if (hasPiece(destination)) {
             checkEnemy(current, destination);
             return;
         }
@@ -43,7 +43,7 @@ public class Board {
         if (next.equals(destination)) {
             return;
         }
-        if (!isEmptySquare(next)) {
+        if (hasPiece(next)) {
             throw new WrongDirectionException();
         }
         validateRoute(next, destination, direction);
@@ -75,8 +75,12 @@ public class Board {
         return board.get(current);
     }
 
+    private boolean hasPiece(final Square square) {
+        return board.containsKey(square);
+    }
+
     private boolean isEmptySquare(final Square square) {
-        return !board.containsKey(square);
+        return !hasPiece(square);
     }
 
     private void movePiece(final Square current, final Square destination) {
