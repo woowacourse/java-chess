@@ -18,7 +18,9 @@ class EndTest {
         final PlayRequest request = new PlayRequest("end", "Z0", "Z0");
 
         // when, then
-        assertThatThrownBy(() -> end.execute(request));
+        assertThatThrownBy(() -> end.execute(request))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료되었습니다.");
     }
 
     @Test
