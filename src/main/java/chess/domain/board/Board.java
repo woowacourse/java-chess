@@ -29,7 +29,7 @@ public class Board {
     }
 
     private void updateIfPawn(final Square source) {
-        if (isSameRole(source, Role.PAWN)) {
+        if (board.get(source).isSameRole(Role.PAWN)) {
             board.put(source, new Pawn(board.get(source).getCamp(), MOVED));
         }
     }
@@ -37,70 +37,35 @@ public class Board {
     private boolean isMovable(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
         final Move move = Move.calculateMove(source, target);
+        final boolean isPathBlocked = isPathBlocked(source, target, move);
 
-        if (isSameRole(source, Role.KNIGHT)) {
-            return isKnightMovable(source, target, sourcePiece);
-        }
-        if (isPathBlocked(source, target, move)) {
+        if (isTargetSameCamp(source, target)) {
             return false;
         }
-        if (isSameRole(source, Role.PAWN)) {
-            return isPawnMovable(source, target, move);
-        }
-        return sourcePiece.isMovable(source, target, move);
-    }
-
-    private boolean isKnightMovable(final Square source, final Square target, final Piece piece) {
-        final Move knightMove = Move.calculateMove(source, target);
-        return piece.isMovable(source, target, knightMove);
-    }
-
-    private boolean isPawnMovable(final Square source, final Square target, final Move move) {
-        final boolean isTargetEmpty = board.get(target).equals(Empty.of());
-
-        if (Move.isMoveForward(move) && !isTargetEmpty) {
-            return false;
-        }
-        if (Move.isMoveDiagonal(move) && (isSameCamp(source, target) || isTargetEmpty)) {
-            return false;
-        }
-        return board.get(source).isMovable(source, target, move);
+        return sourcePiece.isMovable(source, target, move, isPathBlocked);
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
-        if (move.equals(Move.EMPTY)) {
-            return isSameRole(source, Role.KNIGHT);
-        }
-        return isBlocked(source, target, move) || isSameCamp(source, target);
-    }
-
-    private boolean isBlocked(final Square source, final Square target, final Move move) {
         final Square nextSquare = source.nextSquare(source, move);
 
         if (nextSquare.equals(target)) {
             return false;
         }
         if (isEmptyPiece(nextSquare)) {
-            return isBlocked(nextSquare, target, move);
+            return isPathBlocked(nextSquare, target, move);
         }
         return true;
     }
 
-    private boolean isSameCamp(final Square source, final Square target) {
+    private boolean isTargetSameCamp(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
         final Camp targetCamp = board.get(target).getCamp();
 
         return sourcePiece.isSameCamp(targetCamp);
     }
 
-    public boolean isSameCamp(final Square square, final Camp camp) {
+    public boolean isTargetSameCamp(final Square square, final Camp camp) {
         return board.get(square).isSameCamp(camp);
-    }
-
-    private boolean isSameRole(final Square source, final Role role) {
-        final Piece sourcePiece = board.get(source);
-
-        return sourcePiece.isSameRole(role);
     }
 
     public boolean isEmptyPiece(final Square source) {

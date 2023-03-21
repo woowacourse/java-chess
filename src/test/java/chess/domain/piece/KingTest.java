@@ -65,7 +65,7 @@ class KingTest {
     void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
         final King king = new King(Camp.WHITE);
 
-        assertThat(king.isMovable(source, target, move)).isTrue();
+        assertThat(king.isMovable(source, target, move, false)).isTrue();
     }
 
     private static Stream<Arguments> failKingTestProvider() {
@@ -119,7 +119,7 @@ class KingTest {
     void Should_Fail_When_KingMove(final Square source, final Square target, final Move move) {
         final King king = new King(Camp.WHITE);
 
-        assertThat(king.isMovable(source, target, move)).isFalse();
+        assertThat(king.isMovable(source, target, move, false)).isFalse();
     }
 
     @DisplayName("")
@@ -130,6 +130,6 @@ class KingTest {
         final Square target = new Square(File.A, Rank.THREE);
         final Move move = Move.UP_UP;
 
-        assertThat(king.isMovable(source, target, move)).isFalse();
+        assertThat(king.isMovable(source, target, move, false)).isFalse();
     }
 }

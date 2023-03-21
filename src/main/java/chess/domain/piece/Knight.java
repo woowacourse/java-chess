@@ -25,7 +25,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move knightMove) {
+    public boolean isMovable(final Square source, final Square target, final Move knightMove, final boolean isPathBlocked) {
         return possibleMoves.contains(knightMove);
     }
 }

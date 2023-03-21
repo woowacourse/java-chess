@@ -25,7 +25,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move) {
-        return possibleMoves.contains(move);
+    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
+        return possibleMoves.contains(move) && !isPathBlocked;
     }
 }

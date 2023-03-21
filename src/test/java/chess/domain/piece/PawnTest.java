@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PawnTest {
+    final static boolean PATH_NOT_BLOCKED = false;
+
     @DisplayName("폰이 흰색 진영이다.")
     @Nested
     class WhitePawnTest {
@@ -22,7 +24,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.WHITE);
             final Move move = Move.UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 없을 경우 두 칸 움직일 수 있다.")
@@ -33,7 +35,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.WHITE);
             final Move move = Move.UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 있을 경우 두 칸 이상 움직일 수 없다.")
@@ -44,7 +46,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.WHITE, true);
             final Move move = Move.UP_UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isFalse();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isFalse();
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")
@@ -55,7 +57,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.WHITE);
             final Move move = Move.UP_RIGHT;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 왼쪽 대각선으로 움직일 수 있다.")
@@ -66,7 +68,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.WHITE);
             final Move move = Move.UP_LEFT;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
     }
 
@@ -81,7 +83,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.BLACK);
             final Move move = Move.DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 없을 경우 두 칸 움직일 수 있다.")
@@ -92,7 +94,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.BLACK);
             final Move move = Move.DOWN_DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 있을 경우 두 칸 이상 움직일 수 없다.")
@@ -103,7 +105,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.BLACK, true);
             final Move move = Move.DOWN_DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isFalse();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isFalse();
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")
@@ -114,7 +116,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.BLACK);
             final Move move = Move.DOWN_LEFT;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
 
         @DisplayName("폰은 왼쪽 대각선으로 움직일 수 있다.")
@@ -125,7 +127,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Camp.BLACK);
             final Move move = Move.DOWN_RIGHT;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, move, PATH_NOT_BLOCKED)).isTrue();
         }
     }
 }

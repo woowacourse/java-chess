@@ -13,10 +13,10 @@ public abstract class Piece {
         this.role = role;
     }
 
-    public boolean isMovable(final Square source, final Square target, final Move move) {
+    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
         throw new UnsupportedOperationException();
     }
-    
+
     public boolean isSameRole(final Role role) {
         return this.role == role;
     }

@@ -25,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move) {
+    public boolean isMovable(final Square source, final Square target, final Move move, final boolean isPathBlocked) {
         return possibleMoves.contains(move) && isNotSlidingMove(source, target, move);
     }
 

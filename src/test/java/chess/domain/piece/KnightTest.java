@@ -64,7 +64,7 @@ class KnightTest {
     void Should_Success_When_Move(final Square source, final Square target, final Move knightMove) {
         final Knight knight = new Knight(Camp.WHITE);
 
-        assertThat(knight.isMovable(source, target, knightMove)).isTrue();
+        assertThat(knight.isMovable(source, target, knightMove,  false)).isTrue();
     }
 
 }
