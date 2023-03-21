@@ -1,10 +1,14 @@
 package chess.domain.pieces;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -37,5 +41,21 @@ class KingTest {
         assertThatThrownBy(
             () -> king.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("King의 이동경로는 빈 리스트이다.")
+    void generate_king_move_route() {
+        // given
+        Position source = Position.from("e1");
+        Position destination = Position.from("e2");
+        King king = new King(Team.WHITE);
+        List<Position> expectRoute = List.of();
+
+        // when
+        Route result = king.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
     }
 }

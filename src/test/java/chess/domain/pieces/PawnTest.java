@@ -1,8 +1,12 @@
 package chess.domain.pieces;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,5 +83,73 @@ class PawnTest {
         // then
         assertThatThrownBy(() -> pawn.canMove(Position.from("a3"), Position.from("a5")))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("White Pawn이 첫 두칸 움직임의 경로를 만든다.")
+    void generate_white_pawn_first_move_route() {
+        // given
+        Position source = Position.from("a2");
+        Position destination = Position.from("a4");
+        Pawn pawn = new Pawn(Team.WHITE);
+        List<Position> expectRoute = List.of(
+            Position.from("a3")
+        );
+
+        // when
+        Route result = pawn.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
+    }
+
+    @Test
+    @DisplayName("white pawn의 한 칸 이동의 경로는 빈리스트를 반환한다.")
+    void generate_route_when_white_pawn_one_move() {
+        // given
+        Position source = Position.from("a2");
+        Position destination = Position.from("a3");
+        Pawn pawn = new Pawn(Team.WHITE);
+        List<Position> expectRoute = List.of();
+
+        // when
+        Route result = pawn.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
+    }
+
+    @Test
+    @DisplayName("black Pawn이 첫 두칸 움직임의 경로를 만든다.")
+    void generate_black_pawn_first_move_route() {
+        // given
+        Position source = Position.from("a7");
+        Position destination = Position.from("a5");
+        Pawn pawn = new Pawn(Team.BLACK);
+        List<Position> expectRoute = List.of(
+            Position.from("a6")
+        );
+
+        // when
+        Route result = pawn.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
+    }
+
+    @Test
+    @DisplayName("black pawn의 한 칸 이동의 경로는 빈리스트를 반환한다.")
+    void generate_route_when_black_pawn_one_move() {
+        // given
+        Position source = Position.from("a7");
+        Position destination = Position.from("a6");
+        Pawn pawn = new Pawn(Team.BLACK);
+        List<Position> expectRoute = Collections.emptyList();
+
+        // when
+        Route result = pawn.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
     }
 }

@@ -2,6 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.board.Position;
 import chess.domain.strategy.PawnDirection;
+import chess.domain.strategy.Route;
+import chess.domain.strategy.Vector;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -50,6 +52,18 @@ public class Pawn extends Piece {
         }
     }
 
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
+        PawnDirection direction = findDirection(source, destination);
+        if (direction == PawnDirection.WHITE_PAWN_DOUBLE_MOVE) {
+            return Route.generateRouteFromWhitePawnDoubleMove(direction, source, destination);
+        }
+        if (direction == PawnDirection.BLACK_PAWN_DOUBLE_MOVE) {
+            return Route.generateRouteFromBlackPawnDoubleMove(direction, source, destination);
+        }
+        return Route.generateRouteFromPawn(direction, source, destination);
+    }
+
     private void validateFirstMove(final Position source, final Position destination) {
         if (isWhiteTeam()) {
             validateWhiteTeamFirstMoveDirection(source, destination);
@@ -94,5 +108,38 @@ public class Pawn extends Piece {
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Black Pawn의 움직임으로 올바르지 않습니다."));
+    }
+
+    private PawnDirection findDirection(final Position source, final Position destiantion) {
+        if (isWhiteTeam()) {
+            return findWhitePawnDirection(source, destiantion);
+        }
+        return findBlackPawnDirection(source, destiantion);
+    }
+
+    private PawnDirection findWhitePawnDirection(final Position source, final Position destination) {
+        if (isFirstMove) {
+            return WHITE_PAWN_FIRST_MOVE_DIRECTION.stream()
+                .filter(vector -> vector.isSameDirection(source, destination))
+                .findFirst()
+                .get();
+        }
+        return WHITE_PAWN_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
+    }
+
+    private PawnDirection findBlackPawnDirection(final Position source, final Position destination) {
+        if (isFirstMove) {
+            return BLACK_PAWN_FIRST_MOVE_DIRECTION.stream()
+                .filter(vector -> vector.isSameDirection(source, destination))
+                .findFirst()
+                .get();
+        }
+        return BLACK_PAWN_MOVE_DIRECTION.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
     }
 }

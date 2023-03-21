@@ -28,6 +28,14 @@ public enum PawnDirection {
         return this.col == moveDirection.get(0) && this.row == moveDirection.get(1);
     }
 
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     private List<Integer> generateDirection(final Position source, final Position destination) {
         int subCol = destination.calculateDistanceOfCol(source);
         int subRow = destination.calculateDistanceOfRow(source);

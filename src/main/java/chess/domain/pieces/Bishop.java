@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
 import chess.domain.strategy.Vector;
 import java.util.List;
 
@@ -24,6 +25,12 @@ public class Bishop extends Piece {
         validateRangeOfMove(source, destination);
     }
 
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
+        Vector direction = findDirection(source, destination);
+        return Route.generateRouteFromOtherPiece(direction, source, destination);
+    }
+
     private void validateMoveDirection(final Position source, final Position destination) {
         BISHOP_MOVE_VECTOR.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
@@ -37,5 +44,12 @@ public class Bishop extends Piece {
         if (!(absSubOfRow < MOVE_MAX_RANGE && absSubOfCol < MOVE_MAX_RANGE)) {
             throw new IllegalArgumentException("Bishop의 이동범위는 최대 8칸 입니다.");
         }
+    }
+
+    private Vector findDirection(final Position source, final Position destination) {
+        return BISHOP_MOVE_VECTOR.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
     }
 }

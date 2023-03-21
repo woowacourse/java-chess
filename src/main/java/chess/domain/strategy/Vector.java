@@ -23,9 +23,18 @@ public enum Vector {
         this.row = row;
     }
 
+
     public boolean isSameDirection(final Position source, final Position destination) {
         List<Integer> moveDirection = generateVector(source, destination);
         return this.col == moveDirection.get(0) && this.row == moveDirection.get(1);
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
     }
 
     private List<Integer> generateVector(final Position source, final Position destination) {

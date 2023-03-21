@@ -1,6 +1,8 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.List;
 
 public class Empty extends Piece {
 
@@ -10,6 +12,11 @@ public class Empty extends Piece {
 
     @Override
     public void canMove(final Position start, final Position end) {
+        throw new IllegalArgumentException("움직일 수 없는 말입니다.");
+    }
+
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
         throw new IllegalArgumentException("움직일 수 없는 말입니다.");
     }
 }

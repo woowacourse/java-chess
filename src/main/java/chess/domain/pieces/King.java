@@ -1,7 +1,11 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Col;
 import chess.domain.board.Position;
+import chess.domain.board.Row;
+import chess.domain.strategy.Route;
 import chess.domain.strategy.Vector;
+import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
@@ -28,6 +32,12 @@ public class King extends Piece {
         validateRangeOfMove(source, destination);
     }
 
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
+        Vector direction = findDirection(source, destination);
+        return Route.generateRouteFromOtherPiece(direction, source, destination);
+    }
+
     private void validateMoveDirection(final Position source, final Position destination) {
         KING_MOVE_VECTOR.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
@@ -41,5 +51,12 @@ public class King extends Piece {
         if (!(absSubOfRow <= MOVE_MAX_RANGE && absSubOfCol <= MOVE_MAX_RANGE)) {
             throw new IllegalArgumentException("KING의 이동범위는 최대 1칸 입니다.");
         }
+    }
+
+    private Vector findDirection(final Position source, final Position destination) {
+        return KING_MOVE_VECTOR.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
     }
 }

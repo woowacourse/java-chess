@@ -1,6 +1,8 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -12,6 +14,8 @@ public abstract class Piece {
     }
 
     public abstract void canMove(final Position start, final Position end);
+
+    public abstract Route generateRoute (final Position source, final Position destination);
 
     public Team getTeam() {
         return team;

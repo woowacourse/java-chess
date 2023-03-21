@@ -1,10 +1,14 @@
 package chess.domain.pieces;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -39,5 +43,24 @@ class RookTest {
         assertThatThrownBy(
             () -> rook.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Rook의 이동경로를 만들어 준다. (a1 -> a4) 라면 경로에는 (a2, a3)가 존재한다.")
+    void generate_rook_move_rout() {
+        // given
+        Position source = Position.from("a1");
+        Position destination = Position.from("a4");
+        Rook rook = new Rook(Team.WHITE);
+        List<Position> expectRoute = List.of(
+            Position.from("a2"),
+            Position.from("a3")
+        );
+
+        // when
+        Route result = rook.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
     }
 }

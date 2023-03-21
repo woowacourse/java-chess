@@ -1,10 +1,14 @@
 package chess.domain.pieces;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.strategy.Route;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -37,5 +41,24 @@ class BishopTest {
         assertThatThrownBy(
             () -> bishop.canMove(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("bishop의 경로를 생성한다.")
+    void generate_bishop_move_route() {
+        // given
+        Position source = Position.from("c1");
+        Position destination = Position.from("f4");
+        Bishop bishop = new Bishop(Team.WHITE);
+        List<Position> expectRoute = List.of(
+            Position.from("d2"),
+            Position.from("e3")
+        );
+
+        // when
+        Route result = bishop.generateRoute(source, destination);
+
+        // then
+        assertThat(result.getRoute()).isEqualTo(expectRoute);
     }
 }

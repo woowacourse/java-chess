@@ -1,7 +1,12 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Col;
 import chess.domain.board.Position;
+import chess.domain.board.Row;
 import chess.domain.strategy.KnightDirection;
+import chess.domain.strategy.Route;
+import chess.domain.strategy.Vector;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -27,11 +32,17 @@ public class Knight extends Piece {
         validateRangeOfMove(source, destination);
     }
 
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
+        KnightDirection direction = findDirection(source, destination);
+        return Route.generateRouteFromKnight(direction, source, destination);
+    }
+
     private void validateMoveDirection(final Position source, final Position destination) {
         KNIGHT_DIRECTIONS.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Knight는 "));
+            .orElseThrow(() -> new IllegalArgumentException("Knight는 (2,1) (1,2)와 같은 방식으로 움직여야 합니다."));
     }
 
     private void validateRangeOfMove(final Position source, final Position destination) {
@@ -40,5 +51,12 @@ public class Knight extends Piece {
         if ((absSubOfRow == 2 && absSubOfCol != 1) || (absSubOfRow == 1 && absSubOfCol != 2)) {
             throw new IllegalArgumentException("Knight의 올바른 이동범위가 아닙니다.");
         }
+    }
+
+    private KnightDirection findDirection(final Position source, final Position destination) {
+        return KNIGHT_DIRECTIONS.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
     }
 }

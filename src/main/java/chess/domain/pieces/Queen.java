@@ -1,7 +1,12 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Col;
 import chess.domain.board.Position;
+import chess.domain.board.Row;
+import chess.domain.direction.Direction;
+import chess.domain.strategy.Route;
 import chess.domain.strategy.Vector;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -24,13 +29,16 @@ public class Queen extends Piece {
 
     @Override
     public void canMove(final Position source, final Position destination) {
-        validateMove(source, destination);
-    }
-
-    private void validateMove(final Position source, final Position destination) {
         validateMoveDirection(source, destination);
         validateRangeOfMove(source, destination);
     }
+
+    @Override
+    public Route generateRoute(final Position source, final Position destination) {
+        Vector direction = findDirection(source, destination);
+        return Route.generateRouteFromOtherPiece(direction, source, destination);
+    }
+
 
     private void validateMoveDirection(final Position source, final Position destination) {
         QUEEN_MOVE_VECTOR.stream()
@@ -45,5 +53,12 @@ public class Queen extends Piece {
         if (!(absSubOfRow < MOVE_MAX_RANGE && absSubOfCol < MOVE_MAX_RANGE)) {
             throw new IllegalArgumentException("QUEEN의 이동범위는 최대 8칸 입니다.");
         }
+    }
+
+    private Vector findDirection(final Position source, final Position destination) {
+        return QUEEN_MOVE_VECTOR.stream()
+            .filter(vector -> vector.isSameDirection(source, destination))
+            .findFirst()
+            .get();
     }
 }

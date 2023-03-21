@@ -6,6 +6,7 @@ import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Team;
+import chess.domain.strategy.Route;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,8 @@ public class Board {
     private void validateMove(final Position source, final Position destination) {
         Piece piece = findPiece(source);
         validateMoveSamePosition(source, destination);
-        if (!(piece instanceof Knight)) {
-            validateObstacle(source, destination);
-        }
         piece.canMove(source, destination);
+        validateObstacle(piece, source, destination);
         validatePawnMove(piece, source, destination);
         validateMoveMyTeam(source, destination);
     }
@@ -48,12 +47,12 @@ public class Board {
         }
     }
 
-    private void validateObstacle(final Position source, final Position destination) {
-        List<Position> routes = Direction.getRoute(source, destination);
+    private void validateObstacle(final Piece piece, final Position source, final Position destination) {
+        Route route = piece.generateRoute(source, destination);
 
-        boolean isObstacleExist = routes.stream()
+        boolean isObstacleExist = route.getRoute().stream()
                 .map(this::findPiece)
-                .anyMatch(piece -> !(piece instanceof Empty));
+                .anyMatch(p -> !(p instanceof Empty));
 
         if (isObstacleExist) {
             throw new IllegalArgumentException("장애물이 존재합니다.");
