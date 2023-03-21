@@ -6,8 +6,9 @@ import chessgame.domain.square.Square;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-public class PieceTypeMapper {
+public class PieceMapper {
 
     private static final Map<Class<? extends Piece>, String> mapper = new HashMap<>();
 
@@ -21,9 +22,11 @@ public class PieceTypeMapper {
     }
 
     public static String getTarget(Square square) {
+        Optional<Piece> piece = square.getPiece();
         String message = mapper.keySet()
                                .stream()
-                               .filter(pieceType -> pieceType.isInstance(square.getPieceType()))
+                               .filter(pieceType ->
+                                       piece.isPresent() && pieceType.isInstance(piece.get()))
                                .map(mapper::get)
                                .findAny()
                                .orElse(".");

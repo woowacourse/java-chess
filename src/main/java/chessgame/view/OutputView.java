@@ -23,8 +23,9 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < BOARD_FILE; file++) {
             Square square = board.get(new Coordinate(rank, file));
-            stringBuilder.append(PieceTypeMapper.getTarget(square));
+            stringBuilder.append(PieceMapper.getTarget(square));
         }
+        stringBuilder.append(System.lineSeparator());
         return stringBuilder;
     }
 

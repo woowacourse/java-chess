@@ -13,7 +13,7 @@ public abstract class Square {
         isFirstMove = true;
     }
 
-    public abstract Optional<Piece> getPieceType();
+    public abstract Optional<Piece> getPiece();
 
     public abstract boolean isSameCamp(Camp camp);
 

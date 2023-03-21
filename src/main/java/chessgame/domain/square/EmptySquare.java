@@ -23,7 +23,7 @@ public class EmptySquare extends Square {
     }
 
     @Override
-    public Optional<Piece> getPieceType() {
+    public Optional<Piece> getPiece() {
         return Optional.empty();
     }
 
