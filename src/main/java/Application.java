@@ -1,6 +1,6 @@
-import chess.board.ChessBoard;
 import chess.controller.ChessController;
-import chess.game.ChessGame;
+import chess.domain.board.ChessBoard;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 

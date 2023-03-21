@@ -1,13 +1,13 @@
 package chess.fixture;
 
-import chess.piece.Bishop;
-import chess.piece.EmptyPiece;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.piece.Team;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 
 public class PieceFixture {
 

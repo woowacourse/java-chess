@@ -1,8 +1,8 @@
 package chess.fixture;
 
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
 
 public class PositionFixture {
 

@@ -1,18 +1,18 @@
 package chess.dto;
 
-import chess.piece.Piece;
-import chess.piece.PieceType;
-import chess.piece.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 
 import java.util.Map;
 
-import static chess.piece.PieceType.BISHOP;
-import static chess.piece.PieceType.EMPTY;
-import static chess.piece.PieceType.KING;
-import static chess.piece.PieceType.KNIGHT;
-import static chess.piece.PieceType.PAWN;
-import static chess.piece.PieceType.QUEEN;
-import static chess.piece.PieceType.ROOK;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.EMPTY;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
 
 public class PieceDto {
 

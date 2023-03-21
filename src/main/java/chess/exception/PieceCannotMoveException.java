@@ -1,6 +1,6 @@
 package chess.exception;
 
-import chess.piece.PieceType;
+import chess.domain.piece.PieceType;
 
 public class PieceCannotMoveException extends RuntimeException {
 

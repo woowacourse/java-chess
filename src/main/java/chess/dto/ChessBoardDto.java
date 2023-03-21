@@ -1,10 +1,10 @@
 package chess.dto;
 
-import chess.board.ChessBoard;
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
-import chess.piece.Piece;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.piece.Piece;
 
 import java.util.Arrays;
 import java.util.Collections;
