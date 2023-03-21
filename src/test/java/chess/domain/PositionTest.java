@@ -47,6 +47,7 @@ class PositionTest {
     }
 
     @Test
+    @DisplayName("목적지 사이의 Position들이 정확히 계산되어야 한다.")
     void getRouteBetweenSourceAndTargetPosition() {
         // given
         Position source = Position.of(3, 3);
