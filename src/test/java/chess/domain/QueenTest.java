@@ -20,7 +20,7 @@ public class QueenTest {
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
                 Queen queen = Queen.getQueenOf(Side.BLACK);
-                assertThat(queen.getSide()).isEqualTo("BLACK");
+                assertThat(queen.getSide()).isEqualTo(Side.BLACK);
             }
         }
     }

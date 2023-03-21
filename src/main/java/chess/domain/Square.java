@@ -95,6 +95,10 @@ public class Square {
         return file.distanceTo(other.file);
     }
 
+    public boolean isAtRank(final Rank rank) {
+        return this.rank == rank;
+    }
+
     public int getRank() {
         return rank.getPosition();
     }

@@ -22,7 +22,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return isNotSameSide(piece) &&
                 (isLine(from, to) || isDiagonal(from, to));
     }

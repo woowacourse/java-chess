@@ -33,7 +33,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return isDiagonal(from, to) && isNotSameSide(piece);
     }
 

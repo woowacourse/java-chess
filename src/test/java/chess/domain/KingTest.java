@@ -20,7 +20,7 @@ public class KingTest {
             @DisplayName("해당 진영의 King을 1개 생성한다")
             void it_returns_king() {
                 King king = King.getKingOf(Side.BLACK);
-                assertThat(king.getSide()).isEqualTo("BLACK");
+                assertThat(king.getSide()).isEqualTo(Side.BLACK);
             }
         }
     }

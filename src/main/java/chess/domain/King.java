@@ -22,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return this.isNotSameSide(piece) && inKingsRange(from, to);
     }
 

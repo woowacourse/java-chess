@@ -2,7 +2,8 @@ package chess.domain;
 
 // TODO: Piece에 속하는 클래스는 ChessPiece 패키지에 저장하기
 public abstract class Piece {
-    final Side side;
+
+    private final Side side;
 
     Piece(final Side side) {
         this.side = side;
@@ -20,13 +21,17 @@ public abstract class Piece {
         return this.side == Side.NO_SIDE;
     }
 
-    public String getSide() {
-        return side.toString();
+    abstract public boolean isMovable(Square from, Square to, Piece piece);
+
+    protected boolean isWhite() {
+        return side == Side.WHITE;
     }
 
-    abstract boolean isMovable(Square from, Square to, Piece piece);
+    protected boolean isBlack() {
+        return side == Side.BLACK;
+    }
 
-    public boolean isPawn() {
-        return this instanceof Pawn;
+    public Side getSide() {
+        return side;
     }
 }

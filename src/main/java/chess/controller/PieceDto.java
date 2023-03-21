@@ -31,7 +31,8 @@ public class PieceDto {
         if (piece instanceof King) {
             type = "KING";
         }
-        return new PieceDto(piece.getSide(), type);
+        final Side side = piece.getSide();
+        return new PieceDto(side.toString(), type);
     }
 
     public String getSide() {

@@ -17,10 +17,6 @@ public class ChessBoard {
         if (target.isMovable(from, to, pieces.get(to)) && !hasObstacleAlongPath(from, to)) {
             pieces.put(to, target);
             pieces.put(from, EmptyPiece.getInstance());
-            if (target.isPawn()) {
-                Pawn.class.cast(target)
-                          .move();
-            }
             return true;
         }
         return false;
