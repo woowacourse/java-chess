@@ -28,7 +28,7 @@ public final class ChessGame {
         path.judgeBetweenStuck(
                 chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
                 pieceMove);
-        validateMovable(chessBoard.isPieceExist(toPosition), pieceMove, true);
+        validateLastMovable(chessBoard.isEmpty(toPosition), pieceMove, true);
 
         chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
@@ -54,16 +54,16 @@ public final class ChessGame {
     }
 
     private void validatePickExistPiece(Position fromPosition) {
-        if (!chessBoard.isPieceExist(fromPosition)) {
+        if (!chessBoard.isEmpty(fromPosition)) {
             throw new IllegalArgumentException(EMPTY_CHOICE_ERROR_MESSAGE);
         }
     }
 
     private void validateSameCamp(Position fromPosition, Position toPosition) {
-        if (!chessBoard.isPieceExist(toPosition)) {
+        if (!chessBoard.isEmpty(toPosition)) {
             return;
         }
-        if (chessBoard.choicePiece(fromPosition).isSameCamp(chessBoard.choicePiece(fromPosition))) {
+        if (chessBoard.choicePiece(fromPosition).isSameCamp(chessBoard.choicePiece(toPosition))) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }
@@ -74,8 +74,8 @@ public final class ChessGame {
         }
     }
 
-    public void validateMovable(boolean isEmpty, PieceMove pieceMove, boolean lastPiece) {
-        if (!pieceMove.isMovable(!isEmpty, lastPiece)) {
+    public void validateLastMovable(boolean isEmpty, PieceMove pieceMove, boolean lastPiece) {
+        if (!pieceMove.isMovable(isEmpty, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }

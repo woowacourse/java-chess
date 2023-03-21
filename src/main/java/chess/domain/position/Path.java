@@ -32,7 +32,7 @@ public class Path {
 
     public void judgeBetweenStuck(List<Boolean> betweenPieces, PieceMove pieceMove) {
         for (boolean isPieceExist : betweenPieces) {
-            validateMovable(!isPieceExist, pieceMove, false);
+            validateMovable(isPieceExist, pieceMove, false);
         }
     }
 

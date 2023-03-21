@@ -4,10 +4,10 @@ public final class PawnForwardMove implements PieceMove {
 
     @Override
     public boolean isMovable(boolean isEmpty, boolean isLastPiece) {
-        if (isLastPiece && !isEmpty) {
+        if (isLastPiece && isEmpty) {
             return false;
         }
 
-        return isEmpty;
+        return !isEmpty;
     }
 }

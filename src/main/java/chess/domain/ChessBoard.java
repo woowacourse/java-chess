@@ -27,12 +27,12 @@ public class ChessBoard {
     public List<Boolean> choiceBetweenPiece(List<Position> betweenPosition) {
         List<Boolean> betweenPiece = new ArrayList<>();
         for (Position position : betweenPosition) {
-            betweenPiece.add(isPieceExist(position));
+            betweenPiece.add(isEmpty(position));
         }
         return betweenPiece;
     }
 
-    public boolean isPieceExist(Position position) {
+    public boolean isEmpty(Position position) {
         return board.containsKey(position);
     }
 

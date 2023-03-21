@@ -7,6 +7,6 @@ public final class BlockingMove implements PieceMove {
         if (isLastPiece) {
             return true;
         }
-        return isEmpty;
+        return !isEmpty;
     }
 }
