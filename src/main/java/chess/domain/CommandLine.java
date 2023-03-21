@@ -44,15 +44,15 @@ public class CommandLine {
         return START.equals(this.getCommand());
     }
     
-    public String getCommand() {
-        return this.tokens.get(MAIN_COMMAND_INDEX);
-    }
-    
     public boolean isMove() {
         return MOVE.equals(this.getCommand());
     }
     
     public boolean isEnd() {
         return END.endsWith(this.getCommand());
+    }
+
+    public String getCommand() {
+        return this.tokens.get(MAIN_COMMAND_INDEX);
     }
 }

@@ -36,8 +36,8 @@ public class Position implements Comparable<Position> {
     }
 
     public Direction calculateDirection(Position destination) {
-        int fileGap = destination.file.getIndex() - this.file.getIndex();
-        int rankGap = destination.rank.getIndex() - this.rank.getIndex();
+        int fileGap = getFileGap(destination);
+        int rankGap = getRankGap(destination);
 
         int gcd = getGreatestCommonDivisor(Math.max(fileGap, rankGap), Math.min(fileGap, rankGap));
         return Direction.findByUnitVector(fileGap / gcd, rankGap / gcd);
@@ -53,23 +53,26 @@ public class Position implements Comparable<Position> {
         return Math.abs(bigNum);
     }
 
+    public int calculateDistance(Position destination) {
+        int fileGap = getFileGap(destination);
+        int rankGap = getRankGap(destination);
+
+        return fileGap * fileGap + rankGap * rankGap;
+    }
+
+    private int getFileGap(Position destination) {
+        return destination.file.getIndex() - this.file.getIndex();
+    }
+
+    private int getRankGap(Position destination) {
+        return destination.rank.getIndex() - this.rank.getIndex();
+    }
+
     public Position addDirection(Direction direction) {
         int fileIndex = file.getIndex();
         int rankIndex = rank.getIndex();
 
         return new Position(fileIndex + direction.getX(), rankIndex + direction.getY());
-    }
-
-    public int calculateDistance(Position destination) {
-        int sourceFIleIndex = getFile().getIndex();
-        int sourceRankIndex = getRank().getIndex();
-        int destinationFIleIndex = destination.getFile().getIndex();
-        int destinationRankIndex = destination.getRank().getIndex();
-
-        int fileGap = destinationFIleIndex - sourceFIleIndex;
-        int rankGap = destinationRankIndex - sourceRankIndex;
-
-        return fileGap * fileGap + rankGap * rankGap;
     }
 
     public boolean isRank(final int index) {
