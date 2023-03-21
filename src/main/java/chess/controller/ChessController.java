@@ -58,24 +58,16 @@ public class ChessController {
     }
 
     private void start(List<String> commands) {
-        try {
-            GameCommand.validateCommandSize(commands.size(), START_COMMAND_SIZE);
-            outputView.printBoard(chessGame.getBoard());
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-        }
+        GameCommand.validateCommandSize(commands.size(), START_COMMAND_SIZE);
+        outputView.printBoard(chessGame.getBoard());
     }
 
 
     private void move(List<String> commands) {
-        try {
-            GameCommand.validateCommandSize(commands.size(), MOVE_COMMAND_SIZE);
-            String source = commands.get(SOURCE_INDEX);
-            String target = commands.get(TARGET_INDEX);
-            chessGame.movePieceTo(GameCommand.getPosition(source), GameCommand.getPosition(target));
-            outputView.printBoard(chessGame.getBoard());
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-        }
+        GameCommand.validateCommandSize(commands.size(), MOVE_COMMAND_SIZE);
+        String source = commands.get(SOURCE_INDEX);
+        String target = commands.get(TARGET_INDEX);
+        chessGame.movePieceTo(GameCommand.getPosition(source), GameCommand.getPosition(target));
+        outputView.printBoard(chessGame.getBoard());
     }
 }
