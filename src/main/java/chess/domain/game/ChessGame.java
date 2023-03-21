@@ -1,9 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class ChessGame {
 
@@ -17,13 +15,7 @@ public class ChessGame {
 
     public void movePiece(final Position source, final Position target) {
         checkPlayable();
-        final Piece sourcePiece = board.findPieceByPosition(source);
-        final List<Position> movablePositions = sourcePiece.findMovablePosition(source, board);
-        checkMovable(movablePositions, target);
         board.move(source, target);
-        if (sourcePiece.isPawn()) {
-            sourcePiece.changePawnMoveState();
-        }
     }
 
     private void checkPlayable() {
@@ -31,12 +23,6 @@ public class ChessGame {
             return;
         }
         throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-    }
-
-    private void checkMovable(final List<Position> movablePositions, final Position target) {
-        if (!movablePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
     }
 
     public void start() {

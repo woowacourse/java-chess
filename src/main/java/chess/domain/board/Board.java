@@ -3,9 +3,8 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -21,6 +20,16 @@ public class Board {
 
     public void move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
+        final List<Position> movablePosition = sourcePiece.findMovablePosition(source, this);
+
+        if (!movablePosition.contains(target)) {
+            throw new IllegalArgumentException("해당 위치로 기물을 움직일 수 없습니다.");
+        }
+
+        if (sourcePiece.isPawn()) {
+            sourcePiece.changePawnMoveState();
+        }
+
         board.put(target, sourcePiece);
         board.put(source, new Empty());
     }
