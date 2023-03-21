@@ -69,7 +69,7 @@ public final class ChessGame {
     }
 
     private void validateEqualPosition(Position fromPosition, Position toPosition) {
-        if (fromPosition.isSamePosition(toPosition)) {
+        if (fromPosition.equals(toPosition)) {
             throw new IllegalArgumentException(SAME_POSITION_ERROR_MESSAGE);
         }
     }

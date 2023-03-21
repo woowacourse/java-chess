@@ -33,10 +33,6 @@ public final class Position {
         return file.subtractOrder(other.file);
     }
 
-    public boolean isSamePosition(Position toPosition) {
-        return this.file == toPosition.file && this.rank == toPosition.rank;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
