@@ -54,8 +54,8 @@ public class Position {
     }
 
     private void validateStraight(Position destination) {
-        int rankDifference = getRankDifference(destination);
-        int fileDifference = getFileDifference(destination);
+        int rankDifference = calculateRankDifference(destination);
+        int fileDifference = calculateFileDifference(destination);
         if (rankDifference == 0 || fileDifference == 0) {
             return;
         }
@@ -82,7 +82,7 @@ public class Position {
     }
 
     private List<Position> createCrossPath(Position destination) {
-        if (getRankDifference(destination) == 0) {
+        if (calculateRankDifference(destination) == 0) {
             return createFilePath(destination);
         }
         return createRankPath(destination);
@@ -118,11 +118,11 @@ public class Position {
         return rank;
     }
 
-    public int getRankDifference(Position other) {
+    public int calculateRankDifference(Position other) {
         return rank.calculateDifference(other.rank);
     }
 
-    public int getFileDifference(Position other) {
+    public int calculateFileDifference(Position other) {
         return file.calculateDifference(other.file);
     }
 }

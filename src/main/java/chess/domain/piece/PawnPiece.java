@@ -19,7 +19,7 @@ public class PawnPiece extends Piece {
     }
 
     private boolean validDirection(Position from, Position to) {
-        int rankDifference = from.getRankDifference(to);
+        int rankDifference = from.calculateRankDifference(to);
         if (rankDifference > 0 && color == Color.WHITE) {
             return true;
         }
@@ -30,8 +30,8 @@ public class PawnPiece extends Piece {
     }
 
     private boolean checkPositionChange(Position from, Position to, Piece piece) {
-        int x = from.getFileDifference(to);
-        int y = from.getRankDifference(to);
+        int x = from.calculateFileDifference(to);
+        int y = from.calculateRankDifference(to);
         if (!moved) {
             return InitialMove(x, y, piece);
         }

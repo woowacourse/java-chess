@@ -12,7 +12,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.PositionFixture.*;
+import static chess.domain.PositionFixture.A1;
+import static chess.domain.PositionFixture.A3;
+import static chess.domain.PositionFixture.B2;
+import static chess.domain.PositionFixture.C3;
+import static chess.domain.PositionFixture.D4;
+import static chess.domain.PositionFixture.E1;
+import static chess.domain.PositionFixture.E2;
+import static chess.domain.PositionFixture.E3;
+import static chess.domain.PositionFixture.E4;
+import static chess.domain.PositionFixture.E5;
+import static chess.domain.PositionFixture.F1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -49,7 +59,7 @@ public class PositionTest {
         Position position2 = A3;
 
         //when
-        int result = position1.getRankDifference(position2);
+        int result = position1.calculateRankDifference(position2);
 
         //then
         assertThat(result).isEqualTo(2);
@@ -62,7 +72,7 @@ public class PositionTest {
         Position position2 = F1;
 
         //when
-        int result = position1.getFileDifference(position2);
+        int result = position1.calculateFileDifference(position2);
 
         //then
         assertThat(result).isEqualTo(5);

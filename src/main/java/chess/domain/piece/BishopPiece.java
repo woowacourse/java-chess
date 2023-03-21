@@ -10,8 +10,8 @@ public class BishopPiece extends Piece {
 
     @Override
     public boolean canMove(Position from, Position to, Piece piece) {
-        int x = from.getFileDifference(to);
-        int y = from.getRankDifference(to);
+        int x = from.calculateFileDifference(to);
+        int y = from.calculateRankDifference(to);
         return Math.abs(x) == Math.abs(y) && piece.color != color;
     }
 
