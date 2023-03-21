@@ -3,11 +3,11 @@ package chess.controller;
 import chess.domain.chesspiece.*;
 
 public class PieceDto {
-    private final String team;
+    private final String side;
     private final String type;
 
-    private PieceDto(final String team, final String type) {
-        this.team = team;
+    private PieceDto(final String side, final String type) {
+        this.side = side;
         this.type = type;
     }
 
@@ -35,16 +35,10 @@ public class PieceDto {
     }
 
     public String getSide() {
-        return team;
+        return side;
     }
 
     public String getType() {
         return type;
-    }
-
-    @Override
-    public String toString() {
-        return
-                type;
     }
 }

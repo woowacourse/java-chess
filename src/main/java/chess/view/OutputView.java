@@ -36,38 +36,38 @@ public class OutputView {
     private void printRank(final List<PieceDto> rank) {
         for (PieceDto piece : rank) {
             final String type = piece.getType();
-            final String team = piece.getSide();
-            printPiece(type, team);
+            final String side = piece.getSide();
+            printPiece(type, side);
         }
         System.out.println();
     }
 
-    private void printPiece(final String type, final String team) {
+    private void printPiece(final String type, final String side) {
         if (Objects.equals(type, "EMPTY_PIECE")) {
             System.out.print(" . ");
         }
         if (Objects.equals(type, "PAWN")) {
-            printLetter(" p ", team);
+            printLetter(" p ", side);
         }
         if (Objects.equals(type, "ROOK")) {
-            printLetter(" r ", team);
+            printLetter(" r ", side);
         }
         if (Objects.equals(type, "KNIGHT")) {
-            printLetter(" n ", team);
+            printLetter(" n ", side);
         }
         if (Objects.equals(type, "BISHOP")) {
-            printLetter(" b ", team);
+            printLetter(" b ", side);
         }
         if (Objects.equals(type, "QUEEN")) {
-            printLetter(" q ", team);
+            printLetter(" q ", side);
         }
         if (Objects.equals(type, "KING")) {
-            printLetter(" k ", team);
+            printLetter(" k ", side);
         }
     }
 
-    private void printLetter(final String letter, final String team) {
-        if (Objects.equals(team, "BLACK")) {
+    private void printLetter(final String letter, final String side) {
+        if (Objects.equals(side, "BLACK")) {
             System.out.print(letter.toUpperCase());
             return;
         }

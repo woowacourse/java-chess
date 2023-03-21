@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
-    private static final List<Pawn> blackPawns = new ArrayList<>();
-    private static final List<Pawn> whitePawns = new ArrayList<>();
+    private static final List<Pawn> BLACK_PAWNS = new ArrayList<>();
+    private static final List<Pawn> WHITE_PAWNS = new ArrayList<>();
 
     static {
-        addPawns(blackPawns, Side.BLACK);
-        addPawns(whitePawns, Side.WHITE);
+        addPawns(BLACK_PAWNS, Side.BLACK);
+        addPawns(WHITE_PAWNS, Side.WHITE);
     }
 
     private boolean atInitialPosition;
@@ -31,9 +31,9 @@ public final class Pawn extends Piece {
 
     public static List<Pawn> of(final Side side) {
         if (side == Side.BLACK) {
-            return List.copyOf(blackPawns);
+            return List.copyOf(BLACK_PAWNS);
         }
-        return List.copyOf(whitePawns);
+        return List.copyOf(WHITE_PAWNS);
     }
 
     @Override
