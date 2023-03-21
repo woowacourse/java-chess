@@ -21,39 +21,39 @@ import domain.piece.type.Queen;
 import domain.piece.type.Rook;
 
 public class ChessBoard {
-    private final Map<Square, Piece> board = new HashMap<>();
+    private final Map<Square, Piece> board;
 
     public ChessBoard() {
+        board = new HashMap<>();
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                board.put(new Square(file, rank), Empty.getInstance());
-            }
+            setRank(file);
+        }
+    }
+
+    private void setRank(File file) {
+        for (Rank rank : Rank.values()) {
+            board.put(new Square(file, rank), Empty.getInstance());
         }
     }
 
     public void initialize() {
-        Rank WHITE_WITHOUT_PAWN_RANK = Rank.ONE;
-        Rank BLACK_WITHOUT_PAWN_RANK = Rank.EIGHT;
-        Rank WHITE_PAWN_RANK = Rank.TWO;
-        Rank BLACK_PAWN_RANK = Rank.SEVEN;
-
-        initializePawns(WHITE_PAWN_RANK, BLACK_PAWN_RANK);
-        initializeKings(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
-        initializeQueens(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
-        initializeBishops(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
-        initializeKnights(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
-        initializeRooks(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
+        initializePawns();
+        initializeKings();
+        initializeQueens();
+        initializeBishops();
+        initializeKnights();
+        initializeRooks();
     }
 
-    private void initializePawns(Rank WHITE_PAWN_RANK, Rank BLACK_PAWN_RANK) {
+    private void initializePawns() {
         List<Square> initialWhitePawnSquares = new ArrayList<>();
         List<Square> initialBlackPawnSquares = new ArrayList<>();
 
         for (File value : File.values()) {
-            initialWhitePawnSquares.add(new Square(value, WHITE_PAWN_RANK));
+            initialWhitePawnSquares.add(new Square(value, Rank.TWO));
         }
         for (File value : File.values()) {
-            initialBlackPawnSquares.add(new Square(value, BLACK_PAWN_RANK));
+            initialBlackPawnSquares.add(new Square(value, Rank.SEVEN));
         }
         for (Square initialWhitePawnSquare : initialWhitePawnSquares) {
             board.put(initialWhitePawnSquare, new Pawn(WHITE));
@@ -63,52 +63,52 @@ public class ChessBoard {
         }
     }
 
-    private void initializeKings(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
-        board.put(new Square(File.E, WHITE_WITHOUT_PAWN_RANK), new King(WHITE));
-        board.put(new Square(File.E, BLACK_WITHOUT_PAWN_RANK), new King(BLACK));
+    private void initializeKings() {
+        board.put(new Square(File.E, Rank.ONE), new King(WHITE));
+        board.put(new Square(File.E, Rank.EIGHT), new King(BLACK));
     }
 
-    private void initializeQueens(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
-        board.put(new Square(File.D, WHITE_WITHOUT_PAWN_RANK), new Queen(WHITE));
-        board.put(new Square(File.D, BLACK_WITHOUT_PAWN_RANK), new Queen(BLACK));
+    private void initializeQueens() {
+        board.put(new Square(File.D, Rank.ONE), new Queen(WHITE));
+        board.put(new Square(File.D, Rank.EIGHT), new Queen(BLACK));
     }
 
-    private void initializeBishops(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
+    private void initializeBishops() {
         List<File> initialBishopFiles = List.of(File.C, File.F);
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialBishopFile, Rank.ONE);
             board.put(square, new Bishop(WHITE));
         }
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialBishopFile, Rank.EIGHT);
             board.put(square, new Bishop(BLACK));
         }
     }
 
-    private void initializeKnights(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
+    private void initializeKnights() {
         List<File> initialKnightFiles = List.of(File.B, File.G);
 
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialKnightFile, Rank.ONE);
             board.put(square, new Knight(WHITE));
         }
 
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialKnightFile, Rank.EIGHT);
             board.put(square, new Knight(BLACK));
         }
     }
 
-    private void initializeRooks(Rank WHITE_WITHOUT_PAWN_RANK, Rank BLACK_WITHOUT_PAWN_RANK) {
+    private void initializeRooks() {
         List<File> initialRookFiles = List.of(File.A, File.H);
 
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, WHITE_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialRookFile, Rank.ONE);
             board.put(square, new Rook(WHITE));
         }
 
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, BLACK_WITHOUT_PAWN_RANK);
+            Square square = new Square(initialRookFile, Rank.EIGHT);
             board.put(square, new Rook(BLACK));
         }
     }
