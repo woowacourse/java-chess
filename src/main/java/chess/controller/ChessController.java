@@ -77,9 +77,14 @@ public class ChessController {
     }
 
     private Position searchPosition(final String command) {
-        int fromFile = command.charAt(0) - 'a' + 1;
-        int fromRank = command.charAt(1) - '0';
+        final List<String> positionCommands = List.of(command.split(""));
+        validatePositionCommandsSize(positionCommands);
+        return new Position(positionCommands.get(0), positionCommands.get(1));
+    }
 
-        return new Position(fromFile, fromRank);
+    private static void validatePositionCommandsSize(final List<String> commands) {
+        if (commands.size() != 2) {
+            throw new IllegalArgumentException("a1 ~ h8까지 좌표를 입력해 주세요");
+        }
     }
 }
