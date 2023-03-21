@@ -8,7 +8,6 @@ public class Bishop extends Piece {
         super(color);
     }
 
-
     @Override
     public boolean isValidMove(Move move, Piece targetPiece) {
         return move.isDiagonal();
