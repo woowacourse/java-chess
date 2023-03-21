@@ -26,8 +26,10 @@
     - 이동이 불가능하면 예외가 발생한다.
   - [x] 폰인지 알려준다.
 
-  - Pawn: 폰
-    - `PieceDirection.WHITE_PAWN` & `PieceDirection.BLACK_PAWN`
+  - WhitePawn: 백폰
+    - `PieceDirection.WHITE_PAWN`
+  - BlackPawn: 흑폰
+    - `PieceDirection.BLACK_PAWN`
   - Bishop: 비숍
     - `PieceDirection.DIAGONAL`
   - Knight: 나이트
