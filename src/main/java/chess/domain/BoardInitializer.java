@@ -15,15 +15,15 @@ import static chess.domain.piece.PieceType.*;
 public class BoardInitializer {
     private static final int FILE_LENGTH = 8;
 
-    private BoardInitializer() {
-    }
-
     private static final List<PieceType> ARRANGEMENT_WITHOUT_PAWN;
 
     static {
         ARRANGEMENT_WITHOUT_PAWN = List.of(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
         );
+    }
+
+    private BoardInitializer() {
     }
 
     public static void initializeBoard(Chessboard chessboard) {
