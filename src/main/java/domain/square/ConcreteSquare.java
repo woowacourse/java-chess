@@ -41,6 +41,11 @@ public final class ConcreteSquare extends Square implements Cloneable {
     }
 
     @Override
+    public boolean isKing() {
+        return piece.isKing();
+    }
+
+    @Override
     public Piece getPieceType() {
         return piece;
     }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -164,5 +165,67 @@ class ChessGameTest {
                 new Coordinate(2, 0),
                 new Coordinate(6, 4)
         )).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("킹을 잡지 않으면 게임이 끝나지 않는다")
+    void notCatchKingNotGameOver() {
+        chessGame.move( // move Pawn
+                new Coordinate(1, 1),
+                new Coordinate(2, 1)
+        );
+
+        assertThat(chessGame.isGameNotOver()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹을 잡으면 게임이 끝난다")
+    void catchKingGameOver() {
+        chessGame.move( // move Pawn
+                new Coordinate(1, 0),
+                new Coordinate(3, 0)
+        );
+
+        chessGame.move( // for change turn(move any Piece)
+                new Coordinate(6, 0),
+                new Coordinate(5, 0)
+        );
+
+        chessGame.move( // move Rook
+                new Coordinate(0, 0),
+                new Coordinate(2, 0)
+        );
+
+        chessGame.move( // for change turn(move any Piece)
+                new Coordinate(6, 1),
+                new Coordinate(5, 1)
+        );
+
+        chessGame.move( // move Rook
+                new Coordinate(2, 0),
+                new Coordinate(2, 4)
+        );
+
+        chessGame.move( // for change turn(move any Piece)
+                new Coordinate(6, 2),
+                new Coordinate(5, 2)
+        );
+
+        chessGame.move( // move Rook
+                new Coordinate(2, 4),
+                new Coordinate(6, 4)
+        );
+
+        chessGame.move( // for change turn(move any Piece)
+                new Coordinate(6, 3),
+                new Coordinate(5, 3)
+        );
+
+        chessGame.move( // Finally Rook catches King
+                new Coordinate(6, 4),
+                new Coordinate(7, 4)
+        );
+
+        assertThat(chessGame.isGameNotOver()).isFalse();
     }
 }

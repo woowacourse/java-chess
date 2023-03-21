@@ -11,4 +11,8 @@ public interface Piece {
     default boolean isPawn() {
         return false;
     }
+
+    default boolean isKing() {
+        return false;
+    }
 }

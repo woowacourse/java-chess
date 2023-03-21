@@ -16,6 +16,11 @@ public final class ChessGame {
         this.turn = new Turn(PRIORITY_GIVEN_CAMP);
     }
 
+    // TODO: 테스트를 위한 생성자 유연성 증가
+    public boolean isGameNotOver() {
+        return board.allKingAlive();
+    }
+
     public void move(final Coordinate start, final Coordinate end) {
         validateMove(start, end);
         Square findSquare = board.findSquare(start);

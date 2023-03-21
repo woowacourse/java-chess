@@ -9,8 +9,10 @@ import java.util.Map;
 
 public final class Board {
 
-    public static final int RANK_SIZE = 8;
-    public static final int FILE_SIZE = 8;
+    private static final int KING_COUNT = 2;
+
+    private static final int RANK_SIZE = 8;
+    private static final int FILE_SIZE = 8;
 
     private final Map<Coordinate, Square> squareLocations;
 
@@ -75,5 +77,11 @@ public final class Board {
         Square endSquare = findSquare(end);
 
         return startSquare.isNotSameCampWith(endSquare);
+    }
+
+    public boolean allKingAlive() {
+        return squareLocations.values().stream()
+                .filter(Square::isKing)
+                .count() == KING_COUNT;
     }
 }

@@ -16,4 +16,9 @@ public final class King implements Piece {
         return DIRECTION.canBeDirectionOf(inclination) &&
                 startCoordinate.hasDistanceLessThanOne(endCoordinate);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

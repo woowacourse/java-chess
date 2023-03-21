@@ -54,7 +54,7 @@ public final class ChessController {
             List<String> frontCommand = inputView.readCommand();
             command = Command.of(frontCommand);
             moveByCommand(chessGame, command, frontCommand);
-        } while (command.isNotEnd());
+        } while (command.isNotEnd() && chessGame.isGameNotOver());
     }
 
     private void moveByCommand(final ChessGame chessGame, final Command command, final List<String> frontCommand) {
