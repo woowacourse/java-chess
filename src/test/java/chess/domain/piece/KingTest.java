@@ -26,9 +26,9 @@ class KingTest {
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
     void get_passing_path_test() {
-        final Piece king = new King(new Position(E, EIGHT), BLACK);
+        final Piece king = new King(Position.of(E, EIGHT), BLACK);
 
-        final List<Position> path = king.getPassingPositions(new Position(E, SEVEN));
+        final List<Position> path = king.getPassingPositions(Position.of(E, SEVEN));
 
         assertThat(path).isEmpty();
     }
@@ -37,9 +37,9 @@ class KingTest {
     @CsvSource({"E, SIX", "E, EIGHT"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void invalid_target_position_throw_exception(final File file, final Rank rank) {
-        final Piece king = new King(new Position(E, EIGHT), BLACK);
+        final Piece king = new King(Position.of(E, EIGHT), BLACK);
 
-        assertThatThrownBy(() -> king.getPassingPositions(new Position(file, rank)))
+        assertThatThrownBy(() -> king.getPassingPositions(Position.of(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -48,7 +48,7 @@ class KingTest {
     @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
     void move_test(final Piece pieceInTargetPosition) {
-        final Piece originalKing = new King(new Position(E, EIGHT), BLACK);
+        final Piece originalKing = new King(Position.of(E, EIGHT), BLACK);
 
         final Piece movedKing = originalKing.move(pieceInTargetPosition);
 
@@ -57,16 +57,16 @@ class KingTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(new Position(E, SEVEN))),
-                Arguments.of(new Pawn(new Position(E, SEVEN), WHITE))
+                Arguments.of(new BlankPiece(Position.of(E, SEVEN))),
+                Arguments.of(new Pawn(Position.of(E, SEVEN), WHITE))
         );
     }
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catch_same_color_throw_exception() {
-        final Piece originalKing = new King(new Position(E, EIGHT), BLACK);
-        final Piece sameColorPiece = new Pawn(new Position(E, SEVEN), BLACK);
+        final Piece originalKing = new King(Position.of(E, EIGHT), BLACK);
+        final Piece sameColorPiece = new Pawn(Position.of(E, SEVEN), BLACK);
 
         assertThatThrownBy(() -> originalKing.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)

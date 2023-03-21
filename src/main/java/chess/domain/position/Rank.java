@@ -17,25 +17,25 @@ public enum Rank {
     EIGHT("8", 7);
 
     private static final Map<Integer, Rank> RANK_BY_INDEX = new HashMap<>();
-    private static final Map<String, Rank> RANK_BY_VALUE = new HashMap<>();
+    private static final Map<String, Rank> RANK_BY_CODE = new HashMap<>();
 
     static {
         for (Rank rank : values()) {
             RANK_BY_INDEX.put(rank.index, rank);
-            RANK_BY_VALUE.put(rank.value, rank);
+            RANK_BY_CODE.put(rank.code, rank);
         }
     }
 
-    private final String value;
+    private final String code;
     private final int index;
 
-    Rank(final String value, final int index) {
-        this.value = value;
+    Rank(final String code, final int index) {
+        this.code = code;
         this.index = index;
     }
 
-    public static Rank findByValue(final String value) {
-        return RANK_BY_VALUE.get(value);
+    public static Rank findByCode(final String code) {
+        return RANK_BY_CODE.get(code);
     }
 
     public int calculateDistance(final Rank otherRank) {
@@ -76,5 +76,9 @@ public enum Rank {
 
     public boolean isLowerThan(final Rank otherRank) {
         return this.index < otherRank.index;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

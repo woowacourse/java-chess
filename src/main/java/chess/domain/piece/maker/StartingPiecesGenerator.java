@@ -65,7 +65,7 @@ public class StartingPiecesGenerator implements PiecesGenerator {
     private static List<Piece> makeStatingPawns(final Color color) {
         final List<Piece> pawns = new ArrayList<>();
         for (File file : File.values()) {
-            final Position position = new Position(file, INITIAL_PAWN_RANKS_BY_COLOR.get(color));
+            final Position position = Position.of(file, INITIAL_PAWN_RANKS_BY_COLOR.get(color));
             pawns.add(new Pawn(position, color));
         }
         return pawns;
@@ -73,34 +73,34 @@ public class StartingPiecesGenerator implements PiecesGenerator {
 
     private static List<Piece> makeStartingRooks(final Color color) {
         return List.of(
-                new Rook(new Position(A, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Rook(new Position(H, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Rook(Position.of(A, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
+                new Rook(Position.of(H, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
         );
     }
 
     private static List<Piece> makeStartingKnight(final Color color) {
         return List.of(
-                new Knight(new Position(B, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Knight(new Position(G, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Knight(Position.of(B, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
+                new Knight(Position.of(G, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
         );
     }
 
     private static List<Piece> makeStartingBishop(final Color color) {
         return List.of(
-                new Bishop(new Position(C, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Bishop(new Position(F, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Bishop(Position.of(C, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
+                new Bishop(Position.of(F, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
         );
     }
 
     private static List<Piece> makeStartingKing(final Color color) {
         return List.of(
-                new King(new Position(E, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new King(Position.of(E, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
         );
     }
 
     private static List<Piece> makeStartingQueen(final Color color) {
         return List.of(
-                new Queen(new Position(D, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Queen(Position.of(D, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
         );
     }
 }

@@ -32,11 +32,11 @@ class BishopTest {
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
     void get_passing_path_test() {
-        final Piece bishop = new Bishop(new Position(C, EIGHT), Color.BLACK);
+        final Piece bishop = new Bishop(Position.of(C, EIGHT), Color.BLACK);
 
-        final List<Position> path = bishop.getPassingPositions(new Position(F, FIVE));
+        final List<Position> path = bishop.getPassingPositions(Position.of(F, FIVE));
 
-        assertThat(path).containsExactly(new Position(D, SEVEN), new Position(E, SIX));
+        assertThat(path).containsExactly(Position.of(D, SEVEN), Position.of(E, SIX));
     }
 
 
@@ -44,9 +44,9 @@ class BishopTest {
     @CsvSource({"E, FOUR", "C, EIGHT"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void invalid_target_position_throw_exception(final File file, final Rank rank) {
-        final Piece bishop = new Bishop(new Position(C, EIGHT), Color.BLACK);
+        final Piece bishop = new Bishop(Position.of(C, EIGHT), Color.BLACK);
 
-        assertThatThrownBy(() -> bishop.getPassingPositions(new Position(file, rank)))
+        assertThatThrownBy(() -> bishop.getPassingPositions(Position.of(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -55,7 +55,7 @@ class BishopTest {
     @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
     void move_test(final Piece pieceInTargetPosition) {
-        final Piece originalBishop = new Bishop(new Position(C, EIGHT), BLACK);
+        final Piece originalBishop = new Bishop(Position.of(C, EIGHT), BLACK);
 
         final Piece movedBishop = originalBishop.move(pieceInTargetPosition);
 
@@ -64,16 +64,16 @@ class BishopTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(new Position(F, FIVE))),
-                Arguments.of(new Pawn(new Position(F, FIVE), WHITE))
+                Arguments.of(new BlankPiece(Position.of(F, FIVE))),
+                Arguments.of(new Pawn(Position.of(F, FIVE), WHITE))
         );
     }
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catch_same_color_throw_exception() {
-        final Piece originalBishop = new Bishop(new Position(F, EIGHT), BLACK);
-        final Piece sameColorPiece = new Pawn(new Position(D, SIX), BLACK);
+        final Piece originalBishop = new Bishop(Position.of(F, EIGHT), BLACK);
+        final Piece sameColorPiece = new Pawn(Position.of(D, SIX), BLACK);
 
         assertThatThrownBy(() -> originalBishop.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)

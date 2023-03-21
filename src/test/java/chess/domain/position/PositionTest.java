@@ -30,19 +30,19 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class PositionTest {
 
-    private final Position E_FOUR = new Position(E, FOUR);
+    private final Position E_FOUR = Position.of(E, FOUR);
 
     @Test
     @DisplayName("File과 Rank정보로 위치를 만든다")
     void init_test() {
-        assertThatNoException().isThrownBy(() -> new Position(A, ONE));
+        assertThatNoException().isThrownBy(() -> Position.of(A, ONE));
     }
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, true", "E, ONE, true", "C, SIX, false", "G, TWO, false"})
     @DisplayName("상하좌우 위치에 있는지 확인한다")
     void cross_position_check_test(final File file, final Rank rank, final boolean expected) {
-        final Position otherPosition = new Position(file, rank);
+        final Position otherPosition = Position.of(file, rank);
 
         final boolean actual = E_FOUR.isInCrossPosition(otherPosition);
 
@@ -53,7 +53,7 @@ class PositionTest {
     @CsvSource({"A, FOUR, false", "E, ONE, false", "C, SIX, true", "G, TWO, true"})
     @DisplayName("대각선 위치에 있는지 확인한다")
     void diagonal_position_check_test(final File file, final Rank rank, final boolean expected) {
-        final Position otherPosition = new Position(file, rank);
+        final Position otherPosition = Position.of(file, rank);
 
         final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
 
@@ -64,7 +64,7 @@ class PositionTest {
     @CsvSource({"D, FOUR, 1", "F, FIVE, 2", "G, FIVE, 3"})
     @DisplayName("맨허튼 거리를 계산한다")
     void manhattan_distance_calculate_test(final File file, final Rank rank, final int expectedDistance) {
-        final Position otherPosition = new Position(file, rank);
+        final Position otherPosition = Position.of(file, rank);
 
         final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
 
@@ -82,11 +82,11 @@ class PositionTest {
 
     private static Stream<Arguments> provideOtherPositionAndExpectedPassingPositions() {
         return Stream.of(
-                Arguments.of(new Position(B, FOUR), List.of(new Position(D, FOUR), new Position(C, FOUR))),
-                Arguments.of(new Position(E, TWO), List.of(new Position(E, THREE))),
-                Arguments.of(new Position(F, FIVE), List.of()),
-                Arguments.of(new Position(H, ONE), List.of(new Position(F, THREE), new Position(G, TWO))),
-                Arguments.of(new Position(B, SEVEN), List.of(new Position(D, FIVE), new Position(C, SIX)))
+                Arguments.of(Position.of(B, FOUR), List.of(Position.of(D, FOUR), Position.of(C, FOUR))),
+                Arguments.of(Position.of(E, TWO), List.of(Position.of(E, THREE))),
+                Arguments.of(Position.of(F, FIVE), List.of()),
+                Arguments.of(Position.of(H, ONE), List.of(Position.of(F, THREE), Position.of(G, TWO))),
+                Arguments.of(Position.of(B, SEVEN), List.of(Position.of(D, FIVE), Position.of(C, SIX)))
         );
     }
 
@@ -94,20 +94,20 @@ class PositionTest {
     @CsvSource({"FOUR, true", "SIX, false"})
     @DisplayName("Rank가 높은지 확인한다.")
     void upper_rank_check_test(final Rank otherRank, final boolean expected) {
-        final Position position = new Position(D, FIVE);
-        final Position otherPosition = new Position(D, otherRank);
+        final Position position = Position.of(D, FIVE);
+        final Position otherPosition = Position.of(D, otherRank);
 
         final boolean actual = position.isUpperRankThan(otherPosition);
 
         assertThat(actual).isEqualTo(expected);
     }
-    
+
     @ParameterizedTest
     @CsvSource({"FOUR, false", "SIX, true"})
     @DisplayName("Rank가 낮은지 확인한다.")
     void lower_rank_check_test(final Rank otherRank, final boolean expected) {
-        final Position position = new Position(D, FIVE);
-        final Position otherPosition = new Position(D, otherRank);
+        final Position position = Position.of(D, FIVE);
+        final Position otherPosition = Position.of(D, otherRank);
 
         final boolean actual = position.isLowerRankThan(otherPosition);
 

@@ -45,10 +45,10 @@ public class ChessRunning extends ChessState {
     }
 
     private Position generatePositionBy(String fileRankInput) {
-        final String fileValue = String.valueOf(fileRankInput.charAt(0));
-        final String rankValue = String.valueOf(fileRankInput.charAt(1));
+        final String fileCode = String.valueOf(fileRankInput.charAt(0));
+        final String rankCode = String.valueOf(fileRankInput.charAt(1));
 
-        return new Position(File.findByValue(fileValue), Rank.findByValue(rankValue));
+        return Position.of(File.findByCode(fileCode), Rank.findByCode(rankCode));
     }
 
     @Override

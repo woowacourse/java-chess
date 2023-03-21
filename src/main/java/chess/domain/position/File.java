@@ -17,25 +17,25 @@ public enum File {
     H("h", 7);
 
     private static final Map<Integer, File> FILE_BY_INDEX = new HashMap<>();
-    private static final Map<String, File> FILE_BY_VALUE = new HashMap<>();
+    private static final Map<String, File> FILE_BY_CODE = new HashMap<>();
 
     static {
         for (File file : values()) {
             FILE_BY_INDEX.put(file.index, file);
-            FILE_BY_VALUE.put(file.value, file);
+            FILE_BY_CODE.put(file.code, file);
         }
     }
 
-    private final String value;
+    private final String code;
     private final int index;
 
-    File(final String value, final int index) {
-        this.value = value;
+    File(final String code, final int index) {
+        this.code = code;
         this.index = index;
     }
 
-    public static File findByValue(final String value) {
-        return FILE_BY_VALUE.get(value);
+    public static File findByCode(final String code) {
+        return FILE_BY_CODE.get(code);
     }
 
     public int calculateDistance(final File otherFile) {
@@ -68,5 +68,9 @@ public enum File {
 
     private File findByIndex(final int index) {
         return FILE_BY_INDEX.get(index);
+    }
+
+    public String getCode() {
+        return code;
     }
 }

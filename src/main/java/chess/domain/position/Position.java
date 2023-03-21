@@ -1,7 +1,9 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -9,12 +11,24 @@ public class Position {
     public static final int CROSS_ADJACENT_MANHATTAN_DISTANCE = 1;
     public static final int DIAGONAL_ADJACENT_MANHATTAN_DISTANCE = 2;
 
+    private static final Map<String, Position> positionCache = new HashMap<>();
+
     private final File file;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(final File file, final Rank rank) {
+        final String fileRankCode = file.getCode() + rank.getCode();
+        if (positionCache.containsKey(fileRankCode)) {
+            return positionCache.get(fileRankCode);
+        }
+        final Position position = new Position(file, rank);
+        positionCache.put(fileRankCode, position);
+        return position;
     }
 
     public boolean isInCrossPosition(final Position otherPosition) {
@@ -63,7 +77,7 @@ public class Position {
         final List<Rank> ranks = this.rank.getRanksTo(otherPosition.rank);
         List<Position> passingPositions = new ArrayList<>();
         for (int index = 0; index < files.size(); index++) {
-            passingPositions.add(new Position(files.get(index), ranks.get(index)));
+            passingPositions.add(Position.of(files.get(index), ranks.get(index)));
         }
         return passingPositions;
     }
@@ -71,7 +85,7 @@ public class Position {
     private List<Position> findVerticalPassingPositions(final Position otherPosition) {
         List<Position> passingPositions = new ArrayList<>();
         for (Rank rank : this.rank.getRanksTo(otherPosition.rank)) {
-            passingPositions.add(new Position(this.file, rank));
+            passingPositions.add(Position.of(this.file, rank));
         }
         return passingPositions;
     }
@@ -79,7 +93,7 @@ public class Position {
     private List<Position> findHorizontalPassingPositions(final Position otherPosition) {
         List<Position> passingPositions = new ArrayList<>();
         for (File file : this.file.getFilesTo(otherPosition.file)) {
-            passingPositions.add(new Position(file, this.rank));
+            passingPositions.add(Position.of(file, this.rank));
         }
         return passingPositions;
     }

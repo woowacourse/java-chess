@@ -28,11 +28,11 @@ class RookTest {
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
     void get_passing_path_test() {
-        final Piece rook = new Rook(new Position(A, EIGHT), BLACK);
+        final Piece rook = new Rook(Position.of(A, EIGHT), BLACK);
 
-        final List<Position> path = rook.getPassingPositions(new Position(A, FIVE));
+        final List<Position> path = rook.getPassingPositions(Position.of(A, FIVE));
 
-        assertThat(path).containsExactly(new Position(A, SEVEN), new Position(A, SIX));
+        assertThat(path).containsExactly(Position.of(A, SEVEN), Position.of(A, SIX));
     }
 
 
@@ -40,9 +40,9 @@ class RookTest {
     @CsvSource({"A, EIGHT", "E, FOUR"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void invalid_target_position_throw_exception(final File file, final Rank rank) {
-        final Piece rook = new Rook(new Position(A, EIGHT), BLACK);
+        final Piece rook = new Rook(Position.of(A, EIGHT), BLACK);
 
-        assertThatThrownBy(() -> rook.getPassingPositions(new Position(file, rank)))
+        assertThatThrownBy(() -> rook.getPassingPositions(Position.of(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -51,7 +51,7 @@ class RookTest {
     @MethodSource("providePieceInTargetPosition")
     @DisplayName("말을 이동시킨다.")
     void move_test(final Piece pieceInTargetPosition) {
-        final Piece originalRook = new Rook(new Position(A, EIGHT), BLACK);
+        final Piece originalRook = new Rook(Position.of(A, EIGHT), BLACK);
 
         final Piece movedRook = originalRook.move(pieceInTargetPosition);
 
@@ -60,16 +60,16 @@ class RookTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(new Position(A, FIVE))),
-                Arguments.of(new Pawn(new Position(A, FIVE), WHITE))
+                Arguments.of(new BlankPiece(Position.of(A, FIVE))),
+                Arguments.of(new Pawn(Position.of(A, FIVE), WHITE))
         );
     }
 
     @Test
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catch_same_color_throw_exception() {
-        final Piece originalRook = new Rook(new Position(A, EIGHT), BLACK);
-        final Piece sameColorPiece = new Pawn(new Position(A, FIVE), BLACK);
+        final Piece originalRook = new Rook(Position.of(A, EIGHT), BLACK);
+        final Piece sameColorPiece = new Pawn(Position.of(A, FIVE), BLACK);
 
         assertThatThrownBy(() -> originalRook.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)

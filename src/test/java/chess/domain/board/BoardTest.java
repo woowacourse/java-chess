@@ -37,22 +37,22 @@ class BoardTest {
     @DisplayName("초기 체스판이 정상적으로 생성된다")
     void init_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Pawn(new Position(A, SEVEN), BLACK),
-                new Rook(new Position(A, EIGHT), BLACK),
+                new Pawn(Position.of(A, SEVEN), BLACK),
+                new Rook(Position.of(A, EIGHT), BLACK),
 
-                new Pawn(new Position(A, TWO), WHITE),
-                new Rook(new Position(A, ONE), WHITE)
+                new Pawn(Position.of(A, TWO), WHITE),
+                new Rook(Position.of(A, ONE), WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
         final List<Piece> pieces = board.getExistingPieces();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .contains(
-                        tuple(new Position(A, SEVEN), BLACK, Pawn.class),
-                        tuple(new Position(A, EIGHT), BLACK, Rook.class),
+                        tuple(Position.of(A, SEVEN), BLACK, Pawn.class),
+                        tuple(Position.of(A, EIGHT), BLACK, Rook.class),
 
-                        tuple(new Position(A, TWO), WHITE, Pawn.class),
-                        tuple(new Position(A, ONE), WHITE, Rook.class)
+                        tuple(Position.of(A, TWO), WHITE, Pawn.class),
+                        tuple(Position.of(A, ONE), WHITE, Rook.class)
                 );
     }
 
@@ -60,35 +60,35 @@ class BoardTest {
     @DisplayName("말을 원하는 위치로 이동시킨다")
     void move_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK)
+                new Queen(Position.of(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        board.move(new Position(D, EIGHT), new Position(D, FIVE));
+        board.move(Position.of(D, EIGHT), Position.of(D, FIVE));
 
         final List<Piece> pieces = board.getExistingPieces();
         final Piece queen = pieces.get(0);
 
-        assertThat(queen.getPosition()).isEqualTo(new Position(D, FIVE));
+        assertThat(queen.getPosition()).isEqualTo(Position.of(D, FIVE));
     }
 
     @Test
     @DisplayName("다른 색 말을 잡는다.")
     void catch_test() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK),
-                new Pawn(new Position(D, FIVE), WHITE)
+                new Queen(Position.of(D, EIGHT), BLACK),
+                new Pawn(Position.of(D, FIVE), WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        board.move(new Position(D, EIGHT), new Position(D, FIVE));
+        board.move(Position.of(D, EIGHT), Position.of(D, FIVE));
         final List<Piece> pieces = board.getExistingPieces();
         final Piece queen = pieces.get(0);
 
         assertSoftly(softly -> {
             softly.assertThat(pieces.size()).isEqualTo(1);
             softly.assertThat(queen).isInstanceOf(Queen.class);
-            softly.assertThat(queen.getPosition()).isEqualTo(new Position(D, FIVE));
+            softly.assertThat(queen.getPosition()).isEqualTo(Position.of(D, FIVE));
         });
     }
 
@@ -98,7 +98,7 @@ class BoardTest {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of());
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, FIVE)))
+        assertThatThrownBy(() -> board.move(Position.of(D, EIGHT), Position.of(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
     }
@@ -107,11 +107,11 @@ class BoardTest {
     @DisplayName("목표 위치로 이동할 수 없다면, 예외가 발생한다")
     void invalid_target_position_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK)
+                new Queen(Position.of(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(E, SIX)))
+        assertThatThrownBy(() -> board.move(Position.of(D, EIGHT), Position.of(E, SIX)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -120,12 +120,12 @@ class BoardTest {
     @DisplayName("이동 경로에 말이 있다면, 예외가 발생한다")
     void blocked_moving_path_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK),
-                new Pawn(new Position(D, SEVEN), BLACK)
+                new Queen(Position.of(D, EIGHT), BLACK),
+                new Pawn(Position.of(D, SEVEN), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, FIVE)))
+        assertThatThrownBy(() -> board.move(Position.of(D, EIGHT), Position.of(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 말이 있습니다.");
     }
@@ -134,12 +134,12 @@ class BoardTest {
     @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
     void catching_same_color_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK),
-                new Pawn(new Position(D, SEVEN), BLACK)
+                new Queen(Position.of(D, EIGHT), BLACK),
+                new Pawn(Position.of(D, SEVEN), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, SEVEN)))
+        assertThatThrownBy(() -> board.move(Position.of(D, EIGHT), Position.of(D, SEVEN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
@@ -149,11 +149,11 @@ class BoardTest {
     @DisplayName("같은 색인지 확인한다")
     void ch_is_same_color_test(final Color color, final boolean expected) {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
-                new Queen(new Position(D, EIGHT), BLACK)
+                new Queen(Position.of(D, EIGHT), BLACK)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
 
-        final boolean actual = board.isSameColor(new Position(D, EIGHT), color);
+        final boolean actual = board.isSameColor(Position.of(D, EIGHT), color);
 
         assertThat(actual).isEqualTo(expected);
     }
