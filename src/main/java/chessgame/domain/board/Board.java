@@ -28,10 +28,11 @@ public class Board {
     public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
             Square findSquare = board.get(startCoordinate);
-
             board.put(startCoordinate, new EmptySquare());
             board.put(endCoordinate, findSquare);
+            return;
         }
+        throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");
     }
 
     private boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
