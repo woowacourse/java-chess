@@ -148,4 +148,8 @@ public class Board {
         }
         return pawnCount * Role.PAWN.getScore() / 2.0;
     }
+
+    public Team getTurn() {
+        return turn;
+    }
 }

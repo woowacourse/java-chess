@@ -1,5 +1,6 @@
 package chess.game.state;
 
+import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
 import java.util.function.DoubleSupplier;
@@ -15,4 +16,6 @@ public interface GameState {
     List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier);
 
     double getTeamScore(DoubleSupplier doubleSupplier);
+
+    Team getTurn(Supplier<Team> supplier);
 }

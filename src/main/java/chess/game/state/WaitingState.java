@@ -1,5 +1,6 @@
 package chess.game.state;
 
+import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
 import java.util.function.DoubleSupplier;
@@ -34,6 +35,11 @@ public class WaitingState implements GameState {
 
     @Override
     public double getTeamScore(DoubleSupplier doubleSupplier) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public Team getTurn(Supplier<Team> supplier) {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }

@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
 
@@ -66,5 +67,19 @@ public class OutputView {
             return "White 팀 승리";
         }
         return "무승부";
+    }
+
+    public static void printTurn(Team team) {
+        System.out.println(getTeamName(team) + " 팀의 차례입니다.");
+    }
+
+    private static String getTeamName(Team team) {
+        if (team == Team.BLACK) {
+            return "Black";
+        }
+        if (team == Team.WHITE) {
+            return "White";
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 팀은 이름이 없습니다.");
     }
 }
