@@ -6,6 +6,14 @@ public enum Side {
     WHITE,
     NEUTRALITY;
 
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
     public boolean isNeutrality() {
         return this == NEUTRALITY;
     }
