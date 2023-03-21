@@ -21,21 +21,19 @@ public final class Bishop extends MovablePiece {
         final List<MovingStrategy> rawStrategies = List.of(
                 new MoveRightUp(), new MoveRightDown(),
                 new MoveLeftDown(), new MoveLeftUp());
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Bishop(color, strategies);
     }
 
     @Override
-    public List<Position> createPath(final Position source, final Position target,
-                                      final MovingStrategy movingStrategy) {
-        List<Position> path = new ArrayList<>();
-        Position currentPosition = source;
-        do {
-            currentPosition = movingStrategy.move(currentPosition);
+    public List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
+        final List<Position> path = new ArrayList<>();
+        Position currentPosition = movingStrategy.move(source);
+        while (!currentPosition.equals(target)) {
             path.add(currentPosition);
-        } while (!currentPosition.isUpDown(target) && !currentPosition.isOnDiagonal(target));
-
+            currentPosition = movingStrategy.move(currentPosition);
+        }
         return path;
     }
 }

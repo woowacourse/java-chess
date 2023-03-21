@@ -65,4 +65,12 @@ public final class Position {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
 }

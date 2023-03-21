@@ -18,24 +18,22 @@ public final class Rook extends MovablePiece {
     }
 
     public static Rook create(final Color color) {
-        final List<MovingStrategy> rawStrategies = List.of(new MoveUp(), new MoveDown(),
+        final List<MovingStrategy> rawStrategies = List.of(
+                new MoveUp(), new MoveDown(),
                 new MoveLeft(), new MoveRight());
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Rook(color, strategies);
     }
 
     @Override
-    public List<Position> createPath(final Position source, final Position target,
-                                      final MovingStrategy movingStrategy) {
+    public List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
         List<Position> path = new ArrayList<>();
-        Position currentPosition = source;
-
-        do {
-            currentPosition = movingStrategy.move(currentPosition);
+        Position currentPosition = movingStrategy.move(source);
+        while (!currentPosition.equals(target)) {
             path.add(currentPosition);
-        } while (!currentPosition.isUpDown(target) && !currentPosition.isOnDiagonal(target));
-
+            currentPosition = movingStrategy.move(currentPosition);
+        }
         return path;
     }
 }
