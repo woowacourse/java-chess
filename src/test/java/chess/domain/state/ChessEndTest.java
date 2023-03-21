@@ -6,9 +6,6 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionFixture.A2;
 import static chess.domain.state.ChessEnd.GAME_END_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,7 +23,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessEndTest {
 
-    private static final Pawn pawn = new Pawn(Position.of(File.A, Rank.TWO), Color.WHITE);
+    private static final Pawn pawn = new Pawn(A2, Color.WHITE);
 
     @ParameterizedTest
     @MethodSource("provideCommand")
@@ -56,7 +54,7 @@ class ChessEndTest {
 
         assertSoftly(softly -> {
             softly.assertThat(piece).isInstanceOf(Pawn.class);
-            softly.assertThat(piece.getPosition()).isEqualTo(Position.of(File.A, Rank.TWO));
+            softly.assertThat(piece.getPosition()).isEqualTo(A2);
             softly.assertThat(piece.getColor()).isEqualTo(Color.WHITE);
         });
 

@@ -9,11 +9,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
+import static chess.PositionFixture.A1;
+import static chess.PositionFixture.C8;
 import static chess.domain.piece.property.Color.BLACK;
-import static chess.domain.position.File.A;
-import static chess.domain.position.File.C;
-import static chess.domain.position.Rank.EIGHT;
-import static chess.domain.position.Rank.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -45,14 +43,14 @@ class PieceTest {
     @Test
     @DisplayName("위치를 가지는 말이 정상적으로 생성이 된다")
     void init_test() {
-        assertThatNoException().isThrownBy(() -> new TestPiece(Position.of(A, ONE), BLACK));
+        assertThatNoException().isThrownBy(() -> new TestPiece(A1, BLACK));
     }
 
     @ParameterizedTest()
     @DisplayName("같은 색인지 확인한다")
     @CsvSource({"BLACK, true", "WHITE, false"})
     void check_is_same_color_test(final Color otherColor, final boolean expected) {
-        final Piece piece = new TestPiece(Position.of(C, EIGHT), BLACK);
+        final Piece piece = new TestPiece(C8, BLACK);
 
         final boolean actual = piece.isSameColor(otherColor);
 

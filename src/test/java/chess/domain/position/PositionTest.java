@@ -10,27 +10,26 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static chess.PositionFixture.B4;
+import static chess.PositionFixture.B7;
+import static chess.PositionFixture.C4;
+import static chess.PositionFixture.C6;
+import static chess.PositionFixture.D4;
+import static chess.PositionFixture.D5;
+import static chess.PositionFixture.E2;
+import static chess.PositionFixture.E3;
+import static chess.PositionFixture.E4;
+import static chess.PositionFixture.F3;
+import static chess.PositionFixture.F5;
+import static chess.PositionFixture.G2;
+import static chess.PositionFixture.H1;
 import static chess.domain.position.File.A;
-import static chess.domain.position.File.B;
-import static chess.domain.position.File.C;
 import static chess.domain.position.File.D;
-import static chess.domain.position.File.E;
-import static chess.domain.position.File.F;
-import static chess.domain.position.File.G;
-import static chess.domain.position.File.H;
-import static chess.domain.position.Rank.FIVE;
-import static chess.domain.position.Rank.FOUR;
 import static chess.domain.position.Rank.ONE;
-import static chess.domain.position.Rank.SEVEN;
-import static chess.domain.position.Rank.SIX;
-import static chess.domain.position.Rank.THREE;
-import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class PositionTest {
-
-    private final Position E_FOUR = Position.of(E, FOUR);
 
     @Test
     @DisplayName("File과 Rank정보로 위치를 만든다")
@@ -44,7 +43,7 @@ class PositionTest {
     void cross_position_check_test(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = Position.of(file, rank);
 
-        final boolean actual = E_FOUR.isInCrossPosition(otherPosition);
+        final boolean actual = E4.isInCrossPosition(otherPosition);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -55,7 +54,7 @@ class PositionTest {
     void diagonal_position_check_test(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = Position.of(file, rank);
 
-        final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
+        final boolean actual = E4.isInDiagonalPosition(otherPosition);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -66,7 +65,7 @@ class PositionTest {
     void manhattan_distance_calculate_test(final File file, final Rank rank, final int expectedDistance) {
         final Position otherPosition = Position.of(file, rank);
 
-        final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
+        final int actualDistance = E4.calculateManhattanDistance(otherPosition);
 
         assertThat(actualDistance).isEqualTo(expectedDistance);
     }
@@ -75,18 +74,18 @@ class PositionTest {
     @MethodSource("provideOtherPositionAndExpectedPassingPositions")
     @DisplayName("입력 받은 위치로 가는 경로에 있는 위치들을 반환한다")
     void find_passing_position_test(final Position otherPosition, final List<Position> expectedPassingPositions) {
-        final List<Position> actualPassingPositions = E_FOUR.findPassingPositions(otherPosition);
+        final List<Position> actualPassingPositions = E4.findPassingPositions(otherPosition);
 
         assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
     }
 
     private static Stream<Arguments> provideOtherPositionAndExpectedPassingPositions() {
         return Stream.of(
-                Arguments.of(Position.of(B, FOUR), List.of(Position.of(D, FOUR), Position.of(C, FOUR))),
-                Arguments.of(Position.of(E, TWO), List.of(Position.of(E, THREE))),
-                Arguments.of(Position.of(F, FIVE), List.of()),
-                Arguments.of(Position.of(H, ONE), List.of(Position.of(F, THREE), Position.of(G, TWO))),
-                Arguments.of(Position.of(B, SEVEN), List.of(Position.of(D, FIVE), Position.of(C, SIX)))
+                Arguments.of(B4, List.of(D4, C4)),
+                Arguments.of(E2, List.of(E3)),
+                Arguments.of(F5, List.of()),
+                Arguments.of(H1, List.of(F3, G2)),
+                Arguments.of(B7, List.of(D5, C6))
         );
     }
 
@@ -94,7 +93,7 @@ class PositionTest {
     @CsvSource({"FOUR, true", "SIX, false"})
     @DisplayName("Rank가 높은지 확인한다.")
     void upper_rank_check_test(final Rank otherRank, final boolean expected) {
-        final Position position = Position.of(D, FIVE);
+        final Position position = D5;
         final Position otherPosition = Position.of(D, otherRank);
 
         final boolean actual = position.isUpperRankThan(otherPosition);
@@ -106,7 +105,7 @@ class PositionTest {
     @CsvSource({"FOUR, false", "SIX, true"})
     @DisplayName("Rank가 낮은지 확인한다.")
     void lower_rank_check_test(final Rank otherRank, final boolean expected) {
-        final Position position = Position.of(D, FIVE);
+        final Position position = D5;
         final Position otherPosition = Position.of(D, otherRank);
 
         final boolean actual = position.isLowerRankThan(otherPosition);
