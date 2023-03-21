@@ -19,4 +19,12 @@ public enum GameCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
+
+    public boolean isStart() {
+        return this == START;
+    }
 }

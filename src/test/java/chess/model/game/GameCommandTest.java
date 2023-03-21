@@ -29,4 +29,26 @@ class GameCommandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 명령어입니다.");
     }
+
+    @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
+    @DisplayName("isStart() 테스트")
+    @CsvSource(value = {"START:true", "MOVE:false", "END:false"}, delimiter = ':')
+    void isStart_whenCall_thenReturnIsStart(final GameCommand gameCommand, final boolean expected) {
+        // when
+        final boolean actual = gameCommand.isStart();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
+
+    @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
+    @DisplayName("isMove() 테스트")
+    @CsvSource(value = {"START:false", "MOVE:true", "END:false"}, delimiter = ':')
+    void isMove_whenCall_thenReturnIsStart(final GameCommand gameCommand, final boolean expected) {
+        // when
+        final boolean actual = gameCommand.isMove();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
 }

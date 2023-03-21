@@ -5,7 +5,6 @@ import static chess.helper.PositionFixture.A2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.piece.Camp;
 import chess.view.ChessBoardResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +38,7 @@ class ChessGameTest {
         chessGame.initialChessGame();
 
         // when, then
-        assertThatThrownBy(() -> chessGame.move(A1, A1, Camp.BLACK))
+        assertThatThrownBy(() -> chessGame.move(A1, A1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("동일한 위치로 기물을 이동시킬 수 없습니다.");
     }
@@ -48,7 +47,7 @@ class ChessGameTest {
     @DisplayName("move() 메소드는 체스 판과 플레이어 진행 턴을 초기화하지 않았다면 예외가 발생한다.")
     void move_whenCallBeforeInitial_thenFail() {
         // when, then
-        assertThatThrownBy(() -> chessGame.move(A1, A2, Camp.BLACK))
+        assertThatThrownBy(() -> chessGame.move(A1, A2))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임을 진행할 수 없는 상태입니다.");
     }
