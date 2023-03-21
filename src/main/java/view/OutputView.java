@@ -53,4 +53,5 @@ public class OutputView {
     public void printError(String message) {
         System.out.printf("[ERROR]: %s\n", message);
     }
+
 }
