@@ -17,11 +17,9 @@ public class Bishop extends Piece {
 
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = Rank.calculateInterval(from.getRank(), to.getRank());
-
         if (fileInterval == rankInterval) {
             return true;
         }
-
         throw new IllegalArgumentException("Bishop이 이동할 수 없는 경로입니다.");
     }
 

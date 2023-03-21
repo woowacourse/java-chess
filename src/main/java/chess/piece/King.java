@@ -17,7 +17,6 @@ public class King extends Piece {
 
         final boolean isFileIntervalOne = File.calculateInterval(from.getFile(), to.getFile()) <= 1;
         final boolean isRankIntervalOne = Rank.calculateInterval(from.getRank(), to.getRank()) <= 1;
-
         if (isFileIntervalOne && isRankIntervalOne) {
             return true;
         }

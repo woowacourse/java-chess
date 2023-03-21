@@ -105,29 +105,35 @@ public class ChessBoard {
             return;
         }
 
-        final List<Rank> cutRanks = IntStream.range(1, ranks.size() - 1)
-                .mapToObj(ranks::get)
-                .collect(Collectors.toList());
-
-        final List<File> cutFiles = IntStream.range(1, files.size() - 1)
-                .mapToObj(files::get)
-                .collect(Collectors.toList());
-
-        if (from.getFile().getIndex() > to.getFile().getIndex()) {
-            Collections.reverse(cutFiles);
-        }
-
-        if (from.getRank().getIndex() > to.getRank().getIndex()) {
-            Collections.reverse(cutRanks);
-        }
-
-        final List<Position> collect = IntStream.range(0, cutFiles.size())
-                .mapToObj(index -> new Position(cutFiles.get(index), cutRanks.get(index)))
-                .collect(Collectors.toList());
-
-        for (final Position position : collect) {
+        for (final Position position : makeDiagonal(sliceFile(from, to, files), sliceRank(from, to, ranks))) {
             validateBlockedRoute(piecePosition.get(position));
         }
+    }
+
+    private static List<Position> makeDiagonal(final List<File> slicedFiles, final List<Rank> slicedRanks) {
+        return IntStream.range(0, slicedFiles.size())
+                .mapToObj(index -> new Position(slicedFiles.get(index), slicedRanks.get(index)))
+                .collect(Collectors.toList());
+    }
+
+    private List<File> sliceFile(final Position from, final Position to, final List<File> files) {
+        final List<File> slicedFiles = IntStream.range(1, files.size() - 1)
+                .mapToObj(files::get)
+                .collect(Collectors.toList());
+        if (from.getFile().getIndex() > to.getFile().getIndex()) {
+            Collections.reverse(slicedFiles);
+        }
+        return slicedFiles;
+    }
+
+    private List<Rank> sliceRank(final Position from, final Position to, final List<Rank> ranks) {
+        final List<Rank> slicedRanks = IntStream.range(1, ranks.size() - 1)
+                .mapToObj(ranks::get)
+                .collect(Collectors.toList());
+        if (from.getRank().getIndex() > to.getRank().getIndex()) {
+            Collections.reverse(slicedRanks);
+        }
+        return slicedRanks;
     }
 
     private void validateFileAndRank(final Position from, final Position to) {
@@ -149,7 +155,6 @@ public class ChessBoard {
 
         for (int i = min; i <= max; i++) {
             final Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.from(i)));
-
             validateBlockedRoute(validationPiece);
         }
     }
