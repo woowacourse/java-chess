@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -16,4 +17,6 @@ public interface ChessGameStep {
     ChessGameStep end();
 
     List<Piece> pieces();
+
+    Color winColor();
 }

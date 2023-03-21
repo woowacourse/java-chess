@@ -83,4 +83,12 @@ public class OutputView {
     public static void error(final String message) {
         System.out.println("[ERROR] " + message);
     }
+
+    public static void printWinColor(final Color winColor) {
+        if (winColor == Color.NONE) {
+            System.out.println("무승부입니다.");
+            return;
+        }
+        System.out.println(winColor + " 이 이겼습니다.");
+    }
 }

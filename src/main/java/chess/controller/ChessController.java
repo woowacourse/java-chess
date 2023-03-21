@@ -37,6 +37,8 @@ public class ChessController {
         while (chessGame.playable()) {
             play(chessGame);
         }
+
+        OutputView.printWinColor(chessGame.winColor());
     }
 
     private void play(final ChessGame chessGame) {

@@ -33,11 +33,16 @@ public class InitializeGame implements ChessGameStep {
 
     @Override
     public ChessGameStep end() {
-        return new EndGame();
+        throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
     }
 
     @Override
     public List<Piece> pieces() {
+        throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
+    }
+
+    @Override
+    public Color winColor() {
         throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
     }
 }

@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.KingMovementStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +79,7 @@ public class ChessBoard {
 
     public boolean existKingByColor(final Color color) {
         return pieces.stream()
-                .filter(it -> it.isKing())
+                .filter(Piece::isKing)
                 .anyMatch(it -> it.color() == color);
     }
 
