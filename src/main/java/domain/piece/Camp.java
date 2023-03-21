@@ -9,6 +9,9 @@ public enum Camp {
         if (this.equals(BLACK)) {
             return WHITE;
         }
-        return BLACK;
+        if (this.equals(WHITE)) {
+            return BLACK;
+        }
+        return NONE;
     }
 }
