@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ChessController {
+    private static final int MOVE_COMMAND_LENGTH = 3;
     private final InputView inputView;
     private final OutputView outputView;
     private Board board;
@@ -65,7 +66,7 @@ public class ChessController {
     }
 
     private void validateMoveCommand(final String[] commands) {
-        if (commands.length != 3) {
+        if (commands.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException("이동할 기물과 이동할 위치를 입력해주세요.");
         }
     }
