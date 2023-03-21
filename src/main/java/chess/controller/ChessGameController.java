@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.service.BoardService;
 import chess.domain.commnad.Command;
+import chess.domain.commnad.GameStatusCommand;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
@@ -26,14 +27,13 @@ public class ChessGameController {
     }
 
     public void run() {
+        GameStatusCommand statusCommand = inputView.readStatusOfGame();
 
-        String savingGame = inputView.readSavingGame();
-
-        if (savingGame.equals("1")) {
+        if (statusCommand.isNewGame()) {
             playNewGame();
         }
 
-        if (savingGame.equals("2")) {
+        if (statusCommand.isSavedGame()) {
             playSavedGame();
         }
     }
