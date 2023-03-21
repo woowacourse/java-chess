@@ -18,7 +18,8 @@
 
 - [x] King이 잡히는 경우 게임에서 진다. (게임 종료)
 - [x] `status` 명령어를 입력하면 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야한다. (게임 종료)
-- [ ] `end` 명령어를 입력하면 프로그램이 종료한다. (프로그램 종료)
+- [x] `end` 명령어를 입력하면 프로그램이 종료한다. (프로그램 종료)
+- [x] 초기 게임 상태 명령어를 받아서 체스 게임을 새로 시작할지 혹은 기존 게임을 불러올지 정할 수 있다.
 
 ### 기물 
 - [x] 체스판을 구성하는 요소이다.
@@ -53,8 +54,10 @@
 
 ### DB
 - DB 계획도
-  - Room (room_id, game_id, user1, user2)
-  - Game (game_id, board_id)
-  - board (chess_id, position(String), piece(String))
+  - Room (room_id, game_id, user1, user2) --> 추가 미션 예정
+  - Game (game_id, board_id) --> 추가 미션 예정
+  - board (board_id, position(String), piece(String), isLowerTeamTurn) --> isLowerTeamTurn은 추가 미션 때 Game 테이블로 옮길 예정입니다.
+
+
 
 
