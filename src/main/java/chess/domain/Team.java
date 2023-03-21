@@ -9,10 +9,10 @@ public enum Team {
 	}
 
 	public boolean isBlack(){
-		return this.equals(BLACK);
+		return this == BLACK;
 	}
 
 	public boolean isWhite(){
-		return this.equals(WHITE);
+		return this == WHITE;
 	}
 }

@@ -37,13 +37,11 @@ public class InputRenderer {
 	}
 
 	private static Command toCommand(final String string) {
-		Command command;
 		try {
-			command = Command.valueOf(getUpperCasedFirstWord(string));
+			return Command.valueOf(getUpperCasedFirstWord(string));
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(INVALID_COMMAND_ERROR_MESSAGE);
 		}
-		return command;
 	}
 
 	private static String getUpperCasedFirstWord(String string) {

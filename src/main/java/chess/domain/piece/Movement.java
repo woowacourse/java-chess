@@ -32,7 +32,7 @@ public enum Movement {
 	}
 
 	private boolean isMovedTooFar(final RelativePosition relativePosition, final RelativePosition unitPosition) {
-		return mobility.equals(Mobility.ONCE) && !unitPosition.equals(relativePosition);
+		return mobility == Mobility.ONCE && !unitPosition.equals(relativePosition);
 	}
 
 	private boolean containsUnitPosition(final RelativePosition unitPosition) {
