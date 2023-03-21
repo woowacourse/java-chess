@@ -95,7 +95,7 @@
 
 - [x] `BoardFactory`를 정적 팩토리로 선언
 
-- [ ] `moveIfPawn` 매서드명 수정
+- [x] `moveIfPawn` 매서드명 수정
 
 - [x] `Empty` 객체 캐싱
 

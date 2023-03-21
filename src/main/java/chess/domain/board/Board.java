@@ -23,12 +23,12 @@ public class Board {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
 
-        moveIfPawn(source);
+        updateIfPawn(source);
         board.put(target, board.get(source));
         board.put(source, Empty.of());
     }
 
-    private void moveIfPawn(final Square source) {
+    private void updateIfPawn(final Square source) {
         if (isSameRole(source, Role.PAWN)) {
             board.put(source, new Pawn(board.get(source).getCamp(), IS_MOVED));
         }
