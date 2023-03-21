@@ -46,7 +46,7 @@ public enum PieceDirection {
         return number / Math.abs(number);
     }
 
-    public boolean contains(Direction direction) {
+    public boolean contains(final Direction direction) {
         return pieceDirections.contains(direction);
     }
 

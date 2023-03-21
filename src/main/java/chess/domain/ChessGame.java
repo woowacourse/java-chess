@@ -14,7 +14,7 @@ public class ChessGame {
         turn = Team.WHITE;
     }
 
-    public void move(SquareDto currentDto, SquareDto destinationDto) {
+    public void move(final SquareDto currentDto, final SquareDto destinationDto) {
         Square current = currentDto.getSquare();
         Square destination = destinationDto.getSquare();
         checkTurn(current);
@@ -22,7 +22,7 @@ public class ChessGame {
         turn = turn.getEnemy();
     }
 
-    private void checkTurn(Square square) {
+    private void checkTurn(final Square square) {
         if (board.isPieceTurn(square, turn)) {
             return;
         }

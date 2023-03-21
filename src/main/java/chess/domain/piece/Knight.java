@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Direction findDirection(Square current, Square destination) {
+    public Direction findDirection(final Square current, final Square destination) {
         int fileDifference = current.getFileDifference(destination);
         int rankDifference = current.getRankDifference(destination);
         return PieceDirection.KNIGHT.findDirection(fileDifference, rankDifference);

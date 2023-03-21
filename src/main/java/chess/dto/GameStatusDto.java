@@ -19,7 +19,7 @@ public class GameStatusDto {
 
     private final List<String> gameStatus;
 
-    private GameStatusDto(List<String> gameStatus) {
+    private GameStatusDto(final List<String> gameStatus) {
         this.gameStatus = gameStatus;
     }
 
@@ -28,7 +28,7 @@ public class GameStatusDto {
         return new GameStatusDto(gameStatus);
     }
 
-    private static List<String> makeGameStatus(Map<Square, Piece> board) {
+    private static List<String> makeGameStatus(final Map<Square, Piece> board) {
         List<String> gameStatus = new ArrayList<>();
         for (int i = 0; i < BOARD_SIZE; i++) {
             char rank = (char) (LAST_RANK - i);
@@ -37,7 +37,7 @@ public class GameStatusDto {
         return gameStatus;
     }
 
-    private static String makeRankStatus(Map<Square, Piece> board, char rank) {
+    private static String makeRankStatus(final Map<Square, Piece> board, final char rank) {
         StringBuilder rankStatus = new StringBuilder();
         for (int i = 0; i < BOARD_SIZE; i++) {
             char file = (char) (FIRST_FILE + i);
@@ -47,7 +47,7 @@ public class GameStatusDto {
         return rankStatus.toString();
     }
 
-    private static String makeSquareMark(Map<Square, Piece> board, Square square) {
+    private static String makeSquareMark(final Map<Square, Piece> board, final Square square) {
         if (board.containsKey(square)) {
             Piece piece = board.get(square);
             return Mark.from(piece);

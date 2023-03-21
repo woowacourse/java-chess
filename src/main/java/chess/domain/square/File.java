@@ -26,7 +26,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
     }
 
-    public File move(int difference) {
+    public File move(final int difference) {
         try {
             return File.from((char) (value + difference));
         } catch (IllegalArgumentException e) {

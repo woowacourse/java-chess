@@ -28,7 +28,7 @@ public enum Mark {
         this.pieceClass = pieceClass;
     }
 
-    public static String from(Piece piece) {
+    public static String from(final Piece piece) {
         Class<? extends Piece> pieceClass = piece.getClass();
         Team team = piece.getColor();
         String mark = Arrays.stream(Mark.values())
@@ -39,7 +39,7 @@ public enum Mark {
         return makeMarkByColor(mark, team);
     }
 
-    private static String makeMarkByColor(String mark, Team team) {
+    private static String makeMarkByColor(final String mark, final Team team) {
         if (team == Team.BLACK) {
             return mark.toUpperCase();
         }

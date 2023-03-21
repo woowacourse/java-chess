@@ -26,7 +26,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
     }
 
-    public Rank move(int difference) {
+    public Rank move(final int difference) {
         try {
             return Rank.from((char) (value + difference));
         } catch (IllegalArgumentException e) {

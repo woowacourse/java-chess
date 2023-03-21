@@ -16,14 +16,14 @@ public class SquareDto {
         this.square = square;
     }
 
-    public static SquareDto of(String square) {
+    public static SquareDto of(final String square) {
         validateSquare(square);
         char file = square.charAt(0);
         char rank = square.charAt(1);
         return new SquareDto(Square.of(File.from(file), Rank.from(rank)));
     }
 
-    private static void validateSquare(String square) {
+    private static void validateSquare(final String square) {
         if (Pattern.matches(SQUARE_REGEX, square)) {
             return;
         }

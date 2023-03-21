@@ -33,7 +33,7 @@ public class ChessController {
         }
     }
 
-    private void validateInitialCommand(Command command) {
+    private void validateInitialCommand(final Command command) {
         if (command == Command.MOVE) {
             throw new IllegalArgumentException("게임 시작 전에는 기물을 이동할 수 없습니다.");
         }
@@ -59,7 +59,7 @@ public class ChessController {
         }
     }
 
-    private void validatePlayCommand(Command command) {
+    private void validatePlayCommand(final Command command) {
         if (command == Command.START) {
             throw new IllegalArgumentException("이미 게임을 시작하셨습니다.");
         }
@@ -74,7 +74,7 @@ public class ChessController {
         }
     }
 
-    private void move(SquareDto currentDto, SquareDto destinationDto) {
+    private void move(final SquareDto currentDto, final SquareDto destinationDto) {
         if (currentDto == null || destinationDto == null) {
             return;
         }

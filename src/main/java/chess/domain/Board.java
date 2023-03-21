@@ -22,12 +22,12 @@ public class Board {
         return new Board(boardMaker.make());
     }
 
-    public boolean isPieceTurn(Square current, Team team) {
+    public boolean isPieceTurn(final Square current, final Team team) {
         Piece piece = getPiece(current);
         return piece.isAlly(team);
     }
 
-    public void move(Square current, Square destination) {
+    public void move(final Square current, final Square destination) {
         Piece piece = getPiece(current);
         Direction direction = piece.findDirection(current, destination);
 
@@ -47,7 +47,7 @@ public class Board {
         return !hasPiece(square);
     }
 
-    private void validateRoute(Square current, Square destination, Direction direction) {
+    private void validateRoute(final Square current, final Square destination, final Direction direction) {
         Square next = current.move(direction);
         if (next.equals(destination)) {
             return;
@@ -62,7 +62,7 @@ public class Board {
         return board.containsKey(square);
     }
 
-    private void checkDestination(Square current, Square destination, Direction direction) {
+    private void checkDestination(final Square current, final Square destination, final Direction direction) {
         if (hasPiece(destination)) {
             checkEnemy(current, destination);
             killEnemy(destination);
@@ -71,13 +71,13 @@ public class Board {
         checkPawn(current, direction);
     }
 
-    private void checkEnemy(Square current, Square destination) {
+    private void checkEnemy(final Square current, final Square destination) {
         if (isAlly(current, destination)) {
             throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
     }
 
-    private boolean isAlly(Square current, Square destination) {
+    private boolean isAlly(final Square current, final Square destination) {
         Piece currentPiece = getPiece(current);
         Piece destinationPiece = getPiece(destination);
         return !currentPiece.isEnemy(destinationPiece);
@@ -87,18 +87,18 @@ public class Board {
         board.remove(destination);
     }
 
-    private void checkPawn(Square current, Direction direction) {
+    private void checkPawn(final Square current, final Direction direction) {
         if (isPawn(current)) {
             checkDiagonal(direction);
         }
     }
 
-    private boolean isPawn(Square square) {
+    private boolean isPawn(final Square square) {
         Piece piece = getPiece(square);
         return piece.isPawn();
     }
 
-    private void checkDiagonal(Direction direction) {
+    private void checkDiagonal(final Direction direction) {
         if (PieceDirection.DIAGONAL.contains(direction)) {
             throw new IllegalArgumentException("폰은 적이 있을 때만 대각선으로 이동할 수 있습니다.");
         }

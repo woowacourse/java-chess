@@ -8,7 +8,7 @@ public class OutputView {
 
     private static final String MESSAGE_PREFIX = "> ";
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
 
@@ -26,12 +26,12 @@ public class OutputView {
         System.out.println(MESSAGE_PREFIX + message);
     }
 
-    public static void printGameStatus(GameStatusDto gameStatusDto) {
+    public static void printGameStatus(final GameStatusDto gameStatusDto) {
         List<String> gameStatus = gameStatusDto.getGameStatus();
         gameStatus.forEach(OutputView::printRankStatus);
     }
 
-    private static void printRankStatus(String rankStatus) {
+    private static void printRankStatus(final String rankStatus) {
         System.out.println(rankStatus);
     }
 }
