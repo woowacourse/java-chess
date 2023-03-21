@@ -41,6 +41,7 @@ public class OutputView {
     }
 
     private void printBoard(char[][] board) {
+        System.out.println();
         for (int i = board.length - 1; i >= 0; i--) {
             char[] line = board[i];
             System.out.println(String.copyValueOf(line));
