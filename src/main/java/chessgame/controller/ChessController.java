@@ -11,6 +11,8 @@ public class ChessController {
 
     public static final char ASCII_ALPHABET_A = 'a';
     public static final int START_COORDINATE_INDEX = 1;
+    public static final int COLUMN_INDEX = 0;
+    public static final int ROW_INDEX = 1;
     public static final int END_COORDINATE_INDEX = 2;
 
     private final InputView inputView;
@@ -59,8 +61,8 @@ public class ChessController {
     }
 
     private Coordinate convertCoordinate(final String frontCoordinate) {
-        int row = Character.getNumericValue(frontCoordinate.charAt(1)) - 1;
-        int col = (int) frontCoordinate.charAt(0) - ASCII_ALPHABET_A;
-        return new Coordinate(row, col);
+        int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
+        int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
+        return new Coordinate(row, column);
     }
 }
