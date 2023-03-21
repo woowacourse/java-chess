@@ -112,7 +112,7 @@ Board
 
 - [ ] Readme 기능 목록 체크
 - [ ] Color 클래스에서 isBlack 메서드 삭제하기
-- [ ] File, Rank 클래스에서 index 고민하기
+- [x] File, Rank 클래스에서 index 상태를 ordinal()로 수정
 
 test
 
