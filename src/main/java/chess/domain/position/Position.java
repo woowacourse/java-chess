@@ -89,12 +89,4 @@ public class Position {
     public boolean isSameRank(final Rank rank) {
         return this.rank == rank;
     }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
-    }
 }
