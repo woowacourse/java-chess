@@ -1,21 +1,40 @@
 package chess.domain.position;
 
 import chess.domain.path.Movement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
+    private static final Map<String, Position> CACHE = new HashMap<>();
+
+    static {
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                CACHE.put(file.command() + rank.command(), new Position(file, rank));
+            }
+        }
+    }
+
     private final File file;
     private final Rank rank;
 
+    public Position(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
+    }
+
     public Position(final int file, final int rank) {
-        this.file = File.from(file);
-        this.rank = Rank.from(rank);
+        this(File.from(file), Rank.from(rank));
     }
 
     public Position(final String file, final String rank) {
-        this.file = File.from(file);
-        this.rank = Rank.from(rank);
+        this(File.from(file), Rank.from(rank));
+    }
+
+    public static Position of(final File file, final Rank rank) {
+        return CACHE.get(file.command() + rank.command());
     }
 
     public Movement convertMovement(Position from) {

@@ -1,7 +1,17 @@
 package chess.piece;
 
-import static chess.domain.position.InitialPositionFixtures.BLACK_BISHOP_RIGHT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_BISHOP_LEFT_POSITION;
+import static chess.fixture.PositionFixture.A3;
+import static chess.fixture.PositionFixture.B4;
+import static chess.fixture.PositionFixture.C1;
+import static chess.fixture.PositionFixture.C5;
+import static chess.fixture.PositionFixture.D2;
+import static chess.fixture.PositionFixture.D6;
+import static chess.fixture.PositionFixture.E1;
+import static chess.fixture.PositionFixture.E3;
+import static chess.fixture.PositionFixture.E7;
+import static chess.fixture.PositionFixture.F4;
+import static chess.fixture.PositionFixture.F8;
+import static chess.fixture.PositionFixture.G5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -25,44 +35,33 @@ class BishopTest {
         @Test
         void test_searchPathTo() {
             Piece bishop = new Bishop(Color.WHITE);
-            Path path = bishop.searchPathTo(WHITE_BISHOP_LEFT_POSITION, new Position(7, 5), null);
+            Path path = bishop.searchPathTo(C1, G5, null);
 
             assertThat(path)
                     .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                    .containsExactly(
-                            new Position(4, 2),
-                            new Position(5, 3),
-                            new Position(6, 4));
+                    .containsExactly(D2, E3, F4);
         }
 
         @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
         @Test
         void test_searchPathTo2() {
-
             Bishop bishop = new Bishop(Color.BLACK);
 
-            Path path = bishop.searchPathTo(BLACK_BISHOP_RIGHT_POSITION, new Position(1, 3), null);
+            Path path = bishop.searchPathTo(F8, A3, null);
 
             assertThat(path)
                     .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-                    .containsExactly(
-                            new Position(5, 7),
-                            new Position(4, 6),
-                            new Position(3, 5),
-                            new Position(2, 4));
+                    .containsExactly(E7, D6, C5, B4);
         }
     }
 
     @DisplayName("비정상 경로를 받으면 예외 처리한다.")
     @Test
     void test_searchPathTo4() {
-
         Bishop bishop = new Bishop(Color.WHITE);
 
         assertThatThrownBy(
-                () -> bishop.searchPathTo(WHITE_BISHOP_LEFT_POSITION,
-                        new Position(5, 1),
-                        new King(Color.WHITE)))
+                () -> bishop.searchPathTo(C1, E1, new King(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

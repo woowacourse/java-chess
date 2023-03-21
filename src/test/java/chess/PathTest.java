@@ -1,5 +1,6 @@
 package chess;
 
+import static chess.fixture.PositionFixture.A1;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.path.Path;
@@ -13,7 +14,7 @@ class PathTest {
     @DisplayName("이동 경로에 다른 말이 존재하는 경우 예외 처리한다.")
     @Test
     void test_validateObstacle() {
-        Position position = new Position(1, 1);
+        Position position = A1;
         Path path = new Path(position);
 
         assertThatThrownBy(() -> path.validateObstacle(Set.of(position)))

@@ -39,11 +39,15 @@ public enum Rank {
         return this.value - rank.value;
     }
 
+    public boolean isSame(final int rank) {
+        return this.value == rank;
+    }
+
     public int value() {
         return value;
     }
 
-    public boolean isSame(final int rank) {
-        return this.value == rank;
+    public String command() {
+        return command;
     }
 }

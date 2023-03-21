@@ -42,4 +42,8 @@ public enum File {
     public int value() {
         return value;
     }
+
+    public String command() {
+        return command;
+    }
 }
