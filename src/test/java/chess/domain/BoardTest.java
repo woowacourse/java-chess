@@ -1,11 +1,19 @@
 package chess.domain;
 
-import chess.domain.dto.PieceResponse;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.BishopPiece;
+import chess.domain.piece.KingPiece;
+import chess.domain.piece.KnightPiece;
+import chess.domain.piece.PawnPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.QueenPiece;
+import chess.domain.piece.RookPiece;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static chess.domain.PositionFixture.A3;
@@ -27,13 +35,18 @@ public class BoardTest {
         Board board = BoardGenerator.makeBoard();
 
         //when
-        var result = board.getPiecePosition().get(0);
-        //then
+        Map<Position, Piece> boardData = board.getBoard();
+        List<Piece> pieces = boardData.keySet().stream()
+                .filter(position -> position.getRank() == Rank.ONE)
+                .map((position) -> boardData.get(position))
+                .collect(Collectors.toList());
 
-        var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
-        assertThat(check)
-                .containsExactly("r", "n", "b", "q", "k", "b", "n", "r")
-                .hasSize(8);
+        //then
+        assertThat(pieces)
+                .allSatisfy((piece) -> assertThat(piece)
+                        .isOfAnyClassIn(RookPiece.class, BishopPiece.class, KnightPiece.class, KingPiece.class, QueenPiece.class)
+                ).hasSize(8);
+
     }
 
     @Test
@@ -42,13 +55,19 @@ public class BoardTest {
         Board board = BoardGenerator.makeBoard();
 
         //when
-        var result = board.getPiecePosition().get(1);
-        //then
+        Map<Position, Piece> boardData = board.getBoard();
+        List<Piece> pieces = boardData.keySet().stream()
+                .filter(position -> position.getRank() == Rank.TWO)
+                .map((position) -> boardData.get(position))
+                .collect(Collectors.toList());
 
-        var check = result.stream().map(PieceResponse::getPieceType).collect(Collectors.toList());
-        assertThat(check)
-                .containsOnly("p")
+        //then
+        assertThat(pieces)
+                .allSatisfy((piece) -> assertThat(piece)
+                        .isExactlyInstanceOf(PawnPiece.class)
+                )
                 .hasSize(8);
+
     }
 
     @Test

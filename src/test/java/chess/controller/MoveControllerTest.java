@@ -2,15 +2,19 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.BoardGenerator;
-import chess.domain.dto.PieceResponse;
+import chess.domain.Color;
+import chess.domain.Position;
+import chess.domain.piece.PawnPiece;
+import chess.domain.piece.Piece;
 import chess.view.OutputView;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Map;
 
+import static chess.domain.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
@@ -25,18 +29,16 @@ public class MoveControllerTest {
 
         //when
         Board executedBoard = moveController.execute(request, BoardGenerator.makeBoard());
-        List<List<PieceResponse>> piecePosition = executedBoard.getPiecePosition();
-        PieceResponse pieceResponse = piecePosition.get(2).get(0);
-        String pieceColor = pieceResponse.getPieceColor();
-        String pieceType = pieceResponse.getPieceType();
+        Map<Position, Piece> board = executedBoard.getBoard();
+        Piece result = board.get(A3);
 
 
         //then
         Assertions.assertAll(() -> {
-                    assertThat(pieceColor).isEqualTo("WHITE");
+                    assertThat(result.getColor()).isEqualTo(Color.WHITE);
                 },
                 () -> {
-                    assertThat(pieceType).isEqualTo("p");
+                    assertThat(result).isInstanceOf(PawnPiece.class);
                 }
         );
     }

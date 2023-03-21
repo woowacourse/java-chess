@@ -110,6 +110,14 @@ public class Position {
                 '}';
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     public int getRankDifference(Position other) {
         return rank.calculateDifference(other.rank);
     }
