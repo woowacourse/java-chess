@@ -1,6 +1,8 @@
 package chess.cache;
 
+import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.Row;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
@@ -14,14 +16,14 @@ public final class BoardCache {
     }
 
     static {
-        for (int column = 0; column < 8; column++) {
+        for (final Column column : Column.values()) {
             addRow(column);
         }
     }
 
-    private static void addRow(final int column) {
-        for (int row = 0; row < 8; row++) {
-            board.put(Position.of(column, row), Empty.create());
+    private static void addRow(final Column column) {
+        for (Row row : Row.values()) {
+            board.put(Position.of(row, column), Empty.create());
         }
     }
 
