@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int START_INDEX = 0;
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -28,19 +29,17 @@ public class Board {
     }
 
     public void move(final Position source, final Position target, final Player player) {
+        validateMove(source, target, player);
+        movePiece(source, target);
+    }
+
+    private void validateMove(final Position source, final Position target, final Player player) {
         validateNotSamePosition(source, target);
         validateSourceNotEmpty(source);
         validateNotSameTeam(source, target);
         validateSameTeamPieceAndPlayer(source, player);
-
-        Direction unitVector = Direction.findByPosition(source, target);
-
-        Piece piece = board.get(source);
-
-        validateMovable(source, target, unitVector);
-        validatePath(source, target, unitVector, piece);
-
-        movePiece(source, target, piece);
+        validateMovable(source, target);
+        validatePath(source, target);
     }
 
     private void validateNotSamePosition(final Position source, final Position target) {
@@ -80,37 +79,38 @@ public class Board {
         }
     }
 
-    private void validateMovable(final Position source, final Position target, final Direction unit) {
+    private void validateMovable(final Position source, final Position target) {
+        final Direction unitVector = Direction.findByPosition(source, target);
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
-        if (!sourcePiece.movable(unit) && !sourcePiece.isAttack(unit, targetPiece.team())) {
+        if (!sourcePiece.movable(unitVector) && !sourcePiece.isAttack(unitVector, targetPiece.team())) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validatePath(final Position source, final Position target, final Direction unit, final Piece piece) {
-        List<Position> path = calculatePath(source, target, unit);
+    private void validatePath(final Position source, final Position target) {
+        final Direction unitVector = Direction.findByPosition(source, target);
+        final Piece piece = board.get(source);
+
+        final List<Position> path = calculatePath(source, target, unitVector);
+
         validatePathIsEmpty(path);
         validateMovableByCount(piece, path.size() + 1);
     }
 
-    private List<Position> calculatePath(Position source, Position target, Direction unit) {
+    private List<Position> calculatePath(Position source, Position target, Direction unitVector) {
         char file = source.file();
         int rank = source.rank();
-        return searchPath(target, unit, file, rank);
-    }
-
-    private static List<Position> searchPath(final Position target, final Direction unit, char file, int rank) {
         List<Position> path = new ArrayList<>();
 
         while (file != target.file() || rank != target.rank()) {
-            file += unit.getDx();
-            rank += unit.getDy();
+            file += unitVector.getDx();
+            rank += unitVector.getDy();
             path.add(Position.of(File.of(file), Rank.of(rank)));
         }
 
-        return path.subList(0, path.size() - 1);
+        return path.subList(START_INDEX, path.size() - 1);
     }
 
     private void validatePathIsEmpty(final List<Position> path) {
@@ -131,7 +131,9 @@ public class Board {
         }
     }
 
-    private void movePiece(final Position source, final Position target, final Piece piece) {
+    private void movePiece(final Position source, final Position target) {
+        final Piece piece = board.get(source);
+
         board.put(target, piece);
         board.put(source, new Empty(Team.NONE));
     }
