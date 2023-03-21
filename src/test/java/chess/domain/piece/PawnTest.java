@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import chess.domain.Team;
+import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.position.RelativePosition;
-import chess.domain.Team;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PawnTest {
 
