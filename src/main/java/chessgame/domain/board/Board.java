@@ -2,8 +2,10 @@ package chessgame.domain.board;
 
 import chessgame.domain.piece.Coordinate;
 import chessgame.domain.square.Camp;
+import chessgame.domain.square.EmptySquare;
 import chessgame.domain.square.Square;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -15,7 +17,7 @@ public class Board {
     }
 
     public Map<Coordinate, Square> initialize() {
-        return BoardInitialImage.generate();
+        return new HashMap<>(BoardInitialImage.generate());
     }
 
     public boolean checkCamp(Coordinate coordinate, Camp camp) {
@@ -27,7 +29,7 @@ public class Board {
         if (isMovable(startCoordinate, endCoordinate)) {
             Square findSquare = board.get(startCoordinate);
 
-            board.remove(startCoordinate);
+            board.put(startCoordinate, new EmptySquare());
             board.put(endCoordinate, findSquare);
         }
     }
