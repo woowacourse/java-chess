@@ -14,7 +14,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    void validateTeam(final Team team) {
+    protected void validateTeam(final Team team) {
         if (team == Team.NEUTRALITY) {
             throw new IllegalArgumentException(INVALID_TEAM);
         }
