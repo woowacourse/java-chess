@@ -35,6 +35,9 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다."));
     }
 
+    public String symbol() {
+        return this.symbol.toUpperCase();
+    }
     public int index() {
         return this.index;
     }
