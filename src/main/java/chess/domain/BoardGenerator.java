@@ -65,9 +65,7 @@ public class BoardGenerator {
     }
 
     private static void enrollPiece(Map<Position, Piece> board, Map<Position, Piece> data) {
-        for (Position position : data.keySet()) {
-            board.put(position, data.get(position));
-        }
+        board.putAll(data);
     }
 
     private static void enrollWhitePiece(Map<Position, Piece> board) {
