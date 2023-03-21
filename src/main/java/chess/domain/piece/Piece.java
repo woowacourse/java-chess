@@ -16,6 +16,10 @@ public abstract class Piece {
 
     public abstract boolean movableByCount(final int count);
 
+    public boolean isAttack(final Direction direction, final Team team) {
+        return movable(direction);
+    }
+
     public boolean isSameTeam(final Team team) {
         return this.team.equals(team);
     }

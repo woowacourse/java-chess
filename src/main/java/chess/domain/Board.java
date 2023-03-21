@@ -40,7 +40,7 @@ public class Board {
 
         Piece piece = board.get(source);
 
-        validateMovable(piece, unitVector);
+        validateMovable(source, target, unitVector);
         validatePath(source, target, unitVector, piece);
 
         movePiece(source, target, piece);
@@ -83,8 +83,11 @@ public class Board {
         }
     }
 
-    private void validateMovable(final Piece piece, final Direction unit) {
-        if (!piece.movable(unit)) {
+    private void validateMovable(final Position source, final Position target, final Direction unit) {
+        final Piece sourcePiece = board.get(source);
+        final Piece targetPiece = board.get(target);
+
+        if (!sourcePiece.movable(unit) && !sourcePiece.isAttack(unit, targetPiece.team())) {
             throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
         }
     }

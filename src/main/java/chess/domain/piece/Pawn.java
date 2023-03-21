@@ -2,8 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.team.Team;
 
-import static chess.domain.piece.Direction.DOWN;
-import static chess.domain.piece.Direction.UP;
+import java.util.List;
+
+import static chess.domain.piece.Direction.*;
+import static chess.domain.team.Team.*;
 
 public final class Pawn extends Piece {
 
@@ -15,7 +17,7 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean movable(final Direction move) {
-        if (team().equals(Team.BLACK)) {
+        if (team().equals(BLACK)) {
             return DOWN.equals(move);
         }
         return UP.equals(move);
@@ -28,5 +30,18 @@ public final class Pawn extends Piece {
             return count <= 2;
         }
         return count <= 1;
+    }
+
+    @Override
+    public boolean isAttack(final Direction direction, final Team targetTeam) {
+        if (isSameTeam(BLACK) && targetTeam.equals(WHITE)) {
+            return List.of(LEFT_DOWN, RIGHT_DOWN).contains(direction);
+        }
+
+        if (isSameTeam(WHITE) && targetTeam.equals(BLACK)) {
+            return List.of(LEFT_UP, RIGHT_UP).contains(direction);
+        }
+
+        return false;
     }
 }
