@@ -21,6 +21,6 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return this.isNotSameSide(piece) && from.inKingsRange(to);
+        return isNotSameSide(piece) && from.inKingsRange(to);
     }
 }

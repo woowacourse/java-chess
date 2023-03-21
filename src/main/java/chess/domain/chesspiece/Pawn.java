@@ -41,12 +41,12 @@ public final class Pawn extends Piece {
         if (atInitialPosition) {
             targetInMovableRange = from.inPawnsInitialMovableRange(to, side);
         }
-        return piece.isEmpty() && targetInMovableRange;
+        return targetInMovableRange && piece.isEmpty();
 
     }
 
     private boolean isCatchable(final Square from, final Square to, final Piece piece) {
-        return this.isOppositeSide(piece) && from.inPawnsCatchableRange(to, side);
+        return isOppositeSide(piece) && from.inPawnsCatchableRange(to, side);
     }
 
     public void move() {
