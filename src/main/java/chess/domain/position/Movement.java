@@ -25,7 +25,6 @@ public enum Movement {
 
     private static final String MOVEMENT_NOT_FOUND_MESSAGE = "이동할 수 없는 방법입니다.";
 
-
     private final int file;
     private final int rank;
 
