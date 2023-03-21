@@ -1,7 +1,6 @@
 package chess.view;
 
-import chess.controller.GameCommand;
-import chess.controller.MoveRequest;
+import chess.controller.PlayRequest;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
@@ -13,10 +12,7 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final String DELIMITER = " ";
-    private static final int MOVE_COMMAND_INDEX = 0;
-    private static final int SOURCE_COMMAND_INDEX = 1;
-    private static final int TARGET_COMMAND_INDEX = 2;
-    private static final Position DEFAULT_POSITION = Position.of(File.A, Rank.FIRST);
+    private static final String DEFAULT_POSITION = "Z0";
     private static final int COMMAND_INDEX = 0;
     private static final int POSITION_INDEX = 1;
 
@@ -26,43 +22,27 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public GameCommand printGameStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-
-        return readGameCommand();
-    }
-
-    public GameCommand readGameCommand() {
-        final String command = readInput();
-
-        validateBlank(command);
-
-        return GameCommand.from(command);
-    }
-
-    public MoveRequest readPlayCommand() {
-        System.out.println();
+    public PlayRequest readPlayCommand() {
         final String input = readInput();
 
         final List<String> commands = Arrays.stream(input.split(DELIMITER))
                 .collect(Collectors.toList());
+        validateInputCommand(commands);
 
         return createPlayRequest(commands);
     }
 
-    private MoveRequest createPlayRequest(final List<String> commands) {
-        final GameCommand gameCommand = GameCommand.from(commands.get(MOVE_COMMAND_INDEX));
-        if (!GameCommand.MOVE.equals(gameCommand)) {
-            return new MoveRequest(gameCommand, DEFAULT_POSITION, DEFAULT_POSITION);
+    private void validateInputCommand(final List<String> commands) {
+        if (commands.size() > 3) {
+            throw new IllegalArgumentException("");
         }
+    }
 
-        final Position source = convertPosition(commands.get(SOURCE_COMMAND_INDEX));
-        final Position target = convertPosition(commands.get(TARGET_COMMAND_INDEX));
-
-        validatePosition(source, target);
-
-        return new MoveRequest(gameCommand, source, target);
+    private PlayRequest createPlayRequest(final List<String> commands) {
+        if (commands.size() < 3) {
+            return new PlayRequest(commands.get(0), DEFAULT_POSITION, DEFAULT_POSITION);
+        }
+        return new PlayRequest(commands.get(0), commands.get(1), commands.get(2));
     }
 
     private void validatePosition(final Position source, final Position target) {

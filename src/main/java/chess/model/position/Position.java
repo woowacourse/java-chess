@@ -48,6 +48,10 @@ public class Position {
         return of(nextFile, nextRank);
     }
 
+    public String getPosition() {
+        return file.name() + rank.value();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
