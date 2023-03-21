@@ -5,6 +5,7 @@ import chess.piece.Bishop;
 import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
+import chess.piece.WhitePawn;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
@@ -350,7 +351,7 @@ class ChessBoardTest {
 
             Position other = FixturePosition.B3;
 
-            piecePosition.put(from, new Pawn(Team.WHITE));
+            piecePosition.put(from, new WhitePawn());
             piecePosition.put(other, new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -366,7 +367,7 @@ class ChessBoardTest {
             Position from = FixturePosition.D4;
             Position to = FixturePosition.E5;
 
-            piecePosition.put(from, new Pawn(Team.WHITE));
+            piecePosition.put(from, new WhitePawn());
             piecePosition.put(to, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 

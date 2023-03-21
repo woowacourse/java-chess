@@ -15,7 +15,7 @@ class PawnTest {
         @Test
         void 위로_한_칸_이동한다() {
             //given
-            Pawn pawn = new Pawn(Team.WHITE);
+            Pawn pawn = new WhitePawn();
 
             Position from = FixturePosition.B2;
             Position to = FixturePosition.B3;
@@ -27,7 +27,7 @@ class PawnTest {
         @Test
         void 첫_위치면_두칸_위로갈_수_있다() {
             //given
-            Pawn pawn = new Pawn(Team.WHITE);
+            Pawn pawn = new WhitePawn();
 
             Position from = FixturePosition.B2;
             Position to = FixturePosition.B4;
@@ -39,19 +39,19 @@ class PawnTest {
         @Test
         void 상대_말이_있을_때만_위_대각선으로_한칸_이동할_수_있다() {
             //given
-            Pawn pawn = new Pawn(Team.WHITE);
+            Pawn pawn = new WhitePawn();
 
             Position from = FixturePosition.B2;
             Position to = FixturePosition.C3;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, new Pawn(Team.BLACK))).isTrue();
+            assertThat(pawn.isMovable(from, to, new BlackPawn())).isTrue();
         }
 
         @Test
         void 올바른_방향이_아니면_예외() {
             //given
-            Pawn pawn = new Pawn(Team.WHITE);
+            Pawn pawn = new WhitePawn();
 
             Position from = FixturePosition.B2;
             Position to = FixturePosition.C4;
@@ -68,7 +68,7 @@ class PawnTest {
         @Test
         void 아래로_한_칸_이동한다() {
             //given
-            Pawn pawn = new Pawn(Team.BLACK);
+            Pawn pawn = new BlackPawn();
 
             Position from = FixturePosition.B5;
             Position to = FixturePosition.B4;
@@ -80,7 +80,7 @@ class PawnTest {
         @Test
         void 첫_위치면_두칸_아래로_갈_수_있다() {
             //given
-            Pawn pawn = new Pawn(Team.BLACK);
+            Pawn pawn = new BlackPawn();
 
             Position from = FixturePosition.B7;
             Position to = FixturePosition.B5;
@@ -92,19 +92,19 @@ class PawnTest {
         @Test
         void 상대_말이_있을_때만_아래_대각선으로_한칸_이동할_수_있다() {
             //given
-            Pawn pawn = new Pawn(Team.BLACK);
+            Pawn pawn = new BlackPawn();
 
             Position from = FixturePosition.C7;
             Position to = FixturePosition.B6;
 
             //when & then
-            assertThat(pawn.isMovable(from, to, new Pawn(Team.WHITE))).isTrue();
+            assertThat(pawn.isMovable(from, to, new WhitePawn())).isTrue();
         }
 
         @Test
         void 올바른_방향이_아니면_예외() {
             //given
-            Pawn pawn = new Pawn(Team.BLACK);
+            Pawn pawn = new BlackPawn();
 
             Position from = FixturePosition.B2;
             Position to = FixturePosition.C4;
