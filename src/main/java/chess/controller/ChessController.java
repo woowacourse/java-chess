@@ -4,6 +4,7 @@ import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,6 +28,7 @@ public class ChessController {
         actionMapping.put(CommandType.START, this::start);
         actionMapping.put(CommandType.MOVE, this::move);
         actionMapping.put(CommandType.END, this::end);
+        actionMapping.put(CommandType.STATUS, this::status);
     }
 
     public void run() {
@@ -66,5 +68,10 @@ public class ChessController {
 
     private void end(final ChessGame chessGame, final Command command) {
         chessGame.end();
+    }
+
+    private void status(final ChessGame chessGame, final Command command) {
+        final Map<Color, Double> colorDoubleMap = chessGame.calculateScore();
+        OutputView.printScore(colorDoubleMap);
     }
 }

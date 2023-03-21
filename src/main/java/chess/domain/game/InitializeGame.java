@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Map;
 
 public class InitializeGame implements ChessGameStep {
 
@@ -43,6 +44,11 @@ public class InitializeGame implements ChessGameStep {
 
     @Override
     public Color winColor() {
+        throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
+    }
+
+    @Override
+    public Map<Color, Double> calculateScore() {
         throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
     }
 }

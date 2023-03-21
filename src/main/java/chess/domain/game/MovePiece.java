@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Map;
 
 public class MovePiece implements ChessGameStep {
 
@@ -55,5 +56,10 @@ public class MovePiece implements ChessGameStep {
     @Override
     public Color winColor() {
         throw new IllegalArgumentException("아직 게임이 진행중입니다.");
+    }
+
+    @Override
+    public Map<Color, Double> calculateScore() {
+        return chessBoard.calculateScore();
     }
 }

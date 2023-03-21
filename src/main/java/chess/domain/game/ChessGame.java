@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -37,5 +38,9 @@ public class ChessGame {
 
     public Color winColor() {
         return step.winColor();
+    }
+
+    public Map<Color, Double> calculateScore() {
+        return step.calculateScore();
     }
 }

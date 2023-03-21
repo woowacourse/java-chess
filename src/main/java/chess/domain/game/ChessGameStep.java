@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ChessGameStep {
 
@@ -19,4 +20,6 @@ public interface ChessGameStep {
     List<Piece> pieces();
 
     Color winColor();
+
+    Map<Color, Double> calculateScore();
 }

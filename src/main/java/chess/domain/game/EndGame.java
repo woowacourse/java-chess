@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
+import java.util.Map;
 
 public class EndGame implements ChessGameStep {
 
@@ -42,5 +43,10 @@ public class EndGame implements ChessGameStep {
     @Override
     public Color winColor() {
         return winColor;
+    }
+
+    @Override
+    public Map<Color, Double> calculateScore() {
+        throw new IllegalArgumentException("이미 게임 끝났습니다.");
     }
 }

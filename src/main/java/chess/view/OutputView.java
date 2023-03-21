@@ -78,6 +78,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 현재 점수 : status (게임 진행 중에만 볼 수 있습니다.)");
     }
 
     public static void error(final String message) {
@@ -86,9 +87,16 @@ public class OutputView {
 
     public static void printWinColor(final Color winColor) {
         if (winColor == Color.NONE) {
-            System.out.println("무승부입니다.");
+            System.out.println("왕이 죽지 않아서 i무승부입니다.");
             return;
         }
         System.out.println(winColor + " 이 이겼습니다.");
+    }
+
+    public static void printScore(final Map<Color, Double> colorScoreMapping) {
+        System.out.println(colorScoreMapping.entrySet()
+                .stream()
+                .map(it -> it.getKey() + "색: " + it.getValue() + "점")
+                .collect(Collectors.joining(System.lineSeparator())));
     }
 }
