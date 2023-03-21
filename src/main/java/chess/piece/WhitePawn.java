@@ -17,8 +17,8 @@ public class WhitePawn extends Pawn {
         if (isDiagonal(from, to) && toPiece.isBlack()) {
             return true;
         }
-        if (isFirstPosition(from)) {
-            return to.getRank().getIndex() - from.getRank().getIndex() <= 2 && to.getFile() == from.getFile();
+        if (isFirstPosition(from) && isFirstMoveCondition(from, to)) {
+            return true;
         }
         if (isGeneral(from, to) && toPiece.isEmpty()) {
             return true;
@@ -35,6 +35,10 @@ public class WhitePawn extends Pawn {
 
     private boolean isFirstPosition(final Position from) {
         return from.getRank() == Rank.TWO;
+    }
+
+    private boolean isFirstMoveCondition(final Position from, final Position to) {
+        return to.getRank().getIndex() - from.getRank().getIndex() <= 2 && to.getFile() == from.getFile();
     }
 
     private boolean isGeneral(final Position from, final Position to) {

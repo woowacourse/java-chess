@@ -1,16 +1,21 @@
 package chess.board;
 
 import chess.piece.Bishop;
+import chess.piece.BlackPawn;
 import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
-import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
 import chess.piece.Team;
+import chess.piece.WhitePawn;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -176,11 +181,11 @@ public class ChessBoard {
     private static void createPawn(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
             Arrays.stream(File.values())
-                    .forEach(file -> piecePosition.put(new Position(file, Rank.TWO), new Pawn(team)));
+                    .forEach(file -> piecePosition.put(new Position(file, Rank.TWO), new WhitePawn()));
         }
         if (team == Team.BLACK) {
             Arrays.stream(File.values())
-                    .forEach(file -> piecePosition.put(new Position(file, Rank.SEVEN), new Pawn(team)));
+                    .forEach(file -> piecePosition.put(new Position(file, Rank.SEVEN), new BlackPawn()));
         }
     }
 
