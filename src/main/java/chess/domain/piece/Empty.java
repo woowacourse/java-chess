@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Role;
 import chess.domain.Team;
+import chess.dto.BoardSnapshot;
 import chess.strategy.EmptyStrategy;
 
 public class Empty extends Piece {
@@ -14,7 +15,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Position source, Position target, BoardSnapshot boardSnapshot) {
         return false;
     }
 }

@@ -24,7 +24,7 @@ public class Turn {
         return CACHE.computeIfAbsent(Team.BLACK, ignore -> new Turn(Team.WHITE));
     }
 
-    public boolean isCollectWith(Piece piece) {
+    public boolean isCorrectWith(Piece piece) {
         return team == piece.getTeam();
     }
 

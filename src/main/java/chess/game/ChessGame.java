@@ -10,6 +10,7 @@ import chess.domain.piece.Piece;
 import chess.dto.SquareResponse;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChessGame {
 
@@ -23,11 +24,18 @@ public class ChessGame {
 
     public void move(Position source, Position target) {
         validateTurn(source);
+        validatePosition(source, target);
         if (!board.canMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
         board.move(source, target);
         changeTurn();
+    }
+
+    private void validatePosition(Position source, Position target) {
+        if (Objects.equals(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+        }
     }
 
     private void changeTurn() {
@@ -42,7 +50,7 @@ public class ChessGame {
     }
 
     private boolean isInvalidTurn(Piece sourcePiece) {
-        return !turn.isCollectWith(sourcePiece);
+        return !turn.isCorrectWith(sourcePiece);
     }
 
     public List<SquareResponse> getBoard() {
