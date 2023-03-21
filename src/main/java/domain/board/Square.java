@@ -33,7 +33,7 @@ public class Square {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Square square = (Square) o;
+        Square square = (Square)o;
         return file == square.file && rank == square.rank;
     }
 

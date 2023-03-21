@@ -12,7 +12,7 @@ import domain.piece.Camp;
 class RookTest {
     @Test
     @DisplayName("rook이 이동할 수 있는 칸의 좌표를 반환한다.")
-    void kingMoveTest() {
+    void RookMoveTest() {
         Rook rook = new Rook(Camp.WHITE);
         assertThat(rook.fetchMovePath(new Square(1, 3), new Square(4,3))).contains(
                 new Square(2,3),
@@ -23,7 +23,7 @@ class RookTest {
 
     @Test
     @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
-    void bishopMoveFailTest() {
+    void RookMoveFailTest() {
         Rook rook = new Rook(Camp.WHITE);
         assertThatThrownBy(() -> rook.fetchMovePath(new Square(1, 3), new Square(2, 5)))
                 .isInstanceOf(IllegalArgumentException.class)

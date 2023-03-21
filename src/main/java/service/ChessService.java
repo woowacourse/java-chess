@@ -1,8 +1,9 @@
 package service;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
-import controller.Command;
+import domain.CommandRequest;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
@@ -11,50 +12,53 @@ import domain.piece.Camp;
 import domain.piece.Piece;
 
 public class ChessService {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final ChessBoard chessBoard = new ChessBoard();
     private Camp currentCamp = Camp.WHITE;
-
-    public boolean isOngoing() {
-        return isOngoing;
-    }
-
     private boolean isOngoing;
 
+    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(
+        Command.START, ignored -> commandIsStart(),
+        Command.END, ignored -> commandIsEnd(),
+        Command.MOVE, this::commandIsMove
+    );
 
-    public void execute(String[] inputs) {
-        if (commandIsStart(inputs)) {
-            return;
-        }
-        if (commandIsEnd(inputs)) {
-            return;
-        }
-        if (commandIsMove(inputs)) {
-            return;
-        }
-        throw new IllegalStateException("명령에 알맞은 상태가 아닙니다.");
+    public void execute(CommandRequest commandRequest) {
+        Command command = Command.findRunCommand(commandRequest.getCommand());
+        commandsAndExecutions.get(command).accept(commandRequest);
     }
 
-    private boolean commandIsMove(String[] inputs) {
-        if (Command.findRunCommand(inputs[0]).equals(Command.MOVE) && isOngoing) {
-            Square currentSquare = getCurrentSquare(inputs);
-            Square targetSquare = getTargetSquare(inputs);
+    private void commandIsStart() {
+        if (!isOngoing) {
+            chessBoard.initialize();
+            isOngoing = true;
+            return;
+        }
+        throw new IllegalStateException("이미 게임이 실행중입니다.");
+    }
+
+    private void commandIsEnd() {
+        isOngoing = false;
+    }
+
+    private void commandIsMove(CommandRequest commandRequest) {
+        if (isOngoing) {
+            Square currentSquare = convertToSquare(commandRequest.getCurrentSquareName());
+            Square targetSquare = convertToSquare(commandRequest.getTargetSquareName());
             validateCurrentCamp(currentSquare);
 
             chessBoard.move(currentSquare, targetSquare);
             currentCamp = currentCamp.fetchOppositeCamp();
-            return true;
+            return;
         }
-        return false;
+        throw new IllegalStateException("게임을 먼저 실행해주세요.");
     }
 
-    private Square getTargetSquare(String[] inputs) {
-        return new Square(File.findFile(inputs[2].charAt(0)),
-                Rank.findRank(inputs[2].charAt(1)));
-    }
-
-    private Square getCurrentSquare(String[] inputs) {
-        return new Square(File.findFile(inputs[1].charAt(0)),
-                Rank.findRank(inputs[1].charAt(1)));
+    private Square convertToSquare(String squareName) {
+        return new Square(File.findFile(squareName.charAt(FILE_INDEX)),
+            Rank.findRank(squareName.charAt(RANK_INDEX)));
     }
 
     private void validateCurrentCamp(Square currentSquare) {
@@ -63,28 +67,11 @@ public class ChessService {
         }
     }
 
-    private boolean commandIsEnd(String[] inputs) {
-        if (Command.findRunCommand(inputs[0]).equals(Command.END) && isOngoing) {
-            isOngoing = false;
-            return true;
-        }
-        return false;
-    }
-
-    private boolean commandIsStart(String[] inputs) {
-        if (Command.findRunCommand(inputs[0]).equals(Command.START) && !isOngoing) {
-            chessBoard.initialize();
-            isOngoing = true;
-            return true;
-        }
-        return false;
-    }
-
-    public void setUp() {
-        chessBoard.initialize();
-    }
-
     public Map<Square, Piece> getChessBoard() {
         return chessBoard.getBoard();
+    }
+
+    public boolean isOngoing() {
+        return isOngoing;
     }
 }
