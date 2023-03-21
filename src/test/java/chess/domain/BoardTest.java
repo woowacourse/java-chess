@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.MovablePiece;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -154,7 +153,7 @@ class BoardTest {
 
         board.makeMove(sourceSquare, targetSquare);
 
-        MovablePiece piece = (MovablePiece) board.findPiece(targetFile, targetRank);
+        Piece piece = board.findPiece(targetFile, targetRank);
 
         assertThat(piece.getRole()).isEqualTo(expectedRole);
     }

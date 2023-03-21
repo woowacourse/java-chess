@@ -9,15 +9,16 @@ public enum Role {
     KNIGHT(Knight::new),
     BISHOP(Bishop::new),
     QUEEN(Queen::new),
-    KING(King::new);
+    KING(King::new),
+    BLANK(BlankPiece::new);
 
-    private final Constructor<Side, Role, MovablePiece> createPiece;
+    private final Constructor<Side, Role, Piece> createPiece;
 
-    Role(final Constructor<Side, Role, MovablePiece> createPiece) {
+    Role(final Constructor<Side, Role, Piece> createPiece) {
         this.createPiece = createPiece;
     }
 
-    public MovablePiece create(final Side side) {
+    public Piece create(final Side side) {
         return createPiece.construct(side, this);
     }
 

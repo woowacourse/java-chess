@@ -26,27 +26,27 @@ public class OutputView {
 
     private String convertPiece(final Piece piece) {
         if (piece instanceof Pawn) {
-            return convertSide((MovablePiece) piece, "p");
+            return convertSide(piece, "p");
         }
         if (piece instanceof Rook) {
-            return convertSide((MovablePiece) piece, "r");
+            return convertSide(piece, "r");
         }
         if (piece instanceof Knight) {
-            return convertSide((MovablePiece) piece, "n");
+            return convertSide(piece, "n");
         }
         if (piece instanceof Bishop) {
-            return convertSide((MovablePiece) piece, "b");
+            return convertSide(piece, "b");
         }
         if (piece instanceof Queen) {
-            return convertSide((MovablePiece) piece, "q");
+            return convertSide(piece, "q");
         }
         if (piece instanceof King) {
-            return convertSide((MovablePiece) piece, "k");
+            return convertSide(piece, "k");
         }
         return ".";
     }
 
-    private String convertSide(final MovablePiece piece, final String convertedPiece) {
+    private String convertSide(final Piece piece, final String convertedPiece) {
         if (piece.getColor().equals(Color.BLACK)) {
             return convertedPiece.toUpperCase();
         }

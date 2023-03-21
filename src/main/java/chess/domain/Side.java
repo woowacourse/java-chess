@@ -11,6 +11,7 @@ public class Side {
         CACHE = new HashMap<>();
         CACHE.put(Color.BLACK, new Side(Color.BLACK));
         CACHE.put(Color.WHITE, new Side(Color.WHITE));
+        CACHE.put(Color.EMPTY, new Side(Color.EMPTY));
     }
 
     private final Color color;

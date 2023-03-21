@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Role;
 import chess.domain.Side;
 
-public class King extends MovablePiece {
+public class King extends Piece {
     private static final int MAX_MOVE_DISTANCE = 1;
 
     public King(final Side side, final Role role) {
@@ -16,7 +16,7 @@ public class King extends MovablePiece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         return canMove(direction, distance) && isOpponentSide(target);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 import static chess.domain.piece.Direction.*;
 
-public class Pawn extends MovablePiece {
+public class Pawn extends Piece {
     protected static final Direction WHITE_FORWARD_DIRECTION = NORTH;
     protected static final Direction BLACK_FORWARD_DIRECTION = SOUTH;
     protected static final List<Direction> WHITE_ATTACK_DIRECTION = List.of(NORTH_EAST, NORTH_WEST);
@@ -31,7 +31,7 @@ public class Pawn extends MovablePiece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         if (!isOpponentSide(target)) {
             return false;
         }

@@ -10,10 +10,10 @@ import java.util.Map;
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
 
-    private final Map<Square, MovablePiece> board;
+    private final Map<Square, Piece> board;
     private Side turn;
 
-    Board(final Map<Square, MovablePiece> board) {
+    Board(final Map<Square, Piece> board) {
         this.board = board;
         this.turn = Side.from(FIRST_TURN_COLOR);
     }
@@ -21,7 +21,8 @@ public class Board {
     public Piece findPiece(final File file, final Rank rank) {
         Square piece = Square.of(file, rank);
         if (!board.containsKey(piece)) {
-            return new VacantPiece();
+            Side blankSide = Side.from(Color.EMPTY);
+            return Role.BLANK.create(blankSide);
         }
         return board.get(piece);
     }
@@ -30,7 +31,7 @@ public class Board {
         validate(sourceSquare, targetSquare);
 
         Direction direction = Direction.of(sourceSquare, targetSquare);
-        MovablePiece sourcePiece = board.get(sourceSquare);
+        Piece sourcePiece = board.get(sourceSquare);
         int distance = sourceSquare.calculateDistance(targetSquare);
 
         validateCanNotMove(targetSquare, direction, sourcePiece, distance);
@@ -58,13 +59,13 @@ public class Board {
     }
 
     private void validateSideWrongTurn(final Square sourceSquare) {
-        MovablePiece sourcePiece = board.get(sourceSquare);
+        Piece sourcePiece = board.get(sourceSquare);
         if (!sourcePiece.isSameSide(turn)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
 
-    private void validateCanNotMove(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
+    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
         boolean possible = isPossibleMove(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
@@ -72,7 +73,7 @@ public class Board {
         }
     }
 
-    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
+    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
         if (board.containsKey(targetSquare)) {
             return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
         }
@@ -86,8 +87,8 @@ public class Board {
         }
     }
 
-    private void movePiece(final Square sourceSquare, final Square targetSquare, final MovablePiece sourcePiece) {
-        MovablePiece piece = sourcePiece;
+    private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
+        Piece piece = sourcePiece;
         if (sourcePiece.getRole().equals(Role.INITIAL_PAWN)) {
             piece = ((InitialPawn) sourcePiece).changeState();
         }

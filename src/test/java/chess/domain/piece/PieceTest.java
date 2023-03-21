@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MovablePieceTest {
+class PieceTest {
 
     static Stream<Arguments> pieceDummy() {
         return Stream.of(
@@ -44,9 +44,9 @@ class MovablePieceTest {
         Side sourceSide = Side.from(Color.WHITE);
         Side sameSide = Side.from(Color.WHITE);
         Side opponenetSide = Side.from(Color.BLACK);
-        MovablePiece sourcePiece = new Pawn(sourceSide, Role.PAWN);
-        MovablePiece targetPiece = new King(sameSide, Role.KING);
-        MovablePiece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
+        Piece sourcePiece = new Pawn(sourceSide, Role.PAWN);
+        Piece targetPiece = new King(sameSide, Role.KING);
+        Piece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
 
         assertThat(sourcePiece.isOpponentSide(targetPiece)).isFalse();
         assertThat(sourcePiece.isOpponentSide(opponentPiece)).isTrue();

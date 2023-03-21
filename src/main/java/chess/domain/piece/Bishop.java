@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Role;
 import chess.domain.Side;
 
-public class Bishop extends MovablePiece {
+public class Bishop extends Piece {
     public Bishop(final Side side, final Role role) {
         super(side, role);
     }
@@ -14,7 +14,7 @@ public class Bishop extends MovablePiece {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         return canMove(direction, distance) && isOpponentSide(target);
     }
 }
