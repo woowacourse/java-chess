@@ -1,8 +1,8 @@
 package chess.model.piece.type;
 
 import chess.model.Color;
-import chess.model.piece.Direction;
 import chess.model.piece.PieceType;
+import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.List;
 

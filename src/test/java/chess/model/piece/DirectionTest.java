@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.model.position.Direction;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

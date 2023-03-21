@@ -27,8 +27,7 @@ import java.util.Map;
 
 class BoardFactory {
 
-    private static final List<PieceType> INITIAL_BACK_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP,
-            KNIGHT, ROOK);
+    private static final List<PieceType> INITIAL_BACK_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
     private static final List<PieceType> INITIAL_FRONT_PIECES = List.of(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN);
 
     private BoardFactory() {
@@ -53,8 +52,7 @@ class BoardFactory {
         initializeBackPieces(squares, EIGHTH, BLACK);
     }
 
-    private static void initializeBackPieces(final Map<Position, Piece> squares, final Rank rank,
-                                             final PieceColor pieceColor) {
+    private static void initializeBackPieces(final Map<Position, Piece> squares, final Rank rank, final PieceColor pieceColor) {
         final List<Position> backPositions = Positions.getPositionsBy(rank);
 
         for (int i = 0, size = backPositions.size(); i < size; i++) {
@@ -63,8 +61,7 @@ class BoardFactory {
         }
     }
 
-    private static void initializeFrontPieces(final Map<Position, Piece> squares, final Rank rank,
-                                              final PieceColor pieceColor) {
+    private static void initializeFrontPieces(final Map<Position, Piece> squares, final Rank rank, final PieceColor pieceColor) {
         final List<Position> frontPositions = Positions.getPositionsBy(rank);
 
         for (int i = 0, size = frontPositions.size(); i < size; i++) {

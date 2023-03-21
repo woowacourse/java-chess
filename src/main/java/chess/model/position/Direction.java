@@ -1,7 +1,5 @@
-package chess.model.piece;
+package chess.model.position;
 
-import chess.model.position.Distance;
-import chess.model.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,11 +59,6 @@ public enum Direction {
                 .filter(direction -> direction.match(file, rank))
                 .findFirst()
                 .orElse(ILLEGAL_MOVE);
-    }
-
-    public static Direction findDirection(final Position source, final Position target) {
-        final Distance distance = target.differ(source);
-        return distance.findDirection();
     }
 
     public static boolean isDiagonal(final Direction direction) {

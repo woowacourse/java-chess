@@ -1,6 +1,5 @@
 package chess.model.position;
 
-import chess.model.piece.Direction;
 import java.util.Objects;
 
 public class Position {

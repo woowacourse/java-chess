@@ -2,7 +2,7 @@ package chess.model.piece.type;
 
 import chess.model.board.DefaultColor;
 import chess.model.board.DefaultType;
-import chess.model.piece.Direction;
+import chess.model.position.Direction;
 
 public class Empty extends Piece {
 

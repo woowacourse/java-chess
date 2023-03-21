@@ -2,7 +2,7 @@ package chess.model.piece.type;
 
 import chess.model.Color;
 import chess.model.Type;
-import chess.model.piece.Direction;
+import chess.model.position.Direction;
 import chess.model.position.Distance;
 
 public abstract class Piece {

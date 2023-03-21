@@ -1,9 +1,9 @@
 package chess.model.board;
 
-import chess.model.piece.Direction;
 import chess.model.piece.PieceColor;
 import chess.model.piece.type.Empty;
 import chess.model.piece.type.Piece;
+import chess.model.position.Direction;
 import chess.model.position.Distance;
 import chess.model.position.Position;
 import java.util.Map;
@@ -53,7 +53,8 @@ public class Board {
     }
 
     private void validateWaypoint(final Position source, final Position target) {
-        final Direction direction = Direction.findDirection(source, target);
+        final Distance distance = target.differ(source);
+        final Direction direction = distance.findDirection();
 
         Position wayPoint = source.next(direction);
         while (!wayPoint.equals(target)) {

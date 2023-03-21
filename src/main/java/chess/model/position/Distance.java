@@ -1,7 +1,5 @@
 package chess.model.position;
 
-import chess.model.piece.Direction;
-
 public class Distance {
 
     private final int file;

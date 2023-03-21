@@ -1,15 +1,15 @@
 package chess.model.piece.type;
 
-import static chess.model.piece.Direction.NORTH;
-import static chess.model.piece.Direction.NORTH_EAST;
-import static chess.model.piece.Direction.NORTH_WEST;
-import static chess.model.piece.Direction.SOUTH;
-import static chess.model.piece.Direction.SOUTH_EAST;
-import static chess.model.piece.Direction.SOUTH_WEST;
+import static chess.model.position.Direction.NORTH;
+import static chess.model.position.Direction.NORTH_EAST;
+import static chess.model.position.Direction.NORTH_WEST;
+import static chess.model.position.Direction.SOUTH;
+import static chess.model.position.Direction.SOUTH_EAST;
+import static chess.model.position.Direction.SOUTH_WEST;
 
 import chess.model.Color;
-import chess.model.piece.Direction;
 import chess.model.piece.PieceType;
+import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.List;
 
