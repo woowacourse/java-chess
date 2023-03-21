@@ -65,15 +65,12 @@ public final class Board {
     }
 
     private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
-        Position iterator = new Position(current).move(unitVector);
+        Position pieceFinder = new Position(current).move(unitVector);
 
-        while (!iterator.equals(target)) {
-            Rank iteratorRank = board.get(iterator.getRow());
-
-            if (!iteratorRank.isEmptyPiece(iterator.getColumn())) {
-                throw new IllegalArgumentException("기물이 움직이는 경로에 다른 기물이 존재합니다.");
-            }
-            iterator = iterator.move(unitVector);
+        while (!pieceFinder.equals(target)) {
+            Rank findedRank = board.get(pieceFinder.getRow());
+            findedRank.validatePiece(pieceFinder.getColumn());
+            pieceFinder = pieceFinder.move(unitVector);
         }
     }
 
