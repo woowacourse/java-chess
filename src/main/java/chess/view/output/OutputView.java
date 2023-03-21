@@ -10,12 +10,6 @@ public final class OutputView {
     private static final int LINE_BREAK_INDEX = 1;
     private static final String EMPTY_PIECE_SYMBOL = ".";
 
-    private final ConsoleViewChessBoardPositions boardPositions;
-
-    public OutputView(ConsoleViewChessBoardPositions boardPositions) {
-        this.boardPositions = boardPositions;
-    }
-
     public void printStartPrefix() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"

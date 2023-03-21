@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.position.move.InvalidMove;
-import chess.domain.position.move.PawnCatchMove;
-import chess.domain.position.move.PawnForwardMove;
-import chess.domain.position.move.PieceMove;
+import chess.domain.piece.move.InvalidMove;
+import chess.domain.piece.move.PawnCatchMove;
+import chess.domain.piece.move.PawnForwardMove;
+import chess.domain.piece.move.PieceMove;
 
 public final class Pawn extends Piece {
 

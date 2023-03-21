@@ -1,4 +1,4 @@
-package chess.domain.position.move;
+package chess.domain.piece.move;
 
 public interface PieceMove {
 

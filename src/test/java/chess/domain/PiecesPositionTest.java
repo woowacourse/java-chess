@@ -12,6 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.File;
+import chess.domain.position.PiecesPosition;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.stream.Stream;

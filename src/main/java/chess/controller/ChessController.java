@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.controller.mapper.ChessCommandMapper;
-import chess.domain.PiecesPosition;
+import chess.domain.position.PiecesPosition;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.ChessGameCommand;
 import chess.view.input.InputView;

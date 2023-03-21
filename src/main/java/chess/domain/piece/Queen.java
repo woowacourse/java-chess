@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.position.move.BlockingMove;
-import chess.domain.position.move.InvalidMove;
-import chess.domain.position.move.PieceMove;
+import chess.domain.piece.move.BlockingMove;
+import chess.domain.piece.move.InvalidMove;
+import chess.domain.piece.move.PieceMove;
 
 public final class Queen extends Piece {
 

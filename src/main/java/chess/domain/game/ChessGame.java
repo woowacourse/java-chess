@@ -1,12 +1,12 @@
 package chess.domain.game;
 
-import chess.domain.PiecesPosition;
+import chess.domain.position.PiecesPosition;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.ReadyState;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.move.PieceMove;
+import chess.domain.piece.move.PieceMove;
 import java.util.List;
 
 public class ChessGame {

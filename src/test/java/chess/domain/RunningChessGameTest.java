@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Camp;
 import chess.domain.position.File;
+import chess.domain.position.PiecesPosition;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.junit.jupiter.api.BeforeEach;
