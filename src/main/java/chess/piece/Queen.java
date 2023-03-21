@@ -15,23 +15,14 @@ public class Queen extends Piece {
         validateStay(from, to);
         validateDestination(toPiece);
 
-        if (from.getRank() == to.getRank()) {
-            return true;
-        }
-        if (from.getFile() == to.getFile()) {
-            return true;
-        }
-        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
-        final int rankInterval = Rank.calculateInterval(from.getRank(), to.getRank());
-
-        if (fileInterval == rankInterval) {
+        if (isMovablePosition(from, to)) {
             return true;
         }
         throw new IllegalArgumentException("Queen이 이동할 수 없는 경로입니다.");
     }
 
     private void validateStay(final Position from, final Position to) {
-        if (from.equals(to)) {
+        if (from.isSamePosition(to)) {
             throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
         }
     }
@@ -40,6 +31,24 @@ public class Queen extends Piece {
         if (this.team == toPiece.team) {
             throw new IllegalArgumentException("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
+    }
+
+    private boolean isMovablePosition(final Position from, final Position to) {
+        if (from.getRank() == to.getRank()) {
+            return true;
+        }
+        if (from.getFile() == to.getFile()) {
+            return true;
+        }
+        if (isSameInterval(from, to)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isSameInterval(final Position from, final Position to) {
+        return File.calculateInterval(from.getFile(), to.getFile()) ==
+                Rank.calculateInterval(from.getRank(), to.getRank());
     }
 
     @Override
