@@ -27,7 +27,7 @@ class EndChessGameTest {
     @Test
     @DisplayName("게임이 끝나면 실행이 불가능 하다.")
     void isRunnableGameTest() {
-        assertThat(endGame.isGameRunnable())
+        assertThat(endGame.isRunnableGame())
                 .isFalse();
     }
 

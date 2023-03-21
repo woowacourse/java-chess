@@ -24,7 +24,7 @@ class ReadyChessGameTest {
     @Test
     @DisplayName("게임 준비 단계에서는 실행 할 수 없다")
     void isRunnableGameTest() {
-        assertThatThrownBy(() -> readyGame.isGameRunnable())
+        assertThatThrownBy(() -> readyGame.isRunnableGame())
                 .isInstanceOf(IllegalStateException.class);
     }
 

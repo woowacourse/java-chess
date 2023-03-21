@@ -25,7 +25,7 @@ public class RunningChessGame implements ChessGame {
     }
 
     @Override
-    public boolean isGameRunnable() {
+    public boolean isRunnableGame() {
         return true;
     }
 

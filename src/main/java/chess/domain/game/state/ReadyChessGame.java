@@ -17,7 +17,7 @@ public class ReadyChessGame implements ChessGame {
     }
 
     @Override
-    public boolean isGameRunnable() {
+    public boolean isRunnableGame() {
         throw new IllegalStateException(NOT_START_COMMAND);
     }
 

@@ -15,7 +15,7 @@ public class EndChessGame implements ChessGame {
     }
 
     @Override
-    public boolean isGameRunnable() {
+    public boolean isRunnableGame() {
         return false;
     }
 

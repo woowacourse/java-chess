@@ -37,7 +37,7 @@ public final class ChessController {
     }
 
     private void play(ChessGame chessGame) {
-        while (chessGame.isGameRunnable()) {
+        while (chessGame.isRunnableGame()) {
             ChessGame recentGame = chessGame;
             chessGame = retryOnInvalidUserInput(() -> playTurn(recentGame));
             printChessGameBoard(chessGame);

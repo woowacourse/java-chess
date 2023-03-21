@@ -86,7 +86,7 @@ class RunningChessGameTest {
     @Test
     @DisplayName("게임 실행 여부 확인.")
     void isRunnableGameTest() {
-        assertThat(runningGame.isGameRunnable())
+        assertThat(runningGame.isRunnableGame())
                 .isTrue();
     }
 }

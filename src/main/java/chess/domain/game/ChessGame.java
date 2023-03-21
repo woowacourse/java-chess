@@ -4,7 +4,7 @@ import chess.domain.PiecesPosition;
 
 public interface ChessGame {
 
-    boolean isGameRunnable();
+    boolean isRunnableGame();
 
     ChessGame playByCommand(ChessGameCommand gameCommand);
 
