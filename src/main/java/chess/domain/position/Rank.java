@@ -28,14 +28,14 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == number)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력한 값과 대응하는 랭크가 존재하지 않습니다."));
+                .orElse(null);
     }
 
     public static Rank of(char symbol) {
         return Arrays.stream(values())
                 .filter(rank -> rank.symbol == symbol)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력한 값과 대응하는 랭크가 존재하지 않습니다."));
+                .orElse(null);
     }
 
     public Rank move(int distance) {

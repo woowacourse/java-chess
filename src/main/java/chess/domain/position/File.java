@@ -23,17 +23,18 @@ public enum File {
     }
 
     public static File of(int number) {
+        System.out.println(number);
         return Arrays.stream(values())
                 .filter(file -> file.index == number)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력한 값과 대응하는 파일이 존재하지 않습니다."));
+                .orElse(null);
     }
 
     public static File of(char symbol) {
         return Arrays.stream(values())
                 .filter(file -> file.symbol == symbol)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력한 값과 대응하는 파일이 존재하지 않습니다."));
+                .orElse(null);
     }
 
     public File move(int distance) {

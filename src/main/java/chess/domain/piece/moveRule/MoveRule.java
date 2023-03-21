@@ -19,7 +19,14 @@ public interface MoveRule {
     }
 
     default void updatePiecePosition(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+        validateMoveToEmpty(nextPosition);
         Piece movingPiece = board.remove(currentPosition);
         board.put(nextPosition, movingPiece);
+    }
+
+    private void validateMoveToEmpty(Position nextPosition){
+        if(nextPosition == null){
+            throw new IllegalArgumentException("기물이 이동할 수 없는 위치입니다.");
+        }
     }
 }

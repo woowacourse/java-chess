@@ -64,8 +64,7 @@ public class PawnMoveRule extends UnJumpableMoveRule {
         if (board.containsKey(nextPosition)) {
             throw new IllegalArgumentException("폰의 이동위치에 다른 기물이 있습니다.");
         }
-        Piece movingPiece = board.remove(currentPosition);
-        board.put(nextPosition, movingPiece);
+        updatePiecePosition(currentPosition, nextPosition, board);
     }
 
     private void moveDiagonal(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
