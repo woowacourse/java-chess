@@ -4,9 +4,7 @@ import dto.ChessBoardDto;
 import view.GameCommand;
 import domain.chessGame.ChessBoard;
 import domain.chessGame.ChessBoardGenerator;
-import domain.position.ColumnToNumber;
 import domain.position.Position;
-import domain.position.RowToNumber;
 import view.InputView;
 import view.OutputView;
 

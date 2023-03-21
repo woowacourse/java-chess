@@ -1,9 +1,9 @@
 package dto;
 
 import domain.piece.Piece;
-import domain.position.ColumnToNumber;
+import controller.ColumnToNumber;
 import domain.position.Position;
-import domain.position.RowToNumber;
+import controller.RowToNumber;
 
 import java.util.ArrayList;
 import java.util.List;
