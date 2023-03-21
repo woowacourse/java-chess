@@ -14,11 +14,15 @@ public abstract class Piece {
     }
 
     public boolean isSameSide(final Side side) {
-        return this.side.equals(side);
+        return this.side == side;
     }
 
-    protected boolean isOpponentSide(final Piece targetPiece) {
-        return !side.equals(targetPiece.side);
+    public boolean isOpposite(final Side side) {
+        return this.side != side;
+    }
+
+    public boolean hasSameRole(final Role role) {
+        return this.role == role;
     }
 
     public Side getSide() {

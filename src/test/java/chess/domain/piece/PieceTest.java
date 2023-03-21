@@ -48,7 +48,7 @@ class PieceTest {
         Piece targetPiece = new King(sameSide, Role.KING);
         Piece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
 
-        assertThat(sourcePiece.isOpponentSide(targetPiece)).isFalse();
-        assertThat(sourcePiece.isOpponentSide(opponentPiece)).isTrue();
+        assertThat(sourcePiece.isOpposite(targetPiece.side)).isFalse();
+        assertThat(sourcePiece.isOpposite(opponentPiece.side)).isTrue();
     }
 }

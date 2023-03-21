@@ -14,7 +14,7 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    protected boolean isOpponentSide(final Piece targetPiece) {
+    public boolean isOpposite(final Side side) {
         throw new UnsupportedOperationException("빈 칸은 상대 팀이 없습니다.");
     }
 
