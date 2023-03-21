@@ -11,6 +11,7 @@ import chess.domain.team.player.Player;
 import chess.initial.BoardFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +25,6 @@ public class Board {
 
     public static Board create(final Map<Position, Piece> board) {
         return new Board(BoardFactory.create(board));
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
     }
 
     public void move(final Position source, final Position target, final Player player) {
@@ -137,5 +134,9 @@ public class Board {
     private void movePiece(final Position source, final Position target, final Piece piece) {
         board.put(target, piece);
         board.put(source, new Empty(Team.NONE));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
