@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlankPieceTest {
 
-    private static final BlankPiece blankPiece = new BlankPiece(Position.of(File.A, Rank.ONE));
+    private static final BlankPiece blankPiece = BlankPiece.of(Position.of(File.A, Rank.ONE));
 
     @Test
     @DisplayName("생성시 Blank 색상 정보를 가진다")
@@ -26,7 +26,7 @@ class BlankPieceTest {
     @Test
     @DisplayName("이동 명령시 예외를 발생한다")
     void move_throws_exception() {
-        assertThatThrownBy(() -> blankPiece.move(new BlankPiece(Position.of(File.A, Rank.TWO))))
+        assertThatThrownBy(() -> blankPiece.move(BlankPiece.of(Position.of(File.A, Rank.TWO))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(BLANK_PIECE_EXCEPTION_MESSAGE);
     }

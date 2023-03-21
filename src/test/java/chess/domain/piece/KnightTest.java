@@ -61,7 +61,7 @@ class KnightTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(Position.of(C, SIX))),
+                Arguments.of(BlankPiece.of(Position.of(C, SIX))),
                 Arguments.of(new Pawn(Position.of(C, SIX), WHITE))
         );
     }

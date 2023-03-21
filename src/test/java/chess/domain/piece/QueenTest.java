@@ -63,7 +63,7 @@ class QueenTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(Position.of(D, SIX))),
+                Arguments.of(BlankPiece.of(Position.of(D, SIX))),
                 Arguments.of(new Pawn(Position.of(D, SIX), WHITE))
         );
     }

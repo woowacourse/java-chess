@@ -51,7 +51,7 @@ public class Board {
 
     private void processMoving(final Piece pieceToMove, final Position targetPosition) {
         final Piece pieceInTargetPosition = findPieceOptionalIn(targetPosition)
-                .orElseGet(() -> new BlankPiece(targetPosition));
+                .orElseGet(() -> BlankPiece.of(targetPosition));
         final Piece movedPiece = pieceToMove.move(pieceInTargetPosition);
 
         existingPieces.remove(pieceToMove);

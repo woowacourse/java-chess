@@ -57,7 +57,7 @@ class KingTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(Position.of(E, SEVEN))),
+                Arguments.of(BlankPiece.of(Position.of(E, SEVEN))),
                 Arguments.of(new Pawn(Position.of(E, SEVEN), WHITE))
         );
     }

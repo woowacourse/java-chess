@@ -64,7 +64,7 @@ class BishopTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(Position.of(F, FIVE))),
+                Arguments.of(BlankPiece.of(Position.of(F, FIVE))),
                 Arguments.of(new Pawn(Position.of(F, FIVE), WHITE))
         );
     }
