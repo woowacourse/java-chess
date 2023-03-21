@@ -7,6 +7,8 @@ import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 import static chess.domain.piece.PieceType.QUEEN;
 import static chess.domain.piece.PieceType.ROOK;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B3;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -86,7 +88,7 @@ class InitialStateTest {
         final Board board = new InitialState();
 
         // expect
-        assertThatThrownBy(() -> board.move("b2", "b3"))
+        assertThatThrownBy(() -> board.move(B2, B3))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }

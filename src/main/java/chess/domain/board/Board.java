@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.position.Position;
+
 public interface Board {
 
     Board initialize();
@@ -8,7 +10,7 @@ public interface Board {
 
     boolean isEnd();
 
-    Board move(final String source, final String target);
+    Board move(final Position source, final Position target);
 
     GameResult getResult();
 }

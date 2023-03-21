@@ -17,7 +17,7 @@ public final class EndState extends InitializedState {
     }
 
     @Override
-    public Board move(final String source, final String target) {
+    public Board move(final Position source, final Position target) {
         throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 }

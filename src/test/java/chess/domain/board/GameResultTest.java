@@ -1,5 +1,22 @@
 package chess.domain.board;
 
+import static chess.fixture.PositionFixture.B8;
+import static chess.fixture.PositionFixture.C1;
+import static chess.fixture.PositionFixture.C6;
+import static chess.fixture.PositionFixture.D1;
+import static chess.fixture.PositionFixture.D2;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.D7;
+import static chess.fixture.PositionFixture.E2;
+import static chess.fixture.PositionFixture.E4;
+import static chess.fixture.PositionFixture.E5;
+import static chess.fixture.PositionFixture.E7;
+import static chess.fixture.PositionFixture.E8;
+import static chess.fixture.PositionFixture.F4;
+import static chess.fixture.PositionFixture.F5;
+import static chess.fixture.PositionFixture.F7;
+import static chess.fixture.PositionFixture.H5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
@@ -30,9 +47,9 @@ public class GameResultTest {
         // given
         Board board = new InitialState();
         board = board.initialize();
-        board = board.move("e2", "e4");
-        board = board.move("d7", "d5");
-        board = board.move("e4", "d5");
+        board = board.move(E2, E4);
+        board = board.move(D7, D5);
+        board = board.move(E4, D5);
         final GameResult result = board.getResult();
 
         // when
@@ -47,11 +64,11 @@ public class GameResultTest {
         // given
         Board board = new InitialState();
         board = board.initialize();
-        board = board.move("e2", "e4");
-        board = board.move("e7", "e5");
-        board = board.move("d1", "h5");
-        board = board.move("f7", "f5");
-        board = board.move("h5", "e8");
+        board = board.move(E2, E4);
+        board = board.move(E7, E5);
+        board = board.move(D1, H5);
+        board = board.move(F7, F5);
+        board = board.move(H5, E8);
         final GameResult result = board.getResult();
 
         // when
@@ -66,10 +83,10 @@ public class GameResultTest {
         // given
         Board board = new InitialState();
         board = board.initialize();
-        board = board.move("d2", "d4");
-        board = board.move("b8", "c6");
-        board = board.move("c1", "f4");
-        board = board.move("c6", "d4");
+        board = board.move(D2, D4);
+        board = board.move(B8, C6);
+        board = board.move(C1, F4);
+        board = board.move(C6, D4);
         final GameResult result = board.getResult();
 
         // when

@@ -1,6 +1,13 @@
 package chess.domain.board;
 
+import static chess.fixture.PositionFixture.D1;
+import static chess.fixture.PositionFixture.D2;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.E2;
 import static chess.fixture.PositionFixture.E4;
+import static chess.fixture.PositionFixture.G6;
+import static chess.fixture.PositionFixture.G7;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -25,7 +32,7 @@ public class PlayStateTest {
 
         // expect
         final Board finalBoard = board;
-        assertThatThrownBy(() -> finalBoard.move("d2", "d5"))
+        assertThatThrownBy(() -> finalBoard.move(D2, D5))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 이동 명령어 입니다.");
     }
@@ -37,7 +44,7 @@ public class PlayStateTest {
         board = board.initialize();
 
         // when
-        board = board.move("e2", "e4");
+        board = board.move(E2, E4);
 
         // then
         final Map<Position, Piece> result = board.getResult().getBoard();
@@ -52,7 +59,7 @@ public class PlayStateTest {
 
         // expect
         final Board finalBoard = board;
-        assertThatThrownBy(() -> finalBoard.move("g7", "g6"))
+        assertThatThrownBy(() -> finalBoard.move(G7, G6))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대방의 기물을 움직일 수 없습니다.");
     }
@@ -65,7 +72,7 @@ public class PlayStateTest {
 
         // expect
         final Board finalBoard = board;
-        assertThatThrownBy(() -> finalBoard.move("d1", "d4"))
+        assertThatThrownBy(() -> finalBoard.move(D1, D4))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있을 수 없습니다.");
     }

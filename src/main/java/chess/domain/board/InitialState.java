@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import java.util.HashMap;
 
 public final class InitialState extends AbstractBoard {
@@ -28,7 +29,7 @@ public final class InitialState extends AbstractBoard {
     }
 
     @Override
-    public Board move(final String source, final String target) {
+    public Board move(final Position source, final Position target) {
         throw new IllegalStateException(INVALID_GAME_STATE_MESSAGE);
     }
 

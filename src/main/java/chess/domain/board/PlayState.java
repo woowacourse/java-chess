@@ -21,33 +21,31 @@ public final class PlayState extends InitializedState {
     }
 
     @Override
-    public Board move(final String source, final String target) {
-        final Position sourcePosition = Position.from(source);
-        final Position targetPosition = Position.from(target);
-        final Piece piece = board.get(sourcePosition);
+    public Board move(final Position source, final Position target) {
+        final Piece piece = board.get(source);
 
-        validate(sourcePosition, targetPosition, piece);
-        movePiece(sourcePosition, targetPosition, piece);
+        validate(source, target, piece);
+        movePiece(source, target, piece);
         if (isGameOver()) {
             return new EndState(board, turn.nextTurn());
         }
         return new PlayState(board, turn.nextTurn());
     }
 
-    private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+    private void validate(final Position source, final Position target, final Piece piece) {
         if (piece.isNotSameColor(turn)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (piece.isNotMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
+        if (piece.isNotMovable(source, target, board.get(target))) {
             throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다.");
         }
-        if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
+        if (isPieceExistsBetweenPosition(source, target)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있을 수 없습니다.");
         }
     }
 
-    private boolean isPieceExistsBetweenPosition(final Position sourcePosition, final Position targetPosition) {
-        return sourcePosition.between(targetPosition).stream()
+    private boolean isPieceExistsBetweenPosition(final Position source, final Position target) {
+        return source.between(target).stream()
                 .anyMatch(this::isPieceExists);
     }
 
@@ -55,9 +53,9 @@ public final class PlayState extends InitializedState {
         return !board.get(position).equals(Empty.instance());
     }
 
-    private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        board.put(targetPosition, piece);
-        board.put(sourcePosition, Empty.instance());
+    private void movePiece(final Position source, final Position target, final Piece piece) {
+        board.put(target, piece);
+        board.put(source, Empty.instance());
     }
 
     private boolean isGameOver() {

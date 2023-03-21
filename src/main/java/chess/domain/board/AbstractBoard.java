@@ -24,7 +24,7 @@ public abstract class AbstractBoard implements Board {
     public abstract boolean isEnd();
 
     @Override
-    public abstract Board move(final String source, final String target);
+    public abstract Board move(final Position source, final Position target);
 
     @Override
     public abstract GameResult getResult();

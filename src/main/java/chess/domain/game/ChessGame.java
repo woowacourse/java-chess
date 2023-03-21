@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.GameResult;
 import chess.domain.board.InitialState;
+import chess.domain.position.Position;
 
 public class ChessGame {
     private Board board;
@@ -20,7 +21,9 @@ public class ChessGame {
     }
 
     public void move(final String source, final String target) {
-        board = board.move(source, target);
+        final Position sourcePosition = Position.from(source);
+        final Position targetPosition = Position.from(target);
+        board = board.move(sourcePosition, targetPosition);
     }
 
     public GameResult getResult() {
