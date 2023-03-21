@@ -3,6 +3,7 @@ package chess.game.state;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -41,5 +42,10 @@ public class RunningState implements GameState {
     @Override
     public Team getTurn(Supplier<Team> supplier) {
         return supplier.get();
+    }
+
+    @Override
+    public boolean isChecked(BooleanSupplier supplier) {
+        return supplier.getAsBoolean();
     }
 }

@@ -80,22 +80,19 @@ public class Board {
 
     private void validatePieceRole(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
-        if (!sourcePiece.isRoleOf(Role.KNIGHT)) {
-            validateCollision(source, target);
+        if (!sourcePiece.isRoleOf(Role.KNIGHT) && !isEmptyRoute(source, target)) {
+            throw new IllegalArgumentException(NO_EMPTY_ROUTE_EXCEPTION_MESSAGE);
         }
         if (sourcePiece.isRoleOf(Role.PAWN)) {
             validatePawnMove(source, target);
         }
     }
 
-    private void validateCollision(Position source, Position target) {
+    private boolean isEmptyRoute(Position source, Position target) {
         List<Position> routes = source.getBetweenPositions(target);
-        boolean isEmptyRoute = routes.stream()
+        return routes.stream()
                 .map(squares::get)
                 .allMatch(piece -> piece.isRoleOf(Role.EMPTY));
-        if (!isEmptyRoute) {
-            throw new IllegalArgumentException(NO_EMPTY_ROUTE_EXCEPTION_MESSAGE);
-        }
     }
 
     private void validatePawnMove(Position source, Position target) {
@@ -151,5 +148,23 @@ public class Board {
 
     public Team getTurn() {
         return turn;
+    }
+
+    public boolean isChecked(Team team) {
+        Position kingPosition = getKingPosition(team);
+        return squares.entrySet().stream()
+                .filter(entry -> !entry.getValue().isSameTeam(team))
+                .filter(entry -> !entry.getValue().isRoleOf(Role.KING))
+                .anyMatch(entry -> entry.getValue().canMove(entry.getKey(), kingPosition)
+                        && isEmptyRoute(entry.getKey(), kingPosition));
+    }
+
+    private Position getKingPosition(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .filter(entry -> entry.getValue().isRoleOf(Role.KING))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 체스판에 킹이 존재하지 않습니다."))
+                .getKey();
     }
 }

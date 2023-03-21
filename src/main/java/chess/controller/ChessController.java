@@ -41,7 +41,11 @@ public class ChessController {
         PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
         chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
         OutputView.printBoard(chessGame.getBoard());
-        OutputView.printTurn(chessGame.getTurn());
+        Team turn = chessGame.getTurn();
+        OutputView.printTurn(turn);
+        if (chessGame.isChecked(turn)) {
+            OutputView.printChecked(turn);
+        }
     }
 
     private void getGameStatus() {

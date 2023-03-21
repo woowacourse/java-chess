@@ -82,4 +82,8 @@ public class OutputView {
         }
         throw new IllegalArgumentException("[ERROR] 해당 팀은 이름이 없습니다.");
     }
+
+    public static void printChecked(Team team) {
+        System.out.println(getTeamName(team) + " 팀은 현재 체크 상태 입니다.");
+    }
 }

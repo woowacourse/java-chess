@@ -53,4 +53,8 @@ public class ChessGame {
     public Team getTurn() {
         return gameState.getTurn(() -> board.getTurn());
     }
+
+    public boolean isChecked(Team team) {
+        return gameState.isChecked(() -> board.isChecked(team));
+    }
 }
