@@ -1,14 +1,13 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
 import chess.domain.piece.Camp;
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ChessController {
@@ -43,8 +42,7 @@ public final class ChessController {
     }
 
     private ChessGame startChessGame() {
-        ChessBoard piecesPosition = new ChessBoard();
-        Map<Position, Piece> chessBoard = piecesPosition.createBoard();
+        ChessBoard chessBoard = ChessBoardMaker.create();
 
         printBoard(chessBoard);
 
@@ -66,7 +64,7 @@ public final class ChessController {
         }
 
         move(chessGame, commands);
-        printBoard(chessGame.getPiecesPosition());
+        printBoard(chessGame.getChessBoard());
         return chessCommand;
     }
 
@@ -84,8 +82,8 @@ public final class ChessController {
         return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
-    private void printBoard(Map<Position, Piece> piecesPosition) {
-        outputView.printChessState(piecesPosition);
+    private void printBoard(ChessBoard chessBoard) {
+        outputView.printChessState(chessBoard.getBoard());
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {

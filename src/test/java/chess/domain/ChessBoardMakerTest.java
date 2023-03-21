@@ -15,22 +15,20 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class ChessBoardTest {
+class ChessBoardMakerTest {
 
-    Map<Position, Piece> board;
+    ChessBoard board;
 
     @BeforeAll
     @DisplayName("64개의 기물이 생성된다.")
     void setUp() {
-        ChessBoard chessBoard = new ChessBoard();
-        board = chessBoard.createBoard();
+        board = ChessBoardMaker.create();
     }
 
     @TestInstance(Lifecycle.PER_CLASS)
@@ -40,7 +38,7 @@ class ChessBoardTest {
         @ParameterizedTest(name = "화이트 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateWhite")
         void judgePiecesTest2(Position position, Piece piece) {
-            assertThat(board.get(position))
+            assertThat(board.getBoard().get(position))
                     .isEqualTo(piece);
         }
 
@@ -61,7 +59,7 @@ class ChessBoardTest {
         @ParameterizedTest(name = "블랙 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateBlack")
         void judgePiecesTest3(Position position, Piece piece) {
-            assertThat(board.get(position))
+            assertThat(board.getBoard().get(position))
                     .isEqualTo(piece);
         }
 
@@ -85,7 +83,7 @@ class ChessBoardTest {
     void judgePiecesTest4(Rank rank, Camp camp) {
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(board.get(position))
+            assertThat(board.getBoard().get(position))
                     .isEqualTo(new Pawn(camp));
         }
     }
@@ -95,7 +93,7 @@ class ChessBoardTest {
     void judgePiecesTest5(Rank rank) {
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(board.get(position))
+            assertThat(board.getBoard().get(position))
                     .isEqualTo(new Empty());
         }
     }

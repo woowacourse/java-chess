@@ -1,13 +1,11 @@
 package chess.domain;
 
 import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
 
 import java.util.List;
-import java.util.Map;
 
 public final class ChessGame {
 
@@ -16,31 +14,43 @@ public final class ChessGame {
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     public static final String SAME_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
-    private final Map<Position, Piece> piecesPosition;
+    private final ChessBoard chessBoard;
     private Camp turnCamp;
 
-    public ChessGame(Map<Position, Piece> piecesPosition, Camp turnCamp) {
+    public ChessGame(ChessBoard chessBoard, Camp turnCamp) {
         this.turnCamp = turnCamp;
-        this.piecesPosition = piecesPosition;
+        this.chessBoard = chessBoard;
     }
 
     public void move(Position fromPosition, Position toPosition) {
-        validateBeforeMoveTo(fromPosition, toPosition);
+        validateBeforeMoveTo(fromPosition, toPosition, turnCamp);
 
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
-        validateMovable(toPosition, pieceMove);
-        movePieceOn(fromPosition, toPosition);
+        validateMovable(toPosition, pieceMove,true);
+        chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
-    private void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
-        validateFromPiece(piecesPosition.get(fromPosition));
-        validateSameCamp(piecesPosition.get(fromPosition), piecesPosition.get(toPosition));
+    private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
+        Piece fromPiece = chessBoard.choicePiece(fromPosition);
+        PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
+
+        List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
+        for (Position position : pathPositions) {
+            validateMovable(position, pieceMove, false);
+        }
+
+        return pieceMove;
+    }
+
+    public void validateBeforeMoveTo(Position fromPosition, Position toPosition, Camp turnCamp) {
+        validateFromPiece(chessBoard.choicePiece(fromPosition), turnCamp);
+        validateSameCamp(chessBoard.choicePiece(fromPosition), chessBoard.choicePiece(toPosition));
         validateEqualPosition(fromPosition, toPosition);
     }
 
-    private void validateFromPiece(Piece fromPiece) {
+    private void validateFromPiece(Piece fromPiece,Camp turnCamp) {
         if (fromPiece.isBlack() && turnCamp != Camp.BLACK
                 || !fromPiece.isBlack() && turnCamp == Camp.BLACK) {
             throw new IllegalArgumentException(TURN_MISMATCHED);
@@ -63,42 +73,18 @@ public final class ChessGame {
         }
     }
 
-    private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
-        Piece fromPiece = piecesPosition.get(fromPosition);
-        PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
-
-        List<Position> pathPositions = fromPosition.getBetweenPositions(toPosition);
-        for (Position position : pathPositions) {
-            validateMovableBetween(pieceMove, position);
-        }
-
-        return pieceMove;
-    }
-
-    private void validateMovable(Position toPosition, PieceMove pieceMove) {
-        if (!pieceMove.isMovable(piecesPosition.get(toPosition), true)) {
+    public void validateMovable(Position position, PieceMove pieceMove,boolean lastPiece) {
+        if (!pieceMove.isMovable(chessBoard.choicePiece(position), lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE);
         }
-    }
-
-    private void validateMovableBetween(PieceMove pieceMove, Position position) {
-        Piece betweenPiece = piecesPosition.get(position);
-        if (!pieceMove.isMovable(betweenPiece, false)) {
-            throw new IllegalArgumentException(UNABLE_TO_MOVE);
-        }
-    }
-
-    private void movePieceOn(Position fromPosition, Position toPosition) {
-        piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
-        piecesPosition.put(fromPosition, new Empty());
     }
 
     private void changeTurn() {
         this.turnCamp = Camp.convert(turnCamp);
     }
 
-    public Map<Position, Piece> getPiecesPosition() {
-        return piecesPosition;
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }
 
