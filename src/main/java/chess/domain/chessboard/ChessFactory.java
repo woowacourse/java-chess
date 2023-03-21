@@ -1,5 +1,7 @@
 package chess.domain.chessboard;
 
+import chess.domain.piece.Empty;
+import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
 import chess.domain.piece.state.*;
 
@@ -22,8 +24,8 @@ public final class ChessFactory {
         return INSTANCE;
     }
 
-    public Map<Coordinate, Square> create() {
-        Map<Coordinate, Square> squares = new LinkedHashMap<>();
+    public Map<Coordinate, PieceState> create() {
+        Map<Coordinate, PieceState> squares = new LinkedHashMap<>();
 
         createSideRankByTeam(squares, FIRST.index, Team.WHITE);
         createPawnRankByTeam(squares, SECOND.index, Team.WHITE);
@@ -34,50 +36,46 @@ public final class ChessFactory {
         return squares;
     }
 
-    private void createSideRankByTeam(Map<Coordinate, Square> squares, final char rank, final Team team) {
-        final List<Square> sideSquares = createSideSquaresByTeam(team);
+    private void createSideRankByTeam(Map<Coordinate, PieceState> squares, final char rank, final Team team) {
+        final List<PieceState> sideSquares = createSideSquaresByTeam(team);
 
         char file = A.index;
-        for (Square square : sideSquares) {
-            squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), square);
+        for (PieceState pieceState : sideSquares) {
+            squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), pieceState);
         }
     }
 
-    private List<Square> createSideSquaresByTeam(final Team team) {
+    private List<PieceState> createSideSquaresByTeam(final Team team) {
         return List.of(
-                new Square(new Rook(team)),
-                new Square(new Knight(team)),
-                new Square(new Bishop(team)),
-                new Square(new Queen(team)),
-                new Square(new King(team)),
-                new Square(new Bishop(team)),
-                new Square(new Knight(team)),
-                new Square(new Rook(team)));
+                new Rook(team),
+                new Knight(team),
+                new Bishop(team),
+                new Queen(team),
+                new King(team),
+                new Bishop(team),
+                new Knight(team),
+                new Rook(team));
     }
 
     private String makeAlphanumeric(final char file, final char rank) {
         return String.valueOf(file) + rank;
     }
 
-    private void createPawnRankByTeam(Map<Coordinate, Square> squares, final char rank, final Team team) {
+    private void createPawnRankByTeam(Map<Coordinate, PieceState> squares, final char rank, final Team team) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
+            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Pawn(team));
         }
     }
 
-    private Square createPawnSquareByTeam(final Team team) {
-        return new Square(new Pawn(team));
-    }
-
-    private void createBlankRanks(Map<Coordinate, Square> squares) {
+    private void createBlankRanks(Map<Coordinate, PieceState> squares) {
         for (char rank = THIRD.index; rank <= SIXTH.index; rank++) {
             createBlankRank(squares, rank);
         }
     }
 
-    private void createBlankRank(Map<Coordinate, Square> squares, final char rank) {
+    private void createBlankRank(Map<Coordinate, PieceState> squares, final char rank) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Square());
+            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Empty());
         }
     }
 }

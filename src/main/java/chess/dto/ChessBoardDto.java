@@ -2,7 +2,7 @@ package chess.dto;
 
 import chess.controller.SquareMark;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.Square;
+import chess.domain.piece.PieceState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ public final class ChessBoardDto {
 
     private static List<String> getChessBoardMark(final ChessBoard chessBoard) {
         final List<String> currentChessBoardMark = new ArrayList<>();
-        final List<Square> squares = chessBoard.getSquares();
+        final List<PieceState> squares = chessBoard.getSquares();
 
         for (int rank = 0; rank < squares.size(); rank += RANK_SIZE) {
             currentChessBoardMark.add(makeRankMark(squares.subList(rank, rank + RANK_SIZE)));
@@ -33,9 +33,9 @@ public final class ChessBoardDto {
         return currentChessBoardMark;
     }
 
-    private static String makeRankMark(final List<Square> rank) {
+    private static String makeRankMark(final List<PieceState> rank) {
         StringBuilder currentRank = new StringBuilder();
-        for (Square square : rank) {
+        for (PieceState square : rank) {
             currentRank.append(SquareMark.getMarkBySquare(square));
         }
         return currentRank.toString();

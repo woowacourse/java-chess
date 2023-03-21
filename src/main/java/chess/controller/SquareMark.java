@@ -1,15 +1,10 @@
 package chess.controller;
 
-import chess.domain.chessboard.Square;
 import chess.domain.piece.Empty;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.Team;
-import chess.domain.piece.state.Bishop;
-import chess.domain.piece.state.King;
-import chess.domain.piece.state.Knight;
-import chess.domain.piece.state.Pawn;
-import chess.domain.piece.state.Queen;
-import chess.domain.piece.state.Rook;
+import chess.domain.piece.state.*;
+
 import java.util.Arrays;
 
 public enum SquareMark {
@@ -29,14 +24,14 @@ public enum SquareMark {
         this.pieceClass = pieceClass;
     }
 
-    public static String getMarkBySquare(final Square square) {
-        final String squareMark = getSquareMarkByPiece(square.getPieceState());
+    public static String getMarkBySquare(final PieceState pieceState) {
+        final String squareMark = getSquareMarkByPiece(pieceState);
 
         if (EMPTY.mark.equals(squareMark)) {
             return EMPTY.mark;
         }
 
-        return getMarkByTeam(squareMark, square.getPieceState().getTeam());
+        return getMarkByTeam(squareMark, pieceState.getTeam());
     }
 
     private static String getMarkByTeam(final String squareMark, final Team team) {

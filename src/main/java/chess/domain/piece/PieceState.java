@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.chessboard.Coordinate;
-import chess.domain.chessboard.Square;
+
 import java.util.List;
 
 public interface PieceState {
@@ -14,5 +14,5 @@ public interface PieceState {
 
     List<Coordinate> findRoute(final Coordinate from, final Coordinate to);
 
-    void validateRoute(final List<Square> routeSquares);
+    void validateRoute(final List<PieceState> routeSquares);
 }
