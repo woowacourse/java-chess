@@ -1,6 +1,6 @@
 package chessgame.controller;
 
-import chessgame.domain.board.Board;
+import chessgame.domain.board.ChessGame;
 import chessgame.domain.piece.Coordinate;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -32,32 +32,34 @@ public class ChessController {
     }
 
     private void startChessGame() {
-        Board board = new Board();
+        ChessGame chessGame = new ChessGame();
         Command command = Command.START;
         inputView.printGameStartMessage();
         while (command.canContinue()) {
             List<String> commands = inputView.readCommand();
             command = Command.of(commands);
-            carryOutByCommand(board, commands, command);
-            outputView.printBoard(board);
+            carryOutByCommand(chessGame, commands, command);
+            outputView.printBoard(chessGame.getBoard());
         }
     }
 
-    private void carryOutByCommand(Board board, List<String> commands, Command command) {
+    private void carryOutByCommand(ChessGame chessGame, List<String> commands, Command command) {
         if (command.isStart()) {
-            board.initialize();
+            chessGame.getBoard()
+                     .initialize();
             return;
         }
-        moveIfCommandIsNotEnd(board, commands, command);
+        moveIfCommandIsNotEnd(chessGame, commands, command);
     }
 
-    private void moveIfCommandIsNotEnd(final Board board, final List<String> commands, final Command command) {
+    private void moveIfCommandIsNotEnd(final ChessGame chessGame, final List<String> commands,
+                                       final Command command) {
         if (command.isEnd()) {
             return;
         }
         Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
-        board.move(startCoordinate, endCoordinate);
+        chessGame.move(startCoordinate, endCoordinate);
     }
 
     private Coordinate convertCoordinate(final String frontCoordinate) {

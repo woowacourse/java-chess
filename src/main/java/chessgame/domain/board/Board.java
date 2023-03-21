@@ -1,6 +1,7 @@
 package chessgame.domain.board;
 
 import chessgame.domain.piece.Coordinate;
+import chessgame.domain.square.Camp;
 import chessgame.domain.square.Square;
 
 import java.util.Map;
@@ -15,6 +16,11 @@ public class Board {
 
     public Map<Coordinate, Square> initialize() {
         return BoardInitialImage.generate();
+    }
+
+    public boolean checkCamp(Coordinate coordinate, Camp camp) {
+        Square findSquare = board.get(coordinate);
+        return findSquare.isSameCamp(camp);
     }
 
     public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
