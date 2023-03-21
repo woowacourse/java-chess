@@ -17,10 +17,7 @@ public class Knight extends Piece {
 
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = Rank.calculateInterval(from.getRank(), to.getRank());
-        final boolean isFileUnderTwo = fileInterval <= 2;
-        final boolean isRankUnderTwo = rankInterval <= 2;
-
-        if (isFileUnderTwo && isRankUnderTwo && fileInterval + rankInterval == 3) {
+        if (isMovablePosition(fileInterval, rankInterval)) {
             return true;
         }
         throw new IllegalArgumentException("Knight가 이동할 수 없는 경로입니다.");
@@ -36,6 +33,12 @@ public class Knight extends Piece {
         if (this.team == toPiece.team) {
             throw new IllegalArgumentException("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
+    }
+
+    private boolean isMovablePosition(final int fileInterval, final int rankInterval) {
+        final boolean isFileUnderTwo = fileInterval <= 2;
+        final boolean isRankUnderTwo = rankInterval <= 2;
+        return isFileUnderTwo && isRankUnderTwo && fileInterval + rankInterval == 3;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum Rank {
+
     EIGHT(8),
     SEVEN(7),
     SIX(6),

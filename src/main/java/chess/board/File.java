@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum File {
+
     A(1),
     B(2),
     C(3),

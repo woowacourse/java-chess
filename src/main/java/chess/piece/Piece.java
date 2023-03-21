@@ -10,8 +10,6 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(final Position from, final Position to, final Piece piece);
-
     public boolean isPawn() {
         return false;
     }
@@ -47,4 +45,6 @@ public abstract class Piece {
     public boolean isBlack() {
         return team == Team.BLACK;
     }
+
+    public abstract boolean isMovable(final Position from, final Position to, final Piece piece);
 }

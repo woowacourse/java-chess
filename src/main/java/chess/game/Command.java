@@ -3,6 +3,7 @@ package chess.game;
 import java.util.Arrays;
 
 public enum Command {
+
     START("start"),
     END("end"),
     MOVE("move"),
