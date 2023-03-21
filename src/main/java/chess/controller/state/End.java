@@ -11,4 +11,9 @@ public class End extends State {
     public End end() {
         return this;
     }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
 }

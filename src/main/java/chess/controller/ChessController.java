@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.controller.state.End;
 import chess.controller.state.Ready;
 import chess.controller.state.State;
 import chess.domain.game.Command;
@@ -24,7 +23,7 @@ public class ChessController {
     public void run() {
         outputView.printGameStartMessage();
 
-        while (!(state instanceof End)) {
+        while (state.isRunning()) {
             executeState();
         }
     }

@@ -22,4 +22,8 @@ public abstract class State {
     public Camp turn() {
         return turn;
     }
+
+    public boolean isRunning() {
+        return true;
+    }
 }
