@@ -23,7 +23,7 @@ public class BoardFactory {
     private static final int KING_FILE = 5;
     private static final int QUEEN_FILE = 4;
 
-    public Map<Position, Piece> createInitialBoard() {
+    public Board createInitialBoard() {
         final Map<Position, Piece> board = new HashMap<>();
 
         board.putAll(createPawn());
@@ -33,7 +33,7 @@ public class BoardFactory {
         board.putAll(createRook());
         board.putAll(createKnight());
 
-        return board;
+        return new Board(board);
     }
 
     private Map<Position, Piece> createPawn() {
