@@ -19,7 +19,6 @@ abstract public class Piece {
         return this.team == team;
     }
 
-    // TODO: override 할까? (Pawn만 true 반환)
     public boolean isPawn() {
         return this instanceof Pawn;
     }

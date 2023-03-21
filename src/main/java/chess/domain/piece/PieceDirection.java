@@ -18,7 +18,6 @@ import static chess.domain.square.Direction.UP_UP_LEFT;
 import static chess.domain.square.Direction.UP_UP_RIGHT;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import chess.domain.piece.exception.WrongDirectionException;
@@ -51,7 +50,6 @@ public enum PieceDirection {
         return pieceDirections.contains(direction);
     }
 
-    // TODO: 코드 개선 필요
     public Direction findDirection(final int fileDifference, final int rankDifference) {
         if (this == STRAIGHT) {
             return getAbsDirection(fileDifference, rankDifference);

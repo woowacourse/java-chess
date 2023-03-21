@@ -47,14 +47,13 @@ public final class Square {
         return move(direction.getFileDirection(), direction.getRankDirection());
     }
 
-    public Square move(final int fileDifference, final int rankDifference) {
+    private Square move(final int fileDifference, final int rankDifference) {
         try {
             File newFile = file.move(fileDifference);
             Rank newRank = rank.move(rankDifference);
             return Square.of(newFile, newRank);
         } catch (IllegalStateException e) {
-            // TODO: 리팩터링 필요
-            throw new IllegalArgumentException("잘못된 좌표값입니다.");
+            throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
     }
 
