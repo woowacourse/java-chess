@@ -12,19 +12,14 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        int sourceColumnNumber = sourcePosition.getColumn();
-        int targetColumnNumber = targetPosition.getColumn();
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-
-        return isDifferenceUnderBound(sourceColumnNumber, targetColumnNumber)
-                && isDifferenceUnderBound(sourceRankNumber, targetRankNumber)
+        return isDifferenceUnderBound(sourcePosition, targetPosition)
                 && isNotMyPosition(sourcePosition, targetPosition)
                 && isNotSameTeam(team);
     }
 
-    private boolean isDifferenceUnderBound(int source, int target) {
-        return Math.abs(source - target) <= BOUND;
+    public boolean isDifferenceUnderBound(Position sourcePosition, Position targetPosition) {
+        return sourcePosition.calculateColumnDifferenceWith(targetPosition) <= BOUND
+                && sourcePosition.calculateRowDifferenceWith(targetPosition) <= BOUND;
     }
 
     @Override

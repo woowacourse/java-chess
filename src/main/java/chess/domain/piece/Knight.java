@@ -10,22 +10,13 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        int sourceColumnNumber = sourcePosition.getColumn();
-        int targetColumnNumber = targetPosition.getColumn();
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-
-        if (isDifferenceWith(sourceColumnNumber, targetColumnNumber, 2)) {
-            return isDifferenceWith(sourceRankNumber, targetRankNumber, 1) && isNotSameTeam(team);
+        if (sourcePosition.calculateColumnDifferenceWith(targetPosition) == 2) {
+            return sourcePosition.calculateRowDifferenceWith(targetPosition) == 1 && isNotSameTeam(team);
         }
-        if (isDifferenceWith(sourceColumnNumber, targetColumnNumber, 1)) {
-            return isDifferenceWith(sourceRankNumber, targetRankNumber, 2) && isNotSameTeam(team);
+        if (sourcePosition.calculateColumnDifferenceWith(targetPosition) == 1) {
+            return sourcePosition.calculateRowDifferenceWith(targetPosition) == 2 && isNotSameTeam(team);
         }
         return false;
-    }
-
-    private boolean isDifferenceWith(int sourceColumnNumber, int targetColumnNumber, int x) {
-        return Math.abs(sourceColumnNumber - targetColumnNumber) == x;
     }
 
     @Override

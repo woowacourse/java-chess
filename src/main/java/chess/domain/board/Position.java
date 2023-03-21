@@ -46,6 +46,14 @@ public class Position {
         return columnDifference != 0 && rowDifference != 0 && columnDifference != rowDifference;
     }
 
+    public int calculateColumnDifferenceWith(Position targetPosition) {
+        return Math.abs(this.getColumn() - targetPosition.getColumn());
+    }
+
+    public int calculateRowDifferenceWith(Position targetPosition) {
+        return Math.abs(this.getRow() - targetPosition.getRow());
+    }
+
     private int getStep(int nowCoordinate, int targetCoordinate) {
         return Integer.compare(targetCoordinate, nowCoordinate);
     }
