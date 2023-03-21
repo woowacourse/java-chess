@@ -7,7 +7,6 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.team.Team;
-import chess.domain.team.player.Player;
 import chess.initial.BoardFactory;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import java.util.Map;
 public class Board {
 
     private static final int START_INDEX = 0;
+
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -28,16 +28,16 @@ public class Board {
         return new Board(BoardFactory.create(board));
     }
 
-    public void move(final Position source, final Position target, final Player player) {
-        validateMove(source, target, player);
+    public void move(final Position source, final Position target, final Team team) {
+        validateMove(source, target, team);
         movePiece(source, target);
     }
 
-    private void validateMove(final Position source, final Position target, final Player player) {
+    private void validateMove(final Position source, final Position target, final Team team) {
         validateNotSamePosition(source, target);
         validateSourceNotEmpty(source);
         validateNotSameTeam(source, target);
-        validateSameTeamPieceAndPlayer(source, player);
+        validateSameTeamPieceAndPlayer(source, team);
         validateMovable(source, target);
         validatePath(source, target);
     }
@@ -71,10 +71,10 @@ public class Board {
         }
     }
 
-    private void validateSameTeamPieceAndPlayer(final Position source, final Player player) {
+    private void validateSameTeamPieceAndPlayer(final Position source, final Team team) {
         Piece piece = board.get(source);
 
-        if (!player.containPiece(piece)) {
+        if (!piece.isSameTeam(team)) {
             throw new IllegalArgumentException("상대방 기물을 움직이려고 시도하고 있습니다. 다른 체스말을 선택해주세요");
         }
     }

@@ -4,5 +4,12 @@ public enum Team {
 
     BLACK,
     WHITE,
-    NONE
+    NONE;
+
+    public Team reverse() {
+        if (this.equals(WHITE)) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

@@ -1,8 +1,10 @@
-package chess.domain.command.strategy;
+package chess.controller.command.strategy;
 
+import chess.controller.ChessState;
 import chess.domain.Board;
 import chess.domain.position.Position;
-import chess.domain.team.player.Player;
+import chess.domain.team.Team;
+import chess.view.OutputView;
 
 import java.util.List;
 
@@ -27,7 +29,13 @@ public class MoveCommand implements StrategyCommand {
     }
 
     @Override
-    public void execute(final Board board, final Player player) {
-        board.move(source, target, player);
+    public ChessState execute(final ChessState state, final Board board, final Team team) {
+        if (state == ChessState.START || state == ChessState.PROGRESS) {
+            board.move(source, target, team);
+            OutputView.printBoard(board);
+            return ChessState.PROGRESS;
+        }
+
+        throw new IllegalArgumentException("게임을 시작하전에 체스 기물을 이동할 수 없습니다");
     }
 }

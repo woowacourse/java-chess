@@ -1,10 +1,10 @@
-package chess.domain.command;
+package chess.controller.command;
 
-import chess.domain.command.strategy.StrategyCommand;
-import chess.domain.command.factory.ActionCommandFactory;
-import chess.domain.command.factory.EndCommandFactory;
-import chess.domain.command.factory.MoveCommandFactory;
-import chess.domain.command.factory.StartCommandFactory;
+import chess.controller.command.factory.ActionCommandFactory;
+import chess.controller.command.strategy.StrategyCommand;
+import chess.controller.command.factory.EndCommandFactory;
+import chess.controller.command.factory.MoveCommandFactory;
+import chess.controller.command.factory.StartCommandFactory;
 
 import java.util.Arrays;
 import java.util.List;

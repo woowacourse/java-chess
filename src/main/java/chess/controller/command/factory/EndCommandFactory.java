@@ -1,7 +1,7 @@
-package chess.domain.command.factory;
+package chess.controller.command.factory;
 
-import chess.domain.command.strategy.StrategyCommand;
-import chess.domain.command.strategy.EndCommand;
+import chess.controller.command.strategy.EndCommand;
+import chess.controller.command.strategy.StrategyCommand;
 
 import java.util.List;
 
