@@ -24,7 +24,7 @@ class CalculatorTest {
 
     @Test
     public void sumAllOverThree() {
-        int sum = Calculator.sumAllOverThree(numbers);
+        int sum = Calculator.sumAllOverThree(numbers, num -> num > 3);
         assertThat(sum).isEqualTo(15);
     }
 }
