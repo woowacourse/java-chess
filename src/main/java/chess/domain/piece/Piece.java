@@ -22,7 +22,11 @@ public final class Piece {
         return pieceData.isDifferentColor(other.pieceData);
     }
 
-    public boolean isSameColor(Piece other){
+    public boolean isOpponent(Color other) {
+        return pieceData.isDifferentColor(other);
+    }
+
+    public boolean isSameTeam(Piece other) {
         return pieceData.isSameColor(other.pieceData);
     }
 

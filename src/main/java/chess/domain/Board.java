@@ -61,4 +61,8 @@ public class Board {
         }
         return pieceNames;
     }
+
+    public Piece findPieceByPosition(Position position) {
+        return board.get(position);
+    }
 }

@@ -20,7 +20,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 명령어가 아닙니다."));
     }
 
-    public boolean isEqual(String other){
+    public boolean isEqual(String other) {
         return command.equals(other);
     }
 }

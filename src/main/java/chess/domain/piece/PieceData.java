@@ -19,6 +19,10 @@ public class PieceData {
         return color.isDifferent(other.color);
     }
 
+    public boolean isDifferentColor(Color other) {
+        return color.isDifferent(other);
+    }
+
     public boolean isSameColor(PieceData other) {
         return color.isEqual(other.color);
     }

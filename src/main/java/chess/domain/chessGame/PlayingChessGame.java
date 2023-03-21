@@ -1,22 +1,17 @@
 package chess.domain.chessGame;
 
 import chess.domain.Board;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
 public class PlayingChessGame implements ChessGame {
     private final Board board;
-    private boolean isPlaying = true;
+    private Color turnColor = Color.WHITE;
 
     public PlayingChessGame(Board board) {
         this.board = board;
-    }
-
-    @Override
-    public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) { //b1
-        Position currentPosition = Position.from(currentPositionSymbol);
-        Position nextPosition = Position.from(nextPositionSymbol);
-        return board.move(currentPosition, nextPosition);
     }
 
     @Override
@@ -25,13 +20,30 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public void end() {
-        isPlaying = false;
+    public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) { //b1
+        Position currentPosition = Position.from(currentPositionSymbol);
+        checkTurn(currentPosition);
+        Position nextPosition = Position.from(nextPositionSymbol);
+        board.move(currentPosition, nextPosition);
+        turnColor = turnColor.getOppositeColor();
+        return this;
+    }
+
+    private void checkTurn(Position currentPosition) {
+        Piece movingPiece = board.findPieceByPosition(currentPosition);
+        if (movingPiece.isOpponent(turnColor)) {
+            throw new IllegalArgumentException("상대방 기물의 턴입니다.");
+        }
+    }
+
+    @Override
+    public ChessGame end() {
+        return new EndChessGame();
     }
 
     @Override
     public boolean isPlaying() {
-        return isPlaying;
+        return true;
     }
 
     @Override

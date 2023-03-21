@@ -23,4 +23,11 @@ public enum Color {
     public boolean isEqual(Color other) {
         return this == other;
     }
+
+    public Color getOppositeColor() {
+        if (this == Color.WHITE) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
 }
