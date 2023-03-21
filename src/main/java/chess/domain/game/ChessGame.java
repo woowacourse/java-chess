@@ -20,6 +20,7 @@ public class ChessGame {
         checkPlayable();
         checkTurn(source);
         board.move(source, target);
+        changeTurn();
     }
 
     private void checkPlayable() {
@@ -32,9 +33,13 @@ public class ChessGame {
     private void checkTurn(final Position position) {
         final Side side = board.findSideByPosition(position);
         if (turn.isTurnValid(side)) {
-            turn = turn.change();
+            return;
         }
         throw new IllegalArgumentException("다음 턴에 움직일 수 있습니다.");
+    }
+
+    private void changeTurn() {
+        turn = turn.change();
     }
 
     public void start() {
