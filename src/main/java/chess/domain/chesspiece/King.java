@@ -5,13 +5,8 @@ import chess.domain.Square;
 
 public class King extends Piece {
 
-    private static final King blackKing;
-    private static final King whiteKing;
-
-    static {
-        blackKing = new King(Side.BLACK);
-        whiteKing = new King(Side.WHITE);
-    }
+    private static final King blackKing = new King(Side.BLACK);
+    private static final King whiteKing = new King(Side.WHITE);
 
     private King(final Side side) {
         super(side);

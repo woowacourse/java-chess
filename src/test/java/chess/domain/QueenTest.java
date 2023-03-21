@@ -39,8 +39,7 @@ public class QueenTest {
             Square movableSquare1 = Square.of(Rank.ONE, File.G);
             Square movableSquare2 = Square.of(Rank.FOUR, File.H);
             Square unable = Square.of(Rank.THREE, File.B);
-            Bishop whiteBishop = Bishop.of(Side.WHITE)
-                    .get(0);
+            Bishop whiteBishop = Bishop.of(Side.WHITE);
             Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test

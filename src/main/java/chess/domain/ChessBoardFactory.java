@@ -25,30 +25,30 @@ public class ChessBoardFactory {
     }
 
     private void addRooks(final HashMap<Square, Piece> pieces) {
-        final List<Rook> blackRooks = Rook.of(Side.BLACK);
-        final List<Rook> whiteRooks = Rook.of(Side.WHITE);
-        pieces.put(Square.of(Rank.EIGHT, File.A), blackRooks.get(0));
-        pieces.put(Square.of(Rank.EIGHT, File.H), blackRooks.get(1));
-        pieces.put(Square.of(Rank.ONE, File.A), whiteRooks.get(0));
-        pieces.put(Square.of(Rank.ONE, File.H), whiteRooks.get(1));
+        final Rook blackRook = Rook.of(Side.BLACK);
+        final Rook whiteRook = Rook.of(Side.WHITE);
+        pieces.put(Square.of(Rank.EIGHT, File.A), blackRook);
+        pieces.put(Square.of(Rank.EIGHT, File.H), blackRook);
+        pieces.put(Square.of(Rank.ONE, File.A), whiteRook);
+        pieces.put(Square.of(Rank.ONE, File.H), whiteRook);
     }
 
     private void addKnights(final HashMap<Square, Piece> pieces) {
-        final List<Knight> blackKnights = Knight.of(Side.BLACK);
-        final List<Knight> whiteKnights = Knight.of(Side.WHITE);
-        pieces.put(Square.of(Rank.EIGHT, File.B), blackKnights.get(0));
-        pieces.put(Square.of(Rank.EIGHT, File.G), blackKnights.get(1));
-        pieces.put(Square.of(Rank.ONE, File.B), whiteKnights.get(0));
-        pieces.put(Square.of(Rank.ONE, File.G), whiteKnights.get(1));
+        final Knight blackKnight = Knight.of(Side.BLACK);
+        final Knight whiteKnight = Knight.of(Side.WHITE);
+        pieces.put(Square.of(Rank.EIGHT, File.B), blackKnight);
+        pieces.put(Square.of(Rank.EIGHT, File.G), blackKnight);
+        pieces.put(Square.of(Rank.ONE, File.B), whiteKnight);
+        pieces.put(Square.of(Rank.ONE, File.G), whiteKnight);
     }
 
     private void addBishops(final HashMap<Square, Piece> pieces) {
-        final List<Bishop> blackBishops = Bishop.of(Side.BLACK);
-        final List<Bishop> whiteBishops = Bishop.of(Side.WHITE);
-        pieces.put(Square.of(Rank.EIGHT, File.C), blackBishops.get(0));
-        pieces.put(Square.of(Rank.EIGHT, File.F), blackBishops.get(1));
-        pieces.put(Square.of(Rank.ONE, File.C), whiteBishops.get(0));
-        pieces.put(Square.of(Rank.ONE, File.F), whiteBishops.get(1));
+        final Bishop blackBishop = Bishop.of(Side.BLACK);
+        final Bishop whiteBishop = Bishop.of(Side.WHITE);
+        pieces.put(Square.of(Rank.EIGHT, File.C), blackBishop);
+        pieces.put(Square.of(Rank.EIGHT, File.F), blackBishop);
+        pieces.put(Square.of(Rank.ONE, File.C), whiteBishop);
+        pieces.put(Square.of(Rank.ONE, File.F), whiteBishop);
     }
 
     private void addQueens(final HashMap<Square, Piece> pieces) {

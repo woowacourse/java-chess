@@ -4,29 +4,23 @@ import chess.domain.File;
 import chess.domain.Side;
 import chess.domain.Square;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Pawn extends Piece {
-    private static final List<Pawn> BLACK_PAWNS = new ArrayList<>();
-    private static final List<Pawn> WHITE_PAWNS = new ArrayList<>();
-
-    static {
-        addPawns(BLACK_PAWNS, Side.BLACK);
-        addPawns(WHITE_PAWNS, Side.WHITE);
-    }
+    private static final List<Pawn> BLACK_PAWNS = Arrays.stream(File.values())
+            .map(file -> new Pawn(Side.BLACK))
+            .collect(Collectors.toUnmodifiableList());
+    private static final List<Pawn> WHITE_PAWNS = Arrays.stream(File.values())
+            .map(file -> new Pawn(Side.WHITE))
+            .collect(Collectors.toUnmodifiableList());
 
     private boolean atInitialPosition;
 
     private Pawn(Side side) {
         super(side);
         atInitialPosition = true;
-    }
-
-    private static void addPawns(final List<Pawn> pawns, final Side side) {
-        for (int i = 0; i < File.values().length; i++) {
-            pawns.add(new Pawn(side));
-        }
     }
 
     public static List<Pawn> of(final Side side) {

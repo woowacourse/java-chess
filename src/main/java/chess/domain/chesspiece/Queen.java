@@ -5,14 +5,8 @@ import chess.domain.Square;
 
 public class Queen extends Piece {
 
-    private static final Queen blackQueen;
-    private static final Queen whiteQueen;
-
-    static {
-        blackQueen = new Queen(Side.BLACK);
-        whiteQueen = new Queen(Side.WHITE);
-    }
-
+    private static final Queen blackQueen = new Queen(Side.BLACK);
+    private static final Queen whiteQueen = new Queen(Side.WHITE);
 
     private Queen(final Side side) {
         super(side);

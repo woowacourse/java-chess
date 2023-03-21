@@ -20,9 +20,11 @@ public class BishopTest {
         @DisplayName("진영이 주어지면")
         class given_team {
             @Test
-            @DisplayName("해당 진영의 Bishop을 2개 생성한다")
+            @DisplayName("해당 진영의 Bishop을 반환한다")
             void it_returns_bishops() {
-                assertThat(Bishop.of(Side.BLACK)).hasSize(2);
+                Bishop blackBishop = Bishop.of(Side.BLACK);
+                assertThat(blackBishop).isInstanceOf(Bishop.class);
+                assertThat(blackBishop.isBlack()).isTrue();
             }
         }
     }
@@ -33,14 +35,12 @@ public class BishopTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Bishop whiteBishop = Bishop.of(Side.WHITE)
-                    .get(0);
+            Bishop whiteBishop = Bishop.of(Side.WHITE);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.ONE, File.G);
             Square movableSquare2 = Square.of(Rank.SIX, File.B);
             Square unable = Square.of(Rank.THREE, File.B);
-            Bishop whiteBishop2 = Bishop.of(Side.WHITE)
-                    .get(1);
+            Bishop whiteBishop2 = Bishop.of(Side.WHITE);
             Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
