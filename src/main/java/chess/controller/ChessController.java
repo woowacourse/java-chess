@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.exception.InvalidTurnException;
 import chess.dto.SquareMoveDto;
 import chess.view.Command;
 import chess.view.InputView;
@@ -51,8 +52,13 @@ public class ChessController {
     }
 
     private void move(String current, String destination) {
-        SquareMoveDto moveDto = SquareMoveDto.from(current, destination);
-        chessGame.move(moveDto);
+        try {
+            SquareMoveDto moveDto = SquareMoveDto.from(current, destination);
+            chessGame.move(moveDto);
+        } catch (InvalidTurnException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            playUntilEnd();
+        }
     }
 
     private void checkStart(final List<String> command) {
