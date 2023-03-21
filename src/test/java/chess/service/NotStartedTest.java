@@ -1,10 +1,9 @@
 package chess.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,16 +17,16 @@ class NotStartedTest {
     void test_start() {
         final State start = notStarted.start();
 
-        assertSame(start, Started.getInstance());
+        assertThat(start)
+                .isInstanceOf(Started.class);
     }
 
     @Test
     @DisplayName("시작되지 않은 상태에서는 말을 움직일 수 없습니다.")
     void test_move() {
-        final Board initialBoard = new BoardFactory().createInitialBoard();
         final Position from = new Position(2, 2);
         final Position to = new Position(2, 4);
-        assertThatThrownBy(() -> notStarted.move(initialBoard, from, to))
+        assertThatThrownBy(() -> notStarted.move(from, to))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

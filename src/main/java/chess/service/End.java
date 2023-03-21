@@ -1,7 +1,8 @@
 package chess.service;
 
-import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public class End implements State {
 
@@ -21,12 +22,17 @@ public class End implements State {
     }
 
     @Override
-    public State move(final Board board, final Position from, final Position to) {
+    public State move(final Position from, final Position to) {
         throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
     }
 
     @Override
     public State end() {
+        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+    }
+
+    @Override
+    public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
     }
 }

@@ -2,8 +2,6 @@ package chess.service;
 
 import chess.controller.CommandRequest;
 import chess.controller.GameCommand;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -17,7 +15,6 @@ public class ChessService {
             GameCommand.END, ignored -> end()
     );
 
-    private Board board;
     private State state;
 
     public ChessService() {
@@ -31,11 +28,10 @@ public class ChessService {
 
     private void start() {
         state = state.start();
-        board = new BoardFactory().createInitialBoard();
     }
 
     private void move(final CommandRequest request) {
-        state = state.move(board, request.getFrom(), request.getTo());
+        state = state.move(request.getFrom(), request.getTo());
     }
 
     private void end() {
@@ -47,7 +43,6 @@ public class ChessService {
     }
 
     public Map<Position, Piece> getBoard() {
-        assert (state == NotStarted.getInstance());
-        return board.getBoard();
+        return state.getBoard();
     }
 }
