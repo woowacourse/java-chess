@@ -38,7 +38,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printSide(Side side) {
-        System.out.println("현재 차례: " + side + " 진영");
+    public void printSideOfTurn(Side side) {
+        System.out.println(side + " 진영의 말을 움직이세요");
     }
 }

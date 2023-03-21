@@ -120,7 +120,7 @@ classDiagram
 - [x] 각각의 Rank와 File을 표현하도록 체스판을 초기화한다.
     - [x] Rank(가로 위치)는 왼쪽부터 a ~ h이다.
     - [x] File(세로 위치)는 아래부터 위로 1 ~ 8이다.
-- [x] Source position, Target position를 입력 받아 말을 이동시킨다.
+- [x] Source position, Target position를 입력 받아 말을 이동시키고 턴을 바꾼다.
     - [x] 이동 경로에 같은 진영의 말이 존재하는지 확인한다.
     - [x] 상대방의 말을 움직일 경우, 예외가 발생한다.
     - [x] Source position에 말이 존재하지 않는 경우, 예외가 발생한다.

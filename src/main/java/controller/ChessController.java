@@ -1,12 +1,9 @@
 package controller;
 
-import static domain.piece.Side.WHITE;
-
 import controller.command.Command;
 import controller.command.Move;
 import domain.game.Game;
 import domain.piece.Position;
-import domain.piece.Side;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -18,7 +15,7 @@ public class ChessController {
     public void run() {
         this.outputView.printGameGuideMessage();
         Game game = repeat(this::startGame);
-        proceedGame(game);
+        proceed(game);
     }
 
     private Game startGame() {
@@ -31,20 +28,15 @@ public class ChessController {
         throw new IllegalArgumentException("게임 시작하려면 먼저 start를 입력하세요.");
     }
 
-    private void proceedGame(Game game) {
-        Side side = WHITE;
+    private void proceed(Game game) {
         Command command;
-        this.outputView.printChessBoard(game.getChessBoard());
         do {
-            Side finalSide = side;
-            this.outputView.printSide(side);
-            command = repeat(() -> moveByUserCommand(game, finalSide));
-            side = changeSide(side);
-            this.outputView.printChessBoard(game.getChessBoard());
+            this.outputView.printSideOfTurn(game.getSideOfTurn());
+            command = repeat(() -> moveByUserCommand(game));
         } while (command.isMove());
     }
 
-    private Command moveByUserCommand(Game game, Side side) {
+    private Command moveByUserCommand(Game game) {
         Command command = this.inputView.requestUserCommand();
         if (command.isEnd()) {
             return command;
@@ -52,15 +44,9 @@ public class ChessController {
         Move moveCommand = (Move) command;
         Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
         Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
-        game.move(side, sourcePosition, targetPosition);
+        game.move(sourcePosition, targetPosition);
+        this.outputView.printChessBoard(game.getChessBoard());
         return command;
-    }
-
-    private Side changeSide(Side side) {
-        if (side.equals(WHITE)) {
-            return Side.BLACK;
-        }
-        return WHITE;
     }
 
     private <T> T repeat(Supplier<T> supplier) {
