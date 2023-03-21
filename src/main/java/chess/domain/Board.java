@@ -34,11 +34,11 @@ public class Board {
         if (turn.isOpponent(piece.color())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (isPieceExistsBetweenPositions(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
         if (piece.isUnmovable(sourcePosition, targetPosition, board.get(targetPosition))) {
             throw new IllegalArgumentException("올바르지 않은 이동 명령어입니다.");
+        }
+        if (isPieceExistsBetweenPositions(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
     }
 
