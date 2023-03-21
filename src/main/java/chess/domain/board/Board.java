@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.path.Path;
@@ -61,6 +62,13 @@ public class Board {
     private void movePiece(final Position from, final Position to) {
         Piece piece = board.remove(from);
         board.put(to, piece);
+    }
+
+    public boolean isEnd() {
+        final long numberOfKing = board.values().stream()
+                .filter(piece -> piece.isTypeOf(KING))
+                .count();
+        return numberOfKing == 1;
     }
 
     public Map<Color, Double> calculateScore() {

@@ -75,6 +75,7 @@ class BoardTest {
         }
     }
 
+    @DisplayName("체스 게임의 점수를 계산할 수 있다.")
     @Test
     void test_calculateScore() {
         Map<Position, Piece> boardData = new HashMap<>() {
@@ -101,5 +102,19 @@ class BoardTest {
 
         assertThat(board.calculateScore().get(BLACK)).isEqualTo(20);
         assertThat(board.calculateScore().get(WHITE)).isEqualTo(19.5);
+    }
+
+    @DisplayName("King이 죽으면, 곧바로 게임을 종료할 수 있다.")
+    @Test
+    void test_isEnd() {
+        Map<Position, Piece> boardData = new HashMap<>() {
+            {
+                put(F1, King.from(WHITE));
+            }
+        };
+
+        Board board = new Board(boardData);
+
+        assertTrue(board.isEnd());
     }
 }
