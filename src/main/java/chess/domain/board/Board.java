@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
 
@@ -20,7 +22,7 @@ public class Board {
 
     public Board(final Map<Position, Piece> board) {
         this.board = board;
-        this.turn = Color.WHITE;
+        this.turn = WHITE;
     }
 
     public void move(final Position from, final Position to) {
@@ -69,6 +71,28 @@ public class Board {
                 .filter(piece -> piece.isTypeOf(KING))
                 .count();
         return numberOfKing == 1;
+    }
+
+    public Color winner() {
+        if (!isEnd()) {
+            final Map<Color, Double> score = calculateScore();
+            if (score.get(WHITE) > score.get(BLACK)) {
+                return WHITE;
+            }
+            return BLACK;
+        }
+        final List<Color> colorsOfKing = collectColorsOfKing();
+        if (colorsOfKing.size() >= 2) {
+            throw new IllegalStateException("게임이 끝나지 않은 것 같습니다!");
+        }
+        return colorsOfKing.get(0);
+    }
+
+    private List<Color> collectColorsOfKing() {
+        return board.values().stream()
+                .filter(piece -> piece.isTypeOf(KING))
+                .map(Piece::color)
+                .collect(Collectors.toList());
     }
 
     public Map<Color, Double> calculateScore() {

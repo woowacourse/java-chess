@@ -117,4 +117,32 @@ class BoardTest {
 
         assertTrue(board.isEnd());
     }
+
+    @DisplayName("승리 팀을 알 수 있다.")
+    @Test
+    void test_winner() {
+        Map<Position, Piece> boardData = new HashMap<>() {
+            {
+                put(A7, Pawn.from(BLACK));
+                put(A8, King.from(BLACK));
+                put(B6, Pawn.from(BLACK));
+                put(B8, Rook.from(BLACK));
+                put(C7, Pawn.from(BLACK));
+                put(D7, Bishop.from(BLACK));
+                put(E1, Rook.from(WHITE));
+                put(E6, Queen.from(BLACK));
+                put(F1, King.from(WHITE));
+                put(F2, Pawn.from(WHITE));
+                put(F3, Pawn.from(WHITE));
+                put(F4, Knight.from(WHITE));
+                put(G2, Pawn.from(WHITE));
+                put(G4, Queen.from(WHITE));
+                put(H3, Pawn.from(WHITE));
+            }
+        };
+
+        Board board = new Board(boardData);
+
+        assertThat(board.winner()).isEqualTo(BLACK);
+    }
 }

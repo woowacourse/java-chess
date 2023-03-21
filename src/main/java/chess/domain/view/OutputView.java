@@ -82,4 +82,8 @@ public class OutputView {
         System.out.println("BLACK팀(대문자) 점수 : " + score.get(BLACK));
         System.out.println("WHITE팀(소문자) 점수 : " + score.get(WHITE));
     }
+
+    public static void printWinner(final Color winner) {
+        System.out.println("승리 팀은 " + winner.name() + "팀 입니다!!! 축하합니다!!!");
+    }
 }

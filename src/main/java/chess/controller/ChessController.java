@@ -72,7 +72,11 @@ public class ChessController {
     private void end(final List<String> strings) {
         validateCommandsSize(strings, DEFAULT_COMMAND_SIZE);
 
-        OutputView.printScore(board.calculateScore());
+        if (!board.isEnd()) {
+            OutputView.printScore(board.calculateScore());
+        }
+
+        OutputView.printWinner(board.winner());
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {
