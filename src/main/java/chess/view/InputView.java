@@ -27,6 +27,16 @@ public class InputView implements Input {
 
     @Override
     public RequestType inputGameCommand() {
+        while (true) {
+            try {
+                return inputPlayerCommand();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private RequestType inputPlayerCommand() {
         String input = scanner.nextLine();
         return requests.entrySet().stream()
                 .filter(entry -> entry.getKey().matcher(input).matches())
