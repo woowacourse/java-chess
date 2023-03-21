@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.controller.dto.ChessBoardPositions;
 import chess.controller.dto.ChessCommandDto;
 import chess.domain.PiecesPosition;
 import chess.domain.game.ChessGame;
@@ -53,8 +52,7 @@ public final class ChessController {
 
     private void printChessGameBoard(ChessGame chessGame) {
         PiecesPosition piecesPosition = chessGame.getPiecesPosition();
-        ChessBoardPositions chessBoardPositions = ChessBoardPositions.getInstance();
-        outputView.printChessState(chessBoardPositions.getPositions(), piecesPosition.getPiecesPosition());
+        outputView.printChessState(piecesPosition.getPiecesPosition());
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {

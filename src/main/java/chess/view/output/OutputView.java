@@ -2,7 +2,6 @@ package chess.view.output;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Map;
 
 public final class OutputView {
@@ -11,6 +10,12 @@ public final class OutputView {
     private static final int LINE_BREAK_INDEX = 1;
     private static final String EMPTY_PIECE_SYMBOL = ".";
 
+    private final ConsoleViewChessBoardPositions boardPositions;
+
+    public OutputView(ConsoleViewChessBoardPositions boardPositions) {
+        this.boardPositions = boardPositions;
+    }
+
     public void printStartPrefix() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
@@ -18,9 +23,9 @@ public final class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessState(List<Position> chessBoardPositions, Map<Position, Piece> piecePoint) {
+    public void printChessState(Map<Position, Piece> piecePoint) {
         StringBuilder chessBoardView = new StringBuilder();
-        for (Position position : chessBoardPositions) {
+        for (Position position : boardPositions.getPositions()) {
             String viewSymbolBy = getViewSymbol(piecePoint, position);
 
             checkLineBreak(chessBoardView);

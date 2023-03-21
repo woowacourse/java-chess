@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.view.output;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -6,32 +6,31 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: 2023/03/21 DTO가 맞는지?
-public class ChessBoardPositions {
-    private static ChessBoardPositions chessBoardPositions;
+public class ConsoleViewChessBoardPositions {
+    private static ConsoleViewChessBoardPositions consoleViewChessBoardPositions;
 
     private final List<Position> positions;
 
-    public ChessBoardPositions(List<Position> positions) {
+    private ConsoleViewChessBoardPositions(List<Position> positions) {
         this.positions = positions;
     }
 
-    public static ChessBoardPositions getInstance() {
-        if (chessBoardPositions == null) {
-            chessBoardPositions =  init();
-            return chessBoardPositions;
+    public static ConsoleViewChessBoardPositions getInstance() {
+        if (consoleViewChessBoardPositions == null) {
+            consoleViewChessBoardPositions =  init();
+            return consoleViewChessBoardPositions;
         }
 
-        return chessBoardPositions;
+        return consoleViewChessBoardPositions;
     }
 
-    private static ChessBoardPositions init() {
+    private static ConsoleViewChessBoardPositions init() {
         List<Position> positions = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             addPositions(positions, rank);
         }
 
-        return new ChessBoardPositions(positions);
+        return new ConsoleViewChessBoardPositions(positions);
     }
 
     private static void addPositions(List<Position> positions, Rank rank) {
