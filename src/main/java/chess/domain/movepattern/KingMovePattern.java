@@ -20,16 +20,6 @@ public enum KingMovePattern implements MovePattern {
     }
 
     @Override
-    public int getFileVector() {
-        return fileVector;
-    }
-
-    @Override
-    public int getRankVector() {
-        return rankVector;
-    }
-
-    @Override
     public int nextFileIndex(final int currentFileIndex) {
         return currentFileIndex + this.fileVector;
     }

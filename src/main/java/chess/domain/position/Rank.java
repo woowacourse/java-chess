@@ -29,4 +29,4 @@ public enum Rank {
     public int index() {
         return this.index;
     }
-    }
+}

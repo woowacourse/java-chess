@@ -37,6 +37,4 @@ public class Queen implements Piece {
     public void changePawnMoveState() {
         linearPiece.changePawnMoveState();
     }
-
-
 }
