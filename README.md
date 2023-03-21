@@ -8,85 +8,89 @@
 
 ```mermaid
 classDiagram
-  class Board {
-    -Map~Position|Piece~: Squares
-  }
+    class Board {
+        -Map~Position|Piece~: Squares
+    }
 
-  class Piece {
-    <<abstract>>
-    -Role: role
-    -Team: Team
-    +canMove(Position src, Position dst)
-  }
+    class Piece {
+        <<abstract>>
+        -Role: role
+        -Team: Team
+        +canMove(Position src, Position dst)
+    }
 
-  class Position {
-    - int: x
-    - int: y
-  }
+    class Position {
+        - int: x
+        - int: y
+    }
 
-  class Role {
-    <<enumeration>>
-    KING,
-    QUEEN,
-    ROOK,
-    BISHOP,
-    KNIGHT,
-    PAWN,
-    EMPTY
-  }
+    class Role {
+        <<enumeration>>
+        KING,
+        QUEEN,
+        ROOK,
+        BISHOP,
+        KNIGHT,
+        PAWN,
+        EMPTY
+    }
 
-  class Team {
-    <<enumeration>>
-    WHITE,
-    BLACK,
-    NONE
-  }
+    class Team {
+        <<enumeration>>
+        WHITE,
+        BLACK,
+        NONE
+    }
 ```
+
 ```mermaid
 flowchart BT
-  Pawn --> Piece
-  King --> Piece
-  Knight --> Piece
-  Bishop --> Piece
-  Queen --> Piece
-  Rook --> Piece
-  Empty --> Piece
+    Pawn --> Piece
+    King --> Piece
+    Knight --> Piece
+    Bishop --> Piece
+    Queen --> Piece
+    Rook --> Piece
+    Empty --> Piece
 ```
+
 ```mermaid
 stateDiagram
-  ChessGame --> WaitingState
-  state WaitingState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> [*]
-    movePiece --> Exception
-    getBoard --> Exception
-  }
+    ChessGame --> WaitingState
+    state WaitingState {
+        [*] --> startGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> [*]
+        movePiece --> Exception
+        getBoard --> Exception
+    }
 ```
+
 ```mermaid
 stateDiagram
-  ChessGame --> RunningState
-  state RunningState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> Exception
-    movePiece --> [*]
-    getBoard --> [*]
-  }
+    ChessGame --> RunningState
+    state RunningState {
+        [*] --> startGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> Exception
+        movePiece --> [*]
+        getBoard --> [*]
+    }
 ```
+
 ```mermaid
 stateDiagram
-  ChessGame --> EndState
-  state EndState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> Exception
-    movePiece --> Exception
-    getBoard --> Exception
-  }
+    ChessGame --> EndState
+    state EndState {
+        [*] --> startGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> Exception
+        movePiece --> Exception
+        getBoard --> Exception
+    }
 ```
 
 ## 기능 요구 사항
@@ -102,6 +106,12 @@ stateDiagram
 - [X] 체스판이 초기화되고, `move source위치 target위치`를 입력하면 체스 말이 이동한다.
 - [X] 체스판이 초기화되지 않고 `move`를 입력하면 예외가 발생한다.
 - [X] 체스말이 움직일 수 없는 위치로 이동하면 예외가 발생한다.
+- [ ] 상대팀의 `King`을 잡으면 승리한다.
+- [ ] 게임 도중 각 진영의 점수를 출력하고, 어느 진영이 이겼는지 알 수 있다.
+- [ ] 시작 시 누가 먼저 말을 움직일지는 랜덤하게 선택한다.
+- [ ] 나의 턴이 아닌데 말을 움직이면 예외가 발생한다.
+- [ ] 각 말의 점수가 정확히 계산되어야 한다.
+  - [ ] 같은 세로 줄에 있는 `Pawn`은 각 0.5점씩 계산해야 한다.
 
 ### 예외 상황
 
@@ -112,6 +122,7 @@ stateDiagram
   - [X] source와 target의 위치가 체스판을 벗어나는 경우 예외가 발생한다.
   - [X] target에 같은 팀의 말이 있는 경우 예외가 발생한다.
   - [X] source에 말이 없는 경우 예외가 발생한다.
+- [ ] 나의 턴이 아닌데, 말을 움직이면 예외가 발생한다.
 
 ### 움직임
 
