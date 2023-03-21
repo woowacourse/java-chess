@@ -1,14 +1,14 @@
 package domain.board;
 
-import domain.square.Color;
-import domain.piece.sliding.Bishop;
-import domain.piece.pawn.BlackPawn;
+import domain.piece.Piece;
 import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
-import domain.piece.Piece;
+import domain.piece.pawn.BlackInitPawn;
+import domain.piece.pawn.WhiteInitPawn;
+import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
-import domain.piece.pawn.WhitePawn;
+import domain.square.Color;
 import domain.square.Square;
 
 import java.util.ArrayList;
@@ -63,19 +63,18 @@ public final class BoardInitialImage {
 
     private static List<Square> makeWhiteBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new Square(new WhitePawn(), Color.WHITE))
+                .mapToObj(i -> new Square(new WhiteInitPawn(), Color.WHITE))
                 .collect(Collectors.toList());
     }
 
     private static List<Square> makeBlackBackRank() {
         return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new Square(new BlackPawn(), Color.BLACK))
+                .mapToObj(i -> new Square(new BlackInitPawn(), Color.BLACK))
                 .collect(Collectors.toList());
     }
 
     public static Square getSquareByCoordinate(final int row, final int col) {
-        return (Square) boardImage.get(row)
-                .get(col)
-                .clone();
+        return boardImage.get(row)
+                .get(col);
     }
 }

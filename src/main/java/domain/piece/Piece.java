@@ -4,8 +4,6 @@ import domain.piece.move.Coordinate;
 
 public abstract class Piece {
 
-    private boolean isNeverMoved = true;
-
     public abstract boolean isReachableByRule(final Coordinate start, final Coordinate end);
 
     public boolean canJump() {
@@ -18,13 +16,5 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
-    }
-
-    protected boolean isFirstMove() {
-        return isNeverMoved;
-    }
-
-    public void checkMoved() {
-        isNeverMoved = false;
     }
 }

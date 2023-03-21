@@ -1,31 +1,18 @@
 package domain.board;
 
-import domain.piece.sliding.Bishop;
 import domain.piece.EmptyPiece;
 import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
 import domain.piece.pawn.Pawn;
+import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
-import domain.square.Square;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BoardInitialImageTest {
-
-    @Test
-    @DisplayName("항상 다른 참조 값을 가진 객체를 반환한다")
-    void getSquareByCoordinate() {
-        Square firstSquare = BoardInitialImage.getSquareByCoordinate(0, 0);
-        Square secondSquare = BoardInitialImage.getSquareByCoordinate(0 , 0);
-
-        assertThat(firstSquare != secondSquare).isTrue();
-        assertThat(firstSquare.getPiece() != secondSquare.getPiece()).isTrue();
-    }
 
     @ParameterizedTest(name = "{0}행 {1}열의 록을 가져온다")
     @CsvSource(value = {"0,0", "7,0", "0,7", "7,7"})

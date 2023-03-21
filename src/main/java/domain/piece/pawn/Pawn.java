@@ -5,7 +5,7 @@ import domain.piece.Piece;
 
 public abstract class Pawn extends Piece {
 
-    public abstract boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
+    public abstract boolean isReachableByRule(final Coordinate start, final Coordinate end);
 
     @Override
     public boolean isPawn() {

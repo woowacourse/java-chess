@@ -27,7 +27,6 @@ public final class ChessGame {
         validateTurn(findSquare);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
-        findSquare.checkPieceMoved();
         turn.invert();
     }
 
@@ -38,9 +37,16 @@ public final class ChessGame {
     }
 
     private void validateMove(final Coordinate start, final Coordinate end) {
+        validateNotEmpty(start);
         validateMoveByRule(start, end);
         validateIsNotSameCamp(start, end);
         validateNotBlocked(start, end);
+    }
+
+    private void validateNotEmpty(final Coordinate start) {
+        if (board.isSquareEmptyAt(start)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
+        }
     }
 
     private void validateMoveByRule(final Coordinate start, final Coordinate end) {

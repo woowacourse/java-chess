@@ -6,10 +6,10 @@ import domain.piece.move.Inclination;
 
 import java.util.List;
 
-public final class WhitePawn extends Pawn {
+public final class BlackInitPawn extends Pawn {
 
     private static final Direction DIRECTION = new Direction(List.of(
-            Inclination.POSITIVE_INFINITY
+            Inclination.NEGATIVE_INFINITY
     ));
 
     @Override
@@ -17,6 +17,6 @@ public final class WhitePawn extends Pawn {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination) &&
-                start.hasDistanceLessThanOne(end);
+                start.hasDistanceLessThanTwo(end);
     }
 }

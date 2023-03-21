@@ -37,7 +37,7 @@ class PawnTest {
     void isReachableByRuleUpTwo() {
         Coordinate startCoordinate = new Coordinate(1, 0);
         Coordinate endCoordinate = new Coordinate(3, 0);
-        Pawn pawn = new WhitePawn();
+        Pawn pawn = new WhiteInitPawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -79,7 +79,7 @@ class PawnTest {
     void isReachableByRuleDownTwo() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(4, 0);
-        Pawn pawn = new BlackPawn();
+        Pawn pawn = new BlackInitPawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }

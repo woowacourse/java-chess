@@ -1,9 +1,9 @@
 package domain.square;
 
-import domain.piece.sliding.Bishop;
-import domain.piece.pawn.BlackPawn;
-import domain.piece.move.Coordinate;
 import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.sliding.Bishop;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +27,6 @@ class SquareTest {
         Piece pawn = new BlackPawn();
         Square square = new Square(pawn, Color.BLACK);
 
-        square.checkPieceMoved();
-
         assertThat(square.isPieceMovable(
                 new Coordinate(2, 0),
                 new Coordinate(1, 0)
@@ -40,8 +38,6 @@ class SquareTest {
     void isNotMovableWhenChecked() {
         Piece pawn = new BlackPawn();
         Square square = new Square(pawn, Color.WHITE);
-
-        square.checkPieceMoved();
 
         assertThat(square.isPieceMovable(
                 new Coordinate(3, 0),

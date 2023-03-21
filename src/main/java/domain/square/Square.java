@@ -4,8 +4,6 @@ import domain.piece.move.Coordinate;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 
-import java.util.Objects;
-
 public final class Square implements Cloneable {
 
     private final Piece piece;
@@ -36,31 +34,12 @@ public final class Square implements Cloneable {
         return piece.isKing();
     }
 
-    public void checkPieceMoved() {
-        piece.checkMoved();
-    }
-
     public Piece getPiece() {
         return piece;
     }
 
     public Color getColor() {
         return color;
-    }
-
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Square that = (Square) o;
-        return piece.getClass() == that.piece.getClass() &&
-                color == that.color;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(piece, color);
     }
 
     @Override
