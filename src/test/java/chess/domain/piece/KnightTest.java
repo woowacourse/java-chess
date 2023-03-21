@@ -9,9 +9,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.domain.piece.Direction.*;
 import static chess.domain.side.Color.BLACK;
 import static chess.domain.side.Color.WHITE;
-import static chess.domain.piece.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {

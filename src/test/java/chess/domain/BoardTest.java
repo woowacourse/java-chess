@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.*;
-import chess.domain.piece.MovablePiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
@@ -156,7 +155,7 @@ class BoardTest {
 
         board.makeMove(sourceSquare, targetSquare);
 
-        MovablePiece piece = (MovablePiece) board.findPiece(targetFile, targetRank);
+        Piece piece = board.findPiece(targetFile, targetRank);
 
         assertThat(piece.getRole()).isEqualTo(expectedRole);
     }

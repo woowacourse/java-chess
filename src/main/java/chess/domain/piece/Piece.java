@@ -1,5 +1,42 @@
 package chess.domain.piece;
 
-public abstract class Piece {
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 
+public abstract class Piece {
+    protected final Side side;
+    protected final Role role;
+
+    public Piece(Side side, Role role) {
+        this.side = side;
+        this.role = role;
+    }
+
+    public boolean isSameSide(final Side side) {
+        return this.side.equals(side);
+    }
+
+    protected boolean isOpponentSide(final Piece targetPiece) {
+        return !side.equals(targetPiece.side);
+    }
+
+    public boolean isRole(Role role) {
+        return this.role.equals(role);
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Color getColor() {
+        return side.getColor();
+    }
+
+    public abstract boolean canMove(final Direction direction, final int distance);
+
+    public abstract boolean canAttack(final Direction direction, final int distance, final Piece target);
 }

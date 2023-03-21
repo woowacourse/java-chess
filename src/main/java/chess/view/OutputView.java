@@ -1,7 +1,8 @@
 package chess.view;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.piece.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,28 +26,28 @@ public class OutputView {
     }
 
     private String convertPiece(final Piece piece) {
-        if (piece instanceof Pawn) {
-            return convertSide((MovablePiece) piece, "p");
+        if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
+            return convertSide(piece, "p");
         }
-        if (piece instanceof Rook) {
-            return convertSide((MovablePiece) piece, "r");
+        if (piece.isRole(Role.ROOK)) {
+            return convertSide(piece, "r");
         }
-        if (piece instanceof Knight) {
-            return convertSide((MovablePiece) piece, "n");
+        if (piece.isRole(Role.KNIGHT)) {
+            return convertSide(piece, "n");
         }
-        if (piece instanceof Bishop) {
-            return convertSide((MovablePiece) piece, "b");
+        if (piece.isRole(Role.BISHOP)) {
+            return convertSide(piece, "b");
         }
-        if (piece instanceof Queen) {
-            return convertSide((MovablePiece) piece, "q");
+        if (piece.isRole(Role.QUEEN)) {
+            return convertSide(piece, "q");
         }
-        if (piece instanceof King) {
-            return convertSide((MovablePiece) piece, "k");
+        if (piece.isRole(Role.KING)) {
+            return convertSide(piece, "k");
         }
         return ".";
     }
 
-    private String convertSide(final MovablePiece piece, final String convertedPiece) {
+    private String convertSide(final Piece piece, final String convertedPiece) {
         if (piece.getColor().equals(Color.BLACK)) {
             return convertedPiece.toUpperCase();
         }

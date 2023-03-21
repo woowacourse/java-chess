@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.MovablePiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
 import chess.domain.side.Side;
@@ -11,7 +11,7 @@ public class BoardFactory {
     private static final Map<Side, Map<Role, Rank>> INITIAL_RANKS;
     private static final Map<Role, List<File>> INITIAL_FILES;
 
-    private static final Map<Square, MovablePiece> board = new LinkedHashMap<>();
+    private static final Map<Square, Piece> board = new LinkedHashMap<>();
 
     static {
         INITIAL_FILES = createInitialFiles();
@@ -56,7 +56,7 @@ public class BoardFactory {
         }
     }
 
-    private static void putPiece(final Rank rank, final List<File> files, final MovablePiece piece) {
+    private static void putPiece(final Rank rank, final List<File> files, final Piece piece) {
         for (File file : files) {
             board.put(Square.of(file, rank), piece);
         }

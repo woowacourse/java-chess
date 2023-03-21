@@ -1,6 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.InitialPawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.side.Color;
 import chess.domain.side.Side;
 
@@ -11,26 +14,23 @@ import java.util.Map;
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
 
-    private final Map<Square, MovablePiece> board;
+    private final Map<Square, Piece> board;
     private Side turn;
 
-    Board(final Map<Square, MovablePiece> board) {
+    Board(final Map<Square, Piece> board) {
         this.board = board;
         this.turn = Side.from(FIRST_TURN_COLOR);
     }
 
     public Piece findPiece(final File file, final Rank rank) {
-        if (!board.containsKey(Square.of(file, rank))) {
-            return new VacantPiece();
-        }
-        return board.get(Square.of(file, rank));
+        return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Side.from(Color.NOTHING)));
     }
 
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
         validate(sourceSquare, targetSquare);
 
         Direction direction = Direction.of(sourceSquare, targetSquare);
-        MovablePiece sourcePiece = board.get(sourceSquare);
+        Piece sourcePiece = board.get(sourceSquare);
         int distance = sourceSquare.calculateDistance(targetSquare);
 
         validateCanNotMove(targetSquare, direction, sourcePiece, distance);
@@ -46,7 +46,7 @@ public class Board {
     }
 
     private void validateSideWrongTurn(final Square sourceSquare) {
-        MovablePiece sourcePiece = board.get(sourceSquare);
+        Piece sourcePiece = board.get(sourceSquare);
         if (!sourcePiece.isSameSide(turn)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
@@ -64,7 +64,7 @@ public class Board {
         }
     }
 
-    private void validateCanNotMove(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
+    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
         boolean possible = isPossible(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
@@ -72,7 +72,7 @@ public class Board {
         }
     }
 
-    private boolean isPossible(final Square targetSquare, final Direction direction, final MovablePiece sourcePiece, final int distance) {
+    private boolean isPossible(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
         if (board.containsKey(targetSquare)) {
             return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
         }
@@ -86,8 +86,8 @@ public class Board {
         }
     }
 
-    private void movePiece(final Square sourceSquare, final Square targetSquare, MovablePiece sourcePiece) {
-        if (sourcePiece.getRole().equals(Role.INITIAL_PAWN)) {
+    private void movePiece(final Square sourceSquare, final Square targetSquare, Piece sourcePiece) {
+        if (sourcePiece.isRole(Role.INITIAL_PAWN)) {
             sourcePiece = ((InitialPawn) sourcePiece).changeState();
         }
         board.put(targetSquare, sourcePiece);
@@ -109,5 +109,13 @@ public class Board {
             squares.add(nextSquare);
         }
         return squares;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "board의 Piece 개수=" + board.size() +
+                ", turn=" + turn +
+                '}';
     }
 }

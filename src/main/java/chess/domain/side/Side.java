@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+//TODO: Side 클래스 필요성 고민해보기
 public class Side {
     private static final Map<Color, Side> CACHE;
 
     static {
         CACHE = new HashMap<>();
+        CACHE.put(Color.NOTHING, new Side(Color.NOTHING));
         CACHE.put(Color.BLACK, new Side(Color.BLACK));
         CACHE.put(Color.WHITE, new Side(Color.WHITE));
     }
@@ -24,6 +26,9 @@ public class Side {
     }
 
     public Side findOpponent() {
+        if (this.color == Color.NOTHING) {
+            return from(Color.NOTHING);
+        }
         if (this.color == Color.WHITE) {
             return from(Color.BLACK);
         }

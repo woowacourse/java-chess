@@ -22,7 +22,7 @@ public class InitialPawn extends Pawn {
     }
 
     @Override
-    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         return super.canAttack(direction, distance, target);
     }
 
