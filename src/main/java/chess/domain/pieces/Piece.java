@@ -13,9 +13,9 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract void canMove(final Position start, final Position end);
+    public abstract void canMove(final Position start, final Position end, final boolean isAttack);
 
-    public abstract Route generateRoute (final Position source, final Position destination);
+    public abstract Route generateRoute(final Position source, final Position destination);
 
     public Team getTeam() {
         return team;

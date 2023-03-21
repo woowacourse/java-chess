@@ -25,7 +25,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
 
         // when & then
-        Assertions.assertDoesNotThrow(() -> pawn.canMove(source, destination));
+        Assertions.assertDoesNotThrow(() -> pawn.canMove(source, destination, false));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -39,7 +39,7 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-            () -> pawn.canMove(source, destination)
+            () -> pawn.canMove(source, destination, false)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +53,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
 
         // when & then
-        Assertions.assertDoesNotThrow(() -> pawn.canMove(source, destination));
+        Assertions.assertDoesNotThrow(() -> pawn.canMove(source, destination, false));
     }
 
     @ParameterizedTest(name = "{displayName} 시작위치: {0} 도착위치: {1}")
@@ -67,7 +67,7 @@ class PawnTest {
 
         // when & then
         assertThatThrownBy(
-            () -> pawn.canMove(source, destination)
+            () -> pawn.canMove(source, destination, false)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -78,10 +78,10 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
 
         // when
-        pawn.canMove(Position.from("a2"), Position.from("a3"));
+        pawn.canMove(Position.from("a2"), Position.from("a3"),false);
 
         // then
-        assertThatThrownBy(() -> pawn.canMove(Position.from("a3"), Position.from("a5")))
+        assertThatThrownBy(() -> pawn.canMove(Position.from("a3"), Position.from("a5"), false))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

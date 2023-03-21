@@ -1,13 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.direction.Direction;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Piece;
 import chess.domain.pieces.Empty;
+import chess.domain.pieces.Piece;
 import chess.domain.pieces.Team;
 import chess.domain.strategy.Route;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -35,10 +31,16 @@ public class Board {
     private void validateMove(final Position source, final Position destination) {
         Piece piece = findPiece(source);
         validateMoveSamePosition(source, destination);
-        piece.canMove(source, destination);
         validateObstacle(piece, source, destination);
-        validatePawnMove(piece, source, destination);
+        piece.canMove(source, destination, isAttackMove(source, destination));
         validateMoveMyTeam(source, destination);
+    }
+
+    private boolean isAttackMove(final Position source, final Position destination) {
+        Piece sourcePiece = findPiece(source);
+        Piece destinationPiece = findPiece(destination);
+        return (sourcePiece.isWhiteTeam() && destinationPiece.isBlackTeam())
+            || (sourcePiece.isBlackTeam() && destinationPiece.isWhiteTeam());
     }
 
     private void validateMoveSamePosition(final Position source, final Position destination) {
@@ -51,55 +53,12 @@ public class Board {
         Route route = piece.generateRoute(source, destination);
 
         boolean isObstacleExist = route.getRoute().stream()
-                .map(this::findPiece)
-                .anyMatch(p -> !(p instanceof Empty));
+            .map(this::findPiece)
+            .anyMatch(p -> !(p instanceof Empty));
 
         if (isObstacleExist) {
             throw new IllegalArgumentException("장애물이 존재합니다.");
         }
-    }
-
-    private void validatePawnMove(final Piece piece, final Position source, final Position destination) {
-        if (!(piece instanceof Pawn)) {
-            return;
-        }
-
-        if (piece.isWhiteTeam()) {
-            validateLowercasePawnMove(source, destination);
-            return;
-        }
-
-        validateUppercasePawnMove(source, destination);
-    }
-
-    private void validateLowercasePawnMove(final Position source, final Position destination) {
-        if (Direction.isLowerPawnDiagonal(source, destination)) {
-            validateLowercasePawnAttack(destination);
-            return;
-        }
-        validateLowercasePawnMoveForward(destination);
-    }
-
-    private void validateLowercasePawnAttack(final Position end) {
-        Piece upperEnemy = findPiece(end);
-        if (upperEnemy.isWhiteTeam() || upperEnemy instanceof Empty) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
-        }
-    }
-
-    private void validateLowercasePawnMoveForward(final Position end) {
-        Piece destination = findPiece(end);
-        if (!(destination instanceof Empty)) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
-        }
-    }
-
-    private void validateUppercasePawnMove(final Position start, final Position end) {
-        if (Direction.isUpperPawnDiagonal(start, end)) {
-            validateUppercasePawnAttack(end);
-            return;
-        }
-        validateUppercasePawnMoveForward(end);
     }
 
     private void validateMoveMyTeam(final Position start, final Position end) {
@@ -113,19 +72,5 @@ public class Board {
     private boolean isSameTeam(final Piece selectedPiece, final Piece destinationPiece) {
         return selectedPiece.isWhiteTeam() == destinationPiece.isWhiteTeam()
             || selectedPiece.isBlackTeam() == destinationPiece.isBlackTeam();
-    }
-
-    private void validateUppercasePawnAttack(final Position end) {
-        Piece lowerEnemy = findPiece(end);
-        if (lowerEnemy.isBlackTeam() || lowerEnemy instanceof Empty) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
-        }
-    }
-
-    private void validateUppercasePawnMoveForward(final Position end) {
-        Piece destination = findPiece(end);
-        if (!(destination instanceof Empty)) {
-            throw new IllegalArgumentException("폰의 잘못된 이동입니다.");
-        }
     }
 }

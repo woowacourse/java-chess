@@ -24,7 +24,7 @@ class BoardTest {
     }
 
     @ParameterizedTest(name = "{0} -> {1} {displayName}")
-    @CsvSource(value = {"c3:c3", "c2:b2", "c7:b7", "c7:c7"}, delimiter = ':')
+    @CsvSource(value = {"c3:c3", "b1:d2", "c7:c7", "b8:d7"}, delimiter = ':')
     @DisplayName("같은 위치 혹은 같은 팀의 위치로 이동하는 경우 예외가 발생한다.")
     void throws_exception_when_move_invalid(final String start, final String end) {
         // given
