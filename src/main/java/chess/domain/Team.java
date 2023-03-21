@@ -3,5 +3,9 @@ package chess.domain;
 public enum Team {
     BLACK,
     WHITE,
-    NEUTRALITY
+    NEUTRALITY;
+
+    public boolean isNeutrality() {
+        return this.equals(NEUTRALITY);
+    }
 }
