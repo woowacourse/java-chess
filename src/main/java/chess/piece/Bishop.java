@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     public Bishop(final Team team) {
         super(team, PieceType.BISHOP);

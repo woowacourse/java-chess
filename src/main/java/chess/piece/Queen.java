@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     public Queen(final Team team) {
         super(team, PieceType.QUEEN);

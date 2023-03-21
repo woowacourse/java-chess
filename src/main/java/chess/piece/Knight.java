@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     public static final int INTERVAL_LIMIT = 2;
 

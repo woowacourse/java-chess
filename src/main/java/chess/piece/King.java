@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class King extends Piece {
+public final class King extends Piece {
 
     public King(final Team team) {
         super(team, PieceType.KING);

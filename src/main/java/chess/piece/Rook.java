@@ -2,7 +2,7 @@ package chess.piece;
 
 import chess.board.Position;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     public Rook(final Team team) {
         super(team, PieceType.ROOK);
@@ -10,7 +10,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        
+
         return (from.getRank() == to.getRank()) || (from.getFile() == to.getFile());
     }
 }

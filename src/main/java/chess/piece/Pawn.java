@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     public Pawn(final Team team) {
         super(team, PieceType.PAWN);

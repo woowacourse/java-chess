@@ -2,7 +2,7 @@ package chess.piece;
 
 import chess.board.Position;
 
-public class EmptyPiece extends Piece {
+public final class EmptyPiece extends Piece {
 
     public EmptyPiece() {
         super(Team.EMPTY, PieceType.EMPTY);
