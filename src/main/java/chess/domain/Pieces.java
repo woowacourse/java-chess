@@ -17,11 +17,11 @@ public final class Pieces {
     public static final char LAST_RANK = 'h';
     public static final int FIRST_FILE_OF_WHITE = 0;
     public static final int FIRST_FILE_OF_BLACK = 7;
-    private static final int LAST_FILE_OF_WHITE = 1;
     private static final char MIDDLE_RANK = 'd';
-    private static final int LAST_FILE_OF_BLACK = 6;
     private static final char QUEEN_DEFAULT_RANK_POSITION = 'd';
     private static final char KING_DEFAULT_RANK_POSITION = 'e';
+    private static final int LAST_FILE_OF_WHITE = 1;
+    private static final int LAST_FILE_OF_BLACK = 6;
 
     private final List<Piece> pieces;
 

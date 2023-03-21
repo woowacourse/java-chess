@@ -1,8 +1,8 @@
 package chess.controller;
 
+import java.util.List;
+
 @FunctionalInterface
 public interface Action {
-
-    boolean execute(String... args);
-
+    void execute(List<String> list);
 }

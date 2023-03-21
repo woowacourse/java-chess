@@ -11,16 +11,37 @@ import java.util.List;
 
 public final class ChessGameController {
 
-    public void execute() {
-        Players players = initializeChessBoard();
-        List<String> command;
-        while (true) {
-            command = InputView.getCommands();
-            if(command.get(0).equals("end")) {
-                break;
-            }
-            String inputMovablePiece = command.get(1);
-            String inputTargetPosition = command.get(2);
+    private final Players players = initializeChessBoard();
+
+    private final Map<Command, Action> commands = Map.of(
+            Command.START, this::start,
+            Command.MOVE, this::move,
+            Command.END, this::end
+    );
+
+    public void run() {
+        OutputView.printStartGame();
+        List<String> commands = InputView.getCommands();
+        Command findCommand = Command.findCommand(commands);
+        this.commands.get(findCommand).execute(commands);
+    }
+
+    private void start(final List<String> strings) {
+        Command findCommand = Command.START;
+
+        PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
+        OutputView.printInitializedChessBoard(piecesResponse);
+
+        while (findCommand.isNotEnd()) {
+            List<String> commands = InputView.getCommands();
+            findCommand = Command.findCommand(commands);
+            this.commands.get(findCommand).execute(commands);
+        }
+    }
+
+    private void move(List<String> command) {
+        String inputMovablePiece = command.get(1);
+        String inputTargetPosition = command.get(2);
 
             try {
                 players.movePiece(inputMovablePiece, inputTargetPosition);
@@ -39,9 +60,6 @@ public final class ChessGameController {
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-
-        PiecesResponse piecesResponse = new PiecesResponse(whitePlayer, blackPlayer);
-        OutputView.printInitializedChessBoard(piecesResponse);
 
         return Players.from(whitePlayer, blackPlayer);
     }

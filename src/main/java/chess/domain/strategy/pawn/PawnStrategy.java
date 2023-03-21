@@ -20,12 +20,13 @@ public class PawnStrategy implements PieceStrategy {
     public void validateDirection(final MoveRequest request) {
         PositionDto movablePiecePosition = request.getMovablePieceDto();
         PositionDto targetPosition = request.getTargetPositionDto();
+        List<Position> positions = request.getPositions();
 
         if (isNotMoveFront(movablePiecePosition, targetPosition)) {
-            validateMoveDiagonal(movablePiecePosition, targetPosition);
+            validateMoveDiagonal(positions, movablePiecePosition, targetPosition);
             return;
         }
-        validateAlreadyExistFront(request.getPositions(), targetPosition);
+        validateAlreadyExistFront(positions, targetPosition);
         judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
     }
 
@@ -131,6 +132,14 @@ public class PawnStrategy implements PieceStrategy {
         throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
+    private int getRankDistance(int targetRank, int movableRank) {
+        return Math.abs(targetRank - movableRank);
+    }
+
+    private boolean isNotSameFile(PositionDto movablePiecePosition, PositionDto targetPosition) {
+        return movablePiecePosition.getFile() != targetPosition.getFile();
+    }
+
     private boolean isWhitePiece(Color color) {
         return color.isWhite();
     }
@@ -139,12 +148,5 @@ public class PawnStrategy implements PieceStrategy {
         return color.isBlack();
     }
 
-    private int getRankDistance(int targetRank, int movableRank) {
-        return Math.abs(targetRank - movableRank);
-    }
-
-    private boolean isNotSameFile(PositionDto movablePiecePosition, PositionDto targetPosition) {
-        return movablePiecePosition.getFile() != targetPosition.getFile();
-    }
 
 }

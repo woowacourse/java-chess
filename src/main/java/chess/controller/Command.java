@@ -1,13 +1,27 @@
 package chess.controller;
 
-public class Command {
-    private final Action action;
+import java.util.Arrays;
+import java.util.List;
 
-    public Command(Action action) {
-        this.action = action;
+public enum Command {
+    START("start"),
+    END("end"),
+    MOVE("move");
+
+    private final String command;
+
+    Command(String command) {
+        this.command = command;
     }
 
-    public boolean execute() {
-        return action.execute();
+    public static Command findCommand(List<String> command) {
+        return Arrays.stream(Command.values())
+                .filter(commands -> commands.command.equals(command.get(0)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("커맨드 일치 x"));
+    }
+
+    public boolean isNotEnd() {
+        return !this.command.equals("end");
     }
 }
