@@ -53,7 +53,7 @@ class BoardTest {
     @Test
     void 말을_움직인다() {
         Board board = BoardFactory.createBoard();
-        board.movePiece(C_2, C_4);
+        board.movePiece(C_2, C_4, Team.WHITE);
 
         assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);

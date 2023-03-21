@@ -17,19 +17,7 @@ public class ChessGame {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        validateMove(sourcePosition, targetPosition);
-        move(sourcePosition, targetPosition);
-    }
-
-    private void validateMove(Position sourcePosition, Position targetPosition) {
-        board.validateSourceTeam(sourcePosition, nowPlayingTeam);
-        board.validateCanMove(sourcePosition, targetPosition);
-        List<Position> path = sourcePosition.findPath(targetPosition);
-        board.validatePath(path);
-    }
-
-    private void move(Position sourcePosition, Position targetPosition) {
-        board.movePiece(sourcePosition, targetPosition);
+        board.movePiece(sourcePosition, targetPosition, nowPlayingTeam);
         this.nowPlayingTeam = nowPlayingTeam.getReverseTeam();
     }
 
