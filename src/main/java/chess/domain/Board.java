@@ -3,9 +3,9 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDirection;
+import chess.domain.piece.Team;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
