@@ -1,9 +1,9 @@
-package dto;
+package chess.dto;
 
-import domain.piece.Piece;
-import controller.ColumnToNumber;
-import domain.position.Position;
-import controller.RowToNumber;
+import chess.domain.piece.Piece;
+import chess.controller.ColumnToNumber;
+import chess.domain.position.Position;
+import chess.controller.RowToNumber;
 
 import java.util.ArrayList;
 import java.util.List;

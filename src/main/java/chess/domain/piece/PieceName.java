@@ -1,4 +1,4 @@
-package domain.piece;
+package chess.domain.piece;
 
 public enum PieceName {
 

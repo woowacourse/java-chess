@@ -3,11 +3,13 @@ package domain.chessGame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.Color;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Rook;
-import domain.position.Position;
+import chess.domain.chessGame.ChessBoard;
+import chess.domain.chessGame.ChessBoardGenerator;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,12 @@
-package controller;
+package chess.controller;
 
-import dto.ChessBoardDto;
-import view.GameCommand;
-import domain.chessGame.ChessBoard;
-import domain.chessGame.ChessBoardGenerator;
-import domain.position.Position;
-import view.InputView;
-import view.OutputView;
+import chess.domain.chessGame.ChessBoard;
+import chess.domain.chessGame.ChessBoardGenerator;
+import chess.domain.position.Position;
+import chess.dto.ChessBoardDto;
+import chess.view.GameCommand;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 import java.util.List;
 

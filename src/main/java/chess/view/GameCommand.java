@@ -1,4 +1,4 @@
-package view;
+package chess.view;
 
 import java.util.Arrays;
 

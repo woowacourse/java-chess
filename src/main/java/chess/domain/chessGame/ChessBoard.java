@@ -1,9 +1,9 @@
-package domain.chessGame;
+package chess.domain.chessGame;
 
-import domain.piece.Piece;
-import domain.piece.PieceName;
-import domain.position.Direction;
-import domain.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceName;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.List;

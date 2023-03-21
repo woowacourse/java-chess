@@ -1,14 +1,14 @@
-package domain.chessGame;
+package chess.domain.chessGame;
 
-import domain.piece.Bishop;
-import domain.piece.Color;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.position.Position;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.List;
