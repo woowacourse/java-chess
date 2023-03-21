@@ -8,23 +8,28 @@ public class Piece {
     private static final Piece empty = new Piece(PieceType.EMPTY, Color.NONE);
 
     private final Color color;
-    private MoveState moveState;
+    private final MoveState moveState;
 
     public Piece(PieceType pieceType, Color color) {
         this.color = color;
         moveState = pieceType.getState();
     }
 
+    private Piece(Color color, MoveState moveState) {
+        this.color = color;
+        this.moveState = moveState;
+    }
+
     public static Piece empty() {
         return empty;
     }
 
-    public void move(int x, int y, Piece piece) {
+    public Piece move(int x, int y, Piece piece) {
         boolean canMove = moveState.canMove(x, color.colorForwardDirection(y), piece.compareColor(color));
         if (!canMove) {
             throw new IllegalPieceMoveException();
         }
-        moveState = moveState.getNextState();
+        return new Piece(color, moveState.getNextState());
     }
 
     private ColorCompareResult compareColor(Color color) {

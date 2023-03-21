@@ -18,10 +18,10 @@ public class Board {
     public void movePiece(Position origin, Position destination) {
         validateMoveRequest(origin, destination);
         Piece targetPiece = piecePosition.get(origin);
-        targetPiece.move(origin.getFileDifference(destination),
+        Piece movedPiece = targetPiece.move(origin.getFileDifference(destination),
                 origin.getRankDifference(destination),
                 piecePosition.get(destination));
-        piecePosition.put(destination, targetPiece);
+        piecePosition.put(destination, movedPiece);
         piecePosition.put(origin, Piece.empty());
     }
 
