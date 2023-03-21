@@ -10,7 +10,6 @@ public class InputView {
     private static final String NEXT_LINE = System.lineSeparator();
     private static final String DELIMITER = " ";
     private static final int LIMIT = -1;
-    private static final int MOVE_COMMAND_SIZE = 3;
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
