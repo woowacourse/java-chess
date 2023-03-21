@@ -20,9 +20,9 @@ public class ChessGame {
         this.gameState = WaitingState.STATE;
     }
 
-    public void start() {
+    public void start(TurnStrategy turnStrategy) {
         gameState.startGame(() -> {
-            this.board = new Board(BoardFactory.create());
+            this.board = new Board(BoardFactory.create(), turnStrategy.create());
             this.gameState = RunningState.STATE;
         });
     }

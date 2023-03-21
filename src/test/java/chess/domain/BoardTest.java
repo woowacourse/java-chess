@@ -34,7 +34,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), new Queen(Team.WHITE));
         squares.put(Position.of(3, 4), new Pawn(Team.BLACK));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 6);
@@ -52,7 +52,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
         squares.put(Position.of(3, 4), new Pawn(Team.BLACK));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
         
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 4);
@@ -70,7 +70,7 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
         
         Position source = Position.of(3, 3);
         Position target = Position.of(x, 4);
@@ -90,7 +90,7 @@ class BoardTest {
         Pawn sourcePiece = new Pawn(Team.WHITE);
         squares.put(Position.of(3, 3), sourcePiece);
         squares.put(Position.of(x, 4), new Pawn(Team.BLACK));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         // when
         Position source = Position.of(3, 3);
@@ -108,7 +108,7 @@ class BoardTest {
     void move_EmptySquare() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(4, 4);
@@ -126,7 +126,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
         squares.put(Position.of(3, 4), new Pawn(Team.WHITE));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(4, 4);
@@ -147,7 +147,7 @@ class BoardTest {
         squares.put(Position.of(2, 3), new Pawn(Team.WHITE));
         squares.put(Position.of(2, 2), new Pawn(Team.BLACK));
         squares.put(Position.of(3, 2), new Pawn(Team.WHITE));
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(1, 2);
@@ -166,7 +166,7 @@ class BoardTest {
     void move_Duplicate_Position() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares);
+        Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(2, 2);
         Position target = Position.of(2, 2);
@@ -175,5 +175,43 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 같은 위치로 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("나의 턴이 아닌데 말을 움직이면 예외가 발생한다.")
+    void move_Invalid_Turn() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Board board = new Board(squares, Team.BLACK);
+        squares.put(Position.of(2, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(2, 5), new Pawn(Team.BLACK));
+
+        Position source = Position.of(2, 1);
+        Position target = Position.of(2, 3);
+
+        // expect
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("나의 턴이 끝나면 상대방의 턴이어야 한다.")
+    void move_Next_Turn() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Board board = new Board(squares, Team.WHITE);
+        squares.put(Position.of(2, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(2, 5), new Pawn(Team.BLACK));
+
+        Position source = Position.of(2, 1);
+        Position target = Position.of(2, 3);
+        board.move(source, target);
+        Position nextTarget = Position.of(2, 4);
+
+        // expect
+        assertThatThrownBy(() -> board.move(target, nextTarget))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
     }
 }

@@ -13,11 +13,14 @@ public class Board {
     private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
     private static final String SAME_TEAM_EXCEPTION_MESSAGE = "[ERROR] 목적지에 아군 말이 존재합니다.";
     private static final String MOVE_FAIL_EXCEPTION_MESSAGE = "[ERROR] 해당 목적지로 이동할 수 없습니다.";
+    private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
 
     private final Map<Position, Piece> squares;
+    private Team turn;
 
-    public Board(Map<Position, Piece> squares) {
+    public Board(Map<Position, Piece> squares, Team team) {
         this.squares = squares;
+        this.turn = team;
     }
 
     public Map<Position, Piece> getBoard() {
@@ -28,6 +31,7 @@ public class Board {
         validate(source, target);
         squares.put(target, squares.get(source));
         squares.put(source, Empty.INSTANCE);
+        turn = turn.opposite();
     }
 
     private void validate(Position source, Position target) {
@@ -35,6 +39,7 @@ public class Board {
         Piece sourcePiece = squares.get(source);
         Piece targetPiece = squares.get(target);
         validateEmptySquare(sourcePiece);
+        validateTurn(sourcePiece);
         validateSameTeam(sourcePiece, targetPiece);
         validateMovement(source, target);
         validatePieceRole(source, target);
@@ -43,6 +48,12 @@ public class Board {
     private void validateDuplicate(Position source, Position target) {
         if (Objects.equals(source, target)) {
             throw new IllegalArgumentException(DUPLICATE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private void validateTurn(Piece sourcePiece) {
+        if (!sourcePiece.isSameTeam(turn)) {
+            throw new IllegalArgumentException(INVALID_TURN_EXCEPTION_MESSAGE);
         }
     }
 

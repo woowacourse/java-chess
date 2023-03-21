@@ -32,6 +32,10 @@ public abstract class Piece {
         return this.role == role;
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     public Role getRole() {
         return role;
     }

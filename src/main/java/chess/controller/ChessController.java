@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
 import chess.game.GameCommand;
 import chess.domain.Position;
@@ -27,7 +28,7 @@ public class ChessController {
     }
 
     private void startGame() {
-        chessGame.start();
+        chessGame.start(new RandomTurnStrategy());
         OutputView.printBoard(chessGame.getBoard());
     }
 

@@ -48,11 +48,14 @@ class ChessGameTest {
     @Test
     @DisplayName("게임이 진행 상태일때 게임을 시작하면 예외가 발생한다.")
     void ChessGame_StartWhenRunningState() {
+        // given
+        TurnStrategy turnStrategy = new RandomTurnStrategy();
+
         // when
-        chessGame.start();
+        chessGame.start(turnStrategy);
 
         // then
-        assertThatThrownBy(() -> chessGame.start())
+        assertThatThrownBy(() -> chessGame.start(turnStrategy))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 진행중)");
     }
@@ -60,11 +63,14 @@ class ChessGameTest {
     @Test
     @DisplayName("게임이 종료 상태일때 게임을 시작하면 예외가 발생한다.")
     void ChessGame_StartWhenEndState() {
+        // given
+        TurnStrategy turnStrategy = new RandomTurnStrategy();
+
         // when
         chessGame.end();
 
         // then
-        assertThatThrownBy(() -> chessGame.start())
+        assertThatThrownBy(() -> chessGame.start(turnStrategy))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)");
     }
