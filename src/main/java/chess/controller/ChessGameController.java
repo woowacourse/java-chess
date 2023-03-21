@@ -4,6 +4,7 @@ import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.MOVE_COMMAND_INDEX;
 import static chess.controller.Command.MOVE_COMMAND_SIZE;
+import static chess.controller.Command.MOVE_SOURCE_INDEX;
 import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 import static chess.controller.Command.validateMoveCommandForm;
@@ -62,7 +63,7 @@ public class ChessGameController {
     }
 
     private void move(final Board board, final List<String> commands) {
-        final String source = commands.get(MOVE_COMMAND_SIZE);
+        final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
         board.move(source, target);
         OutputView.printBoard(board.getBoard());
