@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public interface GameState {
+    String INVALID_TEAM_EXCEPTION_MESSAGE = "[ERROR] 해당 팀에 대한 조건이 없습니다.";
     void startGame(Runnable runnable);
 
     boolean isEnd();
@@ -24,7 +25,7 @@ public interface GameState {
 
     Team getWinner();
 
-    void checkCheckmate(Runnable runnable);
-
     boolean hasWinner();
+
+    boolean isChecked();
 }

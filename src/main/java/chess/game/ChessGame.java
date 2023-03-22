@@ -7,6 +7,7 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.state.checked.CheckedState;
 import chess.game.state.end.EndState;
 import chess.game.state.GameState;
 import chess.game.state.end.NoneWinState;
@@ -51,15 +52,6 @@ public class ChessGame {
         }
     }
 
-    public void checkCheckmate() {
-        gameState.checkCheckmate(() -> {
-            Team turn = gameState.getTurn();
-            if (board.isChecked(turn.opposite()) && board.isCheckmate(turn.opposite())) {
-                gameState = EndState.createWinState(turn);
-            }
-        });
-    }
-
     public List<SquareResponse> getBoard() {
         return gameState.getBoard(() -> board.getBoard().entrySet().stream()
                 .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
@@ -76,6 +68,9 @@ public class ChessGame {
 
     public void changeTurn() {
         this.gameState = gameState.changeTurn();
+        if (board.isChecked(gameState.getTurn())) {
+            this.gameState = CheckedState.createCheckedState(gameState.getTurn());
+        }
     }
 
     public Team getWinner() {
@@ -84,5 +79,16 @@ public class ChessGame {
 
     public boolean hasWinner() {
         return gameState.hasWinner();
+    }
+
+    public boolean isChecked() {
+        return gameState.isChecked();
+    }
+
+    public void checkCheckmate() {
+        Team turn = gameState.getTurn();
+        if (board.isChecked(turn)) {
+            this.gameState = EndState.createWinState(turn.opposite());
+        }
     }
 }

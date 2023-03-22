@@ -141,14 +141,6 @@ public class Board {
                 .anyMatch(entry -> canMove(entry.getKey(), target));
     }
 
-    public boolean isCheckmate(Team team) {
-        King king = King.of(team);
-        List<Position> enemyKingMovablePositions = king.getKingMovablePositions(getKingPosition(team));
-        return enemyKingMovablePositions.stream()
-                .filter(position -> squares.get(position).isRoleOf(Role.EMPTY))
-                .allMatch(position -> isAnyMovable(team.opposite(), position));
-    }
-
     public Team getPieceTeam(Position target) {
         return squares.get(target).getTeam();
     }

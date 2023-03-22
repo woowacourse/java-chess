@@ -43,9 +43,16 @@ public class ChessController {
         chessGame.checkCheckmate();
         if (!chessGame.isEnd()) {
             chessGame.changeTurn();
+            printCheckWarning();
             OutputView.printTurn(chessGame.getTurn());
         }
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void printCheckWarning() {
+        if (chessGame.isChecked()) {
+            OutputView.printCheckWarning(chessGame.getTurn());
+        }
     }
 
     private void getGameStatus() {

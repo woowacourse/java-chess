@@ -44,12 +44,12 @@ public abstract class RunningState implements GameState {
     }
 
     @Override
-    public void checkCheckmate(Runnable runnable) {
-        runnable.run();
+    public boolean hasWinner() {
+        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public boolean hasWinner() {
-        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
+    public boolean isChecked() {
+        return false;
     }
 }

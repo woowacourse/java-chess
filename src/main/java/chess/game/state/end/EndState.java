@@ -53,7 +53,7 @@ public abstract class EndState implements GameState {
     }
 
     @Override
-    public void checkCheckmate(Runnable runnable) {
-        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    public boolean isChecked() {
+        return false;
     }
 }

@@ -254,24 +254,6 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("킹이 도망칠 수 없으면 체크메이트여야 한다.")
-    void isCheckmate_Success() {
-        // given
-        Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
-        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
-        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(4, 7), King.of(Team.BLACK));
-        squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
-        Board board = new Board(squares);
-
-        // expect
-        assertThat(board.isCheckmate(Team.BLACK))
-                .isTrue();
-    }
-
-    @Test
     @DisplayName("킹이 적의 폰의 공격 범위에 있으면 체크여야 한다.")
     void isChecked_Pawn() {
         // given
@@ -321,22 +303,5 @@ class BoardTest {
         // expect
         assertThat(board.isChecked(Team.BLACK))
                 .isTrue();
-    }
-
-    @Test
-    @DisplayName("킹이 도망칠 수 있으면 체크메이트가 아니여야 한다.")
-    void isCheckmate_KingCanEscape() {
-        // given
-        Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
-        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(4, 7), King.of(Team.BLACK));
-        squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
-        Board board = new Board(squares);
-
-        // expect
-        assertThat(board.isCheckmate(Team.BLACK))
-                .isFalse();
     }
 }

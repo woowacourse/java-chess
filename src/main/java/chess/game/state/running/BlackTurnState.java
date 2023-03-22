@@ -5,6 +5,9 @@ import chess.domain.Team;
 public class BlackTurnState extends RunningState {
     public static final RunningState STATE = new BlackTurnState();
 
+    private BlackTurnState() {
+    }
+
     @Override
     public Team getTurn() {
         return Team.BLACK;

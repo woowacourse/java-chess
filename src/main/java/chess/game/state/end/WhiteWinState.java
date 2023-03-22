@@ -8,6 +8,9 @@ import java.util.function.Supplier;
 public class WhiteWinState extends EndState {
     public static final EndState STATE = new WhiteWinState();
 
+    private WhiteWinState() {
+    }
+
     @Override
     public Team getWinner() {
         return Team.WHITE;

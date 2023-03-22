@@ -8,6 +8,9 @@ import java.util.function.Supplier;
 public class NoneWinState extends EndState {
     public static final EndState STATE = new NoneWinState();
 
+    private NoneWinState() {
+    }
+
     @Override
     public Team getWinner() {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);

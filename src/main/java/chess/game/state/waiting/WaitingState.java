@@ -56,12 +56,12 @@ public class WaitingState implements GameState {
     }
 
     @Override
-    public void checkCheckmate(Runnable runnable) {
+    public boolean hasWinner() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public boolean hasWinner() {
+    public boolean isChecked() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }
