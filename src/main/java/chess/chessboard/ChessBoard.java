@@ -16,25 +16,42 @@ public class ChessBoard {
     }
 
     public boolean executeTurnMove(final Square source, final Square destination) {
-        final Piece toMove = pieces.get(source);
-        validateNotEmpty(toMove);
+        validateNotEmpty(pieces.get(source));
 
-        if (turn.isTurnOf(toMove.getSide()) && move(source, destination)) {
+        if (isMovePieceSuccess(source, destination)) {
             turn = turn.nextTurn();
             return true;
         }
         return false;
     }
 
-    public boolean move(final Square source, final Square destination) {
-        final Piece toMove = pieces.get(source);
-        validateNotEmpty(toMove);
-        if (toMove.isMovable(source, destination, pieces.get(destination)) && !hasObstacleAlongPath(source, destination)) {
-            pieces.put(destination, toMove);
-            pieces.put(source, EmptyPiece.getInstance());
+    private boolean isMovePieceSuccess(final Square source, final Square destination) {
+        final Piece pieceToMove = pieces.get(source);
+
+        return turn.isTurnOf(pieceToMove) && movePiece(source, destination);
+    }
+
+    public boolean movePiece(final Square source, final Square destination) {
+        final Piece pieceToMove = pieces.get(source);
+        validateNotEmpty(pieceToMove);
+
+        if (isPieceMovable(source, destination)) {
+            movePiece(source, destination, pieceToMove);
             return true;
         }
         return false;
+    }
+
+    private boolean isPieceMovable(final Square source, final Square destination) {
+        final Piece pieceToMove = pieces.get(source);
+        final Piece pieceOfDestination = pieces.get(destination);
+
+        return pieceToMove.isMovable(source, destination, pieceOfDestination) && !hasObstacleAlongPath(source, destination);
+    }
+
+    private void movePiece(final Square source, final Square destination, final Piece pieceToMove) {
+        pieces.put(destination, pieceToMove);
+        pieces.put(source, EmptyPiece.getInstance());
     }
 
     private void validateNotEmpty(final Piece target) {

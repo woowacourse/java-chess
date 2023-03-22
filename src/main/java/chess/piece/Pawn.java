@@ -9,11 +9,11 @@ import java.util.List;
 
 public final class Pawn extends Piece {
     private static final int NUMBER_OF_PAWNS_EACH_SIDE = 8;
+    private static final Rank WHITE_PAWN_INITIAL_RANK = Rank.TWO;
+    private static final Rank BLACK_PAWN_INITIAL_RANK = Rank.SEVEN;
 
     private static final List<Pawn> blackPawns = new ArrayList<>();
     private static final List<Pawn> whitePawns = new ArrayList<>();
-    private static final Rank WHITE_PAWN_INITIAL_RANK = Rank.TWO;
-    private static final Rank BLACK_PAWN_INITIAL_RANK = Rank.SEVEN;
 
     static {
         addPawns(blackPawns, Side.BLACK);
@@ -38,26 +38,30 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square destination, final Piece piece) {
-        return canMoveForward(source, destination, piece) ||
-                isCatchable(source, destination, piece);
+    public boolean isMovable(final Square source, final Square destination, final Piece pieceAtDestination) {
+        return canMoveForward(source, destination, pieceAtDestination) ||
+                isCatchable(source, destination, pieceAtDestination);
     }
 
-    private boolean canMoveForward(final Square source, final Square destination, final Piece destinationState) {
-        boolean isTargetInMovableRange = isMovableRange(source, destination);
-        if (isAtInitialPosition(source)) {
-            isTargetInMovableRange = isInitialMovableRange(source, destination);
-        }
-        return destinationState.isEmpty() && isTargetInMovableRange;
+    private boolean canMoveForward(final Square source, final Square destination, final Piece pieceAtDestination) {
+        return pieceAtDestination.isEmpty() && isForwardMovableRange(source, destination);
     }
 
-    private boolean isInitialMovableRange(final Square source, final Square destination) {
+    private boolean isForwardMovableRange(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
+
         final int verticalDistance = source.calculateVerticalDistance(destination);
         final int horizontalDistance = source.calculateHorizontalDistance(destination);
+
         return source.isBackOf(destination, getSide()) &&
-                (verticalDistance == 1 || verticalDistance == 2) &&
-                horizontalDistance == 0;
+                isForwardMovableDistance(verticalDistance, horizontalDistance, source);
+    }
+
+    private boolean isForwardMovableDistance(final int verticalDistance, final int horizontalDistance, final Square sourceSquare) {
+        if (isAtInitialPosition(sourceSquare)) {
+            return horizontalDistance == 0 && (verticalDistance == 1 || verticalDistance == 2);
+        }
+        return horizontalDistance == 0 && verticalDistance == 1;
     }
 
     private boolean isAtInitialPosition(final Square square) {
@@ -67,24 +71,21 @@ public final class Pawn extends Piece {
         return square.isAtRank(BLACK_PAWN_INITIAL_RANK);
     }
 
-    private boolean isMovableRange(final Square source, final Square destination) {
-        source.validateNotSameSquare(destination);
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        return source.isBackOf(destination, getSide()) &&
-                verticalDistance == 1 &&
-                source.calculateHorizontalDistance(destination) == 0;
-    }
-
     private boolean isCatchable(final Square source, final Square destination, final Piece piece) {
         return isOppositeSide(piece) && isCatchableRange(source, destination);
     }
 
     private boolean isCatchableRange(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
+
         final int verticalDistance = source.calculateVerticalDistance(destination);
         final int horizontalDistance = source.calculateHorizontalDistance(destination);
+
         return source.isBackOf(destination, getSide()) &&
-                verticalDistance == 1 &&
-                horizontalDistance == 1;
+                isCatchableDistance(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isCatchableDistance(final int verticalDistance, final int horizontalDistance) {
+        return verticalDistance == 1 && horizontalDistance == 1;
     }
 }

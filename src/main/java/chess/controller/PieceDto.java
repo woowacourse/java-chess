@@ -14,6 +14,8 @@ public class PieceDto {
 
     public static PieceDto from(final Piece piece) {
         String type = ".";
+        final Side side = piece.getSide();
+
         if (piece instanceof Pawn) {
             type = "p";
         }
@@ -32,7 +34,7 @@ public class PieceDto {
         if (piece instanceof King) {
             type = "k";
         }
-        final Side side = piece.getSide();
+
         return new PieceDto(side.toString(), type);
     }
 

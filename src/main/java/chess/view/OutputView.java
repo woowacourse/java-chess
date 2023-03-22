@@ -22,34 +22,49 @@ public class OutputView {
 
     public void printChessBoard(ChessBoardDto chessBoardDto) {
         final List<List<PieceDto>> pieceDtos = chessBoardDto.getPieceDtos();
-        System.out.println();
+
+        printBlankLine();
         for (List<PieceDto> rank : pieceDtos) {
-            printRank(rank);
+            printOneRank(rank);
         }
     }
 
-    public void printInvalidMoveMessage() {
-        System.out.println("이동할 수 없습니다.");
-    }
-
-    private void printRank(final List<PieceDto> rank) {
+    private void printOneRank(final List<PieceDto> rank) {
         for (PieceDto piece : rank) {
             final String type = piece.getType();
             final String team = piece.getSide();
+
             printPiece(type, team);
         }
-        System.out.println();
+
+        printBlankLine();
     }
 
     private void printPiece(final String type, final String team) {
         printLetter(type, team);
     }
 
+    public void printInvalidMoveMessage() {
+        System.out.println("이동할 수 없습니다.");
+    }
+
     private void printLetter(final String letter, final String team) {
         if (Objects.equals(team, "BLACK")) {
-            System.out.print(letter.toUpperCase());
+            printBlackPiece(letter);
             return;
         }
+        printWhitePiece(letter);
+    }
+
+    private void printBlackPiece(final String letter) {
+        System.out.print(letter.toUpperCase());
+    }
+
+    private void printWhitePiece(final String letter) {
         System.out.print(letter.toLowerCase());
+    }
+
+    private void printBlankLine() {
+        System.out.println();
     }
 }

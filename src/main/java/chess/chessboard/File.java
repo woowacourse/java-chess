@@ -31,18 +31,26 @@ public enum File {
     public static List<File> filesBetween(final File source, final File destination) {
         final int smaller = Math.min(source.position, destination.position);
         final int bigger = Math.max(source.position, destination.position);
-        List<File> files = Arrays.stream(values())
-                                 .filter(file -> file.position > smaller && file.position < bigger)
-                                 .collect(Collectors.toList());
+
+        List<File> files = filesBetween(smaller, bigger);
 
         return sortByPosition(source, destination, files);
     }
 
+    private static List<File> filesBetween(final int smaller, final int bigger) {
+        return Arrays.stream(values())
+                     .filter(file -> file.position > smaller && file.position < bigger)
+                     .collect(Collectors.toList());
+    }
+
     private static List<File> sortByPosition(final File source, final File destination, final List<File> files) {
-        files.sort(Comparator.comparing(File::getPosition));
+        final Comparator<File> comparatorByPosition = Comparator.comparing(File::getPosition);
+
+        files.sort(comparatorByPosition);
         if (source.position > destination.position) {
             Collections.reverse(files);
         }
+
         return files;
     }
 

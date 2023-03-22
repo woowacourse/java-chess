@@ -3,11 +3,13 @@ package chess.controller;
 import java.util.List;
 
 public interface CommandDto {
-    public static CommandDto from(List<String> commandWithOptions) {
+    static CommandDto from(List<String> commandWithOptions) {
         validateLengthNotZero(commandWithOptions);
+
         if (commandWithOptions.size() == 1) {
             return new OptionLessCommandDto(commandWithOptions);
         }
+
         return MoveCommandDto.from(commandWithOptions);
     }
 

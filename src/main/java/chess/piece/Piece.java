@@ -11,25 +11,25 @@ public abstract class Piece {
         this.side = side;
     }
 
+    protected boolean isOppositeSide(final Piece piece) {
+        return isNotSameSide(piece) && !piece.isEmpty();
+    }
+
     protected boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;
     }
 
-    protected boolean isOppositeSide(final Piece piece) {
-        return this.side != piece.side && !piece.isEmpty();
-    }
-
     protected boolean isEmpty() {
-        return this.side == Side.NO_SIDE;
+        return this.side == Side.EMPTY;
     }
 
     abstract public boolean isMovable(Square source, Square to, Piece piece);
 
-    protected boolean isWhite() {
+    public boolean isWhite() {
         return side == Side.WHITE;
     }
 
-    protected boolean isBlack() {
+    public boolean isBlack() {
         return side == Side.BLACK;
     }
 

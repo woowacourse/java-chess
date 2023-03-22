@@ -40,13 +40,19 @@ public class Knight extends Piece {
         return isNotSameSide(piece) && isLShape(source, destination);
     }
 
-    private boolean isLShape(final Square source, final Square destination) {
-        source.validateNotSameSquare(destination);
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+    private static boolean isLShape(final int verticalDistance, final int horizontalDistance) {
         if (verticalDistance == 0 || horizontalDistance == 0) {
             return false;
         }
         return verticalDistance + horizontalDistance == ROUTE_LENGTH_OF_LSHAPE;
+    }
+
+    private boolean isLShape(final Square source, final Square destination) {
+        source.validateNotSameSquare(destination);
+
+        final int verticalDistance = source.calculateVerticalDistance(destination);
+        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+
+        return isLShape(verticalDistance, horizontalDistance);
     }
 }

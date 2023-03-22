@@ -19,29 +19,37 @@ public class ChessGameController {
     public void run() {
         ChessBoard chessBoard = startGame();
         GameStatus gameStatus = GameStatus.getInitialGameStatus();
+
         while (gameStatus.isPlaying()) {
             gameStatus = repeatUntilNoIAE(this::playTurn, chessBoard);
         }
     }
 
     private ChessBoard startGame() {
+        final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
+
         outputView.printInstructions();
-        return new ChessBoardFactory().generate();
+
+        return chessBoardFactory.generate();
     }
 
     private GameStatus playTurn(final ChessBoard chessBoard) {
         outputView.printChessBoard(ChessBoardDto.of(chessBoard));
+
         CommandDto commandDto = inputView.readCommand();
         GameStatus gamestatus = GameStatus.getNextStatus(commandDto.getCommand());
+
         if (gamestatus.isPlaying()) {
             movePiece(chessBoard, (MoveCommandDto) commandDto);
         }
+
         return gamestatus;
     }
 
     private void movePiece(final ChessBoard chessBoard, final MoveCommandDto moveCommandDto) {
         final Square source = getSourceSquare(moveCommandDto);
         final Square destination = getDestinationSquare(moveCommandDto);
+
         if (!chessBoard.executeTurnMove(source, destination)) {
             outputView.printInvalidMoveMessage();
         }
@@ -50,12 +58,14 @@ public class ChessGameController {
     private Square getSourceSquare(final MoveCommandDto moveCommandDto) {
         final Rank sourceRank = moveCommandDto.getSourceRank();
         final File sourceFile = moveCommandDto.getSourceFile();
+
         return Square.of(sourceRank, sourceFile);
     }
 
     private Square getDestinationSquare(final MoveCommandDto moveCommandDto) {
         final Rank destinationRank = moveCommandDto.getDestinationRank();
         final File destinationFile = moveCommandDto.getDestinationFile();
+
         return Square.of(destinationRank, destinationFile);
     }
 

@@ -32,15 +32,27 @@ public class Queen extends Piece {
 
     private boolean isDiagonal(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
+
         final int verticalDistance = source.calculateVerticalDistance(destination);
         final int horizontalDistance = source.calculateHorizontalDistance(destination);
+
+        return isDiagonal(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isDiagonal(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == horizontalDistance;
     }
 
     private boolean isLine(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
+
         final int verticalDistance = source.calculateVerticalDistance(destination);
         final int horizontalDistance = source.calculateHorizontalDistance(destination);
+
+        return isLine(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isLine(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == 0 || horizontalDistance == 0;
     }
 }

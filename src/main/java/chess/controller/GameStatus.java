@@ -19,6 +19,7 @@ public enum GameStatus {
 
     public static GameStatus getNextStatus(String code) {
         validateCodeExistence(code);
+
         if (Objects.equals(PLAYING.code, code)) {
             return PLAYING;
         }
@@ -29,7 +30,6 @@ public enum GameStatus {
         if (isCodeNotExist(code)) {
             throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
-
     }
 
     private static boolean isCodeNotExist(final String code) {

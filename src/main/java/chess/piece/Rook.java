@@ -40,8 +40,13 @@ public class Rook extends Piece {
 
     private boolean isLine(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
+
         final int verticalDistance = source.calculateVerticalDistance(destination);
         final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        return isLine(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isLine(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == 0 || horizontalDistance == 0;
     }
 }

@@ -27,8 +27,8 @@ public class SquareTest {
             @DisplayName("해당 위치의 Square를 반환한다")
             void it_returns_square() {
                 Square square = Square.of(rank, file);
-                assertThat(square.getRank()).isEqualTo(1);
-                assertThat(square.getFile()).isEqualTo(file);
+                assertThat(square.getRank()).isEqualTo(Rank.ONE);
+                assertThat(square.getFile()).isEqualTo(File.A);
             }
         }
     }

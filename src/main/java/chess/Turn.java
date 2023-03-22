@@ -1,6 +1,7 @@
 package chess;
 
 import chess.chessboard.Side;
+import chess.piece.Piece;
 
 public abstract class Turn {
 
@@ -16,5 +17,5 @@ public abstract class Turn {
 
     public abstract Turn nextTurn();
 
-    public abstract boolean isTurnOf(final Side side);
+    public abstract boolean isTurnOf(final Piece side);
 }

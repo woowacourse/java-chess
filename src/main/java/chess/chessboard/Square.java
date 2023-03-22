@@ -23,12 +23,6 @@ public class Square {
         return Objects.hash(rank, file);
     }
 
-    public void validateNotSameSquare(final Square other) {
-        if (this == other) {
-            throw new IllegalArgumentException("같은 위치의 square입니다");
-        }
-    }
-
     public boolean isBackOf(final Square other, final Side side) {
         if (side == Side.WHITE) {
             return other.rank.isBiggerThan(this.rank);
@@ -48,20 +42,28 @@ public class Square {
 
     private boolean isLine(final Square other) {
         validateNotSameSquare(other);
+
         return this.rank == other.rank || this.file == other.file;
     }
 
     private boolean isDiagonal(final Square other) {
         validateNotSameSquare(other);
+
         final int verticalDistance = this.rank.distanceTo(other.rank);
         final int horizontalDistance = this.file.distanceTo(other.file);
+
         return verticalDistance == horizontalDistance;
     }
 
-    private List<Square> squaresOfLine(final Square otherSquare) {
-        if (!isLine(otherSquare)) {
-            throw new IllegalArgumentException("직선이 아닙니다");
+    public void validateNotSameSquare(final Square other) {
+        if (this == other) {
+            throw new IllegalArgumentException("같은 위치의 square입니다");
         }
+    }
+
+    private List<Square> squaresOfLine(final Square otherSquare) {
+        assert isLine(otherSquare);
+
         if (otherSquare.rank == this.rank) {
             return squaresOfRank(otherSquare);
         }
@@ -83,15 +85,17 @@ public class Square {
     }
 
     private List<Square> squaresOfDiagonal(final Square otherSquare) {
-        if (!isDiagonal(otherSquare)) {
-            throw new IllegalArgumentException("대각선이 아닙니다");
-        }
-        List<Rank> ranks = Rank.ranksBetween(this.rank, otherSquare.rank);
-        List<File> files = File.filesBetween(this.file, otherSquare.file);
-        List<Square> squares = new ArrayList<>();
+        assert isDiagonal(otherSquare);
+
+        final List<Rank> ranks = Rank.ranksBetween(this.rank, otherSquare.rank);
+        final List<File> files = File.filesBetween(this.file, otherSquare.file);
+        final List<Square> squares = new ArrayList<>();
+
         for (int i = 0; i < ranks.size(); i++) {
-            squares.add(Square.of(ranks.get(i), files.get(i)));
+            final Square nextSquare = Square.of(ranks.get(i), files.get(i));
+            squares.add(nextSquare);
         }
+
         return squares;
     }
 
@@ -107,8 +111,8 @@ public class Square {
         return this.rank == rank;
     }
 
-    public int getRank() {
-        return rank.getPosition();
+    public Rank getRank() {
+        return rank;
     }
 
     public File getFile() {

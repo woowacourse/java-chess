@@ -149,7 +149,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
@@ -163,7 +163,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
@@ -176,7 +176,7 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
@@ -189,8 +189,8 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
-                assertThat(chessBoard.move(source, Square.of(Rank.SIX, File.C))).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, Square.of(Rank.SIX, File.C))).isFalse();
             }
         }
 
@@ -207,7 +207,7 @@ class ChessBoardTest {
                                          .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
@@ -221,7 +221,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어있다면 true를 반환한다")
@@ -234,9 +234,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                chessBoard.movePiece(destination, source);
+                assertThat(chessBoard.movePiece(source, Square.of(Rank.FIVE, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -249,7 +249,7 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
         }
 
@@ -266,7 +266,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
@@ -280,7 +280,7 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -293,9 +293,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.SEVEN, File.D))).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                chessBoard.movePiece(destination, source);
+                assertThat(chessBoard.movePiece(source, Square.of(Rank.SEVEN, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -308,7 +308,7 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
         }
 
@@ -325,9 +325,9 @@ class ChessBoardTest {
                                          .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isTrue();
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                chessBoard.movePiece(destination, source);
+                assertThat(chessBoard.movePiece(source, Square.of(Rank.FIVE, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -340,7 +340,7 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
         }
 
@@ -359,9 +359,9 @@ class ChessBoardTest {
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isTrue();
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
+                chessBoard.movePiece(destination1, source);
+                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
@@ -377,8 +377,8 @@ class ChessBoardTest {
                 pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isFalse();
-                assertThat(chessBoard.move(source, destination2)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination1)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination2)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -391,9 +391,9 @@ class ChessBoardTest {
                 pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isTrue();
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
+                chessBoard.movePiece(destination1, source);
+                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -407,8 +407,8 @@ class ChessBoardTest {
                 pieces.put(destination2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isFalse();
-                assertThat(chessBoard.move(source, destination2)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination1)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination2)).isFalse();
             }
         }
 
@@ -426,9 +426,9 @@ class ChessBoardTest {
                 pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isTrue();
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isTrue();
+                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
+                chessBoard.movePiece(destination1, source);
+                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -440,7 +440,7 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.movePiece(source, destination)).isFalse();
             }
         }
 

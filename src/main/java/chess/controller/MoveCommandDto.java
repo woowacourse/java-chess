@@ -4,6 +4,7 @@ import chess.chessboard.File;
 import chess.chessboard.Rank;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MoveCommandDto implements CommandDto {
 
@@ -16,15 +17,21 @@ public class MoveCommandDto implements CommandDto {
     }
 
     public static CommandDto from(final List<String> commandWithOptions) {
+        final String command = commandWithOptions.get(0);
+        validateCommandIsMove(command);
+
         final int optionBeginIndex = 1;
         final int optionEndIndex = commandWithOptions.size();
+
         final List<String> options = commandWithOptions.subList(optionBeginIndex, optionEndIndex);
+
         return new MoveCommandDto(options);
     }
 
-    @Override
-    public String getCommand() {
-        return COMMAND;
+    private static void validateCommandIsMove(final String command) {
+        if (!Objects.equals(command, COMMAND)) {
+            throw new IllegalArgumentException("잘못된 명령어입니다.");
+        }
     }
 
     public File getSourceFile() {
@@ -53,5 +60,10 @@ public class MoveCommandDto implements CommandDto {
 
     private String getDestinationSquare() {
         return options.get(1);
+    }
+
+    @Override
+    public String getCommand() {
+        return COMMAND;
     }
 }

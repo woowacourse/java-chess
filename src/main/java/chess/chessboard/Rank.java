@@ -32,17 +32,26 @@ public enum Rank {
     public static List<Rank> ranksBetween(final Rank source, final Rank destination) {
         final int smaller = Math.min(source.position, destination.position);
         final int bigger = Math.max(source.position, destination.position);
-        List<Rank> ranks = Arrays.stream(values())
-                                 .filter(rank -> rank.position > smaller && rank.position < bigger)
-                                 .collect(Collectors.toList());
+
+        List<Rank> ranks = ranksBetween(smaller, bigger);
+
         return sortByPosition(source, destination, ranks);
     }
 
+    private static List<Rank> ranksBetween(final int smaller, final int bigger) {
+        return Arrays.stream(values())
+                     .filter(rank -> rank.position > smaller && rank.position < bigger)
+                     .collect(Collectors.toList());
+    }
+
     private static List<Rank> sortByPosition(final Rank source, final Rank destination, final List<Rank> ranks) {
-        ranks.sort(Comparator.comparing(Rank::getPosition));
+        final Comparator<Rank> comparatorByPosition = Comparator.comparing(Rank::getPosition);
+
+        ranks.sort(comparatorByPosition);
         if (source.position > destination.position) {
             Collections.reverse(ranks);
         }
+
         return ranks;
     }
 
