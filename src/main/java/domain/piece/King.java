@@ -4,10 +4,11 @@ import domain.position.Direction;
 import domain.position.Position;
 
 import java.util.List;
+import java.util.Set;
 
 public final class King extends Piece {
 
-    public static final List<Direction> KING_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
+    public static final Set<Direction> KING_MOVABLE_DIRECTIONS = Set.of(Direction.CROSS, Direction.DIAGONAL);
 
     public King(Color color) {
         super(PieceName.KING, color);
