@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.game.Turn;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
@@ -39,5 +40,18 @@ public class Board {
 
     public List<Position> findMovablePositions(final Position source) {
         return getPiece(source).findMovablePositions(source, this);
+    }
+
+    public boolean isRightTurn(final Position source, final Turn turn) {
+        final Piece piece = board.get(source);
+        return isWhite(turn, piece) || isBlack(turn, piece);
+    }
+
+    private static boolean isBlack(final Turn turn, final Piece piece) {
+        return piece.isBlack() && !turn.isWhite();
+    }
+
+    private static boolean isWhite(final Turn turn, final Piece piece) {
+        return piece.isWhite() && turn.isWhite();
     }
 }

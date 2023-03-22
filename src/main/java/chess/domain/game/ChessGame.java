@@ -7,11 +7,13 @@ import java.util.List;
 public class ChessGame {
 
     private State state;
+    private Turn turn;
     private final Board board;
 
     public ChessGame(final Board board) {
         this.state = State.RUN;
         this.board = board;
+        this.turn = Turn.WHITE;
     }
 
     public void start() {
@@ -24,9 +26,17 @@ public class ChessGame {
 
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
+        checkTurn(source);
         final List<Position> movablePositions = board.findMovablePositions(source);
         checkMovable(movablePositions, target);
         board.move(source, target);
+        changeTurn();
+    }
+
+    private void checkTurn(final Position source) {
+        if (!board.isRightTurn(source, turn)) {
+            throw new IllegalArgumentException("잘못된 차례입니다.");
+        }
     }
 
     private void checkPlayable() {
@@ -40,6 +50,10 @@ public class ChessGame {
         if (!movablePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
+    }
+
+    private void changeTurn() {
+        turn = turn.changeTurn();
     }
 
     public boolean isRunnable() {

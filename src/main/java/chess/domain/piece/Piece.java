@@ -37,6 +37,14 @@ public abstract class Piece {
 
     public abstract List<Position> findMovablePositions(final Position source, final Board board);
 
+    public boolean isWhite() {
+        return side.isWhite();
+    }
+
+    public boolean isBlack() {
+        return side.isBlack();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
