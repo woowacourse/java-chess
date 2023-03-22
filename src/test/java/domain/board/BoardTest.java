@@ -451,4 +451,29 @@ class BoardTest {
         //then
         assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E5")));
     }
+
+    @DisplayName("존재하지 않는 장소에 말을 두려는 경우 예외가 발생한다.")
+    @Test
+    void notExistToExistMove() {
+        //given
+        final Queen queen = TestFixture.BLACK_QUEEN;
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> Board.create(testStrategy(Map.of(Positions.from("D0"), queen))));
+    }
+
+    @DisplayName("존재하는 장소에서 존재하지 않는 장소로 가는 경우 예외가 발생한다.")
+    @Test
+    void existToNotExistMove() {
+        //given
+        final Queen queen = TestFixture.BLACK_QUEEN;
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)));
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("Z4")));
+    }
 }

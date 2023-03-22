@@ -8,8 +8,7 @@ public enum File {
     E("E"),
     F("F"),
     G("G"),
-    H("H"),
-    NOTHING("");
+    H("H");
 
     private final String name;
 

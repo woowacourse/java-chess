@@ -8,10 +8,9 @@ public enum Rank {
     FOUR("4"),
     THREE("3"),
     TWO("2"),
-    ONE("1"),
-    NOTHING("");
+    ONE("1");
 
-    private String name;
+    private final String name;
 
     Rank(final String name) {
         this.name = name;

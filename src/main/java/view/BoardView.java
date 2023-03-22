@@ -15,7 +15,6 @@ public final class BoardView {
 
     public void printBoard(Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
-                .filter(rank -> !Rank.NOTHING.equals(rank))
                 .map(rank -> makeAnRankView(board, rank))
                 .forEach(System.out::println);
         System.out.println();
@@ -23,7 +22,6 @@ public final class BoardView {
 
     private String makeAnRankView(final Map<Position, Piece> board, final Rank rank) {
         return Arrays.stream(File.values())
-                .filter(file -> !File.NOTHING.equals(file))
                 .map(file -> file.getName() + rank.getName())
                 .map(position -> makePieceView(board, Positions.from(position)))
                 .collect(Collectors.joining());

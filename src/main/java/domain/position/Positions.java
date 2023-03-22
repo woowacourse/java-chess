@@ -34,7 +34,7 @@ public final class Positions {
             return positions.get(position.toUpperCase());
         }
 
-        return new Position(File.NOTHING, Rank.NOTHING);
+        throw new IllegalArgumentException("존재하지 않는 영역입니다.");
     }
 
     public static List<Position> between(final Position source, final Position destination) {
