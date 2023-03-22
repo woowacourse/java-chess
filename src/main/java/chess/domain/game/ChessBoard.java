@@ -5,7 +5,7 @@ import chess.domain.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.practiceMove.Direction;
+import chess.direction.Direction;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,12 +1,16 @@
 package chess.domain;
 
-import chess.practiceMove.Direction;
+import chess.direction.Direction;
 
 import java.util.Objects;
 
 public class Position {
     private final Rank rank;
     private final Column column;
+
+    public Position(String column, String rank) {
+        this(Column.findColumnByValue(column), Rank.findRankByValue(rank));
+    }
 
     public Position(Column column, Rank rank) {
         this.column = column;
@@ -50,7 +54,7 @@ public class Position {
         return Objects.hash(rank, column);
     }
 
-    public boolean isSameColumn (Column column){
+    public boolean isSameColumn(Column column) {
         return this.column.equals(column);
     }
 }

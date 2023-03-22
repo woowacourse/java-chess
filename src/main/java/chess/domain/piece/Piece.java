@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
+import chess.direction.Direction;
 
 public abstract class Piece {
 

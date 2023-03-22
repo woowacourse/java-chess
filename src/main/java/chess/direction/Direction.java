@@ -1,4 +1,4 @@
-package chess.practiceMove;
+package chess.direction;
 
 import chess.domain.Position;
 import chess.domain.piece.Knight;
