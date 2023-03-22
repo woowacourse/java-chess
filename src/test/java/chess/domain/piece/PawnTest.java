@@ -3,8 +3,10 @@ package chess.domain.piece;
 import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.PositionFixture.A5;
@@ -42,9 +43,10 @@ class PawnTest {
         void get_passing_path_form_initial_2_moving_test() {
             final Piece pawn = new Pawn(B7, Color.BLACK);
 
-            final List<Position> path = pawn.getPassingPositions(B5);
+            final Path path = pawn.getPassingPositions(B5);
 
-            assertThat(path).containsExactly(B6);
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .containsExactly(B6);
         }
 
         @Test
@@ -52,9 +54,10 @@ class PawnTest {
         void get_passing_path_from_non_initial_1_moving_test() {
             final Piece pawn = new Pawn(B6, Color.BLACK);
 
-            final List<Position> path = pawn.getPassingPositions(B5);
+            final Path path = pawn.getPassingPositions(B5);
 
-            assertThat(path).isEmpty();
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .isEmpty();
         }
 
         @Test
@@ -62,9 +65,10 @@ class PawnTest {
         void get_passing_path_non_initial_diagonal_1_moving_test() {
             final Piece pawn = new Pawn(B6, Color.BLACK);
 
-            final List<Position> path = pawn.getPassingPositions(C5);
+            final Path path = pawn.getPassingPositions(C5);
 
-            assertThat(path).isEmpty();
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .isEmpty();
         }
 
         @ParameterizedTest
@@ -99,9 +103,10 @@ class PawnTest {
         void get_passing_path_form_initial_2_moving_test() {
             final Piece pawn = new Pawn(B2, Color.WHITE);
 
-            final List<Position> path = pawn.getPassingPositions(B4);
+            final Path path = pawn.getPassingPositions(B4);
 
-            assertThat(path).containsExactly(B3);
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .containsExactly(B3);
         }
 
         @Test
@@ -109,9 +114,10 @@ class PawnTest {
         void get_passing_path_from_non_initial_1_moving_test() {
             final Piece pawn = new Pawn(B3, Color.WHITE);
 
-            final List<Position> path = pawn.getPassingPositions(B4);
+            final Path path = pawn.getPassingPositions(B4);
 
-            assertThat(path).isEmpty();
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .isEmpty();
         }
 
         @Test
@@ -119,9 +125,10 @@ class PawnTest {
         void get_passing_path_non_initial_diagonal_1_moving_test() {
             final Piece pawn = new Pawn(B3, Color.WHITE);
 
-            final List<Position> path = pawn.getPassingPositions(C4);
+            final Path path = pawn.getPassingPositions(C4);
 
-            assertThat(path).isEmpty();
+            assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                    .isEmpty();
         }
 
         @ParameterizedTest

@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BlankPiece extends Piece {
@@ -32,7 +32,7 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    public List<Position> getPassingPositions(final Position targetPosition) {
+    public Path getPassingPositions(final Position targetPosition) {
         throw new IllegalStateException(ExceptionCode.ACCESS_BLANK_PIECE.name());
     }
 }

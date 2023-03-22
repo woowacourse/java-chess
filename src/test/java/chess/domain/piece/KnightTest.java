@@ -3,8 +3,10 @@ package chess.domain.piece;
 import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.PositionFixture.B8;
@@ -31,9 +32,10 @@ class KnightTest {
     void get_passing_path_test(final File file, final Rank rank) {
         final Piece knight = new Knight(B8, Color.BLACK);
 
-        final List<Position> path = knight.getPassingPositions(Position.of(file, rank));
+        final Path path = knight.getPassingPositions(Position.of(file, rank));
 
-        assertThat(path).isEmpty();
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                .isEmpty();
     }
 
 

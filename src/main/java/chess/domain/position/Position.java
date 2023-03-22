@@ -1,8 +1,6 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,11 +29,11 @@ public class Position {
         return isInVerticalPosition(otherPosition) || isInHorizontalPosition(otherPosition);
     }
 
-    private boolean isInHorizontalPosition(final Position otherPosition) {
+    public boolean isInHorizontalPosition(final Position otherPosition) {
         return this.rank == otherPosition.rank && !this.equals(otherPosition);
     }
 
-    private boolean isInVerticalPosition(final Position otherPosition) {
+    public boolean isInVerticalPosition(final Position otherPosition) {
         return this.file == otherPosition.file && !this.equals(otherPosition);
     }
 
@@ -53,45 +51,6 @@ public class Position {
 
     public int calculateManhattanDistance(final Position otherPosition) {
         return calculateFileDistance(otherPosition) + calculateRankDistance(otherPosition);
-    }
-
-    public List<Position> findPassingPositions(final Position otherPosition) {
-        if (isInHorizontalPosition(otherPosition)) {
-            return findHorizontalPassingPositions(otherPosition);
-        }
-        if (isInVerticalPosition(otherPosition)) {
-            return findVerticalPassingPositions(otherPosition);
-        }
-        if (isInDiagonalPosition(otherPosition)) {
-            return findDiagonalPassingPositions(otherPosition);
-        }
-        return List.of();
-    }
-
-    private List<Position> findDiagonalPassingPositions(final Position otherPosition) {
-        final List<File> files = this.file.getFilesTo(otherPosition.file);
-        final List<Rank> ranks = this.rank.getRanksTo(otherPosition.rank);
-        List<Position> passingPositions = new ArrayList<>();
-        for (int index = 0; index < files.size(); index++) {
-            passingPositions.add(Position.of(files.get(index), ranks.get(index)));
-        }
-        return passingPositions;
-    }
-
-    private List<Position> findVerticalPassingPositions(final Position otherPosition) {
-        List<Position> passingPositions = new ArrayList<>();
-        for (Rank rank : this.rank.getRanksTo(otherPosition.rank)) {
-            passingPositions.add(Position.of(this.file, rank));
-        }
-        return passingPositions;
-    }
-
-    private List<Position> findHorizontalPassingPositions(final Position otherPosition) {
-        List<Position> passingPositions = new ArrayList<>();
-        for (File file : this.file.getFilesTo(otherPosition.file)) {
-            passingPositions.add(Position.of(file, this.rank));
-        }
-        return passingPositions;
     }
 
     public boolean isUpperRankThan(final Position otherPosition) {

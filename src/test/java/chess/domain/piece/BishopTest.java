@@ -3,8 +3,10 @@ package chess.domain.piece;
 import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.PositionFixture.C8;
@@ -33,9 +34,10 @@ class BishopTest {
     void get_passing_path_test() {
         final Piece bishop = new Bishop(C8, Color.BLACK);
 
-        final List<Position> path = bishop.getPassingPositions(F5);
+        final Path path = bishop.getPassingPositions(F5);
 
-        assertThat(path).containsExactly(D7, E6);
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                .containsExactly(D7, E6);
     }
 
 

@@ -5,9 +5,9 @@ import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class Board {
 
     public void move(final Position currentPosition, final Position targetPosition) {
         final Piece pieceToMove = findPieceOrElseThrowIn(currentPosition);
-        final List<Position> passingPositions = pieceToMove.getPassingPositions(targetPosition);
+        final Path passingPositions = pieceToMove.getPassingPositions(targetPosition);
 
         validatePieceExistenceIn(passingPositions);
 
@@ -43,7 +43,7 @@ public class Board {
                 .findAny();
     }
 
-    private void validatePieceExistenceIn(final List<Position> passingPositions) {
+    private void validatePieceExistenceIn(final Path passingPositions) {
         final boolean isBlocked = existingPieces.stream()
                 .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
         if (isBlocked) {

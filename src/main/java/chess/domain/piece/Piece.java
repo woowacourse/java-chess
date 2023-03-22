@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -43,7 +43,7 @@ public abstract class Piece {
         }
     }
 
-    public abstract List<Position> getPassingPositions(final Position targetPosition);
+    public abstract Path getPassingPositions(final Position targetPosition);
 
     public final Color getColor() {
         return color;

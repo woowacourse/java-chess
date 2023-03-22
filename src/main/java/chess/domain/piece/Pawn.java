@@ -3,9 +3,8 @@ package chess.domain.piece;
 import chess.constant.ExceptionCode;
 import chess.domain.piece.maker.InitialRankCondition;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
-
-import java.util.List;
 
 import static chess.domain.position.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
 import static chess.domain.position.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
@@ -66,9 +65,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> getPassingPositions(final Position targetPosition) {
+    public Path getPassingPositions(final Position targetPosition) {
         validateSamePosition(targetPosition);
         validateDestination(targetPosition);
-        return position.findPassingPositions(targetPosition);
+        return Path.of(position, targetPosition);
     }
 }

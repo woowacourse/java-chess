@@ -3,26 +3,10 @@ package chess.domain.position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
-import java.util.stream.Stream;
-
-import static chess.PositionFixture.B4;
-import static chess.PositionFixture.B7;
-import static chess.PositionFixture.C4;
-import static chess.PositionFixture.C6;
-import static chess.PositionFixture.D4;
 import static chess.PositionFixture.D5;
-import static chess.PositionFixture.E2;
-import static chess.PositionFixture.E3;
 import static chess.PositionFixture.E4;
-import static chess.PositionFixture.F3;
-import static chess.PositionFixture.F5;
-import static chess.PositionFixture.G2;
-import static chess.PositionFixture.H1;
 import static chess.domain.position.File.A;
 import static chess.domain.position.File.D;
 import static chess.domain.position.Rank.ONE;
@@ -68,25 +52,6 @@ class PositionTest {
         final int actualDistance = E4.calculateManhattanDistance(otherPosition);
 
         assertThat(actualDistance).isEqualTo(expectedDistance);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideOtherPositionAndExpectedPassingPositions")
-    @DisplayName("입력 받은 위치로 가는 경로에 있는 위치들을 반환한다")
-    void find_passing_position_test(final Position otherPosition, final List<Position> expectedPassingPositions) {
-        final List<Position> actualPassingPositions = E4.findPassingPositions(otherPosition);
-
-        assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
-    }
-
-    private static Stream<Arguments> provideOtherPositionAndExpectedPassingPositions() {
-        return Stream.of(
-                Arguments.of(B4, List.of(D4, C4)),
-                Arguments.of(E2, List.of(E3)),
-                Arguments.of(F5, List.of()),
-                Arguments.of(H1, List.of(F3, G2)),
-                Arguments.of(B7, List.of(D5, C6))
-        );
     }
 
     @ParameterizedTest

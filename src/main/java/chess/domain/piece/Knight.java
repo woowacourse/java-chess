@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
-
-import java.util.List;
 
 public class Knight extends Piece {
 
     private static final int MOVABLE_MANHATTAN_DISTANCE = 3;
-    private static final List<Position> PASSING_POSITIONS_WITH_LEAPING = List.of();
 
     public Knight(final Position position, final Color color) {
         super(position, color);
@@ -29,9 +27,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> getPassingPositions(final Position targetPosition) {
+    public Path getPassingPositions(final Position targetPosition) {
         validateSamePosition(targetPosition);
         validateDestination(targetPosition);
-        return PASSING_POSITIONS_WITH_LEAPING;
+        return Path.emptyPath();
     }
 }

@@ -2,8 +2,10 @@ package chess.domain.piece;
 
 import chess.constant.ExceptionCode;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static chess.PositionFixture.E7;
@@ -28,9 +29,10 @@ class KingTest {
     void get_passing_path_test() {
         final Piece king = new King(E8, BLACK);
 
-        final List<Position> path = king.getPassingPositions(E7);
+        final Path path = king.getPassingPositions(E7);
 
-        assertThat(path).isEmpty();
+        assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class))
+                .isEmpty();
     }
 
     @ParameterizedTest

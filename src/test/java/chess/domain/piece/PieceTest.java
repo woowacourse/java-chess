@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
 
 import static chess.PositionFixture.A1;
 import static chess.PositionFixture.C8;
@@ -34,7 +33,7 @@ class PieceTest {
         }
 
         @Override
-        public List<Position> getPassingPositions(final Position targetPosition) {
+        public Path getPassingPositions(final Position targetPosition) {
             return null;
         }
 
