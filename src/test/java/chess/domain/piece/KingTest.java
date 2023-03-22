@@ -15,8 +15,8 @@ class KingTest {
 	@DisplayName("킹은 팀과 관계 없이 모든 방향으로 1칸 이동할 수 있다.")
 	@CsvSource({"0,1","1,1","1,0","1,-1","0,-1","-1,-1","-1,0","-1,1"})
 	void kingCanMoveEveryDirectionTest(int x, int y) {
-		King whiteKing = new King(Team.WHITE);
-		King blackKing = new King(Team.BLACK);
+		King whiteKing = King.from(Team.WHITE);
+		King blackKing = King.from(Team.BLACK);
 		RelativePosition relativePosition = new RelativePosition(x, y);
 
 		assertTrue(whiteKing.isMobile(relativePosition));
@@ -28,8 +28,8 @@ class KingTest {
 	@CsvSource({"0,1","1,1","1,0","1,-1","0,-1","-1,-1","-1,0","-1,1"})
 	void kingCannotMoveMoreThan1Test(int x, int y) {
 		int multiplier = 2;
-		King whiteKing = new King(Team.WHITE);
-		King blackKing = new King(Team.BLACK);
+		King whiteKing = King.from(Team.WHITE);
+		King blackKing = King.from(Team.BLACK);
 		RelativePosition relativePosition = new RelativePosition(multiplier * x, multiplier * y);
 
 		assertFalse(whiteKing.isMobile(relativePosition));

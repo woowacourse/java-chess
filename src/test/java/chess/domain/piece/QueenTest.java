@@ -14,8 +14,8 @@ class QueenTest {
     @Nested
     @DisplayName("퀸은 팀과 관계 없이 모든 방향으로 ")
     class QueenMove {
-        private final Queen whiteQueen = new Queen(Team.WHITE);
-        private final Queen blackQueen = new Queen(Team.BLACK);
+        private final Queen whiteQueen = Queen.from(Team.WHITE);
+        private final Queen blackQueen = Queen.from(Team.BLACK);
 
         @ParameterizedTest
         @DisplayName("1칸 이동할 수 있다.")

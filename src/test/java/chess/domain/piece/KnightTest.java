@@ -14,8 +14,8 @@ class KnightTest {
 	@DisplayName("나이트는 팀과 관계 없이 모든 방향의 L자 모양으로 이동할 수 있다.")
 	@CsvSource({"1,2","2,1","2,-1","1,-2","-1,-2","-2,-1","-2,1","-1,2"})
 	void knightCanMoveEveryDirectionTest(int x, int y) {
-		Knight whiteKnight = new Knight(Team.WHITE);
-		Knight blackKnight = new Knight(Team.BLACK);
+		Knight whiteKnight = Knight.from(Team.WHITE);
+		Knight blackKnight = Knight.from(Team.BLACK);
 		RelativePosition relativePosition = new RelativePosition(x, y);
 
 		assertTrue(whiteKnight.isMobile(relativePosition));
