@@ -70,6 +70,7 @@ public class OutputView {
     }
 
     public static void printTurn(Team team) {
+        System.out.println();
         System.out.println(getTeamName(team) + " 팀의 차례입니다.");
     }
 
@@ -83,7 +84,7 @@ public class OutputView {
         throw new IllegalArgumentException("[ERROR] 해당 팀은 이름이 없습니다.");
     }
 
-    public static void printChecked(Team team) {
-        System.out.println(getTeamName(team) + " 팀은 현재 체크 상태 입니다.");
+    public static void printWinner(Team winner) {
+        System.out.println(getTeamName(winner) + " 팀이 체크메이트로 승리했습니다.");
     }
 }

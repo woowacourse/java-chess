@@ -46,7 +46,7 @@ class BoardTest {
         // expect
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 경로에 말이 있습니다.");
+                .hasMessage("[ERROR] 해당 목적지로 이동할 수 없습니다.");
     }
 
     @Test
@@ -65,6 +65,26 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 목적지로 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("폰을 움직일 때 바로 위에 상대 말이 없으면 움직일 수 있다.")
+    void move_Pawn_Forward_Success() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        Position source = Position.of(3, 3);
+        Position target = Position.of(3, 4);
+
+        // when
+        board.move(source, target);
+
+        // expect
+        assertThat(squares)
+                .containsEntry(target, Pawn.of(Team.WHITE))
+                .containsEntry(source, Empty.INSTANCE);
     }
 
     @ParameterizedTest
@@ -133,12 +153,12 @@ class BoardTest {
         Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
-        Position target = Position.of(4, 4);
+        Position target = Position.of(3, 4);
 
         // expect
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 목적지로 이동할 수 없습니다.");
+                .hasMessage("[ERROR] 목적지에 아군 말이 존재합니다.");
     }
     
     @Test
@@ -200,7 +220,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("나의 턴이 끝나면 상대방의 턴이어야 한다.")
+    @DisplayName("턴을 바꾸면 상대방의 턴으로 넘어가야 한다.")
     void move_Next_Turn() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
@@ -208,13 +228,13 @@ class BoardTest {
         squares.put(Position.of(2, 1), Pawn.of(Team.WHITE));
         squares.put(Position.of(2, 5), Pawn.of(Team.BLACK));
 
+        // when
         Position source = Position.of(2, 1);
         Position target = Position.of(2, 3);
-        board.move(source, target);
-        Position nextTarget = Position.of(2, 4);
+        board.changeTurn();
 
         // expect
-        assertThatThrownBy(() -> board.move(target, nextTarget))
+        assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
     }
@@ -269,5 +289,92 @@ class BoardTest {
         // then
         assertThat(whiteScore)
                 .isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("킹이 도망칠 수 없으면 체크메이트여야 한다.")
+    void isCheckmate_Success() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // expect
+        assertThat(board.isCheckmate())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 적의 폰의 공격 범위에 있으면 체크여야 한다.")
+    void isChecked_Pawn() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Pawn.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // expect
+        assertThat(board.isChecked())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 적의 폰의 이동 범위에 있으면 체크가 아니여야 한다.")
+    void isChecked_PawnMovePosition() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(4, 6), Pawn.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // expect
+        assertThat(board.isChecked())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("킹이 적의 나이트 이동 범위에 있으면 체크여야 한다.")
+    void isChecked_KnightMovePosition() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(3, 5), Knight.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // expect
+        assertThat(board.isChecked())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 도망칠 수 있으면 체크메이트가 아니여야 한다.")
+    void isCheckmate_KingCanEscape() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
+        Board board = new Board(squares, Team.WHITE);
+
+        // expect
+        assertThat(board.isCheckmate())
+                .isFalse();
     }
 }

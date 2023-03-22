@@ -1,17 +1,24 @@
 package chess.game.state;
 
 import chess.domain.Team;
-import chess.dto.SquareResponse;
-import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-public class EndState implements GameState {
-    private static final String END_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)";
-    public static final GameState STATE = new EndState();
+public abstract class EndState implements GameState {
+    protected static final String END_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)";
+    private static final String INVALID_TEAM_EXCEPTION_MESSAGE = "[ERROR] 해당 팀에 대한 조건이 없습니다.";
 
-    private EndState() {
+    public static EndState createWinState(Team team) {
+        if (team == Team.WHITE) {
+            return WhiteWinState.STATE;
+        }
+        if (team == Team.BLACK) {
+            return BlackWinState.STATE;
+        }
+        throw new IllegalArgumentException(INVALID_TEAM_EXCEPTION_MESSAGE);
+    }
+
+    protected EndState() {
     }
 
     @Override
@@ -30,11 +37,6 @@ public class EndState implements GameState {
     }
 
     @Override
-    public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
-        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
-    }
-
-    @Override
     public double getTeamScore(DoubleSupplier doubleSupplier) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
@@ -45,7 +47,12 @@ public class EndState implements GameState {
     }
 
     @Override
-    public boolean isChecked(BooleanSupplier supplier) {
+    public void changeTurn(Runnable runnable) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public void checkCheckmate(Runnable runnable) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
 }

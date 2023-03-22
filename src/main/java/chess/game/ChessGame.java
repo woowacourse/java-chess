@@ -9,6 +9,7 @@ import chess.domain.Team;
 import chess.dto.SquareResponse;
 import chess.game.state.EndState;
 import chess.game.state.GameState;
+import chess.game.state.NoneWinState;
 import chess.game.state.RunningState;
 import chess.game.state.WaitingState;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ChessGame {
     }
 
     public void end() {
-        this.gameState = EndState.STATE;
+        this.gameState = NoneWinState.STATE;
     }
 
     public boolean isEnd() {
@@ -38,6 +39,15 @@ public class ChessGame {
 
     public void movePiece(Position source, Position target) {
         gameState.movePiece(() -> board.move(source, target));
+
+    }
+
+    public void checkCheckmate() {
+        gameState.checkCheckmate(() -> {
+            if (board.isChecked() && board.isCheckmate()) {
+                gameState = EndState.createWinState(board.getTurn());
+            }
+        });
     }
 
     public List<SquareResponse> getBoard() {
@@ -54,7 +64,15 @@ public class ChessGame {
         return gameState.getTurn(() -> board.getTurn());
     }
 
-    public boolean isChecked(Team team) {
-        return gameState.isChecked(() -> board.isChecked(team));
+    public void changeTurn() {
+        gameState.changeTurn(() -> board.changeTurn());
+    }
+
+    public Team getWinner() {
+        return gameState.getWinner();
+    }
+
+    public boolean hasWinner() {
+        return gameState.hasWinner();
     }
 }

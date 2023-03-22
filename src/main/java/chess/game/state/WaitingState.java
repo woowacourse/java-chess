@@ -3,7 +3,6 @@ package chess.game.state;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -45,7 +44,22 @@ public class WaitingState implements GameState {
     }
 
     @Override
-    public boolean isChecked(BooleanSupplier supplier) {
+    public void changeTurn(Runnable runnable) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public void checkCheckmate(Runnable runnable) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public boolean hasWinner() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }
