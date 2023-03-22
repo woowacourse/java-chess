@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     private static String makeFormat(final Map<PiecePosition, Piece> chessBoard, final int rank, final char file) {
-        return Optional.ofNullable(chessBoard.get(PiecePosition.of(rank, file)))
+        return Optional.ofNullable(chessBoard.get(PiecePosition.of(file, rank)))
                 .map(OutputView::convertCaseAccordingToColor)
                 .orElse(EMPTY_PIECE_ICON);
     }

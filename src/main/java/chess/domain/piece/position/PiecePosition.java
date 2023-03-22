@@ -4,29 +4,29 @@ import java.util.Objects;
 
 public class PiecePosition {
 
-    private static final int RANK_INDEX = 1;
     private static final int FILE_INDEX = 0;
-    private final Rank rank;
+    private static final int RANK_INDEX = 1;
     private final File file;
+    private final Rank rank;
 
-    private PiecePosition(final Rank rank, final File file) {
-        this.rank = rank;
+    private PiecePosition(final File file, final Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
-    public static PiecePosition of(final int rank, final char file) {
-        return new PiecePosition(Rank.from(rank), File.from(file));
+    public static PiecePosition of(final char file, final int rank) {
+        return new PiecePosition(File.from(file), Rank.from(rank));
     }
 
-    public static PiecePosition of(final Rank rank, final File file) {
-        return new PiecePosition(rank, file);
+    public static PiecePosition of(final File file, final Rank rank) {
+        return new PiecePosition(file, rank);
     }
 
-    public static PiecePosition of(final String rankAndFile) {
-        final String[] split = rankAndFile.split("");
+    public static PiecePosition of(final String fileAndRank) {
+        final String[] split = fileAndRank.split("");
+        final char file = fileAndRank.charAt(FILE_INDEX);
         final int rank = Integer.parseInt(split[RANK_INDEX]);
-        final char file = rankAndFile.charAt(FILE_INDEX);
-        return PiecePosition.of(rank, file);
+        return PiecePosition.of(file, rank);
     }
 
     public int fileDistance(final PiecePosition piecePosition) {
@@ -38,7 +38,7 @@ public class PiecePosition {
     }
 
     public PiecePosition move(final Direction direction) {
-        return PiecePosition.of(rank.plus(direction.rankUnit()), file.plus(direction.fileUnit()));
+        return PiecePosition.of(file.plus(direction.fileUnit()), rank.plus(direction.rankUnit()));
     }
 
     public Direction direction(final PiecePosition destination) {
@@ -50,11 +50,11 @@ public class PiecePosition {
         if (this == o) return true;
         if (!(o instanceof PiecePosition)) return false;
         final PiecePosition that = (PiecePosition) o;
-        return Objects.equals(rank, that.rank) && Objects.equals(file, that.file);
+        return Objects.equals(file, that.file) && Objects.equals(rank, that.rank);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 }

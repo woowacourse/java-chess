@@ -26,8 +26,8 @@ class KnightTest {
     })
     void Rank_두칸_File_한칸_이동_가능하다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
@@ -44,8 +44,8 @@ class KnightTest {
     })
     void Rank_한칸_File_두칸_이동_가능하다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
@@ -65,8 +65,8 @@ class KnightTest {
     })
     void 두칸_이상은_이동할_수_없다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then

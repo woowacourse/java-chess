@@ -28,19 +28,19 @@ public class ChessBoardFactory {
 
     private static void createPawns(final int rank, final Color color) {
         for (char file = File.MIN; file <= File.MAX; file++) {
-            pieces.add(new Pawn(color, PiecePosition.of(rank, file)));
+            pieces.add(new Pawn(color, PiecePosition.of(file, rank)));
         }
     }
 
     private static void createPieceExcludingPawn(final int rank, final Color color) {
-        pieces.add(new Rook(color, PiecePosition.of(rank, 'a')));
-        pieces.add(new Knight(color, PiecePosition.of(rank, 'b')));
-        pieces.add(new Bishop(color, PiecePosition.of(rank, 'c')));
-        pieces.add(new Queen(color, PiecePosition.of(rank, 'd')));
-        pieces.add(new King(color, PiecePosition.of(rank, 'e')));
-        pieces.add(new Bishop(color, PiecePosition.of(rank, 'f')));
-        pieces.add(new Knight(color, PiecePosition.of(rank, 'g')));
-        pieces.add(new Rook(color, PiecePosition.of(rank, 'h')));
+        pieces.add(new Rook(color, PiecePosition.of('a', rank)));
+        pieces.add(new Knight(color, PiecePosition.of('b', rank)));
+        pieces.add(new Bishop(color, PiecePosition.of('c', rank)));
+        pieces.add(new Queen(color, PiecePosition.of('d', rank)));
+        pieces.add(new King(color, PiecePosition.of('e', rank)));
+        pieces.add(new Bishop(color, PiecePosition.of('f', rank)));
+        pieces.add(new Knight(color, PiecePosition.of('g', rank)));
+        pieces.add(new Rook(color, PiecePosition.of('h', rank)));
     }
 
     public static ChessBoard create() {

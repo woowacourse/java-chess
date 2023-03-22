@@ -31,8 +31,8 @@ class BishopTest {
     })
     void 동서남북_방향으로_움직일_수_없다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
@@ -50,8 +50,8 @@ class BishopTest {
     })
     void 대각선_방향으로_한칸은_무조건_이동_가능하다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
@@ -69,8 +69,8 @@ class BishopTest {
     })
     void 대각선_방향으로_두칸_이상은_경로에_피스가_없어야한다(final char file, final int rank) {
         // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
+        final PiecePosition currentPosition = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of(file, rank);
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then

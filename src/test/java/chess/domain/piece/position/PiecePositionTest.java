@@ -19,7 +19,7 @@ class PiecePositionTest {
     @Test
     void Rank_와_File_을_받아_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> PiecePosition.of(1, 'a'));
+        assertDoesNotThrow(() -> PiecePosition.of('a', 1));
     }
 
     @ParameterizedTest
@@ -31,8 +31,8 @@ class PiecePositionTest {
     })
     void 값이_같으면_동등하다(final int rank, final char file) {
         // given
-        final PiecePosition position1 = PiecePosition.of(rank, file);
-        final PiecePosition position2 = PiecePosition.of(rank, file);
+        final PiecePosition position1 = PiecePosition.of(file, rank);
+        final PiecePosition position2 = PiecePosition.of(file, rank);
 
         // when & then
         assertThat(position1).isEqualTo(position2);
@@ -56,8 +56,8 @@ class PiecePositionTest {
     })
     void File_사이의_간격을_구할_수_있다(final char currentFile, final char destination, final int distance) {
         // given
-        final PiecePosition from = PiecePosition.of(1, currentFile);
-        final PiecePosition dest = PiecePosition.of(2, destination);
+        final PiecePosition from = PiecePosition.of(currentFile, 1);
+        final PiecePosition dest = PiecePosition.of(destination, 2);
 
         // when & then
         assertThat(from.fileDistance(dest)).isEqualTo(distance);
@@ -66,19 +66,19 @@ class PiecePositionTest {
     @Test
     void 방위를_받아_해당_방향으로_이동한다() {
         // given
-        final PiecePosition a = PiecePosition.of(1, 'a');
+        final PiecePosition a = PiecePosition.of('a', 1);
 
         // when
         final PiecePosition move = a.move(Direction.NORTHEAST);
 
         // then
-        assertThat(move).isEqualTo(PiecePosition.of(2, 'b'));
+        assertThat(move).isEqualTo(PiecePosition.of('b', 2));
     }
 
     @Test
     void 이동_시_범위를_벗어나면_오류가_발생한다() {
         // given
-        final PiecePosition position = PiecePosition.of(1, 'a');
+        final PiecePosition position = PiecePosition.of('a', 1);
 
         // when & then
         assertThatThrownBy(() -> position.move(Direction.SOUTHWEST))
@@ -88,8 +88,8 @@ class PiecePositionTest {
     @Test
     void 목적지가_주어졌을때_방위를_확인할_수_있다() {
         // given
-        final PiecePosition position = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(7, 'a');
+        final PiecePosition position = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of('a', 7);
 
         // when & then
         assertThat(position.direction(destination)).isEqualTo(Direction.NORTHWEST);

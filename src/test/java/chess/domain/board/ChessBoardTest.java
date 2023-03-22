@@ -70,7 +70,7 @@ class ChessBoardTest {
     }
 
     private static void assertPiece(final ChessBoard chessBoard, final int rank, final char file, final Color color, final Class<?> type) {
-        final Piece piece = chessBoard.get(of(rank, file));
+        final Piece piece = chessBoard.get(of(file, rank));
         assertThat(piece.color()).isEqualTo(color);
         assertThat(piece).isExactlyInstanceOf(type);
     }
@@ -81,14 +81,14 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoardFactory.create();
 
         // when
-        chessBoard.movePiece(new Turn(WHITE), of(2, 'b'), of(3, 'b'));
+        chessBoard.movePiece(new Turn(WHITE), of('b', 2), of('b', 3));
 
         // then
         final Map<PiecePosition, Piece> pieceMap = chessBoard.pieces()
                 .stream()
                 .collect(toMap(Piece::piecePosition, Function.identity()));
-        assertThat(pieceMap.get(of(2, 'b'))).isNull();
-        assertThat(pieceMap.get(of(3, 'b'))).isInstanceOf(Pawn.class);
+        assertThat(pieceMap.get(of('b', 2))).isNull();
+        assertThat(pieceMap.get(of('b', 3))).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -98,7 +98,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of(2, 'b'), of(3, 'b'))
+                chessBoard.movePiece(new Turn(BLACK), of('b', 2), of('b', 3))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -109,7 +109,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), of(5, 'b'), of(3, 'b'))
+                chessBoard.movePiece(new Turn(WHITE), of('b', 5), of('b', 3))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -120,7 +120,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of(7, 'b'), of(4, 'b'))
+                chessBoard.movePiece(new Turn(BLACK), of('b', 7), of('b', 4))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -131,7 +131,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of(8, 'd'), of(6, 'b'))
+                chessBoard.movePiece(new Turn(BLACK), of('d', 8), of('b', 6))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -142,7 +142,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of(8, 'd'), of(7, 'c'))
+                chessBoard.movePiece(new Turn(BLACK), of('d', 8), of('c', 7))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -150,12 +150,12 @@ class ChessBoardTest {
     void 폰이_일직선으로_움직이는_경우_적군_말이_있으면_오류() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
-        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'b'), PiecePosition.of(5, 'b'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
+        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of('b', 7), PiecePosition.of('b', 5));
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(4, 'b'), PiecePosition.of(5, 'b'))
+                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('b', 5))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -163,11 +163,11 @@ class ChessBoardTest {
     void 폰이_대각선으로_움직이는_경우_적군_말이_없으면_오류() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(4, 'b'), PiecePosition.of(5, 'c'))
+                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('c', 5))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -175,11 +175,11 @@ class ChessBoardTest {
     void 폰이_대각선으로_움직이려면_적군_말이_필요하다() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'b'), PiecePosition.of(4, 'b'));
-        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of(7, 'c'), PiecePosition.of(5, 'c'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
+        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of('c', 7), PiecePosition.of('c', 5));
 
         // when
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(4, 'b'), PiecePosition.of(5, 'c'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('c', 5));
 
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);
@@ -189,12 +189,12 @@ class ChessBoardTest {
     void 적군_말을_잡으면_해당_말은_사라진다() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(2, 'e'), PiecePosition.of(4, 'e'));
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(1, 'd'), PiecePosition.of(5, 'h'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('e', 2), PiecePosition.of('e', 4));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('d', 1), PiecePosition.of('h', 5));
 
         // when
         assertThat(chessBoard.pieces().size()).isEqualTo(32);
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of(5, 'h'), PiecePosition.of(7, 'f'));
+        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('h', 5), PiecePosition.of('f', 7));
 
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);

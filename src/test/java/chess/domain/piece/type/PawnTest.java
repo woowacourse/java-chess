@@ -38,8 +38,8 @@ class PawnTest {
         })
         void 움직이지_않은_경우_북쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 2);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
@@ -55,10 +55,10 @@ class PawnTest {
         })
         void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 2);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
-            pawn.move(PiecePosition.of(4, 'b'));
+            pawn.move(PiecePosition.of('b', 4));
 
             // when & then
             assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
@@ -74,8 +74,8 @@ class PawnTest {
         })
         void 모든_경우_세칸_이상은_이동할_수_없다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 2);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
@@ -94,8 +94,8 @@ class PawnTest {
         })
         void 모든_경우_북쪽이_아닌_방향으로_이동할_수_없다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(2, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 2);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
@@ -117,8 +117,8 @@ class PawnTest {
         })
         void 움직이지_않은_경우_남쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 7);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
@@ -134,10 +134,10 @@ class PawnTest {
         })
         void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 7);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
-            pawn.move(PiecePosition.of(5, 'b'));
+            pawn.move(PiecePosition.of('b', 5));
 
             // when & then
             assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
@@ -154,8 +154,8 @@ class PawnTest {
         })
         void 모든_경우_세칸_이상은_이동할_수_없다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 7);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
@@ -174,8 +174,8 @@ class PawnTest {
         })
         void 모든_경우_남쪽이_아닌_방향으로_이동할_수_없다(final char file, final int rank) {
             // given
-            final PiecePosition currentPosition = PiecePosition.of(7, 'b');
-            final PiecePosition destination = PiecePosition.of(rank, file);
+            final PiecePosition currentPosition = PiecePosition.of('b', 7);
+            final PiecePosition destination = PiecePosition.of(file, rank);
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then

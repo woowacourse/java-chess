@@ -18,8 +18,8 @@ class PathTest {
     @Test
     void 생성시_출발지와_목적지가_동일하면_예외() {
         // given
-        final PiecePosition source = PiecePosition.of(3, 'c');
-        final PiecePosition destination = PiecePosition.of(3, 'c');
+        final PiecePosition source = PiecePosition.of('c', 3);
+        final PiecePosition destination = PiecePosition.of('c', 3);
 
         // when & then
         assertThatThrownBy(() -> Path.of(source, destination))
@@ -29,8 +29,8 @@ class PathTest {
     @Test
     void 출발지와_목적지의_File_거리_차이를_구할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(3, 'c');
-        final PiecePosition destination = PiecePosition.of(4, 'a');
+        final PiecePosition source = PiecePosition.of('c', 3);
+        final PiecePosition destination = PiecePosition.of('a', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -40,8 +40,8 @@ class PathTest {
     @Test
     void 출발지와_목적지의_Rank_거리_차이를_구할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(3, 'c');
-        final PiecePosition destination = PiecePosition.of(4, 'a');
+        final PiecePosition source = PiecePosition.of('c', 3);
+        final PiecePosition destination = PiecePosition.of('a', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -51,9 +51,9 @@ class PathTest {
     @Test
     void 목적지가_상대적으로_남쪽에_있는지_확인할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(3, 'c');
-        final PiecePosition southDestination = PiecePosition.of(1, 'f');
-        final PiecePosition northDestination = PiecePosition.of(5, 'a');
+        final PiecePosition source = PiecePosition.of('c', 3);
+        final PiecePosition southDestination = PiecePosition.of('f', 1);
+        final PiecePosition northDestination = PiecePosition.of('a', 5);
         final Path southPath = Path.of(source, southDestination);
         final Path northPath = Path.of(source, northDestination);
 
@@ -65,9 +65,9 @@ class PathTest {
     @Test
     void 목적지가_상대적으로_북쪽에_있는지_확인할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(3, 'c');
-        final PiecePosition southDestination = PiecePosition.of(1, 'f');
-        final PiecePosition northDestination = PiecePosition.of(5, 'a');
+        final PiecePosition source = PiecePosition.of('c', 3);
+        final PiecePosition southDestination = PiecePosition.of('f', 1);
+        final PiecePosition northDestination = PiecePosition.of('a', 5);
         final Path southPath = Path.of(source, southDestination);
         final Path northPath = Path.of(source, northDestination);
 
@@ -90,8 +90,8 @@ class PathTest {
     })
     void isStraight_는_직선_경로이면_true(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -110,8 +110,8 @@ class PathTest {
     })
     void isStraight_는_직선_경로가_아니면_false(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -132,8 +132,8 @@ class PathTest {
     })
     void isDiagonal_은_대각선_경로이면_true(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -154,8 +154,8 @@ class PathTest {
     })
     void isDiagonal_은_대각선_경로가_아니면_false(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -176,8 +176,8 @@ class PathTest {
     })
     void isUnitDistance_는_한칸_거리면_true(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -198,8 +198,8 @@ class PathTest {
     })
     void isUnitDistance_는_한칸_거리가_아니면_false(final char file, final int rank) {
         // given
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final PiecePosition source = PiecePosition.of(4, 'e');
+        final PiecePosition destination = PiecePosition.of(file, rank);
+        final PiecePosition source = PiecePosition.of('e', 4);
         final Path path = Path.of(source, destination);
 
         // when & then
@@ -209,38 +209,38 @@ class PathTest {
     @Test
     void 직선_경로에_대한_경유지를_구할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(7, 'e');
+        final PiecePosition source = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of('e', 7);
         final Path path = Path.of(source, destination);
 
         // when & then
         assertThat(path.wayPoints())
                 .containsExactlyInAnyOrder(
-                        PiecePosition.of(5, 'e'),
-                        PiecePosition.of(6, 'e')
+                        PiecePosition.of('e', 5),
+                        PiecePosition.of('e', 6)
                 );
     }
 
     @Test
     void 대각선_경로에_대한_경유지를_구할_수_있다() {
         // given
-        final PiecePosition source = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(7, 'h');
+        final PiecePosition source = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of('h', 7);
         final Path path = Path.of(source, destination);
 
         // when & then
         assertThat(path.wayPoints())
                 .containsExactlyInAnyOrder(
-                        PiecePosition.of(5, 'f'),
-                        PiecePosition.of(6, 'g')
+                        PiecePosition.of('f', 5),
+                        PiecePosition.of('g', 6)
                 );
     }
 
     @Test
     void 출발지와_목적지가_한칸_차이면_경유지가_없다() {
         // given
-        final PiecePosition source = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(5, 'f');
+        final PiecePosition source = PiecePosition.of('e', 4);
+        final PiecePosition destination = PiecePosition.of('f', 5);
         final Path path = Path.of(source, destination);
 
         // when & then

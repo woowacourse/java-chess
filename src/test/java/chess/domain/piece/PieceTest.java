@@ -21,7 +21,7 @@ class PieceTest {
     @Test
     void 위치와_색상을_가지고_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new Piece(Color.WHITE, of(1, 'a')) {
+        assertDoesNotThrow(() -> new Piece(Color.WHITE, of('a', 1)) {
 
             @Override
             protected void validateMovable(final Path path) {
@@ -38,7 +38,7 @@ class PieceTest {
     @Test
     void clone_할_수_있다() {
         // given
-        final MyPiece myPiece = new MyPiece(Color.BLACK, of(1, 'a'));
+        final MyPiece myPiece = new MyPiece(Color.BLACK, of('a', 1));
 
         // when
         final Piece clone = myPiece.clone();
@@ -66,9 +66,9 @@ class PieceTest {
     @Test
     void 경로탐색시_같은_위치면_예외() {
         // given
-        Piece myPiece = new MyPiece(Color.BLACK, of(1, 'a'));
+        Piece myPiece = new MyPiece(Color.BLACK, of('a', 1));
         // when & then
-        assertThatThrownBy(() -> myPiece.wayPointsWithCondition(of(1, 'a')))
+        assertThatThrownBy(() -> myPiece.wayPointsWithCondition(of('a', 1)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
