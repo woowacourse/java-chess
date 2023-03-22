@@ -152,6 +152,11 @@ public class Board {
 		return team == Team.WHITE && position.getRow() == INITIAL_WHITE_PAWN_ROW;
 	}
 
+	public boolean isKingPosition(final Position position) {
+		return board.get(position)
+			.isGivenType(PieceType.KING);
+	}
+
 	public Map<Position, Piece> getBoard() {
 		return board;
 	}
