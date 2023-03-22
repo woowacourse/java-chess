@@ -2,31 +2,19 @@ package chess.domain.board;
 
 import chess.domain.camp.CampType;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static chess.domain.piece.PieceType.BISHOP;
-import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
-import static chess.domain.piece.PieceType.QUEEN;
-import static chess.domain.piece.PieceType.ROOK;
+import static chess.domain.piece.PieceType.*;
 
 public final class ChessBoardFactory {
 
     private static final Map<ChessGame, ChessBoardFactory> CACHE = new ConcurrentHashMap<>();
 
-    public ChessBoardFactory() {
+    private ChessBoardFactory() {
     }
 
     static ChessBoardFactory getInstance(final ChessGame chessGame) {
