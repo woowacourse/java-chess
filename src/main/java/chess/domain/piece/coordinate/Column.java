@@ -13,6 +13,9 @@ public enum Column {
     H('h');
     
     private static final char MIN_COLUMN_CHAR = 'a';
+    private static final int FORWARD_DIRECTION_COLUMN = 1;
+    private static final int BACK_DIRECTION_COLUMN = -1;
+    private static final int STAY_COLUMN = 0;
     
     private final char column;
     
@@ -32,7 +35,15 @@ public enum Column {
     }
     
     public int directionNumberTo(Column otherColumn) {
-        return Integer.compare(otherColumn.column, column);
+        if (this.column > otherColumn.column) {
+            return BACK_DIRECTION_COLUMN;
+        }
+    
+        if (this.column < otherColumn.column) {
+            return FORWARD_DIRECTION_COLUMN;
+        }
+    
+        return STAY_COLUMN;
     }
     
     public char add(int number) {

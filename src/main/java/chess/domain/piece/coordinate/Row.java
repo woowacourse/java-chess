@@ -12,6 +12,10 @@ public enum Row {
     SEVEN(7),
     EIGHT(8);
     
+    private static final int FORWARD_DIRECTION_ROW = 1;
+    private static final int BACK_DIRECTION_ROW = -1;
+    private static final int STAY_ROW = 0;
+    
     private final int row;
     
     Row(int row) {
@@ -30,7 +34,15 @@ public enum Row {
     }
     
     public int directionNumberTo(Row otherRow) {
-        return Integer.compare(otherRow.row, this.row);
+        if (this.row > otherRow.row) {
+            return BACK_DIRECTION_ROW;
+        }
+        
+        if (this.row < otherRow.row) {
+            return FORWARD_DIRECTION_ROW;
+        }
+        
+        return STAY_ROW;
     }
     
     public int add(int directionNumber) {
