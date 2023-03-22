@@ -3,11 +3,9 @@ package chess.controller;
 import static chess.view.PositionConverter.convertToSourcePosition;
 import static chess.view.PositionConverter.convertToTargetPosition;
 
-import chess.view.GameCommand;
-import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Position;
-import chess.domain.Team;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -24,7 +22,7 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         inputStartCommand();
-        ChessGame chessGame = new ChessGame(Board.init(), Team.getStartTeam());
+        ChessGame chessGame = ChessGame.createGame();
         progress(chessGame);
     }
 

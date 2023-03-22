@@ -5,9 +5,13 @@ public class ChessGame {
     private final Board board;
     private Team turn;
 
-    public ChessGame(Board board, Team turn) {
+    private ChessGame(Board board, Team turn) {
         this.board = board;
         this.turn = turn;
+    }
+
+    public static ChessGame createGame() {
+        return new ChessGame(Board.init(), Team.getStartTeam());
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
