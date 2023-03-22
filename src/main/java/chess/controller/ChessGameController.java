@@ -18,7 +18,7 @@ public class ChessGameController {
 
     public void run() {
         ChessBoard chessBoard = startGame();
-        GameStatus gameStatus = GameStatus.startGame();
+        GameStatus gameStatus = GameStatus.getInitialGameStatus();
         while (gameStatus.isPlaying()) {
             gameStatus = repeatUntilNoIAE(this::playTurn, chessBoard);
         }
@@ -32,7 +32,7 @@ public class ChessGameController {
     private GameStatus playTurn(final ChessBoard chessBoard) {
         outputView.printChessBoard(ChessBoardDto.of(chessBoard));
         CommandDto commandDto = inputView.readCommand();
-        GameStatus gamestatus = GameStatus.changeStatus(commandDto.getCommand());
+        GameStatus gamestatus = GameStatus.getNextStatus(commandDto.getCommand());
         if (gamestatus.isPlaying()) {
             movePiece(chessBoard, (MoveCommandDto) commandDto);
         }

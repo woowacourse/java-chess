@@ -35,20 +35,13 @@ public class GameStatusTest {
     }
 
     @Nested
-    @DisplayName("changeStatus 메서드는")
-    class changeStatus {
-//        @Test
-//        @DisplayName("start가 주어지면 예외를 던진다")
-//        void it_throws_exception1() {
-//            assertThatThrownBy(() -> GameStatus.changeStatus("start"))
-//                    .isInstanceOf(IllegalArgumentException.class)
-//                    .hasMessage("게임 도중에는 다시 시작할 수 없습니다.");
-//        }
+    @DisplayName("getNextStatus 메서드는")
+    class getNextStatus {
 
         @ParameterizedTest(name = "{0}가 주어지면 예외를 던진다")
         @ValueSource(strings = {"", "  ", "Move", "enD"})
         void it_throws_exception2(String code) {
-            assertThatThrownBy(() -> GameStatus.changeStatus(code))
+            assertThatThrownBy(() -> GameStatus.getNextStatus(code))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("잘못된 명령어입니다.");
         }
@@ -59,7 +52,7 @@ public class GameStatusTest {
             @ParameterizedTest(name = "{0}가 주어지면 객체 {1}을 반환한다")
             @CsvSource({"move,PLAYING", "end,END"})
             void it_returns_gameStatus(String code, GameStatus gameStatus) {
-                assertThat(GameStatus.changeStatus(code)).isEqualTo(gameStatus);
+                assertThat(GameStatus.getNextStatus(code)).isEqualTo(gameStatus);
             }
         }
     }
