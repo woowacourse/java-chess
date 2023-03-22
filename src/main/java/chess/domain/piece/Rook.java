@@ -1,14 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import chess.domain.move.RookMove;
 
 public class Rook extends Piece {
 
     private final RookMove rookMove = new RookMove();
 
-    public Rook(final PieceType pieceType, final CampType campType) {
-        super(pieceType, campType);
+    public Rook(final PieceType pieceType, final TeamColor teamColor) {
+        super(pieceType, teamColor);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Position;
 import chess.domain.piece.PositionConverter;
@@ -13,11 +13,11 @@ public final class Move implements Status {
     public static final int TARGET_INDEX = 2;
 
     private final ChessGame chessGame;
-    private final CampType campType;
+    private final TeamColor teamColor;
 
-    public Move(final ChessGame chessGame, final CampType campType) {
+    public Move(final ChessGame chessGame, final TeamColor teamColor) {
         this.chessGame = chessGame;
-        this.campType = campType;
+        this.teamColor = teamColor;
     }
 
     @Override
@@ -36,8 +36,8 @@ public final class Move implements Status {
         final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(SOURCE_INDEX));
         final Position target = PositionConverter.convert(commands.get(TARGET_INDEX));
-        chessGame.setUp(source, target, campType);
-        return new Move(chessGame, campType.changeTurn());
+        chessGame.setUp(source, target, teamColor);
+        return new Move(chessGame, teamColor.changeTurn());
     }
 
     private void validateCommand(final Command command) {

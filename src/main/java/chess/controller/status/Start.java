@@ -1,7 +1,7 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
 
 public final class Start implements Status {
@@ -22,7 +22,7 @@ public final class Start implements Status {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
 
-        return new Move(chessGame, CampType.WHITE);
+        return new Move(chessGame, TeamColor.WHITE);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
@@ -30,7 +30,7 @@ public enum PieceName {
     }
 
     public static Character findMessage(final Piece piece) {
-        if (piece.isSameCamp(CampType.BLACK)) {
+        if (piece.isSameCamp(TeamColor.BLACK)) {
             return CACHE.get(piece.getPieceType());
         }
         return Character.toLowerCase(CACHE.get(piece.getPieceType()));

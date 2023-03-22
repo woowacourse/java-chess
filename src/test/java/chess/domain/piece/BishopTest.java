@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -12,7 +12,7 @@ class BishopTest {
     @CsvSource(value = {"1:1", "7:7", "1:3", "3:1", "3:3"}, delimiter = ':')
     void canMoveSuccess(final int targetRank, final int targetFile) {
         // given
-        final Piece piece = new Bishop(PieceType.BISHOP, CampType.WHITE);
+        final Piece piece = new Bishop(PieceType.BISHOP, TeamColor.WHITE);
 
         // when
         boolean actual = piece.canMove(new Position(2, 2),
@@ -27,7 +27,7 @@ class BishopTest {
     @CsvSource(value = {"1:2", "0:8", "-8:0", "8:0", "0:-8", "0:1", "1:0", "8:8"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
-        final Piece piece = new Bishop(PieceType.BISHOP, CampType.WHITE);
+        final Piece piece = new Bishop(PieceType.BISHOP, TeamColor.WHITE);
 
         // when
         boolean actual = piece.canMove(new Position(0, 0),

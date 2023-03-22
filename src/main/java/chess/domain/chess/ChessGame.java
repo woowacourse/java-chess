@@ -1,7 +1,7 @@
 package chess.domain.chess;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
@@ -9,13 +9,13 @@ import java.util.Map;
 
 public final class ChessGame {
     private final ChessBoard chessBoard;
-    private CampType currentCamp;
+    private TeamColor currentCamp;
 
     public ChessGame() {
         this.chessBoard = ChessBoard.getInstance(this);
     }
 
-    public void setUp(final Position source, final Position target, final CampType currentCamp) {
+    public void setUp(final Position source, final Position target, final TeamColor currentCamp) {
         this.currentCamp = currentCamp;
         play(source, target);
     }
@@ -67,7 +67,7 @@ public final class ChessGame {
      *                                                         TODO : 여기서 책임을 가지는 건 무의미한 것 같은데, 어떻게 분리하지?
      */
     private void movePawn(final Position source, final Position target, final Piece piece) {
-        if ((piece.isSameCamp(CampType.WHITE) && source.getRank() == 1) || (piece.isSameCamp(CampType.BLACK) && source.getRank() == 6)) {
+        if ((piece.isSameCamp(TeamColor.WHITE) && source.getRank() == 1) || (piece.isSameCamp(TeamColor.BLACK) && source.getRank() == 6)) {
             attackOrMove(source, target, piece);
             return;
         }

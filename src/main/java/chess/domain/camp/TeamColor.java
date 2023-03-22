@@ -1,17 +1,17 @@
 package chess.domain.camp;
 
-public enum CampType {
+public enum TeamColor {
     BLACK,
     WHITE;
 
-    public static CampType divide(final char columnPosition) {
+    public static TeamColor divide(final char columnPosition) {
         if (Character.isLowerCase(columnPosition)) {
             return WHITE;
         }
         return BLACK;
     }
 
-    public CampType changeTurn() {
+    public TeamColor changeTurn() {
         if (this == BLACK) {
             return WHITE;
         }

@@ -1,20 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.camp.CampType;
+import chess.domain.camp.TeamColor;
 
 import java.util.Objects;
 
 public abstract class Piece {
     private final PieceType pieceType;
-    private final CampType campType;
+    private final TeamColor teamColor;
 
-    public Piece(final PieceType pieceType, final CampType campType) {
+    public Piece(final PieceType pieceType, final TeamColor teamColor) {
         this.pieceType = pieceType;
-        this.campType = campType;
+        this.teamColor = teamColor;
     }
 
     public boolean compareCamp(final Piece other) {
-        return campType == other.campType;
+        return teamColor == other.teamColor;
     }
 
     public boolean isPawn() {
@@ -25,8 +25,8 @@ public abstract class Piece {
         return pieceType == PieceType.KNIGHT;
     }
 
-    public boolean isSameCamp(final CampType diffType) {
-        return campType == diffType;
+    public boolean isSameCamp(final TeamColor diffType) {
+        return teamColor == diffType;
     }
 
     public abstract boolean canMove(final Position source, final Position target);
@@ -36,19 +36,19 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Piece piece = (Piece) o;
-        return pieceType == piece.pieceType && campType == piece.campType;
+        return pieceType == piece.pieceType && teamColor == piece.teamColor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceType, campType);
+        return Objects.hash(pieceType, teamColor);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
                 "pieceType=" + pieceType +
-                ", campType=" + campType +
+                ", teamColor=" + teamColor +
                 '}';
     }
 
