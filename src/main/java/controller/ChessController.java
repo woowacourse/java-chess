@@ -16,20 +16,35 @@ public final class ChessController {
     private static final int SOURCE_PIECE = 1;
     private static final int DESTINATION = 2;
 
-    public void run(final Board board) {
-        if (isGameStart()) {
+    public final Board board;
+
+    public ChessController(final Board board) {
+        this.board = board;
+    }
+
+    public void run() {
+        StartCommand startCommand = inputStartCommand();
+        if (StartCommand.START.equals(startCommand)) {
             OutputView.printBoard(board.getPieces());
             play(board);
         }
     }
 
-    private boolean isGameStart() {
+    private StartCommand inputStartCommand() {
+        String command;
+        while (validateInputStartCommand(command = InputView.readStartGameOption())) {
+            System.out.println(command);
+        }
+        return StartCommand.from(command);
+    }
+
+    private boolean validateInputStartCommand(String command) {
         try {
-            final StartCommand command = StartCommand.from(InputView.readStartGameOption());
-            return StartCommand.START.equals(command);
+            StartCommand.from(command);
+            return false;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return isGameStart();
+            return true;
         }
     }
 
