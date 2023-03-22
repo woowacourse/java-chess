@@ -56,8 +56,8 @@ public class RowPieces implements Comparable<RowPieces> {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
     
-    public boolean isPieceByCoordinateNotEmpty(Coordinate researchCoordinate) {
-        return !findPieceByCoordinate(researchCoordinate).isSameTeam(Team.EMPTY);
+    public boolean isPieceByCoordinateNotEmpty(Coordinate coordinate) {
+        return !findPieceByCoordinate(coordinate).isSameTeam(Team.EMPTY);
     }
     
     public void move(

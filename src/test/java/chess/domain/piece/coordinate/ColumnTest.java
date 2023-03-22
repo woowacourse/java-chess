@@ -2,11 +2,11 @@ package chess.domain.piece.coordinate;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -24,5 +24,10 @@ class ColumnTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Column.from(column))
                 .withMessage("Column는 a~h까지의 문자만 가능합니다. 다시 입력해주세요.");
+    }
+    
+    @Test
+    void 방향_number_구하기() {
+        assertThat(Column.A.directionNumberTo(Column.C)).isEqualTo(1);
     }
 }

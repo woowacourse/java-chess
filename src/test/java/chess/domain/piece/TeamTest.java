@@ -16,4 +16,11 @@ class TeamTest {
         boolean isWhiteTeam = team.isSameTeam(Team.WHITE);
         assertThat(isWhiteTeam).isEqualTo(isWhite);
     }
+    
+    @ParameterizedTest
+    @CsvSource(value = {"WHITE,false","BLACK,true"})
+    void 자신이_화이트팀이면_false를_반환하고_블랙팀이면_true를_반환한다(Team team, boolean isWhite) {
+        boolean isWhiteTeam = team.isDifferentTeam(Team.WHITE);
+        assertThat(isWhiteTeam).isEqualTo(isWhite);
+    }
 }
