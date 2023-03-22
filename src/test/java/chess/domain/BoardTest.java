@@ -31,11 +31,10 @@ class BoardTest {
 
         //when
         var result = board.getPieces().get(0);
-        //then
 
+        //then
         var check = result.stream()
                 .map(Piece::getType)
-//                .map(PieceType::getName)
                 .collect(Collectors.toList());
         assertThat(check)
                 .containsExactly(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
@@ -50,8 +49,8 @@ class BoardTest {
 
         //when
         var result = board.getPieces().get(1);
-        //then
 
+        //then
         var check = result.stream()
                 .map(Piece::getType)
                 .collect(Collectors.toList());

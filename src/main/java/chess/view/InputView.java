@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class InputView implements Input {
 
     private static final Scanner scanner = new Scanner(System.in);
+
     private final Map<Pattern, Function<List<String>, RequestType>> requests;
 
     public InputView() {

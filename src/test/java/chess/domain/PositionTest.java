@@ -58,7 +58,8 @@ class PositionTest {
         int result = A1.getRankDifference(A3);
 
         //then
-        assertThat(result).isEqualTo(2);
+        assertThat(result)
+                .isEqualTo(2);
     }
 
     @Test
@@ -68,7 +69,8 @@ class PositionTest {
         int result = A1.getFileDifference(F1);
 
         //then
-        assertThat(result).isEqualTo(5);
+        assertThat(result)
+                .isEqualTo(5);
     }
 
     @ParameterizedTest

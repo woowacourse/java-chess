@@ -25,7 +25,8 @@ class PieceTest {
         PieceType result = piece.getType();
 
         //then
-        assertThat(result).isEqualTo(PieceType.PAWN);
+        assertThat(result)
+                .isEqualTo(PieceType.PAWN);
     }
 
     @ParameterizedTest
