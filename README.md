@@ -54,10 +54,20 @@
 
 ### DB
 - DB 계획도
-  - Room (room_id, game_id, user1, user2) --> 추가 미션 예정
-  - Game (game_id, board_id) --> 추가 미션 예정
-  - board (board_id, position(String), piece(String), isLowerTeamTurn) --> isLowerTeamTurn은 추가 미션 때 Game 테이블로 옮길 예정입니다.
+  - Room (room_id, board_id, lowerTeam, upperTeam) --> 추가 미션 예정
+  - board (board_id, position(String), piece(String), isLowerTeamTurn)
+  
 
+### DB 테이블 DDL (추가 미션 전)
+Board 
+```sql
+CREATE TABLE `chess`.`board` (
+  `board_id` INT NOT NULL,
+  `position` VARCHAR(300) NOT NULL,
+  `piece` VARCHAR(300) NOT NULL,
+  `isLowerTeamTurn` TINYINT NOT NULL,
+  PRIMARY KEY (`board_id`));
+```
 
 
 
