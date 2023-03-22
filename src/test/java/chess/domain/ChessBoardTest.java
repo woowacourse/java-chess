@@ -111,4 +111,16 @@ class ChessBoardTest {
         assertThat(piecesCollectedByFile.size()).isEqualTo(8);
     }
 
+    @DisplayName("보드에 2개의 King 이 있지 않으면, King 이 잡힘을 확인한다.")
+    @Test
+    void 킹_잡힘() {
+        Map<Position, Piece> boardForTest = Map.of(
+            Position.from("A2"), InitialPiece.BLACK_QUEEN.getPiece(),
+            Position.from("C4"), InitialPiece.WHITE_KING.getPiece(),
+            Position.from("B2"), InitialPiece.WHITE_PAWN.getPiece());
+        chessBoard = new ChessBoard(boardForTest);
+
+        assertThat(chessBoard.isKingDead()).isTrue();
+    }
+
 }

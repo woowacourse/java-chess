@@ -45,4 +45,9 @@ public class Bishop extends Piece {
         return false;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
 }

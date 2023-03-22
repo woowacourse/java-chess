@@ -1,6 +1,8 @@
 package chess.controller;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
+import chess.domain.InitialPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
@@ -33,7 +35,7 @@ public class ChessController {
         while (isNotStarted) {
             isNotStarted = repeatStartRequest();
         }
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()));
         printBoard();
     }
 

@@ -23,6 +23,8 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public abstract boolean isKing();
+
     public boolean isDifferentColor(final TeamColor color) {
         return !isSameColor(color);
     }
@@ -59,5 +61,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, type);
     }
-
 }
