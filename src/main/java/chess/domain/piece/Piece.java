@@ -21,10 +21,6 @@ public abstract class Piece {
 
     public abstract boolean canAttack(Position source, Position dest, Piece target);
 
-    public boolean isSameCamp(Camp camp) {
-        return this.camp == camp;
-    }
-
     public boolean isDifferentCamp(Camp other) {
         return this.camp != other;
     }
