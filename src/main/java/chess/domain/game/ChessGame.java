@@ -36,10 +36,6 @@ public class ChessGame {
         return state.playable();
     }
 
-    public void end() {
-        state = state.end();
-    }
-
     public Color winColor() {
         return state.winColor();
     }
@@ -52,15 +48,15 @@ public class ChessGame {
         return state.calculateScore(chessBoard);
     }
 
-    public ChessBoard chessBoard() {
-        return chessBoard;
-    }
-
     public Long id() {
         return id;
     }
 
     public ChessGameState state() {
         return state;
+    }
+
+    public Color turnColor() {
+        return state.turn().color();
     }
 }

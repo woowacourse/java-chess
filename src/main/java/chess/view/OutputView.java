@@ -47,13 +47,14 @@ public class OutputView {
         colorIconMapping.put(Color.BLACK, blackPieceIcons);
     }
 
-    public static void showBoard(final List<Piece> chessBoard) {
+    public static void showBoard(final List<Piece> chessBoard, final Color color) {
         final Map<PiecePosition, Piece> pieceMap = chessBoard.stream()
                 .collect(Collectors.toMap(Piece::piecePosition, Function.identity()));
         for (int rank = Rank.MAX; rank >= Rank.MIN; rank--) {
             System.out.println(makeLineFormat(pieceMap, rank));
         }
         System.out.println();
+        System.out.println(color + " 색이 움직일 차례입니다.");
     }
 
     private static String makeLineFormat(final Map<PiecePosition, Piece> chessBoard, final int rank) {
@@ -99,5 +100,14 @@ public class OutputView {
                 .stream()
                 .map(it -> it.getKey() + "색: " + it.getValue() + "점")
                 .collect(Collectors.joining(System.lineSeparator())));
+    }
+
+    public static void startGame(final Long id) {
+        System.out.println(id + "번 게임을 시작합니다");
+        System.out.println();
+    }
+
+    public static void saveAndEnd() {
+        System.out.println("게임 저장 후 종료");
     }
 }

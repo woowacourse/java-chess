@@ -3,22 +3,20 @@ package chess.controller.command;
 import java.util.Arrays;
 import java.util.List;
 
-public enum CommandType {
+public enum RunningCommandType {
 
-    START(0),
     MOVE(2),
     END(0),
     STATUS(0),
-    RESTART(1),
     ;
 
     private final int parameterSize;
 
-    CommandType(final int parameterSize) {
+    RunningCommandType(final int parameterSize) {
         this.parameterSize = parameterSize;
     }
 
-    public static CommandType find(final String input) {
+    public static RunningCommandType find(final String input) {
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(input))
                 .findAny()

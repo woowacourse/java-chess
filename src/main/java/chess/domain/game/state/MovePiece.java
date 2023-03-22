@@ -49,6 +49,7 @@ public class MovePiece implements ChessGameState {
         return chessBoard.calculateScore();
     }
 
+    @Override
     public Turn turn() {
         return turn;
     }

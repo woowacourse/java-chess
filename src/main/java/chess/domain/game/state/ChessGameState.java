@@ -1,6 +1,7 @@
 package chess.domain.game.state;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 
@@ -17,4 +18,6 @@ public interface ChessGameState {
     Color winColor();
 
     Map<Color, Double> calculateScore(final ChessBoard chessBoard);
+
+    Turn turn();
 }
