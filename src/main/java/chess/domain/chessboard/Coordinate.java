@@ -8,7 +8,7 @@ public final class Coordinate {
     private static final String ALPHANUMERIC_REGEX = "^[a-h][1-8]$";
     private static final int FILE_PARSE_INDEX = 0;
     private static final int RANK_PARSE_INDEX = 1;
-
+    private static final int DIRECTION_CONVERTER = -1;
     private static final Map<String, Coordinate> cache = new HashMap<>();
 
     private final char fileIndex;
@@ -57,7 +57,7 @@ public final class Coordinate {
         final int rankDistance = other.rankIndex - this.rankIndex;
         final int fileDistance = other.fileIndex - this.fileIndex;
 
-        return rankDistance == (-1 * fileDistance);
+        return rankDistance == (DIRECTION_CONVERTER * fileDistance);
     }
 
     private String addIndex(final char index, final int step) {
