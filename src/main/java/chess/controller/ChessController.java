@@ -1,8 +1,5 @@
 package chess.controller;
 
-import static chess.domain.state.command.Command.FROM_POSITION_INDEX;
-import static chess.domain.state.command.Command.TO_POSITION_INDEX;
-
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.piece.position.PiecePosition;
@@ -13,7 +10,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChessController {
 
@@ -50,9 +46,8 @@ public class ChessController {
     }
 
     private ChessState movePiece(final ChessBoard chessBoard, final Command command, ChessState state) {
-        final List<String> parameters = command.parameters();
-        final PiecePosition from = PiecePosition.of(parameters.get(FROM_POSITION_INDEX));
-        final PiecePosition to = PiecePosition.of(parameters.get(TO_POSITION_INDEX));
+        final PiecePosition from = PiecePosition.of(command.getFromParameter());
+        final PiecePosition to = PiecePosition.of(command.getToParameter());
         chessBoard.movePiece(state, from, to);
         return state.changeTurn();
     }

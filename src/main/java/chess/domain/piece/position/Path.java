@@ -61,7 +61,13 @@ public class Path {
         return wayPoints;
     }
 
-    public PiecePosition destination() {
-        return destination;
+    public List<PiecePosition> wayPointsWithDestination() {
+        final List<PiecePosition> wayPoints = wayPoints();
+        wayPoints.add(destination);
+        return wayPoints;
+    }
+
+    public List<PiecePosition> destination() {
+        return List.of(destination);
     }
 }

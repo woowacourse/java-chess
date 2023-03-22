@@ -48,8 +48,7 @@ public class Pawn extends Piece {
     @Override
     protected WayPoints wayPointsWithCondition(final Path path) {
         if (!isMoved && isPawnSpecialDestination(path)) {
-            final List<PiecePosition> wayPoints = path.wayPoints();
-            wayPoints.add(path.destination());
+            final List<PiecePosition> wayPoints = path.wayPointsWithDestination();
             return new WayPoints(wayPoints);
         }
         return defaultMove(path);
@@ -59,7 +58,7 @@ public class Pawn extends Piece {
         if (path.isDiagonal()) {
             return new WayPoints(Collections.emptyList());
         }
-        return new WayPoints(List.of(path.destination()));
+        return new WayPoints(path.destination());
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Run extends Runnable {
     }
 
     private void validateSize(final Command command) {
-        if (command.parameters().size() != 2) {
+        if (command.sizeParameters() != 2) {
             throw new IllegalArgumentException("제대로 입력되지 않았습니다.");
         }
     }

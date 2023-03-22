@@ -33,8 +33,16 @@ public class Command {
         return new Command(type, inputs);
     }
 
-    public List<String> parameters() {
-        return commands;
+    public String getFromParameter() {
+        return commands.get(FROM_POSITION_INDEX);
+    }
+
+    public String getToParameter() {
+        return commands.get(TO_POSITION_INDEX);
+    }
+
+    public int sizeParameters() {
+        return commands.size();
     }
 
     public boolean isStart() {

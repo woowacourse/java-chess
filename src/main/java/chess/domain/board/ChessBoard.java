@@ -32,15 +32,9 @@ public class ChessBoard {
 
     private void validateNonBlock(final PiecePosition destination, final Piece from) {
         final WayPoints wayPoints = from.wayPointsWithCondition(destination);
-        if (isBlocking(wayPoints)) {
+        if (wayPoints.isBlocking(pieces)) {
             throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
         }
-    }
-
-    private boolean isBlocking(final WayPoints wayPoints) {
-        return wayPoints.wayPoints()
-                .stream()
-                .anyMatch(this::existByPosition);
     }
 
     private void moveOrKill(final PiecePosition destination, final Piece from) {
