@@ -20,7 +20,7 @@ public final class MainController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int CURRENT_POSITION_INDEX = 1;
-    private static final int TARGET_INDEX_POSITION = 2;
+    private static final int TARGET_POSITION_INDEX = 2;
     private static final int ONLY_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
@@ -69,7 +69,7 @@ public final class MainController {
 
     private void movePiece(final List<String> inputs) {
         Position currentPosition = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
-        Position targetPosition = PositionConverter.toPosition(inputs.get(TARGET_INDEX_POSITION));
+        Position targetPosition = PositionConverter.toPosition(inputs.get(TARGET_POSITION_INDEX));
 
         board.movePiece(currentPosition, targetPosition);
     }
