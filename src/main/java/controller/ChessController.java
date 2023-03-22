@@ -16,13 +16,13 @@ public final class ChessController {
     public void run() {
         OutputView.printStartMessage();
         GameCommand gameCommand = receiveStartOrEndCommand(receiveGameCommand());
-        if (gameCommand.equals(GameCommand.START)) {
+        if (gameCommand == GameCommand.START) {
             startGame();
         }
     }
 
     private GameCommand receiveStartOrEndCommand(GameCommand gameCommand) {
-        while (!gameCommand.equals(GameCommand.START) && !gameCommand.equals(GameCommand.END)) {
+        while (gameCommand == GameCommand.MOVE) {
             OutputView.printNotStartedGameMessage();
             gameCommand = receiveGameCommand();
         }
@@ -40,7 +40,7 @@ public final class ChessController {
         List<String> userInput = InputView.readUserInput();
         GameCommand gameCommand = GameCommand.of(userInput.get(0));
 
-        while (!gameCommand.equals(GameCommand.END)) {
+        while (gameCommand != GameCommand.END) {
             executePlayingCommand(chessBoard, userInput);
             userInput = InputView.readUserInput();
             gameCommand = GameCommand.of(userInput.get(0));
@@ -50,11 +50,11 @@ public final class ChessController {
     private void executePlayingCommand(ChessBoard chessBoard, List<String> userInput) {
         GameCommand gameCommand = GameCommand.of(userInput.get(0));
 
-        if (gameCommand.equals(GameCommand.START)) {
+        if (gameCommand == GameCommand.START) {
             throw new IllegalArgumentException("[ERROR] 게임 진행 중에는 move와 end 명령어만 입력 가능합니다.");
         }
 
-        if (gameCommand.equals(GameCommand.MOVE)) {
+        if (gameCommand == GameCommand.MOVE) {
             executeMoveCommand(chessBoard, userInput);
         }
     }
