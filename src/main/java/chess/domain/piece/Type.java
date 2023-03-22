@@ -22,4 +22,8 @@ public enum Type {
         }
         return this.symbol;
     }
+
+    public boolean isKing() {
+        return this == KING;
+    }
 }

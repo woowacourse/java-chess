@@ -57,4 +57,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(type, side);
     }
+
+    public boolean isKing() {
+        return type.isKing();
+    }
 }

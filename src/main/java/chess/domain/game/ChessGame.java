@@ -27,10 +27,18 @@ public class ChessGame {
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
         checkTurn(source);
+        boolean kingDeath = board.isKing(target);
         final List<Position> movablePositions = board.findMovablePositions(source);
         checkMovable(movablePositions, target);
         board.move(source, target);
+        endGameIfKingDeath(kingDeath);
         changeTurn();
+    }
+
+    private void endGameIfKingDeath(final boolean flag) {
+        if (flag) {
+            end();
+        }
     }
 
     private void checkTurn(final Position source) {

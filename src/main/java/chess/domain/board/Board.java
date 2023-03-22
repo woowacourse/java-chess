@@ -54,4 +54,9 @@ public class Board {
     private static boolean isWhite(final Turn turn, final Piece piece) {
         return piece.isWhite() && turn.isWhite();
     }
+
+    public boolean isKing(final Position target) {
+        final Piece piece = board.get(target);
+        return piece.isKing();
+    }
 }
