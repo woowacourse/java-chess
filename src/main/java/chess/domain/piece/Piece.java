@@ -21,10 +21,6 @@ public abstract class Piece {
         return camp.isOpposite(otherPiece.camp);
     }
 
-    public boolean isNotMoveOrder(Camp otherCamp) {
-        return camp.isOpposite(otherCamp);
-    }
-
     public abstract boolean canMove(Square source, Square target);
 
     public abstract PieceType getPieceType();
