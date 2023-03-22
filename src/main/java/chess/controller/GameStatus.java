@@ -5,7 +5,8 @@ import chess.view.Command;
 public enum GameStatus {
 
     READY,
-    RUNNING;
+    RUNNING,
+    FORCE_QUIT;
 
     public void validateCommand(Command command) {
         if (this == READY && (command != Command.START)) {

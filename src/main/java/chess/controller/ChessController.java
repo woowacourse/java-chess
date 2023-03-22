@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static chess.controller.GameStatus.FORCE_QUIT;
 import static chess.controller.GameStatus.READY;
 import static chess.controller.GameStatus.RUNNING;
 
@@ -29,11 +30,12 @@ public class ChessController {
         actionMapper.put(Command.START, this::start);
         actionMapper.put(Command.MOVE, this::move);
         actionMapper.put(Command.END, this::end);
+        actionMapper.put(Command.FORCE_QUIT, this::forceQuit);
     }
 
     public void run() {
         OutputView.printGuideMessage();
-        while (true) {
+        while (gameStatus != FORCE_QUIT) {
             gameStatus = inputExceptionHandler.retryExecuteIfInputIllegal(InputView::requestGameCommand, this::execute);
         }
     }
@@ -66,6 +68,10 @@ public class ChessController {
         chessBoard = new ChessBoard(Camp.WHITE, Camp::transfer);
         OutputView.printGuideMessage();
         return READY;
+    }
+
+    private GameStatus forceQuit(CommandRequest commandRequest) {
+        return FORCE_QUIT;
     }
 
 }
