@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import domain.piece.Camp;
 import domain.piece.Piece;
 
 class ChessBoardTest {
@@ -107,4 +108,24 @@ class ChessBoardTest {
         assertThat(chessBoard.getBoard().get(targetSquare)).isEqualTo(piece);
     }
 
+    @Test
+    @DisplayName("board에 인자로 받은 캠프의 킹이 없으면 true를 반환한다.")
+    void isCapturedKing() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        boolean result = chessBoard.isCapturedKing(Camp.WHITE);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("board에 인자로 받은 캠프의 킹이 없으면 true를 반환한다.")
+    void isCapturedKingFalse() {
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.initialize();
+
+        boolean result = chessBoard.isCapturedKing(Camp.WHITE);
+
+        assertThat(result).isFalse();
+    }
 }

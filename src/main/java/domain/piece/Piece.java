@@ -3,6 +3,7 @@ package domain.piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -113,5 +114,22 @@ public abstract class Piece {
 
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return camp == piece.camp && type == piece.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp, type);
     }
 }

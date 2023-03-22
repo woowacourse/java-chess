@@ -144,4 +144,8 @@ public class ChessBoard {
     public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {
         return currentCamp.equals(board.get(currentSquare).getCamp());
     }
+
+    public boolean isCapturedKing(Camp camp) {
+        return !board.containsValue(new King(camp, KING));
+    }
 }
