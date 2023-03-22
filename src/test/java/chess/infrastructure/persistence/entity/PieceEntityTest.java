@@ -32,7 +32,7 @@ class PieceEntityTest {
                 () -> assertThat(pieceEntity.id()).isEqualTo(1L),
                 () -> assertThat(pieceEntity.rank()).isEqualTo(2),
                 () -> assertThat(pieceEntity.file()).isEqualTo('d'),
-                () -> assertThat(pieceEntity.movementType()).isEqualTo(KingMovementStrategy.class.getName()),
+                () -> assertThat(pieceEntity.movementType()).isEqualTo(KingMovementStrategy.class.getSimpleName()),
                 () -> assertThat(pieceEntity.chessGameId()).isEqualTo(2L)
         );
     }
@@ -40,7 +40,7 @@ class PieceEntityTest {
     @Test
     void Piece_를_생성할_수_있다() {
         // given
-        final PieceEntity pieceEntity = new PieceEntity(1L, 4, 'f', "BLACK", BlackPawnMovementStrategy.class.getName(), 1L);
+        final PieceEntity pieceEntity = new PieceEntity(1L, 4, 'f', "BLACK", BlackPawnMovementStrategy.class.getSimpleName(), 1L);
 
         // when
         final Piece piece = PieceMapper.toDomain(pieceEntity);

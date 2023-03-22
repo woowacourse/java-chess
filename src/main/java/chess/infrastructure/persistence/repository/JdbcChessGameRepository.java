@@ -12,7 +12,8 @@ import chess.infrastructure.persistence.mapper.PieceMapper;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class JdbcChessGameRepository implements ChessGameRepository {
 
@@ -31,7 +32,7 @@ public class JdbcChessGameRepository implements ChessGameRepository {
         chessGameDao.save(chessGameEntity);
         final List<PieceEntity> pieceEntities = pieces.stream()
                 .map(it -> PieceMapper.fromDomain(it, chessGameEntity.id()))
-                .collect(Collectors.toList());
+                .collect(toList());
         pieceDao.saveAll(pieceEntities);
         return ChessGameMapper.toDomain(chessGameEntity, pieceEntities);
     }
@@ -50,6 +51,6 @@ public class JdbcChessGameRepository implements ChessGameRepository {
         pieceDao.saveAllWithId(chessGame.pieces()
                 .stream()
                 .map(it -> PieceMapper.fromDomain(it, chessGame.id()))
-                .collect(Collectors.toList()));
+                .collect(toList()));
     }
 }

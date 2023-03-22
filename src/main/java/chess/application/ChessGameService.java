@@ -18,13 +18,14 @@ public class ChessGameService {
         return chessGameRepository.save(chessGame).id();
     }
 
-    public ChessGame findById(final Long id) {
-        return chessGameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾으시는 게임이 없습니다."));
-    }
-
     public void movePiece(final Long id, final PiecePosition source, final PiecePosition destination) {
-        final ChessGame chessGame = chessGameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾으시는 게임이 없습니다."));
+        final ChessGame chessGame = findById(id);
         chessGame.movePiece(source, destination);
         chessGameRepository.update(chessGame);
+    }
+
+    public ChessGame findById(final Long id) {
+        return chessGameRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("찾으시는 게임이 없습니다."));
     }
 }
