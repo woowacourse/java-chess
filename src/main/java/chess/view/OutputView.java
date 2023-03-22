@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.game.Board;
 import chess.domain.game.Position;
 import chess.domain.piece.*;
 
@@ -23,28 +22,26 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(Board board) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-
+    public void printBoard(Map<Position, Piece> board) {
         for (int rank = MAX_RANK; rank >= MIN_RANK; rank--) {
-            iterateFile(chessBoard, rank);
+            iterateFile(board, rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private void iterateFile(Map<Position, Piece> chessBoard, int rank) {
+    private void iterateFile(Map<Position, Piece> board, int rank) {
         for (int file = MIN_FILE; file <= MAX_FILE; file++) {
-            printBoardUnit(chessBoard, rank, file);
+            printBoardUnit(board, rank, file);
         }
     }
 
-    private void printBoardUnit(Map<Position, Piece> chessBoard, int rank, int file) {
-        if (!chessBoard.containsKey(new Position(rank, file))) {
+    private void printBoardUnit(Map<Position, Piece> board, int rank, int file) {
+        if (!board.containsKey(new Position(rank, file))) {
             System.out.print(EMPTY_PIECE);
         }
-        if (chessBoard.containsKey(new Position(rank, file))) {
-            Piece piece = chessBoard.get(new Position(rank, file));
+        if (board.containsKey(new Position(rank, file))) {
+            Piece piece = board.get(new Position(rank, file));
             printPiece(piece);
         }
     }
