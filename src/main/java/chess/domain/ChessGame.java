@@ -25,6 +25,7 @@ public class ChessGame {
         chessBoard.move(source, dest, teamColor);
         if (chessBoard.isKingDead()) {
             isPlaying = false;
+            return;
         }
         teamColor = teamColor.transfer();
     }

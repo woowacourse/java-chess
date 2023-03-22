@@ -41,7 +41,7 @@ class ChessGameTest {
     void 우승팀_안내() {
         chessGame.move(Position.from("A2"), Position.from("C4"));
 
-        assertThat(chessGame.findWinningTeam()).isEqualTo(TeamColor.BLACK);
+        assertThat(chessGame.findWinningTeam()).isEqualTo(TeamColor.WHITE);
     }
 
     @DisplayName("King 을 잡지 않았다면 우승팀 반환 요청 시, 예외가 발생한다.")
