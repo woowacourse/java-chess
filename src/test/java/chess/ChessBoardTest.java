@@ -101,7 +101,7 @@ public class ChessBoardTest {
         for (int i = 3; i <= 8; i++) {
             for (int j = 3; j <= 6; j++) {
                 assertThat(chessBoard.getChessBoard().get(Position.initPosition(i, j)).getShape())
-                        .isEqualTo(Shape.BLANK);
+                        .isEqualTo(Shape.EMPTY);
             }
         }
     }

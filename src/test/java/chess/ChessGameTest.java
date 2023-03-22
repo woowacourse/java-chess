@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.ChessPiece;
+import chess.piece.Knight;
 import chess.piece.Shape;
 import chess.piece.Side;
+import chess.position.MovablePosition;
 import chess.position.Position;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -39,7 +41,7 @@ class ChessGameTest {
 
         chessGame.removeChessPiece(sourcePosition);
 
-        assertThat(chessBoard.getChessPieceByPosition(sourcePosition).getShape()).isEqualTo(Shape.BLANK);
+        assertThat(chessBoard.getChessPieceByPosition(sourcePosition).getShape()).isEqualTo(Shape.EMPTY);
     }
 
     @Test
@@ -48,7 +50,7 @@ class ChessGameTest {
 
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        ChessPiece knight = new ChessPiece(Shape.KNIGHT, Side.BLACK);
+        ChessPiece knight = new Knight(Shape.KNIGHT, Side.BLACK);
         Position targetPosition = Position.initPosition(1, 3);
 
         chessGame.copyChessPiece(knight, targetPosition);
@@ -63,8 +65,9 @@ class ChessGameTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         Position targetPosition = Position.initPosition(5, 5);
-        List<Position> movablePosition = List.of(Position.initPosition(3, 3), Position.initPosition(1, 3),
-                Position.initPosition(2, 2), Position.initPosition(2, 4));
+        MovablePosition movablePosition = new MovablePosition(
+                List.of(Position.initPosition(3, 3), Position.initPosition(1, 3),
+                        Position.initPosition(2, 2), Position.initPosition(2, 4)));
 
         Assertions.assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
                 .isInstanceOf(IllegalArgumentException.class)

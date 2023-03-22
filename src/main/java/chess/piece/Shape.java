@@ -8,7 +8,7 @@ public enum Shape {
     ROOK("r", "R"),
     QUEEN("q", "Q"),
     KING("k", "K"),
-    BLANK(".", ".");
+    EMPTY(".", ".");
 
     private final String whiteName;
     private final String blackName;

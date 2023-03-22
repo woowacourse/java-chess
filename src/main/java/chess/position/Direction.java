@@ -6,8 +6,10 @@ import java.util.List;
 public enum Direction {
     EAST(Position.initPosition(1, 0)),
     NORTH(Position.initPosition(0, 1)),
+    NORTH_NORTH(Position.initPosition(0, 2)),
     WEST(Position.initPosition(-1, 0)),
     SOUTH(Position.initPosition(0, -1)),
+    SOUTH_SOUTH(Position.initPosition(0, -2)),
     EAST_NORTH(Position.initPosition(1, 1)),
     WEST_NORTH(Position.initPosition(-1, 1)),
     EAST_SOUTH(Position.initPosition(1, -1)),
@@ -23,15 +25,18 @@ public enum Direction {
 
     private final Position direction;
 
+
     Direction(Position direction) {
         this.direction = direction;
     }
 
-    public static final List<Position> WHITE_PAWN_MOVE_DIRECTION
-            = List.of(NORTH.direction);
+    public static final List<Position> WHITE_PAWN_MOVE_DIRECTION = List.of(NORTH.direction);
 
-    public static final List<Position> BLACK_PAWN_MOVE_DIRECTION
-            = List.of(SOUTH.direction);
+    public static final List<Position> BLACK_PAWN_MOVE_DIRECTION = List.of(SOUTH.direction);
+
+    public static final List<Position> WHITE_PAWN_FIRST_MOVE_DIRECTION = List.of(NORTH_NORTH.direction);
+
+    public static final List<Position> BLACK_PAWN_FIRST_MOVE_DIRECTION = List.of(SOUTH_SOUTH.direction);
 
     public static final List<Position> WHITE_PAWN_CATCH_DIRECTION
             = Arrays.asList(EAST_NORTH.direction, WEST_NORTH.direction);

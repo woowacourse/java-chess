@@ -1,8 +1,11 @@
 package chess.piece;
 
+import chess.ChessBoard;
+import chess.position.MovablePosition;
+import chess.position.Position;
 import java.util.Objects;
 
-public class ChessPiece {
+public abstract class ChessPiece {
 
     private final Shape shape;
     private final Side side;
@@ -10,6 +13,12 @@ public class ChessPiece {
     public ChessPiece(Shape shape, Side side) {
         this.shape = shape;
         this.side = side;
+    }
+
+    public abstract MovablePosition findMovableRoute(ChessBoard chessBoard, Position sourcePosition);
+
+    public boolean isEqualSide(ChessPiece chessPiece) {
+        return side.equals(chessPiece.getSide());
     }
 
     public String getName() {

@@ -1,14 +1,19 @@
 package chess;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.piece.ChessPiece;
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Queen;
+import chess.piece.Rook;
 import chess.piece.Shape;
 import chess.piece.Side;
 import chess.position.Position;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,19 +27,18 @@ class ChessPieceTest {
     @DisplayName("각 기물들이 올바르게 생성된다.")
     void shouldSuccessGeneratePieces() {
         assertSoftly(softly -> {
-            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.KING, Side.WHITE));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.QUEEN, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.QUEEN, Side.WHITE));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.KNIGHT, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.KNIGHT, Side.WHITE));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.BISHOP, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.BISHOP, Side.WHITE));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.ROOK, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.ROOK, Side.WHITE));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.PAWN, Side.BLACK));
-            assertDoesNotThrow(() -> new ChessPiece(Shape.PAWN, Side.WHITE));
+            assertDoesNotThrow(() -> new King(Shape.KING, Side.BLACK));
+            assertDoesNotThrow(() -> new King(Shape.KING, Side.WHITE));
+            assertDoesNotThrow(() -> new Queen(Shape.QUEEN, Side.BLACK));
+            assertDoesNotThrow(() -> new Queen(Shape.QUEEN, Side.WHITE));
+            assertDoesNotThrow(() -> new Knight(Shape.KNIGHT, Side.BLACK));
+            assertDoesNotThrow(() -> new Knight(Shape.KNIGHT, Side.WHITE));
+            assertDoesNotThrow(() -> new Bishop(Shape.BISHOP, Side.BLACK));
+            assertDoesNotThrow(() -> new Bishop(Shape.BISHOP, Side.WHITE));
+            assertDoesNotThrow(() -> new Rook(Shape.ROOK, Side.BLACK));
+            assertDoesNotThrow(() -> new Rook(Shape.ROOK, Side.WHITE));
+            assertDoesNotThrow(() -> new Pawn(Shape.PAWN, Side.BLACK));
+            assertDoesNotThrow(() -> new Pawn(Shape.PAWN, Side.WHITE));
         });
     }
 
@@ -45,7 +49,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -56,7 +60,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
@@ -71,7 +75,7 @@ class ChessPieceTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         chessGame.removeChessPiece(Position.of("a2"));
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -82,7 +86,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
@@ -96,7 +100,7 @@ class ChessPieceTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         chessGame.removeChessPiece(Position.of("d2"));
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -107,7 +111,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
@@ -123,7 +127,7 @@ class ChessPieceTest {
         ChessController chessController = new ChessController(chessBoard, chessGame);
         chessController.moveChessPieceByCondition(List.of("move", "b2", "b3"), Side.WHITE);
         chessController.moveChessPieceByCondition(List.of("move", "b7", "b6"), Side.BLACK);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -134,7 +138,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
@@ -149,7 +153,7 @@ class ChessPieceTest {
         chessGame.removeChessPiece(Position.of("d2"));
         chessGame.removeChessPiece(Position.of("c2"));
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -160,7 +164,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
@@ -176,7 +180,7 @@ class ChessPieceTest {
         chessGame.removeChessPiece(Position.of("e2"));
         chessGame.removeChessPiece(Position.of("f2"));
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side));
     }
 
@@ -187,7 +191,7 @@ class ChessPieceTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         ChessController chessController = new ChessController(chessBoard, chessGame);
-        org.assertj.core.api.Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                         () -> chessController.moveChessPieceByCondition(List.of("move", source, target), side))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(OUT_OF_CHESS_BOUND_ERROR);
