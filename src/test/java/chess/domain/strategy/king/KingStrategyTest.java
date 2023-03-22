@@ -18,53 +18,59 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class KingStrategyTest {
 
-    @DisplayName("모든 방향으로 한 칸 이동할 수 있다.")
     @ParameterizedTest
     @CsvSource({"3,e", "4,e", "5,e", "3,f", "5,f", "3,g", "4,g", "5,g"})
+    @DisplayName("모든 방향으로 한 칸 이동할 수 있다.")
     void canMove(int rank, char filter) {
         //given
         List<Position> piecesExist = List.of(Position.from(4, 'f'));
-        //when
+
         MoveRequest moveRequest = MoveRequest.from(
                 piecesExist,
                 Color.WHITE,
                 new PositionDto(Position.from(4, 'f')),
-                new PositionDto(Position.from(rank, filter)));;
-        //then
+                new PositionDto(Position.from(rank, filter))
+        );
+
+
+        // when, then
         assertDoesNotThrow(()-> new KingStrategy().validateDirection(moveRequest));
     }
 
-    @DisplayName("한 칸 이상 움직일 수 없다.")
     @Nested
+    @DisplayName("한 칸 이상 움직일 수 없다.")
     class InvalidDistance {
 
-        @DisplayName("두 칸 위로 움직이기")
         @Test
+        @DisplayName("두 칸 위로 움직이기")
         void twoUp() {
             //given
             List<Position> piecesExist = List.of(Position.from(4, 'd'));
-            //when
+
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(6, 'd')));
-            //then
+
+
+            // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
 
-        @DisplayName("두 칸 아래로 움직이기")
         @Test
+        @DisplayName("두 칸 아래로 움직이기")
         void twoBack() {
             //given
             List<Position> piecesExist = List.of(Position.from(4, 'd'));
-            //when
+
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(2, 'd')));
-            //then
+
+            // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
 
@@ -73,13 +79,14 @@ class KingStrategyTest {
         void twoDiagonal() {
             //given
             List<Position> piecesExist = List.of(Position.from(4, 'f'));
-            //when
+
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(2, 'd')));
-            //then
+
+            // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
 
@@ -88,13 +95,14 @@ class KingStrategyTest {
         void twoLeft() {
             //given
             List<Position> piecesExist = List.of(Position.from(4, 'f'));
-            //when
+
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(4, 'a')));
-            //then
+
+            // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
 
@@ -103,13 +111,14 @@ class KingStrategyTest {
         void twoRight() {
             //given
             List<Position> piecesExist = List.of(Position.from(4, 'f'));
-            //when
+
             MoveRequest moveRequest = MoveRequest.from(
                     piecesExist,
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'f')),
                     new PositionDto(Position.from(4, 'h')));
-            //then
+
+            // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
     }
