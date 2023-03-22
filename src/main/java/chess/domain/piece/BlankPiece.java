@@ -18,12 +18,8 @@ public class BlankPiece extends Piece {
     }
 
     public static BlankPiece of(final Position position) {
-        if (blankPieceCache.containsKey(position)) {
-            return blankPieceCache.get(position);
-        }
-        final BlankPiece blankPiece = new BlankPiece(position);
-        blankPieceCache.put(position, blankPiece);
-        return blankPiece;
+        blankPieceCache.putIfAbsent(position, new BlankPiece(position));
+        return blankPieceCache.get(position);
     }
 
     @Override

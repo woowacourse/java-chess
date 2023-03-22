@@ -23,12 +23,8 @@ public class Position {
 
     public static Position of(final File file, final Rank rank) {
         final String fileRankCode = file.getCode() + rank.getCode();
-        if (positionCache.containsKey(fileRankCode)) {
-            return positionCache.get(fileRankCode);
-        }
-        final Position position = new Position(file, rank);
-        positionCache.put(fileRankCode, position);
-        return position;
+        positionCache.putIfAbsent(fileRankCode, new Position(file, rank));
+        return positionCache.get(fileRankCode);
     }
 
     public boolean isInCrossPosition(final Position otherPosition) {
