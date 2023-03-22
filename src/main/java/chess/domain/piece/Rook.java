@@ -2,22 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final List<Move> possibleMoves = makePossibleMove();
+    private static final List<Move> POSSIBLE_MOVES = List.of(Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
 
-    public Rook(final Camp camp) {
+    public Rook(Camp camp) {
         super(camp, Role.ROOK);
     }
 
-    private static List<Move> makePossibleMove() {
-        return new ArrayList<>(List.of(Move.values()).subList(0, 4));
-    }
-
     @Override
-    public boolean isMovable(final Square source, final Square target, final Move move) {
-        return possibleMoves.contains(move);
+    public boolean isMovable(Square source, Square target, Move move) {
+        return POSSIBLE_MOVES.contains(move);
     }
 }

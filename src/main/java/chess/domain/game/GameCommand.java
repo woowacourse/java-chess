@@ -6,25 +6,25 @@ import chess.domain.board.Square;
 import java.util.List;
 
 public class GameCommand {
-    private enum gameCommandIndex {
+    private enum GameCommandIndex {
         COMMAND(0),
         SOURCE(1),
         TARGET(2);
 
         private final int index;
 
-        gameCommandIndex(int index) {
+        GameCommandIndex(int index) {
             this.index = index;
         }
     }
 
-    private enum moveIndex {
+    private enum MoveIndex {
         FILE(0),
         RANK(1);
 
         private final int index;
 
-        moveIndex(int index) {
+        MoveIndex(int index) {
             this.index = index;
         }
     }
@@ -43,13 +43,13 @@ public class GameCommand {
     }
 
     private void validateGameCommand(List<String> gameCommand) {
-        String command = gameCommand.get(gameCommandIndex.COMMAND.index);
+        String command = gameCommand.get(GameCommandIndex.COMMAND.index);
         boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
         if (isCommandMove) {
             validateMoveCommand(
-                    gameCommand.get(gameCommandIndex.SOURCE.index),
-                    gameCommand.get(gameCommandIndex.TARGET.index)
+                    gameCommand.get(GameCommandIndex.SOURCE.index),
+                    gameCommand.get(GameCommandIndex.TARGET.index)
             );
             return;
         }
@@ -66,22 +66,22 @@ public class GameCommand {
     }
 
     public boolean isStart() {
-        return gameCommand.get(gameCommandIndex.COMMAND.index).equals(START_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
     }
 
     public boolean isMove() {
-        return gameCommand.get(gameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
     }
 
     public List<Square> convertToSquare() {
-        String source = gameCommand.get(gameCommandIndex.SOURCE.index);
-        String target = gameCommand.get(gameCommandIndex.TARGET.index);
+        String source = gameCommand.get(GameCommandIndex.SOURCE.index);
+        String target = gameCommand.get(GameCommandIndex.TARGET.index);
 
-        File sourceFile = File.findFileByLetter(source.charAt(moveIndex.FILE.index));
-        Rank sourceRank = Rank.findRankByLetter(source.charAt(moveIndex.RANK.index));
+        File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
+        Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
 
-        File targetFile = File.findFileByLetter(target.charAt(moveIndex.FILE.index));
-        Rank targetRank = Rank.findRankByLetter(target.charAt(moveIndex.RANK.index));
+        File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
+        Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
 
         return List.of(new Square(sourceFile, sourceRank), new Square(targetFile, targetRank));
     }
