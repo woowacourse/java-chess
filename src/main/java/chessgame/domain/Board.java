@@ -77,7 +77,7 @@ public class Board {
         int eachFileMove = target.eachFileMove(source);
         int eachRankMove = target.eachRankMove(source);
         int distance = target.calculateDistance(source);
-        while (distance-- > 0) {
+        while (distance-- > 1) {
             point = point.move(eachFileMove, eachRankMove);
             if (isBlockedPiece(point)) {
                 return false;
