@@ -16,6 +16,9 @@ import java.util.Map;
 
 public class BoardUtil {
 
+    private static final int POSITION_INDEX = 0;
+    private static final int PIECE_INDEX = 1;
+
     public List<String> compressBoard(final Map<Position, Piece> board) {
         StringBuilder positions = new StringBuilder();
         StringBuilder pieces = new StringBuilder();
@@ -32,8 +35,8 @@ public class BoardUtil {
     public Map<Position, Piece> unCompressBoard(final List<String> compressedBoard) {
         Map<Position, Piece> chessBoard = new HashMap<>();
 
-        String positions = compressedBoard.get(0);
-        String pieces = compressedBoard.get(1);
+        String positions = compressedBoard.get(POSITION_INDEX);
+        String pieces = compressedBoard.get(PIECE_INDEX);
 
         for (int i = 0; i < positions.length(); i += 2) {
             String rawPosition = positions.substring(i, i + 2);

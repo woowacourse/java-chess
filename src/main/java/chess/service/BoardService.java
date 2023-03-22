@@ -11,13 +11,16 @@ import java.util.Map;
 
 public class BoardService {
 
+    private static final int POSITION_INDEX = 0;
+    private static final int PIECE_INDEX = 1;
+
     private final BoardDao boardDao = new BoardDao();
     private final BoardUtil boardUtil = new BoardUtil();
 
     public void save(final int boardId, final Map<Position, Piece> board, final boolean isLowerTeamTurn) {
         List<String> compressedBoard = boardUtil.compressBoard(board);
-        String compressedPosition = compressedBoard.get(0);
-        String compressedPiece = compressedBoard.get(1);
+        String compressedPosition = compressedBoard.get(POSITION_INDEX);
+        String compressedPiece = compressedBoard.get(PIECE_INDEX);
 
         boardDao.save(boardId, compressedPosition, compressedPiece, isLowerTeamTurn);
     }
