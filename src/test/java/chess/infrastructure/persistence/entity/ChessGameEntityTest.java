@@ -29,7 +29,7 @@ class ChessGameEntityTest {
 
         // then
         assertAll(
-                () -> assertThat(chessGameEntity.id()).isNotNull(),
+                () -> assertThat(chessGameEntity.id()).isNull(),
                 () -> assertThat(chessGameEntity.state()).isEqualTo("MovePiece"),
                 () -> assertThat(chessGameEntity.turn()).isEqualTo("WHITE"),
                 () -> assertThat(chessGameEntity.winner()).isNull()

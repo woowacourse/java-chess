@@ -9,14 +9,11 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 public class ChessGameEntity {
 
-    private static final AtomicLong idGen = new AtomicLong(1L);
-
-    private final Long id;
+    private Long id;
     private final String state;
     private final String turn;
     private final String winner;
@@ -32,7 +29,7 @@ public class ChessGameEntity {
         if (chessGame.state() instanceof MovePiece) {
             final MovePiece state = (MovePiece) chessGame.state();
             return new ChessGameEntity(
-                    genId(chessGame),
+                    chessGame.id(),
                     state.getClass().getSimpleName(),
                     state.turn().color().name(),
                     null
@@ -40,19 +37,11 @@ public class ChessGameEntity {
         }
         final EndGame state = (EndGame) chessGame.state();
         return new ChessGameEntity(
-                genId(chessGame),
+                chessGame.id(),
                 state.getClass().getSimpleName(),
                 null,
                 state.winColor().name()
         );
-    }
-
-    private static Long genId(final ChessGame chessGame) {
-        Long id = chessGame.id();
-        if (id != null) {
-            return id;
-        }
-        return idGen.getAndIncrement();
     }
 
     public ChessGame toDomain(final List<PieceEntity> pieceEntities) {
@@ -67,6 +56,10 @@ public class ChessGameEntity {
 
         final MovePiece movePiece = new MovePiece(new Turn(Color.valueOf(turn)));
         return new ChessGame(id, ChessBoard.from(pieces), movePiece);
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     public Long id() {

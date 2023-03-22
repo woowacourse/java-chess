@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("PieceDao 는")
 class PieceDaoTest {
 
-    private final Long chessGameId = 10L;
+    private Long chessGameId;
     private final PieceDao pieceDao = new PieceDao();
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
@@ -38,7 +38,9 @@ class PieceDaoTest {
     void setUp() {
         pieceDao.deleteAll();
         chessGameDao.deleteAll();
-        chessGameDao.save(new ChessGameEntity(chessGameId, "MovePiece", "WHITE", null));
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", "WHITE", null);
+        chessGameDao.save(chessGameEntity);
+        chessGameId = chessGameEntity.id();
     }
 
     @AfterEach

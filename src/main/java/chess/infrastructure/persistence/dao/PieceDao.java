@@ -17,6 +17,28 @@ public class PieceDao {
         final String sql = "INSERT INTO piece(id, pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            Long id = getId();
+            for (final PieceEntity pieceEntity : pieceEntities) {
+                preparedStatement.setString(1, id.toString());
+                preparedStatement.setString(2, String.valueOf(pieceEntity.rank()));
+                preparedStatement.setString(3, String.valueOf(pieceEntity.file()));
+                preparedStatement.setString(4, pieceEntity.color());
+                preparedStatement.setString(5, pieceEntity.movementType());
+                preparedStatement.setString(6, pieceEntity.chessGameId().toString());
+                preparedStatement.addBatch();
+                pieceEntity.setId(id);
+                id++;
+            }
+            preparedStatement.executeBatch();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void mergeAll(final List<PieceEntity> pieceEntities) {
+        final String sql = "INSERT INTO piece(id, pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?, ?)";
+        try (final Connection connection = connection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             for (final PieceEntity pieceEntity : pieceEntities) {
                 preparedStatement.setString(1, pieceEntity.id().toString());
                 preparedStatement.setString(2, String.valueOf(pieceEntity.rank()));
@@ -27,6 +49,20 @@ public class PieceDao {
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Long getId() {
+        final String query = "SELECT COUNT(*) FROM piece";
+        try (final Connection connection = connection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new RuntimeException();
+            }
+            return resultSet.getLong(1);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

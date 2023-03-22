@@ -7,13 +7,9 @@ import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class PieceEntity {
 
-    private static final AtomicLong idGen = new AtomicLong(1L);
-
-    private final Long id;
+    private Long id;
     private final int rank;
     private final char file;
     private final String color;
@@ -31,21 +27,13 @@ public class PieceEntity {
 
     public static PieceEntity fromDomain(final Piece piece, final Long chessGameId) {
         return new PieceEntity(
-                genId(piece),
+                piece.id(),
                 piece.piecePosition().rank().value(),
                 piece.piecePosition().file().value(),
                 piece.color().name(),
                 piece.pieceMovementStrategy().getClass().getName(),
                 chessGameId
         );
-    }
-
-    private static Long genId(final Piece piece) {
-        final Long id = piece.id();
-        if (id != null) {
-            return id;
-        }
-        return idGen.getAndIncrement();
     }
 
     public Piece toDomain() {
@@ -64,6 +52,10 @@ public class PieceEntity {
         } catch (Exception e) {
             throw new RuntimeException("피스 생성 중 문제 발생", e);
         }
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     public Long id() {

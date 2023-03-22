@@ -16,11 +16,27 @@ public class ChessGameDao {
         final String sql = "INSERT INTO chess_game(id, state, turn, winner) VALUES (?, ?, ?, ?)";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, chessGameEntity.id().toString());
+            final Long id = getId();
+            preparedStatement.setString(1, id.toString());
             preparedStatement.setString(2, chessGameEntity.state());
             preparedStatement.setString(3, chessGameEntity.turn());
             preparedStatement.setString(4, chessGameEntity.winner());
             preparedStatement.executeUpdate();
+            chessGameEntity.setId(id);
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Long getId() {
+        final String query = "SELECT COUNT(*) FROM chess_game";
+        try (final Connection connection = connection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new RuntimeException();
+            }
+            return resultSet.getLong(1);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
