@@ -12,12 +12,10 @@ import java.util.List;
 public class Pawn extends Piece {
 
     private final List<MovePattern> movePatterns;
-    private boolean moved;
 
     public Pawn(final Type type, final Side side) {
         super(type, side);
         this.movePatterns = initMovePatterns(side);
-        this.moved = false;
     }
 
     private List<MovePattern> initMovePatterns(final Side side) {

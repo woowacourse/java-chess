@@ -23,14 +23,6 @@ public abstract class Piece {
         return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 
-    public boolean isPawn() {
-        return false;
-    }
-
-    public void changePawnMoved() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
-    }
-
     public String getName() {
         return type.getSymbol(side);
     }

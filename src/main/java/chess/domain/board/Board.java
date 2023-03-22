@@ -40,12 +40,4 @@ public class Board {
     public List<Position> findMovablePositions(final Position source) {
         return getPiece(source).findMovablePositions(source, this);
     }
-
-    public boolean isPawn(final Position source) {
-        return getPiece(source).isPawn();
-    }
-
-    public void changePawnMoved(final Position source) {
-        getPiece(source).changePawnMoved();
-    }
 }

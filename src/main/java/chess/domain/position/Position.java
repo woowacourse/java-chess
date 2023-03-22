@@ -3,9 +3,12 @@ package chess.domain.position;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Position {
+
+    private static final List<Integer> DOUBLE_POSITIONS = List.of(2, 7);
 
     private static final Map<Integer, Position> CACHE;
 
@@ -47,12 +50,8 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
+    public boolean isDoubleMovePosition() {
+        return DOUBLE_POSITIONS.stream().anyMatch(position -> position == getRankIndex());
     }
 
     public int getFileIndex() {
