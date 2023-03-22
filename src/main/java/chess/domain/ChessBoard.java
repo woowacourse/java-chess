@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -17,17 +18,17 @@ public class ChessBoard {
 
     public void movePieceOn(Position fromPosition, Position toPosition) {
         board.put(toPosition, board.get(fromPosition));
-        board.remove(fromPosition);
+        board.put(fromPosition, new Empty());
     }
 
     public Piece choicePiece(Position position) {
         return board.get(position);
     }
 
-    public List<Boolean> choiceBetweenPiece(List<Position> betweenPosition) {
-        List<Boolean> betweenPiece = new ArrayList<>();
+    public List<Piece> choiceBetweenPiece(List<Position> betweenPosition) {
+        List<Piece> betweenPiece = new ArrayList<>();
         for (Position position : betweenPosition) {
-            betweenPiece.add(isEmpty(position));
+            betweenPiece.add(board.get(position));
         }
         return betweenPiece;
     }

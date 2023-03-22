@@ -28,7 +28,7 @@ public final class ChessGame {
         path.judgeBetweenStuck(
                 chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
                 pieceMove);
-        validateLastMovable(chessBoard.isEmpty(toPosition), pieceMove, true);
+        validateLastMovable(chessBoard.choicePiece(toPosition), pieceMove, true);
 
         chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
@@ -74,8 +74,8 @@ public final class ChessGame {
         }
     }
 
-    public void validateLastMovable(boolean isEmpty, PieceMove pieceMove, boolean lastPiece) {
-        if (!pieceMove.isMovable(isEmpty, lastPiece)) {
+    public void validateLastMovable(Piece piece, PieceMove pieceMove, boolean lastPiece) {
+        if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }

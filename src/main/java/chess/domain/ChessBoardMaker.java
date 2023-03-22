@@ -14,6 +14,7 @@ public final class ChessBoardMaker {
         Map<Position, Piece> board = new LinkedHashMap<>();
         makeNobility(board);
         makePawn(board);
+        makeEmpty(board);
         return new ChessBoard(board);
     }
 
@@ -38,9 +39,22 @@ public final class ChessBoardMaker {
         board.put(Position.of(File.H, rank), new Rook(camp));
     }
 
+    private static void makeEmpty(Map<Position, Piece> board) {
+        setUpBlank(board, Rank.SIX);
+        setUpBlank(board, Rank.FIVE);
+        setUpBlank(board, Rank.FOUR);
+        setUpBlank(board, Rank.THREE);
+    }
+
     private static void setUpPawn(Map<Position, Piece> board, Rank rank, Camp camp) {
         for (File file : File.values()) {
             board.put(Position.of(file, rank), new Pawn(camp));
+        }
+    }
+
+    private static void setUpBlank(Map<Position, Piece> board, Rank rank) {
+        for (File file : File.values()) {
+            board.put(Position.of(file, rank), new Empty());
         }
     }
 }

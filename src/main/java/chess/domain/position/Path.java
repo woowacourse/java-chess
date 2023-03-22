@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.piece.Piece;
 import chess.domain.position.move.PieceMove;
 
 import java.util.ArrayList;
@@ -30,14 +31,14 @@ public class Path {
         return between;
     }
 
-    public void judgeBetweenStuck(List<Boolean> betweenPieces, PieceMove pieceMove) {
-        for (boolean isPieceExist : betweenPieces) {
-            validateMovable(isPieceExist, pieceMove, false);
+    public void judgeBetweenStuck(List<Piece> betweenPieces, PieceMove pieceMove) {
+        for (Piece piece : betweenPieces) {
+            validateMovable(piece, pieceMove, false);
         }
     }
 
-    public void validateMovable(boolean isEmpty, PieceMove pieceMove, boolean lastPiece) {
-        if (!pieceMove.isMovable(isEmpty, lastPiece)) {
+    public void validateMovable(Piece piece, PieceMove pieceMove,boolean lastPiece) {
+        if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }
