@@ -96,5 +96,35 @@ class ChessGameTest {
 				() -> chessGame.movePiece(F8, A3));
 			assertEquals("말이 이동하려는 방향에 장애물이 있습니다.", e.getMessage());
 		}
+
+		/*
+		아래 상태에서 흑팀 퀸(Q)이 킹을 잡고 이후로 추가 움직임을 시도해 오류가 발생한다.
+		RNB.KBNR
+		PPPP.PPP
+		.....p..
+		....P...
+		.......Q
+		........
+		ppppp.pp
+		rnbqkbnr
+		 */
+		@Test
+		@DisplayName("폰의 두 칸 이동 및 퀸이 이동하여 킹을 잡은 뒤 추가로 움직임 시 예외 발생 테스트")
+		void gameFlowTest3() {
+			chessGame.initialize();
+
+			assertDoesNotThrow(() -> {
+				chessGame.movePiece(F2, F4);
+				chessGame.movePiece(E7, E5);
+				chessGame.movePiece(F4, F5);
+				chessGame.movePiece(D8, H4);
+				chessGame.movePiece(F5, F6);
+				chessGame.movePiece(H4, E1);
+			});
+
+			Exception e = assertThrows(IllegalStateException.class,
+				() -> chessGame.movePiece(A2, A4));
+			assertEquals("현재 상태에서 불가능한 명령입니다.", e.getMessage());
+		}
 	}
 }

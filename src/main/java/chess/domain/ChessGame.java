@@ -26,6 +26,9 @@ public class ChessGame {
 	public void movePiece(Position source, Position target) {
 		assertState(GameState.GAME_RUNNING);
 		board.checkIsMovable(team, source, target);
+		if (board.isKingPosition(target)) {
+			changeState(GameState.GAME_END);
+		}
 		board.movePiece(team, source, target);
 		alternateTeam();
 	}
@@ -39,7 +42,7 @@ public class ChessGame {
 	}
 
 	public Map<Position, Piece> getBoard() {
-		assertState(GameState.GAME_RUNNING);
+		assertState(GameState.GAME_RUNNING, GameState.GAME_END);
 		return board.getBoard();
 	}
 
