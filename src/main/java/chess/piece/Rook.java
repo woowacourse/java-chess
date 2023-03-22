@@ -19,7 +19,6 @@ public class Rook extends Piece {
         if (from.getFile() == to.getFile()) {
             return true;
         }
-
         throw new IllegalArgumentException("Rook이 이동할 수 없는 경로입니다.");
     }
 

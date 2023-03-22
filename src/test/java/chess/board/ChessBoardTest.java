@@ -379,7 +379,7 @@ class ChessBoardTest {
     @Test
     void 체스판은_64개의_칸을_가진다() {
         //given
-        ChessBoard chessBoard = ChessBoard.createBoard();
+        ChessBoard chessBoard = new ChessBoard();
         //when & then
         assertThat(chessBoard.getPiecePosition().size())
                 .isEqualTo(64);
@@ -393,7 +393,7 @@ class ChessBoardTest {
         void 폰의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -406,7 +406,7 @@ class ChessBoardTest {
         void 룩의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -419,7 +419,7 @@ class ChessBoardTest {
         void 나이트의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -432,7 +432,7 @@ class ChessBoardTest {
         void 비숍의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -444,7 +444,7 @@ class ChessBoardTest {
         void 퀸의_초기_위치는_D1_이다() {
             //given
             Position position = FixturePosition.D1;
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -456,7 +456,7 @@ class ChessBoardTest {
         void 킹의_초기_위치는_E1_이다() {
             //given
             Position position = FixturePosition.E1;
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -474,7 +474,7 @@ class ChessBoardTest {
         void 폰의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -487,7 +487,7 @@ class ChessBoardTest {
         void 룩의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -500,7 +500,7 @@ class ChessBoardTest {
         void 나이트의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -513,7 +513,7 @@ class ChessBoardTest {
         void 비숍의_초기_위치는_(File file, Rank rank) {
             //given
             Position position = new Position(file, rank);
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -525,7 +525,7 @@ class ChessBoardTest {
         void 퀸의_초기_위치는_D1_이다() {
             //given
             Position position = FixturePosition.D8;
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
@@ -537,7 +537,7 @@ class ChessBoardTest {
         void 킹의_초기_위치는_E8_이다() {
             //given
             Position position = FixturePosition.E8;
-            ChessBoard chessBoard = ChessBoard.createBoard();
+            ChessBoard chessBoard = new ChessBoard();
 
             //when & then
             Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();

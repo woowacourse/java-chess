@@ -9,7 +9,7 @@ public class ChessGame {
     private boolean isProcessing;
 
     public ChessGame() {
-        this.chessBoard = ChessBoard.createBoard();
+        this.chessBoard = new ChessBoard();
         this.isProcessing = false;
     }
 
