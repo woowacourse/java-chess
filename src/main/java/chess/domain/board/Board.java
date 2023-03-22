@@ -199,7 +199,7 @@ public class Board {
 
     public boolean isKingDead() {
         int countOfKing = (int) board.values().stream()
-                .filter(piece -> piece.isKing())
+                .filter(Piece::isKing)
                 .count();
 
         return countOfKing == ONE_OF_KING_IS_DEAD;
@@ -207,7 +207,7 @@ public class Board {
 
     public boolean isUpperTeamWin() {
         Piece kingOfWinner = board.values().stream()
-                .filter(piece -> piece.isKing())
+                .filter(Piece::isKing)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
 
