@@ -1,19 +1,18 @@
-package chess.game;
+package chess.gamecommand;
 
 import java.util.Arrays;
 
-public enum GameStatus {
+public enum GameCommand {
     START("start"),
     MOVE("move"),
     END("end");
 
     private final String command;
 
-    GameStatus(final String command) {
+    GameCommand(final String command) {
         this.command = command;
     }
-
-    public static GameStatus from(String statusCommand) {
+    public static GameCommand from(String statusCommand) {
         return Arrays.stream(values())
                 .filter(value -> value.command.equals(statusCommand))
                 .findFirst()
