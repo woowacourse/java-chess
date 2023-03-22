@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,6 +101,14 @@ class ChessBoardTest {
         assertThat(piecesByPosition.containsKey(Position.of(2, 7))).isFalse();
         assertThat(piecesByPosition.get(Position.of(1, 6)))
             .isEqualTo(new Pawn(otherTeamColor));
+    }
+
+    @DisplayName("같은 세로줄 (file) 에 있는 Piece 들을 반환한다.")
+    @Test
+    void 같은_열_체스말_묶음() {
+        Set<Pieces> piecesCollectedByFile = chessBoard.getPiecesCollectedByFile();
+
+        assertThat(piecesCollectedByFile.size()).isEqualTo(8);
     }
 
 }

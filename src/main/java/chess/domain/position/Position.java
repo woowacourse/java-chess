@@ -6,8 +6,8 @@ import java.util.Objects;
 public class Position {
 
     private static final String OUT_OF_BOUNDS_ERROR_MESSAGE = "말의 위치 범위를 벗어났습니다.";
-    private static final int MINIMUM = 1;
-    private static final int MAXIMUM = 8;
+    public static final int MINIMUM = 1;
+    public static final int MAXIMUM = 8;
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
     private final int x;

@@ -56,4 +56,8 @@ public enum InitialPiece {
         }
     }
 
+    public Piece getPiece() {
+        return piece;
+    }
+
 }
