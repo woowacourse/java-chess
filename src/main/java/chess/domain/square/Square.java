@@ -53,6 +53,10 @@ public final class Square {
         return rank.getDifference(other.rank);
     }
 
+    public int getFileNumber() {
+        return file.getFileNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
