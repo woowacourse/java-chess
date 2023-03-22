@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import chess.piece.nonsliding.Knight;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

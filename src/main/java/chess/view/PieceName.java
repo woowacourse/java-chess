@@ -1,12 +1,12 @@
 package chess.view;
 
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
+import chess.piece.sliding.Bishop;
+import chess.piece.nonsliding.King;
+import chess.piece.nonsliding.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
+import chess.piece.sliding.Queen;
+import chess.piece.sliding.Rook;
 import chess.piece.Side;
 import java.util.Arrays;
 

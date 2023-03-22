@@ -3,6 +3,11 @@ package chess.piece;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import chess.piece.nonsliding.King;
+import chess.piece.nonsliding.Knight;
+import chess.piece.sliding.Bishop;
+import chess.piece.sliding.Queen;
+import chess.piece.sliding.Rook;
 import java.util.ArrayList;
 import java.util.List;
 

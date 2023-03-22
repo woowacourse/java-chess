@@ -1,6 +1,8 @@
-package chess.piece;
+package chess.piece.sliding;
 
 import chess.board.Position;
+import chess.piece.Direction;
+import chess.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 

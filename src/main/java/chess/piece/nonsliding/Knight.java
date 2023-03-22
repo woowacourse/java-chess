@@ -1,6 +1,7 @@
-package chess.piece;
+package chess.piece.nonsliding;
 
 import chess.board.Position;
+import chess.piece.Side;
 
 public class Knight extends NonSlidingPiece {
 

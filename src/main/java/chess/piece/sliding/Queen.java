@@ -1,25 +1,22 @@
-package chess.piece;
+package chess.piece.sliding;
 
 import chess.board.Position;
+import chess.piece.Direction;
+import chess.piece.Side;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Rook extends SlidingPiece {
+public class Queen extends SlidingPiece {
 
     private final List<Direction> directions;
-
-    public Rook(final Position position, final Side side) {
+    public Queen(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
     }
 
     private List<Direction> initDirections() {
-        final List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UP);
-        directions.add(Direction.DOWN);
-        directions.add(Direction.LEFT);
-        directions.add(Direction.RIGHT);
-        return directions;
+        return new ArrayList<>(Arrays.asList(Direction.values()));
     }
 
     @Override
@@ -29,8 +26,8 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public Rook move(final Position positionToMove) {
-        return new Rook(positionToMove, this.side);
+    public Queen move(final Position positionToMove) {
+        return new Queen(positionToMove, this.side);
     }
 
 }

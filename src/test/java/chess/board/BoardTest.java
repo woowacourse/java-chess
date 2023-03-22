@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.piece.AllPiecesGenerator;
 import chess.piece.Pawn;
 import chess.piece.Pieces;
-import chess.piece.Rook;
+import chess.piece.sliding.Rook;
 import chess.piece.Side;
 import java.util.List;
 import org.assertj.core.api.Assertions;
