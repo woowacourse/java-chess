@@ -15,13 +15,15 @@ public final class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        GameCommand gameCommand = receiveStartOrEndCommand(receiveGameCommand());
+        GameCommand gameCommand = receiveStartOrEndCommand();
         if (gameCommand == GameCommand.START) {
             startGame();
         }
     }
 
-    private GameCommand receiveStartOrEndCommand(GameCommand gameCommand) {
+    private GameCommand receiveStartOrEndCommand() {
+        GameCommand gameCommand = receiveGameCommand();
+
         while (gameCommand == GameCommand.MOVE) {
             OutputView.printNotStartedGameMessage();
             gameCommand = receiveGameCommand();
