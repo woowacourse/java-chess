@@ -31,8 +31,8 @@ public enum Direction {
     }
 
     public static Direction calculateDirection(final Square source, final Square target) {
-        final int directionFile = target.getFile() - source.getFile();
-        final int directionRank = target.getRank() - source.getRank();
+        final int directionFile = source.calculateFileGap(target);
+        final int directionRank = source.calculateRankGap(target);
 
         if (directionFile != 0 && directionRank != 0 && Math.abs(directionFile / directionRank) != 1) {
             throw new PieceCanNotMoveException();

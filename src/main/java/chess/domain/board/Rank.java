@@ -32,6 +32,10 @@ public enum Rank {
                 .orElseThrow(RankCanNotFindException::new);
     }
 
+    public int calculateGap(final Rank other) {
+        return this.y - other.y;
+    }
+
     public int getY() {
         return this.y;
     }

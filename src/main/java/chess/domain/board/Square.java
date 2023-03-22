@@ -15,15 +15,15 @@ public class Square {
         final int targetFile = target.getFile();
         final int targetRank = target.getRank();
 
-        return isMovableToTargetFile(targetFile, fileWeight) && isMovableToTargetRank(targetRank, rankWeight);
+        return this.isMovableToTargetFile(targetFile, fileWeight) && this.isMovableToTargetRank(targetRank, rankWeight);
     }
 
     private boolean isMovableToTargetFile(final int targetFile, final int fileWeight) {
-        return getFile() + fileWeight == targetFile;
+        return this.getFile() + fileWeight == targetFile;
     }
 
     private boolean isMovableToTargetRank(final int targetRank, final int rankWeight) {
-        return getRank() + rankWeight == targetRank;
+        return this.getRank() + rankWeight == targetRank;
     }
 
     public Square nextSquare(final Square source, final int fileWeight, final int rankWeight) {
@@ -33,28 +33,36 @@ public class Square {
         return new Square(File.findFile(sourceFile), Rank.findRank(sourceRank));
     }
 
+    public int calculateFileGap(final Square target) {
+        return target.file.calculateGap(this.file);
+    }
+
+    public int calculateRankGap(final Square target) {
+        return target.rank.calculateGap(this.rank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
         final Square square = (Square) o;
-        return file == square.file && rank == square.rank;
+        return this.file == square.file && this.rank == square.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(this.file, this.rank);
     }
 
     public int getFile() {
-        return file.getX();
+        return this.file.getX();
     }
 
     public int getRank() {
-        return rank.getY();
+        return this.rank.getY();
     }
 }

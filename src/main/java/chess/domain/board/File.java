@@ -21,10 +21,6 @@ public enum File {
         this.x = x;
     }
 
-    public int getX() {
-        return this.x;
-    }
-
     public static File findFileByLetter(final char letter) {
         return findFile(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
     }
@@ -34,5 +30,13 @@ public enum File {
                 .filter(file -> file.getX() == fileIndex)
                 .findFirst()
                 .orElseThrow(FileCanNotFindException::new);
+    }
+
+    public int calculateGap(final File other) {
+        return this.x - other.x;
+    }
+
+    public int getX() {
+        return this.x;
     }
 }
