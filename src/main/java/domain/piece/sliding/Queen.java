@@ -14,6 +14,8 @@ public final class Queen extends Piece {
             Inclination.POSITIVE_INFINITY, Inclination.ZERO, Inclination.MINUS_ZERO
     ));
 
+    private static final double POINT = 9;
+
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
@@ -22,5 +24,10 @@ public final class Queen extends Piece {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

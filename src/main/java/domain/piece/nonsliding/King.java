@@ -14,6 +14,8 @@ public final class King extends Piece {
             Inclination.POSITIVE_INFINITY, Inclination.ZERO, Inclination.MINUS_ZERO
     ));
 
+    private static final double POINT = 0;
+
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
@@ -28,5 +30,10 @@ public final class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

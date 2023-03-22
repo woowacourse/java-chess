@@ -13,6 +13,8 @@ public final class Bishop extends Piece {
             Inclination.ONE, Inclination.MINUS_ONE
     ));
 
+    private static final double POINT = 3;
+
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
@@ -21,5 +23,10 @@ public final class Bishop extends Piece {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

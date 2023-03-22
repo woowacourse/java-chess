@@ -36,4 +36,8 @@ public abstract class Piece {
     public boolean isKing() {
         return false;
     }
+
+    public double getPoint() {
+        return 0;
+    }
 }

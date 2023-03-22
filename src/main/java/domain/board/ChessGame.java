@@ -4,6 +4,9 @@ import domain.square.Color;
 import domain.piece.move.Coordinate;
 import domain.square.Square;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class ChessGame {
 
     private static final Color PRIORITY_GIVEN_COLOR = Color.WHITE;
@@ -11,14 +14,21 @@ public final class ChessGame {
     private final Board board;
     private final Turn turn;
 
+    // TODO: 테스트를 위한 생성자 유연성 증가
     public ChessGame() {
         this.board = new Board();
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
     }
 
-    // TODO: 테스트를 위한 생성자 유연성 증가
     public boolean isGameNotOver() {
         return board.allKingAlive();
+    }
+
+    public Map<Color, Double> collectPoint() {
+        Map<Color, Double> collectedPoints = new HashMap<>();
+        collectedPoints.put(Color.BLACK, board.collectPointFor(Color.BLACK));
+        collectedPoints.put(Color.WHITE, board.collectPointFor(Color.WHITE));
+        return collectedPoints;
     }
 
     public void move(final Coordinate start, final Coordinate end) {

@@ -19,6 +19,8 @@ public final class Knight extends Piece {
             new Coordinate(2, 1)
     );
 
+    private static final double POINT = 2.5;
+
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
@@ -34,5 +36,10 @@ public final class Knight extends Piece {
     @Override
     public boolean canJump() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

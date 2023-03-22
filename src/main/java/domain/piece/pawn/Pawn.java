@@ -6,6 +6,8 @@ import domain.piece.Piece;
 
 public abstract class Pawn extends Piece {
 
+    private static final double POINT = 1;
+
     @Override
     public boolean isReachableByRule(
             final Coordinate start,
@@ -31,5 +33,10 @@ public abstract class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

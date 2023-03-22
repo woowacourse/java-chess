@@ -39,6 +39,14 @@ public final class Square {
         return piece.isKing();
     }
 
+    public boolean hasPawn() {
+        return piece.isPawn();
+    }
+
+    public double getPoint() {
+        return piece.getPoint();
+    }
+
     public Piece getPiece() {
         return piece;
     }
