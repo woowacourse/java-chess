@@ -31,5 +31,6 @@ public class OutputView {
 
     public void printScore(Chessboard chessboard, Camp camp) {
         System.out.println(CampRenderer.getCampOutput(camp) + SCORE_DELIMITER + chessboard.countScore(camp));
+        System.out.println();
     }
 }
