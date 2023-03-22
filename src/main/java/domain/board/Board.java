@@ -2,8 +2,8 @@ package domain.board;
 
 import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
-import domain.piece.pawn.BlackInitPawn;
-import domain.piece.pawn.WhiteInitPawn;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.square.Color;
 import domain.square.Square;
 
@@ -32,10 +32,11 @@ public final class Board {
 
     private void replaceSquareIfIsPawn(final Coordinate target, final Square square) {
         if (square.getColor() == Color.BLACK) {
-            squareLocations.put(target, new Square(new WhiteInitPawn(), Color.WHITE));
+            squareLocations.put(target, new Square(new BlackPawn(), Color.BLACK));
             return;
         }
-        squareLocations.put(target, new Square(new BlackInitPawn(), Color.BLACK));
+        squareLocations.put(target, new Square(new WhitePawn(), Color.WHITE));
+        System.out.println(123);
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {

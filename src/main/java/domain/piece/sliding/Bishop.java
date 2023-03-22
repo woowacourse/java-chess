@@ -14,7 +14,7 @@ public final class Bishop extends Piece {
     ));
 
     @Override
-    public boolean isReachableByRuleWhenNoEnemy(
+    public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {

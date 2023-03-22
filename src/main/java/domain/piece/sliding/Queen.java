@@ -15,7 +15,7 @@ public final class Queen extends Piece {
     ));
 
     @Override
-    public boolean isReachableByRuleWhenNoEnemy(
+    public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {

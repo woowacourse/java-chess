@@ -17,7 +17,7 @@ public final class WhiteInitPawn extends Pawn {
     ));
 
     @Override
-    public boolean isReachableByRuleWhenNoEnemy(
+    public boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {
@@ -28,7 +28,7 @@ public final class WhiteInitPawn extends Pawn {
     }
 
     @Override
-    protected boolean isReachableByRuleWhenThereIsEnemy(
+    protected boolean isReachableByRuleWhenMovingVariates(
             final Coordinate start,
             final Coordinate end
     ) {

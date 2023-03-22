@@ -11,10 +11,10 @@ public abstract class Piece {
             final Situation situation
     ) {
         validateIsNotSameColor(situation);
-        return isReachableByRuleWhenNoEnemy(start, end);
+        return isReachableByRuleWhenMovingNotVariates(start, end);
     }
 
-    protected abstract boolean isReachableByRuleWhenNoEnemy(
+    protected abstract boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     );
