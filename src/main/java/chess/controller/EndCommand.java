@@ -7,13 +7,13 @@ public class EndCommand implements Command {
     private final OutputView outputView;
     private final ChessGame chessGame;
 
-    public EndCommand(OutputView outputView, ChessGame chessGame) {
+    public EndCommand(final OutputView outputView, final ChessGame chessGame) {
         this.outputView = outputView;
         this.chessGame = chessGame;
     }
 
     @Override
-    public void execute(String command) {
+    public void execute(final String command) {
         chessGame.forceClose();
         outputView.printEndMessage();
     }

@@ -1,7 +1,5 @@
 package techcourse;
 
-import chess.User;
-import chess.UserDao;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

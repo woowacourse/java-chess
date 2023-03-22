@@ -35,7 +35,7 @@ public class Side {
         return from(Color.WHITE);
     }
 
-    public boolean isOpponent(Side target) {
+    public boolean isOpponent(final Side target) {
         if (this.color == Color.WHITE) {
             return target.color == Color.BLACK;
         }

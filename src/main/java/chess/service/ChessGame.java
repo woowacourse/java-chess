@@ -15,7 +15,7 @@ public class ChessGame {
     }
 
     public void initializeBoard() {
-        if(gameStatus != GameStatus.NOT_START) {
+        if (gameStatus != GameStatus.NOT_START) {
             throw new IllegalStateException("게임이 이미 시작되었습니다.");
         }
         board = BoardFactory.create();
@@ -23,7 +23,7 @@ public class ChessGame {
     }
 
     public void move(final String sourceSquareInput, final String targetSquareInput) {
-        if(gameStatus != GameStatus.STARTED) {
+        if (gameStatus != GameStatus.STARTED) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
         Square sourceSquare = Square.from(sourceSquareInput);
@@ -37,7 +37,7 @@ public class ChessGame {
     }
 
     public List<List<Piece>> findChessBoard() {
-        if(gameStatus != GameStatus.STARTED) {
+        if (gameStatus != GameStatus.STARTED) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
         List<List<Piece>> pieces = new ArrayList<>();

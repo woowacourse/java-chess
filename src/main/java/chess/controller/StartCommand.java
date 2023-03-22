@@ -7,13 +7,13 @@ public class StartCommand implements Command {
     private final OutputView outputView;
     private final ChessGame chessGame;
 
-    public StartCommand(OutputView outputView, ChessGame chessGame) {
+    public StartCommand(final OutputView outputView, final ChessGame chessGame) {
         this.outputView = outputView;
         this.chessGame = chessGame;
     }
 
     @Override
-    public void execute(String command) {
+    public void execute(final String command) {
         chessGame.initializeBoard();
         outputView.printBoard(chessGame.findChessBoard());
     }

@@ -39,7 +39,7 @@ public enum Role {
     private final List<File> initialFiles;
     private final Map<Side, List<Rank>> initialRanks;
 
-    Role(final Constructor<Side, Role, Piece> createPiece, List<File> initialFiles, Map<Side, List<Rank>> initialRanks) {
+    Role(final Constructor<Side, Role, Piece> createPiece, final List<File> initialFiles, final Map<Side, List<Rank>> initialRanks) {
         this.createPiece = createPiece;
         this.initialFiles = initialFiles;
         this.initialRanks = initialRanks;
@@ -53,7 +53,7 @@ public enum Role {
         return initialFiles;
     }
 
-    public List<Rank> getInitialRanksBySide(Side side) {
+    public List<Rank> getInitialRanksBySide(final Side side) {
         return initialRanks.getOrDefault(side, List.of());
     }
 

@@ -43,7 +43,7 @@ public class Board {
         turn = turn.findOpponent();
     }
 
-    private void movePiece(final Square sourceSquare, final Square targetSquare, Piece sourcePiece) {
+    private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
         Piece vacantPiece = Role.VACANT_PIECE.create(Side.from(Color.NOTHING));
         board.put(sourceSquare, vacantPiece);
         board.put(targetSquare, sourcePiece.update());
@@ -84,7 +84,7 @@ public class Board {
         validateCanMove(direction, distance, sourcePiece);
     }
 
-    private void validateCanMove(Direction direction, int distance, Piece sourcePiece) {
+    private void validateCanMove(final Direction direction, final int distance, final Piece sourcePiece) {
         if (!sourcePiece.canMove(direction, distance)) {
             throw new IllegalArgumentException("이동 할 수 없는 경로입니다.");
         }

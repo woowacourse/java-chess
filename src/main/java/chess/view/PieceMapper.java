@@ -1,16 +1,10 @@
 package chess.view;
 
-import chess.controller.Command;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 public enum PieceMapper {
     VACANT_PIECE(Role.VACANT_PIECE, " . ", " . "),
@@ -26,13 +20,13 @@ public enum PieceMapper {
     private final String whitePattern;
     private final String blackPattern;
 
-    PieceMapper(Role role, String whitePattern, String blackPattern) {
+    PieceMapper(final Role role, final String whitePattern, final String blackPattern) {
         this.role = role;
         this.whitePattern = whitePattern;
         this.blackPattern = blackPattern;
     }
 
-    public static String getPattern(Piece piece) {
+    public static String getPattern(final Piece piece) {
         PieceMapper targetMapper = Arrays.stream(values())
                 .filter(pieceMapper -> piece.isRole(pieceMapper.role))
                 .findFirst()

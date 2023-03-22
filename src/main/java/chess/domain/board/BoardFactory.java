@@ -5,7 +5,9 @@ import chess.domain.piece.Role;
 import chess.domain.side.Color;
 import chess.domain.side.Side;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BoardFactory {
     private static final Map<Square, Piece> board = new LinkedHashMap<>();

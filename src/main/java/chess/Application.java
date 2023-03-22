@@ -7,10 +7,10 @@ import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
-        ChessGame chessGame = new ChessGame();
-        ChessController controller = new ChessController(inputView, outputView, chessGame);
+        final InputView inputView = new InputView();
+        final OutputView outputView = new OutputView();
+        final ChessGame chessGame = new ChessGame();
+        final ChessController controller = new ChessController(inputView, outputView, chessGame);
         controller.run();
     }
 }

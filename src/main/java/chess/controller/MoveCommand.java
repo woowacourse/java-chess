@@ -11,13 +11,13 @@ public class MoveCommand implements Command {
     private final OutputView outputView;
     private final ChessGame chessGame;
 
-    public MoveCommand(OutputView outputView, ChessGame chessGame) {
+    public MoveCommand(final OutputView outputView, final ChessGame chessGame) {
         this.outputView = outputView;
         this.chessGame = chessGame;
     }
 
     @Override
-    public void execute(String command) {
+    public void execute(final String command) {
         String[] commands = command.split(DELIMITER_OF_MOVE_COMMAND);
         validateMoveCommand(commands);
         String sourceSquare = commands[SOURCE_INDEX_OF_MOVE_COMMAND];

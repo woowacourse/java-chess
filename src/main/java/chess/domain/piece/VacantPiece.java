@@ -9,12 +9,12 @@ public class VacantPiece extends Piece {
     }
 
     @Override
-    public boolean canAttack(Direction direction, int distance, Piece piece) {
+    public boolean canAttack(final Direction direction, final int distance, final Piece piece) {
         throw new UnsupportedOperationException("빈 말은 공격할 수 없습니다.");
     }
 
     @Override
-    public boolean canMove(Direction direction, int distance) {
+    public boolean canMove(final Direction direction, final int distance) {
         throw new UnsupportedOperationException("빈 말은 움직일 수 없습니다.");
     }
 

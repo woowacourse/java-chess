@@ -1,4 +1,4 @@
-package chess;
+package techcourse;
 
 import java.util.Objects;
 
