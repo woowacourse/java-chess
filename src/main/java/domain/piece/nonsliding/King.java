@@ -22,7 +22,7 @@ public final class King extends Piece {
     }
 
     @Override
-    protected boolean isReachableByRuleWhenMovingNotVariates(
+    protected boolean isMovableWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {

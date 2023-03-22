@@ -22,7 +22,7 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    public boolean isReachableByRuleWhenMovingNotVariates(
+    public boolean isMovableWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {
@@ -33,7 +33,7 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    protected boolean isReachableByRuleWhenMovingVariates(
+    protected boolean isMovableWhenMovingVariates(
             final Coordinate start,
             final Coordinate end
     ) {

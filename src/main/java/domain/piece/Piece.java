@@ -22,7 +22,7 @@ public abstract class Piece {
             final Situation situation
     ) {
         validateIsNotSameColor(situation);
-        return isReachableByRuleWhenMovingNotVariates(start, end);
+        return isMovableWhenMovingNotVariates(start, end);
     }
 
     private void validateIsNotSameColor(final Situation situation) {
@@ -31,7 +31,7 @@ public abstract class Piece {
         }
     }
 
-    protected abstract boolean isReachableByRuleWhenMovingNotVariates(
+    protected abstract boolean isMovableWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     );

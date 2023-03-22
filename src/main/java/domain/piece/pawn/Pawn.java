@@ -20,17 +20,17 @@ public abstract class Pawn extends Piece {
             final Situation situation
     ) {
         if (situation.meetNeutral()) {
-            return isReachableByRuleWhenMovingNotVariates(start, end);
+            return isMovableWhenMovingNotVariates(start, end);
         }
-        return isReachableByRuleWhenMovingVariates(start, end);
+        return isMovableWhenMovingVariates(start, end);
     }
 
-    protected abstract boolean isReachableByRuleWhenMovingNotVariates(
+    protected abstract boolean isMovableWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     );
 
-    protected abstract boolean isReachableByRuleWhenMovingVariates(
+    protected abstract boolean isMovableWhenMovingVariates(
             final Coordinate start,
             final  Coordinate end
     );

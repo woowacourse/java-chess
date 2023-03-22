@@ -27,7 +27,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isReachableByRuleWhenMovingNotVariates(
+    public boolean isMovableWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {
