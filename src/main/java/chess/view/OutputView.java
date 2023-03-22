@@ -13,7 +13,8 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String COMMAND_INPUT_MESSAGE = "> 게임 시작 : start" + LINE_SEPARATOR +
             "> 게임 종료 : end" + LINE_SEPARATOR +
-            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + LINE_SEPARATOR +
+            "> 점수 확인 : status";
 
     private OutputView() {
     }
@@ -28,6 +29,11 @@ public class OutputView {
         for (String[] row : board) {
             System.out.println(String.join(ROW_DELIMITER, row));
         }
+    }
+
+    public static void printScore(double whiteTeamScore, double blackTeamScore) {
+        System.out.println("WHITE: " + whiteTeamScore);
+        System.out.println("BLACK: " + blackTeamScore);
     }
 
     private static String[][] convertResponseToBoard(List<SquareResponse> responses) {

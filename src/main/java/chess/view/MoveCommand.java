@@ -7,6 +7,7 @@ import java.util.Optional;
 public enum MoveCommand {
 
     MOVE("move", 3),
+    STATUS("status", 1),
     END("end", 1);
 
     private final String value;

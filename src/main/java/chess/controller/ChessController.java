@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
 import chess.view.*;
@@ -34,6 +35,12 @@ public class ChessController {
 
         if (moveCommand == MoveCommand.MOVE) {
             move(commands);
+            return GameStatus.CONTINUE;
+        }
+        if (moveCommand == MoveCommand.STATUS) {
+            double whiteTeamScore = chessGame.calculateScore(Team.WHITE);
+            double blackTeamScore = chessGame.calculateScore(Team.BLACK);
+            OutputView.printScore(whiteTeamScore, blackTeamScore);
             return GameStatus.CONTINUE;
         }
         return GameStatus.EXIT;
