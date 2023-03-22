@@ -41,34 +41,45 @@ public final class LinearPiece implements Piece {
 
         List<Position> movablePosition = new ArrayList<>();
         Position currentPosition = source;
-        while (canMoveMore(currentPosition, movePattern, board)) {
+        boolean hasCaptured = false;
+        while (canMoveMore(source, currentPosition, movePattern, board, hasCaptured)) {
             Position nextPosition = currentPosition.move(movePattern);
             movablePosition.add(nextPosition);
+            hasCaptured = updateCaptured(
+                    board.findSideByPosition(source),
+                    board.findSideByPosition(nextPosition)
+            );
             currentPosition = nextPosition;
         }
         return movablePosition;
     }
 
-    private boolean canMoveMore(final Position currentPosition, final MovePattern movePattern, final Board board) {
+    private boolean canMoveMore(
+            final Position source,
+            final Position currentPosition,
+            final MovePattern movePattern,
+            final Board board,
+            final boolean hasCaptured
+    ) {
         final Position nextPosition = currentPosition.move(movePattern);
-        final Side currentSide = board.findSideByPosition(currentPosition);
+        final Side sourceSide = board.findSideByPosition(source);
         final Side nextSide = board.findSideByPosition(nextPosition);
 
         return isInRange(currentPosition, nextPosition) &&
-                isDifferentSide(currentSide, nextSide) &&
-                !hasCaptured(currentSide, nextSide);
+                isDifferentSide(sourceSide, nextSide) &&
+                !hasCaptured;
     }
 
     private boolean isInRange(final Position currentPosition, final Position nextPosition) {
         return currentPosition != nextPosition;
     }
 
-    private boolean isDifferentSide(final Side currentSide, final Side nextSide) {
-        return currentSide != nextSide;
+    private boolean isDifferentSide(final Side sourceSide, final Side nextSide) {
+        return sourceSide != nextSide;
     }
 
-    private boolean hasCaptured(final Side currentSide, final Side nextSide) {
-        return isDifferentSide(currentSide, nextSide) && nextSide != Side.NEUTRALITY;
+    private boolean updateCaptured(final Side sourceSide, final Side nextSide) {
+        return isDifferentSide(sourceSide, nextSide) && nextSide != Side.NEUTRALITY;
     }
 
     @Override
