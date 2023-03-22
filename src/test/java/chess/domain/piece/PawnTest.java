@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Direction;
 import chess.domain.board.File;
-import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +20,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.A, Rank.THREE);
             final Pawn pawn = new Pawn(Team.WHITE);
-            final Move move = Move.UP;
+            final Direction direction = Direction.UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 없을 경우 두 칸 움직일 수 있다.")
@@ -31,9 +31,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.A, Rank.FOUR);
             final Pawn pawn = new Pawn(Team.WHITE);
-            final Move move = Move.UP;
+            final Direction direction = Direction.UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 있을 경우 두 칸 이상 움직일 수 없다.")
@@ -42,9 +42,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.A, Rank.FOUR);
             final Pawn pawn = new Pawn(Team.WHITE, true);
-            final Move move = Move.UP;
+            final Direction direction = Direction.UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isFalse();
+            assertThat(pawn.isMovable(source, target, direction)).isFalse();
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")
@@ -53,9 +53,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.B, Rank.THREE);
             final Pawn pawn = new Pawn(Team.WHITE);
-            final Move move = Move.RIGHT_UP;
+            final Direction direction = Direction.RIGHT_UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 왼쪽 대각선으로 움직일 수 있다.")
@@ -64,9 +64,9 @@ class PawnTest {
             final Square source = new Square(File.B, Rank.TWO);
             final Square target = new Square(File.A, Rank.THREE);
             final Pawn pawn = new Pawn(Team.WHITE);
-            final Move move = Move.LEFT_UP;
+            final Direction direction = Direction.LEFT_UP;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
     }
 
@@ -79,9 +79,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.THREE);
             final Square target = new Square(File.A, Rank.TWO);
             final Pawn pawn = new Pawn(Team.BLACK);
-            final Move move = Move.DOWN;
+            final Direction direction = Direction.DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 없을 경우 두 칸 움직일 수 있다.")
@@ -90,9 +90,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.SEVEN);
             final Square target = new Square(File.A, Rank.FIVE);
             final Pawn pawn = new Pawn(Team.BLACK);
-            final Move move = Move.DOWN;
+            final Direction direction = Direction.DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 움직인 적이 있을 경우 두 칸 이상 움직일 수 없다.")
@@ -101,9 +101,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.SIX);
             final Square target = new Square(File.A, Rank.FOUR);
             final Pawn pawn = new Pawn(Team.BLACK, true);
-            final Move move = Move.DOWN;
+            final Direction direction = Direction.DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isFalse();
+            assertThat(pawn.isMovable(source, target, direction)).isFalse();
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")
@@ -112,9 +112,9 @@ class PawnTest {
             final Square source = new Square(File.B, Rank.SEVEN);
             final Square target = new Square(File.A, Rank.SIX);
             final Pawn pawn = new Pawn(Team.BLACK);
-            final Move move = Move.LEFT_DOWN;
+            final Direction direction = Direction.LEFT_DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
 
         @DisplayName("폰은 왼쪽 대각선으로 움직일 수 있다.")
@@ -123,9 +123,9 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.SEVEN);
             final Square target = new Square(File.B, Rank.SIX);
             final Pawn pawn = new Pawn(Team.BLACK);
-            final Move move = Move.RIGHT_DOWN;
+            final Direction direction = Direction.RIGHT_DOWN;
 
-            assertThat(pawn.isMovable(source, target, move)).isTrue();
+            assertThat(pawn.isMovable(source, target, direction)).isTrue();
         }
     }
 }

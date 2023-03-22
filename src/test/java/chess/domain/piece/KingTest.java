@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Direction;
 import chess.domain.board.File;
-import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.stream.Stream;
@@ -19,42 +19,42 @@ class KingTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.B, Rank.THREE),
-                        Move.UP
+                        Direction.UP
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.THREE),
-                        Move.RIGHT_UP
+                        Direction.RIGHT_UP
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.TWO),
-                        Move.RIGHT
+                        Direction.RIGHT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.ONE),
-                        Move.RIGHT_DOWN
+                        Direction.RIGHT_DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.B, Rank.ONE),
-                        Move.DOWN
+                        Direction.DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.ONE),
-                        Move.LEFT_DOWN
+                        Direction.LEFT_DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.TWO),
-                        Move.LEFT
+                        Direction.LEFT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.THREE),
-                        Move.LEFT_UP
+                        Direction.LEFT_UP
                 )
         );
     }
@@ -62,10 +62,10 @@ class KingTest {
     @DisplayName("팔방으로 한 칸씩 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("kingTestProvider")
-    void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
+    void Should_Success_When_KingMove(final Square source, final Square target, final Direction direction) {
         final King king = new King(Team.WHITE);
 
-        assertThat(king.isMovable(source, target, move)).isTrue();
+        assertThat(king.isMovable(source, target, direction)).isTrue();
     }
 
     @DisplayName("사방과 대각선으로 한 칸 초과해서 움직일 수 없다.")
@@ -74,8 +74,8 @@ class KingTest {
         final King king = new King(Team.WHITE);
         final Square source = new Square(File.A, Rank.ONE);
         final Square target = new Square(File.A, Rank.THREE);
-        final Move move = Move.UP;
+        final Direction direction = Direction.UP;
 
-        assertThat(king.isMovable(source, target, move)).isFalse();
+        assertThat(king.isMovable(source, target, direction)).isFalse();
     }
 }

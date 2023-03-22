@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Direction;
 import chess.domain.board.File;
-import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.stream.Stream;
@@ -18,22 +18,22 @@ class RookTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.B, Rank.SEVEN),
-                        Move.UP
+                        Direction.UP
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.H, Rank.TWO),
-                        Move.RIGHT
+                        Direction.RIGHT
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.B, Rank.ONE),
-                        Move.DOWN
+                        Direction.DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.TWO),
-                        Move.LEFT
+                        Direction.LEFT
                 )
         );
     }
@@ -41,9 +41,9 @@ class RookTest {
     @DisplayName("사방으로 거리 제한 없이 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleRookTestProvider")
-    void Should_Success_When_RookMove(final Square source, final Square target, final Move move) {
+    void Should_Success_When_RookMove(final Square source, final Square target, final Direction direction) {
         final Rook rook = new Rook(Team.WHITE);
 
-        assertThat(rook.isMovable(source, target, move)).isTrue();
+        assertThat(rook.isMovable(source, target, direction)).isTrue();
     }
 }

@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.exception.PieceCanNotMoveException;
 import java.util.Arrays;
 
-public enum Move {
+public enum Direction {
     RIGHT(1, 0),
     LEFT(-1, 0),
     UP(0, 1),
@@ -25,12 +25,12 @@ public enum Move {
     private final int file;
     private final int rank;
 
-    Move(final int file, final int rank) {
+    Direction(final int file, final int rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Move calculateDirection(final Square source, final Square target) {
+    public static Direction calculateDirection(final Square source, final Square target) {
         final int directionFile = target.getFile() - source.getFile();
         final int directionRank = target.getRank() - source.getRank();
 
@@ -38,32 +38,35 @@ public enum Move {
             throw new PieceCanNotMoveException();
         }
 
-        return Arrays.stream(Move.values())
-                .filter(move -> isSameDirection(directionFile, directionRank, move))
+        return Arrays.stream(Direction.values())
+                .filter(direction -> isSameDirection(directionFile, directionRank, direction))
                 .findFirst()
                 .orElseThrow(PieceCanNotMoveException::new);
     }
 
-    public static Move calculateKnightDirection(final Square source, final Square target) {
+    public static Direction calculateKnightDirection(final Square source, final Square target) {
         final int directionFile = target.getFile() - source.getFile();
         final int directionRank = target.getRank() - source.getRank();
 
-        return Arrays.stream(Move.values())
-                .filter(move -> move.file == directionFile && move.rank == directionRank)
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.file == directionFile && direction.rank == directionRank)
                 .findFirst()
                 .orElseThrow(PieceCanNotMoveException::new);
     }
 
-    private static boolean isSameDirection(final int directionFile, final int directionRank, final Move move) {
-        return move.file == Integer.signum(directionFile) && move.rank == Integer.signum(directionRank);
+    private static boolean isSameDirection(final int directionFile, final int directionRank,
+                                           final Direction direction) {
+        return direction.file == Integer.signum(directionFile) && direction.rank == Integer.signum(directionRank);
     }
 
-    public static boolean isMoveForward(final Move move) {
-        return move == Move.UP || move == Move.DOWN;
+    public static boolean isMoveForward(final Direction direction) {
+        return direction == Direction.UP || direction == Direction.DOWN;
     }
 
-    public static boolean isMoveDiagonal(final Move move) {
-        return move == Move.RIGHT_UP || move == Move.RIGHT_DOWN || move == Move.LEFT_UP || move == Move.LEFT_DOWN;
+    public static boolean isMoveDiagonal(final Direction direction) {
+        return direction == Direction.RIGHT_UP || direction == Direction.RIGHT_DOWN || direction == Direction.LEFT_UP
+                || direction
+                == Direction.LEFT_DOWN;
     }
 
     public int getFile() {

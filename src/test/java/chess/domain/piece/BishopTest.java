@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Direction;
 import chess.domain.board.File;
-import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import java.util.stream.Stream;
@@ -18,22 +18,22 @@ class BishopTest {
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.H, Rank.SEVEN),
-                        Move.RIGHT_UP
+                        Direction.RIGHT_UP
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.C, Rank.ONE),
-                        Move.RIGHT_DOWN
+                        Direction.RIGHT_DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.ONE),
-                        Move.LEFT_DOWN
+                        Direction.LEFT_DOWN
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
                         new Square(File.A, Rank.THREE),
-                        Move.LEFT_UP
+                        Direction.LEFT_UP
                 )
         );
     }
@@ -41,9 +41,9 @@ class BishopTest {
     @DisplayName("대각선으로 거리 제한 없이 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleBishopTestProvider")
-    void Should_Success_When_BishopMove(final Square source, final Square target, final Move move) {
+    void Should_Success_When_BishopMove(final Square source, final Square target, final Direction direction) {
         final Bishop bishop = new Bishop(Team.WHITE);
 
-        assertThat(bishop.isMovable(source, target, move)).isTrue();
+        assertThat(bishop.isMovable(source, target, direction)).isTrue();
     }
 }
