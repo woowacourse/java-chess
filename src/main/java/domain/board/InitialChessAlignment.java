@@ -2,57 +2,27 @@ package domain.board;
 
 import domain.piece.*;
 import domain.position.Position;
-import domain.position.Positions;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class InitialChessAlignment implements ChessAlignment {
     @Override
-    public void addInitialRooks(final Map<Position, Piece> board) {
-        final List<Position> black = Positions.of("A8", "H8");
-        final List<Position> white = Positions.of("A1", "H1");
+    public Map<Position, Piece> makeInitialPieces() {
+        final HashMap<Position, Piece> board = new HashMap<>();
 
-        black.forEach(position -> board.put(position, new Rook(Team.BLACK)));
-        white.forEach(position -> board.put(position, new Rook(Team.WHITE)));
+        addPieces(new Bishop(Team.BLACK), new Bishop(Team.WHITE), board);
+        addPieces(new Pawn(Team.BLACK), new Pawn(Team.WHITE), board);
+        addPieces(new Rook(Team.BLACK), new Rook(Team.WHITE), board);
+        addPieces(new King(Team.BLACK), new King(Team.WHITE), board);
+        addPieces(new Knight(Team.BLACK), new Knight(Team.WHITE), board);
+        addPieces(new Queen(Team.BLACK), new Queen(Team.WHITE), board);
+
+        return board;
     }
 
-    @Override
-    public void addInitialKnights(final Map<Position, Piece> board) {
-        final List<Position> black = Positions.of("B8", "G8");
-        final List<Position> white = Positions.of("B1", "G1");
-
-        black.forEach(position -> board.put(position, new Knight(Team.BLACK)));
-        white.forEach(position -> board.put(position, new Knight(Team.WHITE)));
-    }
-
-    @Override
-    public void addInitialBishops(final Map<Position, Piece> board) {
-        final List<Position> black = Positions.of("C8", "F8");
-        final List<Position> white = Positions.of("C1", "F1");
-
-        black.forEach(position -> board.put(position, new Bishop(Team.BLACK)));
-        white.forEach(position -> board.put(position, new Bishop(Team.WHITE)));
-    }
-
-    @Override
-    public void addInitialQueens(final Map<Position, Piece> board) {
-        board.put(Positions.from("D8"), new Queen(Team.BLACK));
-        board.put(Positions.from("D1"), new Queen(Team.WHITE));
-    }
-
-    @Override
-    public void addInitialPawns(final Map<Position, Piece> board) {
-        final List<Position> black = Positions.of("A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7");
-        final List<Position> white = Positions.of("A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2");
-
-        black.forEach(position -> board.put(position, new Pawn(Team.BLACK)));
-        white.forEach(position -> board.put(position, new Pawn(Team.WHITE)));
-    }
-
-    @Override
-    public void addInitialKings(final Map<Position, Piece> board) {
-        board.put(Positions.from("E8"), new King(Team.BLACK));
-        board.put(Positions.from("E1"), new King(Team.WHITE));
+    private void addPieces(final Piece black, final Piece white, final Map<Position, Piece> board) {
+        black.getInitialBlackPositions().forEach(position -> board.put(position, black));
+        white.getInitialWhitePositions().forEach(position -> board.put(position, white));
     }
 }

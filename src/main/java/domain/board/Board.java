@@ -2,7 +2,6 @@ package domain.board;
 
 import domain.piece.Piece;
 import domain.position.Position;
-import domain.position.Positions;
 
 import java.util.Collections;
 import java.util.Map;
@@ -18,8 +17,8 @@ public final class Board {
         this.board = board;
     }
 
-    public static Board create(final ChessAlignment chessStrategy) {
-        return new Board(chessStrategy.init());
+    public static Board create(final ChessAlignment alignment) {
+        return new Board(alignment.makeInitialPieces());
     }
 
     public void move(final Position source, final Position destination) {
@@ -53,7 +52,7 @@ public final class Board {
     }
 
     private boolean pieceInRoute(final Position source, final Position destination) {
-        return Positions.between(source, destination).stream()
+        return source.between(destination).stream()
                 .anyMatch(board::containsKey);
     }
 

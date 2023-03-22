@@ -1,7 +1,11 @@
 package domain.piece;
 
 import domain.position.Direction;
+import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
+
+import java.util.List;
 
 public final class King extends Piece {
 
@@ -11,6 +15,16 @@ public final class King extends Piece {
 
     public King(final Team team) {
         super(NAME, team);
+    }
+
+    @Override
+    public List<Position> getInitialBlackPositions() {
+        return List.of(Position.of(File.E, Rank.EIGHT));
+    }
+
+    @Override
+    public List<Position> getInitialWhitePositions() {
+        return List.of(Position.of(File.E, Rank.ONE));
     }
 
     @Override

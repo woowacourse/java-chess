@@ -1,12 +1,13 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.position.Position;
-import domain.position.Positions;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static domain.position.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
     @DisplayName("폰은 직진 한 칸 갈 수 있다")
@@ -15,9 +16,9 @@ class PawnTest {
         //given
         final Pawn black = new Pawn(Team.BLACK);
         final Pawn white = new Pawn(Team.WHITE);
-        final Position source = Positions.from("D4");
-        final Position blackDestination = Positions.from("D3");
-        final Position whiteDestination = Positions.from("D5");
+        final Position source = D4;
+        final Position blackDestination = D3;
+        final Position whiteDestination = D5;
 
         //when
 
@@ -25,14 +26,14 @@ class PawnTest {
         assertThat(black.isMovable(source, blackDestination)).isTrue();
         assertThat(white.isMovable(source, whiteDestination)).isTrue();
     }
-    
+
     @DisplayName("폰은 두 칸 초과해서 갈 수 없다.")
     @Test
     void cannotGo() {
         //given
         final Pawn pawn = new Pawn(Team.BLACK);
-        final Position source = Positions.from("D4");
-        final List<Position> cannotGo = Positions.of("D1", "B2", "F6");
+        final Position source = D4;
+        final List<Position> cannotGo = List.of(D1, B2, F6);
 
         //when
 
@@ -45,8 +46,8 @@ class PawnTest {
     void cannotGo2() {
         //given
         final Pawn pawn = new Pawn(Team.BLACK);
-        final Position source = Positions.from("D4");
-        final List<Position> cannotGo = Positions.of("D5", "C5", "E6");
+        final Position source = D4;
+        final List<Position> cannotGo = List.of(D5, C5, E6);
 
         //when
 
@@ -60,10 +61,10 @@ class PawnTest {
         //given
         final Pawn black = new Pawn(Team.BLACK);
         final Pawn white = new Pawn(Team.WHITE);
-        final Position blackSource = Positions.from("D7");
-        final Position whiteSource = Positions.from("D2");
-        final Position blackDestination = Positions.from("D5");
-        final Position whiteDestination = Positions.from("D4");
+        final Position blackSource = D7;
+        final Position whiteSource = D2;
+        final Position blackDestination = D5;
+        final Position whiteDestination = D4;
 
         //when
 
@@ -77,8 +78,8 @@ class PawnTest {
     void cannotGoTwoAtNotFirst() {
         //given
         final Pawn pawn = new Pawn(Team.BLACK);
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from("D2");
+        final Position source = D4;
+        final Position destination = D2;
 
         //when
 

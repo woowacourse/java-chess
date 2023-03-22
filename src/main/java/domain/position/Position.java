@@ -1,26 +1,56 @@
 package domain.position;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Position {
-
-    private static final int FILE_OFFSET = 0;
-    private static final int RANK_OFFSET = 1;
 
     private final File file;
     private final Rank rank;
 
-    Position(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public int getFileDifference(final Position other) {
-        return other.getFile() - this.getFile();
+    public static Position of(final File file, final Rank rank) {
+        return new Position(file, rank);
+    }
+
+    public List<Position> between(final Position destination) {
+        final Direction direction = Direction.of(this, destination);
+
+        if (Direction.NOTHING.equals(direction)) {
+            return Collections.emptyList();
+        }
+
+        return getBetweenPositions(destination, direction);
+    }
+
+    private List<Position> getBetweenPositions(final Position destination, final Direction direction) {
+        final int countBetweenPositions = getMaxDifference(destination) - 1;
+
+        return Stream.iterate(this.move(direction), position -> position.move(direction))
+                .limit(countBetweenPositions)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private int getMaxDifference(final Position destination) {
+        final int rankDifference = Math.abs(getRankDifference(destination));
+        final int fileDifference = Math.abs(getFileDifference(destination));
+
+        return Math.max(rankDifference, fileDifference);
     }
 
     public int getRankDifference(final Position other) {
-        return other.getRank() - this.getRank();
+        return rank.getDifference(other.rank);
+    }
+
+    public int getFileDifference(final Position other) {
+        return file.getDifference(other.file);
     }
 
     public int getDistance(final Position other) {
@@ -28,10 +58,10 @@ public final class Position {
     }
 
     public Position move(final Direction direction) {
-        final int rank = this.getRank() + direction.getRankDifference();
-        final int file = this.getFile() + direction.getFileDifference();
+        final Rank movedRank = rank.move(direction.getRankDifference());
+        final File movedFile = file.move(direction.getFileDifference());
 
-        return Positions.from(String.valueOf((char) file) + (char) rank);
+        return Position.of(movedFile, movedRank);
     }
 
     public Position move(final Direction direction, final int distance) {
@@ -43,16 +73,8 @@ public final class Position {
         return result;
     }
 
-    public String getName() {
-        return file.getName() + rank.getName();
-    }
-
-    private int getFile() {
-        return this.getName().charAt(FILE_OFFSET);
-    }
-
-    public int getRank() {
-        return this.getName().charAt(RANK_OFFSET);
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

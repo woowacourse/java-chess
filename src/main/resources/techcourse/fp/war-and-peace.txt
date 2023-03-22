@@ -13241,7 +13241,7 @@ the reception room, where he found some ten officers and generals.
 
 When he entered, Prince Andrew, his eyes drooping contemptuously (with
 that peculiar expression of polite weariness which plainly says, "If it
-were not my duty I would not talk to you for a moment"), was listening
+were not my duty I would not talk to you for a moment, was listening
 to an old Russian general with decorations, who stood very erect, almost
 on tiptoe, with a soldier's obsequious expression on his purple face,
 reporting something.
@@ -42588,7 +42588,7 @@ their feeling of hostile distrust gradually began to change into a
 kindly and bantering sympathy, such as soldiers feel for their dogs,
 cocks, goats, and in general for the animals that live with the
 regiment. The men soon accepted Pierre into their family, adopted him,
-gave him a nickname ("our gentleman"), and made kindly fun of him among
+gave him a nickname ("our gentleman, and made kindly fun of him among
 themselves.
 
 A shell tore up the earth two paces from Pierre and he looked around
@@ -46090,7 +46090,7 @@ corrected himself) "has shown or displayed in the battle of the
 twenty-sixth--there are no words worthy to do it justice! I tell you,
 Papa" (he smote himself on the breast as a general he had heard speaking
 had done, but Berg did it a trifle late for he should have struck his
-breast at the words "Russian army"), "I tell you frankly that we, the
+breast at the words "Russian army, "I tell you frankly that we, the
 commanders, far from having to urge the men on or anything of that kind,
 could hardly restrain those... those... yes, those exploits of antique
 valor," he went on rapidly. "General Barclay de Tolly risked his life
@@ -47338,7 +47338,7 @@ Highness," said the tall fellow with a triumphant smile on his lips and
 a frown on his brow), "to consult with him to act, and to aid the army
 to exterminate these scoundrels. We too will take part..." the reader
 went on, and then paused ("Do you see," shouted the youth victoriously,
-"he's going to clear up the whole affair for you...."), "in destroying
+"he's going to clear up the whole affair for you...., "in destroying
 them, and will send these visitors to the devil. I will come back to
 dinner, and we'll set to work. We will do, completely do, and undo these
 scoundrels."
@@ -65013,7 +65013,7 @@ PLEASE READ THIS BEFORE YOU DISTRIBUTE OR USE THIS WORK
 To protect the Project Gutenberg-tm mission of promoting the free
 distribution of electronic works, by using or distributing this work
 (or any other work associated in any way with the phrase "Project
-Gutenberg"), you agree to comply with all the terms of the Full Project
+Gutenberg, you agree to comply with all the terms of the Full Project
 Gutenberg-tm License (available with this file or online at
 http://gutenberg.org/license).
 

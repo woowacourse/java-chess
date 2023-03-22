@@ -1,12 +1,13 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.position.Position;
-import domain.position.Positions;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static domain.position.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 
@@ -15,8 +16,8 @@ class QueenTest {
     void queenMovable() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A7", "D5", "A1", "C4", "D1", "C3", "G7", "E3");
+        Position source = D4;
+        final List<Position> destinations = List.of(A7, D5, A1, C4, D1, C3, G7, E3);
 
         //when
 
@@ -29,8 +30,8 @@ class QueenTest {
     void queenUnMovable() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("A8", "B5", "G6");
+        Position source = D4;
+        final List<Position> destinations = List.of(A8, B5, G6);
 
         //when
 

@@ -1,12 +1,13 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.position.Position;
-import domain.position.Positions;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static domain.position.PositionFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
     @DisplayName("비숍은 대각선 네 방향으로 이동할 수 있다.")
@@ -14,8 +15,8 @@ class BishopTest {
     void bishopMovable() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("H8", "A7", "A1", "G1");
+        Position source = D4;
+        final List<Position> destinations = List.of(H8, A7, A1, G1);
 
         //when
 
@@ -28,8 +29,8 @@ class BishopTest {
     void bishopUnMovable() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        Position source = Positions.from("D4");
-        final List<Position> destinations = Positions.of("F8", "A6", "A2", "H3");
+        Position source = D4;
+        final List<Position> destinations = List.of(F8, A6, A2, H3);
 
         //when
 

@@ -1,9 +1,10 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
 
@@ -21,12 +22,13 @@ class PieceTest {
         //when
 
         //then
-        assertThat(king.getName()).isEqualTo("K");
-        assertThat(queen.getName()).isEqualTo("Q");
-        assertThat(knight.getName()).isEqualTo("N");
-        assertThat(bishop.getName()).isEqualTo("B");
-        assertThat(rook.getName()).isEqualTo("R");
-        assertThat(pawn.getName()).isEqualTo("P");
+        Assertions.assertAll(
+                () -> assertThat(king.getName()).isEqualTo("K"),
+                () -> assertThat(queen.getName()).isEqualTo("Q"),
+                () -> assertThat(knight.getName()).isEqualTo("N"),
+                () -> assertThat(bishop.getName()).isEqualTo("B"),
+                () -> assertThat(rook.getName()).isEqualTo("R"),
+                () -> assertThat(pawn.getName()).isEqualTo("P"));
     }
 
     @DisplayName("기물들은 팀을 가진다")
@@ -39,7 +41,8 @@ class PieceTest {
         //when
 
         //then
-        assertThat(black.isBlack()).isTrue();
-        assertThat(white.isBlack()).isFalse();
+        Assertions.assertAll(
+                () -> assertThat(black.isBlack()).isTrue(),
+                () -> assertThat(white.isBlack()).isFalse());
     }
 }

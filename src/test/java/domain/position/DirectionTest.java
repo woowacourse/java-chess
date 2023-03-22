@@ -2,35 +2,36 @@ package domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
+import static domain.position.Direction.*;
+import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
 
     @DisplayName("8가지 방향을 검증할 수 있다")
-    @ParameterizedTest
-    @CsvSource({"B6,NW", "D6,N", "F6,NE", "F4,E", "F2,SE", "D2,S", "B2,SW", "B4,W"})
-    void of(String to, String expected) {
+    @Test
+    void of() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from(to);
-        final Direction direction = Direction.valueOf(expected);
+        final Position source = D4;
+        final List<Position> destinations = List.of(B6, D6, F6, F4, F2, D2, B2, B4);
+        final List<Direction> expected = List.of(NW, N, NE, E, SE, S, SW, W);
 
         //when
 
         //then
-        assertThat(Direction.of(source, destination)).isEqualTo(direction);
+        assertThat(destinations).map(destination -> Direction.of(source, destination))
+                .containsExactlyElementsOf(expected);
     }
 
     @DisplayName("8가지 방향이 아니면 NOTHING을 리턴한다")
     @Test
-    void of() {
+    void ofNothing() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from("F5");
+        final Position source = D4;
+        final Position destination = F5;
 
         //when
 
@@ -39,58 +40,54 @@ class DirectionTest {
     }
 
     @DisplayName("대각선 관계면 true를 반환한다")
-    @ParameterizedTest
-    @ValueSource(strings = {"B6", "F6", "B2", "F2"})
-    void isDiagonal(String to) {
+    @Test
+    void isDiagonal() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from(to);
+        final Position source = D4;
+        final List<Position> destinations = List.of(B6, F6, B2, F2);
 
         //when
 
         //then
-        assertThat(Direction.isDiagonal(source, destination)).isTrue();
+        assertThat(destinations).allMatch(destination -> Direction.isDiagonal(source, destination));
     }
 
     @DisplayName("대각선 관계가 아니면 false를 반환한다")
-    @ParameterizedTest
-    @ValueSource(strings = {"B7", "F5", "C2", "H2"})
-    void isNotDiagonal(String to) {
+    @Test
+    void isNotDiagonal() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from(to);
+        final Position source = D4;
+        final List<Position> destinations = List.of(B7, F5, C2, H2);
 
         //when
 
         //then
-        assertThat(Direction.isDiagonal(source, destination)).isFalse();
+        assertThat(destinations).noneMatch(destination -> Direction.isDiagonal(source, destination));
     }
 
     @DisplayName("직선 관계면 true를 반환한다")
-    @ParameterizedTest
-    @ValueSource(strings = {"D8", "D1", "A4", "F4"})
-    void isStraight(String to) {
+    @Test
+    void isStraight() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from(to);
+        final Position source = D4;
+        final List<Position> destinations = List.of(D8, D1, A4, F4);
 
         //when
 
         //then
-        assertThat(Direction.isStraight(source, destination)).isTrue();
+        assertThat(destinations).allMatch(destination -> Direction.isStraight(source, destination));
     }
 
     @DisplayName("직선 관계가 아니면 false를 반환한다")
-    @ParameterizedTest
-    @ValueSource(strings = {"H8", "B1", "A2", "F7"})
-    void isNotStraight(String to) {
+    @Test
+    void isNotStraight() {
         //given
-        final Position source = Positions.from("D4");
-        final Position destination = Positions.from(to);
+        final Position source = D4;
+        final List<Position> destinations = List.of(H8, B1, A2, F7);
 
         //when
 
         //then
-        assertThat(Direction.isStraight(source, destination)).isFalse();
+        assertThat(destinations).noneMatch(destination -> Direction.isStraight(source, destination));
     }
 }

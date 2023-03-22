@@ -1,6 +1,8 @@
 package domain.piece;
 
 import domain.position.Position;
+
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -11,6 +13,10 @@ public abstract class Piece {
         this.name = name;
         this.team = team;
     }
+
+    public abstract List<Position> getInitialBlackPositions();
+
+    public abstract List<Position> getInitialWhitePositions();
 
     public abstract boolean isMovable(final Position source, final Position destination);
 
