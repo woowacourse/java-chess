@@ -13,21 +13,23 @@ import java.util.function.Consumer;
 
 public enum Shape {
 
-    PAWN('p', 'P', (request) -> new PawnStrategy().validateDirection(request)),
-    KING('k', 'K', (request) -> new KingStrategy().validateDirection(request)),
-    QUEEN('q', 'Q', (request) -> new QueenStrategy().validateDirection(request)),
-    ROOK('r', 'R', (request) -> new RookStrategy().validateDirection(request)),
-    BISHOP('b', 'B', (request) -> new BishopStrategy().validateDirection(request)),
-    KNIGHT('n', 'N', (request) -> new KnightStrategy().validateDirection(request));
+    PAWN('p', 'P', 1, (request) -> new PawnStrategy().validateDirection(request)),
+    KING('k', 'K', 0, (request) -> new KingStrategy().validateDirection(request)),
+    QUEEN('q', 'Q', 9, (request) -> new QueenStrategy().validateDirection(request)),
+    ROOK('r', 'R', 5, (request) -> new RookStrategy().validateDirection(request)),
+    BISHOP('b', 'B', 3, (request) -> new BishopStrategy().validateDirection(request)),
+    KNIGHT('n', 'N', 2.5, (request) -> new KnightStrategy().validateDirection(request));
 
     private final char whiteName;
     private final char blackName;
+    private final Score score;
     private final Consumer<MoveRequest> validateDirection;
 
-    Shape(char whiteName, char blackName, final Consumer<MoveRequest> movePosition) {
+    Shape(final char whiteName, char blackName, double score, Consumer<MoveRequest> validateDirection) {
         this.whiteName = whiteName;
         this.blackName = blackName;
-        this.validateDirection = movePosition;
+        this.score = Score.from(score);
+        this.validateDirection = validateDirection;
     }
 
     public void move(final MoveRequest request) {
@@ -52,4 +54,7 @@ public enum Shape {
         return whiteName;
     }
 
+    public double getScore() {
+        return score.getValue();
+    }
 }

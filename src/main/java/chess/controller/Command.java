@@ -6,7 +6,8 @@ import java.util.List;
 public enum Command {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
 
@@ -18,10 +19,10 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(commands -> commands.command.equals(command.get(0)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("커맨드 일치 x"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 커맨드입니다."));
     }
 
     public boolean isNotEnd() {
-        return !this.command.equals("end");
+        return this != END;
     }
 }
