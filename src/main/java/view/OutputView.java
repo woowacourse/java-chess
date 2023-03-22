@@ -12,7 +12,7 @@ public class OutputView {
         Rank currentRank = Rank.EIGHT;
         for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
             currentRank = moveNextRankIfLast(currentRank, positionPieceEntry);
-            System.out.print(positionPieceEntry.getValue().getCategory().getPieceValue());
+            System.out.print(PieceMapper.convertPieceCategoryToText(positionPieceEntry.getValue().getCategory()));
         }
         System.out.println();
         System.out.println();

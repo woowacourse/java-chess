@@ -1,4 +1,4 @@
-package view;
+package domain.piece;
 
 public enum PieceCategory {
     WHITE_PAWN("p"),

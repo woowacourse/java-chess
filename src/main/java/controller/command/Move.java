@@ -1,5 +1,7 @@
 package controller.command;
 
+import controller.mapper.FileMapper;
+import controller.mapper.RankMapper;
 import domain.piece.File;
 import domain.piece.Rank;
 

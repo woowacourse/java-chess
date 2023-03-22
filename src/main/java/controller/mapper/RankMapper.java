@@ -1,4 +1,4 @@
-package controller.command;
+package controller.mapper;
 
 import domain.piece.Rank;
 import java.util.Arrays;

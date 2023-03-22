@@ -12,7 +12,7 @@ import static domain.piece.Rank.THREE;
 import static domain.piece.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import controller.command.RankMapper;
+import controller.mapper.RankMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

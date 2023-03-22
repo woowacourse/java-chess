@@ -1,7 +1,5 @@
 package domain.piece;
 
-import view.PieceCategory;
-
 import java.util.Collections;
 import java.util.List;
 

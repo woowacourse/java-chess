@@ -1,4 +1,4 @@
-package controller.command;
+package controller.mapper;
 
 import domain.piece.File;
 import java.util.Arrays;

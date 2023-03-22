@@ -1,7 +1,6 @@
 package domain.piece;
 
 import java.util.List;
-import view.PieceCategory;
 
 public class EmptyPiece extends Piece {
     public EmptyPiece() {

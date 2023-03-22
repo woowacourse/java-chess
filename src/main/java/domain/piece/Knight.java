@@ -2,7 +2,6 @@ package domain.piece;
 
 import java.util.Collections;
 import java.util.List;
-import view.PieceCategory;
 
 public class Knight extends Piece {
     private Knight(Side side) {

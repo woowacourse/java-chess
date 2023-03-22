@@ -4,7 +4,6 @@ import static domain.piece.Side.BLACK;
 import static domain.piece.Side.WHITE;
 
 import java.util.List;
-import view.PieceCategory;
 
 public abstract class Piece {
     protected final Side side;
