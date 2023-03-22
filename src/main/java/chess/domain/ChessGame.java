@@ -17,7 +17,6 @@ public class ChessGame {
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
         validateEmpty(source);
         validateTurn(source);
-        validateTurn(source);
         board.move(source, target);
         turn = turn.reverse();
     }
