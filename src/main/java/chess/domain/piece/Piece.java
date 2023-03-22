@@ -13,7 +13,6 @@ public abstract class Piece {
     protected static final int TWO_SQUARES = 2;
     protected static final int INCLINATION = 1;
 
-
     protected final Color color;
 
     public Piece(final Color color) {
