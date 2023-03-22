@@ -23,7 +23,7 @@ public final class ChessBoard {
 
     private final Map<Position, SquareStatus> chessBoard;
 
-    ChessBoard(final Map<Position, SquareStatus> chessBoard) {
+    public ChessBoard(final Map<Position, SquareStatus> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
