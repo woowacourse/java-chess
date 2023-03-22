@@ -17,6 +17,14 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int BLACK_PAWN_INITIAL_ROW = 6;
+    private static final int WHITE_PAWN_INITIAL_ROW = 1;
+
+    private static final int BLACK_EDGE_ROW = 7;
+    private static final int WHITE_EDGE_ROW = 0;
+    private static final int EMPTY_START_ROW = 2;
+    private static final int EMPTY_END_ROW = 5;
+
     private static final int LINE_SIZE = 8;
 
     private final Map<Position, Piece> board;
@@ -27,47 +35,44 @@ public class Board {
 
     public static Board create() {
         HashMap<Position, Piece> board = new HashMap<>();
-        initializeWhitePieces(board);
+        initializePawns(board, Team.WHITE, WHITE_PAWN_INITIAL_ROW);
+        initializePawns(board, Team.BLACK, BLACK_PAWN_INITIAL_ROW);
+        initializePiecesOfEdgeLine(board, Team.WHITE, WHITE_EDGE_ROW);
+        initializePiecesOfEdgeLine(board, Team.BLACK, BLACK_EDGE_ROW);
         initializeEmptyPieces(board);
-        initializeBlackPieces(board);
         return new Board(board);
-    }
-
-    private static void initializeWhitePieces(HashMap<Position, Piece> board) {
-        List<Piece> whitePieces = new ArrayList<>(
-                List.of(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
-                        new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE))
-        );
-        for (int i = 0; i < LINE_SIZE; i++) {
-            board.put(new Position(i, 0), whitePieces.get(i));
-        }
-        for (int i = 0; i < LINE_SIZE; i++) {
-            board.put(new Position(i, 1), new Pawn(Team.WHITE));
-        }
     }
 
     private static void initializeEmptyPieces(HashMap<Position, Piece> board) {
         for (int i = 0; i < LINE_SIZE; i++) {
-            for (int j = 2; j < 6; j++) {
+            for (int j = EMPTY_START_ROW; j <= EMPTY_END_ROW; j++) {
                 board.put(new Position(i, j), new EmptyPiece());
             }
         }
     }
 
-    private static void initializeBlackPieces(HashMap<Position, Piece> board) {
-        List<Piece> blackPieces = new ArrayList<>(
-                List.of(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
-                        new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK))
+    private static void initializePiecesOfEdgeLine(HashMap<Position, Piece> board, Team team, int row) {
+        List<Piece> pieces = new ArrayList<>(
+                List.of(Rook.from(team), Knight.from(team), Bishop.from(team), Queen.from(team),
+                        King.from(team), Bishop.from(team), Knight.from(team), Rook.from(team))
         );
         for (int i = 0; i < LINE_SIZE; i++) {
-            board.put(new Position(i, 6), new Pawn(Team.BLACK));
+            board.put(new Position(i, row), pieces.get(i));
         }
-        for (int i = 7; i >= 0; i--) {
-            board.put(new Position(i, 7), blackPieces.get(i));
+    }
+
+    private static void initializePawns(HashMap<Position, Piece> board, Team team, int row) {
+        for (int i = 0; i < LINE_SIZE; i++) {
+            board.put(new Position(i, row), Pawn.from(team));
         }
     }
 
     public void movePiece(Position source, Position target) {
+        //source가 비어있으면 예외
+        //target이 비어있지 않다면, 같은 팀인지 판단
+
+        //경로에 장애물이 있으면 예외
+
         MoveValidator.validate(board, source, target);
 
         Piece piece = board.get(source);

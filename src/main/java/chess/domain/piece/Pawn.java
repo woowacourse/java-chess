@@ -8,9 +8,13 @@ public class Pawn extends NoneEmptyPiece {
 
     private boolean hasMoved;
 
-    public Pawn(final Team team) {
-        super(team, Movement.PAWN);
-        this.hasMoved = false;
+    private Pawn(PieceType pieceType, Team team, Movement movement, boolean hasMoved) {
+        super(pieceType, team, movement);
+        this.hasMoved = hasMoved;
+    }
+
+    public static Pawn from(Team team){
+        return new Pawn(PieceType.PAWN, team, Movement.PAWN, false);
     }
 
     @Override
@@ -34,15 +38,5 @@ public class Pawn extends NoneEmptyPiece {
             relativePosition = relativePosition.inverseByXAxis();
         }
         return movement.isMobile(relativePosition);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.PAWN;
     }
 }

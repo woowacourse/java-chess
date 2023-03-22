@@ -2,15 +2,20 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.position.RelativePosition;
 
 public class Rook extends NoneEmptyPiece {
 
-    public Rook(final Team team) {
-        super(team, Movement.ROOK);
+    private Rook(PieceType pieceType, Team team, Movement movement) {
+        super(pieceType, team, movement);
+    }
+
+    public static Rook from(Team team){
+        return new Rook(PieceType.ROOK, team, Movement.ROOK);
     }
 
     @Override
-    public PieceType getType() {
-        return PieceType.ROOK;
+    public boolean isMobile(RelativePosition relativePosition) {
+        return movement.isMobile(relativePosition);
     }
 }

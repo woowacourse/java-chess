@@ -2,22 +2,22 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.piece.movable.Movable;
 import chess.domain.position.RelativePosition;
 
-public abstract class NoneEmptyPiece implements Piece {
+public abstract class NoneEmptyPiece extends Piece implements Movable {
 
     protected final Team team;
     protected final Movement movement;
 
-    public NoneEmptyPiece(Team team, Movement movement) {
+    public NoneEmptyPiece(PieceType pieceType, Team team, Movement movement) {
+        super(pieceType);
         this.team = team;
         this.movement = movement;
     }
 
     @Override
-    public boolean isMobile(RelativePosition relativePosition) {
-        return movement.isMobile(relativePosition);
-    }
+    public abstract boolean isMobile(RelativePosition relativePosition);
 
     @Override
     public boolean isBlack() {
@@ -34,14 +34,4 @@ public abstract class NoneEmptyPiece implements Piece {
         return false;
     }
 
-    public boolean isKnight() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public abstract PieceType getType();
 }

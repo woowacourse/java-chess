@@ -1,16 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.position.RelativePosition;
+public class EmptyPiece extends Piece {
 
-public class EmptyPiece implements Piece {
 
     public EmptyPiece() {
-        super();
-    }
-
-    @Override
-    public boolean isMobile(RelativePosition relativePosition) {
-        throw new IllegalStateException("이동이 불가능한 기물입니다.");
+        super(PieceType.EMPTY);
     }
 
     @Override
@@ -28,8 +22,4 @@ public class EmptyPiece implements Piece {
         return false;
     }
 
-    @Override
-    public PieceType getType() {
-        return PieceType.EMPTY;
-    }
 }

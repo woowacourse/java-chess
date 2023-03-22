@@ -2,15 +2,20 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.position.RelativePosition;
 
 public class Bishop extends NoneEmptyPiece {
 
-    public Bishop(final Team team) {
-        super(team, Movement.BISHOP);
+    private Bishop(PieceType pieceType, Team team, Movement movement) {
+        super(pieceType, team, movement);
+    }
+
+    public static Bishop from(Team team){
+        return new Bishop(PieceType.BISHOP, team, Movement.BISHOP);
     }
 
     @Override
-    public PieceType getType() {
-        return PieceType.BISHOP;
+    public boolean isMobile(RelativePosition relativePosition) {
+        return movement.isMobile(relativePosition);
     }
 }

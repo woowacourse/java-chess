@@ -2,20 +2,21 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.position.RelativePosition;
 
 public class Knight extends NoneEmptyPiece {
 
-    public Knight(final Team team) {
-        super(team, Movement.KNIGHT);
+    private Knight(PieceType pieceType, Team team, Movement movement) {
+        super(pieceType, team, movement);
+    }
+
+    public static Knight from(Team team){
+        return new Knight(PieceType.KNIGHT, team, Movement.KNIGHT);
     }
 
     @Override
-    public boolean isKnight() {
-        return true;
+    public boolean isMobile(RelativePosition relativePosition) {
+        return movement.isMobile(relativePosition);
     }
 
-    @Override
-    public PieceType getType() {
-        return PieceType.KNIGHT;
-    }
 }

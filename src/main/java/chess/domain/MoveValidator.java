@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.NoneEmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 
@@ -52,13 +53,13 @@ public class MoveValidator {
 
     private static boolean isInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
         RelativePosition relativePosition = RelativePosition.of(source, target);
-        Piece piece = board.get(source);
+        NoneEmptyPiece piece = (NoneEmptyPiece) board.get(source);
         return !piece.isMobile(relativePosition);
     }
 
     private static void validateObstacle(Map<Position, Piece> board, Position source, Position target) {
-        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(source);
-        if (!sourcePiece.isKnight() && hasObstacle(board, source, target)) {
+        Piece sourcePiece = board.get(source);
+        if (!sourcePiece.isType(PieceType.KNIGHT) && hasObstacle(board, source, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
         }
     }
@@ -69,7 +70,7 @@ public class MoveValidator {
         Position currentPosition = source.move(unitPosition);
 
         List<Position> positions = new ArrayList<>();
-        while(!currentPosition.equals(target)){
+        while (!currentPosition.equals(target)) {
             positions.add(currentPosition);
             currentPosition = currentPosition.move(unitPosition);
         }
@@ -79,9 +80,9 @@ public class MoveValidator {
     }
 
     private static void validateDiagonalImpossible(Map<Position, Piece> board, Position source, Position target) {
-        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(source);
+        Piece sourcePiece = board.get(source);
         RelativePosition relativePosition = RelativePosition.of(source, target);
-        if (sourcePiece.isPawn() && relativePosition.isDiagonal() && isEmpty(board, target)) {
+        if (sourcePiece.isType(PieceType.PAWN) && relativePosition.isDiagonal() && isEmpty(board, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
         }
     }

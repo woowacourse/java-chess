@@ -1,16 +1,24 @@
 package chess.domain.piece;
 
-import chess.domain.position.RelativePosition;
+public abstract class Piece {
 
-public interface Piece {
+    protected final PieceType pieceType;
 
-    boolean isMobile(RelativePosition relativePosition);
+    public Piece(PieceType pieceType) {
+        this.pieceType = pieceType;
+    }
 
-    boolean isEmpty();
+    public abstract boolean isEmpty();
 
-    boolean isBlack();
+    public abstract boolean isBlack();
 
-    boolean isWhite();
+    public abstract boolean isWhite();
 
-    PieceType getType();
+    public boolean isType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
+    public PieceType getType() {
+        return pieceType;
+    }
 }
