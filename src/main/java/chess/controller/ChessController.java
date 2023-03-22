@@ -33,6 +33,15 @@ public final class ChessController {
         repeatPlay();
     }
 
+    private void repeatReadStart() {
+        try {
+            startByCommand();
+        } catch (RuntimeException e) {
+            outputView.printErrorMesage(e);
+            repeatReadStart();
+        }
+    }
+
     private void repeatPlay() {
         try {
             playGameUntilEnd();
@@ -40,15 +49,6 @@ public final class ChessController {
             outputView.printErrorMesage(e);
             outputView.printGuideMessage();
             repeatPlay();
-        }
-    }
-
-    private void repeatReadStart() {
-        try {
-            startByCommand();
-        } catch (RuntimeException e) {
-            outputView.printErrorMesage(e);
-            repeatReadStart();
         }
     }
 

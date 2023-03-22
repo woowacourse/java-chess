@@ -31,11 +31,13 @@ public final class Board {
     public void play(Position source, Position target, Color color) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
+
         validateEmpty(sourceSquare);
         validateTurn(sourceSquare, color);
         validateSameColor(sourceSquare, targetSquare);
-        Set<Position> movablePath = sourceSquare.computePath(source, target);
-        Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
+
+        var movablePath = sourceSquare.computePath(source, target);
+        var isEmptySquare = generateIsEmptySquare(movablePath);
 
         validateMove(source, target, sourceSquare, isEmptySquare);
         move(sourceSquare, targetSquare);
