@@ -12,13 +12,11 @@ public enum DirectionVector {
         this.vectorr = vectorr;
     }
 
-    public Vectorr multiply(int length) {
-        return vectorr.multiply(length);
-    }
-
     public boolean isSameDirection(Vectorr vector) {
         return this.multiply(vector.getMaxLength()).equals(vector);
     }
 
-
+    public Vectorr multiply(int length) {
+        return vectorr.multiply(length);
+    }
 }
