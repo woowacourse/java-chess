@@ -61,11 +61,12 @@ public class ChessGameDao {
     }
 
     public void update(final ChessGameEntity chessGameEntity) {
-        final String sql = "UPDATE chess_game SET turn = ?, winner = ? ";
+        final String sql = "UPDATE chess_game SET turn = ?, winner = ? where id = ?";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, chessGameEntity.turn());
             preparedStatement.setString(2, chessGameEntity.winner());
+            preparedStatement.setString(3, chessGameEntity.id().toString());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

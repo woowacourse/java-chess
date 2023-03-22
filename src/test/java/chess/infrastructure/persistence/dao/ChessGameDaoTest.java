@@ -59,9 +59,32 @@ class ChessGameDaoTest {
 
         // then
         final ChessGameEntity result = chessGameDao.findById(update.id()).get();
+        assertAll(
+                () -> assertThat(result.id()).isEqualTo(update.id()),
+                () -> assertThat(result.turn()).isEqualTo("BLACK"),
+                () -> assertThat(result.winner()).isNull()
+        );
+    }
+
+    @Test
+    void 업데이트_시_하나만_업데이트_되어야_한다() {
+        // given
+        final ChessGameEntity chessGameEntity1 = new ChessGameEntity(null, Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity2 = new ChessGameEntity(null, Color.WHITE.name(), null);
+        chessGameDao.save(chessGameEntity1);
+        chessGameDao.save(chessGameEntity2);
+
+        // when
+        final ChessGameEntity update = new ChessGameEntity(chessGameEntity1.id(), Color.BLACK.name(), null);
+        chessGameDao.update(update);
+
+        // then
+        final ChessGameEntity result = chessGameDao.findById(update.id()).get();
+        final ChessGameEntity noUpdate = chessGameDao.findById(chessGameEntity2.id()).get();
         Assertions.assertAll(
                 () -> assertThat(result.id()).isEqualTo(update.id()),
                 () -> assertThat(result.turn()).isEqualTo("BLACK"),
+                () -> assertThat(noUpdate.turn()).isEqualTo("WHITE"),
                 () -> assertThat(result.winner()).isNull()
         );
     }
