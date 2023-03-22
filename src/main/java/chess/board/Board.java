@@ -43,13 +43,21 @@ public class Board {
             throw new IllegalArgumentException("[ERROR] 해당 기물은 대상 위치로 이동할 수 없습니다.");
         }
         if (sourcePiece.getClass() == Pawn.class) {
-            checkConditionOfPawnDiagonalMove(sourcePosition, targetPosition);
+            final Direction direction = sourcePosition.getDirectionTo(targetPosition);
+            final boolean isPieceOnTargetPosition = pieces.isPieceExistOnPosition(targetPosition);
+            checkConditionOfPawnVerticalMove(direction, isPieceOnTargetPosition);
+            checkConditionOfPawnDiagonalMove(direction, isPieceOnTargetPosition);
         }
     }
 
-    private void checkConditionOfPawnDiagonalMove(final Position sourcePosition, final Position targetPosition) {
-        final Direction direction = sourcePosition.getDirectionTo(targetPosition);
-        if (direction.isDiagonalMovable() && !pieces.isPieceExistOnPosition(targetPosition)) {
+    private void checkConditionOfPawnVerticalMove(final Direction direction, final boolean isPieceOnTargetPosition) {
+        if (direction.isVertical() && isPieceOnTargetPosition) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각으로 이동할 때만 적 기물이 있는 위치로 이동할 수 있습니다.");
+        }
+    }
+
+    private void checkConditionOfPawnDiagonalMove(final Direction direction, final boolean isPieceOnTargetPosition) {
+        if (direction.isDiagonal() && !isPieceOnTargetPosition) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각 방향에 적이 있을 때만 대각으로 이동할 수 있습니다.");
         }
     }
