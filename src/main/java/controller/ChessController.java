@@ -27,8 +27,7 @@ public class ChessController {
             return;
         }
         chessGame.initialize();
-        ExecuteContext.repeatableExecute(this::printBoard,
-            () -> command(inputView.getCommand()));
+        ExecuteContext.repeatableExecute(this::printBoard, () -> command(inputView.getCommand()));
     }
 
     private Void printBoard() {
@@ -50,22 +49,26 @@ public class ChessController {
             calculateScore();
             return true;
         }
-        move(commands);
-        return true;
+        return move(commands);
     }
 
-    private void move(final List<String> commands) {
+    private boolean move(final List<String> commands) {
         final Location start = mapToLocation(commands.get(1));
         final Location end = mapToLocation(commands.get(2));
-        chessGame.move(start, end);
+        final Color result = chessGame.move(start, end);
+        if (result.equals(Color.NONE)) {
+            return true;
+        }
+        outputView.printResult(result);
+        return false;
     }
 
     private Location mapToLocation(final String location) {
         final String columnInput = location.substring(0, 1);
         final String rowInput = location.substring(1);
         try {
-            int col = ColumnConverter.findColumn(columnInput);
-            int row = Integer.parseInt(rowInput);
+            final int col = ColumnConverter.findColumn(columnInput);
+            final int row = Integer.parseInt(rowInput);
             return Location.of(col, row);
         } catch (Exception exception) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);

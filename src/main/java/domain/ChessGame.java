@@ -1,6 +1,8 @@
 package domain;
 
+import domain.piece.Piece;
 import domain.type.Color;
+import domain.type.PieceType;
 import domain.type.Turn;
 import java.util.HashMap;
 
@@ -18,14 +20,19 @@ public class ChessGame {
         board.initialize();
     }
 
-    public void move(final Location start, final Location end) {
+    public Color move(final Location start, final Location end) {
         if (turn.equals(Turn.WHITE)) {
-            board.moveWhite(start, end);
-            turn = Turn.BLACK;
-            return;
+            return convert(board.moveWhite(start, end));
         }
-        board.moveBlack(start, end);
-        turn = Turn.WHITE;
+        return convert(board.moveBlack(start, end));
+    }
+
+    private Color convert(final Piece piece) {
+        if (piece.isSameType(PieceType.KING)) {
+            return piece.getColor().reverse();
+        }
+        turn = turn.convert();
+        return Color.NONE;
     }
 
     public double calculateWhiteScore() {

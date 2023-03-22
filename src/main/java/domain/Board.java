@@ -34,29 +34,29 @@ public class Board {
         }
     }
 
-    public void moveWhite(final Location start, final Location end) {
+    public Piece moveWhite(final Location start, final Location end) {
         final Piece piece = findPiece(start);
         if (piece.isBlack()) {
             throw new IllegalArgumentException(WHITE_TURN_ERROR_MESSAGE);
         }
-        move(start, end);
+        return move(start, end);
     }
 
-    public void moveBlack(final Location start, final Location end) {
+    public Piece moveBlack(final Location start, final Location end) {
         final Piece piece = findPiece(start);
         if (piece.isWhite()) {
             throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
-        move(start, end);
+        return move(start, end);
     }
 
     public Piece findPiece(final Location location) {
         return board.get(location);
     }
 
-    private void move(final Location start, final Location end) {
+    private Piece move(final Location start, final Location end) {
         canMove(start, end);
-        convert(start, end);
+        return convert(start, end);
     }
 
     private void canMove(final Location startLocation, final Location endLocation) {
@@ -84,9 +84,11 @@ public class Board {
             .anyMatch(Piece::isNotEmpty);
     }
 
-    private void convert(final Location start, final Location end) {
+    private Piece convert(final Location start, final Location end) {
+        final Piece endPiece = board.get(end);
         board.replace(end, board.get(start));
         board.replace(start, EmptyPiece.make());
+        return endPiece;
     }
 
     public double calculateWhiteScore() {
