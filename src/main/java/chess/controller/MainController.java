@@ -4,6 +4,7 @@ import static chess.controller.ExceptionHandler.repeatUntilValidInput;
 import static chess.view.Command.END;
 import static chess.view.Command.MOVE;
 import static chess.view.Command.START;
+import static chess.view.InputView.readCommand;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
@@ -12,7 +13,6 @@ import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.math.PositionConverter;
 import chess.view.Command;
-import chess.view.InputView;
 import java.util.List;
 
 public final class MainController {
@@ -41,6 +41,14 @@ public final class MainController {
         printFinishMessage();
     }
 
+    private List<String> readValidCommand() {
+        List<String> inputs = readCommand();
+        validateCommand(inputs.get(COMMAND_INDEX));
+        validateInputSize(inputs);
+
+        return inputs;
+    }
+
     private boolean playChess() {
         List<String> inputs = repeatUntilValidInput(this::readValidCommand);
         Command command = Command.of(inputs.get(COMMAND_INDEX));
@@ -57,27 +65,19 @@ public final class MainController {
         }
         if (command == MOVE) {
             movePiece(inputs);
+            printBoard(board.getBoard());
         }
         return true;
     }
 
     private void movePiece(final List<String> inputs) {
-        Position current = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
-        Position target = PositionConverter.toPosition(inputs.get(TARGET_INDEX_POSITION));
+        Position currentPosition = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
+        Position targetPosition = PositionConverter.toPosition(inputs.get(TARGET_INDEX_POSITION));
 
-        board.movePiece(current, target);
-        printBoard(board.getBoard());
+        board.movePiece(currentPosition, targetPosition);
     }
 
-    private List<String> readValidCommand() {
-        List<String> inputs = InputView.readCommand();
-        isValidCommand(inputs.get(COMMAND_INDEX));
-        isValidInputSize(inputs);
-
-        return inputs;
-    }
-
-    private void isValidCommand(final String commandValue) {
+    private void validateCommand(final String commandValue) {
         try {
             Command.of(commandValue);
         } catch (IllegalArgumentException e) {
@@ -85,12 +85,16 @@ public final class MainController {
         }
     }
 
-    private void isValidInputSize(final List<String> inputs) {
+    private void validateInputSize(final List<String> inputs) {
         int size = inputs.size();
 
-        if (size == ONLY_COMMAND_SIZE || size == MOVE_COMMAND_SIZE) {
+        if (isValidInputSize(size)) {
             return;
         }
         throw new IllegalArgumentException("입력이 잘못되었습니다. 다시 입력해주세요.");
+    }
+
+    private boolean isValidInputSize(final int size) {
+        return size == ONLY_COMMAND_SIZE || size == MOVE_COMMAND_SIZE;
     }
 }
