@@ -12,28 +12,21 @@ public final class Rank {
     private final List<Square> rank;
 
     public Rank(final List<Square> rank) {
-        validateSize(rank);
+        validateRankSize(rank);
         this.rank = new ArrayList<>(rank);
     }
 
-    private void validateSize(final List<Square> rank) {
+    private void validateRankSize(final List<Square> rank) {
         if (rank.size() != RANK_SIZE) {
             throw new IllegalArgumentException(INVALID_RANK_SIZE + rank.size());
         }
     }
-    
-    public void validatePiece(final int column) {
-        if (isEmptyPiece(column)) {
-            return;
-        }
-        throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다. 다시 입력해주세요.");
-    }
 
     public boolean isEmptyPiece(final int column) {
-        return findSquare(column).isEmptyPiece();
+        return findSquareAt(column).isEmptyPiece();
     }
 
-    public Square findSquare(final int column) {
+    public Square findSquareAt(final int column) {
         return rank.get(column);
     }
 
@@ -42,13 +35,13 @@ public final class Rank {
     }
 
     public void replacePiece(final int column, final Piece newPiece) {
-        Square square = findSquare(column);
+        Square square = findSquareAt(column);
         Square replacedSquare = square.replacePiece(newPiece);
         replaceSquare(column, replacedSquare);
     }
 
-    public Piece findPiece(final int column) {
-        Square square = findSquare(column);
+    public Piece findPieceAt(final int column) {
+        Square square = findSquareAt(column);
         return square.getPiece();
     }
 

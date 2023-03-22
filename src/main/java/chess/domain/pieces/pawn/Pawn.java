@@ -30,16 +30,16 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public void validateMove(final Direction movableDirection, final List<Piece> otherPieces) {
-        validateDirection(movableDirection);
-        validateDistance(otherPieces);
-        validatePiecesTeam(otherPieces);
-        validateDiagonal(movableDirection, otherPieces);
+    public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces) {
+        validateDirection(correctDirection);
+        validateDistance(onRoutePieces);
+        validateOnRoutePiecesExistAlly(onRoutePieces);
+        validateKill(correctDirection, onRoutePieces);
 
         checkMoved();
     }
 
-    abstract protected void validateDiagonal(final Direction movableDirection, final List<Piece> otherPieces);
+    abstract protected void validateKill(final Direction movableDirection, final List<Piece> otherPieces);
 
     protected void checkMoved() {
         this.isMoved = true;

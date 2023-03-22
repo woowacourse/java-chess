@@ -15,10 +15,10 @@ public final class King extends NonSlidingPiece {
     }
 
     @Override
-    public void validateMove(final Direction movableDirection, final List<Piece> otherPieces) {
-        validateDirection(movableDirection);
-        validateDistance(otherPieces);
-        validatePiecesTeam(otherPieces);
+    public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces) {
+        validateDirection(correctDirection);
+        validateDistance(onRoutePieces);
+        validateOnRoutePiecesExistAlly(onRoutePieces);
     }
 
     private void validateDistance(final List<Piece> otherPieces) {

@@ -24,18 +24,18 @@ public final class BoardMaker {
     public List<Rank> createBoard() {
         List<Rank> ranks = new ArrayList<>();
 
-        ranks.add(createFirstRank());
-        ranks.add(createSecondRank());
+        ranks.add(createBlackPiecesExpectPawn());
+        ranks.add(createBlackPawns());
         for (int row = START_MIDDLE_ROW; row <= END_MIDDLE_ROW; row++) {
-            ranks.add(createMiddleRank(row));
+            ranks.add(createEmptyPieces(row));
         }
-        ranks.add(createSecondLastRank());
-        ranks.add(createLastRank());
+        ranks.add(createWhitePawns());
+        ranks.add(createWhitePiecesExpectPawn());
 
         return ranks;
     }
 
-    private Rank createFirstRank() {
+    private Rank createBlackPiecesExpectPawn() {
         List<Square> squares = new ArrayList<>(List.of(
                 new Square(new Position(0, 0), new Rook(Team.BLACK)),
                 new Square(new Position(0, 1), new Knight(Team.BLACK)),
@@ -50,7 +50,7 @@ public final class BoardMaker {
         return new Rank(squares);
     }
 
-    private Rank createSecondRank() {
+    private Rank createBlackPawns() {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(1, column), new BlackPawn()))
                 .collect(toList());
@@ -58,7 +58,7 @@ public final class BoardMaker {
         return new Rank(squares);
     }
 
-    private Rank createMiddleRank(int row) {
+    private Rank createEmptyPieces(int row) {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(row, column), new EmptyPiece()))
                 .collect(toList());
@@ -66,7 +66,7 @@ public final class BoardMaker {
         return new Rank(squares);
     }
 
-    private Rank createSecondLastRank() {
+    private Rank createWhitePawns() {
         List<Square> squares = IntStream.range(0, 8)
                 .mapToObj(column -> new Square(new Position(6, column), new WhitePawn()))
                 .collect(toList());
@@ -74,7 +74,7 @@ public final class BoardMaker {
         return new Rank(squares);
     }
 
-    private Rank createLastRank() {
+    private Rank createWhitePiecesExpectPawn() {
         List<Square> squares = new ArrayList<>(List.of(
                 new Square(new Position(7, 0), new Rook(Team.WHITE)),
                 new Square(new Position(7, 1), new Knight(Team.WHITE)),

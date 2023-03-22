@@ -39,7 +39,7 @@ class BlackPawnTest {
     @Test
     @DisplayName("블랙팀 폰은 6시, 5시, 7시 방향으로만 갈 수 있습니다.")
     void 블랙팀_폰은_6시_5시_7시_방향으로만_갈_수_있습니다() {
-        assertThat(blackPawn.getDirections()).containsOnly(Direction.DOWN_LEFT, Direction.DOWN, Direction.DOWN_RIGHT);
+        assertThat(blackPawn.getMovableDirections()).containsOnly(Direction.DOWN_LEFT, Direction.DOWN, Direction.DOWN_RIGHT);
     }
 
     @Test

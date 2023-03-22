@@ -35,29 +35,29 @@ class BoardMakerTest {
         var rank = ranks.get(0);
 
         assertAll(
-                () -> assertThat(rank.findPiece(0).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(0)).isInstanceOf(Rook.class),
+                () -> assertThat(rank.findPieceAt(0).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(0)).isInstanceOf(Rook.class),
 
-                () -> assertThat(rank.findPiece(1).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(1)).isInstanceOf(Knight.class),
+                () -> assertThat(rank.findPieceAt(1).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(1)).isInstanceOf(Knight.class),
 
-                () -> assertThat(rank.findPiece(2).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(2)).isInstanceOf(Bishop.class),
+                () -> assertThat(rank.findPieceAt(2).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(2)).isInstanceOf(Bishop.class),
 
-                () -> assertThat(rank.findPiece(3).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(3)).isInstanceOf(Queen.class),
+                () -> assertThat(rank.findPieceAt(3).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(3)).isInstanceOf(Queen.class),
 
-                () -> assertThat(rank.findPiece(4).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(4)).isInstanceOf(King.class),
+                () -> assertThat(rank.findPieceAt(4).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(4)).isInstanceOf(King.class),
 
-                () -> assertThat(rank.findPiece(5).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(5)).isInstanceOf(Bishop.class),
+                () -> assertThat(rank.findPieceAt(5).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(5)).isInstanceOf(Bishop.class),
 
-                () -> assertThat(rank.findPiece(6).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(6)).isInstanceOf(Knight.class),
+                () -> assertThat(rank.findPieceAt(6).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(6)).isInstanceOf(Knight.class),
 
-                () -> assertThat(rank.findPiece(7).getTeam()).isEqualTo(BLACK),
-                () -> assertThat(rank.findPiece(7)).isInstanceOf(Rook.class)
+                () -> assertThat(rank.findPieceAt(7).getTeam()).isEqualTo(BLACK),
+                () -> assertThat(rank.findPieceAt(7)).isInstanceOf(Rook.class)
         );
     }
 
@@ -67,8 +67,8 @@ class BoardMakerTest {
         var rank = ranks.get(1);
 
         for (int index = 0; index < 8; index++) {
-            assertThat(rank.findPiece(index).getTeam()).isEqualTo(BLACK);
-            assertThat(rank.findPiece(index)).isInstanceOf(Pawn.class);
+            assertThat(rank.findPieceAt(index).getTeam()).isEqualTo(BLACK);
+            assertThat(rank.findPieceAt(index)).isInstanceOf(Pawn.class);
         }
     }
 
@@ -78,8 +78,8 @@ class BoardMakerTest {
         var rank = ranks.get(6);
 
         for (int index = 0; index < 8; index++) {
-            assertThat(rank.findPiece(index).getTeam()).isEqualTo(WHITE);
-            assertThat(rank.findPiece(index)).isInstanceOf(Pawn.class);
+            assertThat(rank.findPieceAt(index).getTeam()).isEqualTo(WHITE);
+            assertThat(rank.findPieceAt(index)).isInstanceOf(Pawn.class);
         }
     }
 
@@ -89,29 +89,29 @@ class BoardMakerTest {
         var rank = ranks.get(7);
 
         assertAll(
-                () -> assertThat(rank.findPiece(0).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(0)).isInstanceOf(Rook.class),
+                () -> assertThat(rank.findPieceAt(0).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(0)).isInstanceOf(Rook.class),
 
-                () -> assertThat(rank.findPiece(1).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(1)).isInstanceOf(Knight.class),
+                () -> assertThat(rank.findPieceAt(1).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(1)).isInstanceOf(Knight.class),
 
-                () -> assertThat(rank.findPiece(2).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(2)).isInstanceOf(Bishop.class),
+                () -> assertThat(rank.findPieceAt(2).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(2)).isInstanceOf(Bishop.class),
 
-                () -> assertThat(rank.findPiece(3).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(3)).isInstanceOf(Queen.class),
+                () -> assertThat(rank.findPieceAt(3).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(3)).isInstanceOf(Queen.class),
 
-                () -> assertThat(rank.findPiece(4).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(4)).isInstanceOf(King.class),
+                () -> assertThat(rank.findPieceAt(4).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(4)).isInstanceOf(King.class),
 
-                () -> assertThat(rank.findPiece(5).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(5)).isInstanceOf(Bishop.class),
+                () -> assertThat(rank.findPieceAt(5).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(5)).isInstanceOf(Bishop.class),
 
-                () -> assertThat(rank.findPiece(6).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(6)).isInstanceOf(Knight.class),
+                () -> assertThat(rank.findPieceAt(6).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(6)).isInstanceOf(Knight.class),
 
-                () -> assertThat(rank.findPiece(7).getTeam()).isEqualTo(WHITE),
-                () -> assertThat(rank.findPiece(7)).isInstanceOf(Rook.class)
+                () -> assertThat(rank.findPieceAt(7).getTeam()).isEqualTo(WHITE),
+                () -> assertThat(rank.findPieceAt(7)).isInstanceOf(Rook.class)
         );
     }
 }

@@ -23,7 +23,7 @@ public enum Direction {
         this.direction = direction;
     }
 
-    public static Direction findDirection(final Position current, final Position target) {
+    public static Direction computeDirection(final Position current, final Position target) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.direction.test(current, target))
                 .findFirst()

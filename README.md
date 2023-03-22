@@ -11,7 +11,7 @@ graph TD
     subgraph View
         GameController --> OutputView
         GameController --> InputView
-        OutputView --> PieceRender
+        OutputView --> PieceType
         Command
     end
 
@@ -22,6 +22,10 @@ graph TD
         Square --> Position
         Square --> Piece
         Piece --> Team
+    end
+
+    subgraph math
+        PositionConverter
         Direction
         UnitVector
     end

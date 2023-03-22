@@ -59,7 +59,7 @@ class RankTest {
     @Test
     @DisplayName("원하는 인덱스의 Sqaure를 조회한다.")
     void findSquareTest() {
-        assertThat(rank.findSquare(0)).isEqualTo(new Square(new Position(0, 0), new EmptyPiece()));
+        assertThat(rank.findSquareAt(0)).isEqualTo(new Square(new Position(0, 0), new EmptyPiece()));
     }
 
     @Test
@@ -81,6 +81,6 @@ class RankTest {
     @Test
     @DisplayName("원하는 인덱스의 Piece를 반환한다.")
     void findPieceTest() {
-        assertThat(rank.findPiece(0)).isInstanceOf(EmptyPiece.class);
+        assertThat(rank.findPieceAt(0)).isInstanceOf(EmptyPiece.class);
     }
 }

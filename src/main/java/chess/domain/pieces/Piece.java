@@ -10,38 +10,38 @@ public abstract class Piece {
     public static final String INVALID_DIRECTION = "해당 기물이 갈 수 없는 방향입니다.";
 
     private final Team team;
-    private final List<Direction> directions;
+    private final List<Direction> movableDirections;
 
-    public Piece(final Team team, final List<Direction> directions) {
+    public Piece(final Team team, final List<Direction> movableDirections) {
         validateTeam(team);
         this.team = team;
-        this.directions = List.copyOf(directions);
+        this.movableDirections = List.copyOf(movableDirections);
     }
 
     abstract protected void validateTeam(final Team team);
 
-    abstract public void validateMove(final Direction movableDirection, final List<Piece> otherPieces);
+    abstract public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces);
 
-    public void validateDirection(final Direction direction) {
-        if (directions.contains(direction)) {
+    public void validateDirection(final Direction correctDirection) {
+        if (movableDirections.contains(correctDirection)) {
             return;
         }
         throw new IllegalArgumentException(INVALID_DIRECTION);
     }
 
-    protected final void validatePiecesTeam(final List<Piece> otherPieces) {
-        for (Piece otherPiece : otherPieces) {
-            validatePieceTeam(otherPiece);
+    protected final void validateOnRoutePiecesExistAlly(final List<Piece> onRoutePieces) {
+        for (Piece otherPiece : onRoutePieces) {
+            validateAlly(otherPiece);
         }
     }
 
-    protected final void validatePieceTeam(final Piece otherPiece) {
+    protected final void validateAlly(final Piece otherPiece) {
         if (this.team.equals(otherPiece.team)) {
             throw new IllegalArgumentException(INVALID_MOVE_EXIST_ALLY);
         }
     }
 
-    public boolean isSameTeam(final Piece otherPiece) {
+    public boolean isAlly(final Piece otherPiece) {
         return this.team == otherPiece.team;
     }
 
@@ -49,7 +49,7 @@ public abstract class Piece {
         return team;
     }
 
-    public List<Direction> getDirections() {
-        return List.copyOf(directions);
+    public List<Direction> getMovableDirections() {
+        return List.copyOf(movableDirections);
     }
 }

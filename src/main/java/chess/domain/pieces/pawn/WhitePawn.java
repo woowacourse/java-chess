@@ -12,7 +12,7 @@ public final class WhitePawn extends Pawn {
     }
 
     @Override
-    protected void validateDiagonal(final Direction movableDirection, final List<Piece> otherPieces) {
+    protected void validateKill(final Direction movableDirection, final List<Piece> otherPieces) {
         Piece otherPiece = otherPieces.get(OTHER_PIECE_INDEX);
 
         if (validateAllyKill(movableDirection, otherPiece)) {
@@ -21,6 +21,6 @@ public final class WhitePawn extends Pawn {
     }
 
     private boolean validateAllyKill(final Direction movableDirection, final Piece otherPiece) {
-        return movableDirection != Direction.DOWN && otherPiece.isSameTeam(this);
+        return movableDirection != Direction.DOWN && otherPiece.isAlly(this);
     }
 }

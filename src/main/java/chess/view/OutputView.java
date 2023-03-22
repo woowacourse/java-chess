@@ -1,10 +1,11 @@
 package chess.view;
 
-import static chess.view.PieceRender.render;
+import static chess.view.PieceType.render;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.pieces.Piece;
 import java.util.List;
 
 public final class OutputView {
@@ -37,12 +38,13 @@ public final class OutputView {
 
     private static void appendRanks(final List<List<Square>> squares, final StringBuilder stringBuilder) {
         for (int row = 0; row < squares.size(); row++) {
-            for (int col = 0; col < squares.get(0).size(); col++) {
-                Square square = squares.get(row).get(col);
-
-                stringBuilder.append(render(square.getPiece()));
+            for (int column = 0; column < squares.get(0).size(); column++) {
+                Square square = squares.get(row).get(column);
+                Piece piece = square.getPiece();
+                char renderResult = render(piece, piece.getTeam());
+                stringBuilder.append(renderResult);
             }
-            stringBuilder.append(" (" + Math.abs(8 - row) + ")" + System.lineSeparator());
+            stringBuilder.append(" (").append(Math.abs(8 - row)).append(")").append(System.lineSeparator());
         }
     }
 

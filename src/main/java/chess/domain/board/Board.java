@@ -16,48 +16,49 @@ public final class Board {
         this.board = boardMaker.createBoard();
     }
 
-    public void movePiece(final Position current, final Position target) {
-        validatePositions(current, target);
+    public void movePiece(final Position currentPosition, final Position targetPosition) {
+        validateDuplicatePositions(currentPosition, targetPosition);
 
-        Piece currentPositionPiece = findPiece(current);
-        Direction legalDirection = Direction.findDirection(current, target);
-        UnitVector unitVector = UnitVector.of(current, target);
-        List<Piece> onRoutePieces = onRoutePieces(current, target, unitVector);
+        Piece currentPositionPiece = findPieceAt(currentPosition);
+        Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
 
-        currentPositionPiece.validateMove(legalDirection, onRoutePieces);
+        UnitVector unitVector = UnitVector.compute(currentPosition, targetPosition);
+        List<Piece> onRoutePieces = getOnRoutePieces(currentPosition, targetPosition, unitVector);
 
-        move(current, target);
+        currentPositionPiece.validateMove(correctDirection, onRoutePieces);
+
+        move(currentPosition, targetPosition);
     }
 
-    private void validatePositions(final Position current, final Position target) {
+    private void validateDuplicatePositions(final Position current, final Position target) {
         if (current.equals(target)) {
             throw new IllegalArgumentException("위치가 중복되었습니다.");
         }
     }
 
-    private Piece findPiece(final Position position) {
+    private Piece findPieceAt(final Position position) {
         Rank rank = this.board.get(position.getRow());
-        Square square = rank.findSquare(position.getColumn());
+        Square square = rank.findSquareAt(position.getColumn());
 
         return square.getPiece();
     }
 
-    private List<Piece> onRoutePieces(final Position current, final Position target, final UnitVector unitVector) {
+    private List<Piece> getOnRoutePieces(final Position current, final Position target, final UnitVector unitVector) {
         List<Piece> foundPieces = new ArrayList<>();
 
         Position pieceFinder = new Position(current).move(unitVector);
         while (!pieceFinder.equals(target)) {
-            foundPieces.add(findPiece(pieceFinder));
+            foundPieces.add(findPieceAt(pieceFinder));
             pieceFinder = pieceFinder.move(unitVector);
         }
-        foundPieces.add(findPiece(target));
+        foundPieces.add(findPieceAt(target));
 
         return foundPieces;
     }
 
     private void move(final Position current, final Position target) {
         Rank currentRank = board.get(current.getRow());
-        Piece currentPositionPiece = currentRank.findPiece(current.getColumn());
+        Piece currentPositionPiece = currentRank.findPieceAt(current.getColumn());
         currentRank.replacePiece(current.getColumn(), new EmptyPiece());
 
         Rank targetRank = board.get(target.getRow());

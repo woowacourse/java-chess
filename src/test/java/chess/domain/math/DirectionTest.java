@@ -8,7 +8,7 @@ import static chess.domain.math.Direction.RIGHT;
 import static chess.domain.math.Direction.UP;
 import static chess.domain.math.Direction.UP_LEFT;
 import static chess.domain.math.Direction.UP_RIGHT;
-import static chess.domain.math.Direction.findDirection;
+import static chess.domain.math.Direction.computeDirection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
@@ -21,7 +21,7 @@ class DirectionTest {
         var current = new Position(1, 0);
         var target = new Position(0, 0);
 
-        assertThat(findDirection(current, target)).isEqualTo(UP);
+        assertThat(computeDirection(current, target)).isEqualTo(UP);
     }
 
     @Test
@@ -29,7 +29,7 @@ class DirectionTest {
         var current = new Position(0, 0);
         var target = new Position(1, 0);
 
-        assertThat(findDirection(current, target)).isEqualTo(DOWN);
+        assertThat(computeDirection(current, target)).isEqualTo(DOWN);
     }
 
     @Test
@@ -37,7 +37,7 @@ class DirectionTest {
         var current = new Position(1, 1);
         var target = new Position(1, 0);
 
-        assertThat(findDirection(current, target)).isEqualTo(LEFT);
+        assertThat(computeDirection(current, target)).isEqualTo(LEFT);
     }
 
     @Test
@@ -45,7 +45,7 @@ class DirectionTest {
         var current = new Position(1, 0);
         var target = new Position(1, 1);
 
-        assertThat(findDirection(current, target)).isEqualTo(RIGHT);
+        assertThat(computeDirection(current, target)).isEqualTo(RIGHT);
     }
 
     @Test
@@ -53,7 +53,7 @@ class DirectionTest {
         var current = new Position(1, 1);
         var target = new Position(0, 0);
 
-        assertThat(findDirection(current, target)).isEqualTo(UP_LEFT);
+        assertThat(computeDirection(current, target)).isEqualTo(UP_LEFT);
     }
 
     @Test
@@ -61,7 +61,7 @@ class DirectionTest {
         var current = new Position(1, 0);
         var target = new Position(0, 1);
 
-        assertThat(findDirection(current, target)).isEqualTo(UP_RIGHT);
+        assertThat(computeDirection(current, target)).isEqualTo(UP_RIGHT);
     }
 
     @Test
@@ -69,7 +69,7 @@ class DirectionTest {
         var current = new Position(0, 1);
         var target = new Position(1, 0);
 
-        assertThat(findDirection(current, target)).isEqualTo(DOWN_LEFT);
+        assertThat(computeDirection(current, target)).isEqualTo(DOWN_LEFT);
     }
 
     @Test
@@ -77,6 +77,6 @@ class DirectionTest {
         var current = new Position(0, 0);
         var target = new Position(1, 1);
 
-        assertThat(findDirection(current, target)).isEqualTo(DOWN_RIGHT);
+        assertThat(computeDirection(current, target)).isEqualTo(DOWN_RIGHT);
     }
 }

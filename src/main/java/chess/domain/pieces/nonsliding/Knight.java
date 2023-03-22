@@ -12,8 +12,8 @@ public final class Knight extends NonSlidingPiece {
     }
 
     @Override
-    public void validateMove(final Direction movableDirection, final List<Piece> otherPieces) {
-        validateDirection(movableDirection);
-        validatePiecesTeam(otherPieces);
+    public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces) {
+        validateDirection(correctDirection);
+        validateOnRoutePiecesExistAlly(onRoutePieces);
     }
 }

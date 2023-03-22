@@ -39,7 +39,7 @@ class WhitePawnTest {
     @Test
     @DisplayName("화이트팀 폰은 12시, 11시, 1시 방향으로만 갈 수 있습니다.")
     void 화이트팀_폰은_12시_11시_1시_방향으로만_갈_수_있습니다() {
-        assertThat(whitePawn.getDirections()).containsOnly(Direction.UP_LEFT, Direction.UP, Direction.UP_RIGHT);
+        assertThat(whitePawn.getMovableDirections()).containsOnly(Direction.UP_LEFT, Direction.UP, Direction.UP_RIGHT);
     }
 
     @Test

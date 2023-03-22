@@ -18,7 +18,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public void validateMove(final Direction movableDirection, final List<Piece> otherPieces) {
+    public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces) {
         throw new IllegalArgumentException(INVALID_MOVE);
     }
 }
