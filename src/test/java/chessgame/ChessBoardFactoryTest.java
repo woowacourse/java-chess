@@ -1,9 +1,9 @@
 package chessgame;
 
 import chessgame.domain.Board;
+import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Team;
 import chessgame.domain.piece.*;
-import chessgame.domain.ChessBoardFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

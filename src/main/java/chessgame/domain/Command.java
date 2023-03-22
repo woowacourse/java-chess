@@ -16,6 +16,7 @@ public class Command {
 
     private final String command;
     private static List<Point> points = new ArrayList<>();
+
     private Command(String command) {
         this.command = command;
     }
@@ -76,11 +77,11 @@ public class Command {
         return points;
     }
 
-    public Point getSourcePoint(){
+    public Point getSourcePoint() {
         return points.get(SOURCE);
     }
 
-    public Point getTargetPoint(){
+    public Point getTargetPoint() {
         return points.get(TARGET);
     }
 }

@@ -67,7 +67,7 @@ public class Point {
     }
 
     public boolean canPawnAttack(Point source, Point target, int distance) {
-        if(source.rankDistance(target) == distance && source.fileDistance(target) == distance){
+        if (source.rankDistance(target) == distance && source.fileDistance(target) == distance) {
             return true;
         }
         return (source.rankDistance(target) == distance && source.fileDistance(target) == -distance);

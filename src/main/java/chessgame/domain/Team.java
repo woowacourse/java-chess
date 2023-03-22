@@ -1,7 +1,5 @@
 package chessgame.domain;
 
-import java.util.function.Function;
-
 public enum Team {
     BLACK("검은"),
     WHITE("흰");

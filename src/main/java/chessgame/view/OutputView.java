@@ -41,10 +41,9 @@ public class OutputView {
     }
 
     private static void printPiece(Piece piece) {
-        if(piece.team() == Team.BLACK){
+        if (piece.team() == Team.BLACK) {
             System.out.print(piece.toString().toUpperCase());
-        }
-        else if(piece.team() == Team.WHITE){
+        } else if (piece.team() == Team.WHITE) {
             System.out.print(piece.toString().toLowerCase());
         }
     }

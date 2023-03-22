@@ -1,9 +1,9 @@
 package chessgame.state;
 
 import chessgame.domain.Board;
+import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
 import chessgame.domain.state.*;
-import chessgame.domain.ChessBoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +16,7 @@ public class StateTest {
     @DisplayName("ready 상태 일 경우")
     class ReadyState {
         State state = new Ready();
+
         @Test
         @DisplayName("start 입력시 상태 테스트")
         void Should_ChangeWhiteState_When_ReadyState() {
@@ -48,6 +49,7 @@ public class StateTest {
     @DisplayName("white 상태 일 경우")
     class WhiteState {
         State state = new White();
+
         @Test
         @DisplayName("start 입력시 상태 테스트")
         void Should_ThrowException_When_WhiteState() {
@@ -81,6 +83,7 @@ public class StateTest {
     @DisplayName("black 상태 일 경우")
     class BlackState {
         State state = new Black();
+
         @Test
         @DisplayName("start 입력시 상태 테스트")
         void Should_ThrowException_When_BlackState() {
@@ -115,6 +118,7 @@ public class StateTest {
     class EndState {
 
         State state = new End();
+
         @Test
         @DisplayName("start 입력시 상태 테스트")
         void Should_ThrowException_When_EndState() {

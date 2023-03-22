@@ -1,8 +1,8 @@
 package chessgame;
 
 import chessgame.domain.Board;
-import chessgame.domain.Team;
 import chessgame.domain.ChessBoardFactory;
+import chessgame.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
