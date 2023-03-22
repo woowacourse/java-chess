@@ -1,30 +1,14 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import java.util.Map;
 
 public interface MoveRule {
-    void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board);
+    void validateMovement(Position currentPosition, Position nextPosition);
 
     PieceType pieceType();
 
-    default void validateDestination(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
-        Piece pieceOfCurrentPosition = board.get(currentPosition);
-        Piece pieceOfNextPosition = board.get(nextPosition);
-        if (board.containsKey(nextPosition) && pieceOfCurrentPosition.isSameTeam(pieceOfNextPosition)) {
-            throw new IllegalArgumentException("도착 지점에 아군 기물이 있어 움직일 수 없습니다.");
-        }
-    }
-
-    default void updatePiecePosition(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
-        validateMoveToEmpty(nextPosition);
-        Piece movingPiece = board.remove(currentPosition);
-        board.put(nextPosition, movingPiece);
-    }
-
-    private void validateMoveToEmpty(Position nextPosition) {
+    default void validateMoveToEmpty(Position nextPosition) {
         if (nextPosition == null) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 위치입니다.");
         }

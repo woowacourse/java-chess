@@ -20,7 +20,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) { //b1
+    public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) {
         Position currentPosition = Position.from(currentPositionSymbol);
         Position nextPosition = Position.from(nextPositionSymbol);
         checkCurrentAndNextPosition(currentPosition, nextPosition);
@@ -30,15 +30,14 @@ public class PlayingChessGame implements ChessGame {
         return this;
     }
 
-    //TODO 포지션 null체크, piece null 체크
-
-    private void checkCurrentAndNextPosition(Position currentPosition, Position nextPosition){
+    //TODO 올바른 포지션 체크 예외를 포지션 객체에서 하게 리팩토링 필요
+    private void checkCurrentAndNextPosition(Position currentPosition, Position nextPosition) {
         checkInvalidPosition(currentPosition);
         checkInvalidPosition(nextPosition);
     }
 
     private void checkInvalidPosition(Position position) {
-        if(position.isInvalid()){
+        if (position.isInvalid()) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 위치입니다.");
         }
     }

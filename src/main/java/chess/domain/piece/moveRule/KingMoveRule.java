@@ -1,9 +1,7 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import java.util.Map;
 
 public class KingMoveRule implements MoveRule {
 
@@ -20,11 +18,9 @@ public class KingMoveRule implements MoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public void validateMovement(Position currentPosition, Position nextPosition) {
+        validateMoveToEmpty(nextPosition);
         validateNear(currentPosition, nextPosition);
-        validateDestination(currentPosition, nextPosition, board);
-
-        updatePiecePosition(currentPosition, nextPosition, board);
     }
 
     private void validateNear(Position currentPosition, Position nextPosition) {

@@ -27,12 +27,12 @@ public class ChessGameController {
         } while (chessGame.isPlaying());
     }
 
-    private ChessGame executeCorrectCommand(ChessGame chessGame){
+    private ChessGame executeCorrectCommand(ChessGame chessGame) {
         ChessGame newChessGame = null;
         try {
             List<String> inputCommand = inputView.inputCommand();
             newChessGame = executeCommand(chessGame, inputCommand);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return executeCorrectCommand(chessGame);
         }

@@ -6,8 +6,9 @@ import static chess.domain.piece.moveRule.TestFixture.B3;
 import static chess.domain.piece.moveRule.TestFixture.D1;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
+import chess.domain.piece.Queen;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +27,8 @@ public class QueenMoveRuleTest {
 
     @BeforeAll
     void setUp() {
-        blackPiece = new Piece(moveRule, Color.BLACK);
-        whitePiece = new Piece(moveRule, Color.WHITE);
+        blackPiece = Queen.from(Color.BLACK);
+        whitePiece = Queen.from(Color.WHITE);
     }
 
     @BeforeEach
@@ -40,19 +41,8 @@ public class QueenMoveRuleTest {
         board.put(A1, blackPiece);
         board.put(B3, whitePiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, B3, board))
+        assertThatThrownBy(() -> moveRule.validateMovement(A1, B3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("퀸은 대각선 또는 직선 상으로만 움직일 수 있습니다.");
-    }
-
-    @Test
-    void 퀸_움직임_실패_중간경로에_기물_존재() {
-        board.put(B1, whitePiece);
-        board.put(A1, whitePiece);
-        board.put(D1, blackPiece);
-
-        assertThatThrownBy(() -> moveRule.move(A1, D1, board))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로상에 다른 기물이 있어 움직일 수 없습니다.");
+                .hasMessage("퀸은 대각선상 또는 직선상으로만 움직일 수 있습니다.");
     }
 }

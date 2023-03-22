@@ -4,8 +4,9 @@ import static chess.domain.piece.moveRule.TestFixture.A1;
 import static chess.domain.piece.moveRule.TestFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +24,8 @@ public class KingMoveRuleTest {
 
     @BeforeAll
     void setUp() {
-        blackPiece = new Piece(moveRule, Color.BLACK);
-        whitePiece = new Piece(moveRule, Color.WHITE);
+        blackPiece = King.from(Color.BLACK);
+        whitePiece = King.from(Color.WHITE);
     }
 
     @BeforeEach
@@ -37,7 +38,7 @@ public class KingMoveRuleTest {
         board.put(A1, blackPiece);
         board.put(A3, whitePiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, A3, board))
+        assertThatThrownBy(() -> moveRule.validateMovement(A1, A3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 인접한 칸으로만 이동할 수 있습니다.");
     }

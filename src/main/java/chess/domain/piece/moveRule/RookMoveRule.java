@@ -1,14 +1,9 @@
 package chess.domain.piece.moveRule;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import java.util.List;
-import java.util.Map;
 
-public class RookMoveRule extends UnJumpableMoveRule {
-
-
+public class RookMoveRule implements MoveRule {
     private static RookMoveRule instance;
 
     private RookMoveRule() {
@@ -22,13 +17,9 @@ public class RookMoveRule extends UnJumpableMoveRule {
     }
 
     @Override
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+    public void validateMovement(Position currentPosition, Position nextPosition) {
+        validateMoveToEmpty(nextPosition);
         validateStraight(currentPosition, nextPosition);
-        List<Position> route = currentPosition.getRoute(nextPosition);
-        validateRoute(board, route);
-        validateDestination(currentPosition, nextPosition, board);
-
-        updatePiecePosition(currentPosition, nextPosition, board);
     }
 
     private void validateStraight(Position currentPosition, Position nextPosition) {
