@@ -1,9 +1,9 @@
 package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
+import domain.piece.Color;
 import domain.position.Position;
 import domain.position.Route;
-import domain.piece.Color;
 import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;
 import domain.type.PieceType;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 public final class ChessGame {
 
     private final ChessBoard chessBoard;
-    private final Turn turn;
+    private Turn turn;
 
     public ChessGame(final ChessBoard chessBoard) {
         turn = new Turn(Color.WHITE);
@@ -26,7 +26,7 @@ public final class ChessGame {
         checkCondition(source, target);
         movePiece(source, target);
 
-        turn.nextTurn();
+        turn = turn.nextTurn();
     }
 
     public boolean isKingAlive() {

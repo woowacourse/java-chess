@@ -14,9 +14,9 @@ class TurnTest {
         //given
         final Turn turn = new Turn(Color.WHITE);
         //when
-        turn.nextTurn();
+        final Turn nextTurn = turn.nextTurn();
 
         //then
-        assertThat(turn.getColor()).isEqualTo(Color.BLACK);
+        assertThat(nextTurn.getColor()).isEqualTo(Color.BLACK);
     }
 }
