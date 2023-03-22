@@ -15,7 +15,8 @@ public class Rook extends NoneEmptyPiece {
     }
 
     @Override
-    public boolean isMobile(RelativePosition relativePosition) {
+    public boolean isMobile(RelativePosition relativePosition, Piece target) {
+        validateSameTeam(target);
         return movement.isMobile(relativePosition);
     }
 }

@@ -18,7 +18,9 @@ public class Pawn extends NoneEmptyPiece {
     }
 
     @Override
-    public boolean isMobile(RelativePosition relativePosition) {
+    public boolean isMobile(RelativePosition relativePosition, Piece target) {
+        validateSameTeam(target);
+        validateLegalDiagonalMove(relativePosition, target);
         if (!hasMoved && isMoveTwoBlocks(relativePosition)) {
             relativePosition = relativePosition.toUnit();
         }
@@ -27,6 +29,12 @@ public class Pawn extends NoneEmptyPiece {
             return true;
         }
         return false;
+    }
+
+    private void validateLegalDiagonalMove(RelativePosition relativePosition, Piece target) {
+        if (relativePosition.isDiagonal() && (target.isEmpty() || isSameTeam(target))) {
+            throw new IllegalArgumentException("폰은 상대팀을 공격할 때만 대각선으로 이동 가능합니다.");
+        }
     }
 
     private boolean isMoveTwoBlocks(RelativePosition relativePosition) {

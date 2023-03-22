@@ -15,6 +15,12 @@ public abstract class NoneEmptyPiece extends Piece implements Movable {
     }
 
     @Override
-    public abstract boolean isMobile(RelativePosition relativePosition);
+    public abstract boolean isMobile(RelativePosition relativePosition, Piece target);
+
+    protected void validateSameTeam(Piece target){
+        if(isSameTeam(target)){
+            throw new IllegalArgumentException("이동하고자 하는 자리에 같은 팀이 존재합니다.");
+        }
+    }
 
 }

@@ -14,10 +14,8 @@ public class MoveValidator {
 
     public static void validate(Map<Position, Piece> board, Position source, Position target) {
         validateEmpty(board, source);
-        validateSameTeam(board, source, target);
         validateInvalidDirection(board, source, target);
         validateObstacle(board, source, target);
-        validateDiagonalImpossible(board, source, target);
     }
 
     private static void validateEmpty(Map<Position, Piece> board, Position source) {
@@ -30,18 +28,6 @@ public class MoveValidator {
         return board.get(source).isEmpty();
     }
 
-    private static void validateSameTeam(Map<Position, Piece> board, Position source, Position target) {
-        if (isSameTeam(board, source, target)) {
-            throw new IllegalArgumentException("target 위치에 같은 팀의 말이 존재합니다.");
-        }
-    }
-
-    private static boolean isSameTeam(Map<Position, Piece> board, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-        return sourcePiece.isSameTeam(targetPiece);
-    }
-
     private static void validateInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
         if (isInvalidDirection(board, source, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
@@ -51,7 +37,7 @@ public class MoveValidator {
     private static boolean isInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
         RelativePosition relativePosition = RelativePosition.of(source, target);
         NoneEmptyPiece piece = (NoneEmptyPiece) board.get(source);
-        return !piece.isMobile(relativePosition);
+        return !piece.isMobile(relativePosition, board.get(target));
     }
 
     private static void validateObstacle(Map<Position, Piece> board, Position source, Position target) {
@@ -74,13 +60,5 @@ public class MoveValidator {
 
         return positions.stream()
                 .anyMatch(position -> isEmpty(board, position));
-    }
-
-    private static void validateDiagonalImpossible(Map<Position, Piece> board, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        RelativePosition relativePosition = RelativePosition.of(source, target);
-        if (sourcePiece.isPieceType(PieceType.PAWN) && relativePosition.isDiagonal() && isEmpty(board, target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
-        }
     }
 }
