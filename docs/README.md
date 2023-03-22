@@ -58,3 +58,23 @@
 - [x] 이동 순서 제한
 - [x] 폰 대각 이동 조건
 - [x] 말 제거 기능
+
+### 궁금한 점
+- 각 기물의 이름("k", "K", "q", ...)은 도메인 로직에 쓰이지 않는다. 오직 사용자에게 보여주기 위함이다. 즉, 뷰를 위해 존재하는데 이를 기물 객체가 상태로 관리할 필요가 있을까?
+- 이동 경로를 검사할 필요 없는 기물(Non-Sliding Piece)은 getPaths 메서드에서 emptyList를 반환하고 있다.
+  - getPaths 메서드는 다른 개발자로 하여금 경로를 반환해줄 것이라고 예상하게 된다.
+    - ex) 나이트는 위,위,오른쪽 과 같은 경로를 반환할 것이다
+  - 하지만 지금처럼 getPaths() 메서드가 경우에 따라 emptyList를 반환한다면, getPaths를 사용하는 개발자가 예상하지 못했던 동작을 할 수도 있을 것이다.
+  - 이를 해결하기 위한 방법을 생각해 봤다.
+    - Piece 클래스를 상속하는 SlidingPiece, NonSlidingPiece 추상 클래스로 나눈다.
+    - SlidingPiece 클래스는 경로 반환 메서드를 추상 메서드로 갖는다.
+    - NonSlidingPiece 클래스는 경로 반환이 필요 없기 때문에 해당 메서드를 가지지 않는다.
+    - Board에서는 SlidingPiece가 이동할 때만 경로 검사를 한다.
+  - 이런 상속 구조를 가져갔을 때, 다음 문제가 발생한다.
+    - Board에서는 Piece 클래스를 통해 기물 객체와 소통하게 될 것이다. 
+    - SlidingPiece일 때만 경로 검사를 하려면, 소통하고 있는 Piece가 SlidingPiece인지 검사해야 된다.
+    - 검사한 뒤에는 원래 다루던 서브클래스 객체로 SlidingPiece를 생성해줘야 된다.
+  - 이를 해결하기 위해서는 instanceOf를 통해 SlidingPiece인지 검사하고, 맞다면 SldiingPiece로 다시 생성해주는 코드가 필요하다.
+  - 그럴 바엔 NonSlidingPiece도 getPaths를 가지되, emptyList를 반환하도록 하는 것이 타협점일 것 같다 ..
+    - 이런 방법도 getPaths가 emptyList를 반환함으로써 다른 개발자가 예상치 못한 동작을 할 수 있다는 점은 해결하지 못 한다.
+    - 하지만 **NonSlidingPiece로 묶어주면서** emptyList를 반환한다는 점에서 조금 더 해석의 여지가 생기지 않나 싶은 마음이다
