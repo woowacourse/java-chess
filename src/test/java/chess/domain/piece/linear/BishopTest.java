@@ -16,7 +16,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.immediate.Knight;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

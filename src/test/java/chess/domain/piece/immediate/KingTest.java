@@ -1,22 +1,23 @@
 package chess.domain.piece.immediate;
 
-import static chess.domain.piece.Side.*;
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
-import static org.assertj.core.api.Assertions.*;
+import static chess.domain.piece.Side.BLACK;
+import static chess.domain.piece.Side.WHITE;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.TWO;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.immediate.King;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

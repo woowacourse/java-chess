@@ -6,7 +6,6 @@ import static chess.domain.position.File.A;
 import static chess.domain.position.File.B;
 import static chess.domain.position.File.C;
 import static chess.domain.position.File.D;
-import static chess.domain.position.Rank.FOUR;
 import static chess.domain.position.Rank.ONE;
 import static chess.domain.position.Rank.THREE;
 import static chess.domain.position.Rank.TWO;

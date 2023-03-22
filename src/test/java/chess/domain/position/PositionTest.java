@@ -6,7 +6,6 @@ import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.movepattern.PawnMovePattern;
-import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

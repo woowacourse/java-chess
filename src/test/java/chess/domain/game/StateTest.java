@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.game.State;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

@@ -4,15 +4,12 @@ import static chess.domain.piece.Side.BLACK;
 import static chess.domain.piece.Side.WHITE;
 import static chess.domain.position.File.A;
 import static chess.domain.position.File.B;
-import static chess.domain.position.File.C;
-import static chess.domain.position.File.D;
 import static chess.domain.position.Rank.ONE;
 import static chess.domain.position.Rank.THREE;
 import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.piece.linear.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

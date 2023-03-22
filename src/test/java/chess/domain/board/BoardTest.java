@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
