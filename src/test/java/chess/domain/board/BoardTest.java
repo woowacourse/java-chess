@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static chess.util.SquareFixture.A_EIGHT;
 import static chess.util.SquareFixture.A_ONE;
 import static chess.util.SquareFixture.A_SEVEN;
@@ -12,8 +14,10 @@ import static chess.util.SquareFixture.B_TWO;
 import static chess.util.SquareFixture.C_EIGHT;
 import static chess.util.SquareFixture.C_ONE;
 import static chess.util.SquareFixture.C_SEVEN;
+import static chess.util.SquareFixture.C_THREE;
 import static chess.util.SquareFixture.C_TWO;
 import static chess.util.SquareFixture.D_EIGHT;
+import static chess.util.SquareFixture.D_FOUR;
 import static chess.util.SquareFixture.D_ONE;
 import static chess.util.SquareFixture.D_SEVEN;
 import static chess.util.SquareFixture.D_TWO;
@@ -40,10 +44,13 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -104,5 +111,44 @@ class BoardTest {
         board.move(B_TWO, B_THREE);
 
         assertThat(board.findPieceOf(B_THREE)).containsInstanceOf(Pawn.class);
+    }
+
+    @Nested
+    class calculateScoreOfColor_메서드는 {
+
+        @Test
+        void 같은_색의_폰이_일직선에_있을경우_점수가_감소되서_계산된다() {
+            final Map<Square, Piece> table = Map.ofEntries(
+                    Map.entry(A_ONE, new Pawn(BLACK)),
+                    Map.entry(A_TWO, new Pawn(BLACK)),
+                    Map.entry(B_TWO, new Pawn(BLACK)),
+                    Map.entry(B_THREE, new Rook(BLACK)),
+                    Map.entry(C_THREE, new Knight(BLACK)),
+                    Map.entry(D_FOUR, new Bishop(BLACK)),
+                    Map.entry(E_SEVEN, new Queen(BLACK)),
+                    Map.entry(F_EIGHT, new King(BLACK)),
+                    Map.entry(G_ONE, new Queen(WHITE))
+            );
+            final Board board = new Board(table);
+
+            assertThat(board.calculateScoreOfColor(BLACK)).isEqualTo(21.5);
+        }
+
+        @Test
+        void 같은_색의_폰이_일직선에_없을경우_점수가_감소되지_않은채_계산된다() {
+            final Map<Square, Piece> table = Map.ofEntries(
+                    Map.entry(A_ONE, new Pawn(BLACK)),
+                    Map.entry(B_TWO, new Pawn(BLACK)),
+                    Map.entry(B_THREE, new Rook(BLACK)),
+                    Map.entry(C_THREE, new Knight(BLACK)),
+                    Map.entry(D_FOUR, new Bishop(BLACK)),
+                    Map.entry(E_SEVEN, new Queen(BLACK)),
+                    Map.entry(F_EIGHT, new King(BLACK)),
+                    Map.entry(G_ONE, new Queen(WHITE))
+            );
+            final Board board = new Board(table);
+
+            assertThat(board.calculateScoreOfColor(BLACK)).isEqualTo(21.5);
+        }
     }
 }
