@@ -40,15 +40,15 @@ public abstract class Piece {
         }
     }
 
-    protected abstract boolean canMove(final Position targetPosition);
-
-    public abstract Piece move(final Piece pieceInTargetPosition);
-
     protected final void validateCatchingSameColor(final Piece pieceInTargetPosition) {
         if (pieceInTargetPosition.isSameColor(color)) {
             throw new IllegalArgumentException(INVALID_MOVING_CAUSE_OF_CATCHING);
         }
     }
+
+    protected abstract boolean canMove(final Position targetPosition);
+
+    public abstract Piece move(final Piece pieceInTargetPosition);
 
     public abstract List<Position> getPassingPositions(final Position targetPosition);
 
