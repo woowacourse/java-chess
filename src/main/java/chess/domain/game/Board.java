@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
 import java.util.HashMap;
@@ -94,6 +95,11 @@ public class Board {
         return !board.containsKey(position);
     }
 
+    public long countKingNumber() {
+        return board.values().stream()
+                .filter(piece -> piece.type() == PieceType.KING)
+                .count();
+    }
     public Map<Position, Piece> getBoard() {
         return new HashMap<>(board);
     }
