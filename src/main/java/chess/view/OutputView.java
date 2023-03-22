@@ -23,11 +23,15 @@ public final class OutputView {
     public static void printChessBoard(final Map<Position, Piece> board) {
         System.out.println();
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                System.out.print(PieceViewForm.parseToName(board.get(Position.of(row, column))));
-            }
-            System.out.println();
+            printBoardRow(board, column);
         }
+    }
+
+    private static void printBoardRow(final Map<Position, Piece> board, final Column column) {
+        for (Row row : Row.values()) {
+            System.out.print(PieceViewForm.parseToName(board.get(Position.of(row, column))));
+        }
+        System.out.println();
     }
 
     public static void printExceptionMessage(String errorMessage) {
