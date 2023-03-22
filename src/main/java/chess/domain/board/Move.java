@@ -45,14 +45,13 @@ public enum Move {
 
     public static boolean isMoveDiagonal(final Move move) {
         return move == Move.RIGHT_UP || move == Move.RIGHT_DOWN || move == Move.LEFT_UP || move == Move.LEFT_DOWN;
-
     }
 
     public int getFile() {
-        return file;
+        return this.file;
     }
 
     public int getRank() {
-        return rank;
+        return this.rank;
     }
 }

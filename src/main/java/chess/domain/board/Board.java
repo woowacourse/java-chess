@@ -135,7 +135,7 @@ public class Board {
     }
 
     private boolean isPawnMovable(final Square source, final Square target, final Move move) {
-        final boolean isTargetEmpty = this.board.get(target).equals(new Empty());
+        final boolean isTargetEmpty = this.board.get(target).isEmpty();
 
         if (Move.isMoveForward(move) && !isTargetEmpty) {
             return false;
@@ -183,7 +183,7 @@ public class Board {
     }
 
     public boolean isEmptyPiece(final Square source) {
-        return this.board.get(source).equals(new Empty());
+        return this.board.get(source).isEmpty();
     }
 
     public List<Piece> getPieces() {
