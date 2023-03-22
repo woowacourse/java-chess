@@ -84,6 +84,10 @@ public abstract class Piece {
         return false;
     }
 
+    public double getScore() {
+        return type.getScore();
+    }
+
     public Camp getCamp() {
         return camp;
     }
