@@ -22,14 +22,10 @@ import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;
 
 public class ChessBoard {
-    private final Map<Square, Piece> board = new HashMap<>();
+    private final Map<Square, Piece> board;
 
-    public ChessBoard() {
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                board.put(Square.of(file, rank), Empty.getInstance());
-            }
-        }
+    public ChessBoard(Map<Square, Piece> board) {
+        this.board = board;
     }
 
     public void initialize() {
@@ -38,12 +34,21 @@ public class ChessBoard {
         Rank WHITE_PAWN_RANK = Rank.TWO;
         Rank BLACK_PAWN_RANK = Rank.SEVEN;
 
+        initializeEmpty();
         initializePawns(WHITE_PAWN_RANK, BLACK_PAWN_RANK);
         initializeKings(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
         initializeQueens(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
         initializeBishops(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
         initializeKnights(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
         initializeRooks(WHITE_WITHOUT_PAWN_RANK, BLACK_WITHOUT_PAWN_RANK);
+    }
+
+    private void initializeEmpty() {
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                this.board.put(Square.of(file, rank), Empty.getInstance());
+            }
+        }
     }
 
     private void initializePawns(Rank WHITE_PAWN_RANK, Rank BLACK_PAWN_RANK) {

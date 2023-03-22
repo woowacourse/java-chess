@@ -3,6 +3,8 @@ package domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,14 +18,14 @@ class ChessBoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void createChessBoard() {
-        assertDoesNotThrow(ChessBoard::new);
+        assertDoesNotThrow(() -> new ChessBoard(new HashMap<>()));
     }
 
 
     @Test
     @DisplayName("좌표를 입력받아 해당 square를 반환한다.")
     void toSquare() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new HashMap<>());
 
         Square square = chessBoard.toSquare(1, 1);
 
@@ -37,7 +39,7 @@ class ChessBoardTest {
 
         @BeforeEach
         void setUp() {
-            chessBoard = new ChessBoard();
+            chessBoard = new ChessBoard(new HashMap<>());
             chessBoard.initialize();
         }
 
@@ -99,7 +101,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물을 음직인다.")
     void moveTest() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new HashMap<>());
         chessBoard.initialize();
         Square currentSquare = Square.of(File.A, Rank.TWO);
         Square targetSquare = Square.of(File.A, Rank.FOUR);
@@ -111,7 +113,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("board에 인자로 받은 캠프의 킹이 없으면 true를 반환한다.")
     void isCapturedKing() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new HashMap<>());
 
         boolean result = chessBoard.isCapturedKing(Camp.WHITE);
 
@@ -121,7 +123,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("board에 인자로 받은 캠프의 킹이 없으면 true를 반환한다.")
     void isCapturedKingFalse() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new HashMap<>());
         chessBoard.initialize();
 
         boolean result = chessBoard.isCapturedKing(Camp.WHITE);
