@@ -27,22 +27,22 @@ public class PieceTest {
         }
     }
 
-    @DisplayName("공격 가능한 상대인지 판단한다")
+    @DisplayName("같은 색상의 기물인지 판단한다")
     @Test
-    void isRightTarget() {
-        Piece piece = new PieceImplement(WHITE);
-        Piece otherPiece = new PieceImplement(BLACK);
-
-        assertThat(piece.isRightTarget(otherPiece)).isTrue();
-    }
-
-    @DisplayName("공격 불가능한 상대인지 판단한다")
-    @Test
-    void isNotRightTarget() {
+    void isSameColor() {
         Piece piece = new PieceImplement(WHITE);
         Piece otherPiece = new PieceImplement(WHITE);
 
-        assertThat(piece.isRightTarget(otherPiece)).isFalse();
+        assertThat(piece.isSameColor(otherPiece)).isTrue();
+    }
+
+    @DisplayName("다른 색상의 기물인지 판단한다")
+    @Test
+    void isNotSameColor() {
+        Piece piece = new PieceImplement(WHITE);
+        Piece otherPiece = new PieceImplement(BLACK);
+
+        assertThat(piece.isSameColor(otherPiece)).isFalse();
     }
 
     @DisplayName("색을 확인할 수 있다.")

@@ -12,17 +12,17 @@ public abstract class Piece {
 
     public abstract boolean isValidMove(Move move, Piece targetPiece);
 
-    public boolean isRightTarget(Piece target) {
+    public boolean isSameColor(Piece target) {
         if (target == null) {
-            return true;
+            return false;
         }
-        return color != target.color;
+        return color == target.color;
     }
 
     public boolean isRightTurn(Color turn) {
         return this.color == turn;
     }
-    
+
     public abstract PieceType getType();
 
     public Color getColor() {
