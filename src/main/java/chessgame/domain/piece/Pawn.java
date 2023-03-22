@@ -23,10 +23,10 @@ public class Pawn implements Piece {
 
     private boolean isPawnAttack(Point source, Point target, Team team) {
         if (team == Team.BLACK) {
-            return source.checkPawnAttackLength(source, target, BLACK_DISTANCE);
+            return source.canPawnAttack(source, target, BLACK_DISTANCE);
         }
         if (team == Team.WHITE) {
-            return source.checkPawnAttackLength(source, target, WHITE_DISTANCE);
+            return source.canPawnAttack(source, target, WHITE_DISTANCE);
         }
         return false;
     }

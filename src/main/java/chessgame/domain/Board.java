@@ -1,6 +1,5 @@
 package chessgame.domain;
 
-import chessgame.domain.piece.Pawn;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.Point;
 
@@ -61,7 +60,7 @@ public class Board {
             movePiece(source, target, piece);
             return;
         }
-        if (checkRoute(source, target)) {
+        if (canMoveRoute(source, target)) {
             movePiece(source, target, piece);
             return;
         }
@@ -73,7 +72,7 @@ public class Board {
         board.remove(source);
     }
 
-    private boolean checkRoute(Point source, Point target) {
+    private boolean canMoveRoute(Point source, Point target) {
         Point point = source;
         int eachFileMove = target.eachFileMove(source);
         int eachRankMove = target.eachRankMove(source);
