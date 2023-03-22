@@ -10,12 +10,12 @@ public enum Command {
     END("end"),
     MOVE("move");
 
-    private final static int COMMAND_KEYWORD_INDEX = 0;
-    private final static int START_AND_END_COMMAND_SIZE = 1;
-    private final static int MOVE_COMMAND_SIZE = 3;
-    public final static int MOVE_SOURCE_INDEX = 1;
-    public final static int MOVE_DESTINATION_INDEX = 2;
-    private final static int MOVE_SQUARE_INPUT_SIZE = 2;
+    private static final int COMMAND_KEYWORD_INDEX = 0;
+    private static final int START_AND_END_COMMAND_SIZE = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
+    public static final int MOVE_SOURCE_INDEX = 1;
+    public static final int MOVE_DESTINATION_INDEX = 2;
+    private static final int MOVE_SQUARE_INPUT_SIZE = 2;
 
     private final String keyword;
 
