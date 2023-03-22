@@ -55,21 +55,22 @@ public final class ChessBoard {
         }
     }
 
+    private void validatePassablePathToForward(Position startPosition, List<Position> path) {
+        if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
+            //Todo : 폰이 isPassablePath처럼 마지막 도착 위치 전까지 판단하는게 아니라 마지막 위치까지 포함해서 계산하고 있어서 묶기 힘들다.
+            path.forEach(position -> {
+                if(chessBoard.containsKey(position)) {
+                    throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+                }
+            });
+        }
+    }
+
     private void validateMovableToDiagonal(Position startPosition, Position endPosition) {
         Piece startPiece = chessBoard.get(startPosition);
         if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
                 (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
-        }
-    }
-
-    private void validatePassablePathToForward(Position startPosition, List<Position> path) {
-        if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
-            path.stream()
-                    .filter(chessBoard::containsKey)
-                    .forEach(position -> {
-                        throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
-                    });
         }
     }
 
