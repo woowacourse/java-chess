@@ -3,13 +3,9 @@ package chess.domain.board;
 import chess.domain.Position;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
-import chess.domain.pieces.Bishop;
 import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Board {
@@ -21,13 +17,22 @@ public final class Board {
     }
 
     public void movePiece(final Position current, final Position target) {
-        Piece currentPointPiece = findPiece(current);
+        validatePositions(current, target);
+
+        Piece currentPositionPiece = findPiece(current);
         Direction legalDirection = Direction.findDirection(current, target);
+        UnitVector unitVector = UnitVector.of(current, target);
+        List<Piece> onRoutePieces = onRoutePieces(current, target, unitVector);
 
-        currentPointPiece.validateDirection(legalDirection);
-        currentPointPiece.validateSameTeam(findPiece(target));
+        currentPositionPiece.validateMove(legalDirection, onRoutePieces);
 
-        runLogic(current, target);
+        move(current, target);
+    }
+
+    private void validatePositions(final Position current, final Position target) {
+        if (current.equals(target)) {
+            throw new IllegalArgumentException("위치가 중복되었습니다.");
+        }
     }
 
     private Piece findPiece(final Position position) {
@@ -37,37 +42,17 @@ public final class Board {
         return square.getPiece();
     }
 
-    private void runLogic(final Position current, final Position target) {
-        Piece currentPointPiece = findPiece(current);
+    private List<Piece> onRoutePieces(final Position current, final Position target, final UnitVector unitVector) {
+        List<Piece> foundPieces = new ArrayList<>();
 
-        if (currentPointPiece instanceof King) {
-            currentPointPiece.validateDistance(current, target);
-        }
-
-        if (currentPointPiece instanceof Pawn) {
-            Pawn pawn = (Pawn) currentPointPiece;
-
-            pawn.validateDistance(current, target);
-            pawn.validateExistPiece(findPiece(target));
-
-            pawn.move();
-        }
-
-        if (currentPointPiece instanceof Rook || currentPointPiece instanceof Bishop || currentPointPiece instanceof Queen) {
-            checkExistPiece(current, target, UnitVector.of(current, target));
-        }
-
-        move(current, target);
-    }
-
-    private void checkExistPiece(final Position current, final Position target, final UnitVector unitVector) {
         Position pieceFinder = new Position(current).move(unitVector);
-
         while (!pieceFinder.equals(target)) {
-            Rank findedRank = board.get(pieceFinder.getRow());
-            findedRank.validatePiece(pieceFinder.getColumn());
+            foundPieces.add(findPiece(pieceFinder));
             pieceFinder = pieceFinder.move(unitVector);
         }
+        foundPieces.add(findPiece(target));
+
+        return foundPieces;
     }
 
     private void move(final Position current, final Position target) {
