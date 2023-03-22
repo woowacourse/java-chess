@@ -19,6 +19,11 @@ public class Pawn extends Jumper {
         Direction.NORTH_EAST
     );
 
+    private static final Integer MIN_FILE_INDEX = 0;
+    private static final Integer MAX_FILE_INDEX = 7;
+    private static final Integer MIN_RANK_INDEX = 0;
+    private static final Integer MAX_RANK_INDEX = 7;
+
     private boolean isGoingForward;
     private boolean isFirstMove = true;
 
@@ -81,8 +86,8 @@ public class Pawn extends Jumper {
 
     private List<Square> removeSquareOutOfBoard(List<Square> movableSquares) {
         return movableSquares.stream()
-            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= 0 && square.toCoordinate().get(FILE_INDEX) <= 7
-                && square.toCoordinate().get(RANK_INDEX) >= 0 && square.toCoordinate().get(RANK_INDEX) <= 7)
+            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= MIN_FILE_INDEX && square.toCoordinate().get(FILE_INDEX) <= MAX_FILE_INDEX
+                && square.toCoordinate().get(RANK_INDEX) >= MIN_RANK_INDEX && square.toCoordinate().get(RANK_INDEX) <= MAX_RANK_INDEX)
             .collect(Collectors.toList());
     }
 
