@@ -21,7 +21,6 @@ public class ChessController {
     private final InputView inputView;
     private final ChessGame chessGame;
 
-
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
@@ -61,7 +60,6 @@ public class ChessController {
         GameCommand.validateCommandSize(commands.size(), START_COMMAND_SIZE);
         outputView.printBoard(chessGame.getBoard());
     }
-
 
     private void move(List<String> commands) {
         GameCommand.validateCommandSize(commands.size(), MOVE_COMMAND_SIZE);
