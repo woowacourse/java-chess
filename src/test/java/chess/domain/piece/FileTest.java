@@ -22,7 +22,7 @@ class FileTest {
     @ValueSource(chars = {'i', 'j', 'z', ' '})
     void 생성_시_a_부터_h_사이에_포함되지_않는_문자가_들어오면_예외(final char file) {
         // when & then
-        assertThatThrownBy(() -> File.from(file))
+        assertThatThrownBy(() -> new File(file))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -30,15 +30,15 @@ class FileTest {
     @ValueSource(chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'})
     void a_부터_h_사이에_포함되는_문자인_경우_정상_생성(final char file) {
         // when & then
-        assertDoesNotThrow(() -> File.from(file));
+        assertDoesNotThrow(() -> new File(file));
     }
 
     @ParameterizedTest
     @ValueSource(chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'})
     void 값이_같으면_동등하다(final char value) {
         // given
-        final File file1 = File.from(value);
-        final File file2 = File.from(value);
+        final File file1 = new File(value);
+        final File file2 = new File(value);
 
         // when & then
         assertThat(file1).isEqualTo(file2);
@@ -55,8 +55,8 @@ class FileTest {
     })
     void File_사이의_간격을_구할_수_있다(final char currentFile, final char destination, final int distance) {
         // given
-        final File from = File.from(currentFile);
-        final File dest = File.from(destination);
+        final File from = new File(currentFile);
+        final File dest = new File(destination);
 
         // when & then
         assertThat(from.interval(dest)).isEqualTo(distance);
@@ -65,9 +65,9 @@ class FileTest {
     @Test
     void 특정_거리를_더할_수_있다() {
         // given
-        final File from = File.from('c');
+        final File from = new File('c');
 
         // when & then
-        assertThat(from.plus(-2)).isEqualTo(File.from('a'));
+        assertThat(from.plus(-2)).isEqualTo(new File('a'));
     }
 }

@@ -39,35 +39,35 @@ class KingTest {
         return Stream.of(
                 Arguments.of(
                         Named.of("동쪽", PiecePosition.of('f', 4)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("서쪽", PiecePosition.of('d', 4)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북쪽", PiecePosition.of('e', 5)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남쪽", PiecePosition.of('e', 3)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북동쪽", PiecePosition.of('f', 5)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남동쪽", PiecePosition.of('f', 3)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북서쪽", PiecePosition.of('d', 5)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남서쪽", PiecePosition.of('d', 3)),
-                        WayPoints.from(Collections.emptyList())
+                        new WayPoints(Collections.emptyList())
                 )
         );
     }

@@ -21,6 +21,6 @@ public class Rook extends Piece {
 
     @Override
     protected WayPoints wayPointsWithCondition(final Path path) {
-        return WayPoints.from(path.wayPoints());
+        return new WayPoints(path.wayPoints());
     }
 }

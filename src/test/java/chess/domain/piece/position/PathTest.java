@@ -22,7 +22,7 @@ class PathTest {
         final PiecePosition destination = PiecePosition.of('c', 3);
 
         // when & then
-        assertThatThrownBy(() -> Path.of(source, destination))
+        assertThatThrownBy(() -> new Path(source, destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -31,7 +31,7 @@ class PathTest {
         // given
         final PiecePosition source = PiecePosition.of('c', 3);
         final PiecePosition destination = PiecePosition.of('a', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.fileDistance()).isEqualTo(-2);
@@ -42,7 +42,7 @@ class PathTest {
         // given
         final PiecePosition source = PiecePosition.of('c', 3);
         final PiecePosition destination = PiecePosition.of('a', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.rankDistance()).isEqualTo(1);
@@ -54,8 +54,8 @@ class PathTest {
         final PiecePosition source = PiecePosition.of('c', 3);
         final PiecePosition southDestination = PiecePosition.of('f', 1);
         final PiecePosition northDestination = PiecePosition.of('a', 5);
-        final Path southPath = Path.of(source, southDestination);
-        final Path northPath = Path.of(source, northDestination);
+        final Path southPath = new Path(source, southDestination);
+        final Path northPath = new Path(source, northDestination);
 
         // when & then
         assertThat(southPath.isDestinationRelativelySouth()).isTrue();
@@ -68,8 +68,8 @@ class PathTest {
         final PiecePosition source = PiecePosition.of('c', 3);
         final PiecePosition southDestination = PiecePosition.of('f', 1);
         final PiecePosition northDestination = PiecePosition.of('a', 5);
-        final Path southPath = Path.of(source, southDestination);
-        final Path northPath = Path.of(source, northDestination);
+        final Path southPath = new Path(source, southDestination);
+        final Path northPath = new Path(source, northDestination);
 
         // when & then
         assertThat(southPath.isDestinationRelativelyNorth()).isFalse();
@@ -92,7 +92,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isStraight()).isTrue();
@@ -112,7 +112,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isStraight()).isFalse();
@@ -134,7 +134,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isDiagonal()).isTrue();
@@ -156,7 +156,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isDiagonal()).isFalse();
@@ -178,7 +178,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isUnitDistance()).isTrue();
@@ -200,7 +200,7 @@ class PathTest {
         // given
         final PiecePosition destination = PiecePosition.of(file, rank);
         final PiecePosition source = PiecePosition.of('e', 4);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.isUnitDistance()).isFalse();
@@ -211,7 +211,7 @@ class PathTest {
         // given
         final PiecePosition source = PiecePosition.of('e', 4);
         final PiecePosition destination = PiecePosition.of('e', 7);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.wayPoints())
@@ -226,7 +226,7 @@ class PathTest {
         // given
         final PiecePosition source = PiecePosition.of('e', 4);
         final PiecePosition destination = PiecePosition.of('h', 7);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.wayPoints())
@@ -241,7 +241,7 @@ class PathTest {
         // given
         final PiecePosition source = PiecePosition.of('e', 4);
         final PiecePosition destination = PiecePosition.of('f', 5);
-        final Path path = Path.of(source, destination);
+        final Path path = new Path(source, destination);
 
         // when & then
         assertThat(path.wayPoints()).isEmpty();

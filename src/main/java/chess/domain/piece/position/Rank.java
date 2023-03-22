@@ -9,7 +9,7 @@ public class Rank {
 
     private final int rank;
 
-    private Rank(final int rank) {
+    public Rank(final int rank) {
         validateRange(rank);
         this.rank = rank;
     }
@@ -22,16 +22,12 @@ public class Rank {
         }
     }
 
-    public static Rank from(final int rank) {
-        return new Rank(rank);
-    }
-
     public int interval(final Rank rank) {
         return rank.rank - this.rank;
     }
 
     public Rank plus(final int amount) {
-        return Rank.from(rank + amount);
+        return new Rank(rank + amount);
     }
 
     @Override

@@ -50,21 +50,21 @@ public class Pawn extends Piece {
         if (!isMoved && isPawnSpecialDestination(path)) {
             final List<PiecePosition> wayPoints = path.wayPoints();
             wayPoints.add(path.destination());
-            return WayPoints.from(wayPoints);
+            return new WayPoints(wayPoints);
         }
         return defaultMove(path);
     }
 
     private WayPoints defaultMove(final Path path) {
         if (path.isDiagonal()) {
-            return WayPoints.from(Collections.emptyList());
+            return new WayPoints(Collections.emptyList());
         }
-        return WayPoints.from(List.of(path.destination()));
+        return new WayPoints(List.of(path.destination()));
     }
 
     @Override
     public void move(final PiecePosition piecePosition) {
-        if (!Path.of(this.piecePosition, piecePosition).isStraight()) {
+        if (!new Path(this.piecePosition, piecePosition).isStraight()) {
             throw new IllegalArgumentException("폰은 적이 없는 경우 직선으로만 이동할 수 있습니다.");
         }
         this.piecePosition = piecePosition;
@@ -73,7 +73,7 @@ public class Pawn extends Piece {
 
     @Override
     public void moveAndKill(final Piece enemy) {
-        if (!Path.of(piecePosition, enemy.piecePosition()).isDiagonal()) {
+        if (!new Path(piecePosition, enemy.piecePosition()).isDiagonal()) {
             throw new IllegalArgumentException("폰은 대각선 위치에 있는 적만 죽일 수 있습니다.");
         }
         this.piecePosition = enemy.piecePosition();

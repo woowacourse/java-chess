@@ -44,7 +44,7 @@ public class ChessBoardFactory {
     }
 
     public static ChessBoard create() {
-        return ChessBoard.from(pieces.stream()
+        return new ChessBoard(pieces.stream()
                 .map(Piece::clone)
                 .collect(Collectors.toList()));
     }

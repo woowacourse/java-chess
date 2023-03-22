@@ -22,14 +22,14 @@ class RankTest {
     @ValueSource(ints = {-1, 0})
     void 생성시_1보다_작은_값이면_예외(final int rank) {
         // when & then
-        assertThatThrownBy(() -> Rank.from(rank))
+        assertThatThrownBy(() -> new Rank(rank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 생성시_8보다_큰_값이면_예외() {
         // when & then
-        assertThatThrownBy(() -> Rank.from(9))
+        assertThatThrownBy(() -> new Rank(9))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -37,15 +37,15 @@ class RankTest {
     @ValueSource(ints = {1, 5, 8})
     void 정상_생성(final int rank) {
         // when & then
-        assertDoesNotThrow(() -> Rank.from(rank));
+        assertDoesNotThrow(() -> new Rank(rank));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
     void 값이_같으면_동등하다(final int value) {
         // given
-        final Rank rank1 = Rank.from(value);
-        final Rank rank2 = Rank.from(value);
+        final Rank rank1 = new Rank(value);
+        final Rank rank2 = new Rank(value);
 
         // when & then
         assertThat(rank1).isEqualTo(rank2);
@@ -62,8 +62,8 @@ class RankTest {
     })
     void Rank_사이의_간격을_구할_수_있다(final int currentRank, final int destination, final int distance) {
         // given
-        final Rank from = Rank.from(currentRank);
-        final Rank dest = Rank.from(destination);
+        final Rank from = new Rank(currentRank);
+        final Rank dest = new Rank(destination);
 
         // when & then
         assertThat(from.interval(dest)).isEqualTo(distance);
@@ -72,9 +72,9 @@ class RankTest {
     @Test
     void 특정_거리를_더할_수_있다() {
         // given
-        final Rank from = Rank.from(3);
+        final Rank from = new Rank(3);
 
         // when & then
-        assertThat(from.plus(-2)).isEqualTo(Rank.from(1));
+        assertThat(from.plus(-2)).isEqualTo(new Rank(1));
     }
 }

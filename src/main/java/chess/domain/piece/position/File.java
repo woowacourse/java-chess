@@ -9,7 +9,7 @@ public class File {
 
     private final char file;
 
-    private File(final char file) {
+    public File(final char file) {
         validate(file);
         this.file = file;
     }
@@ -22,16 +22,12 @@ public class File {
         }
     }
 
-    public static File from(final char file) {
-        return new File(file);
-    }
-
     public int interval(final File file) {
         return file.file - this.file;
     }
 
     public File plus(final int amount) {
-        return File.from((char) (file + amount));
+        return new File((char) (file + amount));
     }
 
     @Override

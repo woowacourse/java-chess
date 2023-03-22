@@ -23,6 +23,6 @@ public class King extends Piece {
 
     @Override
     protected WayPoints wayPointsWithCondition(final Path path) {
-        return WayPoints.from(Collections.emptyList());
+        return new WayPoints(Collections.emptyList());
     }
 }

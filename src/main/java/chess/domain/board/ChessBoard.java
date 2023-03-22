@@ -13,12 +13,8 @@ public class ChessBoard {
 
     private final List<Piece> pieces;
 
-    private ChessBoard(final List<Piece> pieces) {
+    public ChessBoard(final List<Piece> pieces) {
         this.pieces = new ArrayList<>(pieces);
-    }
-
-    static ChessBoard from(final List<Piece> pieces) {
-        return new ChessBoard(pieces);
     }
 
     public void movePiece(final ChessState state, final PiecePosition source, final PiecePosition destination) {

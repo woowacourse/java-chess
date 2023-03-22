@@ -15,7 +15,7 @@ public class PiecePosition {
     }
 
     public static PiecePosition of(final char file, final int rank) {
-        return new PiecePosition(File.from(file), Rank.from(rank));
+        return new PiecePosition(new File(file), new Rank(rank));
     }
 
     public static PiecePosition of(final File file, final Rank rank) {

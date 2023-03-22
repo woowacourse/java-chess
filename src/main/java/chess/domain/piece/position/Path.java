@@ -8,7 +8,7 @@ public class Path {
     private final PiecePosition source;
     private final PiecePosition destination;
 
-    private Path(final PiecePosition source, final PiecePosition destination) {
+    public Path(final PiecePosition source, final PiecePosition destination) {
         validate(source, destination);
         this.source = source;
         this.destination = destination;
@@ -18,10 +18,6 @@ public class Path {
         if (source.equals(destination)) {
             throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
         }
-    }
-
-    public static Path of(final PiecePosition source, final PiecePosition destination) {
-        return new Path(source, destination);
     }
 
     public int fileDistance() {
