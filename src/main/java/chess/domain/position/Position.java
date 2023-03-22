@@ -20,7 +20,7 @@ public class Position {
 
     private static void cacheEachFile(final File file) {
         for (Rank rank : Rank.values()) {
-            CACHE.put(rank.name() + file.name(), new Position(rank, file));
+            CACHE.put(rank.toString() + file.toString(), new Position(rank, file));
         }
     }
 
@@ -30,7 +30,7 @@ public class Position {
     }
 
     public static Position of(Rank rank, File file) {
-        return CACHE.get(rank.name() + file.name());
+        return CACHE.get(rank.toString() + file.toString());
     }
 
     public static Position from(String positionCommand) {

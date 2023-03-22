@@ -27,7 +27,7 @@ class ChessGameTest {
             //given
 
             //when
-            final Executable executable = ChessGame::startNewGame;
+            final Executable executable = ChessGame::createGame;
 
             //then
             assertDoesNotThrow(executable);

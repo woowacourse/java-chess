@@ -40,4 +40,9 @@ public enum File {
     public File plus(final int fileDirection) {
         return File.from(index + fileDirection);
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
