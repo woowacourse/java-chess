@@ -28,8 +28,19 @@ public abstract class Piece {
         return createPath(source, target, targetColor, movingStrategy);
     }
 
+    public boolean isInitialPawn() {
+        return false;
+    }
     public final boolean isEmpty() {
         return color.isEmpty();
+    }
+
+    public boolean isWhite() {
+        return color.isWhite();
+    }
+
+    public boolean isBlack() {
+        return color.isBlack();
     }
 
     public final Color getColor() {

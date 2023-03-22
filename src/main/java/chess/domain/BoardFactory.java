@@ -8,8 +8,8 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
+import chess.domain.piece.pawn.InitialBlackPawn;
+import chess.domain.piece.pawn.InitialWhitePawn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +42,8 @@ public final class BoardFactory {
 
     private static void initPawn(final Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file, Rank.TWO), WhitePawn.create());
-            board.put(Position.of(file, Rank.SEVEN), BlackPawn.create());
+            board.put(Position.of(file, Rank.TWO), InitialWhitePawn.create());
+            board.put(Position.of(file, Rank.SEVEN), InitialBlackPawn.create());
         }
     }
 

@@ -21,4 +21,9 @@ public final class InitialWhitePawn extends Pawn {
                 new MoveUpUp(), new MoveUp(), new MoveLeftUp(), new MoveRightUp());
         return new InitialWhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return true;
+    }
 }

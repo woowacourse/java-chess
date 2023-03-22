@@ -21,4 +21,9 @@ public final class InitialBlackPawn extends Pawn {
                 new MoveDownDown(), new MoveDown(), new MoveLeftDown(), new MoveRightDown());
         return new InitialBlackPawn(Color.BLACK, new MovingStrategies(movingStrategies));
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return true;
+    }
 }
