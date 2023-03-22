@@ -33,7 +33,7 @@ class BoardTest {
             Position target = new Position(3, 4);
 
             assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("source 위치에 조작할 수 있는 말이 없습니다.");
+                    .hasMessage("조작할 수 있는 말이 없습니다.");
         }
 
 
@@ -45,7 +45,7 @@ class BoardTest {
             Position target = new Position(3, 4);
 
             assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 target 위치로 움직일 수 없습니다.");
+                    .hasMessage("해당 경로의 다른 말을 건너뛸 수 없습니다.");
         }
 
         @Test
