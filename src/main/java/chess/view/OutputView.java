@@ -17,9 +17,9 @@ public class OutputView {
     public void printChessBoard(final List<Piece> pieces) {
         for (int i = 1; i < pieces.size() + 1; i++) {
             String pieceRole = pieces.get(i - 1).getRole().getInitial();
-            pieceRole = checkPieceCamp(pieces, i, pieceRole);
+            pieceRole = this.checkPieceCamp(pieces, i, pieceRole);
             System.out.print(pieceRole);
-            printNewLine(i);
+            this.printNewLine(i);
         }
     }
 
@@ -34,5 +34,9 @@ public class OutputView {
         if (i % BOARD_LINE_SIZE == 0) {
             System.out.println();
         }
+    }
+
+    public void printErrorMessage(final String message) {
+        System.err.println(message);
     }
 }
