@@ -15,19 +15,17 @@ public abstract class Piece {
 		this.pieceType = pieceType;
 	}
 
-	public boolean isGivenTeam(Team team) {
+	public abstract boolean isMobile(RelativePosition relativePosition);
+
+	public final boolean isGivenTeam(Team team) {
 		return this.team == team;
 	}
 
-	public boolean isMobile(RelativePosition relativePosition) {
-		return movement.isMobile(relativePosition);
-	}
-
-	public boolean isGivenType(PieceType pieceType) {
+	public final boolean isGivenType(PieceType pieceType) {
 		return this.pieceType == pieceType;
 	}
 
-	public PieceType getPieceType() {
+	public final PieceType getPieceType() {
 		return pieceType;
 	}
 }
