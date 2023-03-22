@@ -38,8 +38,16 @@ public abstract class Piece {
         return !color.equals(piece.color);
     }
 
+    public boolean isDifferentColor(final Color color) {
+        return !this.color.equals(color);
+    }
+
     public boolean isSameColor(final Piece piece) {
         return color.equals(piece.color);
+    }
+
+    public boolean isSameColor(final Color color) {
+        return this.color.equals(color);
     }
 
     public boolean isWhite() {
@@ -69,5 +77,13 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(color);
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
