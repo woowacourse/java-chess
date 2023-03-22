@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PawnStrategyTest {
+final class PawnStrategyTest {
 
     PieceStrategy pawnStrategy = new PawnStrategy();
     MoveRequest request;
@@ -168,4 +168,5 @@ class PawnStrategyTest {
         // then
         assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
+
 }

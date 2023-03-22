@@ -16,7 +16,7 @@ public class Piece {
     }
 
     public static Piece from(final int rank, final char file, final Shape shape) {
-         return new Piece(Position.from(rank, file), shape);
+        return new Piece(Position.from(rank, file), shape);
     }
 
     public boolean isSameShape(Shape shape) {

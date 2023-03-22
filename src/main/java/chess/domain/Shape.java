@@ -57,4 +57,5 @@ public enum Shape {
     public double getScore() {
         return score.getValue();
     }
+
 }
