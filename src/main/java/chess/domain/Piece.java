@@ -28,27 +28,19 @@ public class Piece {
             final Position inputTargetPosition,
             final Color movablePieceColor
     ) {
-        char file = inputTargetPosition.getFileValue();
-        int rank = inputTargetPosition.getRankValue();
-
         shape.move(MoveRequest.from(
                 positions,
                 movablePieceColor,
                 new PositionDto(position),
-                new PositionDto(Position.from(rank, file))
+                new PositionDto(inputTargetPosition)
         ));
 
-        Position changedPosition = Position.from(rank, file);
-        this.position = changedPosition;
-        return changedPosition;
+        this.position = inputTargetPosition;
+        return position;
     }
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "position=" + position +
-                ", shape=" + shape +
-                '}';
+    public boolean isSamePosition(final Position findPosition) {
+        return position.equals(findPosition);
     }
 
     public Piece getNewPiece(int file) {
@@ -71,8 +63,12 @@ public class Piece {
         return this.shape.getNameByColor(color);
     }
 
-    public boolean isSamePosition(Position findPosition) {
-        return position.equals(findPosition);
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "position=" + position +
+                ", shape=" + shape +
+                '}';
     }
 
 }
