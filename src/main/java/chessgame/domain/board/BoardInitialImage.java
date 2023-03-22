@@ -1,10 +1,10 @@
 package chessgame.domain.board;
 
-import chessgame.domain.piece.*;
-import chessgame.domain.square.Camp;
-import chessgame.domain.square.ConcreteSquare;
-import chessgame.domain.square.EmptySquare;
-import chessgame.domain.square.Square;
+import chessgame.domain.piece.Camp;
+import chessgame.domain.piece.ConcretePiece;
+import chessgame.domain.piece.EmptyPiece;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.piecetype.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ public class BoardInitialImage {
     private static final int BLACK_FRONT_RANK = 6;
     private static final int BLACK_BACK_RANK = 7;
 
-    private static final Map<Coordinate, Square> boardImage;
+    private static final Map<Coordinate, Piece> boardImage;
 
     private BoardInitialImage() {
     }
@@ -31,8 +31,8 @@ public class BoardInitialImage {
         boardImage = makeBoardImage();
     }
 
-    private static Map<Coordinate, Square> makeBoardImage() {
-        Map<Coordinate, Square> boardImage = new HashMap<>();
+    private static Map<Coordinate, Piece> makeBoardImage() {
+        Map<Coordinate, Piece> boardImage = new HashMap<>();
 
         addWhiteRanks(boardImage);
         addEmptyRanks(boardImage);
@@ -40,63 +40,63 @@ public class BoardInitialImage {
         return boardImage;
     }
 
-    private static void addWhiteRanks(Map<Coordinate, Square> boardImage) {
-        List<Square> backSquares = makeBackRank(Camp.WHITE);
-        List<Square> frontSquares = makeWhiteFrontRank();
+    private static void addWhiteRanks(Map<Coordinate, Piece> boardImage) {
+        List<Piece> backPieces = makeBackRank(Camp.WHITE);
+        List<Piece> frontPieces = makeWhiteFrontRank();
 
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(Coordinate.fromOnBoard(WHITE_BACK_RANK, file), backSquares.get(file));
-            boardImage.put(Coordinate.fromOnBoard(WHITE_FRONT_RANK, file), frontSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(WHITE_BACK_RANK, file), backPieces.get(file));
+            boardImage.put(Coordinate.fromOnBoard(WHITE_FRONT_RANK, file), frontPieces.get(file));
         }
     }
 
-    private static List<Square> makeBackRank(Camp camp) {
-        List<Piece> frontPieces = List.of(
+    private static List<Piece> makeBackRank(Camp camp) {
+        List<PieceType> frontPieceTypes = List.of(
                 new Rook(), new Knight(), new Bishop(),
                 new Queen(), new King(), new Bishop(),
                 new Knight(), new Rook()
         );
 
-        return frontPieces.stream()
-                          .map(pieceType -> new ConcreteSquare(pieceType, camp))
-                          .collect(Collectors.toList());
+        return frontPieceTypes.stream()
+                              .map(pieceType -> new ConcretePiece(pieceType, camp))
+                              .collect(Collectors.toList());
     }
 
-    private static List<Square> makeWhiteFrontRank() {
+    private static List<Piece> makeWhiteFrontRank() {
         return IntStream.range(0, 8)
-                        .mapToObj(i -> new ConcreteSquare(new WhitePawn(), Camp.WHITE))
+                        .mapToObj(i -> new ConcretePiece(new WhitePawn(), Camp.WHITE))
                         .collect(Collectors.toList());
     }
 
-    private static void addEmptyRanks(Map<Coordinate, Square> boardImage) {
+    private static void addEmptyRanks(Map<Coordinate, Piece> boardImage) {
         for (int rank = START_EMPTY_RANK; rank <= END_EMPTY_RANK; rank++) {
             addEachEmptyRank(boardImage, rank);
         }
     }
 
-    private static void addEachEmptyRank(Map<Coordinate, Square> boardImage, int rank) {
+    private static void addEachEmptyRank(Map<Coordinate, Piece> boardImage, int rank) {
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(Coordinate.fromOnBoard(rank, file), new EmptySquare());
+            boardImage.put(Coordinate.fromOnBoard(rank, file), new EmptyPiece());
         }
     }
 
-    private static void addBlackRanks(Map<Coordinate, Square> boardImage) {
-        List<Square> backSquares = makeBackRank(Camp.BLACK);
-        List<Square> frontSquares = makeBlackFrontRank();
+    private static void addBlackRanks(Map<Coordinate, Piece> boardImage) {
+        List<Piece> backPieces = makeBackRank(Camp.BLACK);
+        List<Piece> frontPieces = makeBlackFrontRank();
 
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(Coordinate.fromOnBoard(BLACK_FRONT_RANK, file), frontSquares.get(file));
-            boardImage.put(Coordinate.fromOnBoard(BLACK_BACK_RANK, file), backSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(BLACK_FRONT_RANK, file), frontPieces.get(file));
+            boardImage.put(Coordinate.fromOnBoard(BLACK_BACK_RANK, file), backPieces.get(file));
         }
     }
 
-    private static List<Square> makeBlackFrontRank() {
+    private static List<Piece> makeBlackFrontRank() {
         return IntStream.range(0, 8)
-                        .mapToObj(i -> new ConcreteSquare(new BlackPawn(), Camp.BLACK))
+                        .mapToObj(i -> new ConcretePiece(new BlackPawn(), Camp.BLACK))
                         .collect(Collectors.toList());
     }
 
-    public static Map<Coordinate, Square> generate() {
+    public static Map<Coordinate, Piece> generate() {
         return Map.copyOf(boardImage);
     }
 }

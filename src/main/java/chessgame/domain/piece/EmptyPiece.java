@@ -1,11 +1,11 @@
-package chessgame.domain.square;
+package chessgame.domain.piece;
 
-import chessgame.domain.piece.Coordinate;
-import chessgame.domain.piece.Piece;
+import chessgame.domain.piecetype.Coordinate;
+import chessgame.domain.piecetype.PieceType;
 
 import java.util.Optional;
 
-public class EmptySquare extends Square {
+public class EmptyPiece extends Piece {
 
     @Override
     public boolean canReap() {
@@ -23,7 +23,7 @@ public class EmptySquare extends Square {
     }
 
     @Override
-    public Optional<Piece> getPiece() {
+    public Optional<PieceType> getPiece() {
         return Optional.empty();
     }
 

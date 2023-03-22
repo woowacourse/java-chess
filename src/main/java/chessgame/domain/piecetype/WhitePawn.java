@@ -1,4 +1,4 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
 public class WhitePawn extends Pawn {
 

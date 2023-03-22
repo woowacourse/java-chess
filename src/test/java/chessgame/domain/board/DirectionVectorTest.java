@@ -1,6 +1,6 @@
 package chessgame.domain.board;
 
-import chessgame.domain.piece.Coordinate;
+import chessgame.domain.piecetype.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

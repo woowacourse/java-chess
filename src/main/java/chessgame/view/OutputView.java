@@ -1,8 +1,8 @@
 package chessgame.view;
 
 import chessgame.domain.board.Board;
-import chessgame.domain.piece.Coordinate;
-import chessgame.domain.square.Square;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.piecetype.Coordinate;
 
 import java.util.Map;
 
@@ -27,11 +27,11 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private StringBuilder makeRank(Map<Coordinate, Square> board, int rank) {
+    private StringBuilder makeRank(Map<Coordinate, Piece> board, int rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < BOARD_FILE; file++) {
-            Square square = board.get(Coordinate.fromOnBoard(rank, file));
-            stringBuilder.append(PieceMapper.getTarget(square));
+            Piece piece = board.get(Coordinate.fromOnBoard(rank, file));
+            stringBuilder.append(PieceMapper.getTarget(piece));
         }
         stringBuilder.append(System.lineSeparator());
         return stringBuilder;

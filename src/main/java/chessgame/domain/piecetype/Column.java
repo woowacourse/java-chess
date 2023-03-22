@@ -1,25 +1,24 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
 import java.util.Objects;
 
-public class Row {
-
-    private static final int MIN_ROW = 0;
-    private static final int MAX_ROW = 7;
+public class Column {
+    private static final int MIN_COLUMN = 0;
+    private static final int MAX_COLUMN = 7;
 
     private final int value;
 
-    public Row(int value) {
+    public Column(int value) {
         this.value = value;
     }
 
-    public static Row from(int value) {
+    public static Column from(int value) {
         validate(value);
-        return new Row(value);
+        return new Column(value);
     }
 
-    public static Row fromWithoutValidate(int value) {
-        return new Row(value);
+    public static Column fromWithoutValidate(int value) {
+        return new Column(value);
     }
 
     private static void validate(int value) {
@@ -29,23 +28,23 @@ public class Row {
     }
 
     private static boolean isOutOfRange(int value) {
-        return value < MIN_ROW || value > MAX_ROW;
+        return value < MIN_COLUMN || value > MAX_COLUMN;
     }
 
-    public int add(Row otherRow) {
-        return this.value + otherRow.value;
+    public int add(Column otherColumn) {
+        return this.value + otherColumn.value;
     }
 
-    public int add(int otherRow) {
-        return this.value + otherRow;
+    public int add(int otherColumn) {
+        return this.value + otherColumn;
     }
 
-    public int minus(Row otherRow) {
-        return this.value - otherRow.value;
+    public int minus(Column otherColumn) {
+        return this.value - otherColumn.value;
     }
 
-    public int absoluteOfMinus(Row otherRow) {
-        return Math.abs(this.value - otherRow.value);
+    public int absoluteOfMinus(Column otherColumn) {
+        return Math.abs(this.value - otherColumn.value);
     }
 
     public boolean isPositive() {
@@ -68,8 +67,8 @@ public class Row {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Row row = (Row) o;
-        return value == row.value;
+        Column column = (Column) o;
+        return value == column.value;
     }
 
     @Override

@@ -1,8 +1,33 @@
 package chessgame.domain.piece;
 
-public interface Piece {
+import chessgame.domain.piecetype.Coordinate;
+import chessgame.domain.piecetype.PieceType;
 
-    boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate);
-    boolean canReap();
-    boolean isSameTypeWith(PieceType otherType);
+import java.util.Optional;
+
+public abstract class Piece {
+
+    private boolean isFirstMove;
+
+    public Piece() {
+        isFirstMove = true;
+    }
+
+    public abstract Optional<PieceType> getPiece();
+
+    public abstract boolean isSameCamp(Camp camp);
+
+    public abstract boolean isMovable(Coordinate startCoordinate, Coordinate endCoordinate);
+
+    public abstract boolean isExist();
+
+    public abstract boolean canReap();
+
+    protected boolean isFirstMove() {
+        return isFirstMove;
+    }
+
+    public void checkMoved() {
+        isFirstMove = false;
+    }
 }

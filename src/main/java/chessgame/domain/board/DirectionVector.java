@@ -1,6 +1,6 @@
 package chessgame.domain.board;
 
-import chessgame.domain.piece.Coordinate;
+import chessgame.domain.piecetype.Coordinate;
 
 import java.util.Arrays;
 

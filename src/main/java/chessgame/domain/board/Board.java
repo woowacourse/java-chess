@@ -1,35 +1,35 @@
 package chessgame.domain.board;
 
-import chessgame.domain.piece.Coordinate;
-import chessgame.domain.square.Camp;
-import chessgame.domain.square.EmptySquare;
-import chessgame.domain.square.Square;
+import chessgame.domain.piece.Camp;
+import chessgame.domain.piece.EmptyPiece;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.piecetype.Coordinate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
 
-    private final Map<Coordinate, Square> board;
+    private final Map<Coordinate, Piece> board;
 
     public Board() {
         board = initialize();
     }
 
-    public Map<Coordinate, Square> initialize() {
+    public Map<Coordinate, Piece> initialize() {
         return new HashMap<>(BoardInitialImage.generate());
     }
 
     public boolean checkCamp(Coordinate coordinate, Camp camp) {
-        Square findSquare = board.get(coordinate);
-        return findSquare.isSameCamp(camp);
+        Piece findPiece = board.get(coordinate);
+        return findPiece.isSameCamp(camp);
     }
 
     public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
-            Square findSquare = board.get(startCoordinate);
-            board.put(startCoordinate, new EmptySquare());
-            board.put(endCoordinate, findSquare);
+            Piece findPiece = board.get(startCoordinate);
+            board.put(startCoordinate, new EmptyPiece());
+            board.put(endCoordinate, findPiece);
             return;
         }
         throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");
@@ -42,21 +42,21 @@ public class Board {
     }
 
     private boolean isMovableByRule(Coordinate startCoordinate, Coordinate endCoordinate) {
-        Square findSquare = board.get(startCoordinate);
+        Piece findPiece = board.get(startCoordinate);
 
-        return findSquare.isMovable(startCoordinate, endCoordinate);
+        return findPiece.isMovable(startCoordinate, endCoordinate);
     }
 
     private boolean isPieceExistsAt(Coordinate coordinate) {
-        Square findSquare = board.get(coordinate);
+        Piece findPiece = board.get(coordinate);
 
-        return findSquare.isExist();
+        return findPiece.isExist();
     }
 
     private boolean isNotBlocked(Coordinate startCoordinate, Coordinate endCoordinate) {
-        Square findSquare = board.get(startCoordinate);
+        Piece findPiece = board.get(startCoordinate);
 
-        if (findSquare.canReap()) {
+        if (findPiece.canReap()) {
             return true;
         }
         return isNotBlockedWhenNotReap(startCoordinate, endCoordinate);
@@ -73,7 +73,7 @@ public class Board {
         return indexCoordinate.equals(endCoordinate);
     }
 
-    public Map<Coordinate, Square> getBoard() {
+    public Map<Coordinate, Piece> getBoard() {
         return board;
     }
 }

@@ -1,6 +1,6 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
-public enum PieceType {
+public enum PieceTypeSymbol {
 
     KING,
     QUEEN,

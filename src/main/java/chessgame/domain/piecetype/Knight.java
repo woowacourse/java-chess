@@ -1,12 +1,12 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
 import java.util.List;
 
-import static chessgame.domain.piece.Inclination.*;
+import static chessgame.domain.piecetype.Inclination.*;
 
-public class Knight implements Piece {
+public class Knight implements PieceType {
 
-    private static final PieceType pieceType = PieceType.KNIGHT;
+    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.KNIGHT;
     private static final List<Inclination> availableInclinations = List.of(
             TWO, MINUS_TWO, HALF, MINUS_HALF
     );
@@ -16,8 +16,8 @@ public class Knight implements Piece {
     );
 
     @Override
-    public boolean isSameTypeWith(final PieceType otherType) {
-        return pieceType == otherType;
+    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
+        return PIECE_TYPE_SYMBOL == otherType;
     }
 
     @Override

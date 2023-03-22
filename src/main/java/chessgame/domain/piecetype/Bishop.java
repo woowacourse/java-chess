@@ -1,18 +1,18 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
 import java.util.List;
 
-import static chessgame.domain.piece.Inclination.MINUS_ONE;
-import static chessgame.domain.piece.Inclination.ONE;
+import static chessgame.domain.piecetype.Inclination.MINUS_ONE;
+import static chessgame.domain.piecetype.Inclination.ONE;
 
-public class Bishop implements Piece {
+public class Bishop implements PieceType {
 
-    private static final PieceType pieceType = PieceType.BISHOP;
+    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.BISHOP;
     private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
     @Override
-    public boolean isSameTypeWith(final PieceType otherType) {
-        return pieceType == otherType;
+    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
+        return PIECE_TYPE_SYMBOL == otherType;
     }
 
     @Override

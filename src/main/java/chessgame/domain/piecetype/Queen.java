@@ -1,19 +1,19 @@
-package chessgame.domain.piece;
+package chessgame.domain.piecetype;
 
 import java.util.List;
 
-import static chessgame.domain.piece.Inclination.*;
+import static chessgame.domain.piecetype.Inclination.*;
 
-public class Rook implements Piece {
+public class Queen implements PieceType {
 
-    private static final PieceType pieceType = PieceType.ROOK;
+    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.QUEEN;
     private static final List<Inclination> availableInclinations = List.of(
-            POSITIVE_INFINITY, NEGATIVE_INFINITY, ZERO, MINUS_ZERO
+            POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
     @Override
-    public boolean isSameTypeWith(final PieceType otherType) {
-        return pieceType == otherType;
+    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
+        return PIECE_TYPE_SYMBOL == otherType;
     }
 
     @Override
