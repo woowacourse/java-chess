@@ -7,6 +7,7 @@ import chess.practiceMove.Direction;
 import java.util.List;
 
 import static chess.domain.piece.PieceName.QUEEN_NAME;
+import static chess.domain.score.Score.QUEEN_SCORE;
 import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
@@ -16,10 +17,8 @@ public class Queen extends Piece {
             Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
-    private final double score = 9.0;
-
     public Queen(Color color) {
-        super(QUEEN_NAME.getName(), color);
+        super(QUEEN_NAME.getName(), color, QUEEN_SCORE.getScore());
     }
 
     @Override

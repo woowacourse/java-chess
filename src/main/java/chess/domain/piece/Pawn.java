@@ -7,6 +7,7 @@ import chess.practiceMove.Direction;
 import java.util.List;
 
 import static chess.domain.piece.PieceName.PAWN_NAME;
+import static chess.domain.score.Score.PAWN_DEFAULT_SCORE;
 import static chess.view.ErrorMessage.MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
@@ -16,11 +17,11 @@ public class Pawn extends Piece {
 
     private final List<Direction> direction;
 
-    private final double score = 1.0;
+    private double score = 1.0;
     private int distance = 2;
 
     public Pawn(Color color) {
-        super(PAWN_NAME.getName(), color);
+        super(PAWN_NAME.getName(), color, PAWN_DEFAULT_SCORE.getScore());
         this.direction = createDirectionByColor(color);
     }
 

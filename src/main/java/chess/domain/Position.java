@@ -33,6 +33,10 @@ public class Position {
         return column.name() + rank.name();
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,5 +48,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, column);
+    }
+
+    public boolean isSameColumn (Column column){
+        return this.column.equals(column);
     }
 }

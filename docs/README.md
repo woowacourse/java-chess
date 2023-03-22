@@ -14,7 +14,7 @@
 
 ## ScoreCalculator
 
-- [] 현재 남아 있는 말에 대한 점수를 구한다
+- [x] 현재 남아 있는 말의 점수를 구한다
 
 ## ChessBoard
 
@@ -73,13 +73,13 @@
 - [x] p를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
 - [x] 상수로 점수(1점)를 가진다
-    - [] 같은 세로줄에 같은 색의 Pawn이 있는 경우 0.5점을 가진다
+    - [x] 같은 세로줄에 같은 색의 Pawn이 있는 경우 0.5점을 가진다
 
 ### Rook (Piece)
 
 - [x] r를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(5점)를 가진다
+- [x] 상수로 점수(5점)를 가진다
 
 ### Knight (Piece)
 
