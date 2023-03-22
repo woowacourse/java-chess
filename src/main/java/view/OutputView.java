@@ -11,21 +11,12 @@ public final class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        System.out.println("> 좌표 안내");
-        System.out.println("RNBQKBNR  8 (rank 8)\n" +
-                "PPPPPPPP  7\n" +
-                "........  6\n" +
-                "........  5\n" +
-                "........  4\n" +
-                "........  3\n" +
-                "pppppppp  2\n" +
-                "rnbqkbnr  1 (rank 1)\n" +
-                "\n" +
-                "abcdefgh\n");
+        System.out.println("> 게임 점수 : status");
+        System.out.println();
     }
 
     public static void printNotice(final String message) {
-        System.out.println(message);
+        System.out.println(System.lineSeparator() + message);
     }
 
     public static void printErrorMessage(final String message) {
@@ -36,17 +27,24 @@ public final class OutputView {
         final List<List<String>> rowDTOs = chessBoard.getRowDTOs();
 
         System.out.print(System.lineSeparator());
-        for (List<String> row : rowDTOs) {
+        final int size = rowDTOs.size();
+        for (int i = 0; i < size; i++) {
+            final List<String> row = rowDTOs.get(i);
             printRow(row);
+            System.out.printf("  %d%n", 8-i);
         }
-        System.out.print(System.lineSeparator());
+        System.out.println(System.lineSeparator() + "abcdefgh" + System.lineSeparator());
     }
 
     private static void printRow(final List<String> chessBoardElements) {
         for (String chessBoardElement : chessBoardElements) {
             System.out.print(chessBoardElement);
         }
-        System.out.println();
     }
 
+    public static void printScore(final double whiteScore, final double blackScore) {
+        System.out.printf("White : %.1f%n", whiteScore);
+        System.out.printf("Black : %.1f%n", blackScore);
+        System.out.println();
+    }
 }
