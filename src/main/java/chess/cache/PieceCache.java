@@ -10,18 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PieceCache {
-    public static final Row ROOK_LEFT_ROW_INDEX = Row.ROW_A;
-    public static final Row KNIGHT_LEFT_ROW_INDEX = Row.ROW_B;
-    public static final Row BISHOP_LEFT_ROW_INDEX = Row.ROW_C;
-    public static final Row QUEEN_ROW_INDEX = Row.ROW_D;
-    public static final Row KING_ROW_INDEX = Row.ROW_E;
-    public static final Row BISHOP_RIGHT_ROW_INDEX = Row.ROW_F;
-    public static final Row KNIGHT_RIGHT_ROW_INDEX = Row.ROW_G;
-    public static final Row ROOK_RIGHT_ROW_INDEX = Row.ROW_H;
-    public static final Column BLACK_PIECE_COLUMN = Column.COLUMN_8;
-    public static final Column BLACK_PAWN_COLUMN = Column.COLUMN_7;
-    public static final Column WHITE_PAWN_COLUMN = Column.COLUMN_2;
-    public static final Column WHITE_PIECE_COLUMN = Column.COLUMN_1;
+    private static final Row ROOK_LEFT_ROW_INDEX = Row.ROW_A;
+    private static final Row KNIGHT_LEFT_ROW_INDEX = Row.ROW_B;
+    private static final Row BISHOP_LEFT_ROW_INDEX = Row.ROW_C;
+    private static final Row QUEEN_ROW_INDEX = Row.ROW_D;
+    private static final Row KING_ROW_INDEX = Row.ROW_E;
+    private static final Row BISHOP_RIGHT_ROW_INDEX = Row.ROW_F;
+    private static final Row KNIGHT_RIGHT_ROW_INDEX = Row.ROW_G;
+    private static final Row ROOK_RIGHT_ROW_INDEX = Row.ROW_H;
+    private static final Column BLACK_PIECE_COLUMN = Column.COLUMN_8;
+    private static final Column BLACK_PAWN_COLUMN = Column.COLUMN_7;
+    private static final Column WHITE_PAWN_COLUMN = Column.COLUMN_2;
+    private static final Column WHITE_PIECE_COLUMN = Column.COLUMN_1;
     private static final Map<Position, Piece> board = new HashMap<>();
 
     private PieceCache() {
