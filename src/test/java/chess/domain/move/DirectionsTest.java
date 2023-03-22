@@ -1,6 +1,5 @@
 package chess.domain.move;
 
-import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
@@ -53,24 +52,6 @@ public class DirectionsTest extends AbstractTestFixture {
         var destination = directions.move(createPosition("A,ONE"));
 
         assertThat(destination).isEqualTo(createPosition("C,FOUR"));
-    }
-
-    @DisplayName("수평 축을 기준으로 뒤집는다")
-    @Test
-    void flipOverHorizon() {
-        var directions = new Directions(List.of(RIGHT, UP, UP));
-        var flipped = new Directions(List.of(RIGHT, DOWN, DOWN));
-
-        assertThat(directions.flipOver(Axis.HORIZON)).isEqualTo(flipped);
-    }
-
-    @DisplayName("수직 축을 기준으로 뒤집는다")
-    @Test
-    void flipOverVertical() {
-        var directions = new Directions(List.of(RIGHT, RIGHT, UP));
-        var flipped = new Directions(List.of(LEFT, LEFT, UP));
-
-        assertThat(directions.flipOver(Axis.VERTICAL)).isEqualTo(flipped);
     }
 
     @DisplayName("방향 컬렉션끼리 합칠 수 있다")

@@ -4,30 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Direction {
-    RIGHT(Axis.HORIZON) {
-        @Override
-        public Direction flip() {
-            return LEFT;
-        }
-    },
-    UP(Axis.VERTICAL) {
-        @Override
-        public Direction flip() {
-            return DOWN;
-        }
-    },
-    LEFT(Axis.HORIZON) {
-        @Override
-        public Direction flip() {
-            return RIGHT;
-        }
-    },
-    DOWN(Axis.VERTICAL) {
-        @Override
-        public Direction flip() {
-            return UP;
-        }
-    };
+    RIGHT(Axis.HORIZON),
+    UP(Axis.VERTICAL),
+    LEFT(Axis.HORIZON),
+    DOWN(Axis.VERTICAL);
 
     private final Axis axis;
 
@@ -38,15 +18,6 @@ public enum Direction {
     public boolean isIn(Axis axis) {
         return this.axis == axis;
     }
-
-    public Direction flipOver(Axis axis) {
-        if (this.axis == axis) {
-            return this;
-        }
-        return flip();
-    }
-
-    public abstract Direction flip();
 
     public List<Direction> repeat(long times) {
         List<Direction> directions = new ArrayList<>();

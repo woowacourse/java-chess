@@ -1,7 +1,5 @@
 package chess.domain.move;
 
-import static chess.domain.move.Direction.DOWN;
-import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -61,24 +59,6 @@ public class UnitMoveTest extends AbstractTestFixture {
     @MethodSource
     void unit_move_does_not_throw(List<Direction> directions) {
         assertThatNoException().isThrownBy(() -> UnitMove.of(new Directions(directions)));
-    }
-
-    @DisplayName("수평 축을 기준으로 뒤집을 수 있다.")
-    @Test
-    void flipOverHorizon() {
-        var unitMove = UnitMove.of(new Directions(List.of(RIGHT, UP, UP)));
-        var flipped = UnitMove.of(new Directions(List.of(RIGHT, DOWN, DOWN)));
-
-        assertThat(unitMove.flipOver(Axis.HORIZON)).isEqualTo(flipped);
-    }
-
-    @DisplayName("수직 축을 기준으로 뒤집을 수 있다.")
-    @Test
-    void flipOverVertical() {
-        var unitMove = UnitMove.of(new Directions(List.of(RIGHT, RIGHT, UP)));
-        var flipped = UnitMove.of(new Directions(List.of(LEFT, LEFT, UP)));
-
-        assertThat(unitMove.flipOver(Axis.VERTICAL)).isEqualTo(flipped);
     }
 
     @DisplayName("반복할 수 있다.")

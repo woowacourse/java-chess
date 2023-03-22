@@ -1,6 +1,5 @@
 package chess.domain.move;
 
-import static chess.domain.move.Direction.DOWN;
 import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
@@ -14,24 +13,6 @@ import chess.domain.AbstractTestFixture;
 import chess.domain.position.Position;
 
 public class MoveTest extends AbstractTestFixture {
-
-    @DisplayName("상하 대칭 할 수 있다.")
-    @Test
-    void flipHorizontal() {
-        Move move = createMove(RIGHT, UP, UP);
-        Move expected = createMove(RIGHT, DOWN, DOWN);
-
-        assertThat(move.flipOver(Axis.HORIZON)).isEqualTo(expected);
-    }
-
-    @DisplayName("좌우 대칭 할 수 있다.")
-    @Test
-    void flipVertical() {
-        Move move = createMove(RIGHT, RIGHT, UP);
-        Move expected = createMove(LEFT, LEFT, UP);
-
-        assertThat(move.flipOver(Axis.VERTICAL)).isEqualTo(expected);
-    }
 
     @SuppressWarnings("Convert2MethodRef")
     @DisplayName("빈 수 생성시 예외를 던진다")

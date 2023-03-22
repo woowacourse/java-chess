@@ -50,10 +50,6 @@ public class UnitMove {
         return directions.move(position);
     }
 
-    public UnitMove flipOver(Axis axis) {
-        return new UnitMove(directions.flipOver(axis));
-    }
-
     public List<UnitMove> repeat(long times) {
         List<UnitMove> unitMoves = new ArrayList<>();
         for (int i = 0; i < times; i++) {

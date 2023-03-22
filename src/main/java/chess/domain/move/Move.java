@@ -3,7 +3,6 @@ package chess.domain.move;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import chess.domain.position.Position;
 
@@ -27,12 +26,6 @@ public class Move {
         Directions verticalDirections = source.getVerticalDirectionsTo(target);
         Directions horizontalDirections = source.getHorizontalDirectionsTo(target);
         return new Move(verticalDirections.join(horizontalDirections));
-    }
-
-    public Move flipOver(Axis axis) {
-        return new Move(unitMoves.stream()
-                .map(unitMove -> unitMove.flipOver(axis))
-                .collect(Collectors.toList()));
     }
 
     public Position move(Position position) {

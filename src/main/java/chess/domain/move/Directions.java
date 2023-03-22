@@ -67,12 +67,6 @@ public class Directions {
         return destination;
     }
 
-    public Directions flipOver(Axis axis) {
-        return new Directions(directions.stream()
-                .map(direction -> direction.flipOver(axis))
-                .collect(Collectors.toList()));
-    }
-
     public Directions join(Directions other) {
         List<Direction> directions = new ArrayList<>(this.directions);
         directions.addAll(other.directions);
