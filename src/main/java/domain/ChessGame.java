@@ -20,7 +20,6 @@ public class ChessGame {
 
     public void move(Square src, Square dest) {
         Piece piece = chessBoard.find(src);
-        validateNotExist(piece);
         rule.validateOrder(piece);
         List<Square> routes = piece.findRoutes(src, dest);
 
@@ -29,14 +28,8 @@ public class ChessGame {
         rule.nextOrder();
     }
 
-    private void validateNotExist(Piece piece) {
-        if (piece == null) {
-            throw new IllegalArgumentException("기물이 존재하지 않습니다.");
-        }
-    }
-
     private void checkPawn(Square src, Square dest, Piece piece) {
-        if (piece instanceof Pawn) {
+        if (piece.isPawn()) {
             Pawn pawn = (Pawn) piece;
             validatePawnMove(pawn, src, dest);
             pawn.start();
@@ -47,17 +40,13 @@ public class ChessGame {
         if (pawn.isDiagonal(src, dest) && !canKill(dest, pawn, dest)) {
             throw new IllegalArgumentException("대각선으로 갈 수 없습니다.");
         }
-        if (!pawn.isDiagonal(src, dest) && canKill(dest, pawn, dest)) {
-            throw new IllegalArgumentException("앞으로 갈 수 없습니다.");
+        if (pawn.isLinear(src, dest) && chessBoard.hasPiece(dest)) {
+            throw new IllegalArgumentException("폰은 기물이 있으면 앞으로 갈 수 없습니다.");
         }
     }
-
+    
     private boolean canKill(Square dest, Piece piece, Square route) {
-        return route == dest && hasPiece(route) && piece.isDifferentTeam(chessBoard.find(dest));
-    }
-
-    private boolean hasPiece(Square route) {
-        return chessBoard.containsKey(route);
+        return route == dest && chessBoard.hasPiece(route) && piece.isDifferentTeam(chessBoard.find(dest));
     }
 
     private void go(Square src, Square dest, Piece piece, List<Square> routes) {
@@ -68,8 +57,8 @@ public class ChessGame {
     }
 
     private void validateBlock(Square dest, Piece piece, Square route) {
-        if (hasPiece(route) && !canKill(dest, piece, route)) {
-            throw new IllegalArgumentException("갈 수 없습니다!");
+        if (chessBoard.hasPiece(route) && !canKill(dest, piece, route)) {
+            throw new IllegalArgumentException("중간에 기물이 있어 이동할 수 없습니다.");
         }
     }
 }

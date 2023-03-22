@@ -12,16 +12,24 @@ public abstract class Piece {
     }
 
     public boolean isBlack() {
-        return teamColor == TeamColor.BLACK;
+        return teamColor.isBlack();
     }
 
     public abstract List<Square> findRoutes(Square src, Square dest);
 
     public boolean isDifferentTeam(Piece piece) {
-        return teamColor != piece.teamColor;
+        return teamColor.isDifferent(piece.teamColor);
     }
 
     public boolean isSameColor(TeamColor color) {
-        return teamColor == color;
+        return teamColor.isSame(color);
+    }
+
+    public boolean isNotBlank() {
+        return true;
+    }
+
+    public boolean isPawn() {
+        return false;
     }
 }

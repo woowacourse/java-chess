@@ -9,13 +9,18 @@ import static domain.ChessColumn.F;
 import static domain.ChessColumn.G;
 import static domain.ChessColumn.H;
 import static domain.Rank.EIGHT;
+import static domain.Rank.FIVE;
+import static domain.Rank.FOUR;
 import static domain.Rank.ONE;
 import static domain.Rank.SEVEN;
+import static domain.Rank.SIX;
+import static domain.Rank.THREE;
 import static domain.Rank.TWO;
 import static domain.piece.TeamColor.BLACK;
 import static domain.piece.TeamColor.WHITE;
 
 import domain.piece.Bishop;
+import domain.piece.Blank;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
@@ -33,6 +38,16 @@ public class ChessBoard {
         Square.of(E, EIGHT), Square.of(F, EIGHT), Square.of(G, EIGHT), Square.of(H, EIGHT),
         Square.of(A, SEVEN), Square.of(B, SEVEN), Square.of(C, SEVEN), Square.of(D, SEVEN),
         Square.of(E, SEVEN), Square.of(F, SEVEN), Square.of(G, SEVEN), Square.of(H, SEVEN)
+    );
+    private static final List<Square> EMPTY_SQUARES = List.of(
+        Square.of(A, SIX), Square.of(B, SIX), Square.of(C, SIX), Square.of(D, SIX),
+        Square.of(E, SIX), Square.of(F, SIX), Square.of(G, SIX), Square.of(H, SIX),
+        Square.of(A, FIVE), Square.of(B, FIVE), Square.of(C, FIVE), Square.of(D, FIVE),
+        Square.of(E, FIVE), Square.of(F, FIVE), Square.of(G, FIVE), Square.of(H, FIVE),
+        Square.of(A, FOUR), Square.of(B, FOUR), Square.of(C, FOUR), Square.of(D, FOUR),
+        Square.of(E, FOUR), Square.of(F, FOUR), Square.of(G, FOUR), Square.of(H, FOUR),
+        Square.of(A, THREE), Square.of(B, THREE), Square.of(C, THREE), Square.of(D, THREE),
+        Square.of(E, THREE), Square.of(F, THREE), Square.of(G, THREE), Square.of(H, THREE)
     );
     private static final List<Square> WHITE_SQUARES = List.of(
         Square.of(A, ONE), Square.of(B, ONE), Square.of(C, ONE), Square.of(D, ONE),
@@ -61,6 +76,9 @@ public class ChessBoard {
             locationInfo.put(BLACK_SQUARES.get(i), BLACK_PIECES.get(i));
             locationInfo.put(WHITE_SQUARES.get(i), WHITE_PIECES.get(i));
         }
+        for (Square emptySquare : EMPTY_SQUARES) {
+            locationInfo.put(emptySquare, Blank.getInstance());
+        }
     }
 
     public Piece find(Square square) {
@@ -68,12 +86,13 @@ public class ChessBoard {
     }
 
     public void update(Square source, Square target) {
-        Piece piece = locationInfo.get(source);
-        locationInfo.remove(source);
-        locationInfo.put(target, piece);
+        Piece sourcePiece = locationInfo.get(source);
+        locationInfo.replace(target, sourcePiece);
+        locationInfo.replace(source, Blank.getInstance());
     }
 
-    public boolean containsKey(Square route) {
-        return locationInfo.containsKey(route);
+    public boolean hasPiece(Square route) {
+        Piece piece = locationInfo.get(route);
+        return piece.isNotBlank();
     }
 }
