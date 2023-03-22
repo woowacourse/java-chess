@@ -36,8 +36,8 @@ class PieceTest {
         final Piece differentSidePiece = new Bishop(new Position(File.C, Rank.EIGHT), Side.BLACK);
 
         // when, then
-        assertThat(piece.isSameSide(sameSidePiece)).isTrue();
-        assertThat(piece.isSameSide(differentSidePiece)).isFalse();
+        assertThat(piece.isSameSide(sameSidePiece.getSide())).isTrue();
+        assertThat(piece.isSameSide(differentSidePiece.getSide())).isFalse();
     }
 
     @ParameterizedTest

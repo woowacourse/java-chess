@@ -25,8 +25,8 @@ public abstract class Piece {
 
     public abstract List<Position> getPaths(Position targetPosition);
 
-    public boolean isSameSide(Piece piece) {
-        return this.side == piece.side;
+    public boolean isSameSide(Side side) {
+        return this.side == side;
     }
 
     public int getFile() {
