@@ -13,9 +13,9 @@ public class ChessGameService {
         this.chessGameRepository = chessGameRepository;
     }
 
-    public ChessGame create(final ChessBoardFactory chessBoardFactory) {
+    public Long create(final ChessBoardFactory chessBoardFactory) {
         final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
-        return chessGameRepository.save(chessGame);
+        return chessGameRepository.save(chessGame).id();
     }
 
     public ChessGame findById(final Long id) {

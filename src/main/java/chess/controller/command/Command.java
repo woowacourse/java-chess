@@ -40,6 +40,10 @@ public class Command {
         return Arrays.asList(from, to);
     }
 
+    public Long restartParameter() {
+        return Long.parseLong(commands.get(0));
+    }
+
     public CommandType type() {
         return commandType;
     }

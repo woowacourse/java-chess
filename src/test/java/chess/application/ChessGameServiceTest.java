@@ -46,17 +46,18 @@ class ChessGameServiceTest {
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
 
         // when
-        final ChessGame chessGame = chessGameService.create(chessBoardFactory);
+        final Long id = chessGameService.create(chessBoardFactory);
 
         // then
-        assertThat(chessGameRepository.findById(chessGame.id())).isNotNull();
+        assertThat(chessGameRepository.findById(id)).isNotNull();
     }
 
     @Test
     void 기물을_움직일_수_있다() {
         // given
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
-        final ChessGame chessGame = chessGameService.create(chessBoardFactory);
+        final Long id = chessGameService.create(chessBoardFactory);
+        final ChessGame chessGame = chessGameRepository.findById(id).get();
 
         // when
         흰색_왕을_죽인다(chessGame);
