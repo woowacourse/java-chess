@@ -6,6 +6,7 @@ import chess.practiceMove.Direction;
 
 import java.util.List;
 
+import static chess.domain.piece.PieceName.PAWN_NAME;
 import static chess.view.ErrorMessage.MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
@@ -13,7 +14,6 @@ import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
 
 public class Pawn extends Piece {
 
-    private static final String name = "p";
     private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
     private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
 
@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     private boolean isFirstMove = true;
 
     public Pawn(Color color) {
-        super(name, color);
+        super(PAWN_NAME.getName(), color);
         this.movableDirection = createMovableDirectionByColor(color);
     }
 

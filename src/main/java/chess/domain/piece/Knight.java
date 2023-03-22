@@ -7,12 +7,14 @@ import chess.practiceMove.Direction;
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.piece.PieceName.BISHOP_NAME;
+import static chess.domain.piece.PieceName.KNIGHT_NAME;
 import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
 
 public class Knight extends Piece {
-    private static final String name = "n";
+
     private static final Map<Integer, Integer> movableDistance = Map.of(1, 2, 2, 1);
     private static final List<Direction> movableDirection = List.of(
             Direction.KNIGHT_TOP_LEFT,
@@ -26,7 +28,7 @@ public class Knight extends Piece {
 
 
     public Knight(Color color) {
-        super(name, color);
+        super(KNIGHT_NAME.getName(), color);
     }
 
     @Override
