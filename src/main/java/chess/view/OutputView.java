@@ -10,12 +10,15 @@ public class OutputView {
             Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION);
     private static final String ERROR_MESSAGE_FORMAT = "[입력 오류] %s" + System.lineSeparator();
 
-    public void printGuideMessage() {
+    private OutputView() {
+    }
+
+    public static void printGuideMessage() {
         System.out.println(GAME_START);
         System.out.println(GAME_COMMAND_REQUEST);
     }
 
-    public void printBoard(List<List<String>> board) {
+    public static void printBoard(List<List<String>> board) {
         System.out.println();
         for (List<String> rank : board) {
             printRank(rank);
@@ -24,13 +27,13 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printRank(final List<String> rank) {
+    private static void printRank(final List<String> rank) {
         for (String value : rank) {
             System.out.print(value);
         }
     }
 
-    public void printInputErrorMessage(final String message) {
-        System.out.printf(ERROR_MESSAGE_FORMAT, message);
+    public static void printInputErrorMessage(final Exception exception) {
+        System.out.printf(ERROR_MESSAGE_FORMAT, exception.getMessage());
     }
 }

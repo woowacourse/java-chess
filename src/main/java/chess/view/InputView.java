@@ -16,13 +16,12 @@ public class InputView {
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
     private static final String WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE = "이동 요청 정보가 잘못 되었습니다.";
-    private final Scanner scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public InputView() {
-        this.scanner = new Scanner(System.in);
+    private InputView() {
     }
 
-    public CommandRequest requestGameCommand() {
+    public static CommandRequest requestGameCommand() {
         String[] request = readRequest();
         if (request.length == SINGLE_COMMAND_LENGTH) {
             return CommandRequest.fromControlCommand(Command.findSingleCommand(request[COMMAND_INDEX]));
@@ -32,18 +31,18 @@ public class InputView {
                 parsePosition(request[DESTINATION_POSITION_INDEX]));
     }
 
-    private String[] readRequest() {
+    private static String[] readRequest() {
         String line = scanner.nextLine();
         return line.split(REQUEST_DELIMITER);
     }
 
-    private void validateMoveCommandRequest(final String[] request) {
+    private static void validateMoveCommandRequest(final String[] request) {
         if (request.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
     }
 
-    private List<Integer> parsePosition(String word) {
+    private static List<Integer> parsePosition(String word) {
         List<Integer> position = new ArrayList<>();
         position.add(File.findByUserIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
         position.add(Rank.findByUserIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
