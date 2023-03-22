@@ -1,7 +1,7 @@
 package domain.piece.move;
 
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -13,15 +13,15 @@ public enum Situation {
     NEUTRAL((x, y) -> y.getColor() == Color.NEUTRAL)
     ;
 
-    private final BiPredicate<Square, Square> selector;
+    private final BiPredicate<Piece, Piece> selector;
 
-    Situation(final BiPredicate<Square, Square> selector) {
+    Situation(final BiPredicate<Piece, Piece> selector) {
         this.selector = selector;
     }
 
-    public static Situation of(final Square square, final Square otherSquare) {
+    public static Situation of(final Piece piece, final Piece otherPiece) {
         return Arrays.stream(values())
-                .filter(confrontation -> confrontation.selector.test(square, otherSquare))
+                .filter(confrontation -> confrontation.selector.test(piece, otherPiece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 적팀인지 동료인지를 판단할 수 없습니다."));
     }

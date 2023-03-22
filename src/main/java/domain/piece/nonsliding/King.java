@@ -1,9 +1,10 @@
 package domain.piece.nonsliding;
 
-import domain.piece.Piece;
 import domain.piece.move.Coordinate;
 import domain.piece.move.Direction;
 import domain.piece.move.Inclination;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.List;
 
@@ -16,8 +17,12 @@ public final class King extends Piece {
 
     private static final double POINT = 0;
 
+    public King(final Color color) {
+        super(color);
+    }
+
     @Override
-    public boolean isReachableByRuleWhenMovingNotVariates(
+    protected boolean isReachableByRuleWhenMovingNotVariates(
             final Coordinate start,
             final Coordinate end
     ) {

@@ -3,8 +3,8 @@ package view;
 import domain.board.Board;
 import domain.board.ChessGame;
 import domain.piece.move.Coordinate;
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.Map;
 
@@ -19,13 +19,13 @@ public final class OutputView {
 
     public void printBoard(final ChessGame chessGame) {
         Board board = chessGame.getBoard();
-        Map<Coordinate, Square> squareLocations = board.getSquareLocations();
+        Map<Coordinate, Piece> squareLocations = board.getSquareLocations();
 
         printSquares(squareLocations);
     }
 
     // TODO: 뷰가 도메인에 직접적으로 의존하지 않도록 변경
-    private void printSquares(final Map<Coordinate, Square> squareLocations) {
+    private void printSquares(final Map<Coordinate, Piece> squareLocations) {
         StringBuilder allSquares = new StringBuilder();
         for (int i = 0; i < 8; i++) {
             StringBuilder oneRank = makeRank(squareLocations, i);
@@ -36,7 +36,7 @@ public final class OutputView {
     }
 
     private static StringBuilder makeRank(
-            final Map<Coordinate, Square> squareLocations,
+            final Map<Coordinate, Piece> squareLocations,
             final int rankNumber
     ) {
         StringBuilder rank = new StringBuilder();

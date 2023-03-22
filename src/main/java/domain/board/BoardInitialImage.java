@@ -1,6 +1,5 @@
 package domain.board;
 
-import domain.piece.Piece;
 import domain.piece.move.Coordinate;
 import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
@@ -9,8 +8,8 @@ import domain.piece.pawn.WhiteInitPawn;
 import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,7 @@ public final class BoardInitialImage {
     public static final int FILE_SIZE = 8;
     public static final int EMPTY_RANK_SIZE = 4;
 
-    private static final Map<Coordinate, Square> initializedBoardImage;
+    private static final Map<Coordinate, Piece> initializedBoardImage;
     private static Coordinate iterator;
 
     static {
@@ -44,18 +43,18 @@ public final class BoardInitialImage {
 
     private static void makeKingExistRank(final Color color) {
         List<Piece> frontPieces = List.of(
-                new Rook(), new Knight(), new Bishop(), new Queen(),
-                new King(), new Bishop(), new Knight(), new Rook()
+                new Rook(color), new Knight(color), new Bishop(color), new Queen(color),
+                new King(color), new Bishop(color), new Knight(color), new Rook(color)
         );
         for (Piece piece : frontPieces) {
-            initializedBoardImage.put(iterator, new Square(piece, color));
+            initializedBoardImage.put(iterator, piece);
             updateIterator();
         }
     }
 
     private static void makeWhitePawnExistRank() {
         for (int file = 0; file < FILE_SIZE; file++) {
-            initializedBoardImage.put(iterator, new Square(new WhiteInitPawn(), Color.WHITE));
+            initializedBoardImage.put(iterator, new WhiteInitPawn(Color.WHITE));
             updateIterator();
         }
     }
@@ -68,14 +67,14 @@ public final class BoardInitialImage {
 
     private static void makeEmptyRank() {
         for (int file = 0; file < FILE_SIZE; file++) {
-            initializedBoardImage.put(iterator, Square.ofEmptyPiece());
+            initializedBoardImage.put(iterator, Piece.ofEmpty());
             updateIterator();
         }
     }
 
     private static void makeBlackPawnExistRank() {
         for (int file = 0; file < FILE_SIZE; file++) {
-            initializedBoardImage.put(iterator, new Square(new BlackInitPawn(), Color.BLACK));
+            initializedBoardImage.put(iterator, new BlackInitPawn(Color.BLACK));
             updateIterator();
         }
     }
@@ -87,7 +86,7 @@ public final class BoardInitialImage {
         iterator = new Coordinate(updatedRow, updatedCol);
     }
 
-    public static Map<Coordinate, Square> getCachedBoard() {
+    public static Map<Coordinate, Piece> getCachedBoard() {
         return new HashMap<>(initializedBoardImage);
     }
 }

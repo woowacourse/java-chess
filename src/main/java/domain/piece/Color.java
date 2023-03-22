@@ -1,4 +1,4 @@
-package domain.square;
+package domain.piece;
 
 public enum Color {
 

@@ -1,12 +1,11 @@
 package view;
 
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 import domain.piece.sliding.Bishop;
 import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
 import domain.piece.pawn.Pawn;
-import domain.piece.Piece;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
 
@@ -27,17 +26,17 @@ public final class PieceTypeMapper {
         mapper.put(Pawn.class, "p");
     }
 
-    public static String getTarget(final Square square) {
+    public static String getTarget(final Piece piece) {
         String message = mapper.keySet().stream()
-                .filter(pieceType -> pieceType.isInstance(square.getPiece()))
+                .filter(pieceType -> pieceType.isInstance(piece))
                 .map(mapper::get)
                 .findAny()
                 .orElse(".");
-        return makeUpperCaseIfCampIsBlack(square, message);
+        return makeUpperCaseIfCampIsBlack(piece, message);
     }
 
-    private static String makeUpperCaseIfCampIsBlack(final Square square, final String message) {
-        if (square.getColor() != null && square.getColor().equals(Color.BLACK)) {
+    private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
+        if (piece.getColor() != null && piece.getColor().equals(Color.BLACK)) {
             return message.toUpperCase();
         }
         return message;

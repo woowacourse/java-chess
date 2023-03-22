@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.square.Color;
+import domain.piece.Color;
 
 public class Turn {
 

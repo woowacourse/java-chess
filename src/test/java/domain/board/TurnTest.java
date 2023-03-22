@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.square.Color;
+import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

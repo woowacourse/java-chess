@@ -5,7 +5,18 @@ import domain.piece.move.Coordinate;
 
 public abstract class Piece {
 
-    public boolean isReachableByRule(
+    private final Color color;
+
+    public Piece(final Color color) {
+        this.color = color;
+    }
+
+
+    public static Piece ofEmpty() {
+        return new EmptyPiece();
+    }
+
+    public boolean isMovable(
             final Coordinate start,
             final Coordinate end,
             final Situation situation
@@ -14,16 +25,16 @@ public abstract class Piece {
         return isReachableByRuleWhenMovingNotVariates(start, end);
     }
 
-    protected abstract boolean isReachableByRuleWhenMovingNotVariates(
-            final Coordinate start,
-            final Coordinate end
-    );
-
     private void validateIsNotSameColor(final Situation situation) {
         if (situation.meetColleague()) {
             throw new IllegalArgumentException("[ERROR] 같은 팀이 존재하는 곳으로 이동할 수 없습니다.");
         }
     }
+
+    protected abstract boolean isReachableByRuleWhenMovingNotVariates(
+            final Coordinate start,
+            final Coordinate end
+    );
 
     public boolean canJump() {
         return false;
@@ -39,5 +50,9 @@ public abstract class Piece {
 
     public double getPoint() {
         return 0;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

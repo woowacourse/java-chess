@@ -7,7 +7,9 @@ public enum Command {
 
     START("start", 1),
     END("end", 1),
-    MOVE("move", 3);
+    STATUS("status", 1),
+    MOVE("move", 3),
+    ;
 
     private final String message;
     private final int commandCount;
@@ -30,7 +32,8 @@ public enum Command {
     }
 
     public boolean isNotEnd() {
-        return this != Command.END;
+        return this != Command.END &&
+                this != Command.STATUS;
     }
 
     public boolean isMove() {

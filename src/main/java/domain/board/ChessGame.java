@@ -1,8 +1,8 @@
 package domain.board;
 
-import domain.square.Color;
+import domain.piece.Color;
 import domain.piece.move.Coordinate;
-import domain.square.Square;
+import domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +32,9 @@ public final class ChessGame {
 
     public void move(final Coordinate start, final Coordinate end) {
         validate(start, end);
-        Square findSquare = board.findSquare(start);
+        Piece findPiece = board.findSquare(start);
         board.replaceWithEmptySquare(start);
-        board.replaceSquare(end, findSquare);
+        board.replaceSquare(end, findPiece);
         turn.invert();
     }
 
@@ -46,8 +46,8 @@ public final class ChessGame {
     }
 
     private void validateTurn(final Coordinate start) {
-        Square findSquare = board.findSquare(start);
-        if (turn.isNotFor(findSquare.getColor())) {
+        Piece findPiece = board.findSquare(start);
+        if (turn.isNotFor(findPiece.getColor())) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }
@@ -66,8 +66,8 @@ public final class ChessGame {
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {
-        Square square = board.findSquare(start);
-        if (square.hasPieceCanJump() || isNotBlockedWhenCantReap(start, end)) {
+        Piece piece = board.findSquare(start);
+        if (piece.canJump() || isNotBlockedWhenCantReap(start, end)) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 해당 위치로 가는 길에 다른 기물이 존재합니다.");

@@ -18,6 +18,8 @@ class EmptyPieceTest {
         assertThat(emptyPiece.canJump()).isFalse();
         assertThat(emptyPiece.isKing()).isFalse();
         assertThat(emptyPiece.isPawn()).isFalse();
+        assertThat(emptyPiece.getColor()).isEqualTo(Color.NEUTRAL);
+        assertThat(emptyPiece.getPoint()).isEqualTo(0);
     }
 
     @Test
@@ -25,7 +27,7 @@ class EmptyPieceTest {
     void isReachableByRuleWhenExceptionalCase() {
         Piece emptyPiece = new EmptyPiece();
 
-        assertThatThrownBy(() -> emptyPiece.isReachableByRule(
+        assertThatThrownBy(() -> emptyPiece.isMovable(
                 new Coordinate(0, 0),
                 new Coordinate(1, 0),
                 Situation.NEUTRAL

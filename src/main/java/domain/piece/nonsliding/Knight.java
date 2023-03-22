@@ -1,9 +1,10 @@
 package domain.piece.nonsliding;
 
-import domain.piece.Piece;
 import domain.piece.move.Coordinate;
 import domain.piece.move.Direction;
 import domain.piece.move.Inclination;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public final class Knight extends Piece {
     );
 
     private static final double POINT = 2.5;
+
+    public Knight(final Color color) {
+        super(color);
+    }
 
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(

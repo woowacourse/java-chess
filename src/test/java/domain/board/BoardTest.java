@@ -7,8 +7,8 @@ import domain.piece.pawn.WhitePawn;
 import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -92,14 +92,14 @@ class BoardTest {
     @Test
     @DisplayName("폰은 점수가 1점이다")
     void pawnPointTest() {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         mockSquareLocations.put(
                 new Coordinate(0, 0),
-                new Square(new WhitePawn(), Color.WHITE)
+                new WhitePawn(Color.WHITE)
         );
         mockSquareLocations.put(
                 new Coordinate(1, 1),
-                new Square(new BlackPawn(), Color.BLACK)
+                new BlackPawn(Color.BLACK)
         );
 
         Board board = new Board(mockSquareLocations);
@@ -111,14 +111,14 @@ class BoardTest {
     @Test
     @DisplayName("나이트는 점수가 2.5점이다")
     void knightPointTest() {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         mockSquareLocations.put(
                 new Coordinate(0, 0),
-                new Square(new Knight(), Color.WHITE)
+                new Knight(Color.WHITE)
         );
         mockSquareLocations.put(
                 new Coordinate(1, 1),
-                new Square(new Knight(), Color.BLACK)
+               new Knight((Color.BLACK))
         );
 
         Board board = new Board(mockSquareLocations);
@@ -130,14 +130,14 @@ class BoardTest {
     @Test
     @DisplayName("비숍은 점수가 3점이다")
     void bishopPointTest() {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         mockSquareLocations.put(
                 new Coordinate(0, 0),
-                new Square(new Bishop(), Color.WHITE)
+                new Bishop(Color.WHITE)
         );
         mockSquareLocations.put(
                 new Coordinate(1, 1),
-                new Square(new Bishop(), Color.BLACK)
+                new Bishop(Color.BLACK)
         );
 
         Board board = new Board(mockSquareLocations);
@@ -149,14 +149,14 @@ class BoardTest {
     @Test
     @DisplayName("룩은 점수가 5점이다")
     void rookPointTest() {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         mockSquareLocations.put(
                 new Coordinate(0, 0),
-                new Square(new Rook(), Color.WHITE)
+                new Rook(Color.WHITE)
         );
         mockSquareLocations.put(
                 new Coordinate(1, 1),
-                new Square(new Rook(), Color.BLACK)
+                new Rook(Color.BLACK)
         );
 
         Board board = new Board(mockSquareLocations);
@@ -168,14 +168,14 @@ class BoardTest {
     @Test
     @DisplayName("퀸은 점수가 9점이다")
     void queenPointTest() {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         mockSquareLocations.put(
                 new Coordinate(0, 0),
-                new Square(new Queen(), Color.WHITE)
+                new Queen(Color.WHITE)
         );
         mockSquareLocations.put(
                 new Coordinate(1, 1),
-                new Square(new Queen(), Color.BLACK)
+                new Queen(Color.BLACK)
         );
 
         Board board = new Board(mockSquareLocations);
@@ -187,11 +187,11 @@ class BoardTest {
     @ParameterizedTest(name = "화이트 폰이 일렬로 {0}개 놓이는 경우 점수가 0.5씩 부여된다")
     @ValueSource(ints = {2, 3, 4, 5, 6, 7, 8})
     void whitePawnTestWhenStraightExist(final int pawnCount) {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         for (int i = 0; i < pawnCount; i++) {
             mockSquareLocations.put(
                     new Coordinate(i, 0),
-                    new Square(new WhitePawn(), Color.WHITE)
+                    new WhitePawn(Color.WHITE)
             );
         }
 
@@ -203,11 +203,11 @@ class BoardTest {
     @ParameterizedTest(name = "블랙 폰이 일렬로 {0}개 놓이는 경우 점수가 0.5씩 부여된다")
     @ValueSource(ints = {2, 3, 4, 5, 6, 7, 8})
     void blackPawnTestWhenStraightExist(final int pawnCount) {
-        Map<Coordinate, Square> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
         for (int i = 0; i < pawnCount; i++) {
             mockSquareLocations.put(
                     new Coordinate(i, 0),
-                    new Square(new BlackPawn(), Color.BLACK)
+                    new BlackPawn(Color.BLACK)
             );
         }
 

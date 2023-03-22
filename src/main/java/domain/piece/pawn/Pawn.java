@@ -2,14 +2,19 @@ package domain.piece.pawn;
 
 import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
+import domain.piece.Color;
 import domain.piece.Piece;
 
 public abstract class Pawn extends Piece {
 
     private static final double POINT = 1;
 
+    public Pawn(final Color color) {
+        super(color);
+    }
+
     @Override
-    public boolean isReachableByRule(
+    public boolean isMovable(
             final Coordinate start,
             final Coordinate end,
             final Situation situation

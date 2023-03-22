@@ -1,8 +1,9 @@
 package domain.piece.pawn;
 
-import domain.piece.Piece;
 import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
+import domain.piece.Color;
+import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +14,20 @@ class PawnTest {
     @Test
     @DisplayName("폰은 기본 상태를 가진다")
     void propertyTest() {
-        Piece whitePawn = new WhitePawn();
-        Piece blackPawn = new BlackPawn();
+        Piece whitePawn = new WhitePawn(Color.WHITE);
+        Piece blackPawn = new BlackPawn(Color.BLACK);
 
         assertThat(whitePawn.canJump()).isFalse();
         assertThat(whitePawn.isPawn()).isTrue();
+        assertThat(whitePawn.getPoint()).isEqualTo(1);
+        assertThat(whitePawn.isKing()).isFalse();
+        assertThat(whitePawn.getColor()).isEqualTo(Color.WHITE);
 
         assertThat(blackPawn.canJump()).isFalse();
         assertThat(blackPawn.isPawn()).isTrue();
+        assertThat(blackPawn.getPoint()).isEqualTo(1);
+        assertThat(blackPawn.isKing()).isFalse();
+        assertThat(blackPawn.getColor()).isEqualTo(Color.BLACK);
     }
 
     @Test
@@ -28,9 +35,9 @@ class PawnTest {
     void isReachableByRuleUp() {
         Coordinate startCoordinate = new Coordinate(1, 0);
         Coordinate endCoordinate = new Coordinate(2, 0);
-        Pawn pawn = new WhitePawn();
+        Pawn pawn = new WhitePawn(Color.WHITE);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -38,9 +45,9 @@ class PawnTest {
     void isReachableByRuleUpTwo() {
         Coordinate startCoordinate = new Coordinate(1, 0);
         Coordinate endCoordinate = new Coordinate(3, 0);
-        Pawn pawn = new WhiteInitPawn();
+        Pawn pawn = new WhiteInitPawn(Color.WHITE);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -48,10 +55,10 @@ class PawnTest {
     void isReachableByRuleUpThree() {
         Coordinate startCoordinate = new Coordinate(1, 0);
         Coordinate endCoordinate = new Coordinate(4, 0);
-        Pawn pawn = new WhitePawn();
+        Pawn pawn = new WhitePawn(Color.WHITE);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
 
     }
 
@@ -60,9 +67,9 @@ class PawnTest {
     void isReachableByRuleCantDown() {
         Coordinate startCoordinate = new Coordinate(2, 0);
         Coordinate endCoordinate = new Coordinate(1, 0);
-        Pawn pawn = new WhitePawn();
+        Pawn pawn = new WhitePawn(Color.WHITE);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -70,9 +77,9 @@ class PawnTest {
     void isReachableByRuleDown() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(5, 0);
-        Pawn pawn = new BlackPawn();
+        Pawn pawn = new BlackPawn(Color.BLACK);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -80,9 +87,9 @@ class PawnTest {
     void isReachableByRuleDownTwo() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(4, 0);
-        Pawn pawn = new BlackInitPawn();
+        Pawn pawn = new BlackInitPawn(Color.BLACK);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -90,10 +97,10 @@ class PawnTest {
     void isReachableByRuleDownThree() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(3, 0);
-        Pawn pawn = new BlackPawn();
+        Pawn pawn = new BlackPawn(Color.BLACK);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -101,9 +108,9 @@ class PawnTest {
     void isReachableByRuleCantUp() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(7, 0);
-        Pawn pawn = new BlackPawn();
+        Pawn pawn = new BlackPawn(Color.BLACK);
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -111,10 +118,10 @@ class PawnTest {
     void isReachableByRuleCantStraight() {
         Coordinate startCoordinate = new Coordinate(6, 0);
         Coordinate endCoordinate = new Coordinate(6, 1);
-        Pawn blackPawn = new BlackPawn();
-        Pawn whitePawn = new WhitePawn();
+        Pawn blackPawn = new BlackPawn(Color.BLACK);
+        Pawn whitePawn = new WhitePawn(Color.WHITE);
 
-        assertThat(blackPawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
-        assertThat(whitePawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(blackPawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(whitePawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 }

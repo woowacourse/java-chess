@@ -1,9 +1,10 @@
 package domain.piece.sliding;
 
-import domain.piece.Piece;
 import domain.piece.move.Coordinate;
 import domain.piece.move.Direction;
 import domain.piece.move.Inclination;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public final class Bishop extends Piece {
     ));
 
     private static final double POINT = 3;
+
+    public Bishop(final Color color) {
+        super(color);
+    }
 
     @Override
     public boolean isReachableByRuleWhenMovingNotVariates(

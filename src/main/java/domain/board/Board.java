@@ -4,8 +4,8 @@ import domain.piece.move.Coordinate;
 import domain.piece.move.Situation;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.WhitePawn;
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,48 +14,44 @@ public final class Board {
 
     private static final int KING_COUNT = 2;
 
-    private final Map<Coordinate, Square> squareLocations;
+    private final Map<Coordinate, Piece> squareLocations;
 
     public Board() {
         this.squareLocations = BoardInitialImage.getCachedBoard();
     }
 
-    public Board(final Map<Coordinate, Square> squareLocations) {
+    public Board(final Map<Coordinate, Piece> squareLocations) {
         this.squareLocations = squareLocations;
     }
 
-    public Square findSquare(final Coordinate target) {
+    public Piece findSquare(final Coordinate target) {
         return squareLocations.get(target);
     }
 
-    public void replaceSquare(final Coordinate target, final Square square) {
-        if (square.getPiece().isPawn()) {
-            replaceSquareIfIsPawn(target, square);
+    public void replaceSquare(final Coordinate target, final Piece piece) {
+        if (piece.isPawn()) {
+            replaceSquareIfIsPawn(target, piece);
             return;
         }
-        squareLocations.put(target, square);
+        squareLocations.put(target, piece);
     }
 
-    private void replaceSquareIfIsPawn(final Coordinate target, final Square square) {
-        if (square.getColor() == Color.BLACK) {
-            squareLocations.put(target, new Square(new BlackPawn(), Color.BLACK));
+    private void replaceSquareIfIsPawn(final Coordinate target, final Piece piece) {
+        if (piece.getColor() == Color.BLACK) {
+            squareLocations.put(target, new BlackPawn(Color.BLACK));
             return;
         }
-        squareLocations.put(target, new Square(new WhitePawn(), Color.WHITE));
+        squareLocations.put(target, new WhitePawn(Color.WHITE));
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
-        squareLocations.put(target, Square.ofEmptyPiece());
+        squareLocations.put(target, Piece.ofEmpty());
     }
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-
-        return squareLocations.get(start).isPieceMovable(
-                start,
-                end,
-                Situation.of(findSquare(start), findSquare(end))
-        );
+        Situation situation = Situation.of(findSquare(start), findSquare(end));
+        return findSquare(start).isMovable(start, end, situation);
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {
@@ -73,7 +69,7 @@ public final class Board {
     private double collectPurePointFor(final Color color) {
         return squareLocations.values().stream()
                 .filter(square -> square.getColor() == color)
-                .map(Square::getPoint)
+                .map(Piece::getPoint)
                 .reduce(Double::sum)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 보드가 초기화되지 않아 점수를 계산할 수 없습니다"));
     }
@@ -91,7 +87,7 @@ public final class Board {
     private Map<Integer, Long> makePawnCountForEachFile(final Color color) {
         return squareLocations.entrySet().stream()
                 .filter(entry -> entry.getValue().getColor() == color)
-                .filter(entry -> entry.getValue().hasPawn())
+                .filter(entry -> entry.getValue().isPawn())
                 .collect(Collectors.groupingBy(entry -> entry.getKey().getCol(), Collectors.counting()));
     }
 
@@ -102,11 +98,11 @@ public final class Board {
 
     public boolean allKingAlive() {
         return squareLocations.values().stream()
-                .filter(Square::hasKing)
+                .filter(Piece::isKing)
                 .count() == KING_COUNT;
     }
 
-    public Map<Coordinate, Square> getSquareLocations() {
+    public Map<Coordinate, Piece> getSquareLocations() {
         return squareLocations;
     }
 }

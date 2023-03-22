@@ -2,8 +2,8 @@ package domain.piece.move;
 
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.WhitePawn;
-import domain.square.Color;
-import domain.square.Square;
+import domain.piece.Color;
+import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,30 +14,30 @@ class SituationTest {
     @Test
     @DisplayName("컬러가 다른 경우, ENEMY가 반환된다")
     void ofTestEnemy() {
-        Square square = new Square(new BlackPawn(), Color.BLACK);
-        Square otherSquare = new Square(new WhitePawn(), Color.WHITE);
+        Piece piece = new BlackPawn(Color.BLACK);
+        Piece otherPiece = new WhitePawn(Color.WHITE);
 
-        assertThat(Situation.of(square, otherSquare))
+        assertThat(Situation.of(piece, otherPiece))
                 .isEqualTo(Situation.ENEMY);
     }
 
     @Test
     @DisplayName("컬러가 같은 경우, COLLEAGUE가 반환된다")
     void ofTestColleague() {
-        Square square = new Square(new BlackPawn(), Color.WHITE);
-        Square otherSquare = new Square(new WhitePawn(), Color.WHITE);
+        Piece piece = new BlackPawn(Color.BLACK);
+        Piece otherPiece = new BlackPawn(Color.BLACK);
 
-        assertThat(Situation.of(square, otherSquare))
+        assertThat(Situation.of(piece, otherPiece))
                 .isEqualTo(Situation.COLLEAGUE);
     }
 
     @Test
     @DisplayName("상대가 색이 없는 경우, NEUTRAL가 반환된다")
     void ofTestNeutral() {
-        Square square = new Square(new BlackPawn(), Color.BLACK);
-        Square otherSquare = new Square(new WhitePawn(), Color.NEUTRAL);
+        Piece piece = new BlackPawn(Color.BLACK);
+        Piece otherPiece = new WhitePawn(Color.NEUTRAL);
 
-        assertThat(Situation.of(square, otherSquare))
+        assertThat(Situation.of(piece, otherPiece))
                 .isEqualTo(Situation.NEUTRAL);
     }
 }
