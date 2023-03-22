@@ -1,6 +1,6 @@
-package chessgame;
+package chessgame.domain.piece;
 
-import static chessgame.PointFixture.*;
+import static chessgame.domain.point.PointFixture.*;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chessgame.domain.Team;
-import chessgame.domain.piece.Rook;
 import chessgame.domain.point.Points;
 
 class RookTest {

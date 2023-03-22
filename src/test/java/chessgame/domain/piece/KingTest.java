@@ -1,6 +1,6 @@
-package chessgame;
+package chessgame.domain.piece;
 
-import static chessgame.PointFixture.*;
+import static chessgame.domain.point.PointFixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.List;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chessgame.domain.Team;
-import chessgame.domain.piece.King;
 import chessgame.domain.point.Points;
 
 public class KingTest {

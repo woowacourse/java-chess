@@ -1,17 +1,12 @@
-package chessgame;
+package chessgame.domain.point;
 
-import static chessgame.PointFixture.*;
+import static chessgame.domain.point.PointFixture.*;
 
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import chessgame.domain.point.File;
-import chessgame.domain.point.Point;
-import chessgame.domain.point.Points;
-import chessgame.domain.point.Rank;
 
 class PointTest {
 
@@ -65,6 +60,7 @@ class PointTest {
     }
 
     @Test
-    void isInitialPoint() {Assertions.assertThat(A1.isInitialPoint(Rank.ONE)).isTrue();
+    void isInitialPoint() {
+        Assertions.assertThat(A1.isInitialPoint(Rank.ONE)).isTrue();
     }
 }

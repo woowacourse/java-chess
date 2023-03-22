@@ -1,6 +1,6 @@
 package chessgame.domain.point;
 
-import static chessgame.PointFixture.*;
+import static chessgame.domain.point.PointFixture.*;
 
 import java.util.List;
 
