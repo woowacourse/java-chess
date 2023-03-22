@@ -44,19 +44,12 @@ public class RowPieces implements Comparable<RowPieces> {
         return rowPieces.pieces.get(FIRST_PIECE_INDEX);
     }
     
-    public boolean isSameCoordinate(Coordinate coordinate) {
+    public boolean containsSameCoordinate(Coordinate coordinate) {
         return pieces.stream()
                 .anyMatch(piece -> piece.isSameCoordinate(coordinate));
     }
     
-    public boolean isMovable(RowPieces targetRowPieces, Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
-        Piece sourcePiece = findPieceByCoordinate(sourceCoordinate);
-        Piece destinationPiece = targetRowPieces.findPieceByCoordinate(destinationCoordinate);
-    
-        return sourcePiece.isMovable(destinationPiece);
-    }
-    
-    private Piece findPieceByCoordinate(Coordinate coordinate) {
+    Piece findPieceByCoordinate(Coordinate coordinate) {
         return pieces.stream()
                 .filter(piece -> piece.isSameCoordinate(coordinate))
                 .findFirst()
@@ -65,11 +58,6 @@ public class RowPieces implements Comparable<RowPieces> {
     
     public boolean isPieceByCoordinateNotEmpty(Coordinate researchCoordinate) {
         return !findPieceByCoordinate(researchCoordinate).isSameTeam(Team.EMPTY);
-    }
-    
-    public boolean isPieceByCoordinateKnight(Coordinate coordinate) {
-        return findPieceByCoordinate(coordinate)
-                .isKnight();
     }
     
     public void move(
@@ -90,10 +78,6 @@ public class RowPieces implements Comparable<RowPieces> {
     
     private Piece createEmpty(Coordinate coordinate) {
         return new Empty(Team.EMPTY, coordinate);
-    }
-    
-    public boolean isCorrectOrderTeam(Coordinate coordinate, Team currentOrderTeam) {
-        return findPieceByCoordinate(coordinate).isSameTeam(currentOrderTeam);
     }
     
     public int row() {

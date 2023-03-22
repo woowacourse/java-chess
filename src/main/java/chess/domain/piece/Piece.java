@@ -40,7 +40,7 @@ public abstract class Piece {
     }
     
     protected Distances subtractCoordinate(Piece targetPiece) {
-        return this.coordinate.calculateCoordinateDistance(targetPiece.coordinate);
+        return this.coordinate.subtractCoordinate(targetPiece.coordinate);
     }
     
     protected boolean isDifferentTeam(Piece otherPiece) {

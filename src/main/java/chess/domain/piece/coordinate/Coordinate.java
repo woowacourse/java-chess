@@ -57,7 +57,7 @@ public class Coordinate {
         return this.row.compareTo(otherCoordinate.row);
     }
     
-    public Distances calculateCoordinateDistance(Coordinate otherCoordinate) {
+    public Distances subtractCoordinate(Coordinate otherCoordinate) {
         int subtractedColumnDistance = this.column.subtract(otherCoordinate.column);
         int subtractedRowDistance = this.row.subtract(otherCoordinate.row);
         return new Distances(subtractedColumnDistance, subtractedRowDistance);

@@ -17,7 +17,7 @@ class RowTest {
         assertThatNoException()
                 .isThrownBy(() -> Row.from(row));
     }
-    
+
     @ParameterizedTest(name = "row : {0}")
     @ValueSource(ints = {0, 9})
     void row가_1부터_8까지의_범위를_벗어나면_예외_처리(int row) {

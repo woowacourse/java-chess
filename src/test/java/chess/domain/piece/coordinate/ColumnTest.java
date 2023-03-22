@@ -17,7 +17,7 @@ class ColumnTest {
         assertThatNoException()
                 .isThrownBy(() -> Column.from(column));
     }
-    
+
     @ParameterizedTest(name = "column : {0}")
     @ValueSource(chars = {'`', 'i', 'z'})
     void column가_a부터_h까지의_범위를_벗어나면_예외_처리(char column) {

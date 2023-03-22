@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 
@@ -11,7 +12,7 @@ import java.util.stream.IntStream;
 public class ChessBoard {
     private static final int MIN_ROW_NUMBER = 1;
     private static final int MAX_ROW_NUMBER = 8;
-    private static final boolean FIRST_TRY = false;
+    private static final boolean NOT_FIRST_TRY = false;
     
     private final List<RowPieces> chessBoard;
     
@@ -40,38 +41,40 @@ public class ChessBoard {
     
     private RowPieces findRowPiecesByCoordinate(Coordinate coordinate) {
         return chessBoard.stream()
-                .filter(rowPieces -> rowPieces.isSameCoordinate(coordinate))
+                .filter(rowPieces -> rowPieces.containsSameCoordinate(coordinate))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 좌표는 존재하지 않습니다."));
     }
     
     private void validateMovableSourcePiece(Coordinate sourceCoordinate, Coordinate destinationCoordinate, Team currentOrderTeam) {
-        RowPieces rowPiecesContainsSourcePiece = findRowPiecesByCoordinate(sourceCoordinate);
-        RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByCoordinate(destinationCoordinate);
+        Piece sourcePiece = findPieceByCoordinate(sourceCoordinate);
+        Piece destinationPiece = findPieceByCoordinate(destinationCoordinate);
         
-        validateCurrentOrderTeam(sourceCoordinate, currentOrderTeam, rowPiecesContainsSourcePiece);
-        validateMovable(sourceCoordinate, destinationCoordinate, rowPiecesContainsSourcePiece, rowPiecesContainsDestinationPiece);
-        validateRoute(sourceCoordinate, destinationCoordinate, rowPiecesContainsSourcePiece);
+        validateCurrentOrderTeam(sourcePiece, currentOrderTeam);
+        validateMovable(sourcePiece, destinationPiece);
+        validateRoute(sourceCoordinate, destinationCoordinate, sourcePiece);
     }
     
-    private void validateCurrentOrderTeam(Coordinate sourceCoordinate, Team currentOrderTeam, RowPieces rowPiecesContainsSourcePiece) {
-        boolean isCorrectOrderTeam = rowPiecesContainsSourcePiece.isCorrectOrderTeam(sourceCoordinate, currentOrderTeam);
-        if (!isCorrectOrderTeam) {
+    private Piece findPieceByCoordinate(Coordinate coordinate) {
+        return findRowPiecesByCoordinate(coordinate)
+                .findPieceByCoordinate(coordinate);
+    }
+    
+    private void validateCurrentOrderTeam(Piece sourcePiece, Team currentOrderTeam) {
+        if (!sourcePiece.isSameTeam(currentOrderTeam)) {
             throw new IllegalArgumentException("해당 기물이 속한 팀의 순서가 아닙니다. 다시 입력해주세요.");
         }
     }
     
-    private void validateMovable(Coordinate sourceCoordinate, Coordinate destinationCoordinate, RowPieces rowPiecesContainsSourcePiece, RowPieces rowPiecesContainsDestinationPiece) {
-        boolean isMovablePiece = rowPiecesContainsSourcePiece
-                .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        if (!isMovablePiece) {
+    private void validateMovable(Piece sourcePiece, Piece destinationPiece) {
+        if (!sourcePiece.isMovable(destinationPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 목적지입니다. 다시 입력해주세요.");
         }
     }
     
-    private void validateRoute(Coordinate sourceCoordinate, Coordinate destinationCoordinate, RowPieces rowPiecesContainsSourcePiece) {
-        boolean isEmptyRoute = isEmptyRoute(FIRST_TRY, sourceCoordinate, destinationCoordinate);
-        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByCoordinateKnight(sourceCoordinate);
+    private void validateRoute(Coordinate sourceCoordinate, Coordinate destinationCoordinate, Piece sourcePiece) {
+        boolean isEmptyRoute = isEmptyRoute(NOT_FIRST_TRY, sourceCoordinate, destinationCoordinate);
+        boolean isSourcePieceKnight = sourcePiece.isKnight();
         if (!isEmptyRoute && !isSourcePieceKnight) {
             throw new IllegalArgumentException("목적지까지의 경로에 기물이 있어서 목적지로 갈 수 없습니다. 다시 입력해주세요.");
         }

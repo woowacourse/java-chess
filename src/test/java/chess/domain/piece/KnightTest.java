@@ -19,7 +19,7 @@ class KnightTest {
         Piece knight = new Knight(Team.WHITE, new Coordinate('a', 1));
         assertThat(PieceSymbolConverter.convert(knight.pieceType())).isEqualTo("n");
     }
-    
+
     @ParameterizedTest(name = "targetRow : {0}, targetColumn : {1}, expectedResult : {2}")
     @CsvSource(value = {"2,c,true", "3,b,true", "2,b,false", "2,a,false", "1,a,false"})
     void 도착지를_제시하고_태생적으로_이동할_수_있는지_판단한다(int targetRow, char targetColumn, boolean expectedResult) {
@@ -27,7 +27,7 @@ class KnightTest {
         Piece targetPiece = new Empty(Team.EMPTY, new Coordinate(targetColumn, targetRow));
         assertThat(knight.isMovable(targetPiece)).isEqualTo(expectedResult);
     }
-    
+
     @ParameterizedTest(name = "targetTeam : {0}, expectedResult : {1}")
     @CsvSource(value = {"WHITE,false","EMPTY,true","BLACK,true"})
     void 도착지에_같은_팀이_있으면_이동할_수_없다(Team targetTeam, boolean expectedResult) {
