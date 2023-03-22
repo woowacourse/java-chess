@@ -13,14 +13,13 @@ import static chess.infrastructure.persistence.JdbcConnectionUtil.connection;
 public class ChessGameDao {
 
     public void save(final ChessGameEntity chessGameEntity) {
-        final String sql = "INSERT INTO chess_game(id, state, turn, winner) VALUES (?, ?, ?, ?)";
+        final String sql = "INSERT INTO chess_game(id,  turn, winner) VALUES (?, ?, ?)";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             final Long id = getId();
             preparedStatement.setString(1, id.toString());
-            preparedStatement.setString(2, chessGameEntity.state());
-            preparedStatement.setString(3, chessGameEntity.turn());
-            preparedStatement.setString(4, chessGameEntity.winner());
+            preparedStatement.setString(2, chessGameEntity.turn());
+            preparedStatement.setString(3, chessGameEntity.winner());
             preparedStatement.executeUpdate();
             chessGameEntity.setId(id);
         } catch (final SQLException e) {
@@ -54,8 +53,7 @@ public class ChessGameDao {
             return Optional.of(new ChessGameEntity(
                     resultSet.getObject(1, Long.class),
                     resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4)
+                    resultSet.getString(3)
             ));
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -63,12 +61,11 @@ public class ChessGameDao {
     }
 
     public void update(final ChessGameEntity chessGameEntity) {
-        final String sql = "UPDATE chess_game SET state = ?,turn = ?, winner = ? ";
+        final String sql = "UPDATE chess_game SET turn = ?, winner = ? ";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, chessGameEntity.state());
-            preparedStatement.setString(2, chessGameEntity.turn());
-            preparedStatement.setString(3, chessGameEntity.winner());
+            preparedStatement.setString(1, chessGameEntity.turn());
+            preparedStatement.setString(2, chessGameEntity.winner());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

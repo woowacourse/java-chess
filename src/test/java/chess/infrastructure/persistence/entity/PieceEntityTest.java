@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.movestrategy.KingMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.position.PiecePosition;
+import chess.infrastructure.persistence.mapper.PieceMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,7 +25,7 @@ class PieceEntityTest {
         final Piece piece = new Piece(1L, PiecePosition.of("d2"), new KingMovementStrategy(Color.WHITE));
 
         // when
-        final PieceEntity pieceEntity = PieceEntity.fromDomain(piece, 2L);
+        final PieceEntity pieceEntity = PieceMapper.fromDomain(piece, 2L);
 
         // then
         assertAll(
@@ -42,7 +43,7 @@ class PieceEntityTest {
         final PieceEntity pieceEntity = new PieceEntity(1L, 4, 'f', "BLACK", BlackPawnMovementStrategy.class.getName(), 1L);
 
         // when
-        final Piece piece = pieceEntity.toDomain();
+        final Piece piece = PieceMapper.toDomain(pieceEntity);
 
         // then
         assertAll(

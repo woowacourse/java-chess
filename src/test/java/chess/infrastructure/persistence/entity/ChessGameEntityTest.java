@@ -4,6 +4,7 @@ import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.EndGame;
 import chess.domain.piece.Color;
+import chess.infrastructure.persistence.mapper.ChessGameMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,12 +26,11 @@ class ChessGameEntityTest {
         final ChessGame chessGame = new ChessGame(new ChessBoardFactory().create());
 
         // when
-        final ChessGameEntity chessGameEntity = ChessGameEntity.fromDomain(chessGame);
+        final ChessGameEntity chessGameEntity = ChessGameMapper.fromDomain(chessGame);
 
         // then
         assertAll(
                 () -> assertThat(chessGameEntity.id()).isNull(),
-                () -> assertThat(chessGameEntity.state()).isEqualTo("MovePiece"),
                 () -> assertThat(chessGameEntity.turn()).isEqualTo("WHITE"),
                 () -> assertThat(chessGameEntity.winner()).isNull()
         );
@@ -39,10 +39,10 @@ class ChessGameEntityTest {
     @Test
     void ChessGame_을_생성할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, "EndGame", null, "BLACK");
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, null, "BLACK");
 
         // when
-        final ChessGame chessGame = chessGameEntity.toDomain(new ArrayList<>());
+        final ChessGame chessGame = ChessGameMapper.toDomain(chessGameEntity, new ArrayList<>());
 
         // then
         assertAll(

@@ -1,6 +1,5 @@
 package chess.infrastructure.persistence.dao;
 
-import chess.domain.game.state.MovePiece;
 import chess.domain.piece.Color;
 import chess.infrastructure.persistence.entity.ChessGameEntity;
 import org.junit.jupiter.api.AfterEach;
@@ -34,7 +33,7 @@ class ChessGameDaoTest {
     @Test
     void ChessGameEntity_를_저장한다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, MovePiece.class.getSimpleName(), Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, Color.WHITE.name(), null);
 
         // when
         chessGameDao.save(chessGameEntity);
@@ -43,7 +42,6 @@ class ChessGameDaoTest {
         final ChessGameEntity byId = chessGameDao.findById(chessGameEntity.id()).get();
         assertAll(
                 () -> assertThat(byId.id()).isNotNull(),
-                () -> assertThat(byId.state()).isEqualTo(chessGameEntity.state()),
                 () -> assertThat(byId.turn()).isEqualTo(chessGameEntity.turn()),
                 () -> assertThat(byId.winner()).isEqualTo(chessGameEntity.winner())
         );
@@ -52,18 +50,17 @@ class ChessGameDaoTest {
     @Test
     void 업데이트_할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, MovePiece.class.getSimpleName(), Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, Color.WHITE.name(), null);
         chessGameDao.save(chessGameEntity);
 
         // when
-        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), MovePiece.class.getSimpleName(), Color.BLACK.name(), null);
+        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), Color.BLACK.name(), null);
         chessGameDao.update(update);
 
         // then
         final ChessGameEntity result = chessGameDao.findById(update.id()).get();
         Assertions.assertAll(
                 () -> assertThat(result.id()).isEqualTo(update.id()),
-                () -> assertThat(result.state()).isEqualTo(chessGameEntity.state()),
                 () -> assertThat(result.turn()).isEqualTo("BLACK"),
                 () -> assertThat(result.winner()).isNull()
         );

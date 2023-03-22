@@ -13,6 +13,7 @@ import chess.domain.piece.movestrategy.pawn.WhitePawnMovementStrategy;
 import chess.domain.piece.position.PiecePosition;
 import chess.infrastructure.persistence.entity.ChessGameEntity;
 import chess.infrastructure.persistence.entity.PieceEntity;
+import chess.infrastructure.persistence.mapper.PieceMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -40,7 +42,7 @@ class PieceDaoTest {
     void setUp() {
         pieceDao.deleteAll();
         chessGameDao.deleteAll();
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", "WHITE", null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "WHITE", null);
         chessGameDao.save(chessGameEntity);
         chessGameId = chessGameEntity.id();
     }
@@ -56,7 +58,7 @@ class PieceDaoTest {
         // given
         final List<PieceEntity> pieceEntities = new ChessBoardFactory().create().pieces()
                 .stream()
-                .map(it -> PieceEntity.fromDomain(it, chessGameId))
+                .map(it -> PieceMapper.fromDomain(it, chessGameId))
                 .collect(Collectors.toList());
 
         // when & then
@@ -71,7 +73,7 @@ class PieceDaoTest {
         // when
         final Map<Class<?>, List<Piece>> pieceTypeMap = pieceDao.findByAllChessGameId(chessGameId)
                 .stream()
-                .map(PieceEntity::toDomain)
+                .map(PieceMapper::toDomain)
                 .collect(Collectors.groupingBy(it -> it.pieceMovementStrategy().getClass()));
 
         // then
@@ -101,13 +103,12 @@ class PieceDaoTest {
     @Test
     void id를_설정한_체로_저장할_수_있다() {
         // given
-        final List<PieceEntity> pieceEntities = List.of(
+        final List<PieceEntity> pieceEntities = Stream.of(
                         new Piece(1L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE)),
                         new Piece(10L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE)),
                         new Piece(124L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE))
                 )
-                .stream()
-                .map(it -> PieceEntity.fromDomain(it, chessGameId))
+                .map(it -> PieceMapper.fromDomain(it, chessGameId))
                 .collect(Collectors.toList());
 
         // when

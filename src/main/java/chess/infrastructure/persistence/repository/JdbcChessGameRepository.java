@@ -7,6 +7,8 @@ import chess.infrastructure.persistence.dao.ChessGameDao;
 import chess.infrastructure.persistence.dao.PieceDao;
 import chess.infrastructure.persistence.entity.ChessGameEntity;
 import chess.infrastructure.persistence.entity.PieceEntity;
+import chess.infrastructure.persistence.mapper.ChessGameMapper;
+import chess.infrastructure.persistence.mapper.PieceMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,29 +27,29 @@ public class JdbcChessGameRepository implements ChessGameRepository {
     @Override
     public ChessGame save(final ChessGame chessGame) {
         final List<Piece> pieces = chessGame.pieces();
-        final ChessGameEntity chessGameEntity = ChessGameEntity.fromDomain(chessGame);
+        final ChessGameEntity chessGameEntity = ChessGameMapper.fromDomain(chessGame);
         chessGameDao.save(chessGameEntity);
         final List<PieceEntity> pieceEntities = pieces.stream()
-                .map(it -> PieceEntity.fromDomain(it, chessGameEntity.id()))
+                .map(it -> PieceMapper.fromDomain(it, chessGameEntity.id()))
                 .collect(Collectors.toList());
         pieceDao.saveAll(pieceEntities);
-        return chessGameEntity.toDomain(pieceEntities);
+        return ChessGameMapper.toDomain(chessGameEntity, pieceEntities);
     }
 
     @Override
     public Optional<ChessGame> findById(final Long id) {
         final List<PieceEntity> byAllChessGameId = pieceDao.findByAllChessGameId(id);
         return chessGameDao.findById(id)
-                .map(it -> it.toDomain(byAllChessGameId));
+                .map(it -> ChessGameMapper.toDomain(it, byAllChessGameId));
     }
 
     @Override
     public void update(final ChessGame chessGame) {
-        chessGameDao.update(ChessGameEntity.fromDomain(chessGame));
+        chessGameDao.update(ChessGameMapper.fromDomain(chessGame));
         pieceDao.deleteAllByChessGameId(chessGame.id());
-        final List<PieceEntity> pieceEntities = chessGame.pieces().stream()
-                .map(it -> PieceEntity.fromDomain(it, chessGame.id()))
-                .collect(Collectors.toList());
-        pieceDao.saveAllWithId(pieceEntities);
+        pieceDao.saveAllWithId(chessGame.pieces()
+                .stream()
+                .map(it -> PieceMapper.fromDomain(it, chessGame.id()))
+                .collect(Collectors.toList()));
     }
 }
