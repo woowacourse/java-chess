@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.model.Color;
 import chess.model.Type;
-import chess.model.board.DefaultType;
+import chess.model.piece.DefaultType;
 import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
 import java.util.Arrays;

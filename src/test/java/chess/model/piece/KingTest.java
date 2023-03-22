@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import static chess.model.board.DefaultColor.EMPTY;
+import static chess.model.piece.DefaultColor.EMPTY;
 import static chess.model.piece.PieceFixture.WHITE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 

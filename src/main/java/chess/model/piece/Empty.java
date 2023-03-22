@@ -1,8 +1,6 @@
 package chess.model.piece;
 
 import chess.model.Color;
-import chess.model.board.DefaultColor;
-import chess.model.board.DefaultType;
 import chess.model.position.Distance;
 
 public class Empty extends Piece {

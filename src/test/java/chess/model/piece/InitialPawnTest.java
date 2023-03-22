@@ -4,7 +4,6 @@ import static chess.model.piece.PieceFixture.BLACK_INITIAL_PAWN;
 import static chess.model.piece.PieceFixture.WHITE_INITIAL_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.board.DefaultColor;
 import chess.model.position.Distance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

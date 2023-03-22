@@ -1,7 +1,6 @@
 package chess.model;
 
 import chess.model.board.Board;
-import chess.model.board.Turn;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Map;
