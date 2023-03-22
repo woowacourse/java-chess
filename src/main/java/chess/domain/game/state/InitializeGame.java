@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Turn;
@@ -9,7 +9,7 @@ import chess.domain.piece.position.PiecePosition;
 import java.util.List;
 import java.util.Map;
 
-public class InitializeGame implements ChessGameStep {
+public class InitializeGame implements ChessGameState {
 
     private final ChessBoard chessBoard;
 
@@ -23,17 +23,17 @@ public class InitializeGame implements ChessGameStep {
     }
 
     @Override
-    public ChessGameStep initialize() {
+    public ChessGameState initialize() {
         return new MovePiece(chessBoard, new Turn(Color.WHITE));
     }
 
     @Override
-    public ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination) {
+    public ChessGameState movePiece(final PiecePosition source, final PiecePosition destination) {
         throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
     }
 
     @Override
-    public ChessGameStep end() {
+    public ChessGameState end() {
         throw new IllegalArgumentException("아직 게임이 초기화되지 않았습니다.");
     }
 

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.strategy.KingMovementStrategy;
-import chess.domain.piece.strategy.RookMovementStrategy;
+import chess.domain.piece.movestrategy.KingMovementStrategy;
+import chess.domain.piece.movestrategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

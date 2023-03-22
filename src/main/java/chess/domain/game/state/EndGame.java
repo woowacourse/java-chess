@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -7,7 +7,7 @@ import chess.domain.piece.position.PiecePosition;
 import java.util.List;
 import java.util.Map;
 
-public class EndGame implements ChessGameStep {
+public class EndGame implements ChessGameState {
 
     private final Color winColor;
 
@@ -21,17 +21,17 @@ public class EndGame implements ChessGameStep {
     }
 
     @Override
-    public ChessGameStep initialize() {
+    public ChessGameState initialize() {
         throw new IllegalStateException("이미 종료된 상태입니다.");
     }
 
     @Override
-    public ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination) {
+    public ChessGameState movePiece(final PiecePosition source, final PiecePosition destination) {
         throw new IllegalStateException("이미 종료된 상태입니다.");
     }
 
     @Override
-    public ChessGameStep end() {
+    public ChessGameState end() {
         throw new IllegalStateException("이미 종료된 상태입니다.");
     }
 

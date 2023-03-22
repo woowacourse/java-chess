@@ -1,10 +1,10 @@
-package chess.domain.piece.strategy.pawn;
+package chess.domain.piece.movestrategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.strategy.RookMovementStrategy;
+import chess.domain.piece.movestrategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

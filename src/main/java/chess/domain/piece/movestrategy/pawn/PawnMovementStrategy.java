@@ -1,11 +1,11 @@
-package chess.domain.piece.strategy.pawn;
+package chess.domain.piece.movestrategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.strategy.AbstractPieceMovementStrategy;
+import chess.domain.piece.movestrategy.AbstractPieceMovementStrategy;
 
 public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 

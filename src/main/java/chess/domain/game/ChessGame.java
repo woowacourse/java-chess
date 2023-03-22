@@ -1,6 +1,8 @@
 package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.game.state.ChessGameState;
+import chess.domain.game.state.InitializeGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
@@ -10,7 +12,7 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private ChessGameStep step;
+    private ChessGameState step;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.step = new InitializeGame(chessBoard);

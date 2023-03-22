@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Turn;
@@ -9,7 +9,7 @@ import chess.domain.piece.position.PiecePosition;
 import java.util.List;
 import java.util.Map;
 
-public class MovePiece implements ChessGameStep {
+public class MovePiece implements ChessGameState {
 
     private final ChessBoard chessBoard;
     private final Turn turn;
@@ -25,18 +25,18 @@ public class MovePiece implements ChessGameStep {
     }
 
     @Override
-    public ChessGameStep initialize() {
+    public ChessGameState initialize() {
         throw new IllegalStateException("이미 시작된 상태입니다.");
     }
 
     @Override
-    public ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination) {
+    public ChessGameState movePiece(final PiecePosition source, final PiecePosition destination) {
         chessBoard.movePiece(turn, source, destination);
 
         return judgeState();
     }
 
-    private ChessGameStep judgeState() {
+    private ChessGameState judgeState() {
         if (chessBoard.existKingByColor(turn.enemyColor())) {
             return new MovePiece(chessBoard, turn.change());
         }
@@ -44,7 +44,7 @@ public class MovePiece implements ChessGameStep {
     }
 
     @Override
-    public ChessGameStep end() {
+    public ChessGameState end() {
         return new EndGame(Color.NONE);
     }
 

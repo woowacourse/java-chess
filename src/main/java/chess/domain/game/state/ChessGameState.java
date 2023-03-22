@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -7,15 +7,15 @@ import chess.domain.piece.position.PiecePosition;
 import java.util.List;
 import java.util.Map;
 
-public interface ChessGameStep {
+public interface ChessGameState {
 
     boolean playable();
 
-    ChessGameStep initialize();
+    ChessGameState initialize();
 
-    ChessGameStep movePiece(final PiecePosition source, final PiecePosition destination);
+    ChessGameState movePiece(final PiecePosition source, final PiecePosition destination);
 
-    ChessGameStep end();
+    ChessGameState end();
 
     List<Piece> pieces();
 
