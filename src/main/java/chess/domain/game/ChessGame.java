@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 
-import java.util.List;
+import java.util.Map;
 
 public final class ChessGame {
 
@@ -21,7 +21,7 @@ public final class ChessGame {
         this.gameStatus = gameStatus.playTurn(source, target);
     }
 
-    public List<Squares> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return gameStatus.getBoard();
     }
 

@@ -1,15 +1,16 @@
 package chess.controller;
 
 import chess.domain.board.Position;
-import chess.domain.board.Squares;
 import chess.domain.game.ChessGame;
-import chess.view.*;
+import chess.domain.piece.Piece;
+import chess.view.Command;
+import chess.view.InputView;
+import chess.view.OutputView;
+import chess.view.PositionParser;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class ChessController {
 
@@ -56,15 +57,8 @@ public final class ChessController {
         printBoard(chessGame.getBoard());
     }
 
-    private void printBoard(final List<Squares> board) {
-        List<List<String>> pieceNames = board.stream()
-                .map(Squares::getPieces)
-                .map(KindMapper::mapToStrings)
-                .collect(Collectors.toList());
-
-        Collections.reverse(pieceNames);
-
-        pieceNames.forEach(outputView::printRank);
+    private void printBoard(final Map<Position, Piece> board) {
+        outputView.printBoard(board);
     }
 
     private void move(final List<String> commands) {

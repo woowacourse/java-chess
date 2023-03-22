@@ -1,90 +1,118 @@
 package chess.domain.board;
 
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.normal.*;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.property.Color;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public final class Board {
 
-    private final List<Squares> board = new ArrayList<>();
+    private final Map<Position, Piece> board = new HashMap<>();
 
     public Board() {
-        board.add(Squares.initializePieces(Color.WHITE));
-        board.add(Squares.initializePawns(Color.WHITE));
-        board.add(Squares.initializeEmpty());
-        board.add(Squares.initializeEmpty());
-        board.add(Squares.initializeEmpty());
-        board.add(Squares.initializeEmpty());
-        board.add(Squares.initializePawns(Color.BLACK));
-        board.add(Squares.initializePieces(Color.BLACK));
+        board.put(new Position(File.A, Rank.ONE), new Rook(Color.WHITE));
+        board.put(new Position(File.B, Rank.ONE), new Knight(Color.WHITE));
+        board.put(new Position(File.C, Rank.ONE), new Bishop(Color.WHITE));
+        board.put(new Position(File.D, Rank.ONE), new Queen(Color.WHITE));
+        board.put(new Position(File.E, Rank.ONE), new King(Color.WHITE));
+        board.put(new Position(File.F, Rank.ONE), new Bishop(Color.WHITE));
+        board.put(new Position(File.G, Rank.ONE), new Knight(Color.WHITE));
+        board.put(new Position(File.H, Rank.ONE), new Rook(Color.WHITE));
+
+        board.put(new Position(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+        board.put(new Position(File.B, Rank.EIGHT), new Knight(Color.BLACK));
+        board.put(new Position(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
+        board.put(new Position(File.D, Rank.EIGHT), new Queen(Color.BLACK));
+        board.put(new Position(File.E, Rank.EIGHT), new King(Color.BLACK));
+        board.put(new Position(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
+        board.put(new Position(File.G, Rank.EIGHT), new Knight(Color.BLACK));
+        board.put(new Position(File.H, Rank.EIGHT), new Rook(Color.BLACK));
+
+        board.put(new Position(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.B, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.E, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.F, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.G, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.put(new Position(File.H, Rank.SEVEN), new Pawn(Color.BLACK));
+
+        board.put(new Position(File.A, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.B, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.C, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.D, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.E, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.F, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.G, Rank.TWO), new Pawn(Color.WHITE));
+        board.put(new Position(File.H, Rank.TWO), new Pawn(Color.WHITE));
     }
 
     public void confirmMove(final Position source, final Position target, Color color) {
-        Square sourceSquare = getSquare(source);
-        Square targetSquare = getSquare(target);
-        validateBasicInfo(color, sourceSquare, targetSquare);
+        validateBasicInfo(color, source, target);
 
-        Set<Position> movablePath = sourceSquare.computePath(source, target);
+        Set<Position> movablePath = getPiece(source).computePath(source, target);
         Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
 
-        validateMove(source, target, sourceSquare, isEmptySquare);
-        move(sourceSquare, targetSquare);
-    }
-
-    private void validateBasicInfo(final Color color, final Square sourceSquare, final Square targetSquare) {
-        validateIsEmptySquare(sourceSquare);
-        validateLegalSourceColor(sourceSquare, color);
-        validateLegalTargetColor(sourceSquare, targetSquare);
-    }
-
-    private void validateIsEmptySquare(final Square sourceSquare) {
-        if (sourceSquare.isEmpty()) {
-            throw new IllegalArgumentException("비어있는 칸입니다.");
-        }
-    }
-
-    private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
-        if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException("움직일 수 있는 기물이 아닙니다.");
-        }
-    }
-
-    private void validateLegalTargetColor(final Square sourceSquare, final Square targetSquare) {
-        if (sourceSquare.equalsColor(targetSquare)) {
-            throw new IllegalArgumentException("자신의 기물이 있는 곳으로 이동할 수 없습니다.");
-        }
-    }
-
-    private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
-        if (!sourceSquare.canMovePiece(isEmptySquare, source, target)) {
-            throw new IllegalArgumentException("유효한 움직임이 아닙니다.");
-        }
-    }
-
-    private void move(final Square sourceSquare, final Square targetSquare) {
-        targetSquare.changePiece(sourceSquare);
-        sourceSquare.makeEmpty();
+        validateMove(source, target, isEmptySquare);
+        move(source, target);
     }
 
     private Map<Position, Boolean> generateIsEmptySquare(final Set<Position> movablePath) {
         return movablePath.stream()
-                .collect(Collectors.toMap(
+                .collect(toMap(
                         position -> position,
-                        position -> getSquare(position).isEmpty()));
+                        position -> getPiece(position).isEmpty()
+                ));
     }
 
-    private Square getSquare(final Position source) {
-        int rank = source.getRank();
-        int file = source.getFile();
-        Squares squares = board.get(rank);
-        return squares.get(file);
+    private void validateBasicInfo(final Color color, final Position source, final Position target) {
+        validateIsEmptySquare(source);
+        validateLegalSourceColor(source, color);
+        validateLegalTargetColor(source, target);
     }
 
-    public List<Squares> getSquares() {
-        return new ArrayList<>(board);
+    private void validateIsEmptySquare(final Position source) {
+        if (getPiece(source).isEmpty()) {
+            throw new IllegalArgumentException("비어있는 칸입니다.");
+        }
+
+    }
+
+    private void validateLegalSourceColor(final Position source, final Color color) {
+        if (getPiece(source).differsColor(color)) {
+            throw new IllegalArgumentException("움직일 수 있는 기물이 아닙니다.");
+        }
+    }
+
+    private void validateLegalTargetColor(final Position source, final Position target) {
+        if (getPiece(source).equalsColor(getPiece(target))) {
+            throw new IllegalArgumentException("자신의 기물이 있는 곳으로 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateMove(final Position source, final Position target, final Map<Position, Boolean> isEmptySquare) {
+        if (!getPiece(source).canMove(isEmptySquare, source, target)) {
+            throw new IllegalArgumentException("유효한 움직임이 아닙니다.");
+        }
+    }
+
+    private void move(final Position source, final Position target) {
+        board.put(target, getPiece(source));
+        board.remove(source);
+    }
+
+    private Piece getPiece(Position position) {
+        return board.getOrDefault(position, new Empty());
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
     }
 }

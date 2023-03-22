@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 
-import java.util.List;
+import java.util.Map;
 
 public final class Finished implements GameStatus {
     @Override
@@ -27,7 +27,7 @@ public final class Finished implements GameStatus {
     }
 
     @Override
-    public List<Squares> getBoard() {
+    public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException("게임이 이미 종료되었습니다.");
     }
 

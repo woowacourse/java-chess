@@ -39,4 +39,11 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("자신의 기물이");
     }
+
+    @Test
+    @DisplayName("유효한 움직임이 아니면 예외가 발생한다")
+    void illegalMoveTest() {
+        assertThatThrownBy(() -> board.confirmMove(A2, A7, Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

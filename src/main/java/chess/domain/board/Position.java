@@ -167,14 +167,6 @@ public final class Position {
         return path;
     }
 
-    public int getRank() {
-        return rank.getValue() - VALUE_INDEX_ADJUST;
-    }
-
-    public int getFile() {
-        return file.getValue() - VALUE_INDEX_ADJUST;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -191,5 +183,9 @@ public final class Position {
     @Override
     public String toString() {
         return file.toString() + rank.toString();
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

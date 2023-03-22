@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 
-import java.util.List;
+import java.util.Map;
 
 public interface GameStatus {
 
@@ -15,7 +15,7 @@ public interface GameStatus {
 
     boolean isOnGoing();
 
-    List<Squares> getBoard();
+    Map<Position, Piece> getBoard();
 
     GameStatus save();
 }

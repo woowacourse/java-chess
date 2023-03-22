@@ -35,6 +35,10 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public boolean differsColor(final Color color) {
+        return this.color != color;
+    }
+
     public Color getColor() {
         return color;
     }

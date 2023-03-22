@@ -2,11 +2,11 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 import database.BoardDao;
 
-import java.util.List;
+import java.util.Map;
 
 public final class Running implements GameStatus {
 
@@ -58,8 +58,7 @@ public final class Running implements GameStatus {
         return new Finished();
     }
 
-
-    public List<Squares> getBoard() {
-        return board.getSquares();
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }

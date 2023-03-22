@@ -5,8 +5,6 @@ import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum KindMapper {
     BLACK_PAWN(Kind.PAWN, Color.BLACK, "P"),
@@ -33,17 +31,11 @@ public enum KindMapper {
         this.pieceView = pieceView;
     }
 
-    public static String mapping(final Kind kind, final Color color) {
+    public static String mapping(final Piece piece) {
         return Arrays.stream(KindMapper.values())
-                .filter(kindMapper -> kindMapper.kind == kind && kindMapper.color == color)
+                .filter(kindMapper -> kindMapper.kind == piece.getKind() && kindMapper.color == piece.getColor())
                 .map(kindMapper -> kindMapper.pieceView)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("매핑 정보가 잘못되었습니다."));
-    }
-
-    public static List<String> mapToStrings(List<Piece> pieces) {
-        return pieces.stream()
-                .map(piece -> mapping(piece.getKind(), piece.getColor()))
-                .collect(Collectors.toList());
     }
 }
