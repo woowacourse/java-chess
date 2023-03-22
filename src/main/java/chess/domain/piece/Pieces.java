@@ -10,6 +10,10 @@ public class Pieces {
         this.pieces = pieces;
     }
 
+    public int size() {
+        return pieces.size();
+    }
+
     // 얘한테 이 체스말들의 점수 계산해달라고 요청 보내기 (GameResult 에 필요한 도메인)
 
 }
