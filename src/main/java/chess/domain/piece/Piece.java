@@ -25,6 +25,14 @@ public abstract class Piece {
         return this.camp.equals(camp);
     }
 
+    public boolean isCamp(Piece piece) {
+        return this.camp.equals(piece.camp);
+    }
+
+    public boolean isSamePieceType(PieceType pieceType) {
+        return getPieceType().equals(pieceType);
+    }
+
     public boolean isOpposite(Piece otherPiece) {
         return camp.isOpposite(otherPiece.camp);
     }

@@ -66,6 +66,26 @@ public class Chessboard {
         return board.values().stream()
                 .filter(piece -> piece.isCamp(camp))
                 .map(Piece::getScore)
+                .reduce(0.0, Double::sum) - calculatePawn(camp);
+    }
+
+    private double calculatePawn(Camp camp) {
+        return Square.getEachFileSquares()
+                .stream()
+                .map(squares -> multiplePawnScore(countPawnOnFile(squares, camp)))
                 .reduce(0.0, Double::sum);
+    }
+
+    private int countPawnOnFile(List<Square> squares, Camp camp) {
+        return (int) squares.stream()
+                .filter(square -> board.get(square).isSamePieceType(PieceType.PAWN) && board.get(square).isCamp(camp))
+                .count();
+    }
+
+    private double multiplePawnScore(int count) {
+        if (count == 1) {
+            return 0;
+        }
+        return count * 0.5;
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -78,5 +79,17 @@ public class Square {
 
     public boolean isRankTwo() {
         return rank == Rank.TWO;
+    }
+
+    static public List<List<Square>> getEachFileSquares() {
+        return Arrays.stream(File.values())
+                .map(file -> getRankSquares(file))
+                .collect(Collectors.toList());
+    }
+
+    static private List<Square> getRankSquares(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> new Square(file, rank))
+                .collect(Collectors.toList());
     }
 }
