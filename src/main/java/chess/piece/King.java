@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class King extends Piece {
+public class King extends NonSlidingPiece {
 
     private final List<Direction> directions;
 
@@ -31,16 +31,4 @@ public class King extends Piece {
         return new King(positionToMove, this.side);
     }
 
-    @Override
-    public List<Position> getPaths(Position targetPosition) {
-        List<Position> paths = new ArrayList<>();
-        final Direction direction = position.getDirectionTo(targetPosition);
-        final int moveCountBeforeArrivalPosition = position.getMoveCount(targetPosition, direction) - 1;
-        Position nextPosition = this.position;
-        for (int next = 0; next < moveCountBeforeArrivalPosition; next++) {
-            nextPosition = nextPosition.getNextPosition(direction);
-            paths.add(nextPosition);
-        }
-        return paths;
-    }
 }
