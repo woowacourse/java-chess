@@ -67,10 +67,8 @@ public final class ChessBoard {
     }
 
     private void validateMovableToDiagonal(Position startPosition, Position endPosition) {
-        Piece startPiece = chessBoard.get(startPosition);
-        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
-                (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
+        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL && !chessBoard.containsKey(endPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없으면 이동이 불가능합니다.");
         }
     }
 
@@ -84,8 +82,8 @@ public final class ChessBoard {
     }
 
     private boolean validateMovableEndPosition(Position endPosition, Piece startPiece) {
-        if (chessBoard.containsKey(endPosition)) {
-            return !isSameColorPiece(startPiece, chessBoard.get(endPosition));
+        if (chessBoard.containsKey(endPosition) && isSameColorPiece(startPiece, chessBoard.get(endPosition))) {
+            throw new IllegalArgumentException("[ERROR] 같은 색의 말이 있는 칸으로 이동이 불가능합니다.");
         }
         return true;
     }
