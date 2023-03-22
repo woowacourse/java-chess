@@ -19,10 +19,10 @@ public final class Board {
     private final Map<Coordinate, Square> squareLocations;
 
     public Board() {
-        this.squareLocations = fillBoard();
+        this.squareLocations = fillSquareLocations();
     }
 
-    private Map<Coordinate, Square> fillBoard() {
+    private Map<Coordinate, Square> fillSquareLocations() {
         Map<Coordinate, Square> board = new HashMap<>();
         for (int rank = 0; rank < RANK_SIZE; rank++) {
             board.putAll(fillSquaresForOneRank(rank));
@@ -81,10 +81,6 @@ public final class Board {
                 .getColor() == Color.NEUTRAL;
     }
 
-    public Map<Coordinate, Square> getSquareLocations() {
-        return squareLocations;
-    }
-
     public boolean isSameColor(final Coordinate start, final Coordinate end) {
         Square startSquare = findSquare(start);
         Square endSquare = findSquare(end);
@@ -96,5 +92,9 @@ public final class Board {
         return squareLocations.values().stream()
                 .filter(Square::hasKing)
                 .count() == KING_COUNT;
+    }
+
+    public Map<Coordinate, Square> getSquareLocations() {
+        return squareLocations;
     }
 }
