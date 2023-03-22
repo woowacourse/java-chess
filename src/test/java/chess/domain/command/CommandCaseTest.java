@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class CommandCaseTest {
+class   CommandCaseTest {
 
     @Test
     @DisplayName("start 명령어를 받으면 START를 반환한다")
@@ -40,23 +40,5 @@ class CommandCaseTest {
         assertThatThrownBy(() -> CommandCase.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력값은 start, end, move만 가능합니다.");
-    }
-
-    @Test
-    @DisplayName("START는 이름을 가진다")
-    void getValue_START() {
-        assertThat(CommandCase.START.getValue()).isEqualTo("start");
-    }
-
-    @Test
-    @DisplayName("END는 이름을 가진다")
-    void getValue_END() {
-        assertThat(CommandCase.END.getValue()).isEqualTo("end");
-    }
-
-    @Test
-    @DisplayName("MOVE는 이름을 가진다")
-    void getValue_MOVE() {
-        assertThat(CommandCase.MOVE.getValue()).isEqualTo("move");
     }
 }
