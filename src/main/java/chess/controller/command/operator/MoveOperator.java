@@ -26,7 +26,7 @@ public class MoveOperator extends Operator {
         }
         chessGame.move(makeSquare(command.get(1)), makeSquare(command.get(2)));
         OutputView.printChessBoard(chessGame.getChessboard());
-        return true;
+        return chessGame.canKeepGoing();
     }
 
     private Square makeSquare(String fileRank) {

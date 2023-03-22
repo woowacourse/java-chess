@@ -88,4 +88,11 @@ public class Chessboard {
         }
         return count * 0.5;
     }
+
+    public boolean isKingSurvive() {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.getPieceType().equals(PieceType.KING))
+                .count() == 2;
+    }
 }

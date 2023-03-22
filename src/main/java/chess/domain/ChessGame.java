@@ -50,4 +50,8 @@ public class ChessGame {
     public Camp getTurn() {
         return turn;
     }
+
+    public boolean canKeepGoing() {
+        return this.getChessboard().isKingSurvive();
+    }
 }
