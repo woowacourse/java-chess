@@ -40,9 +40,9 @@ public final class ChessGame {
     }
 
     public void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
-        validatePickExistPiece(fromPosition);
+        validatePickExistPiece(chessBoard.choicePiece(fromPosition));
         validateTurnCamp(chessBoard.choicePiece(fromPosition));
-        validateSameCamp(fromPosition, toPosition);
+        validateSameCamp(chessBoard.choicePiece(fromPosition), chessBoard.choicePiece(toPosition));
         validateEqualPosition(fromPosition, toPosition);
     }
 
@@ -52,17 +52,17 @@ public final class ChessGame {
         }
     }
 
-    private void validatePickExistPiece(Position fromPosition) {
-        if (!chessBoard.isEmpty(fromPosition)) {
+    private void validatePickExistPiece(Piece fromPiece) {
+        if (fromPiece.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CHOICE_ERROR_MESSAGE);
         }
     }
 
-    private void validateSameCamp(Position fromPosition, Position toPosition) {
-        if (!chessBoard.isEmpty(toPosition)) {
+    private void validateSameCamp(Piece fromPiece, Piece toPiece) {
+        if (fromPiece.isEmpty()) {
             return;
         }
-        if (chessBoard.choicePiece(fromPosition).isSameCamp(chessBoard.choicePiece(toPosition))) {
+        if (fromPiece.isSameCamp(toPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }

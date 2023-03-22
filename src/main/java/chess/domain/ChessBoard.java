@@ -33,10 +33,6 @@ public class ChessBoard {
         return betweenPiece;
     }
 
-    public boolean isEmpty(Position position) {
-        return board.containsKey(position);
-    }
-
     public Map<Position, Piece> getBoard() {
         return board;
     }
