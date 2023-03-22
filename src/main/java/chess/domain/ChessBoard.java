@@ -21,8 +21,8 @@ public class ChessBoard {
 
     private final Map<Position, Piece> piecesByPosition;
 
-    public ChessBoard() {
-        piecesByPosition = InitialPiece.getPiecesWithPosition();
+    public ChessBoard(final Map<Position, Piece> piecesByPosition) {
+        this.piecesByPosition = piecesByPosition;
     }
 
     public void move(final Position source, final Position dest, final TeamColor teamColor) {

@@ -27,13 +27,13 @@ class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard();
+        chessBoard = new ChessBoard(InitialPiece.getPiecesWithPosition());
     }
 
     @DisplayName("체스판에 초기 말을 세팅한다.")
     @Test
     void 체스판_초기화() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(InitialPiece.getPiecesWithPosition());
 
         Map<Position, Piece> positionPieces = chessBoard.piecesByPosition();
 

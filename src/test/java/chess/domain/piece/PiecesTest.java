@@ -16,7 +16,7 @@ class PiecesTest {
     @DisplayName("초기 ChessBoard 에서는 한 file 에 4개의 체스말이 들어있다.")
     @Test
     void 초기_체스판_한_열_확인() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(InitialPiece.getPiecesWithPosition());
 
         Set<Pieces> piecesCollectedByFile = chessBoard.getPiecesCollectedByFile();
 

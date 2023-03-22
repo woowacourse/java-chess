@@ -8,7 +8,7 @@ public class ChessGame {
     private TeamColor teamColor;
 
     public ChessGame() {
-        this.chessBoard = new ChessBoard();
+        this.chessBoard = new ChessBoard(InitialPiece.getPiecesWithPosition());
         this.teamColor = TeamColor.WHITE;
     }
 
