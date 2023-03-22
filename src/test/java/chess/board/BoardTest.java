@@ -152,6 +152,23 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("폰이 전진하려 하는 위치에 적 기물이 존재하면 예외를 던진다.")
+    void checkPieceMovable_pawnVerticalMove_throws() {
+        // given
+        final Position sourcePosition = new Position(File.B, Rank.FOUR);
+        final Position targetPosition = new Position(File.B, Rank.FIVE);
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Pawn(sourcePosition, Side.WHITE),
+                new Pawn(targetPosition, Side.BLACK)
+        )), Side.WHITE);
+
+        // when, then
+        assertThatThrownBy(() -> fixedBoard.movePiece(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 대각으로 이동할 때만 적 기물이 있는 위치로 이동할 수 있습니다.");
+    }
+
+    @Test
     @DisplayName("흰색 진영이 기물을 옮길 차례일 때, 검은색 진영의 기물을 옮기면 예외가 발생한다.")
     void checkTurnToMove_whiteTurn_throws() {
         // given
