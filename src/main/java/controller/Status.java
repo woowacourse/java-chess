@@ -14,9 +14,10 @@ public class Status extends GameStatus{
 
     @Override
     public void playTurn(final List<String> inputs) {
-        OutputView.printNotice("> 중간 결과");
         final double whiteScore = chessGame.calculateScore(Color.WHITE);
         final double blackScore = chessGame.calculateScore(Color.BLACK);
+
+        OutputView.printNotice("> 중간 결과");
         OutputView.printScore(whiteScore, blackScore);
 
 
