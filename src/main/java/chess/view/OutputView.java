@@ -16,7 +16,7 @@ public class OutputView {
 
     public void printChessBoard(final List<Piece> pieces) {
         for (int i = 1; i < pieces.size() + 1; i++) {
-            String pieceRole = pieces.get(i - 1).getRole().getInitial();
+            String pieceRole = PieceMessage.getMessage(pieces.get(i - 1).getRole());
             pieceRole = this.checkPieceCamp(pieces, i, pieceRole);
             System.out.print(pieceRole);
             this.printNewLine(i);
