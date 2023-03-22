@@ -67,9 +67,18 @@ public class Pawn extends Piece {
         directions = List.of(TOP, TOP_RIGHT, TOP_LEFT);
     }
 
+    public boolean isLinear(Square src, Square dest) {
+        return !isDiagonal(src, dest);
+    }
+
     public boolean isDiagonal(Square src, Square dest) {
         Vectorr vector = src.calculateVector(dest);
         List<Vectorr> diagonalDirections = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
         return diagonalDirections.contains(vector);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }
