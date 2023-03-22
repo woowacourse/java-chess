@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final Score ZERO = new Score(BigDecimal.ZERO);
+
     private final BigDecimal value;
 
     private Score(final BigDecimal value) {
@@ -19,6 +21,10 @@ public class Score {
         return new Score(value.add(score.value));
     }
 
+    public Score multiply(final int repeat) {
+        return new Score(value.multiply(BigDecimal.valueOf(repeat)));
+    }
+
     public BigDecimal value() {
         return value;
     }
@@ -28,7 +34,7 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Score score = (Score) o;
-        return Objects.equals(value, score.value);
+        return score.value.compareTo(value) == 0;
     }
 
     @Override

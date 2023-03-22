@@ -24,4 +24,20 @@ class ScoreTest {
         //when & then
         assertEquals(score1.plus(score2), result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1,2,2",
+            "0,1,0",
+            "100000,3,300000"
+    })
+    @DisplayName("multiply() : Score에 value만큼 곱할 수 있다.")
+    void test_multiply(final int value1, final int repeat, final int resultValue) throws Exception {
+        //given
+        final Score score = Score.from(value1);
+        final Score result = Score.from(resultValue);
+
+        //when & then
+        assertEquals(score.multiply(repeat), result);
+    }
 }
