@@ -19,7 +19,7 @@ public final class ChessBoard {
     public void movePiece(Position startPosition, Position endPosition) {
         validateExistPieceInStartPosition(startPosition);
 
-        if (!isPieceMovable(startPosition, endPosition)) {
+        if (!validatePieceMovable(startPosition, endPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
         }
 
@@ -33,15 +33,16 @@ public final class ChessBoard {
         }
     }
 
-    private boolean isPieceMovable(Position startPosition, Position endPosition) {
+    private boolean validatePieceMovable(Position startPosition, Position endPosition) {
         List<Position> path = startPosition.getPathTo(endPosition);
         Piece startPiece = chessBoard.get(startPosition);
+        // Todo : 폰에 대한 로직을 폰에 넣을 수 있나? 된다 하더라도 반드시 폰에 넣어야 하나?
         if (startPiece.isPawn()) {
             considerPawnCase(startPosition, endPosition);
         }
         return startPiece.isMovablePath(startPosition, path) &&
-                isPassablePath(path) &&
-                isMovableEndPosition(endPosition, startPiece);
+                validatePassablePath(path) &&
+                validateMovableEndPosition(endPosition, startPiece);
     }
 
     private void considerPawnCase(Position startPosition, Position endPosition) {
@@ -49,12 +50,12 @@ public final class ChessBoard {
         Piece startPiece = chessBoard.get(startPosition);
 
         if (startPiece.isMovablePath(startPosition, path)) {
-            checkPassablePathToForward(startPosition, path);
-            checkMovableToDiagonal(startPosition, endPosition);
+            validatePassablePathToForward(startPosition, path);
+            validateMovableToDiagonal(startPosition, endPosition);
         }
     }
 
-    private void checkMovableToDiagonal(Position startPosition, Position endPosition) {
+    private void validateMovableToDiagonal(Position startPosition, Position endPosition) {
         Piece startPiece = chessBoard.get(startPosition);
         if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL &&
                 (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
@@ -62,7 +63,7 @@ public final class ChessBoard {
         }
     }
 
-    private void checkPassablePathToForward(Position startPosition, List<Position> path) {
+    private void validatePassablePathToForward(Position startPosition, List<Position> path) {
         if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
             path.stream()
                     .filter(chessBoard::containsKey)
@@ -72,7 +73,7 @@ public final class ChessBoard {
         }
     }
 
-    private boolean isPassablePath(List<Position> path) {
+    private boolean validatePassablePath(List<Position> path) {
         for (Position position : path.subList(0, path.size() - 1)) {
             if (chessBoard.containsKey(position)) {
                 throw new IllegalArgumentException("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
@@ -81,13 +82,14 @@ public final class ChessBoard {
         return true;
     }
 
-    private boolean isMovableEndPosition(Position endPosition, Piece startPiece) {
+    private boolean validateMovableEndPosition(Position endPosition, Piece startPiece) {
         if (chessBoard.containsKey(endPosition)) {
             return !isSameColorPiece(startPiece, chessBoard.get(endPosition));
         }
         return true;
     }
 
+    //Todo: 체스판에서 considerPawnCase를 분리하면 1곳에서만 쓰이는데 분리하지 않아도 될 것 같다고 하심
     private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
         return startPiece.isBlack() == endPiece.isBlack();
     }
