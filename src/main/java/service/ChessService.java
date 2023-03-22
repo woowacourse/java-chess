@@ -1,7 +1,10 @@
 package service;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import domain.board.ChessBoard;
 import domain.board.File;
@@ -9,6 +12,7 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import dto.ScoreDto;
 
 public class ChessService {
     private final ChessBoard chessBoard = new ChessBoard(new HashMap<>());
@@ -64,5 +68,11 @@ public class ChessService {
 
     public boolean isFinished() {
         return !isOngoing;
+    }
+
+    public List<ScoreDto> calculateFinalScore() {
+        return Camp.PLAYING_CAMPS.stream()
+                .map(camp -> ScoreDto.from(camp, chessBoard.calculateFinalScore(camp)))
+                .collect(Collectors.toUnmodifiableList());
     }
 }

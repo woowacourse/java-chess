@@ -9,6 +9,7 @@ import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Piece;
+import dto.ScoreDto;
 
 public class OutputView {
     public static void printChessBoard(Map<Square, Piece> board) {
@@ -48,5 +49,11 @@ public class OutputView {
 
     public static void printErrorMessage(RuntimeException e) {
         System.out.println(e.getMessage());
+    }
+
+    public static void printScores(List<ScoreDto> scoreDto) {
+        for (ScoreDto dto : scoreDto) {
+            System.out.println(String.join(" : " , dto.getCamp(), String.valueOf(dto.getScore())));
+        }
     }
 }

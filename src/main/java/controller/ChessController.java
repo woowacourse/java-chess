@@ -14,6 +14,7 @@ import static controller.Command.TARGET_SQUARE_INDEX;
 import java.util.EnumMap;
 import java.util.List;
 
+import dto.ScoreDto;
 import service.ChessService;
 import view.InputView;
 import view.OutputView;
@@ -35,6 +36,8 @@ public class ChessController {
         while (command != END) {
             command = play();
         }
+        List<ScoreDto> scoreDto = chessService.calculateFinalScore();
+        OutputView.printScores(scoreDto);
     }
 
     private Command play() {
