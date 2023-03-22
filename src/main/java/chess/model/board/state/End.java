@@ -18,6 +18,11 @@ public class End implements GameState {
     }
 
     @Override
+    public GameState isGameEnd() {
+        return this;
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException();
     }

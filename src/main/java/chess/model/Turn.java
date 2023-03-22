@@ -17,13 +17,13 @@ public class Turn {
         this.count = 0;
     }
 
-    public PieceColor findNextPlayer() {
-        final int colorIndex = count++ % PLAYER_COUNT;
+    public PieceColor findCurrentPlayer() {
+        final int colorIndex = count % PLAYER_COUNT;
 
         return COLORS.get(colorIndex);
     }
 
-    public void beforePlayer() {
-        count--;
+    public void next() {
+        count++;
     }
 }

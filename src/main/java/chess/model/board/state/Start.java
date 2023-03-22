@@ -38,6 +38,11 @@ public class Start implements GameState {
     }
 
     @Override
+    public GameState isGameEnd() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         return chessGame.getBoard();
     }

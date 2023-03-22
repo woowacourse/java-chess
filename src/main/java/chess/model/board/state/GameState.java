@@ -11,5 +11,7 @@ public interface GameState {
 
     boolean isNotEnd();
 
+    GameState isGameEnd();
+
     Map<Position, Piece> getBoard();
 }

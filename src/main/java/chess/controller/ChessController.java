@@ -24,7 +24,7 @@ public class ChessController {
 
     private void doGame() {
         GameState state = retry(this::getGameState);
-        retry(this::move, state);
+        retry(this::progressGame, state);
     }
 
     private GameState getGameState() {
@@ -48,10 +48,10 @@ public class ChessController {
         }
     }
 
-    private void move(GameState state) {
+    private void progressGame(GameState state) {
         while (state.isNotEnd()) {
             final MoveRequest moveRequest = readGameCommand();
-            state = updateState(state, moveRequest);
+            state = updateAndCheckEnd(state, moveRequest);
             printBoardStatus(state);
         }
     }
@@ -66,8 +66,11 @@ public class ChessController {
         return inputView.readPlayCommand();
     }
 
-    private GameState updateState(GameState state, final MoveRequest moveRequest) {
-        return state.execute(moveRequest.getGameCommand(), moveRequest.getSource(), moveRequest.getTarget());
+    private GameState updateAndCheckEnd(GameState state, final MoveRequest moveRequest) {
+        state = state.execute(
+                moveRequest.getGameCommand(), moveRequest.getSource(), moveRequest.getTarget()
+        );
+        return state.isGameEnd();
     }
 
     private <T> void retry(final Consumer<T> consumer, T input) {

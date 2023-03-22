@@ -35,6 +35,15 @@ public class Playing implements GameState {
     }
 
     @Override
+    public GameState isGameEnd() {
+        if ((chessGame.isGameEnd())) {
+            return new End();
+        }
+
+        return this;
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         return chessGame.getBoard();
     }

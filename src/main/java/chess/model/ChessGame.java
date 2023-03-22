@@ -16,12 +16,12 @@ public class ChessGame {
     }
 
     public void move(final Position source, final Position target) {
-        try {
-            board.move(source, target, turn.findNextPlayer());
-        } catch (final IllegalArgumentException e) {
-            turn.beforePlayer();
-            throw e;
-        }
+        board.move(source, target, turn.findCurrentPlayer());
+        turn.next();
+    }
+
+    public boolean isGameEnd() {
+        return !board.findKing(turn.findCurrentPlayer());
     }
 
     public Map<Position, Piece> getBoard() {
