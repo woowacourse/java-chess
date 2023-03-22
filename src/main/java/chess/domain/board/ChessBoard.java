@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.piece.move.Position;
 
 import java.util.Map;
 

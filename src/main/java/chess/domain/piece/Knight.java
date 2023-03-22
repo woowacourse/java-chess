@@ -1,8 +1,8 @@
-package chess.domain.piece.move.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.Position;
+import chess.domain.piece.move.Position;
 
-public class KnightMove implements MoveRule {
+public class Knight implements Movable {
     private static final int KNIGHT_MOVE_GAP = 2;
 
     @Override

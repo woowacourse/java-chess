@@ -1,9 +1,9 @@
-package chess.domain.piece.move.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.Position;
 import chess.domain.piece.move.Direction;
 import chess.domain.piece.move.Location;
 import chess.domain.piece.move.LocationHelper;
+import chess.domain.piece.move.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

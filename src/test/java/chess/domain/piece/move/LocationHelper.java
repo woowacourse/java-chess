@@ -1,7 +1,5 @@
 package chess.domain.piece.move;
 
-import chess.domain.piece.Position;
-
 import java.util.Set;
 
 public class LocationHelper {

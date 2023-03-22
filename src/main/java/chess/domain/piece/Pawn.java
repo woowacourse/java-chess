@@ -1,14 +1,14 @@
-package chess.domain.piece.move.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.Position;
 import chess.domain.piece.move.Direction;
 import chess.domain.piece.move.Location;
+import chess.domain.piece.move.Position;
 
 import java.util.List;
 
-import static chess.domain.piece.move.piece.Move.PAWN_MAX_MOVE_COUNT;
+import static chess.domain.piece.Move.PAWN_MAX_MOVE_COUNT;
 
-public class PawnMove implements MoveRule {
+public class Pawn implements Movable {
     private static final int ATTACK_INDEX = 1;
 
     @Override

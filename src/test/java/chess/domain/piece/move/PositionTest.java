@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.move;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

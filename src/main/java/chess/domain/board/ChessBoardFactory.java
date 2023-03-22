@@ -2,14 +2,14 @@ package chess.domain.board;
 
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.move.piece.BishopMove;
-import chess.domain.piece.move.piece.KingMove;
-import chess.domain.piece.move.piece.KnightMove;
-import chess.domain.piece.move.piece.PawnMove;
-import chess.domain.piece.move.piece.QueenMove;
-import chess.domain.piece.move.piece.RookMove;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.move.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,19 +56,19 @@ public final class ChessBoardFactory {
     }
 
     private void createPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
-        board.put(new Position(rank, 0), new Piece(ROOK, campType, new RookMove()));
-        board.put(new Position(rank, 1), new Piece(KNIGHT, campType, new KnightMove()));
-        board.put(new Position(rank, 2), new Piece(BISHOP, campType, new BishopMove()));
-        board.put(new Position(rank, 3), new Piece(QUEEN, campType, new QueenMove()));
-        board.put(new Position(rank, 4), new Piece(KING, campType, new KingMove()));
-        board.put(new Position(rank, 5), new Piece(BISHOP, campType, new BishopMove()));
-        board.put(new Position(rank, 6), new Piece(KNIGHT, campType, new KnightMove()));
-        board.put(new Position(rank, 7), new Piece(ROOK, campType, new RookMove()));
+        board.put(new Position(rank, 0), new Piece(ROOK, campType, new Rook()));
+        board.put(new Position(rank, 1), new Piece(KNIGHT, campType, new Knight()));
+        board.put(new Position(rank, 2), new Piece(BISHOP, campType, new Bishop()));
+        board.put(new Position(rank, 3), new Piece(QUEEN, campType, new Queen()));
+        board.put(new Position(rank, 4), new Piece(KING, campType, new King()));
+        board.put(new Position(rank, 5), new Piece(BISHOP, campType, new Bishop()));
+        board.put(new Position(rank, 6), new Piece(KNIGHT, campType, new Knight()));
+        board.put(new Position(rank, 7), new Piece(ROOK, campType, new Rook()));
     }
 
     private void createPawnPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
         for (int file = 0; file < 8; file++) {
-            board.put(new Position(rank, file), new Piece(PAWN, campType, new PawnMove()));
+            board.put(new Position(rank, file), new Piece(PAWN, campType, new Pawn()));
         }
     }
 }

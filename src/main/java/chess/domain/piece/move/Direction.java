@@ -1,7 +1,5 @@
 package chess.domain.piece.move;
 
-import chess.domain.piece.Position;
-
 import java.util.List;
 
 public enum Direction {

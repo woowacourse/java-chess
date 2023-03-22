@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.chess.CampType;
-import chess.domain.piece.move.piece.MoveRule;
+import chess.domain.piece.move.Position;
 
 import java.util.Objects;
 
@@ -12,12 +12,12 @@ public class Piece {
 
     private final PieceType pieceType;
     private final CampType campType;
-    protected final MoveRule moveRule;
+    protected final Movable movable;
 
-    public Piece(final PieceType pieceType, final CampType campType, final MoveRule moveRule) {
+    public Piece(final PieceType pieceType, final CampType campType, final Movable movable) {
         this.pieceType = pieceType;
         this.campType = campType;
-        this.moveRule = moveRule;
+        this.movable = movable;
     }
 
     public boolean isSameCamp(final Piece other) {
@@ -29,17 +29,17 @@ public class Piece {
     }
 
     public boolean canMove(final Position source, final Position target, final boolean isTargetExist) {
-        if (pieceType == PieceType.PAWN && moveRule.canMove(source, target)) {
+        if (pieceType == PieceType.PAWN && movable.canMove(source, target)) {
             return validatePawnMove(source, target, isTargetExist);
         }
-        return moveRule.canMove(source, target);
+        return movable.canMove(source, target);
     }
 
     public boolean canAttack(final Position source, final Position target, final boolean isTargetExist) {
-        if (pieceType == PieceType.PAWN && moveRule.canAttack(source, target) && !isTargetExist) {
+        if (pieceType == PieceType.PAWN && movable.canAttack(source, target) && !isTargetExist) {
             throw new IllegalArgumentException("폰이 공격할 수 있는 위치가 아닙니다.");
         }
-        return moveRule.canAttack(source, target);
+        return movable.canAttack(source, target);
     }
 
     private boolean validatePawnMove(final Position source, final Position target, final boolean isTargetExist) {
