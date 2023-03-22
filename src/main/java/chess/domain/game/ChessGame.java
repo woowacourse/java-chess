@@ -32,4 +32,8 @@ public final class ChessGame {
     public boolean isOnGoing() {
         return gameStatus.isOnGoing();
     }
+
+    public void save() {
+        this.gameStatus = gameStatus.save();
+    }
 }

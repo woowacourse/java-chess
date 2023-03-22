@@ -30,4 +30,9 @@ public final class Finished implements GameStatus {
     public List<Squares> getBoard() {
         throw new UnsupportedOperationException("게임이 이미 종료되었습니다.");
     }
+
+    @Override
+    public GameStatus save() {
+        return null;
+    }
 }

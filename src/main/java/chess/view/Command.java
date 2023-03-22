@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Command {
     START,
     END,
-    MOVE;
+    MOVE,
+    SAVE;
 
     public static Command from(final String input) {
         return Arrays.stream(Command.values())

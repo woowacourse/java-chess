@@ -38,4 +38,8 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public String getName() {
+        return getKind().name();
+    }
 }

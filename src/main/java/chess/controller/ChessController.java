@@ -29,6 +29,7 @@ public final class ChessController {
         commandMap.put(Command.START, new Action(ignored -> start()));
         commandMap.put(Command.MOVE, new Action(this::move));
         commandMap.put(Command.END, new Action(ignored -> end()));
+        commandMap.put(Command.SAVE, new Action(ignored -> save()));
     }
 
     public void play() {
@@ -55,18 +56,6 @@ public final class ChessController {
         printBoard(chessGame.getBoard());
     }
 
-    private void move(final List<String> commands) {
-        Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
-        Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
-        chessGame.playTurn(parsedFile, parsedRank);
-        printBoard(chessGame.getBoard());
-    }
-
-
-    private void end() {
-        chessGame.end();
-    }
-
     private void printBoard(final List<Squares> board) {
         List<List<String>> pieceNames = board.stream()
                 .map(Squares::getPieces)
@@ -76,5 +65,21 @@ public final class ChessController {
         Collections.reverse(pieceNames);
 
         pieceNames.forEach(outputView::printRank);
+    }
+
+    private void move(final List<String> commands) {
+        Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
+        Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
+        chessGame.playTurn(parsedFile, parsedRank);
+        printBoard(chessGame.getBoard());
+    }
+
+
+    private void save() {
+        chessGame.save();
+    }
+
+    private void end() {
+        chessGame.end();
     }
 }

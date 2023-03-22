@@ -4,18 +4,26 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Squares;
 import chess.domain.piece.property.Color;
+import database.BoardDao;
 
 import java.util.List;
 
 public final class Running implements GameStatus {
 
+    private final BoardDao boardDao;
     private final Board board;
     private final Color turn;
 
-    public Running(final Board board, final Color turn) {
+    public Running(final BoardDao boardDao, final Board board, final Color turn) {
+        this.boardDao = boardDao;
         this.board = board;
         this.turn = turn;
     }
+
+//    public Running(final Board board, final Color turn) {
+//        this.board = board;
+//        this.turn = turn;
+//    }
 
     @Override
     public GameStatus start() {
@@ -25,7 +33,7 @@ public final class Running implements GameStatus {
     @Override
     public GameStatus playTurn(final Position source, final Position target) {
         board.confirmMove(source, target, turn);
-        return new Running(board, changeTurn());
+        return new Running(boardDao, board, changeTurn());
     }
 
     @Override
@@ -44,6 +52,12 @@ public final class Running implements GameStatus {
         }
         return Color.BLACK;
     }
+
+    public GameStatus save() {
+        boardDao.saveBoard(board);
+        return new Finished();
+    }
+
 
     public List<Squares> getBoard() {
         return board.getSquares();

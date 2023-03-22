@@ -16,4 +16,6 @@ public interface GameStatus {
     boolean isOnGoing();
 
     List<Squares> getBoard();
+
+    GameStatus save();
 }
