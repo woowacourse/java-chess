@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ChessBoard {
 
-    Map<Position, ChessPiece> chessBoard;
+    private final Map<Position, ChessPiece> chessBoard;
 
     private ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;

@@ -17,6 +17,7 @@ dependencies {
     implementation 'mysql-java:mysql-java:5.1.21'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 }
 
 java {

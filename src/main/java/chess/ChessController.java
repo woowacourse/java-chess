@@ -60,7 +60,7 @@ public class ChessController {
     public void moveChessPieceByCondition(List<String> moveCommand, Side side) {
         Position sourcePosition = Position.of(moveCommand.get(SOURCE_POSITION_INDEX));
         if (!chessBoard.getChessPieceByPosition(sourcePosition).getSide().equals(side)) {
-            throw new IllegalArgumentException("[ERROR] " + side.getSide() + "편의 기물을 움직여 주세요");
+            throw new IllegalArgumentException("[ERROR] 자신 편의 기물을 움직여 주세요.");
         }
         Position targetPosition = Position.of(moveCommand.get(TARGET_POSITION_INDEX));
         MovablePosition movablePosition = new MovablePosition();
