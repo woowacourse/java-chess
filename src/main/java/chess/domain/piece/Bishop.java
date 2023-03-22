@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
+import java.util.Set;
+
 import chess.domain.move.Direction;
 import chess.domain.move.Move;
-import java.util.Set;
 
 public class Bishop extends InfinitePiece {
 
@@ -11,7 +12,12 @@ public class Bishop extends InfinitePiece {
     }
 
     private static Set<Move> setUpMoves() {
-        return Set.of(new Move(Direction.UP, Direction.RIGHT));
+        return Set.of(
+                new Move(Direction.UP, Direction.LEFT),
+                new Move(Direction.UP, Direction.RIGHT),
+                new Move(Direction.DOWN, Direction.LEFT),
+                new Move(Direction.DOWN, Direction.RIGHT)
+        );
     }
 
     @Override

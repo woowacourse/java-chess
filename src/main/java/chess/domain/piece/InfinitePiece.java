@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.move.Move;
 import java.util.Set;
 
-public abstract class InfinitePiece extends QuadrantPiece {
+import chess.domain.move.Move;
+
+public abstract class InfinitePiece extends Piece {
 
     public InfinitePiece(boolean isWhite, Set<Move> moves) {
         super(isWhite, moves);
