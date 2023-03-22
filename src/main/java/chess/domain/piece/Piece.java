@@ -20,7 +20,7 @@ public class Piece {
         this.moveRule = moveRule;
     }
 
-    public boolean compareCamp(final Piece other) {
+    public boolean isSameCamp(final Piece other) {
         return campType == other.campType;
     }
 

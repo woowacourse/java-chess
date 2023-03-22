@@ -45,7 +45,7 @@ public final class ChessBoard {
             return false;
         }
         final Piece targetPiece = board.get(target);
-        return targetPiece == null || !targetPiece.compareCamp(board.get(source));
+        return targetPiece == null || !targetPiece.isSameCamp(board.get(source));
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, final Position currentPosition) {

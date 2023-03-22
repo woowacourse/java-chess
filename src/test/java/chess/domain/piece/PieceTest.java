@@ -16,15 +16,15 @@ class PieceTest {
 
     @Test
     @DisplayName("두 체스말이 동일한 진영인지 확인한다.")
-    void compareCamp() {
+    void isSameCamp_withPiece() {
         // given
         final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new PawnMove());
         final Piece king = new Piece(PieceType.KING, CampType.BLACK, new KingMove());
         final Piece queen = new Piece(PieceType.QUEEN, CampType.WHITE, new QueenMove());
 
         // when
-        final boolean actualFalse = pawn.compareCamp(king);
-        final boolean actualTrue = pawn.compareCamp(queen);
+        final boolean actualFalse = pawn.isSameCamp(king);
+        final boolean actualTrue = pawn.isSameCamp(queen);
 
         // then
         assertThat(actualFalse)
@@ -36,7 +36,7 @@ class PieceTest {
 
     @Test
     @DisplayName("체스말이 입력받은 진영에 속하는지 판단한다.")
-    void isSameCamp() {
+    void isSameCamp_withCampType() {
         // given
         final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new PawnMove());
 
