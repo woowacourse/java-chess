@@ -2,11 +2,8 @@ package chess.domain;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 public class Players {
 
@@ -37,12 +34,14 @@ public class Players {
         return List.of(fileDirection, rankDirection);
     }
 
-    private void validateEachPositions(Position fromPosition, Position toPosition, List<Integer> directionVector) {
-        Position tempPosition = fromPosition.move(directionVector.get(0), directionVector.get(1));
+    private void validateEachPositions(final Position fromPosition, final Position toPosition, final List<Integer> directionVector) {
+        Integer fileDirection = directionVector.get(0);
+        Integer rankDirection = directionVector.get(1);
+        Position tempPosition = fromPosition.move(fileDirection, rankDirection);
 
         while (!tempPosition.equals(toPosition)) {
             validateIsEmpty(tempPosition);
-            tempPosition = tempPosition.move(directionVector.get(0), directionVector.get(1));
+            tempPosition = tempPosition.move(fileDirection, rankDirection);
         }
     }
 
@@ -122,14 +121,20 @@ public class Players {
         }
     }
 
-    private Player getPlayerByColor(Color color) {
+    private Player getPlayerByColor(final Color color) {
         return players.stream().filter(player -> player.getColor().equals(color))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
 
-    public List<Piece> getPiecesByColor(Color color) {
+    public List<Piece> getPiecesByColor(final Color color) {
         return getPlayerByColor(color).getPieces();
+    }
+
+    public double calculateScore() {
+        return getPlayerByColor(current)
+                .getTotalScore()
+                .getValue();
     }
 
     @Override
@@ -138,4 +143,5 @@ public class Players {
                 "players=" + players +
                 '}';
     }
+
 }
