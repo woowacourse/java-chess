@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Board {
 
+    private static final int SIDE_LENGTH = 8;
+
     private final Pieces pieces;
     private Side turnToMove;
 
@@ -101,5 +103,9 @@ public class Board {
 
     public List<Piece> getPieces() {
         return pieces.getPieces();
+    }
+
+    public int getSideLength() {
+        return SIDE_LENGTH;
     }
 }
