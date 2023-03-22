@@ -5,12 +5,4 @@ public enum Camp {
     WHITE,
     NEUTRAL,
     ;
-
-    public static Camp convert(Camp turnCamp) {
-        if (turnCamp == BLACK) {
-            return WHITE;
-        }
-
-        return BLACK;
-    }
 }

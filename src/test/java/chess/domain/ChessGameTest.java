@@ -20,7 +20,7 @@ class ChessGameTest {
     @DisplayName("기물이 가로막고 있으면 통과 할 수 없다.")
     void moveBlockTest() {
         ChessBoard chessBoard = ChessBoardMaker.create();
-        ChessGame chessGame = new ChessGame(chessBoard, Camp.WHITE);
+        ChessGame chessGame = new ChessGame(chessBoard, new Turn(Camp.WHITE));
 
         Position whiteRookPosition = Position.of(File.A, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
@@ -33,7 +33,7 @@ class ChessGameTest {
     @DisplayName("나이트는 기물의 유무와 관계없이 이동할 수 있다.")
     void movePassKnightTest() {
         ChessBoard chessBoard = ChessBoardMaker.create();
-        ChessGame chessGame = new ChessGame(chessBoard, Camp.WHITE);
+        ChessGame chessGame = new ChessGame(chessBoard, new Turn(Camp.WHITE));
 
         Position whiteKnightPosition = Position.of(File.B, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
@@ -45,7 +45,7 @@ class ChessGameTest {
     @DisplayName("빈칸을 이동 시킬 수 없다")
     void moveEmptyExceptionTest() {
         ChessBoard chessBoard = ChessBoardMaker.create();
-        ChessGame chessGame = new ChessGame(chessBoard, Camp.WHITE);
+        ChessGame chessGame = new ChessGame(chessBoard, new Turn(Camp.WHITE));
 
         Position emptyPosition = Position.of(File.A, Rank.THREE);
         Position toPosition = Position.of(File.A, Rank.FOUR);
@@ -61,7 +61,7 @@ class ChessGameTest {
         Position emptyPosition = Position.of(File.A, Rank.FOUR);
 
         ChessBoard chessBoard = ChessBoardMaker.create();
-        ChessGame chessGame = new ChessGame(chessBoard, Camp.WHITE);
+        ChessGame chessGame = new ChessGame(chessBoard, new Turn(Camp.WHITE));
 
         chessGame.move(whitePawnPosition, emptyPosition, new Path());
 

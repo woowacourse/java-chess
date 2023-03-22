@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
@@ -14,9 +13,9 @@ public final class ChessGame {
     public static final String SAME_POSITION_ERROR_MESSAGE = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
     private final ChessBoard chessBoard;
-    private Camp turnCamp;
+    private Turn turnCamp;
 
-    public ChessGame(ChessBoard chessBoard, Camp turnCamp) {
+    public ChessGame(ChessBoard chessBoard, Turn turnCamp) {
         this.turnCamp = turnCamp;
         this.chessBoard = chessBoard;
     }
@@ -48,7 +47,7 @@ public final class ChessGame {
     }
 
     private void validateTurnCamp(Piece fromPiece) {
-        if (fromPiece.isMyTurn(turnCamp)) {
+        if (turnCamp.isMyTurn(fromPiece)) {
             throw new IllegalArgumentException(TURN_MISMATCHED_ERROR_MESSAGE);
         }
     }
@@ -81,7 +80,7 @@ public final class ChessGame {
     }
 
     private void changeTurn() {
-        this.turnCamp = Camp.convert(turnCamp);
+        this.turnCamp = turnCamp.convert(turnCamp);
     }
 
     public ChessBoard getChessBoard() {

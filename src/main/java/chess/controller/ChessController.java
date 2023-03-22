@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
+import chess.domain.Turn;
 import chess.domain.piece.Camp;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
@@ -41,7 +42,7 @@ public final class ChessController {
 
         printBoard(chessBoard);
 
-        return new ChessGame(chessBoard, Camp.WHITE);
+        return new ChessGame(chessBoard, new Turn(Camp.WHITE));
     }
 
     private void requestStartCommand() {
