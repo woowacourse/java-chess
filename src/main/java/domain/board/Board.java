@@ -26,6 +26,7 @@ public final class Board {
     public void replaceSquare(final Coordinate target, final Square square) {
         if (square.getPiece().isPawn()) {
             replaceSquareIfIsPawn(target, square);
+            return;
         }
         squareLocations.put(target, square);
     }
@@ -36,7 +37,6 @@ public final class Board {
             return;
         }
         squareLocations.put(target, new Square(new WhitePawn(), Color.WHITE));
-        System.out.println(123);
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
