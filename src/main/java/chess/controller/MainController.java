@@ -11,6 +11,7 @@ import static chess.view.OutputView.printGameStart;
 
 import chess.domain.Position;
 import chess.domain.board.Board;
+import chess.domain.board.BoardMaker;
 import chess.domain.math.PositionConverter;
 import chess.view.Command;
 import java.util.List;
@@ -23,11 +24,7 @@ public final class MainController {
     private static final int ONLY_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
-    private final Board board;
-
-    public MainController(final Board board) {
-        this.board = board;
-    }
+    private final Board board = new Board(new BoardMaker());
 
     public void run() {
         printGameStart();
