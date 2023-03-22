@@ -94,14 +94,14 @@ public class ChessGame {
         return gameState.hasWinner();
     }
 
-    public boolean isChecked() {
-        return gameState.isChecked();
-    }
-
     public void checkCheckmate() {
         Team turn = gameState.getTurn();
-        if (board.isChecked(turn)) {
+        if (isChecked() && board.isChecked(turn)) {
             this.gameState = EndState.createWinState(turn.opposite());
         }
+    }
+
+    public boolean isChecked() {
+        return gameState.isChecked();
     }
 }
