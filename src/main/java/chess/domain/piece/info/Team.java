@@ -11,6 +11,9 @@ public enum Team {
         if (file == File.SEVEN || file == File.EIGHT) {
             return BLACK;
         }
-        return WHITE;
+        if(file == File.ONE || file == File.TWO){
+            return WHITE;
+        }
+        return EMPTY;
     }
 }
