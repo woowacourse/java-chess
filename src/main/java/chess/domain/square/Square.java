@@ -1,5 +1,7 @@
 package chess.domain.square;
 
+import chess.domain.exception.SquareOutOfBoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,8 +58,7 @@ public final class Square {
             Rank newRank = rank.move(rankDifference);
             return Square.of(newFile, newRank);
         } catch (IllegalStateException e) {
-            // TODO: 리팩터링 필요
-            throw new IllegalArgumentException("잘못된 좌표값입니다.");
+            throw new SquareOutOfBoundException();
         }
     }
 

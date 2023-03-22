@@ -1,5 +1,6 @@
 package chess.domain.square;
 
+import chess.domain.exception.FileNotFoundException;
 import chess.domain.square.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class FileTest {
     @DisplayName("a~h가 아닌 File을 검색하면 예외가 발생한다")
     void search_file_exception() {
         assertThatThrownBy(() -> File.from('i'))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(FileNotFoundException.class);
     }
 
     @Test

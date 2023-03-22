@@ -1,5 +1,8 @@
 package chess.domain.square;
 
+import chess.domain.exception.FileNotFoundException;
+import chess.domain.exception.RankNotFoundException;
+import chess.domain.exception.SquareOutOfBoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -114,7 +117,7 @@ class SquareTest {
         void file_out_of_bound1() {
             final Square square = Square.of(File.A, Rank.THREE);
             assertThatThrownBy(() -> square.move(Direction.LEFT))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(SquareOutOfBoundException.class);
         }
 
         @Test
@@ -122,7 +125,7 @@ class SquareTest {
         void file_out_of_bound2() {
             final Square square = Square.of(File.H, Rank.THREE);
             assertThatThrownBy(() -> square.move(Direction.RIGHT))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(SquareOutOfBoundException.class);
         }
 
         @Test
@@ -130,7 +133,7 @@ class SquareTest {
         void rank_out_of_bound1() {
             final Square square = Square.of(File.C, Rank.ONE);
             assertThatThrownBy(() -> square.move(Direction.DOWN))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(SquareOutOfBoundException.class);
         }
 
         @Test
@@ -138,7 +141,7 @@ class SquareTest {
         void rank_out_of_bound2() {
             final Square square = Square.of(File.C, Rank.EIGHT);
             assertThatThrownBy(() -> square.move(Direction.UP))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(SquareOutOfBoundException.class);
         }
     }
 

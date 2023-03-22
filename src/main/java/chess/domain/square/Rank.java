@@ -1,6 +1,7 @@
 package chess.domain.square;
 
 import chess.domain.exception.InvalidSquareIndexException;
+import chess.domain.exception.RankNotFoundException;
 
 import java.util.Arrays;
 
@@ -25,7 +26,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
+                .orElseThrow(RankNotFoundException::new);
     }
 
     public static Rank getRankByIndex(final int index) {

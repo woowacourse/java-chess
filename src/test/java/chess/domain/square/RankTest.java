@@ -1,5 +1,6 @@
 package chess.domain.square;
 
+import chess.domain.exception.RankNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class RankTest {
     @DisplayName("1~8이 아닌 Rank를 검색하면 예외가 발생한다")
     void search_rank_exception() {
         assertThatThrownBy(() -> Rank.from('9'))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(RankNotFoundException.class);
     }
 
     @Test

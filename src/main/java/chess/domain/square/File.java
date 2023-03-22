@@ -1,6 +1,7 @@
 package chess.domain.square;
 
 import chess.domain.exception.InvalidSquareIndexException;
+import chess.domain.exception.FileNotFoundException;
 
 import java.util.Arrays;
 
@@ -25,7 +26,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
+                .orElseThrow(FileNotFoundException::new);
     }
 
     public static File getFileByIndex(final int index) {
