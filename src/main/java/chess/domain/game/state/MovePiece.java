@@ -48,4 +48,8 @@ public class MovePiece implements ChessGameState {
     public Map<Color, Double> calculateScore(final ChessBoard chessBoard) {
         return chessBoard.calculateScore();
     }
+
+    public Turn turn() {
+        return turn;
+    }
 }

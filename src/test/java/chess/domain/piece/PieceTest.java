@@ -72,7 +72,7 @@ class PieceTest {
 
         // then
         assertThat(next.piecePosition()).isEqualTo(PiecePosition.of("b7"));
-        assertThat(next.pieceMovement()).isInstanceOf(RookMovementStrategy.class);
+        assertThat(next.pieceMovementStrategy()).isInstanceOf(RookMovementStrategy.class);
     }
 
     @Test

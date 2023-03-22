@@ -72,4 +72,8 @@ public class PiecePosition {
     public File file() {
         return file;
     }
+
+    public Rank rank() {
+        return rank;
+    }
 }

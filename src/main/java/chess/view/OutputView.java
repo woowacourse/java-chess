@@ -70,7 +70,7 @@ public class OutputView {
 
     private static String convertCaseAccordingToColor(final Piece piece) {
         final Map<Class<?>, String> pieceIconMap = colorIconMapping.get(piece.color());
-        return pieceIconMap.get(piece.pieceMovement().getClass());
+        return pieceIconMap.get(piece.pieceMovementStrategy().getClass());
     }
 
     public static void printStartMessage() {

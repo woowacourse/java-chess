@@ -6,6 +6,12 @@ import chess.domain.piece.position.Rank;
 
 public class BlackPawnMovementStrategy extends PawnMovementStrategy {
 
+    private static final Rank DEFAULT_PERMIT_TWO_RANK = Rank.from(7);
+
+    public BlackPawnMovementStrategy(final Color color) {
+        super(color, DEFAULT_PERMIT_TWO_RANK);
+    }
+
     public BlackPawnMovementStrategy(final Color color, final Rank permitTwoMoveRank) {
         super(color, permitTwoMoveRank);
     }

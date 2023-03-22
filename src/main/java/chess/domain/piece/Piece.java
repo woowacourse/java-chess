@@ -1,16 +1,23 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.movestrategy.PieceMovementStrategy;
+import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
 
 public class Piece {
 
+    private Long id;
     private final PiecePosition piecePosition;
     private final PieceMovementStrategy pieceMovementStrategy;
 
     public Piece(final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
+        this.piecePosition = piecePosition;
+        this.pieceMovementStrategy = pieceMovementStrategy;
+    }
+
+    public Piece(final Long id, final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
+        this.id = id;
         this.piecePosition = piecePosition;
         this.pieceMovementStrategy = pieceMovementStrategy;
     }
@@ -54,7 +61,11 @@ public class Piece {
         return piecePosition;
     }
 
-    public PieceMovementStrategy pieceMovement() {
+    public PieceMovementStrategy pieceMovementStrategy() {
         return pieceMovementStrategy;
+    }
+
+    public Long id() {
+        return id;
     }
 }

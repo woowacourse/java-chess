@@ -2,8 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Rank;
 import chess.domain.piece.movestrategy.BishopMovementStrategy;
 import chess.domain.piece.movestrategy.KingMovementStrategy;
 import chess.domain.piece.movestrategy.KnightMovementStrategy;
@@ -12,6 +10,8 @@ import chess.domain.piece.movestrategy.RookMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.PawnMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.WhitePawnMovementStrategy;
+import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -82,7 +82,7 @@ class ChessBoardTest {
     private static void assertPiece(final ChessBoard chessBoard, final int rank, final char file, final Color color, final Class<?> type) {
         final Piece piece = chessBoard.findByPosition(of(rank, file));
         assertThat(piece.color()).isEqualTo(color);
-        assertThat(piece.pieceMovement()).isInstanceOf(type);
+        assertThat(piece.pieceMovementStrategy()).isInstanceOf(type);
     }
 
     @Test
@@ -95,7 +95,7 @@ class ChessBoardTest {
                 .stream()
                 .collect(toMap(Piece::piecePosition, Function.identity()));
         assertThat(pieceMap.get(of(2, 'b'))).isNull();
-        assertThat(pieceMap.get(of(3, 'b')).pieceMovement()).isInstanceOf(PawnMovementStrategy.class);
+        assertThat(pieceMap.get(of(3, 'b')).pieceMovementStrategy()).isInstanceOf(PawnMovementStrategy.class);
     }
 
     @Test

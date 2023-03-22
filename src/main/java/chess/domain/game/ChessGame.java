@@ -13,28 +13,35 @@ import java.util.Map;
 
 public class ChessGame {
 
+    private Long id;
     private final ChessBoard chessBoard;
-    private ChessGameState step;
+    private ChessGameState state;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.step = new MovePiece(new Turn(Color.WHITE));
+        this.state = new MovePiece(new Turn(Color.WHITE));
+    }
+
+    public ChessGame(final Long id, final ChessBoard chessBoard, final ChessGameState state) {
+        this.id = id;
+        this.chessBoard = chessBoard;
+        this.state = state;
     }
 
     public void movePiece(final PiecePosition source, final PiecePosition destination) {
-        step = step.movePiece(chessBoard, source, destination);
+        state = state.movePiece(chessBoard, source, destination);
     }
 
     public boolean playable() {
-        return step.playable();
+        return state.playable();
     }
 
     public void end() {
-        step = step.end();
+        state = state.end();
     }
 
     public Color winColor() {
-        return step.winColor();
+        return state.winColor();
     }
 
     public List<Piece> pieces() {
@@ -42,10 +49,18 @@ public class ChessGame {
     }
 
     public Map<Color, Double> calculateScore() {
-        return step.calculateScore(chessBoard);
+        return state.calculateScore(chessBoard);
     }
 
     public ChessBoard chessBoard() {
         return chessBoard;
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public ChessGameState state() {
+        return state;
     }
 }

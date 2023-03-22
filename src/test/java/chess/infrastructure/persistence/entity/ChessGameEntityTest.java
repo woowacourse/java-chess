@@ -1,0 +1,54 @@
+package chess.infrastructure.persistence.entity;
+
+import chess.domain.board.ChessBoardFactory;
+import chess.domain.game.ChessGame;
+import chess.domain.game.state.EndGame;
+import chess.domain.piece.Color;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@DisplayName("ChessGameEntity 은")
+class ChessGameEntityTest {
+
+    @Test
+    void ChessGame_으로부터_생성될_수_있다() {
+        // given
+        final ChessGame chessGame = new ChessGame(new ChessBoardFactory().create());
+
+        // when
+        final ChessGameEntity chessGameEntity = ChessGameEntity.fromDomain(chessGame);
+
+        // then
+        assertAll(
+                () -> assertThat(chessGameEntity.id()).isNotNull(),
+                () -> assertThat(chessGameEntity.state()).isEqualTo("MovePiece"),
+                () -> assertThat(chessGameEntity.turn()).isEqualTo("WHITE"),
+                () -> assertThat(chessGameEntity.winner()).isNull()
+        );
+    }
+
+    @Test
+    void ChessGame_을_생성할_수_있다() {
+        // given
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, "EndGame", null, "BLACK");
+
+        // when
+        final ChessGame chessGame = chessGameEntity.toDomain(new ArrayList<>());
+
+        // then
+        assertAll(
+                () -> assertThat(chessGame.id()).isEqualTo(1L),
+                () -> assertThat(chessGame.state()).isInstanceOf(EndGame.class),
+                () -> assertThat(chessGame.winColor()).isEqualTo(Color.BLACK)
+        );
+    }
+}
