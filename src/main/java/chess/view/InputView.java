@@ -1,4 +1,4 @@
-package chess.domain.view;
+package chess.view;
 
 import static java.util.stream.Collectors.toList;
 

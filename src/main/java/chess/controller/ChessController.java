@@ -14,8 +14,8 @@ import chess.ChessGameCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
-import chess.domain.view.InputView;
-import chess.domain.view.OutputView;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
