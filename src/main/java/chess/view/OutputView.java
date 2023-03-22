@@ -33,7 +33,6 @@ public class OutputView {
 
         for (int rank = MAX_RANK; rank >= MIN_RANK; rank--) {
             iterateFile(chessBoard, rank);
-            System.out.println();
         }
         System.out.println();
     }
@@ -42,6 +41,7 @@ public class OutputView {
         for (int file = MIN_FILE; file <= MAX_FILE; file++) {
             printBoardUnit(chessBoard, rank, file);
         }
+        System.out.println();
     }
 
     private void printBoardUnit(Map<Position, Piece> chessBoard, int rank, int file) {
