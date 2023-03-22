@@ -1,5 +1,14 @@
 package domain.piece;
 
+import static domain.piece.File.B;
+import static domain.piece.File.C;
+import static domain.piece.File.D;
+import static domain.piece.File.E;
+import static domain.piece.File.F;
+import static domain.piece.Rank.FOUR;
+import static domain.piece.Rank.ONE;
+import static domain.piece.Rank.THREE;
+import static domain.piece.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -12,7 +21,7 @@ class RookTest {
     @Test
     void shouldReturnTrueWhenRookDirectionIsPerpendicular() {
         Rook whiteRook = Rook.createOfWhite();
-        boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("c", "4"));
+        boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of(C, TWO), Position.of(C, FOUR));
         assertThat(movable).isTrue();
     }
 
@@ -20,7 +29,7 @@ class RookTest {
     @Test
     void shouldReturnFalseWhenRookDirectionIsNotPerpendicular() {
         Rook whiteRook = Rook.createOfWhite();
-        boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("d", "4"));
+        boolean movable = whiteRook.isMovable(new EmptyPiece(), Position.of(C, TWO), Position.of(D, FOUR));
         assertThat(movable).isFalse();
     }
 
@@ -28,7 +37,7 @@ class RookTest {
     @Test
     void shouldReturnFalseWhenRookDirectionIsPerpendicularButTargetPieceIsSameSide() {
         Rook whiteRook = Rook.createOfWhite();
-        boolean movable = whiteRook.isMovable(Bishop.createOfWhite(), Position.of("c", "2"), Position.of("c", "4"));
+        boolean movable = whiteRook.isMovable(Bishop.createOfWhite(), Position.of(C, TWO), Position.of(C, FOUR));
         assertThat(movable).isFalse();
     }
 
@@ -36,7 +45,7 @@ class RookTest {
     @Test
     void shouldReturnTrueWhenRookDirectionIsPerpendicularAndTargetPieceIsOpponentSide() {
         Rook blackRook = Rook.createOfBlack();
-        boolean movable = blackRook.isMovable(Bishop.createOfWhite(), Position.of("c", "2"), Position.of("c", "4"));
+        boolean movable = blackRook.isMovable(Bishop.createOfWhite(), Position.of(C, TWO), Position.of(C, FOUR));
         assertThat(movable).isTrue();
     }
 
@@ -44,31 +53,31 @@ class RookTest {
     @Test
     void shouldReturnPathWhenRookMoveUpward() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.collectPath(Position.of("c", "1"), Position.of("c", "4"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "2"), Position.of("c", "3"));
+        List<Position> path = whiteRook.collectPath(Position.of(C, ONE), Position.of(C, FOUR));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(C, TWO), Position.of(C, THREE));
     }
 
     @DisplayName("Rook이 수직 아래로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveDownward() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.collectPath(Position.of("c", "4"), Position.of("c", "1"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("c", "2"));
+        List<Position> path = whiteRook.collectPath(Position.of(C, FOUR), Position.of(C, ONE));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(C, THREE), Position.of(C, TWO));
     }
 
     @DisplayName("Rook이 왼쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveLeft() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.collectPath(Position.of("e", "3"), Position.of("b", "3"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("c", "3"));
+        List<Position> path = whiteRook.collectPath(Position.of(E, THREE), Position.of(B, THREE));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(C, THREE));
     }
 
     @DisplayName("Rook이 오른쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveRight() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.collectPath(Position.of("c", "3"), Position.of("f", "3"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "3"));
+        List<Position> path = whiteRook.collectPath(Position.of(C, THREE), Position.of(F, THREE));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(E, THREE));
     }
 }

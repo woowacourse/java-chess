@@ -1,5 +1,15 @@
 package domain.piece;
 
+import static domain.piece.File.C;
+import static domain.piece.File.D;
+import static domain.piece.File.E;
+import static domain.piece.File.F;
+import static domain.piece.File.G;
+import static domain.piece.Rank.FIVE;
+import static domain.piece.Rank.FOUR;
+import static domain.piece.Rank.SIX;
+import static domain.piece.Rank.THREE;
+import static domain.piece.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -12,7 +22,7 @@ class BishopTest {
     @Test
     void shouldReturnTrueWhenDirectionIsDiagonal() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        boolean movable = whiteBishop.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("e", "4"));
+        boolean movable = whiteBishop.isMovable(new EmptyPiece(), Position.of(C, TWO), Position.of(E, FOUR));
         assertThat(movable).isTrue();
     }
 
@@ -20,7 +30,7 @@ class BishopTest {
     @Test
     void shouldReturnFalseWhenBishopDirectionIsNotDiagonal() {
         Bishop whiteBishop = Bishop.createOfBlack();
-        boolean movable = whiteBishop.isMovable(new EmptyPiece(), Position.of("c", "2"), Position.of("e", "3"));
+        boolean movable = whiteBishop.isMovable(new EmptyPiece(), Position.of(C, TWO), Position.of(E, THREE));
         assertThat(movable).isFalse();
     }
 
@@ -28,7 +38,7 @@ class BishopTest {
     @Test
     void shouldReturnFalseWhenBishopDirectionIsDiagonalButTargetPieceIsSameSide() {
         Bishop blackBishop = Bishop.createOfBlack();
-        boolean movable = blackBishop.isMovable(Pawn.createOfBlack(), Position.of("c", "2"), Position.of("e", "4"));
+        boolean movable = blackBishop.isMovable(Pawn.createOfBlack(), Position.of(C, TWO), Position.of(E, FOUR));
         assertThat(movable).isFalse();
     }
 
@@ -36,7 +46,7 @@ class BishopTest {
     @Test
     void shouldReturnTrueWhenBishopDirectionIsDiagonalAndTargetPieceIsOpponentSide() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        boolean movable = whiteBishop.isMovable(Pawn.createOfBlack(), Position.of("c", "2"), Position.of("e", "4"));
+        boolean movable = whiteBishop.isMovable(Pawn.createOfBlack(), Position.of(C, TWO), Position.of(E, FOUR));
         assertThat(movable).isTrue();
     }
 
@@ -44,31 +54,31 @@ class BishopTest {
     @Test
     void shouldReturnPathWhenBishopMoveRightUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.collectPath(Position.of("c", "2"), Position.of("g", "6"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "4"), Position.of("f", "5"));
+        List<Position> path = whiteBishop.collectPath(Position.of(C, TWO), Position.of(G, SIX));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(E, FOUR), Position.of(F, FIVE));
     }
 
     @DisplayName("Bishop이 오른쪽 아래로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveRightDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.collectPath(Position.of("c", "6"), Position.of("g", "2"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("d", "5"), Position.of("e", "4"), Position.of("f", "3"));
+        List<Position> path = whiteBishop.collectPath(Position.of(C, SIX), Position.of(G, TWO));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(D, FIVE), Position.of(E, FOUR), Position.of(F, THREE));
     }
 
     @DisplayName("Bishop이 왼쪽 아래로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveLeftDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.collectPath(Position.of("g", "6"), Position.of("c", "2"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("f", "5"), Position.of("e", "4"), Position.of("d", "3"));
+        List<Position> path = whiteBishop.collectPath(Position.of(G, SIX), Position.of(C, TWO));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(F, FIVE), Position.of(E, FOUR), Position.of(D, THREE));
     }
 
     @DisplayName("Bishop이 왼쪽 위로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveLeftUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.collectPath(Position.of("g", "2"), Position.of("c", "6"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("f", "3"), Position.of("e", "4"), Position.of("d", "5"));
+        List<Position> path = whiteBishop.collectPath(Position.of(G, TWO), Position.of(C, SIX));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(F, THREE), Position.of(E, FOUR), Position.of(D, FIVE));
     }
 }

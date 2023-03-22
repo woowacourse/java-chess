@@ -1,5 +1,9 @@
 package domain.piece;
 
+import static domain.piece.File.A;
+import static domain.piece.File.C;
+import static domain.piece.Rank.FIVE;
+import static domain.piece.Rank.SEVEN;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +15,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCallIsMovable() {
         assertThatThrownBy(() ->
-                new EmptyPiece().isMovable(Pawn.createOfBlack(), Position.of("a", "5"), Position.of("c", "7")))
+                new EmptyPiece().isMovable(Pawn.createOfBlack(), Position.of(A, FIVE), Position.of(C, SEVEN)))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("서버 내부 에러 - EmptyPiece는 움직임을 확인할 수 없습니다.");
     }
@@ -20,7 +24,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCallGetPath() {
         assertThatThrownBy(() ->
-                new EmptyPiece().collectPath(Position.of("a", "5"), Position.of("c", "7")))
+                new EmptyPiece().collectPath(Position.of(A, FIVE), Position.of(C, SEVEN)))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("서버 내부 에러 - EmptyPiece는 움직임의 경로를 계산할 수 없습니다.");
     }

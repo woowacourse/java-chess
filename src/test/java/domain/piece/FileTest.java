@@ -8,26 +8,11 @@ import org.junit.jupiter.api.Test;
 
 public class FileTest {
 
-    @DisplayName("사용자 입력 텍스트에 맞는 File을 반환한다.")
-    @Test
-    void shouldReturnAppropriateFileWhenInputText() {
-        File file = File.from("a");
-        assertThat(file).isEqualTo(File.A);
-    }
-
-    @DisplayName("유효하지 않은 File 텍스트 입력 시 예외가 발생한다.")
-    @Test
-    void shouldThrowExceptionWhenInvalidFileText() {
-        assertThatThrownBy(() -> File.from("q"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 file입니다.");
-    }
-
     @DisplayName("Source file과 Target file의 거리 차이를 반환한다.")
     @Test
     void shouldReturnDistanceBetweenSourceAndTargetWhenInput() {
-        File sourceFile = File.from("d");
-        File targetFile = File.from("g");
+        File sourceFile = File.D;
+        File targetFile = File.G;
         assertThat(sourceFile.calculateIncrement(targetFile)).isEqualTo(3);
     }
 

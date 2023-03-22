@@ -34,62 +34,59 @@ public class ChessBoardGenerator {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
         Arrays.stream(Rank.values())
                 .forEach(rank -> generateEmptyPieceByEachRank(chessBoard, rank));
-
         generateWhitePiecesExcludePawn(chessBoard);
         generateWhitePawns(chessBoard);
-
         generateBlackPiecesExcludePawn(chessBoard);
         generateBlackPawns(chessBoard);
-
         return chessBoard;
     }
 
     private void generateWhitePiecesExcludePawn(Map<Position, Piece> chessBoard) {
-        chessBoard.put(new Position(A, ONE), Rook.createOfWhite());
-        chessBoard.put(new Position(B, ONE), Knight.createOfWhite());
-        chessBoard.put(new Position(C, ONE), Bishop.createOfWhite());
-        chessBoard.put(new Position(D, ONE), Queen.createOfWhite());
-        chessBoard.put(new Position(E, ONE), King.createOfWhite());
-        chessBoard.put(new Position(F, ONE), Bishop.createOfWhite());
-        chessBoard.put(new Position(G, ONE), Knight.createOfWhite());
-        chessBoard.put(new Position(H, ONE), Rook.createOfWhite());
+        chessBoard.put(Position.of(A, ONE), Rook.createOfWhite());
+        chessBoard.put(Position.of(B, ONE), Knight.createOfWhite());
+        chessBoard.put(Position.of(C, ONE), Bishop.createOfWhite());
+        chessBoard.put(Position.of(D, ONE), Queen.createOfWhite());
+        chessBoard.put(Position.of(E, ONE), King.createOfWhite());
+        chessBoard.put(Position.of(F, ONE), Bishop.createOfWhite());
+        chessBoard.put(Position.of(G, ONE), Knight.createOfWhite());
+        chessBoard.put(Position.of(H, ONE), Rook.createOfWhite());
     }
 
     private void generateWhitePawns(Map<Position, Piece> chessBoard) {
-        chessBoard.put(new Position(A, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(B, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(C, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(D, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(E, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(F, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(G, TWO), Pawn.createOfWhite());
-        chessBoard.put(new Position(H, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(A, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(B, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(C, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(D, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(E, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(F, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(G, TWO), Pawn.createOfWhite());
+        chessBoard.put(Position.of(H, TWO), Pawn.createOfWhite());
     }
 
     private void generateBlackPiecesExcludePawn(Map<Position, Piece> chessBoard) {
-        chessBoard.put(new Position(A, EIGHT), Rook.createOfBlack());
-        chessBoard.put(new Position(B, EIGHT), Knight.createOfBlack());
-        chessBoard.put(new Position(C, EIGHT), Bishop.createOfBlack());
-        chessBoard.put(new Position(D, EIGHT), Queen.createOfBlack());
-        chessBoard.put(new Position(E, EIGHT), King.createOfBlack());
-        chessBoard.put(new Position(F, EIGHT), Bishop.createOfBlack());
-        chessBoard.put(new Position(G, EIGHT), Knight.createOfBlack());
-        chessBoard.put(new Position(H, EIGHT), Rook.createOfBlack());
+        chessBoard.put(Position.of(A, EIGHT), Rook.createOfBlack());
+        chessBoard.put(Position.of(B, EIGHT), Knight.createOfBlack());
+        chessBoard.put(Position.of(C, EIGHT), Bishop.createOfBlack());
+        chessBoard.put(Position.of(D, EIGHT), Queen.createOfBlack());
+        chessBoard.put(Position.of(E, EIGHT), King.createOfBlack());
+        chessBoard.put(Position.of(F, EIGHT), Bishop.createOfBlack());
+        chessBoard.put(Position.of(G, EIGHT), Knight.createOfBlack());
+        chessBoard.put(Position.of(H, EIGHT), Rook.createOfBlack());
     }
 
     private void generateBlackPawns(Map<Position, Piece> chessBoard) {
-        chessBoard.put(new Position(A, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(B, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(C, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(D, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(E, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(F, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(G, SEVEN), Pawn.createOfBlack());
-        chessBoard.put(new Position(H, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(A, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(B, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(C, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(D, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(E, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(F, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(G, SEVEN), Pawn.createOfBlack());
+        chessBoard.put(Position.of(H, SEVEN), Pawn.createOfBlack());
     }
 
     private void generateEmptyPieceByEachRank(Map<Position, Piece> chessBoard, Rank rank) {
         Arrays.stream(File.values())
-                .forEach(file -> chessBoard.put(new Position(file, rank), new EmptyPiece()));
+                .forEach(file -> chessBoard.put(Position.of(file, rank), new EmptyPiece()));
     }
 }

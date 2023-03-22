@@ -5,8 +5,31 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Position {
+    private static final List<Position> cache = generatePositionCache();
+
     private final Rank rank;
     private final File file;
+
+    private static List<Position> generatePositionCache() {
+        List<Position> positions = new ArrayList<>();
+        for (File file : File.values()) {
+            addPositionOfAllRankByFile(positions, file);
+        }
+        return positions;
+    }
+
+    private static void addPositionOfAllRankByFile(List<Position> positions, File file) {
+        for (Rank rank : Rank.values()) {
+            positions.add(new Position(file, rank));
+        }
+    }
+
+    public static Position of(File file, Rank rank) {
+        return cache.stream()
+                .filter(position -> position.file.equals(file) && position.rank.equals(rank))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - File, Rank에 해당하는 Position을 찾을 수 없습니다."));
+    }
 
     public Position(File file, Rank rank) {
         this.file = file;
@@ -24,7 +47,7 @@ public final class Position {
     }
 
     public List<Position> getPath(Position targetPosition) {
-        Position movingPosition = new Position(this.file, this.rank);
+        Position movingPosition = Position.of(this.file, this.rank);
         Movement movement = this.calculateMovement(targetPosition);
 
         List<Position> path = new ArrayList<>();
@@ -39,7 +62,7 @@ public final class Position {
     private Position moveOneStepBy(Movement direction) {
         File file = getDirectionOfFile(direction);
         Rank rank = getDirectionOfRank(direction);
-        return new Position(file, rank);
+        return Position.of(file, rank);
     }
 
     private File getDirectionOfFile(Movement direction) {

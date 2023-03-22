@@ -1,5 +1,15 @@
 package domain.piece;
 
+import static domain.piece.File.A;
+import static domain.piece.File.B;
+import static domain.piece.File.C;
+import static domain.piece.Rank.FIVE;
+import static domain.piece.Rank.FOUR;
+import static domain.piece.Rank.ONE;
+import static domain.piece.Rank.SEVEN;
+import static domain.piece.Rank.SIX;
+import static domain.piece.Rank.THREE;
+import static domain.piece.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -14,7 +24,7 @@ public class PawnTest {
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsWhiteSide() {
         Pawn whitePawn = Pawn.createOfWhite();
-        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", "2"), Position.of("a", "3"));
+        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of(A, TWO), Position.of(A, THREE));
         assertThat(movable).isTrue();
     }
 
@@ -22,33 +32,33 @@ public class PawnTest {
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsBlackSide() {
         Pawn blackPawn = Pawn.createOfBlack();
-        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", "7"), Position.of("a", "6"));
+        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of(A, SEVEN), Position.of(A, SIX));
         assertThat(movable).isTrue();
     }
 
     @DisplayName("White 진영인 경우 - 처음 움직일 때 Target position이 Source position의 rank보다 2높으면 true를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"2, 4, true", "2,3,true", "2,5,false", "3,4,true", "3,5,false"})
+    @CsvSource(value = {"TWO,FOUR,true", "TWO,THREE,true", "TWO,FIVE,false", "THREE,FOUR,true", "THREE,FIVE,false"})
     void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsWhiteSideAndFirstMoving(
-            String sourceRank,
-            String targetRank,
+            Rank sourceRank,
+            Rank targetRank,
             boolean result) {
         Pawn whitePawn = Pawn.createOfWhite();
-        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank),
-                Position.of("a", targetRank));
+        boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of(A, sourceRank),
+                Position.of(A, targetRank));
         assertThat(movable).isEqualTo(result);
     }
 
     @DisplayName("Black 진영인 경우 - 처음 움직일 때 Target position이 Source position의 rank보다 2낮으면 true를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"7, 5, true", "7,6,true", "7,4,false", "6,5,true", "6,4,false"})
+    @CsvSource(value = {"SEVEN, FIVE, true", "SEVEN,SIX,true", "SEVEN,FOUR,false", "SIX,FIVE,true", "SIX,FOUR,false"})
     void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsBlackSideAndFirstMoving(
-            String sourceRank,
-            String targetRank,
+            Rank sourceRank,
+            Rank targetRank,
             boolean result) {
         Pawn blackPawn = Pawn.createOfBlack();
-        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank),
-                Position.of("a", targetRank));
+        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of(A, sourceRank),
+                Position.of(A, targetRank));
         assertThat(movable).isEqualTo(result);
     }
 
@@ -90,10 +100,10 @@ public class PawnTest {
 
     @DisplayName("White 진영인 경우 - 위쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"c,2,b,3,true", "c,2,d,3,true", "c,2,c,3,false"})
+    @CsvSource(value = {"C,TWO,B,THREE,true", "C,TWO,D,THREE,true", "C,TWO,C,THREE,false"})
     void shouldReturnTrueWhenMoveToOpponentPieceWhitePawn(
-            String sourceFile, String sourceRank,
-            String targetFile, String targetRank,
+            File sourceFile, Rank sourceRank,
+            File targetFile, Rank targetRank,
             boolean result) {
         Pawn sourcePawn = Pawn.createOfWhite();
         boolean movable = sourcePawn.isMovable(
@@ -105,10 +115,10 @@ public class PawnTest {
 
     @DisplayName("Black 진영인 경우 - 아래쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"c,7,b,6,true", "c,7,d,6,true", "c,7,c,6,false"})
+    @CsvSource(value = {"C,SEVEN,B,SIX,true", "C,SEVEN,D,SIX,true", "C,SEVEN,C,SIX,false"})
     void shouldReturnTrueWhenMoveToOpponentPieceBlackPawn(
-            String sourceFile, String sourceRank,
-            String targetFile, String targetRank,
+            File sourceFile, Rank sourceRank,
+            File targetFile, Rank targetRank,
             boolean result) {
         Pawn sourcePawn = Pawn.createOfBlack();
         boolean movable = sourcePawn.isMovable(
@@ -122,7 +132,7 @@ public class PawnTest {
     @Test
     void shouldHasNoPositionWhenGetPathWhitePawn() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "3"));
+        List<Position> path = pawn.collectPath(Position.of(B, TWO), Position.of(B, THREE));
         assertThat(path).isEmpty();
     }
 
@@ -130,15 +140,15 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenWhitePawnMoveTwoSteps() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "4"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "3"));
+        List<Position> path = pawn.collectPath(Position.of(B, TWO), Position.of(B, FOUR));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(B, THREE));
     }
 
     @DisplayName("White 진영의 Pawn이 오른쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenWhitePawnMoveRightUpward() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "3"));
+        List<Position> path = pawn.collectPath(Position.of(B, TWO), Position.of(C, THREE));
         assertThat(path).isEmpty();
     }
 
@@ -146,7 +156,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenWhitePawnMoveLeftUpward() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "1"));
+        List<Position> path = pawn.collectPath(Position.of(B, TWO), Position.of(C, ONE));
         assertThat(path).isEmpty();
     }
 
@@ -154,7 +164,7 @@ public class PawnTest {
     @Test
     void shouldHasNoPositionWhenGetPathBlackPawn() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "6"));
+        List<Position> path = pawn.collectPath(Position.of(B, SEVEN), Position.of(B, SIX));
         assertThat(path).isEmpty();
     }
 
@@ -162,15 +172,15 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenBlackPawnMoveTwoSteps() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "5"));
-        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "6"));
+        List<Position> path = pawn.collectPath(Position.of(B, SEVEN), Position.of(B, FIVE));
+        assertThat(path).containsExactlyInAnyOrder(Position.of(B, SIX));
     }
 
     @DisplayName("Black 진영의 Pawn이 오른쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenBLackPawnMoveRightDownward() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("c", "6"));
+        List<Position> path = pawn.collectPath(Position.of(B, SEVEN), Position.of(C, SIX));
         assertThat(path).isEmpty();
     }
 
@@ -178,7 +188,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenBlackPawnMoveLeftDownward() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("a", "6"));
+        List<Position> path = pawn.collectPath(Position.of(B, SEVEN), Position.of(A, SIX));
         assertThat(path).isEmpty();
     }
 }
