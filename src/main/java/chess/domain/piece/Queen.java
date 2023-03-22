@@ -40,4 +40,9 @@ public class Queen extends Piece {
         return target.isDifferentColor(color);
     }
 
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
 }

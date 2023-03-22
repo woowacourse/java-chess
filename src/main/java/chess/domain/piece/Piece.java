@@ -21,6 +21,8 @@ public abstract class Piece {
 
     public abstract boolean canAttack(final Piece target, final Position source, final Position dest);
 
+    public abstract boolean isPawn();
+
     public boolean isDifferentColor(final TeamColor color) {
         return !isSameColor(color);
     }
@@ -35,6 +37,10 @@ public abstract class Piece {
 
     public PieceType getType() {
         return type;
+    }
+
+    public double getScore() {
+        return type.getScore();
     }
 
     @Override

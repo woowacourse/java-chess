@@ -69,4 +69,9 @@ public class Pawn extends Piece {
         return source.isOneStepForwardDiagonal(dest);
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
 }
