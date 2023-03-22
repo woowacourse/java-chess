@@ -24,4 +24,12 @@ public class ScoreCalculator {
             }
         }
     }
+
+    public int getBlackScore() {
+        return blackScore;
+    }
+
+    public int getWhiteScore() {
+        return whiteScore;
+    }
 }

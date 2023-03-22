@@ -1,35 +1,64 @@
 package chess.controller;
 
-import chess.domain.Column;
 import chess.domain.Position;
-import chess.domain.Rank;
 import chess.domain.boardStrategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.view.Command;
 
+import java.util.Map;
+
+import static chess.view.Command.isEnd;
+import static chess.view.Command.isMove;
+import static chess.view.Command.isStart;
+import static chess.view.Command.isStatus;
 import static chess.view.ErrorMessage.FIRST_COMMAND_ERROR_MESSAGE;
 import static chess.view.InputView.readStateCommand;
 import static chess.view.OutputView.printBoard;
+import static chess.view.OutputView.printCheckmateGuideMessage;
 import static chess.view.OutputView.printExceptionMessage;
+import static chess.view.OutputView.printScores;
 import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
+    //todo: emptyPosition을 move하겠다고 하면 errormessage 출력
 
     public void playChessGame() {
         printStartGuideMessage();
-        ChessGame chessGame;
+        ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
 
-        Command command = getfirstCommand();
-        while (isCommandStart(command)) {
-            chessGame = new ChessGame(new InitialBoardStrategy());
-            printChessGame(chessGame);
-            command = inputMoveCommand(chessGame);
+        Command command = getFirstCommand();
+        play(chessGame, command);
+    }
+
+    //todo: method extract하자니 덜 직관적이게 된다. 해결방법이 없을까요?
+    private void play(ChessGame chessGame, Command command) {
+        while (gameCondition(chessGame, command)) {
+            if (isEnd(command)) {
+                break;
+            }
+
+            if (isStatus(command)) {
+                printScores(chessGame.getChessBoard());
+            }
+
+            if (isStart(command)) {
+                chessGame = new ChessGame(new InitialBoardStrategy());
+                printChessGame(chessGame);
+            }
+
+            command = inputCommand(chessGame);
         }
     }
 
-    private Command getfirstCommand() {
+    private boolean gameCondition(ChessGame chessGame, Command command) {
+        return !isCheckmate(chessGame) && (isStart(command) || isStatus(command));
+    }
+
+    private Command getFirstCommand() {
         try {
             CommandDto commandDto = readStateCommand();
             Command command = commandDto.getCommand();
@@ -37,7 +66,7 @@ public class Controller {
             return command;
         } catch (IllegalArgumentException exception) {
             printExceptionMessage(exception);
-            return getfirstCommand();
+            return getFirstCommand();
         }
     }
 
@@ -47,26 +76,26 @@ public class Controller {
         }
     }
 
-    private boolean isCommandStart(Command command) {
-        return command == Command.START;
-    }
-
-    private Command inputMoveCommand(ChessGame chessGame) {
+    //todo: method extract하자니 덜 직관적이게 됩니다. 해결방법이 없을까요?
+    private Command inputCommand(ChessGame chessGame) {
         try {
             CommandDto commandDto = readStateCommand();
             Command command = commandDto.getCommand();
 
-            while (command == Command.MOVE) {
-                Position start = new Position(
-                        Column.findColumnByValue(commandDto.getColumnOfStartSource())
-                        , Rank.findRankByValue(commandDto.getRankOfStartSource()));
+            while (isMove(command) || isStatus(command)) {
 
-                Position end = new Position(
-                        Column.findColumnByValue(commandDto.getColumnOfEndSource()),
-                        Rank.findRankByValue(commandDto.getRankOfEndSource()));
+                if (isStatus(command)) {
+                    printScores(chessGame.getChessBoard());
+                }
 
-                chessGame.move(start, end);
-                printChessGame(chessGame);
+                if (isMove(command)) {
+                    move(chessGame, commandDto);
+
+                    if (isCheckmate(chessGame)) {
+                        printCheckmateGuideMessage();
+                        return Command.END;
+                    }
+                }
 
                 commandDto = readStateCommand();
                 command = commandDto.getCommand();
@@ -75,8 +104,26 @@ public class Controller {
 
         } catch (IllegalArgumentException exception) {
             printExceptionMessage(exception);
-            return inputMoveCommand(chessGame);
+            return inputCommand(chessGame);
         }
+    }
+
+    private void move(ChessGame chessGame, CommandDto commandDto) {
+        Position start = new Position(commandDto.getColumnOfStartSource(), commandDto.getRankOfStartSource());
+        Position end = new Position(commandDto.getColumnOfEndSource(), commandDto.getRankOfEndSource());
+
+        chessGame.move(start, end);
+        printChessGame(chessGame);
+    }
+
+    private boolean isCheckmate(ChessGame chessGame) {
+        Map<Position, Piece> chessBoard = chessGame.getChessBoard();
+        int kingCount = (int) chessBoard.values()
+                .stream()
+                .filter(piece -> piece instanceof King)
+                .count();
+
+        return kingCount < 2;
     }
 
     private void printChessGame(ChessGame chessGame) {
