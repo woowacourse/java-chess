@@ -8,13 +8,20 @@ import java.util.List;
 
 public class Queen extends Piece {
 
+    private static final double SCORE = 9;
+
     public Queen(final Color color) {
-        super(color, new SlidingStrategy(SlidingVector.ofQueen()));
+        super(color, new SlidingStrategy(SlidingVector.ofQueen()), SCORE);
     }
 
     @Override
     public boolean isMovable(final Square source, final Square destination, final BoardSnapShot boardSnapShot) {
         final List<Square> route = strategy.findRoute(source, destination);
         return boardSnapShot.canMove(source, route);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

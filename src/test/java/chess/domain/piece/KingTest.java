@@ -50,4 +50,11 @@ class KingTest {
             assertThat(king.isMovable(E_FOUR, F_FIVE, boardSnapShot)).isFalse();
         }
     }
+
+    @Test
+    void 킹은_폰이_아니다() {
+        final King king = new King(BLACK);
+
+        assertThat(king.isPawn()).isFalse();
+    }
 }

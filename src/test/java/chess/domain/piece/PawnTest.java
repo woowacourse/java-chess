@@ -133,4 +133,11 @@ class PawnTest {
             }
         }
     }
+
+    @Test
+    void 폰은_폰이다() {
+        final Pawn pawn = new Pawn(WHITE);
+
+        assertThat(pawn.isPawn()).isTrue();
+    }
 }

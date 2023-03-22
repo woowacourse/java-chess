@@ -2,33 +2,39 @@
 
 ```mermaid
 graph TD
-  ChessController --> InputView
-  ChessController --> OutputView
-  ChessController --> ExecuteState
+    ChessController --> InputView
+    ChessController --> OutputView
+    ChessController --> ExecuteState
 
-  ChessController --> ChessGame
-  ChessGame --> Board
+    ChessController --> ChessGame
+    ChessGame --> Board
 
-  Square --> File
-  Square --> Rank
+    Square --> File
+    Square --> Rank
 
-  BoardFactory --> Board
+    BoardFactory --> Board
 
-  Board --> Square
-  Board --> PIECE
+    Board --> Square
+    Board --> PIECE
 
-  PIECE --> Color
-  PIECE --> Strategy
+    PIECE --> Color
+    PIECE --> Strategy
 
-  subgraph PIECE
-    direction BT
-    Pawn -.-> Piece
-    Rook -.-> Piece
-    Bishop -.-> Piece
-    Knight -.-> Piece
-    Queen -.-> Piece
-    King -.-> Piece
-  end
+    Strategy --> DirectStrategy
+    Strategy --> SlidingStrategy
+
+    DirectStrategy --> DirectVector
+    SlidingStrategy --> SlidingVector
+
+    subgraph PIECE
+        direction BT
+        Pawn -.-> Piece
+        Rook -.-> Piece
+        Bishop -.-> Piece
+        Knight -.-> Piece
+        Queen -.-> Piece
+        King -.-> Piece
+    end
 ```
 
 ## 구현 기능 목록
@@ -44,6 +50,7 @@ graph TD
 - [x] 이동 경로로 이동할 수 있는지 확인한다.
 - [x] 폰이 이동 경로로 이동할 수 있는지 확인한다.
 - [x] 기물 위치를 업데이트한다.
+- [ ] 색에 따른 기물 점수를 계산한다.
 
 ### 체스 칸
 
@@ -73,10 +80,10 @@ graph TD
     - [x] 흑과 백이 존재한다.
     - [x] 검은색인지 확인한다.
     - [x] 같은 색인지 확인한다.
-- [x] 움직이는 경로를 반환한다.
+- [x] 움직일 수 있는지 확인한다.
 - [x] 폰인지 확인한다.
 
-### 방향 벡터
+### 벡터
 
 - [x] 움직이려는 방향으로 갈 수 있는지 확인한다.
 - [x] 방향의 다음 파일을 반환한다.

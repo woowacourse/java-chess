@@ -50,4 +50,11 @@ class KnightTest {
             assertThat(knight.isMovable(E_FOUR, F_SIX, boardSnapShot)).isFalse();
         }
     }
+
+    @Test
+    void 나이트는_폰이_아니다() {
+        final Knight knight = new Knight(BLACK);
+
+        assertThat(knight.isPawn()).isFalse();
+    }
 }

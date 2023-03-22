@@ -51,4 +51,11 @@ class QueenTest {
             assertThat(queen.isMovable(A_ONE, H_EIGHT, boardSnapShot)).isFalse();
         }
     }
+
+    @Test
+    void 퀸은_폰이_아니다() {
+        final Queen queen = new Queen(BLACK);
+
+        assertThat(queen.isPawn()).isFalse();
+    }
 }

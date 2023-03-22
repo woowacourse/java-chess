@@ -8,13 +8,20 @@ import java.util.List;
 
 public class King extends Piece {
 
+    private static final double SCORE = 0;
+
     public King(final Color color) {
-        super(color, new DirectStrategy(DirectVector.ofKing()));
+        super(color, new DirectStrategy(DirectVector.ofKing()), SCORE);
     }
 
     @Override
     public boolean isMovable(final Square source, final Square destination, final BoardSnapShot boardSnapShot) {
         final List<Square> route = strategy.findRoute(source, destination);
         return boardSnapShot.canMove(source, route);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

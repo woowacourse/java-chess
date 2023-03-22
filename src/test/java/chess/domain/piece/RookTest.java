@@ -51,4 +51,11 @@ class RookTest {
             assertThat(rook.isMovable(E_THREE, E_SIX, boardSnapShot)).isFalse();
         }
     }
+
+    @Test
+    void 룩은_폰이_아니다() {
+        final Rook rook = new Rook(BLACK);
+
+        assertThat(rook.isPawn()).isFalse();
+    }
 }

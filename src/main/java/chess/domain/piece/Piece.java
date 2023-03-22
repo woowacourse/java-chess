@@ -8,10 +8,12 @@ public abstract class Piece {
 
     protected final Color color;
     protected final Strategy strategy;
+    protected final double score;
 
-    protected Piece(final Color color, final Strategy strategy) {
+    protected Piece(final Color color, final Strategy strategy, final double score) {
         this.color = color;
         this.strategy = strategy;
+        this.score = score;
     }
 
     public boolean isBlack() {
@@ -30,5 +32,11 @@ public abstract class Piece {
         return color;
     }
 
+    public double getScore() {
+        return score;
+    }
+
     public abstract boolean isMovable(final Square source, final Square destination, final BoardSnapShot boardSnapShot);
+
+    public abstract boolean isPawn();
 }

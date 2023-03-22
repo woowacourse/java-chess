@@ -50,4 +50,11 @@ class BishopTest {
             assertThat(bishop.isMovable(H_EIGHT, E_FIVE, boardSnapShot)).isFalse();
         }
     }
+
+    @Test
+    void 비숍은_폰이_아니다() {
+        final Bishop bishop = new Bishop(BLACK);
+
+        assertThat(bishop.isPawn()).isFalse();
+    }
 }
