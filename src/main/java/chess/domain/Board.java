@@ -3,20 +3,18 @@ package chess.domain;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import chess.domain.team.Team;
 import chess.initial.BoardFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
 
     private static final int START_INDEX = 0;
+    private static final int START_COUNT = 0;
+    private static final int INCLUDE_TARGET = 1;
 
     private final Map<Position, Piece> board;
 
@@ -93,30 +91,11 @@ public class Board {
         final Direction unitVector = Direction.findByPosition(source, target);
         final Piece piece = board.get(source);
 
-        final List<Position> path = calculatePath(source, target, unitVector);
-
-        validatePathIsEmpty(path);
-        validateMovableByCount(piece, path.size() + 1);
-    }
-
-    private List<Position> calculatePath(Position source, Position target, Direction unitVector) {
-        char file = source.file();
-        int rank = source.rank();
-        List<Position> path = new ArrayList<>();
-
-        while (file != target.file() || rank != target.rank()) {
-            file += unitVector.getDx();
-            rank += unitVector.getDy();
-            path.add(Position.of(File.of(file), Rank.of(rank)));
+        int count = START_COUNT;
+        for (Position next = source.add(unitVector); !next.equals(target); next = next.add(unitVector), count++) {
+            validatePositionIsEmpty(next);
         }
-
-        return path.subList(START_INDEX, path.size() - 1);
-    }
-
-    private void validatePathIsEmpty(final List<Position> path) {
-        for (final Position position : path) {
-            validatePositionIsEmpty(position);
-        }
+        validateMovableByCount(piece, count + INCLUDE_TARGET);
     }
 
     private void validatePositionIsEmpty(final Position position) {
@@ -125,8 +104,8 @@ public class Board {
         }
     }
 
-    private void validateMovableByCount(final Piece piece, final int pathSize) {
-        if (!piece.movableByCount(pathSize)) {
+    private void validateMovableByCount(final Piece piece, final int count) {
+        if (!piece.movableByCount(count)) {
             throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다.");
         }
     }

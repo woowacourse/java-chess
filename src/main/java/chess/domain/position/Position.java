@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.Objects;
 
 public final class Position {
@@ -23,6 +25,13 @@ public final class Position {
 
     public static Position of(final File file, final Rank rank) {
         return new Position(file, rank);
+    }
+
+    public Position add(final Direction unitVector) {
+        final File nextFile = File.of((char) (file() + unitVector.getDx()));
+        final Rank nextRank = Rank.of(rank() + unitVector.getDy());
+
+        return new Position(nextFile, nextRank);
     }
 
     public int diffFile(final Position target) {
