@@ -6,7 +6,7 @@ public enum Command {
     END("end");
 
     private static final String NO_COMMAND_ERROR_GUIDE_MESSAGE = "일치하는 명령이 없습니다.";
-    private String value;
+    private final String value;
 
     Command(String value) {
         this.value = value;

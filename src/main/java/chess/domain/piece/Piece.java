@@ -25,7 +25,7 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public Direction findDirectionToMove(Position start, Position end) {
+    public Direction findDirection(Position start, Position end) {
         return Direction.findDirectionByGap(start, end, this);
     }
 

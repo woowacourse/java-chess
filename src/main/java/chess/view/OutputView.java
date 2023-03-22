@@ -27,7 +27,7 @@ public class OutputView {
         }
     }
 
-    public static void printExceptionMessage(Exception exception){
+    public static void printExceptionMessage(Exception exception) {
         System.out.println(exception.getMessage());
     }
 }

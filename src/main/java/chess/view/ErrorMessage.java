@@ -10,7 +10,7 @@ public enum ErrorMessage {
     OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE("이동 경로에 기물이 있으므로 이동할 수 없습니다");
 
 
-    private String errorMessage;
+    private final String errorMessage;
 
     ErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;

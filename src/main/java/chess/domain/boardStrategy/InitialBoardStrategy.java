@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class InitialBoardStrategy implements BoardStrategy {
-    private Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
     public Map<Position, Piece> generate() {
@@ -46,7 +46,7 @@ public class InitialBoardStrategy implements BoardStrategy {
                 new King(color), new Bishop(color), new Knight(color), new Rook(color));
 
         IntStream.range(0, firstRowPieces.size())
-                .forEach(i -> board.replace(new Position(Column.findColumnByIndex(i+1), rank),
+                .forEach(i -> board.replace(new Position(Column.findColumnByIndex(i + 1), rank),
                         firstRowPieces.get(i))
                 );
 
