@@ -2,20 +2,20 @@ package chess.domain.piece;
 
 import java.util.function.Function;
 
-public enum Camp {
+public enum Team {
     WHITE(weight -> weight), BLACK(weight -> -weight), EMPTY(weight -> 0);
 
     private final Function<Integer, Integer> expression;
 
-    Camp(final Function<Integer, Integer> expression) {
+    Team(final Function<Integer, Integer> expression) {
         this.expression = expression;
     }
 
     public int calculateDirection(final int weight) {
-        return expression.apply(weight);
+        return this.expression.apply(weight);
     }
 
-    public Camp nextTurn(final Camp turn) {
+    public Team nextTurn(final Team turn) {
         if (turn.equals(WHITE)) {
             return BLACK;
         }

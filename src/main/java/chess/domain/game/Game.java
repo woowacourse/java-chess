@@ -2,18 +2,18 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Square;
-import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.exception.CampNotMatchException;
 import java.util.List;
 
 public class Game {
     private final Board board;
-    private Camp turn;
+    private Team turn;
 
     public Game() {
         this.board = new Board();
-        this.turn = Camp.WHITE;
+        this.turn = Team.WHITE;
     }
 
     public List<Piece> getPieces() {

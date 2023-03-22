@@ -6,11 +6,11 @@ import chess.domain.board.Square;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final Camp camp;
+    protected final Team team;
     protected final Role role;
 
-    public Piece(final Camp camp, final Role role) {
-        this.camp = camp;
+    public Piece(final Team team, final Role role) {
+        this.team = team;
         this.role = role;
     }
 
@@ -26,20 +26,20 @@ public abstract class Piece {
         return this.role == role;
     }
 
-    public boolean isSameCamp(final Camp camp) {
-        return this.camp == camp;
+    public boolean isSameCamp(final Team team) {
+        return this.team == team;
     }
 
-    public boolean isAnotherCamp(final Camp camp) {
-        return this.camp != camp;
+    public boolean isAnotherCamp(final Team team) {
+        return this.team != team;
     }
 
-    public Camp getCamp() {
-        return camp;
+    public Team getCamp() {
+        return this.team;
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     @Override
@@ -47,15 +47,15 @@ public abstract class Piece {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
         final Piece piece = (Piece) o;
-        return camp == piece.camp && role == piece.role;
+        return this.team == piece.team && this.role == piece.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, role);
+        return Objects.hash(this.team, this.role);
     }
 }

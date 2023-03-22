@@ -3,11 +3,11 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.exception.PieceCanNotMoveException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
@@ -22,11 +22,11 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(
                         0,
-                        new Rook(Camp.BLACK)
+                        new Rook(Team.BLACK)
                 ),
                 Arguments.of(
                         1,
-                        new Knight(Camp.BLACK)
+                        new Knight(Team.BLACK)
                 ),
                 Arguments.of(
                         30,
@@ -35,7 +35,7 @@ class BoardTest {
                 ),
                 Arguments.of(
                         63,
-                        new Rook(Camp.WHITE)
+                        new Rook(Team.WHITE)
                 )
         );
     }

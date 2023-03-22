@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.List;
 
 public class OutputView {
@@ -24,7 +24,7 @@ public class OutputView {
     }
 
     private String checkPieceCamp(final List<Piece> pieces, final int i, String pieceRole) {
-        if (pieces.get(i - 1).getCamp().equals(Camp.WHITE)) {
+        if (pieces.get(i - 1).getCamp().equals(Team.WHITE)) {
             pieceRole = pieceRole.toLowerCase();
         }
         return pieceRole;

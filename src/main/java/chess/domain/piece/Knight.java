@@ -7,8 +7,8 @@ import java.util.List;
 public class Knight extends Piece {
     private static final List<KnightMove> POSSIBLE_MOVES = List.of(KnightMove.values());
 
-    public Knight(final Camp camp) {
-        super(camp, Role.KNIGHT);
+    public Knight(final Team team) {
+        super(team, Role.KNIGHT);
     }
 
     @Override

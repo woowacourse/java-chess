@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -10,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Role;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.exception.PieceCanNotMoveException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,38 +43,38 @@ public class Board {
     private List<Piece> generatePieces() {
         final List<Piece> pieces = new ArrayList<>();
 
-        pieces.addAll(this.generateFirstLine(Camp.BLACK));
-        pieces.addAll(this.generateSecondLine(Camp.BLACK));
+        pieces.addAll(this.generateFirstLine(Team.BLACK));
+        pieces.addAll(this.generateSecondLine(Team.BLACK));
         pieces.addAll(this.generateEmptyLine());
         pieces.addAll(this.generateEmptyLine());
         pieces.addAll(this.generateEmptyLine());
         pieces.addAll(this.generateEmptyLine());
-        pieces.addAll(this.generateSecondLine(Camp.WHITE));
-        pieces.addAll(this.generateFirstLine(Camp.WHITE));
+        pieces.addAll(this.generateSecondLine(Team.WHITE));
+        pieces.addAll(this.generateFirstLine(Team.WHITE));
 
         return pieces;
     }
 
-    private List<Piece> generateFirstLine(final Camp camp) {
+    private List<Piece> generateFirstLine(final Team team) {
         final List<Piece> pieces = new ArrayList<>();
 
-        pieces.add(new Rook(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Queen(camp));
-        pieces.add(new King(camp));
-        pieces.add(new Bishop(camp));
-        pieces.add(new Knight(camp));
-        pieces.add(new Rook(camp));
+        pieces.add(new Rook(team));
+        pieces.add(new Knight(team));
+        pieces.add(new Bishop(team));
+        pieces.add(new Queen(team));
+        pieces.add(new King(team));
+        pieces.add(new Bishop(team));
+        pieces.add(new Knight(team));
+        pieces.add(new Rook(team));
 
         return pieces;
     }
 
-    private List<Piece> generateSecondLine(final Camp camp) {
+    private List<Piece> generateSecondLine(final Team team) {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Pawn(camp));
+            pieces.add(new Pawn(team));
         }
 
         return pieces;
@@ -167,9 +167,9 @@ public class Board {
 
     private boolean isSameCamp(final Square source, final Square target) {
         final Piece sourcePiece = this.board.get(source);
-        final Camp targetCamp = this.board.get(target).getCamp();
+        final Team targetTeam = this.board.get(target).getCamp();
 
-        return sourcePiece.isSameCamp(targetCamp);
+        return sourcePiece.isSameCamp(targetTeam);
     }
 
     private boolean isSameRole(final Square source, final Role role) {
@@ -178,7 +178,7 @@ public class Board {
         return sourcePiece.isSameRole(role);
     }
 
-    public boolean isNotMyTurn(final Square source, final Camp turn) {
+    public boolean isNotMyTurn(final Square source, final Team turn) {
         return this.board.get(source).isAnotherCamp(turn);
     }
 

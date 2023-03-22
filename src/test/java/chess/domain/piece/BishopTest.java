@@ -42,7 +42,7 @@ class BishopTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleBishopTestProvider")
     void Should_Success_When_BishopMove(final Square source, final Square target, final Move move) {
-        final Bishop bishop = new Bishop(Camp.WHITE);
+        final Bishop bishop = new Bishop(Team.WHITE);
 
         assertThat(bishop.isMovable(source, target, move)).isTrue();
     }

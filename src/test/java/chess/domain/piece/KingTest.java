@@ -63,7 +63,7 @@ class KingTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("kingTestProvider")
     void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
-        final King king = new King(Camp.WHITE);
+        final King king = new King(Team.WHITE);
 
         assertThat(king.isMovable(source, target, move)).isTrue();
     }
@@ -71,7 +71,7 @@ class KingTest {
     @DisplayName("사방과 대각선으로 한 칸 초과해서 움직일 수 없다.")
     @Test()
     void Should_Fail_When_KingMove() {
-        final King king = new King(Camp.WHITE);
+        final King king = new King(Team.WHITE);
         final Square source = new Square(File.A, Rank.ONE);
         final Square target = new Square(File.A, Rank.THREE);
         final Move move = Move.UP;

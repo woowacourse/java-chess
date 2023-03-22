@@ -7,12 +7,12 @@ import java.util.List;
 public class Rook extends Piece {
     private static final List<Move> POSSIBLE_MOVES = List.of(Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
 
-    public Rook(Camp camp) {
-        super(camp, Role.ROOK);
+    public Rook(final Team team) {
+        super(team, Role.ROOK);
     }
 
     @Override
-    public boolean isMovable(Square source, Square target, Move move) {
+    public boolean isMovable(final Square source, final Square target, final Move move) {
         return POSSIBLE_MOVES.contains(move);
     }
 }

@@ -62,7 +62,7 @@ class QueenTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleQueenTestProvider")
     void Should_Success_When_QueenMove(final Square source, final Square target, final Move move) {
-        final Queen queen = new Queen(Camp.WHITE);
+        final Queen queen = new Queen(Team.WHITE);
 
         assertThat(queen.isMovable(source, target, move)).isTrue();
     }

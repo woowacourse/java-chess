@@ -7,12 +7,12 @@ import java.util.List;
 public class King extends Piece {
     private static final List<Move> POSSIBLE_MOVES = List.of(Move.values());
 
-    public King(Camp camp) {
-        super(camp, Role.KING);
+    public King(final Team team) {
+        super(team, Role.KING);
     }
 
     @Override
-    public boolean isMovable(Square source, Square target, Move move) {
+    public boolean isMovable(final Square source, final Square target, final Move move) {
         if (POSSIBLE_MOVES.contains(move)) {
             return source.isMovableToTarget(target, move.getFile(), move.getRank());
         }
