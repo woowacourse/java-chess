@@ -5,7 +5,7 @@
 # 📚 도메인 모델 네이밍 사전
 
 | 한글명   | 영문명       | 설명                               | 분류               |
-|-------|-----------|----------------------------------|------------------|
+|---------|-------------|-----------------------------------|-------------------|
 | 팀     | Team      | Black, White로 구별되는 팀 정보          | enum             |
 | 로그    | Log       | 기물이 이동 명령을 받았을 떄의 위치와 게임 턴 수를 저장 | class            |
 | 기록    | Trace     | 로그의 목록                           | class            |
@@ -77,14 +77,17 @@ class Piece{
   #Team team
   #Trace trace
 }
-class King 
-class Queen
-class Rook
-class Bishop
-class Knight
-class Pawn
-class NoPiece
-class Position
+
+King 
+Queen
+Rook
+Bishop
+Knight
+Pawn
+NoPiece
+
+Position
+
 class Rank{
 <<enumeration>>
 A
@@ -107,6 +110,19 @@ FIVE
 SIX
 SEVEN
 EIGHT
+}
+class MoveRange{
+    <<enumeration>>
+    CROSS
+    DIAGONAL
+    ONE_CIRCLE
+    L_SHAPED
+    ONE_DIAGONAL_UP
+    ONE_DIAGONAL_DOWN
+    ONE_UP
+    ONE_DOWN
+    TWO_UP
+    TWO_DOWN
 }
 class Command{
 <<enumeration>>
@@ -157,6 +173,104 @@ Trace"1"-->"1..*"Log
 
 ```
 
+- piece 패키지
+
+```mermaid
+classDiagram
+
+class Piece{
+  <<abstract>>
+  #Team team
+  #Trace trace
+}
+King 
+Queen
+Rook
+Bishop
+Knight
+Pawn
+NoPiece
+
+class Team{
+    <<enumeration>>
+    BLACK
+    WHITE
+    EMPTY
+}
+
+class Trace{
+    -List<Log> logs
+}
+class Log {
+    -Turn turn
+    -Position position
+}
+
+Piece<|--King
+Piece<|--Queen
+Piece<|--Rook
+Piece<|--Bishop
+Piece<|--Knight
+Piece<|--Pawn
+Piece<|--NoPiece
+
+Piece --> Team
+Piece --> Trace
+Trace"1"-->"1..*"Log
+
+```
+
+- position 패키지
+
+```mermaid
+classDiagram
+
+Position
+
+class Rank{
+    <<enumeration>>
+    A
+    B
+    C
+    D
+    E
+    F
+    G
+    H
+}
+
+class File{
+    <<enumeration>>
+    ONE
+    TWO
+    THREE
+    FOUR
+    FIVE
+    SIX
+    SEVEN
+    EIGHT
+}
+class MoveRange{
+    <<enumeration>>
+    CROSS
+    DIAGONAL
+    ONE_CIRCLE
+    L_SHAPED
+    ONE_DIAGONAL_UP
+    ONE_DIAGONAL_DOWN
+    ONE_UP
+    ONE_DOWN
+    TWO_UP
+    TWO_DOWN
+}
+
+
+Position --> Rank
+Position --> File
+
+
+```
+
 # 👨‍🍳 기능 목록
 
 ## 입력(InputView)
@@ -165,6 +279,7 @@ Trace"1"-->"1..*"Log
 - [x] 게임 중 명령을 입력 받는다.
     - [x] 이동 명령 : move source위치 target위치을 실행해 이동한다.
     - [x] 종료 명령 : end로 프로그램을 종료한다.
+    - [ ] 상태확인 명령 : status 명령을 받으면 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
 
 ## 도메인(domain)
 
@@ -177,6 +292,8 @@ Trace"1"-->"1..*"Log
 - [x] 이동 명령을 받으면 체스판에 명령을 전달한다.
 - [x] 종료 명령을 받으면 게임을 종료한다.
 - [x] 킹이 잡히면 게임을 종료한다.
+- [ ] 현재 남아있는 말에 대한 점수를 구한다.
+- [ ] 애플리케이션 재시작 시
 
 #### 체스판(ChessBoard)
 
@@ -188,6 +305,8 @@ Trace"1"-->"1..*"Log
         - [x] 체스판은 이동 또는 공격이 가능한지 확인한다.
         - [x] 입력받은 두 칸의 기물을 변경한다.
         - [x] 이동 기록(Log)을 기물에 추가한다.
+- [ ] 현재 남아있는 말에 대한 점수를 구한다.
+    - [ ] 한번에 한 세로줄의 점수를 구한 뒤 합산한다.
 
 #### 기물(Piece)
 
@@ -210,6 +329,14 @@ Trace"1"-->"1..*"Log
 - [x] 게임의 명령어 가이드를 출력한다.
 - [x] 현재 체스 판의 정보를 출력한다.
     - [x] 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자)편으로 구분한다.
+- [ ] 각 팀의 점수와 어느 팀이 승리하였는지에 대한 정보를 출력한다.
+
+## DB
+
+- [ ] 체스게임 정보를 DB에 저장하는 기능
+- [ ] 체스 게임 정보를 불러와 DTO에 매핑하는 기능
+- [ ] 체스 게임 정보를 업데이트하는 기능
+    - DB에 게임이 끝난 여부도 함께 저장하도록 해야 할 듯
 
 # 프로그래밍 요구사항
 
