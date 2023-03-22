@@ -48,11 +48,15 @@ public abstract class Piece {
         return false;
     }
 
-    public double getPoint() {
-        return 0;
+    public boolean hasSameColorWith(final Color otherColor) {
+        return color == otherColor;
     }
 
-    public Color getColor() {
-        return color;
+    public boolean hasSameColorWith(final Piece otherPiece) {
+        return color == otherPiece.color;
+    }
+
+    public double getPoint() {
+        return 0;
     }
 }

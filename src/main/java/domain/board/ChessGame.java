@@ -47,7 +47,7 @@ public final class ChessGame {
 
     private void validateTurn(final Coordinate start) {
         Piece findPiece = board.findSquare(start);
-        if (turn.isNotFor(findPiece.getColor())) {
+        if (turn.isNotFor(findPiece)) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }

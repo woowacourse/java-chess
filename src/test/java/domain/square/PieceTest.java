@@ -18,7 +18,7 @@ class PieceTest {
     void propertyTest() {
         Piece piece = new Bishop(Color.BLACK);
 
-        assertThat(piece.getColor()).isEqualTo(Color.BLACK);
+        assertThat(piece.hasSameColorWith(Color.BLACK)).isTrue();
     }
 
     @Test

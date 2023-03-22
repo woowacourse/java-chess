@@ -19,7 +19,7 @@ class KingTest {
         assertThat(king.isPawn()).isFalse();
         assertThat(king.isKing()).isTrue();
         assertThat(king.getPoint()).isEqualTo(0);
-        assertThat(king.getColor()).isEqualTo(Color.WHITE);
+        assertThat(king.hasSameColorWith(Color.WHITE)).isTrue();
     }
 
     @Test

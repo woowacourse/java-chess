@@ -21,7 +21,7 @@ class KnightTest {
         assertThat(knight.isPawn()).isFalse();
         assertThat(knight.getPoint()).isEqualTo(2.5);
         assertThat(knight.isKing()).isFalse();
-        assertThat(knight.getColor()).isEqualTo(Color.WHITE);
+        assertThat(knight.hasSameColorWith(Color.WHITE)).isTrue();
     }
 
     @ParameterizedTest(name = "(4, 4)에서 ({0}, {1})로의 이동이 가능하다")

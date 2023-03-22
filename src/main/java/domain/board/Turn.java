@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Color;
+import domain.piece.Piece;
 
 public class Turn {
 
@@ -18,7 +19,7 @@ public class Turn {
         turn = Color.BLACK;
     }
 
-    public boolean isNotFor(final Color color) {
-        return turn != color;
+    public boolean isNotFor(final Piece piece) {
+        return !piece.hasSameColorWith(turn);
     }
 }

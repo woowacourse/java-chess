@@ -20,7 +20,7 @@ class RookTest {
         assertThat(rook.canJump()).isFalse();
         assertThat(rook.isPawn()).isFalse();
         assertThat(rook.isKing()).isFalse();
-        assertThat(rook.getColor()).isEqualTo(Color.WHITE);
+        assertThat(rook.hasSameColorWith(Color.WHITE)).isTrue();
         assertThat(rook.getPoint()).isEqualTo(5);
     }
 

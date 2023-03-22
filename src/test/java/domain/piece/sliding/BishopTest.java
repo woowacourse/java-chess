@@ -21,7 +21,7 @@ class BishopTest {
         assertThat(bishop.canJump()).isFalse();
         assertThat(bishop.isPawn()).isFalse();
         assertThat(bishop.isKing()).isFalse();
-        assertThat(bishop.getColor()).isEqualTo(Color.WHITE);
+        assertThat(bishop.hasSameColorWith(Color.WHITE)).isTrue();
         assertThat(bishop.getPoint()).isEqualTo(3);
     }
 
