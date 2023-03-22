@@ -4,7 +4,7 @@ import chessgame.domain.Command;
 import chessgame.domain.Game;
 import chessgame.domain.Team;
 
-public class End implements State {
+public class Ready implements State {
     @Override
     public void changeState(Game game, Command command) {
         if (!command.isStart()) {

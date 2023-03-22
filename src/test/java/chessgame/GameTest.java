@@ -9,17 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chessgame.domain.Board;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
-import chessgame.util.ChessBoardFactory;
 
 class GameTest {
     Game game;
 
     @BeforeEach
     void before() {
-        game = new Game(new Board(ChessBoardFactory.create()));
+        game = new Game();
         game.setState(Command.of("start"));
     }
 
