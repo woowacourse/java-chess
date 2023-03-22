@@ -6,7 +6,7 @@ public class ReadyState implements GameState {
 
     @Override
     public boolean isRunnable() {
-        return false;
+        return true;
     }
 
     @Override

@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.controller.mapper.response.ChessBoardStateFormatter;
 import chess.controller.mapper.request.ChessGameCommandMapper;
-import chess.domain.position.PiecesPosition;
+import chess.controller.mapper.response.ChessBoardStateFormatter;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.ChessGameCommand;
+import chess.domain.position.PiecesPosition;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -21,24 +21,8 @@ public final class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-
-        ChessGame chessGame = startChessGame();
-        printChessGameBoard(chessGame);
+        ChessGame chessGame = new ChessGame();
         play(chessGame);
-    }
-
-    private ChessGame startChessGame() {
-        try {
-            List<String> commandInputs = inputView.readCommands();
-            ChessGame chessGame = new ChessGame();
-
-            ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
-            command.execute(chessGame);
-            return chessGame;
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return startChessGame();
-        }
     }
 
     private void play(ChessGame chessGame) {
@@ -61,7 +45,9 @@ public final class ChessController {
 
     private void printChessGameBoard(ChessGame chessGame) {
         PiecesPosition piecesPosition = chessGame.getPiecesPosition();
-        List<List<String>> consoleViewBoard = ChessBoardStateFormatter.convertToConsoleViewBoard(piecesPosition.getPiecesPosition());
+        List<List<String>> consoleViewBoard =
+                ChessBoardStateFormatter.convertToConsoleViewBoard(piecesPosition.getPiecesPosition());
+
         outputView.printChessState(consoleViewBoard);
     }
 }
