@@ -65,5 +65,4 @@ public class ChessBoard {
             throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE);
         }
     }
-
 }

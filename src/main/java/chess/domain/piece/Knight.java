@@ -7,6 +7,10 @@ import chess.practiceMove.Direction;
 import java.util.List;
 import java.util.Map;
 
+import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
+
 public class Knight extends Piece {
     private static final String name = "n";
     private static final Map<Integer, Integer> movableDistance = Map.of(1, 2, 2, 1);
@@ -39,7 +43,7 @@ public class Knight extends Piece {
         int absGapOfRank = start.findGapOfRank(end);
 
         if(!isMovableAtOnce(absGapOfColumn, absGapOfRank)) {
-            throw new IllegalArgumentException("knight이 한 번에 이동할 수 있는 거리가 아닙니다");
+            throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
@@ -51,13 +55,13 @@ public class Knight extends Piece {
 
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("knight가 이동할 수 있는 방향이 아닙니다");
+            throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
         if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException("목적지에 아군이 있으므로 Knight는 이동할 수 없습니다.");
+            throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
 
     }
