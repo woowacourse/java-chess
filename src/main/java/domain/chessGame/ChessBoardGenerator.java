@@ -19,13 +19,9 @@ public class ChessBoardGenerator {
     private final Map<Position, Piece> chessBoard = new HashMap<>();
 
     public Map<Position, Piece> generate() {
-        setUp();
-        return chessBoard;
-    }
-
-    private void setUp() {
         setUpBlackPieces();
         setUpWhitePieces();
+        return chessBoard;
     }
 
     private void setUpBlackPieces() {
@@ -52,8 +48,8 @@ public class ChessBoardGenerator {
     private void setUpFrontLine(int row, Color color) {
         List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
-        columns.stream()
-                .map(column -> Position.of(row, column))
-                .forEach(position -> chessBoard.put(position, new Pawn(color)));
+        for (int column : columns) {
+            chessBoard.put(Position.of(row, column), new Pawn(color));
+        }
     }
 }
