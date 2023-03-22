@@ -26,6 +26,6 @@ public enum PieceScore {
                 .filter(pieceScore -> pieceScore.pieceType == pieceType)
                 .mapToDouble(pieceScore -> pieceScore.score)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("하이하이"));
+                .orElseThrow(IllegalArgumentException::new);
     }
 }
