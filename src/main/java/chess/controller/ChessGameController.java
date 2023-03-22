@@ -81,11 +81,7 @@ public class ChessGameController {
     }
 
     private boolean isGameEnd(final ChessGame chessGame, final Command command) {
-        if (isCommandStatus(chessGame, command) || command.isGameStop()) {
-            return true;
-        }
-
-        return false;
+        return isCommandStatus(chessGame, command) || command.isGameStop();
     }
 
     private boolean isCommandStatus(final ChessGame chessGame, final Command command) {
