@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -73,7 +74,7 @@ class PlayGroundTest {
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
 
         words.collect(
                         groupingBy(word -> word.chars().sorted()
@@ -268,7 +269,8 @@ class PlayGroundTest {
         IntStream stream = IntStream.of(1, 2);
         stream.forEach(System.out::println);
 
-        stream.forEach(System.out::println);
+        assertThatThrownBy(() -> stream.forEach(System.out::println))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
