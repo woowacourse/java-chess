@@ -6,39 +6,16 @@ import domain.piece.pawn.WhiteInitPawn;
 import domain.square.Color;
 import domain.square.Square;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public final class Board {
 
     private static final int KING_COUNT = 2;
 
-    private static final int RANK_SIZE = 8;
-    private static final int FILE_SIZE = 8;
-
     private final Map<Coordinate, Square> squareLocations;
 
     public Board() {
-        this.squareLocations = fillSquareLocations();
-    }
-
-    private Map<Coordinate, Square> fillSquareLocations() {
-        Map<Coordinate, Square> board = new HashMap<>();
-        for (int rank = 0; rank < RANK_SIZE; rank++) {
-            board.putAll(fillSquaresForOneRank(rank));
-        }
-        return board;
-    }
-
-    private Map<Coordinate, Square> fillSquaresForOneRank(final int rankNumber) {
-        Map<Coordinate, Square> rank = new HashMap<>();
-        for (int fileNumber = 0; fileNumber < FILE_SIZE; fileNumber++) {
-            rank.put(
-                    new Coordinate(rankNumber, fileNumber),
-                    BoardInitialImage.getSquareByCoordinate(rankNumber, fileNumber)
-            );
-        }
-        return rank;
+        this.squareLocations = BoardInitialImage.getCachedBoard();
     }
 
     public Square findSquare(final Coordinate target) {
