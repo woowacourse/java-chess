@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Direction;
-import chess.domain.piece.InitialPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
@@ -27,34 +26,45 @@ public class Board {
     }
 
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
-        validate(sourceSquare, targetSquare);
+        validateSourceAndTarget(sourceSquare, targetSquare);
 
         Direction direction = Direction.of(sourceSquare, targetSquare);
         Piece sourcePiece = board.get(sourceSquare);
         int distance = sourceSquare.calculateDistance(targetSquare);
 
         validateCanNotMove(targetSquare, direction, sourcePiece, distance);
-        validateIsNotEmptyPath(sourceSquare, direction, distance);
+        validateMovablePath(sourceSquare, direction, distance);
 
         movePiece(sourceSquare, targetSquare, sourcePiece);
     }
 
-    private void validate(final Square sourceSquare, final Square targetSquare) {
-        validateEmptySourceSquare(sourceSquare);
-        validateSourceEqualsTarget(sourceSquare, targetSquare);
-        validateSideWrongTurn(sourceSquare);
+    public void turnSwitch() {
+        turn = turn.findOpponent();
     }
 
-    private void validateSideWrongTurn(final Square sourceSquare) {
-        Piece sourcePiece = board.get(sourceSquare);
-        if (!sourcePiece.isSameSide(turn)) {
-            throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
+    private void movePiece(final Square sourceSquare, final Square targetSquare, Piece sourcePiece) {
+        Piece vacantPiece = Role.VACANT_PIECE.create(Side.from(Color.NOTHING));
+        board.put(sourceSquare, vacantPiece);
+        board.put(targetSquare, sourcePiece.update());
+    }
+
+    private void validateSourceAndTarget(final Square sourceSquare, final Square targetSquare) {
+        validateAvailableSquare(sourceSquare);
+        validateAvailableSquare(targetSquare);
+        validateCurrentTurn(sourceSquare);
+        validateSourceEqualsTarget(sourceSquare, targetSquare);
+    }
+
+    private void validateAvailableSquare(final Square square) {
+        if (!board.containsKey(square)) {
+            throw new IllegalArgumentException("해당 칸은 체스판 위에 존재하지 않습니다.");
         }
     }
 
-    private void validateEmptySourceSquare(final Square sourceSquare) {
-        if (!board.containsKey(sourceSquare)) {
-            throw new IllegalArgumentException("해당 칸에 기물이 없습니다.");
+    private void validateCurrentTurn(final Square sourceSquare) {
+        Side sourceSide = board.get(sourceSquare).getSide();
+        if (sourceSide.isOpponent(turn)) {
+            throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
 
@@ -65,39 +75,29 @@ public class Board {
     }
 
     private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
-        boolean possible = isPossible(targetSquare, direction, sourcePiece, distance);
+        Piece targetPiece = board.get(targetSquare);
+        if (targetPiece.isOpponentSide(sourcePiece)) {
+            validateCanAttack(direction, distance, sourcePiece, targetPiece);
+        }
+        validateCanMove(direction, distance, sourcePiece);
+    }
 
-        if (!possible) {
-            throw new IllegalArgumentException("상대 기물이나 빈 공간으로만 이동할 수 있습니다.");
+    private void validateCanMove(Direction direction, int distance, Piece sourcePiece) {
+        if (!sourcePiece.canMove(direction, distance)) {
+            throw new IllegalArgumentException("이동 할 수 없는 경로입니다.");
         }
     }
 
-    private boolean isPossible(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
-        if (board.containsKey(targetSquare)) {
-            return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
+    private void validateCanAttack(final Direction direction, final int distance, final Piece sourcePiece, final Piece targetPiece) {
+        if (!sourcePiece.canAttack(direction, distance, targetPiece)) {
+            throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
         }
-        return sourcePiece.canMove(direction, distance);
     }
 
-    private void validateIsNotEmptyPath(final Square sourceSquare, final Direction direction, final int distance) {
+    private void validateMovablePath(final Square sourceSquare, final Direction direction, final int distance) {
         List<Square> path = findPath(sourceSquare, direction, distance);
         for (Square square : path) {
-            validateIsNotEmptySquare(square);
-        }
-    }
-
-    private void movePiece(final Square sourceSquare, final Square targetSquare, Piece sourcePiece) {
-        if (sourcePiece.isRole(Role.INITIAL_PAWN)) {
-            sourcePiece = ((InitialPawn) sourcePiece).changeState();
-        }
-        board.put(targetSquare, sourcePiece);
-        board.remove(sourceSquare);
-        turn = turn.findOpponent();
-    }
-
-    private void validateIsNotEmptySquare(final Square square) {
-        if (board.containsKey(square)) {
-            throw new IllegalArgumentException("해당 칸으로는 이동할 수 없습니다.");
+            validateMovableSquare(square);
         }
     }
 
@@ -111,11 +111,10 @@ public class Board {
         return squares;
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "board의 Piece 개수=" + board.size() +
-                ", turn=" + turn +
-                '}';
+    private void validateMovableSquare(final Square square) {
+        Piece pieceOnPath = board.get(square);
+        if (pieceOnPath.isNotVacant()) {
+            throw new IllegalArgumentException("해당 칸으로는 이동할 수 없습니다.");
+        }
     }
 }

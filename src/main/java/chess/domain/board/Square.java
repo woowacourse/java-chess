@@ -32,7 +32,7 @@ public class Square {
     }
 
     public static Square from(final String fileAndRank) {
-        return CACHE.get(fileAndRank);
+        return CACHE.get(fileAndRank.toLowerCase());
     }
 
     public static Square of(final File file, final Rank rank) {
@@ -58,7 +58,8 @@ public class Square {
     }
 
     private static String convertToFormat(final File file, final Rank rank) {
-        return String.format("%s%s", file, rank);
+        String squareFormat = String.format("%s%d", file, rank.getPosition());
+        return squareFormat.toLowerCase();
     }
 
     public Square next(final Direction direction) {
@@ -71,6 +72,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return String.format("%s%s", file, rank);
+        String squareFormat = String.format("%s%d", file, rank.getPosition());
+        return squareFormat.toLowerCase();
     }
 }

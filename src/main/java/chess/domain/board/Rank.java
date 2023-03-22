@@ -37,4 +37,8 @@ public enum Rank {
         int nextPosition = this.position + rankDifference;
         return Rank.from(nextPosition);
     }
+
+    public int getPosition() {
+        return position;
+    }
 }

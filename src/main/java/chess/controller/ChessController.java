@@ -37,13 +37,12 @@ public class ChessController {
 
     private void playGame(String inputCommand) {
         String command = findCommand(inputCommand);
-        commands.getOrDefault(inputCommand, new ExceptionCommand()).execute(command);
+        commands.getOrDefault(command, new ExceptionCommand()).execute(inputCommand);
     }
 
     private String findCommand(String input) {
         if (input.contains(" ")) {
             int spaceIndex = input.indexOf(" ");
-            System.out.println(spaceIndex);
             return input.substring(0, spaceIndex);
         }
         return input;

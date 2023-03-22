@@ -18,39 +18,22 @@ public class OutputView {
     public void printBoard(final List<List<Piece>> pieces) {
         Collections.reverse(pieces);
         for (List<Piece> rank : pieces) {
-            for (Piece piece : rank) {
-                System.out.print(convertPiece(piece));
-            }
+            printRank(rank);
             System.out.println();
         }
     }
 
-    private String convertPiece(final Piece piece) {
-        if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
-            return convertSide(piece, "p");
+    private void printRank(List<Piece> rank) {
+        for (Piece piece : rank) {
+            System.out.print(convertPiece(piece));
         }
-        if (piece.isRole(Role.ROOK)) {
-            return convertSide(piece, "r");
-        }
-        if (piece.isRole(Role.KNIGHT)) {
-            return convertSide(piece, "n");
-        }
-        if (piece.isRole(Role.BISHOP)) {
-            return convertSide(piece, "b");
-        }
-        if (piece.isRole(Role.QUEEN)) {
-            return convertSide(piece, "q");
-        }
-        if (piece.isRole(Role.KING)) {
-            return convertSide(piece, "k");
-        }
-        return ".";
     }
 
-    private String convertSide(final Piece piece, final String convertedPiece) {
-        if (piece.getColor().equals(Color.BLACK)) {
-            return convertedPiece.toUpperCase();
-        }
-        return convertedPiece.toLowerCase();
+    private String convertPiece(final Piece piece) {
+        return PieceMapper.getPattern(piece);
+    }
+
+    public void printEndMessage() {
+        System.out.println("게임 종료");
     }
 }

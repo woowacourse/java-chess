@@ -29,6 +29,7 @@ public class ChessGame {
         Square sourceSquare = Square.from(sourceSquareInput);
         Square targetSquare = Square.from(targetSquareInput);
         board.makeMove(sourceSquare, targetSquare);
+        board.turnSwitch();
     }
 
     public void forceClose() {
