@@ -4,6 +4,7 @@ import common.ExecuteContext;
 import domain.Board;
 import domain.ChessGame;
 import domain.Location;
+import domain.type.Color;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -45,6 +46,10 @@ public class ChessController {
             chessGame.initialize();
             return true;
         }
+        if (command.equals(Command.STATUS)) {
+            calculateScore();
+            return true;
+        }
         move(commands);
         return true;
     }
@@ -65,5 +70,13 @@ public class ChessController {
         } catch (Exception exception) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
+    }
+
+    private void calculateScore() {
+        final double whiteScore = chessGame.calculateWhiteScore();
+        final double blackScore = chessGame.calculateBlackScore();
+        final Color color = chessGame.judgeResult();
+        outputView.printScore(whiteScore, blackScore);
+        outputView.printResult(color);
     }
 }

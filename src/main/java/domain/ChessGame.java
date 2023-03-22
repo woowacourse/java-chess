@@ -1,5 +1,6 @@
 package domain;
 
+import domain.type.Color;
 import domain.type.Turn;
 import java.util.HashMap;
 
@@ -25,6 +26,26 @@ public class ChessGame {
         }
         board.moveBlack(start, end);
         turn = Turn.WHITE;
+    }
+
+    public double calculateWhiteScore() {
+        return board.calculateWhiteScore();
+    }
+
+    public double calculateBlackScore() {
+        return board.calculateBlackScore();
+    }
+
+    public Color judgeResult() {
+        final double whiteScore = board.calculateWhiteScore();
+        final double blackScore = board.calculateBlackScore();
+        if (whiteScore > blackScore) {
+            return Color.WHITE;
+        }
+        if (whiteScore < blackScore) {
+            return Color.BLACK;
+        }
+        return Color.NONE;
     }
 
     public Board getBoard() {
