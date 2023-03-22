@@ -38,11 +38,11 @@ public class StateProcessor {
         return state.move(commandDto.getSource(), commandDto.getTarget());
     }
 
-    public State start(final CommandDto commandDto) {
+    public State start() {
         return state.start();
     }
 
-    public State end(final CommandDto commandDto) {
+    public State end() {
         return state.end();
     }
 }

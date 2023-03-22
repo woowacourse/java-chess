@@ -22,8 +22,8 @@ public final class Controller {
     }
 
     private static void setup(final CommandProcessor commandProcessor, final StateProcessor stateProcessor) {
-        commandProcessor.register(Command.START, stateProcessor::start);
-        commandProcessor.register(Command.END, stateProcessor::end);
+        commandProcessor.register(Command.START, command -> stateProcessor.start());
+        commandProcessor.register(Command.END, command -> stateProcessor.end());
         commandProcessor.register(Command.MOVE, stateProcessor::move);
     }
 
