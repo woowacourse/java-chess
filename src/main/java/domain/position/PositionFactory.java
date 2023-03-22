@@ -44,16 +44,6 @@ public enum PositionFactory {
         return positions;
     }
 
-    public static List<Position> findColumn(final int column) {
-        List<Position> positions = new ArrayList<>();
-
-        for (int row = 0; row < MAX_SIZE; row++) {
-            positions.add(Position.of(column, row));
-        }
-
-        return positions;
-    }
-
     private static int findColumn(final String command) {
         final char coordinate = getCoordinate(command, INDEX_COLUMN);
         return PositionFactory.from(coordinate, value -> value.column).value;

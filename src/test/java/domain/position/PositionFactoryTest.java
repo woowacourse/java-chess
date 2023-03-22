@@ -48,19 +48,4 @@ class PositionFactoryTest {
         assertThat(collect).hasSize(1);
     }
 
-    @Test
-    @DisplayName("숫자를 입력하면 해당 열의 Position 리스트를 반환한다.")
-    void findColumnTest() {
-        //given
-        final List<Position> row = PositionFactory.findColumn(1);
-
-        //when
-        final Set<Integer> collect = row.stream()
-                .map(Position::getX)
-                .collect(Collectors.toSet());
-
-        //then
-        assertThat(collect).hasSize(1);
-    }
-
 }
