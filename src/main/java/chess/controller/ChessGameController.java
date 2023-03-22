@@ -8,8 +8,8 @@ import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
 import static chess.controller.Command.validateMoveCommandForm;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

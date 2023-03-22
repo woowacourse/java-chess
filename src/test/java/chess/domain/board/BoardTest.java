@@ -1,11 +1,11 @@
-package chess.domain;
+package chess.domain.board;
 
 import static chess.fixture.PositionFixture.E4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayNameGeneration;
