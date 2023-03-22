@@ -33,4 +33,9 @@ class ChessGameTest {
             assertDoesNotThrow(executable);
         }
     }
+    //TODO isFinished
+    //TODO startGame
+    // TODO: 2023-03-22 finisheGame 
+    // TODO: 2023-03-22  executeMove
+    // TODO: 2023-03-22 checkGameNotFinished 
 }

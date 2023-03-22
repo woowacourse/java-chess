@@ -30,9 +30,7 @@ class ChessBoardTest {
         //when
 
         //then
-        assertThat(chessBoard).extracting("squares",
-                InstanceOfAssertFactories.collection(Square.class))
-            .hasSize(64);
+        assertThat(chessBoard.getSquares()).hasSize(64);
     }
 
     @Test
@@ -43,15 +41,21 @@ class ChessBoardTest {
 
         //when
         chessBoard.move(startPosition, endPosition);
-        boolean isEmpty = chessBoard.getSquares().stream()
+        boolean isStartEmpty = chessBoard.getSquares().stream()
             .filter(square -> square.isSamePosition(startPosition))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+            .isEmpty();
+        boolean isEndEmpty = chessBoard.getSquares().stream()
+            .filter(square -> square.isSamePosition(endPosition))
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
             .isEmpty();
 
         //then
         assertAll(
-            () -> assertThat(isEmpty).isTrue()
+            () -> assertThat(isStartEmpty).isTrue(),
+            () -> assertThat(isEndEmpty).isFalse()
         );
     }
 

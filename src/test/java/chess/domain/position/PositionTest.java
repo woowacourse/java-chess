@@ -35,4 +35,7 @@ class PositionTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    //TODO position.move() 테스트
+    //TODO position.of, from 테스트
+
 }
