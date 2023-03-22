@@ -27,11 +27,11 @@ public class ChessController {
         Command command;
 
         do {
-            command = getCommend();
+            command = readCommend();
         } while (command.canContinue());
     }
 
-    private Command getCommend() {
+    private Command readCommend() {
         try {
             outputView.printGameStartMessage();
             List<String> commands = inputView.readCommand();
@@ -40,7 +40,7 @@ public class ChessController {
             return command;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getCommend();
+            return readCommend();
         }
     }
 
@@ -57,11 +57,11 @@ public class ChessController {
         Command command;
 
         do {
-            command = getPlayCommand(chessGame);
+            command = readPlayCommand(chessGame);
         } while (command.canContinue());
     }
 
-    private Command getPlayCommand(final ChessGame chessGame) {
+    private Command readPlayCommand(final ChessGame chessGame) {
         try {
             outputView.printBoard(chessGame.getBoard());
             List<String> commands = inputView.readCommand();
@@ -70,7 +70,7 @@ public class ChessController {
             return command;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getPlayCommand(chessGame);
+            return readPlayCommand(chessGame);
         }
     }
 
