@@ -15,15 +15,12 @@ public class ChessGame {
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
-    private final PiecesPosition piecesPosition;
+    private PiecesPosition piecesPosition;
     private GameState gameState = new ReadyState();
     private Camp turnCamp;
 
-    public ChessGame(PiecesPosition piecesPosition) {
-        this.piecesPosition = piecesPosition;
-    }
-
     public void startGame() {
+        this.piecesPosition = new PiecesPosition();
         this.gameState = gameState.start();
         this.turnCamp = Camp.WHITE;
     }

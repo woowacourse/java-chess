@@ -30,8 +30,7 @@ public final class ChessController {
     private ChessGame startChessGame() {
         try {
             List<String> commandInputs = inputView.readCommands();
-            PiecesPosition piecesPosition = new PiecesPosition();
-            ChessGame chessGame = new ChessGame(piecesPosition);
+            ChessGame chessGame = new ChessGame();
 
             ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
             command.execute(chessGame);
