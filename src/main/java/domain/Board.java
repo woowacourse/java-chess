@@ -13,10 +13,12 @@ public class Board {
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final Map<Location, Piece> board;
+    private final ScoreCalculator scoreCalculator;
 
 
-    public Board(final Map<Location, Piece> board) {
+    public Board(final Map<Location, Piece> board, final ScoreCalculator scoreCalculator) {
         this.board = board;
+        this.scoreCalculator = scoreCalculator;
     }
 
     public void initialize() {
@@ -46,6 +48,10 @@ public class Board {
             throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
         move(start, end);
+    }
+
+    public Piece findPiece(final Location location) {
+        return board.get(location);
     }
 
     private void move(final Location start, final Location end) {
@@ -83,7 +89,11 @@ public class Board {
         board.replace(start, EmptyPiece.make());
     }
 
-    public Piece findPiece(final Location location) {
-        return board.get(location);
+    public double calculateWhiteScore() {
+        return scoreCalculator.calculateWhite(board);
+    }
+
+    public double calculateBlackScore() {
+        return scoreCalculator.calculateBlack(board);
     }
 }

@@ -13,7 +13,7 @@ public class ChessGame {
     }
 
     public void initialize() {
-        this.board = new Board(new HashMap<>());
+        this.board = new Board(new HashMap<>(), new ScoreCalculator());
         board.initialize();
     }
 
