@@ -10,6 +10,7 @@ import static chess.domain.math.Direction.KNIGHT;
 public class Knight extends Piece {
 
     private static final String KNIGHT_NAME = "N";
+
     private final List<Direction> directions = List.of(KNIGHT);
 
     public Knight(final Team team) {

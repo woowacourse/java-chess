@@ -28,4 +28,5 @@ class EmptyPieceTest {
                 () -> new EmptyPiece(team)
         );
     }
+
 }

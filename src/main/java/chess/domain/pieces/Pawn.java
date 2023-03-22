@@ -15,8 +15,8 @@ public class Pawn extends Piece {
     private static final int TWO_STEP = 2;
     private static final int ONE_STEP = 1;
     private static final String PAWN_NAME = "P";
-    private final List<Direction> directions;
 
+    private final List<Direction> directions;
 
     public Pawn(final Team team) {
         super(team);

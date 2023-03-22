@@ -10,6 +10,7 @@ import static chess.domain.math.Direction.*;
 public class Bishop extends Piece {
 
     private static final String BISHOP_NAME = "B";
+
     private final List<Direction> directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 
     public Bishop(final Team team) {

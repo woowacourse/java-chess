@@ -10,6 +10,7 @@ import static chess.domain.math.Direction.*;
 public class Rook extends Piece {
 
     private final static String Rook_NAME = "R";
+
     private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT);
 
     public Rook(final Team team) {
