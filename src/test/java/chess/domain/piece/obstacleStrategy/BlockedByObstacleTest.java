@@ -13,7 +13,7 @@ class BlockedByObstacleTest {
 
     @Test
     @DisplayName("이동 경로의 장애물 확인이 필요한 위치들을 반환한다.")
-    void SkipObstacleTest() {
+    void blockedByObstacleTest() {
         ObstacleStrategy obstacleStrategy = new BlockedByObstacle();
         List<Position> positions = obstacleStrategy.obstacleCheckingPositions(new Position(1, 0), new Position(5, 0));
 
