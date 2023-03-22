@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.sliding.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,7 +73,7 @@ class RankTest {
     @Test
     @DisplayName("원하는 인덱스의 Piece를 교체한다.")
     void replacePieceTest() {
-        rank.replacePiece(0, new Rook(Team.BLACK));
+        rank.replacePiece(0, new Rook(Team.WHITE));
 
         assertThat(rank.getRank().get(0).getPiece()).isInstanceOf(Rook.class);
     }

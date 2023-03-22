@@ -4,14 +4,14 @@ import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
 import chess.domain.Team;
-import chess.domain.pieces.Bishop;
 import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.sliding.Bishop;
+import chess.domain.pieces.sliding.Queen;
+import chess.domain.pieces.sliding.Rook;
+import chess.domain.pieces.nonsliding.King;
+import chess.domain.pieces.nonsliding.Knight;
+import chess.domain.pieces.pawn.Pawn;
 
 public final class PieceRender {
 

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.sliding.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

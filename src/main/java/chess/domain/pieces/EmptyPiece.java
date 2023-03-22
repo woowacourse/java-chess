@@ -1,22 +1,24 @@
 package chess.domain.pieces;
 
-import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.math.Direction;
+import java.util.Collections;
+import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
+    static final String INVALID_MOVE = "EmptyPiece는 이동할 수 없습니다.";
+
     public EmptyPiece() {
-        super(Team.NEUTRALITY);
+        super(Team.NEUTRALITY, Collections.emptyList());
     }
 
     @Override
-    public void validateDirection(final Direction direction) {
-        throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+    protected void validateTeam(final Team team) {
     }
 
     @Override
-    public void validateDistance(final Position current, final Position target) {
-        throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+    public void validateMove(final Direction movableDirection, final List<Piece> otherPieces) {
+        throw new IllegalArgumentException(INVALID_MOVE);
     }
 }

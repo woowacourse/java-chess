@@ -2,7 +2,9 @@ package chess.domain.math;
 
 import chess.domain.Position;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public enum Direction {
     UP(Direction::isUp),
@@ -80,5 +82,33 @@ public enum Direction {
         int rowDifferent = Math.abs(current.getRow() - target.getRow());
         int colDifferent = Math.abs(current.getColumn() - target.getColumn());
         return (rowDifferent == 2 && colDifferent == 1) || (rowDifferent == 1 && colDifferent == 2);
+    }
+
+    public static List<Direction> ofAllExpectKnight() {
+        List<Direction> directions = Arrays.stream(values())
+                .collect(Collectors.toList());
+        directions.remove(Direction.KNIGHT);
+
+        return directions;
+    }
+
+    public static List<Direction> ofCross() {
+        return List.of(UP, RIGHT, DOWN, LEFT);
+    }
+
+    public static List<Direction> ofDiagonal() {
+        return List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
+    }
+
+    public static List<Direction> ofKnight() {
+        return List.of(KNIGHT);
+    }
+
+    public static List<Direction> ofWhitePawn() {
+        return List.of(UP, UP_RIGHT, UP_LEFT);
+    }
+
+    public static List<Direction> ofBlackPawn() {
+        return List.of(DOWN, DOWN_RIGHT, DOWN_LEFT);
     }
 }
