@@ -21,7 +21,7 @@ public final class ChessGame {
     }
 
     public void play(final Position source, final Position target) {
-        final Piece piece = chessBoard.checkPiece(source);
+        final Piece piece = chessBoard.getPiece(source);
         validateCamp(piece);
         if (piece.isPawn()) {
             movePawn(source, target, piece);
@@ -96,7 +96,7 @@ public final class ChessGame {
 
     private boolean canAttack(final Position source, final Position target) {
         if (Math.abs(target.getRank() - source.getRank()) == 1 && Math.abs(target.getFile() - source.getFile()) == 1) {
-            if (!chessBoard.contains(target) || chessBoard.checkPiece(target).isSameCamp(currentCamp)) {
+            if (!chessBoard.contains(target) || chessBoard.getPiece(target).isSameCamp(currentCamp)) {
                 throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
             }
         }

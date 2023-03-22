@@ -18,11 +18,11 @@ public final class ChessBoard {
         return new ChessBoard(board);
     }
 
-    public boolean contains(final Position possiblePosition) {
-        return board.containsKey(possiblePosition);
+    public boolean contains(final Position position) {
+        return board.containsKey(position);
     }
 
-    public Piece checkPiece(final Position source) {
+    public Piece getPiece(final Position source) {
         if (contains(source)) {
             return board.get(source);
         }

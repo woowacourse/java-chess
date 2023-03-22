@@ -51,7 +51,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.checkPiece(new Position(0, 0)))
+        assertThat(chessBoard.getPiece(new Position(0, 0)))
                 .isEqualTo(new Rook(PieceType.ROOK, TeamColor.WHITE));
     }
 
@@ -62,7 +62,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThatThrownBy(() -> chessBoard.checkPiece(new Position(5, 5)))
+        assertThatThrownBy(() -> chessBoard.getPiece(new Position(5, 5)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스말이 존재하는 위치를 입력해 주세요.");
     }
@@ -104,7 +104,7 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position source = new Position(0, 3);
-        final Piece piece = chessBoard.checkPiece(source);
+        final Piece piece = chessBoard.getPiece(source);
         final Position target = new Position(rank, file);
 
         final Position obstacle = new Position(1, 4);
