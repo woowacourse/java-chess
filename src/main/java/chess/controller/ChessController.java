@@ -62,7 +62,8 @@ public class ChessController {
     private void play() {
         CommandRequest request;
         while ((request = repeatProgressRequest()).getCommand() != Command.END) {
-            progressMove(request);
+            progressMoveCommand(request);
+            progressStatusCommand(request);
         }
     }
 
@@ -91,11 +92,32 @@ public class ChessController {
         return request;
     }
 
+    private void progressMoveCommand(CommandRequest request) {
+        if (request.getCommand() == Command.MOVE) {
+            progressMove(request);
+        }
+    }
+
     private void progressMove(CommandRequest request) {
         try {
             chessGame.move(Position.from(request.getSource()),
                 Position.from(request.getDestination()));
             printBoard();
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception);
+        }
+    }
+
+    private void progressStatusCommand(CommandRequest request) {
+        if (request.getCommand() == Command.STATUS) {
+            printGameResult();
+        }
+    }
+
+    private void printGameResult() {
+        outputView.printCurrentScore(chessGame.getCurrentScore());
+        try {
+            outputView.printWinner(chessGame.findWinningTeam().name());
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
         }
