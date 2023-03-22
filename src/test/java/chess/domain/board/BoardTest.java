@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.KingPiece;

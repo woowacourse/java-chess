@@ -1,10 +1,10 @@
 package chess.controller;
 
-public class RequestInfo {
+public class Request {
     private final GameCommand gameCommand;
     private final String input;
 
-    public RequestInfo(String input) {
+    public Request(String input) {
         gameCommand = GameCommand.from(input);
         this.input = input;
     }

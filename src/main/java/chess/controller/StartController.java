@@ -1,13 +1,14 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.dto.PieceResponse;
+import chess.domain.board.Board;
+import chess.domain.board.BoardGenerator;
+import chess.domain.board.BoardSession;
+import chess.domain.dto.BoardDto;
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
-import chess.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,56 +17,54 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StartController implements Controller {
-    private final OutputView outputView;
+    private final static StartController INSTANCE = new StartController();
 
-    public StartController(OutputView outputView) {
-        this.outputView = outputView;
+    private StartController() {
+    }
+
+    public static StartController getInstance() {
+        return INSTANCE;
     }
 
     @Override
-    public Board execute(RequestInfo requestInfo, Board board) {
+    public Response execute(Request request) {
         try {
-            validate(requestInfo, board);
-            Board newBoard = BoardGenerator.makeBoard();
-            printBoard(newBoard);
-            return newBoard;
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e);
-            return board;
+            validate(request);
+            BoardSession.makeSession(BoardGenerator.makeBoard());
+            return new Response(ResponseType.START, makeBoardDto(BoardSession.getBoard()));
+        } catch (IllegalStateException e) {
+            return new Response(ResponseType.FAIL, e.getMessage());
         }
     }
 
-    private void validate(RequestInfo requestInfo, Board board) {
-        validateRequest(requestInfo);
-        validateBoard(board);
+    private void validate(Request request) {
+        validateRequest(request);
+        validateBoard();
     }
 
-    private void validateRequest(RequestInfo requestInfo) {
-        if (requestInfo.getGameCommand() != GameCommand.START) {
+    private void validateRequest(Request request) {
+        if (request.getGameCommand() != GameCommand.START) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void validateBoard(Board board) {
-        if (board != BoardGenerator.emtpyBoard()) {
-            throw new IllegalArgumentException("이미 게임이 시작되었습니다.");
+    private void validateBoard() {
+        if (BoardSession.existBoard()) {
+            throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
     }
 
-    private void printBoard(Board board) {
-        outputView.printBoard(makePieceResponse(board.getBoard()));
-    }
-
-    public List<List<PieceResponse>> makePieceResponse(Map<Position, Piece> data) {
-        List<List<PieceResponse>> response = new ArrayList<>();
+    public BoardDto makeBoardDto(Board board) {
+        Map<Position, Piece> data = board.getBoard();
+        List<List<PieceDto>> response = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            List<PieceResponse> pieceResponses = Arrays.stream(File.values())
+            List<PieceDto> pieceRespons = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
                     .map(data::get)
-                    .map(PieceResponse::from)
+                    .map(PieceDto::from)
                     .collect(Collectors.toList());
-            response.add(pieceResponses);
+            response.add(pieceRespons);
         }
-        return response;
+        return new BoardDto(response);
     }
 }

@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class PieceResponseTest {
+class PieceDtoTest {
     @Test
     void Test() {
         //given
         PawnPiece pawnPiece = new PawnPiece(Color.WHITE);
-        PieceResponse.from(pawnPiece);
+        PieceDto.from(pawnPiece);
         //when
         //then
     }

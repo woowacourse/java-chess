@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -15,20 +13,18 @@ public class ChessController {
     private final InputView inputView;
 
     private final Map<GameCommand, Controller> controllers;
-    private Board board;
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
-        controllers = makeControllers(outputView);
-        board = BoardGenerator.emtpyBoard();
+        controllers = makeControllers();
     }
 
-    private Map<GameCommand, Controller> makeControllers(OutputView outputView) {
+    private Map<GameCommand, Controller> makeControllers() {
         Map<GameCommand, Controller> controllers = new HashMap<>();
-        controllers.put(GameCommand.START, new StartController(outputView));
-        controllers.put(GameCommand.MOVE, new MoveController(outputView));
-        controllers.put(GameCommand.END, new EndController(outputView));
+        controllers.put(GameCommand.START, StartController.getInstance());
+        controllers.put(GameCommand.MOVE, MoveController.getInstance());
+        controllers.put(GameCommand.END, EndController.getInstance());
 
         return controllers;
     }
@@ -39,17 +35,28 @@ public class ChessController {
     }
 
     private void playUntilEnd() {
-        RequestInfo requestInfo = readRequest();
-        if (requestInfo.getGameCommand() == GameCommand.END) {
+        Request request = readRequest();
+        if (request.getGameCommand() == GameCommand.END) {
             return;
         }
-        Controller controller = controllers.get(requestInfo.getGameCommand());
-        board = controller.execute(requestInfo, board);
+        Controller controller = controllers.get(request.getGameCommand());
+        Response response = controller.execute(request);
+        handleResponse(response);
         playUntilEnd();
     }
 
-    private RequestInfo readRequest() {
-        return repeat(() -> new RequestInfo(inputView.inputGameCommand()));
+    private void handleResponse(Response response) {
+        ResponseType type = response.getType();
+        if (type == ResponseType.MOVE || type == ResponseType.START) {
+            outputView.printBoard(response.getBoard());
+        }
+        if (type == ResponseType.FAIL) {
+            outputView.printCommandError(response.getCause());
+        }
+    }
+
+    private Request readRequest() {
+        return repeat(() -> new Request(inputView.inputGameCommand()));
     }
 
     private <T> T repeat(Supplier<T> supplier) {

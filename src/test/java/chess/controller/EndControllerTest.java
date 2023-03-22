@@ -1,8 +1,5 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
-import chess.view.OutputView;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,15 +10,14 @@ import org.junit.jupiter.api.Test;
 public class EndControllerTest {
 
     @Test
-    void 엔드_컨트롤러는_보드를_그대로_반환한다() {
+    void 엔드_컨트롤러는_종료_응답을_반환한다() {
         //given
-        EndController endController = new EndController(new OutputView());
-        Board before = BoardGenerator.makeBoard();
+        EndController endController = EndController.getInstance();
 
         //when
-        Board after = endController.execute(new RequestInfo("end"), before);
+        Response response = endController.execute(new Request("end"));
 
         //then
-        Assertions.assertThat(before).isEqualTo(after);
+        Assertions.assertThat(response.getType()).isEqualTo(ResponseType.END);
     }
 }

@@ -1,14 +1,14 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.dto.PieceResponse;
+import chess.domain.board.Board;
+import chess.domain.board.BoardSession;
+import chess.domain.dto.BoardDto;
+import chess.domain.dto.PieceDto;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.piece.Piece;
-import chess.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,61 +17,67 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MoveController implements Controller {
-    private final OutputView outputView;
+    private final static MoveController INSTANCE = new MoveController();
 
-    public MoveController(OutputView outputView) {
-        this.outputView = outputView;
+    private MoveController() {
+    }
+
+    public static MoveController getInstance() {
+        return INSTANCE;
     }
 
     @Override
-    public Board execute(RequestInfo requestInfo, Board board) {
+    public Response execute(Request request) {
         try {
-            validate(requestInfo, board);
-            board.movePiece(makeStartingPosition(requestInfo), makeDestinationPosition(requestInfo));
-            printBoard(board);
-            return board;
-        } catch (IllegalArgumentException | IllegalPieceMoveException e) {
-            outputView.printError(e);
-            return board;
+            validate(request);
+            Board board = getBoard();
+            board.movePiece(makeStartingPosition(request), makeDestinationPosition(request));
+            return new Response(ResponseType.MOVE, makeBoardDto(BoardSession.getBoard()));
+        } catch (IllegalStateException | IllegalPieceMoveException e) {
+            return new Response(ResponseType.FAIL, e.getMessage());
         }
     }
 
-    private void printBoard(Board board) {
-        outputView.printBoard(makePieceResponse(board.getBoard()));
-    }
-
-    public List<List<PieceResponse>> makePieceResponse(Map<Position, Piece> data) {
-        List<List<PieceResponse>> response = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            List<PieceResponse> pieceResponses = Arrays.stream(File.values())
-                    .map(file -> Position.of(file, rank))
-                    .map(data::get)
-                    .map(PieceResponse::from)
-                    .collect(Collectors.toList());
-            response.add(pieceResponses);
+    private void validate(Request request) {
+        if (request.getGameCommand() != GameCommand.MOVE) {
+            throw new IllegalArgumentException("잘못된 커맨드 요청입니다.");
         }
-        return response;
+        if (!BoardSession.existBoard()) {
+            throw new IllegalStateException("게임이 시작하지 않았습니다");
+        }
     }
 
-    private Position makeStartingPosition(RequestInfo requestInfo) {
-        String inputData = requestInfo.getInput();
+    private Board getBoard() {
+        if (!BoardSession.existBoard()) {
+            throw new IllegalStateException("보드가 초기화 되지 않았습니다.");
+        }
+        return BoardSession.getBoard();
+    }
+
+    private Position makeStartingPosition(Request request) {
+        String inputData = request.getInput();
         List<String> data = Arrays.asList(inputData.split(" "));
         return Position.of(data.get(1).charAt(0), data.get(1).charAt(1));
     }
 
-    private Position makeDestinationPosition(RequestInfo requestInfo) {
-        String inputData = requestInfo.getInput();
+    private Position makeDestinationPosition(Request request) {
+        String inputData = request.getInput();
         List<String> data = Arrays.asList(inputData.split(" "));
         return Position.of(data.get(2).charAt(0), data.get(2).charAt(1));
     }
 
-
-    private void validate(RequestInfo requestInfo, Board board) {
-        if (requestInfo.getGameCommand() != GameCommand.MOVE) {
-            throw new IllegalArgumentException();
+    public BoardDto makeBoardDto(Board board) {
+        Map<Position, Piece> data = board.getBoard();
+        List<List<PieceDto>> response = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            List<PieceDto> pieceRespons = Arrays.stream(File.values())
+                    .map(file -> Position.of(file, rank))
+                    .map(data::get)
+                    .map(PieceDto::from)
+                    .collect(Collectors.toList());
+            response.add(pieceRespons);
         }
-        if (board == BoardGenerator.emtpyBoard()) {
-            throw new IllegalArgumentException("게임이 시작하지 않았습니다");
-        }
+        return new BoardDto(response);
     }
+
 }

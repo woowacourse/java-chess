@@ -1,9 +1,7 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
-import chess.view.OutputView;
-import org.assertj.core.api.Assertions;
+import chess.domain.board.BoardSession;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,15 +10,17 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class StartControllerTest {
     @Test
-    void 스타트_컨트롤러는_보더를_초기화_해준다() {
+    void 스타트_컨트롤러는_보드_세션에_보드를_등록해준다() {
         //given
-        StartController startController = new StartController(new OutputView());
-        Board board = BoardGenerator.emtpyBoard();
+        StartController startController = StartController.getInstance();
 
         //when
-        Board expect = startController.execute(new RequestInfo("start"), board);
+        boolean before = BoardSession.existBoard();
+        startController.execute(new Request("start"));
+        boolean after = BoardSession.existBoard();
 
         //then
-        Assertions.assertThat(expect).isNotEqualTo(BoardGenerator.emtpyBoard());
+        Assertions.assertFalse(before);
+        Assertions.assertTrue(after);
     }
 }

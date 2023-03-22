@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.File;
+import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.KingPiece;
@@ -9,23 +13,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BoardGenerator {
     private static final int RANK_SIZE = 8;
-    private static final Board emptyBoard;
-
-    static {
-        Map<Position, Piece> emptyMap = Collections.emptyMap();
-        emptyBoard = new Board(emptyMap);
-    }
-
-    public static Board emtpyBoard() {
-        return emptyBoard;
-    }
 
     public static Board makeBoard() {
         Map<Position, Piece> board = new HashMap<>();

@@ -1,25 +1,27 @@
 package chess.view;
 
-import chess.domain.dto.PieceResponse;
+import chess.domain.dto.BoardDto;
+import chess.domain.dto.PieceDto;
 
 import java.util.List;
 
 public class OutputView {
 
-    public void printBoard(List<List<PieceResponse>> piecePosition) {
-        for (int i = piecePosition.size() - 1; i >= 0; i--) {
-            printRank(piecePosition.get(i));
+    public void printBoard(BoardDto dto) {
+        List<List<PieceDto>> pieces = dto.getPieces();
+        for (int i = pieces.size() - 1; i >= 0; i--) {
+            printRank(pieces.get(i));
         }
         System.out.println();
     }
 
-    private void printRank(List<PieceResponse> pieceResponses) {
-        pieceResponses.forEach(this::printPiece);
+    private void printRank(List<PieceDto> pieceRespons) {
+        pieceRespons.forEach(this::printPiece);
         System.out.println();
     }
 
-    private void printPiece(PieceResponse pieceResponse) {
-        System.out.print(formatByColor(pieceResponse.getPieceType(), pieceResponse.getPieceColor()));
+    private void printPiece(PieceDto pieceDto) {
+        System.out.print(formatByColor(pieceDto.getPieceType(), pieceDto.getPieceColor()));
     }
 
     private String formatByColor(String pieceType, String pieceColor) {
@@ -36,12 +38,11 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printUnsuitableCommand() {
-        System.out.println("해당 상황에서 입력할 수 없는 커맨드 입니다.");
-        System.out.println();
-    }
-
     public void printError(Exception e) {
         System.out.println(e.getMessage());
+    }
+
+    public void printCommandError(String error) {
+        System.out.println(error);
     }
 }
