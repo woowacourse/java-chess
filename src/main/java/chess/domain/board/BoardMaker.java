@@ -1,93 +1,105 @@
 package chess.domain.board;
 
-import static chess.domain.Team.NEUTRALITY;
-import static java.util.stream.Collectors.toList;
-
+import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.Team;
-import chess.domain.pieces.Bishop;
-import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BoardMaker {
 
-    private static final int START_MIDDLE_ROW = 2;
-    private static final int END_MIDDLE_ROW = 5;
+    private static final int START_MIDDLE_ROW = 3;
+    private static final int END_MIDDLE_ROW = 6;
 
-    private BoardMaker() {}
+    private BoardMaker() {
+    }
 
-    public static List<Rank> create() {
-        List<Rank> ranks = new ArrayList<>();
+    public static List<Line> create() {
+        List<Line> lines = new ArrayList<>();
 
-        ranks.add(createFirstRank());
-        ranks.add(createSecondRank());
+        lines.add(createFirstWhite());
+        lines.add(createWhitePawn());
         for (int row = START_MIDDLE_ROW; row <= END_MIDDLE_ROW; row++) {
-            ranks.add(createMiddleRank(row));
+            lines.add(createEmptyPiece(row));
         }
-        ranks.add(createSecondLastRank());
-        ranks.add(createLastRank());
+        lines.add(createBlackPawn());
+        lines.add(createLastBlack());
 
-        return ranks;
+        return lines;
     }
 
-    private static Rank createFirstRank() {
+    private static Line createFirstWhite() {
         List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(0, 0), new Rook(Team.BLACK)),
-                new Square(new Position(0, 1), new Knight(Team.BLACK)),
-                new Square(new Position(0, 2), new Bishop(Team.BLACK)),
-                new Square(new Position(0, 3), new Queen(Team.BLACK)),
-                new Square(new Position(0, 4), new King(Team.BLACK)),
-                new Square(new Position(0, 5), new Bishop(Team.BLACK)),
-                new Square(new Position(0, 6), new Knight(Team.BLACK)),
-                new Square(new Position(0, 7), new Rook(Team.BLACK))
+                new Square(new Position(Rank.ONE, File.A), new Rook(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.B), new Knight(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.C), new Bishop(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.D), new Queen(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.E), new King(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.F), new Bishop(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.G), new Knight(Team.WHITE)),
+                new Square(new Position(Rank.ONE, File.H), new Rook(Team.WHITE))
         ));
 
-        return new Rank(squares);
+        return new Line(squares);
     }
 
-    private static Rank createSecondRank() {
-        List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(1, col), new Pawn(Team.BLACK)))
-                .collect(toList());
-
-        return new Rank(squares);
-    }
-
-    private static Rank createMiddleRank(int row) {
-        List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(row, col), new EmptyPiece(NEUTRALITY)))
-                .collect(toList());
-
-        return new Rank(squares);
-    }
-
-    private static Rank createSecondLastRank() {
-        List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(col -> new Square(new Position(6, col), new Pawn(Team.WHITE)))
-                .collect(toList());
-
-        return new Rank(squares);
-    }
-
-    private static Rank createLastRank() {
+    private static Line createWhitePawn() {
         List<Square> squares = new ArrayList<>(List.of(
-                new Square(new Position(7, 0), new Rook(Team.WHITE)),
-                new Square(new Position(7, 1), new Knight(Team.WHITE)),
-                new Square(new Position(7, 2), new Bishop(Team.WHITE)),
-                new Square(new Position(7, 3), new Queen(Team.WHITE)),
-                new Square(new Position(7, 4), new King(Team.WHITE)),
-                new Square(new Position(7, 5), new Bishop(Team.WHITE)),
-                new Square(new Position(7, 6), new Knight(Team.WHITE)),
-                new Square(new Position(7, 7), new Rook(Team.WHITE))
+                new Square(new Position(Rank.TWO, File.A), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.B), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.C), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.D), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.E), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.F), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.G), new Pawn(Team.WHITE)),
+                new Square(new Position(Rank.TWO, File.H), new Pawn(Team.WHITE))
+        ));
+        return new Line(squares);
+    }
+
+    private static Line createEmptyPiece(int rank) {
+        List<Square> squares = new ArrayList<>(List.of(
+                new Square(new Position(Rank.of(rank), File.A), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.B), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.C), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.D), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.E), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.F), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.G), new Pawn(Team.NEUTRALITY)),
+                new Square(new Position(Rank.of(rank), File.H), new Pawn(Team.NEUTRALITY))
+        ));
+        return new Line(squares);
+    }
+
+    private static Line createBlackPawn() {
+        List<Square> squares = new ArrayList<>(List.of(
+                new Square(new Position(Rank.SEVEN, File.A), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.B), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.C), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.D), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.E), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.F), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.G), new Pawn(Team.BLACK)),
+                new Square(new Position(Rank.SEVEN, File.H), new Pawn(Team.BLACK))
+        ));
+        return new Line(squares);
+    }
+
+    private static Line createLastBlack() {
+        List<Square> squares = new ArrayList<>(List.of(
+                new Square(new Position(Rank.EIGHT, File.A), new Rook(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.B), new Knight(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.C), new Bishop(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.D), new Queen(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.E), new King(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.F), new Bishop(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.G), new Knight(Team.BLACK)),
+                new Square(new Position(Rank.EIGHT, File.H), new Rook(Team.BLACK))
         ));
 
-        return new Rank(squares);
+        return new Line(squares);
     }
 }
