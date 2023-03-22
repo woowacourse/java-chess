@@ -2,16 +2,13 @@ package chessgame;
 
 import static chessgame.PointFixture.*;
 
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import chessgame.domain.Command;
-import chessgame.domain.point.Point;
+import chessgame.controller.Command;
 
 public class CommandTest {
     @Test
@@ -31,10 +28,8 @@ public class CommandTest {
     void Should_NoThrowException_When_CommandIsMove() {
         Command command = Command.of("move a1 a2");
 
-        List<Point> points = List.of(A1, A2);
-
-        Assertions.assertThat(command.points()).containsAll(points);
-        Assertions.assertThat(command.points().size()).isEqualTo(points.size());
+        Assertions.assertThat(command.points().source()).isEqualTo(A1);
+        Assertions.assertThat(command.points().target()).isEqualTo(A2);
     }
 
     @ParameterizedTest(name = "name : {0}일 경우 생성 실패 한다.")

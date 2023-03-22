@@ -1,4 +1,4 @@
-package chessgame.domain;
+package chessgame.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 import chessgame.domain.point.Rank;
 
 public class Command {
@@ -14,10 +15,9 @@ public class Command {
     private static final String MOVE = "move";
 
     private final String command;
+    private final Points points;
 
-    private final List<Point> points;
-
-    private Command(String command, List<Point> points) {
+    private Command(String command, Points points) {
         this.command = command;
         this.points = points;
     }
@@ -31,7 +31,7 @@ public class Command {
             throw new IllegalArgumentException("빈값을 입력하면 안됩니다.");
         }
         if (START.equals(command) || END.equals(command)) {
-            return new Command(command, Collections.emptyList());
+            return new Command(command, new Points(Collections.emptyList()));
         }
         return validateMove(command);
     }
@@ -50,31 +50,31 @@ public class Command {
     }
 
     private static void validatePoint(List<String> points) {
-        boolean isPoint = points.stream().anyMatch(point -> point.length() !=2);
-        if(isPoint){
+        boolean isPoint = points.stream().anyMatch(point -> point.length() != 2);
+        if (isPoint) {
             throw new IllegalArgumentException("좌표를 정확하게 입력하세요");
         }
     }
 
-    private static List<Point> makePoint(List<String> inputs) {
+    private static Points makePoint(List<String> inputs) {
         List<Point> points = new ArrayList<>();
         points.add(Point.of(File.find(inputs.get(0).charAt(0)),
             Rank.find(Integer.parseInt(inputs.get(0).substring(1)))));
         points.add(Point.of(File.find(inputs.get(1).charAt(0)),
             Rank.find(Integer.parseInt(inputs.get(1).substring(1)))));
-        return points;
+        return new Points(points);
     }
 
-    public List<Point> points() {
-        return Collections.unmodifiableList(points);
+    public Points points() {
+        return points;
     }
 
     public boolean isMove() {
         return MOVE.equals(command);
     }
 
-    public boolean isStart() {
-        return START.equals(command);
+    public boolean isNotStart() {
+        return !START.equals(command);
     }
 
     public boolean isEnd() {

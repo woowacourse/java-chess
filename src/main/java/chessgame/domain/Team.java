@@ -5,8 +5,8 @@ import java.util.function.Function;
 import chessgame.domain.point.Rank;
 
 public enum Team {
-    BLACK(String::toUpperCase, "검은", 1, Rank.SEVEN),
-    WHITE(String::toLowerCase, "흰", -1, Rank.TWO);
+    BLACK(String::toUpperCase, "검은", -1, Rank.SEVEN),
+    WHITE(String::toLowerCase, "흰", 1, Rank.TWO);
 
     private final Function<String, String> name;
     private final String color;
@@ -22,13 +22,6 @@ public enum Team {
 
     public String calculate(String convertedName) {
         return name.apply(convertedName);
-    }
-
-    public Team changeTurn() {
-        if (this == Team.BLACK) {
-            return Team.WHITE;
-        }
-        return Team.BLACK;
     }
 
     public String color() {

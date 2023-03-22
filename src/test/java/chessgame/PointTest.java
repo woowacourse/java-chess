@@ -2,12 +2,15 @@ package chessgame;
 
 import static chessgame.PointFixture.*;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 import chessgame.domain.point.Rank;
 
 class PointTest {
@@ -22,51 +25,46 @@ class PointTest {
     }
 
     @Test
-    @DisplayName("좌표 2개 수평인지 확인한다.")
+    @DisplayName("좌표 2개 수평인지 아닌지 확인한다.")
     void isHorizontal() {
-        Point source = A1;
+        Points horizentalPoints = new Points(List.of(A1, B1));
+        Points notHorizentalPoints = new Points(List.of(A1, A2));
 
-        Assertions.assertThat(source.isHorizontal(B1)).isTrue();
-        Assertions.assertThat(source.isHorizontal(A2)).isFalse();
+        Assertions.assertThat(horizentalPoints.isHorizontal()).isTrue();
+        Assertions.assertThat(notHorizentalPoints.isHorizontal()).isFalse();
     }
 
     @Test
-    @DisplayName("좌표 2개 수직인지 확인한다.")
+    @DisplayName("좌표 2개 수직인지 아닌지 확인한다.")
     void isVertical() {
-        Point source = A1;
+        Points verticalPoints = new Points(List.of(A1, A2));
+        Points notVerticalPoints = new Points(List.of(A1, B1));
 
-        Assertions.assertThat(source.isVertical(A2)).isTrue();
-        Assertions.assertThat(source.isVertical(B1)).isFalse();
+        Assertions.assertThat(verticalPoints.isVertical()).isTrue();
+        Assertions.assertThat(notVerticalPoints.isVertical()).isFalse();
     }
 
     @Test
     @DisplayName("좌표 2개 대각선인지 확인한다.")
     void isDiagonal() {
-        Point source = A1;
+        Points diagonalPoints = new Points(List.of(A1, B2));
 
-        Assertions.assertThat(source.isDiagonal(B2)).isTrue();
+        Assertions.assertThat(diagonalPoints.isDiagonal()).isTrue();
     }
 
     @Test
     @DisplayName("File간 거리를 알 수 있다.")
     void fileDistance() {
-        Point source = A1;
-
-        Assertions.assertThat(source.fileDistance(B1)).isEqualTo(-1);
+        Assertions.assertThat(A1.fileDistance(B1)).isEqualTo(-1);
     }
 
     @Test
     @DisplayName("Rank간 거리를 알 수 있다.")
     void rankDistance() {
-        Point source = A1;
-
-        Assertions.assertThat(source.rankDistance(A8)).isEqualTo(-7);
+        Assertions.assertThat(A1.rankDistance(A8)).isEqualTo(-7);
     }
 
     @Test
-    void isInitialPoint() {
-        Point source = A1;
-
-        Assertions.assertThat(source.isInitialPoint(Rank.ONE)).isTrue();
+    void isInitialPoint() {Assertions.assertThat(A1.isInitialPoint(Rank.ONE)).isTrue();
     }
 }

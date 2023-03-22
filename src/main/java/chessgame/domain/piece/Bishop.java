@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
@@ -17,11 +17,11 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
         if (hasBlock) {
             throw new IllegalArgumentException("비숍은 기물을 건너 뛸 수 없습니다.");
         }
-        return source.isDiagonal(target);
+        return points.isDiagonal();
     }
 
     @Override

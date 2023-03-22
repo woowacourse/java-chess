@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public class Pawn implements Piece {
     private static final String ORIGINAL_NAME = "p";
@@ -18,41 +18,41 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
         if (hasTarget) {
-            return isAttack(source, target);
+            return isAttack(points);
         }
-        return isPawnMovable(source, target);
+        return isPawnMovable(points);
     }
 
-    public boolean isPawnMovable(Point source, Point target) {
-        if (!source.isVertical(target)) {
+    public boolean isPawnMovable(Points points) {
+        if (!points.isVertical()) {
             return false;
         }
-        if (isPawnStartMove(source, target, team)) {
+        if (isPawnStartMove(points, team)) {
             return true;
         }
-        return source.rankDistance(target) == teamDirection(DISTANCE);
+        return points.rankDistance() == teamDirection(DISTANCE);
     }
 
-    private boolean isPawnStartMove(Point source, Point target, Team team) {
-        if (source.isInitialPoint(team.startRank())
-            && source.rankDistance(target) == teamDirection(DISTANCE)) {
+    private boolean isPawnStartMove(Points points, Team team) {
+        if (points.isInitialPoint(team.startRank())
+            && points.rankDistance() == teamDirection(DISTANCE)) {
             return true;
         }
-        return source.isInitialPoint(team.startRank())
-            && source.rankDistance(target) == teamDirection(FIRST_MOVE_DISTANCE);
+        return points.isInitialPoint(team.startRank())
+            && points.rankDistance() == teamDirection(FIRST_MOVE_DISTANCE);
     }
 
     private int teamDirection(int distance) {
         return distance * team.direction();
     }
 
-    private boolean isAttack(Point source, Point target) {
-        if (!source.isDiagonal(target)) {
+    private boolean isAttack(Points points) {
+        if (!points.isDiagonal()) {
             return false;
         }
-        return source.rankDistance(target) == teamDirection(DISTANCE);
+        return points.rankDistance() == teamDirection(DISTANCE);
     }
 
     @Override

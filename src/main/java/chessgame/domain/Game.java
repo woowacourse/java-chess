@@ -1,9 +1,7 @@
 package chessgame.domain;
 
-import java.util.List;
-
 import chessgame.controller.Command;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 import chessgame.domain.state.Ready;
 import chessgame.domain.state.State;
 
@@ -35,15 +33,15 @@ public class Game {
         return state.isRunning();
     }
 
-    private void movePiece(List<Point> points) {
-        board.move(points.get(0), points.get(1), state.team());
-    }
-
-    public Board board() {
-        return board;
+    private void movePiece(Points points) {
+        board.move(points, state.team());
     }
 
     public boolean isNotEnd() {
         return state.isNotEnd();
+    }
+
+    public Board board() {
+        return board;
     }
 }

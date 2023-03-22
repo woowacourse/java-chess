@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
@@ -17,11 +17,11 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
         if (hasBlock) {
             throw new IllegalArgumentException("룩은 기물을 건너 뛸 수 없습니다.");
         }
-        return source.isHorizontal(target) || source.isVertical(target);
+        return points.isHorizontal() || points.isVertical();
     }
 
     @Override

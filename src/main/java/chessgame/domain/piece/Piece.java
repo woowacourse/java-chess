@@ -1,11 +1,11 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public interface Piece {
 
-    boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget);
+    boolean isMovable(Points points, boolean hasBlock, boolean hasTarget);
 
     Team team();
 

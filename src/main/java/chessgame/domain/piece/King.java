@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public class King implements Piece {
     private static final String ORIGINAL_NAME = "k";
@@ -18,21 +18,21 @@ public class King implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
         if (hasBlock) {
             throw new IllegalArgumentException("킹은 기물을 건너 뛸 수 없습니다.");
         }
-        return isKingMove(source, target);
+        return isKingMove(points);
     }
 
-    public boolean isKingMove(Point source, Point target) {
-        if (source.isHorizontal(target) && source.isSameFileDistance(target, DISTANCE)) {
+    public boolean isKingMove(Points points) {
+        if (points.isHorizontal() && points.isSameFileDistance(DISTANCE)) {
             return true;
         }
-        if (source.isVertical(target) && source.isSameRankDistance(target, DISTANCE)) {
+        if (points.isVertical() && points.isSameRankDistance(DISTANCE)) {
             return true;
         }
-        return source.isDiagonal(target) && source.isSameFileDistance(target, DISTANCE);
+        return points.isDiagonal() && points.isSameFileDistance(DISTANCE);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
-import chessgame.domain.point.Point;
+import chessgame.domain.point.Points;
 
 public class Knight implements Piece {
     private static final String ORIGINAL_NAME = "n";
@@ -19,9 +19,9 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
-        int fileDistance = Math.abs(source.fileDistance(target));
-        int rankDistance = Math.abs(source.rankDistance(target));
+    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
+        int fileDistance = Math.abs(points.fileDistance());
+        int rankDistance = Math.abs(points.rankDistance());
 
         if (fileDistance == STRAIGHT_DISTANCE && rankDistance == DIAGONAL_DISTANCE) {
             return true;
