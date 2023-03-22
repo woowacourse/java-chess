@@ -15,17 +15,17 @@ public class InputView {
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final Scanner scanner = new Scanner(System.in);
 
-    public void printStartChess() {
+    public static void printStartChess() {
         System.out.println(START_MESSAGE);
     }
 
-    public List<String> requestCommend(List<ValidateType> validateTypes) {
+    public static List<String> requestCommand(List<ValidateType> validateTypes) {
         List<String> input = List.of(scanner.nextLine().split(" "));
         validate(input, validateTypes);
         return input;
     }
 
-    private void validate(List<String> input, List<ValidateType> validateTypes) {
+    private static void validate(List<String> input, List<ValidateType> validateTypes) {
         InputValidator validator = new StartValidator();
         validator.validate(new InputRequest(validateTypes, input));
     }

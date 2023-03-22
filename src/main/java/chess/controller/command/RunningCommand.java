@@ -1,13 +1,10 @@
 package chess.controller.command;
 
 import chess.controller.ChessController;
+import chess.controller.command.operator.Operator;
+import chess.controller.command.operator.StatusOperator;
 import chess.domain.ChessGame;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
-import chess.renderer.CommendRenderer;
-import chess.renderer.FileInputRenderer;
-import chess.renderer.RankInputRenderer;
+import chess.view.InputView;
 import chess.view.validator.ValidateType;
 
 import java.util.List;
@@ -19,28 +16,9 @@ public class RunningCommand extends Command {
 
     @Override
     public boolean operate(ChessGame chessGame) {
-        List<String> commend = inputView.requestCommend(List.of(ValidateType.PLAY,
+        Operator operator = new StatusOperator(chessController, chessGame);
+        return operator.operate(InputView.requestCommand(List.of(ValidateType.PLAY,
                 ValidateType.MOVE_SIZE,
-                ValidateType.OUT_OF_RANGE));
-        if (CommendRenderer.render(commend.get(0)).equals(CommandType.END)) {
-            this.chessController.setCommend(new EndCommand(chessController));
-            return true;
-        }
-        if (CommendRenderer.render(commend.get(0)).equals(CommandType.STATUS)) {
-            outputView.printScore(chessGame.getChessboard(), chessGame.getTurn());
-            return true;
-        }
-        if (CommendRenderer.render(commend.get(0)).equals(CommandType.MOVE)) {
-            chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));
-            outputView.printChessBoard(chessGame.getChessboard());
-            return true;
-        }
-        return true;
-    }
-
-    private Square makeSquare(String fileRank) {
-        File file = FileInputRenderer.renderString(String.valueOf(fileRank.charAt(0)));
-        Rank rank = RankInputRenderer.renderString(String.valueOf(fileRank.charAt(1)));
-        return new Square(file, rank);
+                ValidateType.OUT_OF_RANGE)));
     }
 }

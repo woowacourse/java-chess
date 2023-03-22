@@ -24,4 +24,8 @@ public enum CommendRenderer {
                 .orElseThrow(IllegalArgumentException::new)
                 .commandType;
     }
+
+    public static boolean isSame(String input, CommandType commandType) {
+        return render(input).equals(commandType);
+    }
 }

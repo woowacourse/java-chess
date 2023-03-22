@@ -6,17 +6,15 @@ import chess.domain.ChessGame;
 import chess.view.InputView;
 
 public class ChessController {
-    private final InputView inputView;
     private Command command;
 
     public ChessController() {
-        this.inputView = new InputView();
         this.command = new StartCommand(this);
     }
 
     public void run() {
         ChessGame chessGame = new ChessGame();
-        inputView.printStartChess();
+        InputView.printStartChess();
         boolean keepPlaying = catchException(chessGame);
         while (keepPlaying) {
             keepPlaying = catchException(chessGame);
