@@ -10,9 +10,11 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Team turn;
 
     public Board() {
         board = new HashMap<>();
+        turn = Team.getStartTeam();
         init();
     }
 
@@ -24,6 +26,7 @@ public class Board {
 
     public void move(Position source, Position target) {
         validateSource(source);
+        validateTurn(source);
         validateMovable(source, target);
         Piece sourcePiece = board.get(source);
         validatePathBeforeTarget(sourcePiece.findPath(source, target));
@@ -34,6 +37,14 @@ public class Board {
         if (haveNoPieceInPosition(source)) {
             throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
         }
+    }
+
+    private void validateTurn(Position source) {
+        if (board.get(source).isSameTeam(turn)) {
+            turn = turn.reverse();
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 지금은 " + turn + "차례입니다.");
     }
 
     private void validateMovable(Position source, Position target) {
@@ -81,11 +92,6 @@ public class Board {
 
     private boolean haveNoPieceInPosition(Position position) {
         return !board.containsKey(position);
-    }
-
-    public boolean isCorrectTeam(Position source, Team team) {
-        validateSource(source);
-        return board.get(source).isSameTeam(team);
     }
 
     public Map<Position, Piece> getBoard() {
