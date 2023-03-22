@@ -32,16 +32,16 @@ public class ChessController {
         showStartMessage();
 
         while (chessGame.isRunning()) {
-            repeat(this::play);
+            repeatIfExceptionOccur(this::play);
         }
     }
 
-    private void repeat(Runnable runnable) {
+    private void repeatIfExceptionOccur(Runnable runnable) {
         try {
             runnable.run();
         } catch (Exception e) {
             outputView.printExceptionMessage(e.getMessage());
-            repeat(runnable);
+            repeatIfExceptionOccur(runnable);
         }
     }
 
