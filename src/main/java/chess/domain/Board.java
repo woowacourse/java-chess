@@ -49,7 +49,7 @@ public class Board {
     }
 
     private boolean isSamePosition(final Position source, final Position target) {
-        return source.file() == target.file() && source.rank() == target.rank();
+        return source.equals(target);
     }
 
     private void validateSourceNotEmpty(final Position source) {
