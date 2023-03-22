@@ -46,4 +46,8 @@ public class ChessGame {
     public Chessboard getChessboard() {
         return chessboard;
     }
+
+    public Camp getTurn() {
+        return turn;
+    }
 }

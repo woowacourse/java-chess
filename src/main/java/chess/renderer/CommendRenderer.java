@@ -7,7 +7,8 @@ import java.util.Arrays;
 public enum CommendRenderer {
     START("start", CommandType.START),
     END("end", CommandType.END),
-    MOVE("move", CommandType.MOVE);
+    MOVE("move", CommandType.MOVE),
+    STATUS("status", CommandType.STATUS);
     private final String value;
     private final CommandType commandType;
 
@@ -20,7 +21,7 @@ public enum CommendRenderer {
         return Arrays.stream(values())
                 .filter(commendType -> commendType.value.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException())
+                .orElseThrow(IllegalArgumentException::new)
                 .commandType;
     }
 }

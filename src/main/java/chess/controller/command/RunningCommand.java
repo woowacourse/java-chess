@@ -26,8 +26,15 @@ public class RunningCommand extends Command {
             this.chessController.setCommend(new EndCommand(chessController));
             return true;
         }
-        chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));
-        outputView.printChessBoard(chessGame.getChessboard());
+        if (CommendRenderer.render(commend.get(0)).equals(CommandType.STATUS)) {
+            outputView.printScore(chessGame.getChessboard(), chessGame.getTurn());
+            return true;
+        }
+        if (CommendRenderer.render(commend.get(0)).equals(CommandType.MOVE)) {
+            chessGame.move(makeSquare(commend.get(1)), makeSquare(commend.get(2)));
+            outputView.printChessBoard(chessGame.getChessboard());
+            return true;
+        }
         return true;
     }
 
