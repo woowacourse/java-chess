@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class RankTest {
+final class RankTest {
 
     @ParameterizedTest
     @DisplayName("가로줄은 0 ~ 7 값을 벗어날 경우 예외가 발생한다.")

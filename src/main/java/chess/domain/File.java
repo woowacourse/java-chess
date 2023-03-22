@@ -6,11 +6,11 @@ public class File {
 
     private final char file;
 
-    public File(final int asciiValue){
+    public File(final int asciiValue) {
         this((char) asciiValue);
     }
 
-    public File(final char file){
+    public File(final char file) {
         validate(file);
         this.file = file;
     }
