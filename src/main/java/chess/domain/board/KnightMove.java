@@ -27,14 +27,14 @@ public enum KnightMove {
         return Arrays.stream(KnightMove.values())
                 .filter(knightMove -> knightMove.file == directionFile && knightMove.rank == directionRank)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
     }
 
     public int getFile() {
-        return file;
+        return this.file;
     }
 
     public int getRank() {
-        return rank;
+        return this.rank;
     }
 }

@@ -21,7 +21,7 @@ public enum File {
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public static File findFileByLetter(final char letter) {
@@ -32,6 +32,6 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.getX() == fileIndex)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 좌표를 찾을 수 없습니다."));
     }
 }

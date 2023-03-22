@@ -78,7 +78,7 @@
 - [ ] 오류 메세지를 출력하는 기능 구현
 - [x] 패키지 위치 수정
 - [x] '구현체가 아닌 인터페이스에 대고 프로그래밍' 규칙 지키기
-- [ ] orElseThrow -> 대신 적절한 예외 처리
+- [x] orElseThrow -> 대신 적절한 예외 처리
 - [ ] Move class calculateDirection 메서드 내 empty 판단 로직 메서드 분리
 - [ ] 일반적으로 enum의 정적 팩터리 메서드를 사용할때 순회하는 방법을 많이 사용하는데, Map을 이용하여 시간 복잡도를 낮추는 방법 찾아보기
 - [ ] Move, KnightMove 추상화

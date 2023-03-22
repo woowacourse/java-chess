@@ -28,10 +28,10 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getY() == rankIndex)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 좌표를 찾을 수 없습니다."));
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 }
