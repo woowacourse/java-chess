@@ -79,6 +79,10 @@ public final class Position implements Comparable<Position> {
         return fileGap * fileGap + rankGap * rankGap;
     }
     
+    public boolean isFile(final int file) {
+        return this.file.getIndex() == file;
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hash(this.file, this.rank);

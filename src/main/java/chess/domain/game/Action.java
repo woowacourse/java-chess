@@ -1,6 +1,5 @@
-package chess.action;
+package chess.domain.game;
 
-import chess.domain.Status;
 import chess.domain.position.Position;
 
 public interface Action {

@@ -1,7 +1,7 @@
 package chess.command;
 
-import chess.action.Action;
-import chess.domain.Status;
+import chess.domain.game.Action;
+import chess.domain.game.Status;
 import java.util.List;
 
 public class EndCommand implements Command {

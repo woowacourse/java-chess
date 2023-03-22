@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.game;
 
-import chess.GameStatus;
-import chess.action.Action;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;

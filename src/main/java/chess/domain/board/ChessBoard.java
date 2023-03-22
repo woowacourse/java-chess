@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.RouteCheck;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
