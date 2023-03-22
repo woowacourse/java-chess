@@ -30,12 +30,12 @@ public final class Position {
         return new Position(this.row.move(row), this.column.move(column));
     }
 
-    public int calculateRowDistance(Row row) {
-        return this.row.distance(row);
+    public int calculateRowDistance(Position position) {
+        return this.row.distance(position.row);
     }
 
-    public int calculateColumnDistance(Column column) {
-        return this.column.distance(column);
+    public int calculateColumnDistance(Position position) {
+        return this.column.distance(position.column);
     }
 
     public List<Position> calculateBetweenPoints(Position end) {
@@ -52,30 +52,34 @@ public final class Position {
     }
 
     public boolean isNotLinearFunction(Position position) {
-        if (isSameColumn(position.getColumn()) || isSameRow(position.row)) {
+        if (isSameColumn(position) || isSameRow(position)) {
             return true;
         }
         return column.distance(position.column) != row.distance(position.row);
     }
 
-    public boolean isSameRow(Row row) {
-        return this.row == row;
+    public boolean isSameRow(Position position) {
+        return this.row == position.row;
     }
 
-    public boolean isNotSameRow(Row row) {
-        return this.row != row;
+    public boolean isNotSameRow(Position position) {
+        return this.row != position.row;
+    }
+
+    public boolean isSameColumn(Position position) {
+        return this.column == position.column;
     }
 
     public boolean isSameColumn(Column column) {
         return this.column == column;
     }
 
-    public boolean isNotSameColumn(Column column) {
-        return this.column != column;
+    public boolean isNotSameColumn(Position position) {
+        return this.column != position.column;
     }
 
     public boolean isNotConstantFunction(Position position) {
-        return isNotSameRow(position.getRow()) && isNotSameColumn(position.column);
+        return isNotSameRow(position) && isNotSameColumn(position);
     }
 
     public int getRowDirection(Position position) {
@@ -84,14 +88,6 @@ public final class Position {
 
     public int getColumnDirection(Position position) {
         return column.direction(position.column);
-    }
-
-    public Row getRow() {
-        return row;
-    }
-
-    public Column getColumn() {
-        return column;
     }
 
     @Override
