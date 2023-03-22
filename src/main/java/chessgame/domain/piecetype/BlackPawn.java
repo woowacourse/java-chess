@@ -24,7 +24,6 @@ public class BlackPawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-
         Inclination inclination = startCoordinate.getInclination(endCoordinate);
         return inclination.equals(Inclination.POSITIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 1);
@@ -35,7 +34,6 @@ public class BlackPawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-
         Inclination inclination = startCoordinate.getInclination(endCoordinate);
         Coordinate differenceCoordinate = startCoordinate.minus(endCoordinate);
         return availableInclinationsWhenCatch.contains(inclination)

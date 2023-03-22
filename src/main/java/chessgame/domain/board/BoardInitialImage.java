@@ -34,7 +34,6 @@ public class BoardInitialImage {
 
     private static Map<Coordinate, Piece> makeBoardImage() {
         Map<Coordinate, Piece> boardImage = new HashMap<>();
-
         boardImage.putAll(makeWhiteRanks());
         boardImage.putAll(makeEmptyRanks());
         boardImage.putAll(makeBlackRanks());
