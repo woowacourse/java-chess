@@ -1,6 +1,5 @@
-package chessgame.factory;
+package chessgame.domain;
 
-import chessgame.domain.Team;
 import chessgame.domain.piece.*;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;

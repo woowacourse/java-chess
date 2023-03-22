@@ -2,7 +2,6 @@ package chessgame.domain;
 
 import chessgame.domain.state.Ready;
 import chessgame.domain.state.State;
-import chessgame.factory.ChessBoardFactory;
 
 public class Game {
     private final Board board;

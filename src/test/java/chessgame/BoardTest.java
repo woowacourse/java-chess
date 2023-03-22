@@ -2,7 +2,7 @@ package chessgame;
 
 import chessgame.domain.Board;
 import chessgame.domain.Team;
-import chessgame.factory.ChessBoardFactory;
+import chessgame.domain.ChessBoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
