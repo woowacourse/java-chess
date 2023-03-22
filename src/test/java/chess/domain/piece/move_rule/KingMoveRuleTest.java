@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -11,15 +11,15 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.moveRule.TestFixture.A1;
-import static chess.domain.piece.moveRule.TestFixture.B2;
+import static chess.domain.piece.move_rule.TestFixture.A1;
+import static chess.domain.piece.move_rule.TestFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class KnightMoveRuleTest {
+public class KingMoveRuleTest {
     private Piece blackPiece;
     private Piece whitePiece;
-    private MoveRule moveRule = KnightMoveRule.getInstance();
+    private MoveRule moveRule = KingMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll
@@ -34,12 +34,12 @@ class KnightMoveRuleTest {
     }
 
     @Test
-    void 나이트_움직임_실패() {
+    void 킹_움직임_실패() {
         board.put(A1, blackPiece);
-        board.put(B2, whitePiece);
+        board.put(A3, whitePiece);
 
-        assertThatThrownBy(() -> moveRule.move(A1, B2))
+        assertThatThrownBy(() -> moveRule.move(A1, A3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("나이트는 L 모양으로만 움직일 수 있습니다.");
+                .hasMessage("킹은 인접한 칸으로만 이동할 수 있습니다.");
     }
 }

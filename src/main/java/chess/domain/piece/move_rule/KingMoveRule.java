@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;

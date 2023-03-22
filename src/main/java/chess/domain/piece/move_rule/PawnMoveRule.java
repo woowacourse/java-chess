@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.Direction;
 import chess.domain.piece.Color;

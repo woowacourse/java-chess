@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
@@ -25,7 +25,6 @@ public class KnightMoveRule implements MoveRule {
         validateKnightDirection(currentPosition, nextPosition);
         return Collections.emptyList();
     }
-
 
     @Override
     public PieceType pieceType() {

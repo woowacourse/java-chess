@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.moveRule.*;
+import chess.domain.piece.move_rule.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

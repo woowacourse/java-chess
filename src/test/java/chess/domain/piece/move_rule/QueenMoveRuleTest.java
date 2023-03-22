@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -11,15 +11,16 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.moveRule.TestFixture.*;
+import static chess.domain.piece.move_rule.TestFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RookMoveRuleTest {
+public class QueenMoveRuleTest {
+
     private Piece blackPiece;
     private Piece whitePiece;
-    private MoveRule moveRule = RookMoveRule.getInstance();
+    private MoveRule moveRule = QueenMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll
@@ -34,17 +35,17 @@ class RookMoveRuleTest {
     }
 
     @Test
-    void 룩_움직임_실패() {
+    void 퀸_움직임_실패() {
         board.put(A1, blackPiece);
         board.put(B3, whitePiece);
 
         assertThatThrownBy(() -> moveRule.move(A1, B3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("룩은 직선상으로만 움직일 수 있습니다.");
+                .hasMessage("퀸은 대각선 또는 직선 상으로만 움직일 수 있습니다.");
     }
 
     @Test
-    void 룩_움직임_실패_중간경로에_기물_존재() {
+    void 퀸_움직임_실패_중간경로에_기물_존재() {
         board.put(B1, whitePiece);
         board.put(A1, whitePiece);
         board.put(D1, blackPiece);

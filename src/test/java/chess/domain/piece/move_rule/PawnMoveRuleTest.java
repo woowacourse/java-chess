@@ -1,4 +1,4 @@
-package chess.domain.piece.moveRule;
+package chess.domain.piece.move_rule;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.moveRule.TestFixture.*;
+import static chess.domain.piece.move_rule.TestFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

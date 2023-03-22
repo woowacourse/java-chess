@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.moveRule.MoveRule;
+import chess.domain.piece.move_rule.MoveRule;
 import chess.domain.position.Position;
 
 import java.util.List;
