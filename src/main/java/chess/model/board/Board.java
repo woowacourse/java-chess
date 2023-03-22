@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.Score;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
@@ -103,6 +104,15 @@ public class Board {
         final Piece movePiece = squares.get(source);
         squares.put(target, movePiece.update());
         squares.put(source, Empty.getInstance());
+    }
+
+    public Score calculateScore(final PieceColor targetColor) {
+        final double sum = squares.values().stream()
+                .filter(piece -> piece.getColor().isSameColor(targetColor))
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        return new Score(targetColor, sum);
     }
 
     public Map<Position, Piece> getSquares() {

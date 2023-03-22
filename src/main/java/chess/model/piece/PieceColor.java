@@ -26,4 +26,9 @@ public enum PieceColor implements Color {
     public boolean isEmpty() {
         return false;
     }
+
+    @Override
+    public boolean isSameColor(final Color targetColor) {
+        return this == targetColor;
+    }
 }

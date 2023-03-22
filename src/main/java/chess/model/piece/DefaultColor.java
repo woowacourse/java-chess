@@ -25,4 +25,9 @@ public enum DefaultColor implements Color {
     public boolean isEmpty() {
         return true;
     }
+
+    @Override
+    public boolean isSameColor(final Color targetColor) {
+        return this == targetColor;
+    }
 }

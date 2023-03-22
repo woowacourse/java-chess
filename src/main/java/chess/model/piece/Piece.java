@@ -18,6 +18,14 @@ public abstract class Piece {
 
     public abstract Piece update();
 
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isDifferentColor(final PieceColor color) {
+        return this.color.isDifferent(color);
+    }
+
     public Color getColor() {
         return color;
     }
@@ -26,11 +34,7 @@ public abstract class Piece {
         return type;
     }
 
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public boolean isDifferentColor(final PieceColor color) {
-        return this.color.isDifferent(color);
+    public double getScore() {
+        return type.getScore();
     }
 }
