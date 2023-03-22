@@ -1,4 +1,4 @@
-package domain.piece.type;
+package domain.piece.slider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.pawn.Pawn;
 
 class PawnTest {
 
@@ -69,8 +70,8 @@ class PawnTest {
         Square targetSquare = new Square(7, 7);
         pawn.fetchMovePath(new Square(7, 5), targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.NONE);
-        pathInfo.put(new Square(6,7), Camp.NONE);
+        pathInfo.put(targetSquare, Camp.EMPTY);
+        pathInfo.put(new Square(6,7), Camp.EMPTY);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -84,7 +85,7 @@ class PawnTest {
         Square targetSquare = new Square(7, 7);
         pawn.fetchMovePath(new Square(7, 5), targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.NONE);
+        pathInfo.put(targetSquare, Camp.EMPTY);
         pathInfo.put(new Square(6,7), Camp.WHITE);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
@@ -100,7 +101,7 @@ class PawnTest {
         pawn.fetchMovePath(new Square(7, 5), targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
         pathInfo.put(targetSquare, Camp.WHITE);
-        pathInfo.put(new Square(6,7), Camp.NONE);
+        pathInfo.put(new Square(6,7), Camp.EMPTY);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -128,7 +129,7 @@ class PawnTest {
         Square targetSquare = new Square(7, 7);
         pawn.fetchMovePath(new Square(7, 5), targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.NONE);
+        pathInfo.put(targetSquare, Camp.EMPTY);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -170,7 +171,7 @@ class PawnTest {
         Square targetSquare = new Square(7, 7);
         pawn.fetchMovePath(new Square(6, 6), targetSquare);
         Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.NONE);
+        pathInfo.put(targetSquare, Camp.EMPTY);
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 

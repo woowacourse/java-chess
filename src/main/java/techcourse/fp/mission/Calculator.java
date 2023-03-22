@@ -17,6 +17,7 @@ public class Calculator {
         }
         return total;
     }
+
     public static int sumAll(List<Integer> numbers) {
         return sumAllByCondition(numbers, number -> true);
     }

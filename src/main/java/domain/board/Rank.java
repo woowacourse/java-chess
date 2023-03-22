@@ -20,15 +20,15 @@ public enum Rank {
 
     public static Rank find(int rankCoordinate) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.ordinal() == rankCoordinate)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+            .filter(rank -> rank.ordinal() == rankCoordinate)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     public static Rank find(char value) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+            .filter(rank -> rank.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 }

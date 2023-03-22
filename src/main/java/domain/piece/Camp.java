@@ -3,15 +3,15 @@ package domain.piece;
 public enum Camp {
     BLACK,
     WHITE,
-    NONE;
+    EMPTY;
 
     public Camp fetchOppositeCamp() {
-        if (this.equals(BLACK)) {
+        if (this == BLACK) {
             return WHITE;
         }
-        if (this.equals(WHITE)) {
+        if (this == WHITE) {
             return BLACK;
         }
-        return NONE;
+        return EMPTY;
     }
 }

@@ -1,4 +1,4 @@
-package domain.piece.type;
+package domain.piece.slider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.jumper.Knight;
 
 class KnightTest {
 

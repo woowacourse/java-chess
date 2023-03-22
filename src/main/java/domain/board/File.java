@@ -20,15 +20,15 @@ public enum File {
 
     public static File find(int fileCoordinate) {
         return Arrays.stream(File.values())
-                .filter(file -> file.ordinal() == fileCoordinate)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+            .filter(file -> file.ordinal() == fileCoordinate)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     public static File find(char value) {
         return Arrays.stream(File.values())
-                .filter(file -> file.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+            .filter(file -> file.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 }

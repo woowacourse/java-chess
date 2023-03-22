@@ -1,7 +1,6 @@
 package domain.board;
 
-import static domain.piece.Camp.BLACK;
-import static domain.piece.Camp.WHITE;
+import static domain.piece.Camp.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,13 +11,14 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.type.Bishop;
-import domain.piece.type.Empty;
-import domain.piece.type.King;
-import domain.piece.type.Knight;
-import domain.piece.type.Pawn;
-import domain.piece.type.Queen;
-import domain.piece.type.Rook;
+import domain.piece.slider.Slider;
+import domain.piece.slider.Bishop;
+import domain.piece.empty.Empty;
+import domain.piece.slider.King;
+import domain.piece.jumper.Knight;
+import domain.piece.pawn.Pawn;
+import domain.piece.slider.Queen;
+import domain.piece.slider.Rook;
 
 public class ChessBoard {
     private final Map<Square, Piece> board;
@@ -121,9 +121,9 @@ public class ChessBoard {
 
     public void move(Square currentSquare, Square targetSquare) {
         Piece currentPiece = board.get(currentSquare);
-        List<Square> path = currentPiece.fetchMovePath(currentSquare, targetSquare);
-        Map<Square, Camp> pathInfo = path.stream()
-                .collect(Collectors.toMap(Function.identity(), square -> board.get(square).getCamp()));
+        List<Square> path = currentPiece.fetchMovableSquares(currentSquare, targetSquare);
+        Map<Square, Piece> pathInfo = path.stream()
+            .collect(Collectors.toMap(Function.identity(), board::get));
         if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
@@ -137,6 +137,6 @@ public class ChessBoard {
     }
 
     public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {
-        return currentCamp == board.get(currentSquare).getCamp();
+        return (currentCamp == WHITE) == board.get(currentSquare).isWhite();
     }
 }

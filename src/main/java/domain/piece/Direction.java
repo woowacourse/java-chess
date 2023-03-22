@@ -18,6 +18,15 @@ public enum Direction {
         this.rank = rank;
     }
 
+    public static Direction find(int file, int rank) {
+        for (Direction direction : Direction.values()) {
+            if (direction.file == file && direction.rank == rank) {
+                return direction;
+            }
+        }
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    }
+
     public int getFile() {
         return file;
     }

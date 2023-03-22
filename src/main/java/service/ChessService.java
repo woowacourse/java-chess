@@ -10,6 +10,7 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.slider.Slider;
 
 public class ChessService {
     private static final int FILE_INDEX = 0;
@@ -18,8 +19,10 @@ public class ChessService {
     private final ChessBoard chessBoard;
     private Camp currentCamp;
     private boolean isOngoing;
-    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(Command.START,
-        ignored -> start(), Command.END, ignored -> end(), Command.MOVE, this::move);
+    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(
+        Command.START, ignored -> start(),
+        Command.END, ignored -> end(),
+        Command.MOVE, this::move);
 
     public ChessService() {
         this.chessBoard = new ChessBoard();

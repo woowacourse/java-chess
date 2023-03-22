@@ -1,4 +1,4 @@
-package domain.piece.type;
+package domain.piece.slider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.empty.Empty;
+import domain.piece.pawn.Pawn;
 
 class BishopTest {
 
@@ -39,13 +41,13 @@ class BishopTest {
     @DisplayName("경로에 있는 기물들이 없고, targetSquare에 같은편 기물이 없으면 true를 반환한다.")
     void canMove() {
         Bishop whiteBishop = new Bishop(Camp.WHITE);
-        Map<Square,Camp> pathInfo = new HashMap<>();
+        Map<Square, Slider> pathInfo = new HashMap<>();
         Square targetSquare = new Square(7, 7);
-        pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(targetSquare, new Pawn(Camp.BLACK));
+        pathInfo.put(new Square(6,6), Empty.getInstance());
+        pathInfo.put(new Square(5,5), Empty.getInstance());
+        pathInfo.put(new Square(4,4), Empty.getInstance());
+        pathInfo.put(new Square(3,3), Empty.getInstance());
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -59,10 +61,10 @@ class BishopTest {
         Map<Square,Camp> pathInfo = new HashMap<>();
         Square targetSquare = new Square(7, 7);
         pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
+        pathInfo.put(new Square(6,6), Camp.EMPTY);
+        pathInfo.put(new Square(5,5), Camp.EMPTY);
         pathInfo.put(new Square(4,4), Camp.WHITE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(new Square(3,3), Camp.EMPTY);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -76,10 +78,10 @@ class BishopTest {
         Map<Square,Camp> pathInfo = new HashMap<>();
         Square targetSquare = new Square(7, 7);
         pathInfo.put(targetSquare, Camp.WHITE);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(new Square(6,6), Camp.EMPTY);
+        pathInfo.put(new Square(5,5), Camp.EMPTY);
+        pathInfo.put(new Square(4,4), Camp.EMPTY);
+        pathInfo.put(new Square(3,3), Camp.EMPTY);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
@@ -93,10 +95,10 @@ class BishopTest {
         Map<Square,Camp> pathInfo = new HashMap<>();
         Square targetSquare = new Square(7, 7);
         pathInfo.put(targetSquare, Camp.BLACK);
-        pathInfo.put(new Square(6,6), Camp.NONE);
-        pathInfo.put(new Square(5,5), Camp.NONE);
-        pathInfo.put(new Square(4,4), Camp.NONE);
-        pathInfo.put(new Square(3,3), Camp.NONE);
+        pathInfo.put(new Square(6,6), Camp.EMPTY);
+        pathInfo.put(new Square(5,5), Camp.EMPTY);
+        pathInfo.put(new Square(4,4), Camp.EMPTY);
+        pathInfo.put(new Square(3,3), Camp.EMPTY);
 
         boolean result = whiteBishop.canMove(pathInfo, targetSquare);
 
