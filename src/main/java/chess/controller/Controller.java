@@ -9,14 +9,13 @@ import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.view.Command;
 
+import static chess.view.ErrorMessage.FIRST_COMMAND_ERROR_MESSAGE;
 import static chess.view.InputView.readStateCommand;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printExceptionMessage;
 import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
-
-    private static final String FIRST_COMMAND_ERROR_MESSAGE = "첫 번째로는 start, end만 입력 가능합니다";
 
     public void playChessGame() {
         printStartGuideMessage();
@@ -44,7 +43,7 @@ public class Controller {
 
     private void checkFirstCommand(Command command) {
         if (command == Command.MOVE) {
-            throw new IllegalArgumentException(FIRST_COMMAND_ERROR_MESSAGE);
+            throw new IllegalArgumentException(FIRST_COMMAND_ERROR_MESSAGE.getErrorMessage());
         }
     }
 
