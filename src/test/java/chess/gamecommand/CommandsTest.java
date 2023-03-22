@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import chess.board.File;
+import chess.board.Position;
+import chess.board.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,5 +44,20 @@ class CommandsTest {
                 Arguments.arguments(new Commands(Arrays.asList("move", "a2", "a4")), GameCommand.MOVE),
                 Arguments.arguments(new Commands(Arrays.asList("end")), GameCommand.END)
         );
+    }
+
+    @Test
+    @DisplayName("move 커맨드일 떄 소스 위치와 타겟 위치를 생성한다.")
+    void generatePosition() {
+        // given
+        Commands commands = new Commands(Arrays.asList("move", "a2", "a4"));
+
+        // when
+        Position sourcePosition = commands.generateSourcePosition();
+        Position targetPosition = commands.generateTargetPosition();
+
+        // then
+        assertThat(sourcePosition).isEqualTo(new Position(File.A, Rank.TWO));
+        assertThat(targetPosition).isEqualTo(new Position(File.A, Rank.FOUR));
     }
 }
