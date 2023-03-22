@@ -35,11 +35,11 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveStraightOne(int rankGap) {
-        return rankGap == MOVABLE_DISTANCE * getColor().getDirection();
+        return rankGap == MOVABLE_DISTANCE * getDirection();
     }
 
     private boolean canMoveStraightTwo(int rankGap) {
-        return rankGap == INITIAL_MOVABLE_DISTANCE * getColor().getDirection() && isFirstMove();
+        return rankGap == INITIAL_MOVABLE_DISTANCE * getDirection() && isFirstMove();
     }
 
     private boolean isFirstMove() {
@@ -50,7 +50,14 @@ public class Pawn extends Piece {
         int rankGap = sourcePosition.calculateRankGap(targetPosition);
         int fileGap = Math.abs(sourcePosition.calculateFileGap(targetPosition));
         boolean isOpponent = getColor().isOpposite(color);
-        return rankGap == MOVABLE_DISTANCE * getColor().getDirection() && fileGap == MOVABLE_DISTANCE && isOpponent;
+        return rankGap == MOVABLE_DISTANCE * getDirection() && fileGap == MOVABLE_DISTANCE && isOpponent;
+    }
+
+    private int getDirection() {
+        if (getColor() == Color.BLACK) {
+            return 1;
+        }
+        return -1;
     }
 
     @Override

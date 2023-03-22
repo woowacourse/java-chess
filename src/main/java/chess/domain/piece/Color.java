@@ -1,15 +1,10 @@
 package chess.domain.piece;
 
 public enum Color {
-    BLACK(1),
-    WHITE(-1),
-    EMPTY(0),
+    BLACK,
+    WHITE,
+    EMPTY,
     ;
-    private final int direction;
-
-    Color(int direction) {
-        this.direction = direction;
-    }
 
     public boolean isOpposite(Color color) {
         return this.getReverseColor() == color;
@@ -28,9 +23,4 @@ public enum Color {
         }
         return EMPTY;
     }
-
-    public int getDirection() {
-        return direction;
-    }
-
 }
