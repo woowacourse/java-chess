@@ -52,12 +52,22 @@ class ChessGameTest {
 
     @Test
     @DisplayName("게임이 Running인 상태에서는 시작 커맨드가 들어왔을 시 예외를 던진다.")
-    void gameRunningStatus() {
+    void gameRunningStatusWithStart() {
         ChessGame chessGame = new ChessGame(new Board());
         chessGame.inputGameCommand(GameCommand.START);
         assertThatThrownBy(() -> chessGame.inputGameCommand(GameCommand.START))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 게임이 이미 실행중입니다.");
+    }
+
+    @Test
+    @DisplayName("게임이 Running인 상태에서는 상태 커맨드가 들어왔을 시 예외를 던진다.")
+    void gameRunningStatusWithStatus() {
+        ChessGame chessGame = new ChessGame(new Board());
+        chessGame.inputGameCommand(GameCommand.START);
+        assertThatThrownBy(() -> chessGame.inputGameCommand(GameCommand.STATUS))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 게임이 실행중 일 때는 결과를 알 수 없습니다.");
     }
 
     @Test
