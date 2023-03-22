@@ -48,31 +48,30 @@ public class ChessBoard {
     private void validateMovableSourcePiece(Coordinate sourceCoordinate, Coordinate destinationCoordinate, Team currentOrderTeam) {
         RowPieces rowPiecesContainsSourcePiece = findRowPiecesByCoordinate(sourceCoordinate);
         RowPieces rowPiecesContainsDestinationPiece = findRowPiecesByCoordinate(destinationCoordinate);
-    
-        boolean isCorrectOrderTeam = rowPiecesContainsSourcePiece.isCorrectOrderTeam(sourceCoordinate, currentOrderTeam);
-        boolean isMovablePiece = rowPiecesContainsSourcePiece
-                .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
-        boolean isEmptyRoute = isEmptyRoute(FIRST_TRY, sourceCoordinate, destinationCoordinate);
-        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByCoordinateKnight(sourceCoordinate);
-    
-        validateCurrentOrderTeam(isCorrectOrderTeam);
-        validateMovable(isMovablePiece);
-        validateRoute(isEmptyRoute, isSourcePieceKnight);
+        
+        validateCurrentOrderTeam(sourceCoordinate, currentOrderTeam, rowPiecesContainsSourcePiece);
+        validateMovable(sourceCoordinate, destinationCoordinate, rowPiecesContainsSourcePiece, rowPiecesContainsDestinationPiece);
+        validateRoute(sourceCoordinate, destinationCoordinate, rowPiecesContainsSourcePiece);
     }
     
-    private void validateCurrentOrderTeam(boolean isCorrectOrderTeam) {
+    private void validateCurrentOrderTeam(Coordinate sourceCoordinate, Team currentOrderTeam, RowPieces rowPiecesContainsSourcePiece) {
+        boolean isCorrectOrderTeam = rowPiecesContainsSourcePiece.isCorrectOrderTeam(sourceCoordinate, currentOrderTeam);
         if (!isCorrectOrderTeam) {
             throw new IllegalArgumentException("해당 기물이 속한 팀의 순서가 아닙니다. 다시 입력해주세요.");
         }
     }
     
-    private void validateMovable(boolean isMovablePiece) {
+    private void validateMovable(Coordinate sourceCoordinate, Coordinate destinationCoordinate, RowPieces rowPiecesContainsSourcePiece, RowPieces rowPiecesContainsDestinationPiece) {
+        boolean isMovablePiece = rowPiecesContainsSourcePiece
+                .isMovable(rowPiecesContainsDestinationPiece, sourceCoordinate, destinationCoordinate);
         if (!isMovablePiece) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 목적지입니다. 다시 입력해주세요.");
         }
     }
     
-    private void validateRoute(boolean isEmptyRoute, boolean isSourcePieceKnight) {
+    private void validateRoute(Coordinate sourceCoordinate, Coordinate destinationCoordinate, RowPieces rowPiecesContainsSourcePiece) {
+        boolean isEmptyRoute = isEmptyRoute(FIRST_TRY, sourceCoordinate, destinationCoordinate);
+        boolean isSourcePieceKnight = rowPiecesContainsSourcePiece.isPieceByCoordinateKnight(sourceCoordinate);
         if (!isEmptyRoute && !isSourcePieceKnight) {
             throw new IllegalArgumentException("목적지까지의 경로에 기물이 있어서 목적지로 갈 수 없습니다. 다시 입력해주세요.");
         }
@@ -91,16 +90,16 @@ public class ChessBoard {
         return repeatResearchForDestination(researchCoordinate, destinationCoordinate);
     }
     
+    private boolean isReachedAtDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
+        return researchCoordinate.equals(destinationCoordinate);
+    }
+    
     private boolean repeatResearchForDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
         return isEmptyRoute(
                 true,
                 moveForDestination(researchCoordinate, destinationCoordinate),
                 destinationCoordinate
         );
-    }
-    
-    private boolean isReachedAtDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
-        return researchCoordinate.equals(destinationCoordinate);
     }
     
     private Coordinate moveForDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
