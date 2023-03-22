@@ -12,22 +12,29 @@ public enum Rank {
     SEVEN("7"),
     EIGHT("8");
 
-    private static final Map<String, Rank> RANK_BY_VALUE = new HashMap<>();
+    private static final Map<String, Rank> RANK_BY_NAME = new HashMap<>();
 
     static {
         for (Rank rank : values()) {
-            RANK_BY_VALUE.put(rank.value, rank);
+            RANK_BY_NAME.put(rank.name, rank);
         }
     }
 
-    private final String value;
+    private final String name;
 
-    Rank(final String value) {
-        this.value = value;
+    Rank(final String name) {
+        this.name = name;
     }
 
-    public static Rank findByValue(final String value) {
-        return RANK_BY_VALUE.get(value);
+    public static Rank valueOfName(final String name) {
+        validateRankName(name);
+        return RANK_BY_NAME.get(name);
+    }
+
+    private static void validateRankName(final String name) {
+        if (!RANK_BY_NAME.containsKey(name)) {
+            throw new IllegalArgumentException("해당 위치는 존재하지 않습니다. 입력 값 :" + name);
+        }
     }
 
     public int calculateDistance(final Rank otherRank) {

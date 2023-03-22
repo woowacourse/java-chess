@@ -7,11 +7,16 @@ import chess.domain.Rank;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class ChessController {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+    private static final String DELIMITER = "";
     private final int COMMAND_INDEX = 0;
     private final int MOVE_CURRENT_POSITION_INDEX = 1;
     private final int MOVE_TARGET_POSITION_INDEX = 2;
@@ -79,14 +84,26 @@ public class ChessController {
 
     private void validateCommandSize(final List<String> commandInputs) {
         if (commandInputs.size() != VALID_COMMON_SIZE) {
-            throw new IllegalArgumentException("위치 명령 입력이 잘못 되었습니다.");
+            throw new IllegalArgumentException("유효하지 않은 이동 입력입니다.");
         }
     }
 
     private Position generatePositionBy(String fileRankInput) {
-        final String fileValue = String.valueOf(fileRankInput.charAt(0));
-        final String rankValue = String.valueOf(fileRankInput.charAt(1));
-        return new Position(File.findByValue(fileValue), Rank.findByValue(rankValue));
+        final List<String> positionLetters = generatePositionLetters(fileRankInput);
+        validatePositionLetterSize(positionLetters);
+        final String fileValue = String.valueOf(positionLetters.get(FILE_INDEX));
+        final String rankValue = String.valueOf(positionLetters.get(RANK_INDEX));
+        return new Position(File.valueOfName(fileValue), Rank.valueOfName(rankValue));
+    }
+
+    private List<String> generatePositionLetters(final String fileRankInput) {
+        return Arrays.stream(fileRankInput.split(DELIMITER)).collect(Collectors.toList());
+    }
+
+    private void validatePositionLetterSize(final List<String> positionLetters) {
+        if (positionLetters.size() != 2) {
+            throw new IllegalArgumentException("유효하지 않은 위치 입력입니다.");
+        }
     }
 
 }

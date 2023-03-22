@@ -12,22 +12,29 @@ public enum File {
     G("g"),
     H("h");
 
-    private static final Map<String, File> FILE_BY_VALUE = new HashMap<>();
+    private static final Map<String, File> FILE_BY_NAME = new HashMap<>();
 
     static {
         for (File file : values()) {
-            FILE_BY_VALUE.put(file.value, file);
+            FILE_BY_NAME.put(file.name, file);
         }
     }
 
-    private final String value;
+    private final String name;
 
-    File(final String value) {
-        this.value = value;
+    File(final String name) {
+        this.name = name;
     }
 
-    public static File findByValue(final String value) {
-        return FILE_BY_VALUE.get(value);
+    public static File valueOfName(final String name) {
+        validateFileName(name);
+        return FILE_BY_NAME.get(name);
+    }
+
+    private static void validateFileName(final String name) {
+        if (!FILE_BY_NAME.containsKey(name)) {
+            throw new IllegalArgumentException("해당 위치는 존재하지 않습니다. 입력 값 :" + name);
+        }
     }
 
     public int calculateDistance(final File otherFile) {
