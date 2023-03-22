@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public final class ChessBoardDTO {
 
     private static final int ROW_SIZE = 8;
+
     private final List<List<String>> rowDTOs;
 
     private ChessBoardDTO(final List<List<String>> rowDTOs) {
