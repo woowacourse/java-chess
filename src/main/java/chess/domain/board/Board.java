@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface Board {
     
     List<Piece> getRankPieces(Rank rank);
     
-    List<Piece> getFilePieces(int file);
+    List<Piece> getFilePieces(File file);
     
     boolean isKingDead();
     

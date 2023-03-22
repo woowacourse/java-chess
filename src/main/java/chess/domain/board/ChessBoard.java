@@ -5,6 +5,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.EnumMap;
@@ -142,16 +143,19 @@ public final class ChessBoard implements Board {
     }
     
     @Override
-    public List<Piece> getRankPieces(Rank rank) {
+    public List<Piece> getRankPieces(final Rank rank) {
         return this.board.entrySet().stream()
-                .filter(e -> e.getKey().isRank(rank.getIndex()))
+                .filter(e -> e.getKey().getRank() == rank)
                 .map(Entry::getValue)
                 .collect(Collectors.toList());
     }
     
     @Override
-    public List<Piece> getFilePieces(final int file) {
-        return null;
+    public List<Piece> getFilePieces(final File file) {
+        return this.board.entrySet().stream()
+                .filter(e -> e.getKey().getFile() == file)
+                .map(Entry::getValue)
+                .collect(Collectors.toList());
     }
     
     @Override

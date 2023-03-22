@@ -58,6 +58,10 @@ public abstract class Piece {
         return this.color == piece.color;
     }
     
+    public Color getColor() {
+        return this.color;
+    }
+    
     public PieceType getType() {
         return this.type;
     }

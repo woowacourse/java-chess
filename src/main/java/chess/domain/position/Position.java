@@ -26,11 +26,6 @@ public final class Position implements Comparable<Position> {
         return new Position(file, rank);
     }
     
-    public boolean isRank(final int index) {
-        Rank rank = Rank.findByIndex(index);
-        return this.rank == rank;
-    }
-    
     public Direction calculateDirection(Position destination) {
         int sourceFileIndex = this.getFileIndex();
         int sourceRankIndex = this.getRankIndex();
@@ -79,9 +74,6 @@ public final class Position implements Comparable<Position> {
         return fileGap * fileGap + rankGap * rankGap;
     }
     
-    public boolean isFile(final int file) {
-        return this.file.getIndex() == file;
-    }
     
     @Override
     public int hashCode() {
@@ -121,6 +113,10 @@ public final class Position implements Comparable<Position> {
         int thisFile = this.getFileIndex();
         int otherFile = o.getFileIndex();
         return Integer.compare(thisFile, otherFile);
+    }
+    
+    public File getFile() {
+        return this.file;
     }
     
     public int getFileIndex() {

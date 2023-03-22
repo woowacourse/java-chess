@@ -18,6 +18,10 @@ public final class Score {
         return new Score(this.score + score.score);
     }
     
+    public Score multiply(double score) {
+        return new Score(this.score * score);
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hash(this.score);
