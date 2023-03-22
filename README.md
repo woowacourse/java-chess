@@ -52,6 +52,10 @@
 - [x] 턴을 확인한다.
 - [x] 보드에게 기물을 움직이라 명령한다. 
 
+### 점수
+- [x] 기물 별 점수가 존재한다.
+- [x] 팀 별로 남아있는 기물에 대한 점수를 구할 수 있어야한다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
