@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.*;
 public final class ChessBoard {
 
     private static final Empty EMPTY = new Empty(EmptyType.EMPTY);
+    private static final long ALL_KING_ALIVE = 2L;
 
     private final Map<Position, SquareStatus> chessBoard;
 
@@ -39,6 +40,14 @@ public final class ChessBoard {
             return;
         }
         chessBoard.put(target, squareStatus);
+    }
+
+    public boolean isKingAlive() {
+        final long kingCount = chessBoard.values()
+                .stream()
+                .filter(chessBoard -> chessBoard.isSameType(PieceType.KING))
+                .count();
+        return kingCount == ALL_KING_ALIVE;
     }
 
     public Route findRoute(final Position source, final Position target) {

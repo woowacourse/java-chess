@@ -1,8 +1,12 @@
 package domain.chessboard;
 
-import domain.piece.*;
+import domain.chessgame.TestChessBoardFactory;
+import domain.piece.Color;
+import domain.position.Position;
+import domain.position.PositionFactory;
 import domain.squarestatus.SquareStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -49,4 +53,40 @@ public class ChessBoardTest {
                 .containsOnly(1L)
                 .hasSize(8);
     }
+
+    @Nested
+    class IsKingAliveTest{
+
+        @Test
+        @DisplayName("살아있는 King이 2개면 True를 리턴한다.")
+        void givenBothKingAlive_thenReturnFalse() {
+            //given
+            final ChessBoard chessBoard = TestChessBoardFactory.generate();
+
+            //when
+            final boolean isKingAlive = chessBoard.isKingAlive();
+
+            //then
+            assertThat(isKingAlive).isTrue();
+        }
+
+        @Test
+        @DisplayName("살아있는 King이 2개가 아니면 false를 리턴한다.")
+        void givenOnlyKingAlive_thenReturnFalse() {
+            //given
+            final ChessBoard chessBoard = TestChessBoardFactory.generate();
+
+            //when
+            final Position source = PositionFactory.createPosition("G4");
+            final Position target = PositionFactory.createPosition("G5");
+
+            chessBoard.move(source, target);
+            final boolean isKingAlive = chessBoard.isKingAlive();
+
+            //then
+            assertThat(isKingAlive).isFalse();
+        }
+
+    }
+
 }

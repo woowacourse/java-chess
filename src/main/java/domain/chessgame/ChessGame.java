@@ -29,6 +29,10 @@ public final class ChessGame {
         turn.nextTurn();
     }
 
+    public boolean isKingAlive() {
+        return chessBoard.isKingAlive();
+    }
+
     public double calculateScore(final Color color) {
         final List<Long> columnPawnCount = chessBoard.findColumnPawnCounts(color);
         final List<SquareStatus> pieces = chessBoard.findPieces(color);

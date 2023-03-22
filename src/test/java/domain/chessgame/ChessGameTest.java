@@ -138,4 +138,41 @@ class ChessGameTest {
 
     }
 
+
+    @Nested
+    class IsKingDeadTest {
+
+        @Test
+        @DisplayName("살아있는 King이 2개면 true를 리턴한다.")
+        void givenBothKingAlive_thenReturnFalse() {
+            //given
+            final ChessGame chessGame = new ChessGame(TestChessBoardFactory.generate());
+
+            //when
+            final boolean isKingAlive = chessGame.isKingAlive();
+
+            //then
+            assertThat(isKingAlive).isTrue();
+        }
+
+        @Test
+        @DisplayName("살아있는 King이 2개가 아니면 true를 리턴한다.")
+        void givenOnlyKingAlive_thenReturnTrue() {
+            //given
+            final ChessGame chessGame = new ChessGame(TestChessBoardFactory.generate());
+
+            //when
+            final Position source = PositionFactory.createPosition("G4");
+            final Position target = PositionFactory.createPosition("G5");
+
+            chessGame.move(source, target);
+
+            final boolean isKingAlive = chessGame.isKingAlive();
+
+            //then
+            assertThat(isKingAlive).isFalse();
+        }
+
+    }
+
 }

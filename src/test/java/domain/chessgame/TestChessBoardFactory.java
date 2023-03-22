@@ -16,7 +16,7 @@ public class TestChessBoardFactory {
     static {
         chessBoard = new HashMap<>();
 
-        chessBoard.put(PositionFactory.createPosition("B8"), new King(Color.BLACK));
+        chessBoard.put(PositionFactory.createPosition("G5"), new King(Color.BLACK));
         chessBoard.put(PositionFactory.createPosition("C8"), new Rook(Color.BLACK));
         chessBoard.put(PositionFactory.createPosition("A7"), new Pawn(Color.BLACK));
         chessBoard.put(PositionFactory.createPosition("C7"), new Pawn(Color.BLACK));
