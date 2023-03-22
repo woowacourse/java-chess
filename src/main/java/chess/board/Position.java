@@ -14,9 +14,9 @@ public class Position {
     }
 
     public Direction getDirectionTo(Position targetPosition) {
-        final int fileValuePoint = file.getDirectionTo(targetPosition.file);
-        final int rankValuePoint = rank.getDirectionTo(targetPosition.rank);
-        return Direction.from(fileValuePoint, rankValuePoint);
+        final int file = this.file.getDirectionTo(targetPosition.file);
+        final int rank = this.rank.getDirectionTo(targetPosition.rank);
+        return Direction.from(file, rank);
     }
 
     public double getSlope(Position targetPosition) {
