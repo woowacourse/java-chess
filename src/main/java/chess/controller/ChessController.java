@@ -9,16 +9,16 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-	private final ChessGame service;
+	private final ChessGame chessGame;
 
 	public ChessController() {
-		this.service = new ChessGame();
+		this.chessGame = new ChessGame();
 	}
 
 	public void run() {
 		OutputView.printInitialMessage();
-		while(isRunCommandNotEnd()) {
-			OutputView.printBoard(OutputRenderer.toBoardDto(service.getBoard()));
+		while (isRunCommandNotEnd()) {
+			OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
 		}
 	}
 
@@ -42,10 +42,10 @@ public class ChessController {
 	}
 
 	private void initialize() {
-		service.initialize();
+		chessGame.initialize();
 	}
 
 	private void move(Position source, Position target) {
-		service.movePiece(source, target);
+		chessGame.movePiece(source, target);
 	}
 }

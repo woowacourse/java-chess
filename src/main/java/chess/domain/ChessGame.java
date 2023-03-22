@@ -6,7 +6,7 @@ import chess.domain.piece.Piece;
 
 public class ChessGame {
 
-	private static final String SERVICE_STATE_ERROR_MESSAGE = "현재 상태에서 불가능한 명령입니다.";
+	private static final String GAME_STATE_ERROR_MESSAGE = "현재 상태에서 불가능한 명령입니다.";
 
 	private final Board board;
 	private GameState state;
@@ -52,6 +52,6 @@ public class ChessGame {
 				return;
 			}
 		}
-		throw new IllegalStateException(SERVICE_STATE_ERROR_MESSAGE);
+		throw new IllegalStateException(GAME_STATE_ERROR_MESSAGE);
 	}
 }
