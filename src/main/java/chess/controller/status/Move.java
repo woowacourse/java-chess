@@ -9,6 +9,9 @@ import chess.domain.piece.PositionConverter;
 import java.util.List;
 
 public final class Move implements Status {
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
+
     private final ChessGame chessGame;
     private final CampType campType;
 
@@ -20,8 +23,8 @@ public final class Move implements Status {
     private Status move(final Command command) {
         validateCommand(command);
         final List<String> commands = command.getCommands();
-        final Position source = PositionConverter.convert(commands.get(1));
-        final Position target = PositionConverter.convert(commands.get(2));
+        final Position source = PositionConverter.convert(commands.get(SOURCE_INDEX));
+        final Position target = PositionConverter.convert(commands.get(TARGET_INDEX));
         chessGame.setUp(source, target, campType);
         return new Move(chessGame, campType.changeTurn());
     }

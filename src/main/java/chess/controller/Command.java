@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class Command {
+    public static final int COMMAND_INDEX = 0;
+    public static final int MOVE_COMMAND_SIZE = 3;
+
     private final CommandType type;
     private final List<String> commands;
 
@@ -18,7 +21,7 @@ public final class Command {
 
     public static Command findCommand(final List<String> commands) {
         final CommandType type = Arrays.stream(CommandType.values())
-                .filter(e -> e.name().equalsIgnoreCase(commands.get(0)))
+                .filter(e -> e.name().equalsIgnoreCase(commands.get(COMMAND_INDEX)))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(COMMAND_ERROR_MESSAGE));
         return new Command(type, commands);
@@ -37,7 +40,7 @@ public final class Command {
     }
 
     public boolean isCorrectWhenMove() {
-        return commands.size() == 3;
+        return commands.size() == MOVE_COMMAND_SIZE;
     }
 
     public List<String> getCommands() {
