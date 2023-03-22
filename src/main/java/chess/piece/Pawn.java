@@ -50,7 +50,7 @@ public class Pawn extends Piece {
 
         final int moveCount = position.getMoveCount(targetPosition, direction);
         if (moveCount != 1) {
-            return isStartPosition() && direction.isVerticalMovable() && moveCount == WHITE_PAWN_INITIAL_RANK;
+            return isStartPosition() && direction.isVertical() && moveCount == WHITE_PAWN_INITIAL_RANK;
         }
 
         return true;

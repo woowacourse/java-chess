@@ -35,8 +35,8 @@ class DirectionTest {
         final Direction upDirection = Direction.UP;
 
         // when, then
-        assertThat(rightDirection.isHorizontalMovable()).isTrue();
-        assertThat(upDirection.isHorizontalMovable()).isFalse();
+        assertThat(rightDirection.isHorizontal()).isTrue();
+        assertThat(upDirection.isHorizontal()).isFalse();
     }
 
     @Test
@@ -47,7 +47,7 @@ class DirectionTest {
         final Direction upDirection = Direction.UP;
 
         // when, then
-        assertThat(rightDirection.isVerticalMovable()).isFalse();
-        assertThat(upDirection.isVerticalMovable()).isTrue();
+        assertThat(rightDirection.isVertical()).isFalse();
+        assertThat(upDirection.isVertical()).isTrue();
     }
 }

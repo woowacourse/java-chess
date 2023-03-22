@@ -35,15 +35,15 @@ public enum Direction {
         return this.y + yPoint;
     }
 
-    public boolean isHorizontalMovable() {
-        return x != 0;
+    public boolean isHorizontal() {
+        return x != 0 && y == 0;
     }
 
-    public boolean isVerticalMovable() {
-        return y != 0;
+    public boolean isVertical() {
+        return x == 0 && y != 0;
     }
 
-    public boolean isDiagonalMovable() {
+    public boolean isDiagonal() {
         return x != 0 && y != 0;
     }
 }
