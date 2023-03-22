@@ -1,11 +1,12 @@
 package chess.controller;
 
+import chess.controller.mapper.response.ChessBoardStateMapper;
 import chess.controller.mapper.ChessCommandMapper;
 import chess.domain.position.PiecesPosition;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.ChessGameCommand;
 import chess.view.input.InputView;
-import chess.view.output.OutputView;
+import chess.view.OutputView;
 import java.util.List;
 
 public final class ChessController {
@@ -61,6 +62,7 @@ public final class ChessController {
 
     private void printChessGameBoard(ChessGame chessGame) {
         PiecesPosition piecesPosition = chessGame.getPiecesPosition();
-        outputView.printChessState(piecesPosition.getPiecesPosition());
+        List<List<String>> consoleViewBoard = ChessBoardStateMapper.convertToConsoleViewBoard(piecesPosition.getPiecesPosition());
+        outputView.printChessState(consoleViewBoard);
     }
 }

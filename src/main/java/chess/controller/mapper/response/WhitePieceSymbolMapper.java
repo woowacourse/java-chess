@@ -1,4 +1,4 @@
-package chess.view.output;
+package chess.controller.mapper.response;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -10,7 +10,7 @@ import chess.domain.piece.Rook;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public enum WhitePieceSymbolView {
+public enum WhitePieceSymbolMapper {
     PAWN(Pawn.class, "p"),
     BISHOP(Bishop.class, "b"),
     KING(King.class, "k"),
@@ -22,13 +22,13 @@ public enum WhitePieceSymbolView {
     private final Class<? extends Piece> piece;
     private final String viewSymbol;
 
-    WhitePieceSymbolView(Class<? extends Piece> piece, String viewSymbol) {
+    WhitePieceSymbolMapper(Class<? extends Piece> piece, String viewSymbol) {
         this.piece = piece;
         this.viewSymbol = viewSymbol;
     }
 
     public static String getViewSymbolBy(Piece piece) {
-        return Arrays.stream(WhitePieceSymbolView.values())
+        return Arrays.stream(WhitePieceSymbolMapper.values())
                 .filter(it -> it.piece.isInstance(piece))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
