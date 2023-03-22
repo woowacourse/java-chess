@@ -70,13 +70,4 @@ class ChessGameDaoTest {
                 () -> assertThat(result.winner()).isNull()
         );
     }
-
-    private void 흰색_왕을_죽인다(final ChessGame chessGame) {
-        chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e4"));
-        chessGame.movePiece(PiecePosition.of("d7"), PiecePosition.of("d5"));
-        chessGame.movePiece(PiecePosition.of("e1"), PiecePosition.of("e2"));
-        chessGame.movePiece(PiecePosition.of("d5"), PiecePosition.of("d4"));
-        chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e3"));
-        chessGame.movePiece(PiecePosition.of("d4"), PiecePosition.of("e3"));
-    }
 }
