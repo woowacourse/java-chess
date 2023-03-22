@@ -1,6 +1,6 @@
 package chess.domain.commnad;
 
-import chess.exception.CommandException;
+import chess.exception.CommandMessage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class Command {
         List<String> permittedCommands = List.of(START_COMMAND, MOVE_COMMAND, END_COMMAND, STATUS_COMMAND);
 
         if (!permittedCommands.contains(commands.get(COMMAND_INDEX))) {
-            throw new IllegalArgumentException(CommandException.COMMAND_INVALID.getMessage());
+            throw new IllegalArgumentException(CommandMessage.COMMAND_INVALID.getMessage());
         }
     }
 

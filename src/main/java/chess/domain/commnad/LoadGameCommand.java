@@ -1,6 +1,6 @@
 package chess.domain.commnad;
 
-import chess.exception.CommandException;
+import chess.exception.CommandMessage;
 
 public enum LoadGameCommand {
 
@@ -24,7 +24,7 @@ public enum LoadGameCommand {
 
     private static void validate(final String command) {
         if (!(command.equals("1") || command.equals("2"))) {
-            throw new IllegalArgumentException(CommandException.STATUS_COMMAND_INVALID.getMessage());
+            throw new IllegalArgumentException(CommandMessage.STATUS_COMMAND_INVALID.getMessage());
         }
     }
 

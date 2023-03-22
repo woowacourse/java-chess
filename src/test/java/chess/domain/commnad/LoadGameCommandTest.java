@@ -3,7 +3,7 @@ package chess.domain.commnad;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.exception.CommandException;
+import chess.exception.CommandMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,6 +46,6 @@ class LoadGameCommandTest {
         // when & then
         assertThatThrownBy(() -> LoadGameCommand.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(CommandException.STATUS_COMMAND_INVALID.getMessage());
+                .hasMessage(CommandMessage.STATUS_COMMAND_INVALID.getMessage());
     }
 }
