@@ -62,5 +62,10 @@ public class Chessboard {
         return source.getDiagonalSquares(target);
     }
 
-
+    public double countScore(Camp camp) {
+        return board.values().stream()
+                .filter(piece -> piece.isCamp(camp))
+                .map(Piece::getScore)
+                .reduce(0.0, Double::sum);
+    }
 }

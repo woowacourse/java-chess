@@ -21,6 +21,10 @@ public abstract class Piece {
         return camp != otherPiece.camp;
     }
 
+    public boolean isCamp(Camp camp) {
+        return this.camp.equals(camp);
+    }
+
     public boolean isOpposite(Piece otherPiece) {
         return camp.isOpposite(otherPiece.camp);
     }
