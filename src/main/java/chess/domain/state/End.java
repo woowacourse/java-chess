@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.dto.ChessInputDto;
 
-public class End extends State {
+public final class End extends State {
     public End(final Board board) {
         super(board);
     }

@@ -13,7 +13,7 @@ import java.util.Map;
 import static chess.domain.PieceType.EMPTY;
 import static chess.domain.PieceType.PAWN;
 
-public class Board {
+public final class Board {
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {

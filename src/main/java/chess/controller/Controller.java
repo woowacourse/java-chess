@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.state.Ready;
+import chess.domain.state.Start;
 import chess.domain.state.State;
 import chess.dto.ChessInputDto;
 import chess.view.GameState;
@@ -11,37 +11,25 @@ import chess.view.OutputView;
 public final class Controller {
     public void run() {
         OutputView.printStartMessage();
-
-        State state = new Ready(Board.create());
-        while (!state.isEnd()) {
-            state = processGame(state);
+        State state = new Start(Board.create());
+        while (state.isNotEnd()) {
+            final ChessInputDto dto = InputView.inputGameState();
+            state = processChess(state, dto);
+            OutputView.printChessBoard(state.getBoard());
         }
     }
 
-    private State processGame(final State state) {
-        try {
-            final ChessInputDto chessInputDto = InputView.inputGameState();
-            final GameState gameState = chessInputDto.getGameState();
-
-            return processState(state, chessInputDto, gameState);
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-        }
-        return state.end();
-    }
-
-    private State processState(final State state, final ChessInputDto chessInputDto, final GameState gameState) {
-        State newState = state;
+    private State processChess(State state, final ChessInputDto dto) {
+        final GameState gameState = dto.getGameState();
         if (gameState == GameState.START) {
-            newState = state.start();
-        }
-        if (gameState == GameState.END) {
-            newState = state.end();
+            return state.start();
         }
         if (gameState == GameState.MOVE) {
-            newState = state.move(chessInputDto.getSource(), chessInputDto.getTarget());
+            return state.move(dto);
         }
-        OutputView.printChessBoard(state.getBoard().getBoard());
-        return newState;
+        if (gameState == GameState.END) {
+            return state.end();
+        }
+        return state;
     }
 }

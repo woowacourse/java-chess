@@ -19,7 +19,7 @@ public class ChessInputDto {
     }
 
     public static ChessInputDto from(final GameState gameState) {
-        return new ChessInputDto(gameState, Position.NOT_ABLE, Position.NOT_ABLE);
+         return new ChessInputDto(gameState, Position.NOT_EXISTS, Position.NOT_EXISTS);
     }
 
     public GameState getGameState() {

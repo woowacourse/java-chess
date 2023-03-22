@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.Color;
 import chess.dto.ChessInputDto;
 
-public class Black extends State {
+public final class Black extends State {
     public Black(final Board board) {
         super(board);
     }
