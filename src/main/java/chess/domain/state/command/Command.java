@@ -44,4 +44,8 @@ public class Command {
     public boolean isEnd() {
         return type == Type.END;
     }
+
+    public boolean isMove() {
+        return type == Type.MOVE;
+    }
 }

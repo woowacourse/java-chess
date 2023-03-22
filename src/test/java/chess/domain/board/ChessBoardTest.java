@@ -9,6 +9,7 @@ import chess.domain.piece.type.Knight;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
+import chess.domain.state.Run;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -81,7 +82,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoardFactory.create();
 
         // when
-        chessBoard.movePiece(new Turn(WHITE), of('b', 2), of('b', 3));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), of('b', 2), of('b', 3));
 
         // then
         final Map<PiecePosition, Piece> pieceMap = chessBoard.pieces()
@@ -98,7 +99,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of('b', 2), of('b', 3))
+                chessBoard.movePiece(new Run(new Turn(BLACK)), of('b', 2), of('b', 3))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -109,7 +110,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), of('b', 5), of('b', 3))
+                chessBoard.movePiece(new Run(new Turn(WHITE)), of('b', 5), of('b', 3))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -120,7 +121,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of('b', 7), of('b', 4))
+                chessBoard.movePiece(new Run(new Turn(BLACK)), of('b', 7), of('b', 4))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -131,7 +132,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of('d', 8), of('b', 6))
+                chessBoard.movePiece(new Run(new Turn(BLACK)), of('d', 8), of('b', 6))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -142,7 +143,7 @@ class ChessBoardTest {
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(BLACK), of('d', 8), of('c', 7))
+                chessBoard.movePiece(new Run(new Turn(BLACK)), of('d', 8), of('c', 7))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -150,12 +151,12 @@ class ChessBoardTest {
     void 폰이_일직선으로_움직이는_경우_적군_말이_있으면_오류() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
-        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of('b', 7), PiecePosition.of('b', 5));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
+        chessBoard.movePiece(new Run(new Turn(BLACK)), PiecePosition.of('b', 7), PiecePosition.of('b', 5));
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('b', 5))
+                chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 4), PiecePosition.of('b', 5))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -163,11 +164,11 @@ class ChessBoardTest {
     void 폰이_대각선으로_움직이는_경우_적군_말이_없으면_오류() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
 
         // when & then
         assertThatThrownBy(() ->
-                chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('c', 5))
+                chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 4), PiecePosition.of('c', 5))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -175,11 +176,11 @@ class ChessBoardTest {
     void 폰이_대각선으로_움직이려면_적군_말이_필요하다() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
-        chessBoard.movePiece(new Turn(BLACK), PiecePosition.of('c', 7), PiecePosition.of('c', 5));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 2), PiecePosition.of('b', 4));
+        chessBoard.movePiece(new Run(new Turn(BLACK)), PiecePosition.of('c', 7), PiecePosition.of('c', 5));
 
         // when
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('b', 4), PiecePosition.of('c', 5));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('b', 4), PiecePosition.of('c', 5));
 
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);
@@ -189,12 +190,12 @@ class ChessBoardTest {
     void 적군_말을_잡으면_해당_말은_사라진다() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.create();
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('e', 2), PiecePosition.of('e', 4));
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('d', 1), PiecePosition.of('h', 5));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('e', 2), PiecePosition.of('e', 4));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('d', 1), PiecePosition.of('h', 5));
 
         // when
         assertThat(chessBoard.pieces().size()).isEqualTo(32);
-        chessBoard.movePiece(new Turn(WHITE), PiecePosition.of('h', 5), PiecePosition.of('f', 7));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('h', 5), PiecePosition.of('f', 7));
 
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);

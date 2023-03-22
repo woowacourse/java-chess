@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
 
+import chess.domain.state.ChessState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,15 +21,15 @@ public class ChessBoard {
         return new ChessBoard(pieces);
     }
 
-    public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {
+    public void movePiece(final ChessState state, final PiecePosition source, final PiecePosition destination) {
         final Piece from = get(source);
-        validateCorrectTurn(turn, from);
+        validateCorrectTurn(state, from);
         validateNonBlock(destination, from);
         moveOrKill(destination, from);
     }
 
-    private void validateCorrectTurn(final Turn turn, final Piece from) {
-        if (turn.isIncorrect(from.color())) {
+    private void validateCorrectTurn(final ChessState state, final Piece from) {
+        if (state.isInCorrectTurn(from.color())) {
             throw new IllegalArgumentException("상대 말 선택하셨습니다.");
         }
     }
