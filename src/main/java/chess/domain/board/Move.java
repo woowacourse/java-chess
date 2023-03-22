@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.PieceCanNotMoveException;
 import java.util.Arrays;
 
 public enum Move {
@@ -26,13 +27,13 @@ public enum Move {
         final int directionRank = target.getRank() - source.getRank();
 
         if (directionFile != 0 && directionRank != 0 && Math.abs(directionFile / directionRank) != 1) {
-            return EMPTY;
+            throw new PieceCanNotMoveException();
         }
 
         return Arrays.stream(Move.values())
                 .filter(move -> isSameDirection(directionFile, directionRank, move))
                 .findFirst()
-                .orElse(EMPTY);
+                .orElseThrow(PieceCanNotMoveException::new);
     }
 
     private static boolean isSameDirection(final int directionFile, final int directionRank, final Move move) {
