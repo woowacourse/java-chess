@@ -1,7 +1,5 @@
 package chess.domain.square;
 
-import chess.domain.exception.FileNotFoundException;
-import chess.domain.exception.RankNotFoundException;
 import chess.domain.exception.SquareOutOfBoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

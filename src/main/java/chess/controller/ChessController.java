@@ -9,8 +9,8 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-import static chess.view.Command.MOVE_SOURCE_INDEX;
 import static chess.view.Command.MOVE_DESTINATION_INDEX;
+import static chess.view.Command.MOVE_SOURCE_INDEX;
 
 public class ChessController {
 

@@ -1,7 +1,7 @@
 package chess.domain.square;
 
-import chess.domain.exception.InvalidSquareIndexException;
 import chess.domain.exception.FileNotFoundException;
+import chess.domain.exception.InvalidSquareIndexException;
 
 import java.util.Arrays;
 
