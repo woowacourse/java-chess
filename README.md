@@ -114,3 +114,9 @@ O[RookStrategy] --> J
 ### QueenStrategy
 - [x] 올바른 위치일 경우 타겟 포지션이 반환된다.
 - [x] 올바르지 않은 위치일 경우 예외가 발생한다.
+
+### KnightStrategy
+- [x] rank가 1, file이 2가 아닐 때 움직일 수 없다.
+- [x] rank가 1, file이 2이면 움직일 수 있다.
+- [x] rank가 2, file이 1이 아닐 때 움직일 수 없다.
+- [x] rank가 2, file이 1일 때 움직일 수 있다.
