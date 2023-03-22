@@ -20,6 +20,8 @@ public enum RankCoordinate {
     ONE(1),
     ;
 
+    private static final int SKIP_MY_COORDINATE = 1;
+
     private final int rowNumber;
 
     RankCoordinate(int rowNumber) {
@@ -35,7 +37,7 @@ public enum RankCoordinate {
 
     public List<RankCoordinate> betweenRanks(RankCoordinate other) {
         List<RankCoordinate> result = IntStream.range(min(rowNumber, other.rowNumber), max(rowNumber, other.rowNumber))
-                .skip(1)
+                .skip(SKIP_MY_COORDINATE)
                 .mapToObj(RankCoordinate::findBy)
                 .collect(Collectors.toList());
         if (rowNumber > other.rowNumber) {

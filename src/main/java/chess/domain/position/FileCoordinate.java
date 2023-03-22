@@ -20,6 +20,8 @@ public enum FileCoordinate {
     H(8),
     ;
 
+    private static final int SKIP_MY_COORDINATE = 1;
+
     private final int columnNumber;
 
     FileCoordinate(int columnNumber) {
@@ -37,7 +39,7 @@ public enum FileCoordinate {
         List<FileCoordinate> result = IntStream.range(
                         min(columnNumber, other.columnNumber),
                         max(columnNumber, other.columnNumber))
-                .skip(1)
+                .skip(SKIP_MY_COORDINATE)
                 .mapToObj(FileCoordinate::findBy)
                 .collect(Collectors.toList());
         if (columnNumber > other.columnNumber) {
