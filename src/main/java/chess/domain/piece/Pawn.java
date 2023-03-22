@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
+    private static final int MAX_DISTANCE = 2;
+
     private Pawn(final PieceType pieceType, final Color color) {
         super(pieceType, color);
     }
@@ -24,7 +26,7 @@ public final class Pawn extends Piece {
         final Direction direction = BasicDirection.from(source, target);
 
         Position current = source;
-        while (isMovable(current, target, direction)) {
+        while (isMovable(current, target, direction) && isDistanceOk(current, target)) {
             current = addPositionAfterMove(positions, current, direction);
         }
         addLastPosition(positions, current, direction);
@@ -34,6 +36,11 @@ public final class Pawn extends Piece {
 
     private boolean isMovable(final Position current, final Position target, final Direction direction) {
         return current.isRangeOk(direction) && !target.equals(current.move(direction));
+    }
+
+    private boolean isDistanceOk(final Position current, final Position target) {
+        final int distance = Math.abs(current.diff(target.getRow())) + Math.abs(current.diff(target.getColumn()));
+        return distance <= MAX_DISTANCE;
     }
 
     private Position addPositionAfterMove(final List<Position> positions, Position current, final Direction direction) {
