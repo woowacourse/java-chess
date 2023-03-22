@@ -31,7 +31,7 @@ public class ChessBoard {
         return turn.isTurnOf(pieceToMove) && movePiece(source, destination);
     }
 
-    public boolean movePiece(final Square source, final Square destination) {
+    boolean movePiece(final Square source, final Square destination) {
         final Piece pieceToMove = pieces.get(source);
         validateNotEmpty(pieceToMove);
 
