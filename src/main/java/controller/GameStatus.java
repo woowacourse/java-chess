@@ -28,6 +28,9 @@ public abstract class GameStatus {
         if (command == Command.MOVE) {
             return new Move(chessGame);
         }
+        if (command == Command.STATUS) {
+            return new Status(chessGame);
+        }
         return new End(chessGame);
     }
 
