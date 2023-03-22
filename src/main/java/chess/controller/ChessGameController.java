@@ -3,6 +3,9 @@ package chess.controller;
 import chess.domain.commnad.Command;
 import chess.domain.commnad.LoadGameCommand;
 import chess.domain.game.ChessGame;
+import chess.dto.BoardResultDto;
+import chess.dto.BoardSaveDto;
+import chess.dto.GameScoreResultDto;
 import chess.factory.BoardFactory;
 import chess.service.BoardService;
 import chess.view.InputView;
@@ -40,8 +43,8 @@ public class ChessGameController {
 
     private ChessGame loadGame(final LoadGameCommand loadCommand) {
         if (loadCommand.isSavedGame()) {
-            ChessGame chessGame = new ChessGame(boardService.findById(BOARD_ID), boardService.isLowerTeamTurnByBoardId(BOARD_ID));
-            outputView.printBoard(chessGame.getBoard());
+            ChessGame chessGame = boardService.findById(BOARD_ID).getChessGame();
+            outputView.printBoard(BoardResultDto.toDto(chessGame));
             return chessGame;
         }
 
@@ -56,7 +59,7 @@ public class ChessGameController {
             chessGame = checkCreateNewGame(chessGame, command);
 
             checkMovePiece(chessGame, command);
-            outputView.printBoard(chessGame.getBoard());
+            outputView.printBoard(BoardResultDto.toDto(chessGame));
 
             if (isGameDone(chessGame)) {
                 break;
@@ -70,7 +73,7 @@ public class ChessGameController {
         if (isGameEnd(chessGame, command)) {
             resultView.printGameEndWithSaving();
             boardService.delete(BOARD_ID);
-            boardService.save(BOARD_ID, chessGame.getBoard(), chessGame.isLowerTeamTurn());
+            boardService.save(BoardSaveDto.toDto(BOARD_ID, chessGame));
             return true;
         }
 
@@ -87,9 +90,8 @@ public class ChessGameController {
 
     private boolean isCommandStatus(final ChessGame chessGame, final Command command) {
         if (command.isStatus()) {
-            resultView.printScore(chessGame.calculateScoreOfUpperTeam(), chessGame.calculateScoreOfLowerTeam());
-            resultView.printWinner(chessGame.calculateScoreOfUpperTeam(),
-                    chessGame.calculateScoreOfLowerTeam());
+            resultView.printScore(GameScoreResultDto.toDto(chessGame));
+            resultView.printWinner(GameScoreResultDto.toDto(chessGame));
             return true;
         }
 
