@@ -12,13 +12,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PawnTest {
 
     @Nested
-    public class WhiteFirstPawnTest {
-        private final Pawn firstPawn = Pawn.createByColor(Color.WHITE);
+    public class WhitePawnTest {
+        private final Pawn whitePawn = Pawn.createByColor(Color.WHITE);
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
         void fail_test() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.H2, Color.WHITE))
+            assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.H2, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("행마법상 이동 불가능한 지역입니다.");
         }
@@ -26,7 +26,7 @@ class PawnTest {
         @DisplayName("같은 좌표는 예외가 발생한다.")
         @Test
         void fail_test2() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A2, Color.WHITE))
+            assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A2, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("행마법상 이동 불가능한 지역입니다.");
         }
@@ -34,7 +34,7 @@ class PawnTest {
         @DisplayName("rank의 차이가 3 이상이면 예외가 발생한다.")
         @Test
         void fail_test3() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A5, Color.WHITE))
+            assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A5, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
@@ -46,13 +46,13 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test4() {
-                assertThat(firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.EMPTY)).isEmpty();
+                assertThat(whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.EMPTY)).isEmpty();
             }
 
             @DisplayName("실패한다 - 도착지에 아군 기물 존재")
             @Test
             void fail_test5() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.WHITE))
+                assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.WHITE))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -60,7 +60,7 @@ class PawnTest {
             @DisplayName("실패한다 - 도착지에 적 기물 존재")
             @Test
             void fail_test6() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.BLACK))
+                assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A3, Color.BLACK))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -74,13 +74,13 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.EMPTY)).containsExactly(PositionFixtures.A3);
+                assertThat(whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.EMPTY)).containsExactly(PositionFixtures.A3);
             }
 
             @DisplayName("실패 한다. - 도착지에 아군 기물 존재")
             @Test
             void fail_test8() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.WHITE))
+                assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.WHITE))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -88,7 +88,7 @@ class PawnTest {
             @DisplayName("실패 한다. - 도착지에 적 기물 존재")
             @Test
             void fail_test9() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.BLACK))
+                assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A2, PositionFixtures.A4, Color.BLACK))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -96,7 +96,7 @@ class PawnTest {
             @DisplayName("실패 한다. - 폰이 최초 이동이 아닌 경우")
             @Test
             void fail_by_start_position() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A3, PositionFixtures.A5, Color.EMPTY))
+                assertThatThrownBy(() -> whitePawn.findPath(PositionFixtures.A3, PositionFixtures.A5, Color.EMPTY))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -104,13 +104,13 @@ class PawnTest {
     }
 
     @Nested
-    public class BlackFirstPawnTest {
-        private final Pawn firstPawn = Pawn.createByColor(Color.BLACK);
+    public class BlackPawnTest {
+        private final Pawn blackPawn = Pawn.createByColor(Color.BLACK);
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
         void fail_test() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.H2, PositionFixtures.A2, Color.BLACK))
+            assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.H2, PositionFixtures.A2, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("행마법상 이동 불가능한 지역입니다.");
         }
@@ -118,7 +118,7 @@ class PawnTest {
         @DisplayName("같은 좌표는 예외가 발생한다.")
         @Test
         void fail_test2() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A2, PositionFixtures.A2, Color.BLACK))
+            assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A2, PositionFixtures.A2, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("행마법상 이동 불가능한 지역입니다.");
         }
@@ -126,7 +126,7 @@ class PawnTest {
         @DisplayName("rank의 차이가 3 이상이면 예외가 발생한다.")
         @Test
         void fail_test3() {
-            assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A5, PositionFixtures.A1, Color.BLACK))
+            assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A5, PositionFixtures.A1, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
@@ -138,13 +138,13 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test4() {
-                assertThat(firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.EMPTY)).isEmpty();
+                assertThat(blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.EMPTY)).isEmpty();
             }
 
             @DisplayName("실패한다 - 도착지에 아군 기물 존재")
             @Test
             void fail_test5() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.BLACK))
+                assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.BLACK))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -152,7 +152,7 @@ class PawnTest {
             @DisplayName("실패한다 - 도착지에 적 기물 존재")
             @Test
             void fail_test6() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.WHITE))
+                assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A6, Color.WHITE))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -165,13 +165,13 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.EMPTY)).containsExactly(PositionFixtures.A6);
+                assertThat(blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.EMPTY)).containsExactly(PositionFixtures.A6);
             }
 
             @DisplayName("실패한다. - 도착지에 아군 기물 존재")
             @Test
             void fail_test8() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.BLACK))
+                assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.BLACK))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -179,7 +179,7 @@ class PawnTest {
             @DisplayName("실패한다. - 도착지에 적 기물 존재")
             @Test
             void fail_test9() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.WHITE))
+                assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A7, PositionFixtures.A5, Color.WHITE))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
@@ -187,7 +187,7 @@ class PawnTest {
             @DisplayName("실패 한다. - 폰이 최초 이동이 아닌 경우")
             @Test
             void fail_by_start_position() {
-                assertThatThrownBy(() -> firstPawn.findPath(PositionFixtures.A6, PositionFixtures.A4, Color.EMPTY))
+                assertThatThrownBy(() -> blackPawn.findPath(PositionFixtures.A6, PositionFixtures.A4, Color.EMPTY))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
             }
