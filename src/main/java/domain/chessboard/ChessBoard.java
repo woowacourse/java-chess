@@ -1,17 +1,21 @@
 package domain.chessboard;
 
-import domain.position.Position;
-import domain.position.Route;
 import domain.piece.Color;
 import domain.piece.Pawn;
+import domain.position.Position;
+import domain.position.Route;
 import domain.squarestatus.Empty;
 import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;
 import domain.type.PieceType;
 import domain.type.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.*;
 
 public final class ChessBoard {
 
@@ -41,6 +45,24 @@ public final class ChessBoard {
         final SquareStatus squareStatus = chessBoard.getOrDefault(source, EMPTY);
 
         return squareStatus.findRoute(source, target);
+    }
+
+    public List<SquareStatus> findPieces(final Color color) {
+        return chessBoard.values()
+                .stream()
+                .filter(squareStatus -> squareStatus.isSameColor(color))
+                .filter(squareStatus -> squareStatus.isDifferentType(PieceType.PAWN))
+                .collect(toList());
+    }
+
+    public List<Long> findColumnPawnCounts(final Color color) {
+        final Map<Integer, Long> ColumnPawnCount = chessBoard.entrySet()
+                .stream()
+                .filter((chessboard -> chessboard.getValue().isSameColor(color)))
+                .filter(chessboard -> chessboard.getValue().isSameType(PieceType.PAWN))
+                .collect(groupingBy(chessBoard -> chessBoard.getKey().getX(), counting()));
+
+        return new ArrayList<>(ColumnPawnCount.values());
     }
 
     public boolean isSameColor(final Position position, final Color color) {
