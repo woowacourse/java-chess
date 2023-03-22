@@ -23,17 +23,18 @@ public class ChessController {
 
     public void run() {
         outputView.printGuideMessage();
+        // TODO 프로그램 종료 명령어 임의 추가?
         while (true) {
-            isReady = retryPlayIfCommandIllegal();
+            isReady = retryExecuteIfCommandIllegal();
         }
     }
 
-    private boolean retryPlayIfCommandIllegal() {
+    private boolean retryExecuteIfCommandIllegal() {
         try {
             return executeInputCommand();
         } catch (final IllegalStateException | IllegalArgumentException exception) {
             outputView.printInputErrorMessage(exception.getMessage());
-            return retryPlayIfCommandIllegal();
+            return retryExecuteIfCommandIllegal();
         }
     }
 
