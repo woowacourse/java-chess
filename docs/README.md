@@ -1,7 +1,5 @@
 # 기능 목록
 
-DTO 패키지
-
 ## BoardDto
 
 - [x] 생성시, Map<Position, Piece>를 인자로 받는다
@@ -10,8 +8,13 @@ DTO 패키지
 
 ## ChessGame
 
+- [] king이 잡히는 경우 게임 종료
 - [x] 필드로 ChessBoard를 가진다
 - [x] ChessBoard의 Map<Position, Piece>를 반환한다
+
+## ScoreCalculator
+
+- [] 현재 남아 있는 말에 대한 점수를 구한다
 
 ## ChessBoard
 
@@ -45,11 +48,11 @@ DTO 패키지
 
 - [x] Column과 Rank를 필드로 가진다
 
-## todo: Name
+## Name
 
-- 각 기물들의 이름을 enum으로 관리한다.
+- [x] 각 기물들의 이름을 enum으로 관리한다.
 
-## Color가
+## Color
 
 - [x] Black, White, None
 
@@ -63,39 +66,46 @@ DTO 패키지
 ### EmptyPiece (Piece)
 
 - [x] .을 이름으로 갖는다
-- 오버라이드한 move 메서드는 아무 수행도 하지 않는다.
+- [x] 오버라이드한 move 메서드는 아무 수행도 하지 않는다.
 
 ### Pawn (Piece)
 
 - [x] p를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(1점)를 가진다
+    - [] 같은 세로줄에 같은 색의 Pawn이 있는 경우 0.5점을 가진다
 
 ### Rook (Piece)
 
 - [x] r를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(5점)를 가진다
 
 ### Knight (Piece)
 
 - [x] n를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(2.5점)를 가진다
 
 ### Bishop (Piece)
 
 - [x] b를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(3점)를 가진다
 
 ### Queen (Piece)
 
 - [x] q를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(9점)를 가진다
 
 ### King (Piece)
 
 - [x] k를 이름으로 갖는다
-- todo: move override , rank와 column를 필드로 가진다
+- [x] move override , rank와 column를 필드로 가진다
+- [] 상수로 점수(0점)를 가진다
 
-~~## PieceGenerator
+## PieceGenerator
 
 - [x] 상수로 각 기물이 몇개 생성해야하는지 가지고 있다
 - [x] 첫번째 열 기물들을 생성해 반환한다 (Rook, Knight, Bishop ... )
