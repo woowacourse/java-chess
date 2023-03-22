@@ -20,13 +20,9 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public Position(final int file, final int rank) {
-        this(File.from(file), Rank.from(rank));
     }
 
     public Position(final String file, final String rank) {
@@ -35,6 +31,10 @@ public class Position {
 
     public static Position of(final File file, final Rank rank) {
         return CACHE.get(file.command() + rank.command());
+    }
+
+    public static Position of(final int file, final int rank) {
+        return of(File.from(file), Rank.from(rank));
     }
 
     public Movement convertMovement(Position from) {

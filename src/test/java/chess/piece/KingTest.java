@@ -1,6 +1,6 @@
 package chess.piece;
 
-import static chess.domain.position.InitialPositionFixtures.WHITE_KING_POSITION;
+import static chess.fixture.PositionFixture.E1;
 import static chess.fixture.PositionFixture.E2;
 import static chess.fixture.PositionFixture.F1;
 import static chess.fixture.PositionFixture.H1;
@@ -34,7 +34,7 @@ class KingTest {
     void test_searchPathTo2() {
         Piece piece = new King(Color.WHITE);
 
-        Path path = piece.searchPathTo(WHITE_KING_POSITION, E2, null);
+        Path path = piece.searchPathTo(E1, E2, null);
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -46,7 +46,7 @@ class KingTest {
     void test_searchPathTo3() {
         Piece piece = new King(Color.WHITE);
 
-        Path path = piece.searchPathTo(WHITE_KING_POSITION, E2, new Queen(Color.BLACK));
+        Path path = piece.searchPathTo(E1, E2, new Queen(Color.BLACK));
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))
