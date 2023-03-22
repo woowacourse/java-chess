@@ -2,11 +2,12 @@ package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.ChessBoardFactory;
+import domain.piece.Color;
 import domain.position.Position;
 import domain.position.PositionFactory;
-import domain.piece.Color;
 import domain.type.PieceType;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ class ChessGameTest {
     @DisplayName("본인 턴인 경우만 움직일 수 있다.")
     void validateTurnTest() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
 
         //when&then
         assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("b7"), PositionFactory.createPosition("b6")))
@@ -30,7 +31,7 @@ class ChessGameTest {
     @DisplayName("이동경로 상에 장애물이 있다면 이동할 수 없다.")
     void routeTest() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
 
         //when&then
         assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a3")))
@@ -42,8 +43,8 @@ class ChessGameTest {
     @DisplayName("InitPawn이 움직이면 2칸을 이동할 수 있다.")
     void initPawnTest() {
         //given
-        ChessBoard chessBoard = ChessBoardFactory.generate();
-        ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessBoard chessBoard = ChessBoardFactory.generate();
+        final ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
         final Position source = PositionFactory.createPosition("a2");
@@ -51,8 +52,9 @@ class ChessGameTest {
 
         chessGame.move(source, target);
 
-        // then
         final boolean isPawn = chessBoard.isSameType(target, PieceType.PAWN);
+
+        // then
         assertThat(isPawn).isTrue();
     }
 
@@ -60,8 +62,8 @@ class ChessGameTest {
     @DisplayName("상대편 말이 있을 경우 Pawn이 대각으로 움직일 수 있다.")
     void whenPieceMove_thenSuccess() {
         //given
-        ChessBoard chessBoard = ChessBoardFactory.generate();
-        ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessBoard chessBoard = ChessBoardFactory.generate();
+        final ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
         chessGame.move(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
@@ -79,8 +81,8 @@ class ChessGameTest {
     @DisplayName("initPawn이 움직이면 Pawn으로 상태가 변하고, pawn은 한 칸만 이동할 수 있다.")
     void whenInitPawnMove_thenFail() {
         //given
-        ChessBoard chessBoard = ChessBoardFactory.generate();
-        ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessBoard chessBoard = ChessBoardFactory.generate();
+        final ChessGame chessGame = new ChessGame(chessBoard);
 
         //when
         chessGame.move(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
@@ -96,12 +98,44 @@ class ChessGameTest {
     @DisplayName("목적지에 우리팀 기물이 있을 때 이동할 수 없다.")
     void whenPieceMove_thenFail() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.generate());
 
         //when&then
         assertThatThrownBy(() -> chessGame.move(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
+    }
+
+    @Nested
+    @DisplayName("현재 점수를 출력한다")
+    class CalculateScoreTest {
+
+        @Test
+        @DisplayName("White 입력")
+        void givenColorWhite_thenReturnScore() {
+            //given
+            final ChessGame chessGame = new ChessGame(TestChessBoardFactory.generate());
+
+            //when
+            final double score = chessGame.calculateScore(Color.WHITE);
+
+            //then
+            assertThat(score).isEqualTo(19.5);
+        }
+
+        @Test
+        @DisplayName("Black 입력")
+        void givenColor_thenReturnScore() {
+            //given
+            final ChessGame chessGame = new ChessGame(TestChessBoardFactory.generate());
+
+            //when
+            final double score = chessGame.calculateScore(Color.BLACK);
+
+            //then
+            assertThat(score).isEqualTo(20);
+        }
+
     }
 
 }
