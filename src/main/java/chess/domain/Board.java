@@ -124,7 +124,7 @@ public class Board {
 
     public boolean isChecked(Team team) {
         Position kingPosition = getKingPosition(team);
-        return isAnyMovable(team.opposite(),kingPosition);
+        return isAnyMovable(team.opposite(), kingPosition);
     }
 
     private Position getKingPosition(Team team) {

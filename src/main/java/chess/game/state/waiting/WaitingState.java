@@ -1,7 +1,9 @@
-package chess.game.state;
+package chess.game.state.waiting;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.state.GameState;
+import chess.game.state.running.RunningState;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;

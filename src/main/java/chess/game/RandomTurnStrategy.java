@@ -1,8 +1,8 @@
 package chess.game;
 
-import chess.game.state.BlackTurnState;
-import chess.game.state.RunningState;
-import chess.game.state.WhiteTurnState;
+import chess.game.state.running.BlackTurnState;
+import chess.game.state.running.RunningState;
+import chess.game.state.running.WhiteTurnState;
 import java.util.Random;
 
 public class RandomTurnStrategy implements TurnStrategy {

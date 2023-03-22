@@ -3,8 +3,8 @@ package chess.game;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
-import chess.game.state.BlackTurnState;
-import chess.game.state.WhiteTurnState;
+import chess.game.state.running.BlackTurnState;
+import chess.game.state.running.WhiteTurnState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

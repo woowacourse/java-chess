@@ -1,4 +1,4 @@
-package chess.game.state;
+package chess.game.state.running;
 
 import chess.domain.Team;
 

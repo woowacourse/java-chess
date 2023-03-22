@@ -1,16 +1,16 @@
-package chess.game.state;
+package chess.game.state.end;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class WhiteWinState extends EndState {
-    public static final EndState STATE = new WhiteWinState();
+public class BlackWinState extends EndState {
+    public static final EndState STATE = new BlackWinState();
 
     @Override
     public Team getWinner() {
-        return Team.WHITE;
+        return Team.BLACK;
     }
 
     @Override

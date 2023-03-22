@@ -7,10 +7,10 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
-import chess.game.state.EndState;
+import chess.game.state.end.EndState;
 import chess.game.state.GameState;
-import chess.game.state.NoneWinState;
-import chess.game.state.WaitingState;
+import chess.game.state.end.NoneWinState;
+import chess.game.state.waiting.WaitingState;
 import java.util.List;
 
 public class ChessGame {

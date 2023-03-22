@@ -1,6 +1,8 @@
-package chess.game.state;
+package chess.game.state.end;
 
 import chess.domain.Team;
+import chess.game.state.GameState;
+import chess.game.state.running.RunningState;
 import java.util.function.DoubleSupplier;
 
 public abstract class EndState implements GameState {

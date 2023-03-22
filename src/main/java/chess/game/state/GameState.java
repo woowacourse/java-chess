@@ -2,6 +2,7 @@ package chess.game.state;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.state.running.RunningState;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
