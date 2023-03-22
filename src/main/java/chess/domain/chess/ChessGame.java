@@ -37,14 +37,15 @@ public final class ChessGame {
     }
 
     private void validateCamp(final Position source) {
-        final Piece piece = chessBoard.checkPiece(source);
-        if (!piece.isSameCamp(currentCamp)) {
+        final Piece sourcePiece = chessBoard.checkPiece(source);
+        if (!sourcePiece.isSameCamp(currentCamp)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다. 현재 차례 = " + currentCamp.name());
         }
     }
 
     private void validateTargetSameCamp(final Position target) {
-        if (chessBoard.contains(target) && chessBoard.checkPiece(target).isSameCamp(currentCamp)) {
+        final Piece targetPiece = chessBoard.checkPiece(target);
+        if (chessBoard.contains(target) && targetPiece.isSameCamp(currentCamp)) {
             throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
         }
     }
