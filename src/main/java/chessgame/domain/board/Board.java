@@ -37,20 +37,23 @@ public class Board {
 
     private boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return isMovableByRule(startCoordinate, endCoordinate) &&
-                !isPieceExistsAt(endCoordinate) &&
                 isNotBlocked(startCoordinate, endCoordinate);
     }
 
     private boolean isMovableByRule(final Coordinate startCoordinate,
                                     final Coordinate endCoordinate) {
         Piece findPiece = board.get(startCoordinate);
+        Piece targetPiece = board.get(endCoordinate);
 
+        if (isPieceExistsAt(endCoordinate)) {
+            System.out.println(findPiece.isCatchable(targetPiece.camp(), startCoordinate, endCoordinate));
+            return findPiece.isCatchable(targetPiece.camp(), startCoordinate, endCoordinate);
+        }
         return findPiece.isMovable(startCoordinate, endCoordinate);
     }
 
     private boolean isPieceExistsAt(final Coordinate coordinate) {
         Piece findPiece = board.get(coordinate);
-
         return findPiece.isExist();
     }
 
@@ -67,6 +70,10 @@ public class Board {
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
         Coordinate indexCoordinate = directionVector.moveToDirection(startCoordinate);
 
+        System.out.println(indexCoordinate);
+        System.out.println(!board.get(indexCoordinate)
+                                 .isExist());
+        System.out.println(!indexCoordinate.equals(endCoordinate));
         while (!board.get(indexCoordinate)
                      .isExist() && !indexCoordinate.equals(endCoordinate)) {
             indexCoordinate = directionVector.moveToDirection(indexCoordinate);

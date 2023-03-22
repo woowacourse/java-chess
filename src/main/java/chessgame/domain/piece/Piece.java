@@ -17,11 +17,17 @@ public abstract class Piece {
 
     public abstract boolean isSameCamp(final Camp camp);
 
-    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
-
     public abstract boolean isExist();
 
+    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
+
+    public abstract boolean isCatchable(final Optional<Camp> otherCamp,
+                                        final Coordinate startCoordinate,
+                                        final Coordinate endCoordinate);
+
     public abstract boolean canReap();
+
+    public abstract Optional<Camp> camp();
 
     protected boolean isFirstMove() {
         return isFirstMove;

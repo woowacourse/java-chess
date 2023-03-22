@@ -18,12 +18,22 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
+    public boolean isCatchable(Optional<Camp> otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+        return false;
+    }
+
+    @Override
     public boolean isExist() {
         return false;
     }
 
     @Override
     public Optional<PieceType> getPiece() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Camp> camp() {
         return Optional.empty();
     }
 

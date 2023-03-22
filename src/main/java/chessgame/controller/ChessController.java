@@ -58,7 +58,6 @@ public class ChessController {
 
         do {
             command = getPlayCommand(chessGame);
-            System.out.println(command);
         } while (command.canContinue());
     }
 

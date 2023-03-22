@@ -37,8 +37,27 @@ public class ConcretePiece extends Piece {
     }
 
     @Override
+    public boolean isCatchable(final Optional<Camp> otherCamp,
+                               final Coordinate startCoordinate,
+                               final Coordinate endCoordinate) {
+        if (otherCamp.isPresent() && isSameCamp(otherCamp.get())) {
+            return false;
+        }
+        if (pieceType.isSameTypeWith(PieceTypeSymbol.PAWN)) {
+            Pawn pawn = (Pawn) pieceType;
+            return pawn.isReachableWhenCatch(startCoordinate, endCoordinate);
+        }
+        return pieceType.isReachableByRule(startCoordinate, endCoordinate);
+    }
+
+    @Override
     public Optional<PieceType> getPiece() {
         return Optional.of(pieceType);
+    }
+
+    @Override
+    public Optional<Camp> camp() {
+        return Optional.of(camp);
     }
 
     @Override
