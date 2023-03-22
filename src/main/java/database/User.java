@@ -22,12 +22,19 @@ public final class User {
 
     @Override
     public boolean equals(final Object o) {
-        return userId.equals(((User) o).userId);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        final User user = (User) o;
+        return Objects.equals(userId, user.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name);
+        return Objects.hash(userId);
     }
 
     @Override
