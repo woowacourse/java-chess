@@ -1,4 +1,4 @@
-package chess.domain.piece.normal;
+package chess.domain.piece;
 
 import chess.domain.board.Position;
 import chess.domain.piece.property.Color;
