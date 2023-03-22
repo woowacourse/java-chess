@@ -33,10 +33,6 @@ public enum Command {
         return this == Command.START;
     }
 
-    public boolean isEnd() {
-        return this == Command.END;
-    }
-
     public boolean isMove() {
         return this == Command.MOVE;
     }
