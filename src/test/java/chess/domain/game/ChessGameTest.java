@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,7 +22,7 @@ class ChessGameTest {
 
     @Test
     void 사용자가_말을_움직였을때_말의_위치를_이동할_수_있다() {
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(), Color.WHITE);
 
         chessGame.movePieceTo(C_2, C_4);
 
@@ -32,7 +33,7 @@ class ChessGameTest {
 
     @Test
     void 사용자가_말을_움직였을때_다른_팀의_말을_움직이는_경우_예외가_발생한다() {
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(),Color.WHITE);
 
         assertThatThrownBy(() -> chessGame.movePieceTo(C_7, C_6))
                 .isInstanceOf(IllegalArgumentException.class)

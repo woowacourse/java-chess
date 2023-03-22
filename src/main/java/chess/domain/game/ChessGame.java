@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -9,9 +10,9 @@ public class ChessGame {
     private final Board board;
     private final Turn turn;
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, Color firstTurnColor) {
         this.board = board;
-        this.turn = new Turn();
+        this.turn = new Turn(firstTurnColor);
     }
 
     public void movePieceTo(Position sourcePosition, Position targetPosition) {

@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
@@ -24,7 +25,7 @@ public class ChessController {
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.chessGame = new ChessGame(BoardFactory.createBoard());
+        this.chessGame = new ChessGame(BoardFactory.createBoard(), Color.WHITE);
         initController();
     }
 

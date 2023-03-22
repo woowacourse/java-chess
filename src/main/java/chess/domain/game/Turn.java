@@ -5,8 +5,8 @@ import chess.domain.piece.Color;
 public class Turn {
     private Color color;
 
-    public Turn() {
-        this.color = Color.WHITE;
+    public Turn(Color color) {
+        this.color = color;
     }
 
     public boolean isNotCurrentTurn(Color color) {
