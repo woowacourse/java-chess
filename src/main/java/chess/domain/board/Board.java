@@ -61,7 +61,7 @@ public class Board {
     }
 
     private boolean isBlockBetween(Position sourcePosition, Position targetPosition) {
-        return !sourcePosition.findPath(targetPosition).stream()
+        return !sourcePosition.findPathWithoutSourceAndTarget(targetPosition).stream()
                 .map(boards::get)
                 .allMatch(Piece::isEmpty);
     }
