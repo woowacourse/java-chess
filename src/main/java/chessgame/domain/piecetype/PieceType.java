@@ -4,9 +4,9 @@ import chessgame.domain.coordinate.Coordinate;
 
 public interface PieceType {
 
-    boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate);
+    boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
 
     boolean canReap();
 
-    boolean isSameTypeWith(PieceTypeSymbol otherType);
+    boolean isSameTypeWith(final PieceTypeSymbol otherType);
 }

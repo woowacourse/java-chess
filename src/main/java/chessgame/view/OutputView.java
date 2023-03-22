@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(GAME_START_MESSAGE);
     }
 
-    public void printBoard(Board board) {
+    public void printBoard(final Board board) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int rank = 0; rank < BOARD_RANK; rank++) {
             stringBuilder.insert(0, makeRank(board.getBoard(), rank));
@@ -27,7 +27,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private StringBuilder makeRank(Map<Coordinate, Piece> board, int rank) {
+    private StringBuilder makeRank(final Map<Coordinate, Piece> board, final int rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < BOARD_FILE; file++) {
             Piece piece = board.get(Coordinate.fromOnBoard(rank, file));
@@ -37,7 +37,7 @@ public class OutputView {
         return stringBuilder;
     }
 
-    public void printExceptionMessage(String message) {
+    public void printExceptionMessage(final String message) {
         System.out.println(message);
     }
 }

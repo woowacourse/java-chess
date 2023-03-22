@@ -20,12 +20,12 @@ public class Board {
         return new HashMap<>(BoardInitialImage.generate());
     }
 
-    public boolean checkCamp(Coordinate coordinate, Camp camp) {
+    public boolean checkCamp(final Coordinate coordinate, final Camp camp) {
         Piece findPiece = board.get(coordinate);
         return findPiece.isSameCamp(camp);
     }
 
-    public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
             Piece findPiece = board.get(startCoordinate);
             board.put(startCoordinate, new EmptyPiece());
@@ -41,19 +41,20 @@ public class Board {
                 isNotBlocked(startCoordinate, endCoordinate);
     }
 
-    private boolean isMovableByRule(Coordinate startCoordinate, Coordinate endCoordinate) {
+    private boolean isMovableByRule(final Coordinate startCoordinate,
+                                    final Coordinate endCoordinate) {
         Piece findPiece = board.get(startCoordinate);
 
         return findPiece.isMovable(startCoordinate, endCoordinate);
     }
 
-    private boolean isPieceExistsAt(Coordinate coordinate) {
+    private boolean isPieceExistsAt(final Coordinate coordinate) {
         Piece findPiece = board.get(coordinate);
 
         return findPiece.isExist();
     }
 
-    private boolean isNotBlocked(Coordinate startCoordinate, Coordinate endCoordinate) {
+    private boolean isNotBlocked(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Piece findPiece = board.get(startCoordinate);
 
         if (findPiece.canReap()) {

@@ -18,7 +18,7 @@ public enum Inclination {
 
     private final double inclination;
 
-    Inclination(double inclination) {
+    Inclination(final double inclination) {
         this.inclination = inclination;
     }
 

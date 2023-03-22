@@ -15,9 +15,9 @@ public abstract class Piece {
 
     public abstract Optional<PieceType> getPiece();
 
-    public abstract boolean isSameCamp(Camp camp);
+    public abstract boolean isSameCamp(final Camp camp);
 
-    public abstract boolean isMovable(Coordinate startCoordinate, Coordinate endCoordinate);
+    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
 
     public abstract boolean isExist();
 

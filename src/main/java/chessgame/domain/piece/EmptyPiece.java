@@ -28,7 +28,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isSameCamp(Camp camp) {
+    public boolean isSameCamp(final Camp camp) {
         return false;
     }
 }

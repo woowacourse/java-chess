@@ -13,13 +13,13 @@ public class ChessGame {
         this.turn = Camp.WHITE;
     }
 
-    public void move(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         checkTurn(startCoordinate);
         board.move(startCoordinate, endCoordinate);
         changeTurn();
     }
 
-    private void checkTurn(Coordinate coordinate) {
+    private void checkTurn(final Coordinate coordinate) {
         if (board.checkCamp(coordinate, turn)) {
             return;
         }

@@ -8,42 +8,42 @@ public class Column {
 
     private final int value;
 
-    public Column(int value) {
+    public Column(final int value) {
         this.value = value;
     }
 
-    public static Column from(int value) {
+    public static Column from(final int value) {
         validate(value);
         return new Column(value);
     }
 
-    public static Column fromWithoutValidate(int value) {
+    public static Column fromWithoutValidate(final int value) {
         return new Column(value);
     }
 
-    private static void validate(int value) {
+    private static void validate(final int value) {
         if (isOutOfRange(value)) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 행의 값입니다.");
         }
     }
 
-    private static boolean isOutOfRange(int value) {
+    private static boolean isOutOfRange(final int value) {
         return value < MIN_COLUMN || value > MAX_COLUMN;
     }
 
-    public int add(Column otherColumn) {
+    public int add(final Column otherColumn) {
         return this.value + otherColumn.value;
     }
 
-    public int add(int otherColumn) {
+    public int add(final int otherColumn) {
         return this.value + otherColumn;
     }
 
-    public int minus(Column otherColumn) {
+    public int minus(final Column otherColumn) {
         return this.value - otherColumn.value;
     }
 
-    public int absoluteOfMinus(Column otherColumn) {
+    public int absoluteOfMinus(final Column otherColumn) {
         return Math.abs(this.value - otherColumn.value);
     }
 

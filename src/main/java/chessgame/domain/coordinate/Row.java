@@ -9,42 +9,42 @@ public class Row {
 
     private final int value;
 
-    public Row(int value) {
+    public Row(final int value) {
         this.value = value;
     }
 
-    public static Row from(int value) {
+    public static Row from(final int value) {
         validate(value);
         return new Row(value);
     }
 
-    public static Row fromWithoutValidate(int value) {
+    public static Row fromWithoutValidate(final int value) {
         return new Row(value);
     }
 
-    private static void validate(int value) {
+    private static void validate(final int value) {
         if (isOutOfRange(value)) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 행의 값입니다.");
         }
     }
 
-    private static boolean isOutOfRange(int value) {
+    private static boolean isOutOfRange(final int value) {
         return value < MIN_ROW || value > MAX_ROW;
     }
 
-    public int add(Row otherRow) {
+    public int add(final Row otherRow) {
         return this.value + otherRow.value;
     }
 
-    public int add(int otherRow) {
+    public int add(final int otherRow) {
         return this.value + otherRow;
     }
 
-    public int minus(Row otherRow) {
+    public int minus(final Row otherRow) {
         return this.value - otherRow.value;
     }
 
-    public int absoluteOfMinus(Row otherRow) {
+    public int absoluteOfMinus(final Row otherRow) {
         return Math.abs(this.value - otherRow.value);
     }
 

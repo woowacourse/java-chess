@@ -20,19 +20,19 @@ public class Coordinate {
         return new Coordinate(Row.fromWithoutValidate(row), Column.fromWithoutValidate(column));
     }
 
-    public Coordinate add(Coordinate otherCoordinate) {
+    public Coordinate add(final Coordinate otherCoordinate) {
         return fromOnBoard(this.row.add(otherCoordinate.row), this.column.add(otherCoordinate.column));
     }
 
-    public Coordinate add(int row, int column) {
+    public Coordinate add(final int row, final int column) {
         return fromOnBoard(this.row.add(row), this.column.add(column));
     }
 
-    public Coordinate minus(Coordinate otherCoordinate) {
+    public Coordinate minus(final Coordinate otherCoordinate) {
         return from(otherCoordinate.row.minus(this.row), otherCoordinate.column.minus(this.column));
     }
 
-    public Coordinate minusWithAbsoluteValue(Coordinate otherCoordinate) {
+    public Coordinate minusWithAbsoluteValue(final Coordinate otherCoordinate) {
         return fromOnBoard(this.row.absoluteOfMinus(otherCoordinate.row),
                 this.column.absoluteOfMinus(otherCoordinate.column));
     }
@@ -61,14 +61,14 @@ public class Coordinate {
         return column.isZero();
     }
 
-    public Inclination getInclination(Coordinate otherCoordinate) {
+    public Inclination getInclination(final Coordinate otherCoordinate) {
         int differenceRow = this.row.minus(otherCoordinate.row);
         int differenceColumn = this.column.minus(otherCoordinate.column);
         double inclination = (double) differenceRow / differenceColumn;
         return Inclination.of(inclination);
     }
 
-    public boolean hasDistanceLessThan(Coordinate otherCoordinate, double distance) {
+    public boolean hasDistanceLessThan(final Coordinate otherCoordinate, final double distance) {
         int differenceRow = this.row.minus(otherCoordinate.row);
         int differenceColumn = this.column.minus(otherCoordinate.column);
         return Math.abs(differenceRow) <= distance && Math.abs(differenceColumn) <= distance;

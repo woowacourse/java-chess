@@ -21,7 +21,7 @@ public class PieceMapper {
         mapper.put(Pawn.class, "p");
     }
 
-    public static String getTarget(Piece square) {
+    public static String getTarget(final Piece square) {
         Optional<PieceType> piece = square.getPiece();
         String message = mapper.keySet()
                                .stream()
@@ -33,7 +33,7 @@ public class PieceMapper {
         return makeUpperCaseIfCampIsBlack(square, message);
     }
 
-    private static String makeUpperCaseIfCampIsBlack(Piece piece, String message) {
+    private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
         if (piece.isExist() && piece.isSameCamp(Camp.BLACK)) {
             return message.toUpperCase();
         }

@@ -12,7 +12,7 @@ public class ConcretePiece extends Piece {
     private final PieceType pieceType;
     private final Camp camp;
 
-    public ConcretePiece(PieceType pieceType, Camp camp) {
+    public ConcretePiece(final PieceType pieceType, final Camp camp) {
         this.pieceType = pieceType;
         this.camp = camp;
     }
@@ -42,7 +42,7 @@ public class ConcretePiece extends Piece {
     }
 
     @Override
-    public boolean isSameCamp(Camp camp) {
+    public boolean isSameCamp(final Camp camp) {
         return this.camp.equals(camp);
     }
 }

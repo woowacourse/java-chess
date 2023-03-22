@@ -44,7 +44,7 @@ public class ChessController {
         }
     }
 
-    private void processStartGame(Command command) {
+    private void processStartGame(final Command command) {
         if (command.isStart()) {
             playGame(new ChessGame());
         }
@@ -53,7 +53,7 @@ public class ChessController {
         }
     }
 
-    private void playGame(ChessGame chessGame) {
+    private void playGame(final ChessGame chessGame) {
         Command command;
 
         do {
@@ -62,7 +62,7 @@ public class ChessController {
         } while (command.canContinue());
     }
 
-    private Command getPlayCommand(ChessGame chessGame) {
+    private Command getPlayCommand(final ChessGame chessGame) {
         try {
             outputView.printBoard(chessGame.getBoard());
             List<String> commands = inputView.readCommand();
@@ -75,7 +75,9 @@ public class ChessController {
         }
     }
 
-    private void processPlayGame(Command command, List<String> commands, ChessGame chessGame) {
+    private void processPlayGame(final Command command,
+                                 final List<String> commands,
+                                 final ChessGame chessGame) {
         if (command.isStart()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }
