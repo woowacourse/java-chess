@@ -27,6 +27,14 @@ public class PieceData {
         return color.isEqual(other.color);
     }
 
+    public boolean isSameColor(Color other) {
+        return color.isEqual(other);
+    }
+
+    protected Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

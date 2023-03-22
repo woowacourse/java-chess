@@ -39,8 +39,8 @@ public class Position {
         return of(File.of(fileCommand), Rank.of(rankCommand));
     }
 
-    private static void validatePositionCommandLength(String positionCommand){
-        if(positionCommand.length() != 2){
+    private static void validatePositionCommandLength(String positionCommand) {
+        if (positionCommand.length() != 2) {
             throw new IllegalArgumentException("올바르지 않은 포지션 이름입니다.");
         }
     }
@@ -113,10 +113,7 @@ public class Position {
     }
 
     public boolean isInvalid() {
-        if (rank == null || file == null) {
-            return true;
-        }
-        return false;
+        return rank == null || file == null;
     }
 
     @Override
