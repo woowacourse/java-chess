@@ -9,7 +9,6 @@ public abstract class Pawn extends Piece {
     protected static final int DOWN = 1;
     protected static final int UP = -1;
 
-
     public Pawn(Color color) {
         super(color);
     }
