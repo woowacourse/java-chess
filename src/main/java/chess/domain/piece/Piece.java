@@ -18,11 +18,11 @@ public abstract class Piece {
         return this.role == role;
     }
 
-    public boolean isSameCamp(final Team team) {
+    public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
 
-    public boolean isAnotherCamp(final Team team) {
+    public boolean isAnotherTeam(final Team team) {
         return this.team != team;
     }
 
@@ -30,7 +30,7 @@ public abstract class Piece {
         return false;
     }
 
-    public Team getCamp() {
+    public Team getTeam() {
         return this.team;
     }
 

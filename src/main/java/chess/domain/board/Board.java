@@ -109,7 +109,7 @@ public class Board {
 
     private void moveIfPawn(final Square source) {
         if (this.isSameRole(source, Role.PAWN)) {
-            this.board.put(source, new Pawn(this.board.get(source).getCamp(), IS_MOVED));
+            this.board.put(source, new Pawn(this.board.get(source).getTeam(), IS_MOVED));
         }
     }
 
@@ -167,9 +167,9 @@ public class Board {
 
     private boolean isSameCamp(final Square source, final Square target) {
         final Piece sourcePiece = this.board.get(source);
-        final Team targetTeam = this.board.get(target).getCamp();
+        final Team targetTeam = this.board.get(target).getTeam();
 
-        return sourcePiece.isSameCamp(targetTeam);
+        return sourcePiece.isSameTeam(targetTeam);
     }
 
     private boolean isSameRole(final Square source, final Role role) {
@@ -179,7 +179,7 @@ public class Board {
     }
 
     public boolean isNotMyTurn(final Square source, final Team turn) {
-        return this.board.get(source).isAnotherCamp(turn);
+        return this.board.get(source).isAnotherTeam(turn);
     }
 
     public boolean isEmptyPiece(final Square source) {
