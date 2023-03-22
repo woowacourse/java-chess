@@ -60,18 +60,11 @@ public final class ChessController {
     }
 
     private void executeMoveCommand(ChessBoard chessBoard, List<String> userInput) {
-        Position start = inputToPosition(userInput.get(1));
-        Position end = inputToPosition(userInput.get(2));
+        Position start = Position.of(userInput.get(1));
+        Position end = Position.of(userInput.get(2));
 
         chessBoard.movePiece(start, end);
         OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
-    }
-
-    private Position inputToPosition(String input) {
-        int row = RowToNumber.of(input.charAt(1));
-        int column = ColumnToNumber.of(input.charAt(0));
-
-        return Position.of(row, column);
     }
 
     private ChessBoard setUpChessBoard() {

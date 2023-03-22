@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 public final class Position {
 
     private static final Map<Integer, Position> cache = new HashMap<>();
+    public static final int COLUMN_INDEX = 0;
+    public static final int ROW_INDEX = 1;
 
     static {
         List<Integer> rows = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -27,6 +29,13 @@ public final class Position {
     private Position(int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    public static Position of(String inputPoint) {
+        int row = RowToNumber.of(inputPoint.charAt(ROW_INDEX));
+        int column = ColumnToNumber.of(inputPoint.charAt(COLUMN_INDEX));
+
+        return Position.of(row, column);
     }
 
     public static Position of(int row, int column) {
