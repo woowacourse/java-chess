@@ -29,4 +29,9 @@ public enum Rank {
 	public int rankValue() {
 		return rank;
 	}
+
+	public Rank setNextRank(final int unit) {
+		return from((rank + unit));
+
+	}
 }

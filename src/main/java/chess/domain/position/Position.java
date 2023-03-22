@@ -2,6 +2,8 @@ package chess.domain.position;
 
 import java.util.Objects;
 
+import chess.domain.move.Direction;
+
 public final class Position {
 
 	private final File file;
@@ -52,7 +54,7 @@ public final class Position {
 		return file;
 	}
 
-	public char fileValue(){
+	public char fileValue() {
 		return file.fileValue();
 	}
 
@@ -60,8 +62,18 @@ public final class Position {
 		return rank;
 	}
 
-	public int rankValue(){
+	public int rankValue() {
 		return rank.rankValue();
+	}
+
+	public boolean isSame(final Position target) {
+		return file == target.file && rank == target.rank;
+	}
+
+	public Position setNextPosition(final Direction unit) {
+		File newFile = file.setNextFile(unit.getDx());
+		Rank newRank = rank.setNextRank(unit.getDy());
+		return Position.of(newFile, newRank);
 	}
 
 	@Override

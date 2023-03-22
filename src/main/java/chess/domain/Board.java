@@ -79,12 +79,10 @@ public class Board {
 
 	private List<Position> calculatePath(Position source, Position target, Direction unit) {
 		List<Position> path = new ArrayList<>();
-		char dFile = source.file().fileValue();
-		int dRank = source.rank().rankValue();
-		while (dFile != target.fileValue() || dRank != target.rankValue()) {
-			dFile += unit.getDx();
-			dRank += unit.getDy();
-			path.add(Position.of(File.from(dFile), Rank.from(dRank)));
+		Position pathPosition = source;
+		while (!pathPosition.isSame(target)) {
+			pathPosition = pathPosition.setNextPosition(unit);
+			path.add(pathPosition);
 		}
 
 		return path.subList(0, path.size() - 1);
@@ -119,7 +117,7 @@ public class Board {
 
 	public List<File> getFiles() {
 		final List<File> files = Arrays.asList(File.values());
-		files.sort(Comparator.reverseOrder());
+		files.sort(Comparator.naturalOrder());
 		return files;
 	}
 

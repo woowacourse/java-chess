@@ -29,4 +29,8 @@ public enum File {
 	public char fileValue() {
 		return file;
 	}
+
+	public File setNextFile(final int unit) {
+		return from((char)(file + unit));
+	}
 }
