@@ -6,6 +6,7 @@ import chess.board.Board;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import chess.game.Turn;
 import chess.piece.Pieces;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,7 @@ class PlayTest {
     @DisplayName("게임 플레이 상태에서 시작 시 새로운 플레이 상태로 전이된다.")
     void start() {
         // given
-        Play play = new Play(new Board(new Pieces()));
+        Play play = new Play(new Board(new Pieces()), Turn.WHITE);
 
         // when
         CommandStatus newPlay = play.start();
@@ -28,10 +29,10 @@ class PlayTest {
     }
 
     @Test
-    @DisplayName("게임 플레이 상태에서 이동 시 말이 이동한 상태의 플레이 상태로 전이된다.")
+    @DisplayName("게임 플레이 상태에서 이동 시 말이 이동한 상태 & 턴이 넘어간 플레이 상태로 전이된다.")
     void move() {
         // given
-        Play play = new Play(new Board(new Pieces()));
+        Play play = new Play(new Board(new Pieces()), Turn.WHITE);
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -41,13 +42,14 @@ class PlayTest {
         // then
         assertThat(newPlay).isInstanceOf(Play.class);
         assertThat(newPlay).isNotEqualTo(play);
+        assertThat(newPlay.getTurnDisplayName()).isEqualTo("black");
     }
 
     @Test
     @DisplayName("게임 플레이 상태에서 종료 시 종료 상태로 전이된다.")
     void end() {
         // given
-        Play play = new Play(new Board(new Pieces()));
+        Play play = new Play(new Board(new Pieces()), Turn.WHITE);
 
         // when, then
         assertThat(play.end()).isInstanceOf(End.class);
@@ -57,9 +59,19 @@ class PlayTest {
     @DisplayName("게임 플레이 상태에서 기물들을 가져올 수 있다.")
     void getPieces() {
         // given
-        Play play = new Play(new Board(new Pieces()));
+        Play play = new Play(new Board(new Pieces()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> play.getPieces());
+    }
+
+    @Test
+    @DisplayName("게임 플레이 상태에서 턴 이름을 가져올 수 있다.")
+    void getTurnDisplayName() {
+        // given
+        Play play = new Play(new Board(new Pieces()), Turn.WHITE);
+
+        // when, then
+        assertThat(play.getTurnDisplayName()).isEqualTo("white");
     }
 }

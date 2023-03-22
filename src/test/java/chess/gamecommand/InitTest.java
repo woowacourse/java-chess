@@ -56,4 +56,16 @@ class InitTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 초기 상태에서는 기물들을 반환할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("초기 상태에서 턴 이름을 가져올 시 예외를 던진다.")
+    void getTurnDisplayName() {
+        // given
+        CommandStatus commandStatus = new Init();
+
+        // when, then
+        assertThatThrownBy(() -> commandStatus.getTurnDisplayName())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 초기 상태에서는 턴 이름을 반환할 수 없습니다.");
+    }
 }

@@ -46,4 +46,8 @@ public class CommandManager {
     public List<Piece> getPieces() {
         return commandStatus.getPieces();
     }
+
+    public String getTurnDisplayName() {
+        return commandStatus.getTurnDisplayName();
+    }
 }

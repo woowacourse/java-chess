@@ -16,4 +16,6 @@ public interface CommandStatus {
     boolean isEnd();
 
     List<Piece> getPieces();
+
+    String getTurnDisplayName();
 }

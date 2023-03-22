@@ -32,4 +32,9 @@ public class End implements CommandStatus {
     public List<Piece> getPieces() {
         throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 기물들을 반환할 수 없습니다.");
     }
+
+    @Override
+    public String getTurnDisplayName() {
+        throw new IllegalStateException("[ERROR] 종료 상태에서는 턴 이름을 반환할 수 없습니다.");
+    }
 }

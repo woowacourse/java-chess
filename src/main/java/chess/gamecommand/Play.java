@@ -4,26 +4,39 @@ import java.util.List;
 
 import chess.board.Board;
 import chess.board.Position;
+import chess.game.Turn;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 
 public class Play implements CommandStatus {
 
     private final Board board;
+    private final Turn turn;
 
-    public Play(final Board board) {
+    public Play(final Board board, Turn turn) {
         this.board = board;
+        this.turn = turn;
     }
 
     @Override
     public CommandStatus start() {
-        return new Play(new Board(new Pieces()));
+        return new Play(new Board(new Pieces()), Turn.WHITE);
     }
 
     @Override
     public CommandStatus move(Position sourcePosition, Position targetPosition) {
+        checkTurn(sourcePosition);
+        board.checkPieceMoveCondition(sourcePosition, targetPosition);
         board.movePiece(sourcePosition, targetPosition);
-        return new Play(board);
+        Turn oppositeTurn = turn.change();
+        return new Play(board, oppositeTurn);
+    }
+
+    private void checkTurn(Position sorucePosition) {
+        Piece sourcePiece = board.findPieceByPosition(sorucePosition);
+        if (!turn.isCorrectTurn(sourcePiece.getSide())) {
+            throw new IllegalArgumentException("[ERROR] 현재 턴인 진영의 기물만 이동할 수 있습니다.");
+        }
     }
 
     @Override
@@ -39,5 +52,9 @@ public class Play implements CommandStatus {
     @Override
     public List<Piece> getPieces() {
         return board.getPieces();
+    }
+
+    public String getTurnDisplayName() {
+        return turn.getDisplayName();
     }
 }

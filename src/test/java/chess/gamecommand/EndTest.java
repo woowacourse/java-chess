@@ -59,4 +59,16 @@ class EndTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 게임 종료 상태에서는 기물들을 반환할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("게임 종료 상태에서 턴 이름을 가져올 시 예외를 던진다.")
+    void getTurnDisplayName() {
+        // given
+        End end = new End();
+
+        // when, then
+        assertThatThrownBy(() -> end.getTurnDisplayName())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 종료 상태에서는 턴 이름을 반환할 수 없습니다.");
+    }
 }
