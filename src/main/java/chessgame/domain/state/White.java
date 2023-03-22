@@ -16,7 +16,7 @@ public class White implements State {
             throw new IllegalArgumentException("start를 입력할 수 없습니다.");
         }
         if (command.isMove()) {
-            board.move(command.makePoints().get(0), command.makePoints().get(1), Team.WHITE);
+            board.move(command.getSourcePoint(), command.getTargetPoint(), Team.WHITE);
             return new Black();
         }
         if (command.isEnd()) {

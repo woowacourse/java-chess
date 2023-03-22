@@ -11,9 +11,11 @@ public class Command {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
+    private static final int SOURCE = 0;
+    private static final int TARGET = 1;
 
     private final String command;
-
+    private static List<Point> points = new ArrayList<>();
     private Command(String command) {
         this.command = command;
     }
@@ -36,6 +38,7 @@ public class Command {
         String[] moveCommand = command.split(" ");
         if (moveCommand.length == 3 && MOVE.equals(moveCommand[0])) {
             validatePoint(moveCommand[1], moveCommand[2]);
+            points = makePoints(command);
             return new Command(command);
         }
         if (MOVE.equals(moveCommand[0])) {
@@ -63,7 +66,7 @@ public class Command {
         return "end".equals(command);
     }
 
-    public List<Point> makePoints() {
+    private static List<Point> makePoints(String command) {
         List<Point> points = new ArrayList<>();
         String[] moveCommand = command.split(" ");
         points.add(Point.of(File.findFile(moveCommand[1].charAt(0)),
@@ -71,5 +74,13 @@ public class Command {
         points.add(Point.of(File.findFile(moveCommand[2].charAt(0)),
                 Rank.findRank(Integer.parseInt(moveCommand[2].substring(1)))));
         return points;
+    }
+
+    public Point getSourcePoint(){
+        return points.get(SOURCE);
+    }
+
+    public Point getTargetPoint(){
+        return points.get(TARGET);
     }
 }
