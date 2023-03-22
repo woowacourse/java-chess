@@ -29,18 +29,26 @@ public class ChessController {
         Command command = readCommand();
         try {
             game.setFrom(command);
-            printChessBoard(game);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
         }
+        printChessBoard(game);
     }
 
     private Command readCommand() {
+        Command command;
+        do {
+            command = generateCommand();
+        } while (command == null);
+        return command;
+    }
+
+    private Command generateCommand() {
         try {
             return Command.of(inputView.readCommand());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
-            return readCommand();
+            return null;
         }
     }
 

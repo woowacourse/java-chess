@@ -41,7 +41,7 @@ public class Command {
         if (moveCommand.length == 3 && MOVE.equals(moveCommand[0])) {
             List<String> points = List.of(moveCommand[1], moveCommand[2]);
             validatePoint(points);
-            return new Command(moveCommand[0], makePoint(points));
+            return new Command(moveCommand[0], makePoints(points));
         }
         if (MOVE.equals(moveCommand[0])) {
             throw new IllegalArgumentException("move source target을 정확히 입력해주세요");
@@ -56,7 +56,7 @@ public class Command {
         }
     }
 
-    private static Points makePoint(List<String> inputs) {
+    private static Points makePoints(List<String> inputs) {
         List<Point> points = new ArrayList<>();
         points.add(Point.of(File.find(inputs.get(0).charAt(0)),
             Rank.find(Integer.parseInt(inputs.get(0).substring(1)))));

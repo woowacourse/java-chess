@@ -18,7 +18,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean isBlocked, boolean hasTarget) {
         if (hasTarget) {
             return isAttack(points);
         }
@@ -67,6 +67,6 @@ public class Pawn implements Piece {
 
     @Override
     public String toString() {
-        return team.calculate(ORIGINAL_NAME);
+        return team.convertName(ORIGINAL_NAME);
     }
 }

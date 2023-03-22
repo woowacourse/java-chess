@@ -5,7 +5,7 @@ import chessgame.domain.point.Points;
 
 public interface Piece {
 
-    boolean isMovable(Points points, boolean hasBlock, boolean hasTarget);
+    boolean isMovable(Points points, boolean isBlocked, boolean hasTarget);
 
     Team team();
 

@@ -17,8 +17,8 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
-        if (hasBlock) {
+    public boolean isMovable(Points points, boolean isBlocked, boolean hasTarget) {
+        if (isBlocked) {
             throw new IllegalArgumentException("룩은 기물을 건너 뛸 수 없습니다.");
         }
         return points.isHorizontal() || points.isVertical();
@@ -35,6 +35,6 @@ public class Rook implements Piece {
     }
 
     public String toString() {
-        return team.calculate(ORIGINAL_NAME);
+        return team.convertName(ORIGINAL_NAME);
     }
 }

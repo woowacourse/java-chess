@@ -1,26 +1,27 @@
 package chessgame.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Points;
-import chessgame.util.ChessBoardFactory;
 
 public class Board {
     private final Map<Point, Piece> board;
 
     public Board() {
-        this.board = ChessBoardFactory.create();
+        this.board = GameBoardFactory.create();
     }
 
     public void move(Points points, Team turn) {
         Piece piece = checkSourcePiece(points.source(), points.target(), turn);
         boolean hasTarget = checkHavingTarget(points.target(), turn);
-        boolean hasBlock = checkRouteBlocked(points);
+        boolean isBlocked = checkRouteBlocked(points);
 
-        if (!piece.isMovable(points, hasBlock, hasTarget)) {
+        if (!piece.isMovable(points, isBlocked, hasTarget)) {
             throw new IllegalArgumentException(piece.failMoveMsg());
         }
         movePiece(points, piece);
@@ -46,11 +47,6 @@ public class Board {
         return board.containsKey(target);
     }
 
-    private void movePiece(Points points, Piece piece) {
-        board.remove(points.source());
-        board.put(points.target(), piece);
-    }
-
     private boolean checkRouteBlocked(Points points) {
         int distance = points.maxDistance();
         int fileMove = points.fileMove(distance);
@@ -61,13 +57,18 @@ public class Board {
 
     private boolean isRouteBlocked(Point source, int distance, int fileMove, int rankMove) {
         Point point = source;
+        List<Point> points = new ArrayList<>();
         for (int i = 0; i < distance - 1; i++) {
             point = point.move(fileMove, rankMove);
-            if (board.containsKey(point)) {
-                return true;
-            }
+            points.add(point);
         }
-        return false;
+        return points.stream()
+            .anyMatch(board::containsKey);
+    }
+
+    private void movePiece(Points points, Piece piece) {
+        board.remove(points.source());
+        board.put(points.target(), piece);
     }
 
     public Map<Point, Piece> getBoard() {

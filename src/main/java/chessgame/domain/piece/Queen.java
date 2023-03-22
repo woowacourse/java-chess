@@ -17,8 +17,8 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
-        if (hasBlock) {
+    public boolean isMovable(Points points, boolean isBlocked, boolean hasTarget) {
+        if (isBlocked) {
             throw new IllegalArgumentException("퀸은 기물을 건너 뛸 수 없습니다.");
         }
         return points.isHorizontal() || points.isVertical() || points.isDiagonal();
@@ -36,6 +36,6 @@ public class Queen implements Piece {
 
     @Override
     public String toString() {
-        return team.calculate(ORIGINAL_NAME);
+        return team.convertName(ORIGINAL_NAME);
     }
 }

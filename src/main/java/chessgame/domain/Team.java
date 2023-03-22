@@ -20,7 +20,7 @@ public enum Team {
         this.startRank = startRank;
     }
 
-    public String calculate(String convertedName) {
+    public String convertName(String convertedName) {
         return name.apply(convertedName);
     }
 

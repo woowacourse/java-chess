@@ -19,7 +19,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isMovable(Points points, boolean hasBlock, boolean hasTarget) {
+    public boolean isMovable(Points points, boolean isBlocked, boolean hasTarget) {
         int fileDistance = Math.abs(points.fileDistance());
         int rankDistance = Math.abs(points.rankDistance());
 
@@ -41,6 +41,6 @@ public class Knight implements Piece {
 
     @Override
     public String toString() {
-        return team.calculate(ORIGINAL_NAME);
+        return team.convertName(ORIGINAL_NAME);
     }
 }

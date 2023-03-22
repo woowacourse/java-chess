@@ -1,10 +1,9 @@
-package chessgame.util;
+package chessgame.domain;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chessgame.domain.Team;
 import chessgame.domain.piece.Bishop;
 import chessgame.domain.piece.King;
 import chessgame.domain.piece.Knight;
@@ -16,7 +15,7 @@ import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
 
-public class ChessBoardFactory {
+public class GameBoardFactory {
     public static Map<Point, Piece> create() {
         Map<Point, Piece> initialBoard = new HashMap<>();
 
@@ -29,9 +28,7 @@ public class ChessBoardFactory {
     private static void createOneLine(Map<Point, Piece> initialBoard, Rank rank) {
         for (File file : File.values()) {
             Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
-            if (initialPiece != null) {
-                initialBoard.put(Point.of(file, rank), initialPiece);
-            }
+            addPieceToBoard(initialBoard, rank, file, initialPiece);
         }
     }
 
@@ -49,6 +46,12 @@ public class ChessBoardFactory {
             return getPieces(Team.WHITE).get(idx);
         }
         return null;
+    }
+
+    private static void addPieceToBoard(Map<Point, Piece> initialBoard, Rank rank, File file, Piece initialPiece) {
+        if (initialPiece != null) {
+            initialBoard.put(Point.of(file, rank), initialPiece);
+        }
     }
 
     private static List<Piece> getPieces(Team team) {
