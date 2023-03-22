@@ -1,7 +1,14 @@
 package chess;
 
+import java.util.List;
+import java.util.Map;
+
 import chess.domain.Board;
 import chess.domain.command.Command;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -22,7 +29,10 @@ public class ChessApplication {
 		String inputCommand = InputView.askStart();
 		Command.ofStart(inputCommand);
 
-		OutputView.printBoard(board);
+		final Map<Position, Piece> chessBoard = board.getBoard();
+		final List<Rank> ranks = board.getRanks();
+		final List<File> files = board.getFiles();
+		OutputView.printBoard(chessBoard, ranks, files);
 	}
 
 	private static void play(final Board board) {
@@ -38,7 +48,7 @@ public class ChessApplication {
 
 	private static void movePiece(Board board, Command command) {
 		board.move(command.getSource(), command.getTarget());
-		OutputView.printBoard(board);
+		OutputView.printBoard(board.getBoard(), board.getRanks(), board.getFiles());
 		play(board);
 	}
 }
