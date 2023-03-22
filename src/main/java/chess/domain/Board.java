@@ -8,11 +8,6 @@ import java.util.Map;
 
 public class Board {
 
-    private static final int MIN_EMPTY_RANK = 3;
-    private static final int MAX_EMPTY_RANK = 6;
-    private static final int MIN_FILE = 1;
-    private static final int MAX_FILE = 8;
-
     private final Map<Position, Piece> board;
 
     private Board(Map<Position, Piece> board) {
@@ -25,20 +20,10 @@ public class Board {
         for (PieceSettings pieceSetting : PieceSettings.values()) {
             setting.put(pieceSetting.getPosition(), pieceSetting.getPiece());
         }
-        setEmptyPiece(setting);
+        for (EmptySettings emptySetting : EmptySettings.values()) {
+            setting.put(emptySetting.getPosition(), emptySetting.getPiece());
+        }
         return new Board(setting);
-    }
-
-    private static void setEmptyPiece(Map<Position, Piece> setting) {
-        for (int rank = MIN_EMPTY_RANK; rank <= MAX_EMPTY_RANK; rank++) {
-            setFile(setting, rank);
-        }
-    }
-
-    private static void setFile(Map<Position, Piece> setting, int rank) {
-        for (int file = MIN_FILE; file <= MAX_FILE; file++) {
-            setting.put(new Position(rank, file), new Empty(Team.EMPTY));
-        }
     }
 
     public boolean isNotTurn(Position source, Team turn) {
