@@ -19,7 +19,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public List<Position> createPath(final Position source, final Position target, final MovingStrategy strategy) {
+    public List<Position> createPath(final Position source, final Position target, final Color targetColor, final MovingStrategy strategy) {
         throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
     }
 }

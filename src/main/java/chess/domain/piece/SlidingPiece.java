@@ -17,7 +17,7 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public final List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
+    public final List<Position> createPath(final Position source, final Position target, final Color targetColor, final MovingStrategy movingStrategy) {
         List<Position> path = new ArrayList<>();
         Position currentPosition = movingStrategy.move(source);
         while (!currentPosition.equals(target)) {

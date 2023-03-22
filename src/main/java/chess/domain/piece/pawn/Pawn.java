@@ -1,23 +1,23 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import chess.domain.Position;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Pawn extends Piece {
 
-    private static final int INITIAL_WHITE_RANK = 2;
-    private static final int INITIAL_BLACK_RANK = 7;
-
     protected Pawn(final Color color, final MovingStrategies movingStrategies) {
         super(color, PieceType.PAWN, movingStrategies);
     }
 
     @Override
-    public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
+    public List<Position> createPath(final Position source, final Position target, final Color targetColor, final MovingStrategy strategy) {
         final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
         if (movingStrategy.isAttackStrategy()) {
             final Position movePosition = movingStrategy.move(source);
@@ -32,14 +32,12 @@ public abstract class Pawn extends Piece {
                 return Collections.emptyList();
             }
             Position secondMove = movingStrategy.move(firstMove);
-            if (secondMove.equals(target) && isInitialPosition(source)) {
+            if (secondMove.equals(target) && isInitialPosition()) {
                 return List.of(firstMove);
             }
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
     }
 
-    private boolean isInitialPosition(final Position source) {
-        return source.getRankOrder() == INITIAL_WHITE_RANK || source.getRankOrder() == INITIAL_BLACK_RANK;
-    }
+    public abstract boolean isInitialPosition();
 }

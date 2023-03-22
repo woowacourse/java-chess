@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -9,7 +8,8 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.WhitePawn;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 
 import java.util.HashMap;
 import java.util.Map;
