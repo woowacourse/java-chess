@@ -23,9 +23,7 @@ public final class ChessGameController {
 
     private void playGame(final List<String> inputs) {
         gameStatus = gameStatus.transition(inputs);
-        final ChessBoardDTO chessBoardDTO = gameStatus.playTurn(inputs);
-
-        OutputView.printChessBoard(chessBoardDTO);
+        gameStatus.playTurn(inputs);
     }
 
     private void retryOnError(final Consumer<List<String>> playGame) {
