@@ -7,7 +7,7 @@ import chess.domain.piece.coordinate.Coordinate;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final Team team;
+    protected final Team team;
     protected final Coordinate coordinate;
     
     protected Piece(Team team, Coordinate coordinate) {

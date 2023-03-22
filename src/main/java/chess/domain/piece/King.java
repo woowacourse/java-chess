@@ -9,12 +9,12 @@ public class King extends Piece {
     }
     
     @Override
-    public boolean isMovable(Piece targetPiece) {
-        if (isOutOfMovementRadius(convertAbsoluteValue(targetPiece))) {
+    public boolean isMovable(Piece destinationPiece) {
+        if (isOutOfMovementRadius(convertAbsoluteValue(destinationPiece))) {
             return false;
         }
     
-        return isDifferentTeam(targetPiece);
+        return isDifferentTeam(destinationPiece);
     }
     
     private boolean isOutOfMovementRadius(Distances distances) {

@@ -13,7 +13,7 @@ public class Empty extends Piece {
     }
     
     @Override
-    public boolean isMovable(Piece targetPiece) {
+    public boolean isMovable(Piece destinationPiece) {
         return false;
     }
 }

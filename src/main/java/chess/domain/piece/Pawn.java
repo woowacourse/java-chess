@@ -7,6 +7,10 @@ import chess.domain.piece.coordinate.Row;
 public class Pawn extends Piece {
     private static final int WHITE_PAWN_START_ROW = 7;
     private static final int BLACK_PAWN_START_ROW = 2;
+    private static final int FIRST_MOVE_FORWARD_TWO_UP_DISTANCE = 2;
+    private static final int FIRST_MOVE_FORWARD_TWO_DOWN_DISTANCE = -2;
+    private static final int FIRST_MOVE_FORWARD_ONE_UP_DISTANCE = 1;
+    private static final int FIRST_MOVE_FORWARD_ONE_DOWN_DISTANCE = -1;
     
     public Pawn(Team team, Coordinate coordinate) {
         super(team, coordinate);
@@ -18,56 +22,64 @@ public class Pawn extends Piece {
     }
     
     @Override
-    public boolean isMovable(Piece targetPiece) {
-        if (isOutOfMovementRadius(targetPiece, subtractCoordinate(targetPiece))) {
+    public boolean isMovable(Piece destinationPiece) {
+        if (isOutOfMovementRadius(destinationPiece, subtractCoordinate(destinationPiece))) {
             return false;
         }
     
-        return isDifferentTeam(targetPiece);
+        return isDifferentTeam(destinationPiece);
     }
     
-    private boolean isOutOfMovementRadius(Piece targetPiece, Distances distances) {
-        if (isSameTeam(Team.WHITE)) {
-            return isWhitePawnImmovable(targetPiece, distances);
+    private boolean isOutOfMovementRadius(Piece destinationPiece, Distances distances) {
+        if (isPawnMoveForwardTwoSpace(distances)) {
+            return isPawnImmovableForwardTwoSpace(destinationPiece);
+        }
+        if (isPawnMoveForwardDiagonalOneSpace(distances)) {
+            return isPawnImmovableForwardDiagonalOneSpace(destinationPiece);
+        }
+        if (isPawnMoveForwardOneSpace(distances)) {
+            return isNotEmpty(destinationPiece);
+        }
+        return true;
+    }
+    
+    private boolean isPawnMoveForwardTwoSpace(Distances distances) {
+        if (team.isSameTeam(Team.BLACK)) {
+            return distances.equals(new Distances(0, FIRST_MOVE_FORWARD_TWO_DOWN_DISTANCE));
         }
         
-        if (isSameTeam(Team.BLACK)) {
-            return isBlackPawnMovable(targetPiece, distances);
-        }
-        return true;
+        return distances.equals(new Distances(0, FIRST_MOVE_FORWARD_TWO_UP_DISTANCE));
     }
     
-    private boolean isWhitePawnImmovable(Piece targetPiece, Distances distances) {
-        if (distances.equals(new Distances(0, 2))) {
-            return isPawnImmovableForwardTwoSpace(targetPiece, WHITE_PAWN_START_ROW);
+    private boolean isPawnImmovableForwardTwoSpace(Piece targetPiece) {
+        if (team.isSameTeam(Team.BLACK)) {
+            return !coordinate.isSameRow(Row.from(BLACK_PAWN_START_ROW)) || isNotEmpty(targetPiece);
         }
-        if (distances.absoluteColumn().equals(new Distances(1, 1))) {
-            return isPawnImmovableForwardOneSpace(targetPiece, Team.BLACK);
-        }
-        if (distances.equals(new Distances(0, 1))) {
-            return isPawnImmovableForwardOneSpace(targetPiece, Team.EMPTY);
-        }
-        return true;
+        return !coordinate.isSameRow(Row.from(WHITE_PAWN_START_ROW)) || isNotEmpty(targetPiece);
     }
     
-    private boolean isPawnImmovableForwardTwoSpace(Piece targetPiece, int startRow) {
-        return !coordinate.isSameRow(Row.from(startRow)) || !targetPiece.isSameTeam(Team.EMPTY);
+    private boolean isNotEmpty(Piece targetPiece) {
+        return !targetPiece.isSameTeam(Team.EMPTY);
     }
     
-    private boolean isPawnImmovableForwardOneSpace(Piece targetPiece, Team team) {
-        return !targetPiece.isSameTeam(team);
+    private boolean isPawnMoveForwardDiagonalOneSpace(Distances distances) {
+        Distances distanceWithAbsoluteColumn = distances.absoluteColumn();
+        if (team.isSameTeam(Team.BLACK)) {
+            return distanceWithAbsoluteColumn.equals(new Distances(1, FIRST_MOVE_FORWARD_ONE_DOWN_DISTANCE));
+        }
+        
+        return distanceWithAbsoluteColumn.equals(new Distances(1, FIRST_MOVE_FORWARD_ONE_UP_DISTANCE));
     }
     
-    private boolean isBlackPawnMovable(Piece targetPiece, Distances distances) {
-        if (distances.equals(new Distances(0, -2))) {
-            return isPawnImmovableForwardTwoSpace(targetPiece, BLACK_PAWN_START_ROW);
+    private boolean isPawnImmovableForwardDiagonalOneSpace(Piece targetPiece) {
+        return targetPiece.isSameTeam(team) || targetPiece.isSameTeam(Team.EMPTY);
+    }
+    
+    private boolean isPawnMoveForwardOneSpace(Distances distances) {
+        if (team.isSameTeam(Team.BLACK)) {
+            return distances.equals(new Distances(0, FIRST_MOVE_FORWARD_ONE_DOWN_DISTANCE));
         }
-        if (distances.absoluteColumn().equals(new Distances(1, -1))) {
-            return isPawnImmovableForwardOneSpace(targetPiece, Team.WHITE);
-        }
-        if (distances.equals(new Distances(0, -1))) {
-            return isPawnImmovableForwardOneSpace(targetPiece, Team.EMPTY);
-        }
-        return true;
+        
+        return distances.equals(new Distances(0, FIRST_MOVE_FORWARD_ONE_UP_DISTANCE));
     }
 }
