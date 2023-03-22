@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.pawn.BlackInitPawn;
 import domain.piece.pawn.WhiteInitPawn;
@@ -43,7 +44,12 @@ public final class Board {
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-        return squareLocations.get(start).isPieceMovable(start, end);
+
+        return squareLocations.get(start).isPieceMovable(
+                start,
+                end,
+                Situation.of(findSquare(start), findSquare(end))
+        );
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {

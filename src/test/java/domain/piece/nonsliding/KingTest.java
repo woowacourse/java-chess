@@ -1,6 +1,7 @@
 package domain.piece.nonsliding;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class KingTest {
         Coordinate destination = new Coordinate(0, 1);
         King king = new King();
 
-        assertThat(king.isReachableByRule(startCoordinate, destination))
+        assertThat(king.isReachableByRule(startCoordinate, destination, Situation.NEUTRAL))
                 .isTrue();
     }
 
@@ -36,7 +37,7 @@ class KingTest {
         Coordinate destination = new Coordinate(0, 0);
         King king = new King();
 
-        assertThat(king.isReachableByRule(startCoordinate, destination))
+        assertThat(king.isReachableByRule(startCoordinate, destination, Situation.NEUTRAL))
                 .isTrue();
     }
 
@@ -47,7 +48,7 @@ class KingTest {
         Coordinate destination = new Coordinate(1, 0);
         King king = new King();
 
-        assertThat(king.isReachableByRule(startCoordinate, destination))
+        assertThat(king.isReachableByRule(startCoordinate, destination, Situation.NEUTRAL))
                 .isTrue();
     }
 
@@ -58,7 +59,7 @@ class KingTest {
         Coordinate destination = new Coordinate(0, 0);
         King king = new King();
 
-        assertThat(king.isReachableByRule(startCoordinate, destination))
+        assertThat(king.isReachableByRule(startCoordinate, destination, Situation.NEUTRAL))
                 .isTrue();
     }
 
@@ -68,9 +69,9 @@ class KingTest {
         Coordinate startCoordinate = new Coordinate(1, 1);
         King king = new King();
 
-        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(0, 0))).isTrue();
-        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(0, 2))).isTrue();
-        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(2, 0))).isTrue();
-        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(2, 2))).isTrue();
+        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(0, 0), Situation.NEUTRAL)).isTrue();
+        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(0, 2), Situation.NEUTRAL)).isTrue();
+        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(2, 0), Situation.NEUTRAL)).isTrue();
+        assertThat(king.isReachableByRule(startCoordinate, new Coordinate(2, 2), Situation.NEUTRAL)).isTrue();
     }
 }

@@ -1,6 +1,7 @@
 package domain.square;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.sliding.Bishop;
@@ -29,7 +30,8 @@ class SquareTest {
 
         assertThat(square.isPieceMovable(
                 new Coordinate(2, 0),
-                new Coordinate(1, 0)
+                new Coordinate(1, 0),
+                Situation.NEUTRAL
         )).isTrue();
     }
 
@@ -41,7 +43,8 @@ class SquareTest {
 
         assertThat(square.isPieceMovable(
                 new Coordinate(3, 0),
-                new Coordinate(1, 0)
+                new Coordinate(1, 0),
+                Situation.NEUTRAL
         )).isFalse();
     }
 }

@@ -1,6 +1,7 @@
 package domain.piece.sliding;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(0, 6 - distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 오른쪽으로 {0}칸 이동할 수 있다")
@@ -37,7 +38,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(0, distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 위쪽으로 {0}칸 이동할 수 있다")
@@ -47,7 +48,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, 0);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 아래쪽으로 {0}칸 이동할 수 있다")
@@ -57,7 +58,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(6 - distance, 0);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 우측 상단으로 {0}칸 이동할 수 없다")
@@ -67,7 +68,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 우측 하단으로 {0}칸 이동할 수 없다")
@@ -77,7 +78,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 좌측 하단으로 {0}칸 이동할 수 없다")
@@ -87,7 +88,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 7 - distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 좌측 상단으로 {0}칸 이동할 수 없다")
@@ -97,6 +98,6 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, 7 - distance);
         Rook rook = new Rook();
 
-        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(rook.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 }

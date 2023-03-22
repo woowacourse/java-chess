@@ -1,6 +1,7 @@
 package domain.piece.sliding;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(distance, distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "좌측 상단으로 {0}칸 이동할 수 있다")
@@ -37,7 +38,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "좌측 하단으로 {0}칸 이동할 수 있다")
@@ -47,7 +48,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 7 - distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "우측 하단으로 {0}칸 이동할 수 있다")
@@ -57,7 +58,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "우측으로 {0}칸 이동할 수 없다")
@@ -67,7 +68,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(0, distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "좌측으로 {0}칸 이동할 수 없다")
@@ -77,7 +78,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(0, 7 - distance);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "상단으로 {0}칸 이동할 수 없다")
@@ -87,7 +88,7 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(distance, 0);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @ParameterizedTest(name = "하단으로 {0}칸 이동할 수 없다")
@@ -97,6 +98,6 @@ class BishopTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 0);
         Bishop bishop = new Bishop();
 
-        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 }

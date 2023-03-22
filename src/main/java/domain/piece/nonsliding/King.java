@@ -15,7 +15,10 @@ public final class King extends Piece {
     ));
 
     @Override
-    public boolean isReachableByRule(final Coordinate start, final Coordinate end) {
+    public boolean isReachableByRuleWhenNoEnemy(
+            final Coordinate start,
+            final Coordinate end
+    ) {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination) &&

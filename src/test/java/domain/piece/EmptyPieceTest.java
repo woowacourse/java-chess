@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,8 @@ class EmptyPieceTest {
 
         assertThatThrownBy(() -> emptyPiece.isReachableByRule(
                 new Coordinate(0, 0),
-                new Coordinate(1, 0)
+                new Coordinate(1, 0),
+                Situation.NEUTRAL
         )).isInstanceOf(UnsupportedOperationException.class);
     }
 }

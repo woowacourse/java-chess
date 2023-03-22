@@ -1,6 +1,7 @@
 package domain.piece.pawn;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(2, 0);
         Pawn pawn = new WhitePawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -39,7 +40,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(3, 0);
         Pawn pawn = new WhiteInitPawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -49,8 +50,8 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(4, 0);
         Pawn pawn = new WhitePawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
 
     }
 
@@ -61,7 +62,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(1, 0);
         Pawn pawn = new WhitePawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -71,7 +72,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(5, 0);
         Pawn pawn = new BlackPawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -81,7 +82,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(4, 0);
         Pawn pawn = new BlackInitPawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @Test
@@ -91,8 +92,8 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(3, 0);
         Pawn pawn = new BlackPawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -102,7 +103,7 @@ class PawnTest {
         Coordinate endCoordinate = new Coordinate(7, 0);
         Pawn pawn = new BlackPawn();
 
-        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 
     @Test
@@ -113,7 +114,7 @@ class PawnTest {
         Pawn blackPawn = new BlackPawn();
         Pawn whitePawn = new WhitePawn();
 
-        assertThat(blackPawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
-        assertThat(whitePawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
+        assertThat(blackPawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(whitePawn.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
     }
 }

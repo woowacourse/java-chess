@@ -1,6 +1,7 @@
 package domain.piece.sliding;
 
 import domain.piece.Piece;
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(distance, distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "좌측 상단으로 {0}칸 이동할 수 있다")
@@ -37,7 +38,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "좌측 하단으로 {0}칸 이동할 수 있다")
@@ -47,7 +48,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 7 - distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "우측 하단으로 {0}칸 이동할 수 있다")
@@ -57,7 +58,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "왼쪽으로 {0}칸 이동할 수 있다")
@@ -67,7 +68,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(0, 7 - distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "오른쪽으로 {0}칸 이동할 수 있다")
@@ -77,7 +78,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(0, distance);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "위쪽으로 {0}칸 이동할 수 있다")
@@ -87,7 +88,7 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(distance, 0);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 
     @ParameterizedTest(name = "아래쪽으로 {0}칸 이동할 수 있다")
@@ -97,6 +98,6 @@ class QueenTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 0);
         Queen queen = new Queen();
 
-        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+        assertThat(queen.isReachableByRule(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
     }
 }

@@ -1,5 +1,6 @@
 package domain.square;
 
+import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
@@ -18,8 +19,12 @@ public final class Square {
         return new Square(new EmptyPiece(), Color.NEUTRAL);
     }
 
-    public boolean isPieceMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return piece.isReachableByRule(startCoordinate, endCoordinate);
+    public boolean isPieceMovable(
+            final Coordinate start,
+            final Coordinate end,
+            final Situation situation
+    ) {
+        return piece.isReachableByRule(start, end, situation);
     }
 
     public boolean hasPieceCanJump() {
