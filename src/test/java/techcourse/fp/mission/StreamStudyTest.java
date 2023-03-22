@@ -2,6 +2,7 @@ package techcourse.fp.mission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class StreamStudyTest {
     }
 
     @Test
-    public void sumOverThreeAndDouble() {
+    public void sumOverThreeAndDouble() throws IOException {
         numbers = Arrays.asList(3, 1, 6, 2, 4, 8);
         long sum = StreamStudy.sumOverThreeAndDouble(numbers);
         assertThat(sum).isEqualTo(36);

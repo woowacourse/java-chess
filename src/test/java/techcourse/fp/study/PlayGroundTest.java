@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
+    private static final String WAR_AND_PEACE_TXT = "src/main/resources/techcourse/fp/war-and-peace.txt";
 
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 
@@ -73,7 +74,7 @@ class PlayGroundTest {
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/fp/war-and-peace.txt"));
+                .get(WAR_AND_PEACE_TXT));
 
         words.collect(
                         groupingBy(word -> word.chars().sorted()
@@ -267,14 +268,11 @@ class PlayGroundTest {
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
         stream.forEach(System.out::println);
-
-        stream.forEach(System.out::println);
     }
 
     @Test
-    @Disabled
     public void 무한_스트림_문제() {
-        IntStream.iterate(0, i -> i + 1)
+        IntStream.iterate(0, i -> i < 10, i -> i + 1)
                 .forEach(System.out::println);
     }
 }
