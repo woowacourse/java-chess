@@ -1,13 +1,6 @@
 package chess.view;
 
 import chess.constant.ExceptionCode;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
@@ -23,19 +16,19 @@ public class OutputView {
     private static final String EXCEPTION_MESSAGE_SIGN = "[ERROR] ";
     private static final String EMPTY_SQUARE = ".";
     private static final String NEW_LINE = System.lineSeparator();
-    private static final Map<Class<? extends Piece>, String> UPPER_SIGN_BY_PIECE;
+    private static final Map<String, String> UPPER_SIGN_BY_PIECE;
     private static final Map<File, Integer> COLUMN_BY_FILE;
     private static final Map<Rank, Integer> ROW_BY_RANK;
     private static final Map<ExceptionCode, String> EXCEPTION_MESSAGES;
 
     static {
         UPPER_SIGN_BY_PIECE = Map.of(
-                Rook.class, "R",
-                Knight.class, "N",
-                Bishop.class, "B",
-                Queen.class, "Q",
-                King.class, "K",
-                Pawn.class, "P"
+                "ROOK", "R",
+                "KNIGHT", "N",
+                "BISHOP", "B",
+                "QUEEN", "Q",
+                "KING", "K",
+                "PAWN", "P"
         );
         COLUMN_BY_FILE = Map.of(
                 File.A, 0,
