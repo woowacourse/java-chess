@@ -156,4 +156,27 @@ class ChessBoardTest {
         assertAll(() -> assertThat(result1).isEqualTo(3),
                 () -> assertThat(result2).isEqualTo(2));
     }
+
+    @Test
+    @DisplayName("Camp를 인자로 전달받아 같은 Camp의 기물들의 점수 총합을 반환한다.")
+    void calculateScore() {
+        HashMap<Square, Piece> map = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                map.put(Square.of(file, rank), Empty.getInstance());
+            }
+        }
+
+        map.put(Square.of(0, 0), new Pawn(Camp.WHITE, Type.PAWN));
+        map.put(Square.of(1, 1), new Knight(Camp.WHITE, Type.KNIGHT));
+        map.put(Square.of(2, 0), new Rook(Camp.WHITE, Type.ROOK));
+        map.put(Square.of(2, 1), new Rook(Camp.WHITE, Type.ROOK));
+        map.put(Square.of(3, 0), new Bishop(Camp.WHITE, Type.BISHOP));
+        map.put(Square.of(4, 0), new Queen(Camp.WHITE, Type.QUEEN));
+        ChessBoard chessBoard = new ChessBoard(map);
+
+        double score = chessBoard.calculateScoreSum(Camp.WHITE);
+
+        assertThat(score).isEqualTo(25.5);
+    }
 }
