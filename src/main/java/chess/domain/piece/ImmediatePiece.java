@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class ImmediatePiece extends Piece {
 
-
     public ImmediatePiece(final Type type, final Side side) {
         super(type, side);
     }
@@ -16,13 +15,21 @@ public abstract class ImmediatePiece extends Piece {
     @Override
     public List<Position> findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
-        final List<MovePattern> movePatterns = getMovePatterns();
-        for (MovePattern movePattern : movePatterns) {
-            Position nextPosition = source;
-            if (isRangeValid(nextPosition, movePattern)) {
-                nextPosition = nextPosition.move(movePattern);
-                checkSide(movablePositions, nextPosition, board);
-            }
+
+        for (MovePattern movePattern : getMovePatterns()) {
+            movablePositions.addAll(findMovablePositionsByMovePattern(source, board, movePattern));
+        }
+        return movablePositions;
+    }
+
+    private List<Position> findMovablePositionsByMovePattern(final Position source,
+                                                             final Board board, final MovePattern movePattern) {
+        List<Position> movablePositions = new ArrayList<>();
+        
+        Position nextPosition = source;
+        if (isRangeValid(nextPosition, movePattern)) {
+            nextPosition = nextPosition.move(movePattern);
+            checkSide(movablePositions, nextPosition, board);
         }
         return movablePositions;
     }
