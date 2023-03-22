@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
 import domain.piece.type.Type;
 import domain.piece.type.restricted.King;
@@ -130,5 +131,25 @@ class ChessBoardTest {
         boolean result = chessBoard.isCapturedKing(Camp.WHITE);
 
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("같은 file에 있는 같은 Camp의 Pawn의 갯수를 반환한다.")
+    void countPawnSameRank() {
+        HashMap<Square, Piece> map = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                map.put(Square.of(file, rank), Empty.getInstance());
+            }
+        }
+        map.put(Square.of(1, 2), new Pawn(Camp.WHITE, Type.PAWN));
+        map.put(Square.of(1, 3), new Pawn(Camp.WHITE, Type.PAWN));
+        map.put(Square.of(1, 4), new Pawn(Camp.WHITE, Type.PAWN));
+        map.put(Square.of(1, 5), new Pawn(Camp.BLACK, Type.PAWN));
+
+        ChessBoard chessBoard = new ChessBoard(map);
+        int result = chessBoard.countPawnSameRank(Camp.WHITE);
+
+        assertThat(result).isEqualTo(3);
     }
 }

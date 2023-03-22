@@ -153,4 +153,23 @@ public class ChessBoard {
     public boolean isCapturedKing(Camp camp) {
         return !board.containsValue(new King(camp, KING));
     }
+
+    public int countPawnSameRank(Camp camp) {
+        Pawn pawn = new Pawn(camp, PAWN);
+        int count = 0;
+        for (File file : File.values()) {
+            int tmp = 0;
+            for (Rank rank : Rank.values()) {
+                Square square = Square.of(file, rank);
+                Piece piece = board.get(square);
+                if (piece.equals(pawn)) {
+                    tmp += 1;
+                }
+            }
+            if (tmp > 1) {
+                count += tmp;
+            }
+        }
+        return count;
+    }
 }
