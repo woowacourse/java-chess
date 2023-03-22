@@ -53,12 +53,11 @@ public class ChessGameDao {
 
     public void update(final ChessGameEntity chessGameEntity) {
         final String sql = "UPDATE chess_game SET turn = ?, winner = ? where id = ?";
-        template.execute(sql, (connection, preparedStatement) -> {
-            preparedStatement.setString(1, chessGameEntity.turn());
-            preparedStatement.setString(2, chessGameEntity.winner());
-            preparedStatement.setString(3, chessGameEntity.id().toString());
-            preparedStatement.executeUpdate();
-        });
+        template.executeUpdate(sql,
+                chessGameEntity.turn(),
+                chessGameEntity.winner(),
+                chessGameEntity.id().toString()
+        );
     }
 
     public void deleteAll() {
