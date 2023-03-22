@@ -58,12 +58,12 @@ public final class Position {
         return Objects.hash(rank, file);
     }
 
-    public int calculateFileDistance(int file) {
-        return this.file.calculateDistance(file);
+    public int calculateFileDistance(final Position position) {
+        return this.file.calculateDistance(position.file.getFile());
     }
 
-    public int calculateRankDistance(int rank) {
-        return this.rank.calculateDistance(rank);
+    public int calculateRankDistance(final Position position) {
+        return this.rank.calculateDistance(position.rank.getRank());
     }
 
     public Position move(int fileDirection, int rankDirection) {
