@@ -1,15 +1,16 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.board.Position;
+import chess.domain.position.Position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Queen extends Piece {
 
     private final List<Direction> directions;
 
-    public Bishop(final Position position, final Side side) {
+    public Queen(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
     }
@@ -20,15 +21,13 @@ public class Bishop extends Piece {
         return directions.contains(direction);
     }
 
-    private List<Direction> initDirections() {
-        return new ArrayList<>(
-                List.of(Direction.UP_RIGHT, Direction.UP_LEFT, Direction.DOWN_RIGHT, Direction.DOWN_LEFT)
-        );
+    protected List<Direction> initDirections() {
+        return new ArrayList<>(Arrays.asList(Direction.values()));
     }
 
     @Override
     public Piece move(Position positionToMove) {
-        return new Bishop(positionToMove, this.side);
+        return new Queen(positionToMove, this.side);
     }
 
     @Override

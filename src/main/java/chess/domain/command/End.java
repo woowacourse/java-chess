@@ -1,9 +1,9 @@
-package chess.gamecommand;
+package chess.domain.command;
 
 import java.util.List;
 
-import chess.board.Position;
-import chess.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.piece.Piece;
 
 public class End implements CommandStatus {
 

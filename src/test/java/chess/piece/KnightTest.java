@@ -2,12 +2,14 @@ package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.List;
 
+import chess.domain.piece.Knight;
+import chess.domain.piece.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

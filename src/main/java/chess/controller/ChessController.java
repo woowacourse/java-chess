@@ -2,9 +2,9 @@ package chess.controller;
 
 import java.util.List;
 
-import chess.gamecommand.CommandManager;
-import chess.gamecommand.Commands;
-import chess.piece.Piece;
+import chess.domain.command.CommandManager;
+import chess.domain.command.Commands;
+import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 

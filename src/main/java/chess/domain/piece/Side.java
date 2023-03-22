@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.domain.piece;
 
 public enum Side {
     BLACK,

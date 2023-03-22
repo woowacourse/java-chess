@@ -2,12 +2,15 @@ package chess.gamecommand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.board.Board;
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
-import chess.game.Turn;
-import chess.piece.Pieces;
+import chess.domain.board.Board;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.domain.command.Turn;
+import chess.domain.command.CommandStatus;
+import chess.domain.command.End;
+import chess.domain.command.Play;
+import chess.domain.piece.Pieces;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

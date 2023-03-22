@@ -2,8 +2,6 @@ package chess.view;
 
 import java.util.List;
 
-import chess.game.Turn;
-
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
 

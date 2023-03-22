@@ -1,6 +1,6 @@
-package chess.game;
+package chess.domain.command;
 
-import chess.piece.Side;
+import chess.domain.piece.Side;
 
 public enum Turn {
     BLACK(Side.BLACK, "black"),

@@ -1,34 +1,37 @@
-package chess.piece;
-
-import chess.board.Position;
+package chess.domain.piece;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Rook extends Piece {
+import chess.domain.position.Position;
+
+public class King extends Piece {
 
     private final List<Direction> directions;
 
-    public Rook(final Position position, final Side side) {
+    private static final int KING_MOVE_COUNT = 1;
+
+    public King(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
+    }
+
+    private List<Direction> initDirections() {
+        return new ArrayList<>(Arrays.asList(Direction.values()));
     }
 
     @Override
     public boolean isMovable(Position targetPosition) {
         final Direction direction = position.getDirectionTo(targetPosition);
-        return directions.contains(direction);
-    }
-
-    private List<Direction> initDirections() {
-        return new ArrayList<>(
-                List.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
-        );
+        final boolean isPossibleDirection = directions.contains(direction);
+        final boolean isPossibleDistance = position.getMoveCount(targetPosition, direction) == KING_MOVE_COUNT;
+        return isPossibleDistance && isPossibleDirection;
     }
 
     @Override
     public Piece move(Position positionToMove) {
-        return new Rook(positionToMove, this.side);
+        return new King(positionToMove, this.side);
     }
 
     @Override

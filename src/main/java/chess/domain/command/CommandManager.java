@@ -1,11 +1,11 @@
-package chess.gamecommand;
+package chess.domain.command;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import chess.board.Position;
-import chess.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.piece.Piece;
 
 public class CommandManager {
 

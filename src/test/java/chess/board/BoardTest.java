@@ -3,8 +3,12 @@ package chess.board;
 import java.util.List;
 import java.util.stream.Stream;
 
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.domain.board.Board;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

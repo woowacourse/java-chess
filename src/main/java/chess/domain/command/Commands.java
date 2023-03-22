@@ -1,12 +1,12 @@
-package chess.gamecommand;
+package chess.domain.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class Commands {
 

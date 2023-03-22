@@ -1,10 +1,11 @@
-package chess.board;
+package chess.domain.board;
 
 import java.util.List;
 
-import chess.piece.Direction;
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import chess.domain.position.Position;
 
 public class Board {
 

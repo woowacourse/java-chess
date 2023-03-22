@@ -1,12 +1,11 @@
-package chess.gamecommand;
+package chess.domain.command;
 
 import java.util.List;
 
-import chess.board.Board;
-import chess.board.Position;
-import chess.game.Turn;
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.domain.board.Board;
+import chess.domain.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 
 public class Play implements CommandStatus {
 
