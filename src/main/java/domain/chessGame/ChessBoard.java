@@ -19,12 +19,12 @@ public final class ChessBoard {
     public void movePiece(Position startPosition, Position endPosition) {
         validateExistPieceInStartPosition(startPosition);
 
-        if (isPieceMovable(startPosition, endPosition)) {
-            chessBoard.put(endPosition, chessBoard.get(startPosition));
-            chessBoard.remove(startPosition);
-            return;
+        if (!isPieceMovable(startPosition, endPosition)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
         }
-        throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
+
+        chessBoard.put(endPosition, chessBoard.get(startPosition));
+        chessBoard.remove(startPosition);
     }
 
     private void validateExistPieceInStartPosition(Position startPosition) {

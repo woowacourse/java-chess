@@ -53,10 +53,10 @@ public final class Position {
     }
 
     public List<Position> getPathTo(Position end) {
-        if (Direction.of(this, end) != Direction.OTHER) {
-            return calculatePath(calculateRowGap(end), calculateColumnGap(end));
+        if (Direction.of(this, end) == Direction.OTHER) {
+            return new ArrayList<>(List.of(end));
         }
-        return new ArrayList<>(List.of(end));
+        return calculatePath(calculateRowGap(end), calculateColumnGap(end));
     }
 
     public int calculateRowGap(Position other) {
