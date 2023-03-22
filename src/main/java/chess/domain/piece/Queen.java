@@ -16,6 +16,7 @@ public class Queen extends Piece {
             Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
+    private final double score = 9.0;
 
     public Queen(Color color) {
         super(QUEEN_NAME.getName(), color);

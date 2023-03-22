@@ -15,6 +15,8 @@ import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
 public class Pawn extends Piece {
 
     private final List<Direction> direction;
+
+    private final double score = 1.0;
     private int distance = 2;
 
     public Pawn(Color color) {

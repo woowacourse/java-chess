@@ -15,6 +15,8 @@ public class Bishop extends Piece {
     private static final List<Direction> direction = List.of(
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
+    private final double score = 3.0;
+
     public Bishop(Color color) {
         super(BISHOP_NAME.getName(), color);
     }

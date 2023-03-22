@@ -15,6 +15,8 @@ public class King extends Piece {
 
     private static final int MOVABLE_DISTANCE = 1;
 
+    private final double score = 0.0;
+
     private final List<Direction> direction = List.of(
             Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT
