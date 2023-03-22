@@ -14,7 +14,7 @@ class KingTest {
     @DisplayName("King이 이동할 수 있는 칸의 좌표를 반환한다.")
     void kingMoveTest() {
         King king = new King(Camp.WHITE);
-        assertThat(king.fetchMovePath(new Square(0, 3), new Square(1,4))).contains(
+        assertThat(king.fetchMovableSquares(new Square(0, 3), new Square(1,4))).contains(
                 new Square(1,4)
         );
     }
@@ -23,8 +23,8 @@ class KingTest {
     @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
     void bishopMoveFailTest() {
         King king = new King(Camp.WHITE);
-        assertThatThrownBy(() -> king.fetchMovePath(new Square(1, 3), new Square(2, 5)))
+        assertThatThrownBy(() -> king.fetchMovableSquares(new Square(1, 3), new Square(2, 5)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("움직일 수 없는 경로입니다.");
+                .hasMessage("King은 두 칸 이상 이동할 수 없습니다.");
     }
 }

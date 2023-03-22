@@ -1,7 +1,6 @@
-package domain.piece.slider;
+package domain.piece.pawn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
-import domain.piece.pawn.Pawn;
+import domain.piece.Piece;
+import domain.piece.empty.Empty;
 
 class PawnTest {
 
@@ -23,9 +23,9 @@ class PawnTest {
         Square currentSquare = new Square(2, 2);
         Square targetSquare = new Square(2, 3);
 
-        List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
+        List<Square> squares = pawn.fetchMovableSquares(currentSquare, targetSquare);
 
-        assertThat(squares).contains(new Square(2,3), new Square(2,4));
+        assertThat(squares).contains(new Square(2, 3), new Square(2, 4));
     }
 
     @Test
@@ -36,10 +36,10 @@ class PawnTest {
         Square targetSquare = new Square(2, 3);
         Square nextTargetSquare = new Square(2, 4);
 
-        pawn.fetchMovePath(currentSquare, targetSquare);
-        List<Square> squares = pawn.fetchMovePath(targetSquare, nextTargetSquare);
+        pawn.fetchMovableSquares(currentSquare, targetSquare);
+        List<Square> squares = pawn.fetchMovableSquares(targetSquare, nextTargetSquare);
 
-        assertThat(squares).containsExactly(new Square(2,4));
+        assertThat(squares).containsExactly(new Square(2, 4));
     }
 
     @Test
@@ -49,18 +49,18 @@ class PawnTest {
         Square currentSquare = new Square(2, 2);
         Square targetSquare = new Square(3, 3);
 
-        List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
+        List<Square> squares = pawn.fetchMovableSquares(currentSquare, targetSquare);
 
-        assertThat(squares).contains(new Square(1,3), new Square(3,3));
+        assertThat(squares).contains(new Square(1, 3), new Square(3, 3));
     }
 
     @Test
     @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
     void bishopMoveFailTest() {
         Pawn pawn = new Pawn(Camp.WHITE);
-        assertThatThrownBy(() -> pawn.fetchMovePath(new Square(1, 3), new Square(2, 5)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("움직일 수 없는 경로입니다.");
+        assertThatThrownBy(() -> pawn.fetchMovableSquares(new Square(1, 3), new Square(2, 5)))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Pawn이 움직일 수 없는 경로입니다.");
     }
 
     @Test
@@ -68,10 +68,10 @@ class PawnTest {
     void canMoveTwoStep() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.EMPTY);
-        pathInfo.put(new Square(6,7), Camp.EMPTY);
+        pawn.fetchMovableSquares(new Square(7, 5), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, Empty.getInstance());
+        pathInfo.put(new Square(6, 7), Empty.getInstance());
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -83,10 +83,10 @@ class PawnTest {
     void canMoveTwoStepFailByPath() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.EMPTY);
-        pathInfo.put(new Square(6,7), Camp.WHITE);
+        pawn.fetchMovableSquares(new Square(7, 5), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, Empty.getInstance());
+        pathInfo.put(new Square(6, 7), new Pawn(Camp.WHITE));
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -98,10 +98,10 @@ class PawnTest {
     void canMoveTwoStepFailByTarget() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.WHITE);
-        pathInfo.put(new Square(6,7), Camp.EMPTY);
+        pawn.fetchMovableSquares(new Square(7, 5), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, new Pawn(Camp.WHITE));
+        pathInfo.put(new Square(6, 7), Empty.getInstance());
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -113,9 +113,9 @@ class PawnTest {
     void canMoveOneStepFailByTarget() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.WHITE);
+        pawn.fetchMovableSquares(new Square(7, 5), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, new Pawn(Camp.WHITE));
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -127,9 +127,9 @@ class PawnTest {
     void canMoveOneStep() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(7, 5), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.EMPTY);
+        pawn.fetchMovableSquares(new Square(7, 5), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, Empty.getInstance());
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -141,9 +141,9 @@ class PawnTest {
     void canMoveDiagonal() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.BLACK);
+        pawn.fetchMovableSquares(new Square(6, 6), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, new Pawn(Camp.BLACK));
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -155,9 +155,9 @@ class PawnTest {
     void canMoveDiagonalFailSameCamp() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.WHITE);
+        pawn.fetchMovableSquares(new Square(6, 6), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, new Pawn(Camp.WHITE));
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
@@ -169,9 +169,9 @@ class PawnTest {
     void canMoveDiagonalFailEmpty() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Square targetSquare = new Square(7, 7);
-        pawn.fetchMovePath(new Square(6, 6), targetSquare);
-        Map<Square,Camp> pathInfo = new HashMap<>();
-        pathInfo.put(targetSquare, Camp.EMPTY);
+        pawn.fetchMovableSquares(new Square(6, 6), targetSquare);
+        Map<Square, Piece> pathInfo = new HashMap<>();
+        pathInfo.put(targetSquare, Empty.getInstance());
 
         boolean result = pawn.canMove(pathInfo, targetSquare);
 
