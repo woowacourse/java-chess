@@ -19,16 +19,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public String toString() {
-        return team.calculate(ORIGINAL_NAME);
-    }
-
-    @Override
-    public boolean isMovable(Point source, Point target) {
-        return isKnightMove(source, target);
-    }
-
-    public boolean isKnightMove(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
         int fileDistance = Math.abs(source.fileDistance(target));
         int rankDistance = Math.abs(source.rankDistance(target));
 
@@ -46,5 +37,10 @@ public class Knight implements Piece {
     @Override
     public String failMoveMsg() {
         return "나이트는 상하좌우 1칸 이동 후 진행방향으로 대각선 1칸이동만 가능합니다.";
+    }
+
+    @Override
+    public String toString() {
+        return team.calculate(ORIGINAL_NAME);
     }
 }

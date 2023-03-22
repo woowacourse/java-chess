@@ -18,23 +18,19 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+        if (hasTarget) {
+            return isAttack(source, target);
+        }
+        return isPawnMovable(source, target);
+    }
+
+    public boolean isPawnMovable(Point source, Point target) {
         if (!source.isVertical(target)) {
             return false;
         }
         if (isPawnStartMove(source, target, team)) {
             return true;
-        }
-        return source.rankDistance(target) == teamDirection(DISTANCE);
-    }
-
-    private int teamDirection(int distance) {
-        return distance * team.direction();
-    }
-
-    public boolean isAttack(Point source, Point target) {
-        if (!source.isDiagonal(target)) {
-            return false;
         }
         return source.rankDistance(target) == teamDirection(DISTANCE);
     }
@@ -46,6 +42,17 @@ public class Pawn implements Piece {
         }
         return source.isInitialPoint(team.startRank())
             && source.rankDistance(target) == teamDirection(FIRST_MOVE_DISTANCE);
+    }
+
+    private int teamDirection(int distance) {
+        return distance * team.direction();
+    }
+
+    private boolean isAttack(Point source, Point target) {
+        if (!source.isDiagonal(target)) {
+            return false;
+        }
+        return source.rankDistance(target) == teamDirection(DISTANCE);
     }
 
     @Override

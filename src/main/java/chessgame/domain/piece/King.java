@@ -18,12 +18,10 @@ public class King implements Piece {
     }
 
     @Override
-    public String toString() {
-        return team.calculate(ORIGINAL_NAME);
-    }
-
-    @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+        if (hasBlock) {
+            throw new IllegalArgumentException("킹은 기물을 건너 뛸 수 없습니다.");
+        }
         return isKingMove(source, target);
     }
 
@@ -38,12 +36,17 @@ public class King implements Piece {
     }
 
     @Override
+    public String failMoveMsg() {
+        return "킹은 상하좌우, 대각선으로 1칸만 이동 가능합니다.";
+    }
+
+    @Override
     public Team team() {
         return team;
     }
 
     @Override
-    public String failMoveMsg() {
-        return "킹은 상하좌우, 대각선으로 1칸만 이동 가능합니다.";
+    public String toString() {
+        return team.calculate(ORIGINAL_NAME);
     }
 }

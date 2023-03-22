@@ -17,12 +17,10 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public String toString() {
-        return team.calculate(ORIGINAL_NAME);
-    }
-
-    @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+        if (hasBlock) {
+            throw new IllegalArgumentException("비숍은 기물을 건너 뛸 수 없습니다.");
+        }
         return source.isDiagonal(target);
     }
 
@@ -34,5 +32,10 @@ public class Bishop implements Piece {
     @Override
     public String failMoveMsg() {
         return "비숍은 대각선으로만 이동할 수 있습니다.";
+    }
+
+    @Override
+    public String toString() {
+        return team.calculate(ORIGINAL_NAME);
     }
 }

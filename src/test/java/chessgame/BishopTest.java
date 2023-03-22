@@ -15,7 +15,7 @@ class BishopTest {
     @DisplayName("Bishop 대각선으로 움직일 수 있다.")
     void Should_Move_When_RightDiagonal() {
         Bishop bishop = Bishop.from(Team.BLACK);
-        boolean result = bishop.isMovable(A1, H8);
+        boolean result = bishop.isMovable(A1, H8, false, false);
         Assertions.assertThat(result).isTrue();
     }
 
@@ -23,7 +23,7 @@ class BishopTest {
     @DisplayName("Bishop 반대 대각선으로 움직일 수 있다.")
     void Should_Move_When_LeftDiagonal() {
         Bishop bishop = Bishop.from(Team.BLACK);
-        boolean result = bishop.isMovable(H1, A8);
+        boolean result = bishop.isMovable(H1, A8, false, false);
         Assertions.assertThat(result).isTrue();
     }
 
@@ -31,7 +31,7 @@ class BishopTest {
     @DisplayName("Bishop의 이동정책에 맞지 않으면, Bishop은 움직일 수 없다.")
     void Should_NotMove_When_Unmovable() {
         Bishop bishop = Bishop.from(Team.BLACK);
-        boolean result = bishop.isMovable(A1, H1);
+        boolean result = bishop.isMovable(A1, H1, false, false);
         Assertions.assertThat(result).isFalse();
     }
 }

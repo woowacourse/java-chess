@@ -17,7 +17,10 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasBlock, boolean hasTarget) {
+        if (hasBlock) {
+            throw new IllegalArgumentException("룩은 기물을 건너 뛸 수 없습니다.");
+        }
         return source.isHorizontal(target) || source.isVertical(target);
     }
 

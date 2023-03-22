@@ -3,8 +3,6 @@ package chessgame.domain;
 import java.util.Collections;
 import java.util.Map;
 
-import chessgame.domain.piece.Knight;
-import chessgame.domain.piece.Pawn;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.Point;
 import chessgame.util.ChessBoardFactory;
@@ -20,20 +18,18 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public boolean move(Point source, Point target, Team turn) {
+    public void move(Point source, Point target, Team turn) {
         Piece piece = checkSource(source, target, turn);
         boolean hasTarget = checkTarget(target, turn);
-        if (piece instanceof Pawn) {
-            return isPawnMove(source, target, (Pawn)piece, hasTarget);
+        boolean hasBlock = checkRoute(source, target);
+
+        if (!piece.isMovable(source, target, hasBlock, hasTarget)) {
+            throw new IllegalArgumentException(piece.failMoveMsg());
         }
-        if (piece instanceof Knight && piece.isMovable(source, target)) {
-            movePiece(source, target, piece);
-            return true;
-        }
-        return followPieceRoute(source, target, piece);
+        movePiece(source, target, piece);
     }
 
-    public Piece checkSource(Point source, Point target, Team turn) {
+    private Piece checkSource(Point source, Point target, Team turn) {
         if (source == target) {
             throw new IllegalArgumentException("소스와 타켓 좌표가 달라야합니다.");
         }
@@ -46,23 +42,11 @@ public class Board {
         return board.get(source);
     }
 
-    public boolean checkTarget(Point target, Team turn) {
+    private boolean checkTarget(Point target, Team turn) {
         if (board.containsKey(target) && turn == board.get(target).team()) {
             throw new IllegalArgumentException("자기팀 기물을 잡을 수 없습니다.");
         }
         return board.containsKey(target);
-    }
-
-    private boolean isPawnMove(Point source, Point target, Pawn piece, boolean hasTarget) {
-        if (piece.isAttack(source, target) && hasTarget) {
-            movePiece(source, target, piece);
-            return true;
-        }
-        if (piece.isMovable(source, target) && !hasTarget) {
-            movePiece(source, target, piece);
-            return true;
-        }
-        throw new IllegalArgumentException(piece.failMoveMsg());
     }
 
     private void movePiece(Point source, Point target, Piece piece) {
@@ -70,30 +54,23 @@ public class Board {
         board.remove(source);
     }
 
-    private boolean followPieceRoute(Point source, Point target, Piece piece) {
-        if (!piece.isMovable(source, target)) {
-            throw new IllegalArgumentException(piece.failMoveMsg());
-        }
-        if (checkRoute(source, target)) {
-            movePiece(source, target, piece);
-            return true;
-        }
-        throw new IllegalArgumentException(piece.failMoveMsg());
-    }
-
-    public boolean checkRoute(Point source, Point target) {
+    private boolean checkRoute(Point source, Point target) {
         int distance = source.maxDistance(target);
         int fileMove = target.fileMove(source, distance);
         int rankMove = target.rankMove(source, distance);
 
+        return followRoute(source, distance, fileMove, rankMove);
+    }
+
+    private boolean followRoute(Point source, int distance, int fileMove, int rankMove) {
         Point point = source;
         for (int i = 0; i < distance - 1; i++) {
             point = point.move(fileMove, rankMove);
             if (board.containsKey(point)) {
-                throw new IllegalArgumentException("기물을 건너 뛸 수 없습니다.");
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
