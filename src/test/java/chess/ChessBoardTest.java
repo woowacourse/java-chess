@@ -1,12 +1,14 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessBoardTest {
@@ -140,6 +142,53 @@ public class ChessBoardTest {
                 () -> assertThat(chessBoard.getChessBoard().get(Position.findPosition("h6"))).isInstanceOf(Empty.class)
         );
     }
+
+    @Test
+    @DisplayName("체스보드에 Position 객체를 입력하면 해당 위치에 존재하는 기물이 반환된다")
+    void ShouldSucceedFindChessPiece() {
+
+        Position sourcePosition = Position.findPosition("a2");
+        Color color = Color.WHITE;
+        ChessPiece expectedChessPiece = new Pawn(Color.WHITE);
+
+        ChessPiece chessPiece = chessBoard.findChessPiece(sourcePosition, color);
+
+        assertThat(chessPiece).isEqualTo(expectedChessPiece);
+    }
+
+    @Test
+    @DisplayName("체스보드에서 자신의 색깔이 아닌 기물의 Position을 입력하면 예외가 발생한다.")
+    void shouldFailFindChessPiece() {
+
+        Position sourcePosition = Position.findPosition("a2");
+        Color color = Color.BLACK;
+
+        assertThatThrownBy(() -> chessBoard.findChessPiece(sourcePosition, color))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 색상의 기물을 선택할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("체스 기물과 포지션이 주어졌을 때 체스 기물을 목표 지점을 이동시킨다.")
+    void shouldSucceedMovePiece() {
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position targetPosition = Position.findPosition("a3");
+
+        chessBoard.movePiece(pawn, targetPosition);
+
+        assertThat(chessBoard.getChessBoard().get(Position.findPosition("a3"))).isEqualTo(new Pawn(Color.WHITE));
+    }
+
+    @Test
+    @DisplayName("체스 기물을 이동 시킬 때, 기존 위치에 기물이 공백 객체로 대체된다.")
+    void shouldSucceedRemovingChessPiece() {
+        Position sourcePosition = Position.findPosition("a2");
+
+        chessBoard.removePiece(sourcePosition);
+
+        assertThat(chessBoard.getChessBoard().get(Position.findPosition("a2"))).isEqualTo(new Empty());
+    }
+
     //    ChessBoard chessBoard = ChessBoard.generateChessBoard();
 //
 //    @Test

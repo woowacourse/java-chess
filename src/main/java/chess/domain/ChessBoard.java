@@ -130,9 +130,32 @@ public class ChessBoard {
         }
     }
 
+    public ChessPiece findChessPiece(Position position, Color color) {
+        ChessPiece chessPiece = chessBoard.get(position);
+        validateColor(chessPiece, color);
+        return chessBoard.get(position);
+    }
+
+    private void validateColor(ChessPiece chessPiece, Color color) {
+        if (chessPiece.getColor() == color) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 색상의 기물을 선택할 수 없습니다.");
+    }
+
+
+    public void movePiece(ChessPiece chessPiece, Position targetPosition) {
+        chessBoard.put(targetPosition, chessPiece);
+    }
+
+    public void removePiece(Position sourcePosition) {
+        chessBoard.put(sourcePosition, new Empty());
+    }
+
     public Map<Position, ChessPiece> getChessBoard() {
         return chessBoard;
     }
+
 
     //    Map<Position, ChessPiece> chessBoard;
 //
