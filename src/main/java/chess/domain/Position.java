@@ -95,11 +95,6 @@ public final class Position {
     }
 
     @Override
-    public String toString() {
-        return "(" + row + "," + column + ")";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

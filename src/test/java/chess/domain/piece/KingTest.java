@@ -43,7 +43,8 @@ class KingTest {
         final Piece king = King.from(Color.WHITE);
 
         // then
-        assertThatThrownBy(() -> king.findMoveAblePositions(source, target, Pawn.from(BLACK))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> king.findMoveAblePositions(source, target, Pawn.from(BLACK)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> kingMovableFailTestDummy() {

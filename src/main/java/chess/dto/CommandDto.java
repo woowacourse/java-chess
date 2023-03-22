@@ -28,7 +28,10 @@ public final class CommandDto {
     }
 
     private static void validateCommandsLength(final String[] commands) {
-        if (commands.length != 1 && commands.length != 3) {
+        int moveCommandsCount = 3;
+        int startAndEndCommandsCount = 1;
+
+        if (commands.length != startAndEndCommandsCount && commands.length != moveCommandsCount) {
             throw new IllegalArgumentException("유효한 입력이 아닙니다.");
         }
     }
