@@ -4,7 +4,7 @@ import chess.controller.Command;
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 
-public final class StartController implements Status {
+public final class StartController implements Controller {
 
     private final ChessGame chessGame;
 
@@ -13,7 +13,7 @@ public final class StartController implements Status {
     }
 
     @Override
-    public Status checkCommand(final Command command, final Runnable runnable) {
+    public Controller checkCommand(final Command command, final Runnable runnable) {
         if (command.isEnd()) {
             return new EndController();
         }

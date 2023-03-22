@@ -35,11 +35,11 @@ class StartControllerTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = startController.checkCommand(command, () -> {
+        Controller controller = startController.checkCommand(command, () -> {
         });
 
         // then
-        assertThat(status)
+        assertThat(controller)
                 .isInstanceOf(EndController.class);
     }
 

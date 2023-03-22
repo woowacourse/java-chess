@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.status.Controller;
 import chess.controller.status.StartController;
-import chess.controller.status.Status;
 import chess.domain.chess.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -18,22 +18,22 @@ public final class ChessHandler {
     }
 
     private void start(final ChessGame chessGame) {
-        Status gameStatus = new StartController(chessGame);
-        while (gameStatus.isRun()) {
-            gameStatus = play(chessGame, gameStatus);
+        Controller controller = new StartController(chessGame);
+        while (controller.isRun()) {
+            controller = play(chessGame, controller);
         }
     }
 
-    private Status play(final ChessGame chessGame, Status gameStatus) {
+    private Controller play(final ChessGame chessGame, Controller controller) {
         try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
-            gameStatus = gameStatus.checkCommand(command,
+            controller = controller.checkCommand(command,
                     () -> OutputView.printBoard(BoardDto.from(chessGame.getChessBoard())));
-            return gameStatus;
+            return controller;
         } catch (IllegalArgumentException e) {
             OutputView.print(e.getMessage());
-            return play(chessGame, gameStatus);
+            return play(chessGame, controller);
         }
     }
 }

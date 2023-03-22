@@ -39,11 +39,11 @@ class MoveControllerTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = moveController.checkCommand(command, () -> {
+        Controller controller = moveController.checkCommand(command, () -> {
         });
 
         // then
-        assertThat(status)
+        assertThat(controller)
                 .isInstanceOf(EndController.class);
     }
 
