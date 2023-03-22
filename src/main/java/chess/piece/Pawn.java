@@ -54,9 +54,10 @@ public final class Pawn extends Piece {
     private boolean isInitialMovableRange(final Square source, final Square destination) {
         source.validateNotSameSquare(destination);
         final int verticalDistance = source.calculateVerticalDistance(destination);
+        final int horizontalDistance = source.calculateHorizontalDistance(destination);
         return source.isBackOf(destination, getSide()) &&
                 (verticalDistance == 1 || verticalDistance == 2) &&
-                source.calculateHorizontalDistance(destination) == 0;
+                horizontalDistance == 0;
     }
 
     private boolean isAtInitialPosition(final Square square) {

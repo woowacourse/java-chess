@@ -5,7 +5,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ChessGameController {
 
@@ -35,16 +34,15 @@ public class ChessGameController {
         CommandDto commandDto = inputView.readCommand();
         GameStatus gamestatus = GameStatus.changeStatus(commandDto.getCommand());
         if (gamestatus.isPlaying()) {
-            movePiece(chessBoard, commandDto);
+            movePiece(chessBoard, (MoveCommandDto) commandDto);
         }
         return gamestatus;
     }
 
-    private void movePiece(final ChessBoard chessBoard, final CommandDto commandDto) {
-        final MoveCommandDto moveCommandDto = (MoveCommandDto) commandDto;
+    private void movePiece(final ChessBoard chessBoard, final MoveCommandDto moveCommandDto) {
         final Square source = getSourceSquare(moveCommandDto);
         final Square destination = getDestinationSquare(moveCommandDto);
-        if (!chessBoard.move(source, destination)) {
+        if (!chessBoard.executeTurnMove(source, destination)) {
             outputView.printInvalidMoveMessage();
         }
     }
@@ -59,16 +57,6 @@ public class ChessGameController {
         final Rank destinationRank = moveCommandDto.getDestinationRank();
         final File destinationFile = moveCommandDto.getDestinationFile();
         return Square.of(destinationRank, destinationFile);
-    }
-
-    private <T> T repeatUntilNoIAE(Supplier<T> supplier) {
-        while (true) {
-            try {
-                return supplier.get();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     private <T, R> R repeatUntilNoIAE(Function<T, R> function, T arg) {

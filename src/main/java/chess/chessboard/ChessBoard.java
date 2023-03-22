@@ -1,5 +1,6 @@
 package chess.chessboard;
 
+import chess.Turn;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
 
@@ -7,12 +8,25 @@ import java.util.Map;
 
 public class ChessBoard {
     private final Map<Square, Piece> pieces;
+    private Turn turn;
 
     public ChessBoard(Map<Square, Piece> pieces) {
         this.pieces = pieces;
+        this.turn = Turn.initialTurn();
     }
 
-    public boolean move(Square source, Square destination) {
+    public boolean executeTurnMove(final Square source, final Square destination) {
+        final Piece toMove = pieces.get(source);
+        validateNotEmpty(toMove);
+
+        if (turn.isTurnOf(toMove.getSide()) && move(source, destination)) {
+            turn = turn.nextTurn();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean move(final Square source, final Square destination) {
         final Piece toMove = pieces.get(source);
         validateNotEmpty(toMove);
         if (toMove.isMovable(source, destination, pieces.get(destination)) && !hasObstacleAlongPath(source, destination)) {

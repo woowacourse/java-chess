@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -440,6 +441,88 @@ class ChessBoardTest {
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThat(chessBoard.move(source, destination)).isFalse();
+            }
+        }
+
+
+        @Nested
+        @DisplayName("이동 순서가 있는데")
+        class sequence {
+            Square source1 = Square.of(Rank.FIVE, File.B);
+            Square source2 = Square.of(Rank.FIVE, File.C);
+            Square destination1 = Square.of(Rank.FOUR, File.B);
+            Square destination2 = Square.of(Rank.SEVEN, File.C);
+
+            @Test
+            @DisplayName("처음에 백이 먼저 공격해야 true를 반환한다")
+            void it_returns_true() {
+                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
+                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
+
+                pieces.put(source1, whiteRooks.get(0));
+                pieces.put(source2, blackRooks.get(0));
+
+                final ChessBoard chessBoard = new ChessBoard(pieces);
+                assertThat(chessBoard.executeTurnMove(source1, destination1)).isTrue();
+            }
+
+            @Test
+            @DisplayName("처음에 흑이 먼저 공격하면 false를 반환한다.")
+            void it_returns_false() {
+                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
+                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
+
+                pieces.put(source1, whiteRooks.get(0));
+                pieces.put(source2, blackRooks.get(0));
+
+                final ChessBoard chessBoard = new ChessBoard(pieces);
+                assertThat(chessBoard.executeTurnMove(source2, destination2)).isFalse();
+            }
+
+            @Test
+            @DisplayName("백이 공격하고 나서 흑이 공격해야 true를 반환한다")
+            void it_returns_true1() {
+                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
+                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
+
+                pieces.put(source1, whiteRooks.get(0));
+                pieces.put(source2, blackRooks.get(0));
+
+                final ChessBoard chessBoard = new ChessBoard(pieces);
+                chessBoard.executeTurnMove(source1, destination1);
+
+                assertThat(chessBoard.executeTurnMove(source2, destination2)).isTrue();
+            }
+
+            @Test
+            @DisplayName("흑이 공격하고 나서 백이 공격해야 true를 반환한다")
+            void it_returns_true2() {
+                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
+                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
+
+                pieces.put(source1, whiteRooks.get(0));
+                pieces.put(source2, blackRooks.get(0));
+
+                final ChessBoard chessBoard = new ChessBoard(pieces);
+                chessBoard.executeTurnMove(source1, destination1);
+                chessBoard.executeTurnMove(source2, destination2);
+
+                assertThat(chessBoard.executeTurnMove(destination1, source1)).isTrue();
+            }
+
+            @Test
+            @DisplayName("백이 공격하고 나서 백이 공격하면 false를 반환한다")
+            void it_returns_false1() {
+                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
+                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
+
+                pieces.put(source1, whiteRooks.get(0));
+                pieces.put(source2, blackRooks.get(0));
+
+                final ChessBoard chessBoard = new ChessBoard(pieces);
+                chessBoard.executeTurnMove(source1, destination1);
+
+                assertThat(chessBoard.executeTurnMove(destination1, source1)).isFalse();
             }
         }
     }
