@@ -4,14 +4,14 @@ import domain.piece.Color;
 
 public final class Turn {
 
-    private Color color;
+    private final Color color;
 
     public Turn(final Color color) {
         this.color = color;
     }
 
-    public void nextTurn() {
-        color = color.reverse();
+    public Turn nextTurn() {
+        return new Turn(color.reverse());
     }
 
     public Color getColor() {
