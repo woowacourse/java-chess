@@ -1,13 +1,18 @@
 package chess.domain.board;
 
+import static chess.domain.board.Board.INVALID_TARGET_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Position;
+import chess.domain.pieces.EmptyPiece;
+import chess.domain.pieces.Piece;
+import chess.domain.pieces.pawn.BlackPawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
+import java.util.Map;
 
 class BoardTest {
 
@@ -19,31 +24,46 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("생성된 board의 세로 길이는 8 이다.")
-    void 생성된_board의_세로_길이는_8이다() {
-        assertThat(board.getBoard()).hasSize(8);
-    }
-
-    @Test
-    @DisplayName("생성된 board의 가로 길이는 8 이다.")
-    void 생성된_board의_가로_길이는_8이다() {
-        List<Rank> ranks = board.getBoard();
-
-        assertThat(ranks.get(0).getRank()).hasSize(8);
+    @DisplayName("생성된 Board는 64개의 Position과 Piece를 가진다.")
+    void 생성된_Board는_64개의_Position과_Piece를_가진다() {
+        assertThat(board.getBoard().size()).isEqualTo(64);
     }
 
     @Test
     @DisplayName("기물을 이동한다.")
     void 기물을_이동한다() {
-        List<Rank> ranks = board.getBoard();
+        Position currentPosition = new Position(1, 0);
+        Position targetPosition = new Position(3, 0);
 
-        Position current = new Position(1, 0);
-        Position target = new Position(3, 0);
-        board.movePiece(current, target);
+        board.movePiece(currentPosition, targetPosition);
+
+        Map<Position, Piece> values = board.getBoard();
 
         assertAll(
-                () -> assertThat(ranks.get(1).getRank().get(0).isEmptyPiece()).isTrue(),
-                () -> assertThat(ranks.get(3).getRank().get(0).isEmptyPiece()).isFalse()
+                () -> assertThat(values.get(currentPosition)).isInstanceOf(EmptyPiece.class),
+                () -> assertThat(values.get(targetPosition)).isInstanceOf(BlackPawn.class)
         );
+    }
+
+    @Test
+    @DisplayName("적절한 이동이 아닌 경우 예외가 발생한다.")
+    void 적절한_이동이_아닌_경우_예외가_발생한다() {
+        Position currentPosition = new Position(1, 0);
+        Position targetPosition = new Position(7, 0);
+
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> board.movePiece(currentPosition, targetPosition)
+        );
+    }
+
+    @Test
+    @DisplayName("동일한 좌표로 이동할 수 없다.")
+    void 동일한_좌표로_이동할_수_없다() {
+        Position currentPosition = new Position(1, 0);
+        Position targetPosition = new Position(1, 0);
+
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> board.movePiece(currentPosition, targetPosition)
+        ).withMessage(INVALID_TARGET_POSITION);
     }
 }

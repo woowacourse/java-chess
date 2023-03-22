@@ -7,10 +7,13 @@ import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public final class Board {
+public class Board {
 
-    private final List<Rank> board;
+    static final String INVALID_TARGET_POSITION = "위치가 중복되었습니다.";
+
+    private final Map<Position, Piece> board;
 
     public Board(final BoardMaker boardMaker) {
         this.board = boardMaker.createBoard();
@@ -30,42 +33,36 @@ public final class Board {
         move(currentPosition, targetPosition);
     }
 
-    private void validateDuplicatePositions(final Position current, final Position target) {
-        if (current.equals(target)) {
-            throw new IllegalArgumentException("위치가 중복되었습니다.");
+    private void validateDuplicatePositions(final Position currentPosition, final Position targetPosition) {
+        if (currentPosition.equals(targetPosition)) {
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
     }
 
     private Piece findPieceAt(final Position position) {
-        Rank rank = this.board.get(position.getRow());
-        Square square = rank.findSquareAt(position.getColumn());
-
-        return square.getPiece();
+        return board.get(position);
     }
 
-    private List<Piece> getOnRoutePieces(final Position current, final Position target, final UnitVector unitVector) {
+    private List<Piece> getOnRoutePieces(final Position currentPosition, final Position targetPosition, final UnitVector unitVector) {
         List<Piece> foundPieces = new ArrayList<>();
 
-        Position pieceFinder = new Position(current).move(unitVector);
-        while (!pieceFinder.equals(target)) {
+        Position pieceFinder = new Position(currentPosition).move(unitVector);
+        while (!pieceFinder.equals(targetPosition)) {
             foundPieces.add(findPieceAt(pieceFinder));
             pieceFinder = pieceFinder.move(unitVector);
         }
-        foundPieces.add(findPieceAt(target));
+        foundPieces.add(findPieceAt(targetPosition));
 
         return foundPieces;
     }
 
-    private void move(final Position current, final Position target) {
-        Rank currentRank = board.get(current.getRow());
-        Piece currentPositionPiece = currentRank.findPieceAt(current.getColumn());
-        currentRank.replacePiece(current.getColumn(), new EmptyPiece());
-
-        Rank targetRank = board.get(target.getRow());
-        targetRank.replacePiece(target.getColumn(), currentPositionPiece);
+    private void move(final Position currentPosition, final Position targetPosition) {
+        Piece currentPositionPiece = findPieceAt(currentPosition);
+        board.replace(targetPosition, currentPositionPiece);
+        board.replace(currentPosition, new EmptyPiece());
     }
 
-    public List<Rank> getBoard() {
-        return List.copyOf(board);
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }
