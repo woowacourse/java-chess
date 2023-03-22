@@ -3,7 +3,7 @@ package chess.dto;
 import chess.domain.Position;
 import chess.view.Command;
 
-public class CommandDto {
+public final class CommandDto {
     private static final int GAME_STATE_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;

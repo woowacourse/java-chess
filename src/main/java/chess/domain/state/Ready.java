@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.domain.Position;
 
-public class Ready extends State {
+public final class Ready extends State {
     public Ready(final Board board) {
         super(board);
     }

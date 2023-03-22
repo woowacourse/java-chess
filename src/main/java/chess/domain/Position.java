@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Position {
+public final class Position {
     public static final Position IS_NULL = new Position(null, null);
     private final Row row;
     private final Column column;

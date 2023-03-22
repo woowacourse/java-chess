@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class CommandProcessor {
-    private Map<Command, Function<CommandDto, State>> commands;
+public final class CommandProcessor {
+    private final Map<Command, Function<CommandDto, State>> commands;
 
     private CommandProcessor(final Map<Command, Function<CommandDto, State>> commands) {
         this.commands = commands;

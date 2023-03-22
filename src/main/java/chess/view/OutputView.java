@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
     private OutputView() {
     }
 

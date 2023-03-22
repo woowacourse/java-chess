@@ -8,7 +8,7 @@ import chess.dto.CommandDto;
 
 import java.util.Map;
 
-public class StateProcessor {
+public final class StateProcessor {
     private State state;
 
     private StateProcessor(final State state) {
@@ -21,7 +21,7 @@ public class StateProcessor {
         return new StateProcessor(state);
     }
 
-    public final Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return state.board
                 .getBoard();
     }
