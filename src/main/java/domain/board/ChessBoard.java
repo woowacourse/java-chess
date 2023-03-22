@@ -155,6 +155,12 @@ public class ChessBoard {
         return !board.containsValue(new King(camp, KING));
     }
 
+    public Score calculateFinalScore(Camp camp) {
+        int pawnCount = countPawnInAllColumns(camp);
+        Score score = calculateScoreSum(camp);
+        return score.calculateScoreWithPawnCount(pawnCount);
+    }
+
     public int countPawnInAllColumns(Camp camp) {
         Pawn pawn = new Pawn(camp, PAWN);
         return Arrays.stream(File.values())
