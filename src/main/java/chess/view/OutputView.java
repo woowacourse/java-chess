@@ -1,12 +1,10 @@
 package chess.view;
 
 import static chess.view.PieceType.render;
-import static java.util.stream.Collectors.toList;
 
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
+import chess.domain.Position;
 import chess.domain.pieces.Piece;
-import java.util.List;
+import java.util.Map;
 
 public final class OutputView {
 
@@ -19,37 +17,28 @@ public final class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(List<Rank> board) {
-        List<List<Square>> squares = board.stream()
-                .map(Rank::getRank)
-                .collect(toList());
-
-        System.out.println(makeBoard(squares));
-    }
-
-    private static StringBuilder makeBoard(final List<List<Square>> squares) {
+    public static void printBoard(Map<Position, Piece> board) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        appendRanks(squares, stringBuilder);
+        for (int row = 0; row < 8; row++) {
+            appendColumns(board, stringBuilder, row);
+        }
+        stringBuilder.append(System.lineSeparator());
         appendFiles(stringBuilder);
 
-        return stringBuilder;
+        System.out.println(stringBuilder);
     }
 
-    private static void appendRanks(final List<List<Square>> squares, final StringBuilder stringBuilder) {
-        for (int row = 0; row < squares.size(); row++) {
-            for (int column = 0; column < squares.get(0).size(); column++) {
-                Square square = squares.get(row).get(column);
-                Piece piece = square.getPiece();
-                char renderResult = render(piece, piece.getTeam());
-                stringBuilder.append(renderResult);
-            }
-            stringBuilder.append(" (").append(Math.abs(8 - row)).append(")").append(System.lineSeparator());
+    private static void appendColumns(final Map<Position, Piece> board, final StringBuilder stringBuilder, final int row) {
+        for (int column = 0; column < 8; column++) {
+            Piece piece = board.get(new Position(row, column));
+            char renderResult = render(piece, piece.getTeam());
+            stringBuilder.append(renderResult);
         }
+        stringBuilder.append(" (").append(Math.abs(8 - row)).append(")").append(System.lineSeparator());
     }
 
     private static void appendFiles(final StringBuilder stringBuilder) {
-        stringBuilder.append(System.lineSeparator());
         for (char file = 'a'; file <= 'h'; file++) {
             stringBuilder.append(file);
         }
