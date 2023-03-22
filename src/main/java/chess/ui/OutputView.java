@@ -22,7 +22,7 @@ public final class OutputView {
         System.out.println(GAME_MOVE_MESSAGE);
     }
 
-    public static void printInitializedChessBoard(PiecesResponse piecesResponse) {
+    public static void printInitializedChessBoard(final PiecesResponse piecesResponse) {
         for (int rank = FIRST_FILE_OF_BLACK; rank >= FIRST_FILE_OF_WHITE; rank--) {
             printChessBoardByRankAndFile(piecesResponse, rank);
         }
@@ -31,7 +31,7 @@ public final class OutputView {
         System.out.println(System.lineSeparator());
     }
 
-    private static void printChessBoardByRankAndFile(PiecesResponse piecesResponse, int rank) {
+    private static void printChessBoardByRankAndFile(final PiecesResponse piecesResponse, final int rank) {
         for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
             printChessBoard(piecesResponse, rank, file);
         }
@@ -39,7 +39,7 @@ public final class OutputView {
         System.out.println();
     }
 
-    private static void printChessBoard(PiecesResponse piecesResponse, int rank, int file) {
+    private static void printChessBoard(final PiecesResponse piecesResponse, final int rank, final int file) {
         if (piecesResponse.isExistPosition(rank, file)) {
             System.out.print(piecesResponse.findNameByRankAndFile(rank, file));
             return;
@@ -47,11 +47,20 @@ public final class OutputView {
         System.out.print(EMPTY_POSITION);
     }
 
-    public static void printChessBoardStatus(PiecesResponse piecesResponse) {
+    public static void printChessBoardStatus(final PiecesResponse piecesResponse) {
         printInitializedChessBoard(piecesResponse);
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println("[ERROR]: " + message);
     }
+
+    public static void printStatus(final double calculateScore) {
+        System.out.println("score : " + calculateScore + System.lineSeparator());
+    }
+
+    public static void printWinner(final String color) {
+        System.out.println(color + " 진영이 이겼습니다.");
+    }
+
 }

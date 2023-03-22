@@ -41,6 +41,10 @@ public final class ChessGameController {
         }
     }
 
+    private void status(final List<String> command) {
+        OutputView.printStatus(players.calculateScore());
+    }
+
     private void move(List<String> command) {
         String inputMovablePiece = command.get(1);
         String inputTargetPosition = command.get(2);
