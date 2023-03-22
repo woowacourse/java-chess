@@ -28,7 +28,7 @@ public class ChessBoard {
     }
 
     private void validateCorrectTurn(final Turn turn, final Piece from) {
-        if (turn.incorrect(from.color())) {
+        if (turn.isIncorrect(from.color())) {
             throw new IllegalArgumentException("상대 말 선택하셨습니다.");
         }
     }
