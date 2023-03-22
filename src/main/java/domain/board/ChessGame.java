@@ -14,7 +14,6 @@ public final class ChessGame {
     private final Board board;
     private final Turn turn;
 
-    // TODO: 테스트를 위한 생성자 유연성 증가
     public ChessGame() {
         this.board = new Board();
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
@@ -32,24 +31,25 @@ public final class ChessGame {
     }
 
     public void move(final Coordinate start, final Coordinate end) {
+        validate(start, end);
         Square findSquare = board.findSquare(start);
-        validateMove(start, end);
-        validateTurn(findSquare);
         board.replaceWithEmptySquare(start);
         board.replaceSquare(end, findSquare);
         turn.invert();
     }
 
-    private void validateTurn(final Square findSquare) {
-        if (turn.isNotFor(findSquare.getColor())) {
-            throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
-        }
-    }
-
-    private void validateMove(final Coordinate start, final Coordinate end) {
+    private void validate(final Coordinate start, final Coordinate end) {
+        validateTurn(start);
         validateNotEmpty(start);
         validateMoveByRule(start, end);
         validateNotBlocked(start, end);
+    }
+
+    private void validateTurn(final Coordinate start) {
+        Square findSquare = board.findSquare(start);
+        if (turn.isNotFor(findSquare.getColor())) {
+            throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
+        }
     }
 
     private void validateNotEmpty(final Coordinate start) {
