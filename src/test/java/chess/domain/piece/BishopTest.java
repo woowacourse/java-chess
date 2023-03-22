@@ -15,7 +15,7 @@ class BishopTest {
     @DisplayName("비숍의 이동 조건과 일치하는 경우 true가 반환되어야 한다.")
     void canMove_Success(int x, int y) {
         // given
-        Piece piece = new Bishop(Team.BLACK);
+        Piece piece = Bishop.of(Team.BLACK);
         Position sourcePosition = Position.of(3, 3);
         Position targetPosition = Position.of(x, y);
 
@@ -29,7 +29,7 @@ class BishopTest {
     @DisplayName("비숍의 이동 조건과 다를경우 false가 반환되어야 한다.")
     void canMove_Fail(int x, int y) {
         // given
-        Piece piece = new Bishop(Team.BLACK);
+        Piece piece = Bishop.of(Team.BLACK);
         Position sourcePosition = Position.of(3, 3);
         Position targetPosition = Position.of(x, y);
 

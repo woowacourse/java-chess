@@ -5,13 +5,26 @@ import chess.domain.Role;
 import chess.domain.Team;
 
 public class Pawn extends Piece {
+    private static final Pawn WHITE = new Pawn(Team.WHITE);
+    private static final Pawn BLACK = new Pawn(Team.BLACK);
+
     private static final int WHITE_PAWN_INIT_Y_POS = 1;
     private static final int BLACK_PAWN_INIT_Y_POS = 6;
     private static final int PAWN_SPECIAL_DISTANCE = 2;
     private static final int PAWN_DEFAULT_DISTANCE = 1;
 
-    public Pawn(Team team) {
+    private Pawn(Team team) {
         super(Role.PAWN, team);
+    }
+
+    public static Pawn of(Team team) {
+        if (team == Team.WHITE) {
+            return WHITE;
+        }
+        if (team == Team.BLACK) {
+            return BLACK;
+        }
+        throw new IllegalArgumentException(INVALID_TEAM_EXCEPTION_MESSAGE);
     }
 
     @Override

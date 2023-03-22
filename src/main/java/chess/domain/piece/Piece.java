@@ -6,6 +6,8 @@ import chess.domain.Team;
 import java.util.Objects;
 
 public abstract class Piece {
+    protected static final String INVALID_TEAM_EXCEPTION_MESSAGE = "[ERROR] 올바르지 않는 팀 입니다.";
+
     protected final Role role;
     protected final Team team;
 

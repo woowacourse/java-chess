@@ -36,8 +36,8 @@ class BoardTest {
     void move_With_Collision() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 3), new Queen(Team.WHITE));
-        squares.put(Position.of(3, 4), new Pawn(Team.BLACK));
+        squares.put(Position.of(3, 3), Queen.of(Team.WHITE));
+        squares.put(Position.of(3, 4), Pawn.of(Team.BLACK));
         Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
@@ -54,8 +54,8 @@ class BoardTest {
     void move_Pawn_Forward_Enemy() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
-        squares.put(Position.of(3, 4), new Pawn(Team.BLACK));
+        squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
+        squares.put(Position.of(3, 4), Pawn.of(Team.BLACK));
         Board board = new Board(squares, Team.WHITE);
         
         Position source = Position.of(3, 3);
@@ -73,7 +73,7 @@ class BoardTest {
     void move_Pawn_With_Diagonal_Empty(int x) {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
+        squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
         Board board = new Board(squares, Team.WHITE);
         
         Position source = Position.of(3, 3);
@@ -91,9 +91,9 @@ class BoardTest {
     void move_Pawn_With_Diagonal_Enemy(int x) {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Pawn sourcePiece = new Pawn(Team.WHITE);
+        Pawn sourcePiece = Pawn.of(Team.WHITE);
         squares.put(Position.of(3, 3), sourcePiece);
-        squares.put(Position.of(x, 4), new Pawn(Team.BLACK));
+        squares.put(Position.of(x, 4), Pawn.of(Team.BLACK));
         Board board = new Board(squares, Team.WHITE);
 
         // when
@@ -128,8 +128,8 @@ class BoardTest {
     void move_Same_Team_Position() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
-        squares.put(Position.of(3, 4), new Pawn(Team.WHITE));
+        squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
+        squares.put(Position.of(3, 4), Pawn.of(Team.WHITE));
         Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
@@ -146,11 +146,11 @@ class BoardTest {
     void move_Knight_Ignore_Collision() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Knight knight = new Knight(Team.WHITE);
+        Knight knight = Knight.of(Team.WHITE);
         squares.put(Position.of(3, 3), knight);
-        squares.put(Position.of(2, 3), new Pawn(Team.WHITE));
-        squares.put(Position.of(2, 2), new Pawn(Team.BLACK));
-        squares.put(Position.of(3, 2), new Pawn(Team.WHITE));
+        squares.put(Position.of(2, 3), Pawn.of(Team.WHITE));
+        squares.put(Position.of(2, 2), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 2), Pawn.of(Team.WHITE));
         Board board = new Board(squares, Team.WHITE);
 
         Position source = Position.of(3, 3);
@@ -187,8 +187,8 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         Board board = new Board(squares, Team.BLACK);
-        squares.put(Position.of(2, 1), new Pawn(Team.WHITE));
-        squares.put(Position.of(2, 5), new Pawn(Team.BLACK));
+        squares.put(Position.of(2, 1), Pawn.of(Team.WHITE));
+        squares.put(Position.of(2, 5), Pawn.of(Team.BLACK));
 
         Position source = Position.of(2, 1);
         Position target = Position.of(2, 3);
@@ -205,8 +205,8 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         Board board = new Board(squares, Team.WHITE);
-        squares.put(Position.of(2, 1), new Pawn(Team.WHITE));
-        squares.put(Position.of(2, 5), new Pawn(Team.BLACK));
+        squares.put(Position.of(2, 1), Pawn.of(Team.WHITE));
+        squares.put(Position.of(2, 5), Pawn.of(Team.BLACK));
 
         Position source = Position.of(2, 1);
         Position target = Position.of(2, 3);
@@ -224,22 +224,22 @@ class BoardTest {
     void getTeamScore_Success() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(0, 6), new Pawn(Team.BLACK));
-        squares.put(Position.of(1, 5), new Pawn(Team.BLACK));
-        squares.put(Position.of(1, 7), new Pawn(Team.BLACK));
-        squares.put(Position.of(2, 7), new Rook(Team.BLACK));
-        squares.put(Position.of(2, 6), new Pawn(Team.BLACK));
-        squares.put(Position.of(3, 6), new Bishop(Team.BLACK));
-        squares.put(Position.of(4, 5), new Queen(Team.BLACK));
+        squares.put(Position.of(0, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(1, 5), Pawn.of(Team.BLACK));
+        squares.put(Position.of(1, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(2, 7), Rook.of(Team.BLACK));
+        squares.put(Position.of(2, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Bishop.of(Team.BLACK));
+        squares.put(Position.of(4, 5), Queen.of(Team.BLACK));
 
-        squares.put(Position.of(4, 0), new Rook(Team.WHITE));
-        squares.put(Position.of(5, 0), new King(Team.WHITE));
-        squares.put(Position.of(5, 1), new Pawn(Team.WHITE));
-        squares.put(Position.of(5, 2), new Pawn(Team.WHITE));
-        squares.put(Position.of(5, 3), new Knight(Team.WHITE));
-        squares.put(Position.of(6, 1), new Pawn(Team.WHITE));
-        squares.put(Position.of(6, 3), new Queen(Team.WHITE));
-        squares.put(Position.of(7, 2), new Pawn(Team.WHITE));
+        squares.put(Position.of(4, 0), Rook.of(Team.WHITE));
+        squares.put(Position.of(5, 0), King.of(Team.WHITE));
+        squares.put(Position.of(5, 1), Pawn.of(Team.WHITE));
+        squares.put(Position.of(5, 2), Pawn.of(Team.WHITE));
+        squares.put(Position.of(5, 3), Knight.of(Team.WHITE));
+        squares.put(Position.of(6, 1), Pawn.of(Team.WHITE));
+        squares.put(Position.of(6, 3), Queen.of(Team.WHITE));
+        squares.put(Position.of(7, 2), Pawn.of(Team.WHITE));
         Board board = new Board(squares, Team.WHITE);
 
         // when
@@ -260,7 +260,7 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         for (int i = 1; i <= pawnCount; i++) {
-            squares.put(Position.of(0, i), new Pawn(Team.WHITE));
+            squares.put(Position.of(0, i), Pawn.of(Team.WHITE));
         }
         Board board = new Board(squares, Team.WHITE);
         // when
