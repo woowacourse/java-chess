@@ -68,13 +68,7 @@ public class ChessController {
 
     private Command extractCommand(List<String> commands) {
         Command command = Command.from(commands.get(COMMAND_INDEX));
-        validateCommandSize(command, commands.size());
+        command.validateCommandSize(commands.size());
         return command;
-    }
-
-    private void validateCommandSize(final Command command, final int size) {
-        if (!command.isAppropriateSize(size)) {
-            throw new IllegalArgumentException("입력된 명령어의 파라미터 개수가 올바르지 않습니다.");
-        }
     }
 }

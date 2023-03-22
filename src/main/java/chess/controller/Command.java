@@ -23,9 +23,13 @@ public enum Command {
             .orElseThrow(() -> new IllegalArgumentException("입력된 명령어가 올바르지 않습니다."));
     }
 
-    public boolean isAppropriateSize(final int size) {
-        return size == requiredSize;
+    public void validateCommandSize(final int size) {
+        if (size != requiredSize) {
+            throw new IllegalArgumentException("입력된 명령어의 파라미터 개수가 올바르지 않습니다.");
+        }
     }
+
+
 
     public String getValue() {
         return value;
