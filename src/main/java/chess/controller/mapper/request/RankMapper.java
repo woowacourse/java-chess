@@ -1,9 +1,9 @@
-package chess.view.input;
+package chess.controller.mapper.request;
 
 import chess.domain.position.Rank;
 import java.util.Arrays;
 
-public enum RankInput {
+public enum RankMapper {
     EIGHT(Rank.EIGHT, "8"),
     SEVEN(Rank.SEVEN, "7"),
     SIX(Rank.SIX, "6"),
@@ -17,13 +17,13 @@ public enum RankInput {
     private final Rank rank;
     private final String viewRank;
 
-    RankInput(Rank rank, String viewRank) {
+    RankMapper(Rank rank, String viewRank) {
         this.rank = rank;
         this.viewRank = viewRank;
     }
 
     public static Rank toRank(String viewRank) {
-        return Arrays.stream(RankInput.values())
+        return Arrays.stream(RankMapper.values())
                 .filter(it -> it.viewRank.equals(viewRank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크 입니다."))

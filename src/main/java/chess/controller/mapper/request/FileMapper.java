@@ -1,9 +1,9 @@
-package chess.view.input;
+package chess.controller.mapper.request;
 
 import chess.domain.position.File;
 import java.util.Arrays;
 
-public enum FileInput {
+public enum FileMapper {
     A(File.A, "A"),
     B(File.B, "B"),
     C(File.C, "C"),
@@ -17,13 +17,13 @@ public enum FileInput {
     private final File file;
     private final String viewFile;
 
-    FileInput(File file, String viewFile) {
+    FileMapper(File file, String viewFile) {
         this.file = file;
         this.viewFile = viewFile;
     }
 
     public static File toFile(String viewFile) {
-        return Arrays.stream(FileInput.values())
+        return Arrays.stream(FileMapper.values())
                 .filter(it -> it.viewFile.equalsIgnoreCase(viewFile))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))
