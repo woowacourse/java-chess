@@ -22,19 +22,20 @@ public final class Board {
     public static final String SAME_COLOR_IN_DESTINATION = "[BOARD ERROR] 같은 색의 말이 있습니다.";
     public static final String NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION = "[BOARD ERROR] 대각선으로 이동할 수 없습니다.";
     
-    private final EnumMap<PieceType, RouteCheck> routeCheckMap = new EnumMap<>(PieceType.class);
-    
+    private static final Map<PieceType, RouteCheck> routeCheckMap = new EnumMap<>(PieceType.class);
     
     private final Map<Position, Piece> board;
     
+    private Piece lastPiece = Empty.create();
+    
     private Board(final Map<Position, Piece> board) {
         this.board = board;
-        this.routeCheckMap.put(PieceType.PAWN, this::checkPawnRoute);
-        this.routeCheckMap.put(PieceType.ROOK, this::checkSlidingRoute);
-        this.routeCheckMap.put(PieceType.BISHOP, this::checkSlidingRoute);
-        this.routeCheckMap.put(PieceType.QUEEN, this::checkSlidingRoute);
-        this.routeCheckMap.put(PieceType.KING, this::checkNonSlidingRoute);
-        this.routeCheckMap.put(PieceType.KNIGHT, this::checkNonSlidingRoute);
+        routeCheckMap.put(PieceType.PAWN, this::checkPawnRoute);
+        routeCheckMap.put(PieceType.ROOK, this::checkSlidingRoute);
+        routeCheckMap.put(PieceType.BISHOP, this::checkSlidingRoute);
+        routeCheckMap.put(PieceType.QUEEN, this::checkSlidingRoute);
+        routeCheckMap.put(PieceType.KING, this::checkNonSlidingRoute);
+        routeCheckMap.put(PieceType.KNIGHT, this::checkNonSlidingRoute);
     }
     
     
@@ -50,10 +51,11 @@ public final class Board {
     
     public void checkRoute(final Position from, final Position to) {
         Piece sourcePiece = this.getPiece(from);
-        this.routeCheckMap.get(sourcePiece.getType()).checkRoute(from, to);
+        routeCheckMap.get(sourcePiece.getType()).checkRoute(from, to);
     }
     
     public void move(final Position from, final Position to) {
+        this.lastPiece = this.board.get(to);
         this.board.put(to, this.getPiece(from));
         this.board.put(from, Empty.create());
     }
@@ -147,6 +149,10 @@ public final class Board {
     
     private boolean isSameColorAt(final Position position, final Color color) {
         return this.getPiece(position).isSameColor(color);
+    }
+    
+    public boolean isKingDead() {
+        return this.lastPiece.getType() == PieceType.KING;
     }
     
 }

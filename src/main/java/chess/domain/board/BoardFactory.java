@@ -18,7 +18,7 @@ class BoardFactory {
     private static final List<Piece> BLACK_PAWNS = PieceFactory.createBlackPawns();
     private static final List<Piece> BLACK_GENERALS = PieceFactory.createBlackGenerals();
     
-    private static final EnumMap<Rank, Function<Position, Piece>> INITIAL_BOARD_MAP = new EnumMap<>(Rank.class);
+    private static final Map<Rank, Function<Position, Piece>> INITIAL_BOARD_MAP = new EnumMap<>(Rank.class);
     
     static {
         INITIAL_BOARD_MAP.put(Rank.ONE, position -> WHITE_GENERALS.get(position.getFileIndex()));

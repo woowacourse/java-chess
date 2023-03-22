@@ -21,6 +21,12 @@ public class ChessGame implements Action {
         this.turn = Color.WHITE;
     }
     
+    private void isKingCaught() {
+        if (this.board.isKingDead()) {
+            this.end();
+        }
+    }
+    
     @Override
     public void start() {
         if (this.isNotReady()) {
@@ -38,6 +44,7 @@ public class ChessGame implements Action {
         this.board.checkColor(from, to, this.turn);
         this.board.checkRoute(from, to);
         this.board.move(from, to);
+        this.isKingCaught();
         this.turn = Color.reverse(this.turn);
     }
     
