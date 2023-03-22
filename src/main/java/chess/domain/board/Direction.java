@@ -26,52 +26,51 @@ public enum Direction {
     private final int file;
     private final int rank;
 
-    Direction(final int file, final int rank) {
+    Direction(int file, int rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Direction calculateDirection(final Square source, final Square target) {
-        final int fileGap = source.calculateFileGap(target);
-        final int rankGap = source.calculateRankGap(target);
+    public static Direction calculateDirection(Square source, Square target) {
+        int fileGap = source.calculateFileGap(target);
+        int rankGap = source.calculateRankGap(target);
 
-        final int gcd = calculateGcd(fileGap, rankGap);
+        int gcd = calculateGcd(fileGap, rankGap);
 
-        final int fileDirection = fileGap / gcd;
-        final int rankDirection = rankGap / gcd;
+        int fileDirection = fileGap / gcd;
+        int rankDirection = rankGap / gcd;
 
         return findDirection(fileDirection, rankDirection);
     }
 
-    private static int calculateGcd(final int fileGap, final int rankGap) {
-        final BigInteger b1 = BigInteger.valueOf(fileGap);
-        final BigInteger b2 = BigInteger.valueOf(rankGap);
+    private static int calculateGcd(int fileGap, int rankGap) {
+        BigInteger b1 = BigInteger.valueOf(fileGap);
+        BigInteger b2 = BigInteger.valueOf(rankGap);
 
         return b1.gcd(b2).intValue();
     }
 
-    private static Direction findDirection(final int fileDirection, final int rankDirection) {
+    private static Direction findDirection(int fileDirection, int rankDirection) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.file == fileDirection && direction.rank == rankDirection)
                 .findFirst()
                 .orElseThrow(PieceCanNotMoveException::new);
     }
 
-    public static boolean isMoveForward(final Direction direction) {
+    public static boolean isMoveForward(Direction direction) {
         return direction == Direction.UP || direction == Direction.DOWN;
     }
 
-    public static boolean isMoveDiagonal(final Direction direction) {
+    public static boolean isMoveDiagonal(Direction direction) {
         return direction == Direction.RIGHT_UP || direction == Direction.RIGHT_DOWN
-                || direction == Direction.LEFT_UP
-                || direction == Direction.LEFT_DOWN;
+                || direction == Direction.LEFT_UP || direction == Direction.LEFT_DOWN;
     }
 
     public int getFile() {
-        return this.file;
+        return file;
     }
 
     public int getRank() {
-        return this.rank;
+        return rank;
     }
 }

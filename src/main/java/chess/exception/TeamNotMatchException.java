@@ -2,10 +2,10 @@ package chess.exception;
 
 import chess.domain.piece.Team;
 
-public class TeamNotMatchException extends PieceCanNotMoveException{
+public class TeamNotMatchException extends PieceCanNotMoveException {
     private static final String ERROR_MESSAGE = "팀의 말을 선택해주세요.";
 
-    public TeamNotMatchException(final Team team) {
-        super(team.name()+ERROR_MESSAGE);
+    public TeamNotMatchException(Team team) {
+        super(team.name() + ERROR_MESSAGE);
     }
 }

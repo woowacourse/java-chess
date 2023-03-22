@@ -15,56 +15,56 @@ public class ChessController {
     private final OutputView outputView;
     private Game game;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.game = new Game();
+        game = new Game();
     }
 
     public void run() {
-        this.outputView.printGameStartMessage();
+        outputView.printGameStartMessage();
         boolean isEnd = false;
         while (!isEnd) {
-            final GameCommand gameCommand = this.generateGameCommand();
-            isEnd = this.executeGameCommand(gameCommand);
+            GameCommand gameCommand = generateGameCommand();
+            isEnd = executeGameCommand(gameCommand);
         }
     }
 
     private GameCommand generateGameCommand() {
         try {
-            return new GameCommand(this.inputView.readGameCommand());
-        } catch (final Exception e) {
-            this.outputView.printErrorMessage(e.getMessage());
-            return this.generateGameCommand();
+            return new GameCommand(inputView.readGameCommand());
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+            return generateGameCommand();
         }
     }
 
-    private boolean executeGameCommand(final GameCommand gameCommand) {
+    private boolean executeGameCommand(GameCommand gameCommand) {
         if (gameCommand.isStart()) {
-            this.start();
+            start();
             return false;
         }
         if (gameCommand.isMove()) {
-            this.play(gameCommand);
+            play(gameCommand);
             return false;
         }
         return true;
     }
 
     private void start() {
-        this.game = new Game();
-        this.outputView.printChessBoard(this.game.getPieces());
+        game = new Game();
+        outputView.printChessBoard(game.getPieces());
     }
 
-    private void play(final GameCommand gameCommand) {
+    private void play(GameCommand gameCommand) {
         try {
-            final List<Square> squares = gameCommand.convertToSquare();
-            final Square source = squares.get(SOURCE_INDEX);
-            final Square target = squares.get(TARGET_INDEX);
-            this.game.move(source, target);
-            this.outputView.printChessBoard(this.game.getPieces());
-        } catch (final Exception e) {
-            this.outputView.printErrorMessage(e.getMessage());
+            List<Square> squares = gameCommand.convertToSquare();
+            Square source = squares.get(SOURCE_INDEX);
+            Square target = squares.get(TARGET_INDEX);
+            game.move(source, target);
+            outputView.printChessBoard(game.getPieces());
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
         }
     }
 }

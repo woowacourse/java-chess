@@ -10,12 +10,12 @@ public class King extends Piece {
             Direction.RIGHT_UP, Direction.RIGHT_DOWN, Direction.LEFT_UP, Direction.LEFT_DOWN
     );
 
-    public King(final Team team) {
+    public King(Team team) {
         super(team, Role.KING);
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Direction direction) {
+    public boolean isMovable(Square source, Square target, Direction direction) {
         if (POSSIBLE_DIRECTIONS.contains(direction)) {
             return source.isMovableToTarget(target, direction.getFile(), direction.getRank());
         }

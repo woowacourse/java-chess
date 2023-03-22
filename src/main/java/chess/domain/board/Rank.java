@@ -1,7 +1,11 @@
 package chess.domain.board;
 
 import chess.exception.RankCanNotFindException;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum Rank {
     EIGHT(7),
@@ -14,29 +18,31 @@ public enum Rank {
     ONE(0);
 
     public static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = '1';
+    private static final Map<Integer, Rank> RANKS = Collections.unmodifiableMap(Stream.of(values())
+            .collect(Collectors.toMap(Rank::getRank, Function.identity())));
 
-    private final int y;
+    private final int rank;
 
-    Rank(final int y) {
-        this.y = y;
+    Rank(int rank) {
+        this.rank = rank;
     }
 
-    public static Rank findRankByLetter(final char letter) {
+    public static Rank findRankByLetter(char letter) {
         return findRank(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
     }
 
-    public static Rank findRank(final int rankIndex) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getY() == rankIndex)
-                .findFirst()
-                .orElseThrow(RankCanNotFindException::new);
+    public static Rank findRank(int rankIndex) {
+        if (!RANKS.containsKey(rankIndex)) {
+            throw new RankCanNotFindException();
+        }
+        return RANKS.get(rankIndex);
     }
 
-    public int calculateGap(final Rank other) {
-        return this.y - other.y;
+    public int calculateGap(Rank other) {
+        return rank - other.rank;
     }
 
-    public int getY() {
-        return this.y;
+    public int getRank() {
+        return rank;
     }
 }

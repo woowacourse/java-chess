@@ -7,22 +7,22 @@ public abstract class Piece {
     protected final Team team;
     protected final Role role;
 
-    public Piece(final Team team, final Role role) {
+    public Piece(Team team, Role role) {
         this.team = team;
         this.role = role;
     }
 
-    public abstract boolean isMovable(final Square source, final Square target, final Direction direction);
+    public abstract boolean isMovable(Square source, Square target, Direction direction);
 
-    public boolean isSameRole(final Role role) {
+    public boolean isSameRole(Role role) {
         return this.role == role;
     }
 
-    public boolean isSameTeam(final Team team) {
+    public boolean isSameTeam(Team team) {
         return this.team == team;
     }
 
-    public boolean isAnotherTeam(final Team team) {
+    public boolean isAnotherTeam(Team team) {
         return this.team != team;
     }
 
@@ -31,10 +31,10 @@ public abstract class Piece {
     }
 
     public Team getTeam() {
-        return this.team;
+        return team;
     }
 
     public Role getRole() {
-        return this.role;
+        return role;
     }
 }

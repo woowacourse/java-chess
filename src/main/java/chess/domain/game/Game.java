@@ -12,23 +12,23 @@ public class Game {
     private Team turn;
 
     public Game() {
-        this.board = new Board();
-        this.turn = Team.WHITE;
+        board = new Board();
+        turn = Team.WHITE;
     }
 
-    public void move(final Square source, final Square target) {
-        if (this.isNotMyTurn(source) || this.board.isEmptyPiece(source)) {
-            throw new TeamNotMatchException(this.turn);
+    public void move(Square source, Square target) {
+        if (isNotMyTurn(source) || board.isEmptyPiece(source)) {
+            throw new TeamNotMatchException(turn);
         }
-        this.board.move(source, target);
-        this.turn = this.turn.nextTurn(this.turn);
+        board.move(source, target);
+        turn = turn.nextTurn(turn);
     }
 
-    private boolean isNotMyTurn(final Square source) {
-        return this.board.getPiece(source).isAnotherTeam(this.turn);
+    private boolean isNotMyTurn(Square source) {
+        return board.getPiece(source).isAnotherTeam(turn);
     }
 
     public List<Piece> getPieces() {
-        return this.board.getPieces();
+        return board.getPieces();
     }
 }

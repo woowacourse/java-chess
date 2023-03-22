@@ -11,11 +11,11 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readGameCommand() {
-        final String input = scanner.nextLine();
+        String input = scanner.nextLine();
         return splitAsList(input);
     }
 
-    private static List<String> splitAsList(final String input) {
+    private List<String> splitAsList(String input) {
         return Arrays.stream(input.split(SPLIT_DELIMITER))
                 .map(String::strip)
                 .collect(Collectors.toList());

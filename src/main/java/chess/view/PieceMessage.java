@@ -19,26 +19,26 @@ public enum PieceMessage {
     private final Role role;
     private final String message;
 
-    static {
-        MESSAGES = new EnumMap<>(Role.class);
-        for (final Role role : Role.values()) {
-            MESSAGES.put(role, findMessage(role));
-        }
-    }
-
-    PieceMessage(final Role role, final String message) {
+    PieceMessage(Role role, String message) {
         this.role = role;
         this.message = message;
     }
 
-    private static String findMessage(final Role role) {
+    static {
+        MESSAGES = new EnumMap<>(Role.class);
+        for (Role role : Role.values()) {
+            MESSAGES.put(role, findMessage(role));
+        }
+    }
+
+    private static String findMessage(Role role) {
         return Arrays.stream(PieceMessage.values()).filter(pieceMessage -> pieceMessage.role == role)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new)
                 .message;
     }
 
-    public static String getMessage(final Role role) {
+    public static String getMessage(Role role) {
         return MESSAGES.get(role);
     }
 }

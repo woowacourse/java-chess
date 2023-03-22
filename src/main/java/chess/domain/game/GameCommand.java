@@ -15,17 +15,17 @@ public class GameCommand {
 
     private final List<String> gameCommand;
 
-    public GameCommand(final List<String> gameCommand) {
-        this.validateGameCommand(gameCommand);
+    public GameCommand(List<String> gameCommand) {
+        validateGameCommand(gameCommand);
         this.gameCommand = gameCommand;
     }
 
-    private void validateGameCommand(final List<String> gameCommand) {
-        final String command = gameCommand.get(GameCommandIndex.COMMAND.index);
-        final boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
+    private void validateGameCommand(List<String> gameCommand) {
+        String command = gameCommand.get(GameCommandIndex.COMMAND.index);
+        boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
         if (isCommandMove) {
-            this.validateMoveCommand(
+            validateMoveCommand(
                     gameCommand.get(GameCommandIndex.SOURCE.index),
                     gameCommand.get(GameCommandIndex.TARGET.index)
             );
@@ -37,29 +37,29 @@ public class GameCommand {
         }
     }
 
-    private void validateMoveCommand(final String source, final String target) {
+    private void validateMoveCommand(String source, String target) {
         if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(SQUARE_BOUND_REGULAR_EXPRESSION)) {
             throw new IllegalCommandException();
         }
     }
 
     public boolean isStart() {
-        return this.gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
     }
 
     public boolean isMove() {
-        return this.gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
     }
 
     public List<Square> convertToSquare() {
-        final String source = this.gameCommand.get(GameCommandIndex.SOURCE.index);
-        final String target = this.gameCommand.get(GameCommandIndex.TARGET.index);
+        String source = gameCommand.get(GameCommandIndex.SOURCE.index);
+        String target = gameCommand.get(GameCommandIndex.TARGET.index);
 
-        final File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
-        final Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
+        File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
+        Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
 
-        final File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
-        final Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
+        File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
+        Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
 
         return List.of(new Square(sourceFile, sourceRank), new Square(targetFile, targetRank));
     }
@@ -71,7 +71,7 @@ public class GameCommand {
 
         private final int index;
 
-        GameCommandIndex(final int index) {
+        GameCommandIndex(int index) {
             this.index = index;
         }
     }
@@ -82,7 +82,7 @@ public class GameCommand {
 
         private final int index;
 
-        MoveIndex(final int index) {
+        MoveIndex(int index) {
             this.index = index;
         }
     }

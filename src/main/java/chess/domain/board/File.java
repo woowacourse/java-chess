@@ -1,7 +1,11 @@
 package chess.domain.board;
 
 import chess.exception.FileCanNotFindException;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum File {
     A(0),
@@ -14,29 +18,31 @@ public enum File {
     H(7);
 
     private static final char DIFFERENCE_BETWEEN_LETTER_AND_INDEX = 'a';
+    private static final Map<Integer, File> FILES = Collections.unmodifiableMap(Stream.of(values())
+            .collect(Collectors.toMap(File::getFile, Function.identity())));
 
-    private final int x;
+    private final int file;
 
-    File(final int x) {
-        this.x = x;
+    File(int file) {
+        this.file = file;
     }
 
-    public static File findFileByLetter(final char letter) {
+    public static File findFileByLetter(char letter) {
         return findFile(letter - DIFFERENCE_BETWEEN_LETTER_AND_INDEX);
     }
 
-    public static File findFile(final int fileIndex) {
-        return Arrays.stream(File.values())
-                .filter(file -> file.getX() == fileIndex)
-                .findFirst()
-                .orElseThrow(FileCanNotFindException::new);
+    public static File findFile(int fileIndex) {
+        if (!FILES.containsKey(fileIndex)) {
+            throw new FileCanNotFindException();
+        }
+        return FILES.get(fileIndex);
     }
 
-    public int calculateGap(final File other) {
-        return this.x - other.x;
+    public int calculateGap(File other) {
+        return file - other.file;
     }
 
-    public int getX() {
-        return this.x;
+    public int getFile() {
+        return file;
     }
 }

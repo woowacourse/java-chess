@@ -25,13 +25,13 @@ public class Board {
     private final Map<Square, Piece> board;
 
     public Board() {
-        this.board = this.generateBoard();
+        board = generateBoard();
     }
 
     private Map<Square, Piece> generateBoard() {
-        final Map<Square, Piece> board = new LinkedHashMap<>();
-        final List<Piece> pieces = this.generatePieces();
-        final List<Square> squares = this.generateSquares();
+        Map<Square, Piece> board = new LinkedHashMap<>();
+        List<Piece> pieces = generatePieces();
+        List<Square> squares = generateSquares();
 
         for (int i = 0; i < squares.size(); i++) {
             board.put(squares.get(i), pieces.get(i));
@@ -41,22 +41,22 @@ public class Board {
     }
 
     private List<Piece> generatePieces() {
-        final List<Piece> pieces = new ArrayList<>();
+        List<Piece> pieces = new ArrayList<>();
 
-        pieces.addAll(this.generateFirstLine(Team.BLACK));
-        pieces.addAll(this.generateSecondLine(Team.BLACK));
-        pieces.addAll(this.generateEmptyLine());
-        pieces.addAll(this.generateEmptyLine());
-        pieces.addAll(this.generateEmptyLine());
-        pieces.addAll(this.generateEmptyLine());
-        pieces.addAll(this.generateSecondLine(Team.WHITE));
-        pieces.addAll(this.generateFirstLine(Team.WHITE));
+        pieces.addAll(generateFirstLine(Team.BLACK));
+        pieces.addAll(generateSecondLine(Team.BLACK));
+        pieces.addAll(generateEmptyLine());
+        pieces.addAll(generateEmptyLine());
+        pieces.addAll(generateEmptyLine());
+        pieces.addAll(generateEmptyLine());
+        pieces.addAll(generateSecondLine(Team.WHITE));
+        pieces.addAll(generateFirstLine(Team.WHITE));
 
         return pieces;
     }
 
-    private List<Piece> generateFirstLine(final Team team) {
-        final List<Piece> pieces = new ArrayList<>();
+    private List<Piece> generateFirstLine(Team team) {
+        List<Piece> pieces = new ArrayList<>();
 
         pieces.add(new Rook(team));
         pieces.add(new Knight(team));
@@ -70,8 +70,8 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> generateSecondLine(final Team team) {
-        final List<Piece> pieces = new ArrayList<>();
+    private List<Piece> generateSecondLine(Team team) {
+        List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
             pieces.add(new Pawn(team));
@@ -81,7 +81,7 @@ public class Board {
     }
 
     private List<Piece> generateEmptyLine() {
-        final List<Piece> pieces = new ArrayList<>();
+        List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
             pieces.add(new Empty());
@@ -97,85 +97,85 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public void move(final Square source, final Square target) {
-        if (this.isMovable(source, target)) {
-            this.moveIfPawn(source);
-            this.board.put(target, this.getPiece(source));
-            this.board.put(source, new Empty());
+    public void move(Square source, Square target) {
+        if (isMovable(source, target)) {
+            moveIfPawn(source);
+            board.put(target, getPiece(source));
+            board.put(source, new Empty());
             return;
         }
         throw new PieceCanNotMoveException();
     }
 
-    private void moveIfPawn(final Square source) {
-        if (this.isSameRole(source, Role.PAWN)) {
-            this.board.put(source, new Pawn(this.getPiece(source).getTeam(), IS_MOVED));
+    private void moveIfPawn(Square source) {
+        if (isSameRole(source, Role.PAWN)) {
+            board.put(source, new Pawn(getPiece(source).getTeam(), IS_MOVED));
         }
     }
 
-    private boolean isMovable(final Square source, final Square target) {
-        final Piece sourcePiece = this.getPiece(source);
-        final Direction direction = Direction.calculateDirection(source, target);
+    private boolean isMovable(Square source, Square target) {
+        Piece sourcePiece = getPiece(source);
+        Direction direction = Direction.calculateDirection(source, target);
 
-        if (this.isPathBlocked(source, target, direction) && !this.isSameRole(source, Role.KNIGHT)) {
+        if (isPathBlocked(source, target, direction) && !isSameRole(source, Role.KNIGHT)) {
             return false;
         }
-        if (this.isSameRole(source, Role.PAWN)) {
-            return this.isPawnMovable(source, target, direction);
+        if (isSameRole(source, Role.PAWN)) {
+            return isPawnMovable(source, target, direction);
         }
         return sourcePiece.isMovable(source, target, direction);
     }
 
-    private boolean isPawnMovable(final Square source, final Square target, final Direction direction) {
-        final boolean isTargetEmpty = this.getPiece(target).isEmpty();
+    private boolean isPawnMovable(Square source, Square target, Direction direction) {
+        boolean isTargetEmpty = getPiece(target).isEmpty();
 
         if (Direction.isMoveForward(direction) && !isTargetEmpty) {
             return false;
         }
-        if (Direction.isMoveDiagonal(direction) && (this.isSameTeam(source, target) || isTargetEmpty)) {
+        if (Direction.isMoveDiagonal(direction) && (isSameTeam(source, target) || isTargetEmpty)) {
             return false;
         }
-        return this.getPiece(source).isMovable(source, target, direction);
+        return getPiece(source).isMovable(source, target, direction);
     }
 
-    private boolean isPathBlocked(final Square source, final Square target, final Direction direction) {
-        return this.isBlocked(source, target, direction) || this.isSameTeam(source, target);
+    private boolean isPathBlocked(Square source, Square target, Direction direction) {
+        return isBlocked(source, target, direction) || isSameTeam(source, target);
     }
 
-    private boolean isBlocked(final Square source, final Square target, final Direction direction) {
-        final Square nextSquare = source.nextSquare(source, direction.getFile(), direction.getRank());
+    private boolean isBlocked(Square source, Square target, Direction direction) {
+        Square nextSquare = source.nextSquare(source, direction.getFile(), direction.getRank());
 
         if (nextSquare.equals(target)) {
             return false;
         }
-        if (this.isEmptyPiece(nextSquare)) {
-            return this.isBlocked(nextSquare, target, direction);
+        if (isEmptyPiece(nextSquare)) {
+            return isBlocked(nextSquare, target, direction);
         }
         return true;
     }
 
-    private boolean isSameTeam(final Square source, final Square target) {
-        final Piece sourcePiece = this.getPiece(source);
-        final Team targetTeam = this.getPiece(target).getTeam();
+    private boolean isSameTeam(Square source, Square target) {
+        Piece sourcePiece = getPiece(source);
+        Team targetTeam = getPiece(target).getTeam();
 
         return sourcePiece.isSameTeam(targetTeam);
     }
 
-    private boolean isSameRole(final Square source, final Role role) {
-        final Piece sourcePiece = this.getPiece(source);
+    private boolean isSameRole(Square source, Role role) {
+        Piece sourcePiece = getPiece(source);
 
         return sourcePiece.isSameRole(role);
     }
 
-    public boolean isEmptyPiece(final Square source) {
-        return this.getPiece(source).isEmpty();
+    public boolean isEmptyPiece(Square source) {
+        return getPiece(source).isEmpty();
     }
 
     public List<Piece> getPieces() {
-        return new ArrayList<>(this.board.values());
+        return new ArrayList<>(board.values());
     }
 
-    public Piece getPiece(final Square source) {
-        return this.board.get(source);
+    public Piece getPiece(Square source) {
+        return board.get(source);
     }
 }
