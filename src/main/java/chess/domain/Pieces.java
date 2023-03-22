@@ -79,7 +79,7 @@ public final class Pieces {
         );
 
         for (int frontPosition = FIRST_RANK; frontPosition < MIDDLE_RANK; frontPosition++) {
-            Character shapeValue = whiteNames.pollFirst();
+            char shapeValue = whiteNames.pollFirst();
             Shape shape = Shape.findShapeByWhiteName(shapeValue);
             addPiecePairs(pieceList, frontPosition, shape);
         }
