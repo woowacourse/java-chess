@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-public class RunningState implements GameState {
-    private static final String RUNNING_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 진행중)";
-    public static final GameState STATE = new RunningState();
+public abstract class RunningState implements GameState {
+    protected static final String RUNNING_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 진행중)";
 
-    private RunningState() {
+    protected RunningState() {
     }
 
     @Override
@@ -36,16 +35,6 @@ public class RunningState implements GameState {
     @Override
     public double getTeamScore(DoubleSupplier doubleSupplier) {
         return doubleSupplier.getAsDouble();
-    }
-
-    @Override
-    public Team getTurn(Supplier<Team> supplier) {
-        return supplier.get();
-    }
-
-    @Override
-    public void changeTurn(Runnable runnable) {
-        runnable.run();
     }
 
     @Override

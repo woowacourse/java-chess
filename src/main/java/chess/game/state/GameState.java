@@ -17,9 +17,9 @@ public interface GameState {
 
     double getTeamScore(DoubleSupplier doubleSupplier);
 
-    Team getTurn(Supplier<Team> supplier);
+    Team getTurn();
 
-    void changeTurn(Runnable runnable);
+    RunningState changeTurn();
 
     Team getWinner();
 

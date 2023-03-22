@@ -39,12 +39,12 @@ public class WaitingState implements GameState {
     }
 
     @Override
-    public Team getTurn(Supplier<Team> supplier) {
+    public Team getTurn() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public void changeTurn(Runnable runnable) {
+    public RunningState changeTurn() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 

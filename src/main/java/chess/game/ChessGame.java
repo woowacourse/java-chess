@@ -10,11 +10,12 @@ import chess.dto.SquareResponse;
 import chess.game.state.EndState;
 import chess.game.state.GameState;
 import chess.game.state.NoneWinState;
-import chess.game.state.RunningState;
 import chess.game.state.WaitingState;
 import java.util.List;
 
 public class ChessGame {
+    private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
+
     private Board board;
     private GameState gameState;
 
@@ -24,8 +25,8 @@ public class ChessGame {
 
     public void start(TurnStrategy turnStrategy) {
         gameState.startGame(() -> {
-            this.board = new Board(BoardFactory.create(), turnStrategy.create());
-            this.gameState = RunningState.STATE;
+            this.board = new Board(BoardFactory.create());
+            this.gameState = turnStrategy.create();
         });
     }
 
@@ -38,14 +39,23 @@ public class ChessGame {
     }
 
     public void movePiece(Position source, Position target) {
-        gameState.movePiece(() -> board.move(source, target));
+        gameState.movePiece(() -> {
+            validateTurn(source);
+            board.move(source, target);
+        });
+    }
 
+    private void validateTurn(Position source) {
+        if (board.getPieceTeam(source) != gameState.getTurn()) {
+            throw new IllegalStateException(INVALID_TURN_EXCEPTION_MESSAGE);
+        }
     }
 
     public void checkCheckmate() {
         gameState.checkCheckmate(() -> {
-            if (board.isChecked() && board.isCheckmate()) {
-                gameState = EndState.createWinState(board.getTurn());
+            Team turn = gameState.getTurn();
+            if (board.isChecked(turn.opposite()) && board.isCheckmate(turn.opposite())) {
+                gameState = EndState.createWinState(turn);
             }
         });
     }
@@ -61,11 +71,11 @@ public class ChessGame {
     }
 
     public Team getTurn() {
-        return gameState.getTurn(() -> board.getTurn());
+        return gameState.getTurn();
     }
 
     public void changeTurn() {
-        gameState.changeTurn(() -> board.changeTurn());
+        this.gameState = gameState.changeTurn();
     }
 
     public Team getWinner() {

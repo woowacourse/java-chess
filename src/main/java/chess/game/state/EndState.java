@@ -2,7 +2,6 @@ package chess.game.state;
 
 import chess.domain.Team;
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 public abstract class EndState implements GameState {
     protected static final String END_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)";
@@ -42,12 +41,12 @@ public abstract class EndState implements GameState {
     }
 
     @Override
-    public Team getTurn(Supplier<Team> supplier) {
+    public Team getTurn() {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public void changeTurn(Runnable runnable) {
+    public RunningState changeTurn() {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
 

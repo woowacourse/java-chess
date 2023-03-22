@@ -15,18 +15,11 @@ public class Board {
     private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
     private static final String SAME_TEAM_EXCEPTION_MESSAGE = "[ERROR] 목적지에 아군 말이 존재합니다.";
     private static final String MOVE_FAIL_EXCEPTION_MESSAGE = "[ERROR] 해당 목적지로 이동할 수 없습니다.";
-    private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
 
     private final Map<Position, Piece> squares;
-    private Team turn;
 
-    public Board(Map<Position, Piece> squares, Team team) {
+    public Board(Map<Position, Piece> squares) {
         this.squares = squares;
-        this.turn = team;
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(squares);
     }
 
     public void move(Position source, Position target) {
@@ -40,7 +33,6 @@ public class Board {
         Piece sourcePiece = squares.get(source);
         Piece targetPiece = squares.get(target);
         validateEmptySquare(sourcePiece);
-        validateTurn(sourcePiece);
         validateSameTeam(sourcePiece, targetPiece);
         validateMovement(source, target);
     }
@@ -48,12 +40,6 @@ public class Board {
     private void validateDuplicate(Position source, Position target) {
         if (Objects.equals(source, target)) {
             throw new IllegalArgumentException(DUPLICATE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateTurn(Piece sourcePiece) {
-        if (!sourcePiece.isSameTeam(turn)) {
-            throw new IllegalArgumentException(INVALID_TURN_EXCEPTION_MESSAGE);
         }
     }
 
@@ -136,17 +122,17 @@ public class Board {
         return pawnCount * Role.PAWN.getScore() / 2.0;
     }
 
-    public void changeTurn() {
-        this.turn = turn.opposite();
+    public boolean isChecked(Team team) {
+        Position kingPosition = getKingPosition(team);
+        return isAnyMovable(team.opposite(),kingPosition);
     }
 
-    public Team getTurn() {
-        return turn;
-    }
-
-    public boolean isChecked() {
-        Position enemyKingPosition = getEnemyKingPosition();
-        return isAnyMovable(turn, enemyKingPosition);
+    private Position getKingPosition(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue() == King.of(team))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 체스판에 킹이 존재하지 않습니다."))
+                .getKey();
     }
 
     private boolean isAnyMovable(Team team, Position target) {
@@ -155,19 +141,19 @@ public class Board {
                 .anyMatch(entry -> canMove(entry.getKey(), target));
     }
 
-    private Position getEnemyKingPosition() {
-        return squares.entrySet().stream()
-                .filter(entry -> entry.getValue() == King.of(turn.opposite()))
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 체스판에 킹이 존재하지 않습니다."))
-                .getKey();
-    }
-
-    public boolean isCheckmate() {
-        King enemyKing = King.of(turn.opposite());
-        List<Position> enemyKingMovablePositions = enemyKing.getKingMovablePositions(getEnemyKingPosition());
+    public boolean isCheckmate(Team team) {
+        King king = King.of(team);
+        List<Position> enemyKingMovablePositions = king.getKingMovablePositions(getKingPosition(team));
         return enemyKingMovablePositions.stream()
                 .filter(position -> squares.get(position).isRoleOf(Role.EMPTY))
-                .allMatch(position -> isAnyMovable(turn, position));
+                .allMatch(position -> isAnyMovable(team.opposite(), position));
+    }
+
+    public Team getPieceTeam(Position target) {
+        return squares.get(target).getTeam();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(squares);
     }
 }

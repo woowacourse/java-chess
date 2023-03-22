@@ -38,7 +38,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), Queen.of(Team.WHITE));
         squares.put(Position.of(3, 4), Pawn.of(Team.BLACK));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 6);
@@ -56,7 +56,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
         squares.put(Position.of(3, 4), Pawn.of(Team.BLACK));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
         
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 4);
@@ -73,7 +73,7 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 4);
@@ -94,7 +94,7 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
         
         Position source = Position.of(3, 3);
         Position target = Position.of(x, 4);
@@ -114,7 +114,7 @@ class BoardTest {
         Pawn sourcePiece = Pawn.of(Team.WHITE);
         squares.put(Position.of(3, 3), sourcePiece);
         squares.put(Position.of(x, 4), Pawn.of(Team.BLACK));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // when
         Position source = Position.of(3, 3);
@@ -132,7 +132,7 @@ class BoardTest {
     void move_EmptySquare() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(4, 4);
@@ -150,7 +150,7 @@ class BoardTest {
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), Pawn.of(Team.WHITE));
         squares.put(Position.of(3, 4), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(3, 4);
@@ -171,7 +171,7 @@ class BoardTest {
         squares.put(Position.of(2, 3), Pawn.of(Team.WHITE));
         squares.put(Position.of(2, 2), Pawn.of(Team.BLACK));
         squares.put(Position.of(3, 2), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
         Position target = Position.of(1, 2);
@@ -190,7 +190,7 @@ class BoardTest {
     void move_Duplicate_Position() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         Position source = Position.of(2, 2);
         Position target = Position.of(2, 2);
@@ -199,44 +199,6 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 같은 위치로 움직일 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("나의 턴이 아닌데 말을 움직이면 예외가 발생한다.")
-    void move_Invalid_Turn() {
-        // given
-        Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares, Team.BLACK);
-        squares.put(Position.of(2, 1), Pawn.of(Team.WHITE));
-        squares.put(Position.of(2, 5), Pawn.of(Team.BLACK));
-
-        Position source = Position.of(2, 1);
-        Position target = Position.of(2, 3);
-
-        // expect
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
-    }
-
-    @Test
-    @DisplayName("턴을 바꾸면 상대방의 턴으로 넘어가야 한다.")
-    void move_Next_Turn() {
-        // given
-        Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares, Team.WHITE);
-        squares.put(Position.of(2, 1), Pawn.of(Team.WHITE));
-        squares.put(Position.of(2, 5), Pawn.of(Team.BLACK));
-
-        // when
-        Position source = Position.of(2, 1);
-        Position target = Position.of(2, 3);
-        board.changeTurn();
-
-        // expect
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
     }
 
     @Test
@@ -260,7 +222,7 @@ class BoardTest {
         squares.put(Position.of(6, 1), Pawn.of(Team.WHITE));
         squares.put(Position.of(6, 3), Queen.of(Team.WHITE));
         squares.put(Position.of(7, 2), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // when
         double blackScore = board.getTeamScore(Team.BLACK);
@@ -282,7 +244,7 @@ class BoardTest {
         for (int i = 1; i <= pawnCount; i++) {
             squares.put(Position.of(0, i), Pawn.of(Team.WHITE));
         }
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
         // when
         double whiteScore = board.getTeamScore(Team.WHITE);
 
@@ -302,10 +264,10 @@ class BoardTest {
         squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
         squares.put(Position.of(4, 7), King.of(Team.BLACK));
         squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // expect
-        assertThat(board.isCheckmate())
+        assertThat(board.isCheckmate(Team.BLACK))
                 .isTrue();
     }
 
@@ -319,10 +281,10 @@ class BoardTest {
         squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
         squares.put(Position.of(4, 7), King.of(Team.BLACK));
         squares.put(Position.of(3, 6), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // expect
-        assertThat(board.isChecked())
+        assertThat(board.isChecked(Team.BLACK))
                 .isTrue();
     }
 
@@ -336,10 +298,10 @@ class BoardTest {
         squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
         squares.put(Position.of(4, 7), King.of(Team.BLACK));
         squares.put(Position.of(4, 6), Pawn.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // expect
-        assertThat(board.isChecked())
+        assertThat(board.isChecked(Team.BLACK))
                 .isFalse();
     }
 
@@ -354,10 +316,10 @@ class BoardTest {
         squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
         squares.put(Position.of(4, 7), King.of(Team.BLACK));
         squares.put(Position.of(3, 5), Knight.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // expect
-        assertThat(board.isChecked())
+        assertThat(board.isChecked(Team.BLACK))
                 .isTrue();
     }
 
@@ -371,10 +333,10 @@ class BoardTest {
         squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
         squares.put(Position.of(4, 7), King.of(Team.BLACK));
         squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
-        Board board = new Board(squares, Team.WHITE);
+        Board board = new Board(squares);
 
         // expect
-        assertThat(board.isCheckmate())
+        assertThat(board.isCheckmate(Team.BLACK))
                 .isFalse();
     }
 }

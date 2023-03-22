@@ -1,7 +1,7 @@
 package chess.game;
 
-import chess.domain.Team;
+import chess.game.state.RunningState;
 
 public interface TurnStrategy {
-    Team create();
+    RunningState create();
 }

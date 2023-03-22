@@ -1,6 +1,8 @@
 package chess.game;
 
-import chess.domain.Team;
+import chess.game.state.BlackTurnState;
+import chess.game.state.RunningState;
+import chess.game.state.WhiteTurnState;
 import java.util.Random;
 
 public class RandomTurnStrategy implements TurnStrategy {
@@ -12,10 +14,10 @@ public class RandomTurnStrategy implements TurnStrategy {
 
     @Override
 
-    public Team create() {
+    public RunningState create() {
         if (random.nextBoolean()) {
-            return Team.WHITE;
+            return WhiteTurnState.STATE;
         }
-        return Team.BLACK;
+        return BlackTurnState.STATE;
     }
 }

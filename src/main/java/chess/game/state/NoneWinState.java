@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class NoneWinState extends EndState {
-    public static final GameState STATE = new NoneWinState();
+    public static final EndState STATE = new NoneWinState();
 
     @Override
     public Team getWinner() {
