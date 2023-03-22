@@ -20,8 +20,19 @@ public final class Move implements Status {
         this.campType = campType;
     }
 
-    private Status move(final Command command) {
+    @Override
+    public Status checkCommand(final Command command) {
+        if (command.isStart()) {
+            throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
+        }
+        if (command.isEnd()) {
+            return new End();
+        }
         validateCommand(command);
+        return move(command);
+    }
+
+    private Status move(final Command command) {
         final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(SOURCE_INDEX));
         final Position target = PositionConverter.convert(commands.get(TARGET_INDEX));
@@ -33,17 +44,6 @@ public final class Move implements Status {
         if (!command.isCorrectWhenMove()) {
             throw new IllegalArgumentException("'move source위치 target위치 - 예. move b2 b3'와 같은 형태로 입력해 주세요.");
         }
-    }
-
-    @Override
-    public Status checkCommand(final Command command) {
-        if (command.isStart()) {
-            throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
-        }
-        if (command.isEnd()) {
-            return new End();
-        }
-        return move(command);
     }
 
     @Override
