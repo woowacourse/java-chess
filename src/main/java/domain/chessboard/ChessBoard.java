@@ -58,7 +58,7 @@ public final class ChessBoard {
     public List<Long> findColumnPawnCounts(final Color color) {
         final Map<Integer, Long> ColumnPawnCount = chessBoard.entrySet()
                 .stream()
-                .filter((chessboard -> chessboard.getValue().isSameColor(color)))
+                .filter(chessboard -> chessboard.getValue().isSameColor(color))
                 .filter(chessboard -> chessboard.getValue().isSameType(PieceType.PAWN))
                 .collect(groupingBy(chessBoard -> chessBoard.getKey().getX(), counting()));
 
@@ -92,4 +92,5 @@ public final class ChessBoard {
     public Map<Position, SquareStatus> getChessBoard() {
         return new HashMap<>(chessBoard);
     }
+
 }

@@ -8,6 +8,7 @@ import domain.squarestatus.SquareStatus;
 import domain.type.EmptyType;
 import domain.type.PieceType;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public final class ChessGame {
@@ -26,6 +27,12 @@ public final class ChessGame {
         movePiece(source, target);
 
         turn.nextTurn();
+    }
+
+    public double calculateScore(final Color color) {
+        final List<Long> columnPawnCount = chessBoard.findColumnPawnCounts(color);
+        final List<SquareStatus> pieces = chessBoard.findPieces(color);
+        return ScoreCalculator.calculateScore(pieces, columnPawnCount);
     }
 
     private void validateTurn(final Position source) {
