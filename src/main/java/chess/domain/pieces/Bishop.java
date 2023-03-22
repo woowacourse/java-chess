@@ -30,4 +30,11 @@ public class Bishop extends Piece {
     public boolean hasDirection(final Direction direction) {
         return directions.contains(direction);
     }
+
+    @Override
+    public void validateTeam(Team team) {
+        if(team == Team.NEUTRALITY){
+            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
+        }
+    }
 }

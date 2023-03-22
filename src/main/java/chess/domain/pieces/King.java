@@ -12,6 +12,7 @@ public class King extends Piece {
 
     private static final int STEP = 1;
     private static final String KING_NAME = "K";
+
     private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 
     public King(final Team team) {
@@ -41,5 +42,12 @@ public class King extends Piece {
     @Override
     public boolean hasDirection(final Direction direction) {
         return directions.contains(direction);
+    }
+
+    @Override
+    public void validateTeam(Team team) {
+        if(team == Team.NEUTRALITY){
+            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
+        }
     }
 }

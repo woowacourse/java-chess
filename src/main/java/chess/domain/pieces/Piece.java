@@ -14,10 +14,8 @@ public abstract class Piece {
         this.team = team;
     }
 
-    void validateTeam(final Team team) {
-        if (team == Team.NEUTRALITY) {
-            throw new IllegalArgumentException(INVALID_TEAM);
-        }
+    public Name getName() {
+        return name;
     }
 
     public Team getTeam() {
@@ -25,4 +23,5 @@ public abstract class Piece {
     }
 
     abstract public boolean hasDirection(final Direction direction);
+    abstract public void validateTeam(final Team team);
 }

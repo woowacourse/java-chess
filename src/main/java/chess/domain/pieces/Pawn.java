@@ -35,9 +35,9 @@ public class Pawn extends Piece {
 
     private List<Direction> initDirections(final Team team) {
         if (team == BLACK) {
-            return new ArrayList<>(List.of(UP, UP_LEFT, UP_RIGHT));
+            return new ArrayList<>(List.of(DOWN, DOWN_LEFT, DOWN_RIGHT));
         }
-        return new ArrayList<>(List.of(DOWN, DOWN_LEFT, DOWN_RIGHT));
+        return new ArrayList<>(List.of(UP, UP_LEFT, UP_RIGHT));
     }
 
     public boolean canMoveStep(Position current, Position target) {
@@ -74,5 +74,12 @@ public class Pawn extends Piece {
     @Override
     public boolean hasDirection(final Direction direction) {
         return directions.contains(direction);
+    }
+
+    @Override
+    public void validateTeam(Team team) {
+        if (team == Team.NEUTRALITY) {
+            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
+        }
     }
 }
