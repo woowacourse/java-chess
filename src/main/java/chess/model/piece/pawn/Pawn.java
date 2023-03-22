@@ -1,63 +1,52 @@
 package chess.model.piece.pawn;
 
-import static chess.model.position.Direction.NORTH;
-import static chess.model.position.Direction.NORTH_EAST;
-import static chess.model.position.Direction.NORTH_WEST;
-import static chess.model.position.Direction.SOUTH;
-import static chess.model.position.Direction.SOUTH_EAST;
-import static chess.model.position.Direction.SOUTH_WEST;
-
 import chess.model.Color;
-import chess.model.piece.PieceType;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.Set;
 
-public class Pawn extends Piece {
+public abstract class Pawn extends Piece {
 
-    private static final Set<Direction> WHITE = Set.of(NORTH, NORTH_EAST, NORTH_WEST);
-    private static final Set<Direction> BLACK = Set.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int MINIMUM_DISTANCE = 1;
+    public static final Set<Direction> DIRECTIONS = Direction.diagonal();
 
     public Pawn(final Color color) {
         super(color, PieceType.PAWN);
     }
 
-    @Override
-    protected boolean isRightDirection(final Direction direction) {
-        if (getColor().isWhite()) {
-            return WHITE.contains(direction);
-        }
-
-        return BLACK.contains(direction);
+    public final boolean isMovable(final Distance distance, final Color targetColor) {
+        return isRightMove(distance, targetColor) || isRightAttack(distance, targetColor);
     }
 
-    @Override
-    protected boolean isRightDistance(final Distance distance) {
-        final int rank = Math.abs(distance.rank());
-
-        return rank == MINIMUM_DISTANCE;
+    private boolean isRightMove(final Distance distance, final Color targetColor) {
+        return isRightDirection(distance.findDirection())
+                && isRightDistance(distance)
+                && isSatisfySpecialCondition(distance, targetColor);
     }
 
-    @Override
+    protected abstract boolean isRightDirection(final Direction direction);
+
+    protected abstract boolean isRightDistance(final Distance distance);
+
     protected boolean isSatisfySpecialCondition(final Distance distance, final Color targetColor) {
         final int rank = Math.abs(distance.rank());
 
         final Direction direction = distance.findDirection();
 
         return isDiagonalMoveCondition(targetColor, rank, direction) || isStraightMoveCondition(targetColor, direction);
+
     }
 
-    private static boolean isDiagonalMoveCondition(final Color targetColor, final int rank, final Direction direction) {
-        return Direction.isDiagonal(direction) && rank == MINIMUM_DISTANCE && targetColor.isNotEmpty();
+    private boolean isDiagonalMoveCondition(final Color targetColor, final int rank, final Direction direction) {
+        return DIRECTIONS.contains(direction) && rank == MINIMUM_DISTANCE && targetColor.isNotEmpty();
     }
 
-    private static boolean isStraightMoveCondition(final Color targetColor, final Direction direction) {
+    private boolean isStraightMoveCondition(final Color targetColor, final Direction direction) {
         return Direction.isUpOrDown(direction) && targetColor.isEmpty();
     }
 
-    @Override
     protected boolean isRightAttack(final Distance distance, final Color targetColor) {
         return hasEnemy(targetColor) && isDiagonalAttack(distance);
     }
@@ -69,5 +58,9 @@ public class Pawn extends Piece {
     private boolean isDiagonalAttack(final Distance distance) {
         return Direction.isDiagonal(distance.findDirection())
                 && Math.abs(distance.rank()) == MINIMUM_DISTANCE;
+    }
+
+    public Piece update() {
+        return this;
     }
 }

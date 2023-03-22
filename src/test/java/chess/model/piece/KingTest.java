@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceColor.WHITE;
+import static chess.model.board.DefaultColor.EMPTY;
 import static chess.model.piece.PieceFixture.WHITE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,15 +19,15 @@ class KingTest {
         @ParameterizedTest(name = "킹이 ({0}, {1})로 이동할 때 {2}를 반환한다.")
         @CsvSource({"0,1,true", "1,0,true", "-1,-1,true", "1,-1,true", "1,1,true", "-1,1,true"})
         void isRightDirection_givenRankAndFile_thenReturnIfMovable(
-                final int rank,
                 final int file,
+                final int rank,
                 final boolean result
         ) {
             // given
             final Distance distance = new Distance(file, rank);
 
             // when
-            final boolean movable = WHITE_KING.isMovable(distance, WHITE);
+            final boolean movable = WHITE_KING.isMovable(distance, EMPTY);
 
             // then
             assertThat(movable).isEqualTo(result);
@@ -38,15 +38,15 @@ class KingTest {
                 "0,2,false", "2,0,false", "-2,-2,false", "1,-2,false", "2,2,false", "-2,1,false",
         })
         void isUnAvailableDistance_givenDistance_thenReturnIfMovable(
-                final int rank,
                 final int file,
+                final int rank,
                 final boolean result
         ) {
             // given
             final Distance distance = new Distance(file, rank);
 
             // when
-            final boolean movable = WHITE_KING.isMovable(distance, WHITE);
+            final boolean movable = WHITE_KING.isMovable(distance, EMPTY);
 
             // then
             assertThat(movable).isEqualTo(result);

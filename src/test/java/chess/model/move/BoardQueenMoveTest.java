@@ -64,7 +64,7 @@ class BoardQueenMoveTest {
         // when
         assertThatThrownBy(() -> board.move(D1, D2, WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 좌표로 이동할 수 없습니다.");
+                .hasMessage("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
     }
 
     @Test

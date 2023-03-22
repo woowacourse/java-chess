@@ -54,7 +54,7 @@ public enum Direction {
         return DIAGONAL;
     }
 
-    public static Direction findDirection(final int rank, final int file) {
+    public static Direction findDirection(final int file, final int rank) {
         return Arrays.stream(values())
                 .filter(direction -> direction.match(file, rank))
                 .findFirst()
@@ -79,7 +79,7 @@ public enum Direction {
     }
 
     public boolean match(final int file, final int rank) {
-        int gcd = gcd(Math.abs(rank), Math.abs(file));
+        int gcd = gcd(Math.abs(file), Math.abs(rank));
 
         return this.rank == (rank / gcd) && this.file == (file / gcd);
     }

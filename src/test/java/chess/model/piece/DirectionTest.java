@@ -38,7 +38,7 @@ class DirectionTest {
             "-2,-1,SOUTH_WEST_WEST",
             "2,-1,SOUTH_EAST_EAST"
     })
-    void findDirection_givenRankAndFile_thenReturnDirection(final int rank, final int file,
+    void findDirection_givenRankAndFile_thenReturnDirection(final int file, final int rank,
             final Direction result) {
         final Direction direction = Direction.findDirection(file, rank);
 

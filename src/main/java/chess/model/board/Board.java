@@ -1,8 +1,8 @@
 package chess.model.board;
 
-import chess.model.piece.PieceColor;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceColor;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import chess.model.position.Position;

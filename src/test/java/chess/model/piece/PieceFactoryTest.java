@@ -2,10 +2,10 @@ package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.piece.sliding.Bishop;
-import chess.model.piece.pawn.InitialPawn;
 import chess.model.piece.nonsliding.King;
 import chess.model.piece.nonsliding.Knight;
+import chess.model.piece.pawn.InitialBlackPawn;
+import chess.model.piece.sliding.Bishop;
 import chess.model.piece.sliding.Queen;
 import chess.model.piece.sliding.Rook;
 import java.util.stream.Stream;
@@ -23,7 +23,7 @@ class PieceFactoryTest {
 
     private static Stream<Arguments> initializePieceType() {
         return Stream.of(
-                Arguments.of(PieceType.PAWN, InitialPawn.class),
+                Arguments.of(PieceType.BLACK_PAWN, InitialBlackPawn.class),
                 Arguments.of(PieceType.KING, King.class),
                 Arguments.of(PieceType.QUEEN, Queen.class),
                 Arguments.of(PieceType.ROOK, Rook.class),

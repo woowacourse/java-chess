@@ -1,8 +1,9 @@
 package chess.model.piece;
 
+import chess.model.Color;
 import chess.model.board.DefaultColor;
 import chess.model.board.DefaultType;
-import chess.model.position.Direction;
+import chess.model.position.Distance;
 
 public class Empty extends Piece {
 
@@ -17,8 +18,13 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected boolean isRightDirection(final Direction direction) {
+    public boolean isMovable(final Distance distance, final Color targetColor) {
         return false;
+    }
+
+    @Override
+    public Piece update() {
+        return this;
     }
 
     @Override

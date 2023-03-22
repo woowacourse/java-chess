@@ -1,13 +1,12 @@
 package chess.model.piece.nonsliding;
 
 import chess.model.Color;
-import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.Set;
 
-public class King extends Piece {
+public class King extends NonSlidingPiece {
 
     private static final Set<Direction> directions = Direction.allDirections();
     private static final int MAXIMUM_DISTANCE = 1;
@@ -16,7 +15,6 @@ public class King extends Piece {
         super(color, PieceType.KING);
     }
 
-    @Override
     protected boolean isRightDirection(final Direction direction) {
         return directions.stream()
                 .anyMatch(it -> it.match(direction.rank(), direction.file()));
