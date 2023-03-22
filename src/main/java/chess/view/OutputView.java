@@ -2,6 +2,8 @@ package chess.view;
 
 import java.util.List;
 
+import chess.game.Turn;
+
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
 
@@ -21,6 +23,10 @@ public class OutputView {
             System.out.println(rowNames);
         }
         System.out.println();
+    }
+
+    public static void printCurrentTurn(String turnDisplayName) {
+        printMessage("현재 " + turnDisplayName + "턴입니다.");
     }
 
     private static void printMessage(String message) {
