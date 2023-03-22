@@ -53,7 +53,7 @@ public class OutputView {
 
     public static void printScores(List<ScoreDto> scoreDto) {
         for (ScoreDto dto : scoreDto) {
-            System.out.println(String.join(" : " , dto.getCamp(), String.valueOf(dto.getScore())));
+            System.out.println(String.join(" : ", dto.getCamp(), String.valueOf(dto.getScore())));
         }
     }
 }

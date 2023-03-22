@@ -15,8 +15,8 @@ class KingTest {
     @DisplayName("King이 이동할 수 있는 칸의 좌표를 반환한다.")
     void kingMoveTest() {
         King king = new King(Camp.WHITE, Type.KING);
-        assertThat(king.fetchMovePath(Square.of(0, 3), Square.of(1,4))).contains(
-                Square.of(1,4)
+        assertThat(king.fetchMovePath(Square.of(0, 3), Square.of(1, 4))).contains(
+                Square.of(1, 4)
         );
     }
 

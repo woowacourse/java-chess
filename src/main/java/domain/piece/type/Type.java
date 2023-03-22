@@ -12,11 +12,11 @@ import domain.piece.Score;
 public enum Type {
     KING('k', ZERO_SCORE),
     QUEEN('q', QUEEN_SCORE),
-    ROOK('r',ROOK_SCORE),
-    BISHOP('b',BISHOP_SCORE),
-    KNIGHT('n',KNIGHT_SCORE),
-    PAWN('p',PAWN_SCORE),
-    EMPTY('.',ZERO_SCORE);
+    ROOK('r', ROOK_SCORE),
+    BISHOP('b', BISHOP_SCORE),
+    KNIGHT('n', KNIGHT_SCORE),
+    PAWN('p', PAWN_SCORE),
+    EMPTY('.', ZERO_SCORE);
 
     private final char label;
     private final Score score;

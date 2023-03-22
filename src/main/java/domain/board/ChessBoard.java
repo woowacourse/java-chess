@@ -2,7 +2,12 @@ package domain.board;
 
 import static domain.piece.Camp.BLACK;
 import static domain.piece.Camp.WHITE;
-import static domain.piece.type.Type.*;
+import static domain.piece.type.Type.BISHOP;
+import static domain.piece.type.Type.KING;
+import static domain.piece.type.Type.KNIGHT;
+import static domain.piece.type.Type.PAWN;
+import static domain.piece.type.Type.QUEEN;
+import static domain.piece.type.Type.ROOK;
 
 import java.util.ArrayList;
 import java.util.Arrays;

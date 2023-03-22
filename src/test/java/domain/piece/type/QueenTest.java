@@ -28,10 +28,10 @@ class QueenTest {
     @DisplayName("queen이 직선으로 이동할 수 있는 칸의 좌표를 반환한다.")
     void queenMoveForwardTest() {
         Queen queen = new Queen(Camp.WHITE, Type.QUEEN);
-        assertThat(queen.fetchMovePath(Square.of(1, 3), Square.of(4,3))).contains(
-                Square.of(2,3),
-                Square.of(3,3),
-                Square.of(4,3)
+        assertThat(queen.fetchMovePath(Square.of(1, 3), Square.of(4, 3))).contains(
+                Square.of(2, 3),
+                Square.of(3, 3),
+                Square.of(4, 3)
         );
     }
 

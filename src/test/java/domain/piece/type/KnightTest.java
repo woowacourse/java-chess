@@ -16,8 +16,8 @@ class KnightTest {
     @DisplayName("knight가 이동할 수 있는 square를 반환한다.")
     void fetchMovableCoordinate() {
         Knight knight = new Knight(Camp.WHITE, Type.KNIGHT);
-        assertThat(knight.fetchMovePath(Square.of(1,3), Square.of(3,4))).contains(
-                Square.of(3,4)
+        assertThat(knight.fetchMovePath(Square.of(1, 3), Square.of(3, 4))).contains(
+                Square.of(3, 4)
         );
     }
 

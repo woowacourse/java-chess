@@ -31,7 +31,7 @@ public enum Command {
     }
 
     public static void validateCommandLength(int given, int expected) {
-        if(given != expected) {
+        if (given != expected) {
             throw new IllegalArgumentException(COMMAND_ERROR_MESSAGE);
         }
     }
