@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.stream.Stream;
 
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,7 +44,8 @@ class PieceDirectionTest {
         @DisplayName("흰 폰 이상한 방향이면 실패한다.")
         void white_pawn_fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> whitePawnDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @ParameterizedTest
@@ -68,7 +68,8 @@ class PieceDirectionTest {
         @DisplayName("검정 폰 이상한 방향이면 실패한다.")
         void black_pawn_fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> blackPawnDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -111,7 +112,8 @@ class PieceDirectionTest {
         @CsvSource({"1,1", "2,-2", "3,6", "6,3", "0,0"})
         void straight_fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> straightDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -154,7 +156,8 @@ class PieceDirectionTest {
         @DisplayName("대각 이동이 아니면 실패")
         void diagonal_fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> diagonalDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -190,7 +193,8 @@ class PieceDirectionTest {
         @DisplayName("나이트 이동 실패 케이스")
         void knight_fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> knightDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -261,7 +265,8 @@ class PieceDirectionTest {
         @DisplayName("킹과 퀸 이동 실패 케이스")
         void fail(int fileDirection, int rankDirection) {
             assertThatThrownBy(() -> kingAndQueenDirection.findDirection(fileDirection, rankDirection))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 }

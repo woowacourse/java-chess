@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Team;
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -111,7 +110,9 @@ class BoardTest {
             assertThatThrownBy(() -> {
                 board.move(current, nextMove);
                 board.move(nextMove, destination);
-            }).isInstanceOf(WrongDirectionException.class);
+            })
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -120,7 +121,8 @@ class BoardTest {
             Square current = Square.of(File.A, Rank.TWO);
             Square destination = Square.of(File.A, Rank.ONE);
             assertThatThrownBy(() -> board.move(current, destination))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -165,7 +167,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.B, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -217,7 +220,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftKnight, Square.of(File.B, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -260,7 +264,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.D, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -316,7 +321,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.C, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("King은 1칸만 이동할 수 있습니다.");
         }
     }
 
@@ -361,7 +367,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.A, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test

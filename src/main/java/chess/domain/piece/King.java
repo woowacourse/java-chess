@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 
 public class King extends Piece {
@@ -18,7 +17,7 @@ public class King extends Piece {
 
     private void validateDifference(final int difference) {
         if (Math.abs(difference) > 1) {
-            throw new WrongDirectionException();
+            throw new IllegalArgumentException("King은 1칸만 이동할 수 있습니다.");
         }
     }
 }
