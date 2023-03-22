@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
@@ -170,12 +170,13 @@ public class ChessBoard {
                 .count();
     }
 
-    public double calculateScoreSum(Camp camp) {
+    public Score calculateScoreSum(Camp camp) {
         return Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> board.get(Square.of(file, rank))))
+                        .map(rank -> Square.of(file, rank)))
+                .map(board::get)
                 .filter(piece -> piece.getCamp() == camp)
-                .mapToDouble(Piece::getScore)
-                .sum();
+                .map(Piece::getScore)
+                .reduce(Score.ZERO_SCORE, Score::add);
     }
 }

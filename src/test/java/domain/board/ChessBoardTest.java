@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
 import domain.piece.type.Type;
@@ -175,8 +176,8 @@ class ChessBoardTest {
         map.put(Square.of(4, 0), new Queen(Camp.WHITE, Type.QUEEN));
         ChessBoard chessBoard = new ChessBoard(map);
 
-        double score = chessBoard.calculateScoreSum(Camp.WHITE);
+        Score score = chessBoard.calculateScoreSum(Camp.WHITE);
 
-        assertThat(score).isEqualTo(25.5);
+        assertThat(score.getScore()).isEqualTo(25.5);
     }
 }

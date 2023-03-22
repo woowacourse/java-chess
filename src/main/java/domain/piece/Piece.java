@@ -84,7 +84,7 @@ public abstract class Piece {
         return false;
     }
 
-    public double getScore() {
+    public Score getScore() {
         return type.getScore();
     }
 

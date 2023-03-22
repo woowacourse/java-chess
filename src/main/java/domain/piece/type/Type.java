@@ -1,18 +1,27 @@
 package domain.piece.type;
 
+import static domain.piece.Score.BISHOP_SCORE;
+import static domain.piece.Score.KNIGHT_SCORE;
+import static domain.piece.Score.PAWN_SCORE;
+import static domain.piece.Score.QUEEN_SCORE;
+import static domain.piece.Score.ROOK_SCORE;
+import static domain.piece.Score.ZERO_SCORE;
+
+import domain.piece.Score;
+
 public enum Type {
-    KING('k',0),
-    QUEEN('q',9),
-    ROOK('r',5),
-    BISHOP('b',3),
-    KNIGHT('n',2.5),
-    PAWN('p',1),
-    EMPTY('.',0);
+    KING('k', ZERO_SCORE),
+    QUEEN('q', QUEEN_SCORE),
+    ROOK('r',ROOK_SCORE),
+    BISHOP('b',BISHOP_SCORE),
+    KNIGHT('n',KNIGHT_SCORE),
+    PAWN('p',PAWN_SCORE),
+    EMPTY('.',ZERO_SCORE);
 
     private final char label;
-    private final double score;
+    private final Score score;
 
-    Type(char label, double score) {
+    Type(char label, Score score) {
         this.label = label;
         this.score = score;
     }
@@ -21,7 +30,7 @@ public enum Type {
         return label;
     }
 
-    public double getScore() {
+    public Score getScore() {
         return score;
     }
 }

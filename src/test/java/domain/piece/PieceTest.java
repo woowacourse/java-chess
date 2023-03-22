@@ -21,7 +21,7 @@ class PieceTest {
     @ParameterizedTest(name = "기물마다 해당되는 점수를 반환한다. {0} == {1}")
     @MethodSource("provideScoreList")
     void getScore(Piece piece, double expected) {
-        double result = piece.getScore();
+        double result = piece.getScore().getScore();
 
         assertThat(result).isEqualTo(expected);
     }
