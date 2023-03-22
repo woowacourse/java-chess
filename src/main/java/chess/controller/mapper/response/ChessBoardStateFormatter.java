@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoardStateFormatter {
+
     private static final String EMPTY_PIECE_SYMBOL = ".";
 
     public static List<List<String>> convertToConsoleViewBoard(Map<Position, Piece> piecesPosition) {

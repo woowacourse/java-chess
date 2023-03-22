@@ -10,6 +10,7 @@ import chess.domain.piece.move.PieceMove;
 import java.util.List;
 
 public class ChessGame {
+
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
