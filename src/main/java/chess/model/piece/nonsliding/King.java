@@ -27,4 +27,9 @@ public class King extends NonSlidingPiece {
 
         return rank <= MAXIMUM_DISTANCE && MAXIMUM_DISTANCE >= file;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

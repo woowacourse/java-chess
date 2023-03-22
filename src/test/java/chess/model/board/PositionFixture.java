@@ -72,5 +72,6 @@ public final class PositionFixture {
     public static final Position G7 = new Position(File.G, Rank.SEVENTH);
     public static final Position H7 = new Position(File.H, Rank.SEVENTH);
     public static final Position A8 = new Position(File.A, Rank.EIGHTH);
+    public static final Position G8 = new Position(File.G, Rank.EIGHTH);
     public static final Position D8 = new Position(File.D, Rank.EIGHTH);
 }

@@ -169,6 +169,12 @@ public class Board {
         return count;
     }
 
+    public boolean findKing(final PieceColor targetColor) {
+        return squares.values().stream()
+                .filter(piece -> piece.isSameColor(targetColor))
+                .anyMatch(Piece::isKing);
+    }
+
     public Map<Position, Piece> getSquares() {
         return Map.copyOf(squares);
     }
