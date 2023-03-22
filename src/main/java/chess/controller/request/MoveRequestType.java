@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public abstract class MoveRequestType implements RequestType {
 
-    private static final Pattern POSITION = Pattern.compile("[a-h][1-8]");
+    private static final Pattern POSITION = Pattern.compile("^[a-h][1-8]$");
 
     private final String origin;
     private final String destination;
