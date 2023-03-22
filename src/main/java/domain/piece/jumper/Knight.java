@@ -30,6 +30,10 @@ public class Knight extends Jumper {
         int currentRank = currentSquare.toCoordinate().get(RANK_INDEX);
 
         return POSSIBLE_MOVES.stream()
+            .filter(possibleMove -> currentFile + possibleMove.get(FILE_INDEX) >= 0
+                && currentFile + possibleMove.get(FILE_INDEX) <= 7
+                && currentRank + possibleMove.get(RANK_INDEX) >= 0
+                && currentRank + possibleMove.get(RANK_INDEX) <= 7)
             .map(possibleMove -> new Square(currentFile + possibleMove.get(FILE_INDEX),
                 currentRank + possibleMove.get(RANK_INDEX)))
             .collect(Collectors.toList());
@@ -37,6 +41,9 @@ public class Knight extends Jumper {
 
     @Override
     public boolean canMove(Map<Square, Piece> squares, Square targetSquare) {
-        return squares.containsKey(targetSquare);
+        if (squares.containsKey(targetSquare)) {
+            return true;
+        }
+        throw new IllegalArgumentException("Knight가 움직일 수 없는 경로입니다.");
     }
 }

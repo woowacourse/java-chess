@@ -20,8 +20,8 @@ public class Square {
 
     public List<Integer> toCoordinate() {
         ArrayList<Integer> coordinate = new ArrayList<>();
-        coordinate.add(file.ordinal());
-        coordinate.add(rank.ordinal());
+        coordinate.add(file.getIndex());
+        coordinate.add(rank.getIndex());
         return coordinate;
     }
 

@@ -25,9 +25,11 @@ public abstract class Slider extends Piece {
 
         Direction direction = Direction.find(fileGap / gap, rankGap / gap);
         validateDirection(direction);
-
+        validateDistance(currentSquare, targetSquare);
         return fetchPath(currentSquare, gap, direction);
     }
+
+    protected abstract void validateDistance(Square currentSquare, Square targetSquare);
 
     protected int fetchGap(Square currentSquare, Square targetSquare, int fileOrRank) {
         List<Integer> currentCoordinate = currentSquare.toCoordinate();
@@ -49,7 +51,7 @@ public abstract class Slider extends Piece {
         int fileDirection = direction.getFile();
         int rankDirection = direction.getRank();
 
-        for (int i = 1; i <= gap; i++) {
+        for (int i = 1; i < gap + 1; i++) {
             int fileCoordinate = currentFile + (i * fileDirection);
             int rankCoordinate = currentRank + (i * rankDirection);
             squares.add(new Square(fileCoordinate, rankCoordinate));
@@ -61,7 +63,10 @@ public abstract class Slider extends Piece {
     public boolean canMove(Map<Square, Piece> pathInfo, Square targetSquare) {
         Piece pieceOnTargetSquare = pathInfo.get(targetSquare);
         pathInfo.remove(targetSquare);
-        return isDifferentCampOrEmptyOnTarget(pieceOnTargetSquare) && existNoPieceOnPath(pathInfo);
+        if (isDifferentCampOrEmptyOnTarget(pieceOnTargetSquare) && existNoPieceOnPath(pathInfo)) {
+            return true;
+        }
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 
     private boolean isDifferentCampOrEmptyOnTarget(Piece target) {
@@ -70,6 +75,6 @@ public abstract class Slider extends Piece {
 
     protected boolean existNoPieceOnPath(Map<Square, Piece> pathInfo) {
         return pathInfo.values().stream()
-            .allMatch(piece -> isEmpty());
+            .allMatch(Piece::isEmpty);
     }
 }

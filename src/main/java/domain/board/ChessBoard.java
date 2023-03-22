@@ -127,9 +127,7 @@ public class ChessBoard {
         if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
-            return;
         }
-        throw new IllegalStateException("움직일 수 없는 경로입니다.");
     }
 
     public Map<Square, Piece> getBoard() {

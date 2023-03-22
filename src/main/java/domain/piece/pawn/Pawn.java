@@ -36,7 +36,7 @@ public class Pawn extends Jumper {
             isFirstMove = false;
             return movableSquares;
         }
-        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+        throw new IllegalArgumentException("Pawn이 움직일 수 없는 경로입니다.");
     }
 
     private boolean checkMoveDirection(Square currentSquare, Square targetSquare) {
@@ -111,7 +111,6 @@ public class Pawn extends Jumper {
 
     private boolean existNoPieceOnPath(Map<Square, Piece> pathInfo) {
         return pathInfo.values().stream()
-            .allMatch(piece -> isEmpty());
+            .allMatch(Piece::isEmpty);
     }
-
 }

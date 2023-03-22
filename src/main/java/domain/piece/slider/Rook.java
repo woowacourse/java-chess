@@ -2,6 +2,7 @@ package domain.piece.slider;
 
 import java.util.List;
 
+import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Direction;
 
@@ -12,4 +13,7 @@ public class Rook extends Slider {
     public Rook(Camp camp) {
         super(camp, MOVABLE_DIRECTIONS);
     }
+
+    @Override
+    protected void validateDistance(Square currentSquare, Square targetSquare) {}
 }

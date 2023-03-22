@@ -9,7 +9,7 @@ import domain.piece.Piece;
 
 public class Empty extends Piece {
 
-    private Empty() {
+    public Empty() {
         super(Camp.EMPTY);
     }
 
@@ -28,6 +28,6 @@ public class Empty extends Piece {
     }
 
     private static class SingleEmptyInstanceHolder {
-        public static final Empty INSTANCE = new Empty();
+        private static final Empty INSTANCE = new Empty();
     }
 }

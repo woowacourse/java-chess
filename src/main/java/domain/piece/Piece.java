@@ -2,6 +2,7 @@ package domain.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import domain.board.Square;
 
@@ -33,5 +34,20 @@ public abstract class Piece {
 
     public boolean isEmpty() {
         return camp == Camp.EMPTY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Piece piece = (Piece)o;
+        return camp == piece.camp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp);
     }
 }

@@ -16,12 +16,11 @@ public class King extends Slider {
     }
 
     @Override
-    public List<Square> fetchMovableSquares(Square currentSquare, Square targetSquare) {
+    protected void validateDistance(Square currentSquare, Square targetSquare) {
         int fileGap = fetchGap(currentSquare, targetSquare, FILE_INDEX);
         int rankGap = fetchGap(currentSquare, targetSquare, RANK_INDEX);
         if (Math.abs(fileGap) > MOVABLE_DISTANCE || Math.abs(rankGap) > MOVABLE_DISTANCE) {
             throw new IllegalArgumentException("King은 두 칸 이상 이동할 수 없습니다.");
         }
-        return super.fetchMovableSquares(currentSquare, targetSquare);
     }
 }
