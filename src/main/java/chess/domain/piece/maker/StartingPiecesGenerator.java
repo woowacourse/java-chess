@@ -10,12 +10,10 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static chess.domain.piece.property.Color.BLACK;
@@ -28,21 +26,8 @@ import static chess.domain.position.File.E;
 import static chess.domain.position.File.F;
 import static chess.domain.position.File.G;
 import static chess.domain.position.File.H;
-import static chess.domain.position.Rank.EIGHT;
-import static chess.domain.position.Rank.ONE;
-import static chess.domain.position.Rank.SEVEN;
-import static chess.domain.position.Rank.TWO;
 
 public class StartingPiecesGenerator implements PiecesGenerator {
-
-    private static final Map<Color, Rank> INITIAL_PAWN_RANKS_BY_COLOR = Map.of(
-            BLACK, SEVEN,
-            WHITE, TWO
-    );
-    private static final Map<Color, Rank> INITIAL_NON_PAWNS_RANKS_BY_COLOR = Map.of(
-            BLACK, EIGHT,
-            WHITE, ONE
-    );
 
     @Override
     public Set<Piece> generate() {
@@ -67,7 +52,7 @@ public class StartingPiecesGenerator implements PiecesGenerator {
     private static List<Piece> makeStatingPawns(final Color color) {
         final List<Piece> pawns = new ArrayList<>();
         for (File file : File.values()) {
-            final Position position = Position.of(file, INITIAL_PAWN_RANKS_BY_COLOR.get(color));
+            final Position position = Position.of(file, InitialRankCondition.PAWN.byColor(color));
             pawns.add(new Pawn(position, color));
         }
         return pawns;
@@ -75,34 +60,34 @@ public class StartingPiecesGenerator implements PiecesGenerator {
 
     private static List<Piece> makeStartingRooks(final Color color) {
         return List.of(
-                new Rook(Position.of(A, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Rook(Position.of(H, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Rook(Position.of(A, InitialRankCondition.NON_PAWN.byColor(color)), color),
+                new Rook(Position.of(H, InitialRankCondition.NON_PAWN.byColor(color)), color)
         );
     }
 
     private static List<Piece> makeStartingKnight(final Color color) {
         return List.of(
-                new Knight(Position.of(B, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Knight(Position.of(G, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Knight(Position.of(B, InitialRankCondition.NON_PAWN.byColor(color)), color),
+                new Knight(Position.of(G, InitialRankCondition.NON_PAWN.byColor(color)), color)
         );
     }
 
     private static List<Piece> makeStartingBishop(final Color color) {
         return List.of(
-                new Bishop(Position.of(C, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color),
-                new Bishop(Position.of(F, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Bishop(Position.of(C, InitialRankCondition.NON_PAWN.byColor(color)), color),
+                new Bishop(Position.of(F, InitialRankCondition.NON_PAWN.byColor(color)), color)
         );
     }
 
     private static List<Piece> makeStartingKing(final Color color) {
         return List.of(
-                new King(Position.of(E, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new King(Position.of(E, InitialRankCondition.NON_PAWN.byColor(color)), color)
         );
     }
 
     private static List<Piece> makeStartingQueen(final Color color) {
         return List.of(
-                new Queen(Position.of(D, INITIAL_NON_PAWNS_RANKS_BY_COLOR.get(color)), color)
+                new Queen(Position.of(D, InitialRankCondition.NON_PAWN.byColor(color)), color)
         );
     }
 }

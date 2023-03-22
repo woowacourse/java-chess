@@ -1,22 +1,16 @@
 package chess.domain.piece;
 
 import chess.constant.ExceptionCode;
+import chess.domain.piece.maker.InitialRankCondition;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.List;
-import java.util.Map;
 
 import static chess.domain.position.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
 import static chess.domain.position.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
 
 public class Pawn extends Piece {
-
-    private static final Map<Color, Rank> INITIAL_RANK = Map.of(
-            Color.BLACK, Rank.SEVEN,
-            Color.WHITE, Rank.TWO
-    );
 
     public Pawn(final Position position, final Color color) {
         super(position, color);
@@ -68,7 +62,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isInitialPosition() {
-        return position.getRank() == INITIAL_RANK.get(color);
+        return position.getRank() == InitialRankCondition.PAWN.byColor(color);
     }
 
     @Override
