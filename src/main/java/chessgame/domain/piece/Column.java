@@ -1,5 +1,7 @@
 package chessgame.domain.piece;
 
+import java.util.Objects;
+
 public class Column {
     private static final int MIN_COLUMN = 0;
     private static final int MAX_COLUMN = 7;
@@ -12,6 +14,10 @@ public class Column {
 
     public static Column from(int value) {
         validate(value);
+        return new Column(value);
+    }
+
+    public static Column fromWithoutValidate(int value) {
         return new Column(value);
     }
 
@@ -55,5 +61,18 @@ public class Column {
 
     public int value() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Column column = (Column) o;
+        return value == column.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

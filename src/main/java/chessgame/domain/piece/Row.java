@@ -1,7 +1,5 @@
 package chessgame.domain.piece;
 
-import java.sql.RowId;
-import java.util.Map;
 import java.util.Objects;
 
 public class Row {
@@ -17,6 +15,10 @@ public class Row {
 
     public static Row from(int value) {
         validate(value);
+        return new Row(value);
+    }
+
+    public static Row fromWithoutValidate(int value) {
         return new Row(value);
     }
 

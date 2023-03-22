@@ -11,8 +11,8 @@ public class Knight implements Piece {
             TWO, MINUS_TWO, HALF, MINUS_HALF
     );
     private static final List<Coordinate> availableCoordinateDifferences = List.of(
-            new Coordinate(1, 2),
-            new Coordinate(2, 1)
+            Coordinate.fromOnBoard(1, 2),
+            Coordinate.fromOnBoard(2, 1)
     );
 
     @Override

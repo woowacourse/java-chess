@@ -12,8 +12,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 가능한 우측 상단 이동 테스트")
     void isReachableByRuleRightUp(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 0);
-        Coordinate endCoordinate = new Coordinate(distance, distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(distance, distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -23,8 +23,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 가능한 좌측 상단 이동 테스트")
     void isReachableByRuleLeftUp(int distance) {
-        Coordinate startCoordinate = new Coordinate(7, 0);
-        Coordinate endCoordinate = new Coordinate(7 - distance, distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -34,8 +34,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 가능한 좌측 하단 이동 테스트")
     void isReachableByRuleLeftBottom(int distance) {
-        Coordinate startCoordinate = new Coordinate(7, 7);
-        Coordinate endCoordinate = new Coordinate(7 - distance, 7 - distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(7, 7);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, 7 - distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -45,8 +45,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 가능한 우측 하단 이동 테스트")
     void isReachableByRuleRightBottom(int distance) {
-        Coordinate startCoordinate = new Coordinate(7, 0);
-        Coordinate endCoordinate = new Coordinate(7 - distance, distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -58,8 +58,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 불가능한 왼쪽 이동 테스트")
     void isReachableByRuleLeft(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 6);
-        Coordinate endCoordinate = new Coordinate(0, 6 - distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -69,8 +69,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 불가능한 오른쪽 이동 테스트")
     void isReachableByRuleRight(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 0);
-        Coordinate endCoordinate = new Coordinate(0, distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -80,8 +80,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 불가능한 위쪽 이동 테스트")
     void isReachableByRuleUp(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 0);
-        Coordinate endCoordinate = new Coordinate(distance, 0);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -91,8 +91,8 @@ class BishopTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("비숍 불가능한 아래 이동 테스트")
     void isReachableByRuleDown(int distance) {
-        Coordinate startCoordinate = new Coordinate(6, 0);
-        Coordinate endCoordinate = new Coordinate(6 - distance, 0);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
         Bishop bishop = new Bishop();
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();

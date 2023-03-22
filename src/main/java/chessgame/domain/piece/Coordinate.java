@@ -7,25 +7,33 @@ public class Coordinate {
     private final Row row;
     private final Column column;
 
-    public Coordinate(final int row, final int column) {
-        this.row = Row.from(row);
-        this.column = Column.from(column);
+    public Coordinate(final Row row, final Column column) {
+        this.row = row;
+        this.column = column;
+    }
+
+    public static Coordinate fromOnBoard(final int row, final int column) {
+        return new Coordinate(Row.from(row), Column.from(column));
+    }
+
+    public static Coordinate from(final int row, final int column) {
+        return new Coordinate(Row.fromWithoutValidate(row), Column.fromWithoutValidate(column));
     }
 
     public Coordinate add(Coordinate otherCoordinate) {
-        return new Coordinate(this.row.add(otherCoordinate.row), this.column.add(otherCoordinate.column));
+        return fromOnBoard(this.row.add(otherCoordinate.row), this.column.add(otherCoordinate.column));
     }
 
     public Coordinate add(int row, int column) {
-        return new Coordinate(this.row.add(row), this.column.add(column));
+        return fromOnBoard(this.row.add(row), this.column.add(column));
     }
 
     public Coordinate minus(Coordinate otherCoordinate) {
-        return new Coordinate(this.row.minus(otherCoordinate.row), otherCoordinate.column.minus(this.column));
+        return from(otherCoordinate.row.minus(this.row), otherCoordinate.column.minus(this.column));
     }
 
     public Coordinate minusWithAbsoluteValue(Coordinate otherCoordinate) {
-        return new Coordinate(this.row.absoluteOfMinus(otherCoordinate.row),
+        return fromOnBoard(this.row.absoluteOfMinus(otherCoordinate.row),
                 this.column.absoluteOfMinus(otherCoordinate.column));
     }
 
@@ -67,11 +75,11 @@ public class Coordinate {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Coordinate coordinate = (Coordinate) o;
-        return row == coordinate.row && column == coordinate.column;
+        Coordinate that = (Coordinate) o;
+        return Objects.equals(row, that.row) && Objects.equals(column, that.column);
     }
 
     @Override

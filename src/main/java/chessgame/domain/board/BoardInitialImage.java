@@ -45,8 +45,8 @@ public class BoardInitialImage {
         List<Square> frontSquares = makeWhiteFrontRank();
 
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(new Coordinate(WHITE_BACK_RANK, file), backSquares.get(file));
-            boardImage.put(new Coordinate(WHITE_FRONT_RANK, file), frontSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(WHITE_BACK_RANK, file), backSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(WHITE_FRONT_RANK, file), frontSquares.get(file));
         }
     }
 
@@ -76,7 +76,7 @@ public class BoardInitialImage {
 
     private static void addEachEmptyRank(Map<Coordinate, Square> boardImage, int rank) {
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(new Coordinate(rank, file), new EmptySquare());
+            boardImage.put(Coordinate.fromOnBoard(rank, file), new EmptySquare());
         }
     }
 
@@ -85,8 +85,8 @@ public class BoardInitialImage {
         List<Square> frontSquares = makeBlackFrontRank();
 
         for (int file = 0; file < BOARD_FILE; file++) {
-            boardImage.put(new Coordinate(BLACK_FRONT_RANK, file), frontSquares.get(file));
-            boardImage.put(new Coordinate(BLACK_BACK_RANK, file), backSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(BLACK_FRONT_RANK, file), frontSquares.get(file));
+            boardImage.put(Coordinate.fromOnBoard(BLACK_BACK_RANK, file), backSquares.get(file));
         }
     }
 

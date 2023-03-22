@@ -1,9 +1,7 @@
 package chessgame.controller;
 
 import chessgame.domain.board.ChessGame;
-import chessgame.domain.piece.Column;
 import chessgame.domain.piece.Coordinate;
-import chessgame.domain.piece.Row;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
@@ -95,6 +93,6 @@ public class ChessController {
     private Coordinate convertCoordinate(final String frontCoordinate) {
         int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
         int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
-        return new Coordinate(row, column);
+        return Coordinate.fromOnBoard(row, column);
     }
 }

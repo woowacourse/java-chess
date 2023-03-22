@@ -13,8 +13,8 @@ class KnightTest {
     @CsvSource(value = {"6:5", "6:3", "2:5", "2:3", "5:6", "3:6", "3:2", "5:2"}, delimiter = ':')
     @DisplayName("나이트 가능한 대각선 이동 테스트")
     void isReachableByRule(int row, int col) {
-        Coordinate startCoordinate = new Coordinate(4, 4);
-        Coordinate endCoordinate = new Coordinate(row, col);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(4, 4);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(row, col);
         Knight knight = new Knight();
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -24,8 +24,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 왼쪽 이동 테스트")
     void isReachableByRuleCantLeft(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 6);
-        Coordinate endCoordinate = new Coordinate(0, 6 - distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
         Knight knight = new Knight();
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -35,8 +35,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 오른쪽 이동 테스트")
     void isReachableByRuleCantRight(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 0);
-        Coordinate endCoordinate = new Coordinate(0, distance);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
         Knight knight = new Knight();
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -46,8 +46,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 위로 이동 테스트")
     void isReachableByRuleCantUp(int distance) {
-        Coordinate startCoordinate = new Coordinate(0, 0);
-        Coordinate endCoordinate = new Coordinate(distance, 0);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
         Knight knight = new Knight();
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -57,8 +57,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 가능한 아래로 이동 테스트")
     void isReachableByRuleCantDown(int distance) {
-        Coordinate startCoordinate = new Coordinate(6, 0);
-        Coordinate endCoordinate = new Coordinate(6 - distance, 0);
+        Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
+        Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
         Knight knight = new Knight();
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
