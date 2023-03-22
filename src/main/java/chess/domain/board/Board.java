@@ -76,7 +76,6 @@ public final class Board {
 
     private void move(final Square sourceSquare, final Square targetSquare) {
         targetSquare.changePiece(sourceSquare);
-        sourceSquare.makeEmpty();
     }
 
     private Square getSquare(final Position source) {

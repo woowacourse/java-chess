@@ -29,6 +29,7 @@ public final class Square {
 
     public void changePiece(Square other) {
         this.piece = other.piece;
+        other.makeEmpty();
     }
 
     public void makeEmpty() {
