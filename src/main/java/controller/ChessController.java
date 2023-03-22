@@ -1,7 +1,7 @@
 package controller;
 
-import static controller.ProgressCommand.END;
-import static controller.ProgressCommand.MOVE;
+import static controller.MoveCommand.END;
+import static controller.MoveCommand.MOVE;
 
 import domain.board.Board;
 import domain.position.Position;
@@ -35,7 +35,7 @@ public final class ChessController {
 
     private void play(final Board board) {
         List<String> commands;
-        while (MOVE.equals(ProgressCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
+        while (MOVE.equals(MoveCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
             movePieceWithHandling(board, commands);
             OutputView.printBoard(board.getPieces());
         }
@@ -52,7 +52,7 @@ public final class ChessController {
     private List<String> readProgressCommand() {
         try {
             List<String> commands = inputMoveEndCommand();
-            validateCommands(commands);
+            validateMoveCommands(commands);
             return commands;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
@@ -62,15 +62,15 @@ public final class ChessController {
 
     private List<String> inputMoveEndCommand() {
         final List<String> gameOption = InputView.readPlayGameOption();
-        ProgressCommand.from(gameOption.get(COMMAND_INDEX));
+        MoveCommand.from(gameOption.get(COMMAND_INDEX));
         return gameOption;
     }
 
-    private void validateCommands(final List<String> commands) {
-        if (END.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
+    private void validateMoveCommands(final List<String> commands) {
+        if (END.equals(MoveCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
             return;
         }
-        if (MOVE.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 3) {
+        if (MOVE.equals(MoveCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 3) {
             return;
         }
 

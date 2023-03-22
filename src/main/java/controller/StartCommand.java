@@ -1,14 +1,21 @@
 package controller;
 
+import java.util.Arrays;
+
 public enum StartCommand {
     START,
     END;
 
     public static StartCommand from(final String command) {
-        try {
-            return StartCommand.valueOf(command.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("start 또는 end만 입력해야 합니다.");
+        validateCommand(command);
+        return StartCommand.valueOf(command.toUpperCase());
+    }
+
+    private static void validateCommand(String command) {
+        if (Arrays.stream(StartCommand.values())
+                .anyMatch(startCommand -> startCommand.name().equals(command.toUpperCase()))) {
+            return;
         }
+        throw new IllegalArgumentException("존재하지 않는 커맨드입니다.");
     }
 }
