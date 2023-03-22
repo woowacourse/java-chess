@@ -1,5 +1,7 @@
 package domain.piece.pawn;
 
+import domain.piece.move.Direction;
+import domain.piece.move.Inclination;
 import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.Color;
@@ -30,10 +32,17 @@ public abstract class Pawn extends Piece {
             final Coordinate end
     );
 
-    protected abstract boolean isMovableWhenMovingVariates(
+    protected boolean isMovableWhenMovingVariates(
             final Coordinate start,
-            final  Coordinate end
-    );
+            final Coordinate end
+    ) {
+        Inclination inclination = Inclination.of(start.getInclination(end));
+
+        return directionWhenEnemyExist().canBeDirectionOf(inclination) &&
+                start.hasDistanceLessThanOne(end);
+    }
+
+    protected abstract Direction directionWhenEnemyExist();
 
     @Override
     public boolean isPawn() {

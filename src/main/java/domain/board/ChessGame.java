@@ -39,8 +39,8 @@ public final class ChessGame {
     }
 
     private void validate(final Coordinate start, final Coordinate end) {
-        validateTurn(start);
         validateNotEmpty(start);
+        validateTurn(start);
         validateMoveByRule(start, end);
         validateNotBlocked(start, end);
     }

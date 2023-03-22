@@ -33,13 +33,7 @@ public final class WhiteInitPawn extends Pawn {
     }
 
     @Override
-    protected boolean isMovableWhenMovingVariates(
-            final Coordinate start,
-            final Coordinate end
-    ) {
-        Inclination inclination = Inclination.of(start.getInclination(end));
-
-        return DIRECTION_WHEN_ENEMY_EXIST.canBeDirectionOf(inclination) &&
-                start.hasDistanceLessThanOne(end);
+    protected Direction directionWhenEnemyExist() {
+        return DIRECTION_WHEN_ENEMY_EXIST;
     }
 }
