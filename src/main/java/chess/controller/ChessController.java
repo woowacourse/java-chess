@@ -1,9 +1,9 @@
 package chess.controller;
 
-import static chess.constant.GameCommand.END;
 import static chess.view.PositionConverter.convertToSourcePosition;
 import static chess.view.PositionConverter.convertToTargetPosition;
 
+import chess.view.GameCommand;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Position;
@@ -42,17 +42,13 @@ public class ChessController {
         while (onGoing) {
             outputView.printBoard(chessGame.getBoard());
             String command = inputCommand();
-            onGoing = !isOver(command);
+            onGoing = !GameCommand.isEnd(command);
             movePiece(chessGame, command);
         }
     }
 
-    private boolean isOver(String command) {
-        return END.getCommand().equals(command);
-    }
-
     private void movePiece(ChessGame chessGame, String command) {
-        if (isOver(command)) {
+        if (GameCommand.isEnd(command)) {
             return;
         }
         Position source = convertToSourcePosition(command);

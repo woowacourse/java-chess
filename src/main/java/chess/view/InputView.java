@@ -1,6 +1,5 @@
 package chess.view;
 
-import static chess.constant.GameCommand.END;
 import static chess.view.InputValidator.*;
 
 import java.util.Arrays;
@@ -21,7 +20,7 @@ public class InputView {
     public String readCommand() {
         String input = scanner.nextLine();
 
-        if (END.getCommand().equals(input)) {
+        if (GameCommand.isEnd(input)) {
             return input;
         }
 
