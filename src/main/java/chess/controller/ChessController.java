@@ -1,10 +1,10 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.domain.board.BoardScore;
-import chess.domain.board.BoardSearch;
-import chess.domain.board.Score;
+import chess.domain.board.factory.BoardFactory;
+import chess.domain.board.score.BoardScore;
+import chess.domain.board.search.BoardSearch;
+import chess.domain.board.score.Score;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
 import chess.view.Command;

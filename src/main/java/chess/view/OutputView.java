@@ -1,15 +1,15 @@
 package chess.view;
 
-import chess.domain.board.Score;
+import chess.domain.board.score.Score;
 import chess.domain.board.position.Position;
-import chess.domain.piece.Bishop;
+import chess.domain.piece.slider.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.jumper.King;
+import chess.domain.piece.jumper.Knight;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.slider.Queen;
+import chess.domain.piece.slider.Rook;
 
 import java.util.ArrayList;
 import java.util.Collections;
