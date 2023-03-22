@@ -13,7 +13,7 @@ public class Pawn extends NoneEmptyPiece {
         this.hasMoved = hasMoved;
     }
 
-    public static Pawn from(Team team){
+    public static Pawn from(Team team) {
         return new Pawn(PieceType.PAWN, team, Movement.PAWN, false);
     }
 

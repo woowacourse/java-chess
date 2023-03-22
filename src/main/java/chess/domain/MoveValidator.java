@@ -39,10 +39,7 @@ public class MoveValidator {
     private static boolean isSameTeam(Map<Position, Piece> board, Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
-        if (sourcePiece.isBlack() && targetPiece.isBlack()) {
-            return true;
-        }
-        return sourcePiece.isWhite() && targetPiece.isWhite();
+        return sourcePiece.isSameTeam(targetPiece);
     }
 
     private static void validateInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
@@ -59,7 +56,7 @@ public class MoveValidator {
 
     private static void validateObstacle(Map<Position, Piece> board, Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isType(PieceType.KNIGHT) && hasObstacle(board, source, target)) {
+        if (!sourcePiece.isPieceType(PieceType.KNIGHT) && hasObstacle(board, source, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
         }
     }
@@ -82,7 +79,7 @@ public class MoveValidator {
     private static void validateDiagonalImpossible(Map<Position, Piece> board, Position source, Position target) {
         Piece sourcePiece = board.get(source);
         RelativePosition relativePosition = RelativePosition.of(source, target);
-        if (sourcePiece.isType(PieceType.PAWN) && relativePosition.isDiagonal() && isEmpty(board, target)) {
+        if (sourcePiece.isPieceType(PieceType.PAWN) && relativePosition.isDiagonal() && isEmpty(board, target)) {
             throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
         }
     }

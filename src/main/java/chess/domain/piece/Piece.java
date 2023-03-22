@@ -1,24 +1,34 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
+
 public abstract class Piece {
 
     protected final PieceType pieceType;
+    protected final Team team;
 
-    public Piece(PieceType pieceType) {
+    public Piece(PieceType pieceType, Team team) {
         this.pieceType = pieceType;
+        this.team = team;
     }
 
-    public abstract boolean isEmpty();
+    public boolean isEmpty(){
+        return this.team == Team.EMPTY;
+    }
 
-    public abstract boolean isBlack();
+    public boolean isSameTeam(Piece target) {
+        return this.team == target.team;
+    }
 
-    public abstract boolean isWhite();
-
-    public boolean isType(PieceType pieceType) {
+    public boolean isPieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 
-    public PieceType getType() {
+    public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }
