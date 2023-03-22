@@ -7,13 +7,19 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public final class Controller {
+    private final CommandProcessor commandProcessor;
+    private final StateProcessor stateProcessor;
+
+    public Controller(final CommandProcessor commandProcessor, final StateProcessor stateProcessor) {
+        this.commandProcessor = commandProcessor;
+        this.stateProcessor = stateProcessor;
+    }
+
+
     public void run() {
         OutputView.printStartMessage();
 
-        CommandProcessor commandProcessor = CommandProcessor.create();
-        StateProcessor stateProcessor = StateProcessor.create();
-
-        setup(commandProcessor, stateProcessor);
+        setup();
 
         while (stateProcessor.isNotEnd()) {
             retryOnError(() -> commandProcessor.execute(stateProcessor, InputView.inputGameState()));
@@ -21,7 +27,7 @@ public final class Controller {
         }
     }
 
-    private static void setup(final CommandProcessor commandProcessor, final StateProcessor stateProcessor) {
+    private void setup() {
         commandProcessor.register(Command.START, command -> stateProcessor.start());
         commandProcessor.register(Command.END, command -> stateProcessor.end());
         commandProcessor.register(Command.MOVE, stateProcessor::move);
