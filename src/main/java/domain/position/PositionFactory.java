@@ -54,14 +54,18 @@ public enum PositionFactory {
         return positions;
     }
 
-    private static int findColumn(String command) {
-        final char coordinate = command.charAt(INDEX_COLUMN);
+    private static int findColumn(final String command) {
+        final char coordinate = getCoordinate(command, INDEX_COLUMN);
         return PositionFactory.from(coordinate, value -> value.column).value;
     }
 
-    private static int findRow(String command) {
-        final char coordinate = command.charAt(INDEX_ROW);
+    private static int findRow(final String command) {
+        final char coordinate = getCoordinate(command, INDEX_ROW);
         return PositionFactory.from(coordinate, value -> value.row).value;
+    }
+
+    private static char getCoordinate(final String command, final int index) {
+        return command.toLowerCase().charAt(index);
     }
 
     private static PositionFactory from(char coordinate, Function<PositionFactory, Character> findCoordinate) {
