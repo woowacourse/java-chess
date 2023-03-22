@@ -43,11 +43,11 @@ public class ChessController {
             outputView.printBoard(chessGame.getBoard());
             String command = inputCommand();
             onGoing = !GameCommand.isEnd(command);
-            movePiece(chessGame, command);
+            play(chessGame, command);
         }
     }
 
-    private void movePiece(ChessGame chessGame, String command) {
+    private void play(ChessGame chessGame, String command) {
         if (GameCommand.isEnd(command)) {
             return;
         }
