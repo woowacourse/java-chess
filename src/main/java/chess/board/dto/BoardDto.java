@@ -2,23 +2,23 @@ package chess.board.dto;
 
 import chess.board.Board;
 import chess.piece.Piece;
+import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
-    private static final int BOARD_ROW_COLUMN_SIZE = 8;
 
     private final List<List<String>> nameBoard;
 
     public BoardDto(final Board board) {
         this.nameBoard = new ArrayList<>();
-        initBoardSpaces();
+        initBoardSpaces(board.getSideLength());
         fillPieceNames(board);
     }
 
-    private void initBoardSpaces() {
+    private void initBoardSpaces(int length) {
         final List<String> emptyNames = List.of(".", ".", ".", ".", ".", ".", ".", ".");
-        for (int rowIndex = 0; rowIndex < BOARD_ROW_COLUMN_SIZE; rowIndex++) {
+        for (int rowIndex = 0; rowIndex < length; rowIndex++) {
             List<String> row = new ArrayList<>(emptyNames);
             nameBoard.add(row);
         }
@@ -29,7 +29,8 @@ public class BoardDto {
         for (Piece piece : pieces) {
             final List<String> rank = nameBoard.get(getFlippedIndex(piece.getRank()));
             final int fileIndex = piece.getFile() - 1;
-            rank.set(fileIndex, piece.getName());
+            final String pieceName = PieceName.of(piece.getClass(), piece.getSide());
+            rank.set(fileIndex, pieceName);
         }
     }
 
