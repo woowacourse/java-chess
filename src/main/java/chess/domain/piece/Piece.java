@@ -31,6 +31,10 @@ abstract public class Piece {
         return this instanceof Pawn;
     }
 
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
     public Team getColor() {
         return team;
     }

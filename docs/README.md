@@ -35,7 +35,7 @@
   - [x] 이동 방향을 알려준다.
     - 이동이 불가능하면 예외가 발생한다.
   - [x] 폰인지 알려준다.
-  - [ ] 킹인지 알려준다.
+  - [x] 킹인지 알려준다.
 
   - Pawn: 폰
     - `PieceDirection.WHITE_PAWN` & `PieceDirection.WHITE_PAWN`
