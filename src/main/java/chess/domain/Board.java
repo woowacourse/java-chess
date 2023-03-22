@@ -11,9 +11,6 @@ import java.util.Map;
 
 public final class Board {
 
-
-    private static final int INITIAL_WHITE_RANK = 2;
-    private static final int INITIAL_BLACK_RANK = 7;
     private static final int BOARD_LENGTH = 8;
     public static final double BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
@@ -34,10 +31,18 @@ public final class Board {
     public void move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
+
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece.getColor());
         validatePath(path);
-        board.put(target, checkInitialPawn(sourcePiece));
-        board.put(source, Empty.create());
+        switchPiece(source, target, sourcePiece);
+    }
+
+    private void validatePath(final List<Position> path) {
+        final boolean result = path.stream()
+                .allMatch(position -> board.get(position).isEmpty());
+        if (!result) {
+            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
+        }
     }
 
     private Piece checkInitialPawn(final Piece piece) {
@@ -50,12 +55,9 @@ public final class Board {
         return piece;
     }
 
-    private void validatePath(final List<Position> path) {
-        final boolean result = path.stream()
-                .allMatch(position -> board.get(position).isEmpty());
-        if (!result) {
-            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
-        }
+    private void switchPiece(final Position source, final Position target, final Piece sourcePiece) {
+        board.put(target, checkInitialPawn(sourcePiece));
+        board.put(source, Empty.create());
     }
 
     public Map<Position, Piece> getBoard() {

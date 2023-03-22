@@ -7,7 +7,7 @@ import chess.domain.movingStrategy.MovingStrategy;
 import java.util.Collections;
 import java.util.List;
 
-public class Empty extends Piece {
+public final class Empty extends Piece {
 
     private Empty(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
         super(color, pieceType, strategies);
@@ -19,7 +19,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public List<Position> createPath(final Position source, final Position target, final Color targetColor, final MovingStrategy strategy) {
+    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
         throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
     }
 }

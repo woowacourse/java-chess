@@ -17,7 +17,7 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> createPath(final Position source, final Position target, final Color targetColor, final MovingStrategy strategy) {
+    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
         final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
         if (movingStrategy.isAttackStrategy()) {
             final Position movePosition = movingStrategy.move(source);
