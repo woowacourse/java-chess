@@ -66,6 +66,12 @@ public class Point {
         return rankDistance(point) / calculateDistance(point);
     }
 
+    public boolean checkPawnAttackLength(Point source, Point target, int distance) {
+        if(source.rankDistance(target) == distance && source.fileDistance(target) == distance){
+            return true;
+        }
+        return (source.rankDistance(target) == distance && source.fileDistance(target) == -distance);
+    }
 
     @Override
     public boolean equals(Object o) {

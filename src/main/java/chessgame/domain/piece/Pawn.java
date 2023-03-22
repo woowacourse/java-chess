@@ -23,59 +23,36 @@ public class Pawn implements Piece {
 
     private boolean isPawnAttack(Point source, Point target, Team team) {
         if (team == Team.BLACK) {
-            return canPawnAttack(source, target, BLACK_DISTANCE);
+            return source.checkPawnAttackLength(source, target, BLACK_DISTANCE);
         }
         if (team == Team.WHITE) {
-            return canPawnAttack(source, target, WHITE_DISTANCE);
+            return source.checkPawnAttackLength(source, target, WHITE_DISTANCE);
         }
         return false;
     }
 
-    private boolean isPawnMove(Point source, Point target, Team team) {
+    public boolean isPawnMove(Point source, Point target, Team team) {
         if (team == Team.BLACK && source.fileDistance(target) == 0) {
-            return canPawnBlackMove(source, target);
+            return canPawnMove(source, target, BLACK_DISTANCE, BLACK_INITIAL_RANK);
         }
         if (team == Team.WHITE && source.fileDistance(target) == 0) {
-            return canPawnWhiteMove(source, target);
+            return canPawnMove(source, target, WHITE_DISTANCE, WHITE_INITIAL_RANK);
         }
         return false;
     }
 
-    private boolean canPawnBlackMove(Point source, Point target) {
-        if (source.isInitialPoint(BLACK_INITIAL_RANK) && (source.rankDistance(target) == BLACK_DISTANCE
-                || source.rankDistance(target) == BLACK_DISTANCE * 2)) {
+    private boolean canPawnMove(Point source, Point target, int distance, Rank rank) {
+        if (source.isInitialPoint(rank) && (source.rankDistance(target) == distance
+                || source.rankDistance(target) == distance * 2)) {
             return true;
         }
-        return source.rankDistance(target) == BLACK_DISTANCE;
-    }
-
-    private boolean canPawnWhiteMove(Point source, Point target) {
-        if (source.isInitialPoint(WHITE_INITIAL_RANK) && (source.rankDistance(target) == WHITE_DISTANCE
-                || source.rankDistance(target) == WHITE_DISTANCE * 2)) {
-            return true;
-        }
-        return source.rankDistance(target) == WHITE_DISTANCE;
-    }
-
-    private boolean canPawnAttack(Point source, Point target, int distance) {
-        if (checkRankLengthOne(source, target, distance) && checkFileLengthOne(source, target, distance)) {
-            return true;
-        }
-        return checkRankLengthOne(source, target, distance) && checkFileLengthOne(source, target, -distance);
-    }
-
-    private boolean checkRankLengthOne(Point source, Point target, int distance) {
         return source.rankDistance(target) == distance;
-    }
-
-    private boolean checkFileLengthOne(Point source, Point target, int distance) {
-        return source.fileDistance(target) == distance;
     }
 
     @Override
     public boolean isMovable(Point source, Point target, boolean hasTarget) {
         if (hasTarget) {
-            return isPawnAttack(source,target, team);
+            return isPawnAttack(source, target, team);
         }
         return isPawnMove(source, target, team);
     }
