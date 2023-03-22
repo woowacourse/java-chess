@@ -18,7 +18,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square from, final Square to, final Piece piece) {
+    public boolean isMovable(final Square source, final Square destination, final Piece piece) {
         throw new UnsupportedOperationException();
     }
 }

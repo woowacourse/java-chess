@@ -33,7 +33,7 @@ public class BishopTest {
     class isMovable {
         Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
                                    .get(0);
-        Square fromSquare = Square.of(Rank.FOUR, File.D);
+        Square sourceSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.ONE, File.G);
         Square movableSquare2 = Square.of(Rank.SIX, File.B);
         Square unMovableSquare = Square.of(Rank.THREE, File.B);
@@ -51,9 +51,9 @@ public class BishopTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteBishop.isMovable(fromSquare, movableSquare1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(fromSquare, movableSquare2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(fromSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -64,7 +64,7 @@ public class BishopTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteBishop.isMovable(fromSquare, movableSquare1, whiteBishop2)).isFalse();
+                    assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, whiteBishop2)).isFalse();
                 }
             }
         }
@@ -75,7 +75,7 @@ public class BishopTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteBishop.isMovable(fromSquare, unMovableSquare, blackQueen)).isFalse();
+                assertThat(whiteBishop.isMovable(sourceSquare, unMovableSquare, blackQueen)).isFalse();
             }
         }
     }

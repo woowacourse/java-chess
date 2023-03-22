@@ -24,7 +24,7 @@ public abstract class Piece {
         return this.side == Side.NO_SIDE;
     }
 
-    abstract public boolean isMovable(Square from, Square to, Piece piece);
+    abstract public boolean isMovable(Square source, Square to, Piece piece);
 
     protected boolean isWhite() {
         return side == Side.WHITE;

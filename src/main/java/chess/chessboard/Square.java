@@ -29,32 +29,32 @@ public class Square {
         }
     }
 
-    public boolean isBackOf(final Square to, final Side side) {
+    public boolean isBackOf(final Square other, final Side side) {
         if (side == Side.WHITE) {
-            return to.rank.isBiggerThan(this.rank);
+            return other.rank.isBiggerThan(this.rank);
         }
-        return this.rank.isBiggerThan(to.rank);
+        return this.rank.isBiggerThan(other.rank);
     }
 
-    public List<Square> squaresOfPath(Square to) {
-        if (isLine(to)) {
-            return squaresOfLine(to);
+    public List<Square> squaresOfPath(Square destination) {
+        if (isLine(destination)) {
+            return squaresOfLine(destination);
         }
-        if (isDiagonal(to)) {
-            return squaresOfDiagonal(to);
+        if (isDiagonal(destination)) {
+            return squaresOfDiagonal(destination);
         }
         return Collections.emptyList();
     }
 
-    private boolean isLine(final Square to) {
-        validateNotSameSquare(to);
-        return this.rank == to.rank || this.file == to.file;
+    private boolean isLine(final Square other) {
+        validateNotSameSquare(other);
+        return this.rank == other.rank || this.file == other.file;
     }
 
-    private boolean isDiagonal(final Square to) {
-        validateNotSameSquare(to);
-        final int verticalDistance = this.rank.distanceTo(to.rank);
-        final int horizontalDistance = this.file.distanceTo(to.file);
+    private boolean isDiagonal(final Square other) {
+        validateNotSameSquare(other);
+        final int verticalDistance = this.rank.distanceTo(other.rank);
+        final int horizontalDistance = this.file.distanceTo(other.file);
         return verticalDistance == horizontalDistance;
     }
 
@@ -68,8 +68,8 @@ public class Square {
         return squaresOfFile(otherSquare);
     }
 
-    private List<Square> squaresOfRank(final Square to) {
-        return File.filesBetween(this.file, to.file)
+    private List<Square> squaresOfRank(final Square other) {
+        return File.filesBetween(this.file, other.file)
                    .stream()
                    .map(foundFile -> Square.of(rank, foundFile))
                    .collect(Collectors.toUnmodifiableList());

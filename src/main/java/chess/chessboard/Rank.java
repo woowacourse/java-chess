@@ -29,18 +29,18 @@ public enum Rank {
                      .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
     }
 
-    public static List<Rank> ranksBetween(final Rank from, final Rank to) {
-        final int smaller = Math.min(from.position, to.position);
-        final int bigger = Math.max(from.position, to.position);
+    public static List<Rank> ranksBetween(final Rank source, final Rank destination) {
+        final int smaller = Math.min(source.position, destination.position);
+        final int bigger = Math.max(source.position, destination.position);
         List<Rank> ranks = Arrays.stream(values())
                                  .filter(rank -> rank.position > smaller && rank.position < bigger)
                                  .collect(Collectors.toList());
-        return sortByPosition(from, to, ranks);
+        return sortByPosition(source, destination, ranks);
     }
 
-    private static List<Rank> sortByPosition(final Rank from, final Rank to, final List<Rank> ranks) {
+    private static List<Rank> sortByPosition(final Rank source, final Rank destination, final List<Rank> ranks) {
         ranks.sort(Comparator.comparing(Rank::getPosition));
-        if (from.position > to.position) {
+        if (source.position > destination.position) {
             Collections.reverse(ranks);
         }
         return ranks;

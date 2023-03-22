@@ -142,54 +142,54 @@ class ChessBoardTest {
             @DisplayName("앞의 두 칸에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true1() {
-                Square from = Square.of(Rank.SEVEN, File.A);
-                Square to = Square.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
-                                     .get(0));
+                Square source = Square.of(Rank.SEVEN, File.A);
+                Square destination = Square.of(Rank.FIVE, File.A);
+                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
+                                       .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Square from = Square.of(Rank.SEVEN, File.A);
+                Square source = Square.of(Rank.SEVEN, File.A);
                 Square middle = Square.of(Rank.SIX, File.A);
-                Square to = Square.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
-                                     .get(0));
+                Square destination = Square.of(Rank.FIVE, File.A);
+                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
+                                       .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
-                                     .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.WHITE));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.A);
+                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
-                                     .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.A);
+                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
-                assertThat(chessBoard.move(from, Square.of(Rank.SIX, File.C))).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
+                assertThat(chessBoard.move(source, Square.of(Rank.SIX, File.C))).isFalse();
             }
         }
 
@@ -200,55 +200,55 @@ class ChessBoardTest {
             @DisplayName("대각선 내에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Square from = Square.of(Rank.THREE, File.E);
-                Square to = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
-                                       .get(0));
+                Square source = Square.of(Rank.THREE, File.E);
+                Square destination = Square.of(Rank.SEVEN, File.A);
+                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
+                                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Square from = Square.of(Rank.THREE, File.E);
+                Square source = Square.of(Rank.THREE, File.E);
                 Square middle = Square.of(Rank.FIVE, File.C);
-                Square to = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
-                                       .get(0));
+                Square destination = Square.of(Rank.SEVEN, File.A);
+                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
+                                         .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.WHITE));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.A);
+                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
+                                         .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
-                chessBoard.move(to, from);
-                assertThat(chessBoard.move(from, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.A);
+                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
+                                         .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
         }
 
@@ -259,55 +259,55 @@ class ChessBoardTest {
             @DisplayName("직선 내에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Square from = Square.of(Rank.THREE, File.E);
-                Square to = Square.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
-                                     .get(0));
+                Square source = Square.of(Rank.THREE, File.E);
+                Square destination = Square.of(Rank.THREE, File.A);
+                pieces.put(source, Rook.getRooksOf(Side.BLACK)
+                                       .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Square from = Square.of(Rank.THREE, File.E);
+                Square source = Square.of(Rank.THREE, File.E);
                 Square middle = Square.of(Rank.THREE, File.B);
-                Square to = Square.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
-                                     .get(0));
+                Square destination = Square.of(Rank.THREE, File.A);
+                pieces.put(source, Rook.getRooksOf(Side.BLACK)
+                                       .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.B);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
-                                     .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.WHITE));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.B);
+                pieces.put(source, Rook.getRooksOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
-                chessBoard.move(to, from);
-                assertThat(chessBoard.move(from, Square.of(Rank.SEVEN, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.SEVEN, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.FIVE, File.B);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
-                                     .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.FIVE, File.B);
+                pieces.put(source, Rook.getRooksOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
         }
 
@@ -318,28 +318,28 @@ class ChessBoardTest {
             @DisplayName("도착 위치에 적의 기물이 존재하거나 비어있다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Square from = Square.of(Rank.THREE, File.E);
-                Square to = Square.of(Rank.TWO, File.G);
-                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
-                                       .get(0));
+                Square source = Square.of(Rank.THREE, File.E);
+                Square destination = Square.of(Rank.TWO, File.G);
+                pieces.put(source, Knight.getKnightsOf(Side.BLACK)
+                                         .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isTrue();
-                chessBoard.move(to, from);
-                assertThat(chessBoard.move(from, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isTrue();
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.FIVE, File.C);
-                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.FIVE, File.C);
+                pieces.put(source, Knight.getKnightsOf(Side.BLACK)
+                                         .get(0));
+                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
         }
 
@@ -350,64 +350,64 @@ class ChessBoardTest {
             @DisplayName("이동 경로상에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Square from = Square.of(Rank.THREE, File.E);
-                Square to1 = Square.of(Rank.THREE, File.A);
-                Square to2 = Square.of(Rank.SEVEN, File.A);
+                Square source = Square.of(Rank.THREE, File.E);
+                Square destination1 = Square.of(Rank.THREE, File.A);
+                Square destination2 = Square.of(Rank.SEVEN, File.A);
 
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(source, Queen.getQueenOf(Side.BLACK));
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to1)).isTrue();
-                chessBoard.move(to1, from);
-                assertThat(chessBoard.move(from, to2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isTrue();
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isTrue();
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Square from = Square.of(Rank.THREE, File.E);
+                Square source = Square.of(Rank.THREE, File.E);
                 Square middle1 = Square.of(Rank.THREE, File.B);
                 Square middle2 = Square.of(Rank.FIVE, File.C);
-                Square to1 = Square.of(Rank.THREE, File.A);
-                Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                Square destination1 = Square.of(Rank.THREE, File.A);
+                Square destination2 = Square.of(Rank.SEVEN, File.A);
+                pieces.put(source, Queen.getQueenOf(Side.BLACK));
                 pieces.put(middle1, Queen.getQueenOf(Side.WHITE));
                 pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to1)).isFalse();
-                assertThat(chessBoard.move(from, to2)).isFalse();
+                assertThat(chessBoard.move(source, destination1)).isFalse();
+                assertThat(chessBoard.move(source, destination2)).isFalse();
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to1 = Square.of(Rank.THREE, File.F);
-                Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
-                pieces.put(to1, Queen.getQueenOf(Side.WHITE));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination1 = Square.of(Rank.THREE, File.F);
+                Square destination2 = Square.of(Rank.SEVEN, File.A);
+                pieces.put(source, Queen.getQueenOf(Side.BLACK));
+                pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to1)).isTrue();
-                chessBoard.move(to1, from);
-                assertThat(chessBoard.move(from, to2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isTrue();
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to1 = Square.of(Rank.THREE, File.A);
-                Square to2 = Square.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
-                pieces.put(to1, King.getKingOf(Side.BLACK));
-                pieces.put(to2, King.getKingOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination1 = Square.of(Rank.THREE, File.A);
+                Square destination2 = Square.of(Rank.SEVEN, File.A);
+                pieces.put(source, Queen.getQueenOf(Side.BLACK));
+                pieces.put(destination1, King.getKingOf(Side.BLACK));
+                pieces.put(destination2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to1)).isFalse();
-                assertThat(chessBoard.move(from, to2)).isFalse();
+                assertThat(chessBoard.move(source, destination1)).isFalse();
+                assertThat(chessBoard.move(source, destination2)).isFalse();
             }
         }
 
@@ -418,28 +418,28 @@ class ChessBoardTest {
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Square from = Square.of(Rank.THREE, File.E);
-                Square to1 = Square.of(Rank.THREE, File.F);
-                Square to2 = Square.of(Rank.FOUR, File.D);
-                pieces.put(from, King.getKingOf(Side.BLACK));
-                pieces.put(to1, Queen.getQueenOf(Side.WHITE));
+                Square source = Square.of(Rank.THREE, File.E);
+                Square destination1 = Square.of(Rank.THREE, File.F);
+                Square destination2 = Square.of(Rank.FOUR, File.D);
+                pieces.put(source, King.getKingOf(Side.BLACK));
+                pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to1)).isTrue();
-                chessBoard.move(to1, from);
-                assertThat(chessBoard.move(from, to2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isTrue();
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isTrue();
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false() {
-                Square from = Square.of(Rank.SEVEN, File.B);
-                Square to = Square.of(Rank.SIX, File.A);
-                pieces.put(from, King.getKingOf(Side.BLACK));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                Square source = Square.of(Rank.SEVEN, File.B);
+                Square destination = Square.of(Rank.SIX, File.A);
+                pieces.put(source, King.getKingOf(Side.BLACK));
+                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(from, to)).isFalse();
+                assertThat(chessBoard.move(source, destination)).isFalse();
             }
         }
     }

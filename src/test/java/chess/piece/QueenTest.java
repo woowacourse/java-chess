@@ -33,7 +33,7 @@ public class QueenTest {
     @DisplayName("isMovable 메서드는")
     class isMovable {
         Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
-        Square fromSquare = Square.of(Rank.FOUR, File.D);
+        Square sourceSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.ONE, File.G);
         Square movableSquare2 = Square.of(Rank.FOUR, File.H);
         Square unMovableSquare = Square.of(Rank.THREE, File.B);
@@ -48,9 +48,9 @@ public class QueenTest {
             @DisplayName("true를 반환한다")
             void it_returns_true() {
                 assertAll(
-                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whiteQueen.isMovable(sourceSquare, movableSquare1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isMovable(sourceSquare, movableSquare2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isMovable(sourceSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
                 );
             }
         }
@@ -61,7 +61,7 @@ public class QueenTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteQueen.isMovable(fromSquare, movableSquare1, whiteBishop)).isFalse();
+                assertThat(whiteQueen.isMovable(sourceSquare, movableSquare1, whiteBishop)).isFalse();
             }
         }
 
@@ -71,7 +71,7 @@ public class QueenTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteQueen.isMovable(fromSquare, unMovableSquare, blackQueen)).isFalse();
+                assertThat(whiteQueen.isMovable(sourceSquare, unMovableSquare, blackQueen)).isFalse();
             }
         }
     }

@@ -33,7 +33,7 @@ public class KnightTest {
     class isMovable {
         Knight whiteKnight = Knight.getKnightsOf(Side.WHITE)
                                    .get(0);
-        Square fromSquare = Square.of(Rank.FOUR, File.D);
+        Square sourceSquare = Square.of(Rank.FOUR, File.D);
         Square movableSquare1 = Square.of(Rank.TWO, File.C);
         Square movableSquare2 = Square.of(Rank.FIVE, File.F);
         Square unMovableSquare = Square.of(Rank.TWO, File.B);
@@ -50,7 +50,7 @@ public class KnightTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteKnight.isMovable(fromSquare, movableSquare1, whiteKnight2)).isFalse();
+                    assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, whiteKnight2)).isFalse();
                 }
             }
 
@@ -61,9 +61,9 @@ public class KnightTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteKnight.isMovable(fromSquare, movableSquare1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(fromSquare, movableSquare2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(fromSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -75,7 +75,7 @@ public class KnightTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteKnight.isMovable(fromSquare, unMovableSquare, blackQueen)).isFalse();
+                assertThat(whiteKnight.isMovable(sourceSquare, unMovableSquare, blackQueen)).isFalse();
             }
         }
     }

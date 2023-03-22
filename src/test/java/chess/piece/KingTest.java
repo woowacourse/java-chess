@@ -36,7 +36,7 @@ public class KingTest {
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
             King whiteKing = King.getKingOf(Side.WHITE);
-            Square from = Square.of(Rank.FOUR, File.D);
+            Square source = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.FIVE, File.D);
             Square movableSquare2 = Square.of(Rank.FIVE, File.E);
             Square movableSquare3 = Square.of(Rank.FOUR, File.C);
@@ -49,18 +49,18 @@ public class KingTest {
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
             void it_returns_movable() {
                 assertAll(
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare2, EmptyPiece.getInstance())).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare3, blackQueen)).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare4, EmptyPiece.getInstance())).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare5, blackQueen)).isTrue()
+                        () -> assertThat(whiteKing.isMovable(source, movableSquare1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(source, movableSquare2, EmptyPiece.getInstance())).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(source, movableSquare3, blackQueen)).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(source, movableSquare4, EmptyPiece.getInstance())).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(source, movableSquare5, blackQueen)).isTrue()
                 );
             }
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 같은 진영인 경우 false를 반환한다")
             void it_returns_not_movable1() {
-                assertThat(whiteKing.isMovable(from, movableSquare1, whiteQueen)).isFalse();
+                assertThat(whiteKing.isMovable(source, movableSquare1, whiteQueen)).isFalse();
             }
 
             @Test
@@ -68,8 +68,8 @@ public class KingTest {
             void it_returns_not_movable2() {
                 Square unableSquare1 = Square.of(Rank.FOUR, File.F);
                 Square unableSquare2 = Square.of(Rank.ONE, File.D);
-                assertThat(whiteKing.isMovable(from, unableSquare1, blackQueen)).isFalse();
-                assertThat(whiteKing.isMovable(from, unableSquare2, EmptyPiece.getInstance())).isFalse();
+                assertThat(whiteKing.isMovable(source, unableSquare1, blackQueen)).isFalse();
+                assertThat(whiteKing.isMovable(source, unableSquare2, EmptyPiece.getInstance())).isFalse();
             }
         }
     }

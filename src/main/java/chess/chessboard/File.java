@@ -28,19 +28,19 @@ public enum File {
                      .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
     }
 
-    public static List<File> filesBetween(final File from, final File to) {
-        final int smaller = Math.min(from.position, to.position);
-        final int bigger = Math.max(from.position, to.position);
+    public static List<File> filesBetween(final File source, final File destination) {
+        final int smaller = Math.min(source.position, destination.position);
+        final int bigger = Math.max(source.position, destination.position);
         List<File> files = Arrays.stream(values())
                                  .filter(file -> file.position > smaller && file.position < bigger)
                                  .collect(Collectors.toList());
 
-        return sortByPosition(from, to, files);
+        return sortByPosition(source, destination, files);
     }
 
-    private static List<File> sortByPosition(final File from, final File to, final List<File> files) {
+    private static List<File> sortByPosition(final File source, final File destination, final List<File> files) {
         files.sort(Comparator.comparing(File::getPosition));
-        if (from.position > to.position) {
+        if (source.position > destination.position) {
             Collections.reverse(files);
         }
         return files;
