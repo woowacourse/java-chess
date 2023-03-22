@@ -1,6 +1,8 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -113,5 +115,17 @@ public class Board {
 
 	public Map<Position, Piece> getBoard() {
 		return board;
+	}
+
+	public List<File> getFiles() {
+		final List<File> files = Arrays.asList(File.values());
+		files.sort(Comparator.reverseOrder());
+		return files;
+	}
+
+	public List<Rank> getRanks() {
+		final List<Rank> ranks = Arrays.asList(Rank.values());
+		ranks.sort(Comparator.naturalOrder());
+		return ranks;
 	}
 }
