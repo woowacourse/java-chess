@@ -1,25 +1,39 @@
 package chess.view;
 
-public enum GameCommand {
+import java.util.Arrays;
+
+public enum GameCommandView {
 
     START("start"),
     MOVE("move"),
+    STATUS("status"),
     END("end");
 
     private final String command;
 
-    GameCommand(String command) {
+    GameCommandView(String command) {
         this.command = command;
     }
 
-    public void validateCommand(String command) {
-        if (this.command.equals(command)) {
-            return;
-        }
-        throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위해서는 " + this.command + "를 입력해주세요.");
+    public static boolean isValidCommandWithoutMove(String command) {
+        return Arrays.stream(GameCommandView.values())
+                .filter(gameCommandView -> gameCommandView != MOVE)
+                .anyMatch(gameCommandView -> gameCommandView.command.equals(command));
     }
 
-    public String getCommand() {
-        return command;
+    public static boolean isValidMoveCommand(String command) {
+        return MOVE.command.equals(command);
+    }
+
+    public static boolean isStartCommand(String command) {
+        return START.command.equals(command);
+    }
+
+    public static boolean isStatusCommand(String command) {
+        return STATUS.command.equals(command);
+    }
+
+    public static boolean isEndCommand(String command) {
+        return END.command.equals(command);
     }
 }

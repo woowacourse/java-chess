@@ -4,35 +4,27 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static chess.view.GameCommand.END;
 import static chess.view.InputValidator.*;
 
 public class InputView {
 
-    private static final String COMMANDS_DELIMITER = " ";
+    private static final String MOVE_COMMAND_DELIMITER = " ";
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public void readStart() {
-        String input = scanner.nextLine();
-        validateStartCommand(input);
-    }
-
     public String readCommand() {
         String input = scanner.nextLine();
-        if (END.getCommand().equals(input)) {
+        if (GameCommandView.isValidCommandWithoutMove(input)) {
             return input;
         }
-
-        List<String> commands = Arrays.asList(input.split(COMMANDS_DELIMITER));
-        validateCommands(commands);
-
+        List<String> commands = Arrays.asList(input.split(MOVE_COMMAND_DELIMITER));
+        validateMoveCommand(commands);
         return commands.get(1) + commands.get(2);
     }
 
-    private static void validateCommands(List<String> commands) {
+    private static void validateMoveCommand(List<String> commands) {
         validateBlank(commands);
-        validateMoveCommand(commands.get(0));
+        validateCommandIsMove(commands.get(0));
         validateCommandSize(commands);
         validateCommandLength(commands.get(1), commands.get(2));
         validateFile(commands.get(1).charAt(0));

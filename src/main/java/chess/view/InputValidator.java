@@ -2,8 +2,6 @@ package chess.view;
 
 import java.util.List;
 
-import static chess.view.GameCommand.*;
-
 public class InputValidator {
 
     private static final int MOVE_COMMAND_SIZE = 3;
@@ -19,12 +17,15 @@ public class InputValidator {
         }
     }
 
-    public static void validateStartCommand(String input) {
-        START.validateCommand(input);
-    }
+//    public static void validateStartCommand(String input) {
+//        START.validateCommand(input);
+//    }
 
-    public static void validateMoveCommand(String input) {
-        MOVE.validateCommand(input);
+    public static void validateCommandIsMove(String input) {
+        if (GameCommandView.isValidMoveCommand(input)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 잘못된 입력 형식입니다.");
     }
 
     public static void validateCommandSize(List<String> commands) {

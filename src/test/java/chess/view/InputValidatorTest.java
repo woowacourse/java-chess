@@ -20,21 +20,12 @@ class InputValidatorTest {
     }
 
     @Test
-    @DisplayName("입력이 start가 아니면 예외가 발생한다.")
-    void validateStartCommand() {
-        String input = "stort";
-        assertThatThrownBy(() -> InputValidator.validateStartCommand(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 게임을 진행하기 위해서는 start를 입력해주세요.");
-    }
-
-    @Test
     @DisplayName("입력이 move가 아니면 예외가 발생한다.")
     void validateMoveCommand() {
         String input = "moove";
-        assertThatThrownBy(() -> InputValidator.validateMoveCommand(input))
+        assertThatThrownBy(() -> InputValidator.validateCommandIsMove(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 게임을 진행하기 위해서는 move를 입력해주세요.");
+                .hasMessage("[ERROR] 잘못된 입력 형식입니다.");
     }
 
     @Test
