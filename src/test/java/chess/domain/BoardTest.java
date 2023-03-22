@@ -36,18 +36,6 @@ class BoardTest {
                     .hasMessage("source 위치에 조작할 수 있는 말이 없습니다.");
         }
 
-        @Test
-        @DisplayName("말의 이동방향이 올바르지 않을 경우 예외처리한다.")
-        void moveTest3() {
-            Board board = BoardGenerator.createBoard();
-            Position initial = new Position(0, 1);
-            Position source = new Position(0, 2);
-            Position target = new Position(0, 1);
-            board.movePiece(initial, source);
-
-            assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 target 위치로 움직일 수 없습니다.");
-        }
 
         @Test
         @DisplayName("말이 knight 가 아닌데 다른 말을 뛰어넘으려는 경우 예외처리한다.")

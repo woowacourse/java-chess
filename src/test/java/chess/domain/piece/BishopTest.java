@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BishopTest {
@@ -33,8 +32,12 @@ class BishopTest {
         Bishop blackBishop = Bishop.from(Team.BLACK);
         RelativePosition relativePosition = new RelativePosition(x, y);
 
-        assertFalse(whiteBishop.isMobile(relativePosition, new EmptyPiece()));
-        assertFalse(blackBishop.isMobile(relativePosition, new EmptyPiece()));
+        assertThatThrownBy(() -> whiteBishop.isMobile(relativePosition, new EmptyPiece()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 방향으로 이동할 수 없는 말입니다.");
+        assertThatThrownBy(() -> blackBishop.isMobile(relativePosition, new EmptyPiece()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 방향으로 이동할 수 없는 말입니다.");
     }
 
     @Test
@@ -42,7 +45,8 @@ class BishopTest {
     void sameTeamTest() {
         Bishop whiteBishop = Bishop.from(Team.WHITE);
 
-        assertThatThrownBy(() -> whiteBishop.isMobile(new RelativePosition(0, 1), Bishop.from(Team.WHITE))).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> whiteBishop.isMobile(new RelativePosition(0, 1), Bishop.from(Team.WHITE)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동하고자 하는 자리에 같은 팀이 존재합니다.");
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PawnTest {
@@ -54,7 +53,9 @@ class PawnTest {
         RelativePosition relativePosition = new RelativePosition(0, -2);
 
         pawn.isMobile(relativePosition, new EmptyPiece());
-        assertFalse(pawn.isMobile(relativePosition, new EmptyPiece()));
+        assertThatThrownBy(() -> pawn.isMobile(relativePosition, new EmptyPiece()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 처음 이동할 때만 앞으로 두 칸 갈 수 있습니다.");
     }
 
     @Test
