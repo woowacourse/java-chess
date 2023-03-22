@@ -1,43 +1,41 @@
 package chess.domain;
 
-import chess.domain.math.UnitVector;
 import java.util.Objects;
 
 public class Position {
 
-    private final int row;
-    private final int col;
+    private final Rank rank;
+    private final File file;
 
-    public Position(final int row, final int col) {
-        this.row = row;
-        this.col = col;
+    public Position(final Rank rank, final File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
-    public Position move(final UnitVector unitVector) {
-        int nextRow = this.row + unitVector.getRow();
-        int nextCol = this.col + unitVector.getCol();
-
-        return new Position(nextRow, nextCol);
+    public Position nextPosition(int rank, int file) {
+        Rank nextRank = Rank.of(this.rank.getRank() + rank);
+        File nextFile = File.ofByFile(this.file.getFile() + file);
+        return new Position(nextRank, nextFile);
     }
 
-    public int getRow() {
-        return row;
+    public int getRank() {
+        return rank.getRank();
     }
 
-    public int getCol() {
-        return col;
+    public int getFile() {
+        return file.getFile();
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return row == position.row && col == position.col;
+        return rank == position.rank && file == position.file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(rank, file);
     }
 }
