@@ -103,6 +103,21 @@ class ChessGameTest {
         );
     }
 
+    @DisplayName("Pawn 앞에 장애물(아군, 적 상관 x)이 있을 경우, 이동할 수 없다.")
+    @Test
+    void queenTest() {
+        Square source = new Square(File.C, Rank.SEVEN);
+        Square movedSquare = new Square(File.C, Rank.FIVE);
+        Square target = new Square(File.A, Rank.FIVE);
+
+        ChessGame chessGame = new ChessGame();
+        Chessboard chessboard = chessGame.getChessboard();
+
+        chessboard.swapPiece(source, movedSquare);
+        chessGame.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
+        Assertions.assertThatNoException().isThrownBy(() -> chessGame.move(new Square(File.D, Rank.EIGHT), target));
+    }
+
     @Test
     @DisplayName("체스 게임이 계속 실행 불가능한 상태이면 false반환")
     void cantKeepGoing() {

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,10 +32,13 @@ public enum Rank {
     public List<Rank> getRanksInRange(Rank otherRank) {
         int max = Math.max(value, otherRank.value);
         int min = Math.min(value, otherRank.value);
-
-        return Arrays.stream(values())
+        List<Rank> ranks = Arrays.stream(values())
                 .filter(file -> file.value > min && file.value < max)
                 .collect(Collectors.toList());
+        if (value < otherRank.value) {
+            Collections.reverse(ranks);
+        }
+        return ranks;
     }
 
 }

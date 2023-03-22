@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +29,12 @@ public enum File {
         int max = Math.max(value, otherFile.value);
         int min = Math.min(value, otherFile.value);
 
-        return Arrays.stream(values())
+        List<File> files = Arrays.stream(values())
                 .filter(file -> file.value > min && file.value < max)
                 .collect(Collectors.toList());
+        if (value > otherFile.value) {
+            Collections.reverse(files);
+        }
+        return files;
     }
 }

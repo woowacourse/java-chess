@@ -7,7 +7,6 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
-import chess.view.OutputView;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +76,6 @@ class ChessboardTest {
         Chessboard chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
         chessboard.swapPiece(source, target);
-        new OutputView().printChessBoard(chessboard);
         Assertions.assertThat(chessboard.countScore(Camp.WHITE)).isEqualTo(score);
     }
 

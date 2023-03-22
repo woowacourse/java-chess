@@ -43,6 +43,7 @@ public class Chessboard {
     }
 
     public boolean isEmptyInRoute(Square source, Square target) {
+        List<Square> squares = getMovableRoute(source, target);
         return getMovableRoute(source, target)
                 .stream()
                 .filter(square -> board.get(square).getPieceType() != PieceType.EMPTY)

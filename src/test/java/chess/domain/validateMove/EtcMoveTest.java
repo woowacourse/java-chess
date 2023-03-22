@@ -60,4 +60,6 @@ public class EtcMoveTest {
                 Arguments.arguments("룩은 이동 타겟에 적 기물이 있다면", new Square(File.A, Rank.ONE), new Square(File.D, Rank.SEVEN))
         );
     }
+
+
 }
