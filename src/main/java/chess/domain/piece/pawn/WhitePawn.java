@@ -20,10 +20,4 @@ public final class WhitePawn extends Pawn {
                 new MoveUp(), new MoveLeftUp(), new MoveRightUp());
         return new WhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
-
-    @Override
-    public boolean isInitialPosition() {
-        return false;
-    }
-
 }

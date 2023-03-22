@@ -26,18 +26,10 @@ public abstract class Pawn extends Piece {
             }
             throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
         }
-        if (targetColor.isEmpty()) {
-            Position firstMove = movingStrategy.move(source);
-            if (firstMove.equals(target)) {
-                return Collections.emptyList();
-            }
-            Position secondMove = movingStrategy.move(firstMove);
-            if (secondMove.equals(target) && isInitialPosition()) {
-                return List.of(firstMove);
-            }
+        final Position currentPosition = movingStrategy.move(source);
+        if (currentPosition.equals(target) && targetColor.isEmpty()) {
+            return Collections.emptyList();
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
     }
-
-    public abstract boolean isInitialPosition();
 }

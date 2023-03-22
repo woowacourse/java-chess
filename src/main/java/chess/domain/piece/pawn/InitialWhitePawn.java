@@ -18,13 +18,7 @@ public final class InitialWhitePawn extends Pawn {
 
     public static InitialWhitePawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
-                new MoveUp(), new MoveUpUp(), new MoveLeftUp(), new MoveRightUp());
+                new MoveUpUp(), new MoveUp(), new MoveLeftUp(), new MoveRightUp());
         return new InitialWhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
-
-    @Override
-    public boolean isInitialPosition() {
-        return true;
-    }
-
 }

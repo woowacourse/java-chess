@@ -78,7 +78,7 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(InitialWhitePawn.create().findPath(PositionFixtures.A2, PositionFixtures.A4, Color.EMPTY)).containsExactly(PositionFixtures.A3);
+                assertThat(InitialWhitePawn.create().findPath(PositionFixtures.A2, PositionFixtures.A4, Color.EMPTY)).isEmpty();
             }
 
             @DisplayName("실패 한다. - 도착지에 아군 기물 존재")
@@ -169,7 +169,7 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(InitialBlackPawn.create().findPath(PositionFixtures.A7, PositionFixtures.A5, Color.EMPTY)).containsExactly(PositionFixtures.A6);
+                assertThat(InitialBlackPawn.create().findPath(PositionFixtures.A7, PositionFixtures.A5, Color.EMPTY)).containsExactly();
             }
 
             @DisplayName("실패한다. - 도착지에 아군 기물 존재")
