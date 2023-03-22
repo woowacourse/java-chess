@@ -33,4 +33,29 @@ public class Commands {
     public GameCommand getCommand() {
         return GameCommand.from(commands.get(COMMAND_INDEX));
     }
+
+    public Position generateSourcePosition() {
+        validateMoveCommand();
+        return generatePosition(SOURCE_POSITION_INDEX);
+    }
+
+    public Position generateTargetPosition() {
+        validateMoveCommand();
+        return generatePosition(TARGET_POSITION_INDEX);
+    }
+
+    private void validateMoveCommand() {
+        GameCommand gameCommand = GameCommand.from(commands.get(COMMAND_INDEX));
+        if (gameCommand != GameCommand.MOVE) {
+            throw new IllegalArgumentException("[ERROR] move 커맨드에서만 포지션을 생성할 수 있습니다.");
+        }
+    }
+
+    private Position generatePosition(int positionIndex) {
+        String position = commands.get(positionIndex);
+        final List<String> splitPosition = Arrays.asList(position.split(""));
+        File sourceFile = File.of(splitPosition.get(FILE_INDEX));
+        Rank sourceRank = Rank.of(Integer.parseInt(splitPosition.get(RANK_INDEX)));
+        return new Position(sourceFile, sourceRank);
+    }
 }
