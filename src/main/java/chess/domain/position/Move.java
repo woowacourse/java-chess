@@ -54,8 +54,8 @@ public class Move {
     }
 
     private Position calculateEachRoute(int unit, int index) {
-        int deltaFile = getDeltaFile() / unit * index;
-        int deltaRank = getDeltaRank() / unit * index;
+        int deltaFile = (getDeltaFile() / unit) * index;
+        int deltaRank = (getDeltaRank() / unit) * index;
         return source.move(deltaFile, deltaRank);
     }
 
