@@ -61,4 +61,12 @@ public abstract class Piece {
     public boolean isKing() {
         return type.isKing();
     }
+
+    public boolean isPawn() {
+        return type.isPawn();
+    }
+
+    public double getScore() {
+        return type.getValue();
+    }
 }

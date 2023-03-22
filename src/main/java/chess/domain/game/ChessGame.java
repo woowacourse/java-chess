@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Side;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -74,5 +75,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public List<Double> calculateScore() {
+        return List.of(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
     }
 }
