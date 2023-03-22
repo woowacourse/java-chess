@@ -49,7 +49,6 @@ public final class ChessGame {
     private void validateMove(final Coordinate start, final Coordinate end) {
         validateNotEmpty(start);
         validateMoveByRule(start, end);
-        validateIsNotSameCamp(start, end);
         validateNotBlocked(start, end);
     }
 
@@ -64,12 +63,6 @@ public final class ChessGame {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 방향으로 이동할 수 없습니다.");
-    }
-
-    private void validateIsNotSameCamp(final Coordinate start, final Coordinate end) {
-        if (board.isSameColor(start, end)) {
-            throw new IllegalArgumentException("[ERROR] 같은 팀 기물은 잡을 수 없습니다.");
-        }
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {
