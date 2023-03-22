@@ -1,11 +1,11 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.dao.board.BoardDaoImpl;
+import chess.dao.board.BoardDao;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -13,11 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class BoardDaoImplTest {
+class BoardDaoTest {
 
     private static final int BOARD_ID_FOR_TEST = 9999;
+    private static final String positions = "a1a2a3";
+    private static final String pieces = "pkP";
 
-    private final BoardDaoImpl boardDao = new BoardDaoImpl();
+    private final BoardDao boardDao = new BoardDao();
 
     @Test
     @DisplayName("DB 연결이 성공적으로 된다.")
@@ -35,13 +37,8 @@ class BoardDaoImplTest {
     @DisplayName("방 번호와, 체스판을 DB에 저장한다.")
     @Order(2)
     void save_success() {
-        // given
-        Map<String, String> board = new HashMap<>();
-        board.put("a1", "p");
-        board.put("a2", "P");
-
         // when & then
-        boardDao.save(BOARD_ID_FOR_TEST, board, true);
+        boardDao.save(BOARD_ID_FOR_TEST, positions, pieces, true);
     }
 
     @Test
@@ -49,10 +46,15 @@ class BoardDaoImplTest {
     @Order(3)
     void find_success() {
         // when
-        Map<String, String> board = boardDao.findById(BOARD_ID_FOR_TEST);
+        List<String> positionsWithPieces = boardDao.findById(BOARD_ID_FOR_TEST);
+        String positionsGot = positionsWithPieces.get(0);
+        String pieceGot = positionsWithPieces.get(1);
 
         // then
-        assertThat(board.keySet().size()).isEqualTo(2);
+        assertAll(
+                () -> assertThat(positionsGot).isEqualTo(positions),
+                () -> assertThat(pieceGot).isEqualTo(pieces)
+        );
     }
 
     @Test
