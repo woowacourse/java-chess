@@ -30,6 +30,7 @@ public class Board {
             Piece findPiece = board.get(startCoordinate);
             board.put(startCoordinate, new EmptyPiece());
             board.put(endCoordinate, findPiece);
+            findPiece.checkMoved();
             return;
         }
         throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");
@@ -46,7 +47,6 @@ public class Board {
         Piece targetPiece = board.get(endCoordinate);
 
         if (isPieceExistsAt(endCoordinate)) {
-            System.out.println(findPiece.isCatchable(targetPiece.camp(), startCoordinate, endCoordinate));
             return findPiece.isCatchable(targetPiece.camp(), startCoordinate, endCoordinate);
         }
         return findPiece.isMovable(startCoordinate, endCoordinate);
@@ -70,10 +70,6 @@ public class Board {
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
         Coordinate indexCoordinate = directionVector.moveToDirection(startCoordinate);
 
-        System.out.println(indexCoordinate);
-        System.out.println(!board.get(indexCoordinate)
-                                 .isExist());
-        System.out.println(!indexCoordinate.equals(endCoordinate));
         while (!board.get(indexCoordinate)
                      .isExist() && !indexCoordinate.equals(endCoordinate)) {
             indexCoordinate = directionVector.moveToDirection(indexCoordinate);
