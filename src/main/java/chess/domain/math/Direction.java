@@ -1,6 +1,7 @@
 package chess.domain.math;
 
 import chess.domain.Position;
+
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -29,56 +30,56 @@ public enum Direction {
     }
 
     private static boolean isUp(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return rowDifferent > 0 && colDifferent == 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return rankDifferent > 0 && fileDifferent == 0;
     }
 
     private static boolean isDown(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return rowDifferent < 0 && colDifferent == 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return rankDifferent < 0 && fileDifferent == 0;
     }
 
     private static boolean isLeft(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return rowDifferent == 0 && colDifferent > 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return rankDifferent == 0 && fileDifferent < 0;
     }
 
     private static boolean isRight(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return rowDifferent == 0 && colDifferent < 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return rankDifferent == 0 && fileDifferent > 0;
     }
 
     private static boolean isUpLeft(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return Math.abs(rowDifferent) == Math.abs(colDifferent) && colDifferent > 0 && rowDifferent > 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return Math.abs(rankDifferent) == Math.abs(fileDifferent) && rankDifferent > 0 && fileDifferent < 0;
     }
 
     private static boolean isUpRight(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return Math.abs(rowDifferent) == Math.abs(colDifferent) && colDifferent < 0 && rowDifferent > 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return Math.abs(rankDifferent) == Math.abs(fileDifferent) && rankDifferent > 0 && fileDifferent > 0;
     }
 
     private static boolean isDownLeft(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return Math.abs(rowDifferent) == Math.abs(colDifferent) && colDifferent > 0 && rowDifferent < 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return Math.abs(rankDifferent) == Math.abs(fileDifferent) && rankDifferent < 0 && fileDifferent < 0;
     }
 
     private static boolean isDownRight(final Position current, final Position target) {
-        int rowDifferent = current.getRow() - target.getRow();
-        int colDifferent = current.getCol() - target.getCol();
-        return Math.abs(rowDifferent) == Math.abs(colDifferent) && colDifferent < 0 && rowDifferent < 0;
+        int rankDifferent = target.getRank() - current.getRank();
+        int fileDifferent = target.getFile() - current.getFile();
+        return Math.abs(rankDifferent) == Math.abs(fileDifferent) && rankDifferent < 0 && fileDifferent > 0;
     }
 
     private static boolean isKnight(final Position current, final Position target) {
-        int rowDifferent = Math.abs(current.getRow() - target.getRow());
-        int colDifferent = Math.abs(current.getCol() - target.getCol());
-        return (rowDifferent == 2 && colDifferent == 1) || (rowDifferent == 1 && colDifferent == 2);
+        int rankDifferent = Math.abs(target.getRank() - current.getRank());
+        int fileDifferent = Math.abs(target.getFile() - current.getFile());
+        return (rankDifferent == 2 && fileDifferent == 1) || (rankDifferent == 1 && fileDifferent == 2);
     }
 }
