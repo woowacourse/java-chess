@@ -62,6 +62,9 @@ public class ChessController {
     }
 
     private void move(final List<String> commandInputs) {
+        if (commandInputs.size() != 3) {
+            throw new IllegalArgumentException("입력이 잘못 되었습니다.");
+        }
         final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
         final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
 
