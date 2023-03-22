@@ -1,5 +1,7 @@
 package chess.factory;
 
+import static chess.util.PieceParser.parsePiece;
+
 import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
@@ -13,6 +15,8 @@ import chess.domain.pieces.Piece;
 import chess.domain.pieces.Place;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
+import chess.dto.BoardResultDto;
+import chess.dto.PieceDto;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +32,21 @@ public class BoardFactory {
         fillLowerOtherPositionPieces(chessBoard);
         fillUpperOtherPositionPieces(chessBoard);
         return new Board(chessBoard);
+    }
+
+    public static Board createFromDto(final BoardResultDto boardResultDto) {
+        Map<Position, Piece> chessBoard = new HashMap<>();
+        List<PieceDto> pieces = boardResultDto.getPieces();
+
+        pieces.stream()
+                .forEach(piece -> chessBoard.put(Position.from(String.valueOf(piece.getRow()) + piece.getCol()),
+                        parsePiece(piece.getPiece())));
+
+        return new Board(chessBoard);
+    }
+
+    public static Board createFromUncompressedBoard(final Map<Position, Piece> unCompressedBoard) {
+        return new Board(unCompressedBoard);
     }
 
     private static List<Position> makePosition() {

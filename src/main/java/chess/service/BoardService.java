@@ -1,12 +1,10 @@
 package chess.service;
 
 import chess.dao.board.BoardDao;
-import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.game.ChessGame;
 import chess.domain.pieces.Piece;
-import chess.dto.ChessGameResponseDto;
 import chess.dto.BoardSaveDto;
+import chess.dto.ChessGameResponseDto;
 import chess.factory.BoardFactory;
 import chess.util.BoardUtil;
 import java.util.List;
@@ -36,7 +34,9 @@ public class BoardService {
         }
 
         Map<Position, Piece> unCompressedBoard = boardUtil.unCompressBoard(compressedBoardFromDatabase);
-        return ChessGameResponseDto.toDto(new Board(unCompressedBoard), boardDao.isLowerTeamTurnByBoardId(boardId));
+
+        return ChessGameResponseDto.toDto(BoardFactory.createFromUncompressedBoard(unCompressedBoard),
+                boardDao.isLowerTeamTurnByBoardId(boardId));
     }
 
     public void delete(final int boardId) {

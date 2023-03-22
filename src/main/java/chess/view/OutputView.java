@@ -1,8 +1,12 @@
 package chess.view;
 
+import static chess.util.PieceParser.parsePiece;
+
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
-import chess.dto.BoardResultDto;
+import chess.dto.PieceDto;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -16,12 +20,19 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(final BoardResultDto boardResultDto) {
-        System.out.println();
+    public void printBoard(final List<PieceDto> pieces) {
+        Map<Position, Piece> board = new HashMap<>();
+
+        pieces.forEach(pieceDto -> board.put(Position.from(findPosition(pieceDto)), parsePiece(pieceDto.getPiece())));
+
         for (char row = '8'; row >= '1'; row--) {
-            printLine(boardResultDto.getBoard(), row);
+            printLine(board, row);
             System.out.println();
         }
+    }
+
+    private String findPosition(final PieceDto pieceDto) {
+        return String.valueOf(pieceDto.getRow()) + pieceDto.getCol();
     }
 
     private void printLine(final Map<Position, Piece> board, final char row) {

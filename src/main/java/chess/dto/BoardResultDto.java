@@ -1,24 +1,27 @@
 package chess.dto;
 
-import chess.domain.board.Position;
-import chess.domain.game.ChessGame;
-import chess.domain.pieces.Piece;
-import java.util.Collections;
-import java.util.Map;
+import chess.domain.board.Board;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardResultDto {
 
-    private final Map<Position, Piece> board;
+    private final List<PieceDto> pieces;
 
-    private BoardResultDto(final Map<Position, Piece> board) {
-        this.board = board;
+    private BoardResultDto(final List<PieceDto> pieces) {
+        this.pieces = pieces;
     }
 
-    public static BoardResultDto toDto(final ChessGame chessGame) {
-        return new BoardResultDto(chessGame.getBoard());
+    public static BoardResultDto toDto(final Board board) {
+
+        List<PieceDto> positionsWithPieces = board.getBoard().entrySet().stream()
+                .map(entry -> PieceDto.toDto(entry.getKey(), board.getBoard().get(entry.getKey())))
+                .collect(Collectors.toList());
+
+        return new BoardResultDto(positionsWithPieces);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+    public List<PieceDto> getPieces() {
+        return pieces;
     }
 }

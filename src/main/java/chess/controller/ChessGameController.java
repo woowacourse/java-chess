@@ -1,10 +1,12 @@
 package chess.controller;
 
+import chess.domain.board.Board;
 import chess.domain.commnad.Command;
 import chess.domain.commnad.LoadGameCommand;
 import chess.domain.game.ChessGame;
 import chess.dto.BoardResultDto;
 import chess.dto.BoardSaveDto;
+import chess.dto.ChessGameResponseDto;
 import chess.dto.GameScoreResultDto;
 import chess.factory.BoardFactory;
 import chess.service.BoardService;
@@ -43,9 +45,11 @@ public class ChessGameController {
 
     private ChessGame loadGame(final LoadGameCommand loadCommand) {
         if (loadCommand.isSavedGame()) {
-            ChessGame chessGame = boardService.findById(BOARD_ID).getChessGame();
-            outputView.printBoard(BoardResultDto.toDto(chessGame));
-            return chessGame;
+            ChessGameResponseDto chessGameResponseDto = boardService.findById(BOARD_ID);
+            BoardResultDto boardResultDto = chessGameResponseDto.getBoardResultDto();
+
+            outputView.printBoard(boardResultDto.getPieces());
+            return new ChessGame(BoardFactory.createFromDto(boardResultDto), chessGameResponseDto.isLowerTeamTurn());
         }
 
         return new ChessGame(BoardFactory.createBoard(), true);
@@ -59,7 +63,7 @@ public class ChessGameController {
             chessGame = checkCreateNewGame(chessGame, command);
 
             checkMovePiece(chessGame, command);
-            outputView.printBoard(BoardResultDto.toDto(chessGame));
+            outputView.printBoard(BoardResultDto.toDto(new Board(chessGame.getBoard())).getPieces());
 
             if (isGameDone(chessGame)) {
                 break;

@@ -1,21 +1,26 @@
 package chess.dto;
 
 import chess.domain.board.Board;
-import chess.domain.game.ChessGame;
 
 public class ChessGameResponseDto {
 
-    private final ChessGame chessGame;
+    private final BoardResultDto boardResultDto;
+    private final boolean isLowerTeamTurn;
 
-    private ChessGameResponseDto(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public ChessGameResponseDto(final BoardResultDto boardResultDto, final boolean isLowerTeamTurn) {
+        this.boardResultDto = boardResultDto;
+        this.isLowerTeamTurn = isLowerTeamTurn;
     }
 
     public static ChessGameResponseDto toDto(final Board board, final boolean isLowerTeamTurn) {
-        return new ChessGameResponseDto(new ChessGame(board, isLowerTeamTurn));
+        return new ChessGameResponseDto(BoardResultDto.toDto(board), isLowerTeamTurn);
     }
 
-    public ChessGame getChessGame() {
-        return chessGame;
+    public BoardResultDto getBoardResultDto() {
+        return boardResultDto;
+    }
+
+    public boolean isLowerTeamTurn() {
+        return isLowerTeamTurn;
     }
 }
