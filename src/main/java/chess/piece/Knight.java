@@ -6,13 +6,8 @@ import java.util.List;
 
 public class Knight extends Piece {
 
-    private String name = "n";
-
     public Knight(final Position position, final Side side) {
         super(position, side);
-        if (side == Side.BLACK) {
-            name = name.toUpperCase();
-        }
     }
 
     @Override
@@ -34,10 +29,5 @@ public class Knight extends Piece {
         그러므로, 빈 리스트를 반환함으로써 Knight가 이동할 땐 경로에 말이 존재하는지 체크하지 않는다.
          */
         return Collections.emptyList();
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }

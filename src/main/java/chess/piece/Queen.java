@@ -8,14 +8,9 @@ import java.util.List;
 public class Queen extends Piece {
 
     private final List<Direction> directions;
-    private String name = "q";
-
     public Queen(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
-        if (side == Side.BLACK) {
-            name = name.toUpperCase();
-        }
     }
 
     private List<Direction> initDirections() {
@@ -44,10 +39,5 @@ public class Queen extends Piece {
             paths.add(nextPosition);
         }
         return paths;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }
