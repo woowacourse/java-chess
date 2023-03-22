@@ -11,9 +11,6 @@ import java.util.stream.Collectors;
 public final class Board {
 
     private static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "유효한 움직임이 아닙니다.";
-    private static final String TURN_EXCEPTION_MESSAGE = "의 턴입니다.";
-    private static final String CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE = "자신의 기물이 있는 곳으로 이동할 수 없습니다.";
-    private static final String EMPTY_SOURCE_EXCEPTION_MESSAGE = "움직이려는 기물의 위치는 빈 공간입니다.";
 
     private final List<Squares> board = new ArrayList<>();
 
@@ -32,33 +29,11 @@ public final class Board {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
 
-        validateEmpty(sourceSquare);
-        validateTurn(sourceSquare, color);
-        validateSameColor(sourceSquare, targetSquare);
-
-        var movablePath = sourceSquare.computePath(source, target);
+        var movablePath = sourceSquare.computePath(source, target, targetSquare, color);
         var isEmptySquare = generateIsEmptySquare(movablePath);
 
         validateMove(source, target, sourceSquare, isEmptySquare);
         move(sourceSquare, targetSquare);
-    }
-
-    private void validateEmpty(Square sourceSquare) {
-        if (sourceSquare.equalsColor(Color.NONE)) {
-            throw new IllegalArgumentException(EMPTY_SOURCE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateTurn(final Square sourceSquare, final Color color) {
-        if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException(color.name() + TURN_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateSameColor(final Square sourceSquare, final Square targetSquare) {
-        if (sourceSquare.equalsColor(targetSquare)) {
-            throw new UnsupportedOperationException(CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE);
-        }
     }
 
     private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
