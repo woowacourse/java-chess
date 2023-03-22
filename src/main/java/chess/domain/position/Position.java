@@ -1,10 +1,7 @@
 package chess.domain.position;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Position implements Comparable<Position> {
     
@@ -22,14 +19,7 @@ public final class Position implements Comparable<Position> {
     }
     
     public static Position from(String position) {
-        List<String> parsedPosition = parsing(position);
-        File file = File.findByLabel(parsedPosition.get(0));
-        Rank rank = Rank.findByLabel(parsedPosition.get(1));
-        return new Position(file, rank);
-    }
-    
-    private static List<String> parsing(final String position) {
-        return Arrays.stream(position.split("")).collect(Collectors.toList());
+        return PositionFactory.from(position);
     }
     
     public static Position from(File file, Rank rank) {

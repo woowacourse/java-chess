@@ -1,19 +1,17 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.RouteCheck;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
-import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public final class Board {
@@ -23,10 +21,7 @@ public final class Board {
     public static final String OTHER_PIECE_IN_ROUTE = "[BOARD ERROR] 경로에 다른 피스가 있습니다.";
     public static final String SAME_COLOR_IN_DESTINATION = "[BOARD ERROR] 같은 색의 말이 있습니다.";
     public static final String NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION = "[BOARD ERROR] 대각선으로 이동할 수 없습니다.";
-    public static final int WHITE_GENERALS_RANK = 0;
-    public static final int WHITE_PAWNS_RANK = 1;
-    public static final int BLACK_PAWNS_RANK = 6;
-    public static final int BLACK_GENERALS_RANK = 7;
+    
     private final EnumMap<PieceType, RouteCheck> routeCheckMap = new EnumMap<>(PieceType.class);
     
     
@@ -42,35 +37,11 @@ public final class Board {
         this.routeCheckMap.put(PieceType.KNIGHT, this::checkNonSlidingRoute);
     }
     
+    
     public static Board create() {
-        Map<Position, Piece> board = new TreeMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Position position = Position.from(file, rank);
-                board.put(position, Empty.create());
-            }
-        }
-        return new Board(board);
+        return new Board(BoardFactory.create());
     }
     
-    public void initialize() {
-        List<Piece> whiteGenerals = PieceFactory.createWhiteGenerals();
-        List<Piece> whitePawns = PieceFactory.createWhitePawns();
-        List<Piece> blackPawns = PieceFactory.createBlackPawns();
-        List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
-        for (Position position : this.board.keySet()) {
-            this.placePieceAtPosition(whiteGenerals, position, WHITE_GENERALS_RANK);
-            this.placePieceAtPosition(whitePawns, position, WHITE_PAWNS_RANK);
-            this.placePieceAtPosition(blackPawns, position, BLACK_PAWNS_RANK);
-            this.placePieceAtPosition(blackGenerals, position, BLACK_GENERALS_RANK);
-        }
-    }
-    
-    private void placePieceAtPosition(final List<Piece> pieces, final Position position, int rank) {
-        if (position.isRank(rank)) {
-            this.board.put(position, pieces.get(position.getFileIndex()));
-        }
-    }
     
     public void checkColor(final Position from, final Position to, final Color color) {
         this.checkSourcePiece(from, color);

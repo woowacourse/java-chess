@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PieceFactory {
     
@@ -11,11 +13,7 @@ public class PieceFactory {
     }
     
     private static List<Piece> createPawns(final Color white) {
-        List<Piece> pawns = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            pawns.add(Pawn.create(white));
-        }
-        return pawns;
+        return IntStream.range(0, 8).mapToObj(i -> Pawn.create(white)).collect(Collectors.toList());
     }
     
     public static List<Piece> createBlackPawns() {
@@ -41,5 +39,9 @@ public class PieceFactory {
     
     public static List<Piece> createBlackGenerals() {
         return createGenerals(Color.BLACK);
+    }
+    
+    public static Piece createEmptyPiece() {
+        return Empty.create();
     }
 }

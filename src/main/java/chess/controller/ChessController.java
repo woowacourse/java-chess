@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandFactory;
-import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

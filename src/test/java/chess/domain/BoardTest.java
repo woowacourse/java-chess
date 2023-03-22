@@ -3,6 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
@@ -15,8 +16,6 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
     
@@ -24,23 +23,13 @@ class BoardTest {
     @DisplayName("생성 테스트")
     class CreateBoard {
         
-        @ParameterizedTest
-        @ValueSource(strings = {"a1", "d2", "h8"})
-        @DisplayName("빈 보드 생성 테스트")
-        void create(String position) {
-            Board board = Board.create();
-            assertThat(board).extracting("board").asInstanceOf(InstanceOfAssertFactories.MAP)
-                    .containsEntry(Position.from(position), Empty.create());
-        }
-        
         @Test
         @DisplayName("보드 피스 생성 테스트")
-        void initialize() {
+        void initialize2() {
             Board board = Board.create();
-            board.initialize();
-            List<String> positions = List.of("a1", "b1", "g7", "h8");
+            List<String> positions = List.of("a1", "b1", "g7", "h8", "d4");
             List<Piece> pieces = List.of(Rook.create(Color.WHITE), Knight.create(Color.WHITE), Pawn.create(Color.BLACK),
-                    Rook.create(Color.BLACK));
+                    Rook.create(Color.BLACK), Empty.create());
             for (int i = 0; i < 4; i++) {
                 assertThat(board).extracting("board").asInstanceOf(InstanceOfAssertFactories.MAP)
                         .containsEntry(Position.from(positions.get(i)), pieces.get(i));
@@ -56,7 +45,6 @@ class BoardTest {
         @DisplayName("경로에 다른 피스가 있을 경우")
         void checkOtherPieceInRoute() {
             Board board = Board.create();
-            board.initialize();
             board.move(Position.from("a2"), Position.from("a4"));
             board.move(Position.from("a7"), Position.from("a5"));
             assertThatThrownBy(() -> board.checkRoute(Position.from("a1"), Position.from("a5"))).isInstanceOf(
@@ -73,7 +61,6 @@ class BoardTest {
         @DisplayName("위나 아래로 움직이는데, 경로에 다른 피스가 있을 경우")
         void checkOtherPieceInRoute() {
             Board board = Board.create();
-            board.initialize();
             board.move(Position.from("a2"), Position.from("a4"));
             board.move(Position.from("a7"), Position.from("a5"));
             assertThatThrownBy(() -> board.checkRoute(Position.from("a4"), Position.from("a5"))).isInstanceOf(
@@ -85,7 +72,6 @@ class BoardTest {
         @DisplayName("대각선 방향으로 움직이는데, 상대편 피스가 없는 경우 - 비어있는 경우")
         void checkOtherPieceInDiagonal1() {
             Board board = Board.create();
-            board.initialize();
             assertThatThrownBy(() -> board.checkRoute(Position.from("a2"), Position.from("b3"))).isInstanceOf(
                             IllegalArgumentException.class)
                     .hasMessage(Board.NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION);
@@ -97,7 +83,6 @@ class BoardTest {
     @DisplayName("움직이는 대상이 다른 색깔인지 확인")
     void checkColor() {
         Board board = Board.create();
-        board.initialize();
         assertThatThrownBy(() -> board.checkColor(Position.from("a2"), Position.from("a4"), Color.BLACK)).isInstanceOf(
                         IllegalArgumentException.class)
                 .hasMessage(Board.OTHER_COLOR_IN_SOURCE);
@@ -107,7 +92,6 @@ class BoardTest {
     @DisplayName("목적지에 같은 색깔의 피스가 있는지 확인")
     void checkDestination() {
         Board board = Board.create();
-        board.initialize();
         board.move(Position.from("b2"), Position.from("a4"));
         assertThatThrownBy(
                 () -> board.checkColor(Position.from("a2"), Position.from("a4"), Color.WHITE)).isInstanceOf(

@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.GameStatus;
 import chess.action.Action;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -25,7 +26,6 @@ public class ChessGame implements Action {
         if (this.isNotReady()) {
             throw new IllegalArgumentException(GAME_ALREADY_HAS_STARTED);
         }
-        this.board.initialize();
         this.status = GameStatus.RUN;
     }
     

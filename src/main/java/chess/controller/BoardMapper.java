@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Comparator;
