@@ -1,6 +1,7 @@
 package chessgame.view;
 
 import chessgame.domain.Board;
+import chessgame.domain.Team;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
@@ -30,11 +31,21 @@ public class OutputView {
     }
 
     private void printPoint(Map<Point, Piece> chessBoard, Point point) {
+        Piece piece = chessBoard.get(point);
         if (chessBoard.containsKey(point)) {
-            System.out.print(chessBoard.get(point));
+            printPiece(piece);
         }
         if (!chessBoard.containsKey(point)) {
             System.out.print(".");
+        }
+    }
+
+    private static void printPiece(Piece piece) {
+        if(piece.team() == Team.BLACK){
+            System.out.print(piece.toString().toUpperCase());
+        }
+        else if(piece.team() == Team.WHITE){
+            System.out.print(piece.toString().toLowerCase());
         }
     }
 

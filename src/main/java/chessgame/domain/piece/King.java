@@ -45,6 +45,6 @@ public class King implements Piece {
 
     @Override
     public String toString() {
-        return team.convertTeamName(ORIGINAL_NAME);
+        return ORIGINAL_NAME;
     }
 }
