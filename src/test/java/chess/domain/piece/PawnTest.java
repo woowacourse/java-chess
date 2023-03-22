@@ -15,6 +15,8 @@ import static chess.util.SquareFixture.G_FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import chess.domain.board.BoardSnapShot;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -25,71 +27,109 @@ import org.junit.jupiter.api.Test;
 class PawnTest {
 
     @Nested
-    class findRoute_메서드는 {
+    class isMovable_메서드는 {
 
         @Nested
         class 검은색일때 {
-            @Test
-            void 대각선으로_움직이는_경로를_구한다() {
-                final Pawn pawn = new Pawn(BLACK);
-
-                assertThat(pawn.findRoute(E_SEVEN, F_SIX)).containsExactly(F_SIX);
-            }
 
             @Test
-            void 한칸_앞으로_움직이는_경로를_구한다() {
+            void 경로가_존재하지_않으면_예외를_던진다() {
                 final Pawn pawn = new Pawn(BLACK);
-
-                assertThat(pawn.findRoute(E_SEVEN, E_SIX)).containsExactly(E_SIX);
-            }
-
-            @Test
-            void 두칸_앞으로_움직이는_경로를_구한다() {
-                final Pawn pawn = new Pawn(BLACK);
-
-                assertThat(pawn.findRoute(E_SEVEN, E_FIVE)).containsExactly(E_FIVE);
-            }
-
-            @Test
-            void 움직일_수_없는_칸이면_예외를_던진다() {
-                final Pawn pawn = new Pawn(BLACK);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_SEVEN, pawn));
 
                 assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawn.findRoute(E_SEVEN, E_FOUR))
+                        .isThrownBy(() -> pawn.isMovable(E_SEVEN, E_FOUR, boardSnapShot))
                         .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+            }
+
+            @Test
+            void 대각선으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(BLACK);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                        E_SEVEN, pawn,
+                        F_SIX, new Pawn(WHITE)
+                ));
+
+                assertThat(pawn.isMovable(E_SEVEN, F_SIX, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 한칸_앞으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(BLACK);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_SEVEN, pawn));
+
+                assertThat(pawn.isMovable(E_SEVEN, E_SIX, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 두칸_앞으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(BLACK);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_SEVEN, pawn));
+
+                assertThat(pawn.isMovable(E_SEVEN, E_FIVE, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 움직일_수_없으면_false_반환한다() {
+                final Pawn pawn = new Pawn(BLACK);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                        E_SEVEN, pawn,
+                        E_FIVE, new Pawn(WHITE)
+                ));
+
+                assertThat(pawn.isMovable(E_SEVEN, E_FIVE, boardSnapShot)).isFalse();
             }
         }
 
         @Nested
         class 흰색일때 {
-            @Test
-            void 대각선으로_움직이는_경로를_구한다() {
-                final Pawn pawn = new Pawn(WHITE);
-
-                assertThat(pawn.findRoute(E_TWO, F_THREE)).containsExactly(F_THREE);
-            }
 
             @Test
-            void 한칸_앞으로_움직이는_경로를_구한다() {
+            void 경로가_존재하지_않으면_예외를_던진다() {
                 final Pawn pawn = new Pawn(WHITE);
-
-                assertThat(pawn.findRoute(E_TWO, E_THREE)).containsExactly(E_THREE);
-            }
-
-            @Test
-            void 두칸_앞으로_움직이는_경로를_구한다() {
-                final Pawn pawn = new Pawn(WHITE);
-
-                assertThat(pawn.findRoute(E_TWO, E_FOUR)).containsExactly(E_FOUR);
-            }
-
-            @Test
-            void 움직일_수_없는_칸이면_예외를_던진다() {
-                final Pawn pawn = new Pawn(WHITE);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(F_TWO, pawn));
 
                 assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawn.findRoute(F_TWO, G_FOUR))
+                        .isThrownBy(() -> pawn.isMovable(F_TWO, G_FOUR, boardSnapShot))
                         .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+            }
+
+            @Test
+            void 대각선으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(WHITE);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                        E_TWO, pawn,
+                        F_THREE, new Pawn(BLACK)
+                ));
+
+                assertThat(pawn.isMovable(E_TWO, F_THREE, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 한칸_앞으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(WHITE);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_TWO, pawn));
+
+                assertThat(pawn.isMovable(E_TWO, E_THREE, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 두칸_앞으로_움직일_수_있으면_true_반환한다() {
+                final Pawn pawn = new Pawn(WHITE);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_TWO, pawn));
+
+                assertThat(pawn.isMovable(E_TWO, E_FOUR, boardSnapShot)).isTrue();
+            }
+
+            @Test
+            void 움직일_수_없으면_false_반환한다() {
+                final Pawn pawn = new Pawn(WHITE);
+                final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                        E_TWO, pawn,
+                        E_FOUR, new Pawn(BLACK)
+                ));
+
+                assertThat(pawn.isMovable(E_TWO, E_FOUR, boardSnapShot)).isFalse();
             }
         }
     }

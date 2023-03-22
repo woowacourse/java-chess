@@ -2,42 +2,53 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.util.SquareFixture.A_ONE;
-import static chess.util.SquareFixture.B_TWO;
-import static chess.util.SquareFixture.C_THREE;
 import static chess.util.SquareFixture.D_FOUR;
-import static chess.util.SquareFixture.E_FIVE;
-import static chess.util.SquareFixture.F_SIX;
 import static chess.util.SquareFixture.G_FIVE;
-import static chess.util.SquareFixture.G_SEVEN;
 import static chess.util.SquareFixture.H_EIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.board.Square;
-import java.util.List;
+import chess.domain.board.BoardSnapShot;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class QueenTest {
 
-    @Test
-    void 움직이려는_칸까지_가는_경로를_구한다() {
-        final Queen queen = new Queen(BLACK);
+    @Nested
+    class isMovable_메서드는 {
 
-        final List<Square> route = queen.findRoute(A_ONE, H_EIGHT);
+        @Test
+        void 경로를_만들_수_없는_칸이면_예외를_던진다() {
+            final Queen queen = new Queen(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(D_FOUR, queen));
 
-        assertThat(route).containsExactly(B_TWO, C_THREE, D_FOUR, E_FIVE, F_SIX, G_SEVEN, H_EIGHT);
-    }
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> queen.isMovable(D_FOUR, G_FIVE, boardSnapShot))
+                    .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+        }
 
-    @Test
-    void 움직일_수_없는_칸이면_예외를_던진다() {
-        final Queen queen = new Queen(BLACK);
+        @Test
+        void 경로를_만들_수_있고_갈_수_있다면_true_반환한다() {
+            final Queen queen = new Queen(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(A_ONE, queen));
 
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> queen.findRoute(D_FOUR, G_FIVE))
-                .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+            assertThat(queen.isMovable(A_ONE, H_EIGHT, boardSnapShot)).isTrue();
+        }
+
+        @Test
+        void 경로를_만들_수_있고_갈_수_없다면_false_반환한다() {
+            final Queen queen = new Queen(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                    A_ONE, queen,
+                    H_EIGHT, new Rook(BLACK)
+            ));
+
+            assertThat(queen.isMovable(A_ONE, H_EIGHT, boardSnapShot)).isFalse();
+        }
     }
 }

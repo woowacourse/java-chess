@@ -13,7 +13,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final List<Square> route, final BoardSnapShot boardSnapShot) {
+    public boolean isMovable(final Square source, final Square destination, final BoardSnapShot boardSnapShot) {
+        final List<Square> route = strategy.findRoute(source, destination);
         return boardSnapShot.canMovePawn(source, route);
     }
 }

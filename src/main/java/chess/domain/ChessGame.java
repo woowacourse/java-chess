@@ -3,10 +3,10 @@ package chess.domain;
 import static java.lang.String.format;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardSnapShot;
 import chess.domain.board.Square;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.List;
 
 public class ChessGame {
 
@@ -32,8 +32,8 @@ public class ChessGame {
     }
 
     private void moveToDestination(final Piece piece, final Square source, final Square destination) {
-        final List<Square> route = piece.findRoute(source, destination);
-        if (!piece.isMovable(source, route, board.getBoardSnapShot())) {
+        final BoardSnapShot boardSnapShot = board.getBoardSnapShot();
+        if (!piece.isMovable(source, destination, boardSnapShot)) {
             throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
         }
         board.move(source, destination);

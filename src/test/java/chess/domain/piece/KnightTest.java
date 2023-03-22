@@ -7,31 +7,47 @@ import static chess.util.SquareFixture.G_SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.board.Square;
-import java.util.List;
+import chess.domain.board.BoardSnapShot;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KnightTest {
 
-    @Test
-    void 움직이려는_칸까지_가는_경로를_구한다() {
-        final Knight knight = new Knight(BLACK);
+    @Nested
+    class isMovable_메서드는 {
 
-        final List<Square> route = knight.findRoute(E_FOUR, F_SIX);
+        @Test
+        void 경로를_만들_수_없는_칸이면_예외를_던진다() {
+            final Knight knight = new Knight(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_FOUR, knight));
 
-        assertThat(route).containsExactly(F_SIX);
-    }
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> knight.isMovable(E_FOUR, G_SIX, boardSnapShot))
+                    .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+        }
 
-    @Test
-    void 움직일_수_없는_칸이면_예외를_던진다() {
-        final Knight knight = new Knight(BLACK);
+        @Test
+        void 경로를_만들_수_있고_갈_수_있다면_true_반환한다() {
+            final Knight knight = new Knight(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(E_FOUR, knight));
 
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> knight.findRoute(E_FOUR, G_SIX))
-                .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
+            assertThat(knight.isMovable(E_FOUR, F_SIX, boardSnapShot)).isTrue();
+        }
+
+        @Test
+        void 경로를_만들_수_있고_갈_수_없다면_false_반환한다() {
+            final Knight knight = new Knight(BLACK);
+            final BoardSnapShot boardSnapShot = BoardSnapShot.from(Map.of(
+                    E_FOUR, knight,
+                    F_SIX, new Rook(BLACK)
+            ));
+
+            assertThat(knight.isMovable(E_FOUR, F_SIX, boardSnapShot)).isFalse();
+        }
     }
 }
