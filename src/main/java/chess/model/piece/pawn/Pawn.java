@@ -63,4 +63,9 @@ public abstract class Pawn extends Piece {
     public Piece update() {
         return this;
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

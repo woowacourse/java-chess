@@ -26,6 +26,10 @@ public abstract class Piece {
         return this.color.isDifferent(color);
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public Color getColor() {
         return color;
     }
