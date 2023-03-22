@@ -5,9 +5,10 @@ import chessgame.domain.point.Points;
 
 public class Pawn implements Piece {
     private static final String ORIGINAL_NAME = "p";
+    private static final int FIRST_MOVE_DISTANCE = 2;
+    private static final int DISTANCE = 1;
+
     private final Team team;
-    int FIRST_MOVE_DISTANCE = 2;
-    int DISTANCE = 1;
 
     private Pawn(Team team) {
         this.team = team;
@@ -36,10 +37,6 @@ public class Pawn implements Piece {
     }
 
     private boolean isPawnStartMove(Points points, Team team) {
-        if (points.isInitialPoint(team.startRank())
-            && points.rankDistance() == teamDirection(DISTANCE)) {
-            return true;
-        }
         return points.isInitialPoint(team.startRank())
             && points.rankDistance() == teamDirection(FIRST_MOVE_DISTANCE);
     }
