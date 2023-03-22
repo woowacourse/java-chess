@@ -11,11 +11,6 @@ public class Queen extends UnrestrictedPiece {
     }
 
     @Override
-    public boolean isQueen() {
-        return true;
-    }
-
-    @Override
     protected void validateMovable(List<Integer> gaps) {
         if (isNotForward(gaps) && isNotDiagonal(gaps)) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");

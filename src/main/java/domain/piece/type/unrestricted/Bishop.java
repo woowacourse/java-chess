@@ -11,11 +11,6 @@ public class Bishop extends UnrestrictedPiece {
     }
 
     @Override
-    public boolean isBishop() {
-        return true;
-    }
-
-    @Override
     protected void validateMovable(List<Integer> gaps) {
         if (isNotDiagonal(gaps)) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");

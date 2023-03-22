@@ -14,11 +14,6 @@ public class Knight extends RestrictedPiece {
     }
 
     @Override
-    public boolean isKnight() {
-        return true;
-    }
-
-    @Override
     protected void validateMovable(List<Integer> gaps) {
         Integer fileGapAbs = Math.abs(gaps.get(FILE));
         Integer rankGapAbs = Math.abs(gaps.get(RANK));

@@ -13,11 +13,6 @@ public class King extends RestrictedPiece {
     }
 
     @Override
-    public boolean isKing() {
-        return true;
-    }
-
-    @Override
     protected void validateMovable(List<Integer> gaps) {
         Integer distance = calculateDistance(gaps);
         if (distance != MOVE_DISTANCE_LIMIT) {

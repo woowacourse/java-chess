@@ -11,11 +11,6 @@ public class Rook extends UnrestrictedPiece {
     }
 
     @Override
-    public boolean isRook() {
-        return true;
-    }
-
-    @Override
     protected void validateMovable(List<Integer> gaps) {
         if (isNotForward(gaps)) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");

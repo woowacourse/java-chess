@@ -12,6 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.type.Pawn;
+import domain.piece.type.Type;
+import domain.piece.type.restricted.King;
+import domain.piece.type.restricted.Knight;
+import domain.piece.type.unrestricted.Bishop;
+import domain.piece.type.unrestricted.Queen;
+import domain.piece.type.unrestricted.Rook;
 
 class ChessBoardTest {
 
@@ -48,8 +55,7 @@ class ChessBoardTest {
         void pawnTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.H, Rank.TWO));
 
-            assertThat(piece.isPawn()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new Pawn(Camp.WHITE, Type.PAWN));
         }
 
         @Test
@@ -57,8 +63,7 @@ class ChessBoardTest {
         void knightTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.B, Rank.ONE));
 
-            assertThat(piece.isKnight()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new Knight(Camp.WHITE, Type.KNIGHT));
         }
 
         @Test
@@ -66,8 +71,7 @@ class ChessBoardTest {
         void rookTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.A, Rank.ONE));
 
-            assertThat(piece.isRook()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new Rook(Camp.WHITE, Type.ROOK));
         }
 
         @Test
@@ -75,8 +79,7 @@ class ChessBoardTest {
         void bishopTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.C, Rank.ONE));
 
-            assertThat(piece.isBishop()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new Bishop(Camp.WHITE, Type.BISHOP));
         }
 
         @Test
@@ -84,8 +87,7 @@ class ChessBoardTest {
         void queenTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.D, Rank.ONE));
 
-            assertThat(piece.isQueen()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new Queen(Camp.WHITE, Type.QUEEN));
         }
 
         @Test
@@ -93,8 +95,7 @@ class ChessBoardTest {
         void kingTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.E, Rank.ONE));
 
-            assertThat(piece.isKing()).isTrue();
-            assertThat(piece.isWhite()).isTrue();
+            assertThat(piece).isEqualTo(new King(Camp.WHITE, Type.KING));
         }
     }
 

@@ -18,11 +18,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> gaps = calculateGap(currentSquare, targetSquare);
         Integer distance = calculateDistance(gaps);
