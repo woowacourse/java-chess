@@ -1,88 +1,70 @@
 package chess.controller;
 
-import chess.controller.command.*;
-import chess.domain.File;
-import chess.domain.Rank;
-import chess.domain.Square;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.controller.command.Command;
+import chess.controller.command.CommandFactory;
+import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ChessController {
-    private static final Map<String, CommandAction> commands = new HashMap<>();
     private static final int SOURCE_SQUARE_INDEX = 0;
     private static final int TARGET_SQUARE_INDEX = 1;
-    private static final int MOVE_PARAMETER_SIZE = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
-    private Board board;
+    private final ChessGame chessGame;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.board = BoardFactory.create();
-        putCommands();
-    }
-
-    private void putCommands() {
-        commands.put("start", new StartCommandAction(ignored -> initializeBoard()));
-        commands.put("move", new MoveCommandAction(this::movePiece));
-        commands.put("end", new EndCommandAction());
+        this.chessGame = new ChessGame();
     }
 
     public void run() {
         showStartMessage();
-        CommandAction currentAction = new WaitingCommandAction();
 
-        while (currentAction.isRunnable()) {
-            currentAction = repeat(this::play);
+        while (chessGame.isRunning()) {
+            repeat(this::play);
         }
     }
 
-    private CommandAction repeat(Supplier<CommandAction> supplier) {
+    private void repeat(Runnable runnable) {
         try {
-            return supplier.get();
+            runnable.run();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return repeat(supplier);
+            repeat(runnable);
         }
     }
 
-    private CommandAction play() {
+    private void play() {
         String inputCommand = inputView.readCommand();
-        Command command = new Command(inputCommand);
-        CommandAction action = commands.get(command.getName());
-        action.execute(command);
-        return action;
+        Command command = CommandFactory.from(inputCommand);
+        command.execute(this);
     }
 
-    public void initializeBoard() {
-        board = BoardFactory.create();
+    public void start() {
+        chessGame.start();
         showBoard();
     }
 
-    private void movePiece(final List<String> parameters) {
-        validate(parameters);
+    public void move(final List<String> parameters) {
         Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
-        board.makeMove(sourceSquare, targetSquare);
+        chessGame.move(sourceSquare, targetSquare);
         showBoard();
     }
 
-    private void validate(final List<String> parameters) {
-        if(parameters.size() != MOVE_PARAMETER_SIZE) {
-            throw new IllegalArgumentException("기물 위치와 이동 위치를 입력해주세요.");
-        }
+    public void end() {
+        chessGame.end();
     }
 
     private Square convertSquare(final String square) {
@@ -103,7 +85,7 @@ public class ChessController {
         List<Rank> ranks = List.of(Rank.values());
         for (Rank rank : ranks) {
             List<Piece> rankPieces = files.stream()
-                    .map(file -> board.findPiece(file, rank))
+                    .map(file -> chessGame.getBoard().findPiece(file, rank))
                     .collect(Collectors.toList());
             pieces.add(rankPieces);
         }
