@@ -6,19 +6,19 @@ import chess.practiceMove.Direction;
 
 import java.util.List;
 
+import static chess.domain.piece.PieceName.QUEEN_NAME;
 import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
 public class Queen extends Piece {
 
-    private static final String name = "q";
     private static final List<Direction> movableDirection = List.of(
             Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
 
     public Queen(Color color) {
-        super(name, color);
+        super(QUEEN_NAME.getName(), color);
     }
 
     @Override
