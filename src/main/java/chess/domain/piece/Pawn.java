@@ -27,7 +27,6 @@ public class Pawn extends NoneEmptyPiece {
         if (!hasMoved && isMoveTwoBlocks(relativePosition)) {
             relativePosition = relativePosition.toUnit();
         }
-        System.out.println(isMoveTwoBlocks(relativePosition));
         relativePosition = inverseDirectionIfBlackPawn(relativePosition);
 
         validateIllegalDirection(relativePosition);
