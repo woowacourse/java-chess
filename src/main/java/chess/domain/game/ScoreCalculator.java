@@ -63,7 +63,7 @@ public class ScoreCalculator {
         return score;
     }
 
-    public boolean haveNoPieceInPosition(Position position) {
+    private boolean haveNoPieceInPosition(Position position) {
         return !board.containsKey(position);
     }
 }
