@@ -24,7 +24,6 @@ import static chess.view.OutputView.printScores;
 import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
-    //todo: emptyPosition을 move하겠다고 하면 errormessage 출력
 
     public void playChessGame() {
         printStartGuideMessage();
@@ -111,6 +110,7 @@ public class Controller {
     private void move(ChessGame chessGame, CommandDto commandDto) {
         Position start = new Position(commandDto.getColumnOfStartSource(), commandDto.getRankOfStartSource());
         Position end = new Position(commandDto.getColumnOfEndSource(), commandDto.getRankOfEndSource());
+
 
         chessGame.move(start, end);
         printChessGame(chessGame);
