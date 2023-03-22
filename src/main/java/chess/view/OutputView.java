@@ -12,8 +12,8 @@ public class OutputView {
 
     public void printInitialMessage() {
         printMessageWithPrompt("체스 게임을 시작합니다.");
-        printMessageWithPrompt("게임 시작  : start");
-        printMessageWithPrompt("게임 종료  : end");
+        printMessageWithPrompt("게임 시작 : start");
+        printMessageWithPrompt("게임 종료 : end");
         printMessageWithPrompt("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
@@ -26,7 +26,10 @@ public class OutputView {
         System.out.println();
         for (List<PieceDto> rank : pieceDtos) {
             printRank(rank);
+            System.out.println(String.format("   %s", 8 - pieceDtos.indexOf(rank)));
         }
+        System.out.println();
+        System.out.println(" a  b  c  d  e  f  g  h");
         System.out.println();
     }
 
@@ -40,7 +43,6 @@ public class OutputView {
             final String side = piece.getSide();
             printPiece(type, side);
         }
-        System.out.println();
     }
 
     private void printPiece(final String type, final String side) {

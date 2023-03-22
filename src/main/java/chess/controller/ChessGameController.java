@@ -47,8 +47,15 @@ public class ChessGameController {
     private void updateChessBoard(final ChessBoard chessBoard, final CommandDto commandDto) {
         final Square from = Square.of(Rank.from(commandDto.getSourceRank()), File.from(commandDto.getSourceFile()));
         final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
+        validateSameSquare(from, to);
         if (!chessBoard.canMove(from, to)) {
             outputView.printInvalidMoveMessage();
+        }
+    }
+
+    private void validateSameSquare(final Square from, final Square to) {
+        if (from == to) {
+            throw new IllegalArgumentException("같은 지점이 들어왔습니다.");
         }
     }
 

@@ -24,6 +24,7 @@ public class InputView {
             return;
         }
         if (parsedCommandInput.size() == 3) {
+            validateCommandWithArguments(parsedCommandInput.get(0));
             validateFormatWithArguments(parsedCommandInput);
             return;
         }
@@ -37,13 +38,16 @@ public class InputView {
         }
     }
 
+    private void validateCommandWithArguments(final String parsedCommand) {
+        if (!Objects.equals("move", parsedCommand)) {
+            throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
+        }
+    }
+
     private void validateFormatWithArguments(final List<String> parsedCommandInput) {
         if ((parsedCommandInput.get(1).length() != 2
                 || parsedCommandInput.get(2).length() != 2)) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
-        }
-        if (Objects.equals(parsedCommandInput.get(1), parsedCommandInput.get(2))) {
-            throw new IllegalArgumentException("같은 지점이 들어왔습니다.");
         }
     }
 }
