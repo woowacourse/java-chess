@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ class EmptyPieceGeneratorTest {
     void empty_piece_generate_test() {
         final EmptyPieceGenerator emptyPieceGenerator = new EmptyPieceGenerator();
 
-        final List<Piece> pieces = emptyPieceGenerator.generate();
+        final Set<Piece> pieces = emptyPieceGenerator.generate();
 
         assertThat(pieces).isEmpty();
     }

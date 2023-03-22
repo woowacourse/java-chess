@@ -2,10 +2,10 @@ package chess.domain.state;
 
 import chess.controller.command.Command;
 import chess.domain.ChessGame;
-import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.maker.PiecesGenerator;
 
-import java.util.List;
+import java.util.Set;
 
 public abstract class ChessState {
 
@@ -23,7 +23,7 @@ public abstract class ChessState {
 
     public abstract ChessState process(Command command);
 
-    public abstract List<Piece> getExistingPieces();
+    public abstract Set<Piece> getExistingPieces();
 
     public abstract boolean isEnd();
 

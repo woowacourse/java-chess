@@ -11,7 +11,7 @@ import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static chess.PositionFixture.A1;
 import static chess.PositionFixture.A2;
@@ -53,7 +53,7 @@ class StartingPiecesGeneratorTest {
     @Test
     @DisplayName("초기 체스판이 정상적으로 생성된다")
     void init_test() {
-        final List<Piece> pieces = new StartingPiecesGenerator().generate();
+        final Set<Piece> pieces = new StartingPiecesGenerator().generate();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .containsExactlyInAnyOrder(

@@ -13,8 +13,10 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static chess.domain.piece.property.Color.BLACK;
 import static chess.domain.piece.property.Color.WHITE;
@@ -43,8 +45,8 @@ public class StartingPiecesGenerator implements PiecesGenerator {
     );
 
     @Override
-    public List<Piece> generate() {
-        final List<Piece> startingPieces = new ArrayList<>();
+    public Set<Piece> generate() {
+        final Set<Piece> startingPieces = new HashSet<>();
         startingPieces.addAll(makeStartingPieces(BLACK));
         startingPieces.addAll(makeStartingPieces(WHITE));
         return startingPieces;

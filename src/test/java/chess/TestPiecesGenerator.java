@@ -1,21 +1,22 @@
 package chess;
 
-import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.maker.PiecesGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TestPiecesGenerator implements PiecesGenerator {
 
-    private final List<Piece> pieces;
+    private final Set<Piece> pieces;
 
-    public TestPiecesGenerator(final List<Piece> pieces) {
-        this.pieces = new ArrayList<>(pieces);
+    public TestPiecesGenerator(final Collection<Piece> pieces) {
+        this.pieces = new HashSet<>(pieces);
     }
 
     @Override
-    public List<Piece> generate() {
+    public Set<Piece> generate() {
         return pieces;
     }
 }

@@ -6,7 +6,7 @@ import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Set;
 
 public class ChessGame {
 
@@ -38,7 +38,7 @@ public class ChessGame {
         currentTurnColor = currentTurnColor.getOppositeColor();
     }
 
-    public List<Piece> getExistingPieces() {
+    public Set<Piece> getExistingPieces() {
         return board.getExistingPieces();
     }
 }

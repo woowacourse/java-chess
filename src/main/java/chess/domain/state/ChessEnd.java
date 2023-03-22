@@ -4,7 +4,7 @@ import chess.controller.command.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 
-import java.util.List;
+import java.util.Set;
 
 public final class ChessEnd extends ChessState {
 
@@ -20,7 +20,7 @@ public final class ChessEnd extends ChessState {
     }
 
     @Override
-    public List<Piece> getExistingPieces() {
+    public Set<Piece> getExistingPieces() {
         return chessGame.getExistingPieces();
     }
 

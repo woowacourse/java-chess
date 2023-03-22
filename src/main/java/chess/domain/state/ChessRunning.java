@@ -8,7 +8,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.List;
+import java.util.Set;
 
 import static chess.controller.command.Command.MOVE_CURRENT_POSITION_INDEX;
 import static chess.controller.command.Command.MOVE_TARGET_POSITION_INDEX;
@@ -52,7 +52,7 @@ public class ChessRunning extends ChessState {
     }
 
     @Override
-    public List<Piece> getExistingPieces() {
+    public Set<Piece> getExistingPieces() {
         return chessGame.getExistingPieces();
     }
 

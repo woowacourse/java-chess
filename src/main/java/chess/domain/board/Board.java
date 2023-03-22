@@ -8,12 +8,13 @@ import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class Board {
 
-    private final List<Piece> existingPieces;
+    private final Set<Piece> existingPieces;
 
-    private Board(final List<Piece> pieces) {
+    private Board(final Set<Piece> pieces) {
         this.existingPieces = pieces;
     }
 
@@ -63,7 +64,7 @@ public class Board {
         return findPieceOrElseThrowIn(position).isSameColor(otherColor);
     }
 
-    public List<Piece> getExistingPieces() {
-        return List.copyOf(existingPieces);
+    public Set<Piece> getExistingPieces() {
+        return Set.copyOf(existingPieces);
     }
 }

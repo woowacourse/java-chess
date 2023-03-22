@@ -3,10 +3,10 @@ package chess.domain.state;
 import chess.controller.command.Command;
 import chess.controller.command.Type;
 import chess.domain.ChessGame;
-import chess.domain.piece.maker.StartingPiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.maker.StartingPiecesGenerator;
 
-import java.util.List;
+import java.util.Set;
 
 public final class ChessReady extends ChessState {
 
@@ -32,7 +32,7 @@ public final class ChessReady extends ChessState {
     }
 
     @Override
-    public List<Piece> getExistingPieces() {
+    public Set<Piece> getExistingPieces() {
         throw new IllegalStateException(CHESS_NOT_INITIALIZED_MESSAGE);
     }
 
