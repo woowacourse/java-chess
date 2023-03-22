@@ -5,7 +5,8 @@ import chess.domain.board.Square;
 import java.util.List;
 
 public class King extends Piece {
-    private static final List<Move> POSSIBLE_MOVES = List.of(Move.values());
+    private static final List<Move> POSSIBLE_MOVES = List.of(Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT, Move.RIGHT_UP,
+            Move.RIGHT_DOWN, Move.LEFT_UP, Move.LEFT_DOWN);
 
     public King(final Team team) {
         super(team, Role.KING);

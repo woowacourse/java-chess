@@ -130,8 +130,8 @@ public class Board {
     }
 
     private boolean isKnightMovable(final Square source, final Square target, final Piece piece) {
-        final KnightMove knightMove = KnightMove.calculateDirection(source, target);
-        return piece.isMovable(source, target, knightMove);
+        final Move move = Move.calculateKnightDirection(source, target);
+        return piece.isMovable(source, target, move);
     }
 
     private boolean isPawnMovable(final Square source, final Square target, final Move move) {

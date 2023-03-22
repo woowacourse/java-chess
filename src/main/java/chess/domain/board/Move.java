@@ -12,6 +12,14 @@ public enum Move {
     RIGHT_DOWN(1, -1),
     LEFT_UP(-1, 1),
     LEFT_DOWN(-1, -1),
+    KNIGHT_UP_RIGHT(1, 2),
+    KNIGHT_RIGHT_UP(2, 1),
+    KNIGHT_RIGHT_DOWN(2, -1),
+    KNIGHT_DOWN_RIGHT(1, -2),
+    KNIGHT_DOWN_LEFT(-1, -2),
+    KNIGHT_LEFT_DOWN(-2, -1),
+    KNIGHT_LEFT_UP(-2, 1),
+    KNIGHT_UP_LEFT(-1, 2),
     EMPTY(0, 0);
 
     private final int file;
@@ -32,6 +40,16 @@ public enum Move {
 
         return Arrays.stream(Move.values())
                 .filter(move -> isSameDirection(directionFile, directionRank, move))
+                .findFirst()
+                .orElseThrow(PieceCanNotMoveException::new);
+    }
+
+    public static Move calculateKnightDirection(final Square source, final Square target) {
+        final int directionFile = target.getFile() - source.getFile();
+        final int directionRank = target.getRank() - source.getRank();
+
+        return Arrays.stream(Move.values())
+                .filter(move -> move.file == directionFile && move.rank == directionRank)
                 .findFirst()
                 .orElseThrow(PieceCanNotMoveException::new);
     }
