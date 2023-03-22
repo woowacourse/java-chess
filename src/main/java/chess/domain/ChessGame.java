@@ -9,11 +9,15 @@ import java.util.List;
 
 public class ChessGame {
     private final Board board;
-    private Color currentTurnColor;
+    private final Color currentTurnColor;
+
+    private ChessGame(final Board board, final Color currentTurnColor) {
+        this.board = board;
+        this.currentTurnColor = currentTurnColor;
+    }
 
     private ChessGame(final Board board) {
-        this.board = board;
-        this.currentTurnColor = Color.WHITE;
+        this(board, Color.WHITE);
     }
 
     public static ChessGame createWithSetBoard() {
@@ -24,10 +28,10 @@ public class ChessGame {
         return new ChessGame(Board.createBoardWith(new EmptyPiecesFactory()));
     }
 
-    public void move(final Position currentPosition, final Position targetPosition) {
+    public ChessGame move(final Position currentPosition, final Position targetPosition) {
         validateTurnColor(currentPosition);
         board.move(currentPosition, targetPosition);
-        changeTurnColor();
+        return new ChessGame(board, currentTurnColor.getOppositeColor());
     }
 
     private void validateTurnColor(final Position currentPosition) {
@@ -36,11 +40,7 @@ public class ChessGame {
         }
     }
 
-    private void changeTurnColor() {
-        currentTurnColor = currentTurnColor.getOppositeColor();
-    }
-
-    public boolean hasRun() {
+    public boolean isSet() {
         return board.hasPieces();
     }
 

@@ -18,9 +18,9 @@ class ChessGameTest {
     void 턴이_바뀌었는지_확인한다() {
         final ChessGame chessGame = ChessGame.createWithSetBoard();
 
-        chessGame.move(new Position(A, TWO), new Position(A, FOUR));
+        final ChessGame changedChessGame = chessGame.move(new Position(A, TWO), new Position(A, FOUR));
 
-        assertThat(chessGame).extracting("currentTurnColor")
+        assertThat(changedChessGame).extracting("currentTurnColor")
                 .isEqualTo(BLACK);
     }
 
@@ -34,19 +34,19 @@ class ChessGameTest {
     }
 
     @Test
-    void 빈_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행된_적이_있는지_확인한다() {
+    void 빈_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
         final ChessGame chessGame = ChessGame.createWithEmptyBoard();
 
-        final boolean actual = chessGame.hasRun();
+        final boolean actual = chessGame.isSet();
 
         assertThat(actual).isFalse();
     }
 
     @Test
-    void 세팅된_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행된_적이_있는지_확인한다() {
+    void 세팅된_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
         final ChessGame chessGame = ChessGame.createWithSetBoard();
 
-        final boolean actual = chessGame.hasRun();
+        final boolean actual = chessGame.isSet();
 
         assertThat(actual).isTrue();
     }

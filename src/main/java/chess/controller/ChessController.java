@@ -36,6 +36,7 @@ public class ChessController {
         outputView.printGameStartGuideMessage();
 
         GameState gameState = GameState.EMPTY;
+
         while (gameState != GameState.END) {
             gameState = play();
         }
@@ -54,7 +55,7 @@ public class ChessController {
     }
 
     private void start(final List<String> commandInputs) {
-        if (chessGame.hasRun()) {
+        if (chessGame.isSet()) {
             throw new IllegalArgumentException("게임이 이미 실행되고 있습니다.");
         }
         chessGame = ChessGame.createWithSetBoard();
@@ -63,12 +64,12 @@ public class ChessController {
 
     private void move(final List<String> commandInputs) {
         if (commandInputs.size() != 3) {
-            throw new IllegalArgumentException("입력이 잘못 되었습니다.");
+            throw new IllegalArgumentException("위치 명령 입력이 잘못 되었습니다.");
         }
         final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
         final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
 
-        chessGame.move(currentPosition, targetPosition);
+        chessGame = chessGame.move(currentPosition, targetPosition);
 
         outputView.printBoard(chessGame.getExistingPieces());
     }
