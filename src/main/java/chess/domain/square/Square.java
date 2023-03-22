@@ -1,15 +1,13 @@
 package chess.domain.square;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class Square {
 
     private static final int TOTAL_SQUARE_COUNT = 8 * 8;
+    private static final Map<SquareKey, Square> cache = new HashMap<>(TOTAL_SQUARE_COUNT);
 
-    private static final Map<String, Square> cache = new HashMap<>(TOTAL_SQUARE_COUNT);
     private final File file;
     private final Rank rank;
 
@@ -19,13 +17,12 @@ public final class Square {
     }
 
     public static Square of(final File file, final Rank rank) {
-        // TODO: 나중에 key 방식 변경해야함
-        final String cardKey = String.valueOf(List.of(file.getValue(), rank.getValue()));
-        if (cache.containsKey(cardKey)) {
-            return cache.get(cardKey);
+        final SquareKey key = new SquareKey(file, rank);
+        if (cache.containsKey(key)) {
+            return cache.get(key);
         }
         final Square square = new Square(file, rank);
-        cache.put(cardKey, square);
+        cache.put(key, square);
         return square;
     }
 
