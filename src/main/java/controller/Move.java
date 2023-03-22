@@ -19,6 +19,7 @@ public final class Move extends GameStatus {
     public void playTurn(final List<String> inputs) {
         chessGame.move(PositionFactory.createPosition(inputs.get(SOURCE_INDEX)), PositionFactory.createPosition(inputs.get(TARGET_INDEX)));
         final ChessBoardDTO chessBoardDTO = ChessBoardDTO.from(chessGame.getChessBoard());
+
         OutputView.printChessBoard(chessBoardDTO);
     }
 
