@@ -9,6 +9,7 @@ public enum CommandType {
     MOVE(2),
     END(0),
     STATUS(0),
+    RESTART(1),
     ;
 
     private final int parameterSize;

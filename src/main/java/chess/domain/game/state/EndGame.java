@@ -1,10 +1,9 @@
 package chess.domain.game.state;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
-import java.util.List;
 import java.util.Map;
 
 public class EndGame implements ChessGameState {
@@ -21,12 +20,7 @@ public class EndGame implements ChessGameState {
     }
 
     @Override
-    public ChessGameState initialize() {
-        throw new IllegalStateException("이미 종료된 상태입니다.");
-    }
-
-    @Override
-    public ChessGameState movePiece(final PiecePosition source, final PiecePosition destination) {
+    public ChessGameState movePiece(final ChessBoard chessBoard, final PiecePosition source, final PiecePosition destination) {
         throw new IllegalStateException("이미 종료된 상태입니다.");
     }
 
@@ -36,17 +30,12 @@ public class EndGame implements ChessGameState {
     }
 
     @Override
-    public List<Piece> pieces() {
-        throw new IllegalStateException("이미 종료된 상태입니다.");
-    }
-
-    @Override
     public Color winColor() {
         return winColor;
     }
 
     @Override
-    public Map<Color, Double> calculateScore() {
+    public Map<Color, Double> calculateScore(final ChessBoard chessBoard) {
         throw new IllegalArgumentException("이미 게임 끝났습니다.");
     }
 }

@@ -2,9 +2,6 @@ package chess.view;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.File;
-import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.Rank;
 import chess.domain.piece.movestrategy.BishopMovementStrategy;
 import chess.domain.piece.movestrategy.KingMovementStrategy;
 import chess.domain.piece.movestrategy.KnightMovementStrategy;
@@ -12,6 +9,9 @@ import chess.domain.piece.movestrategy.QueenMovementStrategy;
 import chess.domain.piece.movestrategy.RookMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.WhitePawnMovementStrategy;
+import chess.domain.piece.position.File;
+import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.Rank;
 
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +79,7 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
         System.out.println("> 현재 점수 : status (게임 진행 중에만 볼 수 있습니다.)");
+        System.out.println("> 재시작 : restart gameId - 예. restart 1");
     }
 
     public static void error(final String message) {
@@ -87,7 +88,7 @@ public class OutputView {
 
     public static void printWinColor(final Color winColor) {
         if (winColor == Color.NONE) {
-            System.out.println("왕이 죽지 않아서 i무승부입니다.");
+            System.out.println("왕이 죽지 않아서 무승부입니다.");
             return;
         }
         System.out.println(winColor + " 이 이겼습니다.");

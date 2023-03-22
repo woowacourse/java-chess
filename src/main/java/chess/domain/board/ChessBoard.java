@@ -19,7 +19,7 @@ public class ChessBoard {
         this.pieces = pieces;
     }
 
-    static ChessBoard from(final List<Piece> pieces) {
+    public static ChessBoard from(final List<Piece> pieces) {
         return new ChessBoard(pieces);
     }
 

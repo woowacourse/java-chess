@@ -9,7 +9,6 @@ import chess.domain.piece.position.PiecePosition;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,44 +17,76 @@ import static chess.controller.command.Command.TO_POSITION_INDEX;
 
 public class ChessController {
 
-    private final Map<CommandType, ChessAction> actionMapping = new EnumMap<>(CommandType.class);
-
-    interface ChessAction {
-        void execute(final ChessGame chessGame, final Command command);
-    }
-
-    public ChessController() {
-        actionMapping.put(CommandType.START, this::start);
-        actionMapping.put(CommandType.MOVE, this::move);
-        actionMapping.put(CommandType.END, this::end);
-        actionMapping.put(CommandType.STATUS, this::status);
-    }
-
-    public void run() {
+    public void start() {
         OutputView.printStartMessage();
+        while (true) {
+            try {
+                final Command command = readCommand();
+                if (command.type() == CommandType.START) {
+                    createGameAndStart();
+                    return;
+                }
+                if (command.type() == CommandType.RESTART) {
+                    restartGame();
+                    return;
+                }
+                throw new IllegalArgumentException("시작하거나, 재시작해야 합니다");
+            } catch (Exception e) {
+                OutputView.error(e.getMessage());
+            }
+        }
+    }
+
+    private void createGameAndStart() {
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
         final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
+        playGame(chessGame);
+    }
 
+    private void restartGame() {
+        // TODO - findById 로 ChesGame 가져와서 시작하기
+        System.out.println("아직 기능이 없어서 그냥 시작합니다.");
+        final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
+        final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
+        playGame(chessGame);
+    }
+
+    private void playGame(final ChessGame chessGame) {
+        OutputView.showBoard(chessGame.pieces());
         while (chessGame.playable()) {
             play(chessGame);
         }
-
         OutputView.printWinColor(chessGame.winColor());
+        saveAndEnd(chessGame);
+    }
+
+    private void saveAndEnd(final ChessGame chessGame) {
+        if (chessGame.playable()) {
+            chessGame.end();
+        }
+        // TODO SAVE
     }
 
     private void play(final ChessGame chessGame) {
-        try {
-            final List<String> commands = InputView.readCommand();
-            final Command command = Command.parse(commands);
-            actionMapping.get(command.type()).execute(chessGame, command);
-        } catch (Exception e) {
-            OutputView.error(e.getMessage());
+        final Command command = readCommand();
+        if (command.type() == CommandType.MOVE) {
+            move(chessGame, command);
+            return;
         }
+        if (command.type() == CommandType.END) {
+            saveAndEnd(chessGame);
+            return;
+        }
+        if (command.type() == CommandType.STATUS) {
+            status(chessGame);
+            return;
+        }
+        throw new IllegalArgumentException("움직이거나, 끝내거나");
     }
 
-    private void start(final ChessGame chessGame, final Command command) {
-        chessGame.initialize();
-        OutputView.showBoard(chessGame.pieces());
+    private Command readCommand() {
+        final List<String> commands = InputView.readCommand();
+        return Command.parse(commands);
     }
 
     private void move(final ChessGame chessGame, final Command command) {
@@ -66,11 +97,7 @@ public class ChessController {
         OutputView.showBoard(chessGame.pieces());
     }
 
-    private void end(final ChessGame chessGame, final Command command) {
-        chessGame.end();
-    }
-
-    private void status(final ChessGame chessGame, final Command command) {
+    private void status(final ChessGame chessGame) {
         final Map<Color, Double> colorDoubleMap = chessGame.calculateScore();
         OutputView.printScore(colorDoubleMap);
     }
