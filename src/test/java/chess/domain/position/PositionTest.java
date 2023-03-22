@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import static chess.domain.position.File.A;
 import static chess.domain.position.Rank.ONE;
