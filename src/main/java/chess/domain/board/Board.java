@@ -117,21 +117,13 @@ public class Board {
         final Piece sourcePiece = this.board.get(source);
         final Direction direction = Direction.calculateDirection(source, target);
 
-        if (this.isSameRole(source, Role.KNIGHT)) {
-            return this.isKnightMovable(source, target, sourcePiece);
-        }
-        if (this.isPathBlocked(source, target, direction)) {
+        if (this.isPathBlocked(source, target, direction) && !this.isSameRole(source, Role.KNIGHT)) {
             return false;
         }
         if (this.isSameRole(source, Role.PAWN)) {
             return this.isPawnMovable(source, target, direction);
         }
         return sourcePiece.isMovable(source, target, direction);
-    }
-
-    private boolean isKnightMovable(final Square source, final Square target, final Piece piece) {
-        final Direction direction = Direction.calculateKnightDirection(source, target);
-        return piece.isMovable(source, target, direction);
     }
 
     private boolean isPawnMovable(final Square source, final Square target, final Direction direction) {

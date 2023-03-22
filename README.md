@@ -79,7 +79,6 @@
 - [x] 패키지 위치 수정
 - [x] '구현체가 아닌 인터페이스에 대고 프로그래밍' 규칙 지키기
 - [x] orElseThrow -> 대신 적절한 예외 처리
-- [ ] Move class calculateDirection 메서드 내 empty 판단 로직 메서드 분리
-- [ ] 일반적으로 enum의 정적 팩터리 메서드를 사용할때 순회하는 방법을 많이 사용하는데, Map을 이용하여 시간 복잡도를 낮추는 방법 찾아보기
 - [x] KnightMove -> Move로 합치기
 - [x] 콘솔에 노출될 문구 -> view에서 확인할 수 있도록 수정하기
+- [x] direction 계산 로직 -> gcd를 사용하는 것으로 수정
