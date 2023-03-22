@@ -40,7 +40,7 @@ public enum InitialPieceTypes {
     }
     
     public PieceType findPieceTypeByColumn(Coordinate coordinate) {
-        int columnIndex = coordinate.columnIndexAtRowPieces();
+        int columnIndex = coordinate.columnIndex();
         return pieceTypes.get(columnIndex);
     }
 }

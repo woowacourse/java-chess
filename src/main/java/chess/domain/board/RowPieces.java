@@ -85,7 +85,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     private void switchPiece(Piece movedPiece, Coordinate coordinate) {
-        pieces.set(coordinate.columnIndexAtRowPieces(), movedPiece);
+        pieces.set(coordinate.columnIndex(), movedPiece);
     }
     
     private Piece createEmpty(Coordinate coordinate) {

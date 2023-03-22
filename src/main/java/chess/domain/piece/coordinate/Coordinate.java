@@ -49,8 +49,8 @@ public class Coordinate {
         return this.row.directionNumberTo(coordinate.row);
     }
     
-    public int columnIndexAtRowPieces() {
-        return column.minusMinColumn();
+    public int columnIndex() {
+        return column.convertColumnIndex();
     }
     
     public int compareToPieceByRowNum(Coordinate otherCoordinate) {

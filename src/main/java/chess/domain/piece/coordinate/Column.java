@@ -39,7 +39,7 @@ public enum Column {
         return (char) (column + number);
     }
     
-    public int minusMinColumn() {
+    public int convertColumnIndex() {
         return column - MIN_COLUMN_CHAR;
     }
     
