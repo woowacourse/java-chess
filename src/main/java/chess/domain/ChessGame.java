@@ -26,6 +26,10 @@ public class ChessGame {
         return isPlaying;
     }
 
+    public TeamColor findWinningTeam() {
+        return teamColor;
+    }
+
     public ChessBoard getChessBoard() {
         return chessBoard;
     }

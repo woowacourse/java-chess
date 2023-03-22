@@ -29,4 +29,21 @@ class ChessGameTest {
         assertThat(chessGame.isPlaying()).isFalse();
     }
 
+    @DisplayName("King 이 잡혔을 때 우승팀을 반환한다.")
+    @Test
+    void 우승팀_안내() {
+        Map<Position, Piece> boardForTest = Map.of(
+            Position.from("A2"), InitialPiece.WHITE_QUEEN.getPiece(),
+            Position.from("E3"), InitialPiece.WHITE_KING.getPiece(),
+            Position.from("C4"), InitialPiece.BLACK_KING.getPiece(),
+            Position.from("B2"), InitialPiece.BLACK_PAWN.getPiece());
+
+        ChessBoard chessBoard = new ChessBoard(new HashMap<>(boardForTest));
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        chessGame.move(Position.from("A2"), Position.from("C4"));
+
+        assertThat(chessGame.findWinningTeam()).isEqualTo(TeamColor.BLACK);
+    }
+
 }
