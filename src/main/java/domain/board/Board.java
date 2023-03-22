@@ -100,13 +100,6 @@ public final class Board {
                 .getColor() == Color.NEUTRAL;
     }
 
-    public boolean isSameColor(final Coordinate start, final Coordinate end) {
-        Square startSquare = findSquare(start);
-        Square endSquare = findSquare(end);
-
-        return startSquare.hasPieceNotSameColorWith(endSquare);
-    }
-
     public boolean allKingAlive() {
         return squareLocations.values().stream()
                 .filter(Square::hasKing)
