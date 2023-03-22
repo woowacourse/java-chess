@@ -1,4 +1,4 @@
-package chess.gamecommand;
+package chess.domain.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
