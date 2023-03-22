@@ -90,18 +90,20 @@ rnbqkbnr
 
 ChessGame
 
-- [ ] ChessGame 생성 책임 이동
+- [x] ChessGame 생성 책임 이동
     - ChessGame을 사용하는 곳에서 인스턴스화를 진행하도록 책임 이전
-- [ ] ChessGame을 값 객체로 만드는 것 생각하기
+- [x] ChessGame을 값 객체로 만드는 것 생각하기
+    - 불변으로 만들었다.
+    - 값 객체까지 만들어야 할까?
 
 Controller
 
-- [ ] ChessGame을 생성자의 인자로 받는 것 고민하기
-- [ ] while 반복문과 조건절 수정하기
-- [ ] processStartCommand 메서드 사용 시 타입 활용으로 변경하기
-- [ ] 도메인의 표준타입 정의하기
-- [ ] 재입력 로직 추가
-- [ ] GameCommand 고민하기
+- [x] ChessGame을 생성자의 인자로 받는 것 고민하기
+- [x] while 반복문과 조건절 수정하기
+- [x] processStartCommand 메서드 사용 시 타입 활용으로 변경하기
+- [x] 도메인의 표준타입 정의하기
+- [x] 재입력 로직 추가
+- [x] GameCommand 고민하기
 
 Board
 
@@ -110,14 +112,14 @@ Board
 
 기타
 
-- [ ] Readme 기능 목록 체크
+- [x] Readme 기능 목록 체크
 - [x] Color 클래스에서 isBlack 메서드 삭제하기
 - [x] File, Rank 클래스에서 index 상태를 ordinal()로 수동
 
 test
 
-- [ ] test에서 given, when, then 사용하기
+- [?] test에서 given, when, then 사용하기
 - [x] test에서 inner class Nested
-- [ ] test에서 Fixture 활용해보기
-- [ ] test 메서드 네이밍 일관성 지키기
+- [?] test에서 Fixture 활용해보기
+- [x] test 메서드 네이밍 일관성 지키기
 
