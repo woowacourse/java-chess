@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move_rule.*;
@@ -20,7 +21,7 @@ public class Board {
     }
 
     public Map<Position, String> move(Position currentPosition, Position nextPosition, Color thisTurn) {
-        Piece piece = board.get(currentPosition);
+        Piece piece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
         List<Position> routePositions = piece.move(currentPosition, nextPosition);
         validateThisTurnColor(thisTurn, piece);
 
@@ -46,8 +47,8 @@ public class Board {
     }
 
     private Map<Position, String> movePawn(Position currentPosition, Position nextPosition, List<Position> routePositions) {
-        Piece currentPiece = board.get(currentPosition);
-        Piece destinationPiece = board.get(nextPosition);
+        Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
+        Piece destinationPiece = board.getOrDefault(nextPosition, BlankPiece.getInstance());
         validateMiddlePathConflict(routePositions);
         if (currentPosition.isDiagonalEqual(nextPosition) && currentPiece.isOpponent(destinationPiece)) {
             updateMovedPiece(currentPosition, nextPosition, currentPiece);
