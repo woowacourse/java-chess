@@ -40,7 +40,7 @@ public class ChessController {
         try {
             runnable.run();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            outputView.printExceptionMessage(e.getMessage());
             repeat(runnable);
         }
     }

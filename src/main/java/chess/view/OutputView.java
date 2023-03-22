@@ -1,12 +1,12 @@
 package chess.view;
 
-import chess.domain.Color;
 import chess.domain.piece.Piece;
+import chess.domain.square.Color;
 
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.Role.*;
+import static chess.domain.piece.Role.*;
 
 public class OutputView {
     public void printStartMessage() {
@@ -53,5 +53,9 @@ public class OutputView {
             return convertedPiece.toUpperCase();
         }
         return convertedPiece.toLowerCase();
+    }
+
+    public void printExceptionMessage(final String message) {
+        System.err.println(message);
     }
 }
