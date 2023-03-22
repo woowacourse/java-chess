@@ -15,6 +15,7 @@ import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
 public class Knight extends Piece {
 
     private static final Map<Integer, Integer> distance = Map.of(1, 2, 2, 1);
+
     private static final List<Direction> direction = List.of(
             Direction.KNIGHT_TOP_LEFT,
             Direction.KNIGHT_TOP_RIGHT,
@@ -25,6 +26,7 @@ public class Knight extends Piece {
             Direction.KNIGHT_BOTTOM_LEFT,
             Direction.KNIGHT_BOTTOM_RIGHT);
 
+    private final double score = 2.5;
 
     public Knight(Color color) {
         super(KNIGHT_NAME.getName(), color);

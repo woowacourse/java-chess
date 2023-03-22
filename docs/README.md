@@ -72,7 +72,7 @@
 
 - [x] p를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(1점)를 가진다
+- [x] 상수로 점수(1점)를 가진다
     - [] 같은 세로줄에 같은 색의 Pawn이 있는 경우 0.5점을 가진다
 
 ### Rook (Piece)
@@ -85,25 +85,25 @@
 
 - [x] n를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(2.5점)를 가진다
+- [x] 상수로 점수(2.5점)를 가진다
 
 ### Bishop (Piece)
 
 - [x] b를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(3점)를 가진다
+- [x] 상수로 점수(3점)를 가진다
 
 ### Queen (Piece)
 
 - [x] q를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(9점)를 가진다
+- [x] 상수로 점수(9점)를 가진다
 
 ### King (Piece)
 
 - [x] k를 이름으로 갖는다
 - [x] move override , rank와 column를 필드로 가진다
-- [] 상수로 점수(0점)를 가진다
+- [x] 상수로 점수(0점)를 가진다
 
 ## PieceGenerator
 
