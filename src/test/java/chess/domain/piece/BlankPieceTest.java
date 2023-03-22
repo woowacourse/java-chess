@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
+import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static chess.PositionFixture.A1;
 import static chess.PositionFixture.A2;
-import static chess.domain.piece.BlankPiece.BLANK_PIECE_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -27,7 +27,7 @@ class BlankPieceTest {
     void move_throws_exception() {
         assertThatThrownBy(() -> blankPiece.move(BlankPiece.of(A2)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(BLANK_PIECE_EXCEPTION_MESSAGE);
+                .hasMessage(ExceptionCode.ACCESS_BLANK_PIECE.name());
     }
 
     @Test
@@ -35,6 +35,6 @@ class BlankPieceTest {
     void get_passing_positions_throws_exception() {
         assertThatThrownBy(() -> blankPiece.getPassingPositions(A2))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(BLANK_PIECE_EXCEPTION_MESSAGE);
+                .hasMessage(ExceptionCode.ACCESS_BLANK_PIECE.name());
     }
 }

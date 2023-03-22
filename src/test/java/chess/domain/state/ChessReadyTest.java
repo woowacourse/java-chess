@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.TestPiecesGenerator;
+import chess.constant.ExceptionCode;
 import chess.controller.command.Command;
 import chess.domain.ChessGame;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.state.ChessReady.CHESS_NOT_INITIALIZED_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,7 +37,7 @@ class ChessReadyTest {
 
             assertThatThrownBy(() -> chessReady.process(Command.of(List.of("move", "a2", "a3"))))
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage(CHESS_NOT_INITIALIZED_MESSAGE);
+                    .hasMessage(ExceptionCode.GAME_NOT_INITIALIZED.name());
         }
 
         @Test
@@ -58,7 +58,7 @@ class ChessReadyTest {
 
         assertThatThrownBy(() -> chessReady.getExistingPieces())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(CHESS_NOT_INITIALIZED_MESSAGE);
+                .hasMessage(ExceptionCode.GAME_NOT_INITIALIZED.name());
     }
 
     @Test

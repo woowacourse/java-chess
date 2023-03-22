@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -43,13 +44,13 @@ public class Pawn extends Piece {
     private void validateDiagonalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
         if (position.isInDiagonalPosition(targetPosition)
                 && !pieceInTargetPosition.isSameColor(color.getOppositeColor())) {
-            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 
     private void validateHorizontalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
         if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.BLANK)) {
-            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 

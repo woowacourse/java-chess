@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.constant.ExceptionCode;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -44,7 +45,7 @@ class QueenTest {
 
         assertThatThrownBy(() -> queen.getPassingPositions(Position.of(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+                .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
     @ParameterizedTest
@@ -73,6 +74,6 @@ class QueenTest {
 
         assertThatThrownBy(() -> originalQueen.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 색 말은 잡을 수 없습니다.");
+                .hasMessage(ExceptionCode.TARGET_IS_SAME_COLOR.name());
     }
 }

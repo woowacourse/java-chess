@@ -9,8 +9,6 @@ import java.util.Set;
 
 public abstract class ChessState {
 
-    static final String INVALID_COMMAND_MESSAGE = "유효하지 않은 커멘드가 입력되었습니다.";
-
     protected final ChessGame chessGame;
 
     protected ChessState(final ChessGame chessGame) {

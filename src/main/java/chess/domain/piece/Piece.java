@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Position;
 
@@ -7,9 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-
-    protected static final String INVALID_DESTINATION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
-    protected static final String INVALID_MOVING_CAUSE_OF_CATCHING = "같은 색 말은 잡을 수 없습니다.";
 
     protected final Position position;
     protected final Color color;
@@ -25,13 +23,13 @@ public abstract class Piece {
 
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
-            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 
     protected final void validateDestination(final Position targetPosition) {
         if (!canMove(targetPosition)) {
-            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 
@@ -41,7 +39,7 @@ public abstract class Piece {
 
     protected final void validateCatchingSameColor(final Piece pieceInTargetPosition) {
         if (pieceInTargetPosition.isSameColor(color)) {
-            throw new IllegalArgumentException(INVALID_MOVING_CAUSE_OF_CATCHING);
+            throw new IllegalArgumentException(ExceptionCode.TARGET_IS_SAME_COLOR.name());
         }
     }
 

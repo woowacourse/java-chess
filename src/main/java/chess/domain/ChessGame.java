@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.constant.ExceptionCode;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
@@ -30,7 +31,7 @@ public class ChessGame {
 
     private void validateTurnColor(final Position currentPosition) {
         if (!board.isSameColor(currentPosition, currentTurnColor)) {
-            throw new IllegalArgumentException("해당 색의 말을 이동시킬 순서가 아닙니다.");
+            throw new IllegalArgumentException(ExceptionCode.INVALID_TURN.name());
         }
     }
 

@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.TestPiecesGenerator;
+import chess.constant.ExceptionCode;
 import chess.controller.command.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Pawn;
@@ -13,10 +14,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static chess.PositionFixture.A2;
-import static chess.domain.state.ChessEnd.GAME_END_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -33,7 +34,7 @@ class ChessEndTest {
 
         assertThatThrownBy(() -> chessEnd.process(command))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(GAME_END_MESSAGE);
+                .hasMessage(ExceptionCode.GAME_END.name());
     }
 
     private static Stream<Arguments> provideCommand() {
@@ -49,13 +50,11 @@ class ChessEndTest {
     void getting_existing_piece_test() {
         final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))));
 
-        final List<Piece> existingPieces = chessEnd.getExistingPieces();
-        final Piece piece = existingPieces.get(0);
+        final Set<Piece> existingPieces = chessEnd.getExistingPieces();
 
         assertSoftly(softly -> {
-            softly.assertThat(piece).isInstanceOf(Pawn.class);
-            softly.assertThat(piece.getPosition()).isEqualTo(A2);
-            softly.assertThat(piece.getColor()).isEqualTo(Color.WHITE);
+            softly.assertThat(existingPieces).hasSize(1);
+            softly.assertThat(existingPieces).containsExactly(pawn);
         });
 
     }

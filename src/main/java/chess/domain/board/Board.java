@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.constant.ExceptionCode;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
@@ -33,7 +34,7 @@ public class Board {
 
     private Piece findPieceOrElseThrowIn(final Position position) {
         return findPieceOptionalIn(position)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionCode.PIECE_CAN_NOT_FOUND.name()));
     }
 
     private Optional<Piece> findPieceOptionalIn(final Position position) {
@@ -46,7 +47,7 @@ public class Board {
         final boolean isBlocked = existingPieces.stream()
                 .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
         if (isBlocked) {
-            throw new IllegalArgumentException("이동 경로에 다른 말이 있습니다.");
+            throw new IllegalArgumentException(ExceptionCode.PIECE_MOVING_PATH_BLOCKED.name());
         }
     }
 

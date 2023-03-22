@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.TestPiecesGenerator;
+import chess.constant.ExceptionCode;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,6 @@ class ChessGameTest {
 
         assertThatThrownBy(() -> chessGame.move(A7, A6))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 색의 말을 이동시킬 순서가 아닙니다.");
+                .hasMessage(ExceptionCode.INVALID_TURN.name());
     }
 }

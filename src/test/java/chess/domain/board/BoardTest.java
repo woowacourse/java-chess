@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.TestPiecesGenerator;
+import chess.constant.ExceptionCode;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
+import java.util.Set;
 
 import static chess.PositionFixture.A1;
 import static chess.PositionFixture.A2;
@@ -42,7 +44,7 @@ class BoardTest {
                 new Rook(A1, WHITE)
         ));
         final Board board = Board.createBoardWith(piecesGenerator);
-        final List<Piece> pieces = board.getExistingPieces();
+        final Set<Piece> pieces = board.getExistingPieces();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .contains(
@@ -64,10 +66,10 @@ class BoardTest {
 
         board.move(D8, D5);
 
-        final List<Piece> pieces = board.getExistingPieces();
-        final Piece queen = pieces.get(0);
+        final Set<Piece> pieces = board.getExistingPieces();
+        final Piece expected = new Queen(D5, BLACK);
 
-        assertThat(queen.getPosition()).isEqualTo(D5);
+        assertThat(pieces).containsExactly(expected);
     }
 
     @Test
@@ -80,13 +82,12 @@ class BoardTest {
         final Board board = Board.createBoardWith(piecesGenerator);
 
         board.move(D8, D5);
-        final List<Piece> pieces = board.getExistingPieces();
-        final Piece queen = pieces.get(0);
+        final Set<Piece> pieces = board.getExistingPieces();
+        final Piece expectedMovedQueen = new Queen(D5, BLACK);
 
         assertSoftly(softly -> {
             softly.assertThat(pieces.size()).isEqualTo(1);
-            softly.assertThat(queen).isInstanceOf(Queen.class);
-            softly.assertThat(queen.getPosition()).isEqualTo(D5);
+            softly.assertThat(pieces).containsExactly(expectedMovedQueen);
         });
     }
 
@@ -98,7 +99,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(D8, D5))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 말이 존재하지 않습니다.");
+                .hasMessage(ExceptionCode.PIECE_CAN_NOT_FOUND.name());
     }
 
     @Test
@@ -111,7 +112,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(D8, E6))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+                .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
     @Test
@@ -125,7 +126,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(D8, D5))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 말이 있습니다.");
+                .hasMessage(ExceptionCode.PIECE_MOVING_PATH_BLOCKED.name());
     }
 
     @Test
@@ -139,7 +140,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(D8, D7))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 색 말은 잡을 수 없습니다.");
+                .hasMessage(ExceptionCode.TARGET_IS_SAME_COLOR.name());
     }
 
     @ParameterizedTest

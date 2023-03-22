@@ -1,11 +1,12 @@
 package chess.controller.command;
 
+import chess.constant.ExceptionCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Command {
 
-    private static final String INVALID_PARAMETER_NUMBER_MESSAGE = "커멘드에 맞는 파라미터를 입력해주세요.";
     private static final int COMMAND_TYPE_INDEX = 0;
     private static final int COMMAND_PARAMETER_START_INDEX = 1;
 
@@ -32,7 +33,7 @@ public class Command {
 
     private static void validateParameterSize(final List<String> inputValues, final Type commandType) {
         if (inputValues.size() - 1 != commandType.getRequiredParameterNumber()) {
-            throw new IllegalArgumentException(INVALID_PARAMETER_NUMBER_MESSAGE);
+            throw new IllegalArgumentException(ExceptionCode.INVALID_COMMAND_PARAMETER.name());
         }
     }
 

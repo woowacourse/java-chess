@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.constant.ExceptionCode;
 import chess.controller.command.Command;
 import chess.controller.command.Type;
 import chess.domain.ChessGame;
@@ -15,9 +16,6 @@ import static chess.controller.command.Command.MOVE_TARGET_POSITION_INDEX;
 
 public class ChessRunning extends ChessState {
 
-    static final String CHESS_ALREADY_RUNNING_MESSAGE = "게임이 이미 진행중입니다.";
-
-
     ChessRunning(final ChessGame chessGame) {
         super(chessGame);
     }
@@ -25,7 +23,7 @@ public class ChessRunning extends ChessState {
     @Override
     public ChessState process(final Command command) {
         if (command.is(Type.START)) {
-            throw new IllegalStateException(CHESS_ALREADY_RUNNING_MESSAGE);
+            throw new IllegalStateException(ExceptionCode.GAME_ALREADY_RUNNING.name());
         }
         if (command.is(Type.MOVE)) {
             processMove(command);
@@ -35,7 +33,7 @@ public class ChessRunning extends ChessState {
             return new ChessEnd(chessGame);
         }
 
-        throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+        throw new IllegalArgumentException(ExceptionCode.INVALID_COMMAND.name());
     }
 
     private void processMove(final Command command) {

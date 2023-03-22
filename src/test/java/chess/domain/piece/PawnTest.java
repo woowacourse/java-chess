@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -74,7 +75,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 위치로 이동할 수 없습니다.");
+                    .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
 
         @ParameterizedTest
@@ -85,7 +86,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 위치로 이동할 수 없습니다.");
+                    .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 
@@ -131,7 +132,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 위치로 이동할 수 없습니다.");
+                    .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
 
         @ParameterizedTest
@@ -142,7 +143,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 위치로 이동할 수 없습니다.");
+                    .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
 
@@ -173,7 +174,7 @@ class PawnTest {
 
         assertThatThrownBy(() -> originalPawn.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+                .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
     @ParameterizedTest
@@ -184,7 +185,7 @@ class PawnTest {
 
         assertThatThrownBy(() -> originalPawn.move(pieceInTargetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+                .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
     private static Stream<Arguments> provideDiagonalPieceInTargetPosition() {
