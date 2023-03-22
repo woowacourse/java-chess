@@ -1,61 +1,25 @@
 package chess.domain.piece;
 
-import chess.domain.piece.moveRule.MoveRule;
 import chess.domain.position.Position;
-import java.util.Map;
-import java.util.Objects;
 
-public final class Piece {
-    private final PieceData pieceData;
-    private final MoveRule moveRule;
+public interface Piece {
+    Piece move(Position currentPosition, Position nextPosition, Piece pieceOfNextPosition);
 
-    public Piece(MoveRule moveRule, Color color) {
-        this.moveRule = moveRule;
-        this.pieceData = new PieceData(color, moveRule.pieceType());
-    }
+    void validateMovement(Position currentPosition, Position nextPosition);
 
-    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
-        moveRule.move(currentPosition, nextPosition, board);
-    }
+    boolean isOpponent(Color other);
 
-    public boolean isOpponent(Piece other) {
-        return pieceData.isDifferentColor(other.pieceData);
-    }
+    boolean isOpponent(Piece other);
 
-    public boolean isOpponent(Color other) {
-        return pieceData.isDifferentColor(other);
-    }
+    boolean isSameColor(Color other);
 
-    public boolean isSameTeam(Piece other) {
-        return pieceData.isSameColor(other.pieceData);
-    }
+    boolean isSameColor(Piece other);
 
-    public String formatName() {
-        return pieceData.formatName();
-    }
+    String formatName();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return Objects.equals(pieceData, piece.pieceData);
-    }
+    boolean isEmpty();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(pieceData);
-    }
+    boolean isPiece();
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "pieceData=" + pieceData +
-                ", moveRule=" + moveRule +
-                '}';
-    }
+    boolean isSliding();
 }
