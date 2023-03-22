@@ -15,7 +15,7 @@ public class InitialPawn extends Piece {
 	}
 
 	private boolean isMovementMobile(RelativePosition relativePosition) {
-		if (team.isBlack()) {
+		if (team == Team.BLACK) {
 			relativePosition = relativePosition.inverseByXAxis();
 		}
 		return movement.isMobile(relativePosition);

@@ -11,7 +11,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isMobile(RelativePosition relativePosition) {
-		if (team.isBlack()) {
+		if (team == Team.BLACK) {
 			relativePosition = relativePosition.inverseByXAxis();
 		}
 		return movement.isMobile(relativePosition);
