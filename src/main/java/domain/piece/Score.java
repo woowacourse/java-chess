@@ -7,6 +7,7 @@ public class Score {
     public static final Score BISHOP_SCORE = new Score(3);
     public static final Score KNIGHT_SCORE = new Score(2.5);
     public static final Score PAWN_SCORE = new Score(1);
+    public static final double PAWN_PENALTY_SCORE = 0.5;
 
     private final double score;
 
@@ -20,5 +21,10 @@ public class Score {
 
     public double getScore() {
         return score;
+    }
+
+    public Score calculateScoreWithPawnCount(int pawnCount) {
+        double pawnPenalty = pawnCount * PAWN_PENALTY_SCORE;
+        return new Score(this.score - pawnPenalty);
     }
 }
