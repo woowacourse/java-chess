@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Blank;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -30,17 +30,19 @@ public final class Board {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece.getColor());
-        if (cannotMoveToTheTarget(path)) {
-            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
-        }
+        validatePath(path);
         board.put(target, sourcePiece);
-        board.put(source, Blank.create());
+        board.put(source, Empty.create());
     }
 
-    private boolean cannotMoveToTheTarget(final List<Position> path) {
-        return path.stream()
-                .anyMatch(position -> !board.get(position).isEmpty());
+    private void validatePath(final List<Position> path) {
+        final boolean result = path.stream()
+                .allMatch(position -> board.get(position).isEmpty());
+        if (!result) {
+            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
+        }
     }
+
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);

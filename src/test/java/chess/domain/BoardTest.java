@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
@@ -30,7 +30,7 @@ class BoardTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), Blank.create());
+                board.put(Position.of(file, rank), Empty.create());
             }
         }
         return board;

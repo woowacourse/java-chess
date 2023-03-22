@@ -7,15 +7,15 @@ import chess.domain.movingStrategy.MovingStrategy;
 import java.util.Collections;
 import java.util.List;
 
-public class Blank extends Piece {
+public class Empty extends Piece {
 
-    private Blank(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
+    private Empty(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
         super(color, pieceType, strategies);
     }
 
-    public static Blank create() {
+    public static Empty create() {
         final MovingStrategies emptyStrategies = new MovingStrategies(Collections.emptyList());
-        return new Blank(Color.EMPTY, PieceType.EMPTY, emptyStrategies);
+        return new Empty(Color.EMPTY, PieceType.EMPTY, emptyStrategies);
     }
 
     @Override

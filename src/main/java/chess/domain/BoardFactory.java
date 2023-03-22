@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -34,7 +34,7 @@ public final class BoardFactory {
     private static void initializeBoard(final Map<Position, Piece> board) {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), Blank.create());
+                board.put(Position.of(file, rank), Empty.create());
             }
         }
     }
