@@ -5,12 +5,12 @@ import static chess.domain.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.pieces.Bishop;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.sliding.Bishop;
+import chess.domain.pieces.sliding.Queen;
+import chess.domain.pieces.sliding.Rook;
+import chess.domain.pieces.nonsliding.King;
+import chess.domain.pieces.nonsliding.Knight;
+import chess.domain.pieces.pawn.Pawn;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class BoardMakerTest {
 
     @Test
     @DisplayName("생성된 board의 사이즈는 8x8이다.")
-    void createTest_size() {
+    void 생성된_board의_사이즈는_8x8이다() {
         Assertions.assertAll(
                 () -> assertThat(ranks.size()).isEqualTo(8),
                 () -> assertThat(ranks.get(0).getRank().size()).isEqualTo(8)
@@ -30,8 +30,8 @@ class BoardMakerTest {
     }
 
     @Test
-    @DisplayName("0번 째 인덱스를 테스트한다.")
-    void createTest_index_0() {
+    @DisplayName("첫 번째 인덱스에 블랙팀 기물들이 들어간다.")
+    void 첫_번째_인덱스에_블랙팀_기물들이_들어간다() {
         var rank = ranks.get(0);
 
         assertAll(
@@ -62,8 +62,8 @@ class BoardMakerTest {
     }
 
     @Test
-    @DisplayName("1번 째 인덱스를 테스트한다")
-    void createTest_index_1() {
+    @DisplayName("두번 째 인덱스에 블랙팀 폰들이 들어간다")
+    void 두번_째_인덱스에_블랙팀_폰들이_들어간다() {
         var rank = ranks.get(1);
 
         for (int index = 0; index < 8; index++) {
@@ -73,8 +73,8 @@ class BoardMakerTest {
     }
 
     @Test
-    @DisplayName("6번 째 인덱스를 테스트한다.")
-    void createTest_index_6() {
+    @DisplayName("여섯 번 째 인덱스에 흰색팀 폰들이 들어간다")
+    void 여섯_번_째_인덱스에_흰색팀_폰들이_들어간다() {
         var rank = ranks.get(6);
 
         for (int index = 0; index < 8; index++) {
@@ -84,8 +84,8 @@ class BoardMakerTest {
     }
 
     @Test
-    @DisplayName("7번 째 인덱스를 테스트한다.")
-    void createTest_index_7() {
+    @DisplayName("마지막 인덱스에 흰색팀 기물들이 들어간다")
+    void 마지막_인덱스에_흰색팀_기물들이_들어간다() {
         var rank = ranks.get(7);
 
         assertAll(

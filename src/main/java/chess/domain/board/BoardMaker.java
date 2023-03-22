@@ -4,13 +4,14 @@ import static java.util.stream.Collectors.toList;
 
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.pieces.Bishop;
 import chess.domain.pieces.EmptyPiece;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import chess.domain.pieces.pawn.BlackPawn;
+import chess.domain.pieces.pawn.WhitePawn;
+import chess.domain.pieces.sliding.Bishop;
+import chess.domain.pieces.sliding.Queen;
+import chess.domain.pieces.sliding.Rook;
+import chess.domain.pieces.nonsliding.King;
+import chess.domain.pieces.nonsliding.Knight;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -51,7 +52,7 @@ public final class BoardMaker {
 
     private Rank createSecondRank() {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(column -> new Square(new Position(1, column), new Pawn(Team.BLACK)))
+                .mapToObj(column -> new Square(new Position(1, column), new BlackPawn()))
                 .collect(toList());
 
         return new Rank(squares);
@@ -67,7 +68,7 @@ public final class BoardMaker {
 
     private Rank createSecondLastRank() {
         List<Square> squares = IntStream.range(0, 8)
-                .mapToObj(column -> new Square(new Position(6, column), new Pawn(Team.WHITE)))
+                .mapToObj(column -> new Square(new Position(6, column), new WhitePawn()))
                 .collect(toList());
 
         return new Rank(squares);
