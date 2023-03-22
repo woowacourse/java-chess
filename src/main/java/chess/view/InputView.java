@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.common.IndexCommand;
+import chess.domain.board.position.PositionCache;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +33,14 @@ public class InputView {
                                             .collect(Collectors.toList());
 
         if (commands.size() > 3) {
-            throw new IllegalArgumentException("잘못된 명령어입니다.");
+            throw new IllegalArgumentException("[명령어] [시작 위치] [도착 위치] 로 입력해주세요.");
+        }
+
+        final String sourcePosition = commands.get(IndexCommand.SOURCE_POSITION.value());
+        final String targetPosition = commands.get(IndexCommand.TARGET_POSITION.value());
+
+        if (PositionCache.isNotCaching(sourcePosition) || PositionCache.isNotCaching(targetPosition)) {
+            throw new IllegalArgumentException("접근할 수 없는 위치입니다.");
         }
 
         return commands;
