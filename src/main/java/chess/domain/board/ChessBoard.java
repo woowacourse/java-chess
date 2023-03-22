@@ -69,7 +69,8 @@ public class ChessBoard {
     }
 
     public List<Piece> pieces() {
-        return pieces.stream().map(Piece::clone)
+        return pieces.stream()
+                .map(Piece::clone)
                 .collect(Collectors.toList());
     }
 }
