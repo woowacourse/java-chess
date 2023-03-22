@@ -10,7 +10,9 @@ import domain.board.Rank;
 import domain.board.Square;
 
 public class OutputView {
-    private OutputView() {}
+    private OutputView() {
+    }
+
     public static void printChessInfo() {
         System.out.println("> 체스 게임을 시작합니다.\n"
             + "> 게임 시작 : start\n"

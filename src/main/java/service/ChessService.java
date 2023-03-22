@@ -51,8 +51,11 @@ public class ChessService {
         if (isOngoing) {
             Square currentSquare = convertToSquare(commandRequest.getCurrentSquareName());
             Square targetSquare = convertToSquare(commandRequest.getTargetSquareName());
+
             validateTurn(currentSquare);
+
             chessBoard.move(currentSquare, targetSquare);
+
             currentCamp = currentCamp.fetchOppositeCamp();
             return;
         }

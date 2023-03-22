@@ -15,5 +15,6 @@ public class Queen extends Slider {
     }
 
     @Override
-    protected void validateDistance(Square currentSquare, Square targetSquare) {}
+    protected void validateDistance(Square currentSquare, Square targetSquare) {
+    }
 }

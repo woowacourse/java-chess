@@ -11,10 +11,10 @@ import domain.piece.Piece;
 import domain.piece.jumper.Jumper;
 
 public class Pawn extends Jumper {
-    private static final List<Direction> movableDirectionForward = List.of(
+    private static final List<Direction> MOVABLE_DIRECTION_FORWARD = List.of(
         Direction.NORTH
     );
-    private static final List<Direction> movableDirectionDiagonal = List.of(
+    private static final List<Direction> MOVABLE_DIRECTION_DIAGONAL = List.of(
         Direction.NORTH_WEST,
         Direction.NORTH_EAST
     );
@@ -64,9 +64,9 @@ public class Pawn extends Jumper {
 
     private List<Direction> fetchMovableDirections() {
         if (isGoingForward) {
-            return movableDirectionForward;
+            return MOVABLE_DIRECTION_FORWARD;
         }
-        return movableDirectionDiagonal;
+        return MOVABLE_DIRECTION_DIAGONAL;
     }
 
     private List<Square> findMovableSquares(int directionUnit, Square currentSquare, List<Direction> targetDirection) {
