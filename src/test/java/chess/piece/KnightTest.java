@@ -1,14 +1,12 @@
 package chess.piece;
 
 import static chess.domain.piece.Color.WHITE;
-import static chess.domain.position.InitialPositionFixtures.WHITE_KNIGHT_LEFT_POSITION;
 import static chess.fixture.PositionFixture.C3;
 import static chess.fixture.PositionFixture.D5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.path.Path;
-import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -22,7 +20,7 @@ class KnightTest {
     void test_searchPathTo() {
         Piece piece = Knight.from(WHITE);
 
-        Path path = piece.searchPathTo(WHITE_KNIGHT_LEFT_POSITION, C3, null);
+        Path path = piece.searchPathTo(Position.of(2, 1), C3, null);
 
         assertThat(path).extracting("positions", InstanceOfAssertFactories.list(Position.class)).containsExactly();
     }
@@ -32,7 +30,7 @@ class KnightTest {
     void test_searchPathTo2() {
         Piece piece = Knight.from(WHITE);
 
-        assertThatThrownBy(() -> piece.searchPathTo(WHITE_KNIGHT_LEFT_POSITION, D5, null)).isInstanceOf(
+        assertThatThrownBy(() -> piece.searchPathTo(Position.of(2, 1), D5, null)).isInstanceOf(
                 IllegalStateException.class);
     }
 }

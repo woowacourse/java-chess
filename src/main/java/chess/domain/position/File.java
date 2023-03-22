@@ -21,7 +21,7 @@ public enum File {
         this.command = command;
     }
 
-    static File from(int value) {
+    public static File from(int value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findAny()

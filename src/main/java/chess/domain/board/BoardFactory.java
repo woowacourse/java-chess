@@ -2,20 +2,18 @@ package chess.domain.board;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.domain.position.InitialPositionFixtures.BLACK_BISHOP_LEFT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_KING_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_KNIGHT_LEFT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_KNIGHT_RIGHT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_QUEEN_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_ROOK_LEFT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.BLACK_ROOK_RIGHT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_BISHOP_RIGHT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_KING_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_KNIGHT_LEFT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_KNIGHT_RIGHT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_QUEEN_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_ROOK_LEFT_POSITION;
-import static chess.domain.position.InitialPositionFixtures.WHITE_ROOK_RIGHT_POSITION;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.File.C;
+import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
+import static chess.domain.position.File.G;
+import static chess.domain.position.File.H;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.TWO;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -24,6 +22,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +46,8 @@ public class BoardFactory {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
         for (int file = 1; file <= 8; file++) {
-            final Position whitePosition = new Position(file, 2);
-            final Position blackPosition = new Position(file, 7);
+            final Position whitePosition = Position.of(File.from(file), TWO);
+            final Position blackPosition = Position.of(File.from(file), SEVEN);
             pieceMap.put(whitePosition, Pawn.from(WHITE));
             pieceMap.put(blackPosition, Pawn.from(BLACK));
         }
@@ -59,43 +58,42 @@ public class BoardFactory {
     private Map<Position, Piece> createKing() {
         Map<Position, Piece> pieceMap = new HashMap<>();
 
-        pieceMap.put(WHITE_KING_POSITION, King.from(WHITE));
-        pieceMap.put(BLACK_KING_POSITION, King.from(BLACK));
-
+        pieceMap.put(Position.of(E, ONE), King.from(WHITE));
+        pieceMap.put(Position.of(E, EIGHT), King.from(BLACK));
         return pieceMap;
     }
 
     private Map<Position, Piece> createQueen() {
         return Map.of(
-                WHITE_QUEEN_POSITION, Queen.from(WHITE),
-                BLACK_QUEEN_POSITION, Queen.from(BLACK)
+                Position.of(D, ONE), Queen.from(WHITE),
+                Position.of(D, EIGHT), Queen.from(BLACK)
         );
     }
 
     private Map<Position, Piece> createKnight() {
         return Map.of(
-                WHITE_KNIGHT_LEFT_POSITION, Knight.from(WHITE),
-                WHITE_KNIGHT_RIGHT_POSITION, Knight.from(WHITE),
-                BLACK_KNIGHT_LEFT_POSITION, Knight.from(BLACK),
-                BLACK_KNIGHT_RIGHT_POSITION, Knight.from(BLACK)
+                Position.of(B, ONE), Knight.from(WHITE),
+                Position.of(G, ONE), Knight.from(WHITE),
+                Position.of(B, EIGHT), Knight.from(BLACK),
+                Position.of(G, EIGHT), Knight.from(BLACK)
         );
     }
 
     private Map<Position, Piece> createBishop() {
         return Map.of(
-                new Position(3, 1), Bishop.from(WHITE),
-                WHITE_BISHOP_RIGHT_POSITION, Bishop.from(WHITE),
-                BLACK_BISHOP_LEFT_POSITION, Bishop.from(BLACK),
-                new Position(6, 8), Bishop.from(BLACK)
+                Position.of(C, ONE), Bishop.from(WHITE),
+                Position.of(F, ONE), Bishop.from(WHITE),
+                Position.of(C, EIGHT), Bishop.from(BLACK),
+                Position.of(F, EIGHT), Bishop.from(BLACK)
         );
     }
 
     private Map<Position, Piece> createRook() {
         return Map.of(
-                WHITE_ROOK_LEFT_POSITION, Rook.from(WHITE),
-                WHITE_ROOK_RIGHT_POSITION, Rook.from(WHITE),
-                BLACK_ROOK_LEFT_POSITION, Rook.from(BLACK),
-                BLACK_ROOK_RIGHT_POSITION, Rook.from(BLACK)
+                Position.of(A, ONE), Rook.from(WHITE),
+                Position.of(H, ONE), Rook.from(WHITE),
+                Position.of(A, EIGHT), Rook.from(BLACK),
+                Position.of(H, EIGHT), Rook.from(BLACK)
         );
     }
 }

@@ -42,6 +42,6 @@ public enum Movement {
     }
 
     public Position nextPosition(File file, Rank rank) {
-        return new Position(file.value() + this.file, rank.value() + this.rank);
+        return Position.of(file.value() + this.file, rank.value() + this.rank);
     }
 }

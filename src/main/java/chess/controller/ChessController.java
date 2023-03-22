@@ -88,7 +88,7 @@ public class ChessController {
     private Position searchPosition(final String command) {
         final List<String> positionCommands = List.of(command.split(""));
         validatePositionCommandsSize(positionCommands);
-        return new Position(positionCommands.get(0), positionCommands.get(1));
+        return Position.of(positionCommands.get(0), positionCommands.get(1));
     }
 
     private static void validatePositionCommandsSize(final List<String> commands) {
