@@ -20,18 +20,6 @@ public class Player {
         return new Player(Color.BLACK, pieces);
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "color='" + color + '\'' +
-                ", pieces=" + pieces +
-                '}';
-    }
-
-    public Pieces getOriginPieces() {
-        return this.pieces;
-    }
-
     public List<Piece> getPieces() {
         return pieces.getPieces();
     }
@@ -63,5 +51,33 @@ public class Player {
 
     public void removePiece(Position changedPosition) {
         pieces.remove(changedPosition);
+    }
+
+    public Score getTotalScore() {
+        long pawnSameFileCount = countPawnPerFile().values().stream()
+                .filter(value -> value > 1)
+                .count();
+
+        Score subtrahend = Score.from(pawnSameFileCount * 0.5);
+        Score total = Score.from(pieces.getPieces().stream().mapToDouble(Piece::getScore).sum());
+        return total.subtract(subtrahend);
+    }
+
+    private Map<Character, Long> countPawnPerFile() {
+        return pieces.getPieces().stream()
+                .filter(piece -> piece.isSameShape(Shape.PAWN))
+                .collect(groupingBy(piece -> piece.getPosition().getFileValue(), counting()));
+    }
+
+    public String getColorName() {
+        return color.name();
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "color='" + color + '\'' +
+                ", pieces=" + pieces +
+                '}';
     }
 }
