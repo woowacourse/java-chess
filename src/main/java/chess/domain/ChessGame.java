@@ -1,9 +1,8 @@
 package chess.domain;
 
+import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Team;
 import chess.domain.square.Square;
-import chess.dto.GameStatusDto;
-import chess.dto.SquareDto;
 
 public class ChessGame {
 
@@ -14,9 +13,7 @@ public class ChessGame {
         turn = Team.WHITE;
     }
 
-    public void move(final SquareDto currentDto, final SquareDto destinationDto) {
-        Square current = currentDto.getSquare();
-        Square destination = destinationDto.getSquare();
+    public void move(final Square current, final Square destination) {
         checkTurn(current);
         board.move(current, destination);
         turn = turn.getEnemy();

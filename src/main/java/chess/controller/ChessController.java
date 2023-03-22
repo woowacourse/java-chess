@@ -1,10 +1,13 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.dto.SquareDto;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.SquareDto;
 
 public class ChessController {
 
@@ -79,7 +82,9 @@ public class ChessController {
             return;
         }
         try {
-            chessGame.move(currentDto, destinationDto);
+            Square current = Square.of(File.from(currentDto.getFile()), Rank.from(currentDto.getRank()));
+            Square destination = Square.of(File.from(destinationDto.getFile()), Rank.from(destinationDto.getRank()));
+            chessGame.move(current, destination);
             OutputView.printGameStatus(chessGame.getGameStatus());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());

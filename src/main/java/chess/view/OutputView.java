@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.List;
 
-import chess.dto.GameStatusDto;
+import chess.domain.dto.GameStatusDto;
 
 public class OutputView {
 

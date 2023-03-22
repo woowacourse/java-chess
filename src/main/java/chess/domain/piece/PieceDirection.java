@@ -38,6 +38,13 @@ public enum PieceDirection {
         this.pieceDirections = Arrays.asList(pieceDirections);
     }
 
+    private static int divideByAbs(final int number) {
+        if (number == 0) {
+            return number;
+        }
+        return number / Math.abs(number);
+    }
+
     public boolean contains(final Direction direction) {
         return pieceDirections.contains(direction);
     }
@@ -59,13 +66,6 @@ public enum PieceDirection {
         final int fileDirection = divideByAbs(fileDifference);
         final int rankDirection = divideByAbs(rankDifference);
         return getDirection(fileDirection, rankDirection);
-    }
-
-    private static int divideByAbs(final int number) {
-        if (number == 0) {
-            return number;
-        }
-        return number / Math.abs(number);
     }
 
     private Direction getDiagonalDirection(final int fileDifference, final int rankDifference) {

@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Scanner;
 
-import chess.dto.SquareDto;
+import chess.view.dto.SquareDto;
 
 public class InputView {
 
