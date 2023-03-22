@@ -29,4 +29,7 @@ public abstract class Piece {
         return camp.isOpposite(otherCamp);
     }
 
+    public double getScore() {
+        return this.getPieceType().getScore();
+    }
 }
