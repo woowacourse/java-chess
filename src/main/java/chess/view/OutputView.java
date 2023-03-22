@@ -3,13 +3,7 @@ package chess.view;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 
 import java.util.List;
 import java.util.Map;
@@ -56,7 +50,6 @@ public class OutputView {
 
     public void printBoard(final List<Piece> pieces) {
         final String boardMessage = generateBoardMessage(pieces);
-
         System.out.println(boardMessage);
     }
 

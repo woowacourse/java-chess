@@ -42,6 +42,7 @@ class BoardTest {
                 new Rook(A, ONE, WHITE)
         ));
         final Board board = Board.createBoardWith(piecesFactory);
+
         final List<Piece> pieces = board.getPieces();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
@@ -65,7 +66,6 @@ class BoardTest {
 
         final List<Piece> pieces = board.getPieces();
         final Piece queen = pieces.get(0);
-
         assertThat(queen.getPosition()).isEqualTo(new Position(D, FIVE));
     }
 
@@ -78,9 +78,9 @@ class BoardTest {
         final Board board = Board.createBoardWith(piecesFactory);
 
         board.move(new Position(D, EIGHT), new Position(D, FIVE));
+
         final List<Piece> pieces = board.getPieces();
         final Piece queen = pieces.get(0);
-
         assertSoftly(softly -> {
             softly.assertThat(pieces.size()).isEqualTo(1);
             softly.assertThat(queen).isInstanceOf(Queen.class);
