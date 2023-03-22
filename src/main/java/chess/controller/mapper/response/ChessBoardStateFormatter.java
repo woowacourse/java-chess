@@ -14,6 +14,9 @@ public class ChessBoardStateFormatter {
 
     private static final String EMPTY_PIECE_SYMBOL = ".";
 
+    private ChessBoardStateFormatter() {
+    }
+
     public static List<List<String>> convertToConsoleViewBoard(Map<Position, Piece> piecesPosition) {
         List<List<String>> consoleViewBoard = new ArrayList<>();
         for (Rank rank : Rank.values()) {
