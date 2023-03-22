@@ -11,7 +11,7 @@ public class Rule {
     }
 
     public void nextOrder() {
-        if (currentOrder == TeamColor.BLACK) {
+        if (currentOrder.isBlack()) {
             currentOrder = TeamColor.WHITE;
             return;
         }
@@ -29,3 +29,4 @@ public class Rule {
         return piece.isSameColor(currentOrder);
     }
 }
+
