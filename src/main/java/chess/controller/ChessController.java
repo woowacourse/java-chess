@@ -33,7 +33,7 @@ public class ChessController {
     private GameCommand generateGameCommand() {
         try {
             return new GameCommand(this.inputView.readGameCommand());
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
             this.outputView.printErrorMessage(e.getMessage());
             return this.generateGameCommand();
         }
@@ -63,7 +63,7 @@ public class ChessController {
             final Square target = squares.get(TARGET_INDEX);
             this.game.move(source, target);
             this.outputView.printChessBoard(this.game.getPieces());
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
             this.outputView.printErrorMessage(e.getMessage());
         }
     }

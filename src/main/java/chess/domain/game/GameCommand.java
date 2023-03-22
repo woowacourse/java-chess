@@ -3,29 +3,29 @@ package chess.domain.game;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.exception.IllegalCommandException;
 import java.util.List;
 
 public class GameCommand {
-    private enum GameCommandIndex {
-        COMMAND(0),
-        SOURCE(1),
-        TARGET(2);
-
-        private final int index;
-
-        GameCommandIndex(int index) {
-            this.index = index;
-        }
+    public GameCommand(final List<String> gameCommand) {
+        this.validateGameCommand(gameCommand);
+        this.gameCommand = gameCommand;
     }
 
-    private enum MoveIndex {
-        FILE(0),
-        RANK(1);
+    private void validateGameCommand(final List<String> gameCommand) {
+        final String command = gameCommand.get(GameCommandIndex.COMMAND.index);
+        final boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
-        private final int index;
+        if (isCommandMove) {
+            this.validateMoveCommand(
+                    gameCommand.get(GameCommandIndex.SOURCE.index),
+                    gameCommand.get(GameCommandIndex.TARGET.index)
+            );
+            return;
+        }
 
-        MoveIndex(int index) {
-            this.index = index;
+        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND))) {
+            throw new IllegalCommandException();
         }
     }
 
@@ -37,52 +37,53 @@ public class GameCommand {
 
     private final List<String> gameCommand;
 
-    public GameCommand(List<String> gameCommand) {
-        validateGameCommand(gameCommand);
-        this.gameCommand = gameCommand;
-    }
-
-    private void validateGameCommand(List<String> gameCommand) {
-        String command = gameCommand.get(GameCommandIndex.COMMAND.index);
-        boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
-
-        if (isCommandMove) {
-            validateMoveCommand(
-                    gameCommand.get(GameCommandIndex.SOURCE.index),
-                    gameCommand.get(GameCommandIndex.TARGET.index)
-            );
-            return;
-        }
-
-        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND))) {
-            throw new IllegalArgumentException("게임 명령어가 올바르지 않습니다.");
-        }
-    }
-
-    private void validateMoveCommand(String source, String target) {
+    private void validateMoveCommand(final String source, final String target) {
         if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(SQUARE_BOUND_REGULAR_EXPRESSION)) {
-            throw new IllegalArgumentException("정확한 source 위치와 target 위치를 입력해주세요");
+            throw new IllegalCommandException();
         }
     }
 
     public boolean isStart() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
+        return this.gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
     }
 
     public boolean isMove() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+        return this.gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
     }
 
     public List<Square> convertToSquare() {
-        String source = gameCommand.get(GameCommandIndex.SOURCE.index);
-        String target = gameCommand.get(GameCommandIndex.TARGET.index);
+        final String source = this.gameCommand.get(GameCommandIndex.SOURCE.index);
+        final String target = this.gameCommand.get(GameCommandIndex.TARGET.index);
 
-        File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
-        Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
+        final File sourceFile = File.findFileByLetter(source.charAt(MoveIndex.FILE.index));
+        final Rank sourceRank = Rank.findRankByLetter(source.charAt(MoveIndex.RANK.index));
 
-        File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
-        Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
+        final File targetFile = File.findFileByLetter(target.charAt(MoveIndex.FILE.index));
+        final Rank targetRank = Rank.findRankByLetter(target.charAt(MoveIndex.RANK.index));
 
         return List.of(new Square(sourceFile, sourceRank), new Square(targetFile, targetRank));
+    }
+
+    private enum GameCommandIndex {
+        COMMAND(0),
+        SOURCE(1),
+        TARGET(2);
+
+        private final int index;
+
+        GameCommandIndex(final int index) {
+            this.index = index;
+        }
+    }
+
+    private enum MoveIndex {
+        FILE(0),
+        RANK(1);
+
+        private final int index;
+
+        MoveIndex(final int index) {
+            this.index = index;
+        }
     }
 }

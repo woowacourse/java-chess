@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.FileCanNotFindException;
 import java.util.Arrays;
 
 public enum File {
@@ -32,6 +33,6 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.getX() == fileIndex)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 좌표를 찾을 수 없습니다."));
+                .orElseThrow(FileCanNotFindException::new);
     }
 }

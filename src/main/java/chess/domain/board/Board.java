@@ -10,6 +10,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Role;
 import chess.domain.piece.Rook;
+import chess.exception.PieceCanNotMoveException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -103,7 +104,7 @@ public class Board {
             this.board.put(source, new Empty());
             return;
         }
-        throw new IllegalArgumentException("이동할 수 없습니다.");
+        throw new PieceCanNotMoveException();
     }
 
     private void moveIfPawn(final Square source) {

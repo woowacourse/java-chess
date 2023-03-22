@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.PieceCanNotMoveException;
 import java.util.Arrays;
 
 public enum KnightMove {
@@ -27,7 +28,7 @@ public enum KnightMove {
         return Arrays.stream(KnightMove.values())
                 .filter(knightMove -> knightMove.file == directionFile && knightMove.rank == directionRank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
+                .orElseThrow(PieceCanNotMoveException::new);
     }
 
     public int getFile() {

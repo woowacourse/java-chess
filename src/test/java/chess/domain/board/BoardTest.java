@@ -8,6 +8,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.exception.PieceCanNotMoveException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -66,8 +67,8 @@ class BoardTest {
         final Square target = new Square(File.A, Rank.TWO);
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없습니다.");
+                .isInstanceOf(PieceCanNotMoveException.class)
+                .hasMessage("이동할 수 없는 말입니다.");
     }
 
     @DisplayName("Target에 상대 피스가 있을 경우 이동할 수 있다.")

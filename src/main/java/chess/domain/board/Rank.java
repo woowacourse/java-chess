@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.RankCanNotFindException;
 import java.util.Arrays;
 
 public enum Rank {
@@ -28,7 +29,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getY() == rankIndex)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 좌표를 찾을 수 없습니다."));
+                .orElseThrow(RankCanNotFindException::new);
     }
 
     public int getY() {
