@@ -37,22 +37,20 @@ public final class Knight extends Piece {
 
     private boolean isMoveAble(final Position source, final Position target, final int moveCase) {
         try {
-            return target.isSameRow(source.getRow().move(moveX.get(moveCase)))
-                    && target.isSameColumn(source.getColumn().move(moveY.get(moveCase)));
+            int stayColumn = 0;
+            int stayRow = 0;
+
+            return target.isSameRow(source.move(moveX.get(moveCase), stayColumn))
+                    && target.isSameColumn(source.move(stayRow, moveY.get(moveCase)));
         } catch (IllegalArgumentException exception) {
             return false;
         }
     }
 
-    private void validateInvalidColor(final Piece targetPiece) {
-        if (targetPiece.isSameColor(color)) {
-            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
-        }
-    }
-
-    private void validateInvalidPosition(final List<Position> positions) {
+    private void validateInvalidPosition(List<Position> positions) {
         if (positions.isEmpty()) {
             throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
         }
     }
+
 }

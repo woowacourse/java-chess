@@ -2,8 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.PieceType;
+import chess.domain.Position;
 
-public abstract class Piece implements Movable {
+import java.util.List;
+
+public abstract class Piece {
     private final PieceType pieceType;
     protected final Color color;
 
@@ -11,24 +14,31 @@ public abstract class Piece implements Movable {
         this.pieceType = pieceType;
         this.color = color;
     }
+    public abstract List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece);
 
-    public boolean isSameColor(final Color color) {
+    protected final void validateInvalidColor(final Piece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
+        }
+    }
+
+    public final boolean isSameColor(final Color color) {
         return this.color == color;
     }
 
-    public boolean isNotSameColor(final Color color) {
+    public final boolean isNotSameColor(final Color color) {
         return this.color != color;
     }
 
-    public boolean isSamePieceType(final PieceType type) {
+    public final boolean isSamePieceType(final PieceType type) {
         return this.pieceType == type;
     }
 
-    public boolean isNotSamePieceType(final PieceType type) {
+    public final boolean isNotSamePieceType(final PieceType type) {
         return this.pieceType != type;
     }
 
-    public PieceType getPieceType() {
+    public final PieceType getPieceType() {
         return pieceType;
     }
 }

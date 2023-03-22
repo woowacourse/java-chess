@@ -23,10 +23,11 @@ public final class Pawn extends Piece {
     @Override
     public List<Position> findMoveAblePositions(final Position source, final Position target, final Piece targetPiece) {
         validateInvalidColor(targetPiece);
+
         final List<Position> result = new ArrayList<>();
 
         boolean isEmptyTargetPiece = targetPiece.isSamePieceType(PieceType.EMPTY);
-        int columnDistance = source.calculateColumnDistance(target.getColumn());
+        int columnDistance = source.calculateColumnDistance(target);
 
         if (isSingleMoveAble(source, target, isEmptyTargetPiece, columnDistance)) {
             result.add(createMove(source, PAWN_SINGLE_MOVE_DISTANCE));
@@ -45,25 +46,19 @@ public final class Pawn extends Piece {
         return result;
     }
 
-    private void validateInvalidColor(final Piece targetPiece) {
-        if (targetPiece.isSameColor(color)) {
-            throw new IllegalArgumentException("같은 색깔의 기물을 선택할 수 없습니다.");
-        }
-    }
-
     private static boolean isSingleMoveAble(final Position source, final Position target, final boolean isEmptyTargetPiece, final int columnDistance) {
-        return source.isSameRow(target.getRow()) &&
+        return source.isSameRow(target) &&
                 isEmptyTargetPiece &&
                 columnDistance <= PAWN_MAX_MOVE_DISTANCE;
     }
 
     private Position createMove(final Position source, final int count) {
         final int pawnDirection = color.getDirection();
-        return Position.of(source.getRow(), source.getColumn().move(count * pawnDirection));
+        return source.move(0, count * pawnDirection);
     }
 
     private boolean isDoubleMoveAble(final Position source, final Position target, final boolean isEmptyTargetPiece, final int columnDistance) {
-        return source.isSameRow(target.getRow()) &&
+        return source.isSameRow(target) &&
                 isEmptyTargetPiece &&
                 columnDistance == PAWN_MAX_MOVE_DISTANCE && isStartPosition(source);
     }
@@ -76,7 +71,7 @@ public final class Pawn extends Piece {
 
     private boolean isDiagonalMoveAble(final Position source, final Position target) {
         int diagonalPositionDistance = 1;
-        return source.calculateRowDistance(target.getRow()) == diagonalPositionDistance &&
-                source.calculateColumnDistance(target.getColumn()) == diagonalPositionDistance;
+        return source.calculateRowDistance(target) == diagonalPositionDistance &&
+                source.calculateColumnDistance(target) == diagonalPositionDistance;
     }
 }
