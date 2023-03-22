@@ -30,6 +30,7 @@ public class ChessGameController {
         if (command == START) {
             OutputView.printBoard(board.getBoard());
         }
+
         return command;
     }
 
@@ -46,6 +47,7 @@ public class ChessGameController {
         try {
             final List<String> commands = InputView.readMoveCommand();
             validateMoveCommandForm(commands);
+
             return play(board, commands);
         } catch (IllegalArgumentException e) {
             OutputView.printException(e.getMessage());
@@ -58,12 +60,14 @@ public class ChessGameController {
         if (command == MOVE) {
             move(board, commands);
         }
+
         return command;
     }
 
     private void move(final Board board, final List<String> commands) {
         final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
+
         board.move(source, target);
         OutputView.printBoard(board.getBoard());
     }

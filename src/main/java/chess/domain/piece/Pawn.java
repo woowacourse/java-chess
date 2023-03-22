@@ -36,6 +36,7 @@ public class Pawn extends Piece {
         final int rankGap = start.calculateRankGap(end);
         final int fileGap = Math.abs(start.calculateFileGap(end));
         final boolean isOpponent = color().isOpponent(target.color());
+
         return rankGap == GAP_LOWER_BOUND.get(color()) && fileGap == VALID_DIAGONAL_GAP && isOpponent;
     }
 
@@ -45,6 +46,7 @@ public class Pawn extends Piece {
             return false;
         }
         final int rankGap = start.calculateRankGap(end);
+
         return canMoveStraightOnePosition(color(), rankGap) || canMoveStraightTwoPosition(start, color(), rankGap);
     }
 
