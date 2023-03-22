@@ -1,14 +1,15 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +42,8 @@ public final class BoardFactory {
 
     private static void initPawn(final Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file, Rank.TWO), Pawn.createByColor(Color.WHITE));
-            board.put(Position.of(file, Rank.SEVEN), Pawn.createByColor(Color.BLACK));
+            board.put(Position.of(file, Rank.TWO), WhitePawn.create());
+            board.put(Position.of(file, Rank.SEVEN), BlackPawn.create());
         }
     }
 

@@ -1,47 +1,19 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.movingStrategy.MoveDown;
-import chess.domain.movingStrategy.MoveLeftDown;
-import chess.domain.movingStrategy.MoveLeftUp;
-import chess.domain.movingStrategy.MoveRightDown;
-import chess.domain.movingStrategy.MoveRightUp;
-import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
 
 import java.util.Collections;
 import java.util.List;
 
-public final class Pawn extends NonSlidingPiece {
+public abstract class Pawn extends Piece {
 
     private static final int INITIAL_WHITE_RANK = 2;
     private static final int INITIAL_BLACK_RANK = 7;
 
-    private Pawn(final Color color, final MovingStrategies movingStrategies) {
+    protected Pawn(final Color color, final MovingStrategies movingStrategies) {
         super(color, PieceType.PAWN, movingStrategies);
-    }
-
-    private static Pawn createWhitePawn() {
-        final List<MovingStrategy> movingStrategies = List.of(
-                new MoveUp(), new MoveLeftUp(), new MoveRightUp());
-        return new Pawn(Color.WHITE, new MovingStrategies(movingStrategies));
-    }
-
-    private static Pawn createBlackPawn() {
-        final List<MovingStrategy> movingStrategies = List.of(
-                new MoveDown(), new MoveLeftDown(), new MoveRightDown());
-        return new Pawn(Color.BLACK, new MovingStrategies(movingStrategies));
-    }
-
-    public static Pawn createByColor(final Color color) {
-        if (color == Color.BLACK) {
-            return createBlackPawn();
-        }
-        if (color == Color.WHITE) {
-            return createWhitePawn();
-        }
-        throw new AssertionError();
     }
 
     @Override
