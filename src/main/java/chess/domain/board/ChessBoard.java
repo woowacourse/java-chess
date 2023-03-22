@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class ChessBoard {
     private final List<Piece> pieces;
 
     private ChessBoard(final List<Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new ArrayList<>(pieces);
     }
 
     static ChessBoard from(final List<Piece> pieces) {

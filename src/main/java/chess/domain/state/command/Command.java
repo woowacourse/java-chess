@@ -1,5 +1,6 @@
 package chess.domain.state.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Command {
     private Command(final Type type, final List<String> commands) {
         validateParameterSize(type, commands);
         this.type = type;
-        this.commands = commands;
+        this.commands = new ArrayList<>(commands);
     }
 
     private void validateParameterSize(final Type type, final List<String> commands) {
