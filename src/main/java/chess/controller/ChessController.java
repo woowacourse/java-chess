@@ -10,13 +10,13 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public class ChessController {
+import static chess.common.IndexCommand.POSITION_COLUMN;
+import static chess.common.IndexCommand.POSITION_ROW;
+import static chess.common.IndexCommand.SOURCE_POSITION;
+import static chess.common.IndexCommand.START_COMMAND_INDEX;
+import static chess.common.IndexCommand.TARGET_POSITION;
 
-    private static final int START_COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION = 1;
-    private static final int TARGET_POSITION = 2;
-    private static final int POSITION_COLUMN = 0;
-    private static final int POSITION_ROW = 1;
+public class ChessController {
 
     public void run() {
         final BoardFactory boardFactory = new BoardFactory();
@@ -39,7 +39,7 @@ public class ChessController {
 
             final List<String> moveCommand = InputView.readMoveCommand();
 
-            final String startCommand = moveCommand.get(START_COMMAND_INDEX);
+            final String startCommand = moveCommand.get(START_COMMAND_INDEX.value());
 
             if (Command.isEnd(startCommand)) {
                 break;
@@ -51,8 +51,8 @@ public class ChessController {
 
     private Color movePiece(final Board board, Color turn, final List<String> moveCommands, final String startCommand) {
         if (Command.isMove(startCommand)) {
-            final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION));
-            final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION));
+            final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION.value()));
+            final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION.value()));
 
             board.move(fromPosition, toPosition, turn);
 
@@ -63,6 +63,6 @@ public class ChessController {
     }
 
     private Position convertPositionFrom(String moveCommand) {
-        return new Position(moveCommand.charAt(POSITION_COLUMN), moveCommand.charAt(POSITION_ROW));
+        return new Position(moveCommand.charAt(POSITION_COLUMN.value()), moveCommand.charAt(POSITION_ROW.value()));
     }
 }
