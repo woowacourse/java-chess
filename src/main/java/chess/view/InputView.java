@@ -2,6 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class InputView {
@@ -102,10 +103,13 @@ public class InputView {
         }
 
         private static void validate(String input) {
-            Arrays.stream(values())
+            Optional<PromotionPiece> optionalPromotionPiece = Arrays.stream(values())
                     .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+                    .findAny();
+
+            if (optionalPromotionPiece.isEmpty()) {
+                throw new IllegalArgumentException("존재하지 않는 기물입니다.");
+            }
         }
     }
 
