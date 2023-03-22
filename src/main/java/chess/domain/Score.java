@@ -15,12 +15,12 @@ public class Score {
         return new Score(value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return value == score.value;
+    public Score subtract(Score other) {
+        return new Score(this.value - other.value);
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override
