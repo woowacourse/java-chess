@@ -16,9 +16,16 @@ public class Playing implements GameState {
 
     @Override
     public GameState execute(final GameCommand gameCommand, final Position source, final Position target) {
-        if (gameCommand.isMove()) {
-            chessGame.move(source, target);
+        if (gameCommand.isStart()) {
+            throw new IllegalArgumentException("게임 도중에 start를 입력할 수 없습니다.");
         }
+
+        if (gameCommand.isEnd()) {
+            return new End();
+        }
+
+        chessGame.move(source, target);
+
         return this;
     }
 

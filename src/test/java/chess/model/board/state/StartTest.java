@@ -25,7 +25,7 @@ class StartTest {
 
     private static Stream<Arguments> startParameters() {
         return Stream.of(
-                Arguments.of(START, Start.class),
+                Arguments.of(START, Playing.class),
                 Arguments.of(END, End.class)
         );
     }

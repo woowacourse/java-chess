@@ -23,17 +23,13 @@ public class Start implements GameState {
             return new End();
         }
 
-        return new Start();
+        return new Playing(new ChessGame());
     }
 
 
     @Override
     public GameState execute(final GameCommand gameCommand, final Position source, final Position target) {
-        if (gameCommand.isMove()) {
-            chessGame.move(source, target);
-        }
-
-        return new Playing(chessGame);
+        throw new UnsupportedOperationException();
     }
 
     @Override

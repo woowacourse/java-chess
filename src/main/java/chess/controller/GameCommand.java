@@ -24,11 +24,15 @@ public enum GameCommand {
         return this.command.equalsIgnoreCase(input);
     }
 
-    public boolean isMove() {
-        return this == MOVE;
-    }
-
     public boolean isEnd() {
         return this == END;
+    }
+
+    public boolean isStart() {
+        return this == START;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
     }
 }
