@@ -71,8 +71,8 @@ public class OutputView {
     }
 
     public static void printWinner(final Color color, final Score whiteScore, final Score blackScore) {
-        System.out.println("흰색 : " + whiteScore);
-        System.out.println("검은색 : " + blackScore);
+        System.out.println(Color.WHITE.name() + " " + whiteScore.value());
+        System.out.println(Color.BLACK.name() + " " + blackScore.value());
 
         if (color.isNone()) {
             System.out.println("무승부입니다.");
@@ -80,5 +80,10 @@ public class OutputView {
         }
 
         System.out.println("승자는 : " + color.name());
+    }
+
+    public static void printWinner(final Color color, final Score winnerScore) {
+        System.out.println("승자는 : " + color.name());
+        System.out.println("점수는 : " + winnerScore.value());
     }
 }

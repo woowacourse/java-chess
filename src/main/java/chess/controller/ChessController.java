@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.BoardScore;
+import chess.domain.board.BoardSearch;
 import chess.domain.board.Score;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
@@ -47,8 +48,9 @@ public class ChessController {
                 return;
             }
 
+            final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
+
             if (Command.isStatus(startCommand)) {
-                final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
 
                 final Score blackScore = boardScore.calculateBoardScoreBy(Color.BLACK);
                 final Score whiteScore = boardScore.calculateBoardScoreBy(Color.WHITE);
@@ -57,7 +59,16 @@ public class ChessController {
                 return;
             }
 
-            turn = movePiece(board, turn, moveCommand, startCommand);
+            movePiece(board, turn, moveCommand, startCommand);
+
+            final BoardSearch boardSearch = BoardSearch.countPiecePerClassTypeFrom(board.chessBoard());
+
+            if (boardSearch.isKingDead()) {
+                OutputView.printWinner(turn, boardScore.calculateBoardScoreBy(turn));
+                return;
+            }
+
+            turn = turn.opposite();
         }
     }
 
@@ -71,17 +82,15 @@ public class ChessController {
         return Color.WHITE;
     }
 
-    private Color movePiece(final Board board, Color turn, final List<String> moveCommands, final String startCommand) {
+    private void movePiece(final Board board, final Color turn,
+                           final List<String> moveCommands, final String startCommand) {
         if (Command.isMove(startCommand)) {
             final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION.value()));
             final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION.value()));
 
             board.move(fromPosition, toPosition, turn);
 
-            turn = turn.opposite();
         }
-
-        return turn;
     }
 
     private Position convertPositionFrom(String moveCommand) {
