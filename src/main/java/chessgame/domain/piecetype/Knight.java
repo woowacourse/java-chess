@@ -7,9 +7,8 @@ import java.util.List;
 
 import static chessgame.domain.coordinate.Inclination.*;
 
-public class Knight implements PieceType {
+public class Knight extends PieceType {
 
-    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.KNIGHT;
     private static final List<Inclination> availableInclinations = List.of(
             TWO, MINUS_TWO, HALF, MINUS_HALF
     );
@@ -18,9 +17,8 @@ public class Knight implements PieceType {
             Coordinate.fromOnBoard(2, 1)
     );
 
-    @Override
-    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
-        return PIECE_TYPE_SYMBOL == otherType;
+    public Knight() {
+        super(PieceTypeSymbol.KNIGHT);
     }
 
     @Override

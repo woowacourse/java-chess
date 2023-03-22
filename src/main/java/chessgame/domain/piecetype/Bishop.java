@@ -8,14 +8,12 @@ import java.util.List;
 import static chessgame.domain.coordinate.Inclination.MINUS_ONE;
 import static chessgame.domain.coordinate.Inclination.ONE;
 
-public class Bishop implements PieceType {
+public class Bishop extends PieceType {
 
-    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.BISHOP;
     private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
-    @Override
-    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
-        return PIECE_TYPE_SYMBOL == otherType;
+    public Bishop() {
+        super(PieceTypeSymbol.BISHOP);
     }
 
     @Override

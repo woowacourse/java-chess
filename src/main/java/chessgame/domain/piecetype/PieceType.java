@@ -2,11 +2,20 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 
-public interface PieceType {
+public abstract class PieceType {
 
-    boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
+    private final PieceTypeSymbol pieceTypeSymbol;
 
-    boolean canReap();
+    protected PieceType(PieceTypeSymbol pieceTypeSymbol) {
+        this.pieceTypeSymbol = pieceTypeSymbol;
+    }
 
-    boolean isSameTypeWith(final PieceTypeSymbol otherType);
+    public abstract boolean isReachableByRule(final Coordinate startCoordinate,
+                                              final Coordinate endCoordinate);
+
+    public abstract boolean canReap();
+
+    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
+        return this.pieceTypeSymbol.equals(otherType);
+    }
 }

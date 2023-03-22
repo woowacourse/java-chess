@@ -7,16 +7,14 @@ import java.util.List;
 
 import static chessgame.domain.coordinate.Inclination.*;
 
-public class Queen implements PieceType {
+public class Queen extends PieceType {
 
-    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.QUEEN;
     private static final List<Inclination> availableInclinations = List.of(
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
-    @Override
-    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
-        return PIECE_TYPE_SYMBOL == otherType;
+    public Queen() {
+        super(PieceTypeSymbol.QUEEN);
     }
 
     @Override
