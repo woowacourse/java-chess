@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
+import chess.domain.position.Position;
 
 public class Knight extends Piece {
     public Knight(final PieceType pieceType, final TeamColor teamColor) {

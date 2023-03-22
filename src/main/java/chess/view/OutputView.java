@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 
 import java.util.Map;
 

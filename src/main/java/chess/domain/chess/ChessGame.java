@@ -3,7 +3,7 @@ package chess.domain.chess;
 import chess.domain.board.ChessBoard;
 import chess.domain.camp.TeamColor;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 
 import java.util.Map;
 

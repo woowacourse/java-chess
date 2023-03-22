@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

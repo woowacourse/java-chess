@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

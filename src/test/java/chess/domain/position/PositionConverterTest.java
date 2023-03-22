@@ -1,5 +1,7 @@
-package chess.domain.piece;
+package chess.domain.position;
 
+import chess.domain.position.Position;
+import chess.domain.position.PositionConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
+import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Set;

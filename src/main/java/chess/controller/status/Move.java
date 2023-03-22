@@ -3,8 +3,8 @@ package chess.controller.status;
 import chess.controller.Command;
 import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Position;
-import chess.domain.piece.PositionConverter;
+import chess.domain.position.Position;
+import chess.domain.position.PositionConverter;
 
 import java.util.List;
 

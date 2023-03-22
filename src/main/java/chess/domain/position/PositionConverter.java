@@ -1,4 +1,6 @@
-package chess.domain.piece;
+package chess.domain.position;
+
+import chess.domain.position.Position;
 
 public final class PositionConverter {
     private static final char FIRST_FILE = 'a';
