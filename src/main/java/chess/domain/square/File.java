@@ -30,9 +30,13 @@ public enum File {
 
     public static File getFileByIndex(final int index) {
         return Arrays.stream(values())
-                .filter(file -> file.value == index + A.value)
+                .filter(file -> file.value == file.getValueFrom(index))
                 .findFirst()
                 .orElseThrow(InvalidSquareIndexException::new);
+    }
+
+    private int getValueFrom(final int index) {
+        return index + A.value;
     }
 
     public File move(int difference) {

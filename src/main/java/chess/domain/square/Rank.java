@@ -28,15 +28,15 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
     }
 
-    public static char getLastValue() {
-        return EIGHT.value;
-    }
-
     public static Rank getRankByIndex(final int index) {
         return Arrays.stream(values())
-                .filter(rank -> rank.value == index + ONE.value)
+                .filter(rank -> rank.value == rank.getValueFrom(index))
                 .findFirst()
                 .orElseThrow(InvalidSquareIndexException::new);
+    }
+
+    private int getValueFrom(final int index) {
+        return index + ONE.value;
     }
 
     public boolean isBiggerThan(final Rank rank) {
