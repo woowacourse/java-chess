@@ -5,7 +5,6 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameRepository;
 import chess.domain.game.state.EndGame;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import chess.infrastructure.persistence.dao.ChessGameDao;
 import chess.infrastructure.persistence.dao.PieceDao;
@@ -15,10 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -62,18 +57,12 @@ class JdbcChessGameRepositoryTest {
         // given
         final ChessGame chessGame = new ChessGame(new ChessBoardFactory().create());
         final ChessGame save = repository.save(chessGame);
-        final List<Long> savedPieceIds = save.pieces()
-                .stream()
-                .map(Piece::id)
-                .collect(Collectors.toList());
 
         // when
-        final Optional<ChessGame> byId = repository.findById(save.id());
+        final ChessGame find = repository.findById(save.id()).get();
 
         // then
-        assertThat(byId.get().pieces())
-                .extracting(Piece::id)
-                .containsExactlyInAnyOrderElementsOf(savedPieceIds);
+        assertThat(find.pieces().size()).isEqualTo(32);
     }
 
     @Test
@@ -82,10 +71,6 @@ class JdbcChessGameRepositoryTest {
         final ChessGame chessGame = new ChessGame(new ChessBoardFactory().create());
         final ChessGame save = repository.save(chessGame);
         흰색_왕을_죽인다(save);
-        final List<Long> savedPieceIds = save.pieces()
-                .stream()
-                .map(Piece::id)
-                .collect(Collectors.toList());
 
         // when
         repository.update(save);
@@ -95,9 +80,7 @@ class JdbcChessGameRepositoryTest {
         assertAll(
                 () -> assertThat(result.state()).isInstanceOf(EndGame.class),
                 () -> assertThat(result.winColor()).isEqualTo(Color.BLACK),
-                () -> assertThat(result.pieces())
-                        .extracting(Piece::id)
-                        .containsExactlyInAnyOrderElementsOf(savedPieceIds)
+                () -> assertThat(result.pieces().size()).isEqualTo(31)
         );
     }
 

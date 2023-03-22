@@ -39,7 +39,6 @@ public class PieceMapper {
 
     public static PieceEntity fromDomain(final Piece piece, final Long chessGameId) {
         return new PieceEntity(
-                piece.id(),
                 piece.piecePosition().rank().value(),
                 piece.piecePosition().file().value(),
                 piece.color().name(),
@@ -50,8 +49,7 @@ public class PieceMapper {
 
     public static Piece toDomain(final PieceEntity pieceEntity) {
         final Color color = Color.valueOf(pieceEntity.color());
-        return new Piece(pieceEntity.id(),
-                PiecePosition.of(Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
+        return new Piece(PiecePosition.of(Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
                 makeStrategy(pieceEntity, color)
         );
     }

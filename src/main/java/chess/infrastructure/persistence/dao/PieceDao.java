@@ -14,55 +14,18 @@ import static chess.infrastructure.persistence.JdbcConnectionUtil.connection;
 public class PieceDao {
 
     public void saveAll(final List<PieceEntity> pieceEntities) {
-        final String sql = "INSERT INTO piece(id, pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?, ?)";
-        try (final Connection connection = connection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            Long id = getId();
-            for (final PieceEntity pieceEntity : pieceEntities) {
-                preparedStatement.setString(1, id.toString());
-                preparedStatement.setString(2, String.valueOf(pieceEntity.rank()));
-                preparedStatement.setString(3, String.valueOf(pieceEntity.file()));
-                preparedStatement.setString(4, pieceEntity.color());
-                preparedStatement.setString(5, pieceEntity.movementType());
-                preparedStatement.setString(6, pieceEntity.chessGameId().toString());
-                preparedStatement.addBatch();
-                pieceEntity.setId(id);
-                id++;
-            }
-            preparedStatement.executeBatch();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void saveAllWithId(final List<PieceEntity> pieceEntities) {
-        final String sql = "INSERT INTO piece(id, pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO piece(pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             for (final PieceEntity pieceEntity : pieceEntities) {
-                preparedStatement.setString(1, pieceEntity.id().toString());
-                preparedStatement.setString(2, String.valueOf(pieceEntity.rank()));
-                preparedStatement.setString(3, String.valueOf(pieceEntity.file()));
-                preparedStatement.setString(4, pieceEntity.color());
-                preparedStatement.setString(5, pieceEntity.movementType());
-                preparedStatement.setString(6, pieceEntity.chessGameId().toString());
+                preparedStatement.setString(1, String.valueOf(pieceEntity.rank()));
+                preparedStatement.setString(2, String.valueOf(pieceEntity.file()));
+                preparedStatement.setString(3, pieceEntity.color());
+                preparedStatement.setString(4, pieceEntity.movementType());
+                preparedStatement.setString(5, pieceEntity.chessGameId().toString());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Long getId() {
-        final String query = "SELECT COUNT(*) FROM piece";
-        try (final Connection connection = connection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                throw new RuntimeException();
-            }
-            return resultSet.getLong(1);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +40,6 @@ public class PieceDao {
             final List<PieceEntity> pieceEntities = new ArrayList<>();
             while (resultSet.next()) {
                 pieceEntities.add(new PieceEntity(
-                        resultSet.getLong(1),
                         resultSet.getInt(2),
                         resultSet.getString(3).charAt(0),
                         resultSet.getString(4),

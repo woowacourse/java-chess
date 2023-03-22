@@ -7,17 +7,10 @@ import java.util.List;
 
 public class Piece {
 
-    private Long id;
     private final PiecePosition piecePosition;
     private final PieceMovementStrategy pieceMovementStrategy;
 
     public Piece(final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
-        this.piecePosition = piecePosition;
-        this.pieceMovementStrategy = pieceMovementStrategy;
-    }
-
-    public Piece(final Long id, final PiecePosition piecePosition, final PieceMovementStrategy pieceMovementStrategy) {
-        this.id = id;
         this.piecePosition = piecePosition;
         this.pieceMovementStrategy = pieceMovementStrategy;
     }
@@ -34,7 +27,7 @@ public class Piece {
      */
     public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         pieceMovementStrategy.validateMove(piecePosition, destination, nullablePiece);
-        return new Piece(id, destination, pieceMovementStrategy);
+        return new Piece(destination, pieceMovementStrategy);
     }
 
     public boolean existIn(final PiecePosition piecePosition) {
@@ -63,9 +56,5 @@ public class Piece {
 
     public PieceMovementStrategy pieceMovementStrategy() {
         return pieceMovementStrategy;
-    }
-
-    public Long id() {
-        return id;
     }
 }

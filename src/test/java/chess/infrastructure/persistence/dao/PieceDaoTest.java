@@ -1,7 +1,6 @@
 package chess.infrastructure.persistence.dao;
 
 import chess.domain.board.ChessBoardFactory;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movestrategy.BishopMovementStrategy;
 import chess.domain.piece.movestrategy.KingMovementStrategy;
@@ -10,7 +9,6 @@ import chess.domain.piece.movestrategy.QueenMovementStrategy;
 import chess.domain.piece.movestrategy.RookMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.BlackPawnMovementStrategy;
 import chess.domain.piece.movestrategy.pawn.WhitePawnMovementStrategy;
-import chess.domain.piece.position.PiecePosition;
 import chess.infrastructure.persistence.entity.ChessGameEntity;
 import chess.infrastructure.persistence.entity.PieceEntity;
 import chess.infrastructure.persistence.mapper.PieceMapper;
@@ -24,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -98,25 +95,5 @@ class PieceDaoTest {
 
         // then
         assertThat(pieceDao.findByAllChessGameId(chessGameId)).isEmpty();
-    }
-
-    @Test
-    void id를_설정한_체로_저장할_수_있다() {
-        // given
-        final List<PieceEntity> pieceEntities = Stream.of(
-                        new Piece(1L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE)),
-                        new Piece(10L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE)),
-                        new Piece(124L, PiecePosition.of("d2"), new RookMovementStrategy(Color.WHITE))
-                )
-                .map(it -> PieceMapper.fromDomain(it, chessGameId))
-                .collect(Collectors.toList());
-
-        // when
-        pieceDao.saveAllWithId(pieceEntities);
-
-        // then
-        assertThat(pieceDao.findByAllChessGameId(chessGameId))
-                .extracting(PieceEntity::id)
-                .containsExactly(1L, 10L, 124L);
     }
 }

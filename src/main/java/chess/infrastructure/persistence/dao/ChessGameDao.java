@@ -35,7 +35,7 @@ public class ChessGameDao {
             if (!resultSet.next()) {
                 throw new RuntimeException();
             }
-            return resultSet.getLong(1);
+            return resultSet.getLong(1) + 1;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

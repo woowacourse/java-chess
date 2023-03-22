@@ -48,7 +48,7 @@ public class JdbcChessGameRepository implements ChessGameRepository {
     public void update(final ChessGame chessGame) {
         chessGameDao.update(ChessGameMapper.fromDomain(chessGame));
         pieceDao.deleteAllByChessGameId(chessGame.id());
-        pieceDao.saveAllWithId(chessGame.pieces()
+        pieceDao.saveAll(chessGame.pieces()
                 .stream()
                 .map(it -> PieceMapper.fromDomain(it, chessGame.id()))
                 .collect(toList()));
