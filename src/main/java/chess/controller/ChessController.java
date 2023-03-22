@@ -22,8 +22,8 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        GameCommand gameCommand = repeat(InputView::readGameCommand);
-        if (gameCommand == GameCommand.START) {
+        ChessEvent chessEvent = repeat(InputView::readGameCommand);
+        if (chessEvent == ChessEvent.START) {
             OutputView.printBoard(chessGame.getBoard());
             while (gameLoop() == GameStatus.CONTINUE) ;
         }
@@ -31,19 +31,27 @@ public class ChessController {
 
     private GameStatus gameLoop() {
         List<String> commands = repeat(InputView::readMoveCommand);
-        MoveCommand moveCommand = MoveCommand.of(commands).orElse(MoveCommand.END);
+        return executeByCommands(commands);
+    }
 
-        if (moveCommand == MoveCommand.MOVE) {
+    private GameStatus executeByCommands(List<String> commands) {
+        ChessAction chessAction = ChessAction.of(commands).orElse(ChessAction.END);
+
+        if (chessAction == ChessAction.MOVE) {
             move(commands);
             return GameStatus.CONTINUE;
         }
-        if (moveCommand == MoveCommand.STATUS) {
-            double whiteTeamScore = chessGame.calculateScore(Team.WHITE);
-            double blackTeamScore = chessGame.calculateScore(Team.BLACK);
-            OutputView.printScore(whiteTeamScore, blackTeamScore);
+        if (chessAction == ChessAction.STATUS) {
+            showTeamScores();
             return GameStatus.CONTINUE;
         }
         return GameStatus.EXIT;
+    }
+
+    private void showTeamScores() {
+        double whiteTeamScore = chessGame.calculateScore(Team.WHITE);
+        double blackTeamScore = chessGame.calculateScore(Team.BLACK);
+        OutputView.printScore(whiteTeamScore, blackTeamScore);
     }
 
     private void move(List<String> command) {

@@ -11,9 +11,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static GameCommand readGameCommand() {
+    public static ChessEvent readGameCommand() {
         String inputCommand = scanner.nextLine();
-        return GameCommand.of(inputCommand);
+        return ChessEvent.of(inputCommand);
     }
 
     public static List<String> readMoveCommand() {
@@ -29,7 +29,7 @@ public class InputView {
     }
 
     private static void validateMoveCommand(List<String> commands) {
-        MoveCommand.of(commands)
+        ChessAction.of(commands)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커맨드가 존재하지 않습니다."));
     }
 
