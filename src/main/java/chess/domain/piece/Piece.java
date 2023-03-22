@@ -4,7 +4,7 @@ import chess.domain.camp.TeamColor;
 
 import java.util.Objects;
 
-public abstract class Piece {
+public abstract class Piece implements Movable {
     private final PieceType pieceType;
     private final TeamColor teamColor;
 
@@ -28,8 +28,6 @@ public abstract class Piece {
     public boolean isSameCamp(final TeamColor diffType) {
         return teamColor == diffType;
     }
-
-    public abstract boolean canMove(final Position source, final Position target);
 
     @Override
     public boolean equals(final Object o) {

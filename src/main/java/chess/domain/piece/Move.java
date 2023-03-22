@@ -1,6 +1,4 @@
-package chess.domain.move;
-
-import chess.domain.piece.Position;
+package chess.domain.piece;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,4 +34,3 @@ public final class Move {
         return direction.calculate(before);
     }
 }
-
