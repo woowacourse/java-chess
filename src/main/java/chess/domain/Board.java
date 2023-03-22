@@ -43,7 +43,6 @@ public final class Board {
         }
     }
 
-
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }

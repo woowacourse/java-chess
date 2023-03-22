@@ -6,6 +6,7 @@ public final class Position {
 
     private static final int ONE_SPACE = 1;
     private static final int TWO_SPACES = 2;
+
     private final File file;
     private final Rank rank;
 
@@ -16,21 +17,6 @@ public final class Position {
 
     public static Position of(final File file, final Rank rank) {
         return new Position(file, rank);
-    }
-
-    public boolean isOnDiagonal(final Position target) {
-        return Math.abs(getFileOrder() - target.getFileOrder()) == ONE_SPACE
-                && Math.abs(getRankOrder() - target.getRankOrder()) == ONE_SPACE;
-    }
-
-    public boolean isUpDown(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == ONE_SPACE;
-    }
-
-    public boolean isUpDownTwo(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == TWO_SPACES;
     }
 
     public File getFile() {
