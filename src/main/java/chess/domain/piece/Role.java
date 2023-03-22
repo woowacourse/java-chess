@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.*;
+import chess.domain.square.Side;
 
 public enum Role {
     PAWN(Pawn::new),

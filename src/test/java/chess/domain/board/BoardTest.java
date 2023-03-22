@@ -1,8 +1,8 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
+import chess.domain.square.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

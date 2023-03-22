@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.square.Color;
+import chess.domain.square.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.square;
 
 import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.File.*;
-import static chess.domain.Rank.*;
 import static chess.domain.piece.Direction.*;
+import static chess.domain.square.File.*;
+import static chess.domain.square.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SquareTest {

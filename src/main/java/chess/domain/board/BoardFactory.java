@@ -1,7 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.*;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
+import chess.domain.square.*;
 
 import java.util.*;
 

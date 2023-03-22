@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.square.Side;
 
 public class King extends Piece {
     private static final int MAX_MOVE_DISTANCE = 1;

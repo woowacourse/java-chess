@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Square;
+import chess.domain.square.Square;
 
 import java.math.BigInteger;
 import java.util.Arrays;

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.square.Side;
 
 public class Bishop extends Piece {
     public Bishop(final Side side, final Role role) {
