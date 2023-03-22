@@ -1,5 +1,6 @@
 package service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import domain.board.ChessBoard;
@@ -10,7 +11,7 @@ import domain.piece.Camp;
 import domain.piece.Piece;
 
 public class ChessService {
-    private final ChessBoard chessBoard = new ChessBoard();
+    private final ChessBoard chessBoard = new ChessBoard(new HashMap<>());
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
@@ -23,7 +24,7 @@ public class ChessService {
     }
 
     public void move(String currentSquareInput, String targetSquareInput) {
-        if(!isOngoing) {
+        if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         Square currentSquare = getCurrentSquare(currentSquareInput);
@@ -31,10 +32,11 @@ public class ChessService {
         validateCurrentCamp(currentSquare);
         chessBoard.move(currentSquare, targetSquare);
         currentCamp = currentCamp.fetchOppositeCamp();
+        isOngoing = !chessBoard.isCapturedKing(currentCamp);
     }
 
     public void end() {
-        if(!isOngoing) {
+        if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         isOngoing = false;
@@ -58,5 +60,9 @@ public class ChessService {
 
     public Map<Square, Piece> getChessBoard() {
         return chessBoard.getBoard();
+    }
+
+    public boolean isFinished() {
+        return !isOngoing;
     }
 }

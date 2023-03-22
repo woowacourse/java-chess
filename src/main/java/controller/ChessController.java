@@ -43,11 +43,18 @@ public class ChessController {
             Command command = Command.find(inputs.get(COMMAND_INDEX));
             Action action = actions.get(command);
             action.execute(inputs);
-            return command;
+            return refreshCommandByResult(command);
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e);
             return EMPTY;
         }
+    }
+
+    private Command refreshCommandByResult(Command command) {
+        if (chessService.isFinished()) {
+            return END;
+        }
+        return command;
     }
 
     private void start(List<String> inputs) {
