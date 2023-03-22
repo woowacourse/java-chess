@@ -1,6 +1,7 @@
 package domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.HashMap;
@@ -146,10 +147,13 @@ class ChessBoardTest {
         map.put(Square.of(1, 3), new Pawn(Camp.WHITE, Type.PAWN));
         map.put(Square.of(1, 4), new Pawn(Camp.WHITE, Type.PAWN));
         map.put(Square.of(1, 5), new Pawn(Camp.BLACK, Type.PAWN));
+        map.put(Square.of(1, 1), new Pawn(Camp.BLACK, Type.PAWN));
 
         ChessBoard chessBoard = new ChessBoard(map);
-        int result = chessBoard.countPawnSameRank(Camp.WHITE);
+        int result1 = chessBoard.countPawnInAllColumns(Camp.WHITE);
+        int result2 = chessBoard.countPawnInAllColumns(Camp.BLACK);
 
-        assertThat(result).isEqualTo(3);
+        assertAll(() -> assertThat(result1).isEqualTo(3),
+                () -> assertThat(result2).isEqualTo(2));
     }
 }

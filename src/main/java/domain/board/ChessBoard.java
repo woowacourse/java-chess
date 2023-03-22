@@ -5,7 +5,7 @@ import static domain.piece.Camp.WHITE;
 import static domain.piece.type.Type.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -154,22 +154,18 @@ public class ChessBoard {
         return !board.containsValue(new King(camp, KING));
     }
 
-    public int countPawnSameRank(Camp camp) {
+    public int countPawnInAllColumns(Camp camp) {
         Pawn pawn = new Pawn(camp, PAWN);
-        int count = 0;
-        for (File file : File.values()) {
-            int tmp = 0;
-            for (Rank rank : Rank.values()) {
-                Square square = Square.of(file, rank);
-                Piece piece = board.get(square);
-                if (piece.equals(pawn)) {
-                    tmp += 1;
-                }
-            }
-            if (tmp > 1) {
-                count += tmp;
-            }
-        }
-        return count;
+        return Arrays.stream(File.values())
+                .mapToInt(file -> (int) countPawnInOneColumn(pawn, file))
+                .filter(count -> count >= 2)
+                .sum();
+    }
+
+    private long countPawnInOneColumn(Pawn pawn, File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> board.get(Square.of(file, rank)))
+                .filter(piece -> piece.equals(pawn))
+                .count();
     }
 }
