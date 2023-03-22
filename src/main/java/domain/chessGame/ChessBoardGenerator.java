@@ -14,11 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChessBoardGenerator implements BoardGenerator {
+public class ChessBoardGenerator {
 
     private final Map<Position, Piece> chessBoard = new HashMap<>();
 
-    @Override
     public Map<Position, Piece> generate() {
         setUp();
         return chessBoard;
