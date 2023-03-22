@@ -9,7 +9,7 @@ public enum PieceName {
     QUEEN_NAME("q"),
     ROOK_NAME("r");
 
-    private String name;
+    private final String name;
 
     PieceName(String name) {
         this.name = name;

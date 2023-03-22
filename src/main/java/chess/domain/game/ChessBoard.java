@@ -3,12 +3,10 @@ package chess.domain.game;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.practiceMove.Direction;
 
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,14 +58,14 @@ public class ChessBoard {
     }
 
     private void changePawnSetting(Piece piece) {
-        if(piece instanceof Pawn){
+        if (piece instanceof Pawn) {
             Pawn pawn = (Pawn) piece;
-           pawn.afterFirstMove();
+            pawn.afterFirstMove();
         }
     }
 
     private void checkOtherPieceInTravelRoute(Position currentPosition, Position end) {
-        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor()!=Color.NONE) {
+        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
             throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }

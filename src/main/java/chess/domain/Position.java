@@ -1,4 +1,3 @@
-
 package chess.domain;
 
 import chess.practiceMove.Direction;

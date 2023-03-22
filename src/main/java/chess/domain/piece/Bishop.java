@@ -12,7 +12,7 @@ import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
 public class Bishop extends Piece {
 
-    private static final List<Direction> movableDirection = List.of(
+    private static final List<Direction> direction = List.of(
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
     public Bishop(Color color) {
@@ -21,20 +21,20 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = findDirectionToMove(start, end);
-        checkMovableDirection(direction);
+        Direction direction = findDirection(start, end);
+        checkDirection(direction);
         checkMovableToDestination(colorOfDestination);
         return true;
     }
 
-    public void checkMovableDirection(Direction direction) {
-        if(!movableDirection.contains(direction)){
+    public void checkDirection(Direction direction) {
+        if (!Bishop.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
-        if(this.isSameColor(colorOfDestination)) {
+        if (this.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }

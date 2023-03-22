@@ -36,14 +36,14 @@ public class Controller {
             Command command = commandDto.getCommand();
             checkFirstCommand(command);
             return command;
-        }catch(IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             printExceptionMessage(exception);
             return getfirstCommand();
         }
     }
 
     private void checkFirstCommand(Command command) {
-        if(command == Command.MOVE){
+        if (command == Command.MOVE) {
             throw new IllegalArgumentException(FIRST_COMMAND_ERROR_MESSAGE);
         }
     }
