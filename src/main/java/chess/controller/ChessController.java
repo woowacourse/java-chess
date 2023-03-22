@@ -2,6 +2,8 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.BoardScore;
+import chess.domain.board.Score;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
 import chess.view.Command;
@@ -42,11 +44,31 @@ public class ChessController {
             final String startCommand = moveCommand.get(START_COMMAND_INDEX.value());
 
             if (Command.isEnd(startCommand)) {
-                break;
+                return;
+            }
+
+            if (Command.isStatus(startCommand)) {
+                final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
+
+                final Score blackScore = boardScore.calculateBoardScoreBy(Color.BLACK);
+                final Score whiteScore = boardScore.calculateBoardScoreBy(Color.WHITE);
+
+                OutputView.printWinner(whoIsWinner(blackScore, whiteScore), whiteScore, blackScore);
+                return;
             }
 
             turn = movePiece(board, turn, moveCommand, startCommand);
         }
+    }
+
+    private Color whoIsWinner(final Score blackScore, final Score whiteScore) {
+        if (blackScore.isGreaterThan(whiteScore)) {
+            return Color.BLACK;
+        } else if (blackScore.equals(whiteScore)) {
+            return Color.NONE;
+        }
+
+        return Color.WHITE;
     }
 
     private Color movePiece(final Board board, Color turn, final List<String> moveCommands, final String startCommand) {

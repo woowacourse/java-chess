@@ -32,6 +32,10 @@ public class InputView {
         final List<String> commands = Arrays.stream(scanner.nextLine().split(INPUT_COMMAND_DELIM))
                                             .collect(Collectors.toList());
 
+        if (Command.isStatus(commands.get(IndexCommand.START_COMMAND_INDEX.value()))) {
+            return commands;
+        }
+
         if (commands.size() > 3) {
             throw new IllegalArgumentException("[명령어] [시작 위치] [도착 위치] 로 입력해주세요.");
         }

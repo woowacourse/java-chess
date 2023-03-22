@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ScoreTest {
 
@@ -39,5 +41,22 @@ class ScoreTest {
 
         //when & then
         assertEquals(score.multiply(repeat), result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "2,1",
+            "1,0",
+            "100000,3"
+    })
+    @DisplayName("isGreaterThan(value) : score가 value 보다 크면 true 를 반환한다.")
+    void test_isGreaterThan(final int value1, final int value2) throws Exception {
+        //given
+        final Score score1 = Score.from(value1);
+        final Score score2 = Score.from(value2);
+
+        //when & then
+        assertTrue(score1.isGreaterThan(score2));
+        assertFalse(score2.isGreaterThan(score1));
     }
 }

@@ -1,7 +1,9 @@
 package chess.view;
 
+import chess.domain.board.Score;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -66,5 +68,17 @@ public class OutputView {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;
+    }
+
+    public static void printWinner(final Color color, final Score whiteScore, final Score blackScore) {
+        System.out.println("흰색 : " + whiteScore);
+        System.out.println("검은색 : " + blackScore);
+
+        if (color.isNone()) {
+            System.out.println("무승부입니다.");
+            return;
+        }
+
+        System.out.println("승자는 : " + color.name());
     }
 }
