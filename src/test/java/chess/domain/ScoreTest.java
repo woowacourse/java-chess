@@ -4,7 +4,8 @@ package chess.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ScoreTest {
+public final class ScoreTest {
+
     @Test
     void create() {
         final var score = Score.from(10);

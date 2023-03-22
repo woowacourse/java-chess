@@ -1,7 +1,7 @@
 package chess.domain.dto.res;
 
-import chess.domain.Piece;
 import chess.domain.Color;
+import chess.domain.Piece;
 
 public class PieceResponse {
 

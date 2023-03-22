@@ -30,7 +30,7 @@ public class PawnStrategy implements PieceStrategy {
         judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
     }
 
-    private void judgeColor(Color movablePieceColor, PositionDto movablePiecePosition, PositionDto targetPosition) {
+    private void judgeColor(final Color movablePieceColor, final PositionDto movablePiecePosition, final PositionDto targetPosition) {
         if (isWhitePiece(movablePieceColor)) {
             validateWhiteMoveFront(movablePiecePosition, targetPosition);
         }

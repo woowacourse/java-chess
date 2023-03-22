@@ -7,7 +7,7 @@ import chess.domain.strategy.PieceStrategy;
 public class KingStrategy implements PieceStrategy {
 
     @Override
-    public void validateDirection(MoveRequest request) {
+    public void validateDirection(final MoveRequest request) {
         PositionDto movablePiecePosition = request.getMovablePieceDto();
         PositionDto targetPosition = request.getTargetPositionDto();
 

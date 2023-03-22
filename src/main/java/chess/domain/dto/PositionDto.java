@@ -34,4 +34,5 @@ public class PositionDto {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
 }

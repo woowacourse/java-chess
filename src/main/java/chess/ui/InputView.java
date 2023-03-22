@@ -40,4 +40,5 @@ public final class InputView {
         return Arrays.stream(SCANNER.nextLine().split(" "))
                 .collect(toList());
     }
+
 }
