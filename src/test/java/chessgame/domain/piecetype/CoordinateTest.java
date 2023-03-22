@@ -1,5 +1,7 @@
 package chessgame.domain.piecetype;
 
+import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.coordinate.Inclination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

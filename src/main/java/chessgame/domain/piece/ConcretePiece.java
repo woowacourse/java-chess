@@ -1,6 +1,6 @@
 package chessgame.domain.piece;
 
-import chessgame.domain.piecetype.Coordinate;
+import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piecetype.Pawn;
 import chessgame.domain.piecetype.PieceType;
 import chessgame.domain.piecetype.PieceTypeSymbol;

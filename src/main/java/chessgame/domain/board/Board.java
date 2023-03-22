@@ -1,9 +1,9 @@
 package chessgame.domain.board;
 
+import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Camp;
 import chessgame.domain.piece.EmptyPiece;
 import chessgame.domain.piece.Piece;
-import chessgame.domain.piecetype.Coordinate;
 
 import java.util.HashMap;
 import java.util.Map;

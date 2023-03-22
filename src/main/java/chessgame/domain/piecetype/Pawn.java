@@ -1,5 +1,7 @@
 package chessgame.domain.piecetype;
 
+import chessgame.domain.coordinate.Coordinate;
+
 public abstract class Pawn implements PieceType {
 
     private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.PAWN;

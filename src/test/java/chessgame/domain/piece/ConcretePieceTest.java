@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piecetype.BlackPawn;
-import chessgame.domain.piecetype.Coordinate;
 import chessgame.domain.piecetype.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

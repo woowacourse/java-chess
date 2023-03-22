@@ -1,5 +1,6 @@
 package chessgame.domain.board;
 
+import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Camp;
 import chessgame.domain.piece.ConcretePiece;
 import chessgame.domain.piece.EmptyPiece;

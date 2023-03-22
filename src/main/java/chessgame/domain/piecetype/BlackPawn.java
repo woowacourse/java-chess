@@ -1,5 +1,8 @@
 package chessgame.domain.piecetype;
 
+import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.coordinate.Inclination;
+
 public class BlackPawn extends Pawn {
 
     @Override

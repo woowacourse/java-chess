@@ -1,8 +1,11 @@
 package chessgame.domain.piecetype;
 
+import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.coordinate.Inclination;
+
 import java.util.List;
 
-import static chessgame.domain.piecetype.Inclination.*;
+import static chessgame.domain.coordinate.Inclination.*;
 
 public class Queen implements PieceType {
 

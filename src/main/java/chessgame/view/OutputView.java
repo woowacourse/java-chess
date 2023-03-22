@@ -1,8 +1,8 @@
 package chessgame.view;
 
 import chessgame.domain.board.Board;
+import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
-import chessgame.domain.piecetype.Coordinate;
 
 import java.util.Map;
 
