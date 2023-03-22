@@ -18,6 +18,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 class ChessboardTest {
     @DisplayName("체스판은 64개의 Square로 이루어진다.")
@@ -88,5 +90,24 @@ class ChessboardTest {
                 Arguments.arguments("비숍이 한개 없을 때", new Square(File.A, Rank.SEVEN), new Square(File.C, Rank.ONE), 35),
                 Arguments.arguments("폰이 한줄에 2개 있을때", new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE), 37)
         );
+    }
+
+    @Test
+    @DisplayName("왕이 한명이라도 잡히면 false 반환")
+    void isntKingSurvive() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+        chessboard.swapPiece(new Square(File.A, Rank.ONE), new Square(File.E, Rank.ONE));
+
+        assertThat(chessboard.isKingSurvive()).isFalse();
+    }
+
+    @Test
+    @DisplayName("왕이 둘다 살아있으면 true 반환")
+    void isKingSurvive() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+
+        assertThat(chessboard.isKingSurvive()).isTrue();
     }
 }

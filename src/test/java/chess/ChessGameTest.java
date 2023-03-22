@@ -15,6 +15,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 class ChessGameTest {
     @ParameterizedTest(name = "{0} 이동할 수 없다")
     @MethodSource("invalidSquareProvider")
@@ -101,5 +103,18 @@ class ChessGameTest {
         );
     }
 
+    @Test
+    @DisplayName("체스 게임이 계속 실행 불가능한 상태이면 false반환")
+    void cantKeepGoing() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.getChessboard().swapPiece(new Square(File.A, Rank.ONE), new Square(File.E, Rank.ONE));
+        assertThat(chessGame.canKeepGoing()).isFalse();
+    }
 
+    @Test
+    @DisplayName("체스 게임이 계속 실행 가능한 상태이면 true반환")
+    void canKeepGoing() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.canKeepGoing()).isTrue();
+    }
 }
