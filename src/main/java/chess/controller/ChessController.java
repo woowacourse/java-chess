@@ -3,6 +3,7 @@ package chess.controller;
 import chess.command.Command;
 import chess.command.CommandFactory;
 import chess.domain.ChessGame;
+import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -29,11 +30,24 @@ public class ChessController {
     private void runGame(final ChessGame chessGame) {
         try {
             Command command = this.parseCommand();
-            command.execute(chessGame);
-            this.printBoard(command, chessGame);
+            if (command.isStatus()) {
+                this.queryCommand(chessGame, command);
+                return;
+            }
+            this.executeCommand(chessGame, command);
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
         }
+    }
+    
+    private void executeCommand(final ChessGame chessGame, final Command command) {
+        command.execute(chessGame);
+        this.printBoard(command, chessGame);
+    }
+    
+    private void queryCommand(final ChessGame chessGame, final Command command) {
+        Status status = command.query(chessGame);
+        
     }
     
     private Command parseCommand() {

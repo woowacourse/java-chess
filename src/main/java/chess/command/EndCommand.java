@@ -1,12 +1,14 @@
 package chess.command;
 
 import chess.action.Action;
+import chess.domain.Status;
 import java.util.List;
 
 public class EndCommand implements Command {
     
     public static final int END_ARGUMENTS_SIZE = 0;
-    private static final String INVALID_ARGUMENT_ERROR_MESSAGE = "end 명령어는 인자를 입력할 수 없습니다.";
+    public static final String name = CommandType.END.name();
+    
     
     public EndCommand(final List<String> arguments) {
         this.validate(arguments);
@@ -14,7 +16,8 @@ public class EndCommand implements Command {
     
     private void validate(final List<String> arguments) {
         if (arguments.size() != END_ARGUMENTS_SIZE) {
-            throw new IllegalArgumentException(COMMAND_ERROR_PREFIX + INVALID_ARGUMENT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(
+                    COMMAND_ERROR_PREFIX + name + INVALID_ARGUMENT_ERROR_MESSAGE);
         }
     }
     
@@ -24,7 +27,18 @@ public class EndCommand implements Command {
     }
     
     @Override
+    public Status query(final Action action) {
+        throw new UnsupportedOperationException(
+                COMMAND_ERROR_PREFIX + name + INVALID_QUERY_ERROR_MESSAGE);
+    }
+    
+    @Override
     public boolean isNotEnd() {
+        return false;
+    }
+    
+    @Override
+    public boolean isStatus() {
         return false;
     }
 }

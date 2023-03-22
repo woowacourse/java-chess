@@ -40,12 +40,16 @@ public class ChessGame implements Action {
         if (this.isNotRunning()) {
             throw new IllegalArgumentException(GAME_HAS_NOT_STARTED);
         }
-        
         this.board.checkColor(from, to, this.turn);
         this.board.checkRoute(from, to);
         this.board.move(from, to);
         this.isKingCaught();
         this.turn = Color.reverse(this.turn);
+    }
+    
+    @Override
+    public Status status() {
+        return new Status();
     }
     
     @Override

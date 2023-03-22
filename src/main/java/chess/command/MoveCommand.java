@@ -1,13 +1,14 @@
 package chess.command;
 
 import chess.action.Action;
+import chess.domain.Status;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class MoveCommand implements Command {
     
     public static final int MOVE_ARGUMENTS_SIZE = 2;
-    private static final String INVALID_ARGUMENT_COUNT_ERROR_MESSAGE = "move 명령어는 인자를 2개만 가질 수 있습니다.";
+    public static final String name = CommandType.MOVE.name();
     private final Position from;
     private final Position to;
     
@@ -19,7 +20,8 @@ public class MoveCommand implements Command {
     
     private void validate(final List<String> arguments) {
         if (arguments.size() != MOVE_ARGUMENTS_SIZE) {
-            throw new IllegalArgumentException(COMMAND_ERROR_PREFIX + INVALID_ARGUMENT_COUNT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(
+                    COMMAND_ERROR_PREFIX + name + INVALID_ARGUMENT_COUNT_ERROR_MESSAGE);
         }
     }
     
@@ -29,8 +31,19 @@ public class MoveCommand implements Command {
     }
     
     @Override
+    public Status query(final Action action) {
+        throw new UnsupportedOperationException(
+                COMMAND_ERROR_PREFIX + name + INVALID_QUERY_ERROR_MESSAGE);
+    }
+    
+    @Override
     public boolean isNotEnd() {
         return true;
+    }
+    
+    @Override
+    public boolean isStatus() {
+        return false;
     }
     
     public Position getTo() {
