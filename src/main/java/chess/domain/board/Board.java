@@ -30,9 +30,10 @@ public class Board {
 
         Direction direction = Direction.of(sourceSquare, targetSquare);
         Piece sourcePiece = board.get(sourceSquare);
+        Piece targetPiece = board.get(targetSquare);
         int distance = sourceSquare.calculateDistance(targetSquare);
 
-        validateCanNotMove(targetSquare, direction, sourcePiece, distance);
+        validateMoveOrAttack(sourcePiece, targetPiece, direction, distance);
         validateMovablePath(sourceSquare, direction, distance);
 
         movePiece(sourceSquare, targetSquare, sourcePiece);
@@ -52,7 +53,7 @@ public class Board {
         validateAvailableSquare(sourceSquare);
         validateAvailableSquare(targetSquare);
         validateCurrentTurn(sourceSquare);
-        validateSourceEqualsTarget(sourceSquare, targetSquare);
+        validateSourceNotEqualsTarget(sourceSquare, targetSquare);
     }
 
     private void validateAvailableSquare(final Square square) {
@@ -62,22 +63,23 @@ public class Board {
     }
 
     private void validateCurrentTurn(final Square sourceSquare) {
-        Side sourceSide = board.get(sourceSquare).getSide();
-        if (sourceSide.isOpponent(turn)) {
+        Piece sourcePiece = board.get(sourceSquare);
+        Side sourceSide = sourcePiece.getSide();
+        if (sourceSide.isOpponent(turn) || sourcePiece.isRole(Role.VACANT_PIECE)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
 
-    private void validateSourceEqualsTarget(final Square sourceSquare, final Square targetSquare) {
+    private void validateSourceNotEqualsTarget(final Square sourceSquare, final Square targetSquare) {
         if (sourceSquare.equals(targetSquare)) {
             throw new IllegalArgumentException("동일한 칸으로는 이동할 수 없습니다.");
         }
     }
 
-    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
-        Piece targetPiece = board.get(targetSquare);
-        if (targetPiece.isOpponentSide(sourcePiece)) {
+    private void validateMoveOrAttack(final Piece sourcePiece, final Piece targetPiece, final Direction direction, final int distance) {
+        if (targetPiece.isNotVacant()) {
             validateCanAttack(direction, distance, sourcePiece, targetPiece);
+            return;
         }
         validateCanMove(direction, distance, sourcePiece);
     }
@@ -90,7 +92,7 @@ public class Board {
 
     private void validateCanAttack(final Direction direction, final int distance, final Piece sourcePiece, final Piece targetPiece) {
         if (!sourcePiece.canAttack(direction, distance, targetPiece)) {
-            throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
+            throw new IllegalArgumentException("공격할 수 없는 대상입니다.");
         }
     }
 

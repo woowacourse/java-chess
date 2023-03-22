@@ -19,9 +19,9 @@ public class MoveCommand implements Command {
     @Override
     public void execute(String command) {
         String[] commands = command.split(DELIMITER_OF_MOVE_COMMAND);
+        validateMoveCommand(commands);
         String sourceSquare = commands[SOURCE_INDEX_OF_MOVE_COMMAND];
         String targetSquare = commands[TARGET_INDEX_OF_MOVE_COMMAND];
-        validateMoveCommand(commands);
         chessGame.move(sourceSquare, targetSquare);
         outputView.printBoard(chessGame.findChessBoard());
     }

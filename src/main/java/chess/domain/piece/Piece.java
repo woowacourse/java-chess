@@ -13,11 +13,10 @@ public abstract class Piece {
     }
 
     public boolean isOpponentSide(final Piece targetPiece) {
-        Side opponent = side.findOpponent();
-        if (opponent.equals(Side.from(Color.NOTHING))) {
+        if (side.equals(Side.from(Color.NOTHING))) {
             return false;
         }
-        return targetPiece.side.equals(opponent);
+        return side.findOpponent().equals(targetPiece.side);
     }
 
     public boolean isRole(Role role) {
