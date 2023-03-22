@@ -1,5 +1,8 @@
 package chess.controller;
 
+import static chess.controller.GameStatus.READY;
+import static chess.controller.GameStatus.RUNNING;
+
 import chess.controller.converter.BoardConverter;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
@@ -13,23 +16,24 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private GameStatus gameStatus;
     private ChessBoard chessBoard;
-    private boolean isReady = true;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.gameStatus = READY;
     }
 
     public void run() {
         outputView.printGuideMessage();
         // TODO 프로그램 종료 명령어 임의 추가?
         while (true) {
-            isReady = retryExecuteIfCommandIllegal();
+            gameStatus = retryExecuteIfCommandIllegal();
         }
     }
 
-    private boolean retryExecuteIfCommandIllegal() {
+    private GameStatus retryExecuteIfCommandIllegal() {
         try {
             return executeInputCommand();
         } catch (final IllegalStateException | IllegalArgumentException exception) {
@@ -38,41 +42,36 @@ public class ChessController {
         }
     }
 
-    private boolean executeInputCommand() {
+    private GameStatus executeInputCommand() {
         CommandRequest commandRequest = inputView.requestGameCommand();
         Command command = commandRequest.getCommand();
-        validateRunningStatus(command);
+        gameStatus.validateCommand(command);
         if (command == Command.START) {
             return start();
         }
         if (command == Command.MOVE) {
             return move(commandRequest);
         }
-        initializeChessBoard();
-        outputView.printGuideMessage();
-        return true;
+        return end();
     }
 
-    private void validateRunningStatus(Command command) {
-        if (isReady && (command != Command.START)) {
-            throw new IllegalArgumentException("아직 게임이 실행중이지 않습니다.");
-        }
-        if (!isReady && (command == Command.START)) {
-            throw new IllegalArgumentException("이미 게임이 실행중입니다.");
-        }
-    }
-
-    private boolean start() {
+    private GameStatus start() {
         initializeChessBoard();
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-        return false;
+        return RUNNING;
     }
 
-    private boolean move(CommandRequest commandRequest) {
+    private GameStatus move(CommandRequest commandRequest) {
         chessBoard.move(Position.from(commandRequest.getSourceCoordinate()),
                 Position.from(commandRequest.getDestinationCoordinate()));
         outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
-        return false;
+        return RUNNING;
+    }
+
+    private GameStatus end() {
+        initializeChessBoard();
+        outputView.printGuideMessage();
+        return READY;
     }
 
     private void initializeChessBoard() {
