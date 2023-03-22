@@ -37,17 +37,6 @@ class BoardTest {
         }
 
         @Test
-        @DisplayName("source 위치에 있는 말과 target 위치에 있는 말의 팀 색깔이 같으면 예외처리한다.")
-        void moveTest2() {
-            Board board = BoardGenerator.createBoard();
-            Position source = new Position(0, 0);
-            Position target = new Position(0, 1);
-
-            assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("target 위치에 같은 팀의 말이 존재합니다.");
-        }
-
-        @Test
         @DisplayName("말의 이동방향이 올바르지 않을 경우 예외처리한다.")
         void moveTest3() {
             Board board = BoardGenerator.createBoard();
@@ -66,17 +55,6 @@ class BoardTest {
             Board board = BoardGenerator.createBoard();
             Position source = new Position(3, 0);
             Position target = new Position(3, 4);
-
-            assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 target 위치로 움직일 수 없습니다.");
-        }
-
-        @Test
-        @DisplayName("pawn 이 잡을 말이 없는데 대각선으로 이동하고자 할 경우 예외처리한다.")
-        void moveTest5() {
-            Board board = BoardGenerator.createBoard();
-            Position source = new Position(1, 6);
-            Position target = new Position(2, 5);
 
             assertThatThrownBy(() -> board.movePiece(source, target)).isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("말이 target 위치로 움직일 수 없습니다.");

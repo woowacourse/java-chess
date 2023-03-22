@@ -3,9 +3,11 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,8 +21,8 @@ class KingTest {
 		King blackKing = King.from(Team.BLACK);
 		RelativePosition relativePosition = new RelativePosition(x, y);
 
-		assertTrue(whiteKing.isMobile(relativePosition));
-		assertTrue(blackKing.isMobile(relativePosition));
+		assertTrue(whiteKing.isMobile(relativePosition, new EmptyPiece()));
+		assertTrue(blackKing.isMobile(relativePosition, new EmptyPiece()));
 	}
 
 	@ParameterizedTest
@@ -32,7 +34,16 @@ class KingTest {
 		King blackKing = King.from(Team.BLACK);
 		RelativePosition relativePosition = new RelativePosition(multiplier * x, multiplier * y);
 
-		assertFalse(whiteKing.isMobile(relativePosition));
-		assertFalse(blackKing.isMobile(relativePosition));
+		assertFalse(whiteKing.isMobile(relativePosition, new EmptyPiece()));
+		assertFalse(blackKing.isMobile(relativePosition, new EmptyPiece()));
+	}
+
+	@Test
+	@DisplayName("이동하려는 위치에 있는 말의 팀 색깔이 같으면 예외처리한다.")
+	void sameTeamTest() {
+		King whiteKing = King.from(Team.WHITE);
+
+		assertThatThrownBy(() -> whiteKing.isMobile(new RelativePosition(0, 1), Pawn.from(Team.WHITE))).isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("이동하고자 하는 자리에 같은 팀이 존재합니다.");
 	}
 }

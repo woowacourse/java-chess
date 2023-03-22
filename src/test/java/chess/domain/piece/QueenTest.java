@@ -4,9 +4,11 @@ import chess.domain.Team;
 import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QueenTest {
@@ -23,8 +25,8 @@ class QueenTest {
         void oneBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -33,8 +35,8 @@ class QueenTest {
         void twoBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -43,8 +45,8 @@ class QueenTest {
         void threeBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -53,8 +55,8 @@ class QueenTest {
         void fourBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -63,8 +65,8 @@ class QueenTest {
         void fiveBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -73,8 +75,8 @@ class QueenTest {
         void sixBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
 
         @ParameterizedTest
@@ -83,8 +85,17 @@ class QueenTest {
         void sevenBlockTest(int x, int y) {
             RelativePosition relativePosition = new RelativePosition(x, y);
 
-            assertTrue(whiteQueen.isMobile(relativePosition));
-            assertTrue(blackQueen.isMobile(relativePosition));
+            assertTrue(whiteQueen.isMobile(relativePosition, new EmptyPiece()));
+            assertTrue(blackQueen.isMobile(relativePosition, new EmptyPiece()));
         }
+    }
+
+    @Test
+    @DisplayName("이동하려는 위치에 있는 말의 팀 색깔이 같으면 예외처리한다.")
+    void sameTeamTest() {
+        Queen whiteQueen = Queen.from(Team.WHITE);
+
+        assertThatThrownBy(() -> whiteQueen.isMobile(new RelativePosition(0, 2), Pawn.from(Team.WHITE))).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동하고자 하는 자리에 같은 팀이 존재합니다.");
     }
 }
