@@ -2,9 +2,11 @@ package chess.domain;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class Players {
 
@@ -123,8 +125,9 @@ public class Players {
     private Player getPlayerByColor(Color color) {
         return players.stream().filter(player -> player.getColor().equals(color))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
+
     public List<Piece> getPiecesByColor(Color color) {
         return getPlayerByColor(color).getPieces();
     }
