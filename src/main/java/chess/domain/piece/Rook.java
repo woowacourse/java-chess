@@ -6,6 +6,9 @@ import chess.practiceMove.Direction;
 
 import java.util.List;
 
+import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
+
 
 public class Rook extends Piece {
 
@@ -26,13 +29,13 @@ public class Rook extends Piece {
 
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("rook이 이동할 수 있는 방향이 아닙니다");
+            throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
         if(this.isSameColor(colorOfDestination)) {
-           throw new IllegalArgumentException("목적지에 아군이 있으므로 rook는 이동할 수 없습니다.");
+           throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 }
