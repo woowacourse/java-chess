@@ -22,6 +22,14 @@ public final class Score {
         return new Score(this.score * score);
     }
     
+    public boolean isBiggerThan(final Score score) {
+        return this.score > score.score;
+    }
+    
+    public Score subtract(final Score score) {
+        return new Score(this.score - score.score);
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hash(this.score);

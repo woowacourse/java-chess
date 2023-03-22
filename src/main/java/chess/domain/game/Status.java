@@ -19,4 +19,24 @@ public final class Status {
     public Score getScore(final Color color) {
         return this.scoreMap.get(color);
     }
+    
+    public double getScoreDifference() {
+        Score whiteScore = this.scoreMap.get(Color.WHITE);
+        Score blackScore = this.scoreMap.get(Color.BLACK);
+        
+        return whiteScore.subtract(blackScore).getScore();
+    }
+    
+    public Color getWinner() {
+        Score whiteScore = this.scoreMap.get(Color.WHITE);
+        Score blackScore = this.scoreMap.get(Color.BLACK);
+        
+        if (whiteScore.isBiggerThan(blackScore)) {
+            return Color.WHITE;
+        }
+        if (blackScore.isBiggerThan(whiteScore)) {
+            return Color.BLACK;
+        }
+        return Color.NONE;
+    }
 }

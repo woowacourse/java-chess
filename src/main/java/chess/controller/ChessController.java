@@ -47,7 +47,7 @@ public class ChessController {
     
     private void queryCommand(final ChessGame chessGame, final Command command) {
         Status status = command.query(chessGame);
-        
+        this.outputView.printStatus(status);
     }
     
     private Command parseCommand() {

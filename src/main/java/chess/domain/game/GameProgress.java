@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-public enum GameStatus {
+public enum GameProgress {
     READY,
     END,
     RUN
