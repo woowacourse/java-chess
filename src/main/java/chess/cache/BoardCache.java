@@ -6,6 +6,7 @@ import chess.domain.Row;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +17,7 @@ public final class BoardCache {
     }
 
     static {
-        for (Row row : Row.values()) {
-            addRow(row);
-        }
+        Arrays.stream(Row.values()).forEach(BoardCache::addRow);
     }
 
     private static void addRow(final Row row) {
