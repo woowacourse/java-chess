@@ -152,4 +152,34 @@ class BoardTest {
         // expect
         assertThat(board.canMove(source, target)).isFalse();
     }
+
+    @Test
+    @DisplayName("체스 시작 점수는 38점이다.")
+    void calculate_Initial_Board_Score() {
+        // given
+        Board board = new Board(BoardFactory.create());
+        double expectedScore = 38.0;
+
+        // when
+        Double score = board.calculateScore(Team.WHITE);
+
+        // then
+        assertThat(score).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("폰이 세로 줄에 2개 이상 있는 경우 각각 0.5점으로 계산한다.")
+    void calculate_Score_If_Pawn_Exist_Same_Column() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(1, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 2), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 3), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 4), new Pawn(Team.WHITE));
+        Board board = new Board(squares);
+
+        // expect
+        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(2);
+    }
+
 }

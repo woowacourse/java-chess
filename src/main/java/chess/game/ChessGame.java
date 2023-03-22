@@ -32,6 +32,10 @@ public class ChessGame {
         changeTurn();
     }
 
+    public double calculateScore(Team team) {
+        return board.calculateScore(team);
+    }
+
     private void validatePosition(Position source, Position target) {
         if (Objects.equals(source, target)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");

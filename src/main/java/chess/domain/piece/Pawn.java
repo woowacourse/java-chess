@@ -22,9 +22,11 @@ public class Pawn extends Piece {
         }
         return true;
     }
+
     private boolean isWhitePawnReverseDirection(Position source, Position target) {
         return team == Team.WHITE && source.isOverThanYTo(target);
     }
+
     private boolean isBlackPawnReverseDirection(Position source, Position target) {
         return team == Team.BLACK && target.isOverThanYTo(source);
     }
