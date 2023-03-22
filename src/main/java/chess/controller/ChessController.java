@@ -4,6 +4,7 @@ import chess.controller.dto.CommandDto;
 import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
 import chess.domain.Board;
+import chess.domain.BoardGenerator;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -39,7 +40,7 @@ public class ChessController {
     }
 
     private void playChess() {
-        Board board = Board.create();
+        Board board = BoardGenerator.createBoard();
         OutputView.printBoard(OutputRenderer.toBoardDto(board.getBoard()));
 
         CommandDto commandDto = readMove();
