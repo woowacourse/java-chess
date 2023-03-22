@@ -6,7 +6,8 @@ public enum PieceType {
     QUEEN("Q"),
     KNIGHT("N"),
     KING("K"),
-    PAWN("P");
+    PAWN("P"),
+    BLANK(" ");
 
     private final String name;
 

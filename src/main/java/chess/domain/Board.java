@@ -21,15 +21,15 @@ public class Board {
     }
 
     public Map<Position, String> move(Position currentPosition, Position nextPosition, Color thisTurn) {
-        Piece piece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
-        List<Position> routePositions = piece.move(currentPosition, nextPosition);
-        validateThisTurnColor(thisTurn, piece);
+        Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
+        List<Position> routePositions = currentPiece.move(currentPosition, nextPosition);
+        validateThisTurnColor(thisTurn, currentPiece);
 
-        if (piece.isPawn()) {
+        if (currentPiece.isPawn()) {
             return movePawn(currentPosition, nextPosition, routePositions);
         }
 
-        return moveGeneralPiece(nextPosition, piece, routePositions);
+        return moveGeneralPiece(nextPosition, currentPiece, routePositions);
     }
 
     private void validateThisTurnColor(Color thisTurn, Piece piece) {
@@ -101,8 +101,8 @@ public class Board {
         }
     }
 
-    private void updateMovedPiece(Position currentPosition, Position nextPosition, Piece piece) {
+    private void updateMovedPiece(Position currentPosition, Position nextPosition, Piece movingPiece) {
         board.remove(currentPosition);
-        board.put(nextPosition, piece);
+        board.put(nextPosition, movingPiece);
     }
 }

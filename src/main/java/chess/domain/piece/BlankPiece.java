@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.move_rule.BlankMoveRule;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public class BlankPiece extends Piece {
     private static BlankPiece instance;
 
     private BlankPiece() {
-        super(null, Color.EMPTY);
+        super(new BlankMoveRule(), Color.EMPTY);
     }
 
     public static BlankPiece getInstance() {

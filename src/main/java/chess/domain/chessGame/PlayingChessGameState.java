@@ -6,12 +6,12 @@ import chess.domain.position.Position;
 
 import java.util.Map;
 
-public class PlayingChessGame implements ChessGame {
+public class PlayingChessGameState implements ChessGameState {
     private final Board board;
     private boolean isEnd = false;
     private Color currentTurn;
 
-    public PlayingChessGame(Board board) {
+    public PlayingChessGameState(Board board) {
         this.board = board;
         this.currentTurn = Color.WHITE;
     }
@@ -26,7 +26,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public ChessGame start() {
+    public ChessGameState start() {
         throw new IllegalStateException("이미 플레이중인 게임입니다.");
     }
 
