@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import boardStrategy.EmptyBoardStrategy;
 import chess.boardstrategy.InitialBoardStrategy;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
