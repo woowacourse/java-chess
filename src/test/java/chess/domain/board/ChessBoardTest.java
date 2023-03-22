@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ChessBoardTest {
 
@@ -46,25 +45,13 @@ class ChessBoardTest {
 
     @Test
     @DisplayName("특정 위치에 존재하는 체스말을 반환한다.")
-    void checkPieceSuccess() {
+    void getPiece() {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.checkPiece(new Position(0, 0)))
+        assertThat(chessBoard.getPiece(new Position(0, 0)))
                 .isEqualTo(new Piece(PieceType.ROOK, CampType.WHITE, new Rook()));
-    }
-
-    @Test
-    @DisplayName("없는 위치를 받으면, 예외가 발생한다.")
-    void checkPieceFail() {
-        // given
-        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
-
-        // when, then
-        assertThatThrownBy(() -> chessBoard.checkPiece(new Position(5, 5)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("체스말이 존재하는 위치를 입력해 주세요.");
     }
 
     @Test

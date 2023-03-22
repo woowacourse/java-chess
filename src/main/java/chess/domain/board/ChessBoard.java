@@ -18,15 +18,12 @@ public final class ChessBoard {
         return new ChessBoard(board);
     }
 
-    public boolean contains(final Position possiblePosition) {
-        return board.containsKey(possiblePosition);
+    public boolean contains(final Position position) {
+        return board.containsKey(position);
     }
 
-    public Piece checkPiece(final Position source) {
-        if (!contains(source)) {
-            throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
-        }
-        return board.get(source);
+    public Piece getPiece(final Position position) {
+        return board.get(position);
     }
 
     public void removePiece(final Position position) {
