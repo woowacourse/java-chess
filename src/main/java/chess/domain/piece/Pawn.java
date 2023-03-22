@@ -71,4 +71,9 @@ public class Pawn extends Piece {
         }
         return Math.abs(fileDiff + rankDiff);
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.PAWN;
+    }
 }

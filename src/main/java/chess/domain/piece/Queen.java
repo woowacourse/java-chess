@@ -25,4 +25,9 @@ public class Queen extends Piece {
         }
         return Math.abs(fileDiff + rankDiff);
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.QUEEN;
+    }
 }
