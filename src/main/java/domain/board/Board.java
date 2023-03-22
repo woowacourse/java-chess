@@ -23,13 +23,13 @@ public final class Board {
 
     public void move(final Position source, final Position destination) {
         final Piece piece = getPiece(source);
-        validateRoute(source, destination, piece);
+        validateRoute(source, destination);
 
         if (board.containsKey(destination)) {
-            captureDestination(source, destination, piece);
+            captureDestination(source, destination);
         }
         if (!board.containsKey(destination)) {
-            moveDestination(source, destination, piece);
+            moveDestination(source, destination);
         }
     }
 
@@ -41,12 +41,12 @@ public final class Board {
         return board.get(source);
     }
 
-    private void validateRoute(final Position source, final Position destination, final Piece piece) {
+    private void validateRoute(final Position source, final Position destination) {
         if (pieceInRoute(source, destination)) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
 
-        if (teamOnDestination(destination, piece)) {
+        if (isSameTeamOnDestination(destination, getPiece(source))) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
     }
@@ -56,13 +56,13 @@ public final class Board {
                 .anyMatch(board::containsKey);
     }
 
-    private boolean teamOnDestination(final Position destination, final Piece piece) {
+    private boolean isSameTeamOnDestination(final Position destination, final Piece sourcePiece) {
         return board.containsKey(destination) &&
-                piece.isBlack() == board.get(destination).isBlack();
+                sourcePiece.isBlack() == getPiece(destination).isBlack();
     }
 
-    private void captureDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isCapturable(source, destination)) {
+    private void captureDestination(final Position source, final Position destination) {
+        if (getPiece(source).isCapturable(source, destination)) {
             board.put(destination, board.remove(source));
             return;
         }
@@ -70,8 +70,8 @@ public final class Board {
         throw new IllegalArgumentException(INVALID_MOVEMENT);
     }
 
-    private void moveDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isMovable(source, destination)) {
+    private void moveDestination(final Position source, final Position destination) {
+        if (getPiece(source).isMovable(source, destination)) {
             board.put(destination, board.remove(source));
             return;
         }
