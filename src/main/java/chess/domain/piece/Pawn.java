@@ -20,6 +20,7 @@ public class Pawn extends Piece {
 
     private List<MovePattern> initMovePatterns(final Side side) {
         List<MovePattern> movePatterns = new ArrayList<>();
+
         if (side.isWhite()) {
             movePatterns.addAll(Arrays.asList(WhitePawnMovePattern.values()));
         }
@@ -36,29 +37,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public void changePawnMoved() {
-        moved = true;
-    }
-
-
-    @Override
     public List<Position> findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
-        final List<MovePattern> movePatterns = getMovePatterns();
-        for (MovePattern movePattern : movePatterns) {
-            Position nextPosition = source;
-            if (isRangeValid(nextPosition, movePattern)) {
-                nextPosition = nextPosition.move(movePattern);
-                checkSide(movablePositions, source, nextPosition, board);
-            }
-            if (canDoubleMove(source, board, movePattern)) {
-                movablePositions.add(source.move(movePattern).move(movePattern));
-            }
+
+        for (MovePattern movePattern : getMovePatterns()) {
+            movablePositions.addAll(findMovablePositionsByMovePattern(source, movePattern, board));
+            movablePositions.addAll(findMovablePositionsByDoubleMove(source, board, movePattern));
+        }
+        return movablePositions;
+    }
+
+    private List<Position> findMovablePositionsByDoubleMove(final Position source, final Board board, final MovePattern movePattern) {
+        List<Position> movablePositions = new ArrayList<>();
+
+        if (canDoubleMove(source, board, movePattern)) {
+            movablePositions.add(source.move(movePattern).move(movePattern));
         }
         return movablePositions;
     }
@@ -68,21 +61,33 @@ public class Pawn extends Piece {
                 && isNeutrality(source, board, movePattern)
                 && isRangeValid(source.move(movePattern), movePattern)
                 && isNeutrality(source.move(movePattern), board, movePattern)
-                && !moved;
+                && source.isDoubleMovePosition();
     }
 
     private static boolean isNeutrality(final Position source, final Board board, final MovePattern movePattern) {
         return board.findSideByPosition(source.move(movePattern)).isNeutrality();
     }
 
-    private void checkSide(final List<Position> movablePositions, final Position source, final Position nextPosition,
-                           final Board board) {
+    private List<Position> findMovablePositionsByMovePattern(final Position source, final MovePattern movePattern,
+                                                             final Board board) {
+        List<Position> movablePositions = new ArrayList<>();
+        Position nextPosition = getUpdatedPositionIfValidRange(source, movePattern);
         final Side nextSide = board.findSideByPosition(nextPosition);
+
         if (isDiagonal(source, nextPosition)) {
             checkDiagonalSide(movablePositions, nextPosition, nextSide);
-            return;
+            return movablePositions;
         }
         checkFrontSide(movablePositions, nextPosition, nextSide);
+        return movablePositions;
+    }
+
+    private Position getUpdatedPositionIfValidRange(final Position source, final MovePattern movePattern) {
+        Position nextPosition = source;
+        if (isRangeValid(source, movePattern)) {
+            nextPosition = nextPosition.move(movePattern);
+        }
+        return nextPosition;
     }
 
     private boolean isDiagonal(Position source, Position nextPosition) {
