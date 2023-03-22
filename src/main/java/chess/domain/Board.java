@@ -104,9 +104,15 @@ public class Board {
     }
 
     private void validatePawnDiagonalMove(final Square current, final Direction direction) {
-        if (board.get(current).isPawn() && PieceDirection.DIAGONAL.contains(direction)) {
+        if (canPawnMoveDiagonal(current, direction)) {
             throw new WrongDirectionException();
         }
+    }
+
+    private boolean canPawnMoveDiagonal(final Square current, final Direction direction) {
+        final boolean isPawn = board.get(current).isPawn();
+        final boolean correctDirection = PieceDirection.DIAGONAL.contains(direction);
+        return isPawn && correctDirection;
     }
 
     private void movePiece(final Square current, final Square destination) {
