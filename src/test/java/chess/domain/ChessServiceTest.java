@@ -1,6 +1,6 @@
-package chess.service;
+package chess.domain;
 
-import static chess.Fixtures.*;
+import static chess.domain.Fixtures.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 class ChessServiceTest {
 
-	private ChessService service;
+	private ChessGame service;
 
 	@BeforeEach
 	void beforeEach() {
-		service = new ChessService();
+		service = new ChessGame();
 	}
 
 	@Nested

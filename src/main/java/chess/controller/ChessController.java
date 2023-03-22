@@ -1,20 +1,18 @@
 package chess.controller;
 
 import chess.domain.Position;
-import chess.service.ChessService;
+import chess.domain.ChessGame;
 import chess.view.Command;
 import chess.view.CommandDto;
-import chess.view.InputRenderer;
 import chess.view.InputView;
-import chess.view.OutputRenderer;
 import chess.view.OutputView;
 
 public class ChessController {
 
-	private final ChessService service;
+	private final ChessGame service;
 
 	public ChessController() {
-		this.service = new ChessService();
+		this.service = new ChessGame();
 	}
 
 	public void run() {

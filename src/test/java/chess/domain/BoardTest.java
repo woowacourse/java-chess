@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.Fixtures.*;
+import static chess.domain.Fixtures.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
