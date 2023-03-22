@@ -11,6 +11,11 @@ class CalculatorTest {
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
 
     @Test
+    public void sumIfLargerThenThree() {
+        
+    }
+
+    @Test
     public void sumAll() {
         int sum = Calculator.sumAll(numbers);
         assertThat(sum).isEqualTo(21);
