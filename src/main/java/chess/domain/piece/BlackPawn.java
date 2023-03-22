@@ -15,11 +15,11 @@ public final class BlackPawn extends Pawn {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (canPawnMove(source, target, DOWN)) {
-            return generateTargetPath(source, target);
+        if (!canPawnMove(source, target, DOWN)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+        return generateTargetPath(source, target);
     }
 
     @Override

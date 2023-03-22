@@ -13,14 +13,14 @@ public final class King extends Normal {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (canKingMove(source, target)) {
-            Set<Position> path = new HashSet<>();
-            path.add(target);
-
-            return path;
+        if (!canKingMove(source, target)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+        Set<Position> path = new HashSet<>();
+        path.add(target);
+
+        return path;
     }
 
     @Override
