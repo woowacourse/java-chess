@@ -49,4 +49,5 @@ public class MoveRequest {
     public Color getMovablePieceColor() {
         return movablePieceColor;
     }
+
 }

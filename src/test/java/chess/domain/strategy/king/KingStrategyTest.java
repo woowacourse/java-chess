@@ -1,7 +1,7 @@
 package chess.domain.strategy.king;
 
-import chess.domain.Position;
 import chess.domain.Color;
+import chess.domain.Position;
 import chess.domain.dto.PositionDto;
 import chess.domain.dto.req.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +34,7 @@ class KingStrategyTest {
 
 
         // when, then
-        assertDoesNotThrow(()-> new KingStrategy().validateDirection(moveRequest));
+        assertDoesNotThrow(() -> new KingStrategy().validateDirection(moveRequest));
     }
 
     @Nested
@@ -122,4 +122,5 @@ class KingStrategyTest {
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));
         }
     }
+
 }

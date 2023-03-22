@@ -12,7 +12,7 @@ class UserDaoTest {
     private static final UserDao userDao = new UserDao();
 
     @BeforeEach
-    void cleanUp(){
+    void cleanUp() {
         userDao.cleanUserTable();
         addUser();
     }

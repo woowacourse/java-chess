@@ -7,7 +7,7 @@ public final class Position {
     private final Rank rank;
     private final File file;
 
-     private Position(final int rank, final char file) {
+    private Position(final int rank, final char file) {
         this.rank = new Rank(rank);
         this.file = new File(file);
     }
