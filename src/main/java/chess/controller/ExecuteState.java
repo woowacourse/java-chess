@@ -6,6 +6,7 @@ public enum ExecuteState {
 
     INIT,
     START,
+    STATUS,
     MOVE,
     END,
     ;

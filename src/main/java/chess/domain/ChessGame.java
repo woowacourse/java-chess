@@ -43,6 +43,10 @@ public class ChessGame {
         turnColor = turnColor.reverse();
     }
 
+    public double calculateScoreOfColor(final Color color) {
+        return board.calculateScoreOfColor(color);
+    }
+
     public Board getBoard() {
         return board;
     }

@@ -4,12 +4,16 @@ import static chess.controller.ExecuteState.END;
 import static chess.controller.ExecuteState.INIT;
 import static chess.controller.ExecuteState.MOVE;
 import static chess.controller.ExecuteState.START;
+import static chess.controller.ExecuteState.STATUS;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.ChessBoardDto;
+import chess.view.dto.ChessStatusDto;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -23,6 +27,7 @@ public class ChessController {
     private ExecuteState executeState = INIT;
     private final Map<ExecuteState, Consumer<List<String>>> actions = Map.of(
             START, this::start,
+            STATUS, this::status,
             MOVE, this::move,
             END, this::end
     );
@@ -66,9 +71,11 @@ public class ChessController {
         outputView.printChessBoard(ChessBoardDto.from(chessGame));
     }
 
-    private void end(final List<String> commands) {
+    private void status(final List<String> commands) {
         validateForNotMove(commands);
-        executeState = END;
+        validateStart();
+        outputView.printChessStatus(
+                ChessStatusDto.of(chessGame.calculateScoreOfColor(BLACK), chessGame.calculateScoreOfColor(WHITE)));
     }
 
     private void move(final List<String> commands) {
@@ -76,6 +83,11 @@ public class ChessController {
         validateStart();
         chessGame.move(Square.from(commands.get(1)), Square.from(commands.get(2)));
         outputView.printChessBoard(ChessBoardDto.from(chessGame));
+    }
+
+    private void end(final List<String> commands) {
+        validateForNotMove(commands);
+        executeState = END;
     }
 
     private static void validateForNotMove(final List<String> commands) {

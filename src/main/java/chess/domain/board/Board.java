@@ -29,7 +29,7 @@ public class Board {
         return calculateScoreOfColorExceptPawn(color) + calculateScoreOfColorForPawn(color);
     }
 
-    public double calculateScoreOfColorExceptPawn(final Color color) {
+    private double calculateScoreOfColorExceptPawn(final Color color) {
         return board.keySet().stream()
                 .filter(key -> board.get(key).isSameColor(color))
                 .filter(key -> !board.get(key).isPawn())
@@ -38,7 +38,7 @@ public class Board {
                 .sum();
     }
 
-    public double calculateScoreOfColorForPawn(final Color color) {
+    private double calculateScoreOfColorForPawn(final Color color) {
         final Map<File, Integer> pawnCountTable = createPawnCountTableOfColor(color);
         return board.keySet().stream()
                 .filter(key -> board.get(key).isSameColor(color))

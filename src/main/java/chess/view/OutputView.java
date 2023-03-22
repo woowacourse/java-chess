@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.view.dto.ChessBoardDto;
+import chess.view.dto.ChessStatusDto;
 
 public class OutputView {
 
@@ -15,6 +16,24 @@ public class OutputView {
         for (String line : chessBoardDto.getLines()) {
             System.out.println(line);
         }
+    }
+
+    public void printChessStatus(final ChessStatusDto chessStatusDto) {
+        final double blackScore = chessStatusDto.getBlackScore();
+        final double whiteScore = chessStatusDto.getWhiteScore();
+        System.out.println("BLACK 점수: " + blackScore);
+        System.out.println("WHITE 점수: " + whiteScore);
+        System.out.println(getWinOrLoseMessage(blackScore, whiteScore));
+    }
+
+    private String getWinOrLoseMessage(final Double blackScore, final Double whiteScore) {
+        if (blackScore.compareTo(whiteScore) > 0) {
+            return "BLACK 점수가 높습니다.";
+        }
+        if (blackScore.compareTo(whiteScore) < 0) {
+            return "WHITE 점수가 높습니다.";
+        }
+        return "점수가 같습니다.";
     }
 
     public void printErrorMessage(final String message) {
