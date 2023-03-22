@@ -58,6 +58,10 @@ public class ChessController {
 
     private void stateChessGame(ChessGame chessGame) {
         chessGame.inputGameCommand(GameCommand.STATUS);
+        double blackScore = chessGame.calculateBlackScore();
+        double whiteScore = chessGame.calculateWhiteScore();
+        outputView.printBlackScore(blackScore);
+        outputView.printWhiteScore(whiteScore);
     }
 
     private void endChessGame(ChessGame chessGame) {

@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 import java.util.Map;
 
@@ -40,6 +41,9 @@ public class ChessGame {
         if (gameCommand == GameCommand.START) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 실행중입니다.");
         }
+        if (gameCommand == GameCommand.STATUS) {
+            throw new IllegalArgumentException("[ERROR] 게임이 실행중 일 때는 결과를 알 수 없습니다.");
+        }
         if (gameCommand == GameCommand.END) {
             gameStatus = GameStatus.TERMINATED;
         }
@@ -66,6 +70,16 @@ public class ChessGame {
         if (shouldTerminateGame(board.countKingNumber())) {
             gameStatus = GameStatus.TERMINATED;
         }
+    }
+
+    public double calculateBlackScore() {
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getBoard(), Team.BLACK);
+        return scoreCalculator.calculateScore();
+    }
+
+    public double calculateWhiteScore() {
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getBoard(), Team.WHITE);
+        return scoreCalculator.calculateScore();
     }
 
     private boolean shouldTerminateGame(long kingNumber) {
