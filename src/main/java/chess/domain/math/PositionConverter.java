@@ -10,10 +10,12 @@ public final class PositionConverter {
     private static final int BOARD_MAX_ROW = 8;
 
     public static Position toPosition(final String input) {
-        char columnValue = input.charAt(COLUMN_INDEX);
+        String value = input.toLowerCase();
+
+        char columnValue = value.charAt(COLUMN_INDEX);
         int column = Math.abs(columnValue - ASCII_SMALL_A);
 
-        char rowValue = input.charAt(ROW_INDEX);
+        char rowValue = value.charAt(ROW_INDEX);
         int row = Math.abs(Character.getNumericValue(rowValue) - BOARD_MAX_ROW);
 
         return new Position(row, column);

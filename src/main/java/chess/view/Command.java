@@ -14,8 +14,9 @@ public enum Command {
     }
 
     public static Command of(String inputCommand) {
+        String value = inputCommand.toLowerCase();
         return Arrays.stream(Command.values())
-                .filter(command -> command.command.equals(inputCommand))
+                .filter(command -> command.command.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령입니다."));
     }
