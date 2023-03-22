@@ -8,7 +8,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,11 +28,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class BoardTest {
 
     @Test
-    @DisplayName("초기 체스판이 정상적으로 생성된다")
-    void succeeds_in_creation() {
+    void 초기_체스판이_정상적으로_생성된다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Pawn(A, SEVEN, BLACK),
                 new Rook(A, EIGHT, BLACK),
@@ -53,8 +55,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("말을 원하는 위치로 이동시킨다")
-    void move_test() {
+    void 말을_원하는_위치로_이동시킨다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
@@ -69,8 +70,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("다른 색 말을 잡는다.")
-    void catch_test() {
+    void 다른_색_말을_잡는다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, FIVE, WHITE)
@@ -89,8 +89,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("현재 위치에 말이 없다면, 예외가 발생한다")
-    void can_not_find_piece_in_current_position() {
+    void 현재_위치에_말이_없다면_예외가_발생한다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of());
         final Board board = Board.createBoardWith(piecesFactory);
 
@@ -100,8 +99,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("목표 위치로 이동할 수 없다면, 예외가 발생한다")
-    void throws_exception_if_can_not_move_to_target_position() {
+    void 목표_위치로_이동할_수_없다면_예외가_발생한다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
@@ -113,8 +111,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("이동 경로에 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_piece_in_passing_path() {
+    void 이동_경로에_말이_있다면_예외가_발생한다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
@@ -127,8 +124,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+    void 목표_위치에_같은_색_말이_있다면_예외가_발생한다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
@@ -142,8 +138,7 @@ class BoardTest {
 
     @ParameterizedTest
     @CsvSource({"BLACK, true", "WHITE, false"})
-    @DisplayName("같은 색인지 확인한다")
-    void isSameColorTest(final Color color, final boolean expected) {
+    void 같은_색인지_확인한다(final Color color, final boolean expected) {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));

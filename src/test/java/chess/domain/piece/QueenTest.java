@@ -3,7 +3,8 @@ package chess.domain.piece;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,22 +16,17 @@ import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.Rank.EIGHT;
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
+import static chess.domain.File.*;
+import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class QueenTest {
 
     @Test
-    @DisplayName("지나갈 경로를 얻는다.")
-    void getPassingPathTest() {
+    void 지나갈_경로를_얻는다() {
         final Piece queen = new Queen(D, EIGHT, BLACK);
 
         final List<Position> path = queen.getPassingPositions(new Position(A, FIVE));
@@ -41,8 +37,7 @@ class QueenTest {
 
     @ParameterizedTest
     @CsvSource({"D, EIGHT", "E, FOUR"})
-    @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest(final File file, final Rank rank) {
+    void 이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
         final Piece queen = new Queen(D, EIGHT, BLACK);
 
         assertThatThrownBy(() -> queen.getPassingPositions(new Position(file, rank)))
@@ -52,8 +47,7 @@ class QueenTest {
 
     @ParameterizedTest
     @MethodSource("providePieceInTargetPosition")
-    @DisplayName("말을 이동시킨다.")
-    void moveTest(final Piece pieceInTargetPosition) {
+    void 말을_이동시킨다(final Piece pieceInTargetPosition) {
         final Piece originalQueen = new Queen(D, EIGHT, BLACK);
 
         final Piece movedQueen = originalQueen.move(pieceInTargetPosition);
@@ -69,8 +63,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+    void 목표_위치에_같은_색_말이_있다면_예외가_발생한다() {
         final Piece originalQueen = new Queen(D, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(D, SIX, BLACK);
 

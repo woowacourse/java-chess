@@ -4,7 +4,8 @@ import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,27 +18,20 @@ import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.File.*;
+import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class PawnTest {
 
     @Nested
-    @DisplayName("Black Pawn 테스트")
     class BlackPawnTest {
 
         @Test
-        @DisplayName("초기 위치에서 두 칸을 전진할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_initial_2_moving() {
+        void 초기_위치에서_두_칸을_전진할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, SEVEN, Color.BLACK);
 
             final List<Position> path = pawn.getPassingPositions(new Position(B, Rank.FIVE));
@@ -46,8 +40,7 @@ class PawnTest {
         }
 
         @Test
-        @DisplayName("초기 위치가 아닐 때 한 칸을 전진할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_nonInitial_1_moving() {
+        void 초기_위치가_아닐_때_한_칸을_전진할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, SIX, Color.BLACK);
 
             final List<Position> path = pawn.getPassingPositions(new Position(B, Rank.FIVE));
@@ -56,8 +49,7 @@ class PawnTest {
         }
 
         @Test
-        @DisplayName("초기 위치가 아닐 때 대각선 한 칸을 이동할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_nonInitial_diagonal_1_moving() {
+        void 초기_위치가_아닐_때_대각선_한_칸을_이동할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, SIX, Color.BLACK);
 
             final List<Position> path = pawn.getPassingPositions(new Position(C, Rank.FIVE));
@@ -67,8 +59,7 @@ class PawnTest {
 
         @ParameterizedTest
         @CsvSource({"E, SIX", "C, SEVEN", "B, EIGHT"})
-        @DisplayName("초기 위치에서 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_initial(final File file, final Rank rank) {
+        void 초기_위치에서_이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, SEVEN, Color.BLACK);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
@@ -78,8 +69,7 @@ class PawnTest {
 
         @ParameterizedTest
         @CsvSource({"B, FOUR", "C, SIX", "B, SEVEN"})
-        @DisplayName("초기 위치가 아닐 때 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_nonInitial(final File file, final Rank rank) {
+        void 초기_위치가_아닐_때_이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, SIX, Color.BLACK);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
@@ -89,12 +79,10 @@ class PawnTest {
     }
 
     @Nested
-    @DisplayName("White Pawn 테스트")
     class WhitePawnTest {
 
         @Test
-        @DisplayName("초기 위치에서 두 칸을 전진할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_initial_2_moving() {
+        void 초기_위치에서_두_칸을_전진할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, TWO, Color.WHITE);
 
             final List<Position> path = pawn.getPassingPositions(new Position(B, FOUR));
@@ -103,8 +91,7 @@ class PawnTest {
         }
 
         @Test
-        @DisplayName("초기 위치가 아닐 때 한 칸을 전진할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_nonInitial_1_moving() {
+        void 초기_위치가_아닐_때_한_칸을_전진할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, THREE, Color.WHITE);
 
             final List<Position> path = pawn.getPassingPositions(new Position(B, FOUR));
@@ -113,8 +100,7 @@ class PawnTest {
         }
 
         @Test
-        @DisplayName("초기 위치가 아닐 때 대각선 한 칸을 이동할 경우, 지나갈 경로를 얻는다.")
-        void getPassingPathTest_nonInitial_diagonal_1_moving() {
+        void 초기_위치가_아닐_때_대각선_한_칸을_이동할_경우_지나갈_경로를_얻는다() {
             final Piece pawn = new Pawn(B, THREE, Color.WHITE);
 
             final List<Position> path = pawn.getPassingPositions(new Position(C, FOUR));
@@ -124,8 +110,7 @@ class PawnTest {
 
         @ParameterizedTest
         @CsvSource({"E, SIX", "C, TWO", "B, ONE"})
-        @DisplayName("초기 위치에서 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_initial(final File file, final Rank rank) {
+        void 초기_위치에서_이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, TWO, Color.WHITE);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
@@ -135,8 +120,7 @@ class PawnTest {
 
         @ParameterizedTest
         @CsvSource({"B, FIVE", "C, THREE", "B, TWO"})
-        @DisplayName("초기 위치가 아닐 때 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_nonInitial(final File file, final Rank rank) {
+        void 초기_위치가_아닐_때_이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, THREE, Color.WHITE);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
@@ -147,8 +131,7 @@ class PawnTest {
 
     @ParameterizedTest
     @MethodSource("providePieceInTargetPosition")
-    @DisplayName("말을 이동시킨다.")
-    void moveTest(final Piece pieceInTargetPosition) {
+    void 말을_이동시킨다(final Piece pieceInTargetPosition) {
         final Piece originalPawn = new Pawn(A, SIX, BLACK);
 
         final Piece movedRook = originalPawn.move(pieceInTargetPosition);
@@ -165,8 +148,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource("WHITE, BLACK")
-    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
-    void throws_exception_if_there_is_other_piece_in_front(final Color color) {
+    void 목표_위치에_같은_색_말이_있다면_예외가_발생한다(final Color color) {
         final Piece originalPawn = new Pawn(A, SIX, BLACK);
         final Piece sameColorPiece = new Pawn(A, FIVE, color);
 
@@ -177,8 +159,7 @@ class PawnTest {
 
     @ParameterizedTest
     @MethodSource("provideDiagonalPieceInTargetPosition")
-    @DisplayName("대각선 위치에 같은색 말이 있거나 아무 말도 없으면, 예외를 발생한다")
-    void throws_exception_if_there_is_(final Piece pieceInTargetPosition) {
+    void 대각선_위치에_같은색_말이_있거나_아무_말도_없으면_예외를_발생한다(final Piece pieceInTargetPosition) {
         final Piece originalPawn = new Pawn(A, SIX, BLACK);
 
         assertThatThrownBy(() -> originalPawn.move(pieceInTargetPosition))

@@ -1,6 +1,7 @@
 package chess.domain;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,38 +11,25 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.File.A;
-import static chess.domain.File.B;
-import static chess.domain.File.C;
-import static chess.domain.File.D;
-import static chess.domain.File.E;
-import static chess.domain.File.F;
-import static chess.domain.File.G;
-import static chess.domain.File.H;
-import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.ONE;
-import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
-import static chess.domain.Rank.THREE;
-import static chess.domain.Rank.TWO;
+import static chess.domain.File.*;
+import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class PositionTest {
 
     private final Position E_FOUR = new Position(E, FOUR);
 
     @Test
-    @DisplayName("File과 Rank정보로 위치를 만든다")
-    void initTest() {
+    void File과_Rank정보로_위치를_만든다() {
         assertThatNoException().isThrownBy(() -> new Position(A, ONE));
     }
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, true", "E, ONE, true", "C, SIX, false", "G, TWO, false"})
-    @DisplayName("상하좌우 위치에 있는지 확인한다")
-    void isInCrossPositionTest(final File file, final Rank rank, final boolean expected) {
+    void 상하좌우_위치에_있는지_확인한다(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
         final boolean actual = E_FOUR.isInCrossPosition(otherPosition);
@@ -51,8 +39,7 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, false", "E, ONE, false", "C, SIX, true", "G, TWO, true"})
-    @DisplayName("대각선 위치에 있는지 확인한다")
-    void isInDiagonalPositionTest(final File file, final Rank rank, final boolean expected) {
+    void 대각선_위치에_있는지_확인한다(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
         final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
@@ -62,8 +49,7 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"D, FOUR, 1", "F, FIVE, 2", "G, FIVE, 3"})
-    @DisplayName("맨허튼 거리를 계산한다")
-    void calculateManhattanDistanceTest(final File file, final Rank rank, final int expectedDistance) {
+    void 맨허튼_거리를_계산한다(final File file, final Rank rank, final int expectedDistance) {
         final Position otherPosition = new Position(file, rank);
 
         final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
@@ -73,8 +59,7 @@ class PositionTest {
 
     @ParameterizedTest
     @MethodSource("provideOtherPositionAndExpectedPassingPositions")
-    @DisplayName("입력 받은 위치로 가는 경로에 있는 위치들을 반환한다")
-    void findPassingPositionsTest(final Position otherPosition, final List<Position> expectedPassingPositions) {
+    void 입력_받은_위치로_가는_경로에_있는_위치들을_반환한다(final Position otherPosition, final List<Position> expectedPassingPositions) {
         final List<Position> actualPassingPositions = E_FOUR.findPassingPositions(otherPosition);
 
         assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
@@ -92,8 +77,7 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"FOUR, true", "SIX, false"})
-    @DisplayName("Rank가 높은지 확인한다.")
-    void isUpperRankThanTest(final Rank otherRank, final boolean expected) {
+    void Rank가_높은지_확인한다(final Rank otherRank, final boolean expected) {
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 
@@ -101,11 +85,10 @@ class PositionTest {
 
         assertThat(actual).isEqualTo(expected);
     }
-    
+
     @ParameterizedTest
     @CsvSource({"FOUR, false", "SIX, true"})
-    @DisplayName("Rank가 낮은지 확인한다.")
-    void isLowerRankThanTest(final Rank otherRank, final boolean expected) {
+    void Rank가_낮은지_확인한다(final Rank otherRank, final boolean expected) {
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 

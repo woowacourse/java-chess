@@ -5,7 +5,8 @@ import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.piece.*;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,11 +14,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class StartingPiecesFactoryTest {
 
     @Test
-    @DisplayName("초기 체스판이 정상적으로 생성된다")
-    void succeeds_creation() {
+    void 초기_체스판이_정상적으로_생성된다() {
         final List<Piece> pieces = new StartingPiecesFactory().generate();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)

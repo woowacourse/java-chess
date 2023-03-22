@@ -1,6 +1,7 @@
 package chess.domain;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,12 +12,13 @@ import java.util.List;
 import static chess.domain.File.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class FileTest {
 
     @ParameterizedTest
     @CsvSource({"A, 3", "B, 2", "D, 0", "H, 4"})
-    @DisplayName("거리 계산 테스트")
-    void calculateDistanceTest(final File otherFile, final int expectedDistance) {
+    void 거리를_계산한다(final File otherFile, final int expectedDistance) {
         final File file = D;
 
         final int actualDistance = file.calculateDistance(otherFile);
@@ -25,12 +27,10 @@ class FileTest {
     }
 
     @Nested
-    @DisplayName("두 파일 사이의 파일들을 구한다")
-    class GetFilesToTest {
+    class 두_파일_사이의_파일들을_구한다 {
 
         @Test
-        @DisplayName("오름차순 파일들을 반환한다")
-        void get_ascending_test() {
+        void 오름차순_파일들을_반환한다() {
             final File startFile = A;
             final File endFile = H;
 
@@ -40,8 +40,7 @@ class FileTest {
         }
 
         @Test
-        @DisplayName("내림차순 파일들을 반환한다")
-        void get_descending_test() {
+        void 내림차순_파일들을_반환한다() {
             final File startFile = H;
             final File endFile = A;
 

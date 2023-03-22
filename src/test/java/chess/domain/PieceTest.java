@@ -1,7 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,6 +15,8 @@ import static chess.domain.Rank.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class PieceTest {
 
     private static final class TestPiece extends Piece {
@@ -35,19 +38,16 @@ class PieceTest {
         public List<Position> getPassingPositions(final Position targetPosition) {
             return null;
         }
-
     }
 
     @Test
-    @DisplayName("위치를 가지는 말이 정상적으로 생성이 된다")
-    void initTest() {
+    void 위치를_가지는_말이_정상적으로_생성이_된다() {
         assertThatNoException().isThrownBy(() -> new TestPiece(A, ONE, BLACK));
     }
 
     @ParameterizedTest()
-    @DisplayName("같은 색인지 확인한다")
     @CsvSource({"BLACK, true", "WHITE, false"})
-    void isSameColorTest(final Color otherColor, final boolean expected) {
+    void 같은_색인지_확인한다(final Color otherColor, final boolean expected) {
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
 
         final boolean actual = piece.isSameColor(otherColor);
@@ -56,9 +56,8 @@ class PieceTest {
     }
 
     @ParameterizedTest
-    @DisplayName("검정 색인지 확인한다")
     @CsvSource({"BLACK, true", "WHITE, false"})
-    void isBlackTest(final Color color, final boolean expected) {
+    void 검정_색인지_확인한다(final Color color, final boolean expected) {
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, color);
 
         final boolean actual = piece.isBlack();
