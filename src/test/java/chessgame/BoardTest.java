@@ -106,7 +106,7 @@ class BoardTest {
 
             assertThatThrownBy(() -> board.move(B2, C3, Team.WHITE))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("불가능한 움직임 입니다.");
+                    .hasMessageContaining("움직일 수 없습니다.");
         }
 
         @Test
@@ -119,7 +119,7 @@ class BoardTest {
 
             assertThatThrownBy(() -> board.move(A4, A5, Team.WHITE))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 직진으로 적을 잡을수 없습니다.");
+                    .hasMessage("움직일 수 없습니다.");
         }
     }
 }

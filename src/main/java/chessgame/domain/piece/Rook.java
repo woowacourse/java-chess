@@ -22,13 +22,8 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasTarget) {
         return source.isHorizontal(target) || source.isVertical(target);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override

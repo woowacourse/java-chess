@@ -19,18 +19,13 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasTarget) {
         return isKnightMove(source, target);
     }
 
     @Override
     public Team team() {
         return team;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override

@@ -21,10 +21,6 @@ public class Pawn implements Piece {
         return new Pawn(team);
     }
 
-    public boolean isAttack(Point source, Point target) {
-        return isPawnAttack(source, target, team);
-    }
-
     private boolean isPawnAttack(Point source, Point target, Team team) {
         if (team == Team.BLACK) {
             return canPawnAttack(source, target, BLACK_DISTANCE);
@@ -77,18 +73,16 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasTarget) {
+        if (hasTarget) {
+            return isPawnAttack(source,target, team);
+        }
         return isPawnMove(source, target, team);
     }
 
     @Override
     public Team team() {
         return team;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 
     @Override

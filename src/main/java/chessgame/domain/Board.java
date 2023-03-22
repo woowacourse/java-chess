@@ -19,31 +19,15 @@ public class Board {
     }
 
     public void move(Point source, Point target, Team turn) {
-        Piece piece = board.get(source);
         checkSamePoint(source, target);
         checkSource(source, turn);
         boolean hasTarget = checkTarget(target, turn);
-        executePawnMove(source, target, piece, hasTarget);
-        executeMove(source, target, piece);
+        executeMove(source, target, hasTarget);
     }
 
-    private void executePawnMove(Point source, Point target, Piece piece, boolean hasTarget) {
-        if (!piece.isPawn()) {
-            return;
-        }
-        if (piece.isMovable(source, target)) {
-            checkPawnMove(piece, hasTarget);
-            followPieceRoute(source, target, piece);
-            return;
-        }
-        checkPawnAttack(source, target, piece, hasTarget);
-    }
-
-    private void executeMove(Point source, Point target, Piece piece) {
-        if (piece.isPawn()) {
-            return;
-        }
-        if (piece.isMovable(source, target)) {
+    private void executeMove(Point source, Point target, boolean hasTarget) {
+        Piece piece = board.get(source);
+        if (piece.isMovable(source, target, hasTarget)) {
             followPieceRoute(source, target, piece);
             return;
         }
@@ -70,20 +54,6 @@ public class Board {
             throw new IllegalArgumentException("자기팀 기물을 잡을 수 없습니다.");
         }
         return isBlockedPiece(target);
-    }
-
-    private void checkPawnMove(Piece piece, boolean hasTarget) {
-        if (piece.isPawn() && hasTarget) {
-            throw new IllegalArgumentException("폰은 직진으로 적을 잡을수 없습니다.");
-        }
-    }
-
-    private void checkPawnAttack(Point source, Point target, Piece piece, Boolean hasTarget) {
-        if (((Pawn) piece).isAttack(source, target) && hasTarget) {
-            movePiece(source, target, piece);
-            return;
-        }
-        throw new IllegalArgumentException("불가능한 움직임 입니다.");
     }
 
     private void followPieceRoute(Point source, Point target, Piece piece) {

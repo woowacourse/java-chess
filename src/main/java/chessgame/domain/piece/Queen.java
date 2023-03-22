@@ -17,7 +17,7 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isMovable(Point source, Point target) {
+    public boolean isMovable(Point source, Point target, boolean hasTarget) {
         return source.isHorizontal(target) || source.isVertical(target) || source.isDiagonal(target);
     }
 
@@ -26,10 +26,6 @@ public class Queen implements Piece {
         return team;
     }
 
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 
     @Override
     public boolean isKnight() {
