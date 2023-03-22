@@ -1,5 +1,9 @@
 package domain.piece;
 
+import domain.game.Movement;
+import domain.game.Position;
+import domain.game.Rank;
+import domain.game.Side;
 import java.util.Collections;
 import java.util.List;
 

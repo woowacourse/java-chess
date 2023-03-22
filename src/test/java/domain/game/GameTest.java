@@ -1,24 +1,23 @@
 package domain.game;
 
-import static domain.piece.File.B;
-import static domain.piece.File.C;
-import static domain.piece.File.D;
-import static domain.piece.File.E;
-import static domain.piece.File.F;
-import static domain.piece.Rank.FIVE;
-import static domain.piece.Rank.FOUR;
-import static domain.piece.Rank.ONE;
-import static domain.piece.Rank.SEVEN;
-import static domain.piece.Rank.SIX;
-import static domain.piece.Rank.THREE;
-import static domain.piece.Rank.TWO;
-import static domain.piece.Side.WHITE;
+import static domain.game.File.B;
+import static domain.game.File.C;
+import static domain.game.File.D;
+import static domain.game.File.E;
+import static domain.game.File.F;
+import static domain.game.Rank.FIVE;
+import static domain.game.Rank.FOUR;
+import static domain.game.Rank.ONE;
+import static domain.game.Rank.SEVEN;
+import static domain.game.Rank.SIX;
+import static domain.game.Rank.THREE;
+import static domain.game.Rank.TWO;
+import static domain.game.Side.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.piece.Piece;
-import domain.piece.Position;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -133,4 +132,5 @@ class GameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("source위치에 말이 없습니다.");
     }
+
 }

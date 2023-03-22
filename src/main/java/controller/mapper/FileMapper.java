@@ -1,6 +1,6 @@
 package controller.mapper;
 
-import domain.piece.File;
+import domain.game.File;
 import java.util.Arrays;
 
 

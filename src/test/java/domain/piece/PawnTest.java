@@ -1,17 +1,20 @@
 package domain.piece;
 
-import static domain.piece.File.A;
-import static domain.piece.File.B;
-import static domain.piece.File.C;
-import static domain.piece.Rank.FIVE;
-import static domain.piece.Rank.FOUR;
-import static domain.piece.Rank.ONE;
-import static domain.piece.Rank.SEVEN;
-import static domain.piece.Rank.SIX;
-import static domain.piece.Rank.THREE;
-import static domain.piece.Rank.TWO;
+import static domain.game.File.A;
+import static domain.game.File.B;
+import static domain.game.File.C;
+import static domain.game.Rank.FIVE;
+import static domain.game.Rank.FOUR;
+import static domain.game.Rank.ONE;
+import static domain.game.Rank.SEVEN;
+import static domain.game.Rank.SIX;
+import static domain.game.Rank.THREE;
+import static domain.game.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.game.File;
+import domain.game.Position;
+import domain.game.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

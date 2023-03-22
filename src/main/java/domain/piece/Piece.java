@@ -1,8 +1,10 @@
 package domain.piece;
 
-import static domain.piece.Side.BLACK;
-import static domain.piece.Side.WHITE;
+import static domain.game.Side.BLACK;
+import static domain.game.Side.WHITE;
 
+import domain.game.Position;
+import domain.game.Side;
 import java.util.List;
 
 public abstract class Piece {

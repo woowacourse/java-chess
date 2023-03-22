@@ -1,11 +1,12 @@
 package domain.piece;
 
-import static domain.piece.File.A;
-import static domain.piece.File.C;
-import static domain.piece.Rank.FIVE;
-import static domain.piece.Rank.SEVEN;
+import static domain.game.File.A;
+import static domain.game.File.C;
+import static domain.game.Rank.FIVE;
+import static domain.game.Rank.SEVEN;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.game.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

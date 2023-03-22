@@ -2,8 +2,8 @@ package controller.command;
 
 import controller.mapper.FileMapper;
 import controller.mapper.RankMapper;
-import domain.piece.File;
-import domain.piece.Rank;
+import domain.game.File;
+import domain.game.Rank;
 
 public class Move implements Command {
     private final File sourceFile;

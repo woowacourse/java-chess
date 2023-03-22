@@ -1,6 +1,6 @@
 package controller.mapper;
 
-import domain.piece.Rank;
+import domain.game.Rank;
 import java.util.Arrays;
 
 

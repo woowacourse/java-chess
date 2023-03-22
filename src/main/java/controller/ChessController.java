@@ -3,7 +3,7 @@ package controller;
 import controller.command.Command;
 import controller.command.Move;
 import domain.game.Game;
-import domain.piece.Position;
+import domain.game.Position;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;

@@ -1,9 +1,9 @@
 package view;
 
+import domain.game.Position;
+import domain.game.Rank;
+import domain.game.Side;
 import domain.piece.Piece;
-import domain.piece.Position;
-import domain.piece.Rank;
-import domain.piece.Side;
 import java.util.Map;
 import java.util.Map.Entry;
 

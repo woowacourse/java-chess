@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.game.Position;
+import domain.game.Side;
 import java.util.List;
 
 public class EmptyPiece extends Piece {

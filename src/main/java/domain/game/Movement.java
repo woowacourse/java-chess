@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.game;
 
 import java.util.Objects;
 

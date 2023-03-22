@@ -1,12 +1,10 @@
 package domain.game;
 
-import static domain.piece.Side.BLACK;
-import static domain.piece.Side.WHITE;
+import static domain.game.Side.BLACK;
+import static domain.game.Side.WHITE;
 
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
-import domain.piece.Position;
-import domain.piece.Side;
 import java.util.List;
 import java.util.Map;
 
@@ -95,3 +93,4 @@ public class Game {
         return this.sideOfTurn;
     }
 }
+
