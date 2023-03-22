@@ -1,21 +1,29 @@
 package chess.domain.pieces;
 
-import static chess.domain.math.Direction.DOWN;
-import static chess.domain.math.Direction.LEFT;
-import static chess.domain.math.Direction.RIGHT;
-import static chess.domain.math.Direction.UP;
-
 import chess.domain.Team;
 import chess.domain.math.Direction;
+
 import java.util.List;
+
+import static chess.domain.math.Direction.*;
 
 public class Rook extends Piece {
 
+    private final static String Rook_NAME = "R";
     private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT);
 
     public Rook(final Team team) {
         super(team);
         validateTeam(team);
+        initialName(team);
+    }
+
+    private void initialName(Team team) {
+        if (team == Team.BLACK) {
+            this.name = new Name(Rook_NAME);
+            return;
+        }
+        this.name = new Name(Rook_NAME.toLowerCase());
     }
 
     @Override

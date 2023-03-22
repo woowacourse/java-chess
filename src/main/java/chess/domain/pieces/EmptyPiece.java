@@ -5,11 +5,21 @@ import chess.domain.math.Direction;
 
 public final class EmptyPiece extends Piece {
 
-    static final String INVALID_TEAM = "[ERROR] EmptyPiece의 팀은 NOTHING 여야 합니다. 입력값: ";
+    static final String INVALID_TEAM = "[ERROR] EmptyPiece 의 팀은 NOTHING 여야 합니다. 입력값: ";
+    private static final String EMPTY_NAME = ".";
 
     public EmptyPiece(final Team team) {
         super(team);
         validateTeam(team);
+        initialName(team);
+    }
+
+    private void initialName(Team team) {
+        if (team == Team.BLACK) {
+            this.name = new Name(EMPTY_NAME);
+            return;
+        }
+        this.name = new Name(EMPTY_NAME.toLowerCase());
     }
 
     @Override

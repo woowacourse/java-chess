@@ -7,7 +7,8 @@ public abstract class Piece {
 
     protected static final String INVALID_TEAM = "[ERROR] 허락되지 않는 팀입니다.";
 
-    private final Team team;
+    protected final Team team;
+    protected Name name;
 
     public Piece(final Team team) {
         this.team = team;
@@ -19,9 +20,9 @@ public abstract class Piece {
         }
     }
 
-    abstract public boolean hasDirection(final Direction direction);
-
     public Team getTeam() {
         return this.team;
     }
+
+    abstract public boolean hasDirection(final Direction direction);
 }
