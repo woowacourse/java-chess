@@ -15,7 +15,8 @@ public class ChessController {
     private final int COMMAND_INDEX = 0;
     private final int MOVE_CURRENT_POSITION_INDEX = 1;
     private final int MOVE_TARGET_POSITION_INDEX = 2;
-    private final Map<GameState, Consumer<List<String>>> stateConsumerMap = Map.of(
+    private final int VALID_COMMON_SIZE = 3;
+    private final Map<GameState, Consumer<List<String>>> CONSUMER_BY_GAME_STATE = Map.of(
             GameState.READY, this::start,
             GameState.RUNNING, this::move,
             GameState.END, strings -> {
@@ -46,7 +47,7 @@ public class ChessController {
         try {
             final List<String> commandInputs = inputView.readGameCommand();
             final GameState gameState = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
-            stateConsumerMap.get(gameState).accept(commandInputs);
+            CONSUMER_BY_GAME_STATE.get(gameState).accept(commandInputs);
             return gameState;
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
@@ -55,17 +56,19 @@ public class ChessController {
     }
 
     private void start(final List<String> commandInputs) {
-        if (chessGame.isSet()) {
-            throw new IllegalArgumentException("게임이 이미 실행되고 있습니다.");
-        }
+        validateChessGameSetting();
         chessGame = ChessGame.createWithSetBoard();
         outputView.printBoard(chessGame.getExistingPieces());
     }
 
-    private void move(final List<String> commandInputs) {
-        if (commandInputs.size() != 3) {
-            throw new IllegalArgumentException("위치 명령 입력이 잘못 되었습니다.");
+    private void validateChessGameSetting() {
+        if (chessGame.isSet()) {
+            throw new IllegalArgumentException("게임이 이미 실행되고 있습니다.");
         }
+    }
+
+    private void move(final List<String> commandInputs) {
+        validateCommandSize(commandInputs);
         final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
         final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
 
@@ -74,10 +77,15 @@ public class ChessController {
         outputView.printBoard(chessGame.getExistingPieces());
     }
 
+    private void validateCommandSize(final List<String> commandInputs) {
+        if (commandInputs.size() != VALID_COMMON_SIZE) {
+            throw new IllegalArgumentException("위치 명령 입력이 잘못 되었습니다.");
+        }
+    }
+
     private Position generatePositionBy(String fileRankInput) {
         final String fileValue = String.valueOf(fileRankInput.charAt(0));
         final String rankValue = String.valueOf(fileRankInput.charAt(1));
-
         return new Position(File.findByValue(fileValue), Rank.findByValue(rankValue));
     }
 
