@@ -48,6 +48,6 @@ public class JdbcChessGameRepository implements ChessGameRepository {
         final List<PieceEntity> pieceEntities = chessGame.pieces().stream()
                 .map(it -> PieceEntity.fromDomain(it, chessGame.id()))
                 .collect(Collectors.toList());
-        pieceDao.mergeAll(pieceEntities);
+        pieceDao.saveAllWithId(pieceEntities);
     }
 }

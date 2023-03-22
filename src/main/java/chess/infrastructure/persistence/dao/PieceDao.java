@@ -35,7 +35,7 @@ public class PieceDao {
         }
     }
 
-    public void mergeAll(final List<PieceEntity> pieceEntities) {
+    public void saveAllWithId(final List<PieceEntity> pieceEntities) {
         final String sql = "INSERT INTO piece(id, pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
