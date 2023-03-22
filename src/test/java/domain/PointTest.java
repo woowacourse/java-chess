@@ -1,5 +1,8 @@
 package domain;
 
+import domain.point.File;
+import domain.point.Point;
+import domain.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

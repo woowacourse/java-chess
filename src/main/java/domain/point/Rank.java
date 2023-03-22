@@ -1,4 +1,4 @@
-package domain;
+package domain.point;
 
 public enum Rank {
     ONE,
