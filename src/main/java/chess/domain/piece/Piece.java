@@ -11,7 +11,13 @@ abstract public class Piece {
         this.team = team;
     }
 
-    public abstract Direction findDirection(final Square current, final Square destination);
+    public Direction findDirection(final Square current, final Square destination) {
+        int fileDifference = current.getFileDifference(destination);
+        int rankDifference = current.getRankDifference(destination);
+        return judgeDirection(fileDifference, rankDifference);
+    }
+
+    protected abstract Direction judgeDirection(final int fileDifference, final int rankDifference);
 
     public boolean isAlly(final Team team) {
         return this.team == team;

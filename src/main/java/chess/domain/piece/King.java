@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
-import chess.domain.square.Square;
 
 public class King extends Piece {
 
@@ -11,9 +10,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Direction findDirection(final Square current, final Square destination) {
-        int fileDifference = current.getFileDifference(destination);
-        int rankDifference = current.getRankDifference(destination);
+    protected Direction judgeDirection(final int fileDifference, final int rankDifference) {
         validateDifference(fileDifference);
         validateDifference(rankDifference);
         return PieceDirection.KING_AND_QUEEN.findDirection(fileDifference, rankDifference);
