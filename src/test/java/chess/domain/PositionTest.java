@@ -14,12 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PositionTest {
+    @DisplayName("Position 이동 성공 테스트")
     @Test
     void moveSuccess() {
         //then
         assertThat(POSITION_0_0.move(1, 3)).isEqualTo(POSITION_1_3);
     }
 
+    @DisplayName("Position 이동 실패 테스트")
     @Test
     void moveFail() {
         //then
