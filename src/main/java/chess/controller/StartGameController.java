@@ -23,12 +23,19 @@ public class StartGameController {
 
     public void start() {
         OutputView.printStartMessage();
-        StartCommand startCommand = readCommand();
-        if (startCommand.type() == StartCommandType.START) {
-            createGameAndStart();
-            return;
+        while (true) {
+            try {
+                StartCommand startCommand = readCommand();
+                if (startCommand.type() == StartCommandType.START) {
+                    createGameAndStart();
+                    return;
+                }
+                restartGame(startCommand);
+                return;
+            } catch (Exception e) {
+                OutputView.error(e.getMessage());
+            }
         }
-        restartGame(startCommand);
     }
 
     private void createGameAndStart() {
@@ -41,13 +48,7 @@ public class StartGameController {
     }
 
     private StartCommand readCommand() {
-        while (true) {
-            try {
-                final List<String> commands = InputView.readCommand();
-                return StartCommand.parse(commands);
-            } catch (Exception e) {
-                OutputView.error(e.getMessage());
-            }
-        }
+        final List<String> commands = InputView.readCommand();
+        return StartCommand.parse(commands);
     }
 }

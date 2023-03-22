@@ -19,7 +19,7 @@ public enum StartCommandType {
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 커맨드입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("게임 시작 전에는 start 혹은 restart 만을 입력할 수 있습니다."));
     }
 
     public boolean matchSize(final List<String> parameters) {

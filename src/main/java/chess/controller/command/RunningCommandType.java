@@ -20,7 +20,7 @@ public enum RunningCommandType {
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 커맨드입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("move, end, status 중 하나의 커멘드를 입력해주세요"));
     }
 
     public boolean matchSize(final List<String> parameters) {
