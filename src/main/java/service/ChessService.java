@@ -2,15 +2,15 @@ package service;
 
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import domain.CommandRequest;
+import domain.PieceToStringConverter;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
-import domain.piece.Piece;
-import domain.piece.slider.Slider;
 
 public class ChessService {
     private static final int FILE_INDEX = 0;
@@ -65,12 +65,15 @@ public class ChessService {
 
     private void validateTurn(Square currentSquare) {
         if (!chessBoard.isCorrectCamp(currentCamp, currentSquare)) {
-            throw new IllegalStateException("같은 진영의 말만 움직일 수 있습니다.");
+            throw new IllegalStateException(currentCamp.name() + "의 턴입니다.");
         }
     }
 
-    public Map<Square, Piece> getChessBoard() {
-        return chessBoard.getBoard();
+    public Map<Square, String> getChessBoard() {
+        return chessBoard.getBoard()
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, entry -> PieceToStringConverter.convert(entry.getValue())));
     }
 
     public boolean isOngoing() {
