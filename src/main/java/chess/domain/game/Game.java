@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Square;
@@ -11,7 +11,7 @@ public class Game {
     private Camp turn;
 
     public Game() {
-        this.board = new Board();
+        board = new Board();
         turn = Camp.WHITE;
     }
 
@@ -19,7 +19,7 @@ public class Game {
         return board.getPieces();
     }
 
-    public void move(final Square source, final Square target) {
+    public void move(Square source, Square target) {
         if (board.isNotMyTurn(source, turn) || board.isEmptyPiece(source)) {
             throw new IllegalArgumentException("자신의 말만 이동할 수 있습니다.");
         }

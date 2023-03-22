@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.game;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -13,7 +13,7 @@ public class GameCommand {
 
         private final int index;
 
-        gameCommandIndex(final int index) {
+        gameCommandIndex(int index) {
             this.index = index;
         }
     }
@@ -24,7 +24,7 @@ public class GameCommand {
 
         private final int index;
 
-        moveIndex(final int index) {
+        moveIndex(int index) {
             this.index = index;
         }
     }
@@ -37,14 +37,14 @@ public class GameCommand {
 
     private final List<String> gameCommand;
 
-    public GameCommand(final List<String> gameCommand) {
+    public GameCommand(List<String> gameCommand) {
         validateGameCommand(gameCommand);
         this.gameCommand = gameCommand;
     }
 
-    private void validateGameCommand(final List<String> gameCommand) {
-        final String command = gameCommand.get(gameCommandIndex.COMMAND.index);
-        final boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
+    private void validateGameCommand(List<String> gameCommand) {
+        String command = gameCommand.get(gameCommandIndex.COMMAND.index);
+        boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
         if (isCommandMove) {
             validateMoveCommand(
@@ -59,7 +59,7 @@ public class GameCommand {
         }
     }
 
-    private void validateMoveCommand(final String source, final String target) {
+    private void validateMoveCommand(String source, String target) {
         if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(SQUARE_BOUND_REGULAR_EXPRESSION)) {
             throw new IllegalArgumentException("정확한 source 위치와 target 위치를 입력해주세요");
         }
@@ -74,14 +74,14 @@ public class GameCommand {
     }
 
     public List<Square> convertToSquare() {
-        final String source = gameCommand.get(gameCommandIndex.SOURCE.index);
-        final String target = gameCommand.get(gameCommandIndex.TARGET.index);
+        String source = gameCommand.get(gameCommandIndex.SOURCE.index);
+        String target = gameCommand.get(gameCommandIndex.TARGET.index);
 
-        final File sourceFile = File.findFileByLetter(source.charAt(moveIndex.FILE.index));
-        final Rank sourceRank = Rank.findRankByLetter(source.charAt(moveIndex.RANK.index));
+        File sourceFile = File.findFileByLetter(source.charAt(moveIndex.FILE.index));
+        Rank sourceRank = Rank.findRankByLetter(source.charAt(moveIndex.RANK.index));
 
-        final File targetFile = File.findFileByLetter(target.charAt(moveIndex.FILE.index));
-        final Rank targetRank = Rank.findRankByLetter(target.charAt(moveIndex.RANK.index));
+        File targetFile = File.findFileByLetter(target.charAt(moveIndex.FILE.index));
+        Rank targetRank = Rank.findRankByLetter(target.charAt(moveIndex.RANK.index));
 
         return List.of(new Square(sourceFile, sourceRank), new Square(targetFile, targetRank));
     }
