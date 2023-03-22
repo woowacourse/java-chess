@@ -18,4 +18,9 @@ public class Knight extends Piece {
     public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         return canMove(direction, distance) && isOpponentSide(target);
     }
+
+    @Override
+    public Piece update() {
+        return this;
+    }
 }

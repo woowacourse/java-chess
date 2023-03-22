@@ -12,16 +12,20 @@ public abstract class Piece {
         this.role = role;
     }
 
-    public boolean isSameSide(final Side side) {
-        return this.side.equals(side);
-    }
-
-    protected boolean isOpponentSide(final Piece targetPiece) {
-        return !side.equals(targetPiece.side);
+    public boolean isOpponentSide(final Piece targetPiece) {
+        Side opponent = side.findOpponent();
+        if (opponent.equals(Side.from(Color.NOTHING))) {
+            return false;
+        }
+        return targetPiece.side.equals(opponent);
     }
 
     public boolean isRole(Role role) {
         return this.role.equals(role);
+    }
+
+    public boolean isNotVacant() {
+        return this.role != Role.VACANT_PIECE;
     }
 
     public Side getSide() {
@@ -39,4 +43,6 @@ public abstract class Piece {
     public abstract boolean canMove(final Direction direction, final int distance);
 
     public abstract boolean canAttack(final Direction direction, final int distance, final Piece target);
+
+    public abstract Piece update();
 }

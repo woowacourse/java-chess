@@ -17,4 +17,9 @@ public class VacantPiece extends Piece {
     public boolean canMove(Direction direction, int distance) {
         throw new UnsupportedOperationException("빈 말은 움직일 수 없습니다.");
     }
+
+    @Override
+    public Piece update() {
+        throw new UnsupportedOperationException("빈 말은 움직일 수 없습니다.");
+    }
 }

@@ -35,6 +35,16 @@ public class Side {
         return from(Color.WHITE);
     }
 
+    public boolean isOpponent(Side target) {
+        if (this.color == Color.WHITE) {
+            return target.color == Color.BLACK;
+        }
+        if (this.color == Color.BLACK) {
+            return target.color == Color.WHITE;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
