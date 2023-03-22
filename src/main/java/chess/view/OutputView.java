@@ -14,6 +14,9 @@ public class OutputView {
     private static final int MIN_FILE = 1;
     private static final int MAX_FILE = 8;
     private static final String EMPTY_PIECE = ".";
+    private static final String BLACK_TEAM = "블랙팀";
+    private static final String WHITE_TEAM = "화이트팀";
+    private static final String SCORE_DELIMITER = ": ";
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -89,6 +92,14 @@ public class OutputView {
         if (piece.getClass() == Pawn.class) {
             System.out.print(PAWN.getPieceView(piece.team()));
         }
+    }
+
+    public void printBlackScore(double score) {
+        System.out.println(BLACK_TEAM + SCORE_DELIMITER + score);
+    }
+
+    public void printWhiteScore(double score) {
+        System.out.println(WHITE_TEAM + SCORE_DELIMITER + score);
     }
 
     public void printExceptionMessage(Exception exception) {
