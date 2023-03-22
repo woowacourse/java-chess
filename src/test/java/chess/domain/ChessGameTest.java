@@ -37,7 +37,7 @@ class ChessGameTest {
     void 빈_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
         final ChessGame chessGame = ChessGame.createWithEmptyBoard();
 
-        final boolean actual = chessGame.isSet();
+        final boolean actual = chessGame.hasSetBoard();
 
         assertThat(actual).isFalse();
     }
@@ -46,7 +46,7 @@ class ChessGameTest {
     void 세팅된_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
         final ChessGame chessGame = ChessGame.createWithSetBoard();
 
-        final boolean actual = chessGame.isSet();
+        final boolean actual = chessGame.hasSetBoard();
 
         assertThat(actual).isTrue();
     }

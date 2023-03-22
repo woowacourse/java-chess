@@ -40,7 +40,7 @@ public class ChessGame {
         }
     }
 
-    public boolean isSet() {
+    public boolean hasSetBoard() {
         return board.hasPieces();
     }
 
