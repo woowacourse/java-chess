@@ -17,10 +17,6 @@ public class InputValidator {
         }
     }
 
-//    public static void validateStartCommand(String input) {
-//        START.validateCommand(input);
-//    }
-
     public static void validateCommandIsMove(String input) {
         if (GameCommandView.isValidMoveCommand(input)) {
             return;
