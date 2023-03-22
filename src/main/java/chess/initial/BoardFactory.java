@@ -39,8 +39,8 @@ public final class BoardFactory {
 		fillFour(board, A1, new Rook(WHITE), new Rook(BLACK));
 		fillFour(board, B1, new Knight(WHITE), new Knight(BLACK));
 		fillFour(board, C1, new Bishop(WHITE), new Bishop(BLACK));
-		fillTwo(board, D1, new King(WHITE), new King(BLACK));
-		fillTwo(board, E1, new Queen(WHITE), new Queen(BLACK));
+		fillTwo(board, D1, new Queen(WHITE), new Queen(BLACK));
+		fillTwo(board, E1, new King(WHITE), new King(BLACK));
 		fillPawn(board);
 	}
 
