@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Objects;
 
-public final class Piece {
+public class Piece {
     private final PieceState pieceState;
     private final Color color;
 
@@ -21,6 +21,10 @@ public final class Piece {
 
     public boolean isOpponent(Piece other) {
         return this.color != other.color;
+    }
+
+    public boolean isFriendly(Piece other) {
+        return this.color == other.color;
     }
 
     public boolean isSameColor(Color color) {

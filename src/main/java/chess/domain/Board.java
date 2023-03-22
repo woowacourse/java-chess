@@ -39,7 +39,7 @@ public class Board {
 
     private Map<Position, String> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
         validateMiddlePathConflict(routePositions);
-        if (piece.isOpponent(board.get(nextPosition))) {
+        if (piece.isFriendly(board.get(nextPosition))) {
             throw new IllegalArgumentException("이동 위치에 아군기물이 있어 이동할 수 없습니다.");
         }
         return getPrintingBoard();
