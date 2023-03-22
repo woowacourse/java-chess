@@ -13,7 +13,7 @@ public class Board {
         this.pieceStatus = pieceStatus;
     }
 
-    public static final Board initialize() {
+    public static Board initialize() {
         return new Board(BoardInitializer.initializeBoard());
     }
 

@@ -47,8 +47,8 @@ class BoardTest {
                 () -> assertThat(pieces.get(0)).isEqualTo(new WhiteRook()),
                 () -> assertThat(pieces.get(1)).isEqualTo(new WhiteKnight()),
                 () -> assertThat(pieces.get(2)).isEqualTo(new WhiteBishop()),
-                () -> assertThat(pieces.get(3)).isEqualTo(new WhiteKing()),
-                () -> assertThat(pieces.get(4)).isEqualTo(new WhiteQueen()),
+                () -> assertThat(pieces.get(3)).isEqualTo(new WhiteQueen()),
+                () -> assertThat(pieces.get(4)).isEqualTo(new WhiteKing()),
                 () -> assertThat(pieces.get(5)).isEqualTo(new WhiteBishop()),
                 () -> assertThat(pieces.get(6)).isEqualTo(new WhiteKnight()),
                 () -> assertThat(pieces.get(7)).isEqualTo(new WhiteRook())
@@ -68,8 +68,8 @@ class BoardTest {
                 () -> assertThat(pieces.get(0)).isEqualTo(new BlackRook()),
                 () -> assertThat(pieces.get(1)).isEqualTo(new BlackKnight()),
                 () -> assertThat(pieces.get(2)).isEqualTo(new BlackBishop()),
-                () -> assertThat(pieces.get(3)).isEqualTo(new BlackKing()),
-                () -> assertThat(pieces.get(4)).isEqualTo(new BlackQueen()),
+                () -> assertThat(pieces.get(3)).isEqualTo(new BlackQueen()),
+                () -> assertThat(pieces.get(4)).isEqualTo(new BlackKing()),
                 () -> assertThat(pieces.get(5)).isEqualTo(new BlackBishop()),
                 () -> assertThat(pieces.get(6)).isEqualTo(new BlackKnight()),
                 () -> assertThat(pieces.get(7)).isEqualTo(new BlackRook())

@@ -39,8 +39,8 @@ public class BoardInitializer {
         rank.add(new WhiteRook());
         rank.add(new WhiteKnight());
         rank.add(new WhiteBishop());
-        rank.add(new WhiteKing());
         rank.add(new WhiteQueen());
+        rank.add(new WhiteKing());
         rank.add(new WhiteBishop());
         rank.add(new WhiteKnight());
         rank.add(new WhiteRook());
@@ -60,8 +60,8 @@ public class BoardInitializer {
         rank.add(new BlackRook());
         rank.add(new BlackKnight());
         rank.add(new BlackBishop());
-        rank.add(new BlackKing());
         rank.add(new BlackQueen());
+        rank.add(new BlackKing());
         rank.add(new BlackBishop());
         rank.add(new BlackKnight());
         rank.add(new BlackRook());
