@@ -32,7 +32,7 @@ public class Pawn extends Piece {
         final Position targetPosition = pieceInTargetPosition.getPosition();
         validateDestination(targetPosition);
         validateDiagonalColor(pieceInTargetPosition, targetPosition);
-        validateHorizontalColor(pieceInTargetPosition, targetPosition);
+        validateVerticalColor(pieceInTargetPosition, targetPosition);
 
         return new Pawn(targetPosition.getFile(), targetPosition.getRank(), color);
     }
@@ -44,7 +44,7 @@ public class Pawn extends Piece {
         }
     }
 
-    private void validateHorizontalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
+    private void validateVerticalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
         if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.BLANK)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
         }
