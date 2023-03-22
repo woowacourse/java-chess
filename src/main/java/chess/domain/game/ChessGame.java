@@ -28,10 +28,6 @@ public class ChessGame {
         validateGameCommandWhenTerminated(gameCommand);
     }
 
-    public boolean isNotTerminated() {
-        return !gameStatus.isTerminated();
-    }
-
     private void validateGameCommandWhenReady(GameCommand gameCommand) {
         if (gameCommand == GameCommand.START) {
             gameStatus = GameStatus.RUNNING;
@@ -58,12 +54,15 @@ public class ChessGame {
         }
     }
 
+    public boolean isNotTerminated() {
+        return !gameStatus.isTerminated();
+    }
+
     public void progress(Position source, Position target) {
         if (gameStatus.isNotRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 진행중이 아닙니다.");
         }
         board.move(source, target);
-
         if (shouldTerminateGame(board.countKingNumber())) {
             gameStatus = GameStatus.TERMINATED;
         }
