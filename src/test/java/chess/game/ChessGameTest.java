@@ -131,4 +131,19 @@ class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 해당 팀의 턴이 아닙니다.");
     }
+
+    @Test
+    @DisplayName("빈 칸을 움직이면 예외가 발생해야 한다.")
+    void move_EmptySquare() {
+        // given
+        chessGame.start(new MockTurnStrategy(WhiteTurnState.STATE));
+
+        Position source = Position.of(0, 3);
+        Position target = Position.of(0, 4);
+
+        // expect
+        assertThatThrownBy(() -> chessGame.movePiece(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 빈 칸은 움직일 수 없습니다.");
+    }
 }

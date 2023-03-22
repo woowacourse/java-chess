@@ -7,15 +7,16 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.state.GameState;
 import chess.game.state.checked.CheckedState;
 import chess.game.state.end.EndState;
-import chess.game.state.GameState;
 import chess.game.state.end.NoneWinState;
 import chess.game.state.waiting.WaitingState;
 import java.util.List;
 
 public class ChessGame {
     private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
+    private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
 
     private Board board;
     private GameState gameState;
@@ -41,13 +42,25 @@ public class ChessGame {
 
     public void movePiece(Position source, Position target) {
         gameState.movePiece(() -> {
-            validateTurn(source);
+            validate(source);
             board.move(source, target);
         });
     }
 
-    private void validateTurn(Position source) {
-        if (board.getPieceTeam(source) != gameState.getTurn()) {
+    private void validate(Position source) {
+        Team pieceTeam = board.getPieceTeam(source);
+        validateEmptySquare(pieceTeam);
+        validateTurn(pieceTeam);
+    }
+
+    private void validateEmptySquare(Team team) {
+        if (team == Team.NONE) {
+            throw new IllegalArgumentException(EMPTY_PIECE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private void validateTurn(Team team) {
+        if (team != gameState.getTurn()) {
             throw new IllegalStateException(INVALID_TURN_EXCEPTION_MESSAGE);
         }
     }

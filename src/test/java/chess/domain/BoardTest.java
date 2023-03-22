@@ -128,22 +128,6 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("빈 칸을 움직이면 예외가 발생해야 한다.")
-    void move_EmptySquare() {
-        // given
-        Map<Position, Piece> squares = getEmptySquares();
-        Board board = new Board(squares);
-
-        Position source = Position.of(3, 3);
-        Position target = Position.of(4, 4);
-
-        // expect
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 빈 칸은 움직일 수 없습니다.");
-    }
-    
-    @Test
     @DisplayName("아군 말의 위치로 이동하면 예외가 발생해야 한다.")
     void move_Same_Team_Position() {
         // given
