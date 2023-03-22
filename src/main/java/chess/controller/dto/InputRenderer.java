@@ -34,7 +34,7 @@ public class InputRenderer {
 
     public static CommandDto toCommandDto(final String string) {
         Command command = toCommand(string);
-        if(command == Command.START || command == Command.END){
+        if (command == Command.START || command == Command.END) {
             return new CommandDto(command);
         }
 

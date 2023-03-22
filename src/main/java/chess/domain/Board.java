@@ -21,14 +21,35 @@ public class Board {
     }
 
     public void movePiece(Position from, Position to) {
-        MoveValidator.validate(board, from, to);
-        RelativePosition relativePosition = RelativePosition.of(from, to);
-        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(from);
+        validateSourceEmpty(from);
+        validateObstacleInPath(from, to);
+
+        NoneEmptyPiece source = (NoneEmptyPiece) board.get(from);
         Piece target = board.get(to);
-        if(sourcePiece.isMobile(relativePosition, target)){
-            board.put(to, sourcePiece);
+        if (source.isMobile(RelativePosition.of(from, to), target)) {
+            board.put(to, source);
             board.put(from, new EmptyPiece());
         }
+    }
+
+    private void validateSourceEmpty(Position from) {
+        if (board.get(from).isEmpty()) {
+            throw new IllegalArgumentException("조작할 수 있는 말이 없습니다.");
+        }
+    }
+
+    private void validateObstacleInPath(Position from, Position to) {
+        NoneEmptyPiece source = (NoneEmptyPiece) board.get(from);
+        List<Position> obstaclePositionsInPath = source.getObstacleCheckingPositions(from, to);
+
+        if (hasObstacle(obstaclePositionsInPath)) {
+            throw new IllegalArgumentException("해당 경로의 다른 말을 건너뛸 수 없습니다.");
+        }
+    }
+
+    private boolean hasObstacle(List<Position> obstaclePositionsInPath) {
+        return obstaclePositionsInPath.stream()
+                .anyMatch(position -> !board.get(position).isEmpty());
     }
 
     private List<List<Piece>> sortBoard() {

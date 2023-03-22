@@ -2,19 +2,21 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.movement.Movement;
+import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
+import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.position.RelativePosition;
 
 public class Pawn extends NoneEmptyPiece {
 
     private boolean hasMoved;
 
-    private Pawn(PieceType pieceType, Team team, Movement movement, boolean hasMoved) {
-        super(pieceType, team, movement);
+    private Pawn(PieceType pieceType, Team team, Movement movement, ObstacleStrategy obstacleStrategy, boolean hasMoved) {
+        super(pieceType, team, movement, obstacleStrategy);
         this.hasMoved = hasMoved;
     }
 
     public static Pawn from(Team team) {
-        return new Pawn(PieceType.PAWN, team, Movement.PAWN, false);
+        return new Pawn(PieceType.PAWN, team, Movement.PAWN, new BlockedByObstacle(), false);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class Pawn extends NoneEmptyPiece {
         return relativePosition.equals(new RelativePosition(0, 2)) || relativePosition.equals(new RelativePosition(0, -2));
     }
 
-    private RelativePosition inverseDirectionIfBlackPawn(RelativePosition relativePosition){
+    private RelativePosition inverseDirectionIfBlackPawn(RelativePosition relativePosition) {
         if (team.isBlack()) {
             return relativePosition.inverseByXAxis();
         }

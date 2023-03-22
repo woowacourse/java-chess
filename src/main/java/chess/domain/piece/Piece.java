@@ -12,16 +12,12 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.team == Team.EMPTY;
     }
 
-    public boolean isSameTeam(Piece target) {
+    protected boolean isSameTeam(Piece target) {
         return this.team == target.team;
-    }
-
-    public boolean isPieceType(PieceType pieceType) {
-        return this.pieceType == pieceType;
     }
 
     public PieceType getPieceType() {
