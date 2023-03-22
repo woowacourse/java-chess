@@ -12,12 +12,17 @@ public class MainController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Map<Command, ChessboardExecuter> commandsMapper = new HashMap<>();
+    private final Map<Command, ChessboardExecuter> commandsMapper;
 
 
     public MainController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.commandsMapper = new HashMap<>();
+        setCommandMapper();
+    }
+
+    private void setCommandMapper() {
         commandsMapper.put(Command.START, (chessBoard, ignored) -> outputView.printChessBoard(chessBoard));
         commandsMapper.put(Command.MOVE, this::executeMoveCommand);
         commandsMapper.put(Command.END, (ignored1, ignored2) -> System.out.println("끝"));
