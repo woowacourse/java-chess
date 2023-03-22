@@ -13,4 +13,8 @@ public enum State {
     public boolean isRunnable() {
         return this != END;
     }
+
+    public boolean isCalculable() {
+        return this != RUN;
+    }
 }

@@ -39,7 +39,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printResult(final List<Double> calculateScore) {
+    public static void printResult(final List<Double> calculateScore) {
         final Double whiteScore = calculateScore.get(WHITE_SCORE_INDEX);
         final Double blackScore = calculateScore.get(BLACK_SCORE_INDEX);
         System.out.println(String.format("White팀 점수: %.1f점", whiteScore));

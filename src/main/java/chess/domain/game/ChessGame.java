@@ -78,6 +78,14 @@ public class ChessGame {
     }
 
     public List<Double> calculateScore() {
+        checkCalculable();
         return List.of(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+    }
+
+    private void checkCalculable() {
+        if (state.isCalculable()) {
+            return;
+        }
+        throw new IllegalArgumentException("게임을 시작해주세요.");
     }
 }

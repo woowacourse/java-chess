@@ -4,6 +4,8 @@ import chess.domain.game.ChessGame;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.view.OutputView;
+
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
@@ -11,6 +13,7 @@ public enum Command {
 
     START("start", (chessGame, ignored) -> chessGame.start()),
     END("end", (chessGame, ignored) -> chessGame.end()),
+    STATUS("status", ((chessGame, ignored) -> OutputView.printResult(chessGame.calculateScore()))),
     MOVE("move", moveOrNot());
 
     public static final int SOURCE_INDEX = 1;
