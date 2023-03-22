@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.direction;
 
 import chess.domain.board.Col;
 import chess.domain.board.Position;

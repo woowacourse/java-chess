@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Team;
-import chess.domain.strategy.Route;
+import chess.domain.direction.Route;
 import java.util.Map;
 
 public class Board {

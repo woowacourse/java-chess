@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
-import chess.domain.strategy.Route;
+import chess.domain.direction.Route;
 
 public class Empty extends Piece {
 

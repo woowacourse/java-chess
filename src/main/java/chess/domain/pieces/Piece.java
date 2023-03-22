@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
-import chess.domain.strategy.Route;
+import chess.domain.direction.Route;
 import java.util.Objects;
 
 public abstract class Piece {

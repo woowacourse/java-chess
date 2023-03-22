@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.board.Position;
 import chess.domain.board.Row;
-import chess.domain.strategy.PawnDirection;
-import chess.domain.strategy.Route;
+import chess.domain.direction.PawnDirection;
+import chess.domain.direction.Route;
 import java.util.List;
 
 public class WhitePawn extends Piece {

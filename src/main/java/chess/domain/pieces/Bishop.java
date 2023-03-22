@@ -1,8 +1,8 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
-import chess.domain.strategy.Route;
-import chess.domain.strategy.Vector;
+import chess.domain.direction.Route;
+import chess.domain.direction.Vector;
 import java.util.List;
 
 public class Bishop extends Piece {
