@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.dto.BoardDto;
+import chess.controller.dto.ChessBoardDto;
 import chess.controller.dto.PieceDto;
 import chess.controller.dto.PositionDto;
 
@@ -27,25 +27,25 @@ public final class OutputView {
                 END.name().toLowerCase(), MOVE.name().toLowerCase()));
     }
 
-    public static void printBoard(final BoardDto boardDto) {
+    public static void printBoard(final ChessBoardDto chessBoardDto) {
         final StringBuilder boardMessage = new StringBuilder();
         for (int rank = BOARD_SIZE - 1; rank >= 0; rank--) {
-            boardMessage.append(makeFileMessage(boardDto, rank)).append(System.lineSeparator());
+            boardMessage.append(makeFileMessage(chessBoardDto, rank)).append(System.lineSeparator());
         }
         print(boardMessage.toString());
     }
 
-    private static String makeFileMessage(final BoardDto boardDto, final int rank) {
+    private static String makeFileMessage(final ChessBoardDto chessBoardDto, final int rank) {
         final StringBuilder fileMessage = new StringBuilder();
         for (int file = 0; file < BOARD_SIZE; file++) {
-            fileMessage.append(getPieceName(boardDto, rank, file));
+            fileMessage.append(getPieceName(chessBoardDto, rank, file));
         }
         return fileMessage.toString();
     }
 
-    private static char getPieceName(final BoardDto boardDto, final int rank, final int file) {
+    private static char getPieceName(final ChessBoardDto chessBoardDto, final int rank, final int file) {
         final PositionDto positionDto = PositionDto.from(rank, file);
-        final Map<PositionDto, PieceDto> board = boardDto.getBoard();
+        final Map<PositionDto, PieceDto> board = chessBoardDto.getBoard();
         if (board.containsKey(positionDto)) {
             return PieceName.findMessage(board.get(positionDto));
         }

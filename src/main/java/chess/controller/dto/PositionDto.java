@@ -7,7 +7,7 @@ public final class PositionDto {
     private final int rank;
     private final int file;
 
-    private PositionDto(final int rank, final int file) {
+    public PositionDto(final int rank, final int file) {
         this.rank = rank;
         this.file = file;
     }

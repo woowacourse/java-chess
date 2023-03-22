@@ -73,7 +73,7 @@ public class MoveTest {
     }
 
     @Test
-    @DisplayName("퀸이 이동할 수 있는 모든 위치를 반환한다")
+    @DisplayName("킹이 이동할 수 있는 모든 위치를 반환한다")
     void king_getAllPositions() {
         // given
         final Position source = new Position(3, 3);
