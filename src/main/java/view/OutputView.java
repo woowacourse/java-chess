@@ -12,6 +12,9 @@ public class OutputView {
     public static final int CHESS_COLUMN_SIZE = 8;
     private final static List<Square> squares = makeSquares();
 
+    private OutputView() {
+    }
+
     private static List<Square> makeSquares() {
         List<Square> squares = new ArrayList<>();
         for (var rank : Rank.values()) {
@@ -26,7 +29,7 @@ public class OutputView {
         }
     }
 
-    public void printChessBoard(ChessGame chessGame) {
+    public static void printChessBoard(ChessGame chessGame) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Square square : squares) {
@@ -35,7 +38,7 @@ public class OutputView {
         System.out.print(separateByNewLine(stringBuilder.toString()) + "\n");
     }
 
-    private String separateByNewLine(String input) {
+    private static String separateByNewLine(String input) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0, count = 1; i < input.length(); i++, count++) {
             stringBuilder.append(input.charAt(i));
@@ -44,13 +47,13 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private void addNewLine(StringBuilder stringBuilder, int count) {
+    private static void addNewLine(StringBuilder stringBuilder, int count) {
         if (count % CHESS_COLUMN_SIZE == 0) {
             stringBuilder.append("\n");
         }
     }
 
-    public void printError(String message) {
-        System.out.printf("[ERROR]: %s\n", message);
+    public static void printError(Exception exception) {
+        System.out.printf("[ERROR]: %s\n", exception.getMessage());
     }
 }
