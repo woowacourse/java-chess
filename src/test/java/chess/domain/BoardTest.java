@@ -21,62 +21,62 @@ public class BoardTest {
 
     @Test
     void 흰색_폰을_찾을_수_있다() {
-        assertThat(board.getPiece(File.A, Rank.SEVEN)).isInstanceOf(Pawn.class);
+        assertThat(board.getPiece(Position.of(File.A, Rank.SEVEN))).isInstanceOf(Pawn.class);
     }
 
     @Test
     void 검정색_폰을_찾을_수_있다() {
-        assertThat(board.getPiece(File.A, Rank.TWO)).isInstanceOf(Pawn.class);
+        assertThat(board.getPiece(Position.of(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
     }
 
     @Test
     void 흰색_룩을_찾을_수_있다() {
-        assertThat(board.getPiece(File.A, Rank.EIGHT)).isInstanceOf(Rook.class);
+        assertThat(board.getPiece(Position.of(File.A, Rank.EIGHT))).isInstanceOf(Rook.class);
     }
 
     @Test
     void 검정색_룩을_찾을_수_있다() {
-        assertThat(board.getPiece(File.A, Rank.ONE)).isInstanceOf(Rook.class);
+        assertThat(board.getPiece(Position.of(File.A, Rank.ONE))).isInstanceOf(Rook.class);
     }
 
     @Test
     void 흰색_나이트를_찾을_수_있다() {
-        assertThat(board.getPiece(File.B, Rank.EIGHT)).isInstanceOf(Knight.class);
+        assertThat(board.getPiece(Position.of(File.B, Rank.EIGHT))).isInstanceOf(Knight.class);
     }
 
     @Test
     void 검정색_나이트를_찾을_수_있다() {
-        assertThat(board.getPiece(File.B, Rank.ONE)).isInstanceOf(Knight.class);
+        assertThat(board.getPiece(Position.of(File.B, Rank.ONE))).isInstanceOf(Knight.class);
     }
 
     @Test
     void 흰색_비숍을_찾을_수_있다() {
-        assertThat(board.getPiece(File.C, Rank.EIGHT)).isInstanceOf(Bishop.class);
+        assertThat(board.getPiece(Position.of(File.C, Rank.EIGHT))).isInstanceOf(Bishop.class);
     }
 
     @Test
     void 검정색_비숍을_찾을_수_있다() {
-        assertThat(board.getPiece(File.C, Rank.ONE)).isInstanceOf(Bishop.class);
+        assertThat(board.getPiece(Position.of(File.C, Rank.ONE))).isInstanceOf(Bishop.class);
     }
 
     @Test
     void 흰색_퀸을_찾을_수_있다() {
-        assertThat(board.getPiece(File.D, Rank.EIGHT)).isInstanceOf(Queen.class);
+        assertThat(board.getPiece(Position.of(File.D, Rank.EIGHT))).isInstanceOf(Queen.class);
     }
 
     @Test
     void 검정색_퀸을_찾을_수_있다() {
-        assertThat(board.getPiece(File.D, Rank.ONE)).isInstanceOf(Queen.class);
+        assertThat(board.getPiece(Position.of(File.D, Rank.ONE))).isInstanceOf(Queen.class);
     }
 
     @Test
     void 흰색_킹을_찾을_수_있다() {
-        assertThat(board.getPiece(File.E, Rank.EIGHT)).isInstanceOf(King.class);
+        assertThat(board.getPiece(Position.of(File.E, Rank.EIGHT))).isInstanceOf(King.class);
     }
 
     @Test
     void 검정색_킹을_찾을_수_있다() {
-        assertThat(board.getPiece(File.E, Rank.ONE)).isInstanceOf(King.class);
+        assertThat(board.getPiece(Position.of(File.E, Rank.ONE))).isInstanceOf(King.class);
     }
 
     @Test
