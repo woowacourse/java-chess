@@ -6,7 +6,8 @@ public enum Command {
 
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status");
 
     private final String value;
 
@@ -16,12 +17,14 @@ public enum Command {
 
     public static boolean isEnd(String command) {
         return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals(END.value));
+                     .filter(it -> it == END)
+                     .anyMatch(it -> it.value.equals(command));
     }
 
     public static boolean isMove(String command) {
         return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals(MOVE.value));
+                     .filter(it -> it == MOVE)
+                     .anyMatch(it -> it.value.equals(command));
     }
 
     public static boolean isNotStart(String command) {
@@ -33,5 +36,11 @@ public enum Command {
         return Arrays.stream(values())
                      .filter(it -> it != MOVE)
                      .noneMatch(it -> it.value.equals(command));
+    }
+
+    public static boolean isStatus(final String command) {
+        return Arrays.stream(values())
+                     .filter(it -> it == STATUS)
+                     .anyMatch(it -> it.value.equals(command));
     }
 }

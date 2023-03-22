@@ -46,4 +46,16 @@ class CommandTest {
         assertTrue(Command.isNotStart(command2));
         assertFalse(Command.isNotStart(command1));
     }
+
+    @Test
+    @DisplayName("isStatus() : status 명령어가 들어오면 true를 반환한다.")
+    void test_isStatus() throws Exception {
+        //given
+        String command1 = "status";
+        String command2 = "move";
+
+        //when & then
+        assertTrue(Command.isStatus(command1));
+        assertFalse(Command.isStatus(command2));
+    }
 }
