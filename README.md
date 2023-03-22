@@ -13,14 +13,13 @@ graph TD
         GameController --> InputView
         OutputView --> PieceType
         Command
+        ExceptionHandler
     end
 
     subgraph domain
         GameController --> Board
-        Board --> Rank
-        Rank --> Square
-        Square --> Position
-        Square --> Piece
+        Board --> Position
+        Board --> Piece
         Piece --> Team
     end
 
