@@ -12,20 +12,14 @@ public final class ChessBoardMaker {
 
     public static ChessBoard create() {
         Map<Position, Piece> board = new LinkedHashMap<>();
-        makeNobility(board);
-        makePawn(board);
-        makeEmpty(board);
-        return new ChessBoard(board);
-    }
 
-    private static void makeNobility(Map<Position, Piece> board) {
         setUpNobilityPiece(board, Rank.EIGHT, Camp.BLACK);
-        setUpNobilityPiece(board, Rank.ONE, Camp.WHITE);
-    }
-
-    private static void makePawn(Map<Position, Piece> board) {
         setUpPawn(board, Rank.SEVEN, Camp.BLACK);
+        makeEmpty(board);
         setUpPawn(board, Rank.TWO, Camp.WHITE);
+        setUpNobilityPiece(board, Rank.ONE, Camp.WHITE);
+
+        return new ChessBoard(board);
     }
 
     private static void setUpNobilityPiece(Map<Position, Piece> board, Rank rank, Camp camp) {

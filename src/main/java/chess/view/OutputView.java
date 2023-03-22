@@ -8,13 +8,6 @@ public final class OutputView {
 
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final int LINE_BREAK_INDEX = 1;
-    public static final String EMPTY_SYMBOL = ".";
-
-    ViewChessBoardPosition viewChessBoardPosition;
-
-    public OutputView(ViewChessBoardPosition viewChessBoardPosition) {
-        this.viewChessBoardPosition = viewChessBoardPosition;
-    }
 
     public void printStartPrefix() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -25,22 +18,15 @@ public final class OutputView {
 
     public void printChessState(Map<Position, Piece> piecePoint) {
         StringBuilder chessBoardView = new StringBuilder();
-        for (Position position : viewChessBoardPosition.getPositions()) {
+        for (Position position : piecePoint.keySet()) {
             Piece piece = piecePoint.get(position);
-            String viewSymbolBy = getViewSymbol(piecePoint, position, piece);
+            String viewSymbolBy = ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbol(), piece.isBlack());
 
             checkLineBreak(chessBoardView);
             chessBoardView.append(viewSymbolBy);
         }
 
         System.out.println(chessBoardView);
-    }
-
-    private String getViewSymbol(Map<Position, Piece> piecePoint, Position position,Piece piece) {
-        if (!piecePoint.containsKey(position)) {
-            return EMPTY_SYMBOL;
-        }
-        return ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbol(), piece.isBlack());
     }
 
     private static void checkLineBreak(StringBuilder chessBoardView) {
