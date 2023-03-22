@@ -16,11 +16,11 @@ public class Empty extends Piece {
 
     @Override
     protected boolean isValidMove(final Position start, final Position end) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected boolean isValidTarget(final Piece target) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 }
