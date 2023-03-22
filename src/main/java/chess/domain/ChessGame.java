@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.board.Board;
+
 public class ChessGame {
 
     private final Board board;

@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.PieceView.*;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
