@@ -7,6 +7,7 @@ import chess.practiceMove.Direction;
 import java.util.List;
 
 import static chess.domain.piece.PieceName.ROOK_NAME;
+import static chess.domain.score.Score.ROOK_SCORE;
 import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
@@ -16,7 +17,7 @@ public class Rook extends Piece {
     private static final List<Direction> direction = List.of(Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT);
 
     public Rook(Color color) {
-        super(ROOK_NAME.getName(), color);
+        super(ROOK_NAME.getName(), color, ROOK_SCORE.getScore());
     }
 
     @Override

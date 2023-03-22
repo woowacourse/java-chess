@@ -8,10 +8,12 @@ public abstract class Piece {
 
     private final String name;
     private final Color color;
+    private double score;
 
-    public Piece(String name, Color color) {
+    public Piece(String name, Color color, double score) {
         this.name = name;
         this.color = color;
+        this.score = score;
     }
 
     public String findName() {
@@ -33,5 +35,9 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

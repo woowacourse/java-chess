@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import static chess.domain.piece.PieceName.KNIGHT_NAME;
+import static chess.domain.score.Score.KNIGHT_SCORE;
 import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
@@ -26,10 +27,8 @@ public class Knight extends Piece {
             Direction.KNIGHT_BOTTOM_LEFT,
             Direction.KNIGHT_BOTTOM_RIGHT);
 
-    private final double score = 2.5;
-
     public Knight(Color color) {
-        super(KNIGHT_NAME.getName(), color);
+        super(KNIGHT_NAME.getName(), color, KNIGHT_SCORE.getScore());
     }
 
     @Override
