@@ -3,20 +3,20 @@ package chess.domain.piece;
 import static chess.domain.move.Direction.*;
 
 import chess.domain.move.Direction;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 
 public final class Pawn extends Piece {
 
 	private boolean isFirst = true;
 
-	public Pawn(final Team team) {
-		super(team);
+	public Pawn(final Color color) {
+		super(color);
 	}
 
 	@Override
 	public String name() {
 		String name = "p";
-		if (super.team().equals(Team.WHITE)) {
+		if (super.team().equals(Color.WHITE)) {
 			return name;
 		}
 		return name.toUpperCase();

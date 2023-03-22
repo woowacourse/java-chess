@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 
 import java.util.Set;
 
@@ -11,14 +11,14 @@ public final class Bishop extends Piece {
 
     private static final Set<Direction> directions = Set.of(LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);
 
-    public Bishop(final Team team) {
-        super(team);
+    public Bishop(final Color color) {
+        super(color);
     }
 
     @Override
     public String name() {
         String name = "b";
-        if (super.team().equals(Team.WHITE)) {
+        if (super.team().equals(Color.WHITE)) {
             return name;
         }
         return name.toUpperCase();

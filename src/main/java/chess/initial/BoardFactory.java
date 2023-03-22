@@ -1,6 +1,6 @@
 package chess.initial;
 
-import static chess.domain.team.Team.*;
+import static chess.domain.color.Color.*;
 
 import java.util.HashMap;
 import java.util.Map;

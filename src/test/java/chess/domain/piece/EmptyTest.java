@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class EmptyTest {
     @DisplayName("빈 공간은 이동할 수 없다")
     void notMovable() {
         // given
-        final Empty empty = new Empty(Team.NONE);
+        final Empty empty = new Empty(Color.NONE);
 
         // then
         assertFalse(empty.movable(Direction.LEFT_UP));
@@ -23,7 +23,7 @@ class EmptyTest {
     @DisplayName("빈 공간은 한 칸도 이동할 수 없다")
     void neverMovable() {
         // given
-        final Empty empty = new Empty(Team.NONE);
+        final Empty empty = new Empty(Color.NONE);
 
         // then
         assertFalse(empty.movableByCount(1));

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.move.Direction;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 
 class PieceTest {
 
@@ -14,7 +14,7 @@ class PieceTest {
 	@DisplayName("체스말을 이름을 갖고 있다")
 	void name() {
 		// given
-		final var piece = new TestPiece(Team.BLACK);
+		final var piece = new TestPiece(Color.BLACK);
 		final var expected = "R";
 
 		// when
@@ -26,8 +26,8 @@ class PieceTest {
 
 	static final class TestPiece extends Piece {
 
-		public TestPiece(final Team team) {
-			super(team);
+		public TestPiece(final Color color) {
+			super(color);
 		}
 
 		@Override

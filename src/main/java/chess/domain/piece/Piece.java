@@ -1,14 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.move.Direction;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 
 public abstract class Piece {
 
-    private final Team team;
+    private final Color color;
 
-    protected Piece(final Team team) {
-        this.team = team;
+    protected Piece(final Color color) {
+        this.color = color;
     }
 
     public abstract String name();
@@ -17,11 +17,11 @@ public abstract class Piece {
 
     public abstract boolean movableByCount(final int count);
 
-    public boolean isSameTeam(final Team team) {
-        return this.team.equals(team);
+    public boolean isSameTeam(final Color color) {
+        return this.color.equals(color);
     }
 
-    public Team team() {
-        return team;
+    public Color team() {
+        return color;
     }
 }

@@ -12,7 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.team.Team;
+import chess.domain.color.Color;
 import chess.initial.BoardFactory;
 
 public class Board {
@@ -108,7 +108,7 @@ public class Board {
 
 	private void movePiece(final Position source, final Position target, final Piece piece) {
 		board.put(target, piece);
-		board.put(source, new Empty(Team.NONE));
+		board.put(source, new Empty(Color.NONE));
 	}
 
 	public Map<Position, Piece> getBoard() {
