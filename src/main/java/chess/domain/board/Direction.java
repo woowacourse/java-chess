@@ -21,7 +21,7 @@ public enum Direction {
     KNIGHT_LEFT_DOWN(-2, -1),
     KNIGHT_LEFT_UP(-2, 1),
     KNIGHT_UP_LEFT(-1, 2),
-    EMPTY(0, 0);
+    ;
 
     private final int file;
     private final int rank;

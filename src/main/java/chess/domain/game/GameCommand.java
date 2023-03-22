@@ -7,6 +7,14 @@ import chess.exception.IllegalCommandException;
 import java.util.List;
 
 public class GameCommand {
+    private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
+    private static final String END_COMMAND = "end";
+
+    private final List<String> gameCommand;
+
     public GameCommand(final List<String> gameCommand) {
         this.validateGameCommand(gameCommand);
         this.gameCommand = gameCommand;
@@ -28,14 +36,6 @@ public class GameCommand {
             throw new IllegalCommandException();
         }
     }
-
-    private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
-    private static final int MOVE_COMMAND_SIZE = 3;
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
-
-    private final List<String> gameCommand;
 
     private void validateMoveCommand(final String source, final String target) {
         if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(SQUARE_BOUND_REGULAR_EXPRESSION)) {

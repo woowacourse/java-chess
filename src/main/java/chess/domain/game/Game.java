@@ -16,15 +16,19 @@ public class Game {
         this.turn = Team.WHITE;
     }
 
-    public List<Piece> getPieces() {
-        return this.board.getPieces();
-    }
-
     public void move(final Square source, final Square target) {
-        if (this.board.isNotMyTurn(source, this.turn) || this.board.isEmptyPiece(source)) {
+        if (this.isNotMyTurn(source) || this.board.isEmptyPiece(source)) {
             throw new TeamNotMatchException(this.turn);
         }
         this.board.move(source, target);
         this.turn = this.turn.nextTurn(this.turn);
+    }
+
+    private boolean isNotMyTurn(final Square source) {
+        return this.board.getPiece(source).isAnotherTeam(this.turn);
+    }
+
+    public List<Piece> getPieces() {
+        return this.board.getPieces();
     }
 }

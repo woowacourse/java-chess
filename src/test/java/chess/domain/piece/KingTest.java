@@ -78,4 +78,15 @@ class KingTest {
 
         assertThat(king.isMovable(source, target, direction)).isFalse();
     }
+
+    @DisplayName("이동할 수 없는 방향일 경우 움직일 수 없다.")
+    @Test
+    void Should_ReturnFalse_When_KnightDirection() {
+        final King king = new King(Team.WHITE);
+        final Square source = new Square(File.A, Rank.ONE);
+        final Square target = new Square(File.A, Rank.THREE);
+        final Direction direction = Direction.KNIGHT_DOWN_LEFT;
+
+        assertThat(king.isMovable(source, target, direction)).isFalse();
+    }
 }

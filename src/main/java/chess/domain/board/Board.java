@@ -100,7 +100,7 @@ public class Board {
     public void move(final Square source, final Square target) {
         if (this.isMovable(source, target)) {
             this.moveIfPawn(source);
-            this.board.put(target, this.board.get(source));
+            this.board.put(target, this.getPiece(source));
             this.board.put(source, new Empty());
             return;
         }
@@ -109,12 +109,12 @@ public class Board {
 
     private void moveIfPawn(final Square source) {
         if (this.isSameRole(source, Role.PAWN)) {
-            this.board.put(source, new Pawn(this.board.get(source).getTeam(), IS_MOVED));
+            this.board.put(source, new Pawn(this.getPiece(source).getTeam(), IS_MOVED));
         }
     }
 
     private boolean isMovable(final Square source, final Square target) {
-        final Piece sourcePiece = this.board.get(source);
+        final Piece sourcePiece = this.getPiece(source);
         final Direction direction = Direction.calculateDirection(source, target);
 
         if (this.isPathBlocked(source, target, direction) && !this.isSameRole(source, Role.KNIGHT)) {
@@ -127,22 +127,19 @@ public class Board {
     }
 
     private boolean isPawnMovable(final Square source, final Square target, final Direction direction) {
-        final boolean isTargetEmpty = this.board.get(target).isEmpty();
+        final boolean isTargetEmpty = this.getPiece(target).isEmpty();
 
         if (Direction.isMoveForward(direction) && !isTargetEmpty) {
             return false;
         }
-        if (Direction.isMoveDiagonal(direction) && (this.isSameCamp(source, target) || isTargetEmpty)) {
+        if (Direction.isMoveDiagonal(direction) && (this.isSameTeam(source, target) || isTargetEmpty)) {
             return false;
         }
-        return this.board.get(source).isMovable(source, target, direction);
+        return this.getPiece(source).isMovable(source, target, direction);
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Direction direction) {
-        if (direction.equals(Direction.EMPTY)) {
-            return this.isSameRole(source, Role.KNIGHT);
-        }
-        return this.isBlocked(source, target, direction) || this.isSameCamp(source, target);
+        return this.isBlocked(source, target, direction) || this.isSameTeam(source, target);
     }
 
     private boolean isBlocked(final Square source, final Square target, final Direction direction) {
@@ -157,28 +154,28 @@ public class Board {
         return true;
     }
 
-    private boolean isSameCamp(final Square source, final Square target) {
-        final Piece sourcePiece = this.board.get(source);
-        final Team targetTeam = this.board.get(target).getTeam();
+    private boolean isSameTeam(final Square source, final Square target) {
+        final Piece sourcePiece = this.getPiece(source);
+        final Team targetTeam = this.getPiece(target).getTeam();
 
         return sourcePiece.isSameTeam(targetTeam);
     }
 
     private boolean isSameRole(final Square source, final Role role) {
-        final Piece sourcePiece = this.board.get(source);
+        final Piece sourcePiece = this.getPiece(source);
 
         return sourcePiece.isSameRole(role);
     }
 
-    public boolean isNotMyTurn(final Square source, final Team turn) {
-        return this.board.get(source).isAnotherTeam(turn);
-    }
-
     public boolean isEmptyPiece(final Square source) {
-        return this.board.get(source).isEmpty();
+        return this.getPiece(source).isEmpty();
     }
 
     public List<Piece> getPieces() {
         return new ArrayList<>(this.board.values());
+    }
+
+    public Piece getPiece(final Square source) {
+        return this.board.get(source);
     }
 }
