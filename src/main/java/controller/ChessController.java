@@ -35,7 +35,7 @@ public final class ChessController {
         if (command.isStart()) {
             startInteractionLoop(chessGame);
         }
-        outputView.printGameEndMessage();
+        makeGameResult(chessGame);
     }
 
     private void startInteractionLoop(final ChessGame chessGame) {
@@ -63,5 +63,10 @@ public final class ChessController {
             Coordinate endCoordinate = CoordinateAdapter.convert(frontCommand.get(END_COORDINATE_INDEX));
             chessGame.move(startCoordinate, endCoordinate);
         }
+    }
+
+    private void makeGameResult(final ChessGame chessGame) {
+        outputView.printGameEndMessage();
+        outputView.printGameResult(chessGame.collectPoint());
     }
 }
