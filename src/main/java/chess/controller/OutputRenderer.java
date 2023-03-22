@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -9,6 +9,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.view.BoardDto;
 
 public class OutputRenderer {
 

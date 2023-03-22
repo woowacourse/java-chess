@@ -1,9 +1,11 @@
-package chess.view;
+package chess.controller;
 
 import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Position;
+import chess.view.Command;
+import chess.view.CommandDto;
 
 public class InputRenderer {
 
