@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    public static final int FIRST_MOVE_TWO_SPACES = 2;
+    private static final int FIRST_MOVE_TWO_SPACES = 2;
     private static final int WHITE_PAWN_INITIAL_RANK = 2;
     private static final int BLACK_PAWN_INITIAL_RANK = 7;
 
