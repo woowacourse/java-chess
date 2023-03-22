@@ -12,8 +12,8 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public CommandDto readCommand() {
-        List<String> parsedCommandInput = Arrays.asList(scanner.nextLine()
-                                                               .split(" "));
+        final String rawCommandInput = scanner.nextLine();
+        List<String> parsedCommandInput = Arrays.asList(rawCommandInput.split(" "));
         validate(parsedCommandInput);
         return CommandDto.from(parsedCommandInput);
     }

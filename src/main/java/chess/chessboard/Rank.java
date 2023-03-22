@@ -57,4 +57,5 @@ public enum Rank {
     public int getPosition() {
         return position;
     }
+
 }

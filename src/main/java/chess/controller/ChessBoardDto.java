@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.chessboard.ChessBoard;
 import chess.chessboard.File;
 import chess.chessboard.Square;
 import chess.piece.Piece;
@@ -16,17 +17,19 @@ public class ChessBoardDto {
         this.pieceDtos = pieceDtos;
     }
 
-    public static ChessBoardDto of(Map<Square, Piece> pieces) {
-        final List<List<PieceDto>> chessBoard = initChessBoard();
+    public static ChessBoardDto of(ChessBoard chessBoard) {
+        final Map<Square, Piece> pieces = chessBoard.getPieces();
+        final List<List<PieceDto>> pieceDtos = initChessBoard();
 
         for (Square square : pieces.keySet()) {
             final File file = square.getFile();
-            final int row = getRowIndex(square);
-            final int column = getColumnIndex(file);
-            chessBoard.get(row)
-                      .set(column, PieceDto.from(pieces.get(square)));
+            final int rowIndex = getRowIndex(square);
+            final int columnIndex = getColumnIndex(file);
+            final List<PieceDto> row = pieceDtos.get(rowIndex);
+            final Piece piece = pieces.get(square);
+            row.set(columnIndex, PieceDto.from(piece));
         }
-        return new ChessBoardDto(chessBoard);
+        return new ChessBoardDto(pieceDtos);
     }
 
     private static List<List<PieceDto>> initChessBoard() {

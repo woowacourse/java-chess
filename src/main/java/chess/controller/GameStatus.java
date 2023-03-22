@@ -3,7 +3,6 @@ package chess.controller;
 import java.util.Objects;
 
 public enum GameStatus {
-    START("start"),
     PLAYING("move"),
     END("end");
 
@@ -13,17 +12,11 @@ public enum GameStatus {
         this.code = code;
     }
 
-    public static GameStatus startGame(String code) {
-        if (Objects.equals(START.code, code)) {
-            return START;
-        }
-        throw new IllegalArgumentException("게임을 시작하기 위해서는 start를 입력하세요");
+    public static GameStatus startGame() {
+        return PLAYING;
     }
 
     public static GameStatus changeStatus(String code) {
-        if (Objects.equals(START.code, code)) {
-            throw new IllegalArgumentException("게임 도중에는 다시 시작할 수 없습니다.");
-        }
         if (Objects.equals(PLAYING.code, code)) {
             return PLAYING;
         }
