@@ -44,7 +44,7 @@ public class ChessGameController {
 
     private Command start(final Board board) {
         try {
-            List<String> commands = InputView.readMoveCommand();
+            final List<String> commands = InputView.readMoveCommand();
             validateMoveCommandForm(commands);
             return play(board, commands);
         } catch (IllegalArgumentException e) {
@@ -54,7 +54,7 @@ public class ChessGameController {
     }
 
     private Command play(final Board board, final List<String> commands) {
-        Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
+        final Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
         if (command == MOVE) {
             move(board, commands);
         }
