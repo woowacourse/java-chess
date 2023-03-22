@@ -1,16 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.board.InitialPieceTypes;
+import chess.domain.distance.Distances;
 import chess.domain.piece.coordinate.Coordinate;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public abstract class Piece {
-    protected static final int ROW_INDEX = 1;
-    protected static final int COLUMN_INDEX = 0;
-    
     private final Team team;
     protected final Coordinate coordinate;
     
@@ -39,27 +35,16 @@ public abstract class Piece {
         return this.team.isSameTeam(otherTeam);
     }
     
-    protected int calculateRowOrColumnDistance(Piece targetPiece, int rowOrColumnIndex) {
-        return convertAbsoluteValue(targetPiece).get(rowOrColumnIndex);
+    protected Distances convertAbsoluteValue(Piece targetPiece) {
+        return subtractCoordinate(targetPiece).absoluteValue();
     }
     
-    private List<Integer> convertAbsoluteValue(Piece targetPiece) {
-        return subtractCoordinate(targetPiece)
-                .stream()
-                .map(Math::abs)
-                .collect(Collectors.toUnmodifiableList());
-    }
-    
-    protected List<Integer> subtractCoordinate(Piece targetPiece) {
+    protected Distances subtractCoordinate(Piece targetPiece) {
         return this.coordinate.calculateCoordinateDistance(targetPiece.coordinate);
     }
     
     protected boolean isDifferentTeam(Piece otherPiece) {
-        return this.team != otherPiece.team;
-    }
-    
-    protected boolean isBothZero(int rowDistance, int columnDistance) {
-        return rowDistance == 0 && columnDistance == 0;
+        return this.team.isDifferentTeam(otherPiece.team);
     }
     
     public int compareToPieceByRowNum(Piece piece) {

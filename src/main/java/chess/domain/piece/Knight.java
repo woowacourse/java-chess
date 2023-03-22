@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.distance.Distances;
 import chess.domain.piece.coordinate.Coordinate;
 
 public class Knight extends Piece {
@@ -14,25 +15,15 @@ public class Knight extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
-        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
-        return isKnightMovable(targetPiece, rowDistance, columnDistance);
-    }
-    
-    private boolean isKnightMovable(Piece targetPiece, int rowDistance, int columnDistance) {
-        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
+        if (isOutOfMovementRadius(convertAbsoluteValue(targetPiece))) {
             return false;
         }
-        
+    
         return isDifferentTeam(targetPiece);
     }
     
-    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
-        return isBothZero(rowDistance, columnDistance) || isNotContainsOneAndTwo(rowDistance, columnDistance);
-    }
-    
-    private boolean isNotContainsOneAndTwo(int rowDistance, int columnDistance) {
-        return !((rowDistance == 1 && columnDistance == 2) || (rowDistance == 2 && columnDistance == 1));
+    private boolean isOutOfMovementRadius(Distances distances) {
+        return distances.isBothZero() || !distances.isContainsOneAndTwo();
     }
     
     @Override

@@ -23,6 +23,10 @@ public enum Team {
         return this == otherTeam;
     }
     
+    public boolean isDifferentTeam(Team otherTeam) {
+        return !isSameTeam(otherTeam);
+    }
+    
     public Team nextTeam() {
         if (this == WHITE) {
             return BLACK;

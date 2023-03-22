@@ -41,10 +41,6 @@ public enum Row {
         return this.row - targetRow.row;
     }
     
-    public boolean isPawnStartRow(int pawnStartRow) {
-        return row == pawnStartRow;
-    }
-    
     public boolean isLessOrEqualTo(int otherRow) {
         return row <= otherRow;
     }

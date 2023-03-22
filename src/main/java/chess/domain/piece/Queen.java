@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.distance.Distances;
 import chess.domain.piece.coordinate.Coordinate;
 
 public class Queen extends Piece {
@@ -14,30 +15,15 @@ public class Queen extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
-        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
-    
-        return isQueenMovable(targetPiece, rowDistance, columnDistance);
-    }
-    
-    private boolean isQueenMovable(Piece targetPiece, int rowDistance, int columnDistance) {
-        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
+        if (isOutOfMovementRadius(convertAbsoluteValue(targetPiece))) {
             return false;
         }
     
         return isDifferentTeam(targetPiece);
     }
     
-    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
-        return isBothZero(rowDistance, columnDistance) ||
-                (isDifferentRowColumn(rowDistance, columnDistance) && (isZeroNotExist(rowDistance, columnDistance)));
-    }
-    
-    private boolean isDifferentRowColumn(int rowDistance, int columnDistance) {
-        return rowDistance != columnDistance;
-    }
-    
-    private boolean isZeroNotExist(int rowDistance, int columnDistance) {
-        return rowDistance != 0 && columnDistance != 0;
+    private boolean isOutOfMovementRadius(Distances distances) {
+        return distances.isBothZero() ||
+                (distances.isBothDifferent() && distances.isNotContainsZero());
     }
 }

@@ -35,8 +35,8 @@ public enum Column {
         return Integer.compare(otherColumn.column, column);
     }
     
-    public char add(int directionNumber) {
-        return (char) (column + directionNumber);
+    public char add(int number) {
+        return (char) (column + number);
     }
     
     public int minusMinColumn() {
@@ -45,10 +45,6 @@ public enum Column {
     
     public int subtract(Column targetColumn) {
         return this.column - targetColumn.column;
-    }
-    
-    public int columnIndex() {
-        return column - 'a';
     }
     
     @Override

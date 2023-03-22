@@ -1,6 +1,7 @@
 package chess.domain.piece.coordinate;
 
-import java.util.List;
+import chess.domain.distance.Distances;
+
 import java.util.Objects;
 
 public class Coordinate {
@@ -56,14 +57,10 @@ public class Coordinate {
         return this.row.compareTo(otherCoordinate.row);
     }
     
-    public List<Integer> calculateCoordinateDistance(Coordinate otherCoordinate) {
-        int columnDistance = this.column.subtract(otherCoordinate.column);
-        int rowDistance = this.row.subtract(otherCoordinate.row);
-        return List.of(columnDistance, rowDistance);
-    }
-    
-    public boolean isPawnStartRow(int pawnStartRow) {
-        return row.isPawnStartRow(pawnStartRow);
+    public Distances calculateCoordinateDistance(Coordinate otherCoordinate) {
+        int subtractedColumnDistance = this.column.subtract(otherCoordinate.column);
+        int subtractedRowDistance = this.row.subtract(otherCoordinate.row);
+        return new Distances(subtractedColumnDistance, subtractedRowDistance);
     }
     
     public boolean isRowNumLessOrEqualTo(int otherRow) {
