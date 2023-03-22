@@ -64,12 +64,12 @@ classDiagram
   ChessController --> OutputView
   ChessController --> Board
   Board --> Coordinate
-  Board --> Square
+  Board --> Piece
   Board --> DirectionVector
   Board --> BoardInitialImage
-  Square --> Piece
-  Square --> Camp
   Piece --> PieceType
+  Piece --> Camp
+  PieceType --> PieceTypeSymbol
 ```
 
 
