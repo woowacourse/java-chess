@@ -26,7 +26,7 @@ public class RunningGameController {
     public void startGame(final Long chessGameId) {
         ChessGame chessGame = chessGameService.findById(chessGameId);
         validateAlreadyEnd(chessGame);
-        startGame(chessGame);
+        OutputView.startGame(chessGame.id());
         runToEnd(chessGameId, chessGame);
     }
 
@@ -36,20 +36,17 @@ public class RunningGameController {
         }
     }
 
-    private void startGame(final ChessGame chessGame) {
-        OutputView.startGame(chessGame.id());
-        OutputView.showBoard(chessGame.pieces(), chessGame.turnColor());
-    }
-
-    private void runToEnd(final Long chessGameId, final ChessGame chessGame) {
-        while (chessGame.playable()) {
+    private void runToEnd(final Long chessGameId, ChessGame chessGame) {
+        do {
+            OutputView.showBoard(chessGame.pieces(), chessGame.turnColor());
             final RunningCommand command = readCommand();
             if (command.type() == RunningCommandType.END) {
                 OutputView.saveAndEnd();
                 return;
             }
             run(chessGameId, command);
-        }
+            chessGame = chessGameService.findById(chessGameId);
+        } while (chessGame.playable());
         OutputView.printWinColor(chessGame.winColor());
     }
 
@@ -82,9 +79,6 @@ public class RunningGameController {
         final PiecePosition from = piecePositions.get(FROM_POSITION_INDEX);
         final PiecePosition to = piecePositions.get(TO_POSITION_INDEX);
         chessGameService.movePiece(chessGameId, from, to);
-
-        ChessGame chessGame = chessGameService.findById(chessGameId);
-        OutputView.showBoard(chessGame.pieces(), chessGame.turnColor());
     }
 
     private void status(final Long chessGameId) {
