@@ -28,7 +28,7 @@ public class Position {
         return rankCoordinate.calculateGap(targetPosition.rankCoordinate);
     }
 
-    public List<Position> findPath(Position targetPosition) {
+    public List<Position> findPathWithoutSourceAndTarget(Position targetPosition) {
         List<RankCoordinate> betweenRanks = rankCoordinate.betweenRanks(targetPosition.rankCoordinate);
         List<FileCoordinate> betweenFiles = fileCoordinate.betweenFiles(targetPosition.fileCoordinate);
 
