@@ -20,8 +20,8 @@ public class ChessBoardFactory {
     private static final List<Piece> pieces = new ArrayList<>();
 
     static {
-        createExcludePawn(1, Color.WHITE);
-        createExcludePawn(8, Color.BLACK);
+        createPieceExcludingPawn(1, Color.WHITE);
+        createPieceExcludingPawn(8, Color.BLACK);
         createPawns(2, Color.WHITE);
         createPawns(7, Color.BLACK);
     }
@@ -32,7 +32,7 @@ public class ChessBoardFactory {
         }
     }
 
-    private static void createExcludePawn(final int rank, final Color color) {
+    private static void createPieceExcludingPawn(final int rank, final Color color) {
         pieces.add(new Rook(color, PiecePosition.of(rank, 'a')));
         pieces.add(new Knight(color, PiecePosition.of(rank, 'b')));
         pieces.add(new Bishop(color, PiecePosition.of(rank, 'c')));
