@@ -2,6 +2,7 @@ package controller;
 
 import domain.chessgame.ChessGame;
 import domain.position.PositionFactory;
+import view.OutputView;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ public final class Move extends GameStatus {
     }
 
     @Override
-    public ChessBoardDTO playTurn(final List<String> inputs) {
+    public void playTurn(final List<String> inputs) {
         chessGame.move(PositionFactory.createPosition(inputs.get(SOURCE_INDEX)), PositionFactory.createPosition(inputs.get(TARGET_INDEX)));
-
-        return ChessBoardDTO.from(chessGame.getChessBoard());
+        final ChessBoardDTO chessBoardDTO = ChessBoardDTO.from(chessGame.getChessBoard());
+        OutputView.printChessBoard(chessBoardDTO);
     }
 
     @Override

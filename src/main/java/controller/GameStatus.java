@@ -15,7 +15,7 @@ public abstract class GameStatus {
         this.chessGame = chessGame;
     }
 
-    public abstract ChessBoardDTO playTurn(final List<String> inputs);
+    public abstract void playTurn(final List<String> inputs);
 
     public abstract boolean isKeepGaming();
 
