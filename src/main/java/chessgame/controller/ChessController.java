@@ -1,9 +1,6 @@
 package chessgame.controller;
 
-import chessgame.domain.Board;
-import chessgame.domain.Command;
 import chessgame.domain.Game;
-import chessgame.util.ChessBoardFactory;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
@@ -17,7 +14,7 @@ public class ChessController {
     }
 
     public void run() {
-        Game game = new Game(new Board(ChessBoardFactory.create()));
+        Game game = new Game();
         playGame(game);
     }
 
@@ -25,34 +22,16 @@ public class ChessController {
         outputView.printStartMessage();
         do {
             eachTurn(game);
-            outputView.printChessBoard(game.board());
-        } while (game.isStart());
+        } while (game.isNotEnd());
     }
 
     private void eachTurn(Game game) {
         Command command = readCommand();
-        command = setButton(game, command);
-        if (command.isMove()) {
-            movePiece(game, command);
-        }
-    }
-
-    private void movePiece(Game game, Command command) {
         try {
-            game.movePiece(command.points());
+            game.setFrom(command);
+            printChessBoard(game);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
-            eachTurn(game);
-        }
-    }
-
-    private Command setButton(Game game, Command command) {
-        try {
-            game.setState(command);
-            return command;
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMsg(e.getMessage());
-            return setButton(game, readCommand());
         }
     }
 
@@ -62,6 +41,12 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
             return readCommand();
+        }
+    }
+
+    private void printChessBoard(Game game) {
+        if (game.isRunning()) {
+            outputView.printChessBoard(game.board());
         }
     }
 }

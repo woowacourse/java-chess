@@ -2,37 +2,48 @@ package chessgame.domain;
 
 import java.util.List;
 
+import chessgame.controller.Command;
 import chessgame.domain.point.Point;
-import chessgame.domain.state.Power;
+import chessgame.domain.state.Ready;
+import chessgame.domain.state.State;
 
 public class Game {
     private final Board board;
-    private final Power power = new Power();
-    private Team turn = Team.WHITE;
+    private State state;
 
-    public Game(Board board) {
-        this.board = board;
+    public Game() {
+        this.board = new Board();
+        this.state = new Ready();
+    }
+
+    public void setFrom(Command command) {
+        state.changeState(this, command);
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void setState(Command command, State state) {
+        if (isRunning()) {
+            movePiece(command.points());
+        }
+        this.state = state;
+    }
+
+    public boolean isRunning() {
+        return state.isRunning();
+    }
+
+    private void movePiece(List<Point> points) {
+        board.move(points.get(0), points.get(1), state.team());
     }
 
     public Board board() {
         return board;
     }
 
-    public void setState(Command command) {
-        power.changeState(command);
-    }
-
-    public void movePiece(List<Point> points) {
-        boolean isMoved = false;
-        if (power.isStart()) {
-            isMoved = board.move(points.get(0), points.get(1), turn);
-        }
-        if (isMoved) {
-            turn = turn.changeTurn();
-        }
-    }
-
-    public boolean isStart() {
-        return power.isStart();
+    public boolean isNotEnd() {
+        return state.isNotEnd();
     }
 }

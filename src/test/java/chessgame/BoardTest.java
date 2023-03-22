@@ -10,19 +10,18 @@ import org.junit.jupiter.api.Test;
 
 import chessgame.domain.Board;
 import chessgame.domain.Team;
-import chessgame.util.ChessBoardFactory;
 
 class BoardTest {
     @Test
     @DisplayName("모든 좌표값을 가진 보드를 생성한다")
     void Should_NotThrowException_When_ConstructBord() {
-        assertDoesNotThrow(() -> new Board(ChessBoardFactory.create()));
+        assertDoesNotThrow(Board::new);
     }
 
     @Test
     @DisplayName("소스와 타겟좌표가 같을시 오류가 난다.")
     void Should_ThrowException_When_SourceIsSameWithTarget() {
-        Board board = new Board(ChessBoardFactory.create());
+        Board board = new Board();
 
         Assertions.assertThatThrownBy(() -> board.checkSource(A1, A1, Team.WHITE))
             .isExactlyInstanceOf(IllegalArgumentException.class)
@@ -32,7 +31,7 @@ class BoardTest {
     @Test
     @DisplayName("소스에 기물이 있는지 확인하다.")
     void Should_True_When_SourcePointHasPiece() {
-        Board board = new Board(ChessBoardFactory.create());
+        Board board = new Board();
 
         assertDoesNotThrow(() -> board.checkSource(A1, A2, Team.WHITE));
     }
@@ -40,7 +39,7 @@ class BoardTest {
     @Test
     @DisplayName("타겟에 기물이 있는지 확인하다.")
     void Should_True_When_TargetPointHasPiece() {
-        Board board = new Board(ChessBoardFactory.create());
+        Board board = new Board();
 
         assertThat(board.checkTarget(F7, Team.WHITE)).isTrue();
     }
@@ -48,7 +47,7 @@ class BoardTest {
     @Test
     @DisplayName("기물의 이동 경로가 다른 기물에 의해 막혀있는지 확인")
     void Should_False_When_RouteBlockedByPiece() {
-        Board board = new Board(ChessBoardFactory.create());
+        Board board = new Board();
 
         Assertions.assertThatThrownBy(() -> board.checkRoute(A1, A8))
             .isExactlyInstanceOf(IllegalArgumentException.class)
