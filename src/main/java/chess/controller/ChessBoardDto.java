@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class ChessBoardDto {
     private static final int CHESS_BOARD_SIZE = 8;
+
     private final List<List<PieceDto>> pieceDtos;
 
     private ChessBoardDto(List<List<PieceDto>> pieceDtos) {

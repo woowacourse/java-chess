@@ -43,15 +43,26 @@ public class Square {
     private boolean isLine(final Square other) {
         validateNotSameSquare(other);
 
-        return this.rank == other.rank || this.file == other.file;
+        final int verticalDistance = calculateVerticalDistance(other);
+        final int horizontalDistance = calculateHorizontalDistance(other);
+
+        return isLine(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isLine(final int verticalDistance, final int horizontalDistance) {
+        return verticalDistance == 0 || horizontalDistance == 0;
     }
 
     private boolean isDiagonal(final Square other) {
         validateNotSameSquare(other);
 
-        final int verticalDistance = this.rank.distanceTo(other.rank);
-        final int horizontalDistance = this.file.distanceTo(other.file);
+        final int verticalDistance = calculateVerticalDistance(other);
+        final int horizontalDistance = calculateHorizontalDistance(other);
 
+        return isDiagonal(verticalDistance, horizontalDistance);
+    }
+
+    private boolean isDiagonal(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == horizontalDistance;
     }
 
@@ -64,7 +75,7 @@ public class Square {
     private List<Square> squaresOfLine(final Square otherSquare) {
         assert isLine(otherSquare);
 
-        if (otherSquare.rank == this.rank) {
+        if (isAtRank(otherSquare.rank)) {
             return squaresOfRank(otherSquare);
         }
         return squaresOfFile(otherSquare);
