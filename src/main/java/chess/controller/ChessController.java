@@ -9,73 +9,70 @@ import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.view.*;
 
+import java.util.EnumMap;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Map;
 
 public final class ChessController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
+    private static final int TO_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final int TO_POSITION_INDEX = 2;
 
+    private final Map<ChessCommand, GameAction> commandMapper = new EnumMap<>(ChessCommand.class);
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessGame game;
 
     public ChessController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.game = new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE));
+        initController();
+    }
+
+    private void initController() {
+        commandMapper.put(ChessCommand.START, this::start);
+        commandMapper.put(ChessCommand.MOVE, this::move);
+        commandMapper.put(ChessCommand.END, ignored -> {
+        });
     }
 
     public void run() {
         outputView.printStartPrefix();
-
-        ChessGame chessGame = startChessGame();
-        play(chessGame);
-    }
-
-    private ChessGame startChessGame() {
-        requestStartCommand();
-
-        ChessBoard chessBoard = ChessBoardMaker.create();
-
-        printBoard(chessBoard);
-
-        return new ChessGame(chessBoard, new Turn(Camp.WHITE));
-    }
-
-    private void requestStartCommand() {
-        retryOnInvalidUserInput(() -> {
-            List<String> commands = inputView.readCommand();
-            return ChessCommand.getStart(commands.get(COMMAND_INDEX));
-        });
-    }
-
-    private void play(ChessGame chessGame) {
-        ChessCommand chessCommand = ChessCommand.START;
-        do {
-            chessCommand = retryOnInvalidUserInput(() -> playTurn(chessGame));
-        } while (!chessCommand.isEnd());
-    }
-
-    private ChessCommand playTurn(ChessGame chessGame) {
-        List<String> commands = inputView.readCommand();
-        ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands);
-        if (chessCommand.isEnd()) {
-            return chessCommand;
+        ChessCommand gameCommand = ChessCommand.WAIT;
+        while (gameCommand != ChessCommand.END) {
+            gameCommand = play();
         }
-
-        move(chessGame, commands);
-        printBoard(chessGame.getChessBoard());
-        return chessCommand;
     }
 
-    private void move(ChessGame chessGame, List<String> commands) {
+    private ChessCommand play() {
+        try {
+            List<String> commands = inputView.readCommand();
+            ChessCommand command = ChessCommand.from(commands.get(COMMAND_INDEX));
+            GameAction gameAction = commandMapper.get(command);
+            gameAction.execute(commands);
+            return command;
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return ChessCommand.WAIT;
+        }
+    }
+
+    private void start(List<String> commands) {
+        ChessCommand.validateStartCommand(commands);
+        printBoard(game.getChessBoard());
+    }
+
+
+    private void move(List<String> commands) {
+        ChessCommand.validatePlayingCommand(commands);
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
-
-        chessGame.move(toPosition(fromInput), toPosition(toInput), new Path());
+        game.move(toPosition(fromInput), toPosition(toInput), new Path());
+        printBoard(game.getChessBoard());
     }
 
     private Position toPosition(String positionInput) {
@@ -87,14 +84,5 @@ public final class ChessController {
 
     private void printBoard(ChessBoard chessBoard) {
         outputView.printChessState(chessBoard.getBoard());
-    }
-
-    private <T> T retryOnInvalidUserInput(Supplier<T> request) {
-        try {
-            return request.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            return retryOnInvalidUserInput(request);
-        }
     }
 }

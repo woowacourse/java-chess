@@ -12,7 +12,7 @@ public class ChessBoard {
 
     private final Map<Position, Piece> board;
 
-    ChessBoard(Map<Position, Piece> board) {
+    public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
     }
 
