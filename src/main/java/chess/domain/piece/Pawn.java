@@ -20,18 +20,27 @@ public class Pawn extends NoneEmptyPiece {
     @Override
     public boolean isMobile(RelativePosition relativePosition, Piece target) {
         validateSameTeam(target);
-        validateLegalDiagonalMove(relativePosition, target);
+        validateIllegalTwoBlocksMove(relativePosition);
+
         if (!hasMoved && isMoveTwoBlocks(relativePosition)) {
             relativePosition = relativePosition.toUnit();
         }
-        if (isMovementMobile(relativePosition)) {
-            hasMoved = true;
-            return true;
-        }
-        return false;
+        System.out.println(isMoveTwoBlocks(relativePosition));
+        relativePosition = inverseDirectionIfBlackPawn(relativePosition);
+
+        validateIllegalDirection(relativePosition);
+        validateIllegalDiagonalMove(relativePosition, target);
+        hasMoved = true;
+        return true;
     }
 
-    private void validateLegalDiagonalMove(RelativePosition relativePosition, Piece target) {
+    private void validateIllegalTwoBlocksMove(RelativePosition relativePosition) {
+        if (hasMoved && isMoveTwoBlocks(relativePosition)) {
+            throw new IllegalArgumentException("폰은 처음 이동할 때만 앞으로 두 칸 갈 수 있습니다.");
+        }
+    }
+
+    private void validateIllegalDiagonalMove(RelativePosition relativePosition, Piece target) {
         if (relativePosition.isDiagonal() && (target.isEmpty() || isSameTeam(target))) {
             throw new IllegalArgumentException("폰은 상대팀을 공격할 때만 대각선으로 이동 가능합니다.");
         }
@@ -41,10 +50,10 @@ public class Pawn extends NoneEmptyPiece {
         return relativePosition.equals(new RelativePosition(0, 2)) || relativePosition.equals(new RelativePosition(0, -2));
     }
 
-    private boolean isMovementMobile(RelativePosition relativePosition) {
+    private RelativePosition inverseDirectionIfBlackPawn(RelativePosition relativePosition){
         if (team.isBlack()) {
-            relativePosition = relativePosition.inverseByXAxis();
+            return relativePosition.inverseByXAxis();
         }
-        return movement.isMobile(relativePosition);
+        return relativePosition;
     }
 }

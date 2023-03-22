@@ -17,6 +17,7 @@ public class King extends NoneEmptyPiece {
     @Override
     public boolean isMobile(RelativePosition relativePosition, Piece target) {
         validateSameTeam(target);
-        return movement.isMobile(relativePosition);
+        validateIllegalDirection(relativePosition);
+        return true;
     }
 }

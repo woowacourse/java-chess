@@ -23,4 +23,10 @@ public abstract class NoneEmptyPiece extends Piece implements Movable {
         }
     }
 
+    protected void validateIllegalDirection(RelativePosition relativePosition) {
+        if (!movement.isMobile(relativePosition)) {
+            throw new IllegalArgumentException("해당 방향으로 이동할 수 없는 말입니다.");
+        }
+    }
+
 }

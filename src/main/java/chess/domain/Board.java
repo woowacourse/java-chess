@@ -1,8 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.NoneEmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.RelativePosition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +20,15 @@ public class Board {
         this.board = board;
     }
 
-    public void movePiece(Position source, Position target) {
-        MoveValidator.validate(board, source, target);
-
-        Piece piece = board.get(source);
-        board.put(target, piece);
-        board.put(source, new EmptyPiece());
+    public void movePiece(Position from, Position to) {
+        MoveValidator.validate(board, from, to);
+        RelativePosition relativePosition = RelativePosition.of(from, to);
+        NoneEmptyPiece sourcePiece = (NoneEmptyPiece) board.get(from);
+        Piece target = board.get(to);
+        if(sourcePiece.isMobile(relativePosition, target)){
+            board.put(to, sourcePiece);
+            board.put(from, new EmptyPiece());
+        }
     }
 
     private List<List<Piece>> sortBoard() {

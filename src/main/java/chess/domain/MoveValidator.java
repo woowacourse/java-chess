@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.NoneEmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
@@ -12,10 +11,9 @@ import java.util.Map;
 
 public class MoveValidator {
 
-    public static void validate(Map<Position, Piece> board, Position source, Position target) {
-        validateEmpty(board, source);
-        validateInvalidDirection(board, source, target);
-        validateObstacle(board, source, target);
+    public static void validate(Map<Position, Piece> board, Position from, Position to) {
+        validateEmpty(board, from);
+        validateObstacle(board, from, to);
     }
 
     private static void validateEmpty(Map<Position, Piece> board, Position source) {
@@ -26,18 +24,6 @@ public class MoveValidator {
 
     private static boolean isEmpty(Map<Position, Piece> board, Position source) {
         return board.get(source).isEmpty();
-    }
-
-    private static void validateInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
-        if (isInvalidDirection(board, source, target)) {
-            throw new IllegalArgumentException("말이 target 위치로 움직일 수 없습니다.");
-        }
-    }
-
-    private static boolean isInvalidDirection(Map<Position, Piece> board, Position source, Position target) {
-        RelativePosition relativePosition = RelativePosition.of(source, target);
-        NoneEmptyPiece piece = (NoneEmptyPiece) board.get(source);
-        return !piece.isMobile(relativePosition, board.get(target));
     }
 
     private static void validateObstacle(Map<Position, Piece> board, Position source, Position target) {
@@ -59,6 +45,6 @@ public class MoveValidator {
         }
 
         return positions.stream()
-                .anyMatch(position -> isEmpty(board, position));
+                .anyMatch(position -> !isEmpty(board, position));
     }
 }
