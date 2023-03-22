@@ -1,36 +1,33 @@
 package domain.position;
 
-import java.util.Arrays;
-
 public enum ColumnToNumber {
 
-    A('a', 1),
-    B('b', 2),
-    C('c', 3),
-    D('d', 4),
-    E('e', 5),
-    F('f', 6),
-    G('g', 7),
-    H('h', 8);
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
-    private final char column;
     private final int number;
 
-    ColumnToNumber(char column, int number) {
-        this.column = column;
+    ColumnToNumber(int number) {
         this.number = number;
     }
 
     public static int of(char alphabet) {
-        return Arrays.stream(values())
-                .filter(columnToNumber -> columnToNumber.getColumn() == alphabet)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 열 좌표값입니다."))
-                .getNumber();
+        try {
+            return convertAlphabetToColumnNumber(alphabet).getNumber();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("[ERROR] 사용할 수 없는 명령어를 입력했습니다.");
+        }
     }
 
-    private char getColumn() {
-        return column;
+    private static ColumnToNumber convertAlphabetToColumnNumber(char alphabet) {
+        String convertedAlphabet = Character.toString(alphabet);
+        return ColumnToNumber.valueOf(convertedAlphabet.toUpperCase());
     }
 
     private int getNumber() {
