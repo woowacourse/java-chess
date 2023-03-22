@@ -34,7 +34,6 @@ public class ChessController {
 
     public void move(String origin, String destination) {
         chessGame.move(origin, destination);
-        output.printBoard(makeBoardResponse());
     }
 
     private List<List<PieceResponse>> makeBoardResponse() {
@@ -48,10 +47,13 @@ public class ChessController {
 
     public void start() {
         chessGame.start();
-        output.printBoard(makeBoardResponse());
     }
 
     public void finish() {
         chessGame.end();
+    }
+
+    public void printBoard() {
+        output.printBoard(makeBoardResponse());
     }
 }

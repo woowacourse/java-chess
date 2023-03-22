@@ -7,5 +7,6 @@ public abstract class StartRequestType implements RequestType {
     @Override
     public final void execute(ChessController chessController) {
         chessController.start();
+        chessController.printBoard();
     }
 }

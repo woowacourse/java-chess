@@ -25,5 +25,6 @@ public abstract class MoveRequestType implements RequestType {
     @Override
     public final void execute(ChessController chessController) {
         chessController.move(origin, destination);
+        chessController.printBoard();
     }
 }
