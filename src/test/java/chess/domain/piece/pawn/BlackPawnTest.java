@@ -1,7 +1,6 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.exception.WrongDirectionException;
-import chess.domain.piece.Color;
 import chess.domain.square.Direction;
 import chess.domain.square.File;
 import chess.domain.square.Rank;

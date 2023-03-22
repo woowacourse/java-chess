@@ -17,7 +17,9 @@
 
 - Rank, File: 행, 렬에 관한 Enum
 
-- PieceDirection: 체스 말이 갈 수 있는 방향을 저장하는 enum
+- Direction: 방향 정보를 담고 있는 enum
+
+- PieceDirection: 체스 말이 갈 수 있는 방향을 저장하는 enum. 기물 마다의 Direction들을 저장하고 있는 List를 들고 있음.
   - [x] 체스 말의 이동 방향을 알려준다.
 
 - Piece: 체스말

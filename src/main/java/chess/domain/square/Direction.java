@@ -27,6 +27,10 @@ public enum Direction {
         this.rankDirection = rankDirection;
     }
 
+    public boolean isSameDirection(final int fileDirection, final int rankDirection) {
+        return this.fileDirection == fileDirection && this.rankDirection == rankDirection;
+    }
+
     public int getFileDirection() {
         return fileDirection;
     }

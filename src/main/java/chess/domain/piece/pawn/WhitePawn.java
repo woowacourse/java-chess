@@ -20,6 +20,6 @@ public class WhitePawn extends Piece {
         if (current.isRankTwo() && fileDifference == 0 && rankDifference == 2) {
             return Direction.UP;
         }
-        return PieceDirection.WHITE_PAWN.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findWhitePawnDirection(fileDifference, rankDifference);
     }
 }

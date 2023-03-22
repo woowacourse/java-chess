@@ -18,7 +18,7 @@ public class King extends Piece {
         final int rankDifference = current.getRankDifference(destination);
         validateDifference(fileDifference);
         validateDifference(rankDifference);
-        return PieceDirection.KING_AND_QUEEN.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findKingAndQueenDirection(fileDifference, rankDifference);
     }
 
     private void validateDifference(final int difference) {

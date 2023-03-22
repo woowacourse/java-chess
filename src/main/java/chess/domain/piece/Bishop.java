@@ -13,6 +13,6 @@ public class Bishop extends Piece {
     public Direction findDirection(final Square current, final Square destination) {
         final int fileDifference = current.getFileDifference(destination);
         final int rankDifference = current.getRankDifference(destination);
-        return PieceDirection.DIAGONAL.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findDiagonalDirection(fileDifference, rankDifference);
     }
 }

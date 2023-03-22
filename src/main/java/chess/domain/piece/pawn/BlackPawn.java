@@ -20,6 +20,6 @@ public class BlackPawn extends Piece {
         if (current.isRankSeven() && fileDifference == 0 && rankDifference == -2) {
             return Direction.DOWN;
         }
-        return PieceDirection.BLACK_PAWN.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findBlackPawnDirection(fileDifference, rankDifference);
     }
 }

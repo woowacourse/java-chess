@@ -5,7 +5,7 @@ import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
-abstract public class Piece {
+public abstract class Piece {
 
     private final PieceType pieceType;
     private final Color color;
@@ -19,7 +19,6 @@ abstract public class Piece {
         return piece.color != color;
     }
 
-    // TODO: override 할까? (Pawn만 true 반환)
     public boolean isPawn() {
         return getClass().equals(WhitePawn.class) || getClass().equals(BlackPawn.class);
     }

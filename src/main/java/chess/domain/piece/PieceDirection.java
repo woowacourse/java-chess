@@ -28,33 +28,42 @@ public enum PieceDirection {
         return pieceDirections.contains(direction);
     }
 
-    // TODO: 코드 개선 필요
-    public Direction findDirection(final int fileDifference, final int rankDifference) {
-        if (this == STRAIGHT) {
-            return getAbsDirection(fileDifference, rankDifference);
-        }
-        if (this == DIAGONAL) {
-            return getDiagonalDirection(fileDifference, rankDifference);
-        }
-        if (this == KING_AND_QUEEN) {
-            return getKingAndQueenDirection(fileDifference, rankDifference);
-        }
-        return getDirection(fileDifference, rankDifference);
+    public static Direction findWhitePawnDirection(final int fileDifference, final int rankDifference) {
+        return WHITE_PAWN.getDirection(fileDifference, rankDifference);
     }
 
-    private Direction getKingAndQueenDirection(final int fileDifference, final int rankDifference) {
-        try {
-            return DIAGONAL.findDirection(fileDifference, rankDifference);
-        } catch (WrongDirectionException exception) {
-            return STRAIGHT.findDirection(fileDifference, rankDifference);
-        }
+    public static Direction findBlackPawnDirection(final int fileDifference, final int rankDifference) {
+        return BLACK_PAWN.getDirection(fileDifference, rankDifference);
     }
 
-    private Direction getDiagonalDirection(final int fileDifference, final int rankDifference) {
+    public static Direction findKnightDirection(final int fileDifference, final int rankDifference) {
+        return KNIGHT.getDirection(fileDifference, rankDifference);
+    }
+
+    public static Direction findStraightDirection(final int fileDifference, final int rankDifference) {
+        return STRAIGHT.getAbsDirection(fileDifference, rankDifference);
+    }
+
+    public static Direction findDiagonalDirection(final int fileDifference, final int rankDifference) {
         if (Math.abs(fileDifference) == Math.abs(rankDifference)) {
-            return getAbsDirection(fileDifference, rankDifference);
+            return DIAGONAL.getAbsDirection(fileDifference, rankDifference);
         }
         throw new WrongDirectionException();
+    }
+
+    public static Direction findKingAndQueenDirection(final int fileDifference, final int rankDifference) {
+        try {
+            return findDiagonalDirection(fileDifference, rankDifference);
+        } catch (WrongDirectionException exception) {
+            return findStraightDirection(fileDifference, rankDifference);
+        }
+    }
+
+    private Direction getDirection(final int fileDirection, final int rankDirection) {
+        return pieceDirections.stream()
+                .filter(direction -> direction.isSameDirection(fileDirection, rankDirection))
+                .findAny()
+                .orElseThrow(WrongDirectionException::new);
     }
 
     private Direction getAbsDirection(final int fileDifference, final int rankDifference) {
@@ -68,13 +77,5 @@ public enum PieceDirection {
             return number;
         }
         return number / Math.abs(number);
-    }
-
-    private Direction getDirection(final int fileDirection, final int rankDirection) {
-        return pieceDirections.stream()
-                .filter(direction ->
-                        direction.getFileDirection() == fileDirection && direction.getRankDirection() == rankDirection)
-                .findAny()
-                .orElseThrow(WrongDirectionException::new);
     }
 }

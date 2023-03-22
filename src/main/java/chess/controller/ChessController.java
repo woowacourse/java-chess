@@ -9,6 +9,9 @@ import chess.view.OutputView;
 
 import java.util.List;
 
+import static chess.view.Command.MOVE_SOURCE_INDEX;
+import static chess.view.Command.MOVE_DESTINATION_INDEX;
+
 public class ChessController {
 
     private final ChessGame chessGame = new ChessGame();
@@ -43,7 +46,7 @@ public class ChessController {
     private void playUntilEnd() {
         List<String> command = InputView.readCommand();
         while (Command.from(command).isMoveCommand()) {
-            move(command.get(1), command.get(2));
+            move(command.get(MOVE_SOURCE_INDEX), command.get(MOVE_DESTINATION_INDEX));
             OutputView.printGameStatus(chessGame.getGameStatus());
             command = InputView.readCommand();
         }

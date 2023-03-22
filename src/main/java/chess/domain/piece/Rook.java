@@ -13,6 +13,6 @@ public class Rook extends Piece {
     public Direction findDirection(final Square current, final Square destination) {
         final int fileDifference = current.getFileDifference(destination);
         final int rankDifference = current.getRankDifference(destination);
-        return PieceDirection.STRAIGHT.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findStraightDirection(fileDifference, rankDifference);
     }
 }

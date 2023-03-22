@@ -13,6 +13,6 @@ public class Knight extends Piece {
     public Direction findDirection(final Square current, final Square destination) {
         final int fileDifference = current.getFileDifference(destination);
         final int rankDifference = current.getRankDifference(destination);
-        return PieceDirection.KNIGHT.findDirection(fileDifference, rankDifference);
+        return PieceDirection.findKnightDirection(fileDifference, rankDifference);
     }
 }
