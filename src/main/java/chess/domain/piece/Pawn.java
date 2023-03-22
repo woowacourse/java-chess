@@ -12,48 +12,58 @@ import chess.domain.movingStrategy.MovingStrategy;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public final class Pawn extends NonSlidingPiece {
 
     private static final int INITIAL_WHITE_RANK = 2;
     private static final int INITIAL_BLACK_RANK = 7;
 
-    private Pawn(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.PAWN, strategies);
+    private final AttackStrategies attackStrategies;
+
+    private Pawn(final Color color, final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
+        super(color, PieceType.PAWN, movingStrategies);
+        this.attackStrategies = attackStrategies;
+    }
+
+    private static Pawn createWhitePawn() {
+        final List<MovingStrategy> movingStrategies = List.of(new MoveUp());
+        final List<MovingStrategy> attackStrategies = List.of(new MoveLeftUp(), new MoveRightUp());
+
+        return new Pawn(Color.WHITE,
+                new MovingStrategies(movingStrategies),
+                new AttackStrategies(Color.WHITE, attackStrategies));
+    }
+
+    private static Pawn createBlackPawn() {
+        final List<MovingStrategy> movingStrategies = List.of(new MoveDown());
+        final List<MovingStrategy> attackStrategies = List.of(new MoveLeftDown(), new MoveRightDown());
+
+        return new Pawn(Color.BLACK,
+                new MovingStrategies(movingStrategies),
+                new AttackStrategies(Color.BLACK, attackStrategies));
     }
 
     public static Pawn createByColor(final Color color) {
         if (color == Color.BLACK) {
-            return new Pawn(color, initBlackPawnStrategies());
+            return createBlackPawn();
         }
-
         if (color == Color.WHITE) {
-            return new Pawn(color, initWhitePawnStrategies());
+            return createWhitePawn();
         }
-
         throw new AssertionError();
     }
 
-    private static MovingStrategies initBlackPawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new MoveDown(), new MoveLeftDown(),
-                new MoveRightDown());
-        return new MovingStrategies(movingStrategies);
-    }
-
-    private static MovingStrategies initWhitePawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new MoveUp(), new MoveLeftUp(),
-                new MoveRightUp());
-        return new MovingStrategies(movingStrategies);
-    }
-
-
     @Override
     public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
-        final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
-
-        if (isAttack(source, target, targetColor)) {
-            return Collections.emptyList();
+        final Optional<MovingStrategy> strategy = attackStrategies.findStrategy(source, target);
+        if (strategy.isPresent()) {
+            if (attackStrategies.canAttack(source, target, targetColor, strategy.get())) {
+                return Collections.emptyList();
+            }
+            throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
         }
+        final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
         if (isOneStepMove(source, target, targetColor)) {
             return Collections.emptyList();
         }
@@ -61,15 +71,6 @@ public final class Pawn extends NonSlidingPiece {
             return getTwoStepPath(source, movingStrategy);
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
-    }
-
-    @Override
-    public List<Position> createPath(final Position source, final Position target, final MovingStrategy movingStrategy) {
-        return Collections.emptyList();
-    }
-
-    private boolean isAttack(final Position source, final Position target, final Color targetColor) {
-        return source.isOnDiagonal(target) && targetColor.isOpponent(this.color);
     }
 
     private boolean isOneStepMove(final Position source, final Position target, final Color targetColor) {
@@ -92,5 +93,28 @@ public final class Pawn extends NonSlidingPiece {
             return source.getRankOrder() == INITIAL_BLACK_RANK;
         }
         return false;
+    }
+
+    private static class AttackStrategies {
+
+        private final Color color;
+        private final List<MovingStrategy> attackStrategies;
+
+        private AttackStrategies(final Color color, final List<MovingStrategy> attackStrategies) {
+            this.color = color;
+            this.attackStrategies = attackStrategies;
+        }
+
+        private Optional<MovingStrategy> findStrategy(final Position source, final Position target) {
+            return attackStrategies.stream()
+                    .filter(strategy -> strategy.movable(source, target))
+                    .findFirst();
+        }
+
+        private boolean canAttack(final Position source, final Position target, final Color targetColor,
+                                  final MovingStrategy attackStrategy) {
+            final Position movePosition = attackStrategy.move(source);
+            return movePosition.equals(target) && color.isOpponent(targetColor);
+        }
     }
 }

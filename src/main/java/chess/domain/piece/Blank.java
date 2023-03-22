@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Blank extends Piece {
 
-    private Blank(final Color color, final MovingStrategies strategies, final PieceType pieceType) {
+    private Blank(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
         super(color, pieceType, strategies);
     }
 
     public static Blank create() {
         final MovingStrategies emptyStrategies = new MovingStrategies(Collections.emptyList());
-        return new Blank(Color.EMPTY, emptyStrategies, PieceType.EMPTY);
+        return new Blank(Color.EMPTY, PieceType.EMPTY, emptyStrategies);
     }
 
     @Override

@@ -10,18 +10,18 @@ public abstract class Piece {
 
     protected final PieceType pieceType;
     protected final Color color;
-    protected final MovingStrategies strategies;
+    protected final MovingStrategies movingStrategies;
 
-    public Piece(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
+    public Piece(final Color color, final PieceType pieceType, final MovingStrategies movingStrategies) {
         this.color = color;
-        this.strategies = strategies;
+        this.movingStrategies = movingStrategies;
         this.pieceType = pieceType;
     }
 
     public abstract List<Position> createPath(final Position source, final Position target, final MovingStrategy strategy);
 
     public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
-        final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
+        final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
         if (targetColor.isSameColor(this.color)) {
             throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }

@@ -21,5 +21,4 @@ public abstract class NonSlidingPiece extends Piece {
         }
         return Collections.emptyList();
     }
-
 }

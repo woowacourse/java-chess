@@ -15,7 +15,6 @@ public final class OutputView {
 
     public void printBoard(final BoardDto boardDto) {
         int count = 0;
-
         for (String name : boardDto.getNames()) {
             System.out.print(name);
             count++;
