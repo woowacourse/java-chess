@@ -1,5 +1,8 @@
 package domain.game;
 
+import static domain.piece.File.B;
+import static domain.piece.Rank.FOUR;
+import static domain.piece.Rank.TWO;
 import static domain.piece.Side.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -27,12 +30,10 @@ class GameTest {
             "target position에는 source piece가 저장된다")
     @Test
     void shouldMoveCorrectlyWhenInputMovablePositions() {
-        Position sourcePosition = Position.of("b", "2");
-        Position targetPosition = Position.of("b", "4");
+        Position sourcePosition = new Position(B, TWO);
+        Position targetPosition = new Position(B, FOUR);
         Piece sourcePiece = chessBoard.get(sourcePosition);
-
         game.move(sourcePosition, targetPosition);    // Pawn을 위로 2칸 이동
-
         assertAll(
                 () -> assertThat(chessBoard.get(sourcePosition).isEmptyPiece()).isTrue(),
                 () -> assertThat(chessBoard.get(targetPosition)).isEqualTo(sourcePiece)

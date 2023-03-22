@@ -8,15 +8,9 @@ public final class Position {
     private final Rank rank;
     private final File file;
 
-    private Position(File file, Rank rank) {
+    public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public static Position of(String fileText, String rankText) {
-        File file = File.from(fileText);
-        Rank rank = Rank.from(rankText);
-        return new Position(file, rank);
     }
 
     public Movement calculateMovement(Position targetPosition) {
@@ -74,8 +68,12 @@ public final class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return rank == position.rank && file == position.file;
     }

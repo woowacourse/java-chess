@@ -42,8 +42,8 @@ public class ChessController {
             return command;
         }
         Move moveCommand = (Move) command;
-        Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
-        Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
+        Position sourcePosition = new Position(moveCommand.getSourceFile(), moveCommand.getSourceRank());
+        Position targetPosition = new Position(moveCommand.getTargetFile(), moveCommand.getTargetRank());
         game.move(sourcePosition, targetPosition);
         this.outputView.printChessBoard(game.getChessBoard());
         return command;

@@ -1,12 +1,15 @@
 package controller.command;
 
-public class Move implements Command {
-    private final String sourceFile;
-    private final String sourceRank;
-    private final String targetFile;
-    private final String targetRank;
+import domain.piece.File;
+import domain.piece.Rank;
 
-    private Move(String sourceFile, String sourceRank, String targetFile, String targetRank) {
+public class Move implements Command {
+    private final File sourceFile;
+    private final Rank sourceRank;
+    private final File targetFile;
+    private final Rank targetRank;
+
+    private Move(File sourceFile, Rank sourceRank, File targetFile, Rank targetRank) {
         this.sourceFile = sourceFile;
         this.sourceRank = sourceRank;
         this.targetFile = targetFile;
@@ -15,11 +18,15 @@ public class Move implements Command {
 
     public static Move of(String sourceText, String targetText) {
         //TODO substring
-        String sourceFile = sourceText.split("")[0];
-        String sourceRank = sourceText.split("")[1];
-        String targetFile = targetText.split("")[0];
-        String targetRank = targetText.split("")[1];
-        return new Move(sourceFile, sourceRank, targetFile, targetRank);
+        String sourceFileText = sourceText.split("")[0];
+        String sourceRankText = sourceText.split("")[1];
+        String targetFileText = targetText.split("")[0];
+        String targetRankText = targetText.split("")[1];
+        return new Move(
+                FileMapper.convertTextToFile(sourceFileText),
+                RankMapper.convertTextToRank(sourceRankText),
+                FileMapper.convertTextToFile(targetFileText),
+                RankMapper.convertTextToRank(targetRankText));
     }
 
     @Override
@@ -37,19 +44,19 @@ public class Move implements Command {
         return false;
     }
 
-    public String getSourceFile() {
+    public File getSourceFile() {
         return sourceFile;
     }
 
-    public String getSourceRank() {
+    public Rank getSourceRank() {
         return sourceRank;
     }
 
-    public String getTargetFile() {
+    public File getTargetFile() {
         return targetFile;
     }
 
-    public String getTargetRank() {
+    public Rank getTargetRank() {
         return targetRank;
     }
 }

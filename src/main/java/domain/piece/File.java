@@ -3,28 +3,19 @@ package domain.piece;
 import java.util.Arrays;
 
 public enum File {
-    A("a", 1),
-    B("b", 2),
-    C("c", 3),
-    D("d", 4),
-    E("e", 5),
-    F("f", 6),
-    G("g", 7),
-    H("h", 8);
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
-    private final String text;
     private final int order;
 
-    File(String text, int order) {
-        this.text = text;
+    File(int order) {
         this.order = order;
-    }
-
-    public static File from(String rankText) {
-        return Arrays.stream(File.values())
-                .filter(rank -> rank.getText().equals(rankText))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file입니다."));
     }
 
     public File getNext() {
@@ -39,10 +30,6 @@ public enum File {
                 .filter(file -> file.order == this.order - 1)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - 이전 File은 존재하지 않습니다."));
-    }
-
-    public String getText() {
-        return text;
     }
 
     public int calculateIncrement(File targetFile) {
