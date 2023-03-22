@@ -133,4 +133,11 @@ class GameTest {
                 .hasMessage("source위치에 말이 없습니다.");
     }
 
+    @DisplayName("Pawn에 알맞은 움직임이 아니면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenPawnMoveWrong() {
+        assertThatThrownBy(() -> game.move(Position.of(B, TWO), Position.of(B, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("올바른 움직임이 아닙니다.");
+    }
 }
