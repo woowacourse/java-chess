@@ -14,11 +14,9 @@ import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
 
 public class Pawn extends Piece {
 
-    private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
-    private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
+    private int movableDistance = 2;
 
     private final List<Direction> movableDirection;
-    private boolean isFirstMove = true;
 
     public Pawn(Color color) {
         super(PAWN_NAME.getName(), color);
@@ -53,15 +51,8 @@ public class Pawn extends Piece {
         int absGapOfColumn = Math.abs(start.findGapOfColum(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
-        if (isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
-            throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
-        }
-
-        if(!isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE){
+        if (absGapOfColumn > movableDistance
+                && absGapOfRank > movableDistance) {
             throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
@@ -94,5 +85,9 @@ public class Pawn extends Piece {
 
     private boolean isDiagonalDirection(Direction direction) {
         return direction != Direction.TOP && direction != Direction.BOTTOM;
+    }
+
+    public void afterFirstMove() {
+        movableDistance = 1;
     }
 }
