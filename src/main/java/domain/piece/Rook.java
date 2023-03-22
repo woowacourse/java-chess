@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Rook extends Piece {
     private Rook(Side side) {
-        super(side);
+        super(side, PieceType.ROOK);
     }
 
     public static Rook createOfWhite() {

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private Bishop(Side side) {
-        super(side);
+        super(side, PieceType.BISHOP);
     }
 
     public static Bishop createOfWhite() {

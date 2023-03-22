@@ -1,14 +1,17 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.List;
 
 public abstract class Piece {
     protected final Side side;
+    protected final PieceType pieceType;
 
-    protected Piece(Side side) {
+    protected Piece(Side side, PieceType pieceType) {
         this.side = side;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition);

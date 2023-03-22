@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 public final class Pawn extends Piece {
 
     private Pawn(Side side) {
-        super(side);
+        super(side, PieceType.PAWN);
     }
 
     public static Pawn createOfBlack() {

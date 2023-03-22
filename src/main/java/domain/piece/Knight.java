@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private Knight(Side side) {
-        super(side);
+        super(side, PieceType.KNIGHT);
     }
 
     public static Knight createOfWhite() {

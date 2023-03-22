@@ -1,12 +1,13 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.List;
 
 public class EmptyPiece extends Piece {
     public EmptyPiece() {
-        super(Side.NEUTRAL);
+        super(Side.NEUTRAL, PieceType.EMPTY_PIECE);
     }
 
     @Override
