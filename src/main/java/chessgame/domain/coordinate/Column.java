@@ -31,10 +31,6 @@ public class Column {
         return value < MIN_COLUMN || value > MAX_COLUMN;
     }
 
-    public int add(final Column otherColumn) {
-        return this.value + otherColumn.value;
-    }
-
     public int add(final int otherColumn) {
         return this.value + otherColumn;
     }
@@ -57,10 +53,6 @@ public class Column {
 
     public boolean isZero() {
         return this.value == 0;
-    }
-
-    public int value() {
-        return value;
     }
 
     @Override

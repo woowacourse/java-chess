@@ -20,10 +20,6 @@ public class Coordinate {
         return new Coordinate(Row.fromWithoutValidate(row), Column.fromWithoutValidate(column));
     }
 
-    public Coordinate add(final Coordinate otherCoordinate) {
-        return fromOnBoard(this.row.add(otherCoordinate.row), this.column.add(otherCoordinate.column));
-    }
-
     public Coordinate add(final int row, final int column) {
         return fromOnBoard(this.row.add(row), this.column.add(column));
     }

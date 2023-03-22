@@ -32,10 +32,6 @@ public class Row {
         return value < MIN_ROW || value > MAX_ROW;
     }
 
-    public int add(final Row otherRow) {
-        return this.value + otherRow.value;
-    }
-
     public int add(final int otherRow) {
         return this.value + otherRow;
     }
@@ -58,10 +54,6 @@ public class Row {
 
     public boolean isZero() {
         return this.value == 0;
-    }
-
-    public int value() {
-        return value;
     }
 
     @Override
