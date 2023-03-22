@@ -34,7 +34,7 @@ public class Piece {
      */
     public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
         pieceMovementStrategy.validateMove(piecePosition, destination, nullablePiece);
-        return new Piece(destination, pieceMovementStrategy);
+        return new Piece(id, destination, pieceMovementStrategy);
     }
 
     public boolean existIn(final PiecePosition piecePosition) {

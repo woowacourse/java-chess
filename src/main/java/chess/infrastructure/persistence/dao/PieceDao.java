@@ -66,7 +66,7 @@ public class PieceDao {
         }
     }
 
-    void deleteAll() {
+    public void deleteAll() {
         final String sql = "DELETE FROM piece";
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
