@@ -4,7 +4,6 @@ import static chess.view.PieceView.*;
 
 import chess.domain.Board;
 import chess.domain.Position;
-import chess.domain.Team;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -21,7 +20,6 @@ public class OutputView {
     private static final int MAX_RANK = 8;
     private static final int MIN_FILE = 1;
     private static final int MAX_FILE = 8;
-    //private static final String EMPTY_PIECE = ".";
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -47,13 +45,6 @@ public class OutputView {
     }
 
     private void printBoardUnit(Map<Position, Piece> chessBoard, int rank, int file) {
-//        if (!chessBoard.containsKey(new Position(rank, file))) {
-//            System.out.print(EMPTY_PIECE);
-//        }
-//        if (chessBoard.containsKey(new Position(rank, file))) {
-//            Piece piece = chessBoard.get(new Position(rank, file));
-//            printPiece(piece);
-//        }
         Piece piece = chessBoard.get(new Position(rank, file));
         printPiece(piece);
     }
