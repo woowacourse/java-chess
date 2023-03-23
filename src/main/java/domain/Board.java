@@ -1,5 +1,6 @@
 package domain;
 
+import domain.config.BoardSetting;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import java.util.List;
@@ -97,5 +98,9 @@ public class Board {
 
     public double calculateBlackScore() {
         return scoreCalculator.calculateBlack(board);
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return board;
     }
 }

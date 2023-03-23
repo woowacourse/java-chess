@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.config.BoardSetting;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import java.util.HashMap;
