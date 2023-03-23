@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ChessBoardMoveInitialPawnTest {
+class ChessBoardMoveInitialPawnTest {
 
     private final Position source = D7;
     private ChessBoard chessBoard;
