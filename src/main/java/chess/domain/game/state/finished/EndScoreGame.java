@@ -1,4 +1,4 @@
-package chess.domain.game.state;
+package chess.domain.game.state.finished;
 
 import chess.domain.piece.Camp;
 import chess.domain.position.ChessBoard;

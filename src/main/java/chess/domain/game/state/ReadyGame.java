@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.game.state.started.RunGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;

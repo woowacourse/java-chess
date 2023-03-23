@@ -1,5 +1,7 @@
-package chess.domain.game.state;
+package chess.domain.game.state.started;
 
+import chess.domain.game.state.ChessGame;
+import chess.domain.game.state.finished.EndGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.PieceMove;

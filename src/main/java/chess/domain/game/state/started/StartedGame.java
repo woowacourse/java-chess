@@ -1,5 +1,6 @@
-package chess.domain.game.state;
+package chess.domain.game.state.started;
 
+import chess.domain.game.state.ChessGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
@@ -13,7 +14,7 @@ public abstract class StartedGame implements ChessGame {
     protected final ChessBoard chessBoard;
     protected final Camp turnCamp;
 
-    StartedGame(ChessBoard chessBoard, Camp turnCamp) {
+    protected StartedGame(ChessBoard chessBoard, Camp turnCamp) {
         this.chessBoard = chessBoard;
         this.turnCamp = turnCamp;
     }
