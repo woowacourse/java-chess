@@ -6,12 +6,14 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
+import chess.domain.square.Side;
 import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessController {
@@ -61,6 +63,11 @@ public class ChessController {
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
         chessGame.move(sourceSquare, targetSquare);
         showBoard();
+    }
+
+    public void calculate() {
+        Map<Side, Double> status = chessGame.status();
+        outputView.printStatuses(status);
     }
 
     public void end() {

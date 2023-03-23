@@ -3,6 +3,7 @@ package chess.controller.command;
 public enum CommandType {
     START(0),
     MOVE(2),
+    STATUS(0),
     END(0),
     ;
 
