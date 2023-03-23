@@ -15,4 +15,9 @@ public class EndGame extends Game {
         throw new IllegalGameStateException();
     }
 
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
+
 }

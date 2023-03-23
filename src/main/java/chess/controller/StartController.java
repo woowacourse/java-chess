@@ -3,11 +3,11 @@ package chess.controller;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.BoardSession;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
+import chess.domain.game.Game;
+import chess.domain.game.GameSession;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
@@ -30,8 +30,9 @@ public class StartController implements Controller {
     public Response execute(Request request) {
         try {
             validate(request);
-            BoardSession.makeSession(BoardGenerator.makeBoard());
-            return new Response(ResponseType.START, makeBoardDto(BoardSession.getBoard()));
+            Game newGame = Game.of(BoardGenerator.makeBoard());
+            GameSession.makeSession(newGame);
+            return new Response(ResponseType.START, makeBoardDto(newGame));
         } catch (IllegalStateException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
         }
@@ -49,13 +50,13 @@ public class StartController implements Controller {
     }
 
     private void validateBoard() {
-        if (BoardSession.existBoard()) {
+        if (GameSession.existGame()) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
     }
 
-    public BoardDto makeBoardDto(Board board) {
-        Map<Position, Piece> data = board.getBoard();
+    public BoardDto makeBoardDto(Game game) {
+        Map<Position, Piece> data = game.getBoard().getBoardData();
         List<List<PieceDto>> response = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             List<PieceDto> pieceRespons = Arrays.stream(File.values())

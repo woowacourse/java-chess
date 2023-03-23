@@ -38,7 +38,7 @@ public class BoardTest {
         Board board = BoardGenerator.makeBoard();
 
         //when
-        Map<Position, Piece> boardData = board.getBoard();
+        Map<Position, Piece> boardData = board.getBoardData();
         List<Piece> pieces = boardData.keySet().stream()
                 .filter(position -> position.getRank() == Rank.ONE)
                 .map((position) -> boardData.get(position))
@@ -58,7 +58,7 @@ public class BoardTest {
         Board board = BoardGenerator.makeBoard();
 
         //when
-        Map<Position, Piece> boardData = board.getBoard();
+        Map<Position, Piece> boardData = board.getBoardData();
         List<Piece> pieces = boardData.keySet().stream()
                 .filter(position -> position.getRank() == Rank.TWO)
                 .map((position) -> boardData.get(position))
@@ -95,9 +95,10 @@ public class BoardTest {
     @Test
     void 색을_번갈아_가면서_이동할_수_있다() {
         //expect
-        Board board = BoardGenerator.makeBoard();
-        board.movePiece(A2, A3);
-        Assertions.assertDoesNotThrow(() -> board.movePiece(A7, A6));
-        Assertions.assertDoesNotThrow(() -> board.movePiece(A1, A2));
+        Assertions.assertDoesNotThrow(() -> {
+            Board board = BoardGenerator.makeBoard();
+            Board firstMovedBoard = board.movePiece(A2, A3);
+            Board secondMovedBoard = firstMovedBoard.movePiece(A7, A6);
+        });
     }
 }

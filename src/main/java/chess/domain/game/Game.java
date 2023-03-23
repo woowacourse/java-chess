@@ -25,6 +25,8 @@ public abstract class Game {
 
     public abstract Game move(Position from, Position to);
 
+    public abstract boolean isEnd();
+
     public Map<Color, Score> getStatus() {
         HashMap<Color, Score> result = new HashMap<>();
         result.put(Color.WHITE, board.getScoreOf(Color.WHITE));

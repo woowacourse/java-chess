@@ -2,7 +2,8 @@ package chess.controller;
 
 import chess.domain.Position;
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.BoardSession;
+import chess.domain.game.Game;
+import chess.domain.game.GameSession;
 import chess.domain.piece.Color;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
@@ -25,7 +26,7 @@ public class MoveControllerTest {
 
     @BeforeEach
     void setting() {
-        BoardSession.clear();
+        GameSession.clear();
     }
 
     @Test
@@ -45,11 +46,12 @@ public class MoveControllerTest {
     void Move_Contoller_는_전진_명령을_수행한다() {
         //given
         Request request = new Request("move a2 a3");
-        BoardSession.makeSession(BoardGenerator.makeBoard());
+        GameSession.makeSession(Game.of(BoardGenerator.makeBoard()));
 
         //when
-        Response response = controller.execute(request);
-        Map<Position, Piece> board = BoardSession.getBoard().getBoard();
+        controller.execute(request);
+        Game game = GameSession.getGame();
+        Map<Position, Piece> board = game.getBoard().getBoardData();
         Piece result = board.get(A3);
 
 

@@ -110,7 +110,7 @@ public class ScoreTest {
     void 초기_보드는_38점_이다() {
         //given
         Board board = BoardGenerator.makeBoard();
-        Map<Position, Piece> board1 = board.getBoard();
+        Map<Position, Piece> board1 = board.getBoardData();
 
         //when
         Score score = new Score(board1, Color.WHITE);

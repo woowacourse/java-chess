@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.BoardSession;
+import chess.domain.game.GameSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -15,9 +15,9 @@ public class StartControllerTest {
         StartController startController = StartController.getInstance();
 
         //when
-        boolean before = BoardSession.existBoard();
+        boolean before = GameSession.existGame();
         startController.execute(new Request("start"));
-        boolean after = BoardSession.existBoard();
+        boolean after = GameSession.existGame();
 
         //then
         Assertions.assertFalse(before);

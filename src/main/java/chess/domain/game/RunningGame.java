@@ -19,4 +19,9 @@ public class RunningGame extends Game {
         return new RunningGame(movedBoard);
     }
 
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
 }

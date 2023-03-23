@@ -25,7 +25,7 @@ public class BoardGenerator {
         board.putAll(makeBlackPiece());
         board.putAll(makeWhitePiece());
         board.putAll(makeEmptyPiece());
-        return new Board(board);
+        return new Board(board, Color.WHITE);
     }
 
     private static Map<Position, Piece> makeBlackPiece() {
