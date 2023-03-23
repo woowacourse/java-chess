@@ -19,7 +19,7 @@ public class Piece {
         return new Piece(Position.from(rank, file), shape);
     }
 
-    public boolean isSameShape(Shape shape) {
+    public boolean isSameShape(final Shape shape) {
         return this.shape == shape;
     }
 
@@ -43,7 +43,7 @@ public class Piece {
         return position.equals(findPosition);
     }
 
-    public Piece getNewPiece(int file) {
+    public Piece getNewPiece(final int file) {
         return new Piece(position.changePosition(file), this.shape);
     }
 
@@ -59,7 +59,7 @@ public class Piece {
         return position.getFileValue();
     }
 
-    public char getName(Color color) {
+    public char getName(final Color color) {
         return this.shape.getNameByColor(color);
     }
 
@@ -69,6 +69,10 @@ public class Piece {
                 "position=" + position +
                 ", shape=" + shape +
                 '}';
+    }
+
+    public double getScore() {
+        return shape.getScore();
     }
 
 }

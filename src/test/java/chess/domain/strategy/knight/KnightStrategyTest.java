@@ -29,7 +29,7 @@ class KnightStrategyTest {
     }
 
     @Test
-    @DisplayName("rank가 1, file이 2가 아닐 때 움직일 수 없다.")
+    @DisplayName("rank 차이가 1, file 차이가 2가 아닐 때 움직일 수 없다.")
     void cantMoveRankIs1AndFileIs2() {
         // when, then
         Assertions.assertThrows(
@@ -38,7 +38,7 @@ class KnightStrategyTest {
     }
 
     @Test
-    @DisplayName("rank가 1, file이 2이면 움직일 수 있다.")
+    @DisplayName("rank 차이가 1, file 차이가 2이면 움직일 수 있다.")
     void canMoveRankIs1AndFileIs2() {
         // given
         List<Position> piecesExist = List.of(Position.from(2, 'a'));
@@ -56,7 +56,7 @@ class KnightStrategyTest {
     }
 
     @Test
-    @DisplayName("rank가 2, file이 1이 아닐 때 움직일 수 없다.")
+    @DisplayName("rank 차이가 2이고, file 차이가 1이 아닐 때 움직일 수 없다.")
     void cantMoveRankIs2AndFileIs1() {
         // when, then
         Assertions.assertThrows(
@@ -65,7 +65,7 @@ class KnightStrategyTest {
     }
 
     @Test
-    @DisplayName("rank가 2, file이 1일 때 움직일 수 있다.")
+    @DisplayName("rank 차이가 2 이고, file 차이가 1일 때 움직일 수 있다.")
     void canMoveRankIs2AndFileIs1() {
         // given
         List<Position> piecesExist = List.of(Position.from(2, 'a'));

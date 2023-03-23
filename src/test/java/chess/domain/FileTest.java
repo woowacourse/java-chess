@@ -16,4 +16,5 @@ class FileTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물의 세로 위치는 a부터 h까지 놓을 수 있습니다.");
     }
+
 }
