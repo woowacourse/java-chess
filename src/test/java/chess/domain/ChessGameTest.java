@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -22,7 +21,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(board);
         chessGame.movePiece(C_2, C_4);
 
-        assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
+        assertThat(board.findPiece(C_2)).isEqualTo(null);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
     }
 
