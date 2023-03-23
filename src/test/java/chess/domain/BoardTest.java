@@ -132,4 +132,21 @@ class BoardTest {
             assertThat(scores).containsOnly(0.0, 9.0, 5.0, 5.0, 3.0, 3.0, 2.5, 2.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
         }
     }
+
+    @Nested
+    @DisplayName("특정 팀에 대하여 같은 세로줄에 폰이 두 개 이상 있는 경우 마이너스 점수를 반환하는 getMinusScore 테스트.")
+    class getMinusScoreTest {
+
+        @Test
+        @DisplayName("백 팀에 대하여 같은 세로줄에 폰이 두 개 이상 있는 경우 마이너스 점수를 받는다.")
+        void getScoresTest1() {
+            Board board = BoardGenerator.createBoard();
+
+            board.movePiece(new Position(0, 1), new Position(0,3));
+            board.movePiece(new Position(1,6), new Position(1, 4));
+            board.movePiece(new Position(0, 3), new Position(1, 4));
+
+            assertThat(board.getMinusScore(Team.WHITE)).isEqualTo(0.5 * 2);
+        }
+    }
 }
