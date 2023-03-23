@@ -10,17 +10,17 @@ import java.util.stream.Collectors;
 public final class Position {
 
     private static final Map<Integer, Position> cache = new HashMap<>();
+    public static final List<Integer> PADDING_ROWS = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+    public static final List<Integer> PADDING_COLUMNS = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+    public static final List<Integer> ORDERED_ROWS = List.of(8, 7, 6, 5, 4, 3, 2, 1);
+    public static final List<Integer> ORDERED_COLUMNS = List.of(1, 2, 3, 4, 5, 6, 7, 8);
     public static final int COLUMN_INDEX = 0;
     public static final int ROW_INDEX = 1;
 
     static {
-        List<Integer> rows = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        List<Integer> columns = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        rows.stream()
-                .flatMap(row -> columns.stream()
-                        .map(column -> new Position(row, column)))
-                .forEach(position -> cache.put(position.hashCode(), position));
+        for (int row : PADDING_ROWS) {
+            setUpColumnsByRow(row);
+        }
     }
 
     private final int row;
@@ -42,12 +42,16 @@ public final class Position {
         return cache.get(Objects.hash(row, column));
     }
 
-    public static List<Position> getAllPosition() {
-        List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
-        List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+    private static void setUpColumnsByRow(int row) {
+        for (int column : PADDING_COLUMNS) {
+            Position position = new Position(row, column);
+            cache.put(position.hashCode(), position);
+        }
+    }
 
-        return rows.stream()
-                .flatMap(row -> columns.stream()
+    public static List<Position> getAllPosition() {
+        return ORDERED_ROWS.stream()
+                .flatMap(row -> ORDERED_COLUMNS.stream()
                         .map(column -> Position.of(row, column)))
                 .collect(Collectors.toList());
     }
