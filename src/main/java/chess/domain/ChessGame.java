@@ -2,9 +2,7 @@ package chess.domain;
 
 import java.util.List;
 
-import chess.domain.board.Board;
-import chess.domain.board.ResultCalculator;
-import chess.domain.board.Score;
+import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
@@ -31,7 +29,34 @@ public class ChessGame {
         return board.findPieceByPosition(sourcePosition);
     }
 
+    public void saveScoreBySide() {
+        Score whiteScore = board.calculateSideScore(Side.WHITE);
+        Score blackScore = board.calculateSideScore(Side.BLACK);
+        resultCalculator.saveTotalScoreBySide(Side.WHITE, whiteScore);
+        resultCalculator.saveTotalScoreBySide(Side.BLACK, blackScore);
+    }
+
+    public void saveGameResultBySide() {
+        resultCalculator.saveGameResultBySide();
+    }
+
+    public boolean isTargetPieceOppositeKing(Position sourcePosition, Position targetPosition) {
+        return board.isTargetPieceOppositeKing(sourcePosition, targetPosition);
+    }
+
     public List<Piece> getPieces() {
         return board.getPieces();
+    }
+
+    public ResultCalculator getResultCalculator() {
+        return resultCalculator;
+    }
+
+    public ScoreBySide getScoreBySide() {
+        return resultCalculator.getScoreBySide();
+    }
+
+    public GameResultBySide getGameResultBySide() {
+        return resultCalculator.getGameResultBySide();
     }
 }
