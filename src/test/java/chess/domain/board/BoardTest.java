@@ -211,4 +211,15 @@ class BoardTest {
         assertThat(totalWhiteScore).isEqualTo(new Score(new BigDecimal("37.0")));
         assertThat(totalBlackScore).isEqualTo(new Score(new BigDecimal("37.0")));
     }
+
+    @Test
+    @DisplayName("타겟 위치의 기물이 적군의 킹이면 true를 반환한다.")
+    void isTargetPieceOppositeKing() {
+        // given
+        Position sourcePosition = A1;
+        Position targetPosition = E8;
+
+        // when, then
+        assertThat(board.isTargetPieceOppositeKing(sourcePosition, targetPosition)).isTrue();
+    }
 }
