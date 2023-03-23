@@ -68,6 +68,19 @@ class ChessGameTest {
 
             assertThat(score).isEqualTo(38.0);
         }
+
+        @Test
+        @DisplayName("같은 세로줄에 같은팀의 폰이 있을 경우 점수의 합을 구한다.")
+        void getTotalScoreTest2() {
+            ChessGame game = ChessGame.create();
+
+            game.movePiece(new Position(0, 1), new Position(0,3));
+            game.movePiece(new Position(1,6), new Position(1, 4));
+            game.movePiece(new Position(0, 3), new Position(1, 4));
+
+            double score = game.getTotalScore(Team.WHITE);
+            assertThat(score).isEqualTo(38.0 - 1.0);
+        }
     }
 
     @Nested
