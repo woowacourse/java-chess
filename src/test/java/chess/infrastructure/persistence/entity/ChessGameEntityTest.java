@@ -2,7 +2,7 @@ package chess.infrastructure.persistence.entity;
 
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.ChessGame;
-import chess.domain.game.state.EndGame;
+import chess.domain.game.GameState;
 import chess.domain.piece.Color;
 import chess.infrastructure.persistence.mapper.ChessGameMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ class ChessGameEntityTest {
     @Test
     void ChessGame_으로부터_생성될_수_있다() {
         // given
-        final ChessGame chessGame = new ChessGame(new ChessBoardFactory().create());
+        final ChessGame chessGame = ChessGame.start(new ChessBoardFactory().create());
 
         // when
         final ChessGameEntity chessGameEntity = ChessGameMapper.fromDomain(chessGame);
@@ -39,7 +39,7 @@ class ChessGameEntityTest {
     @Test
     void ChessGame_을_생성할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, null, "BLACK");
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, GameState.END.name(), null, "BLACK");
 
         // when
         final ChessGame chessGame = ChessGameMapper.toDomain(chessGameEntity, new ArrayList<>());
@@ -47,7 +47,7 @@ class ChessGameEntityTest {
         // then
         assertAll(
                 () -> assertThat(chessGame.id()).isEqualTo(1L),
-                () -> assertThat(chessGame.state()).isInstanceOf(EndGame.class),
+                () -> assertThat(chessGame.state()).isEqualTo(GameState.END),
                 () -> assertThat(chessGame.winColor()).isEqualTo(Color.BLACK)
         );
     }

@@ -33,7 +33,7 @@ class ChessGameDaoTest {
     @Test
     void ChessGameEntity_를_저장한다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
 
         // when
         chessGameDao.save(chessGameEntity);
@@ -50,11 +50,11 @@ class ChessGameDaoTest {
     @Test
     void 업데이트_할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
         chessGameDao.save(chessGameEntity);
 
         // when
-        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), Color.BLACK.name(), null);
+        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), "MovePiece", Color.BLACK.name(), null);
         chessGameDao.update(update);
 
         // then
@@ -69,13 +69,13 @@ class ChessGameDaoTest {
     @Test
     void 업데이트_시_하나만_업데이트_되어야_한다() {
         // given
-        final ChessGameEntity chessGameEntity1 = new ChessGameEntity(null, Color.WHITE.name(), null);
-        final ChessGameEntity chessGameEntity2 = new ChessGameEntity(null, Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity1 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity2 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
         chessGameDao.save(chessGameEntity1);
         chessGameDao.save(chessGameEntity2);
 
         // when
-        final ChessGameEntity update = new ChessGameEntity(chessGameEntity1.id(), Color.BLACK.name(), null);
+        final ChessGameEntity update = new ChessGameEntity(chessGameEntity1.id(), "MovePiece", Color.BLACK.name(), null);
         chessGameDao.update(update);
 
         // then

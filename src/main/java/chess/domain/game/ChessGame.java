@@ -2,8 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Turn;
-import chess.domain.game.state.ChessGameState;
-import chess.domain.game.state.MovePiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
@@ -15,29 +13,60 @@ public class ChessGame {
 
     private Long id;
     private final ChessBoard chessBoard;
-    private ChessGameState state;
+    private GameState state;
+    private Turn turn;
+    private Color winner;
 
-    public ChessGame(final ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-        this.state = new MovePiece(new Turn(Color.WHITE));
-    }
-
-    public ChessGame(final Long id, final ChessBoard chessBoard, final ChessGameState state) {
+    private ChessGame(final Long id, final ChessBoard chessBoard, final GameState state, final Turn turn, final Color winner) {
         this.id = id;
         this.chessBoard = chessBoard;
         this.state = state;
+        this.turn = turn;
+        this.winner = winner;
+    }
+
+    public static ChessGame start(final ChessBoard chessBoard) {
+        return new ChessGame(null, chessBoard, GameState.RUN, new Turn(Color.WHITE), null);
+    }
+
+    public static ChessGame restart(final Long id, final ChessBoard chessBoard, final Turn turn) {
+        return new ChessGame(id, chessBoard, GameState.RUN, turn, null);
+    }
+
+    public static ChessGame end(final Long id, final ChessBoard chessBoard, final Color winner) {
+        return new ChessGame(id, chessBoard, GameState.END, null, winner);
     }
 
     public void movePiece(final PiecePosition source, final PiecePosition destination) {
-        state = state.movePiece(chessBoard, source, destination);
+        validateRunning();
+        chessBoard.movePiece(turn, source, destination);
+        if (killEnemyKing()) {
+            state = GameState.END;
+            winner = turn.color();
+            return;
+        }
+        turn = turn.change();
+    }
+
+    private void validateRunning() {
+        if (state != GameState.RUN) {
+            throw new IllegalArgumentException("게임이 진행 중이 아닙니다.");
+        }
+    }
+
+    private boolean killEnemyKing() {
+        return !chessBoard.existKingByColor(turn.enemyColor());
     }
 
     public boolean playable() {
-        return state.playable();
+        return state == GameState.RUN;
     }
 
     public Color winColor() {
-        return state.winColor();
+        if (state != GameState.END) {
+            throw new IllegalArgumentException("아직 게임이 끝나지 않았습니다.");
+        }
+        return winner;
     }
 
     public List<Piece> pieces() {
@@ -45,18 +74,18 @@ public class ChessGame {
     }
 
     public Map<Color, Double> calculateScore() {
-        return state.calculateScore(chessBoard);
+        return chessBoard.calculateScore();
     }
 
     public Long id() {
         return id;
     }
 
-    public ChessGameState state() {
+    public GameState state() {
         return state;
     }
 
     public Color turnColor() {
-        return state.turn().color();
+        return turn.color();
     }
 }

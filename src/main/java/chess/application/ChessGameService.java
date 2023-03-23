@@ -14,7 +14,7 @@ public class ChessGameService {
     }
 
     public Long create(final ChessBoardFactory chessBoardFactory) {
-        final ChessGame chessGame = new ChessGame(chessBoardFactory.create());
+        final ChessGame chessGame = ChessGame.start(chessBoardFactory.create());
         return chessGameRepository.save(chessGame).id();
     }
 

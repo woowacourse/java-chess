@@ -15,9 +15,9 @@ public class ChessGameDao {
     private final JdbcTemplate template = new JdbcTemplate();
 
     public void save(final ChessGameEntity chessGameEntity) {
-        final String sql = "INSERT INTO chess_game(id,  turn, winner) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO chess_game(id, state, turn, winner) VALUES (?, ?, ?, ?)";
         final Long id = getId();
-        template.executeUpdate(sql, id.toString(), chessGameEntity.turn(), chessGameEntity.winner());
+        template.executeUpdate(sql, id.toString(), chessGameEntity.state(), chessGameEntity.turn(), chessGameEntity.winner());
         chessGameEntity.setId(id);
     }
 
@@ -40,14 +40,16 @@ public class ChessGameDao {
         return template.findOne(query, resultSet -> new ChessGameEntity(
                 resultSet.getObject(1, Long.class),
                 resultSet.getString(2),
-                resultSet.getString(3)
+                resultSet.getString(3),
+                resultSet.getString(4)
         ), id.toString());
     }
 
     public void update(final ChessGameEntity chessGameEntity) {
-        final String sql = "UPDATE chess_game SET turn = ?, winner = ? where id = ?";
+        final String sql = "UPDATE chess_game SET turn = ?, state = ?, winner = ? where id = ?";
         template.executeUpdate(sql,
                 chessGameEntity.turn(),
+                chessGameEntity.state(),
                 chessGameEntity.winner(),
                 chessGameEntity.id().toString()
         );
