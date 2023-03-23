@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ActionCommandFactory {
 
-    StrategyCommand create(List<String> inputs);
+    StrategyCommand from(List<String> inputs);
 }

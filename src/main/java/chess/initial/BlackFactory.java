@@ -16,7 +16,7 @@ import java.util.Map;
 
 public final class BlackFactory {
 
-    public static Map<Position, Piece> create(final Map<Position, Piece> board) {
+    public static Map<Position, Piece> from(final Map<Position, Piece> board) {
         fillBlackPiece(board);
         return board;
     }

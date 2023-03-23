@@ -21,7 +21,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create(new HashMap<>());
+        board = Board.from(new HashMap<>());
     }
 
     @Test

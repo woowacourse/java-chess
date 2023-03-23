@@ -15,15 +15,15 @@ public final class BoardFactory {
     private BoardFactory() {
     }
 
-    public static Map<Position, Piece> create(final Map<Position, Piece> board) {
+    public static Map<Position, Piece> from(final Map<Position, Piece> board) {
         fillEmpty(board);
         fillPieces(board);
         return board;
     }
 
     private static void fillPieces(final Map<Position, Piece> board) {
-        board.putAll(BlackFactory.create(new HashMap<>()));
-        board.putAll(WhiteFactory.create(new HashMap<>()));
+        board.putAll(BlackFactory.from(new HashMap<>()));
+        board.putAll(WhiteFactory.from(new HashMap<>()));
     }
 
     private static void fillEmpty(final Map<Position, Piece> board) {

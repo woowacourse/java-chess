@@ -30,7 +30,7 @@ public enum Command {
     public static StrategyCommand bind(final List<String> input) {
         return Arrays.stream(Command.values())
                 .filter(command -> isSameCommand(input, command) && isSameSize(input, command))
-                .map(command -> command.actionCommandFactory.create(input))
+                .map(command -> command.actionCommandFactory.from(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력값은 `start`, `end`, `move source target`만 가능합니다."));
     }

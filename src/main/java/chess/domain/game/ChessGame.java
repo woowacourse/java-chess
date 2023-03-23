@@ -12,7 +12,7 @@ public class ChessGame {
     private Team turn;
 
     public ChessGame() {
-        this.board = Board.create(new HashMap<>());
+        this.board = Board.from(new HashMap<>());
         this.turn = Team.WHITE;
     }
 

@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class Board {
 
-    private static final int START_INDEX = 0;
     private static final int START_COUNT = 0;
     private static final int INCLUDE_TARGET = 1;
 
@@ -22,8 +21,8 @@ public class Board {
         this.board = board;
     }
 
-    public static Board create(final Map<Position, Piece> board) {
-        return new Board(BoardFactory.create(board));
+    public static Board from(final Map<Position, Piece> board) {
+        return new Board(BoardFactory.from(board));
     }
 
     public void move(final Position source, final Position target, final Team team) {
