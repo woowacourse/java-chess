@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public enum File {
-    A("A", 1),
-    B("B", 2),
-    C("C", 3),
-    D("D", 4),
-    E("E", 5),
-    F("F", 6),
-    G("G", 7),
-    H("H", 8),
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8),
     ;
 
     private static final int START_EXCLUSIVE = 1;
