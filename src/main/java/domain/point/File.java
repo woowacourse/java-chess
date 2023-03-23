@@ -1,5 +1,7 @@
 package domain.point;
 
+import java.util.Arrays;
+
 public enum File {
     A("a"),
     B("b"),
@@ -14,6 +16,13 @@ public enum File {
 
     File(String symbol) {
         this.symbol = symbol;
+    }
+
+    public static File findBySymbol(String symbol) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.symbol.equals(symbol))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("우효하지 않은 파일 값입니다."));
     }
 
     public String getSymbol() {
