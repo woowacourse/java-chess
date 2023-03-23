@@ -1,5 +1,7 @@
 package chess.domain;
 
+import static chess.domain.color.Color.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,7 +14,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.color.Color;
 import chess.initial.BoardFactory;
 
 public class Board {
@@ -108,7 +109,7 @@ public class Board {
 
 	private void movePiece(final Position source, final Position target, final Piece piece) {
 		board.put(target, piece);
-		board.put(source, new Empty(Color.NONE));
+		board.put(source, new Empty(NONE, source));
 	}
 
 	public Map<Position, Piece> getBoard() {
