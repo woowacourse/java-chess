@@ -27,7 +27,7 @@ class ChessGameTest {
     void moveTest() {
         Piece sourcePiece = chessBoard.get(Position.of("b", "2"));
         //when
-        chessGame.move("b2b4");
+        chessGame.move(Position.of("b", "2"), Position.of("b", "4"));
         //then
         assertThat(chessBoard.get(Position.of("b", "4"))).isEqualTo(sourcePiece);
     }
@@ -36,7 +36,7 @@ class ChessGameTest {
     @Test
     void whiteInvalidTurnExceptionTest() {
         //then
-        assertThatThrownBy(() -> chessGame.move("b7b6"))
+        assertThatThrownBy(() -> chessGame.move(Position.of("b", "7"), Position.of("b", "6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
     }
@@ -45,9 +45,9 @@ class ChessGameTest {
     @Test
     void blackInvalidTurnExceptionTest() {
         //given
-        chessGame.move("b2b3");
+        chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
         //when
-        assertThatThrownBy(() -> chessGame.move("b3b4"))
+        assertThatThrownBy(() -> chessGame.move(Position.of("b", "3"), Position.of("b", "4")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
     }
@@ -56,7 +56,7 @@ class ChessGameTest {
     @Test
     void moveEmptyPieceExceptionTest() {
         //given
-        assertThatThrownBy(() -> chessGame.move("b3b4"))
+        assertThatThrownBy(() -> chessGame.move(Position.of("b", "3"), Position.of("b", "4")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Position.of("b", "3") + "에 움직일 수 있는 말이 없습니다.");
     }
@@ -78,8 +78,8 @@ class ChessGameTest {
         chessBoard.put(Position.of("d", "2"), Pawn.createOfBlack());
         Board board = new Board(chessBoard);
         chessGame = new ChessGame(board);
-        chessGame.move("b2b3");
-        chessGame.move("d2e1");
+        chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
+        chessGame.move(Position.of("d", "2"), Position.of("e", "1"));
         //when
         assertThat(chessGame.isExitGame()).isEqualTo(true);
         //then
@@ -89,7 +89,7 @@ class ChessGameTest {
     @Test
     void kingAliveTest() {
 
-        chessGame.move("b2b3");
+        chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
         assertThat(chessGame.isExitGame()).isEqualTo(false);
     }
 
