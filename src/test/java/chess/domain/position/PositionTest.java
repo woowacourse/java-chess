@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("Position은 ")
 class PositionTest {
@@ -28,13 +29,22 @@ class PositionTest {
 
     @Test
     @DisplayName("문자열에 해당하는 Position을 반환할 수 있다.")
-    void getCachedPositionByStringTest() {
+    void getCachedPositionByStringTest_Success() {
         // given
         Position position1 = Position.of(2, 2);
         Position position2 = Position.of("b2");
 
         // expect
         assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    @DisplayName("문자열의 길이가 2가 아닐 때에는 Position을 예외가 발생한다.")
+    void getCachedPositionByStringTest_Fail() {
+        // expect
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Position.of("c11"))
+                .withMessage("[ERROR] 존재하지 않는 좌표값입니다.");
     }
 
     @Test

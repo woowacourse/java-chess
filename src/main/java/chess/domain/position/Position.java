@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public final class Position {
 
+    public static final int POSITION_STRING_LENGTH = 2;
+
     private static final Map<Integer, Position> cache = new HashMap<>();
 
     static {
@@ -34,6 +36,9 @@ public final class Position {
     }
 
     public static Position of(String input) {
+        if (input.length() != POSITION_STRING_LENGTH) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 좌표값입니다.");
+        }
         int row = RowToNumber.of(input.charAt(1));
         int column = ColumnToNumber.of(input.charAt(0));
         return cache.get(Objects.hash(row, column));

@@ -21,9 +21,9 @@ public enum RowToNumber {
         this.number = number;
     }
 
-    public static int of(char alphabet) {
+    public static int of(char number) {
         return Arrays.stream(values())
-                .filter(rowToNumber -> rowToNumber.getRow() == alphabet)
+                .filter(rowToNumber -> rowToNumber.getRow() == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 행 좌표값입니다."))
                 .getNumber();
