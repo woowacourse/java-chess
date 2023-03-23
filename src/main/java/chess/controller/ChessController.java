@@ -26,6 +26,8 @@ public class ChessController {
         while (chessGame.isNotTerminated()) {
             playChessGameWithExceptionHandling(chessGame);
         }
+        outputView.printInputStatusMessage();
+        playChessGameWithExceptionHandling(chessGame);
     }
 
     private void playChessGameWithExceptionHandling(ChessGame chessGame) {
@@ -60,8 +62,7 @@ public class ChessController {
         chessGame.inputGameCommand(GameCommand.STATUS);
         double blackScore = chessGame.calculateBlackScore();
         double whiteScore = chessGame.calculateWhiteScore();
-        outputView.printBlackScore(blackScore);
-        outputView.printWhiteScore(whiteScore);
+        outputView.printStatus(blackScore, whiteScore);
     }
 
     private void endChessGame(ChessGame chessGame) {
