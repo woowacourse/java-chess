@@ -85,7 +85,7 @@ public final class ChessController {
         return currentChessBoardMark;
     }
 
-    private static List<String> getRankMark(final List<Square> rank) {
+    private List<String> getRankMark(final List<Square> rank) {
         List<String> currentRank = new ArrayList<>();
         for (Square square : rank) {
             currentRank.add(SquareMark.getMarkBySquare(square));
