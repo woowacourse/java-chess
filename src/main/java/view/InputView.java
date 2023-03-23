@@ -14,12 +14,17 @@ public class InputView {
 
     public String requestUserCommandInGame() {
         String userCommand = SCANNER.nextLine();
+
         if (userCommand.isEmpty()) {
-            throw new IllegalArgumentException("aaa");
+            throw new IllegalArgumentException("아무 값도 입력되지 않았습니다.");
         }
 
         List<String> userCommands = Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
         if (GameCommand.from(userCommands.get(COMMAND_INDEX)).equals(GameCommand.END)) {
+            return userCommand;
+        }
+
+        if (userCommands.size() == 1 && userCommands.get(0).equals("status")) {
             return userCommand;
         }
         if (userCommands.size() != MOVE_COMMAND_INPUT_CORRECT_SIZE) {
