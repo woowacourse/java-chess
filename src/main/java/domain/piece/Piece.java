@@ -16,7 +16,9 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition);
 
-    public abstract List<Position> collectPath(Position sourcePosition, Position targetPosition);
+    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
+        return sourcePosition.getPath(targetPosition);
+    }
 
     public abstract boolean isEmptyPiece();
 

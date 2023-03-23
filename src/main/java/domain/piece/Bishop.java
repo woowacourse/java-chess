@@ -3,8 +3,6 @@ package domain.piece;
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Side;
-import java.util.Collections;
-import java.util.List;
 
 public class Bishop extends Piece {
     private Bishop(Side side) {
@@ -26,15 +24,6 @@ public class Bishop extends Piece {
             return false;
         }
         return movement.isDiagonal();
-    }
-
-    @Override
-    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        Movement movement = sourcePosition.calculateMovement(targetPosition);
-        if (movement.isOneStep()) {
-            return Collections.emptyList();
-        }
-        return sourcePosition.getPath(targetPosition);
     }
 
     @Override

@@ -34,7 +34,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCheckEmptyPieceIsOpponentSide() {
         assertThatThrownBy(() -> new EmptyPiece().isOpponentSideWith(Pawn.createOfBlack()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("서버 내부 에러 - EmptyPiece는 상대 진영인지 확인할 수 없습니다.");
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("서버 내부 에러 - Neutral side는 상대편을 확인할 수 없습니다.");
     }
 }

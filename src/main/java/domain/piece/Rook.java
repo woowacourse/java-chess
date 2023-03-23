@@ -3,8 +3,6 @@ package domain.piece;
 import domain.game.Movement;
 import domain.game.Position;
 import domain.game.Side;
-import java.util.Collections;
-import java.util.List;
 
 public class Rook extends Piece {
     private Rook(Side side) {
@@ -26,15 +24,6 @@ public class Rook extends Piece {
             return false;
         }
         return movement.isPerpendicular();
-    }
-
-    @Override
-    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        Movement movement = sourcePosition.calculateMovement(targetPosition);
-        if (movement.isOneStep()) {
-            return Collections.emptyList();
-        }
-        return sourcePosition.getPath(targetPosition);
     }
 
     @Override
