@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
+import chess.domain.dto.ResultDto;
 
 import java.util.List;
 
@@ -44,5 +45,11 @@ public class OutputView {
 
     public void printCommandError(String error) {
         System.out.println(error);
+    }
+
+    public void printResult(ResultDto resultDto) {
+        System.out.println(resultDto.getWinner());
+        System.out.println("흰색 점수 : " + resultDto.getWhiteScore());
+        System.out.println("검은색 점수 : " + resultDto.getBlackScore());
     }
 }

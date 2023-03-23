@@ -25,33 +25,35 @@ public class ChessController {
         controllers.put(GameCommand.START, StartController.getInstance());
         controllers.put(GameCommand.MOVE, MoveController.getInstance());
         controllers.put(GameCommand.END, EndController.getInstance());
+        controllers.put(GameCommand.STATUS, StatusController.getInstance());
 
         return controllers;
     }
 
     public void init() {
         outputView.printInitialMessage();
-        playUntilEnd();
+        processNextRequest();
     }
 
-    private void playUntilEnd() {
+    private void processNextRequest() {
         Request request = readRequest();
-        if (request.getGameCommand() == GameCommand.END) {
-            return;
-        }
         Controller controller = controllers.get(request.getGameCommand());
         Response response = controller.execute(request);
         handleResponse(response);
-        playUntilEnd();
     }
 
     private void handleResponse(Response response) {
         ResponseType type = response.getType();
         if (type == ResponseType.MOVE || type == ResponseType.START) {
             outputView.printBoard(response.getBoard());
+            processNextRequest();
         }
         if (type == ResponseType.FAIL) {
             outputView.printCommandError(response.getCause());
+            processNextRequest();
+        }
+        if (type == ResponseType.STATUS) {
+            outputView.printResult(response.getResultDto());
         }
     }
 

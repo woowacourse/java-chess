@@ -2,11 +2,7 @@ package chess.domain.game;
 
 import chess.domain.Position;
 import chess.domain.board.Board;
-import chess.domain.board.Score;
 import chess.domain.piece.Color;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Game {
     protected final Board board;
@@ -27,11 +23,8 @@ public abstract class Game {
 
     public abstract boolean isEnd();
 
-    public Map<Color, Score> getStatus() {
-        HashMap<Color, Score> result = new HashMap<>();
-        result.put(Color.WHITE, board.getScoreOf(Color.WHITE));
-        result.put(Color.BLACK, board.getScoreOf(Color.BLACK));
-        return result;
+    public Result getResult() {
+        return new Result(board.getScoreOf(Color.WHITE), board.getScoreOf(Color.BLACK));
     }
 
     public Board getBoard() {

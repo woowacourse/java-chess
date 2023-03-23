@@ -34,7 +34,6 @@ public class MoveController implements Controller {
             Game afterGame = game.move(makeStartingPosition(request), makeDestinationPosition(request));
             GameSession.replaceSession(afterGame);
             return selectResponseBy(afterGame);
-
         } catch (IllegalStateException | IllegalPieceMoveException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
         }

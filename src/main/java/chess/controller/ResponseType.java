@@ -5,5 +5,6 @@ public enum ResponseType {
     START,
     MOVE,
     END,
+    STATUS,
     FAIL
 }

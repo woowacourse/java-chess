@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 public enum GameCommand {
     START(Pattern.compile("^start$")),
     END(Pattern.compile("^end$")),
-    MOVE(Pattern.compile("^move [a-h][1-8] [a-h][1-8]$"));
+    MOVE(Pattern.compile("^move [a-h][1-8] [a-h][1-8]$")),
+    STATUS(Pattern.compile("status"));
 
 
     private final Pattern commandFormat;
