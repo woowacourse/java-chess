@@ -6,5 +6,5 @@ public interface GameState {
 
     GameState end();
 
-    GameState move();
+    GameState run();
 }

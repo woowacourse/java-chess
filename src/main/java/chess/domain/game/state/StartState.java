@@ -24,7 +24,7 @@ public class StartState implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState run() {
         throw new ChessGameException("게임이 시작되지 않았습니다.");
     }
 }

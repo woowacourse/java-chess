@@ -25,7 +25,7 @@ public class EndState implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState run() {
         throw new ChessGameException(GAME_ALREADY_OVER_MESSAGE);
     }
 }
