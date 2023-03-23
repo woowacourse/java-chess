@@ -45,26 +45,26 @@ public final class ChessBoardFactory {
     }
 
     private void createPieces(final Map<Position, Piece> board, final int rank, final TeamColor teamColor) {
-        board.put(new Position(rank, 0), new Rook(ROOK, teamColor));
-        board.put(new Position(rank, 1), new Knight(KNIGHT, teamColor));
-        board.put(new Position(rank, 2), new Bishop(BISHOP, teamColor));
-        board.put(new Position(rank, 3), new Queen(QUEEN, teamColor));
-        board.put(new Position(rank, 4), new King(KING, teamColor));
-        board.put(new Position(rank, 5), new Bishop(BISHOP, teamColor));
-        board.put(new Position(rank, 6), new Knight(KNIGHT, teamColor));
-        board.put(new Position(rank, 7), new Rook(ROOK, teamColor));
+        board.put(Position.of(rank, 0), new Rook(ROOK, teamColor));
+        board.put(Position.of(rank, 1), new Knight(KNIGHT, teamColor));
+        board.put(Position.of(rank, 2), new Bishop(BISHOP, teamColor));
+        board.put(Position.of(rank, 3), new Queen(QUEEN, teamColor));
+        board.put(Position.of(rank, 4), new King(KING, teamColor));
+        board.put(Position.of(rank, 5), new Bishop(BISHOP, teamColor));
+        board.put(Position.of(rank, 6), new Knight(KNIGHT, teamColor));
+        board.put(Position.of(rank, 7), new Rook(ROOK, teamColor));
     }
 
     private void createWhitePawnPieces(final Map<Position, Piece> board) {
         for (int file = 0; file < 8; file++) {
-            board.put(new Position(1, file), new WhitePawn(PAWN));
+            board.put(Position.of(1, file), new WhitePawn(PAWN));
         }
 
     }
 
     private void createBlackPawnPieces(final Map<Position, Piece> board) {
         for (int file = 0; file < 8; file++) {
-            board.put(new Position(6, file), new BlackPawn(PAWN));
+            board.put(Position.of(6, file), new BlackPawn(PAWN));
         }
     }
 }

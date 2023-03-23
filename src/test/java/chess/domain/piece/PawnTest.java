@@ -15,8 +15,8 @@ public class PawnTest {
         final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(0, 1), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(0, 1), null);
 
         // then
         assertThat(actual)
@@ -30,8 +30,8 @@ public class PawnTest {
         final Piece piece = new WhitePawn(PieceType.PAWN);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(2, 1), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(2, 1), null);
 
         // then
         assertThat(actual)
@@ -45,8 +45,8 @@ public class PawnTest {
         final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(2, 1), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(2, 1), null);
 
         // then
         assertThat(actual)
@@ -60,8 +60,8 @@ public class PawnTest {
         final Piece piece = new WhitePawn(PieceType.PAWN);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(0, 1), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(0, 1), null);
 
         // then
         assertThat(actual)

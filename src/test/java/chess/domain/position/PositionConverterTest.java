@@ -23,7 +23,7 @@ class PositionConverterTest {
     @DisplayName("입력 받은 위치를 Position 으로 변환한다.")
     void convert() {
         positionConverter = new PositionConverter();
-        assertThat(positionConverter.convert("a7")).isEqualTo(new Position(6, 0));
+        assertThat(positionConverter.convert("a7")).isEqualTo(Position.of(6, 0));
     }
 
     @ParameterizedTest(name = "잘못된 길이의 위치 정보가 주어지면, 예외가 발생한다.")

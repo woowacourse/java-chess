@@ -16,23 +16,23 @@ class KnightTest {
         final Piece piece = new Knight(PieceType.KNIGHT, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(5, 5),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(5, 5),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
                 .isTrue();
     }
 
-    @ParameterizedTest(name = "킹이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
-    @CsvSource(value = {"0:8", "-8:0", "8:0", "0:-8", "8:8", "4:5", "5:7", "3:3", "0:0"}, delimiter = ':')
+    @ParameterizedTest(name = "나이트가 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
+    @CsvSource(value = {"0:7", "-7:0", "7:0", "0:-7", "7:7", "4:5", "5:7", "3:3", "0:0"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final Piece piece = new Knight(PieceType.KNIGHT, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(5, 5),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(5, 5),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)

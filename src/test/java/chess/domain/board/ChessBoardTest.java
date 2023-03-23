@@ -40,7 +40,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.contains(new Position(rank, file)))
+        assertThat(chessBoard.contains(Position.of(rank, file)))
                 .isSameAs(expected);
     }
 
@@ -51,7 +51,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.getPiece(new Position(0, 0)))
+        assertThat(chessBoard.getPiece(Position.of(0, 0)))
                 .isEqualTo(new Rook(PieceType.ROOK, TeamColor.WHITE));
     }
 
@@ -62,7 +62,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThat(chessBoard.getPiece(new Position(5, 5))).isEqualTo(null);
+        assertThat(chessBoard.getPiece(Position.of(5, 5))).isEqualTo(null);
     }
 
     @Test
@@ -70,7 +70,7 @@ class ChessBoardTest {
     void removePiece() {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
-        final Position removePosition = new Position(1, 0);
+        final Position removePosition = Position.of(1, 0);
 
         // when
         chessBoard.removePiece(removePosition);
@@ -85,7 +85,7 @@ class ChessBoardTest {
     void putPiece() {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
-        final Position putPosition = new Position(2, 0);
+        final Position putPosition = Position.of(2, 0);
         final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when
@@ -101,10 +101,10 @@ class ChessBoardTest {
     void isPossibleRoute(final int rank, final int file, final boolean expected) {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
-        final Position source = new Position(0, 3);
-        final Position target = new Position(rank, file);
+        final Position source = Position.of(0, 3);
+        final Position target = Position.of(rank, file);
 
-        final Position obstacle = new Position(1, 4);
+        final Position obstacle = Position.of(1, 4);
         chessBoard.removePiece(obstacle);
 
         // when

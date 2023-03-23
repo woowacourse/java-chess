@@ -66,11 +66,11 @@ class PieceTest {
 
     private static Stream<Arguments> makePosition() {
         return Stream.of(
-                Arguments.of(new Position(1, 1), new Position(7, 7))
-                , Arguments.of(new Position(1, 1), new Position(7, 1))
-                , Arguments.of(new Position(1, 1), new Position(2, 1))
-                , Arguments.of(new Position(1, 1), new Position(0, 0))
-                , Arguments.of(new Position(1, 1), new Position(1, 0))
+                Arguments.of(Position.of(1, 1), Position.of(7, 7))
+                , Arguments.of(Position.of(1, 1), Position.of(7, 1))
+                , Arguments.of(Position.of(1, 1), Position.of(2, 1))
+                , Arguments.of(Position.of(1, 1), Position.of(0, 0))
+                , Arguments.of(Position.of(1, 1), Position.of(1, 0))
         );
     }
 }

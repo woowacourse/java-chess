@@ -14,8 +14,8 @@ class ChessGameTest {
     void playMovableFail(final int rank, final int file) {
         // given
         final ChessGame chessGame = new ChessGame();
-        final Position source = new Position(rank, file);
-        final Position target = new Position(5, 0);
+        final Position source = Position.of(rank, file);
+        final Position target = Position.of(5, 0);
 
         // when, then
         assertThatThrownBy(() -> chessGame.play(source, target))
@@ -28,8 +28,8 @@ class ChessGameTest {
     void playFirstTurnMovePawnFail(final int rank) {
         // given
         final ChessGame chessGame = new ChessGame();
-        final Position source = new Position(1, 0);
-        final Position target = new Position(rank, 0);
+        final Position source = Position.of(1, 0);
+        final Position target = Position.of(rank, 0);
 
         // when, then
         assertThatThrownBy(() -> chessGame.play(source, target))
@@ -42,8 +42,8 @@ class ChessGameTest {
     void playFirstTurnMoveKnightFail(final int rank, final int file) {
         // given
         final ChessGame chessGame = new ChessGame();
-        final Position source = new Position(0, 1);
-        final Position target = new Position(rank, file);
+        final Position source = Position.of(0, 1);
+        final Position target = Position.of(rank, file);
 
         // when, then
         assertThatThrownBy(() -> chessGame.play(source, target))

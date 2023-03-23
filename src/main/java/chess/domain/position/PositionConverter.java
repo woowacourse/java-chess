@@ -15,7 +15,7 @@ public final class PositionConverter {
         validate(position);
         final int file = position.charAt(FILE_INDEX);
         final int rank = position.charAt(RANK_INDEX);
-        return new Position(rank - FIRST_RANK, file - FIRST_FILE);
+        return Position.of(rank - FIRST_RANK, file - FIRST_FILE);
     }
 
     private static void validate(final String position) {

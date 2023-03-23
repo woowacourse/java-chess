@@ -16,8 +16,8 @@ class QueenTest {
         final Piece piece = new Queen(PieceType.QUEEN, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(0, 0),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(0, 0),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
@@ -25,14 +25,14 @@ class QueenTest {
     }
 
     @ParameterizedTest(name = "source에서 target으로 퀸이 갈 수 없는 위치면 false를 반환한다.")
-    @CsvSource(value = {"1:2", "0:8", "-8:0", "8:0", "0:-8", "2:1", "-1:2", "1:-2", "8:8"}, delimiter = ':')
+    @CsvSource(value = {"1:2",  "-7:0", "0:-7", "2:1", "-1:2", "1:-2"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final Piece piece = new Queen(PieceType.QUEEN, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(0, 0),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(0, 0),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)

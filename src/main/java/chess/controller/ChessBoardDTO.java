@@ -28,7 +28,7 @@ public class ChessBoardDTO {
     }
 
     private char getPieceName(final Map<Position, Piece> board, final int rank, final int file) {
-        final Position position = new Position(rank, file);
+        Position position = Position.of(rank, file);
         if (board.containsKey(position)) {
             return PieceName.findMessage(board.get(position));
         }

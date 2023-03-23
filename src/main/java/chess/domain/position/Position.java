@@ -1,18 +1,30 @@
 package chess.domain.position;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class Position {
+    private static final int POSITION_COUNT = 64;
+    private static final Map<String, Position> cache = new ConcurrentHashMap<>(POSITION_COUNT);
     private final int rank;
     private final int file;
 
-    public Position(final int rank, final int file) {
+    private Position(final int rank, final int file) {
         this.rank = rank;
         this.file = file;
     }
 
+    public static Position of(final int rank, final int file) {
+        return cache.computeIfAbsent(toKey(rank, file), ignored -> new Position(rank, file));
+    }
+
+    public static String toKey(final Integer rank, final Integer file) {
+        return rank.toString() + file.toString();
+    }
+
     public static Position copy(final Position other) {
-        return new Position(other.rank, other.file);
+        return Position.of(other.rank, other.file);
     }
 
     public Position calculate(final int rankMove, final int fileMove) {
@@ -31,20 +43,17 @@ public final class Position {
         int fileGap = target.file - this.file;
         int rankGap = target.rank - this.rank;
         int gcdGap = getGcdGap(Math.abs(fileGap), Math.abs(rankGap));
-        return new Position(rankGap / gcdGap, fileGap / gcdGap);
+        return Position.of(rankGap / gcdGap, fileGap / gcdGap);
     }
 
-    private int getGcdGap(final int fileGap, final int rankGap) {
-        if (fileGap < rankGap) {
-            return computeGcd(fileGap, rankGap);
+    private int getGcdGap(int fileGap, int rankGap) {
+        if (fileGap == 0) {
+            return rankGap;
         }
-        return computeGcd(rankGap, fileGap);
-    }
-
-    private int computeGcd(int smallPosition, int bigPosition) {
-        if (bigPosition == 0)
-            return smallPosition;
-        return computeGcd(bigPosition, smallPosition % bigPosition);
+        if (rankGap == 0) {
+            return fileGap;
+        }
+        return getGcdGap(fileGap, fileGap % rankGap);
     }
 
     public boolean isDiagonalPosition(Position target) {

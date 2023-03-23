@@ -16,8 +16,8 @@ class KingTest {
         final Piece piece = new King(PieceType.KING, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
@@ -25,14 +25,14 @@ class KingTest {
     }
 
     @ParameterizedTest(name = "킹이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
-    @CsvSource(value = {"1:3", "0:8", "-8:0", "8:0", "0:-8", "3:1", "-1:1", "1:-2", "8:8"}, delimiter = ':')
+    @CsvSource(value = {"1:3", "0:7", "-7:0", "7:0", "0:-7", "3:1", "-1:1", "1:-2", "7:7"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final Piece piece = new King(PieceType.KING, TeamColor.WHITE);
 
         // when
-        boolean actual = piece.canMove(new Position(1, 1),
-                new Position(targetRank, targetFile), null);
+        boolean actual = piece.canMove(Position.of(1, 1),
+                Position.of(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
