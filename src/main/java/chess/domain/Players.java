@@ -118,14 +118,14 @@ public class Players {
         }
     }
 
+    public List<Piece> getPiecesByColor(final Color color) {
+        return getPlayerByColor(color).getPieces();
+    }
+
     private Player getPlayerByColor(final Color color) {
         return players.stream().filter(player -> player.getColor().equals(color))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
-    }
-
-    public List<Piece> getPiecesByColor(final Color color) {
-        return getPlayerByColor(color).getPieces();
     }
 
     public boolean everyKingAlive() {
@@ -135,7 +135,7 @@ public class Players {
     public String getWinnerColorName() {
         Player loser = players.stream().filter(Player::isKingDead)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("아직 게임 안 끝났어요"));
+                .orElseThrow(() -> new IllegalArgumentException("아직 블랙, 화이트 킹이 모두 살아있습니다!"));
         return getAnotherPlayer(loser).getColorName();
     }
 

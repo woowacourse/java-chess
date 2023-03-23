@@ -103,10 +103,6 @@ public final class Pieces {
                 .count();
     }
 
-    public List<Piece> getPieces() {
-        return pieces;
-    }
-
     public Piece findPiece(final Position findPosition) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(findPosition))
@@ -121,6 +117,10 @@ public final class Pieces {
 
     public void remove(final Position changedPosition) {
         pieces.removeIf(piece -> piece.isSamePosition(changedPosition));
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 
     @Override
