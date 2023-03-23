@@ -7,25 +7,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionConverterTest {
 
-    @ParameterizedTest(name = "convert()는 {0}을 전달하면 ({1} / {2})로 반환한다.")
+    @ParameterizedTest(name = "convert()는 {0}을 전달하면 그에 맞는 Position으로 반환한다.")
     @DisplayName("convert() 테스트")
-    @CsvSource(value = {"A1:A:FIRST", "B2:B:SECOND", "C3:C:THIRD", "D4:D:FOURTH", "E5:E:FIFTH",
-            "F6:F:SIXTH", "G7:G:SEVENTH", "H8:H:EIGHTH"
-    }, delimiter = ':')
+    @MethodSource("chess.helper.arguments.PositionConverterArguments#provideValidConvertArguments")
     void convert_givenInputPosition_thenReturnPosition(
             final String inputPosition,
-            final File expectedFile,
-            final Rank expectedRank
+            final Position expected
     ) {
         // when
         final Position actual = PositionConverter.convert(inputPosition);
 
         // then
-        final Position expected = Position.of(expectedFile, expectedRank);
-
         assertThat(actual).isSameAs(expected);
     }
 

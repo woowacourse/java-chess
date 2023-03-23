@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FileTest {
@@ -18,10 +18,7 @@ class FileTest {
 
         @ParameterizedTest(name = "{0}을 전달하면 {1}을 반환한다")
         @DisplayName("findFile() 성공 테스트")
-        @CsvSource(
-                value = {"a:A", "b:B", "c:C", "d:D", "e:E", "f:F", "g:G", "h:H"},
-                delimiter = ':'
-        )
+        @MethodSource("chess.helper.arguments.FileArguments#provideValidFindFileArguments")
         void findFile_givenName_thenReturnSameNameFile(final String name, final File expected) {
             // given
             final File actual = File.findFile(name);
@@ -59,9 +56,7 @@ class FileTest {
 
         @ParameterizedTest(name = "주어지는 offer가 {0}일 때 {1}을 반환한다")
         @DisplayName("findNextFile() 성공 테스트")
-        @CsvSource(value = {
-                "1:F", "0:E", "-1:D", "2:G", "-2:C"
-        }, delimiter = ':')
+        @MethodSource("chess.helper.arguments.FileArguments#provideValidFindNextFileArguments")
         void findNextRank_givenOffset_thenReturnNextRank(final int offer, final File expected) {
             // given
             final File e = File.E;
@@ -75,7 +70,7 @@ class FileTest {
 
         @ParameterizedTest(name = "File이 {0}일 때 계산 결과가 1 ~ 8의 범위를 넘어서는 offer {1}이 주어지면 예외가 발생한다.")
         @DisplayName("findNextFile() 실패 테스트")
-        @CsvSource(value = {"A:-1", "H:1"}, delimiter = ':')
+        @MethodSource("chess.helper.arguments.FileArguments#provideInvalidFindNextFileArguments")
         void findNextRank_whenBoundaryRank_givenBoundaryOffset_thenFail(final File file, final int offer) {
             assertThatThrownBy(() -> file.findNextFile(offer))
                     .isInstanceOf(IllegalArgumentException.class)

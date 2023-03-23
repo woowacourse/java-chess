@@ -3,22 +3,31 @@ package chess.model.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class GameCommandTest {
 
     @ParameterizedTest(name = "입력한 커맨드가 {0}이라면 GameCommand.{1}을 반환한다")
     @DisplayName("findGameCommand() 성공 테스트")
-    @CsvSource(value = {"start:START", "end:END", "move:MOVE"}, delimiter = ':')
+    @MethodSource("provideFindGameCommandArguments")
     void findGameCommand_givenValidCommand_thenReturnCommand(final String command, final GameCommand expected) {
         // when
         final GameCommand gameCommand = GameCommand.findGameCommand(command);
 
         // then
         assertThat(gameCommand).isSameAs(expected);
+    }
+
+    private static Stream<Arguments> provideFindGameCommandArguments() {
+        return Stream.of(
+                Arguments.of("start", GameCommand.START), Arguments.of("end", GameCommand.END),
+                Arguments.of("move", GameCommand.MOVE)
+        );
     }
 
     @Test
@@ -32,7 +41,7 @@ class GameCommandTest {
 
     @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
     @DisplayName("isStart() 테스트")
-    @CsvSource(value = {"START:true", "MOVE:false", "END:false"}, delimiter = ':')
+    @MethodSource("provideIsStartArguments")
     void isStart_whenCall_thenReturnIsStart(final GameCommand gameCommand, final boolean expected) {
         // when
         final boolean actual = gameCommand.isStart();
@@ -41,14 +50,28 @@ class GameCommandTest {
         assertThat(actual).isSameAs(expected);
     }
 
+    private static Stream<Arguments> provideIsStartArguments() {
+        return Stream.of(
+                Arguments.of(GameCommand.START, true), Arguments.of(GameCommand.MOVE, false),
+                Arguments.of(GameCommand.END, false)
+        );
+    }
+
     @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
     @DisplayName("isMove() 테스트")
-    @CsvSource(value = {"START:false", "MOVE:true", "END:false"}, delimiter = ':')
+    @MethodSource("provideIsMoveArguments")
     void isMove_whenCall_thenReturnIsStart(final GameCommand gameCommand, final boolean expected) {
         // when
         final boolean actual = gameCommand.isMove();
 
         // then
         assertThat(actual).isSameAs(expected);
+    }
+
+    private static Stream<Arguments> provideIsMoveArguments() {
+        return Stream.of(
+                Arguments.of(GameCommand.START, false), Arguments.of(GameCommand.MOVE, true),
+                Arguments.of(GameCommand.END, false)
+        );
     }
 }

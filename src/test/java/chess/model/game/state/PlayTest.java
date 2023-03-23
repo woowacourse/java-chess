@@ -6,7 +6,6 @@ import static chess.helper.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.dto.PlayRequest;
 import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.game.GameCommand;

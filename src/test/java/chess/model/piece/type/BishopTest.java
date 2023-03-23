@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
@@ -37,7 +38,7 @@ class BishopTest {
 
     @ParameterizedTest(name = "검은색 진영 비숍은 isSameTeam()을 호출할 때 Camp.{0}을 건네주면 {1}을 반환한다")
     @DisplayName("isSameTeam() 테스트")
-    @CsvSource(value = {"BLACK:true", "WHITE:false"}, delimiter = ':')
+    @MethodSource("chess.helper.arguments.CampArguments#provideIsSameTeamByBlack")
     void isSameTeam_givenCamp_thenReturnIsSameTeam(final Camp camp, final boolean expected) {
         // when
         final boolean actual = blackBishop.isSameTeam(camp);
@@ -54,24 +55,10 @@ class BishopTest {
         private final Piece empty = Empty.EMPTY_PIECE;
         private final Piece enemy = new Bishop(Camp.WHITE);
 
-        @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
-        @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 적군 테스트")
+        @ParameterizedTest(name = "목적지가 적군이거나 빈 칸인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
+        @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 유효한 목적지 테스트")
         @CsvSource(value = {"1:1", "1:-1", "-1:-1", "-1:1"}, delimiter = ':')
         void movable_givenValidDistanceAndEnemyTarget_thenReturnTrue(final int file, final int rank) {
-            // given
-            final Distance distance = new Distance(file, rank);
-
-            // when
-            final boolean actual = blackBishop.movable(distance, enemy);
-
-            // then
-            assertThat(actual).isTrue();
-        }
-
-        @ParameterizedTest(name = "목적지가 빈 곳인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
-        @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 빈 곳 테스트")
-        @CsvSource(value = {"1:1", "1:-1", "-1:-1", "-1:1"}, delimiter = ':')
-        void movable_givenValidDistanceAndEmptyTarget_thenReturnTrue(final int file, final int rank) {
             // given
             final Distance distance = new Distance(file, rank);
 
