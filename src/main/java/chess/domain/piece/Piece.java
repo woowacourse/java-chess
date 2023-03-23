@@ -19,7 +19,15 @@ public abstract class Piece {
         return color;
     }
 
+    public boolean isTypeOf(PieceType type) {
+        return this.type == type;
+    }
+
     public PieceType getType() {
         return type;
+    }
+
+    public double getScore() {
+        return type.getScore();
     }
 }

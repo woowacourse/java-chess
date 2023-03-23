@@ -7,6 +7,7 @@ public class PositionFixture {
     public static final Position A4 = Position.of(File.A, Rank.FOUR);
     public static final Position A5 = Position.of(File.A, Rank.FIVE);
     public static final Position A7 = Position.of(File.A, Rank.SEVEN);
+    public static final Position B1 = Position.of(File.B, Rank.ONE);
     public static final Position B2 = Position.of(File.B, Rank.TWO);
     public static final Position B3 = Position.of(File.B, Rank.THREE);
     public static final Position B4 = Position.of(File.B, Rank.FOUR);

@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Position;
 import chess.domain.exception.IllegalPieceMoveException;
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 
@@ -42,6 +43,10 @@ public class Board {
                 throw new IllegalPieceMoveException();
             }
         }
+    }
+
+    public Score getScoreOf(Color color) {
+        return new Score(piecePosition, color);
     }
 
     public Map<Position, Piece> getBoard() {
