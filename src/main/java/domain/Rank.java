@@ -4,9 +4,6 @@ public enum Rank {
     EIGHT(8), SEVEN(7), SIX(6), FIVE(5),
     FOUR(4), THREE(3), TWO(2), ONE(1);
 
-    public final static int MAX_SIZE = values().length;
-    public final static int MIN_SIZE = 1;
-
     private final int row;
 
     Rank(int row) {
@@ -20,7 +17,7 @@ public enum Rank {
                 return rank;
             }
         }
-        throw new IllegalArgumentException("체스판을 벗어날 수 없습니다.");
+        throw new IllegalArgumentException("잘못된 위치입니다.");
     }
 
     public int minus(Rank other) {

@@ -66,6 +66,6 @@ class SquareTest {
     void next_fail(Square square, Vector vector) {
         assertThatThrownBy(() -> square.add(vector))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("체스판을 벗어날 수 없습니다.");
+            .hasMessage("잘못된 위치입니다.");
     }
 }

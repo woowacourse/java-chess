@@ -6,9 +6,6 @@ public enum ChessColumn {
     A(1), B(2), C(3), D(4),
     E(5), F(6), G(7), H(8);
 
-    public final static int MAX_SIZE = values().length;
-    public final static int MIN_SIZE = 1;
-
     private final int column;
 
     ChessColumn(int column) {

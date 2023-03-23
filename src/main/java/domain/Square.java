@@ -21,15 +21,7 @@ public class Square {
     }
 
     public static Square of(int column, int row) {
-        validateSize(column, row);
         return of(ChessColumn.find(column), Rank.find(row));
-    }
-
-    private static void validateSize(int column, int row) {
-        if (column > ChessColumn.MAX_SIZE || row > Rank.MAX_SIZE ||
-                column < ChessColumn.MIN_SIZE || row < Rank.MIN_SIZE) {
-            throw new IllegalArgumentException("체스판을 벗어날 수 없습니다.");
-        }
     }
 
     public static Square of(ChessColumn chessColumn, Rank rank) {
@@ -55,7 +47,6 @@ public class Square {
     public Square add(Vector direction) {
         int column = chessColumn.getColumn() + direction.getX();
         int row = rank.getRow() + direction.getY();
-        validateSize(column, row);
         return of(column, row);
     }
 
