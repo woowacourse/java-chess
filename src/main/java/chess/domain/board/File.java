@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Arrays;
 
@@ -24,14 +24,14 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value.equals(inputValue))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("범위를 벗어난 값입니다."));
+                .orElseThrow(() -> new IllegalStateException("범위를 벗어난 값입니다."));
     }
 
     public static File ofByFile(int inputFile) {
         return Arrays.stream(File.values())
                 .filter(file -> file.file == inputFile)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("범위를 벗어난 값입니다."));
+                .orElseThrow(() -> new IllegalStateException("범위를 벗어난 값입니다."));
     }
 
     public int getFile() {
