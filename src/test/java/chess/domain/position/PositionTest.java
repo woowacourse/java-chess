@@ -31,4 +31,20 @@ class PositionTest {
         Position position = new Position(1, 5);
         assertThat(position.move(new RelativePosition(3, -2))).isEqualTo(new Position(4, 3));
     }
+
+    @Test
+    @DisplayName("두 위치가 같은 세로줄에 있으면 true 를 반환한다.")
+    void isSameColumnTest1() {
+        Position position1 = new Position(1, 5);
+        Position position2 = new Position(1, 7);
+        assertThat(position1.isSameColumn(position2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 위치가 같은 세로줄에 있지 않으면 false 를 판단한다.")
+    void isSameColumnTest2() {
+        Position position1 = new Position(1, 5);
+        Position position2 = new Position(4, 7);
+        assertThat(position1.isSameColumn(position2)).isFalse();
+    }
 }
