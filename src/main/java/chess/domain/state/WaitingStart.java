@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.square.Side;
 import chess.domain.square.Square;
 
 public class WaitingStart implements State {
@@ -27,5 +28,10 @@ public class WaitingStart implements State {
     @Override
     public boolean isRunning() {
         return true;
+    }
+
+    @Override
+    public double calculateScore(final Side side) {
+        throw new IllegalStateException("보드 초기화 이전에 점수를 계산할 수 없습니다.");
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.square.Side;
 import chess.domain.square.Square;
 
 public class Running implements State {
@@ -34,5 +35,10 @@ public class Running implements State {
     @Override
     public boolean isRunning() {
         return true;
+    }
+
+    @Override
+    public double calculateScore(final Side side) {
+        return board.calculateScore(side);
     }
 }

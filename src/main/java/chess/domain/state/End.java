@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.square.Side;
 import chess.domain.square.Square;
 
 public class End implements State {
@@ -29,5 +30,10 @@ public class End implements State {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public double calculateScore(final Side side) {
+        throw new IllegalStateException(END_EXCEPTION_MESSAGE);
     }
 }

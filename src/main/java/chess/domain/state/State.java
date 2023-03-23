@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.square.Side;
 import chess.domain.square.Square;
 
 public interface State {
@@ -13,4 +14,6 @@ public interface State {
     Board getBoard();
 
     boolean isRunning();
+
+    double calculateScore(final Side side);
 }
