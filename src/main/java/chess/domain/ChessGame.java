@@ -39,6 +39,10 @@ public class ChessGame {
         return board.hasPieces();
     }
 
+    public boolean isGameOver() {
+        return !board.hasTwoKings();
+    }
+
     public List<Piece> getExistingPieces() {
         return board.getPieces();
     }

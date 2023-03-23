@@ -1,13 +1,24 @@
 package chess.domain;
 
+import chess.TestPiecesFactory;
 import chess.domain.board.maker.EmptyPiecesFactory;
 import chess.domain.board.maker.StartingPiecesFactory;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static chess.domain.File.A;
+import static chess.domain.File.E;
 import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,9 +63,21 @@ class ChessGameTest {
 
         assertThat(actual).isTrue();
     }
-/*
-    @Test
-    void 게임이_끝났는지_확인한다() {
 
-    }*/
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    void 게임이_끝났는지_확인한다(final List<Piece> pieces, final boolean expected) {
+        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(pieces));
+
+        final boolean actual = chessGame.isGameOver();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> providePieces() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), false),
+                Arguments.of(List.of(new King(E, EIGHT, BLACK)), true)
+        );
+    }
 }
