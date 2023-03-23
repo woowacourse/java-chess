@@ -13,7 +13,7 @@ public class RowPieces implements Comparable<RowPieces> {
     private final List<Piece> pieces;
 
     public RowPieces(String rowNum) {
-        this(InitialSymbols.from(rowNum));
+        this(InitialPieces.from(rowNum));
     }
 
     private RowPieces(List<Piece> pieces) {

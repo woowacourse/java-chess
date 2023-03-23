@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public enum InitialSymbols {
+public enum InitialPieces {
     NOBLE_LINE(
         List.of(Rook::new, Knight::new, Bishop::new, Queen::new, King::new, Bishop::new, Knight::new, Rook::new)),
     PAWN_LINE(List.of(Pawn::new, Pawn::new, Pawn::new, Pawn::new, Pawn::new, Pawn::new, Pawn::new, Pawn::new)),
@@ -30,7 +30,7 @@ public enum InitialSymbols {
     private static final int MAX_COLUMN_INDEX = 7;
     private final List<BiFunction<Team, Coordinate, Piece>> pieces;
 
-    InitialSymbols(List<BiFunction<Team, Coordinate, Piece>> pieces) {
+    InitialPieces(List<BiFunction<Team, Coordinate, Piece>> pieces) {
         this.pieces = pieces;
     }
 
@@ -47,7 +47,7 @@ public enum InitialSymbols {
         return getPieces(EMPTY_LINE, rowNum, team);
     }
 
-    private static List<Piece> getPieces(InitialSymbols symbols, String rowNum, Team team) {
+    private static List<Piece> getPieces(InitialPieces symbols, String rowNum, Team team) {
         return IntStream.rangeClosed(MIN_COLUMN_INDEX, MAX_COLUMN_INDEX)
             .mapToObj(columnIndex -> symbols.pieces.get(columnIndex)
                 .apply(team, Coordinate.createCoordinate(rowNum, Column.symbolFromIndex(columnIndex + 1))))
