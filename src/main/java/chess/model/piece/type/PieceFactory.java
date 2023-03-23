@@ -19,6 +19,9 @@ public final class PieceFactory {
         factories.put(Rook.class, Rook::new);
     }
 
+    private PieceFactory() {
+    }
+
     private static Piece initialPawn(final Camp camp) {
         final Piece pawn = new Pawn(camp);
 
@@ -34,8 +37,5 @@ public final class PieceFactory {
 
     private static boolean cannotFoundPiece(final Class<? extends Piece> type) {
         return !factories.containsKey(type);
-    }
-
-    private PieceFactory() {
     }
 }

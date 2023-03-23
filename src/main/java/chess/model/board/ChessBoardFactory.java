@@ -30,9 +30,17 @@ public final class ChessBoardFactory {
     );
     private static final int CHESS_BOARD_SIZE = 8;
 
+    private ChessBoardFactory() {
+    }
+
     public static ChessBoard create() {
         Map<Position, Piece> initialChessBoard = new HashMap<>();
 
+        initialPiece(initialChessBoard);
+        return new ChessBoard(initialChessBoard);
+    }
+
+    private static void initialPiece(final Map<Position, Piece> initialChessBoard) {
         initialBackPiece(initialChessBoard, Rank.EIGHTH, Camp.BLACK);
         initialFrontPiece(initialChessBoard, Rank.SEVENTH, Camp.BLACK);
         initialEmptyPiece(initialChessBoard, Rank.SIXTH);
@@ -41,8 +49,6 @@ public final class ChessBoardFactory {
         initialEmptyPiece(initialChessBoard, Rank.THIRD);
         initialFrontPiece(initialChessBoard, Rank.SECOND, Camp.WHITE);
         initialBackPiece(initialChessBoard, Rank.FIRST, Camp.WHITE);
-
-        return new ChessBoard(initialChessBoard);
     }
 
     private static void initialBackPiece(
@@ -94,8 +100,5 @@ public final class ChessBoardFactory {
 
             initialChessBoard.put(targetPosition, Empty.EMPTY_PIECE);
         }
-    }
-
-    private ChessBoardFactory() {
     }
 }

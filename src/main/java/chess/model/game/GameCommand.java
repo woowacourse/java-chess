@@ -15,7 +15,8 @@ public enum GameCommand {
     }
 
     public static GameCommand findGameCommand(final String command) {
-        return Arrays.stream(values()).filter(gameCommand -> gameCommand.command.equalsIgnoreCase(command))
+        return Arrays.stream(values())
+                .filter(gameCommand -> gameCommand.command.equalsIgnoreCase(command))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
