@@ -2,16 +2,16 @@ package techcourse.fp.chess.domain;
 
 import java.util.HashMap;
 import java.util.Map;
-import techcourse.fp.chess.domain.piece.Bishop;
-import techcourse.fp.chess.domain.piece.BlackPawn;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.King;
-import techcourse.fp.chess.domain.piece.Knight;
+import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
-import techcourse.fp.chess.domain.piece.Queen;
-import techcourse.fp.chess.domain.piece.Rook;
-import techcourse.fp.chess.domain.piece.UnMovablePiece;
-import techcourse.fp.chess.domain.piece.WhitePawn;
+import techcourse.fp.chess.domain.piece.ordinary.Bishop;
+import techcourse.fp.chess.domain.piece.ordinary.King;
+import techcourse.fp.chess.domain.piece.ordinary.Knight;
+import techcourse.fp.chess.domain.piece.ordinary.Queen;
+import techcourse.fp.chess.domain.piece.ordinary.Rook;
+import techcourse.fp.chess.domain.piece.pawn.BlackPawn;
+import techcourse.fp.chess.domain.piece.pawn.WhitePawn;
 
 public final class BoardFactory {
 
@@ -36,7 +36,7 @@ public final class BoardFactory {
     private static void initializeBoard(final Map<Position, Piece> board) {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), UnMovablePiece.create());
+                board.put(Position.of(file, rank), Empty.create());
             }
         }
     }

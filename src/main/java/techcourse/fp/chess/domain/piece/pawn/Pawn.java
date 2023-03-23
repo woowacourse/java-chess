@@ -1,9 +1,11 @@
-package techcourse.fp.chess.domain.piece;
+package techcourse.fp.chess.domain.piece.pawn;
 
 import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.domain.piece.Piece;
 
 public abstract class Pawn extends Piece {
 
@@ -32,7 +34,7 @@ public abstract class Pawn extends Piece {
     }
 
     private boolean isOpponent(Piece otherPiece) {
-        return color.isOpponent(otherPiece.color);
+        return color.isOpponent(otherPiece.getColor());
     }
 
     private boolean isOneStepMove(final Position source, final Position target, final Piece targetPiece) {

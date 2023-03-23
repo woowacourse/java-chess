@@ -51,7 +51,6 @@ public final class ChessController {
 
     private void start(CommandRequest commandRequest) {
         try {
-            Board board = BoardFactory.generate();
             outputView.printBoard(BoardDto.create(board.getBoard()));
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception.getMessage());

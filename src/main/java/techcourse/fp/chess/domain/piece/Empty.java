@@ -3,14 +3,14 @@ package techcourse.fp.chess.domain.piece;
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
 
-public final class UnMovablePiece extends Piece {
+public final class Empty extends Piece {
 
-    public UnMovablePiece(final Color color) {
+    public Empty(final Color color) {
         super(color);
     }
 
-    public static UnMovablePiece create() {
-        return new UnMovablePiece(Color.EMPTY);
+    public static Empty create() {
+        return new Empty(Color.EMPTY);
     }
 
     @Override

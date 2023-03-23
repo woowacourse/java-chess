@@ -1,8 +1,10 @@
-package techcourse.fp.chess.domain.piece;
+package techcourse.fp.chess.domain.piece.ordinary;
 
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.domain.piece.Piece;
 
 public abstract class OrdinaryPiece extends Piece {
 
@@ -23,6 +25,6 @@ public abstract class OrdinaryPiece extends Piece {
     }
 
     private boolean isAlly(Piece otherPiece) {
-        return color.isSameColor(otherPiece.color);
+        return color.isSameColor(otherPiece.getColor());
     }
 }

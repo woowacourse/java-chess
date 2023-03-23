@@ -1,10 +1,11 @@
-package techcourse.fp.chess.domain.piece;
+package techcourse.fp.chess.domain.piece.pawn;
 
 import java.util.List;
 import techcourse.fp.chess.domain.Direction;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.domain.movingStrategy.SlidingStrategy;
+import techcourse.fp.chess.domain.piece.Color;
 
 public class BlackPawn extends Pawn {
 

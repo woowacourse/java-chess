@@ -1,14 +1,15 @@
 package techcourse.fp.chess.view;
 
-import techcourse.fp.chess.domain.piece.Bishop;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.King;
-import techcourse.fp.chess.domain.piece.Knight;
-import techcourse.fp.chess.domain.piece.Pawn;
+import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
-import techcourse.fp.chess.domain.piece.Queen;
-import techcourse.fp.chess.domain.piece.Rook;
-import techcourse.fp.chess.domain.piece.UnMovablePiece;
+import techcourse.fp.chess.domain.piece.ordinary.Bishop;
+import techcourse.fp.chess.domain.piece.ordinary.King;
+import techcourse.fp.chess.domain.piece.ordinary.Knight;
+import techcourse.fp.chess.domain.piece.ordinary.Queen;
+import techcourse.fp.chess.domain.piece.ordinary.Rook;
+import techcourse.fp.chess.domain.piece.pawn.BlackPawn;
+import techcourse.fp.chess.domain.piece.pawn.WhitePawn;
 
 public final class PieceRender {
 
@@ -17,8 +18,12 @@ public final class PieceRender {
     }
 
     public static String renderName(final Piece piece) {
-        if (piece.getClass() == Pawn.class) {
-            return renderByColor(piece.getColor(), "p");
+        if (piece.getClass() == BlackPawn.class) {
+            return "P";
+        }
+
+        if (piece.getClass() == WhitePawn.class) {
+            return "p";
         }
 
         if (piece.getClass() == Rook.class) {
@@ -41,7 +46,7 @@ public final class PieceRender {
             return renderByColor(piece.getColor(), "k");
         }
 
-        if (piece.getClass() == UnMovablePiece.class) {
+        if (piece.getClass() == Empty.class) {
             return ".";
         }
 

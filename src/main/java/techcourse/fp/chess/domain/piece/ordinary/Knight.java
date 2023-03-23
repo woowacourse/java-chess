@@ -1,7 +1,8 @@
-package techcourse.fp.chess.domain.piece;
+package techcourse.fp.chess.domain.piece.ordinary;
 
 import techcourse.fp.chess.domain.Direction;
 import techcourse.fp.chess.domain.movingStrategy.NoneSlidingStrategy;
+import techcourse.fp.chess.domain.piece.Color;
 
 public final class Knight extends OrdinaryPiece {
 

@@ -2,8 +2,8 @@ package techcourse.fp.chess.domain;
 
 import java.util.List;
 import java.util.Map;
+import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
-import techcourse.fp.chess.domain.piece.UnMovablePiece;
 
 public final class Board {
 
@@ -28,15 +28,15 @@ public final class Board {
 
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece);
 
-        if (cannotMoveToTheTarget(path)) {
+        if (hasObstacle(path)) {
             throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
         }
 
         board.put(target, sourcePiece);
-        board.put(source, UnMovablePiece.create());
+        board.put(source, Empty.create());
     }
 
-    private boolean cannotMoveToTheTarget(final List<Position> path) {
+    private boolean hasObstacle(final List<Position> path) {
         return !path.stream()
                 .allMatch(position -> board.get(position).isEmpty());
     }

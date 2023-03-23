@@ -1,4 +1,4 @@
-package techcourse.fp.chess.domain.piece;
+package techcourse.fp.chess.domain.piece.ordinary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
