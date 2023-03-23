@@ -30,8 +30,17 @@ class BoardRepositoryTest {
         try (final Connection connection = MySqlManager.establishConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-            preparedStatement.setString(1, "mock data");
+            preparedStatement.setString(1, "mock data1");
             preparedStatement.setString(2, "WHITE");
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {}
+
+        try (final Connection connection = MySqlManager.establishConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+
+            preparedStatement.setString(1, "mock data2");
+            preparedStatement.setString(2, "BLACK");
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {}
@@ -65,7 +74,7 @@ class BoardRepositoryTest {
     @DisplayName("findById() : board id 를 통해서 조회할 수 있다.")
     void test_findById() throws Exception {
         //given
-        final Long boardId = 1L;
+        final Long boardId = 2L;
 
         //when
         Optional<BoardSearchDao> savedBoardDao = boardRepository.findById(boardId);
@@ -73,8 +82,8 @@ class BoardRepositoryTest {
         //then
         assertAll(
                 () -> assertTrue(savedBoardDao.isPresent()),
-                () -> assertEquals(savedBoardDao.get().position(), "mock data"),
-                () -> assertEquals(savedBoardDao.get().turn(), "WHITE")
+                () -> assertEquals(savedBoardDao.get().position(), "mock data2"),
+                () -> assertEquals(savedBoardDao.get().turn(), "BLACK")
         );
     }
 
@@ -82,7 +91,7 @@ class BoardRepositoryTest {
     @DisplayName("modifyById() : board id를 통해서 board를 수정할 수 있다.")
     void test_modifyById() throws Exception {
         //given
-        final Long boardId = 1L;
+        final Long boardId = 2L;
         final String modifyingPosition = "modify data";
         final String turn = "BLACK";
 

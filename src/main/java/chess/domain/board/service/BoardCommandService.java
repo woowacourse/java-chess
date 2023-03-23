@@ -41,4 +41,8 @@ public class BoardCommandService {
 
         boardRepository.modifyById(boardModifyDao);
     }
+
+    public void deleteBoard(final Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
 }

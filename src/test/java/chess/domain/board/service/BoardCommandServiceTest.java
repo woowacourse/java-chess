@@ -1,6 +1,7 @@
 package chess.domain.board.service;
 
 import chess.dao.BoardRegisterDao;
+import chess.dao.MySqlManager;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.board.repository.BoardRepository;
@@ -18,9 +19,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,11 +47,23 @@ class BoardCommandServiceTest {
                 new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
                                      "WHITE")
         );
+
+        boardRepository.save(
+                new BoardRegisterDao("P : 3 7, k : 4 7, p : 5 7",
+                                     "BLACK")
+        );
     }
 
     @AfterEach
     void clearData() {
-        boardRepository.deleteById(1L);
+        final String query = "truncate BOARD";
+
+        try (final Connection connection = MySqlManager.establishConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {}
     }
 
     @Test
@@ -76,7 +94,7 @@ class BoardCommandServiceTest {
         //when
         boardCommandService.modifyBoard(boardModifyRequest);
 
-        final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(1L);
+        final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(boardId);
 
         //then
         assertAll(
@@ -89,5 +107,19 @@ class BoardCommandServiceTest {
                                 new Position(4, 7)
                         )
         );
+    }
+
+    @Test
+    @DisplayName("deleteBoard() : board 를 삭제할 수 있다.")
+    void test_deleteBoard() throws Exception {
+        //given
+        final Long boardId = 2L;
+
+        //when
+        boardCommandService.deleteBoard(boardId);
+
+        //then
+        assertThatThrownBy(() -> boardQueryService.searchBoard(boardId))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
