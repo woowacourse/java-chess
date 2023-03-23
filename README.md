@@ -19,6 +19,7 @@ graph TD
     subgraph domain
         GameController --> Board
         Board --> Position
+        Board --> Turn
         Position --> Row
         Position --> Column
         Board --> Piece

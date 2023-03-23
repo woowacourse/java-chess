@@ -14,4 +14,12 @@ class TeamTest {
 
         assertThat(team.isNeutrality()).isFalse();
     }
+
+    @Test
+    @DisplayName("같은 팀인지 확인해준다.")
+    void 같은_팀인지_확인해준다() {
+        Team team = Team.WHITE;
+
+        assertThat(team.isAlly(Team.WHITE)).isTrue();
+    }
 }

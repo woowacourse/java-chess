@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
@@ -12,25 +13,33 @@ import java.util.Map;
 public class Board {
 
     static final String INVALID_TARGET_POSITION = "위치가 중복되었습니다.";
+    private static final Team DEFAULT_TEAM = Team.WHITE;
 
     private final Map<Position, Piece> board;
+    private Turn turn;
 
     public Board(final BoardMaker boardMaker) {
         this.board = boardMaker.createBoard();
+        this.turn = new Turn(DEFAULT_TEAM);
     }
 
     public void movePiece(final Position currentPosition, final Position targetPosition) {
         validateDuplicatePositions(currentPosition, targetPosition);
 
         Piece currentPositionPiece = findPieceAt(currentPosition);
+        checkAndChangeTurn(currentPositionPiece, turn);
+
         Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
-
-        UnitVector unitVector = UnitVector.compute(currentPosition, targetPosition);
+        UnitVector unitVector = UnitVector.computeUnitVector(currentPosition, targetPosition);
         List<Piece> onRoutePieces = getOnRoutePieces(currentPosition, targetPosition, unitVector);
-
         currentPositionPiece.validateMove(correctDirection, onRoutePieces);
 
         move(currentPosition, targetPosition);
+    }
+
+    private void checkAndChangeTurn(final Piece currentPositionPiece, final Turn turn) {
+        turn.validateTurn(currentPositionPiece);
+        this.turn = turn.change();
     }
 
     private void validateDuplicatePositions(final Position currentPosition, final Position targetPosition) {
