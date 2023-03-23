@@ -10,13 +10,13 @@ public enum PieceSymbol {
     EMPTY(0),
     ;
 
-    private final double pieceValue;
+    private final double score;
 
-    PieceSymbol(final double pieceValue) {
-        this.pieceValue = pieceValue;
+    PieceSymbol(final double score) {
+        this.score = score;
     }
 
-    public double getPieceValue() {
-        return pieceValue;
+    public double getPieceScore() {
+        return score;
     }
 }
