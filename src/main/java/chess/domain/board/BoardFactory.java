@@ -12,7 +12,7 @@ public class BoardFactory {
 
     public static Board createBoard() {
         Map<Position, Piece> boards = new HashMap<>();
-        for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
+        for (RankCoordinate rankCoordinate : RankCoordinate.getSortedRankCoordinates()) {
             Team team = Team.of(rankCoordinate);
             addRank(boards, rankCoordinate, team);
         }
@@ -44,7 +44,7 @@ public class BoardFactory {
     }
 
     private static void addPiecesBy(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Piece piece) {
-        for (FileCoordinate value : FileCoordinate.values()) {
+        for (FileCoordinate value : FileCoordinate.getSortedFileCoordinates()) {
             boards.put(new Position(value, rankCoordinate), piece);
         }
     }

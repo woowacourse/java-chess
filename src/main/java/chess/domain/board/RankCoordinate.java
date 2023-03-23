@@ -1,6 +1,9 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum RankCoordinate {
     EIGHT(8),
@@ -25,6 +28,12 @@ public enum RankCoordinate {
                 .filter(it -> it.rowNumber == rowNumber)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
+    }
+
+    public static List<RankCoordinate> getSortedRankCoordinates() {
+        return Arrays.stream(values())
+                .sorted(Comparator.comparing(RankCoordinate::getRowNumber).reversed())
+                .collect(Collectors.toList());
     }
 
     public int getRowNumber() {
