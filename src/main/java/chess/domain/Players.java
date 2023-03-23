@@ -86,7 +86,7 @@ public class Players {
     }
 
     private void changeTurn() {
-        if (current.isWhite()) {
+        if (current == Color.WHITE) {
             current = Color.BLACK;
             return;
         }

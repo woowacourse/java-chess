@@ -142,11 +142,11 @@ public class PawnStrategy implements PieceStrategy {
     }
 
     private boolean isWhitePiece(final Color color) {
-        return color.isWhite();
+        return color == Color.WHITE;
     }
 
     private boolean isBlackPiece(final Color color) {
-        return color.isBlack();
+        return color == Color.BLACK;
     }
 
 }
