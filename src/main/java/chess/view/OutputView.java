@@ -94,12 +94,34 @@ public class OutputView {
         }
     }
 
-    public void printBlackScore(double score) {
-        System.out.println(BLACK_TEAM + SCORE_DELIMITER + score);
+    public void printInputStatusMessage() {
+        System.out.println("게임이 끝났습니다.\n" + "점수와 결과를 보고 싶으면 status를 입력해주세요.");
     }
 
-    public void printWhiteScore(double score) {
-        System.out.println(WHITE_TEAM + SCORE_DELIMITER + score);
+    public void printStatus(double blackScore, double whiteScore) {
+        printBlackScore(blackScore);
+        printWhiteScore(whiteScore);
+        printWhoIsWin(blackScore, whiteScore);
+    }
+
+    private void printBlackScore(double score) {
+        System.out.println(BLACK_TEAM + SCORE_DELIMITER + score + "점");
+    }
+
+    private void printWhiteScore(double score) {
+        System.out.println(WHITE_TEAM + SCORE_DELIMITER + score + "점");
+    }
+
+    private void printWhoIsWin(double blackScore, double whiteScore) {
+        if (blackScore == whiteScore) {
+            System.out.println("비겼습니다.");
+            return;
+        }
+        if (blackScore > whiteScore) {
+            System.out.println("블랙팀이 이겼습니다.");
+            return;
+        }
+        System.out.println("화이트팀이 이겼습니다.");
     }
 
     public void printExceptionMessage(Exception exception) {
