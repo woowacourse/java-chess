@@ -6,7 +6,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 
-public class TempResult implements Result {
+public class TempResult {
 
 	private final Score whiteScore;
 	private final Score blackScore;
@@ -22,25 +22,22 @@ public class TempResult implements Result {
 		return new TempResult(whiteScore, blackScore);
 	}
 
-	@Override
 	public Team getWinner() {
-		int whiteScore = getWhiteScoreMultipliedBy10();
-		int blackScore = getBlackScoreMultipliedBy10();
-		if (whiteScore > blackScore) {
+		int white = whiteScore.getScoreMultipliedBy10();
+		int black = blackScore.getScoreMultipliedBy10();
+		if (white > black) {
 			return Team.WHITE;
 		}
-		if (whiteScore < blackScore) {
+		if (white < black) {
 			return Team.BLACK;
 		}
 		return Team.EMPTY;
 	}
 
-	@Override
 	public int getWhiteScoreMultipliedBy10() {
 		return whiteScore.getScoreMultipliedBy10();
 	}
 
-	@Override
 	public int getBlackScoreMultipliedBy10() {
 		return blackScore.getScoreMultipliedBy10();
 	}

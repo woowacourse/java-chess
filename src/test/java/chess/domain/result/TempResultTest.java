@@ -15,7 +15,7 @@ class TempResultTest {
 	@DisplayName("초기 상황에서의 승패 결과 테스트")
 	void initBoardResultTest() {
 		Board initialBoard = Board.create();
-		Result result = TempResult.from(initialBoard.getBoard());
+		TempResult result = TempResult.from(initialBoard.getBoard());
 
 		assertThat(result.getWinner()).isEqualTo(Team.EMPTY);
 		assertThat(result.getWhiteScoreMultipliedBy10()).isEqualTo(38 * 10);
@@ -41,7 +41,7 @@ class TempResultTest {
 		board.movePiece(Team.WHITE, B5, B6);
 		board.movePiece(Team.WHITE, B6, C7);
 
-		Result result = TempResult.from(board.getBoard());
+		TempResult result = TempResult.from(board.getBoard());
 
 		assertThat(result.getWinner()).isEqualTo(Team.EMPTY);
 		assertThat(result.getWhiteScoreMultipliedBy10()).isEqualTo(370);
@@ -68,7 +68,7 @@ class TempResultTest {
 		board.movePiece(Team.WHITE, B6, C7);
 		board.movePiece(Team.WHITE, C7, B8);
 
-		Result result = TempResult.from(board.getBoard());
+		TempResult result = TempResult.from(board.getBoard());
 
 		assertThat(result.getWinner()).isEqualTo(Team.WHITE);
 		assertThat(result.getWhiteScoreMultipliedBy10()).isEqualTo(380);
