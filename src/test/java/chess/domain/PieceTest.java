@@ -46,6 +46,11 @@ class PieceTest {
         public boolean isKing() {
             return false;
         }
+
+        @Override
+        public double getScore() {
+            return 0;
+        }
     }
 
     @Test
@@ -98,5 +103,14 @@ class PieceTest {
                 Arguments.of(List.of(new Position(File.C, Rank.EIGHT)), true),
                 Arguments.of(List.of(), false)
         );
+    }
+
+    @Test
+    void 점수를_반환한다() {
+        final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
+
+        final double score = piece.getScore();
+
+        assertThat(score).isEqualTo(0);
     }
 }

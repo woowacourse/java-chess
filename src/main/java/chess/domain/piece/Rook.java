@@ -37,4 +37,9 @@ public class Rook extends Piece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double getScore() {
+        return 5;
+    }
 }

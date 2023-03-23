@@ -61,6 +61,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract double getScore();
+
     public final Color getColor() {
         return color;
     }

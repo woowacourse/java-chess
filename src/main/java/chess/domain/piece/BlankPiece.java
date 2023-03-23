@@ -34,4 +34,9 @@ public class BlankPiece extends Piece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double getScore() {
+        return 0;
+    }
 }
