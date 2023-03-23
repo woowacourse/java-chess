@@ -1,12 +1,11 @@
 package chess.view;
 
-import chess.view.dto.Request;
-import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+import chess.view.dto.Request;
 
-    public static final String INVALID_INPUT_MESSAGE = "적절하지 않은 명령어입니다";
+public class InputView {
+    
     private final Scanner scanner;
 
     public InputView(Scanner scanner) {
@@ -15,41 +14,44 @@ public class InputView {
 
     public Request askCommand() {
         String input = scanner.nextLine().strip().toUpperCase();
-        String[] inputs = input.split(" ");
-        validateHasLength(inputs);
-        Command command = Command.from(inputs[0]);
-        if (List.of(Command.START, Command.END).contains(command)) {
-            validateSingleCommand(inputs);
+        String[] parameters = input.split(" ");
+        validateHasLength(parameters);
+        Command command = Command.from(parameters[0]);
+        return createRequest(parameters, command);
+    }
+
+    private Request createRequest(String[] parameters, Command command) {
+        validateParameterCount(command, parameters);
+        if (command == Command.START || command == Command.END) {
             return Request.createSingleCommand(command);
         }
-        validateParameters(inputs);
-        return Request.createMoveCommand(inputs[1], inputs[2]);
-    }
-
-
-    private void validateParameters(String[] inputs) {
-        if (inputs.length != 3) {
-            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        if (command == Command.MOVE) {
+            validateMoveParameterFormats(parameters);
+            return Request.createMoveCommand(parameters[1], parameters[2]);
         }
-        validateParameter(inputs[1]);
-        validateParameter(inputs[2]);
+        throw new IllegalArgumentException("없는 명령어입니다");
     }
 
-    private void validateParameter(String parameter) {
-        if (!parameter.matches("[A-H][1-8]")) {
-            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+    private void validateMoveParameterFormats(String[] parameters) {
+        validateFormatOf(parameters[1]);
+        validateFormatOf(parameters[2]);
+    }
+
+    private void validateFormatOf(String parameter) {
+        if (!parameter.matches("[A-Z]\\d")) {
+            throw new IllegalArgumentException("매개변수 형식이 적절하지 않습니다");
         }
     }
 
     private void validateHasLength(String[] inputs) {
         if (inputs.length < 1) {
-            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+            throw new IllegalArgumentException("명령어가 없습니다");
         }
     }
 
-    private void validateSingleCommand(String[] inputs) {
-        if (inputs.length > 1) {
-            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+    private void validateParameterCount(Command command, String[] parameters) {
+        if (!command.hasParameterCount(parameters.length)) {
+            throw new IllegalArgumentException("인자의 개수가 잘못되었습니다");
         }
     }
 }

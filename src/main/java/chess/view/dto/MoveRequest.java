@@ -1,8 +1,5 @@
 package chess.view.dto;
 
-import chess.view.InputView;
-import java.util.Arrays;
-
 public class MoveRequest {
 
     PositionRequest source;
@@ -15,35 +12,18 @@ public class MoveRequest {
 
     public static MoveRequest of(String source, String target) {
         return new MoveRequest(createPosition(source), createPosition(target));
-
     }
 
     private static PositionRequest createPosition(String input) {
-        return new PositionRequest(createFile(input), createRank(input));
+        return new PositionRequest(getFileFrom(input), getRankFrom(input));
     }
 
-    private static String createFile(String input) {
-        return Arrays.stream(File.values())
-                .map(Enum::name)
-                .filter(name -> name.equals(Character.toString(input.charAt(0))))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_MESSAGE));
+    private static String getFileFrom(String input) {
+        return Character.toString(input.charAt(0));
     }
 
-    private static String createRank(String input) {
-        return Arrays.stream(Rank.values())
-                .filter(value -> value.ordinal() + 1 == input.charAt(1) - '0')
-                .map(Enum::name)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_MESSAGE));
-    }
-
-    private enum File {
-        A, B, C, D, E, F, G, H
-    }
-
-    private enum Rank {
-        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT
+    private static String getRankFrom(String input) {
+        return Character.toString(input.charAt(1));
     }
 
     public PositionRequest getSource() {
