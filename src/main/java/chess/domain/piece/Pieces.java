@@ -7,6 +7,7 @@ import chess.domain.position.Rank;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -106,7 +107,22 @@ public class Pieces {
                 .filter(piece -> piece.isSameSide(side))
                 .collect(Collectors.toUnmodifiableList());
     }
-    
+
+    public Map<File, Integer> getSameFilePawnCount(Side side) {
+        Map<File, Integer> pawnCountByFile = new HashMap<>();
+        for (File file : File.values()) {
+            pawnCountByFile.put(file, countSameFilePawn(file, side));
+        }
+        return pawnCountByFile;
+    }
+
+    private int countSameFilePawn(File file, Side side) {
+        return (int) pieces.stream()
+                .filter(piece -> piece.isSameFile(file) && piece.side == side)
+                .filter(Piece::isPawn)
+                .count();
+    }
+
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
