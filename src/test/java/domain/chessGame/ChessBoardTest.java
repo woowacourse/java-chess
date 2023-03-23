@@ -7,6 +7,7 @@ import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
+import domain.piece.WhitePawn;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -132,7 +133,7 @@ class ChessBoardTest {
     class movePawnTest {
 
         Map<Position, Piece> setupBoard = Map.of(
-                Position.of(2, 4), new Pawn(Color.WHITE),
+                Position.of(2, 4), new WhitePawn(),
                 Position.of(3, 5), new Rook(Color.BLACK),
                 Position.of(4, 4), new Rook(Color.BLACK));
 

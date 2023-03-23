@@ -55,8 +55,9 @@ public final class ChessBoard {
         }
     }
 
-    private void validatePassablePathToForward(Position startPosition, List<Position> path) {
-        if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
+    private void validatePassablePathToForward(Position start, List<Position> path) {
+        Position nextPosition = path.get(0);
+        if (isForwardOneStepOfPawn(start, nextPosition)) {
             //Todo : 폰이 isPassablePath처럼 마지막 도착 위치 전까지 판단하는게 아니라 마지막 위치까지 포함해서 계산하고 있어서 묶기 힘들다.
             path.forEach(position -> {
                 if(chessBoard.containsKey(position)) {
@@ -64,6 +65,19 @@ public final class ChessBoard {
                 }
             });
         }
+    }
+
+    private boolean isForwardOneStepOfPawn(Position start, Position nextPosition) {
+        return isForwardOneStepOfWhitePawn(start, nextPosition) ||
+                isForwardOneStepOfBlackPawn(start, nextPosition);
+    }
+
+    private boolean isForwardOneStepOfWhitePawn(Position start, Position nextPosition) {
+        return start.calculateRowGap(nextPosition) == 1 && start.calculateColumnGap(nextPosition) == 0;
+    }
+
+    private boolean isForwardOneStepOfBlackPawn(Position start, Position nextPosition) {
+        return start.calculateRowGap(nextPosition) == -1 && start.calculateColumnGap(nextPosition) == 0;
     }
 
     private void validateMovableToDiagonal(Position startPosition, Position endPosition) {
