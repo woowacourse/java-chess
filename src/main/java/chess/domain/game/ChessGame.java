@@ -1,12 +1,13 @@
 package chess.domain.game;
 
+import static chess.domain.game.state.GameState.INIT;
+import static chess.domain.game.state.GameState.START;
 import static java.lang.String.format;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardSnapShot;
 import chess.domain.board.Square;
 import chess.domain.game.state.GameState;
-import chess.domain.game.state.StartState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
@@ -14,7 +15,7 @@ public class ChessGame {
 
     private final Board board;
 
-    private GameState gameState = GameState.INIT;
+    private GameState gameState = INIT;
 
     public ChessGame(final Board board) {
         this.board = board;
@@ -22,7 +23,7 @@ public class ChessGame {
 
     public void start() {
         gameState.start();
-        gameState = new GameState(Color.WHITE, new StartState());
+        gameState = START;
     }
 
     public double calculateScore(final Color color) {
@@ -37,6 +38,10 @@ public class ChessGame {
     public void end() {
         gameState.end();
         gameState = gameState.terminate();
+    }
+
+    public void done() {
+        gameState = gameState.done();
     }
 
     public void movePiece(final Square source, final Square destination) {
@@ -62,6 +67,10 @@ public class ChessGame {
 
     public boolean isRunning() {
         return gameState.isRunning();
+    }
+
+    public boolean isKingDied() {
+        return board.isKingDied(gameState.getTurnColor());
     }
 
     public Board getBoard() {

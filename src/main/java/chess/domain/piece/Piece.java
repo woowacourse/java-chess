@@ -22,6 +22,10 @@ public class Piece {
         return boardSnapShot.canMove(source, route);
     }
 
+    public boolean isKing() {
+        return pieceType == PieceType.KING;
+    }
+
     public boolean isPawn() {
         return pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN;
     }

@@ -20,6 +20,7 @@ public class ChessController {
         outputView.printStartMessage();
         while (chessGame.isRunning()) {
             playChessGame();
+            checkKing();
         }
     }
 
@@ -29,6 +30,13 @@ public class ChessController {
             executeCommand.execute(chessGame, outputView);
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void checkKing() {
+        if (chessGame.isKingDied()) {
+            chessGame.done();
+            outputView.printDoneMessage();
         }
     }
 }

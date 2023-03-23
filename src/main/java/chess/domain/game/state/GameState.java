@@ -1,5 +1,8 @@
 package chess.domain.game.state;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.board.Square;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
@@ -7,7 +10,8 @@ import chess.domain.piece.Piece;
 
 public class GameState {
 
-    public static final GameState INIT = new GameState(Color.BLACK, InitState.CACHE);
+    public static final GameState INIT = new GameState(BLACK, InitState.CACHE);
+    public static final GameState START = new GameState(WHITE, StartState.CACHE);
 
     private final Color turn;
     private final ExecuteState executeState;
@@ -39,6 +43,10 @@ public class GameState {
 
     public GameState terminate() {
         return new GameState(turn.reverse(), EndState.CACHE);
+    }
+
+    public GameState done() {
+        return new GameState(turn.reverse(), DoneState.CACHE);
     }
 
     public boolean isTurn(final Piece piece) {

@@ -41,6 +41,10 @@ public class OutputView {
         System.out.println("게임이 종료되었습니다.");
     }
 
+    public void printDoneMessage() {
+        System.out.println("왕이 잡혀 게임이 종료되었습니다.");
+    }
+
     public void printErrorMessage(final String message) {
         System.out.println("[ERROR] " + message);
     }

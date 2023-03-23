@@ -39,12 +39,15 @@ public class Board {
 
     private double calculatePawnDecreaseScore(final Color color) {
         return board.keySet().stream()
-                .filter(key -> board.get(key).isSameColor(color))
-                .filter(key -> board.get(key).isPawn())
+                .filter(key -> isSameColorPawn(board.get(key), color))
                 .filter(key -> isExistOtherPawnInFile(key, color))
                 .map(board::get)
                 .mapToDouble(piece -> piece.getScore() * PAWN_SCORE_DECREASE_RATE)
                 .sum();
+    }
+
+    private boolean isSameColorPawn(final Piece piece, final Color color) {
+        return piece.isSameColor(color) && piece.isPawn();
     }
 
     private boolean isExistOtherPawnInFile(final Square square, final Color color) {
@@ -52,8 +55,17 @@ public class Board {
                 .filter(rank -> rank != square.getRank())
                 .filter(rank -> board.containsKey(new Square(square.getFile(), rank)))
                 .map(rank -> board.get(new Square(square.getFile(), rank)))
-                .filter(piece -> piece.isSameColor(color))
-                .anyMatch(Piece::isPawn);
+                .anyMatch(piece -> isSameColorPawn(piece, color));
+    }
+
+    public boolean isKingDied(final Color turnColor) {
+        return board.keySet().stream()
+                .noneMatch(key -> isKingOfColor(key, turnColor));
+    }
+
+    private boolean isKingOfColor(final Square square, final Color color) {
+        final Piece piece = board.get(square);
+        return piece.isKing() && piece.isSameColor(color);
     }
 
     public BoardSnapShot getBoardSnapShot() {

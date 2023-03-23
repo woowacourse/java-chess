@@ -2,45 +2,45 @@
 
 ```mermaid
 graph TD
-  ChessController --> InputView
-  ChessController --> OutputView
-  ChessController --> ExecuteCommand
+    ChessController --> InputView
+    ChessController --> OutputView
+    ChessController --> ExecuteCommand
 
-  ChessController --> ChessGame
-  ChessGame --> Board
+    ChessController --> ChessGame
+    ChessGame --> Board
 
-  Square --> File
-  Square --> Rank
+    Square --> File
+    Square --> Rank
 
-  BoardFactory --> Board
+    BoardFactory --> Board
 
-  Board --> Square
-  Board --> piece
+    Board --> Square
+    Board --> piece
 
-  piece --> Color
-  piece --> PIECE_TYPE
+    piece --> Color
+    piece --> PIECE_TYPE
 
-  subgraph PIECE_TYPE
-    direction BT
-    Black_Pawn -.-> pieceType
-    White_Pawn -.-> pieceType
-    Rook -.-> pieceType
-    Bishop -.-> pieceType
-    Knight -.-> pieceType
-    Queen -.-> pieceType
-    King -.-> pieceType
-  end
+    subgraph PIECE_TYPE
+        direction BT
+        Black_Pawn -.-> pieceType
+        White_Pawn -.-> pieceType
+        Rook -.-> pieceType
+        Bishop -.-> pieceType
+        Knight -.-> pieceType
+        Queen -.-> pieceType
+        King -.-> pieceType
+    end
 
-  PIECE_TYPE --> STRATEGY
+    PIECE_TYPE --> STRATEGY
 
-  subgraph STRATEGY
-    direction BT
-    DirectStrategy -.-> strategy
-    SlidingStrategy -.-> strategy
-  end
+    subgraph STRATEGY
+        direction BT
+        DirectStrategy -.-> strategy
+        SlidingStrategy -.-> strategy
+    end
 
-  STRATEGY --> DirectVector
-  STRATEGY --> SlidingVector
+    STRATEGY --> DirectVector
+    STRATEGY --> SlidingVector
 ```
 
 ## 구현 기능 목록
@@ -51,13 +51,16 @@ graph TD
 - [x] 점수를 계산한다.
 - [x] 기물을 이동시킨다.
 - [x] 게임을 종료한다.
+- [x] 게임 승부를 가른다.
 - [x] 게임 진행을 확인한다.
+- [x] 왕이 죽었는지 확인한다.
 
 ### 체스 보드
 
 - [x] 특정 칸의 기물을 확인한다.
 - [x] 기물을 이동시킨다.
 - [x] 해당 색의 기물 점수를 계산한다.
+- [x] 왕이 죽었는지 확인한다.
 
 ### 체스 칸
 
@@ -90,6 +93,7 @@ graph TD
     - [x] 같은 색인지 확인한다.
 - [x] 움직일 수 있는지 확인한다.
 - [x] 폰인지 확인한다.
+- [x] 왕인지 확인한다.
 
 ### 전략
 
@@ -111,4 +115,5 @@ graph TD
 - [x] 체스판을 출력한다.
 - [x] 체스 상태에 따른 결과를 출력한다.
 - [x] 게임 종료 문구를 출력한다.
+- [x] 게임 승부 문구를 출력한다.
 - [x] 에러 메시지를 출력한다.
