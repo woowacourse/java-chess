@@ -13,8 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.game.Board;
 import chess.domain.game.exception.ChessGameException;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,6 +25,20 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BoardTest {
+
+    @Test
+    void 체스판_초기_점수_테스트() {
+        //given
+        Board board = new Board();
+
+        //when
+        Map<Color, Double> boardScore = board.getStatus();
+
+        //then
+        assertThat(boardScore)
+                .containsEntry(Color.BLACK, 38d)
+                .containsEntry(Color.WHITE, 38d);
+    }
 
     @Test
     void 첫_번째_줄_테스트() {

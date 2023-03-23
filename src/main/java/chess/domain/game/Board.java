@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.game.constant.ChessPosition;
 import chess.domain.game.exception.ChessGameException;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,5 +52,9 @@ public class Board {
             response.add(pieceResponses);
         }
         return response;
+    }
+
+    public Map<Color, Double> getStatus() {
+        return new ScoreCalculator(piecePosition).calculateScore();
     }
 }

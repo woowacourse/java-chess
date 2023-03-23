@@ -24,7 +24,7 @@ public class ChessGame {
     }
 
     public void move(Position origin, Position destination) {
-        gameState = gameState.move();
+        gameState = gameState.run();
         try {
             board.movePiece(origin, destination);
         } catch (IllegalPieceMoveException e) {
@@ -40,7 +40,8 @@ public class ChessGame {
         gameState = gameState.end();
     }
 
-    public Map<Color, Integer> getStatus() {
-        return null;
+    public Map<Color, Double> getStatus() {
+        gameState = gameState.run();
+        return board.getStatus();
     }
 }

@@ -31,6 +31,10 @@ public class Piece {
         return ColorCompareResult.of(this.color, color);
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     @Override
     public String toString() {
         return "Piece{" +

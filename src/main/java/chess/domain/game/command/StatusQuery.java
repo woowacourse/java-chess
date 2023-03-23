@@ -8,7 +8,7 @@ public class StatusQuery implements Query {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Map<Color, Integer> execute(ChessGame chessGame) {
+    public Map<Color, Double> execute(ChessGame chessGame) {
         return chessGame.getStatus();
     }
 }
