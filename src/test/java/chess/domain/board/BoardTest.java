@@ -387,4 +387,13 @@ public class BoardTest {
         final Side side = board.findSideByPosition(Position.of(A, ONE));
         assertThat(side.isWhite()).isTrue();
     }
+
+    @Test
+    void 두_위치를_통해_서로_아군_관계인지_판단할_수_있다() {
+        boardMap.put(Position.of(A, ONE), new Pawn(WHITE));
+        boardMap.put(Position.of(A, TWO), new Pawn(WHITE));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isAllyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
+    }
 }

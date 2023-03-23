@@ -44,12 +44,10 @@ public class Board {
         }
     }
 
-    public static boolean isInRange(final int fileIndex, final int rankIndex) {
-        return isIndexInRange(fileIndex) && isIndexInRange(rankIndex);
-    }
-
-    private static boolean isIndexInRange(final int index) {
-        return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
+    public boolean isAllyPosition(final Position position, final Position otherPosition) {
+        final Side side = findSideByPosition(position);
+        final Side otherSide = findSideByPosition(otherPosition);
+        return side.isAlly(otherSide);
     }
 
     public Side findSideByPosition(final Position position) {
@@ -57,8 +55,12 @@ public class Board {
         return piece.side();
     }
 
-    public Piece findPieceByPosition(final Position position) {
-        return board.get(position);
+    public static boolean isInRange(final int fileIndex, final int rankIndex) {
+        return isIndexInRange(fileIndex) && isIndexInRange(rankIndex);
+    }
+
+    private static boolean isIndexInRange(final int index) {
+        return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
     }
 
     public Map<Position, Piece> getBoard() {
