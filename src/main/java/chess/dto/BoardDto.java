@@ -19,7 +19,7 @@ public class BoardDto {
 
     private List<List<String>> createDto(Map<Position, Piece> chessBoard) {
         List<List<String>> chessBoardString = new ArrayList<>();
-        for (Rank rank : Rank.getOrderedRanks()) {
+        for (Rank rank : Rank.getReversedOrderedRanks()) {
             List<String> piecesOfRank = new ArrayList<>();
             for (Column column : Column.getOrderedColumns()) {
                 String piece = chessBoard.get(new Position(column, rank)).findName();

@@ -34,7 +34,7 @@ public class InitialBoardStrategy implements BoardStrategy {
     }
 
     private void initEmptyPieces() {
-        for (Rank rank : Rank.getOrderedRanks()) {
+        for (Rank rank : Rank.getReversedOrderedRanks()) {
             for (Column column : Column.getOrderedColumns()) {
                 board.put(new Position(column, rank), new EmptyPiece());
             }
