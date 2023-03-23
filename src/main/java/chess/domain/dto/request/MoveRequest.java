@@ -1,4 +1,4 @@
-package chess.domain.dto.req;
+package chess.domain.dto.request;
 
 import chess.domain.Color;
 import chess.domain.Position;

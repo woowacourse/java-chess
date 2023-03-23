@@ -1,7 +1,7 @@
 package chess.domain.strategy.king;
 
 import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 
 public class KingStrategy implements PieceStrategy {

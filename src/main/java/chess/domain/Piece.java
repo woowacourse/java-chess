@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.dto.request.MoveRequest;
 
 import java.util.List;
 
@@ -63,16 +63,16 @@ public class Piece {
         return this.shape.getNameByColor(color);
     }
 
+    public double getScore() {
+        return shape.getScore();
+    }
+
     @Override
     public String toString() {
         return "Piece{" +
                 "position=" + position +
                 ", shape=" + shape +
                 '}';
-    }
-
-    public double getScore() {
-        return shape.getScore();
     }
 
 }
