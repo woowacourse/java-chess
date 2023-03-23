@@ -20,9 +20,26 @@ public class BoardResult {
     }
 
     public double calculatePoints(final Color color) {
+        return calculateTotalPoints(color) - calculatePawnPoints(color);
+    }
+
+    private double calculateTotalPoints(final Color color) {
         return board.values().stream()
                 .filter(piece -> piece.color() == color)
                 .mapToDouble(pieceType -> pieceType.point())
                 .sum();
     }
+
+    private double calculatePawnPoints(final Color color) {
+        Map<File, List<Position>> positionsByPawn = board.keySet().stream()
+                .filter(key -> board.get(key).type() == PieceType.PAWN)
+                .filter(key -> board.get(key).color() == color)
+                .collect(Collectors.groupingBy(position -> position.file()));
+
+        return positionsByPawn.values().stream()
+                .filter(pawnPositions -> pawnPositions.size() >= PAWN_COUNT)
+                .mapToDouble(pawnPositions -> pawnPositions.size() * PAWN_POINT)
+                .sum();
+    }
+
 }
