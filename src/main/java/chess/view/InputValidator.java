@@ -6,6 +6,7 @@ public class InputValidator {
 
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int POSITION_COMMAND_LENGTH = 2;
+    private static final int MAX_USER_ID_LENGTH = 12;
     private static final char START_FILE = 'a';
     private static final char END_FILE = 'h';
     private static final char START_RANK = '1';
@@ -45,6 +46,12 @@ public class InputValidator {
     public static void validateRank(char rank) {
         if (rank < START_RANK || rank > END_RANK) {
             throw new IllegalArgumentException("[ERROR] rank를 " + START_RANK + "~" + END_RANK + "로 입력해주세요.");
+        }
+    }
+
+    public static void validateUserIdLength(String input) {
+        if (input.length() > MAX_USER_ID_LENGTH) {
+            throw new IllegalArgumentException("[ERROR] 아이디는 12자 이하여야 합니다.");
         }
     }
 }

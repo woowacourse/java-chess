@@ -64,4 +64,13 @@ class InputValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] rank를 1~8로 입력해주세요.");
     }
+
+    @Test
+    @DisplayName("user 아이디의 길이가 12자를 넘으면 예외가 발생한다.")
+    void validateUserIdLength() {
+        String userId = "1234567890abc";
+        assertThatThrownBy(() -> InputValidator.validateUserIdLength(userId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 아이디는 12자 이하여야 합니다.");
+    }
 }

@@ -22,7 +22,7 @@ public class InputView {
         return commands.get(1) + commands.get(2);
     }
 
-    private static void validateMoveCommand(List<String> commands) {
+    private void validateMoveCommand(List<String> commands) {
         validateBlank(commands);
         validateCommandIsMove(commands.get(0));
         validateCommandSize(commands);
@@ -31,5 +31,11 @@ public class InputView {
         validateFile(commands.get(2).charAt(0));
         validateRank(commands.get(1).charAt(1));
         validateRank(commands.get(2).charAt(1));
+    }
+
+    public String readUserId() {
+        String input = scanner.nextLine();
+        validateUserIdLength(input);
+        return input;
     }
 }
