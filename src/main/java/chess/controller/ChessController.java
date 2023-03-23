@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.dto.BoardDto;
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.domain.CommandLine;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -40,6 +41,11 @@ public class ChessController {
         }
         if (commandLine.isMove()) {
             chessGame.move(commandLine.getArguments());
+        }
+        if (commandLine.isStatus()) {
+            double whitePoint = chessGame.getPoint(Color.WHITE);
+            double blackPoint = chessGame.getPoint(Color.BLACK);
+            OutputView.printStatus(whitePoint, blackPoint);
         }
         if (commandLine.isEnd()) {
             chessGame.end();

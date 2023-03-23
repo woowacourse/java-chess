@@ -73,5 +73,9 @@ public class ChessGame {
     public Board getBoard() {
         return board;
     }
+
+    public double getPoint(Color color) {
+        return board.calculatePoint(color);
+    }
 }
 
