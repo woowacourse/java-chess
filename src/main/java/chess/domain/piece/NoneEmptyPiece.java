@@ -12,7 +12,7 @@ public abstract class NoneEmptyPiece extends Piece {
     protected final Movement movement;
     protected final ObstacleStrategy obstacleStrategy;
 
-    public NoneEmptyPiece(PieceType pieceType, Team team, Movement movement, ObstacleStrategy obstacleStrategy) {
+    protected NoneEmptyPiece(PieceType pieceType, Team team, Movement movement, ObstacleStrategy obstacleStrategy) {
         super(pieceType, team);
         this.movement = movement;
         this.obstacleStrategy = obstacleStrategy;

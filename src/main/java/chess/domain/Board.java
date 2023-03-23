@@ -3,12 +3,15 @@ package chess.domain;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.NoneEmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static chess.domain.piece.PieceType.KING;
 
 public class Board {
 
@@ -50,6 +53,12 @@ public class Board {
     private boolean hasObstacle(List<Position> obstaclePositionsInPath) {
         return obstaclePositionsInPath.stream()
                 .anyMatch(position -> !board.get(position).isEmpty());
+    }
+
+    public boolean isKingDead(Team team) {
+        return board.values()
+                .stream()
+                .noneMatch(piece -> piece.isPieceType(KING) && piece.isTeam(team));
     }
 
     private List<List<Piece>> sortBoard() {
