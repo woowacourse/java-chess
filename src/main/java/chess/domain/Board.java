@@ -63,6 +63,10 @@ public class Board {
                 .noneMatch(piece -> piece.isPieceType(KING) && piece.isTeam(team));
     }
 
+    public boolean isTeamInPositionMatched(Position position, Team expected) {
+        return board.get(position).isTeam(expected);
+    }
+
     private List<List<Piece>> sortBoard() {
         List<Position> positions = sortPosition();
         List<List<Piece>> sortedBoard = new ArrayList<>();
@@ -105,9 +109,9 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public double getMinusScore(Team team){
+    public double getMinusScore(Team team) {
         long pawnCount = 0;
-        for(int i = 0; i < LINE_SIZE; i++){
+        for (int i = 0; i < LINE_SIZE; i++) {
             pawnCount += countPawnsInSameColumn(i, team);
         }
         return pawnCount * 0.5;
@@ -121,7 +125,7 @@ public class Board {
                 .filter(piece -> piece.isPieceType(PAWN) && piece.isTeam(team))
                 .count();
 
-        if(pawnCount > 1){
+        if (pawnCount > 1) {
             return pawnCount;
         }
         return 0;

@@ -35,7 +35,7 @@ public class Position {
         return new Position(column, row);
     }
 
-    public boolean isColumn(final int column){
+    public boolean isColumn(final int column) {
         return this.column == column;
     }
 

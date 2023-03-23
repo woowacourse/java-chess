@@ -25,8 +25,26 @@ public class ChessGame {
     }
 
     public void movePiece(Position from, Position to) {
+        validateTurn(from);
         board.movePiece(from, to);
+        turn = changeTurn(turn);
+    }
 
+    private void validateTurn(Position from) {
+        if (board.isTeamInPositionMatched(from, turn)) {
+            return;
+        }
+        if (turn.isBlack()) {
+            throw new IllegalArgumentException("흑 팀의 말을 움직여 주세요.");
+        }
+        throw new IllegalArgumentException("백 팀의 말을 움직여 주세요.");
+    }
+
+    private Team changeTurn(Team currentTurn) {
+        if (currentTurn.isBlack()) {
+            return WHITE;
+        }
+        return BLACK;
     }
 
     public boolean isGameEnd() {
