@@ -12,6 +12,7 @@ import static chess.model.position.Direction.SOUTH_WEST_WEST;
 import chess.model.Color;
 import chess.model.piece.PieceType;
 import chess.model.position.Direction;
+import chess.model.position.Distance;
 import java.util.Set;
 
 public class Knight extends NonSlidingPiece {
@@ -25,8 +26,18 @@ public class Knight extends NonSlidingPiece {
         super(color, PieceType.KNIGHT);
     }
 
+    @Override
+    protected boolean isRightDistance(final Distance distance) {
+        return true;
+    }
+
     protected boolean isRightDirection(final Direction direction) {
         return directions.stream()
                 .anyMatch(it -> it.match(direction.rank(), direction.file()));
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 }

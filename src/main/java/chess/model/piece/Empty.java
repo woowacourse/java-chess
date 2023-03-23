@@ -29,4 +29,14 @@ public class Empty extends Piece {
     public boolean isEmpty() {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

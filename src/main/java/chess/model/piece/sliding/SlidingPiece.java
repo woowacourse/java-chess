@@ -19,11 +19,26 @@ public abstract class SlidingPiece extends Piece {
 
     protected abstract boolean isRightDirection(final Direction direction);
 
+    @Override
+    public final boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public final boolean isKing() {
+        return false;
+    }
+
     protected boolean hasTargetEnemy(final Color targetColor) {
         return getColor().isDifferent(targetColor);
     }
 
-    public Piece update() {
+    public final Piece update() {
         return this;
     }
 }
