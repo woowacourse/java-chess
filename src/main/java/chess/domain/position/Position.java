@@ -89,4 +89,8 @@ public class Position {
     public boolean isSameRank(final Rank rank) {
         return this.rank == rank;
     }
+
+    public File file() {
+        return file;
+    }
 }
