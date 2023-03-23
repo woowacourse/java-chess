@@ -1,5 +1,8 @@
 package service;
 
+import java.util.List;
+
+import dto.BoardDto;
 import repository.ChessDao;
 
 public class GameRoomService {
@@ -13,5 +16,14 @@ public class GameRoomService {
 
     public void createGameRoom(String gameName) {
         gameId = chessDao.addGame(gameName);
+    }
+
+    public List<String> readGameRooms() {
+        return chessDao.findAllGame();
+    }
+
+    public List<BoardDto> getBoard(String gameName) {
+        this.gameId = chessDao.findGameIdByGameName(gameName);
+        return chessDao.findBoardByGameName(gameName);
     }
 }

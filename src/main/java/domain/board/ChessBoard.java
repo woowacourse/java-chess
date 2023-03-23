@@ -15,11 +15,13 @@ import domain.piece.Piece;
 import domain.piece.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
+import domain.piece.type.Type;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;
+import dto.BoardDto;
 
 public class ChessBoard {
     private final Map<Square, Piece> board;
@@ -183,5 +185,14 @@ public class ChessBoard {
                 .filter(piece -> piece.getCamp() == camp)
                 .map(Piece::getScore)
                 .reduce(Score.ZERO_SCORE, Score::add);
+    }
+
+    public void putPiece(BoardDto boardDto) {
+        String parsedSquare = boardDto.getSquare();
+        Square square = Square.of(File.findFile(parsedSquare.charAt(0)), Rank.findRank(parsedSquare.charAt(1)));
+        Type type = Type.find(boardDto.getPiece());
+        Camp camp = Camp.find(boardDto.getCamp());
+        Piece piece = type.createPiece(camp);
+        board.put(square, piece);
     }
 }

@@ -11,6 +11,7 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import dto.BoardDto;
 import dto.ScoreDto;
 
 public class ChessService {
@@ -18,11 +19,14 @@ public class ChessService {
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
-    public void setUp() {
+    public void setUp(List<BoardDto> boardInfo) {
         if (isOngoing) {
             throw new IllegalStateException("이미 게임이 실행중 입니다.");
         }
         chessBoard.initialize();
+        for (BoardDto boardDto : boardInfo) {
+            chessBoard.putPiece(boardDto);
+        }
         isOngoing = true;
     }
 
