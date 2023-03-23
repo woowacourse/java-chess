@@ -10,6 +10,7 @@ import chess.domain.position.RelativePosition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.KING;
 
@@ -93,6 +94,14 @@ public class Board {
 
     public List<List<Piece>> getBoard() {
         return sortBoard();
+    }
+
+    public List<Double> getScores(Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isTeam(team))
+                .map(Piece::getScore)
+                .collect(Collectors.toUnmodifiableList());
     }
 
 }
