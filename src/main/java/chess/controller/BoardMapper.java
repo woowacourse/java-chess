@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.domain.board.PieceProvider;
 import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,7 +11,7 @@ public final class BoardMapper {
     private BoardMapper() {
     }
     
-    public static String map(Board board) {
+    public static String map(PieceProvider board) {
         return Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .map(rank -> RankMapper.map(board, rank))

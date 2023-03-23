@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
+import chess.domain.board.PieceProvider;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceScore;
@@ -125,7 +126,7 @@ public class ChessGame implements Action {
         return this.progress != GameProgress.END;
     }
     
-    public Board getBoard() {
+    public PieceProvider getBoard() {
         return this.board;
     }
 }

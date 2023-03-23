@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandFactory;
-import chess.domain.board.Board;
+import chess.domain.board.PieceProvider;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Status;
 import chess.view.InputView;
@@ -57,7 +57,7 @@ public class ChessController {
     
     private void printBoard(Command command, ChessGame chessGame) {
         if (command.isNotEnd()) {
-            Board board = chessGame.getBoard();
+            PieceProvider board = chessGame.getBoard();
             String boardString = BoardMapper.map(board);
             this.outputView.printBoard(BoardDTO.create(boardString));
         }
