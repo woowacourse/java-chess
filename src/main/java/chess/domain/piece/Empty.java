@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.Team;
 
 public class Empty extends Piece {
@@ -16,6 +17,11 @@ public class Empty extends Piece {
 
     @Override
     protected int calculateCount(int fileDiff, int rankDiff) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Score convertToScore() {
         throw new UnsupportedOperationException();
     }
 }

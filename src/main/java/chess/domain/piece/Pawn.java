@@ -2,12 +2,14 @@ package chess.domain.piece;
 
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.Team;
 
 public class Pawn extends Piece {
 
     private static final int BLACK_INIT_RANK = 7;
     private static final int WHITE_INIT_RANK = 2;
+    private static final double SCORE = 1.0;
 
     public Pawn(Team team) {
         super(team);
@@ -52,5 +54,10 @@ public class Pawn extends Piece {
             return Math.abs(fileDiff);
         }
         return Math.abs(fileDiff + rankDiff);
+    }
+
+    @Override
+    public Score convertToScore() {
+        return new Score(SCORE);
     }
 }

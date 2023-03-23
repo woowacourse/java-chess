@@ -2,9 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.Team;
 
 public class Queen extends Piece {
+
+    private static final double SCORE = 9.0;
 
     public Queen(Team team) {
         super(team);
@@ -22,5 +25,10 @@ public class Queen extends Piece {
             return Math.abs(fileDiff);
         }
         return Math.abs(fileDiff + rankDiff);
+    }
+
+    @Override
+    public Score convertToScore() {
+        return new Score(SCORE);
     }
 }

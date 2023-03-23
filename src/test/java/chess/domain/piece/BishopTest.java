@@ -3,11 +3,13 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -73,5 +75,12 @@ class BishopTest {
                         new Position(2, 6),
                         List.of(new Position(3, 5), new Position(2, 6)))
         );
+    }
+
+    @Test
+    @DisplayName("비숍은 3점으로 계산된다.")
+    void calculateScore() {
+        Piece bishop = new Bishop(Team.WHITE);
+        assertThat(bishop.convertToScore()).isEqualTo(new Score(3));
     }
 }
