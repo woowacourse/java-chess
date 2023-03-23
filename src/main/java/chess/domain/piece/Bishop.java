@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.direction.Direction;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ public class Bishop extends Piece {
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
     public Bishop(Color color) {
-        super(BISHOP_NAME.getName(), color,BISHOP_SCORE.getScore());
+        super(BISHOP_NAME.getName(), color, BISHOP_SCORE.getScore());
     }
 
     @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
+    public boolean isMovable(Position start, Position end, Color destinationColor) {
         Direction direction = findDirection(start, end);
         checkDirection(direction);
-        checkMovableToDestination(colorOfDestination);
+        checkMovableToDestination(destinationColor);
         return true;
     }
 
-    public void checkDirection(Direction direction) {
+    private void checkDirection(Direction direction) {
         if (!Bishop.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
