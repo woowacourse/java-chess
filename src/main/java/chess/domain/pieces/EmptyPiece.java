@@ -2,24 +2,21 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.math.Direction;
+import chess.domain.pieces.component.Name;
 
 public final class EmptyPiece extends Piece {
 
-    static final String INVALID_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다. 입력값: ";
+    static final String INVALID_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다.";
     private static final String EMPTY_NAME = ".";
 
     public EmptyPiece(final Team team) {
         super(team);
         validateTeam(team);
-        initialName(team);
+        initialName();
     }
 
-    private void initialName(Team team) {
-        if (team == Team.BLACK) {
-            this.name = new Name(EMPTY_NAME);
-            return;
-        }
-        this.name = new Name(EMPTY_NAME.toLowerCase());
+    private void initialName() {
+        this.name = new Name(EMPTY_NAME);
     }
 
     @Override
