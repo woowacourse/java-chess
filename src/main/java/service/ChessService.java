@@ -42,11 +42,19 @@ public class ChessService {
         isOngoing = !chessBoard.isCapturedKing(currentCamp);
     }
 
-    public void end() {
+    public List<BoardDto> end() {
         if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         isOngoing = false;
+        return getBoardDtos();
+    }
+
+    private List<BoardDto> getBoardDtos() {
+        Map<Square, Piece> board = chessBoard.getBoard();
+        return board.keySet().stream()
+                .map(square -> BoardDto.of(square, board.get(square)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private Square getCurrentSquare(String currentSquareInput) {

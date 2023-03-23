@@ -26,4 +26,8 @@ public class GameRoomService {
         this.gameId = chessDao.findGameIdByGameName(gameName);
         return chessDao.findBoardByGameName(gameName);
     }
+
+    public void saveBoard(List<BoardDto> boardDtos) {
+        chessDao.saveBoard(gameId, boardDtos);
+    }
 }
