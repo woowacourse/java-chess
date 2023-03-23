@@ -3,7 +3,9 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -33,10 +35,17 @@ public class ChessGame {
         Position destination = Position.from(arguments.get(1));
     
         checkPieceCanMove(source, destination);
+        checkCatchKing(destination);
         board.replace(source, destination);
         turn = turn.reverse();
     }
-    
+
+    private void checkCatchKing(Position destination) {
+        if (board.getPieceAtPosition(destination).getType() == PieceType.KING) {
+            status = GameStatus.CATCH;
+        }
+    }
+
     private void checkPieceCanMove(final Position source, final Position destination) {
         board.validateSourcePiece(source, turn);
         Piece sourcePiece = board.getPieceAtPosition(source);
@@ -66,16 +75,30 @@ public class ChessGame {
         status = GameStatus.END;
     }
     
-    public boolean isGameEnd() {
-        return status == GameStatus.END;
+    public boolean isStop() {
+        return status == GameStatus.END || status == GameStatus.CATCH;
+    }
+
+    public boolean isCatch() {
+        return status == GameStatus.CATCH;
     }
     
     public Board getBoard() {
         return board;
     }
 
-    public double getPoint(Color color) {
-        return board.calculatePoint(color);
+    public Map<Color, Double> status() {
+        if (status == GameStatus.START) {
+            throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        }
+        Map<Color, Double> status = new HashMap<>();
+        status.put(Color.WHITE, board.calculatePoint(Color.WHITE));
+        status.put(Color.BLACK, board.calculatePoint(Color.BLACK));
+        return status;
+    }
+
+    public Color getTurn() {
+        return turn;
     }
 }
 
