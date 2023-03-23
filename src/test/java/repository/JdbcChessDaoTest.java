@@ -45,8 +45,7 @@ class JdbcChessDaoTest {
     @Test
     @DisplayName("saveMoveHistory를 통해 move를 저장한다.")
     void saveMoveHistory() {
-        jdbcChessDao.addGame("테스트");
-        long gameId = jdbcChessDao.findGameIdByGameName("테스트");
+        long gameId = jdbcChessDao.addGame("테스트");
         MoveHistoryDto moveHistoryDto = new MoveHistoryDto("a2", "a3", "EMPTY");
         jdbcChessDao.saveMoveHistory(gameId, moveHistoryDto);
 
@@ -58,8 +57,7 @@ class JdbcChessDaoTest {
     @Test
     @DisplayName("saveBoard를 통해 현재보드를 저장한다.")
     void saveBoard() {
-        jdbcChessDao.addGame("테스트");
-        long gameId = jdbcChessDao.findGameIdByGameName("테스트");
+        long gameId = jdbcChessDao.addGame("테스트");
         List<BoardDto> boardDtos = List.of(
                 new BoardDto("a2", "PAWN", "WHITE"),
                 new BoardDto("a3", "QUEEN", "BLACK"),

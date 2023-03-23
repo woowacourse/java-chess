@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,15 @@ public class JdbcChessDao implements ChessDao {
     }
 
     @Override
-    public void addGame(String gameName) {
+    public long addGame(String gameName) {
         final String query = "INSERT INTO game (gameName) VALUES (?)";
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getLong(1);
         } catch (final SQLException exception) {
             throw new RuntimeException(exception);
         }
@@ -109,19 +113,6 @@ public class JdbcChessDao implements ChessDao {
             preparedStatement.setLong(4, game_id);
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    public long findGameIdByGameName(String gameName) {
-        final String query = "SELECT _id FROM game WHERE gameName = ?";
-        try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, gameName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt("_id");
-        } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }

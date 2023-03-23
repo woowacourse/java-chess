@@ -6,7 +6,7 @@ import dto.BoardDto;
 import dto.MoveHistoryDto;
 
 public interface ChessDao {
-    void addGame(String gameName);
+    long addGame(String gameName);
 
     List<String> findAllGame();
 
