@@ -28,7 +28,6 @@ public enum Direction {
     LEFT_DOWN_DOWN(-1, -2, (dx, dy) -> isKnight(dx, dy) && dx == -1 && dy == -2);
 
     private final int dx;
-
     private final int dy;
     private final BiPredicate<Integer, Integer> isMatch;
 

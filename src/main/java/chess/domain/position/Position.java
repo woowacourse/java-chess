@@ -8,6 +8,7 @@ public final class Position {
 
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
