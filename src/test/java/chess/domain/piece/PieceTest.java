@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,7 +67,7 @@ class PieceTest {
     @DisplayName("해당 기물이 폰인지 확인한다.")
     void isPawn(Piece piece, boolean expectedResult) {
         // when, then
-        assertThat(piece.isNeedToCheckWhenDiagonalMove()).isEqualTo(expectedResult);
+        assertThat(piece.isPawn()).isEqualTo(expectedResult);
     }
 
     static Stream<Arguments> isPawnTestCases() {
