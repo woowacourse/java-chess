@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Set;
+
 import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.position.Position;
@@ -15,6 +17,7 @@ public abstract class Piece {
 	}
 
 	public abstract String name();
+	public abstract Set<Direction> direction();
 
 	public abstract boolean movable(final Direction direction);
 

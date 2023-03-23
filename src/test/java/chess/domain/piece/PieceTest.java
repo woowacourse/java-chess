@@ -1,9 +1,12 @@
 package chess.domain.piece;
 
 import static chess.domain.color.Color.*;
+import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
+
+import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +41,11 @@ class PieceTest {
 		@Override
 		public String name() {
 			return "R";
+		}
+
+		@Override
+		public Set<Direction> direction() {
+			return ofLinear();
 		}
 
 		@Override

@@ -78,7 +78,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("체스말이 이동할 수 없는 위치입니다.");
+			.hasMessage("체스말이 이동할 수 없는 위치입니다");
 	}
 
 	@Test

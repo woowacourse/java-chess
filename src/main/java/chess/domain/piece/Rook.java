@@ -44,6 +44,11 @@ public final class Rook extends Piece {
     }
 
     @Override
+    public Set<Direction> direction(){
+        return Direction.ofLinear();
+    }
+
+    @Override
     public boolean movable(final Direction direction) {
         return directions.contains(direction);
     }

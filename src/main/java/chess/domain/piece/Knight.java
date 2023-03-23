@@ -45,6 +45,11 @@ public final class Knight extends Piece {
     }
 
     @Override
+    public Set<Direction> direction() {
+        return ofKnight();
+    }
+
+    @Override
     public boolean movable(final Direction direction) {
         return directions.contains(direction);
     }

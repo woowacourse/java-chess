@@ -7,9 +7,10 @@ import static chess.domain.position.Rank.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import chess.domain.move.Direction;
 import chess.domain.color.Color;
+import chess.domain.move.Direction;
 import chess.domain.position.Position;
 
 public final class Pawn extends Piece {
@@ -53,6 +54,14 @@ public final class Pawn extends Piece {
 			return name;
 		}
 		return name.toUpperCase();
+	}
+
+	@Override
+	public Set<Direction> direction() {
+		if (super.color().equals(WHITE)) {
+			return ofWhitePawn();
+		}
+		return ofBlackPawn();
 	}
 
 	@Override

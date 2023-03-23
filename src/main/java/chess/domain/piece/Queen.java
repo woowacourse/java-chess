@@ -42,6 +42,11 @@ public final class Queen extends Piece {
     }
 
     @Override
+    public Set<Direction> direction() {
+        return ofEvery();
+    }
+
+    @Override
     public boolean movable(final Direction direction) {
         return directions.contains(direction);
     }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Set;
+
 import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.position.Position;
@@ -13,6 +15,11 @@ public final class Empty extends Piece {
 	@Override
 	public String name() {
 		return ".";
+	}
+
+	@Override
+	public Set<Direction> direction() {
+		return Set.of();
 	}
 
 	@Override

@@ -37,8 +37,8 @@ public class Board {
 		validateDifferentPosition(source, target);
 		validateTargetNotSameColor(source, target);
 
-		Direction unit = Direction.calculateUnitDirection(source, target);
 		Piece piece = board.get(source);
+		Direction unit = Direction.calculateDirection(source, target, piece);
 		validateMovable(piece, unit);
 		validatePath(source, target, unit, piece);
 
@@ -78,7 +78,7 @@ public class Board {
 
 	private void validateMovable(final Piece piece, final Direction unit) {
 		if (!piece.movable(unit)) {
-			throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다.");
+			throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다");
 		}
 	}
 
