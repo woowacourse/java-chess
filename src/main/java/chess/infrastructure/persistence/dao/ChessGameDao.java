@@ -6,7 +6,11 @@ import java.util.Optional;
 
 public class ChessGameDao {
 
-    private final JdbcTemplate template = new JdbcTemplate();
+    private final JdbcTemplate template;
+
+    public ChessGameDao(final JdbcTemplate template) {
+        this.template = template;
+    }
 
     public void save(final ChessGameEntity chessGameEntity) {
         final String sql = "INSERT INTO chess_game(state, turn, winner) VALUES (?, ?, ?)";

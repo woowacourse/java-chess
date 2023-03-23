@@ -6,7 +6,11 @@ import java.util.List;
 
 public class PieceDao {
 
-    private final JdbcTemplate template = new JdbcTemplate();
+    private final JdbcTemplate template;
+
+    public PieceDao(final JdbcTemplate template) {
+        this.template = template;
+    }
 
     public void saveAll(final List<PieceEntity> pieceEntities) {
         final String sql =

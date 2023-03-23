@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("JdbcChessGameRepository 은")
 class JdbcChessGameRepositoryTest {
 
-    private final PieceDao pieceDao = new PieceDao();
+    private final PieceDao pieceDao = new PieceDao(template);
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
     private final ChessGameRepository repository = new JdbcChessGameRepository(pieceDao, chessGameDao);

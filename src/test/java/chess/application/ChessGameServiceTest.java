@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ChessGameServiceTest {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
-    private final PieceDao pieceDao = new PieceDao();
+    private final PieceDao pieceDao = new PieceDao(template);
     private final ChessGameRepository chessGameRepository = new JdbcChessGameRepository(pieceDao, chessGameDao);
     private final ChessGameService chessGameService = new ChessGameService(chessGameRepository);
 

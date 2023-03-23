@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class PieceDaoTest {
 
     private Long chessGameId;
-    private final PieceDao pieceDao = new PieceDao();
+    private final PieceDao pieceDao = new PieceDao(template);
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
     @BeforeEach
