@@ -41,6 +41,10 @@ public abstract class Piece {
         return this.color == color;
     }
     
+    public boolean isNotSameColor(Color color) {
+        return this.color != color;
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hash(this.color);
@@ -78,5 +82,8 @@ public abstract class Piece {
         return this.type == PieceType.EMPTY;
     }
     
+    public boolean isPawn() {
+        return this.type == PieceType.PAWN;
+    }
     
 }

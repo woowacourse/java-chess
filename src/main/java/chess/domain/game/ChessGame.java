@@ -4,16 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.PieceProvider;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceScore;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Score;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ChessGame implements Action {
     
@@ -61,49 +52,7 @@ public class ChessGame implements Action {
         if (this.isNotRunning()) {
             throw new IllegalStateException(GAME_HAS_NOT_STARTED);
         }
-        Map<Color, Score> scoreMap = new HashMap<>();
-        scoreMap.put(Color.WHITE, Score.from(0));
-        scoreMap.put(Color.BLACK, Score.from(0));
-        for (File file : File.values()) {
-            List<Piece> filePieces = this.board.getFilePieces(file);
-            List<Piece> whitePawnStack = new ArrayList<>();
-            List<Piece> blackPawnStack = new ArrayList<>();
-            for (Piece piece : filePieces) {
-                PieceType type = piece.getType();
-                if (type == PieceType.EMPTY) {
-                    continue;
-                }
-                if (type == PieceType.PAWN && piece.getColor() == Color.WHITE) {
-                    whitePawnStack.add(piece);
-                    continue;
-                }
-                if (type == PieceType.PAWN && piece.getColor() == Color.BLACK) {
-                    blackPawnStack.add(piece);
-                    continue;
-                }
-                Score newScore = PieceScore.getScore(type);
-                scoreMap.put(piece.getColor(), newScore.add(scoreMap.get(piece.getColor())));
-            }
-            if (whitePawnStack.size() > 1) {
-                Score pawnScore = PieceScore.getScore(PieceType.PAWN);
-                pawnScore = pawnScore.multiply(whitePawnStack.size() * 0.5);
-                scoreMap.put(Color.WHITE, pawnScore.add(scoreMap.get(Color.WHITE)));
-            }
-            if (blackPawnStack.size() > 1) {
-                Score pawnScore = PieceScore.getScore(PieceType.PAWN);
-                pawnScore = pawnScore.multiply(blackPawnStack.size() * 0.5);
-                scoreMap.put(Color.BLACK, pawnScore.add(scoreMap.get(Color.BLACK)));
-            }
-            if (whitePawnStack.size() == 1) {
-                Score pawnScore = PieceScore.getScore(PieceType.PAWN);
-                scoreMap.put(Color.WHITE, pawnScore.add(scoreMap.get(Color.WHITE)));
-            }
-            if (blackPawnStack.size() == 1) {
-                Score pawnScore = PieceScore.getScore(PieceType.PAWN);
-                scoreMap.put(Color.BLACK, pawnScore.add(scoreMap.get(Color.BLACK)));
-            }
-        }
-        return Status.from(scoreMap);
+        return Status.from(this.board);
     }
     
     @Override
