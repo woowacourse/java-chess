@@ -2,11 +2,10 @@ package chess.domain.game;
 
 import chess.boardstrategy.BoardStrategy;
 import chess.boardstrategy.InitialBoardStrategy;
-import chess.domain.board.Column;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -48,7 +47,8 @@ class ChessGameTest {
 
     @Test
     void 게임이_시작된적_없는데_move메서드_실행하면_예외() {
-        assertThatThrownBy(()-> chessGame.move(Position.of(Column.B, Rank.TWO), Position.of(Column.C, Rank.THREE)))
+
+        assertThatThrownBy(()-> chessGame.move(List.of("move","b2", "c3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("게임이 시작되지 않았습니다");
     }
@@ -57,7 +57,7 @@ class ChessGameTest {
     void 게임이_시작된_뒤에_move메서드_실행된다() {
         chessGame.start(boardStrategy);
 
-        assertDoesNotThrow(()-> chessGame.move(Position.of(Column.B, Rank.TWO), Position.of(Column.C, Rank.THREE)));
+        assertDoesNotThrow(()-> chessGame.move(List.of("move","b2", "b3")));
     }
 
 }
