@@ -9,8 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static chess.domain.piece.MovementType.*;
-import static java.util.stream.Collectors.*;
+import static chess.domain.piece.MovementType.BLACK_PAWN;
+import static chess.domain.piece.MovementType.KING;
+import static chess.domain.piece.MovementType.WHITE_PAWN;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
+import static java.util.stream.Collectors.toMap;
 
 public class ChessBoard {
 
