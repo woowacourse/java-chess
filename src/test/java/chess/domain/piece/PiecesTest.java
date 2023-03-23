@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static chess.fixture.InitPiecesFixtures.*;
+import static chess.fixture.PiecesFixtures.PAWN_WHITE_B3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -15,8 +16,10 @@ import chess.domain.piece.Side;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import chess.fixture.InitPiecesFixtures;
+import chess.fixture.PiecesFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -147,5 +150,19 @@ class PiecesTest {
                 KNIGHT_BLACK_G8,
                 ROOK_BLACK_H8
         );
+    }
+
+    @Test
+    @DisplayName("같은 File을 가지는 File별 폰의 개수를 반환한다.")
+    void getSameFilePawnCount() {
+        // given
+        Pieces pieces = new Pieces();
+        pieces.changePiece(PAWN_WHITE_E2, PAWN_WHITE_B3);
+
+        // when
+        Map<File, Integer> sameFilePawnCount = pieces.getSameFilePawnCount(Side.WHITE);
+
+        // then
+        assertThat(sameFilePawnCount.get(File.B)).isEqualTo(2);
     }
 }
