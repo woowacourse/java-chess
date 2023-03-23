@@ -1,6 +1,7 @@
 package controller;
 
 import controller.adapter.inward.Command;
+import controller.adapter.inward.CommandArguments;
 import controller.adapter.inward.CoordinateAdapter;
 import controller.adapter.outward.RenderingAdapter;
 import domain.board.ChessGame;
@@ -21,7 +22,7 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final Map<Command, BiConsumer<ChessGame, List<String>>> commander;
+    private final Map<Command, BiConsumer<ChessGame, CommandArguments>> commander;
 
     public ChessController(
             final InputView inputView,
@@ -58,30 +59,31 @@ public class ChessController {
     private void interact(final ChessGame chessGame) {
         Command command;
         do {
-            List<String> arguments = inputView.readCommand();
-            command = Command.of(arguments);
-            commander.get(command).accept(chessGame, arguments);
+            List<String> pureArguments = inputView.readCommand();
+            command = Command.of(pureArguments);
+            CommandArguments commandArguments = CommandArguments.of(pureArguments);
+            commander.get(command).accept(chessGame, commandArguments);
         } while (command.isNotEnd() && chessGame.isGameNotOver());
     }
 
-    private void start(final ChessGame chessGame, final List<String> ignored) {
+    private void start(final ChessGame chessGame, final CommandArguments ignored) {
         printBoard(chessGame);
     }
 
-    private void end(final ChessGame chessGame, final List<String> ignored) {
+    private void end(final ChessGame chessGame, final CommandArguments ignored) {
         String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
         outputView.printGameEndMessage();
         outputView.printGameResult(gameResultMessage);
     }
 
-    private void move(final ChessGame chessGame, final List<String> coordinates) {
-        Coordinate startCoordinate = CoordinateAdapter.convert(coordinates.get(START_COORDINATE_INDEX));
-        Coordinate endCoordinate = CoordinateAdapter.convert(coordinates.get(END_COORDINATE_INDEX));
+    private void move(final ChessGame chessGame, final CommandArguments arguments) {
+        Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(START_COORDINATE_INDEX));
+        Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(END_COORDINATE_INDEX));
         chessGame.move(startCoordinate, endCoordinate);
         printBoard(chessGame);
     }
 
-    private void status(final ChessGame chessGame, final List<String> ignored) {
+    private void status(final ChessGame chessGame, final CommandArguments ignored) {
         outputView.printGameResult(RenderingAdapter.unpackGameResult(chessGame.collectPoint()));
     }
 
