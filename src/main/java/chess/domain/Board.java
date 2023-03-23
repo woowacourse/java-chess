@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -18,10 +19,12 @@ import chess.initial.BoardFactory;
 
 public class Board {
 
+	private static Color thisTurn;
 	private final Map<Position, Piece> board;
 
 	private Board(final Map<Position, Piece> board) {
 		this.board = board;
+		thisTurn = BLACK;
 	}
 
 	public static Board create() {
@@ -29,8 +32,9 @@ public class Board {
 	}
 
 	public void move(final Position source, final Position target) {
-		validateDifferentPosition(source, target);
 		validateSourceNotEmpty(source);
+		validateTurn(source);
+		validateDifferentPosition(source, target);
 		validateTargetNotSameColor(source, target);
 
 		Direction unit = Direction.calculateUnitDirection(source, target);
@@ -39,6 +43,12 @@ public class Board {
 		validatePath(source, target, unit, piece);
 
 		movePiece(source, target, piece);
+	}
+
+	private void validateTurn(final Position source) {
+		if (board.get(source).color() != thisTurn) {
+			throw new IllegalArgumentException("상대팀의 순서입니다");
+		}
 	}
 
 	private void validateDifferentPosition(final Position source, final Position target) {
@@ -110,6 +120,7 @@ public class Board {
 	private void movePiece(final Position source, final Position target, final Piece piece) {
 		board.put(target, piece);
 		board.put(source, new Empty(NONE, source));
+		thisTurn = thisTurn.switchTurn();
 	}
 
 	public Map<Position, Piece> getBoard() {
