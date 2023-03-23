@@ -4,14 +4,20 @@ import java.util.Objects;
 
 public class Score {
 
+    public final static Score ZERO = new Score(0.0);
+    
     private final Double value;
 
-    Score(Double value) {
+    public Score(Double value) {
         this.value = value;
     }
 
     Score add(Score score) {
         return new Score(value + score.value);
+    }
+
+    public Score multiply(Long count) {
+        return new Score(value * count);
     }
 
     @Override
@@ -23,7 +29,7 @@ public class Score {
             return false;
         }
         Score score = (Score) o;
-        return value == score.value;
+        return Objects.equals(value, score.value);
     }
 
     @Override
