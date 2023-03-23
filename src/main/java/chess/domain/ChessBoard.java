@@ -24,10 +24,15 @@ public class ChessBoard {
         this.board = board;
     }
 
-    public int inKingLive() {
+    public int countKing() {
         return (int) board.values().stream()
                 .filter(Piece::isKing)
                 .count();
+    }
+
+    public boolean isKingLiveByCamp(Camp camp) {
+        return board.values().stream()
+                .anyMatch(piece -> piece.isMyCamp(camp) && piece.isKing());
     }
 
     public void movePieceOn(Position fromPosition, Position toPosition) {
@@ -72,7 +77,7 @@ public class ChessBoard {
 
     private static Double calculateByCamp(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
         return groupingByCamp.get(camp).stream()
-                .map(piece -> piece.getPieceSymbol().getPieceValue())
+                .map(piece -> piece.getPieceSymbol().getPieceScore())
                 .reduce((double) INITIAL_VALUE, Double::sum);
     }
 
