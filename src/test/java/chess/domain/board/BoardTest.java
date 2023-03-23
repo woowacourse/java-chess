@@ -1,17 +1,17 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.Position;
-import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Pawn;
-import org.assertj.core.api.Assertions;
+import chess.domain.pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -23,85 +23,76 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("생성된 board의 세로 길이는 8개 이다.")
-    void create_test_height() {
-        assertThat(board.getBoard()).hasSize(8);
-    }
-
-    @Test
-    @DisplayName("생성된 board의 가로 길이는 8개 이다.")
+    @DisplayName("생성된 board의 맵의 개수는 64개 이다.")
     void create_test_width() {
         // given
-        List<Rank> ranks = board.getBoard();
+        Map<Position, Piece> expected = board.getBoard();
 
         // then
-        assertThat(ranks.get(0).getRank()).hasSize(8);
+        assertThat(expected).hasSize(64);
     }
 
     @Test
-    @DisplayName("폰 이동 테스트")
+    @DisplayName("폰 두칸 이동 테스트")
     void movePieceTest_Pawn() {
         // given
-        int targetX = 3;
-        int targetY = 4;
 
-        Position current = new Position(1, 4);
-        Position target = new Position(targetX, targetY);
+        Position current = new Position(Rank.TWO, File.B);
+        Position target = new Position(Rank.FOUR, File.B);
 
         board.movePiece(current, target);
 
         // then
-        assertThat(board.getBoard().get(targetX).getRank().get(targetY).getPiece()).isInstanceOf(Pawn.class);
-
-        board.movePiece(new Position(3, 4), new Position(4, 4));
-        assertThat(board.getBoard().get(3).getRank().get(4).getPiece()).isInstanceOf(EmptyPiece.class);
-        assertThat(board.getBoard().get(4).getRank().get(4).getPiece()).isInstanceOf(Pawn.class);
-
-        assertThatThrownBy(
-                () -> board.movePiece(new Position(4, 4), new Position(6, 4))
-        );
-
-        assertThatThrownBy(
-                () -> board.movePiece(new Position(4, 4), new Position(3, 4))
-        );
+        assertThat(board.getBoard().get(target)).isInstanceOf(Pawn.class);
     }
 
     @Test
-    @DisplayName("다른 말 이동 테스트")
-    void movePieceTest() {
+    @DisplayName("폰은 처음 움직임이 아니면 두칸을 이동할 수 없다.")
+    void movePieceTest_Pawn_error() {
         // given
-        int targetX = 3;
-        int targetY = 4;
-
-        Position current = new Position(1, 4);
-        Position target = new Position(targetX, targetY);
+        Position current = new Position(Rank.TWO, File.B);
+        Position target = new Position(Rank.FOUR, File.B);
 
         board.movePiece(current, target);
+
+        Position current2 = new Position(Rank.FOUR, File.B);
+        Position target2 = new Position(Rank.SIX, File.B);
+
+        assertThatThrownBy(() -> board.movePiece(current2, target2));
     }
 
     @Test
     @DisplayName("킹 이동 테스트 -> 킹 앞으로 한칸 이동")
     void movePieceTest_King() {
-        board.movePiece(new Position(6,4), new Position(4,4));
-        // given
-
-        //int targetX = 6;
-        //int targetY = 4;
-
-        Position current = new Position(7, 4);
-        Position target = new Position(6, 4);
+        Position current = new Position(Rank.TWO, File.E);
+        Position target = new Position(Rank.FOUR, File.E);
 
         board.movePiece(current, target);
-        Assertions.assertThat(board.getBoard().get(6).getRank().get(4).getPiece()).isInstanceOf(King.class);
-        board.movePiece(new Position(6,4), new Position(5,4));
-        Assertions.assertThat(board.getBoard().get(5).getRank().get(4).getPiece()).isInstanceOf(King.class);
-        board.movePiece(new Position(5,4), new Position(5,3));
-        Assertions.assertThat(board.getBoard().get(5).getRank().get(3).getPiece()).isInstanceOf(King.class);
 
-        assertThatThrownBy(
-                () -> board.movePiece(new Position(5,3), new Position(3,3))
-        );
+        Position current2 = new Position(Rank.ONE, File.E);
+        Position target2 = new Position(Rank.TWO, File.E);
+
+        board.movePiece(current2, target2);
+
+        assertThat(board.getBoard().get(target2)).isInstanceOf(King.class);
     }
 
+    @Test
+    @DisplayName("킹 이동 테스트 -> 킹은 두칸이동이 불가능 하다.")
+    void movePieceTest_King_error() {
+        Position current = new Position(Rank.TWO, File.E);
+        Position target = new Position(Rank.FOUR, File.E);
 
+        board.movePiece(current, target);
+
+        Position current2 = new Position(Rank.FOUR, File.E);
+        Position target2 = new Position(Rank.FIVE, File.E);
+
+        board.movePiece(current2, target2);
+
+        Position current3 = new Position(Rank.ONE, File.E);
+        Position target3 = new Position(Rank.TREE, File.E);
+
+        assertThatThrownBy(() -> board.movePiece(current3, target3));
+    }
 }
