@@ -16,7 +16,6 @@ public final class InputView {
     }
 
     public static CommandDto readInitialCommand() {
-        OutputView.printStartMessage();
         List<String> input = readUserInput();
         GameCommand gameCommand = recognizeGameCommand(input);
         while (gameCommand == GameCommand.MOVE) {
