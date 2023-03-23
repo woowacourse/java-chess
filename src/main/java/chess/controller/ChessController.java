@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.piece.Team;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -40,14 +41,33 @@ public class ChessController {
         if (command == Command.MOVE) {
             throw new IllegalArgumentException("게임 시작 전에는 기물을 이동할 수 없습니다.");
         }
+        if (command == Command.STATUS) {
+            throw new IllegalArgumentException("게임 시작 전에는 승자를 확인할 수 없습니다.");
+        }
     }
 
     private void playGame() {
         OutputView.printGameStatus(chessGame.getGameStatus());
-        while (readPlayCommand() == Command.MOVE) {
-            SquareDto current = readSquare();
-            SquareDto destination = readSquare();
-            move(current, destination);
+        while (true) {
+            Command command = readPlayCommand();
+            if (command == Command.END) {
+                break;
+            }
+            if (command == Command.MOVE) {
+                SquareDto current = readSquare();
+                SquareDto destination = readSquare();
+                move(current, destination);
+                continue;
+            }
+            if (command == Command.STATUS) {
+                try {
+                    Team winner = chessGame.getWinner();
+                    OutputView.printWinner(winner);
+                } catch (IllegalStateException e) {
+                    OutputView.printWhitePoint(chessGame.getPoint(Team.WHITE));
+                    OutputView.printBlackPoint(chessGame.getPoint(Team.BLACK));
+                }
+            }
         }
     }
 

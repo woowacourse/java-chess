@@ -3,6 +3,7 @@ package chess.view;
 import java.util.List;
 
 import chess.domain.dto.GameStatusDto;
+import chess.domain.piece.Team;
 
 public class OutputView {
 
@@ -33,5 +34,20 @@ public class OutputView {
 
     private static void printRankStatus(final String rankStatus) {
         System.out.println(rankStatus);
+    }
+
+    public static void printWinner(Team winner) {
+        if (winner == Team.WHITE) {
+            System.out.println("백이 승리했습니다!");
+        }
+        System.out.println("흑이 승리했습니다!");
+    }
+
+    public static void printWhitePoint(double point) {
+        System.out.println("백의 기물 점수: " + point);
+    }
+
+    public static void printBlackPoint(double point) {
+        System.out.println("흑의 기물 점수: " + point);
     }
 }
