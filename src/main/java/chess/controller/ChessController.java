@@ -3,66 +3,74 @@ package chess.controller;
 import chess.controller.dto.CommandDto;
 import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
+import chess.domain.ChessGame;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+
+import static chess.controller.Command.END;
+import static chess.controller.Command.MOVE;
+import static chess.controller.Command.START;
+import static chess.controller.Command.STATUS;
 
 public class ChessController {
 
     private final ErrorController errorController;
+    private final ChessGame chessGame;
+    private final Map<Command, Action> commandMapper;
 
     public ChessController(ErrorController errorController) {
         this.errorController = errorController;
+        this.chessGame = ChessGame.create();
+        this.commandMapper = Map.of(
+                START, this::start,
+                MOVE, this::move,
+                STATUS, this::inquireStatus
+        );
     }
 
     public void run() {
         OutputView.printInitialMessage();
-        if (Command.START == readStartSign()) {
-            playChess();
+        CommandDto commandDto = readCommand(List.of(START, END));
+        Command command = commandDto.getCommand();
+
+        while (command.isPlayable()) {
+            commandDto = commandMapper.get(command).act(commandDto);
+            command = commandDto.getCommand();
         }
     }
 
-    private Command readStartSign() {
-        Command startSign;
+    private CommandDto readCommand(List<Command> possibleCommands) {
+        CommandDto commandDto;
         do {
-            startSign = readCommand().getCommand();
-        } while (Command.MOVE == startSign);
-        return startSign;
+            commandDto = errorController.RetryIfThrowsException(() ->
+                    InputRenderer.toCommandDto(InputView.readCommand()));
+        } while (!possibleCommands.contains(commandDto.getCommand()));
+        return commandDto;
     }
 
-    private CommandDto readCommand() {
-        return errorController.RetryIfThrowsException(() ->
-                InputRenderer.toCommandDto(InputView.readCommand()));
+    public CommandDto start(CommandDto commandDto) {
+        OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
+        return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    private void playChess() {
-        Board board = BoardGenerator.createBoard();
-        OutputView.printBoard(OutputRenderer.toBoardDto(board.getBoard()));
-
-        CommandDto commandDto = readMove();
-        while (commandDto.getCommand() == Command.MOVE) {
-            List<Integer> source = commandDto.getSource();
-            List<Integer> target = commandDto.getTarget();
-            Position sourcePosition = new Position(source.get(0), source.get(1));
-            Position targetPosition = new Position(target.get(0), target.get(1));
-            errorController.tryCatchStrategy(() -> {
-                board.movePiece(sourcePosition, targetPosition);
-                OutputView.printBoard(OutputRenderer.toBoardDto(board.getBoard()));
-            });
-            commandDto = readCommand();
-        }
+    public CommandDto move(CommandDto commandDto) {
+        List<Integer> source = commandDto.getSource();
+        List<Integer> target = commandDto.getTarget();
+        Position sourcePosition = new Position(source.get(0), source.get(1));
+        Position targetPosition = new Position(target.get(0), target.get(1));
+        errorController.tryCatchStrategy(() -> {
+            chessGame.movePiece(sourcePosition, targetPosition);
+            OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
+        });
+        return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    private CommandDto readMove() {
-        CommandDto moveSign;
-        do {
-            moveSign = readCommand();
-        } while (Command.START == moveSign.getCommand());
-        return moveSign;
+    public CommandDto inquireStatus(CommandDto commandDto) {
+        // todo: 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
+        return readCommand(List.of(MOVE, STATUS, END));
     }
-
 }
