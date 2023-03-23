@@ -6,6 +6,7 @@ public enum Command {
 
     START("start", 1),
     MOVE("move", 3),
+    STATUS("status", 1),
     END("end", 1);
 
     private final String value;
@@ -28,8 +29,6 @@ public enum Command {
             throw new IllegalArgumentException("입력된 명령어의 파라미터 개수가 올바르지 않습니다.");
         }
     }
-
-
 
     public String getValue() {
         return value;

@@ -20,6 +20,9 @@ public class Score {
         return new Score(value * count);
     }
 
+    public boolean isMoreThan(Score score){
+        return value>score.value;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -35,5 +38,9 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public Double getValue() {
+        return value;
     }
 }

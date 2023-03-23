@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class ChessController {
         Map<Command, ChessAction> actionMap = new HashMap<>();
         actionMap.put(Command.START, new ChessAction(ignore -> startGame(game)));
         actionMap.put(Command.MOVE, new ChessAction(commands -> movePiece(game, commands)));
+        actionMap.put(Command.STATUS, new ChessAction(ignore -> displayGameStatus(game)));
         actionMap.put(Command.END, new ChessAction(ignore -> finishGame(game)));
         return actionMap;
     }
@@ -48,6 +50,12 @@ public class ChessController {
         String destination = commands.get(DEST_POSITION_INDEX);
         game.executeMove(source, destination);
         game.checkGameNotFinished();
+    }
+    private void displayGameStatus(ChessGame game) {
+        Runnable runnable=()->{
+            outputView.printGameStatus(game.makeScoreBoard(), game.judgeWinner());
+        };
+        game.displayGameStatus(runnable);
     }
 
     private void finishGame(ChessGame game) {
