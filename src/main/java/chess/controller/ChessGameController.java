@@ -3,6 +3,8 @@ package chess.controller;
 import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputView;
+import dto.ChessBoardDto;
+import dto.CommandDto;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

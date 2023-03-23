@@ -1,4 +1,4 @@
-package chess.controller;
+package dto;
 
 import chess.domain.File;
 import chess.domain.Square;
