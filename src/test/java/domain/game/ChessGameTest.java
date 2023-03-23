@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,4 +60,37 @@ class ChessGameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Position.of("b", "3") + "에 움직일 수 있는 말이 없습니다.");
     }
+
+    /**
+     * RNBQKBNR
+     * PPPPPPPP
+     * ........
+     * ........
+     * ........
+     * ........
+     * pppppppp
+     * rnbqkbnr
+     */
+    @DisplayName("target position에 king이 있고, 유효한 움직임이면 게임은 종료된다.")
+    @Test
+    void isKingDeadTest() {
+        //given
+        chessBoard.put(Position.of("d", "2"), Pawn.createOfBlack());
+        Board board = new Board(chessBoard);
+        chessGame = new ChessGame(board);
+        chessGame.move("b2b3");
+        chessGame.move("d2e1");
+        //when
+        assertThat(chessGame.isExitGame()).isEqualTo(true);
+        //then
+    }
+
+    @DisplayName("target position에 king이 없고, 유효한 움직임이면 게임은 종료되지 않는다.")
+    @Test
+    void kingAliveTest() {
+
+        chessGame.move("b2b3");
+        assertThat(chessGame.isExitGame()).isEqualTo(false);
+    }
+
 }
