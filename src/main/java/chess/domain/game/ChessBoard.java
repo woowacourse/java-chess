@@ -20,11 +20,6 @@ public class ChessBoard {
         this.chessBoard = new HashMap<>(chessBoard);
     }
 
-    public Map<Position, Piece> getChessBoard() {
-        return new HashMap<>(chessBoard);
-    }
-
-
     public void move(Position start, Position end) {
         Piece startPiece = findStartPiece(start);
         Color colorOfDestination = chessBoard.get(end).getColor();
@@ -68,5 +63,9 @@ public class ChessBoard {
         if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
             throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return new HashMap<>(chessBoard);
     }
 }

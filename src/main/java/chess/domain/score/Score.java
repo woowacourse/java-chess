@@ -16,22 +16,10 @@ public enum Score {
     ROOK_SCORE(5.0),
     EMPTY_SCORE(0.0);
 
-
     private double score;
 
     Score(double score) {
         this.score = score;
-    }
-
-    public static double getPawnScore(Map<Position, Piece> chessBoard, Position targetPosition) {
-        for (Position position : chessBoard.keySet()) {
-            if (position.isSameColumn(targetPosition.getColumn())
-                    && chessBoard.get(position) instanceof Pawn
-                    && !position.equals(targetPosition)) {
-                return PAWN_SPECIAL_SCORE.getScore();
-            }
-        }
-        return PAWN_DEFAULT_SCORE.getScore();
     }
 
     public double getScore() {
