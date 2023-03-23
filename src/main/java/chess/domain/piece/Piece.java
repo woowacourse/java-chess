@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
-import chess.domain.position.Position;
 
 import java.util.Objects;
 
@@ -16,10 +15,6 @@ public abstract class Piece implements Movable {
 
     public boolean compareCamp(final Piece other) {
         return teamColor == other.teamColor;
-    }
-
-    public boolean isPawn() {
-        return pieceType == PieceType.PAWN;
     }
 
     public boolean isSameTeam(final TeamColor diffType) {
