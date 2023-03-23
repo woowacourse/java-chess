@@ -24,4 +24,11 @@ public enum Side {
         }
         return this == other;
     }
+
+    public boolean isEnemy(final Side other) {
+        if (this.isNeutrality()) {
+            throw new IllegalArgumentException("중립은 적군이 존재하지 않습니다.");
+        }
+        return this != other && !other.isNeutrality();
+    }
 }

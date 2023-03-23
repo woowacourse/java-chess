@@ -44,4 +44,13 @@ public class SideTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중립은 아군이 존재하지 않습니다.");
     }
+
+    @Test
+    void 중립_진영이_적군_진영을_판단하려_하면_예외를_던진다() {
+        final Side side = Side.NEUTRALITY;
+
+        assertThatThrownBy(() -> side.isEnemy(Side.NEUTRALITY))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중립은 적군이 존재하지 않습니다.");
+    }
 }
