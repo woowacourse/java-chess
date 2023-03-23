@@ -18,9 +18,4 @@ public class Knight extends Piece {
     private boolean isMovable(int firstGap, int secondGap) {
         return firstGap == 1 && secondGap == 2;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }

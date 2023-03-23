@@ -25,9 +25,9 @@ class RookTest {
     }
 
     @Test
-    void 룩은_Empty가_아니다() {
+    void 룩의_RoleType은_ROOK이다() {
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isEmpty()).isEqualTo(false);
+        assertThat(rook.isSameRoleType(RoleType.ROOK)).isTrue();
     }
 }

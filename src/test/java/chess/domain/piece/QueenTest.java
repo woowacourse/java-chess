@@ -26,9 +26,9 @@ class QueenTest {
     }
 
     @Test
-    void 퀸은_Empty가_아니다() {
+    void 퀸의_RoleType은_QUEEN이다() {
         Queen queen = new Queen(Color.WHITE);
 
-        assertThat(queen.isEmpty()).isEqualTo(false);
+        assertThat(queen.isSameRoleType(RoleType.QUEEN)).isTrue();
     }
 }

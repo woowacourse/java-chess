@@ -8,11 +8,10 @@ public class Pawn extends Piece {
     private static final int MOVABLE_DISTANCE = 1;
     private static final int INITIAL_MOVABLE_DISTANCE = 2;
     private static final int VALID_STRAIGHT_GAP = 0;
-    public static final int BLACK_DIRECTION = 1;
-    public static final int WHITE_DIRECTION = -1;
-    public static final RankCoordinate WHITE_PAWN_INIT_RANK = RankCoordinate.TWO;
-    public static final RankCoordinate BLACK_PAWN_INIT_RANK = RankCoordinate.SEVEN;
-
+    private static final int BLACK_DIRECTION = 1;
+    private static final int WHITE_DIRECTION = -1;
+    private static final RankCoordinate WHITE_PAWN_INIT_RANK = RankCoordinate.TWO;
+    private static final RankCoordinate BLACK_PAWN_INIT_RANK = RankCoordinate.SEVEN;
 
     public Pawn(Color color) {
         super(color, RoleType.PAWN);
@@ -60,10 +59,5 @@ public class Pawn extends Piece {
             return sourcePosition.isSameRank(WHITE_PAWN_INIT_RANK);
         }
         return sourcePosition.isSameRank(BLACK_PAWN_INIT_RANK);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }

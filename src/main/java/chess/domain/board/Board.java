@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.RoleType;
 import chess.domain.position.Position;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class Board {
     }
 
     private void validateEmptyPiece(Piece sourcePiece) {
-        if (sourcePiece.isEmpty()) {
+        if (sourcePiece.isSameRoleType(RoleType.EMPTY)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
     }
@@ -63,7 +64,7 @@ public class Board {
     private boolean isBlockBetween(Position sourcePosition, Position targetPosition) {
         return !sourcePosition.findPathWithoutSourceAndTarget(targetPosition).stream()
                 .map(boards::get)
-                .allMatch(Piece::isEmpty);
+                .allMatch(piece -> piece.isSameRoleType(RoleType.EMPTY));
     }
 
     public Map<Position, Piece> getBoards() {

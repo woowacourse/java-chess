@@ -18,9 +18,4 @@ public class Empty extends Piece {
     protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
         throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
     }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
 }

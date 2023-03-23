@@ -16,8 +16,6 @@ public abstract class Piece {
 
     protected abstract boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor);
 
-    public abstract boolean isEmpty();
-
     public boolean canMove(Position sourcePosition, Position targetPosition, Color targetColor) {
         if (isSameColor(targetColor)) {
             return false;
@@ -36,11 +34,15 @@ public abstract class Piece {
                 || sourcePosition.calculateRankGap(targetPosition) == STRAIGHT_GAP;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
     public boolean isSameColor(Color tagetColor) {
         return this.color == tagetColor;
+    }
+
+    public boolean isSameRoleType(RoleType roleType) {
+        return this.roleType == roleType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

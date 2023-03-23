@@ -12,9 +12,4 @@ public class Rook extends Piece {
     protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
         return isStraight(sourcePosition, targetPosition);
     }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }

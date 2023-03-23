@@ -12,9 +12,4 @@ public class Queen extends Piece {
     protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
         return isStraight(sourcePosition, targetPosition) || isDiagonal(sourcePosition, targetPosition);
     }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }

@@ -16,9 +16,4 @@ public class King extends Piece {
         int rankGap = Math.abs(sourcePosition.calculateRankGap(targetPosition));
         return fileGap <= MAX_DISTANCE && rankGap <= MAX_DISTANCE;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }
