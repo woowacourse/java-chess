@@ -51,22 +51,6 @@
 
 ---
 
-## 체스 칸을 인덱스로 표현하는 로직
-
-![index-convert](./docs/chess-board-square-index.png)
-
-행 : `Rank`, `가로 1 ~ 8`   
-열 : `File`, `세로 a ~ h`
-
-- 상(`NORTH`) : Rank 1 증가 -> `+8`
-- 하(`SOUTH`) : Rank 1 감소 -> `-8`
-- 좌(`WEST`) : File 1 감소 -> `-1`
-- 우(`EAST`) : File 1 증가 -> `+1`
-- 우측 상단(`NORTH_EAST`) : Rank 1 증가, File 1 증가 -> `+9`
-- 좌측 상단(`NORTH_WEST`) : Rank 1 증가, File 1 감소 -> `+7`
-- 우측 하단(`SOUTH_EAST`) : Rank 1 감소, File 1 증가 -> `-7`
-- 좌측 하단(`SOUTH_WEST`) : Rank 1 감소, File 1 감소 -> `-9`
-
 ## ✔️ 프로그래밍 요구사항
 
 - indent(인덴트, 들여쓰기) depth를 2를 넘지 않도록 구현한다. 1까지만 허용한다.
