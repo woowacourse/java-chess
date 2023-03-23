@@ -1,0 +1,28 @@
+package techcourse.fp.chess.domain.piece;
+
+import java.util.List;
+import techcourse.fp.chess.domain.Position;
+import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
+
+public abstract class OrdinaryPiece extends Piece {
+
+    protected final MovingStrategy movingStrategy;
+
+    public OrdinaryPiece(final Color color, final MovingStrategy movingStrategy) {
+        super(color);
+        this.movingStrategy = movingStrategy;
+    }
+
+    @Override
+    public List<Position> findPath(final Position source, final Position target, final Piece targetPiece) {
+        if (isAlly(targetPiece)) {
+            throw new IllegalArgumentException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
+        }
+
+        return movingStrategy.createPath(source, target);
+    }
+
+    private boolean isAlly(Piece otherPiece) {
+        return color.isSameColor(otherPiece.color);
+    }
+}

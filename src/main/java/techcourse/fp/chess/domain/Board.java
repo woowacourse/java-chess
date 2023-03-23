@@ -26,11 +26,7 @@ public final class Board {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
-        if (sourcePiece.isAlly(targetPiece)) {
-            throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
-        }
-
-        final List<Position> path = sourcePiece.findPath(source, target, targetPiece.getColor());
+        final List<Position> path = sourcePiece.findPath(source, target, targetPiece);
 
         if (cannotMoveToTheTarget(path)) {
             throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");

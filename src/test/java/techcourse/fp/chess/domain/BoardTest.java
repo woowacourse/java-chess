@@ -2,6 +2,8 @@ package techcourse.fp.chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static techcourse.fp.chess.domain.PieceFixtures.BLACK_PAWN;
+import static techcourse.fp.chess.domain.PieceFixtures.WHITE_PAWN;
 import static techcourse.fp.chess.domain.PositionFixtures.A1;
 import static techcourse.fp.chess.domain.PositionFixtures.A2;
 import static techcourse.fp.chess.domain.PositionFixtures.A3;
@@ -16,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.Pawn;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.Rook;
 import techcourse.fp.chess.domain.piece.UnMovablePiece;
@@ -60,7 +61,7 @@ class BoardTest {
             //when && then
             assertThatThrownBy(() -> board.move(givenPosition, B2))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("행마법상 이동 불가능한 지역입니다.");
+                    .hasMessage("행마법 상 이동할 수 없는 위치입니다.");
         }
 
         @DisplayName("도착 지점에 아군 기물이 있다면 예외가 발생한다.")
@@ -77,7 +78,7 @@ class BoardTest {
             final Board board = new Board(rawBoard);
             //when && then
             assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
 
@@ -112,7 +113,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, WHITE_PAWN);
 
             final Position givenTargetPosition = A5;
 
@@ -130,10 +131,10 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, WHITE_PAWN);
 
             final Position givenTargetPosition = A4;
-            rawBoard.put(givenTargetPosition, Pawn.createByColor(Color.BLACK));
+            rawBoard.put(givenTargetPosition, BLACK_PAWN);
 
             final Board board = new Board(rawBoard);
             //when  && then
@@ -149,7 +150,7 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = A3;
-            rawBoard.put(givenSourcePosition, Pawn.createByColor(Color.WHITE));
+            rawBoard.put(givenSourcePosition, WHITE_PAWN);
 
             final Position givenTargetPosition = B4;
 

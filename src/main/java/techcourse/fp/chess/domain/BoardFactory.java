@@ -3,14 +3,15 @@ package techcourse.fp.chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 import techcourse.fp.chess.domain.piece.Bishop;
+import techcourse.fp.chess.domain.piece.BlackPawn;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.King;
 import techcourse.fp.chess.domain.piece.Knight;
-import techcourse.fp.chess.domain.piece.Pawn;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.Queen;
 import techcourse.fp.chess.domain.piece.Rook;
 import techcourse.fp.chess.domain.piece.UnMovablePiece;
+import techcourse.fp.chess.domain.piece.WhitePawn;
 
 public final class BoardFactory {
 
@@ -42,8 +43,8 @@ public final class BoardFactory {
 
     private static void initPawn(final Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file, Rank.TWO), Pawn.createByColor(Color.WHITE));
-            board.put(Position.of(file, Rank.SEVEN), Pawn.createByColor(Color.BLACK));
+            board.put(Position.of(file, Rank.TWO), WhitePawn.create());
+            board.put(Position.of(file, Rank.SEVEN), BlackPawn.create());
         }
     }
 

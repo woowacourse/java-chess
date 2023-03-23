@@ -3,93 +3,49 @@ package techcourse.fp.chess.domain.piece;
 import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.movingStrategy.MoveDown;
-import techcourse.fp.chess.movingStrategy.MoveLeftDown;
-import techcourse.fp.chess.movingStrategy.MoveLeftUp;
-import techcourse.fp.chess.movingStrategy.MoveRightDown;
-import techcourse.fp.chess.movingStrategy.MoveRightUp;
-import techcourse.fp.chess.movingStrategy.MoveUp;
-import techcourse.fp.chess.movingStrategy.MovingStrategies;
-import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
 
-public final class Pawn extends MovablePiece {
+public abstract class Pawn extends Piece {
 
-    private static final int INITIAL_WHITE_RANK = 2;
-    private static final int INITIAL_BLACK_RANK = 7;
+    private final MovingStrategy movingStrategy;
 
-    private Pawn(final Color color, final MovingStrategies strategies) {
-        super(color, strategies);
+    public Pawn(final Color color, final MovingStrategy movingStrategy) {
+        super(color);
+        this.movingStrategy = movingStrategy;
     }
-
-    public static Pawn createByColor(final Color color) {
-        if (color == Color.BLACK) {
-            return new Pawn(color, initBlackPawnStrategies());
-        }
-
-        if (color == Color.WHITE) {
-            return new Pawn(color, initWhitePawnStrategies());
-        }
-
-        throw new AssertionError();
-    }
-
-    private static MovingStrategies initBlackPawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new MoveDown(), new MoveLeftDown(),
-                new MoveRightDown());
-        return new MovingStrategies(movingStrategies);
-    }
-
-    private static MovingStrategies initWhitePawnStrategies() {
-        final List<MovingStrategy> movingStrategies = List.of(new MoveUp(), new MoveLeftUp(),
-                new MoveRightUp());
-        return new MovingStrategies(movingStrategies);
-    }
-
 
     @Override
-    public List<Position> findPath(final Position source, final Position target, final Color targetColor) {
-        final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
-
-        if (isAttack(source, target, targetColor)) {
+    public List<Position> findPath(final Position source, final Position target, final Piece targetPiece) {
+        if (isAttack(source, target, targetPiece) || isOneStepMove(source, target, targetPiece)) {
             return Collections.emptyList();
         }
 
-        if (isOneStepMove(source, target, targetColor)) {
-            return Collections.emptyList();
-        }
-
-        if (isTwoStepMove(source, target, targetColor)) {
-            return getTwoStepPath(source, movingStrategy);
+        if (isTwoStepMove(source, target, targetPiece)) {
+            return movingStrategy.createPath(source, target);
         }
 
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
     }
 
-    private boolean isAttack(final Position source, final Position target, final Color targetColor) {
-        return source.isOnDiagonal(target) && targetColor.isOpponent(this.color);
+    private boolean isAttack(final Position source, final Position target, final Piece targetPiece) {
+        return source.isOnDiagonal(target) && isOpponent(targetPiece);
     }
 
-    private boolean isOneStepMove(final Position source, final Position target, final Color targetColor) {
-        return source.isUpDown(target) && targetColor.isEmpty();
+    private boolean isOpponent(Piece otherPiece) {
+        return color.isOpponent(otherPiece.color);
     }
 
-    private boolean isTwoStepMove(final Position source, final Position target, final Color targetColor) {
-        return isMovableTwoStep(source) && source.isUpDownTwo(target) && targetColor.isEmpty();
+    private boolean isOneStepMove(final Position source, final Position target, final Piece targetPiece) {
+        return source.isUpDown(target) && targetPiece.isEmpty();
     }
 
-    private List<Position> getTwoStepPath(final Position source, final MovingStrategy movingStrategy) {
-        return List.of(movingStrategy.move(source));
+    private boolean isTwoStepMove(final Position source, final Position target, final Piece targetPiece) {
+        return isStartPosition(source) && isTwoDistance(source, target, targetPiece);
     }
 
-    private boolean isMovableTwoStep(final Position source) {
-        if (color.isWhite()) {
-            return source.getRankOrder() == INITIAL_WHITE_RANK;
-        }
-
-        if (color.isBlack()) {
-            return source.getRankOrder() == INITIAL_BLACK_RANK;
-        }
-
-        return false;
+    private boolean isTwoDistance(final Position source, final Position target, final Piece targetPiece) {
+        return isStartPosition(source) && source.isUpDownTwo(target) && targetPiece.isEmpty();
     }
+
+    protected abstract boolean isStartPosition(final Position source);
 }
