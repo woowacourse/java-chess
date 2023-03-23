@@ -48,7 +48,7 @@ public class PrintGameResult implements CommandStatus {
 
     @Override
     public CommandStatus end() {
-        return new End(chessGame.getResultCalculator());
+        return new End();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class PrintGameResult implements CommandStatus {
     }
 
     @Override
-    public boolean isPrintGameResult() {
+    public boolean canPrintGameResult() {
         return true;
     }
 

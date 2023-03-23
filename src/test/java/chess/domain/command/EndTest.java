@@ -18,7 +18,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 시작 시 예외를 던진다.")
     void start() {
         // given
-        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.start())
@@ -30,7 +30,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 이동 시 예외를 던진다.")
     void move() {
         // given
-        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        End end = new End();
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -44,7 +44,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 종료 시 예외를 던진다.")
     void end() {
         // given
-        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.end())
@@ -53,10 +53,22 @@ class EndTest {
     }
 
     @Test
+    @DisplayName("게임 종료 상태에서 게임 결과 출력 시 예외를 던진다.")
+    void printGameResult() {
+        // given
+        End end = new End();
+        // when, then
+        assertThatThrownBy(() -> end.printGameResult())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임 종료 상태에서는 게임 결과를 출력할 수 없습니다.");
+    }
+
+
+    @Test
     @DisplayName("게임 종료 상태에서 기물들을 가져올 시 예외를 던진다.")
     void getPieces() {
         // given
-        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.getPieces())
@@ -68,7 +80,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 턴 이름을 가져올 시 예외를 던진다.")
     void getTurnDisplayName() {
         // given
-        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.getTurnDisplayName())

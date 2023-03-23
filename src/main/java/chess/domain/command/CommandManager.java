@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 
@@ -12,7 +14,8 @@ public class CommandManager {
     private final Map<GameCommand, Consumer<Commands>> executionByGameCommand = Map.of(
             GameCommand.START, none -> start(),
             GameCommand.MOVE, this::move,
-            GameCommand.END, none -> end()
+            GameCommand.END, none -> end(),
+            GameCommand.STATUS, none -> printGameResult()
     );
 
     private CommandStatus commandStatus;
@@ -43,11 +46,27 @@ public class CommandManager {
         return commandStatus.isEnd();
     }
 
+    public boolean isPrintGameResult() {
+        return commandStatus.canPrintGameResult();
+    }
+
     public List<Piece> getPieces() {
         return commandStatus.getPieces();
     }
 
     public String getTurnDisplayName() {
         return commandStatus.getTurnDisplayName();
+    }
+
+    private void printGameResult() {
+        this.commandStatus = commandStatus.printGameResult();
+    }
+
+    public ScoreBySideDto getScoreBySide() {
+        return commandStatus.getScoreBySide();
+    }
+
+    public GameResultBySideDto getGameResultBySide() {
+        return commandStatus.getGameResultBySide();
     }
 }

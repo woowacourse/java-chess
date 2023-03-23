@@ -7,14 +7,10 @@ import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
 import chess.domain.board.ScoreBySide;
+import chess.domain.piece.Pieces;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.command.Turn;
-import chess.domain.command.CommandStatus;
-import chess.domain.command.End;
-import chess.domain.command.Play;
-import chess.domain.piece.Pieces;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,6 +65,18 @@ class PlayTest {
     }
 
     @Test
+    @DisplayName("게임 플레이 상태에서 status 시 게임 출력 상태로 전이된다.")
+    void printGameResult() {
+        // given
+        Board board = new Board(new Pieces());
+        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        Play play = new Play(new ChessGame(board, resultCalculator), Turn.WHITE);
+
+        // when, then
+        assertThat(play.printGameResult()).isInstanceOf(PrintGameResult.class);
+    }
+
+    @Test
     @DisplayName("게임 플레이 상태에서 기물들을 가져올 수 있다.")
     void getPieces() {
         // given
@@ -90,5 +98,29 @@ class PlayTest {
 
         // when, then
         assertThat(play.getTurnDisplayName()).isEqualTo("white");
+    }
+
+    @Test
+    @DisplayName("게임 플레이 출력 상태에서 진영별 점수를 가져올 수 있다.")
+    void getScoreBySide() {
+        // given
+        Board board = new Board(new Pieces());
+        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        Play play = new Play(new ChessGame(board, resultCalculator), Turn.WHITE);
+
+        // when, then
+        Assertions.assertDoesNotThrow(() -> play.getScoreBySide());
+    }
+
+    @Test
+    @DisplayName("게임 플레이 출력 상태에서 진영별 결과를 가져올 수 있다.")
+    void getGameResultBySide() {
+        // given
+        Board board = new Board(new Pieces());
+        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        Play play = new Play(new ChessGame(board, resultCalculator), Turn.WHITE);
+
+        // when, then
+        Assertions.assertDoesNotThrow(() -> play.getGameResultBySide());
     }
 }

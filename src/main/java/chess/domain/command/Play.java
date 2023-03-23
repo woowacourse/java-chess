@@ -2,6 +2,8 @@ package chess.domain.command;
 
 import java.util.List;
 
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -34,9 +36,7 @@ public class Play implements CommandStatus {
         chessGame.checkPieceMoveCondition(sourcePosition, targetPosition);
         chessGame.movePiece(sourcePosition, targetPosition);
         Turn oppositeTurn = turn.change();
-        Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        return new Play(new ChessGame(board, resultCalculator), oppositeTurn);
+        return new Play(this.chessGame, oppositeTurn);
     }
 
     private void checkTurn(Position sorucePosition) {
@@ -52,7 +52,19 @@ public class Play implements CommandStatus {
     }
 
     @Override
+    public CommandStatus printGameResult() {
+        chessGame.saveScoreBySide();
+        chessGame.saveGameResultBySide();
+        return new PrintGameResult(chessGame, turn);
+    }
+
+    @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean canPrintGameResult() {
         return false;
     }
 
@@ -61,7 +73,18 @@ public class Play implements CommandStatus {
         return chessGame.getPieces();
     }
 
+    @Override
     public String getTurnDisplayName() {
         return turn.getDisplayName();
+    }
+
+    @Override
+    public ScoreBySideDto getScoreBySide() {
+        return new ScoreBySideDto(chessGame.getScoreBySide());
+    }
+
+    @Override
+    public GameResultBySideDto getGameResultBySide() {
+        return new GameResultBySideDto(chessGame.getGameResultBySide());
     }
 }

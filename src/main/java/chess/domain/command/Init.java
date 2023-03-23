@@ -2,6 +2,8 @@ package chess.domain.command;
 
 import java.util.List;
 
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -31,7 +33,17 @@ public class Init implements CommandStatus {
     }
 
     @Override
+    public CommandStatus printGameResult() {
+        throw new IllegalStateException("[ERROR] 초기 상태에서는 게임 결과를 출력할 수 없습니다.");
+    }
+
+    @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean canPrintGameResult() {
         return false;
     }
 
@@ -43,5 +55,15 @@ public class Init implements CommandStatus {
     @Override
     public String getTurnDisplayName() {
         throw new IllegalStateException("[ERROR] 초기 상태에서는 턴 이름을 반환할 수 없습니다.");
+    }
+
+    @Override
+    public ScoreBySideDto getScoreBySide() {
+        throw new IllegalStateException("[ERROR] 초기 상태에서는 점수를 가져올 수 없습니다.");
+    }
+
+    @Override
+    public GameResultBySideDto getGameResultBySide() {
+        throw new IllegalStateException("[ERROR] 초기 상태에서는 결과를 가져올 수 없습니다.");
     }
 }
