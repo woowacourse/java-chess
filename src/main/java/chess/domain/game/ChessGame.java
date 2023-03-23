@@ -21,10 +21,10 @@ public class ChessGame {
         board = new Board();
     }
 
-    public void move(String origin, String destination) {
+    public void move(Position origin, Position destination) {
         gameState = gameState.move();
         try {
-            board.movePiece(Position.from(origin), Position.from(destination));
+            board.movePiece(origin, destination);
         } catch (IllegalPieceMoveException e) {
             throw new ChessGameException(e.getMessage(), e);
         }
