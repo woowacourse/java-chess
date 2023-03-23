@@ -13,18 +13,18 @@ import org.junit.jupiter.api.Test;
 import dto.MoveHistoryDto;
 
 class JdbcChessDaoTest {
-
-    JdbcChessDao jdbcChessDao = new JdbcChessDao();
+    JdbcConnector connector = new TestConnector();
+    JdbcChessDao jdbcChessDao = new JdbcChessDao(connector);
 
     @BeforeEach
     void setUp() {
-//        jdbcChessDao.deleteAllGame();
+        jdbcChessDao.deleteAllGame();
     }
 
     @Test
     @DisplayName("DB 커넥션 테스트")
     void connection() throws SQLException {
-        try(Connection connection = jdbcChessDao.getConnection()) {
+        try (Connection connection = connector.getConnection()) {
             assertThat(connection).isNotNull();
         }
     }
@@ -38,7 +38,7 @@ class JdbcChessDaoTest {
 
         assertThat(allGame).contains("테스트");
     }
-    
+
     @Test
     @DisplayName("saveMoveHistory를 통해 move를 저장한다.")
     void saveMoveHistory() {
