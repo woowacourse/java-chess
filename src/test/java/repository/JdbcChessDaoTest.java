@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import dto.BoardDto;
 import dto.MoveHistoryDto;
 
 class JdbcChessDaoTest {
@@ -18,6 +19,8 @@ class JdbcChessDaoTest {
 
     @BeforeEach
     void setUp() {
+        jdbcChessDao.deleteAllMoveHistory();
+        jdbcChessDao.deleteAllBoard();
         jdbcChessDao.deleteAllGame();
     }
 
@@ -50,5 +53,25 @@ class JdbcChessDaoTest {
         List<MoveHistoryDto> moveHistoryByGameId = jdbcChessDao.findMoveHistoryByGameId(gameId);
 
         assertThat(moveHistoryByGameId).contains(moveHistoryDto);
+    }
+
+    @Test
+    @DisplayName("saveBoard를 통해 현재보드를 저장한다.")
+    void saveBoard() {
+        jdbcChessDao.addGame("테스트");
+        long gameId = jdbcChessDao.findGameIdByGameName("테스트");
+        List<BoardDto> boardDtos = List.of(
+                new BoardDto("a2", "PAWN", "WHITE"),
+                new BoardDto("a3", "QUEEN", "BLACK"),
+                new BoardDto("a4", "KNIGHT", "BLACK"),
+                new BoardDto("a5", "EMPTY", "NONE"),
+                new BoardDto("a6", "KING", "WHITE"),
+                new BoardDto("a7", "KING", "BLACK")
+        );
+
+        jdbcChessDao.saveBoard(gameId, boardDtos);
+        List<BoardDto> boardDto = jdbcChessDao.findBoardByGameName("테스트");
+
+        assertThat(boardDto).containsExactlyInAnyOrderElementsOf(boardDto);
     }
 }

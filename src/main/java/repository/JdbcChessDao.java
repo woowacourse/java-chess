@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.BoardDto;
 import dto.MoveHistoryDto;
 
 public class JdbcChessDao implements ChessDao {
@@ -47,16 +48,22 @@ public class JdbcChessDao implements ChessDao {
     }
 
     @Override
-    public void findBoardByGameName() {}
-
-    public long findGameIdByGameName(String gameName) {
-        final String query = "SELECT _id FROM game WHERE gameName = ?";
+    public List<BoardDto> findBoardByGameName(String gameName) {
+        final String query = "SELECT square, piece, camp FROM game "
+                + "JOIN board ON game._id = board.g_id "
+                + "WHERE game.gameName = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt("_id");
+            List<BoardDto> boardDtos = new ArrayList<>();
+            while (resultSet.next()) {
+                String square = resultSet.getString("square");
+                String piece = resultSet.getString("piece");
+                String camp = resultSet.getString("camp");
+                boardDtos.add(new BoardDto(square, piece, camp));
+            }
+            return boardDtos;
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
@@ -74,8 +81,21 @@ public class JdbcChessDao implements ChessDao {
     }
 
     @Override
-    public void saveBoard() {
-
+    public void saveBoard(long game_id, List<BoardDto> boardDtos) {
+        final String query = "INSERT INTO board (square, piece, camp, g_id) VALUES (?,?,?,?)";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            for (BoardDto boardDto : boardDtos) {
+                preparedStatement.setString(1, boardDto.getSquare());
+                preparedStatement.setString(2, boardDto.getPiece());
+                preparedStatement.setString(3, boardDto.getCamp());
+                preparedStatement.setLong(4, game_id);
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
@@ -89,6 +109,19 @@ public class JdbcChessDao implements ChessDao {
             preparedStatement.setLong(4, game_id);
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public long findGameIdByGameName(String gameName) {
+        final String query = "SELECT _id FROM game WHERE gameName = ?";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("_id");
+        } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }
@@ -107,6 +140,27 @@ public class JdbcChessDao implements ChessDao {
                 moveHistoryDtos.add(new MoveHistoryDto(source, target, piece));
             }
             return moveHistoryDtos;
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+
+    public void deleteAllBoard() {
+        final String query = "DELETE from board";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public void deleteAllMoveHistory() {
+        final String query = "DELETE from moveHistory";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
