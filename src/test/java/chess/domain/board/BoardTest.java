@@ -2,12 +2,10 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.exception.PieceMessage;
 import chess.factory.BoardFactory;
-import chess.factory.BoardFactoryForTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -148,115 +146,4 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PieceMessage.PAWN_INVALID_MOVE.getMessage());
     }
-
-    @Test
-    @DisplayName("소문자 팀 점수 계산 (초기 세팅)")
-    void returns_sum_of_lower_team_score() {
-        // given
-        Board board = BoardFactory.createBoard();
-
-        // when
-        double score = board.getScoreOfLowerTeam();
-
-        // then
-        assertThat(score).isEqualTo(38);
-    }
-
-    @Test
-    @DisplayName("대문자 팀 점수 계산 (초기 세팅)")
-    void returns_sum_of_upper_team_score() {
-        // given
-        Board board = BoardFactory.createBoard();
-
-        // when
-        double score = board.getScoreOfUpperTeam();
-
-        // then
-        assertThat(score).isEqualTo(38);
-    }
-
-    @Test
-    @DisplayName("소문자 팀 점수 계산 (같은 Column에 폰이 겹치는 경우가 있는 경우 0.5로 계산한다.)")
-    void returns_sum_of_lower_team_score_when_pawn_has_same_column() {
-        // given
-        Board board = BoardFactory.createBoard();
-
-        board.switchPosition(Position.from("a2"), Position.from("a4"));
-        board.switchPosition(Position.from("b7"), Position.from("b5"));
-        board.switchPosition(Position.from("a4"), Position.from("b5"));
-        board.switchPosition(Position.from("d7"), Position.from("d5"));
-        board.switchPosition(Position.from("b5"), Position.from("b6"));
-        board.switchPosition(Position.from("c7"), Position.from("b6"));
-        board.switchPosition(Position.from("a1"), Position.from("a7"));
-
-        // when
-        double result = board.getScoreOfLowerTeam();
-
-        // then
-        assertThat(result).isEqualTo(37.0);
-        assertThat(board.getScoreOfUpperTeam()).isEqualTo(36.0);
-    }
-
-    @Test
-    @DisplayName("대문자 팀 점수 계산 (같은 Column에 폰이 겹치는 경우가 있는 경우 0.5로 계산한다.)")
-    void returns_sum_of_upper_team_score_when_pawn_has_same_column() {
-        // given
-        Board board = BoardFactory.createBoard();
-        double expectedResult = 36;
-
-        board.switchPosition(Position.from("a2"), Position.from("a3"));
-        board.switchPosition(Position.from("a7"), Position.from("a5"));
-        board.switchPosition(Position.from("b2"), Position.from("b4"));
-        board.switchPosition(Position.from("a5"), Position.from("b4"));
-        board.switchPosition(Position.from("c2"), Position.from("c3"));
-        board.switchPosition(Position.from("d7"), Position.from("d5"));
-        board.switchPosition(Position.from("c3"), Position.from("c4"));
-        board.switchPosition(Position.from("d5"), Position.from("c4"));
-
-        // when
-        double result = board.getScoreOfUpperTeam();
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    @Test
-    @DisplayName("3단계 요구 사항에 나온 맵 점수 테스트")
-    void returns_score_of_example_map() {
-        // given
-        Board board = BoardFactoryForTest.createBoard();
-
-        // when
-        double scoreOfUpperTeam = board.getScoreOfUpperTeam();
-        double scoreOfLowerTeam = board.getScoreOfLowerTeam();
-
-        // then
-        assertAll(
-                () -> assertThat(scoreOfUpperTeam).isEqualTo(20),
-                () -> assertThat(scoreOfLowerTeam).isEqualTo(19.5)
-        );
-     }
-
-     @Test
-     @DisplayName("King이 한명이라도 죽으면 게임은 멈춘다.")
-     void chess_done_when_king_is_dead() {
-         // given
-         Board board = BoardFactory.createBoard();
-         board.switchPosition(Position.from("e2"), Position.from("e4"));
-         board.switchPosition(Position.from("a7"), Position.from("a5"));
-         board.switchPosition(Position.from("h2"), Position.from("h4"));
-         board.switchPosition(Position.from("a8"), Position.from("a6"));
-         board.switchPosition(Position.from("f2"), Position.from("f4"));
-         board.switchPosition(Position.from("a6"), Position.from("e6"));
-         board.switchPosition(Position.from("e4"), Position.from("e5"));
-         board.switchPosition(Position.from("e6"), Position.from("e5"));
-         board.switchPosition(Position.from("a2"), Position.from("a3"));
-         board.switchPosition(Position.from("e5"), Position.from("e1"));
-
-         // when
-         boolean isKingDead = board.isKingDead();
-
-         // then
-         assertThat(isKingDead).isTrue();
-      }
 }

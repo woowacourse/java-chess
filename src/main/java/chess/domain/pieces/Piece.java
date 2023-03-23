@@ -4,8 +4,7 @@ import chess.domain.board.Position;
 
 public abstract class Piece {
 
-    protected final Name name;
-    protected Score score;
+    private final Name name;
 
     public Piece(final Name name) {
         this.name = name;
@@ -18,19 +17,15 @@ public abstract class Piece {
     }
 
     public boolean isPlace() {
-        return false;
+        return name.isPlace();
     }
 
     public boolean isKnight() {
-        return false;
+        return this.name.isKnight();
     }
 
     public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
+        return this.name.isPawn();
     }
 
     public boolean isNameLowerCase() {
@@ -39,12 +34,5 @@ public abstract class Piece {
 
     public boolean isNameUpperCase() {
         return this.name.isUpperCase();
-    }
-
-    public double getScore() {
-        return score.getScore();
-    }
-
-    public void updateScoreByOtherPawnsBeingWithSameColumn() {
     }
 }

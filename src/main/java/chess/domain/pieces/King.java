@@ -8,11 +8,8 @@ import java.util.List;
 
 public class King extends Piece {
 
-    private static final double SCORE_OF_KING = 0;
-
     public King(final Name name) {
         super(name);
-        this.score = new Score(SCORE_OF_KING);
     }
 
     @Override
@@ -31,10 +28,5 @@ public class King extends Piece {
         if (!possibleDirectionOfKing.contains(nextDirection)) {
             throw new IllegalArgumentException(PieceMessage.KING_INVALID_MOVE.getMessage());
         }
-    }
-
-    @Override
-    public boolean isKing() {
-        return this.name.isKing();
     }
 }

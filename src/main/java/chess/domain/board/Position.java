@@ -1,9 +1,6 @@
 package chess.domain.board;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Position {
 
@@ -11,7 +8,6 @@ public class Position {
     private static final char EMPTY_PLACE_END_INDEX = '6';
     private static final char LOWER_PAWN_INDEX = '2';
     private static final char UPPER_PAWN_INDEX = '7';
-
     private final Row row;
     private final Column column;
 
@@ -48,12 +44,6 @@ public class Position {
 
     public char getRow() {
         return row.getIndexOfRow();
-    }
-
-    public static List<Position> getAllPositionsByColumn(final Column column) {
-        return Arrays.stream(Row.values())
-                .map(row -> new Position(row, column))
-                .collect(Collectors.toList());
     }
 
     @Override

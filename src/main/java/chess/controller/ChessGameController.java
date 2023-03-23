@@ -1,144 +1,66 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.domain.commnad.Command;
-import chess.domain.commnad.LoadGameCommand;
 import chess.domain.game.ChessGame;
-import chess.dto.BoardResultDto;
-import chess.dto.BoardSaveDto;
-import chess.dto.ChessGameResponseDto;
-import chess.dto.GameScoreResultDto;
 import chess.factory.BoardFactory;
-import chess.service.BoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.ResultView;
+import java.util.List;
 
 public class ChessGameController {
 
-    private static final int BOARD_ID = 1;
+    private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
+    private static final String END_COMMAND = "end";
+    private static final int COMMAND_INDEX = 0;
+    private static final int SELECTED_PIECE = 1;
+    private static final int DESTINATION = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ResultView resultView;
-    private final BoardService boardService;
 
-    public ChessGameController(final InputView inputView,
-                               final OutputView outputView,
-                               final ResultView resultView,
-                               final BoardService boardService) {
+    public ChessGameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.resultView = resultView;
-        this.boardService = boardService;
     }
 
     public void run() {
-        LoadGameCommand loadGameCommand = inputView.readStatusOfGame();
-        ChessGame chessGame = loadGame(loadGameCommand);
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
 
         outputView.printStartMessage();
-        playChess(chessGame);
 
-        resultView.printGameEnd();
+        List<String> inputCommand = inputView.readGameCommand();
+
+        playChess(chessGame, inputCommand);
     }
 
-    private ChessGame loadGame(final LoadGameCommand loadCommand) {
-        if (loadCommand.isSavedGame()) {
-            ChessGameResponseDto chessGameResponseDto = boardService.findById(BOARD_ID);
-            BoardResultDto boardResultDto = chessGameResponseDto.getBoardResultDto();
-
-            outputView.printBoard(boardResultDto.getPieces());
-            return new ChessGame(BoardFactory.createFromDto(boardResultDto), chessGameResponseDto.isLowerTeamTurn());
-        }
-
-        return new ChessGame(BoardFactory.createBoard(), true);
-    }
-
-
-    private void playChess(ChessGame chessGame) {
-        Command command = inputView.readGameCommand();
-
-        while (!isGameEndCase(chessGame, command)) {
-            chessGame = checkCreateNewGame(chessGame, command);
-
-            checkMovePiece(chessGame, command);
-            outputView.printBoard(BoardResultDto.toDto(new Board(chessGame.getBoard())).getPieces());
-
-            if (isGameDone(chessGame)) {
-                break;
+    private void playChess(ChessGame chessGame, List<String> inputCommand) {
+        while (isNotEnd(inputCommand)) {
+            try {
+                chessGame = createNewChessGame(chessGame, inputCommand);
+                tryChessMove(chessGame, inputCommand);
+                outputView.printBoard(chessGame.getBoard());
+                inputCommand = inputView.readGameCommand();
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+                inputCommand = inputView.readGameCommand();
             }
-
-            command = inputView.readGameCommand();
         }
     }
 
-    private boolean isGameEndCase(final ChessGame chessGame, final Command command) {
-        if (isGameEnd(chessGame, command)) {
-            resultView.printGameEndWithSaving();
-            boardService.delete(BOARD_ID);
-            boardService.save(BoardSaveDto.toDto(BOARD_ID, chessGame));
-            return true;
-        }
-
-        return false;
+    private boolean isNotEnd(final List<String> inputCommand) {
+        return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
     }
 
-    private boolean isGameEnd(final ChessGame chessGame, final Command command) {
-        return isCommandStatus(chessGame, command) || command.isGameStop();
+    private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
+        if (inputCommand.get(COMMAND_INDEX).startsWith(MOVE_COMMAND)) {
+            chessGame.move(inputCommand.get(SELECTED_PIECE), inputCommand.get(DESTINATION));
+        }
     }
 
-    private boolean isCommandStatus(final ChessGame chessGame, final Command command) {
-        if (command.isStatus()) {
-            resultView.printScore(GameScoreResultDto.toDto(chessGame));
-            resultView.printWinner(GameScoreResultDto.toDto(chessGame));
-            return true;
+    private ChessGame createNewChessGame(ChessGame chessGame, final List<String> inputCommand) {
+        if (inputCommand.get(COMMAND_INDEX).equals(START_COMMAND)) {
+            chessGame = new ChessGame(BoardFactory.createBoard());
         }
-
-        return false;
-    }
-
-    private ChessGame checkCreateNewGame(final ChessGame chessGame, final Command command) {
-        if (command.isCreateNewGame()) {
-            chessGame.initGame();
-        }
-
         return chessGame;
-    }
-
-    private boolean isGameDone(final ChessGame chessGame) {
-        if (isKingDead(chessGame)) {
-            resultView.printGameEndWithDeleting();
-            boardService.delete(BOARD_ID);
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isKingDead(final ChessGame chessGame) {
-        if (chessGame.isKingDead() && chessGame.isUpperTeamWin()) {
-            resultView.printWinnerIsUpperTeam();
-            return true;
-        }
-
-        if (chessGame.isKingDead() && !chessGame.isUpperTeamWin()) {
-            resultView.printWinnerIsLowerTeam();
-            return true;
-        }
-
-        return false;
-    }
-
-    private void checkMovePiece(final ChessGame chessGame, final Command command) {
-        if (!command.isMove()) {
-            return;
-        }
-
-        try {
-            chessGame.move(command.findSelectedPiece(), command.findDestination());
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-        }
     }
 }

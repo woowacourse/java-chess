@@ -7,11 +7,8 @@ import chess.exception.PieceMessage;
 
 public class Rook extends Piece {
 
-    private static final double SCORE_OF_ROOK = 5;
-
     public Rook(final Name name) {
         super(name);
-        this.score = new Score(SCORE_OF_ROOK);
     }
 
     @Override

@@ -14,14 +14,11 @@ public class Pawn extends Piece {
     private static final int MOVE_RIGHT = 1;
     private static final int MOVE_LEFT = -1;
     private static final int SAME_POSITION = 0;
-    private static final double SCORE_OF_PAWN = 1;
-    private static final double HALF_SCORE_OF_PAWN = 0.5;
 
     private boolean isFirstMove;
 
     public Pawn(final Name name) {
         super(name);
-        this.score = new Score(SCORE_OF_PAWN);
         this.isFirstMove = true;
     }
 
@@ -79,15 +76,5 @@ public class Pawn extends Piece {
 
     private boolean isLowerPawnMoveAfterFirst(final int subRow, final int subCol) {
         return subCol == SAME_POSITION && subRow == MOVE_UP_ONE;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return this.name.isPawn();
-    }
-
-    @Override
-    public void updateScoreByOtherPawnsBeingWithSameColumn() {
-        this.score = new Score(HALF_SCORE_OF_PAWN);
     }
 }
