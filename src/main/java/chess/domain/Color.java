@@ -3,7 +3,7 @@ package chess.domain;
 public enum Color {
     BLACK,
     WHITE,
-    BLANK;
+    NOTHING;
 
     public Color getOppositeColor() {
         if (this == BLACK) {
@@ -12,6 +12,6 @@ public enum Color {
         if (this == WHITE) {
             return BLACK;
         }
-        return BLANK;
+        return NOTHING;
     }
 }

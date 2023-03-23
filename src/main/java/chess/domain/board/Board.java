@@ -3,68 +3,53 @@ package chess.domain.board;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.maker.PiecesFactory;
-import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Board {
 
-    private final List<Piece> pieces;
+    private final Pieces pieces;
 
-    private Board(final List<Piece> pieces) {
+    private Board(final Pieces pieces) {
         this.pieces = pieces;
     }
 
     public static Board from(final PiecesFactory piecesFactory) {
-        return new Board(piecesFactory.generate());
+        return new Board(new Pieces(piecesFactory.generate()));
     }
 
-    public void move(final Position currentPosition, final Position targetPosition) {
-        final Piece pieceToMove = findPieceToMoveIn(currentPosition);
-        final List<Position> passingPositions = pieceToMove.getPassingPositions(targetPosition);
-
-        validateExistenceIn(passingPositions);
-
-        processMoving(pieceToMove, targetPosition);
+    public void move(final Color turnColor, final Position currentPosition, final Position targetPosition) {
+        final Piece piece = findPiece(currentPosition);
+        validateColor(turnColor, piece);
+        validatePath(piece, targetPosition);
+        processMoving(piece, targetPosition);
     }
 
-    private Piece findPieceToMoveIn(final Position position) {
-        return findPieceOptionalIn(position)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
+    private Piece findPiece(final Position currentPosition) {
+        return pieces.findPieceOrThrow(currentPosition);
     }
 
-    private Optional<Piece> findPieceOptionalIn(final Position position) {
-        return pieces.stream()
-                .filter(piece -> position.equals(piece.getPosition()))
-                .findAny();
+    private void validateColor(final Color turnColor, final Piece piece) {
+        if (!piece.isSameColor(turnColor)) {
+            throw new IllegalArgumentException("해당 색의 말을 이동시킬 순서가 아닙니다.");
+        }
     }
 
-    private Piece findPieceIn(final Position position) {
-        return findPieceOptionalIn(position)
-                .orElseGet(() -> new BlankPiece(position.getFile(), position.getRank()));
-    }
-
-    private void validateExistenceIn(final List<Position> passingPositions) {
-        final boolean isBlocked = pieces.stream()
-                .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
-        if (isBlocked) {
+    private void validatePath(final Piece piece, final Position targetPosition) {
+        final List<Position> pathPositions = piece.getPassingPositions(targetPosition);
+        if (pieces.hasPiece(pathPositions)) {
             throw new IllegalArgumentException("이동 경로에 다른 말이 있습니다.");
         }
     }
 
-    private void processMoving(final Piece pieceToMove, final Position targetPosition) {
-        final Piece pieceInTargetPosition = findPieceIn(targetPosition);
-        final Piece movedPiece = pieceToMove.move(pieceInTargetPosition);
+    private void processMoving(final Piece piece, final Position targetPosition) {
+        final Piece targetPiece = pieces.findPieceOrBlank(targetPosition);
+        final Piece movedPiece = piece.move(targetPiece);
 
-        pieces.remove(pieceToMove);
-        pieces.remove(pieceInTargetPosition);
+        pieces.remove(piece);
+        pieces.remove(targetPiece);
         pieces.add(movedPiece);
-    }
-
-    public boolean isSameColor(final Position position, final Color otherColor) {
-        return findPieceToMoveIn(position).isSameColor(otherColor);
     }
 
     public boolean hasPieces() {
@@ -72,12 +57,10 @@ public class Board {
     }
 
     public boolean hasTwoKings() {
-        return 2 == pieces.stream()
-                .filter(Piece::isKing)
-                .count();
+        return pieces.hasTwoKings();
     }
 
     public List<Piece> getPieces() {
-        return List.copyOf(pieces);
+        return pieces.getPieces();
     }
 }

@@ -24,15 +24,8 @@ public class ChessGame {
     }
 
     public ChessGame move(final Position currentPosition, final Position targetPosition) {
-        validateTurnColor(currentPosition);
-        board.move(currentPosition, targetPosition);
+        board.move(currentTurnColor, currentPosition, targetPosition);
         return new ChessGame(board, currentTurnColor.getOppositeColor());
-    }
-
-    private void validateTurnColor(final Position currentPosition) {
-        if (!board.isSameColor(currentPosition, currentTurnColor)) {
-            throw new IllegalArgumentException("해당 색의 말을 이동시킬 순서가 아닙니다.");
-        }
     }
 
     public boolean isPlaying() {

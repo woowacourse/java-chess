@@ -59,7 +59,7 @@ class BoardTest {
         ));
         final Board board = Board.from(piecesFactory);
 
-        board.move(new Position(D, EIGHT), new Position(D, FIVE));
+        board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
 
         final List<Piece> pieces = board.getPieces();
         final Piece queen = pieces.get(0);
@@ -74,7 +74,7 @@ class BoardTest {
         ));
         final Board board = Board.from(piecesFactory);
 
-        board.move(new Position(D, EIGHT), new Position(D, FIVE));
+        board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
 
         final List<Piece> pieces = board.getPieces();
         final Piece queen = pieces.get(0);
@@ -90,7 +90,7 @@ class BoardTest {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of());
         final Board board = Board.from(piecesFactory);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, FIVE)))
+        assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
     }
@@ -102,9 +102,22 @@ class BoardTest {
         ));
         final Board board = Board.from(piecesFactory);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(E, SIX)))
+        assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(E, SIX)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource({"BLACK, WHITE", "WHITE, BLACK"})
+    void 해당_색상_체스말을_움직일_순서가_아니라면_예외가_발생한다(final Color pieceColor, final Color turnColor) {
+        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+                new Queen(D, EIGHT, pieceColor)
+        ));
+        final Board board = Board.from(piecesFactory);
+
+        assertThatThrownBy(() -> board.move(turnColor, new Position(D, EIGHT), new Position(E, SIX)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 색의 말을 이동시킬 순서가 아닙니다.");
     }
 
     @Test
@@ -115,7 +128,7 @@ class BoardTest {
         ));
         final Board board = Board.from(piecesFactory);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, FIVE)))
+        assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 말이 있습니다.");
     }
@@ -128,22 +141,9 @@ class BoardTest {
         ));
         final Board board = Board.from(piecesFactory);
 
-        assertThatThrownBy(() -> board.move(new Position(D, EIGHT), new Position(D, SEVEN)))
+        assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, SEVEN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
-    }
-
-    @ParameterizedTest
-    @CsvSource({"BLACK, true", "WHITE, false"})
-    void 같은_색인지_확인한다(final Color color, final boolean expected) {
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
-                new Queen(D, EIGHT, BLACK)
-        ));
-        final Board board = Board.from(piecesFactory);
-
-        final boolean actual = board.isSameColor(new Position(D, EIGHT), color);
-
-        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
