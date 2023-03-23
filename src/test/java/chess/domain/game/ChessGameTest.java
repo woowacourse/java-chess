@@ -70,4 +70,18 @@ class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(ChessGame.GAME_HAS_ALREADY_STARTED);
     }
+    
+    @Test
+    @DisplayName("킹이 잡히면 게임이 종료된다.")
+    void endWhenKingCaught() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        chessGame.move(Position.from("e2"), Position.from("e4"));
+        chessGame.move(Position.from("e7"), Position.from("e5"));
+        chessGame.move(Position.from("d1"), Position.from("h5"));
+        chessGame.move(Position.from("f7"), Position.from("f5"));
+        chessGame.move(Position.from("h5"), Position.from("e8"));
+        Assertions.assertThat(chessGame.isNotRunning()).isTrue();
+        Assertions.assertThat(chessGame.isNotReady()).isTrue();
+    }
 }
