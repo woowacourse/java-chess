@@ -17,7 +17,7 @@ public final class Board {
     private final Map<Coordinate, Piece> squareLocations;
 
     public Board() {
-        this.squareLocations = BoardInitialImage.getCachedBoard();
+        this(BoardInitialImage.getCachedBoard());
     }
 
     public Board(final Map<Coordinate, Piece> squareLocations) {
