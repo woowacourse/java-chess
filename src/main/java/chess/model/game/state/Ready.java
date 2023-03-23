@@ -1,6 +1,7 @@
 package chess.model.game.state;
 
-import chess.controller.PlayRequest;
+import chess.controller.dto.PlayRequest;
+import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.game.GameCommand;
 
@@ -13,17 +14,11 @@ public class Ready implements GameState {
     }
 
     @Override
-    public GameState execute(final PlayRequest request) {
-        final GameCommand gameCommand = convertGameCommand(request);
+    public GameState execute(final PlayDto request) {
+        final GameCommand gameCommand = request.getGameCommand();
 
         validateGameCommand(gameCommand);
         return execute(gameCommand);
-    }
-
-    private GameCommand convertGameCommand(final PlayRequest request) {
-        final String command = request.getCommand();
-
-        return GameCommand.findGameCommand(command);
     }
 
     private GameState execute(final GameCommand gameCommand) {

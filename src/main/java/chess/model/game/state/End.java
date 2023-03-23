@@ -1,11 +1,11 @@
 package chess.model.game.state;
 
-import chess.controller.PlayRequest;
+import chess.model.dto.PlayDto;
 
 public class End implements GameState {
 
     @Override
-    public GameState execute(final PlayRequest ignored) {
+    public GameState execute(final PlayDto ignored) {
         throw new IllegalStateException("게임이 종료되었습니다.");
     }
 

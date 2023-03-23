@@ -1,10 +1,10 @@
 package chess.model.game.state;
 
-import chess.controller.PlayRequest;
+import chess.model.dto.PlayDto;
 
 public interface GameState {
 
-    GameState execute(final PlayRequest request);
+    GameState execute(final PlayDto request);
 
     boolean isContinue();
 

@@ -1,10 +1,8 @@
 package chess.model.game.state;
 
-import chess.controller.PlayRequest;
+import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.game.GameCommand;
-import chess.model.position.Position;
-import chess.model.position.PositionConverter;
 
 public class Play implements GameState {
 
@@ -15,9 +13,8 @@ public class Play implements GameState {
     }
 
     @Override
-    public GameState execute(final PlayRequest request) {
-        final String command = request.getCommand();
-        final GameCommand gameCommand = GameCommand.findGameCommand(command);
+    public GameState execute(final PlayDto request) {
+        final GameCommand gameCommand = request.getGameCommand();
 
         validateGameCommand(gameCommand);
 
@@ -28,7 +25,7 @@ public class Play implements GameState {
         }
     }
 
-    private GameState execute(final PlayRequest request, final GameCommand gameCommand) {
+    private GameState execute(final PlayDto request, final GameCommand gameCommand) {
         if (gameCommand.isMove()) {
             move(request);
 
@@ -37,13 +34,8 @@ public class Play implements GameState {
         return new End();
     }
 
-    private void move(final PlayRequest request) {
-        final String source = request.getSource();
-        final String target = request.getTarget();
-        final Position sourcePosition = PositionConverter.convert(source);
-        final Position targetPosition = PositionConverter.convert(target);
-
-        chessGame.move(sourcePosition, targetPosition);
+    private void move(final PlayDto request) {
+        chessGame.move(request.getSource(), request.getTarget());
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {

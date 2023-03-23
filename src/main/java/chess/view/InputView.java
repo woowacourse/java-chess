@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.PlayRequest;
+import chess.controller.dto.PlayRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final String DELIMITER = " ";
-    private static final String DEFAULT_POSITION = "Z0";
+    private static final String DEFAULT_POSITION = "A1";
     private static final int COMMAND_INDEX = 0;
     private static final int MAXIMUM_COMMAND_SIZE = 3;
     private static final int MINIMUM_COMMAND_SIZE = 1;

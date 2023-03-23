@@ -1,9 +1,11 @@
 package chess.model.game.state;
 
+import static chess.helper.PositionFixture.A1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.PlayRequest;
+import chess.model.dto.PlayDto;
+import chess.model.game.GameCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,7 @@ class EndTest {
     @DisplayName("execute()는 호출하면 예외가 발생한다.")
     void execute_whenCall_thenFail() {
         // given
-        final PlayRequest request = new PlayRequest("end", "Z0", "Z0");
+        final PlayDto request = new PlayDto(GameCommand.END, A1, A1);
 
         // when, then
         assertThatThrownBy(() -> end.execute(request))
