@@ -101,7 +101,8 @@ public class Board {
     }
 
     public double calculateScore(Team team){
-        return (board.values().stream()
+        return (board.values()
+                .stream()
                 .filter(s-> s.team().equals(team))
                 .mapToDouble(s->s.getScore()).sum() - calculateSameFilePawn(team));
     }
@@ -109,12 +110,20 @@ public class Board {
     private double calculateSameFilePawn(Team team){
         double sameFilePawn = 0;
         for (File file : File.values()) {
-            double tmp = calculateSameTeamPawn(team).keySet().stream().filter(point -> point.isVerticalFile(file)).count();
-            if(tmp >= 2){
-                sameFilePawn += tmp;
-            }
+            double countPawn = calculateSameTeamPawn(team).keySet()
+                    .stream()
+                    .filter(point -> point.isVerticalFile(file))
+                    .count();
+            sameFilePawn = countSameFilePawn(sameFilePawn, countPawn);
         }
         return sameFilePawn * 0.5;
+    }
+
+    private static double countSameFilePawn(double sameFilePawn, double countPawn) {
+        if(countPawn >= 2){
+            sameFilePawn += countPawn;
+        }
+        return sameFilePawn;
     }
 
     private Map<Point, Piece> calculateSameTeamPawn(Team team){
