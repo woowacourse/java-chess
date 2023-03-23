@@ -30,9 +30,9 @@ public final class ChessGameController {
         boolean isNotEnd = true;
         while (isNotEnd && players.everyKingAlive()) {
             List<String> commands = InputView.getCommands();
-            Command findCommand = Command.findCommand(commands);
-            this.commands.get(findCommand).execute(commands);
-            isNotEnd = findCommand.isNotEnd();
+            Command command = Command.getCommand(commands);
+            this.commands.get(command).execute(commands);
+            isNotEnd = command.isNotEnd();
         }
         this.commands.get(Command.END).execute(Collections.emptyList());
     }
@@ -60,7 +60,7 @@ public final class ChessGameController {
         }
     }
 
-    private void end(final List<String> strings) {
+    private void end(final List<String> command) {
         if (!players.everyKingAlive()) {
             OutputView.printWinner(players.getWinnerColorName());
         }
