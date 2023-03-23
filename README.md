@@ -18,6 +18,9 @@ graph TD
     Board --> Piece
     Board --> Position
 
+    Position --> File
+    Position --> Rank
+
     Piece --> Rook
     Piece --> King
     Piece --> Queen
@@ -54,6 +57,10 @@ graph TD
             - [x] 상, 하, 좌, 우로 원하는 만큼 이동할 수 있다.
         - [x] 비숍
             - [x] 대각선으로 원하는 만큼 이동할 수 있다.
+    - [ ] 킹이 잡히면 게임을 끝낸다.
+- [ ] 체스 게임의 점수를 구한다
+    - [ ] pawn은 기본은 1점 같은 세로줄에 있으면 0.5점으로 계산한다.
+    - [ ] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
 
 ### 입력
 
@@ -64,3 +71,5 @@ graph TD
 ### 출력
 
 - [x] 체스 말의 현재 위치를 출력할 수 있다.
+- [ ] `status`를 입력하면 점수를 출력한다.
+
