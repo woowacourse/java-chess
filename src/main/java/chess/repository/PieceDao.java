@@ -16,7 +16,7 @@ public class PieceDao {
         connection = ConnectionProvider.getConnection();
     }
 
-    public void save(final Map<Position, Piece> piecesByPosition, final long game_id) {
+    public void save(final Map<Position, Piece> piecesByPosition, final long game_id) { // PieceId 반환?
         piecesByPosition.forEach((position, piece) -> saveEachPiece(piece, position, game_id));
     }
 
@@ -39,6 +39,45 @@ public class PieceDao {
 
     private String convertTeamColorToString(final TeamColor color) {
         return color.name();
+    }
+
+    public boolean updateByPositionAndGameId(final Position prev, final long gameId, final Position current) { // 이동시킨다
+        String queryStatement = "UPDATE piece SET position = ? WHERE game_id = ? AND position = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
+            preparedStatement.setString(1, current.toString());
+            preparedStatement.setLong(2, gameId);
+            preparedStatement.setString(3, prev.toString());
+            int result = preparedStatement.executeUpdate();
+
+            if (result != 1) {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("UPDATE 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean deleteByPositionAndGameId(final Position target, final long gameId) {
+        String queryStatement = "DELETE FROM piece WHERE game_id = ? AND position = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.setString(2, target.toString());
+            int result = preparedStatement.executeUpdate();
+
+            if (result == 1) {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("DELETE 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
     }
 
 }

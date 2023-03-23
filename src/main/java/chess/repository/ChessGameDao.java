@@ -29,6 +29,26 @@ public class ChessGameDao {
         }
     }
 
+    public boolean updateStatus(final long gameId, final boolean isEnd) {
+        String queryStatement = "UPDATE game SET is_end = ? WHERE game_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
+            preparedStatement.setBoolean(1, isEnd);
+            preparedStatement.setLong(2, gameId);
+            int result = preparedStatement.executeUpdate();
+
+            if (result != 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("UPDATE 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private String convertTeamColorToString(final TeamColor color) {
         return color.name();
     }
