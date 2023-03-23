@@ -1,5 +1,7 @@
 package domain.piece.pawn;
 
+import domain.board.Board;
+import domain.board.ChessGame;
 import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.Color;
@@ -7,7 +9,11 @@ import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class PawnTest {
 
@@ -123,5 +129,39 @@ class PawnTest {
 
         assertThat(blackPawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
         assertThat(whitePawn.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+    }
+
+    @Test
+    @DisplayName("블랙 폰이 화이트 폰을 우상단 대각 공격할 수 있다")
+    void isReachableByRuleWhenAttackCaseNE() {
+        Coordinate startCoordinate = new Coordinate(0, 0);
+        Coordinate endCoordinate = new Coordinate(1, 1);
+
+        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
+        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedSquareLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
+
+        Board mockedBoard = new Board(mockedSquareLocations);
+        ChessGame mockedChessGame = new ChessGame(mockedBoard);
+
+        assertThatCode(() -> mockedChessGame.move(startCoordinate, endCoordinate))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("화이트 폰이 블랙 폰을 좌상단 대각 공격할 수 있다")
+    void isReachableByRuleWhenAttackCaseNW() {
+        Coordinate startCoordinate = new Coordinate(0, 1);
+        Coordinate endCoordinate = new Coordinate(1, 0);
+
+        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
+        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedSquareLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
+
+        Board mockedBoard = new Board(mockedSquareLocations);
+        ChessGame mockedChessGame = new ChessGame(mockedBoard);
+
+        assertThatCode(() -> mockedChessGame.move(startCoordinate, endCoordinate))
+                .doesNotThrowAnyException();
     }
 }
