@@ -1,6 +1,6 @@
 package chess.model.dto;
 
-import chess.model.game.GameCommand;
+import chess.controller.GameCommand;
 import chess.model.position.Position;
 
 public class PlayDto {

@@ -1,4 +1,4 @@
-package chess.model.game.state;
+package chess.controller.state;
 
 import chess.model.dto.PlayDto;
 

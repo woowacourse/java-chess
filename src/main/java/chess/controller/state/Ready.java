@@ -1,8 +1,8 @@
-package chess.model.game.state;
+package chess.controller.state;
 
+import chess.controller.GameCommand;
 import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
-import chess.model.game.GameCommand;
 
 public class Ready implements GameState {
 

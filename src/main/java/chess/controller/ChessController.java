@@ -1,11 +1,10 @@
 package chess.controller;
 
 import chess.controller.dto.PlayRequest;
+import chess.controller.state.GameState;
+import chess.controller.state.Ready;
 import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
-import chess.model.game.GameCommand;
-import chess.model.game.state.GameState;
-import chess.model.game.state.Ready;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
 import chess.view.InputView;
