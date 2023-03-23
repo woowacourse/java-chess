@@ -2,9 +2,12 @@ package chess.view;
 
 import chess.domain.piece.Piece;
 import chess.domain.square.Color;
+import chess.domain.square.Side;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static chess.domain.piece.Role.*;
 
@@ -57,5 +60,12 @@ public class OutputView {
 
     public void printExceptionMessage(final String message) {
         System.err.println(message);
+    }
+
+    public void printStatuses(final Map<Side, Double> status) {
+        String statuses = status.entrySet().stream()
+                .map(entry -> String.format(entry.getKey() + ": " + entry.getValue() + "점") + System.lineSeparator())
+                .collect(Collectors.joining());
+        System.out.println(statuses);
     }
 }
