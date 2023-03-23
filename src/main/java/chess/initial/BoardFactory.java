@@ -91,6 +91,17 @@ public final class BoardFactory {
 		}
 	}
 
+	private static void addPawn(final Map<Position, Piece> board) {
+		List<Position> pawnPosition = Pawn.getInitialBlackPosition();
+		for (Position position : pawnPosition) {
+			board.put(position, new Pawn(BLACK, position));
+		}
+		pawnPosition = Pawn.getInitialWhitePosition();
+		for (Position position : pawnPosition) {
+			board.put(position, new Pawn(WHITE, position));
+		}
+	}
+
 	private static void addEmpty(final Map<Position, Piece> board) {
 		for (Rank rank : Rank.getRanks()) {
 			findEmpty(board, rank);
