@@ -6,6 +6,8 @@ import java.util.Set;
 
 public final class Rook extends Normal {
 
+    private static final double score = 5;
+
     public Rook(final Color color) {
         super(color);
     }
@@ -29,5 +31,14 @@ public final class Rook extends Normal {
         var rankSub = source.rankSub(target);
 
         return fileSub == SAME_SQUARE || rankSub == SAME_SQUARE;
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return score;
+        }
+
+        return 0;
     }
 }

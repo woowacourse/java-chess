@@ -33,4 +33,9 @@ public final class King extends Normal {
         var rankSub = Math.abs(source.rankSub(target));
         return fileSub <= ONE_SQUARES && rankSub <= ONE_SQUARES;
     }
+
+    @Override
+    public double getScore(Color color) {
+        return 0;
+    }
 }

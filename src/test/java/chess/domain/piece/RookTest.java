@@ -88,4 +88,28 @@ class RookTest {
 
         assertThat(actual).isFalse();
     }
+
+    @DisplayName("흑색 룩은 점수가 5점이다")
+    @Test
+    void getScore_blackThree() {
+        var piece = new Rook(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(5);
+    }
+
+    @DisplayName("백색 룩은 점수가 5점이다")
+    @Test
+    void getScore_whiteThree() {
+        var piece = new Rook(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(5);
+    }
+
+    @DisplayName("다른 색의 룩은 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new Rook(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
+    }
 }

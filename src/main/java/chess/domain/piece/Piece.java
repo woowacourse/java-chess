@@ -26,6 +26,8 @@ public abstract class Piece {
 
     public abstract Kind getKind();
 
+    public abstract double getScore(Color color);
+
     public final Set<Position> computePathWithValidate(Position source, Position target) {
         validateSamePosition(source, target);
         return computePath(source, target);
