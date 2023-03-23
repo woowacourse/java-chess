@@ -2,8 +2,12 @@ package view;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.EmptyType;
+import domain.chessboard.GameResult;
 import domain.chessboard.Rank;
+import domain.chessboard.Result;
+import domain.chessboard.Score;
 import domain.chessboard.Square;
+import domain.chessboard.StatusResult;
 import domain.piece.Color;
 
 import java.util.List;
@@ -44,6 +48,29 @@ public class OutputView {
             return elementName.toUpperCase();
         }
         return elementName;
+    }
+
+    public static void printStatusResult(StatusResult statusResult) {
+        printScore(statusResult.getScore());
+        printResult(statusResult.getResult());
+    }
+
+    private static void printScore(Score score) {
+        score.getValue()
+                .forEach(OutputView::printScoreFormat);
+    }
+
+    public static void printResult(Result result) {
+        result.getValue()
+                .forEach(OutputView::printResultFormat);
+    }
+
+    private static void printScoreFormat(Color color, double value) {
+        System.out.printf("%s : %s점\n", color, value);
+    }
+
+    private static void printResultFormat(Color color, GameResult gameResult) {
+        System.out.printf("%s : %s\n", color, gameResult.getValue());
     }
 
 }

@@ -2,11 +2,13 @@ package domain;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.GameResult;
+import domain.chessboard.Square;
 import domain.chessboard.StatusResult;
 import domain.chessboard.Type;
 import domain.coordinate.MovePosition;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
+import domain.piece.Pawn;
 import domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -164,6 +166,37 @@ class ChessGameTest {
         assertThat(score.get(WHITE)).isEqualTo(37);
         assertThat(result.get(BLACK)).isEqualTo(GameResult.WIN);
         assertThat(result.get(WHITE)).isEqualTo(GameResult.LOSE);
+    }
+
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    p.......
+    p.......
+    pppppppp
+    rnbqkbnr
+     */
+    @Test
+    @DisplayName("Pawn 이 세로줄에 2개 이상 있을 시에 0.5점으로 치환된다.")
+    void threePawninColumn() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        chessBoard.findSquare(PositionFactory.createPosition("a3")).bePiece(new Square(new Pawn(WHITE)));
+        chessBoard.findSquare(PositionFactory.createPosition("a4")).bePiece(new Square(new Pawn(WHITE)));
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        StatusResult statusResult = chessGame.getStatusResult();
+        Map<Color, Double> score = statusResult.getScore().getValue();
+        Map<Color, GameResult> result = statusResult.getResult().getValue();
+
+        // Then
+        assertThat(score.get(BLACK)).isEqualTo(38);
+        assertThat(score.get(WHITE)).isEqualTo(38.5);
+        assertThat(result.get(BLACK)).isEqualTo(GameResult.LOSE);
+        assertThat(result.get(WHITE)).isEqualTo(GameResult.WIN);
     }
 
     /*

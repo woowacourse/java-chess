@@ -110,6 +110,10 @@ public class ChessGame {
         return Result.createByCheckMate(isExistKingOfBlack, isExistKingOfWhite);
     }
 
+    public boolean isCheckMate() {
+        return chessBoard.isCheckMate();
+    }
+
     public ChessBoard getChessBoard() {
         return chessBoard;
     }

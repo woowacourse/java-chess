@@ -48,6 +48,7 @@ public class ChessGameController {
         isStart(command);
         isMove(inputs, command);
         isEnd(command);
+        isStatus(command);
     }
 
     private void isStart(final Command command) {
@@ -61,11 +62,29 @@ public class ChessGameController {
             Position source = PositionFactory.createPosition(inputs.get(SOURCE_INDEX));
             Position target = PositionFactory.createPosition(inputs.get(TARGET_INDEX));
             chessGame.move(MovePosition.of(source, target));
+            exitIfCheckmate();
+        }
+
+    }
+
+    private void exitIfCheckmate() {
+        if (chessGame.isCheckMate()) {
+            OutputView.printResult(chessGame.getCheckMateResult());
+            isKeepGaming = false;
+        }
+    }
+
+    private void isStatus(final Command command) {
+        if (command == Command.STATUS) {
+            OutputView.printStatusResult(chessGame.getStatusResult());
+            isKeepGaming = false;
         }
     }
 
     private void isEnd(final Command command) {
-        isKeepGaming = command != Command.END;
+        if (command == Command.END) {
+            isKeepGaming = false;
+        }
     }
 
 }
