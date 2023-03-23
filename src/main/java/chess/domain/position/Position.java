@@ -43,7 +43,7 @@ public class Position implements Comparable<Position> {
         return Direction.findByUnitVector(fileGap / gcd, rankGap / gcd);
     }
 
-    public int getGreatestCommonDivisor(int bigNum, int smallNum) {
+    private int getGreatestCommonDivisor(int bigNum, int smallNum) {
         while (smallNum != 0) {
             int remainder = bigNum % smallNum;
 

@@ -3,7 +3,7 @@ package chess.controller.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

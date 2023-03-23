@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Queue;
 
 public class Queen extends Piece {
 

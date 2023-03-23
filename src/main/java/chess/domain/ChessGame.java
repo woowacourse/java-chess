@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
@@ -33,13 +32,15 @@ public class ChessGame {
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
     
-        checkPieceMove(source, destination);
+        checkPieceCanMove(source, destination);
         board.replace(source, destination);
         turn = turn.reverse();
     }
     
-    private void checkPieceMove(final Position source, final Position destination) {
-        Piece sourcePiece = board.getValidSourcePiece(source, turn);
+    private void checkPieceCanMove(final Position source, final Position destination) {
+        board.validateSourcePiece(source, turn);
+        Piece sourcePiece = board.getPieceAtPosition(source);
+
         sourcePiece.canMove(source, destination);
         board.checkSameColor(destination, turn);
         checkRoute(source, destination, sourcePiece);
