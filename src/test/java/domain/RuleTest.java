@@ -1,7 +1,7 @@
 package domain;
 
 import domain.piece.Piece;
-import domain.piece.PieceType;
+import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +21,7 @@ class RuleTest {
             }
 
             @Override
-            public PieceType getPieceType() {
+            public PieceInfo getPieceType() {
                 return null;
             }
         };
@@ -33,7 +33,7 @@ class RuleTest {
             }
 
             @Override
-            public PieceType getPieceType() {
+            public PieceInfo getPieceType() {
                 return null;
             }
         };

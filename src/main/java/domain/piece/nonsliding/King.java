@@ -2,7 +2,7 @@ package domain.piece.nonsliding;
 
 import domain.piece.Direction;
 import domain.piece.Directions;
-import domain.piece.PieceType;
+import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 
 public class King extends NonSlidingPiece {
@@ -19,7 +19,7 @@ public class King extends NonSlidingPiece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.KING;
+    public PieceInfo getPieceType() {
+        return PieceInfo.KING;
     }
 }

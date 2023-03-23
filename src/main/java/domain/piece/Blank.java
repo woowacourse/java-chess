@@ -41,7 +41,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.BLANK;
+    public PieceInfo getPieceType() {
+        return PieceInfo.BLANK;
     }
 }

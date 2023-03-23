@@ -44,7 +44,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.PAWN;
+    public PieceInfo getPieceType() {
+        return PieceInfo.PAWN;
     }
 }

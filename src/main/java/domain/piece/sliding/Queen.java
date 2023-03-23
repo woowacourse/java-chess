@@ -2,7 +2,7 @@ package domain.piece.sliding;
 
 import domain.piece.Direction;
 import domain.piece.Directions;
-import domain.piece.PieceType;
+import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 
 public class Queen extends SlidingPiece {
@@ -19,7 +19,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PieceType.QUEEN;
+    public PieceInfo getPieceType() {
+        return PieceInfo.QUEEN;
     }
 }
