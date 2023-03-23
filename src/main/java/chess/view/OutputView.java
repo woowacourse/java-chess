@@ -36,6 +36,10 @@ public class OutputView {
         return "점수가 같습니다.";
     }
 
+    public void printEndMessage() {
+        System.out.println("게임이 종료되었습니다.");
+    }
+
     public void printErrorMessage(final String message) {
         System.out.println("[ERROR] " + message);
     }

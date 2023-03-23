@@ -5,7 +5,7 @@ public class ChessStatusDto {
     private final double blackScore;
     private final double whiteScore;
 
-    public ChessStatusDto(final double blackScore, final double whiteScore) {
+    private ChessStatusDto(final double blackScore, final double whiteScore) {
         this.blackScore = blackScore;
         this.whiteScore = whiteScore;
     }

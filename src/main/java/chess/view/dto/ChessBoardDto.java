@@ -1,10 +1,10 @@
 package chess.view.dto;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

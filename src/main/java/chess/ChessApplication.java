@@ -1,8 +1,8 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
+import chess.domain.game.ChessGame;
 
 public class ChessApplication {
     public static void main(String[] args) {
