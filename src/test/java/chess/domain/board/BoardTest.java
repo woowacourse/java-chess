@@ -10,6 +10,7 @@ import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static chess.domain.PositionFixture.A1;
+import static chess.domain.PositionFixture.A2;
 import static chess.domain.PositionFixture.A3;
-import static chess.domain.PositionFixture.A5;
+import static chess.domain.PositionFixture.A6;
 import static chess.domain.PositionFixture.A7;
-import static chess.domain.PositionFixture.B2;
-import static chess.domain.PositionFixture.B4;
 import static chess.domain.PositionFixture.C1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -83,11 +84,20 @@ public class BoardTest {
     }
 
     @Test
-    void 같은편_말이_없는_곳으로_이동할_수_있다() {
-        //given
+    void 같은_색_말을_연속_해서_옮길_수_없다() {
+        //expect
         Board board = BoardGenerator.makeBoard();
-        board.movePiece(B2, B4);
-        board.movePiece(A7, A5);
-        board.movePiece(C1, A3);
+        board.movePiece(A2, A3);
+        assertThatThrownBy(() -> board.movePiece(A1, A2))
+                .isInstanceOf(IllegalPieceMoveException.class);
+    }
+
+    @Test
+    void 색을_번갈아_가면서_이동할_수_있다() {
+        //expect
+        Board board = BoardGenerator.makeBoard();
+        board.movePiece(A2, A3);
+        Assertions.assertDoesNotThrow(() -> board.movePiece(A7, A6));
+        Assertions.assertDoesNotThrow(() -> board.movePiece(A1, A2));
     }
 }
