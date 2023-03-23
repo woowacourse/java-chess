@@ -58,10 +58,9 @@ class PawnTest {
             @MethodSource("parametersProvider2")
             void move_fail(Square src, Square dest) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-
                 Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 방향으로 갈 수 없습니다.");
+                    .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {
@@ -102,11 +101,11 @@ class PawnTest {
             @MethodSource("parametersProvider2")
             void move_fail(Square src, Square dest) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-                pawn.start();
+                pawn.changeState();
 
                 Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 방향으로 갈 수 없습니다.");
+                    .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {
@@ -161,7 +160,7 @@ class PawnTest {
 
                 Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 방향으로 갈 수 없습니다.");
+                    .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {
@@ -202,11 +201,11 @@ class PawnTest {
             @MethodSource("parametersProvider2")
             void move_fail(Square src, Square dest) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
-                pawn.start();
+                pawn.changeState();
 
                 Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("해당 방향으로 갈 수 없습니다.");
+                    .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {

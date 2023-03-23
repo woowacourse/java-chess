@@ -32,7 +32,7 @@ public class ChessGame {
         if (piece.isPawn()) {
             Pawn pawn = (Pawn) piece;
             validatePawnMove(pawn, src, dest);
-            pawn.start();
+            pawn.changeState();
         }
     }
 
@@ -44,7 +44,7 @@ public class ChessGame {
             throw new IllegalArgumentException("폰은 기물이 있으면 앞으로 갈 수 없습니다.");
         }
     }
-    
+
     private boolean canKill(Square dest, Piece piece, Square route) {
         return route == dest && chessBoard.hasPiece(route) && piece.isDifferentTeam(chessBoard.find(dest));
     }
