@@ -51,8 +51,4 @@ public enum File {
                 .mapToObj(File::from)
                 .collect(Collectors.toList());
     }
-
-    public int getIndex() {
-        return index;
-    }
 }
