@@ -48,7 +48,6 @@ public final class ChessGame {
         if (!chessBoard.contains(target)) {
             return;
         }
-        validatePieceExistence(target);
         final Piece piece = chessBoard.getPiece(target);
         if (piece.isSameCamp(currentCamp)) {
             throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
