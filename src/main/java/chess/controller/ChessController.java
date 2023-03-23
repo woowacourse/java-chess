@@ -39,13 +39,23 @@ public class ChessController {
 
         if (chessAction == ChessAction.MOVE) {
             move(commands);
-            return GameStatus.CONTINUE;
+            return canContinue();
         }
         if (chessAction == ChessAction.STATUS) {
             showTeamScores();
             return GameStatus.CONTINUE;
         }
         return GameStatus.EXIT;
+    }
+
+    private GameStatus canContinue() {
+        if (chessGame.isEndCondition()) {
+            Team winningTeam = chessGame.getWinningTeam();
+            Team losingTeam = chessGame.getLosingTeam();
+            OutputView.printEndMessage(winningTeam, losingTeam);
+            return GameStatus.EXIT;
+        }
+        return GameStatus.CONTINUE;
     }
 
     private void showTeamScores() {

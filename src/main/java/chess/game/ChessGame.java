@@ -32,6 +32,10 @@ public class ChessGame {
         changeTurn();
     }
 
+    public boolean isEndCondition() {
+        return !board.isKingAlive(turn.getTeam());
+    }
+
     public double calculateScore(Team team) {
         return board.calculateScore(team);
     }
@@ -61,5 +65,13 @@ public class ChessGame {
         return board.getBoard().entrySet().stream()
                 .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
                 .collect(toList());
+    }
+
+    public Team getLosingTeam() {
+        return turn.getTeam();
+    }
+
+    public Team getWinningTeam() {
+        return turn.next().getTeam();
     }
 }

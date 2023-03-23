@@ -17,7 +17,7 @@ public class Board {
     public boolean canMove(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
         Piece targetPiece = squares.get(target);
-        return isAttackable(source, target) && isMovable(sourcePiece, targetPiece);
+        return isMovable(sourcePiece, targetPiece) && isAttackable(source, target);
     }
 
     public void move(Position source, Position target) {
@@ -33,28 +33,25 @@ public class Board {
         return GameScore.calculateScore(new HashMap<>(squares), team);
     }
 
-    private boolean isAttackable(Position source, Position target) {
-        return isCorrectMoving(source, target) && validatePieceRole(source, target);
+    public boolean isKingAlive(Team team) {
+        return squares.values()
+                .stream()
+                .anyMatch(piece -> (piece.isSameTeam(team) && piece.isRoleOf(Role.KING)));
     }
 
     private boolean isMovable(Piece sourcePiece, Piece targetPiece) {
-        return isNotEmptyPiece(sourcePiece) && isDifferentTeamPieces(sourcePiece, targetPiece);
+        return !sourcePiece.isRoleOf(Role.EMPTY) && sourcePiece.isDifferentTeam(targetPiece);
     }
 
-    private boolean isNotEmptyPiece(Piece sourcePiece) {
-        return !sourcePiece.isRoleOf(Role.EMPTY);
-    }
-
-    private boolean isDifferentTeamPieces(Piece sourcePiece, Piece targetPiece) {
-        return !sourcePiece.isSameTeamWith(targetPiece);
-    }
-
-    private boolean isCorrectMoving(Position source, Position target) {
+    private boolean isAttackable(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
-        return sourcePiece.canMove(source, target);
+        if (sourcePiece.canMove(source, target)) {
+            return checkAttackCondition(source, target);
+        }
+        return false;
     }
 
-    private boolean validatePieceRole(Position source, Position target) {
+    private boolean checkAttackCondition(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
         if (sourcePiece.isRoleOf(Role.KNIGHT)) {
             return true;

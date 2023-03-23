@@ -21,8 +21,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(Position source, Position target);
 
-    public boolean isSameTeamWith(Piece other) {
-        return this.team == other.team;
+    public boolean isDifferentTeam(Piece other) {
+        return this.team != other.team;
     }
 
     public boolean isRoleOf(Role role) {

@@ -182,4 +182,37 @@ class BoardTest {
         assertThat(board.calculateScore(Team.WHITE)).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("해당 팀의 왕이 죽으면 true가 반환된다.")
+    void isKingAlive_If_king_Alive() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Position kingPosition = Position.of(1, 1);
+        Position enemyPosition = Position.of(2, 2);
+        squares.put(kingPosition, new King(Team.WHITE));
+        squares.put(enemyPosition, new Pawn(Team.BLACK));
+        Board board = new Board(squares);
+
+        // when
+        board.move(enemyPosition, kingPosition);
+
+        // then
+        assertThat(board.isKingAlive(Team.WHITE)).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 팀의 왕이 살아 있으면 true가 반환된다.")
+    void isAlive_If_king_Dead() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Position kingPosition = Position.of(1, 1);
+        Position enemyPosition = Position.of(2, 2);
+        squares.put(kingPosition, new King(Team.WHITE));
+        squares.put(enemyPosition, new Pawn(Team.BLACK));
+        Board board = new Board(squares);
+
+        // then
+        assertThat(board.isKingAlive(Team.WHITE)).isTrue();
+    }
+
 }
