@@ -3,6 +3,8 @@ package domain.game;
 import domain.piece.Position;
 import domain.piece.Side;
 
+import java.util.Map;
+
 public class ChessGame {
 
     private final Board board;
@@ -24,6 +26,10 @@ public class ChessGame {
 
     public boolean isExitGame() {
         return state == GameState.END;
+    }
+
+    public Map<Side, Double> calculateScores() {
+        return board.calculateScore();
     }
 
     private GameState calculateNextGameState(Position targetPosition) {
