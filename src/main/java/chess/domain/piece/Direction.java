@@ -36,11 +36,11 @@ public enum Direction {
     }
 
     public boolean isHorizontalMovable() {
-        return x != 0;
+        return x != 0 && y == 0;
     }
 
     public boolean isVerticalMovable() {
-        return y != 0;
+        return x == 0 && y != 0;
     }
 
     public boolean isDiagonalMovable() {
