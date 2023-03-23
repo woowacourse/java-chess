@@ -76,4 +76,28 @@ class PawnTest {
             Assertions.assertThat(result).isTrue();
         }
     }
+
+    @Nested
+    @DisplayName("기물을 확인한다.")
+    class CheckPiece {
+        Pawn pawn = Pawn.from(Team.WHITE);
+
+        @Test
+        @DisplayName("Pawn인지 여부를 물어본다.")
+        void Should_False_When_IsPawn() {
+            Assertions.assertThat(pawn.isPawn()).isTrue();
+        }
+
+        @Test
+        @DisplayName("Knight인지 여부를 물어본다.")
+        void Should_False_When_IsKnight() {
+            Assertions.assertThat(pawn.isKnight()).isFalse();
+        }
+
+        @Test
+        @DisplayName("King인지 여부를 물어본다.")
+        void Should_False_When_IsKing() {
+            Assertions.assertThat(pawn.isKing()).isFalse();
+        }
+    }
 }
