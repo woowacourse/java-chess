@@ -1,51 +1,33 @@
 package chess.controller;
 
-import chess.domain.Position;
 import chess.domain.ChessGame;
-import chess.view.Command;
-import chess.view.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
-	private final ChessGame chessGame;
-
-	public ChessController() {
-		this.chessGame = new ChessGame();
-	}
-
 	public void run() {
+		ChessGame chessGame = new ChessGame();
 		OutputView.printInitialMessage();
-		while (isRunCommandNotEnd()) {
-			OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
-		}
+		Command lastCommand;
+		do {
+			lastCommand = runInputCommand(chessGame);
+			if (chessGame.isGameDone()) {
+				OutputView.printWinner(chessGame.getFinalWinner().toString());
+				return;
+			}
+		} while (lastCommand != Command.END);
 	}
 
-	private boolean isRunCommandNotEnd() {
+	private Command runInputCommand(ChessGame chessGame) {
 		return ExceptionHandler.RetryIfThrowsException(() -> {
-			CommandDto commandDto = readCommand();
-			Command command = commandDto.getCommand();
-			if (command == Command.START) {
-				initialize();
-			}
-			if (command == Command.MOVE) {
-				move(commandDto.getSourcePosition(), commandDto.getTargetPosition());
-			}
-			return command != Command.END;
+			Command command = readCommand();
+			return command.run(chessGame);
 		});
 	}
 
-	private CommandDto readCommand() {
+	private Command readCommand() {
 		return ExceptionHandler.RetryIfThrowsException(() ->
-			InputRenderer.toCommandDto(InputView.readCommand()));
-	}
-
-	private void initialize() {
-		chessGame.initialize();
-	}
-
-	private void move(Position source, Position target) {
-		chessGame.movePiece(source, target);
+			InputRenderer.toCommand(InputView.readCommand()));
 	}
 }

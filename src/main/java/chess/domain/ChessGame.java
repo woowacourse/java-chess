@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
+import chess.domain.result.TempResult;
 
 public class ChessGame {
 
@@ -23,7 +24,7 @@ public class ChessGame {
 		changeState(GameState.GAME_RUNNING);
 	}
 
-	public void movePiece(Position source, Position target) {
+	public void movePiece(final Position source, final Position target) {
 		assertState(GameState.GAME_RUNNING);
 		board.checkIsMovable(team, source, target);
 		if (board.isKingPosition(target)) {
@@ -39,6 +40,20 @@ public class ChessGame {
 
 	private void changeState(GameState state) {
 		this.state = state;
+	}
+
+	public TempResult getTempResult() {
+		assertState(GameState.GAME_RUNNING);
+		return TempResult.from(board.getBoard());
+	}
+
+	public Team getFinalWinner() {
+		assertState(GameState.GAME_END);
+		return team;
+	}
+
+	public boolean isGameDone() {
+		return state == GameState.GAME_END;
 	}
 
 	public Map<Position, Piece> getBoard() {
