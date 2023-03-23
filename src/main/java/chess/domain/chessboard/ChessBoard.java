@@ -121,9 +121,8 @@ public final class ChessBoard {
     }
 
     public List<Square> getSquares() {
-        return this.squares.keySet()
+        return this.squares.values()
                 .stream()
-                .map(squares::get)
                 .collect(Collectors.toUnmodifiableList());
     }
 }
