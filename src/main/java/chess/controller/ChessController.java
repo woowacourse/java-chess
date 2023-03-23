@@ -11,21 +11,43 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        CommandDto commandDto = InputView.readInitialCommand();
+        CommandDto commandDto = repeat(() -> InputView.readInitialCommand());
         if (commandDto.getGameCommand() == GameCommand.START) {
             startGame();
         }
     }
 
+    private <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return repeat(supplier);
+        }
+    }
+
     private void startGame() {
         ChessBoard chessBoard = setUpChessBoard();
-        CommandDto commandDto = InputView.readPlayingCommand();
+        repeat(() -> playGame(chessBoard));
+    }
 
+    private void repeat(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            repeat(runnable);
+        }
+    }
+
+    private void playGame(ChessBoard chessBoard) {
+        CommandDto commandDto = InputView.readPlayingCommand();
         while (commandDto.getGameCommand() != GameCommand.END) {
             executeMoveCommand(chessBoard, commandDto);
             commandDto = InputView.readPlayingCommand();
