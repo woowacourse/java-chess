@@ -33,18 +33,16 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("두 위치가 같은 세로줄에 있으면 true 를 반환한다.")
-    void isSameColumnTest1() {
+    @DisplayName("column 이 주어진 값과 일치하면 true 를 반환한다.")
+    void isColumnTest1() {
         Position position1 = new Position(1, 5);
-        Position position2 = new Position(1, 7);
-        assertThat(position1.isSameColumn(position2)).isTrue();
+        assertThat(position1.isColumn(1)).isTrue();
     }
 
     @Test
-    @DisplayName("두 위치가 같은 세로줄에 있지 않으면 false 를 판단한다.")
-    void isSameColumnTest2() {
+    @DisplayName("column 이 주어진 값과 일치하지 않으면 false 를 판단한다.")
+    void isColumnTest2() {
         Position position1 = new Position(1, 5);
-        Position position2 = new Position(4, 7);
-        assertThat(position1.isSameColumn(position2)).isFalse();
+        assertThat(position1.isColumn(4)).isFalse();
     }
 }
