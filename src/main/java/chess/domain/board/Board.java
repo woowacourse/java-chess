@@ -17,7 +17,7 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public static Board createBoardWith(final PiecesFactory piecesFactory) {
+    public static Board from(final PiecesFactory piecesFactory) {
         return new Board(piecesFactory.generate());
     }
 
