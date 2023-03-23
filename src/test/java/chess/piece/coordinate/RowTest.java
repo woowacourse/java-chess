@@ -1,28 +1,36 @@
 package chess.piece.coordinate;
 
-import chess.piece.coordinate.Row;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
-
-@SuppressWarnings("NonAsciiCharacters")
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RowTest {
-    @ParameterizedTest(name = "row : {0}")
-    @ValueSource(ints = {1, 8})
-    void row가_1부터_8까지_들어오면_정상_작동(int row) {
-        assertThatNoException()
-                .isThrownBy(() -> new Row(row));
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,ONE", "2,TWO", "3,THREE", "4,FOUR", "5,FIVE", "6,SIX", "7,SEVEN", "8,EIGHT"})
+    void 심볼로부터_로우값_반환(String symbol, Row row) {
+        assertThat(Row.from(symbol)).isEqualTo(row);
     }
-    
-    @ParameterizedTest(name = "row : {0}")
-    @ValueSource(ints = {0, 9})
-    void row가_1부터_8까지의_범위를_벗어나면_예외_처리(int row) {
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Row(row))
-                .withMessage("row는 1~8까지의 숫자만 가능합니다.");
+
+    @Test
+    void 다른_로우와의_거리_반환() {
+        assertThat(Row.FIVE.subtract(Row.ONE)).isEqualTo(4);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"TWO","SEVEN"})
+    void 폰이_시작위치인지_확인(Row row) {
+        assertThat(row.isPawnStartRow()).isTrue();
+    }
+
+    @Test
+    void 현재_로우에서_원하는_만큼_이동() {
+        assertThat(Row.TWO.up(1)).isEqualTo(Row.THREE);
+    }
+
 }

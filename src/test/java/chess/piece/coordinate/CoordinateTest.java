@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CoordinateTest {
     @Test
     void 좌표는_row와_column값을_받아서_생성한다() {
-        Coordinate coordinate = Coordinate.createCoordinate(1, 'a');
+        Coordinate coordinate = Coordinate.createCoordinate("1", "a");
         assertThat(coordinate).isNotNull();
     }
 }

@@ -1,28 +1,36 @@
 package chess.piece.coordinate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ColumnTest {
-    @ParameterizedTest(name = "column : {0}")
-    @ValueSource(chars = {'a', 'h'})
-    void column가_a부터_h까지_들어오면_정상_작동(char column) {
-        assertThatNoException()
-                .isThrownBy(() -> new Column(column));
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,A","b,B","c,C","d,D","e,E","f,F","g,G","h,H"})
+    void 문자로부터_컬럼_반환(String column, Column expected) {
+        assertThat(Column.fromName(column)).isEqualTo(expected);
     }
-    
-    @ParameterizedTest(name = "column : {0}")
-    @ValueSource(chars = {'`', 'i', 'z'})
-    void column가_a부터_h까지의_범위를_벗어나면_예외_처리(char column) {
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Column(column))
-                .withMessage("column는 a~h까지의 문자만 가능합니다.");
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,a","2,b","3,c","4,d","5,e","6,f","7,g","8,h"})
+    void 인덱스로부터_심볼_반환(int index, String name) {
+        assertThat(Column.symbolFromIndex(index)).isEqualTo(name);
+    }
+
+    @Test
+    void 다른_컬럼과의_거리_반환() {
+        assertThat(Column.C.subtract(Column.B)).isEqualTo(1);
+    }
+
+    @Test
+    void 현재_컬럼에서_원하는_만큼_이동() {
+        assertThat(Column.C.up(1)).isEqualTo(Column.D);
     }
 }
