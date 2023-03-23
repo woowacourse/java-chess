@@ -1,10 +1,7 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
 import chess.domain.board.Square;
-import chess.domain.game.state.EndState;
-import chess.domain.game.state.ExecuteState;
-import chess.domain.game.state.InitState;
-import chess.domain.game.state.StartState;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 

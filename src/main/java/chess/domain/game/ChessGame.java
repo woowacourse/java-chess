@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import chess.domain.board.Board;
 import chess.domain.board.BoardSnapShot;
 import chess.domain.board.Square;
+import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
