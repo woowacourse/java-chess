@@ -1,6 +1,7 @@
 package techcourse.fp.mission;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Calculator {
 
@@ -27,6 +28,16 @@ public class Calculator {
 
         //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
 
+        return total;
+    }
+
+    public static int sumAllBy(List<Integer> numbers, Predicate<Integer> condition) {
+        int total = 0;
+        for (final Integer number : numbers) {
+            if (condition.test(number)) {
+                total += number;
+            }
+        }
         return total;
     }
 }
