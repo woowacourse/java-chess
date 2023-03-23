@@ -58,6 +58,26 @@ public class ChessGameDao {
         return false;
     }
 
+    public boolean updateTurn(final long gameId, final TeamColor color) {
+        String queryStatement = "UPDATE game SET turn = ? WHERE game_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
+            preparedStatement.setString(1, color.name());
+            preparedStatement.setLong(2, gameId);
+            int result = preparedStatement.executeUpdate();
+
+            if (result != 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("UPDATE 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Optional<ChessGame> findLastGame() {
         String queryStatement = "SELECT * FROM game WHERE is_end IS FALSE ORDER BY game_id DESC LIMIT 1";
 

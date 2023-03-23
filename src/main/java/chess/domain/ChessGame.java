@@ -52,6 +52,7 @@ public class ChessGame {
             throw new IllegalArgumentException(GAME_END_NO_MOVE_ERROR_MESSAGE);
         }
         chessBoard.move(source, dest, teamColor);
+        saveMovement(source, dest);
         if (isEnd()) {
             return;
         }
@@ -64,6 +65,14 @@ public class ChessGame {
 
     public boolean isPlaying() {
         return !chessBoard.isKingDead();
+    }
+
+    private void saveMovement(final Position source, final Position dest) {
+        boolean isMoveSuccess = chessBoard.isSourceMoved(source);
+        if (isMoveSuccess) {
+            pieceDao.deleteByPositionAndGameId(dest, gameId);
+            pieceDao.updatePositionByPositionAndGameId(source, gameId, dest);
+        }
     }
 
     public TeamColor findWinningTeam() {
@@ -87,4 +96,7 @@ public class ChessGame {
         return teamColor;
     }
 
+    public long getGameId() {
+        return gameId;
+    }
 }

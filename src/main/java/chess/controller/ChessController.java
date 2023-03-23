@@ -114,6 +114,7 @@ public class ChessController {
     private void progressMoveCommand(CommandRequest request) {
         if (request.getCommand() == Command.MOVE) {
             progressMove(request);
+            chessGameDao.updateTurn(chessGame.getGameId(), chessGame.getTeamColor());
         }
     }
 

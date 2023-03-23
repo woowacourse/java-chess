@@ -22,6 +22,10 @@ public class ChessBoard {
         this.piecesByPosition = piecesByPosition;
     }
 
+    public boolean isSourceMoved(final Position source) {
+        return hasNothingInDestination(source);
+    }
+
     public void move(final Position source, final Position dest, final TeamColor teamColor) {
         Piece piece = findPieceInStartPosition(source, teamColor);
         progressMove(source, dest, piece);

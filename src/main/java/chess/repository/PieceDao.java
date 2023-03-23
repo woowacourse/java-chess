@@ -41,7 +41,7 @@ public class PieceDao {
         }
     }
 
-    public boolean updateByPositionAndGameId(final Position prev,
+    public boolean updatePositionByPositionAndGameId(final Position prev,
         final long gameId,
         final Position current) {
         String queryStatement = "UPDATE piece SET position = ? WHERE game_id = ? AND position = ?";
@@ -72,14 +72,14 @@ public class PieceDao {
             int result = preparedStatement.executeUpdate();
 
             if (result == 1) {
-                return false;
+                return true;
             }
 
         } catch (SQLException e) {
             System.err.println("DELETE 오류: " + e.getMessage());
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public Map<Position, Piece> findAllByGameId(final long gameId) {
