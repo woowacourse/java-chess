@@ -6,9 +6,11 @@ import chess.domain.InitialPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
+import chess.repository.ChessGameDao;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Optional;
 
 public class ChessController {
 
@@ -18,10 +20,12 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.chessGameDao = new ChessGameDao();
     }
 
     public void run() {
@@ -35,7 +39,7 @@ public class ChessController {
         while (isNotStarted) {
             isNotStarted = repeatStartRequest();
         }
-        chessGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()));
+        createGame();
         printBoard();
     }
 
@@ -53,6 +57,21 @@ public class ChessController {
         if (inputView.requestGameCommand().getCommand() != Command.START) {
             throw new IllegalArgumentException(START_NEED_ERROR_MESSAGE);
         }
+    }
+
+    private void createGame() {
+        Optional<ChessGame> game = chessGameDao.findLastGame();
+        if (game.isPresent()) {
+            chessGame = game.get();
+            return;
+        }
+        createNewGame();
+    }
+
+    private void createNewGame() {
+        ChessGame newGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()));
+        chessGame = chessGameDao.save(newGame);
+        chessGame.saveAllPieces();
     }
 
     private void printBoard() {

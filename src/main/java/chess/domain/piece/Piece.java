@@ -45,6 +45,10 @@ public abstract class Piece {
         return type.getScore();
     }
 
+    public boolean isSameColorAndType(final TeamColor color, final PieceType type) {
+        return this.color == color && this.type == type;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

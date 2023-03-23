@@ -5,6 +5,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
@@ -54,6 +55,14 @@ public enum InitialPiece {
         for (int file : pieceWithStartPosition.files) {
             map.put(Position.of(file, pieceWithStartPosition.rank), pieceWithStartPosition.piece);
         }
+    }
+
+    public static Piece findPieceByTypeAndColor(final PieceType type, final TeamColor color) {
+        return Arrays.stream(values())
+            .map(InitialPiece::getPiece)
+            .filter(piece -> piece.isSameColorAndType(color, type))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("해당 색과 타입의 체스말은 존재하지 않습니다."));
     }
 
     public Piece getPiece() {

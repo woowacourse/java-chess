@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum PieceType {
 
     PAWN(1),
@@ -17,6 +19,13 @@ public enum PieceType {
 
     public double getScore() {
         return score;
+    }
+
+    public static PieceType findByName(final String name) {
+        return Arrays.stream(values())
+            .filter(type -> type.name().equalsIgnoreCase(name))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다."));
     }
 
 }
