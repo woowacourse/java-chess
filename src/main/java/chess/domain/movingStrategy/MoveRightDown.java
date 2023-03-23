@@ -11,7 +11,7 @@ public final class MoveRightDown implements MovingStrategy {
     private MoveRightDown() {
     }
 
-    public static MoveRightDown get() {
+    public static MoveRightDown instance() {
         return INSTANCE;
     }
 

@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoveUpTest {
 
 
-    private final MovingStrategy upStrategy = MoveUp.get();
+    private final MovingStrategy upStrategy = MoveUp.instance();
 
     @Nested
     public class MovableTest {

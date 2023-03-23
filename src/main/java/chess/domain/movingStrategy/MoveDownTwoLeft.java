@@ -8,7 +8,7 @@ public final class MoveDownTwoLeft extends KnightMovingStrategy {
     }
 
 
-    public static MoveDownTwoLeft get() {
-        return new MoveDownTwoLeft(-1, -2);
+    public static MoveDownTwoLeft instance() {
+        return INSTANCE;
     }
 }

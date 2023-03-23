@@ -17,7 +17,7 @@ public final class BlackPawn extends Pawn {
 
     public static BlackPawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
-                MoveDown.get(), MoveLeftDown.get(), MoveRightDown.get());
+                MoveDown.instance(), MoveLeftDown.instance(), MoveRightDown.instance());
         return new BlackPawn(Color.BLACK, new MovingStrategies(movingStrategies));
     }
 }

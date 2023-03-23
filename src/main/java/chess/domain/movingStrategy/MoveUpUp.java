@@ -10,7 +10,7 @@ public class MoveUpUp implements MovingStrategy {
     private MoveUpUp() {
     }
 
-    public static MoveUpUp get() {
+    public static MoveUpUp instance() {
         return INSTANCE;
     }
 

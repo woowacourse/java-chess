@@ -4,12 +4,12 @@ import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 
-public abstract class KnightMovingStrategy  implements MovingStrategy {
+public abstract class KnightMovingStrategy implements MovingStrategy {
 
     private final int horizontalMovement;
     private final int verticalMovement;
 
-    public KnightMovingStrategy(final int horizontalMovement, final int verticalMovement) {
+    KnightMovingStrategy(final int horizontalMovement, final int verticalMovement) {
         this.horizontalMovement = horizontalMovement;
         this.verticalMovement = verticalMovement;
     }

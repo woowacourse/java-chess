@@ -17,7 +17,7 @@ public final class Bishop extends SlidingPiece {
 
     public static Bishop create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                MoveRightUp.get(), MoveRightDown.get(), MoveLeftDown.get(), MoveLeftUp.get());
+                MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Bishop(color, strategies);

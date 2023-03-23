@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MoveLeftTest {
 
-    private final MovingStrategy leftStrategy = MoveLeft.get();
+    private final MovingStrategy leftStrategy = MoveLeft.instance();
 
     @Nested
     public class MovableTest {

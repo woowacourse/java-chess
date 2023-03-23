@@ -11,7 +11,7 @@ public final class MoveLeftUp implements MovingStrategy {
     private MoveLeftUp() {
     }
 
-    public static MoveLeftUp get() {
+    public static MoveLeftUp instance() {
         return INSTANCE;
     }
 

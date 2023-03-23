@@ -10,7 +10,7 @@ public final class MoveDown implements MovingStrategy {
     private MoveDown() {
     }
 
-    public static MoveDown get() {
+    public static MoveDown instance() {
         return INSTANCE;
     }
 

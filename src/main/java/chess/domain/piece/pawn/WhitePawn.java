@@ -17,7 +17,7 @@ public final class WhitePawn extends Pawn {
 
     public static WhitePawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
-                MoveUp.get(), MoveLeftUp.get(), MoveRightUp.get());
+                MoveUp.instance(), MoveLeftUp.instance(), MoveRightUp.instance());
         return new WhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
 }

@@ -8,7 +8,7 @@ public final class MoveDownTwoRight extends KnightMovingStrategy {
         super(horizontalMovement, verticalMovement);
     }
 
-    public static MoveDownTwoRight get() {
+    public static MoveDownTwoRight instance() {
         return INSTANCE;
     }
 }

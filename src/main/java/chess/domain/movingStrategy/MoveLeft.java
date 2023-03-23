@@ -10,7 +10,7 @@ public final class MoveLeft implements MovingStrategy {
     private MoveLeft() {
     }
 
-    public static MoveLeft get() {
+    public static MoveLeft instance() {
         return INSTANCE;
     }
 
