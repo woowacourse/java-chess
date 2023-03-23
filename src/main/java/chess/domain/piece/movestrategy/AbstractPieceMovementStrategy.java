@@ -13,10 +13,6 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
                                          final PiecePosition destination,
                                          final Piece nullableEnemy) {
         validateMove(source, destination, nullableEnemy);
-        return waypoint(source, destination);
-    }
-
-    private List<PiecePosition> waypoint(final PiecePosition source, final PiecePosition destination) {
         final List<PiecePosition> waypoints = new ArrayList<>();
         PiecePosition current = source;
         while (!current.equals(destination)) {
