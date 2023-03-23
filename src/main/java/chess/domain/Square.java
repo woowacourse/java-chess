@@ -84,8 +84,8 @@ public class Square {
         return squares;
     }
 
-    public int getRank() {
-        return rank.getPosition();
+    public Rank getRank() {
+        return rank;
     }
 
     public File getFile() {
