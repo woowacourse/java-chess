@@ -18,7 +18,7 @@ import static chess.domain.PositionFixtures.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LeftMoveDownTest {
-    private final MovingStrategy leftDown = new MoveLeftDown();
+    private final MovingStrategy leftDown =  MoveLeftDown.get();
 
     @Nested
     public class MovableTest {

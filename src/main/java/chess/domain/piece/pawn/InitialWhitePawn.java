@@ -18,7 +18,7 @@ public final class InitialWhitePawn extends Pawn {
 
     public static InitialWhitePawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
-                new MoveUpUp(), new MoveUp(), new MoveLeftUp(), new MoveRightUp());
+                MoveUpUp.get(), MoveUp.get(), MoveLeftUp.get(), MoveRightUp.get());
         return new InitialWhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
 

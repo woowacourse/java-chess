@@ -21,10 +21,8 @@ public final class Queen extends SlidingPiece {
 
     public static Queen create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                new MoveRightUp(), new MoveRightDown(),
-                new MoveLeftDown(), new MoveLeftUp(),
-                new MoveUp(), new MoveDown(),
-                new MoveLeft(), new MoveRight());
+                MoveRightUp.get(), MoveRightDown.get(), MoveLeftDown.get(), MoveLeftUp.get(),
+                MoveUp.get(), MoveDown.get(), MoveLeft.get(), MoveRight.get());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Queen(color, strategies);

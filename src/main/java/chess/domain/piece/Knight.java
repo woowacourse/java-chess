@@ -21,10 +21,8 @@ public final class Knight extends NonSlidingPiece {
 
     public static Knight create(final Color color) {
         final List<MovingStrategy> rawStrategies = List.of(
-                MoveUpTwoRight.create(), MoveUpTwoLeft.create(),
-                MoveRightTwoUp.create(), MoveRightTwoDown.create(),
-                MoveDownTwoRight.create(), MoveDownTwoLeft.create(),
-                MoveLeftTwoDown.create(), MoveLeftTwoUp.create());
+                MoveUpTwoRight.get(), MoveUpTwoLeft.get(), MoveRightTwoUp.get(), MoveRightTwoDown.get(),
+                MoveDownTwoRight.get(), MoveDownTwoLeft.get(), MoveLeftTwoDown.get(), MoveLeftTwoUp.get());
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
         return new Knight(color, strategies);

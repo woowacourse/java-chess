@@ -6,6 +6,15 @@ import chess.domain.Rank;
 
 public final class MoveLeftDown implements MovingStrategy {
 
+    private final static MoveLeftDown INSTANCE = new MoveLeftDown();
+
+    private MoveLeftDown() {
+    }
+
+    public static MoveLeftDown get() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean movable(final Position source, final Position target) {
         return (source.getFileOrder() > target.getFileOrder() && source.getRankOrder() > target.getRankOrder()) &&

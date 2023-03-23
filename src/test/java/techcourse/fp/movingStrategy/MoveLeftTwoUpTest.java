@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MoveLeftTwoUpTest {
 
-    private final MovingStrategy leftTwoUp = MoveLeftTwoUp.create();
+    private final MovingStrategy leftTwoUp = MoveLeftTwoUp.get();
 
     @Nested
     public class MovableTest {

@@ -15,8 +15,8 @@ public abstract class NonSlidingPiece extends Piece {
 
     @Override
     public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
-        final Position moveResult = strategy.move(source);
-        if (!moveResult.equals(target)) {
+        final Position movedPosition = strategy.move(source);
+        if (!movedPosition.equals(target)) {
             throw new IllegalArgumentException("한 칸만 이동 가능합니다.");
         }
         return Collections.emptyList();

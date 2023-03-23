@@ -19,15 +19,14 @@ public abstract class Pawn extends Piece {
     @Override
     public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
         final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
+        final Position movedPosition = movingStrategy.move(source);
         if (movingStrategy.isAttackStrategy()) {
-            final Position movePosition = movingStrategy.move(source);
-            if (movePosition.equals(target) && color.isOpponent(targetColor)) {
+            if (movedPosition.equals(target) && color.isOpponent(targetColor)) {
                 return Collections.emptyList();
             }
             throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");
         }
-        final Position currentPosition = movingStrategy.move(source);
-        if (currentPosition.equals(target) && targetColor.isEmpty()) {
+        if (movedPosition.equals(target) && targetColor.isEmpty()) {
             return Collections.emptyList();
         }
         throw new IllegalArgumentException("폰이 해당 지점으로 이동할 수 없습니다.");

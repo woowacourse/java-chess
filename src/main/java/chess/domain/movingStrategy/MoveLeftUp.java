@@ -6,6 +6,15 @@ import chess.domain.Rank;
 
 public final class MoveLeftUp implements MovingStrategy {
 
+    private final static MoveLeftUp INSTANCE = new MoveLeftUp();
+
+    private MoveLeftUp() {
+    }
+
+    public static MoveLeftUp get() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean movable(final Position source, final Position target) {
         return (source.getFileOrder() > target.getFileOrder() && source.getRankOrder() < target.getRankOrder()) &&

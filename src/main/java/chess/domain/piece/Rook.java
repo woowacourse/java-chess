@@ -16,9 +16,7 @@ public final class Rook extends SlidingPiece {
     }
 
     public static Rook create(final Color color) {
-        final List<MovingStrategy> rawStrategies = List.of(
-                new MoveUp(), new MoveDown(),
-                new MoveLeft(), new MoveRight());
+        final List<MovingStrategy> rawStrategies = List.of(MoveUp.get(), MoveDown.get(), MoveLeft.get(), MoveRight.get());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Rook(color, strategies);

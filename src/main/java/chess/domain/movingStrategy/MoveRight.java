@@ -5,6 +5,15 @@ import chess.domain.Position;
 
 public final class MoveRight implements MovingStrategy{
 
+    private final static MoveRight INSTANCE = new MoveRight();
+
+    private MoveRight() {
+    }
+
+    public static MoveRight get() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean movable(final Position source, final Position target) {
         return source.getFileOrder() < target.getFileOrder() && source.getRankOrder() == target.getRankOrder();
