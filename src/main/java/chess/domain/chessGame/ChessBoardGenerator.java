@@ -1,13 +1,6 @@
 package chess.domain.chessGame;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
@@ -53,8 +46,9 @@ public class ChessBoardGenerator implements BoardGenerator {
     private void setUpFrontLine(int row, Color color) {
         List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
-        columns.stream()
-                .map(column -> Position.of(row, column))
-                .forEach(position -> chessBoard.put(position, new Pawn(color)));
+        for (Integer column : columns) {
+            Position position = Position.of(row, column);
+            chessBoard.put(position, new Pawn(color));
+        }
     }
 }
