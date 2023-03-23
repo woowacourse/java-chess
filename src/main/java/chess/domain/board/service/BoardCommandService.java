@@ -1,4 +1,2 @@
-package chess.domain.board.service;
-
-public class BoardCommandService {
+package chess.domain.board.service;public class BoardCommandService {
 }
