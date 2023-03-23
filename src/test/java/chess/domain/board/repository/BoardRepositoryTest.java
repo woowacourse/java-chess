@@ -5,7 +5,6 @@ import chess.dao.BoardRegisterDao;
 import chess.dao.BoardSearchDao;
 import chess.dao.MySqlManager;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,12 +61,13 @@ class BoardRepositoryTest {
     @DisplayName("save() : board를 저장할 수 있다.")
     void test_save() throws Exception {
         //given
-        final String position = "King : 1 1, Queen : 1, 2";
+        final String position = "King : 1 1, Queen : 1 2";
         final String turn = "WHITE";
         final BoardRegisterDao boardRegisterDao = new BoardRegisterDao(position, turn);
 
         //when & then
-        Assertions.assertDoesNotThrow(() -> boardRepository.save(boardRegisterDao));
+        final Long savedId = boardRepository.save(boardRegisterDao);
+        assertEquals(savedId, 3L);
     }
 
     @Test

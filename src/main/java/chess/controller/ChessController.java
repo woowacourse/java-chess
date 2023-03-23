@@ -1,11 +1,16 @@
 package chess.controller;
 
+import chess.config.ChessConfigure;
 import chess.domain.board.Board;
 import chess.domain.board.factory.BoardFactory;
-import chess.domain.board.score.BoardScore;
-import chess.domain.board.search.BoardSearch;
-import chess.domain.board.score.Score;
 import chess.domain.board.position.Position;
+import chess.domain.board.score.BoardScore;
+import chess.domain.board.score.Score;
+import chess.domain.board.search.BoardSearch;
+import chess.domain.board.service.BoardCommandService;
+import chess.domain.board.service.BoardQueryService;
+import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
@@ -21,9 +26,41 @@ import static chess.common.IndexCommand.TARGET_POSITION;
 
 public class ChessController {
 
+    private final BoardQueryService boardQueryService;
+    private final BoardCommandService boardCommandService;
+
+    public ChessController() {
+        final ChessConfigure chessConfigure = new ChessConfigure();
+
+        this.boardQueryService = new BoardQueryService(chessConfigure.boardRepository(),
+                                                       chessConfigure.boardMapper());
+
+        this.boardCommandService = new BoardCommandService(chessConfigure.boardRepository(),
+                                                           chessConfigure.boardMapper());
+    }
+
     public void run() {
+
+        System.out.println("새로운 게임을 시작하려면 1, 게임을 불러오려면 2를 누르세요.");
+
+        final int newGameCommand = InputView.readNewGameCommand();
+
+        Color turn = Color.WHITE;
+
         final BoardFactory boardFactory = new BoardFactory();
-        final Board board = new Board(boardFactory);
+        Board board = new Board(boardFactory);
+
+        if (newGameCommand == 2) {
+            System.out.println("현재 진행하고 있는 게임 번호들입니다.");
+            System.out.println("불러올 게임의 번호를 입력해주세요.");
+
+            final long loadGameNumber = InputView.readLoadGameCommand();
+
+            final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(loadGameNumber);
+
+            board = new Board(boardSearchResponse.chessBoard());
+            turn = Color.valueOf(boardSearchResponse.turn());
+        }
 
         final String command = InputView.readStartCommand();
 
@@ -31,7 +68,6 @@ public class ChessController {
             return;
         }
 
-        final Color turn = Color.WHITE;
         startGame(board, turn);
     }
 
@@ -45,6 +81,8 @@ public class ChessController {
             final String startCommand = moveCommand.get(START_COMMAND_INDEX.value());
 
             if (Command.isEnd(startCommand)) {
+                BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, turn);
+                boardCommandService.registerBoard(boardRegisterRequest);
                 return;
             }
 

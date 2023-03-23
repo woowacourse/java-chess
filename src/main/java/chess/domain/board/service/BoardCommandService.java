@@ -18,7 +18,7 @@ public class BoardCommandService {
         this.boardMapper = boardMapper;
     }
 
-    public void registerBoard(BoardRegisterRequest boardRegisterRequest) {
+    public Long registerBoard(BoardRegisterRequest boardRegisterRequest) {
 
         final Board board = boardRegisterRequest.board();
         final String position = boardMapper.mapToBoardPositionFrom(board);
@@ -28,7 +28,7 @@ public class BoardCommandService {
                                      boardRegisterRequest.turn().name()
                 );
 
-        boardRepository.save(boardRegisterDao);
+        return boardRepository.save(boardRegisterDao);
     }
 
     public void modifyBoard(final BoardModifyRequest boardModifyRequest) {

@@ -9,24 +9,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 public class BoardRepository {
 
-    public void save(final BoardRegisterDao boardRegisterDao) {
+    public Long save(final BoardRegisterDao boardRegisterDao) {
 
         final String query = "INSERT INTO BOARD(POSITION, TURN) VALUES (?, ?)";
 
         try (final Connection connection = MySqlManager.establishConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query,
+                                                                                     Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, boardRegisterDao.position());
             preparedStatement.setString(2, boardRegisterDao.turn());
             preparedStatement.executeUpdate();
 
+            return generateKey(preparedStatement);
         } catch (SQLException e) {
             System.err.println("DB 저장 오류: " + e.getMessage());
         }
+
+        throw new IllegalStateException("DB 저장 오류입니다.");
+    }
+
+    private long generateKey(final PreparedStatement preparedStatement) throws SQLException {
+        try (final ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        }
+
+        throw new IllegalStateException("DB 저장 오류입니다.");
     }
 
     public Optional<BoardSearchDao> findById(final Long id) {

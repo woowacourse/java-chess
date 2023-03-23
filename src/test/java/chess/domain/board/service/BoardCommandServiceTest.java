@@ -14,7 +14,6 @@ import chess.domain.piece.jumper.King;
 import chess.domain.piece.pawn.Pawn;
 import chess.helper.BoardFixture;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,8 +72,11 @@ class BoardCommandServiceTest {
         final Board board = new Board(BoardFixture.createBoard());
         final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, Color.WHITE);
 
-        //when & then
-        Assertions.assertDoesNotThrow(() -> boardCommandService.registerBoard(boardRegisterRequest));
+        //when
+        final Long savedId = boardCommandService.registerBoard(boardRegisterRequest);
+
+        //then
+        assertEquals(3, savedId);
     }
 
     @Test
