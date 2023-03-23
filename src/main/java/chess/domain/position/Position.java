@@ -30,14 +30,13 @@ public class Position {
     }
 
     public int getMoveCount(final Position targetPosition, final Direction direction) {
-        int moveCount = 0;
         if (direction.isHorizontalMovable()) {
-            moveCount = file.getValueDiff(targetPosition.file);
+            return file.getValueDiff(targetPosition.file);
         }
         if (direction.isVerticalMovable()) {
-            moveCount = rank.getValueDiff(targetPosition.rank);
+            return rank.getValueDiff(targetPosition.rank);
         }
-        return moveCount;
+        return file.getValueDiff(targetPosition.file);
     }
 
     public Position getNextPosition(final Direction direction) {
