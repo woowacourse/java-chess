@@ -9,7 +9,8 @@ public enum ErrorMessage {
     EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE("목적지에 아군이 있으므로 이동할 수 없습니다."),
     OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE("이동 경로에 기물이 있으므로 이동할 수 없습니다"),
     FIRST_COMMAND_ERROR_MESSAGE("첫 번째로는 start, end만 입력 가능합니다"),
-    NO_PIECE_ERROR_MESSAGE("이동할 수 있는 기물이 없습니다");
+    NO_PIECE_ERROR_MESSAGE("이동할 수 있는 기물이 없습니다"),
+    NO_COLUMN_ERROR_GUIDE_MESSAGE("존재하지 않는 Column입니다");
 
 
     private final String errorMessage;

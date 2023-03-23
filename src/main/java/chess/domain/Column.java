@@ -1,11 +1,11 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static chess.view.ErrorMessage.NO_COLUMN_ERROR_GUIDE_MESSAGE;
 
 public enum Column {
     A(1, "a"),
@@ -17,7 +17,6 @@ public enum Column {
     G(7, "g"),
     H(8, "h");
 
-    private static final String NO_COLUMN_ERROR_GUIDE_MESSAGE = "존재하지 않는 Column입니다";
     private final int index;
     private final String value;
 
@@ -36,7 +35,7 @@ public enum Column {
         return Arrays.stream(Column.values())
                 .filter(column -> column.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NO_COLUMN_ERROR_GUIDE_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(NO_COLUMN_ERROR_GUIDE_MESSAGE.getErrorMessage()));
     }
 
 
@@ -44,7 +43,7 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(column -> column.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NO_COLUMN_ERROR_GUIDE_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(NO_COLUMN_ERROR_GUIDE_MESSAGE.getErrorMessage()));
 
     }
 
