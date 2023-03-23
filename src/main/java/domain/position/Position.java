@@ -73,8 +73,28 @@ public final class Position {
         return result;
     }
 
+    public int compareRank(final Position other) {
+        final String otherRank = other.rank.getName();
+        final String thisRank = rank.getName();
+        final int rankDifference = otherRank.compareTo(thisRank);
+
+        return Integer.compare(rankDifference, 0);
+    }
+
+    public int compareFile(final Position other) {
+        final String otherFile = other.file.getName();
+        final String thisFile = file.getName();
+        final int fileDifference = otherFile.compareTo(thisFile);
+
+        return Integer.compare(fileDifference, 0);
+    }
+
     public Rank getRank() {
         return rank;
+    }
+
+    public File getFile() {
+        return file;
     }
 
     @Override

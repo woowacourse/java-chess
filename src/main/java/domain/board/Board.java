@@ -32,14 +32,6 @@ public final class Board {
         }
     }
 
-    private Piece getPiece(final Position source) {
-        if (!board.containsKey(source)) {
-            throw new IllegalArgumentException(NOT_EXIST_SOURCE);
-        }
-
-        return board.get(source);
-    }
-
     private void validateRoute(final Position source, final Position destination) {
         if (pieceInRoute(source, destination)) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
@@ -58,6 +50,14 @@ public final class Board {
     private boolean isSameTeamOnDestination(final Position destination, final Piece sourcePiece) {
         return board.containsKey(destination) &&
                 sourcePiece.isBlack() == getPiece(destination).isBlack();
+    }
+
+    private Piece getPiece(final Position source) {
+        if (!board.containsKey(source)) {
+            throw new IllegalArgumentException(NOT_EXIST_SOURCE);
+        }
+
+        return board.get(source);
     }
 
     private void captureDestination(final Position source, final Position destination) {

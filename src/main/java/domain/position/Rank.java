@@ -13,13 +13,13 @@ public enum Rank {
     ONE("1"),
     NOTHING(" ");
 
-    private String name;
+    private final String name;
 
     Rank(final String name) {
         this.name = name;
     }
 
-    public Rank move(int distance) {
+    public Rank move(final int distance) {
         final String resultRank = String.valueOf((char) (name.charAt(0) + distance));
 
         return Arrays.stream(Rank.values())

@@ -19,7 +19,7 @@ public enum File {
         this.name = name;
     }
 
-    public File move(int distance) {
+    public File move(final int distance) {
         final String resultFile = String.valueOf((char) (name.charAt(0) + distance));
 
         return Arrays.stream(File.values())

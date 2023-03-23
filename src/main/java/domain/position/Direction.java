@@ -23,19 +23,12 @@ public enum Direction {
     }
 
     public static Direction of(final Position from, final Position to) {
-        if (isNotEightDirection(from, to)) {
+        if (!isDiagonal(from, to) && !isStraight(from, to)) {
             return NOTHING;
         }
 
-        final int rankDifference = from.getRankDifference(to);
-        final int fileDifference = from.getFileDifference(to);
-
-        return of(rankDifference, fileDifference);
-    }
-
-    public static Direction of(final int rankDifference, final int fileDifference) {
-        final int rank = Integer.compare(rankDifference, 0);
-        final int file = Integer.compare(fileDifference, 0);
+        final int rank = from.compareRank(to);
+        final int file = from.compareFile(to);
 
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.rankDifference == rank && direction.fileDifference == file)
@@ -43,27 +36,16 @@ public enum Direction {
                 .orElse(NOTHING);
     }
 
-    private static boolean isNotEightDirection(final Position from, final Position to) {
-        final int rankDifference = from.getRankDifference(to);
-        final int fileDifference = from.getFileDifference(to);
-
-        if (rankDifference == 0 || fileDifference == 0) {
-            return false;
-        }
-
-        return Math.abs(rankDifference) != Math.abs(fileDifference);
-    }
-
     public static boolean isDiagonal(final Position from, final Position to) {
-        final Direction direction = of(from, to);
+        final int fileDifference = from.getFileDifference(to);
+        final int rankDifference = from.getRankDifference(to);
 
-        return NE.equals(direction) || NW.equals(direction) || SE.equals(direction) || SW.equals(direction);
+        return Math.abs(fileDifference) == Math.abs(rankDifference);
     }
 
     public static boolean isStraight(final Position from, final Position to) {
-        final Direction direction = of(from, to);
-
-        return N.equals(direction) || W.equals(direction) || E.equals(direction) || S.equals(direction);
+        return from.getFileDifference(to) == 0 ||
+                from.getRankDifference(to) == 0;
     }
 
     public int getRankDifference() {
