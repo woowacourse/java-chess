@@ -18,7 +18,7 @@ public class StateTest {
         State state = new Ready();
 
         @Test
-        @DisplayName("start 입력시 상태 테스트")
+        @DisplayName("start 입력시 white 상태로 전이된다.")
         void Should_ChangeWhiteState_When_ReadyState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -27,7 +27,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("move 입력시 상태 테스트")
+        @DisplayName("move 입력시 예외가 발생한다.")
         void Should_ThrowException_When_ReadyState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("move a2 a4"), board))
@@ -36,7 +36,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("end 입력시 상태 테스트")
+        @DisplayName("end 입력시 end상태로 전이된다.")
         void Should_ChangeEndState_When_ReadyState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -51,7 +51,7 @@ public class StateTest {
         State state = new White();
 
         @Test
-        @DisplayName("start 입력시 상태 테스트")
+        @DisplayName("start 입력시 예외가 발생한다.")
         void Should_ThrowException_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("start"), board))
@@ -60,7 +60,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("move 입력시 상태 테스트")
+        @DisplayName("move 입력시 black상태로 전이된다.")
         void Should_ChangeBlackState_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -70,7 +70,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("end 입력시 상태 테스트")
+        @DisplayName("end 입력시 end상태로 전이된다.")
         void Should_ChangeEndState_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -85,7 +85,7 @@ public class StateTest {
         State state = new Black();
 
         @Test
-        @DisplayName("start 입력시 상태 테스트")
+        @DisplayName("start 입력시 예외가 발생한다.")
         void Should_ThrowException_When_BlackState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("start"), board))
@@ -94,7 +94,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("move 입력시 상태 테스트")
+        @DisplayName("move 입력시 white상태로 전이된다.")
         void Should_ChangeWhiteState_When_BlackState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -104,7 +104,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("end 입력시 상태 테스트")
+        @DisplayName("end 입력시 end상태로 전이된다.")
         void Should_ChangeEndState_When_BlackState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -120,7 +120,7 @@ public class StateTest {
         State state = new End();
 
         @Test
-        @DisplayName("start 입력시 상태 테스트")
+        @DisplayName("start 입력시 예외가 발생한다.")
         void Should_ThrowException_When_EndState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -130,7 +130,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("move 입력시 상태 테스트")
+        @DisplayName("move 입력시 예외가 발생한다.")
         void Should_ThrowException2_When_EndState() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -140,7 +140,7 @@ public class StateTest {
         }
 
         @Test
-        @DisplayName("end 입력시 상태 테스트")
+        @DisplayName("end 입력시 end상태로 전이된다.")
         void Should_NoChange_When_EndState() {
             Board board = new Board(ChessBoardFactory.create());
 

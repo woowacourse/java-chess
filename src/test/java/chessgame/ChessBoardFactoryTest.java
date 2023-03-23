@@ -23,7 +23,7 @@ public class ChessBoardFactoryTest {
     @DisplayName("흰팀 기물이 잘 생성되었는지 확인한다.")
     class checkWhitePieceTest {
         @Test
-        @DisplayName("A1에 흰팀 룩이 잘 생성되었는지 확인한다")
+        @DisplayName("A1에 룩이 잘 생성되었는지 확인한다")
         void Should_SameRook_When_ConstructBoardA1() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -31,7 +31,7 @@ public class ChessBoardFactoryTest {
         }
 
         @Test
-        @DisplayName("A2에 흰팀 폰이 잘 생성되었는지 확인한다")
+        @DisplayName("A2에 폰이 잘 생성되었는지 확인한다")
         void Should_SamePawn_When_ConstructBoardA2() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -39,49 +39,49 @@ public class ChessBoardFactoryTest {
         }
 
         @Test
-        @DisplayName("B1에 흰팀 나이트가 잘 생성되었는지 확인한다")
+        @DisplayName("B1에 나이트가 잘 생성되었는지 확인한다")
         void Should_SameKnight_When_ConstructBoardB1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(B1)).usingRecursiveComparison().isEqualTo(Knight.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("C1에 흰팀 비숍이 잘 생성되었는지 확인한다")
+        @DisplayName("C1에 비숍이 잘 생성되었는지 확인한다")
         void Should_SameBishop_When_ConstructBoardC1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(C1)).usingRecursiveComparison().isEqualTo(Bishop.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("D1에 흰팀 퀸이 잘 생성되었는지 확인한다")
+        @DisplayName("D1에 퀸이 잘 생성되었는지 확인한다")
         void Should_SameQueen_When_ConstructBoardD1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(D1)).usingRecursiveComparison().isEqualTo(Queen.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("E1에 흰팀 킹이 잘 생성되었는지 확인한다")
+        @DisplayName("E1에 킹이 잘 생성되었는지 확인한다")
         void Should_SameKing_When_ConstructBoardDE1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(E1)).usingRecursiveComparison().isEqualTo(King.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("F1에 흰팀 비숍이 잘 생성되었는지 확인한다")
+        @DisplayName("F1에 비숍이 잘 생성되었는지 확인한다")
         void Should_SameBishop_When_ConstructBoardF1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(F1)).usingRecursiveComparison().isEqualTo(Bishop.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("G1에 흰팀 나이트가 잘 생성되었는지 확인한다")
+        @DisplayName("G1에 나이트가 잘 생성되었는지 확인한다")
         void Should_SameKnight_When_ConstructBoardG1() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(G1)).usingRecursiveComparison().isEqualTo(Knight.from(Team.WHITE));
         }
 
         @Test
-        @DisplayName("H1에 흰팀 룩이 잘 생성되었는지 확인한다")
+        @DisplayName("H1에 룩이 잘 생성되었는지 확인한다")
         void Should_SameRook_When_ConstructBoardH1() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -93,7 +93,7 @@ public class ChessBoardFactoryTest {
     @DisplayName("검은팀 기물이 잘 생성되었는지 확인한다.")
     class checkBlackPieceTest {
         @Test
-        @DisplayName("A8에 검은팀 룩이 잘 생성되었는지 확인한다")
+        @DisplayName("A8에 룩이 잘 생성되었는지 확인한다")
         void Should_Same_When_ConstructBoardA8() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -101,7 +101,7 @@ public class ChessBoardFactoryTest {
         }
 
         @Test
-        @DisplayName("A7에 검은팀 폰이 잘 생성되었는지 확인한다")
+        @DisplayName("A7에 폰이 잘 생성되었는지 확인한다")
         void Should_Same_When_ConstructBoardA7() {
             Board board = new Board(ChessBoardFactory.create());
 
@@ -109,7 +109,7 @@ public class ChessBoardFactoryTest {
         }
 
         @Test
-        @DisplayName("B8에 검은팀 나이트가 잘 생성되었는지 확인한다")
+        @DisplayName("B8에 나이트가 잘 생성되었는지 확인한다")
         void Should_Same_When_ConstructBoardB8() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(B8)).usingRecursiveComparison().isEqualTo(Knight.from(Team.BLACK));
@@ -124,28 +124,28 @@ public class ChessBoardFactoryTest {
         }
 
         @Test
-        @DisplayName("D8에 흰팀 퀸이 잘 생성되었는지 확인한다")
+        @DisplayName("D8에 퀸이 잘 생성되었는지 확인한다")
         void Should_SameQueen_When_ConstructBoardD8() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(D8)).usingRecursiveComparison().isEqualTo(Queen.from(Team.BLACK));
         }
 
         @Test
-        @DisplayName("E8에 흰팀 킹이 잘 생성되었는지 확인한다")
+        @DisplayName("E8에 킹이 잘 생성되었는지 확인한다")
         void Should_SameKing_When_ConstructBoardDE8() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(E8)).usingRecursiveComparison().isEqualTo(King.from(Team.BLACK));
         }
 
         @Test
-        @DisplayName("F8에 흰팀 비숍이 잘 생성되었는지 확인한다")
+        @DisplayName("F8에 비숍이 잘 생성되었는지 확인한다")
         void Should_SameBishop_When_ConstructBoardF8() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(F8)).usingRecursiveComparison().isEqualTo(Bishop.from(Team.BLACK));
         }
 
         @Test
-        @DisplayName("G8에 흰팀 나이트가 잘 생성되었는지 확인한다")
+        @DisplayName("G8에 나이트가 잘 생성되었는지 확인한다")
         void Should_SameKnight_When_ConstructBoardG8() {
             Board board = new Board(ChessBoardFactory.create());
             Assertions.assertThat(board.getBoard().get(G8)).usingRecursiveComparison().isEqualTo(Knight.from(Team.BLACK));
