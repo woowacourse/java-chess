@@ -18,7 +18,7 @@ public class PieceDao {
                 preparedStatement.setString(2, String.valueOf(pieceEntity.file()));
                 preparedStatement.setString(3, pieceEntity.color());
                 preparedStatement.setString(4, pieceEntity.movementType());
-                preparedStatement.setString(5, pieceEntity.chessGameId().toString());
+                preparedStatement.setLong(5, pieceEntity.chessGameId());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();

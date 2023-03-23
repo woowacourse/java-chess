@@ -1,11 +1,16 @@
 package chess.domain.piece.movestrategy;
 
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 public class RookMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double ROOK_VALUE = 5;
+
+    public RookMovementStrategy() {
+        super(MovementType.ROOK);
+    }
 
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,

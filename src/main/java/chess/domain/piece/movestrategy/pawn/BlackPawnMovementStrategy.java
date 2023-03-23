@@ -1,5 +1,6 @@
 package chess.domain.piece.movestrategy.pawn;
 
+import chess.domain.piece.MovementType;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
 
@@ -8,11 +9,11 @@ public class BlackPawnMovementStrategy extends PawnMovementStrategy {
     private static final Rank DEFAULT_PERMIT_TWO_RANK = Rank.from(7);
 
     public BlackPawnMovementStrategy() {
-        super(DEFAULT_PERMIT_TWO_RANK);
+        super(MovementType.BLACK_PAWN, DEFAULT_PERMIT_TWO_RANK);
     }
 
     public BlackPawnMovementStrategy(final Rank permitTwoMoveRank) {
-        super(permitTwoMoveRank);
+        super(MovementType.BLACK_PAWN, permitTwoMoveRank);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package chess.domain.piece.movestrategy;
 
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -7,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPieceMovementStrategy implements PieceMovementStrategy {
+
+    protected final MovementType type;
+
+    protected AbstractPieceMovementStrategy(final MovementType type) {
+        this.type = type;
+    }
 
     @Override
     public List<PiecePosition> waypoints(final PiecePosition source,
@@ -40,6 +47,16 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     protected abstract void validateMoveWithNoAlly(final PiecePosition source,
                                                    final PiecePosition destination,
                                                    final Piece nullableEnemy);
+
+    @Override
+    public MovementType type() {
+        return type;
+    }
+
+    @Override
+    public boolean isSameType(final MovementType type) {
+        return this.type == type;
+    }
 
     protected boolean isStraight(final PiecePosition source, final PiecePosition destination) {
         return !(Math.abs(source.rankInterval(destination)) > 0

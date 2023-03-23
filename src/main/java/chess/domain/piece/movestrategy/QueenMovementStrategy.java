@@ -1,11 +1,16 @@
 package chess.domain.piece.movestrategy;
 
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 public class QueenMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double QUEEN_VALUE = 9;
+
+    public QueenMovementStrategy() {
+        super(MovementType.QUEEN);
+    }
 
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,

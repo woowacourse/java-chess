@@ -1,6 +1,7 @@
 package chess.infrastructure.persistence.mapper;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movestrategy.BishopMovementStrategy;
 import chess.domain.piece.movestrategy.KingMovementStrategy;
@@ -21,36 +22,36 @@ import java.util.Map;
 
 public class PieceMapper {
 
-    private static final Map<String, Constructor<? extends PieceMovementStrategy>> contractorMap = new HashMap<>();
+    private static final Map<MovementType, Constructor<? extends PieceMovementStrategy>> contractorMap = new HashMap<>();
 
     static {
         try {
             contractorMap.put(
-                    KingMovementStrategy.class.getSimpleName(),
+                    MovementType.KING,
                     KingMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    QueenMovementStrategy.class.getSimpleName(),
+                    MovementType.QUEEN,
                     QueenMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    BishopMovementStrategy.class.getSimpleName(),
+                    MovementType.BISHOP,
                     BishopMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    KnightMovementStrategy.class.getSimpleName(),
+                    MovementType.KNIGHT,
                     KnightMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    RookMovementStrategy.class.getSimpleName(),
+                    MovementType.ROOK,
                     RookMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    BlackPawnMovementStrategy.class.getSimpleName(),
+                    MovementType.BLACK_PAWN,
                     BlackPawnMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
-                    WhitePawnMovementStrategy.class.getSimpleName(),
+                    MovementType.WHITE_PAWN,
                     WhitePawnMovementStrategy.class.getDeclaredConstructor()
             );
         } catch (NoSuchMethodException e) {
@@ -63,7 +64,7 @@ public class PieceMapper {
                 piece.piecePosition().rank().value(),
                 piece.piecePosition().file().value(),
                 piece.color().name(),
-                piece.pieceMovementStrategy().getClass().getSimpleName(),
+                piece.type().name(),
                 chessGameId
         );
     }
@@ -78,7 +79,7 @@ public class PieceMapper {
 
     private static PieceMovementStrategy makeStrategy(final PieceEntity pieceEntity) {
         try {
-            return contractorMap.get(pieceEntity.movementType()).newInstance();
+            return contractorMap.get(MovementType.valueOf(pieceEntity.movementType())).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("피스 생성 중 문제 발생", e);
         }

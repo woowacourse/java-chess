@@ -1,6 +1,7 @@
 package chess.domain.piece.movestrategy;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.MovementType;
 import chess.domain.piece.position.PiecePosition;
 
 import java.util.List;
@@ -23,11 +24,7 @@ public interface PieceMovementStrategy {
 
     double judgeValue();
 
-    default boolean isKing() {
-        return false;
-    }
+    MovementType type();
 
-    default boolean isPawn() {
-        return false;
-    }
+    boolean isSameType(final MovementType type);
 }

@@ -1,6 +1,7 @@
 package chess.domain.piece.movestrategy;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
@@ -112,6 +113,6 @@ class KingMovementTest {
     @Test
     void 왕이다() {
         // when & then
-        assertThat(movement.isKing()).isTrue();
+        assertThat(movement.isSameType(MovementType.KING)).isTrue();
     }
 }

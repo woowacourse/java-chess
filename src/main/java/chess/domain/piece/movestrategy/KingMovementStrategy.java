@@ -1,11 +1,16 @@
 package chess.domain.piece.movestrategy;
 
+import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 public class KingMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double KING_VALUE = 0;
+
+    public KingMovementStrategy() {
+        super(MovementType.KING);
+    }
 
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
@@ -19,10 +24,5 @@ public class KingMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     public double judgeValue() {
         return KING_VALUE;
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
     }
 }

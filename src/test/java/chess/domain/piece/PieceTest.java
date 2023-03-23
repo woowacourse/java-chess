@@ -76,13 +76,13 @@ class PieceTest {
     }
 
     @Test
-    void 왕인지_여부를_판단한다() {
+    void 같은_타입인지_여부를_판단한다() {
         // given
         final Piece king = new Piece(myColor, PiecePosition.of("b6"), new KingMovementStrategy());
         final Piece rook = new Piece(enemyColor, PiecePosition.of("b7"), new RookMovementStrategy());
 
         // when & then
-        assertThat(king.isKing()).isTrue();
-        assertThat(rook.isKing()).isFalse();
+        assertThat(king.isSameType(MovementType.KING)).isTrue();
+        assertThat(rook.isSameType(MovementType.KING)).isFalse();
     }
 }

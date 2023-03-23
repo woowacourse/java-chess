@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.piece.MovementType.*;
 import static java.util.stream.Collectors.*;
 
 public class ChessBoard {
@@ -83,7 +84,7 @@ public class ChessBoard {
 
     public boolean existKingByColor(final Color color) {
         return pieces.stream()
-                .filter(Piece::isKing)
+                .filter(it -> it.isSameType(KING))
                 .anyMatch(it -> it.color() == color);
     }
 
@@ -105,7 +106,7 @@ public class ChessBoard {
 
     private double minusSameFilePawnValue(final Color color) {
         final Map<File, Long> sameFilePawnCounts = pieces.stream()
-                .filter(Piece::isPawn)
+                .filter(it -> it.isSameType(BLACK_PAWN) || it.isSameType(WHITE_PAWN))
                 .filter(it -> it.color() == color)
                 .collect(groupingBy(it -> it.piecePosition().file(), counting()));
         return sameFilePawnCounts.values()
