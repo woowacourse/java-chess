@@ -38,12 +38,12 @@ public class ChessGame {
     }
 
     public double getTotalScore(Team team) {
-        return board.getScores(team)
+        double basicScore = board.getScores(team)
                 .stream()
                 .mapToDouble(score -> score)
                 .sum();
+        return basicScore - board.getMinusScore(team);
     }
-
 
     public Team getWinTeam() {
         if (board.isKingDead(WHITE)) {
