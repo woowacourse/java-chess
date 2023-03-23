@@ -31,14 +31,23 @@ public class ChessGame {
         String targetFile = inputs.get(TARGET_FILE_INDEX);
         String targetRank = inputs.get(TARGET_RANK_INDEX);
 
-        board.move(currentTurn,
-                Position.of(sourceFile, sourceRank),
-                Position.of(targetFile, targetRank)
-        );
-
-        if (board.isKing(Position.of(targetFile, targetRank))) {
-            this.state = GameState.END;
+        Position sourcePosition = Position.of(sourceFile, sourceRank);
+        Position targetPosition = Position.of(targetFile, targetRank);
+        if (board.isMovable(sourcePosition, targetPosition, currentTurn)) {
+            this.state = calculateNextGameState(targetPosition);
+            board.move(sourcePosition, targetPosition);
         }
         currentTurn = currentTurn.nextSide();
+    }
+
+    public boolean isExitGame() {
+        return state == GameState.END;
+    }
+
+    private GameState calculateNextGameState(Position targetPosition) {
+        if (board.isKing(targetPosition)) {
+            return GameState.END;
+        }
+        return GameState.RUN;
     }
 }

@@ -15,21 +15,22 @@ public class Board {
         this.chessBoard = chessBoard;
     }
 
-    public void move(Side side, Position sourcePosition, Position targetPosition) {
+    public void move(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
-        validateMoving(sourcePosition, targetPosition, sourcePiece, side);
         movePiece(sourcePosition, targetPosition, sourcePiece);
     }
 
-    public boolean isKing(Position targetPosition) {
-        return chessBoard.get(targetPosition).isSameType(PieceType.KING);
-    }
-
-    private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece, Side side) {
+    public boolean isMovable(Position sourcePosition, Position targetPosition, Side side) {
+        Piece sourcePiece = chessBoard.get(sourcePosition);
         validateSourcePositionIsEmpty(sourcePosition, sourcePiece);
         validateTurn(side, sourcePiece);
         validateIsMovable(sourcePosition, targetPosition);
         validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece);
+        return true;
+    }
+
+    public boolean isKing(Position targetPosition) {
+        return chessBoard.get(targetPosition).isSameType(PieceType.KING);
     }
 
     private void validateTurn(Side side, Piece sourcePiece) {
