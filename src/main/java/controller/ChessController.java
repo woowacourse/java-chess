@@ -64,6 +64,7 @@ public class ChessController {
             CommandArguments commandArguments = CommandArguments.of(pureArguments);
             commander.get(command).accept(chessGame, commandArguments);
         } while (command.isNotEnd() && chessGame.isGameNotOver());
+
     }
 
     private void start(final ChessGame chessGame, final CommandArguments ignored) {
@@ -72,7 +73,9 @@ public class ChessController {
 
     private void end(final ChessGame chessGame, final CommandArguments ignored) {
         String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
+        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
         outputView.printGameResult(gameResultMessage);
+        outputView.printWinner(winningColorMessage);
     }
 
     private void move(final ChessGame chessGame, final CommandArguments arguments) {

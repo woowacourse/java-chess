@@ -5,6 +5,7 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.move.Coordinate;
 
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -41,6 +42,12 @@ public class RenderingAdapter {
     public static String unpackGameResult(final Map<Color, Double> gameResult) {
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
         gameResult.forEach((k, v) -> stringJoiner.add(String.format(GAME_SCORE_FORMAT, k, v)));
+        return stringJoiner.toString();
+    }
+
+    public static String convertWinningColor(final List<Color> winningColor) {
+        StringJoiner stringJoiner = new StringJoiner(",");
+        winningColor.forEach(color -> stringJoiner.add(color.toString()));
         return stringJoiner.toString();
     }
 }

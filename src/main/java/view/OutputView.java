@@ -11,6 +11,9 @@ public final class OutputView {
             "> 게임 종료 : end" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
 
+    public static final String GAME_WINNER_MESSAGE_FORMAT = "%s가 우승했습니다!" +
+            System.lineSeparator();
+
     public void printBoard(final String parsedBoard) {
         System.out.println(parsedBoard);
     }
@@ -33,5 +36,9 @@ public final class OutputView {
     public void printGameResult(final String gameResult) {
         System.out.println(GAME_END_MESSAGE);
         System.out.println(gameResult);
+    }
+
+    public void printWinner(final String winningColor) {
+        System.out.printf(GAME_WINNER_MESSAGE_FORMAT, winningColor);
     }
 }

@@ -5,7 +5,9 @@ import domain.piece.move.Coordinate;
 import domain.piece.Piece;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class ChessGame {
 
@@ -17,6 +19,23 @@ public final class ChessGame {
     public ChessGame() {
         this.board = new Board();
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
+    }
+
+    public List<Color> getWinningColor() {
+        Map<Color, Double> collectedPoints = collectPoint();
+        double maxPoint = calculateMaxPoint(collectPoint());
+
+        return collectedPoints.entrySet().stream()
+                .filter(entry -> Double.compare(entry.getValue(), maxPoint) == 0)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    private double calculateMaxPoint(final Map<Color, Double> collectedPoints) {
+        return collectedPoints.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .max()
+                .orElse(0.0);
     }
 
     public boolean isGameNotOver() {
