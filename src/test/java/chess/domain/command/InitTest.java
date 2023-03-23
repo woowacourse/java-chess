@@ -72,4 +72,40 @@ class InitTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 초기 상태에서는 턴 이름을 반환할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("초기 상태에서 게임 결과를 출력할 시 예외를 던진다.")
+    void printGameResult() {
+        // given
+        CommandStatus commandStatus = new Init();
+
+        // when, then
+        assertThatThrownBy(() -> commandStatus.printGameResult())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 초기 상태에서는 게임 결과를 출력할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 점수를 가져올 시 예외를 던진다.")
+    void getScoreBySide() {
+        // given
+        CommandStatus commandStatus = new Init();
+
+        // when, then
+        assertThatThrownBy(() -> commandStatus.getScoreBySide())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 초기 상태에서는 점수를 가져올 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 게임 결과를 출력할 시 예외를 던진다.")
+    void getGameResultBySide() {
+        // given
+        CommandStatus commandStatus = new Init();
+
+        // when, then
+        assertThatThrownBy(() -> commandStatus.getGameResultBySide())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 초기 상태에서는 결과를 가져올 수 없습니다.");
+    }
 }
