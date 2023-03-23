@@ -1,8 +1,9 @@
-package chess.domain.pieces;
+package chess.domain.pieces.component;
 
 import java.util.Objects;
 
 public class Name {
+
     private final String name;
 
     public Name(String name) {
