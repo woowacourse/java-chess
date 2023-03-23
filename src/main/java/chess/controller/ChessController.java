@@ -19,9 +19,6 @@ import static chess.domain.game.Command.validateCommandSize;
 
 public class ChessController {
 
-    private static final int MOVE_FROM_INDEX = 1;
-    private static final int MOVE_TO_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -82,10 +79,8 @@ public class ChessController {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
         }
 
-        final String from = commands.get(MOVE_FROM_INDEX);
-        final String to = commands.get(MOVE_TO_INDEX);
-
-        chessGame.movePiece(PositionConvertor.convert(from), PositionConvertor.convert(to));
+        PositionConvertor convertor = new PositionConvertor(commands);
+        chessGame.movePiece(convertor.getFromPosition(), convertor.getToPosition());
     }
 
     private void end(final List<String> commands) {
