@@ -13,12 +13,16 @@ public class OutputView {
 	public static void printBoard(final Map<Position, Piece> chessBoard, final List<Rank> ranks,
 		final List<File> files) {
 		for (final Rank rank : ranks) {
-			for (final File file : files) {
-				final Position position = Position.of(file, rank);
-				System.out.print(chessBoard.get(position).name());
-			}
-			System.out.println();
+			printEachPosition(chessBoard, files, rank);
 		}
+	}
+
+	private static void printEachPosition(Map<Position, Piece> chessBoard, List<File> files, Rank rank) {
+		for (final File file : files) {
+			final Position position = Position.of(file, rank);
+			System.out.print(chessBoard.get(position).name());
+		}
+		System.out.println();
 	}
 
 	public static void printErrorMessage(String errorMessage) {
