@@ -75,4 +75,7 @@ public class Piece {
                 '}';
     }
 
+    public Shape getShape() {
+        return shape;
+    }
 }
