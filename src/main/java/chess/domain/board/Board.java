@@ -5,11 +5,14 @@ import java.util.Map;
 
 import chess.domain.game.Team;
 import chess.domain.move.Move;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Board {
 
+    private static final EmptyPiece EMPTY_PIECE = EmptyPiece.create();
+    
     private final Map<Position, Piece> pieces;
 
     protected Board(Map<Position, Piece> pieces) {
@@ -17,23 +20,14 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        validatePieceExistsAt(source);
         validateNotSameTeam(source, target);
         validateMove(source, target);
         validateNoObstacle(source, target);
         makeMove(source, target);
     }
 
-    private void validatePieceExistsAt(Position source) {
-        if (getPieceAt(source) == null) {
-            throw new IllegalArgumentException("움직일 기물이 없습니다");
-        }
-    }
-
     private void validateNotSameTeam(Position source, Position target) {
-        Piece sourcePiece = getPieceAt(source);
-        Piece targetPiece = getPieceAt(target);
-        if (targetPiece != null && sourcePiece.hasSameTeamWith(targetPiece)) {
+        if (getPieceAt(source).isSameTeamWith(getPieceAt(target))) {
             throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
         }
     }
@@ -45,12 +39,11 @@ public class Board {
     }
 
     private boolean hasMove(Position source, Position target) {
-        Piece sourcePiece = getPieceAt(source);
         Move move = Move.of(source, target);
         if (isAttack(target)) {
-            return sourcePiece.hasAttackMove(move);
+            return getPieceAt(source).hasAttackMove(move);
         }
-        return sourcePiece.hasMove(move);
+        return getPieceAt(source).hasMove(move);
     }
 
     private void validateNoObstacle(Position source, Position target) {
@@ -63,7 +56,7 @@ public class Board {
     }
 
     private void validateNoPieceAt(Position position) {
-        if (getPieceAt(position) != null) {
+        if (!getPieceAt(position).isEmpty()) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
     }
@@ -77,19 +70,18 @@ public class Board {
     }
 
     private boolean isAttack(Position target) {
-        Piece targetPiece = getPieceAt(target);
-        return targetPiece != null;
-    }
-
-    private Piece getPieceAt(Position position) {
-        return pieces.get(position);
-    }
-
-    public Map<Position, Piece> getPieces() {
-        return new HashMap<>(pieces);
+        return !getPieceAt(target).isEmpty();
     }
 
     public boolean hasPositionTeamOf(Position position, Team team) {
         return getPieceAt(position).hasTeam(team);
+    }
+
+    private Piece getPieceAt(Position position) {
+        return pieces.getOrDefault(position, EMPTY_PIECE);
+    }
+
+    public Map<Position, Piece> getPieces() {
+        return new HashMap<>(pieces);
     }
 }

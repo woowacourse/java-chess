@@ -34,7 +34,7 @@ public class PieceTest extends AbstractTestFixture {
         Piece piece = createPiece(Team.WHITE);
         Piece otherPiece = createPiece(Team.BLACK);
 
-        assertThat(piece.hasSameTeamWith(otherPiece)).isFalse();
+        assertThat(piece.isSameTeamWith(otherPiece)).isFalse();
     }
 
     @DisplayName("이동 가능한 수인지 판단한다(유한)")

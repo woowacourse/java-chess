@@ -15,7 +15,7 @@ public abstract class Piece {
         this.moves = moves;
     }
 
-    public boolean hasSameTeamWith(Piece otherPiece) {
+    public boolean isSameTeamWith(Piece otherPiece) {
         return team.equals(otherPiece.team);
     }
 
@@ -38,6 +38,10 @@ public abstract class Piece {
 
     public Piece touch() {
         return this;
+    }
+
+    public boolean isEmpty() {
+        return false;
     }
 
     public abstract PieceType getType();

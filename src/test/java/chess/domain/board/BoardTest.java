@@ -13,6 +13,7 @@ import chess.domain.game.Team;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 public class BoardTest extends AbstractTestFixture {
@@ -66,6 +67,20 @@ public class BoardTest extends AbstractTestFixture {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 기물을 지나칠 수 없습니다");
+    }
+
+    @DisplayName("전제조건이 모두 맞으면, 이동한다")
+    @Test
+    void move() {
+        var board = BoardFactory.createBoard();
+        var source = createPosition("D,ONE");
+        var target = createPosition("A,FOUR");
+
+        board.move(createPosition("C,TWO"), createPosition("C,THREE"));
+        board.move(createPosition("B,TWO"), createPosition("B,FOUR"));
+        board.move(source, target);
+
+        assertThat(board.getPieces().get(target).getType()).isEqualTo(PieceType.QUEEN);
     }
 
     @DisplayName("이동이면, 해당 기물을 위치시킨다")
