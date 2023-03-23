@@ -42,7 +42,7 @@ public class MainController {
 
     private Command playByCommand(ChessBoard chessBoard) {
         try {
-            List<String> input = repeatInputReader(inputView::readInput);
+            List<String> input = readValidInput(inputView::readInput);
             Command command = Command.from(input);
             ChessboardExecuter executer = commandsMapper.get(command);
             executer.execute(chessBoard, input);
@@ -53,12 +53,12 @@ public class MainController {
         }
     }
 
-    private <T> T repeatInputReader(Supplier<T> inputReader) {
+    private List<String> readValidInput(Supplier<List<String>> inputReader) {
         try {
             return inputReader.get();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return repeatInputReader(inputReader);
+            return readValidInput(inputReader);
         }
     }
 
