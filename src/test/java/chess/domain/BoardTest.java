@@ -6,8 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
@@ -114,6 +117,19 @@ class BoardTest {
 
             assertThat(isBlackKingDead).isTrue();
         }
+    }
 
+    @Nested
+    @DisplayName("특정 팀의 점수 리스트를 가져오는 getScores 테스트")
+    class getScoresTest {
+
+        @Test
+        @DisplayName("백 팀의 초기 점수를 리스트로 가져온다.")
+        void getScoresTest1() {
+            Board board = BoardGenerator.createBoard();
+            List<Double> scores = board.getScores(Team.WHITE);
+
+            assertThat(scores).containsOnly(0.0, 9.0, 5.0, 5.0, 3.0, 3.0, 2.5, 2.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+        }
     }
 }
