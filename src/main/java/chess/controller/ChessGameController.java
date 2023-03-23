@@ -6,6 +6,7 @@ import static chess.controller.Command.MOVE_COMMAND_INDEX;
 import static chess.controller.Command.MOVE_SOURCE_INDEX;
 import static chess.controller.Command.MOVE_TARGET_INDEX;
 import static chess.controller.Command.START;
+import static chess.controller.Command.STATUS;
 import static chess.controller.Command.validateMoveCommandForm;
 
 import chess.domain.board.Board;
@@ -57,6 +58,9 @@ public class ChessGameController {
 
     private Command play(final Board board, final List<String> commands) {
         final Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
+        if (command == STATUS) {
+            OutputView.printScore(board.whiteScore(), board.blackScore());
+        }
         if (command == MOVE) {
             move(board, commands);
         }

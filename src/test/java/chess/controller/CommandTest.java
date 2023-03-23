@@ -30,7 +30,7 @@ public class CommandTest {
         // expect
         assertThatThrownBy(() -> Command.createPlayingCommand("start"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("move 또는 end 를 입력해주세요.");
+                .hasMessage("move, status, end 중 하나를 입력해주세요.");
     }
 
     @ParameterizedTest(name = "start 혹은 end를 입력받을 때만 해당 Command를 반환한다 문자열: {0}, Command: {1}")
@@ -40,9 +40,9 @@ public class CommandTest {
         assertThat(Command.createInitCommand(input)).isEqualTo(targetCommand);
     }
 
-    @ParameterizedTest(name = "move 혹은 end를 입력받을 때만 해당 Command를 반환한다 문자열: {0}, Command: {1}")
-    @CsvSource({"move, MOVE", "end, END"})
-    void move_혹은_end_를_입력받을_때만_해당_Command_를_반환한다(final String input, final Command targetCommand) {
+    @ParameterizedTest(name = "move, status, end 중 하나만을 입력받을 때만 해당 Command를 반환한다 문자열: {0}, Command: {1}")
+    @CsvSource({"move, MOVE", "status, STATUS","end, END"})
+    void move_status_end_를_입력받을_때만_해당_Command_를_반환한다(final String input, final Command targetCommand) {
         // expect
         assertThat(Command.createPlayingCommand(input)).isEqualTo(targetCommand);
     }

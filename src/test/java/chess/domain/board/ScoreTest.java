@@ -15,16 +15,16 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class BoardResultTest {
+public class ScoreTest {
 
     @Test
     void 기물들의_점수를_계산할_수_있다() {
         // given
         final Board board = BoardFactory.create();
-        final BoardResult boardResult = new BoardResult(board.getBoard());
+        final Score score = new Score(board.getBoard());
 
         // when
-        final double blackScore = boardResult.calculatePoints(Color.BLACK);
+        final double blackScore = score.calculatePoints(Color.BLACK);
 
         // then
         Assertions.assertThat(blackScore).isEqualTo(38.0);
@@ -39,10 +39,10 @@ public class BoardResultTest {
         board.put(Position.of(File.A, Rank.THREE), Pawn.from(Color.BLACK));
         board.put(Position.of(File.A, Rank.FOUR), Pawn.from(Color.BLACK));
         board.put(Position.of(File.A, Rank.FIVE), Pawn.from(Color.WHITE));
-        final BoardResult boardResult = new BoardResult(board);
+        final Score score = new Score(board);
 
         // when
-        final double points = boardResult.calculatePoints(Color.BLACK);
+        final double points = score.calculatePoints(Color.BLACK);
 
         // then
         Assertions.assertThat(points).isEqualTo(2);

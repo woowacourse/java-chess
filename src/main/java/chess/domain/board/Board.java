@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
@@ -55,6 +56,27 @@ public class Board {
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.getInstance());
         turn = turn.nextTurn();
+    }
+
+    public boolean isKingDead() {
+        return isKingExists(Color.WHITE) || isKingExists(Color.BLACK);
+    }
+
+    private boolean isKingExists(final Color color) {
+        return !board.containsValue(King.from(color));
+    }
+
+    public double whiteScore() {
+        return calculateScore(Color.WHITE);
+    }
+
+    public double blackScore() {
+        return calculateScore(Color.BLACK);
+    }
+
+    public double calculateScore(final Color color) {
+        final Score score = new Score(getBoard());
+        return score.calculatePoints(color);
     }
 
     public Map<Position, Piece> getBoard() {

@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardResult {
+public class Score {
     private static final int PAWN_COUNT = 2;
     private static final double PAWN_POINT = 0.5;
 
     private final Map<Position, Piece> board;
 
-    public BoardResult(final Map<Position, Piece> board) {
+    public Score(final Map<Position, Piece> board) {
         this.board = board;
     }
 
@@ -26,12 +26,13 @@ public class BoardResult {
     private double calculateTotalPoints(final Color color) {
         return board.values().stream()
                 .filter(piece -> piece.color() == color)
+                .peek(piece -> System.out.println(piece))
                 .mapToDouble(pieceType -> pieceType.point())
                 .sum();
     }
 
     private double calculatePawnPoints(final Color color) {
-        Map<File, List<Position>> positionsByPawn = board.keySet().stream()
+        final Map<File, List<Position>> positionsByPawn = board.keySet().stream()
                 .filter(key -> board.get(key).type() == PieceType.PAWN)
                 .filter(key -> board.get(key).color() == color)
                 .collect(Collectors.groupingBy(position -> position.file()));
@@ -41,5 +42,4 @@ public class BoardResult {
                 .mapToDouble(pawnPositions -> pawnPositions.size() * PAWN_POINT)
                 .sum();
     }
-
 }

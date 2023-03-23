@@ -66,6 +66,12 @@ public class OutputView {
         return result;
     }
 
+    public static void printScore(final double whiteScore, final double blackScore) {
+        System.out.println("> 현재 점수");
+        System.out.println("> 백 " + whiteScore);
+        System.out.println("> 흑 " + blackScore);
+    }
+
     public static void printException(final String message) {
         System.out.println("[ERROR] " + message);
     }
