@@ -10,7 +10,7 @@ import static chess.controller.Command.STATUS;
 import static chess.controller.Command.validateMoveCommandForm;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.BoardResult;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ChessGameController {
 
     public void run() {
-        final Board board = BoardFactory.create();
+        final Board board = BoardInitializer.initialize();
         OutputView.printGameStart();
 
         Command command = getInitCommand(board);

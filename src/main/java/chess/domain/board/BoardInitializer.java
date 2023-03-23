@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-public class BoardFactory {
+public class BoardInitializer {
 
-    private BoardFactory() {
+    private BoardInitializer() {
     }
 
-    public static Board create() {
+    public static Board initialize() {
         final Map<Position, Piece> result = new HashMap<>();
         result.putAll(initializePiece(Color.WHITE, Rank.ONE));
         result.putAll(initializePawn(Color.WHITE, Rank.TWO));

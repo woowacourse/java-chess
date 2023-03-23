@@ -25,7 +25,7 @@ public class BoardResultTest {
     @Test
     void 기물들의_점수를_계산할_수_있다() {
         // given
-        final Board board = BoardFactory.create();
+        final Board board = BoardInitializer.initialize();
         final BoardResult boardResult = BoardResult.create(board.getBoard());
 
         // when

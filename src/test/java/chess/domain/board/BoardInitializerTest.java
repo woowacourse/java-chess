@@ -9,8 +9,6 @@ import static chess.domain.piece.PieceType.QUEEN;
 import static chess.domain.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.File;
@@ -21,9 +19,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-class BoardFactoryTest {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
+class BoardInitializerTest {
 
     private static List<PieceType> generateResult(final Board board) {
         final List<Rank> ranks = Arrays.stream(Rank.values())
@@ -40,7 +42,7 @@ class BoardFactoryTest {
     @Test
     void 체스판을_생성한다() {
         // given
-        final Board board = BoardFactory.create();
+        final Board board = BoardInitializer.initialize();
 
         // expect
         final List<PieceType> result = generateResult(board);
