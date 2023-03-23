@@ -1,61 +1,40 @@
 package chess.piece.coordinate;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-public class Row {
-    private static final int MIN_ROW = 1;
-    private static final int MAX_ROW = 8;
-    
-    private final int row;
-    
-    public Row(int row) {
-        validateOutOfRange(row);
+public enum Row {
+    ONE("1"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8");
+
+    private final String row;
+
+    Row(String row) {
         this.row = row;
     }
-    
-    private void validateOutOfRange(int row) {
-        if (isOutOfRange(row)) {
-            throw new IllegalArgumentException("row는 1~8까지의 숫자만 가능합니다.");
-        }
+
+    public static Row from(String targetRow) {
+        return Arrays.stream(values())
+            .filter(row -> row.row.equals(targetRow))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다"));
     }
-    
-    private boolean isOutOfRange(int row) {
-        return row < MIN_ROW || row > MAX_ROW;
-    }
-    
-    public int compareTo(Row otherRow) {
-        return this.row - otherRow.row;
-    }
-    
+
     public int subtract(Row targetRow) {
-        return this.row - targetRow.row;
+        return this.ordinal() - targetRow.ordinal();
     }
-    
-    public boolean isPawnStartRow(int pawnStartRow) {
-        return row == pawnStartRow;
+
+    public boolean isPawnStartRow() {
+        return this == TWO || this == SEVEN;
     }
-    
-    public boolean isSame(int otherRow) {
-        return this.row == otherRow;
+
+    public Row up(int num) {
+        return values()[ordinal() + num];
     }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Row row1 = (Row) o;
-        return row == row1.row;
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(row);
-    }
-    
-    @Override
-    public String toString() {
-        return "Row{" +
-                "row=" + row +
-                '}';
-    }
+
 }

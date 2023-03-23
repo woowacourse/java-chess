@@ -1,53 +1,44 @@
 package chess.piece.coordinate;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-public class Column {
-    private static final char MIN_COLUMN_CHAR = 'a';
-    private static final char MAX_COLUMN_CHAR = 'h';
-    
-    private final char column;
-    
-    public Column(char column) {
-        validateOutOfRange(column);
+public enum Column {
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
+
+    private final String column;
+    private final int columnIndex;
+
+    Column(String column, int columnIndex) {
         this.column = column;
+        this.columnIndex = columnIndex;
     }
-    
-    private void validateOutOfRange(char column) {
-        if (isColumnOutOfRange(column)) {
-            throw new IllegalArgumentException("column는 a~h까지의 문자만 가능합니다.");
-        }
+
+    public static Column fromName(String column) {
+        return Arrays.stream(values())
+            .filter(column2 -> column2.column.equals(column))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
-    
-    private boolean isColumnOutOfRange(char column) {
-        return column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR;
+
+    public static String symbolFromIndex(int index) {
+        return Arrays.stream(values())
+            .filter(column -> column.columnIndex == index)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다")).column;
     }
-    
+
     public int subtract(Column targetColumn) {
-        return this.column - targetColumn.column;
+        return this.ordinal() - targetColumn.ordinal();
     }
-    
-    public boolean isSame(char otherColumn) {
-        return this.column == otherColumn;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Column column1 = (Column) o;
-        return column == column1.column;
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(column);
-    }
-    
-    @Override
-    public String toString() {
-        return "Column{" +
-                "column=" + column +
-                '}';
+
+    public Column up(int num) {
+        return values()[ordinal() + num];
     }
 }

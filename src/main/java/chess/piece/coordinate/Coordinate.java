@@ -6,18 +6,25 @@ import java.util.Objects;
 public class Coordinate {
     private final Row row;
     private final Column column;
-    
 
-    private Coordinate(Row row, Column column) {
+
+    public Coordinate(Row row, Column column) {
         this.row = row;
         this.column = column;
     }
-    public static Coordinate createCoordinate(int row, char column) {
-        return new Coordinate(new Row(row), new Column(column));
+
+    public static Coordinate createCoordinate(String row, String column) {
+        return new Coordinate(Row.from(row), Column.fromName(column));
     }
 
-    public int compareToPieceByRowNum(Coordinate otherCoordinate) {
-        return this.row.compareTo(otherCoordinate.row);
+    public int compareByRowNum(Coordinate otherCoordinate) {
+        return Integer.compare(otherCoordinate.row.ordinal(),this.row.ordinal());
+    }
+
+    public int compareByColumn(Coordinate otherCoordinate){
+        System.out.println("otherCorNum : " +otherCoordinate.column.ordinal());
+        System.out.println("thisCorNum : "+this.column.ordinal());
+        return Integer.compare(otherCoordinate.column.ordinal(),this.column.ordinal());
     }
     
     public List<Integer> calculateCoordinateDistance(Coordinate otherCoordinate) {
@@ -26,16 +33,21 @@ public class Coordinate {
         return List.of(columnDistance, rowDistance);
     }
     
-    public boolean isPawnStartRow(int pawnStartRow) {
-        return row.isPawnStartRow(pawnStartRow);
+    public boolean isPawnStartRow() {
+        return row.isPawnStartRow();
     }
-    
-    public boolean isSameColumn(char otherColumn) {
-        return this.column.isSame(otherColumn);
+
+
+    public Coordinate move(int rowAdd, int columnAdd){
+        return new Coordinate(this.row.up(rowAdd),this.column.up(columnAdd));
     }
-    
-    public boolean isSameRow(int otherRow) {
-        return this.row.isSame(otherRow);
+
+    public int columnIndex(){
+        return column.ordinal();
+    }
+
+    public int compareTo(Coordinate otherCoordinate){
+        return this.row.compareTo(otherCoordinate.row);
     }
     
     @Override
@@ -50,7 +62,7 @@ public class Coordinate {
     public int hashCode() {
         return Objects.hash(row, column);
     }
-    
+
     @Override
     public String toString() {
         return "Coordinate{" +
