@@ -26,4 +26,8 @@ public class OutputView {
     public static void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
     }
+
+    public static void printFinishMessage() {
+        System.out.println("> 게임이 종료되었습니다.");
+    }
 }

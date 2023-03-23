@@ -66,6 +66,11 @@ public class ChessController {
             chessGame.movePiece(sourcePosition, targetPosition);
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         });
+
+        if(chessGame.isGameEnd()){
+            OutputView.printFinishMessage();
+            return readCommand(List.of(STATUS, END));
+        }
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
