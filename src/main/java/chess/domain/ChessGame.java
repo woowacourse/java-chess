@@ -52,4 +52,8 @@ public class ChessGame {
         return chessBoard;
     }
 
+    public TeamColor getTeamColor() {
+        return teamColor;
+    }
+
 }
