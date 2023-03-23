@@ -27,14 +27,15 @@ public class ChessBoard {
         Piece fromPiece = piecePosition.get(from);
         Piece toPiece = piecePosition.get(to);
 
-        validateMovable(from, to, fromPiece);
+        validateMovable(from, to);
         validateAlly(fromPiece, toPiece);
         validateRoute(from, to);
 
         move(from, to);
     }
 
-    private void validateMovable(final Position from, final Position to, final Piece fromPiece) {
+    private void validateMovable(final Position from, final Position to) {
+        final Piece fromPiece = piecePosition.get(from);
         if (!fromPiece.isMovable(from, to)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
