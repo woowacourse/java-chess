@@ -34,6 +34,9 @@ public class Play implements CommandStatus {
     public CommandStatus move(Position sourcePosition, Position targetPosition) {
         checkTurn(sourcePosition);
         chessGame.checkPieceMoveCondition(sourcePosition, targetPosition);
+        if (chessGame.isTargetPieceOppositeKing(sourcePosition, targetPosition)) {
+            return gameEnd(sourcePosition, targetPosition);
+        }
         chessGame.movePiece(sourcePosition, targetPosition);
         Turn oppositeTurn = turn.change();
         return new Play(this.chessGame, oppositeTurn);
@@ -46,9 +49,18 @@ public class Play implements CommandStatus {
         }
     }
 
+    private End gameEnd(Position sourcePosition, Position targetPosition) {
+        chessGame.movePiece(sourcePosition, targetPosition);
+        chessGame.saveScoreBySide();
+        chessGame.saveGameResultBySide();
+        return new End(chessGame.getResultCalculator());
+    }
+
     @Override
     public CommandStatus end() {
-        return new End();
+        chessGame.saveScoreBySide();
+        chessGame.saveGameResultBySide();
+        return new End(chessGame.getResultCalculator());
     }
 
     @Override

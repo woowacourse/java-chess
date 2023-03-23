@@ -29,7 +29,7 @@ public class Init implements CommandStatus {
 
     @Override
     public CommandStatus end() {
-        return new End();
+        return new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
     }
 
     @Override

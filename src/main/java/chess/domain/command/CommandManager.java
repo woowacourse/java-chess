@@ -46,7 +46,7 @@ public class CommandManager {
         return commandStatus.isEnd();
     }
 
-    public boolean isPrintGameResult() {
+    public boolean canPrintGameResult() {
         return commandStatus.canPrintGameResult();
     }
 
