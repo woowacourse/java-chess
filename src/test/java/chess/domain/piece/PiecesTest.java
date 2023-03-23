@@ -101,7 +101,7 @@ class PiecesTest {
         final Pieces pieces = new Pieces();
 
         // when
-        List<Piece> whitePieces = pieces.getWhitePieces();
+        List<Piece> whitePieces = pieces.getPiecesBySide(Side.WHITE);
 
         // then
         assertThat(whitePieces).contains(
@@ -129,7 +129,7 @@ class PiecesTest {
         final Pieces pieces = new Pieces();
 
         // when
-        List<Piece> whitePieces = pieces.getBlackPieces();
+        List<Piece> whitePieces = pieces.getPiecesBySide(Side.BLACK);
 
         // then
         assertThat(whitePieces).contains(

@@ -94,15 +94,7 @@ public class Pieces {
         pieces.remove(pieceToRemove);
     }
 
-    public List<Piece> getWhitePieces() {
-        return getPiecesBySide(Side.WHITE);
-    }
-
-    public List<Piece> getBlackPieces() {
-        return getPiecesBySide(Side.BLACK);
-    }
-
-    private List<Piece> getPiecesBySide(Side side) {
+    public List<Piece> getPiecesBySide(Side side) {
         return pieces.stream()
                 .filter(piece -> piece.isSameSide(side))
                 .collect(Collectors.toUnmodifiableList());
