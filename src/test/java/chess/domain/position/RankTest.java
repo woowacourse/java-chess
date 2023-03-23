@@ -50,7 +50,7 @@ class RankTest {
     }
 
     @Test
-    @DisplayName("유요하지 않은 문자로 Rank를 생성하면 예외가 발생한다")
+    @DisplayName("유효하지 않은 문자로 Rank를 생성하면 예외가 발생한다")
     void throwExceptionWhenInvalidChar() {
         assertThatThrownBy(() -> Rank.of('i'))
                 .isInstanceOf(IllegalArgumentException.class)
