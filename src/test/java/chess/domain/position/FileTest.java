@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -45,5 +46,11 @@ public class FileTest {
         assertThatThrownBy(() -> File.findByIndex(index))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 위치입니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0,false", "1,true", "8,true", "9,false"})
+    void 인덱스를_검증할_수_있다(final int index, final boolean expected) {
+        assertThat(File.isIndexValid(index)).isEqualTo(expected);
     }
 }
