@@ -9,7 +9,7 @@ public class King extends Piece {
     private static final King whiteKing = new King(Side.WHITE);
 
     private King(final Side side) {
-        super(side);
+        super(side, PieceInfo.KING);
     }
 
     public static King of(final Side side) {

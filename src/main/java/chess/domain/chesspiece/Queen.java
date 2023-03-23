@@ -9,7 +9,7 @@ public class Queen extends Piece {
     private static final Queen whiteQueen = new Queen(Side.WHITE);
 
     private Queen(final Side side) {
-        super(side);
+        super(side, PieceInfo.QUEEN);
     }
 
     public static Queen of(final Side side) {

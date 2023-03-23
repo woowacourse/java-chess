@@ -19,7 +19,7 @@ public final class Pawn extends Piece {
     private boolean atInitialPosition;
 
     private Pawn(Side side) {
-        super(side);
+        super(side, PieceInfo.PAWN);
         atInitialPosition = true;
     }
 

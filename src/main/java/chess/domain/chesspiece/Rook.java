@@ -8,7 +8,7 @@ public class Rook extends Piece {
     private static final Rook whiteRook = new Rook(Side.WHITE);
 
     private Rook(final Side side) {
-        super(side);
+        super(side, PieceInfo.ROOK);
     }
 
     public static Rook of(final Side side) {

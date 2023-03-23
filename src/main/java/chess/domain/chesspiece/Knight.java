@@ -8,7 +8,7 @@ public class Knight extends Piece {
     private static final Knight whiteKnight = new Knight(Side.WHITE);
 
     private Knight(final Side side) {
-        super(side);
+        super(side, PieceInfo.KNIGHT);
     }
 
     public static Knight of(final Side side) {

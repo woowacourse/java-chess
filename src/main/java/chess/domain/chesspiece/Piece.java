@@ -4,10 +4,15 @@ import chess.domain.Side;
 import chess.domain.Square;
 
 public abstract class Piece {
-    final Side side;
+    public abstract boolean isMovable(Square from, Square to, Piece piece);
 
-    Piece(final Side side) {
+    protected final Side side;
+
+    protected final PieceInfo pieceInfo;
+
+    Piece(final Side side, final PieceInfo pieceInfo) {
         this.side = side;
+        this.pieceInfo = pieceInfo;
     }
 
     public boolean isNotSameSide(final Piece piece) {
@@ -22,18 +27,16 @@ public abstract class Piece {
         return this.side == Side.NO_SIDE;
     }
 
-    public String getSide() {
-        return side.toString();
-    }
-
-    public abstract boolean isMovable(Square from, Square to, Piece piece);
-
     public boolean isWhite() {
         return side == Side.WHITE;
     }
 
     public boolean isBlack() {
         return side == Side.BLACK;
+    }
+
+    public String getSide() {
+        return side.toString();
     }
 
     public boolean isPawn() {

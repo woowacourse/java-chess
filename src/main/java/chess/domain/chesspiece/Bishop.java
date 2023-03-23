@@ -9,7 +9,7 @@ public class Bishop extends Piece {
     private static final Bishop whiteBishop = new Bishop(Side.WHITE);
 
     private Bishop(final Side side) {
-        super(side);
+        super(side, PieceInfo.BISHOP);
     }
 
     public static Bishop of(final Side side) {
