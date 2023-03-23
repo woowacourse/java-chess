@@ -43,4 +43,8 @@ public abstract class Piece {
     public abstract boolean canAttack(final Direction direction, final int distance, final Piece targetPiece);
 
     public abstract boolean canMove(final Direction direction, final int distance);
+
+    public double getScore() {
+        return role.getScore();
+    }
 }

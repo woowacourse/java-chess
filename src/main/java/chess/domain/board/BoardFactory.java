@@ -48,6 +48,10 @@ public class BoardFactory {
         return new Board(board);
     }
 
+    public static Board create(final Map<Square, Piece> board) {
+        return new Board(board);
+    }
+
     private static void setup(final Side side) {
         Map<Role, Rank> ranksBySide = INITIAL_RANKS.get(side);
         for (Role role : INITIAL_FILES.keySet()) {

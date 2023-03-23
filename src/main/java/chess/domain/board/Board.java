@@ -2,12 +2,14 @@ package chess.domain.board;
 
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Role;
 import chess.domain.square.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static chess.domain.piece.Role.*;
 
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
@@ -24,7 +26,7 @@ public class Board {
         Square piece = Square.of(file, rank);
         if (!board.containsKey(piece)) {
             Side blankSide = Side.from(Color.EMPTY);
-            return Role.BLANK.create(blankSide);
+            return BLANK.create(blankSide);
         }
         return board.get(piece);
     }
@@ -109,5 +111,39 @@ public class Board {
             squares.add(nextSquare);
         }
         return squares;
+    }
+
+    public double calculateScore(final Side side) {
+        double pawnScore = calculatePawnScore(side);
+        double majorScore = calculateMajorScore(side);
+
+        return majorScore + pawnScore;
+    }
+
+    private double calculatePawnScore(final Side side) {
+        return Arrays.stream(File.values())
+                .mapToDouble(file -> calculatePawnScoreOfFile(side, file))
+                .sum();
+    }
+
+    private long calculatePawnScoreOfFile(final Side side, final File file) {
+        long score = board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameSide(side))
+                .filter(entry -> entry.getValue().hasSameRole(PAWN) || entry.getValue().hasSameRole(INITIAL_PAWN))
+                .map(Map.Entry::getKey)
+                .filter(square -> square.hasSameFile(file))
+                .count();
+        if (score >= 2) {
+            return score / 2;
+        }
+        return score;
+    }
+
+    private double calculateMajorScore(final Side side) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameSide(side))
+                .filter(piece -> !piece.hasSameRole(PAWN) && !piece.hasSameRole(INITIAL_PAWN))
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 }

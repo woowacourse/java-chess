@@ -11,6 +11,9 @@ import java.util.Map;
 public class Square {
     private static final Map<String, Square> CACHE;
 
+    private final File file;
+    private final Rank rank;
+
     static {
         CACHE = new HashMap<>();
         for (File file : File.values()) {
@@ -24,9 +27,6 @@ public class Square {
             CACHE.put(square.toString(), square);
         }
     }
-
-    private final File file;
-    private final Rank rank;
 
     private Square(final File file, final Rank rank) {
         this.file = file;
@@ -68,6 +68,10 @@ public class Square {
         File nextFile = file.getNextFile(fileUnit);
         Rank nextRank = rank.getNextRank(rankUnit);
         return of(nextFile, nextRank);
+    }
+
+    public boolean hasSameFile(final File file) {
+        return this.file == file;
     }
 
     @Override
