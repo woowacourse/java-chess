@@ -24,8 +24,8 @@ public class ChessController {
     private boolean catchException(ChessGame chessGame) {
         try {
             return command.operate(chessGame);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
+        } catch (IllegalArgumentException errorMassage) {
+            System.out.println(errorMassage);
         }
         return true;
     }

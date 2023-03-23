@@ -8,6 +8,8 @@ public class Pawn extends Piece {
     private static final int WHITE_MIN_MOVABLE_RANK = 1;
     private static final int BLACK_MAX_MOVABLE_RANK = -2;
     private static final int BLACK_MIN_MOVABLE_RANK = -1;
+    private static final int SELF_SQUARE = 0;
+    private static final int NEXT_SQUARE = 1;
 
     public Pawn(Camp camp) {
         super(camp);
@@ -29,7 +31,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveBlack(Square source, Square target) {
-        if (source.calculateRankDifference(target) >= 0) {
+        if (source.calculateRankDifference(target) >= SELF_SQUARE) {
             return false;
         }
         return canBlackFirstMove(source, target);
@@ -37,7 +39,7 @@ public class Pawn extends Piece {
 
     private boolean canMoveWhite(Square source, Square target) {
 
-        if (source.calculateRankDifference(target) <= 0) {
+        if (source.calculateRankDifference(target) <= SELF_SQUARE) {
             return false;
         }
         return canWhiteFirstMove(source, target);
@@ -48,11 +50,11 @@ public class Pawn extends Piece {
         int fileDistance = source.calculateFileDistance(target);
 
         if (source.isRankSeven()) {
-            return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == 0 ||
-                    rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == 1;
+            return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == SELF_SQUARE ||
+                    rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance == NEXT_SQUARE;
         }
 
-        return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= 1;
+        return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= NEXT_SQUARE;
     }
 
     private static boolean canWhiteFirstMove(Square source, Square target) {
@@ -60,10 +62,10 @@ public class Pawn extends Piece {
         int fileDistance = source.calculateFileDistance(target);
 
         if (source.isRankTwo()) {
-            return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == 0 ||
-                    rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == 1;
+            return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == SELF_SQUARE ||
+                    rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance == NEXT_SQUARE;
         }
 
-        return rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance <= 1;
+        return rankDifference == WHITE_MIN_MOVABLE_RANK && fileDistance <= NEXT_SQUARE;
     }
 }

@@ -11,7 +11,7 @@ import chess.renderer.PieceOutputRenderer;
 
 public class OutputView {
 
-    private static final String SCORE_DELIMITER = "진영 점수: ";
+    private static final String SCORE_DELIMITER = " 진영 점수: ";
 
     public static void printChessBoard(Chessboard chessboard) {
         System.out.println();

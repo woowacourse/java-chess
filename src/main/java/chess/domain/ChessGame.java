@@ -8,6 +8,8 @@ import chess.domain.validateMove.SourceMoveValidator;
 import chess.domain.validateMove.ValidateData;
 
 public class ChessGame {
+    private static final String CANT_MOVE_MESSAGE = "이동할 수 없는 위치입니다";
+    private static final String NOT_YOUR_PIECE_MESSAGE = "해당 위치에는 당신의 Piece가 없습니다.";
     private final Chessboard chessboard;
     private Camp turn;
 
@@ -24,14 +26,14 @@ public class ChessGame {
             turn = turn.getOpposite();
             return;
         }
-        throw new IllegalArgumentException("이동할 수 없는 위치입니다");
+        throw new IllegalArgumentException(CANT_MOVE_MESSAGE);
     }
 
     private void validateTurn(Square square) {
         Piece pieceAtSquare = chessboard.getPieceAt(square);
 
         if (pieceAtSquare.isOpposite(turn)) {
-            throw new IllegalArgumentException("해당 위치에는 당신의 Piece가 없습니다.");
+            throw new IllegalArgumentException(NOT_YOUR_PIECE_MESSAGE);
         }
     }
 

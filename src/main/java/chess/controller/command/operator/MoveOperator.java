@@ -14,17 +14,22 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class MoveOperator extends Operator {
+
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     public MoveOperator(ChessController chessController, ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
     public boolean operate(List<String> command) {
-        if (!CommendRenderer.isSame(command.get(0), CommandType.MOVE)) {
+        if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.MOVE)) {
             Operator next = new EndOperator(chessController, chessGame);
             return next.operate(command);
         }
-        chessGame.move(makeSquare(command.get(1)), makeSquare(command.get(2)));
+        chessGame.move(makeSquare(command.get(SOURCE_INDEX)), makeSquare(command.get(TARGET_INDEX)));
         OutputView.printChessBoard(chessGame.getChessboard());
         return chessGame.canKeepGoing();
     }

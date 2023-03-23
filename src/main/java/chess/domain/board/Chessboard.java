@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Chessboard {
+    private static final double PAWN_RATE = 0.5;
     private final Map<Square, Piece> board;
 
     public Chessboard() {
@@ -43,7 +44,6 @@ public class Chessboard {
     }
 
     public boolean isEmptyInRoute(Square source, Square target) {
-        List<Square> squares = getMovableRoute(source, target);
         return getMovableRoute(source, target)
                 .stream()
                 .filter(square -> board.get(square).getPieceType() != PieceType.EMPTY)
@@ -87,7 +87,7 @@ public class Chessboard {
         if (count == 1) {
             return 0;
         }
-        return count * 0.5;
+        return count * PAWN_RATE;
     }
 
     public boolean isKingSurvive() {

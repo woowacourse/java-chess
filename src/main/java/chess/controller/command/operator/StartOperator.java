@@ -10,13 +10,16 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class StartOperator extends Operator {
+
+    private static final int COMMAND_INDEX = 0;
+
     public StartOperator(ChessController chessController, ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
     public boolean operate(List<String> command) {
-        if (!CommendRenderer.isSame(command.get(0), CommandType.START)) {
+        if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.START)) {
             Operator next = new StatusOperator(chessController, chessGame);
             return next.operate(command);
         }
