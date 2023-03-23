@@ -66,9 +66,9 @@ public class GameController {
 
     public Map<Integer, String> getChessBoard(final Board board) {
         Map<Integer, String> boardResult = new LinkedHashMap<>();
-        Map<Square, Piece> pieces = board.getPieces();
-        for (Square key : pieces.keySet()) {
-            boardResult.put(Squares.getIndex(key), pieces.get(key).getPieceTypeName());
+        Map<Square, Piece> pieces = board.getBoard();
+        for (Square square : pieces.keySet()) {
+            boardResult.put(Squares.getIndex(square), pieces.get(square).getPieceTypeName());
         }
         return boardResult;
     }

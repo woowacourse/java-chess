@@ -30,7 +30,7 @@ class BoardTest {
     void containsPieces() {
         Board board = new Board();
 
-        assertThat(board.getPieces()).hasSize(32);
+        assertThat(board.getBoard()).hasSize(32);
     }
 
     @Test
@@ -42,7 +42,7 @@ class BoardTest {
 
         board.move(src, dst);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(dst);
     }
 
     @Test
@@ -54,7 +54,7 @@ class BoardTest {
 
         board.move(src, dst);
 
-        assertThat(board.getPieces().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(dst);
     }
 
     @Test
@@ -98,7 +98,7 @@ class BoardTest {
 
             board.move(src, dst);
 
-            assertThat(board.getPieces().keySet()).contains(dst);
+            assertThat(board.getBoard().keySet()).contains(dst);
         }
 
         @ParameterizedTest(name = "knight를 제외한 다른 말들은 가는 길목에 말이 있으면 이동할 수 없다.")

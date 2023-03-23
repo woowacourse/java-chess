@@ -7,6 +7,7 @@ import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static chess.domain.piece.PieceType.KNIGHT;
@@ -80,7 +81,7 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public Map<Square, Piece> getPieces() {
-        return board;
+    public Map<Square, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
