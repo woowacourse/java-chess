@@ -3,19 +3,21 @@ package domain.point;
 import java.util.Arrays;
 
 public enum Rank {
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+    ONE("1", 0),
+    TWO("2", 1),
+    THREE("3", 2),
+    FOUR("4", 3),
+    FIVE("5", 4),
+    SIX("6", 5),
+    SEVEN("7", 6),
+    EIGHT("8", 7);
 
     private final String symbol;
+    private final int indexFromBottom;
 
-    Rank(String symbol) {
+    Rank(String symbol, int indexFromBottom) {
         this.symbol = symbol;
+        this.indexFromBottom = indexFromBottom;
     }
 
     public static Rank findBySymbol(String symbol) {
@@ -27,5 +29,9 @@ public enum Rank {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public int getIndexFromBottom() {
+        return indexFromBottom;
     }
 }

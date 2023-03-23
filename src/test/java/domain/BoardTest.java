@@ -4,9 +4,11 @@ import domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BoardTest {
@@ -78,5 +80,36 @@ class BoardTest {
 
     private void assertSecondBlackRank(List<Piece> pieces) {
         assertThat(pieces).containsOnly(new BlackPawn());
+    }
+
+    @Test
+    @DisplayName("출발 좌표, 도착 좌표가 주어지면 출발 좌표에 있는 말이 이동한다.")
+    void move() {
+        List<List<Piece>> boardStatus = Arrays.asList(
+                Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
+                Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, a2, a3
+        );
+        Board board = new Board(boardStatus);
+
+        board.move("a2", "a3");
+
+        assertThat(boardStatus.get(1).get(0)).isEqualTo(new Empty());
+        assertThat(boardStatus.get(2).get(0)).isEqualTo(new BlackPawn());
+    }
+
+    @Test
+    @DisplayName("출발 좌표에 아무 장기말이 없으면 예외가 발생한다.")
+    void moveFromEmptyPoint() {
+        List<List<Piece>> boardStatus = Arrays.asList(
+                Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
+                Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, a2, a3
+        );
+
+        Board board = new Board(boardStatus);
+
+        assertThatThrownBy(() -> board.move("a1", "a3"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

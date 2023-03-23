@@ -16,7 +16,6 @@ public class ChessController {
 
     public void boot() {
         outputView.printAskingBootingCommandMessage();
-
         BootingCommand command = inputView.getGameBootingCommand();
         while (command.isStart()) {
             printBoardStatus();
