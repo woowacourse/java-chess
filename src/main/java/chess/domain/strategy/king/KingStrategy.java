@@ -18,4 +18,5 @@ public class KingStrategy implements PieceStrategy {
             throw new IllegalArgumentException("킹은 한 칸 이상 이동할 수 없습니다.");
         }
     }
+
 }

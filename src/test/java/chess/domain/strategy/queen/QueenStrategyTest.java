@@ -49,6 +49,6 @@ final class QueenStrategyTest {
             //then
             assertThatThrownBy(() -> new QueenStrategy().validateDirection(moveRequest));
         }
-
     }
+
 }

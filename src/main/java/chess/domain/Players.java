@@ -25,8 +25,8 @@ public class Players {
     }
 
     private List<Integer> calculateDirectionVector(final Position fromPosition, final Position toPosition) {
-        int diffFile = toPosition.calculateFileDistance(fromPosition.getFileValue());
-        int diffRank = toPosition.calculateRankDistance(fromPosition.getRankValue());
+        int diffFile = toPosition.calculateFileDistance(fromPosition);
+        int diffRank = toPosition.calculateRankDistance(fromPosition);
 
         BigInteger rankAndFileGcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
         int fileDirection = diffFile / rankAndFileGcd.intValue();
@@ -57,11 +57,8 @@ public class Players {
     }
 
     private List<Position> getAllPosition() {
-        List<Piece> whitePieces = players.get(0).getPieces();
-        List<Piece> blackPieces = players.get(1).getPieces();
-
-        return Stream.concat(whitePieces.stream().map(Piece::getPosition),
-                        blackPieces.stream().map(Piece::getPosition))
+        return players.stream()
+                .flatMap(player -> player.getPieces().stream().map(Piece::getPosition))
                 .collect(toList());
     }
 
@@ -129,6 +126,17 @@ public class Players {
 
     public List<Piece> getPiecesByColor(final Color color) {
         return getPlayerByColor(color).getPieces();
+    }
+
+    public boolean everyKingAlive() {
+        return players.stream().noneMatch(Player::isKingDead);
+    }
+
+    public String getWinnerColorName() {
+        Player loser = players.stream().filter(Player::isKingDead)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("아직 게임 안 끝났어요"));
+        return getAnotherPlayer(loser).getColorName();
     }
 
     public double calculateScore() {

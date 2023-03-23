@@ -8,44 +8,46 @@ import chess.domain.dto.res.PiecesResponse;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public final class ChessGameController {
 
-    private final Players players = initializeChessBoard();
+    private Players players;
 
     private final Map<Command, Action> commands = Map.of(
             Command.START, this::start,
             Command.MOVE, this::move,
-            Command.END, this::end
+            Command.END, this::end,
+            Command.STATUS, this::status
     );
 
     public void run() {
+        initializeChessBoard();
         OutputView.printStartGame();
-        List<String> commands = InputView.getCommands();
-        Command findCommand = Command.findCommand(commands);
-        this.commands.get(findCommand).execute(commands);
+
+        boolean isNotEnd = true;
+        while (isNotEnd && players.everyKingAlive()) {
+            List<String> commands = InputView.getCommands();
+            Command findCommand = Command.findCommand(commands);
+            this.commands.get(findCommand).execute(commands);
+            isNotEnd = findCommand.isNotEnd();
+        }
+        this.commands.get(Command.END).execute(Collections.emptyList());
     }
 
-    private void start(final List<String> strings) {
-        Command findCommand = Command.START;
-
+    private void start(final List<String> command) {
+        initializeChessBoard();
         PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
         OutputView.printInitializedChessBoard(piecesResponse);
-
-        while (findCommand.isNotEnd()) {
-            List<String> commands = InputView.getCommands();
-            findCommand = Command.findCommand(commands);
-            this.commands.get(findCommand).execute(commands);
-        }
     }
 
     private void status(final List<String> command) {
         OutputView.printStatus(players.calculateScore());
     }
 
-    private void move(List<String> command) {
+    private void move(final List<String> command) {
         String inputMovablePiece = command.get(1);
         String inputTargetPosition = command.get(2);
 
@@ -59,15 +61,19 @@ public final class ChessGameController {
     }
 
     private void end(final List<String> strings) {
+        if (!players.everyKingAlive()) {
+            OutputView.printWinner(players.getWinnerColorName());
+        }
     }
 
-    private Players initializeChessBoard() {
+    private void initializeChessBoard() {
         Pieces whitePieces = Pieces.createWhitePieces();
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
 
-        return Players.from(whitePlayer, blackPlayer);
+        this.players = Players.from(whitePlayer, blackPlayer);
     }
+
 }

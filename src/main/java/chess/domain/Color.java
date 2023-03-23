@@ -6,7 +6,7 @@ public enum Color {
     WHITE,
     BLACK;
 
-    public static Color changeColor(Color current) {
+    public static Color changeColor(final Color current) {
         return Arrays.stream(Color.values())
                 .filter(color -> color != current)
                 .findFirst()
@@ -20,4 +20,5 @@ public enum Color {
     public boolean isBlack() {
         return this == BLACK;
     }
+
 }

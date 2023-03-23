@@ -25,7 +25,7 @@ public enum Shape {
     private final Score score;
     private final Consumer<MoveRequest> validateDirection;
 
-    Shape(final char whiteName, char blackName, double score, Consumer<MoveRequest> validateDirection) {
+    Shape(final char whiteName, final char blackName, final double score, final Consumer<MoveRequest> validateDirection) {
         this.whiteName = whiteName;
         this.blackName = blackName;
         this.score = Score.from(score);
@@ -36,14 +36,14 @@ public enum Shape {
         this.validateDirection.accept(request);
     }
 
-    public static Shape findShapeByWhiteName(char whiteName) {
+    public static Shape findShapeByWhiteName(final char whiteName) {
         return Arrays.stream(values())
                 .filter(shape -> shape.whiteName == whiteName)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
 
-    public char getNameByColor(Color color) {
+    public char getNameByColor(final Color color) {
         if (color.isWhite()) {
             return this.whiteName;
         }
