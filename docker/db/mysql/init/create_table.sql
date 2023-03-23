@@ -19,7 +19,7 @@ CREATE TABLE `board`
     `_id`    int PRIMARY KEY AUTO_INCREMENT,
     `square` varchar(2),
     `piece`  varchar(6),
-    `camp`   tinyint,
+    `camp`   varchar(5),
     `g_id`   int
 );
 
