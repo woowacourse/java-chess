@@ -35,7 +35,14 @@ public class OutputView {
     public static void printScoreBySide(ScoreBySideDto scoreBySideDto) {
         Map<String, BigDecimal> scoreBySideForPrint = scoreBySideDto.getScoreBySideForPrint();
         for (String sideName : scoreBySideForPrint.keySet()) {
-            printMessage(sideName + "Score : " + scoreBySideForPrint.get(sideName) + "점");
+            printMessage(sideName + " Score : " + scoreBySideForPrint.get(sideName) + "점");
+        }
+    }
+
+    public static void printGameResultBySide(GameResultBySideDto gameResultBySideDto) {
+        Map<String, String> gameResultBySideForPrint = gameResultBySideDto.getGameResultBySideForPrint();
+        for (String sideName : gameResultBySideForPrint.keySet()) {
+            printMessage(sideName + " Result : " + gameResultBySideForPrint.get(sideName));
         }
     }
 
