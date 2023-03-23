@@ -3,6 +3,7 @@ package domain.piece;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import domain.Square;
+import domain.piece.nonsliding.King;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -49,14 +50,14 @@ class KingTest {
 
     static Stream<Arguments> parametersProvider2() {
         return Stream.of(
-            arguments(Square.of(3, 3), Square.of(3, 5), "움직일 수 있는 범위를 초과합니다."),
-            arguments(Square.of(3, 3), Square.of(5, 5), "움직일 수 있는 범위를 초과합니다."),
-            arguments(Square.of(3, 3), Square.of(5, 3), "움직일 수 있는 범위를 초과합니다."),
-            arguments(Square.of(3, 3), Square.of(3, 3), "움직일 수 있는 범위를 초과합니다."),
-            arguments(Square.of(3, 3), Square.of(1, 3), "움직일 수 있는 범위를 초과합니다."),
-            arguments(Square.of(3, 3), Square.of(4, 1), "해당 방향으로 갈 수 없습니다."),
-            arguments(Square.of(3, 3), Square.of(1, 2), "해당 방향으로 갈 수 없습니다."),
-            arguments(Square.of(3, 3), Square.of(2, 5), "해당 방향으로 갈 수 없습니다.")
+            arguments(Square.of(3, 3), Square.of(3, 5), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(5, 5), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(5, 3), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(3, 3), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(1, 3), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(4, 1), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(1, 2), "해당 목적지로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(2, 5), "해당 목적지로 갈 수 없습니다.")
         );
     }
 }

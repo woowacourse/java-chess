@@ -3,6 +3,7 @@ package domain.piece;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import domain.Square;
+import domain.piece.nonsliding.Knight;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -45,7 +46,7 @@ class KnightTest {
 
         Assertions.assertThatThrownBy(() -> knight.findRoutes(src, dest))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("해당 방향으로 갈 수 없습니다.");
+            .hasMessage("해당 목적지로 갈 수 없습니다.");
     }
 
     static Stream<Arguments> parametersProvider2() {

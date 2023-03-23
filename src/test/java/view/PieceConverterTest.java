@@ -2,9 +2,9 @@ package view;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import domain.piece.King;
+import domain.piece.nonsliding.King;
 import domain.piece.Piece;
-import domain.piece.Queen;
+import domain.piece.sliding.Queen;
 import domain.piece.TeamColor;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
