@@ -26,6 +26,11 @@ public class Empty implements SquareStatus {
     }
 
     @Override
+    public double getScore() {
+        return 0;
+    }
+
+    @Override
     public Route findRoute(MovePosition movePosition) {
         throw new IllegalStateException(EMPTY_ERROR_MESSAGE);
     }

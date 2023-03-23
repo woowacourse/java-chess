@@ -25,6 +25,11 @@ public abstract class Piece implements SquareStatus {
         return color;
     }
 
+    @Override
+    public final double getScore() {
+        return pieceType.getScore();
+    }
+
     protected final void validateMovable(MovePosition movePosition) {
         if (isMovable(movePosition)) {
             return;

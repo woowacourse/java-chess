@@ -13,4 +13,6 @@ public interface SquareStatus {
 
     Route findRoute(MovePosition movePosition);
 
+    double getScore();
+
 }
