@@ -17,4 +17,11 @@ public enum Side {
     public boolean isNeutrality() {
         return this == NEUTRALITY;
     }
+
+    public boolean isAlly(final Side other) {
+        if (this.isNeutrality()) {
+            throw new IllegalArgumentException("중립은 아군이 존재하지 않습니다.");
+        }
+        return this == other;
+    }
 }
