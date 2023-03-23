@@ -4,7 +4,15 @@ import chess.domain.team.Team;
 
 import java.util.List;
 
-import static chess.domain.piece.Direction.*;
+import static chess.domain.piece.Direction.DOWN;
+import static chess.domain.piece.Direction.LEFT;
+import static chess.domain.piece.Direction.LEFT_DOWN;
+import static chess.domain.piece.Direction.LEFT_UP;
+import static chess.domain.piece.Direction.RIGHT;
+import static chess.domain.piece.Direction.RIGHT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_UP;
+import static chess.domain.piece.Direction.UP;
+
 
 public final class Queen extends Piece {
     private static final List<Direction> moves = List.of(

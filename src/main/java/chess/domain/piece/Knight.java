@@ -4,7 +4,14 @@ import chess.domain.team.Team;
 
 import java.util.List;
 
-import static chess.domain.piece.Direction.*;
+import static chess.domain.piece.Direction.LEFT_DOWN_DOWN;
+import static chess.domain.piece.Direction.LEFT_LEFT_DOWN;
+import static chess.domain.piece.Direction.LEFT_LEFT_UP;
+import static chess.domain.piece.Direction.LEFT_UP_UP;
+import static chess.domain.piece.Direction.RIGHT_DOWN_DOWN;
+import static chess.domain.piece.Direction.RIGHT_RIGHT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_RIGHT_UP;
+import static chess.domain.piece.Direction.RIGHT_UP_UP;
 
 public final class Knight extends Piece {
 

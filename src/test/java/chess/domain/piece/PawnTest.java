@@ -3,8 +3,14 @@ package chess.domain.piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.piece.Direction.*;
-import static chess.domain.piece.PieceConstants.*;
+
+import static chess.domain.piece.Direction.DOWN;
+import static chess.domain.piece.Direction.LEFT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_DOWN;
+import static chess.domain.piece.Direction.UP;
+import static chess.domain.piece.PieceConstants.BLACK_PAWN;
+import static chess.domain.piece.PieceConstants.EMPTY;
+import static chess.domain.piece.PieceConstants.WHITE_PAWN;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

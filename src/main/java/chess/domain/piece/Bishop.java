@@ -4,7 +4,10 @@ import chess.domain.team.Team;
 
 import java.util.List;
 
-import static chess.domain.piece.Direction.*;
+import static chess.domain.piece.Direction.LEFT_DOWN;
+import static chess.domain.piece.Direction.LEFT_UP;
+import static chess.domain.piece.Direction.RIGHT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_UP;
 
 public final class Bishop extends Piece {
 

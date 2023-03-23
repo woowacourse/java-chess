@@ -7,7 +7,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.piece.Direction.*;
+import static chess.domain.piece.Direction.DOWN;
+import static chess.domain.piece.Direction.LEFT;
+import static chess.domain.piece.Direction.LEFT_DOWN;
+import static chess.domain.piece.Direction.LEFT_DOWN_DOWN;
+import static chess.domain.piece.Direction.LEFT_LEFT_DOWN;
+import static chess.domain.piece.Direction.LEFT_LEFT_UP;
+import static chess.domain.piece.Direction.LEFT_UP;
+import static chess.domain.piece.Direction.LEFT_UP_UP;
+import static chess.domain.piece.Direction.RIGHT;
+import static chess.domain.piece.Direction.RIGHT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_DOWN_DOWN;
+import static chess.domain.piece.Direction.RIGHT_RIGHT_DOWN;
+import static chess.domain.piece.Direction.RIGHT_RIGHT_UP;
+import static chess.domain.piece.Direction.RIGHT_UP;
+import static chess.domain.piece.Direction.RIGHT_UP_UP;
+import static chess.domain.piece.Direction.UP;
+import static chess.domain.piece.Direction.findByPosition;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
