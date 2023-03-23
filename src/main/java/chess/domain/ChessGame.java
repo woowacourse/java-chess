@@ -8,10 +8,9 @@ import java.util.Map;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private GameStatus gameStatus;
+    private GameStatus gameStatus = GameStatus.READY;
 
     public ChessGame(Camp firstCamp, CampSwitcher campSwitcher) {
-        this.gameStatus = GameStatus.READY;
         this.chessBoard = new ChessBoard(firstCamp, campSwitcher);
     }
 
@@ -34,7 +33,6 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> readBoard(CommandRequest commandRequest) {
-        gameStatus.validateCommand(commandRequest.getCommand());
         return chessBoard.piecesByPosition();
     }
 
