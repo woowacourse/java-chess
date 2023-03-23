@@ -12,7 +12,7 @@ final class RankTest {
     @DisplayName("가로줄은 0 ~ 7 값을 벗어날 경우 예외가 발생한다.")
     @ValueSource(ints = {96, 108})
     void validateFileRange(int rank) {
-        assertThatThrownBy(() -> new Rank(rank))
+        assertThatThrownBy(() -> Rank.from(rank))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물의 가로 위치는 최소 0부터 최대 7까지 놓을 수 있습니다.");
     }
