@@ -5,6 +5,8 @@ import chess.domain.movepattern.PawnMovePattern;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import org.jetbrains.annotations.Nullable;
 
 public class Pawn implements Piece {
 
@@ -65,51 +67,19 @@ public class Pawn implements Piece {
             final Board board
     ) {
         List<Position> movablePosition = new ArrayList<>();
-        if (canMoveMore(source, movePattern, board)) {
-            final Position nextPosition = source.move(movePattern);
+        final Position nextPosition = source.move(movePattern);
+        if (isDiagonalNextPositionValid(source, nextPosition, board)) {
             movablePosition.add(nextPosition);
         }
         return movablePosition;
     }
 
-    private boolean canMoveMore(final Position currentPosition, final PawnMovePattern movePattern, final Board board) {
-        final Position nextPosition = currentPosition.move(movePattern);
-        final Side currentSide = board.findSideByPosition(currentPosition);
-        final Side nextSide = board.findSideByPosition(nextPosition);
-
-        if (movePattern.isDiagonalMove()) {
-            return canDiagonalMoveMore(currentPosition, nextPosition, currentSide, nextSide);
-        }
-        return canNonDiagonalMoveMore(currentPosition, nextPosition, nextSide);
+    private boolean isDiagonalNextPositionValid(final Position source, @Nullable final Position nextPosition, final Board board) {
+        return isPositionNotNull(nextPosition) && board.isEnemyPosition(source, nextPosition);
     }
 
-    private boolean canDiagonalMoveMore(
-            final Position currentPosition,
-            final Position nextPosition,
-            final Side currentSide,
-            final Side nextSide
-    ) {
-        return isInRange(currentPosition, nextPosition) && isEnemySide(currentSide, nextSide);
-    }
-
-    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
-        return currentPosition != nextPosition;
-    }
-
-    private boolean isEnemySide(final Side currentSide, final Side nextSide) {
-        return !isNeutralitySide(nextSide) && currentSide != nextSide;
-    }
-
-    private boolean isNeutralitySide(final Side side) {
-        return side.isNeutrality();
-    }
-
-    private boolean canNonDiagonalMoveMore(
-            final Position currentPosition,
-            final Position nextPosition,
-            final Side nextSide
-    ) {
-        return isInRange(currentPosition, nextPosition) && isNeutralitySide(nextSide);
+    private boolean isPositionNotNull(@Nullable final Position position) {
+        return position != null;
     }
 
     private List<Position> findMovablePositionByNonDiagonalMovePattern(
@@ -118,23 +88,24 @@ public class Pawn implements Piece {
             final Board board
     ) {
         List<Position> movablePosition = new ArrayList<>();
-        if (canMoveMore(source, movePattern, board)) {
-            final Position nextPosition = source.move(movePattern);
+        final Position nextPosition = source.move(movePattern);
+        boolean isNextPositionInvalid = true;
+        if (isNonDiagonalNextPositionValid(nextPosition, board)) {
             movablePosition.add(nextPosition);
+            isNextPositionInvalid = false;
         }
-        if (notMoved && canMoveMoreSpecial(source, movePattern, board)) {
-            final Position specialPosition = source.move(movePattern).move(movePattern);
+        if (isNextPositionInvalid) {
+            return movablePosition;
+        }
+        final Position specialPosition = Objects.requireNonNull(nextPosition).move(movePattern);
+        if (notMoved && isNonDiagonalNextPositionValid(specialPosition, board)) {
             movablePosition.add(specialPosition);
         }
         return movablePosition;
     }
 
-    private boolean canMoveMoreSpecial(final Position currentPosition, final PawnMovePattern movePattern,
-                                       final Board board) {
-        if (!canMoveMore(currentPosition, movePattern, board)) {
-            return false;
-        }
-        return canMoveMore(currentPosition.move(movePattern), movePattern, board);
+    private boolean isNonDiagonalNextPositionValid(@Nullable final Position nextPosition, final Board board) {
+        return isPositionNotNull(nextPosition) && board.findSideByPosition(nextPosition).isNeutrality();
     }
 
     @Override

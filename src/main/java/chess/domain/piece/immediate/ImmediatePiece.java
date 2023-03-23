@@ -8,6 +8,7 @@ import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public final class ImmediatePiece implements Piece {
 
@@ -40,27 +41,19 @@ public final class ImmediatePiece implements Piece {
             final Board board) {
 
         List<Position> movablePosition = new ArrayList<>();
-        if (canMoveMore(source, movePattern, board)) {
-            Position nextPosition = source.move(movePattern);
+        final Position nextPosition = source.move(movePattern);
+        if (isNextPositionValid(source, nextPosition, board)) {
             movablePosition.add(nextPosition);
         }
         return movablePosition;
     }
 
-    private boolean canMoveMore(final Position currentPosition, final MovePattern movePattern, final Board board) {
-        final Position nextPosition = currentPosition.move(movePattern);
-        final Side currentSide = board.findSideByPosition(currentPosition);
-        final Side nextSide = board.findSideByPosition(nextPosition);
-
-        return isInRange(currentPosition, nextPosition) && isDifferentSide(currentSide, nextSide);
+    private boolean isNextPositionValid(final Position source, @Nullable final Position nextPosition, final Board board) {
+        return isPositionNotNull(nextPosition) && !board.isAllyPosition(source, nextPosition);
     }
 
-    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
-        return currentPosition != nextPosition;
-    }
-
-    private boolean isDifferentSide(final Side currentSide, final Side nextSide) {
-        return currentSide != nextSide;
+    private boolean isPositionNotNull(@Nullable final Position position) {
+        return position != null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import java.util.HashMap;
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 public class Position {
 
@@ -37,15 +38,15 @@ public class Position {
         return CACHE.get(getKey(rank, file));
     }
 
-    public Position move(final MovePattern movePattern) {
+    public @Nullable Position move(final MovePattern movePattern) {
         final int nextFileIndex = movePattern.nextFileIndex(fileIndex());
         final int nextRankIndex = movePattern.nextRankIndex(rankIndex());
 
-        if (Board.isInRange(nextFileIndex, nextRankIndex)) {
-            return Position.of(File.findByIndex(nextFileIndex), Rank.findByIndex(nextRankIndex));
+        if (!Board.isInRange(nextFileIndex, nextRankIndex)) {
+            return null;
         }
 
-        return this;
+        return Position.of(File.findByIndex(nextFileIndex), Rank.findByIndex(nextRankIndex));
     }
 
     public int fileIndex() {
