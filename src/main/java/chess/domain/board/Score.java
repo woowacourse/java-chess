@@ -19,6 +19,18 @@ public class Score {
         return new Score(this.score.subtract(scoreToSubtract.score));
     }
 
+    public boolean isGreaterScore(Score scoreToCompare) {
+        return this.score.compareTo(scoreToCompare.score) > 0;
+    }
+
+    public boolean isLessScore(Score scoreToCompare) {
+        return this.score.compareTo(scoreToCompare.score) < 0;
+    }
+
+    public boolean isEqualScore(Score scoreToCompare) {
+        return this.score.compareTo(scoreToCompare.score) == 0;
+    }
+
     public BigDecimal getScore() {
         return score;
     }
