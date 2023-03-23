@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
+import chess.domain.piece.Kind;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -63,5 +64,13 @@ public final class Square {
 
     public Piece getPiece() {
         return piece;
+    }
+
+    public Kind pieceKind() {
+        return piece.getKind();
+    }
+
+    public boolean equalsColor(Color color) {
+        return piece.equalsColor(color);
     }
 }

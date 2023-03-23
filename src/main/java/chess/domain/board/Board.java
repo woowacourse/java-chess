@@ -36,6 +36,11 @@ public final class Board {
         move(sourceSquare, targetSquare);
     }
 
+    public boolean isKingDead(Color color) {
+        return board.stream()
+                .noneMatch(squares -> squares.findKing(color));
+    }
+
     private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
         if (!sourceSquare.canMovePiece(isEmptySquare, source, target)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);

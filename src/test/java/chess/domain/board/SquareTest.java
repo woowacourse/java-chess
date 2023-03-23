@@ -1,9 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.BlackPawn;
-import chess.domain.piece.Color;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,5 +27,13 @@ class SquareTest {
         sourceSquare.makeEmpty();
 
         assertThat(sourceSquare.getPiece()).isExactlyInstanceOf(Empty.class);
+    }
+
+    @DisplayName("킹을 가지고 있다.")
+    @Test
+    void pieceKind_king_true() {
+        final var square = new Square(new King(Color.WHITE));
+        
+        assertThat(square.pieceKind()).isEqualTo(Kind.KING);
     }
 }

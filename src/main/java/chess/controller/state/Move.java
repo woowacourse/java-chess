@@ -18,8 +18,18 @@ public class Move extends Running {
 
     @Override
     public State execute(InputView inputView, OutputView outputView) {
-        chessGame.playTurn(PositionParser.parse(firstArgument), PositionParser.parse(secondArgument));
-        outputView.printBoard(new BoardDTO(chessGame.getBoard()));
+        try {
+            chessGame.playTurn(PositionParser.parse(firstArgument), PositionParser.parse(secondArgument));
+            outputView.printBoard(new BoardDTO(chessGame.getBoard()));
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMesage(e);
+            return inputCommand(inputView, outputView);
+        }
+
+        if (chessGame.isKingDead()) {
+            outputView.printResult(chessGame.getTurn());
+            return new End();
+        }
 
         return inputCommand(inputView, outputView);
     }
