@@ -13,20 +13,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
-    ROOK(List.of(RookState.getInstance())),
-    KNIGHT(List.of(KnightState.getInstance())),
-    BISHOP(List.of(BishopState.getInstance())),
-    QUEEN(List.of(QueenState.getInstance())),
-    KING(List.of(KingState.getInstance())),
-    PAWN(List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
-    EMPTY(List.of(EmptyState.getInstance()));
+    ROOK(5, List.of(RookState.getInstance())),
+    KNIGHT(2.5, List.of(KnightState.getInstance())),
+    BISHOP(3, List.of(BishopState.getInstance())),
+    QUEEN(9, List.of(QueenState.getInstance())),
+    KING(0, List.of(KingState.getInstance())),
+    PAWN(1, List.of(InitialPawnState.getInstance(), MovedPawnState.getInstance())),
+    EMPTY(0, List.of(EmptyState.getInstance()));
 
     private static final int INITIAL_STATE = 0;
 
-
+    private final double score;
     private final List<MoveState> state;
 
-    PieceType(List<MoveState> state) {
+
+    PieceType(double score, List<MoveState> state) {
+        this.score = score;
         this.state = state;
     }
 
@@ -39,5 +41,9 @@ public enum PieceType {
 
     public MoveState getState() {
         return state.get(INITIAL_STATE);
+    }
+
+    public double getScore() {
+        return score;
     }
 }
