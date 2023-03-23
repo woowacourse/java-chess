@@ -8,8 +8,8 @@ import domain.piece.type.Type;
 public class King extends RestrictedPiece {
     public static final int MOVE_DISTANCE_LIMIT = 1;
 
-    public King(Camp camp, Type type) {
-        super(camp, type);
+    public King(Camp camp) {
+        super(camp, Type.KING);
     }
 
     @Override

@@ -16,7 +16,6 @@ import domain.piece.Piece;
 import domain.piece.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
-import domain.piece.type.Type;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
@@ -58,7 +57,7 @@ class ChessBoardTest {
         void pawnTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.H, Rank.TWO));
 
-            assertThat(piece).isEqualTo(new Pawn(Camp.WHITE, Type.PAWN));
+            assertThat(piece).isEqualTo(new Pawn(Camp.WHITE));
         }
 
         @Test
@@ -66,7 +65,7 @@ class ChessBoardTest {
         void knightTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.B, Rank.ONE));
 
-            assertThat(piece).isEqualTo(new Knight(Camp.WHITE, Type.KNIGHT));
+            assertThat(piece).isEqualTo(new Knight(Camp.WHITE));
         }
 
         @Test
@@ -74,7 +73,7 @@ class ChessBoardTest {
         void rookTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.A, Rank.ONE));
 
-            assertThat(piece).isEqualTo(new Rook(Camp.WHITE, Type.ROOK));
+            assertThat(piece).isEqualTo(new Rook(Camp.WHITE));
         }
 
         @Test
@@ -82,7 +81,7 @@ class ChessBoardTest {
         void bishopTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.C, Rank.ONE));
 
-            assertThat(piece).isEqualTo(new Bishop(Camp.WHITE, Type.BISHOP));
+            assertThat(piece).isEqualTo(new Bishop(Camp.WHITE));
         }
 
         @Test
@@ -90,7 +89,7 @@ class ChessBoardTest {
         void queenTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.D, Rank.ONE));
 
-            assertThat(piece).isEqualTo(new Queen(Camp.WHITE, Type.QUEEN));
+            assertThat(piece).isEqualTo(new Queen(Camp.WHITE));
         }
 
         @Test
@@ -98,7 +97,7 @@ class ChessBoardTest {
         void kingTest() {
             Piece piece = chessBoard.getBoard().get(Square.of(File.E, Rank.ONE));
 
-            assertThat(piece).isEqualTo(new King(Camp.WHITE, Type.KING));
+            assertThat(piece).isEqualTo(new King(Camp.WHITE));
         }
     }
 
@@ -144,11 +143,11 @@ class ChessBoardTest {
                 map.put(Square.of(file, rank), Empty.getInstance());
             }
         }
-        map.put(Square.of(1, 2), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(1, 3), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(1, 4), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(1, 5), new Pawn(Camp.BLACK, Type.PAWN));
-        map.put(Square.of(1, 1), new Pawn(Camp.BLACK, Type.PAWN));
+        map.put(Square.of(1, 2), new Pawn(Camp.WHITE));
+        map.put(Square.of(1, 3), new Pawn(Camp.WHITE));
+        map.put(Square.of(1, 4), new Pawn(Camp.WHITE));
+        map.put(Square.of(1, 5), new Pawn(Camp.BLACK));
+        map.put(Square.of(1, 1), new Pawn(Camp.BLACK));
 
         ChessBoard chessBoard = new ChessBoard(map);
         int result1 = chessBoard.countPawnInAllColumns(Camp.WHITE);
@@ -168,12 +167,12 @@ class ChessBoardTest {
             }
         }
 
-        map.put(Square.of(0, 0), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(1, 1), new Knight(Camp.WHITE, Type.KNIGHT));
-        map.put(Square.of(2, 0), new Rook(Camp.WHITE, Type.ROOK));
-        map.put(Square.of(2, 1), new Rook(Camp.WHITE, Type.ROOK));
-        map.put(Square.of(3, 0), new Bishop(Camp.WHITE, Type.BISHOP));
-        map.put(Square.of(4, 0), new Queen(Camp.WHITE, Type.QUEEN));
+        map.put(Square.of(0, 0), new Pawn(Camp.WHITE));
+        map.put(Square.of(1, 1), new Knight(Camp.WHITE));
+        map.put(Square.of(2, 0), new Rook(Camp.WHITE));
+        map.put(Square.of(2, 1), new Rook(Camp.WHITE));
+        map.put(Square.of(3, 0), new Bishop(Camp.WHITE));
+        map.put(Square.of(4, 0), new Queen(Camp.WHITE));
         ChessBoard chessBoard = new ChessBoard(map);
 
         Score score = chessBoard.calculateScoreSum(Camp.WHITE);
@@ -191,14 +190,14 @@ class ChessBoardTest {
             }
         }
 
-        map.put(Square.of(0, 0), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(0, 1), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(0, 2), new Pawn(Camp.WHITE, Type.PAWN));
-        map.put(Square.of(1, 1), new Knight(Camp.WHITE, Type.KNIGHT));
-        map.put(Square.of(2, 0), new Rook(Camp.WHITE, Type.ROOK));
-        map.put(Square.of(2, 1), new Rook(Camp.WHITE, Type.ROOK));
-        map.put(Square.of(3, 0), new Bishop(Camp.WHITE, Type.BISHOP));
-        map.put(Square.of(4, 0), new Queen(Camp.WHITE, Type.QUEEN));
+        map.put(Square.of(0, 0), new Pawn(Camp.WHITE));
+        map.put(Square.of(0, 1), new Pawn(Camp.WHITE));
+        map.put(Square.of(0, 2), new Pawn(Camp.WHITE));
+        map.put(Square.of(1, 1), new Knight(Camp.WHITE));
+        map.put(Square.of(2, 0), new Rook(Camp.WHITE));
+        map.put(Square.of(2, 1), new Rook(Camp.WHITE));
+        map.put(Square.of(3, 0), new Bishop(Camp.WHITE));
+        map.put(Square.of(4, 0), new Queen(Camp.WHITE));
         ChessBoard chessBoard = new ChessBoard(map);
 
         Score result = chessBoard.calculateFinalScore(Camp.WHITE);

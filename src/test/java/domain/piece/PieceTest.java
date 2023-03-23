@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.piece.type.Pawn;
-import domain.piece.type.Type;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
@@ -28,12 +27,12 @@ class PieceTest {
 
     private static Stream<Arguments> provideScoreList() {
         return Stream.of(
-                Arguments.of(new King(Camp.WHITE, Type.KING), 0),
-                Arguments.of(new Pawn(Camp.WHITE, Type.PAWN), 1),
-                Arguments.of(new Knight(Camp.WHITE, Type.KNIGHT), 2.5),
-                Arguments.of(new Bishop(Camp.WHITE, Type.BISHOP), 3),
-                Arguments.of(new Rook(Camp.WHITE, Type.ROOK), 5),
-                Arguments.of(new Queen(Camp.WHITE, Type.QUEEN), 9)
+                Arguments.of(new King(Camp.WHITE), 0),
+                Arguments.of(new Pawn(Camp.WHITE), 1),
+                Arguments.of(new Knight(Camp.WHITE), 2.5),
+                Arguments.of(new Bishop(Camp.WHITE), 3),
+                Arguments.of(new Rook(Camp.WHITE),  5),
+                Arguments.of(new Queen(Camp.WHITE), 9)
         );
     }
 
