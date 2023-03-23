@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.dto.request.MoveRequest;
 import chess.domain.strategy.bishop.BishopStrategy;
 import chess.domain.strategy.king.KingStrategy;
 import chess.domain.strategy.knight.KnightStrategy;

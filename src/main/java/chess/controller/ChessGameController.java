@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.Pieces;
 import chess.domain.Player;
 import chess.domain.Players;
-import chess.domain.dto.res.PiecesResponse;
+import chess.domain.dto.response.PiecesResponse;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 
@@ -73,7 +73,7 @@ public final class ChessGameController {
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
 
-        this.players = Players.from(whitePlayer, blackPlayer);
+        this.players = Players.of(whitePlayer, blackPlayer);
     }
 
 }

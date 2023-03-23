@@ -4,7 +4,7 @@ package chess.domain.strategy.bishop;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.dto.request.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
