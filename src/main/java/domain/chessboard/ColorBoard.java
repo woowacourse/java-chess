@@ -28,19 +28,32 @@ public class ColorBoard {
         return sum - diffScore(chessBoard1);
     }
 
-    public double diffScore(List<Rank> chessBoard1) {
+    private double diffScore(List<Rank> chessBoard1) {
         Map<Integer, Integer> numberOfPawnInColumn = new HashMap<>();
-
         for (Rank value : chessBoard1) {
             List<Square> rank = value.getRank();
             forEachColumn(numberOfPawnInColumn, rank);
         }
-        
         return numberOfPawnInColumn.values()
                 .stream()
                 .filter(i -> 2 <= i)
                 .mapToDouble(i -> i * 0.5)
                 .sum();
+    }
+
+    public long countKing() {
+        return chessBoard.getChessBoard()
+                .stream()
+                .flatMap(rank -> rank.getRank().stream())
+                .filter(square -> square.isSameType(PieceType.KING) && square.isSameColor(color))
+                .count();
+    }
+
+    public boolean isExistKing() {
+        return chessBoard.getChessBoard()
+                .stream()
+                .flatMap(rank -> rank.getRank().stream())
+                .anyMatch(square -> square.isSameType(PieceType.KING) && square.isSameColor(color));
     }
 
     private void forEachColumn(Map<Integer, Integer> numberOfPawnInColumn, List<Square> rank) {
