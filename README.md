@@ -12,14 +12,14 @@
 ### 입력
 - [x] 게임 시작 혹은 종료 명령을 입력한다
 - [x] 게임 이동 명령을 입력한다
-- [ ] 게임 결과 생성 명령을 입력한다
+- [x] 게임 결과 생성 명령을 입력한다
 
 ### 출력
 - [x] 체스판을 출력한다
   - [x] 체스판의 각 행을 출력한다
-- [ ] 게임 결과를 출력한다
-  - [ ] 각 진영의 최종 점수를 출력한다
-  - [ ] 어떤 진영이 승리했는지를 출력한다
+- [x] 게임 결과를 출력한다
+  - [x] 각 진영의 최종 점수를 출력한다
+  - [x] 어떤 진영이 승리했는지를 출력한다
 
 ### 도메인
 
@@ -33,9 +33,11 @@
 - [x] 킹이 잡히면 게임이 종료된다
 - [x] 올바른 턴이 아니라면 기물의 움직임을 제한할 수 있다
   - [x] 턴마다 해당 진영의 기물만 움직일 수 있다
-- [ x 각 진영의 최종 점수를 계산할 수 있다
+- [x] 각 진영의 최종 점수를 계산할 수 있다
   - [x] 생존한 기물들의 점수의 총합으로 계산된다
     - [x] 폰의 경우, 일직선 상에 같은 진영의 폰이 이미 존재한다면 특별하게 계산한다
+- [x] 점수를 통해 우승자를 판단할 수 있다
+  - [x] 공동 우승자인 경우도 판단할 수 있다
 
  - 보드
 - [x] 칸들을 알고 있다
@@ -43,14 +45,16 @@
 - [x] 특정 칸에 있는 기물을 찾을 수 있다
 - [x] 특정 칸에 있는 기물을 교체할 수 있다
 - [x] 명시된 칸에 있는 기물이 움직일 수 있는지 물을 수 있다
+- [x] 진영 별 점수를 계산할 수 있다
+- [x] 모든 킹이 살아있는지 여부를 알고 있다
 
 - 기물
 - [x] 자신의 점수를 알고 있다
 - [x] 자신의 진영을 알고 있다
 - [x] 기물 종류를 알고 있다
 - [x] 이동 규칙을 알고 있다
+  - [x] 폰의 경우, 대치 상황에서 적팀인지 아닌지에 따라 이동 규칙이 바뀐다
 - [x] 특정 좌표로 움직일 수 있는지 판단할 수 있다
-  
 ---
 
 ### 이동 규칙
@@ -67,18 +71,18 @@
 
 ```mermaid
 classDiagram
-    ChessController --> Command
-    ChessController --> InputView
-    ChessController --> OutputView
-    ChessController --> Board
-    Board --> Rank
+    ChessGame --> Board
+    ChessGame --> Turn
+    Board --> BoardInitialImage
     Board --> DirectionVector
-    Rank --> BoardInitialImage
-    Rank --> Square
-    Square --> Piece
-    Square --> Camp
-    Piece --> PieceType
-    PieceType --> Coordinate
+    Board --> Coordinate
+    Board --> Piece
+    Board --> Situation
+    Piece --> Color
+    Piece --> Direction
+    Piece --> Inclination
+    Piece --> Coordinate
+    Piece --> Situation
 ```
 
 
@@ -105,6 +109,8 @@ classDiagram
 > 관련된 아티클 하나 써보면서 공부해보기
 - [x] 같은 팀인지 판단하기 위해서 Camp끼리 비교해야 하는 상황이 왔다. 하지만 이것을 `Square`에 둘 것인가? `EmptySquare`는 사용하지 않는 속성인데.. 하지만 반대로
   생각해보면 `EmptySquare`는 null Object Pattern을 사용한 것이기에 다형성을 사용한 것과는 거리가 멀지 않을까?
+> null object pattern은 다형성보다는 어떤 null을 격리시키기 위한 전략에 가깝다.
 - [x] 일급 컬렉션에서 체스 게임과 관련된 비즈니스 로직을 수행해야 하는가?(InitPawn -> Pawn 변환 등)
   일급 컬렉션은 단순히 컬렉션에 대한 명령 - 쿼리의 책임만으로 두고, 비즈니스 로직은 `ChessGame`에 두면 디미터의 법칙을 위반하지 않나?
 - [x] 오버로딩은 나쁜걸까? 퍼블릭 인터페이스가 여러개가 되니까 나쁜 게 아닐까?
+- [x] 책임을 여기서 더 나눌 수 있을까? 해당 상태를 다룬다면 해당 객체에 책임이 존재하는게 맞지 않나?
