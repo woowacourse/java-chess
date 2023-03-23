@@ -21,7 +21,7 @@ public class Result {
         return new Result(value);
     }
 
-    public static GameResult getGameResultByKing(boolean hasKing) {
+    private static GameResult getGameResultByKing(boolean hasKing) {
         if (hasKing) {
             return GameResult.WIN;
         }

@@ -2,7 +2,6 @@ package domain;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.GameResult;
-import domain.chessboard.Result;
 import domain.chessboard.StatusResult;
 import domain.chessboard.Type;
 import domain.coordinate.MovePosition;

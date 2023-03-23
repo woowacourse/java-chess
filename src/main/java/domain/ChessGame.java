@@ -3,20 +3,13 @@ package domain;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.ColorScore;
 import domain.chessboard.EmptyType;
-import domain.chessboard.GameResult;
 import domain.chessboard.Result;
 import domain.chessboard.Square;
 import domain.chessboard.StatusResult;
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
 import domain.piece.PieceType;
-
-import javax.print.DocFlavor;
-import java.lang.reflect.GenericArrayType;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class ChessGame {
 
