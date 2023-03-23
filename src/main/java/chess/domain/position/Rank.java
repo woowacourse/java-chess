@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public enum Rank {
 
@@ -20,15 +21,16 @@ public enum Rank {
     }
 
     public static Rank of(final int value) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 Rank가 존재하지 않습니다."));
+        return find(rank -> rank.value == value);
     }
 
     public static Rank of(final char value) {
+        return find(rank -> rank.value == value - '0');
+    }
+
+    public static Rank find(final Predicate<Rank> predicate) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == (value - '0'))
+                .filter(predicate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Rank가 존재하지 않습니다."));
     }
