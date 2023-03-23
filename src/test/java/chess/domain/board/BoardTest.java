@@ -30,7 +30,7 @@ class BoardTest {
 
     @BeforeEach
     void init() {
-        board = new Board(new Pieces(), new ScoreBySide());
+        board = new Board(new Pieces());
     }
 
     @Test
@@ -210,19 +210,5 @@ class BoardTest {
         // then
         assertThat(totalWhiteScore).isEqualTo(new Score(new BigDecimal("37.0")));
         assertThat(totalBlackScore).isEqualTo(new Score(new BigDecimal("37.0")));
-    }
-
-    @Test
-    @DisplayName("진영별 점수 합계를 저장한다.")
-    void saveTotalScoreBySide() {
-        // when
-        board.saveTotalScoreBySide(Side.WHITE, new Score(new BigDecimal("28.0")));
-        board.saveTotalScoreBySide(Side.BLACK, new Score(new BigDecimal("30.0")));
-        Map<Side, Score> scoreBySide = board.getScoreBySide();
-
-        // then
-        assertThat(scoreBySide.get(Side.WHITE)).isEqualTo(new Score(new BigDecimal("28.0")));
-        assertThat(scoreBySide.get(Side.BLACK)).isEqualTo(new Score(new BigDecimal("30.0")));
-
     }
 }

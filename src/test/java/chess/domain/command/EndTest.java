@@ -2,6 +2,9 @@ package chess.domain.command;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.GameResultBySide;
+import chess.domain.board.ResultCalculator;
+import chess.domain.board.ScoreBySide;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -15,7 +18,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 시작 시 예외를 던진다.")
     void start() {
         // given
-        End end = new End();
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
 
         // when, then
         assertThatThrownBy(() -> end.start())
@@ -27,7 +30,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 이동 시 예외를 던진다.")
     void move() {
         // given
-        End end = new End();
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -41,7 +44,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 종료 시 예외를 던진다.")
     void end() {
         // given
-        End end = new End();
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
 
         // when, then
         assertThatThrownBy(() -> end.end())
@@ -53,7 +56,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 기물들을 가져올 시 예외를 던진다.")
     void getPieces() {
         // given
-        End end = new End();
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
 
         // when, then
         assertThatThrownBy(() -> end.getPieces())
@@ -65,7 +68,7 @@ class EndTest {
     @DisplayName("게임 종료 상태에서 턴 이름을 가져올 시 예외를 던진다.")
     void getTurnDisplayName() {
         // given
-        End end = new End();
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
 
         // when, then
         assertThatThrownBy(() -> end.getTurnDisplayName())
