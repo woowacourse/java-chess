@@ -39,10 +39,11 @@ public class PawnTest {
     void 갈_수_있는_포지션들을_찾을_수_있다() {
         final Pawn pawn = new Pawn(Type.PAWN, Side.WHITE);
         final Board board = BoardFactory.generateBoard();
+        final Position startPosition = Position.of(File.getFile(2), Rank.getRank(2));
         final Position upPosition = Position.of(File.getFile(2), Rank.getRank(3));
         final Position doubleUpPosition = Position.of(File.getFile(2), Rank.getRank(4));
 
-        Assertions.assertThat(pawn.findMovablePositions(Position.of(File.getFile(2), Rank.getRank(2)), board))
+        Assertions.assertThat(pawn.findMovablePositions(startPosition, board))
                 .isEqualTo(List.of(upPosition, doubleUpPosition));
     }
 }

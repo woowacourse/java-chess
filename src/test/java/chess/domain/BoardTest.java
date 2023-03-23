@@ -112,4 +112,9 @@ public class BoardTest {
         Assertions.assertThat(board.findMovablePositions(startPosition))
                 .isEqualTo(List.of(upPosition, doubleUpPosition));
     }
+
+    @Test
+    void 점수를_계산할_수_있다() {
+        Assertions.assertThat(board.calculateScore(Side.WHITE)).isEqualTo(38);
+    }
 }
