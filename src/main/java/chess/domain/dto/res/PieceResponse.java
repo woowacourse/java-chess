@@ -9,17 +9,18 @@ public class PieceResponse {
     private final char file;
     private final char name;
 
-    public PieceResponse(Piece piece, Color color) {
+    public PieceResponse(final Piece piece, final Color color) {
         this.rank = piece.getRank();
         this.file = piece.getFile();
         this.name = piece.getName(color);
     }
 
-    public boolean samePosition(int rank, int file) {
+    public boolean samePosition(final int rank, final int file) {
         return this.rank == rank && this.file == file;
     }
 
     public String getName() {
         return String.valueOf(this.name);
     }
+
 }

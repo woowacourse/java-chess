@@ -19,18 +19,18 @@ public class File {
         return new File(file);
     }
 
-    private void validate(char file) {
+    private void validate(final char file) {
         if (file < 97 || 104 < file) {
             throw new IllegalArgumentException("기물의 세로 위치는 a부터 h까지 놓을 수 있습니다.");
         }
     }
 
-    public int calculateDistance(int file) {
+    public int calculateDistance(final int file) {
         return this.file - file;
     }
 
-    public char move(int fileDirection) {
-        return (char)(this.file + fileDirection);
+    public char move(final int fileDirection) {
+        return (char) (this.file + fileDirection);
     }
 
     public char getFile() {
@@ -56,4 +56,5 @@ public class File {
                 "file=" + file +
                 '}';
     }
+
 }

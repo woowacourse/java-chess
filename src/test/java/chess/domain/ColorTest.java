@@ -15,4 +15,5 @@ final class ColorTest {
     void changeColor(final Color actual, final Color expected) {
         assertThat(Color.changeColor(actual)).isEqualTo(expected);
     }
+
 }

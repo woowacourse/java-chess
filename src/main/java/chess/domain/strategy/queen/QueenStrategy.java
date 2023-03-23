@@ -12,7 +12,7 @@ public class QueenStrategy implements PieceStrategy {
     private final BishopStrategy bishopStrategy = new BishopStrategy();
 
     @Override
-    public void validateDirection(MoveRequest request) {
+    public void validateDirection(final MoveRequest request) {
         try {
             rookStrategy.validateDirection(request);
         } catch (IllegalArgumentException ignored) {
@@ -20,7 +20,7 @@ public class QueenStrategy implements PieceStrategy {
         }
     }
 
-    private void validateBishopStrategy(MoveRequest request) {
+    private void validateBishopStrategy(final MoveRequest request) {
         try {
             bishopStrategy.validateDirection(request);
         } catch (IllegalArgumentException queen) {

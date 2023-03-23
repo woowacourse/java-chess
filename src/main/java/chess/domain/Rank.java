@@ -6,26 +6,26 @@ public class Rank {
 
     private final int rank;
 
-    public Rank(int rank) {
+    public Rank(final int rank) {
         validate(rank);
         this.rank = rank;
     }
 
-    public static Rank from(int rank) {
+    public static Rank from(final int rank) {
         return new Rank(rank);
     }
 
-    private void validate(int rank) {
+    private void validate(final int rank) {
         if (rank < 0 || 7 < rank) {
             throw new IllegalArgumentException("기물의 가로 위치는 최소 0부터 최대 7까지 놓을 수 있습니다.");
         }
     }
 
-    public int calculateDistance(int rank) {
+    public int calculateDistance(final int rank) {
         return this.rank - rank;
     }
 
-    public int move(int rankDirection) {
+    public int move(final int rankDirection) {
         return this.rank + rankDirection;
     }
 
