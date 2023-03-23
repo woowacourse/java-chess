@@ -10,32 +10,33 @@ public class ChessGame {
 
     private final ChessBoard chessBoard;
     private TeamColor teamColor;
-    private boolean isPlaying;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
         this.teamColor = TeamColor.WHITE;
-        this.isPlaying = true;
     }
 
     public void move(final Position source, final Position dest) {
-        if (!isPlaying) {
+        if (isEnd()) {
             throw new IllegalArgumentException(GAME_END_NO_MOVE_ERROR_MESSAGE);
         }
         chessBoard.move(source, dest, teamColor);
-        if (chessBoard.isKingDead()) {
-            isPlaying = false;
+        if (isEnd()) {
             return;
         }
         teamColor = teamColor.transfer();
     }
 
+    private boolean isEnd() {
+        return !isPlaying();
+    }
+
     public boolean isPlaying() {
-        return isPlaying;
+        return !chessBoard.isKingDead();
     }
 
     public TeamColor findWinningTeam() {
-        if (isPlaying) {
+        if (isPlaying()) {
             throw new IllegalArgumentException(CANNOT_FIND_WINNER_ERROR_MESSAGE);
         }
         return teamColor;
