@@ -9,8 +9,6 @@ import chess.view.PositionMapper;
 import java.util.List;
 
 public class ChessController {
-
-    private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     
@@ -78,15 +76,15 @@ public class ChessController {
     }
 
     private GameCommand executeCommand(List<String> input) {
-        if (GameCommand.of(input.get(COMMAND_INDEX)) == GameCommand.MOVE) {
+        GameCommand gameCommand = GameCommand.from(input);
+        if (gameCommand == GameCommand.MOVE) {
             chessGame.movePiece(PositionMapper.from(input.get(SOURCE_POSITION_INDEX)),
                     PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
         }
-        return GameCommand.of(input.get(COMMAND_INDEX));
+        return gameCommand;
     }
 
     private void validateCommand(List<String> input) {
-        GameCommand.validate(input);
         PositionMapper.validate(input);
     }
 }
