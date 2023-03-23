@@ -26,10 +26,10 @@ public class Position {
     }
 
     public Position moveDirection(Direction direction) {
-        Column newColumn = Column.findColumnByIndex(column.getIndex() + direction.getX());
-        Rank newRank = Rank.findRankByIndex(rank.getIndex() + direction.getY());
+        Column columnOfDestination = Column.findColumnByIndex(column.getIndex() + direction.getX());
+        Rank rankOfDestination = Rank.findRankByIndex(rank.getIndex() + direction.getY());
 
-        return new Position(newColumn, newRank);
+        return new Position(columnOfDestination, rankOfDestination);
     }
 
     @Override
