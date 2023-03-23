@@ -25,6 +25,10 @@ public class Point {
         return rank.getIndexFromBottom();
     }
 
+    public Point up() {
+        return new Point(file, rank.up());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +40,13 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

@@ -27,6 +27,22 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크 값입니다."));
     }
 
+    private static Rank findByIndexFromBottom(int indexFromBottomOfNewRank) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.indexFromBottom == indexFromBottomOfNewRank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크의 인덱스입니다."));
+    }
+
+    public Rank up() {
+        if (this == EIGHT) {
+            throw new IllegalArgumentException("더이상 올라갈 수 없습니다.");
+        }
+
+        int indexFromBottomOfNewRank = Integer.parseInt(symbol);
+        return findByIndexFromBottom(indexFromBottomOfNewRank);
+    }
+
     public String getSymbol() {
         return symbol;
     }

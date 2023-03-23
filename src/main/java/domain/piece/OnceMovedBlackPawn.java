@@ -5,22 +5,22 @@ import domain.point.Direction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlackPawn extends Piece {
+public class OnceMovedBlackPawn extends Piece {
     @Override
     public String getSymbol() {
         return "P";
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return getClass() == obj.getClass();
+    public Map<Direction, Integer> getMovableRange() {
+        Map<Direction, Integer> movableRange = new HashMap<>();
+        movableRange.put(Direction.UP, 1);
+        return movableRange;
     }
 
     @Override
-    public Map<Direction, Integer> getMovableRange() {
-        Map<Direction, Integer> movableRange = new HashMap<>();
-        movableRange.put(Direction.UP, 2);
-        return movableRange;
+    public boolean equals(Object obj) {
+        return getClass() == obj.getClass();
     }
 
     @Override
