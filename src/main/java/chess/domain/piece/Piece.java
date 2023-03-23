@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Team;
 import chess.domain.position.RelativePosition;
 
 public abstract class Piece {
@@ -30,4 +29,6 @@ public abstract class Piece {
     public Team getTeam() {
         return team;
     }
+
+    public abstract double getScore();
 }

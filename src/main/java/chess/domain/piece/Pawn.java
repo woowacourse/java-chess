@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Team;
 import chess.domain.piece.movement.Movement;
 import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
@@ -56,5 +55,11 @@ public class Pawn extends NoneEmptyPiece {
             return relativePosition.inverseByXAxis();
         }
         return relativePosition;
+    }
+
+    // todo : 같은 세로줄에 같은 팀의 pawn이 있으면 점수를 반으로 줄이기
+    @Override
+    public double getScore() {
+        return pieceType.getScore();
     }
 }

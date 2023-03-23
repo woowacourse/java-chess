@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Team;
 import chess.domain.piece.movement.Movement;
 import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
@@ -21,5 +20,10 @@ public class Bishop extends NoneEmptyPiece {
         validateSameTeam(target);
         validateIllegalDirection(relativePosition);
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return pieceType.getScore();
     }
 }

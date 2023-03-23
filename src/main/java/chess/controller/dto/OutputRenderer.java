@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.domain.Team;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
