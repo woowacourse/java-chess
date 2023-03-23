@@ -4,25 +4,23 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.exception.PieceCannotMoveException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
 
     private final Map<Position, Piece> piecePosition;
-
-    public static ChessBoard createBoard() {
-        final Map<Position, Piece> piecePosition = new HashMap<>();
-        PieceFactory.createPiece(piecePosition);
-        return new ChessBoard(piecePosition);
-    }
-
-    public static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
-        return new ChessBoard(piecePosition);
-    }
-
+    
     private ChessBoard(final Map<Position, Piece> piecePosition) {
         this.piecePosition = piecePosition;
+    }
+
+    public static ChessBoard createBoard() {
+        final Map<Position, Piece> piecePosition = PieceFactory.createPiece();
+        return new ChessBoard(piecePosition);
+    }
+
+    static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
+        return new ChessBoard(piecePosition);
     }
 
     public void movePiece(final Position from, final Position to) {
