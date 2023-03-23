@@ -1,81 +1,62 @@
 package chess.controller;
 
+import chess.controller.command.Command;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
-import chess.util.Retryable;
-import chess.view.Command;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public final class ChessController {
 
     public static final int RANK_SIZE = 8;
-    public static final int FROM_INDEX = 0;
-    public static final int TO_INDEX = 1;
-    private ChessBoard chessBoard;
-    private GameState state = GameState.READY;
 
     public void run() {
-        startGame();
-        if (state == GameState.RUNNING) {
-            playGame();
+        OutputView.printWelcomeMessage();
+        ChessGame chessGame = new ChessGame();
+
+        while (!chessGame.isGameEnd()) {
+            playChessGame(chessGame);
+            printChessBoard(chessGame);
         }
     }
 
-    private void startGame() {
-        OutputView.printWelcomeMessage();
-        if (getCommand() == Command.START) {
-            state = GameState.RUNNING;
-            chessBoard = new ChessBoard();
-            OutputView.printChessBoard(getChessBoardMark(chessBoard));
-            return;
+    private void playChessGame(final ChessGame game) {
+        Command command = getCommand();
+        try {
+            game.execute(command);
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
+            playChessGame(game);
         }
-        state = GameState.END;
     }
 
     private Command getCommand() {
-        return Retryable.retryWhenException(this::requestCommand);
+        return repeatInput(InputView::readCommand);
     }
 
-    private Command requestCommand() {
-        final Command command = InputView.readCommand();
-        if (state == GameState.READY && command == Command.MOVE) {
-            throw new IllegalArgumentException("게임을 시작전에는 말을 움직일 수 없습니다.");
-        }
-
-        if (state == GameState.RUNNING && command == Command.START) {
-            throw new IllegalArgumentException("게임을 진행 중에는 새로운 게임을 시작할 수 없습니다.");
-        }
-
-        return command;
-    }
-
-    private void playGame() {
-        while (getCommand() != Command.END) {
-            movePiece();
-        }
-        state = GameState.END;
-    }
-
-    private void movePiece() {
-        final List<String> coordinates = InputView.getCoordinates();
+    private <T> T repeatInput(Supplier<T> input) {
         try {
-            final Coordinate from = Coordinate.of(coordinates.get(FROM_INDEX));
-            final Coordinate to = Coordinate.of(coordinates.get(TO_INDEX));
-            chessBoard.move(from, to);
-        } catch (Exception e) {
+            return input.get();
+        } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
+            return repeatInput(input);
         }
-        OutputView.printChessBoard(getChessBoardMark(chessBoard));
     }
+
+    private void printChessBoard(final ChessGame chessGame) {
+        OutputView.printChessBoard(getChessBoardMark(chessGame.getChessBoard()));
+    }
+
 
     private List<List<String>> getChessBoardMark(final ChessBoard chessBoard) {
         final List<List<String>> currentChessBoardMark = new ArrayList<>();
-        final List<Square> squares = chessBoard.getSquares();
+        final List<Square> squares = Optional.of(chessBoard.getSquares()).orElse(Collections.emptyList());
 
         for (int rank = 0; rank < squares.size(); rank += RANK_SIZE) {
             currentChessBoardMark.add(getRankMark(squares.subList(rank, rank + RANK_SIZE)));

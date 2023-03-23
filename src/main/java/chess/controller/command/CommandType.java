@@ -1,20 +1,20 @@
-package chess.view;
+package chess.controller.command;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum CommandType {
     START("start"),
     END("end"),
     MOVE("move");
 
     private final String command;
 
-    Command(final String command) {
+    CommandType(final String command) {
         this.command = command;
     }
 
-    static Command from(final String query) {
-        return Arrays.stream(Command.values())
+    public static CommandType from(final String query) {
+        return Arrays.stream(CommandType.values())
                 .filter(a -> a.equalsByQuery(query))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("start 혹은 end 혹은 move 를 입력해야합니다."));
