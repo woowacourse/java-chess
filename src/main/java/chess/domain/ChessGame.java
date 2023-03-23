@@ -22,6 +22,10 @@ public final class ChessGame {
         this.turn = changeTurn();
     }
 
+    public boolean isKingDead() {
+        return board.isKingDead(turn);
+    }
+
     private Color changeTurn() {
         if (turn.isBlack()) {
             return Color.WHITE;

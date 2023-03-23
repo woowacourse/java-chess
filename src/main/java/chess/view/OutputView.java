@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.state.BoardDTO;
+import chess.domain.piece.Color;
 
 import java.util.List;
 
@@ -33,5 +34,9 @@ public final class OutputView {
 
     public void printGuideMessage() {
         System.out.println("명령어를 다시 입력하세요");
+    }
+
+    public void printResult(Color turn) {
+        System.out.println(turn + "의 패배입니다.");
     }
 }

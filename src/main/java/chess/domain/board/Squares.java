@@ -52,6 +52,12 @@ public final class Squares {
         return new Squares(list);
     }
 
+    public boolean findKing(Color color) {
+        return squares.stream()
+                .anyMatch(square -> square.pieceKind() == Kind.KING &&
+                        square.equalsColor(color));
+    }
+
     public Square get(final int file) {
         return squares.get(file);
     }
