@@ -15,7 +15,6 @@ public class ChessGame {
         this.chessBoard = new ChessBoard(firstCamp, campSwitcher);
     }
 
-    // TODO 상태검증 로직 통일
     public void start(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
         gameStatus = GameStatus.RUNNING;
@@ -34,10 +33,8 @@ public class ChessGame {
         gameStatus = GameStatus.READY;
     }
 
-    public Map<Position, Piece> readBoard() {
-        if (gameStatus == GameStatus.READY) {
-            throw new IllegalArgumentException("게임이 실행 중이지 않아 보드를 조회할 수 없습니다.");
-        }
+    public Map<Position, Piece> readBoard(CommandRequest commandRequest) {
+        gameStatus.validateCommand(commandRequest.getCommand());
         return chessBoard.piecesByPosition();
     }
 

@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class ChessController {
 
+    private static final String COMMAND_ACTION_ABSENCE_ERROR_MESSAGE = "해당 요청으로 실행할 수 있는 기능이 없습니다.";
     private final InputExceptionHandler inputExceptionHandler;
     private final Map<Command, CommandAction> actionMapper = new EnumMap<>(Command.class);
     private AppStatus appStatus;
@@ -37,7 +38,7 @@ public class ChessController {
     private AppStatus execute(CommandRequest commandRequest) {
         CommandAction action = actionMapper.getOrDefault(commandRequest.getCommand(),
                 request -> {
-                    throw new IllegalArgumentException("해당 요청으로 실행할 수 있는 기능이 없습니다.");
+                    throw new IllegalArgumentException(COMMAND_ACTION_ABSENCE_ERROR_MESSAGE);
                 });
         return action.execute(commandRequest);
     }
@@ -45,13 +46,13 @@ public class ChessController {
     private AppStatus start(CommandRequest commandRequest) {
         chessGame = new ChessGame(Camp.WHITE, Camp::transfer);
         chessGame.start(commandRequest);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard(commandRequest)));
         return AppStatus.RUNNING;
     }
 
     private AppStatus move(CommandRequest commandRequest) {
         chessGame.move(commandRequest);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard(commandRequest)));
         return AppStatus.RUNNING;
     }
 
