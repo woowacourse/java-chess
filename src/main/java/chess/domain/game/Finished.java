@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
 
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public final class Finished implements GameStatus {
     }
 
     @Override
-    public GameStatus save() {
-        return null;
+    public Color getTurn() {
+        throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
     }
 }

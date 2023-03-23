@@ -14,7 +14,7 @@ class BoardTest {
     private static final Position A4 = new Position(File.A, Rank.FOUR);
     private static final Position A6 = new Position(File.A, Rank.SIX);
     private static final Position A7 = new Position(File.A, Rank.SEVEN);
-    private final Board board = new Board();
+    private final Board board = Board.initializeBoard();
 
     @Test
     @DisplayName("자신의 기물이 아닌 것을 움직일 수 없다")

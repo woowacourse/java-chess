@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.chessGameDao;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
@@ -20,17 +21,19 @@ public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
+    private final chessGameDao chessGameDao;
     private final Map<Command, Action> commandMap = new HashMap<>();
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame) {
+    public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame, final chessGameDao chessGameDao) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGame = chessGame;
+        this.chessGameDao = chessGameDao;
         commandMap.put(Command.START, new Action(ignored -> start()));
+        commandMap.put(Command.LOAD, new Action(this::load));
         commandMap.put(Command.MOVE, new Action(this::move));
         commandMap.put(Command.END, new Action(ignored -> end()));
-        commandMap.put(Command.SAVE, new Action(ignored -> save()));
     }
 
     public void play() {
@@ -46,7 +49,7 @@ public final class ChessController {
             Command command = Command.from(commands.get(COMMAND_INDEX));
             commandMap.get(command).excute(commands);
         } catch (RuntimeException e) {
-            outputView.printErrorMesage(e);
+            outputView.printErrorMessage(e);
             outputView.printGuideMessage();
             repeatRead();
         }
@@ -61,6 +64,13 @@ public final class ChessController {
         outputView.printBoard(board);
     }
 
+    private void load(List<String> gameId) {
+        int gameNumber = Integer.parseInt(gameId.get(1));
+
+        this.chessGame = chessGameDao.load(gameNumber);
+        printBoard(chessGame.getBoard());
+    }
+
     private void move(final List<String> commands) {
         Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
         Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
@@ -68,12 +78,10 @@ public final class ChessController {
         printBoard(chessGame.getBoard());
     }
 
-
-    private void save() {
-        chessGame.save();
-    }
-
     private void end() {
+        chessGameDao.save(chessGame);
+        Integer recentSavedId = chessGameDao.findRecentSavedId();
+        outputView.printGameId(recentSavedId);
         chessGame.end();
     }
 }

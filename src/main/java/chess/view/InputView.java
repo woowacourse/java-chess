@@ -8,21 +8,17 @@ import java.util.stream.Collectors;
 public final class InputView {
 
     private static final String DELIMITER = " ";
-    private static final int COMMAND_INEDX = 0;
+    private static final int COMMAND_INDEX = 0;
     private final Scanner scanner;
 
     public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public String inputFirstCommand() {
-        return scanner.nextLine().strip().toUpperCase();
-    }
-
     public List<String> inputCommand() {
         String input = scanner.nextLine();
         List<String> commands = generateCommandsForm(input);
-        if (Command.from(commands.get(COMMAND_INEDX)) == Command.MOVE) {
+        if (Command.from(commands.get(COMMAND_INDEX)) == Command.MOVE) {
             validateMoveCommand(commands);
         }
         return commands;

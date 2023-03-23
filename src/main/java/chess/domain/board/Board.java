@@ -14,9 +14,14 @@ import static java.util.stream.Collectors.toMap;
 
 public final class Board {
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board;
 
-    public Board() {
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
+    public static Board initializeBoard() {
+        final Map<Position, Piece> board = new HashMap<>();
         board.put(new Position(File.A, Rank.ONE), new Rook(Color.WHITE));
         board.put(new Position(File.B, Rank.ONE), new Knight(Color.WHITE));
         board.put(new Position(File.C, Rank.ONE), new Bishop(Color.WHITE));
@@ -52,6 +57,7 @@ public final class Board {
         board.put(new Position(File.F, Rank.TWO), new Pawn(Color.WHITE));
         board.put(new Position(File.G, Rank.TWO), new Pawn(Color.WHITE));
         board.put(new Position(File.H, Rank.TWO), new Pawn(Color.WHITE));
+        return new Board(board);
     }
 
     public void confirmMove(final Position source, final Position target, Color color) {

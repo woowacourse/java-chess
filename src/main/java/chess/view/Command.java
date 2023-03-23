@@ -6,7 +6,7 @@ public enum Command {
     START,
     END,
     MOVE,
-    SAVE;
+    LOAD;
 
     public static Command from(final String input) {
         return Arrays.stream(Command.values())

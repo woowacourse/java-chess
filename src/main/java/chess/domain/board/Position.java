@@ -17,6 +17,15 @@ public final class Position {
         this.rank = rank;
     }
 
+    public static Position from(final String position) {
+        char c = position.charAt(0);
+        char d = position.charAt(1);
+        File from = File.from(c - 'A' + 1);
+        Rank from1 = Rank.from(d - '0');
+
+        return new Position(from, from1);
+    }
+
     private Position getRightDownDiagonal() {
         return new Position(file.plus(), rank.minus());
     }
@@ -182,7 +191,7 @@ public final class Position {
 
     @Override
     public String toString() {
-        return file.toString() + rank.toString();
+        return file.toString() + rank.getValue();
     }
 
     public Rank getRank() {

@@ -54,4 +54,8 @@ public enum Rank {
     public boolean NotEquals(final int rankExpected) {
         return value != rankExpected;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

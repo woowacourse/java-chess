@@ -4,13 +4,10 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
-import database.BoardDao;
 
 import java.util.Map;
 
 public final class Waiting implements GameStatus {
-
-    BoardDao boardDao = new BoardDao();
 
     public Waiting() {
         super();
@@ -18,7 +15,7 @@ public final class Waiting implements GameStatus {
 
     @Override
     public GameStatus start() {
-        return new Running(boardDao, new Board(), Color.WHITE);
+        return new Running(Board.initializeBoard(), Color.WHITE);
     }
 
     @Override
@@ -42,7 +39,7 @@ public final class Waiting implements GameStatus {
     }
 
     @Override
-    public GameStatus save() {
-        return null;
+    public Color getTurn() {
+        throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
     }
 }

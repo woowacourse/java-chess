@@ -1,7 +1,9 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
 
 import java.util.Map;
 
@@ -11,6 +13,10 @@ public final class ChessGame {
 
     public ChessGame() {
         this.gameStatus = new Waiting();
+    }
+
+    public ChessGame(Board board, Color turn) {
+        this.gameStatus = new Running(board, turn);
     }
 
     public void startGame() {
@@ -33,7 +39,11 @@ public final class ChessGame {
         return gameStatus.isOnGoing();
     }
 
-    public void save() {
-        this.gameStatus = gameStatus.save();
+    public String getTurn() {
+        return gameStatus.getTurn().name();
+    }
+
+    public static ChessGame load(Board board, Color turn) {
+        return new ChessGame(board, turn);
     }
 }
