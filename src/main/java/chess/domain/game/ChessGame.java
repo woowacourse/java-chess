@@ -39,8 +39,8 @@ public class ChessGame {
         changeTurn();
     }
 
-    private void endGameIfKingDeath(final boolean flag) {
-        if (flag) {
+    private void endGameIfKingDeath(final boolean kingDeath) {
+        if (kingDeath) {
             end();
         }
     }

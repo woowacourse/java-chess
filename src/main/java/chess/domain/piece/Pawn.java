@@ -45,7 +45,8 @@ public class Pawn extends Piece {
         return movablePositions;
     }
 
-    private List<Position> findMovablePositionsByDoubleMove(final Position source, final Board board, final MovePattern movePattern) {
+    private List<Position> findMovablePositionsByDoubleMove(final Position source, final Board board,
+                                                            final MovePattern movePattern) {
         List<Position> movablePositions = new ArrayList<>();
 
         if (canDoubleMove(source, board, movePattern)) {
