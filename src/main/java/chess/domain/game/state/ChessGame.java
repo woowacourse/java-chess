@@ -14,5 +14,7 @@ public interface ChessGame {
 
     ChessGame endGame();
 
+    ChessGame status();
+
     Map<Position, Piece> getPiecesPosition();
 }

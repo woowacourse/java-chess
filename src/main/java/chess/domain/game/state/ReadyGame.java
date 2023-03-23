@@ -35,6 +35,11 @@ public class ReadyGame implements ChessGame {
     }
 
     @Override
+    public ChessGame status() {
+        throw new IllegalStateException(NOT_START_GAME);
+    }
+
+    @Override
     public Map<Position, Piece> getPiecesPosition() {
         throw new IllegalStateException(NOT_START_GAME);
     }

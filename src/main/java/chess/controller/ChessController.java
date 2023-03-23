@@ -24,12 +24,13 @@ public final class ChessController {
 
     public void run() {
         outputView.printStartPrefix();
-
         ChessGame chessGame = new ReadyGame();
+
         do {
             chessGame = play(chessGame);
-            printChessGameBoard(chessGame);
         } while (chessGame.isRunnableGame());
+
+
     }
 
     private ChessGame play(ChessGame chessGame) {
@@ -44,10 +45,12 @@ public final class ChessController {
 
     private ChessGame playByCommand(ChessGame chessGame, List<String> commandInputs) {
         ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
-        return command.execute(chessGame);
+        ChessGame updateGame = command.execute(chessGame);
+        printChessGameResult(updateGame);
+        return updateGame;
     }
 
-    private void printChessGameBoard(ChessGame chessGame) {
+    private void printChessGameResult(ChessGame chessGame) {
         Map<Position, Piece> piecesPosition = chessGame.getPiecesPosition();
         List<List<String>> consoleViewBoard =
                 ChessBoardStateFormatter.convertToConsoleViewBoard(piecesPosition);
