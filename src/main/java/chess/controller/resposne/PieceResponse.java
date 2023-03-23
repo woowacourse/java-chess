@@ -25,11 +25,11 @@ public class PieceResponse {
                 '}';
     }
 
-    public String getPieceType() {
+    public String getType() {
         return pieceType;
     }
 
-    public String getPieceColor() {
+    public String getColor() {
         return pieceColor;
     }
 }

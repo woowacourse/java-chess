@@ -36,7 +36,7 @@ public class OutputView implements Output {
     }
 
     private void printPiece(PieceResponse pieceResponse) {
-        System.out.print(formatByColor(pieceResponse.getPieceType(), pieceResponse.getPieceColor()));
+        System.out.print(formatByColor(pieceResponse.getType(), pieceResponse.getColor()));
     }
 
     private String formatByColor(String pieceType, String pieceColor) {
