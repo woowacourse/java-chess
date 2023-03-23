@@ -25,6 +25,8 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public abstract boolean isKing();
+
     public abstract List<Position> getPaths(Position targetPosition);
 
     public boolean isSameSide(Side side) {

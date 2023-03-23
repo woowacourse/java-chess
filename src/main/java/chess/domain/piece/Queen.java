@@ -36,6 +36,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);
