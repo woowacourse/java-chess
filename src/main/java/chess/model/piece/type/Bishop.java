@@ -10,13 +10,31 @@ public class Bishop extends Piece {
 
     private static final List<Direction> availableDirections = Direction.DIAGONAL;
 
-    public Bishop(final Camp camp) {
+    Bishop(final Camp camp) {
         super(camp);
     }
 
     @Override
-    protected boolean isAvailableDirection(final Distance distance) {
+    public Piece pick() {
+        return this;
+    }
+
+    @Override
+    public boolean movable(final Distance distance, final Piece target) {
+        return isAttackAble(target) && isAvailableDirection(distance);
+    }
+
+    private boolean isAttackAble(final Piece target) {
+        return !target.isSameTeam(camp());
+    }
+
+    private boolean isAvailableDirection(final Distance distance) {
         return availableDirections.stream()
                 .anyMatch(distance::matchByDirection);
+    }
+
+    @Override
+    public boolean isNotPassable() {
+        return true;
     }
 }

@@ -24,12 +24,25 @@ public class Knight extends Piece {
     private static final int MINIMUM_DISTANCE = 1;
     private static final int MAXIMUM_DISTANCE = 2;
 
-    public Knight(final Camp camp) {
+    Knight(final Camp camp) {
         super(camp);
     }
 
     @Override
-    public boolean isAvailableDirection(final Distance distance) {
+    public Piece pick() {
+        return this;
+    }
+
+    @Override
+    public boolean movable(final Distance distance, final Piece target) {
+        return isAttackAble(target) && isAvailableDirection(distance);
+    }
+
+    private boolean isAttackAble(final Piece target) {
+        return !target.isSameTeam(camp());
+    }
+
+    private boolean isAvailableDirection(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }
@@ -47,5 +60,10 @@ public class Knight extends Piece {
 
         return (rank != MINIMUM_DISTANCE || file != MAXIMUM_DISTANCE)
                 && (rank != MAXIMUM_DISTANCE || file != MINIMUM_DISTANCE);
+    }
+
+    @Override
+    public boolean isNotPassable() {
+        return true;
     }
 }

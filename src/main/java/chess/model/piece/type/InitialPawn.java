@@ -21,9 +21,14 @@ public class InitialPawn extends Piece {
 
     private final Piece pawn;
 
-    public InitialPawn(final Piece pawn) {
+    InitialPawn(final Piece pawn) {
         super(pawn.camp());
         this.pawn = pawn;
+    }
+
+    @Override
+    public Piece pick() {
+        return this.pawn;
     }
 
     @Override
@@ -38,8 +43,7 @@ public class InitialPawn extends Piece {
         return !target.isNotPassable();
     }
 
-    @Override
-    protected boolean isAvailableDirection(final Distance distance) {
+    private boolean isAvailableDirection(final Distance distance) {
         final Direction availableDirection = moveDirections.get(camp());
 
         return isAvailableDistance(distance) && distance.matchByDirection(availableDirection);
@@ -51,9 +55,8 @@ public class InitialPawn extends Piece {
         return rank == Pawn.MOVE_DISTANCE || rank == INITIAL_DISTANCE;
     }
 
-
     @Override
-    public Piece pick() {
-        return this.pawn;
+    public boolean isNotPassable() {
+        return true;
     }
 }

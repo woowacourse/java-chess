@@ -18,12 +18,25 @@ public class King extends Piece {
         availableDirections.addAll(Direction.ORTHOGONAL);
     }
 
-    public King(final Camp camp) {
+    King(final Camp camp) {
         super(camp);
     }
 
     @Override
-    public boolean isAvailableDirection(final Distance distance) {
+    public Piece pick() {
+        return this;
+    }
+
+    @Override
+    public boolean movable(final Distance distance, final Piece target) {
+        return isAttackAble(target) && isAvailableDirection(distance);
+    }
+
+    private boolean isAttackAble(final Piece target) {
+        return !target.isSameTeam(camp());
+    }
+
+    private boolean isAvailableDirection(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }
@@ -41,5 +54,10 @@ public class King extends Piece {
 
         return (rank < MINIMUM_DISTANCE || rank > MAXIMUM_DISTANCE) ||
                 (file < MINIMUM_DISTANCE || file > MAXIMUM_DISTANCE);
+    }
+
+    @Override
+    public boolean isNotPassable() {
+        return true;
     }
 }

@@ -28,8 +28,13 @@ public class Pawn extends Piece {
     );
     static final int MOVE_DISTANCE = 1;
 
-    public Pawn(final Camp camp) {
+    Pawn(final Camp camp) {
         super(camp);
+    }
+
+    @Override
+    public Piece pick() {
+        return this;
     }
 
     @Override
@@ -67,8 +72,7 @@ public class Pawn extends Piece {
         return !isUnAvailableDistance(distance);
     }
 
-    @Override
-    public boolean isAvailableDirection(final Distance distance) {
+    private boolean isAvailableDirection(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }
@@ -85,5 +89,10 @@ public class Pawn extends Piece {
         final Direction availableDirection = moveDirections.get(camp());
 
         return distance.matchByDirection(availableDirection);
+    }
+
+    @Override
+    public boolean isNotPassable() {
+        return true;
     }
 }

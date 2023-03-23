@@ -16,13 +16,31 @@ public class Queen extends Piece {
         availableDirections.addAll(Direction.ORTHOGONAL);
     }
 
-    public Queen(final Camp camp) {
+    Queen(final Camp camp) {
         super(camp);
     }
 
     @Override
-    protected boolean isAvailableDirection(final Distance distance) {
+    public Piece pick() {
+        return this;
+    }
+
+    @Override
+    public boolean movable(final Distance distance, final Piece target) {
+        return isAttackAble(target) && isAvailableDirection(distance);
+    }
+
+    private boolean isAttackAble(final Piece target) {
+        return !target.isSameTeam(camp());
+    }
+
+    private boolean isAvailableDirection(final Distance distance) {
         return availableDirections.stream()
                 .anyMatch(distance::matchByDirection);
+    }
+
+    @Override
+    public boolean isNotPassable() {
+        return true;
     }
 }

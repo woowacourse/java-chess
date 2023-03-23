@@ -13,8 +13,13 @@ public class Empty extends Piece {
     }
 
     @Override
+    public Piece pick() {
+        return this;
+    }
+
+    @Override
     public boolean movable(final Distance ignoredDistance, final Piece ignoredTarget) {
-        return isAvailableDirection(ignoredDistance);
+        return false;
     }
 
     @Override
@@ -24,11 +29,6 @@ public class Empty extends Piece {
 
     @Override
     public boolean isNotPassable() {
-        return false;
-    }
-
-    @Override
-    protected boolean isAvailableDirection(final Distance ignoredDistance) {
         return false;
     }
 }
