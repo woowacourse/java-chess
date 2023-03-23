@@ -44,7 +44,7 @@ public enum Shape {
     }
 
     public char getNameByColor(final Color color) {
-        if (color.isWhite()) {
+        if (color == Color.WHITE) {
             return this.whiteName;
         }
         return this.blackName;
