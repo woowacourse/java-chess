@@ -178,7 +178,7 @@ class ChessBoardTest {
             // then
             assertThatThrownBy(() -> chessBoard.movePiece(start, end))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+                    .hasMessageContaining("[ERROR] 폰은 전진할 때 말이 없는 곳으로만 전진할 수 있습니다.");
         }
 
         @Test
