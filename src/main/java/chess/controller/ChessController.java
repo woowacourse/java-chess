@@ -13,13 +13,13 @@ public class ChessController {
     public AppStatus start(CommandRequest commandRequest) {
         chessGame = new ChessGame(Camp.WHITE, Camp::transfer);
         chessGame.start(commandRequest);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard(commandRequest)));
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;
     }
 
     public AppStatus move(CommandRequest commandRequest) {
         chessGame.move(commandRequest);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard(commandRequest)));
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;
     }
 

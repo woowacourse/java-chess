@@ -32,7 +32,7 @@ public class ChessGame {
         gameStatus = GameStatus.READY;
     }
 
-    public Map<Position, Piece> readBoard(CommandRequest commandRequest) {
+    public Map<Position, Piece> readBoard() {
         return chessBoard.piecesByPosition();
     }
 
