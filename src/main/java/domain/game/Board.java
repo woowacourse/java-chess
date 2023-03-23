@@ -21,6 +21,10 @@ public class Board {
         movePiece(sourcePosition, targetPosition, sourcePiece);
     }
 
+    public boolean isKing(Position targetPosition) {
+        return chessBoard.get(targetPosition).isSameType(PieceType.KING);
+    }
+
     private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece, Side side) {
         validateSourcePositionIsEmpty(sourcePosition, sourcePiece);
         validateTurn(side, sourcePiece);

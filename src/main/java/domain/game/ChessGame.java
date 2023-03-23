@@ -16,9 +16,11 @@ public class ChessGame {
 
     private final Board board;
     private Side currentTurn = Side.WHITE;
+    private GameState state;
 
     public ChessGame(Board board) {
         this.board = board;
+        this.state = GameState.RUN;
     }
 
     public void move(String userInput) {
@@ -34,6 +36,9 @@ public class ChessGame {
                 Position.of(targetFile, targetRank)
         );
 
+        if (board.isKing(Position.of(targetFile, targetRank))) {
+            this.state = GameState.END;
+        }
         currentTurn = currentTurn.nextSide();
     }
 }
