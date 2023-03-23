@@ -28,7 +28,7 @@ public class BoardFactory {
             addPawnPieces(boards, rankCoordinate, team);
         }
         if (rankType == EMPTY_RANK) {
-            addEmptyPieces(boards, rankCoordinate, team);
+            addEmptyPieces(boards, rankCoordinate);
         }
     }
 
@@ -50,7 +50,7 @@ public class BoardFactory {
         }
     }
 
-    private static void addEmptyPieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Team team) {
+    private static void addEmptyPieces(Map<Position, Piece> boards, RankCoordinate rankCoordinate) {
         for (FileCoordinate value : FileCoordinate.getSortedFileCoordinates()) {
             Position position = new Position(value, rankCoordinate);
             boards.put(position, Empty.create(position));

@@ -26,14 +26,14 @@ public class Board {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition, Team nowPlayingTeam) {
-        validatePath(sourcePosition.findPath(targetPosition));
+        validatePaths(sourcePosition.findStraightPaths(targetPosition));
         Piece sourcePiece = boards.get(sourcePosition);
         Piece movedPiece = sourcePiece.move(targetPosition, nowPlayingTeam, findPiece(targetPosition).getTeam());
         boards.put(targetPosition, movedPiece);
         boards.put(sourcePosition, Empty.create(sourcePosition));
     }
 
-    private void validatePath(List<Position> paths) {
+    private void validatePaths(List<Position> paths) {
         if (!isEmptyPosition(paths)) {
             throw new IllegalArgumentException(INVALID_PATH_MESSAGE);
         }
