@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static chessgame.point.PointFixture.*;
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
@@ -121,5 +120,30 @@ class BoardTest {
                     .isExactlyInstanceOf(IllegalArgumentException.class)
                     .hasMessage("움직일 수 없습니다.");
         }
+    }
+
+    @Test
+    @DisplayName("king이 존재하는지 확인한다.")
+    void Should_ExistKing_When_Move() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        assertThat(board.isExistKing(Team.BLACK)).isTrue();
+        assertThat(board.isExistKing(Team.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("king이 없을 경우")
+    void Should_NoExistKing_When_Move() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        board.move(B1, A3, Team.WHITE);
+        board.move(H7, H6, Team.BLACK);
+        board.move(A3, B5, Team.WHITE);
+        board.move(H8, H7, Team.BLACK);
+        board.move(B5, D6, Team.WHITE);
+        board.move(A7, A5, Team.BLACK);
+        board.move(D6, E8, Team.WHITE);
+
+        assertThat(board.isExistKing(Team.BLACK)).isFalse();
     }
 }

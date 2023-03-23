@@ -33,6 +33,11 @@ public class Knight implements Piece {
         return true;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     private boolean isKnightMove(Point source, Point target) {
         int fileDistance = Math.abs(source.fileDistance(target));
         int rankDistance = Math.abs(source.rankDistance(target));

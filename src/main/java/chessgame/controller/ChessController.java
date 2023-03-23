@@ -25,6 +25,7 @@ public class ChessController {
             eachTurn(game);
             printResult(game);
         } while (!game.isEnd());
+        outputView.printWinner(game.winTeam());
     }
 
     private void eachTurn(Game game) {
@@ -49,7 +50,7 @@ public class ChessController {
     private void setState(Game game, Command command) {
         try {
             game.setState(command);
-        } catch (IllegalArgumentException e) {
+        } catch (UnsupportedOperationException e) {
             outputView.printErrorMsg(e.getMessage());
             setState(game, readCommand());
         }

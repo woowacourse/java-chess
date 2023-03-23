@@ -9,4 +9,6 @@ public interface Piece {
     Team team();
 
     boolean isKnight();
+
+    boolean isKing();
 }

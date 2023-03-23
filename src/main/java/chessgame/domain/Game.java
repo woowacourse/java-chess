@@ -23,4 +23,11 @@ public class Game {
     public boolean isEnd() {
         return state.isEnd();
     }
+
+    public Team winTeam() {
+        if(board.isExistKing(Team.BLACK)){
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
 }

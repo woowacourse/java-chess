@@ -51,4 +51,8 @@ public class OutputView {
     public void printErrorMsg(String msg) {
         System.out.println("[ERROR] " + msg);
     }
+
+    public void printWinner(Team team) {
+        System.out.println(team.color() + "팀이 이겼습니다.");
+    }
 }

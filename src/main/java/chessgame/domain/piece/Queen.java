@@ -33,6 +33,11 @@ public class Queen implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return ORIGINAL_NAME;
     }

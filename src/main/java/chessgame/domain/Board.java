@@ -90,6 +90,13 @@ public class Board {
         return board.containsKey(point);
     }
 
+    public boolean isExistKing(Team team){
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .anyMatch(s->s.team() == team);
+    }
+
     @Override
     public String toString() {
         return "Board{" + "board=" + board + '}';
