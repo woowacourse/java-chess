@@ -32,28 +32,6 @@ public enum Shape {
         this.validateDirection.accept(request);
     }
 
-    public static Shape findShapeByWhiteName(final char whiteName) {
-        return Arrays.stream(values())
-                .filter(shape -> shape.getWhiteName() == whiteName)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
-    }
-
-    public char getNameByColor(final Color color) {
-        if (color == Color.WHITE) {
-            return getWhiteName();
-        }
-        return getBlackName();
-    }
-
-    private char getBlackName() {
-        return name().charAt(0);
-    }
-
-    public char getWhiteName() {
-        return name().toLowerCase().charAt(0);
-    }
-
     public double getScore() {
         return score.getValue();
     }
