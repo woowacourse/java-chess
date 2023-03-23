@@ -25,7 +25,7 @@ public abstract class Piece {
 		return this.pieceType == pieceType;
 	}
 
-	public final PieceType getPieceType() {
+public final PieceType getPieceType() {
 		return pieceType;
 	}
 }
