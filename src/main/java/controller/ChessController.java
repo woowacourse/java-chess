@@ -42,9 +42,15 @@ public class ChessController {
     }
 
     public void run() {
+        ChessGame chessGame = setupGame();
+        repeat(() -> interact(chessGame));
+        printGameResult(chessGame);
+    }
+
+    private ChessGame setupGame() {
         ChessGame chessGame = new ChessGame();
         outputView.printGameStartMessage();
-        repeat(() -> interact(chessGame));
+        return chessGame;
     }
 
     private void repeat(Runnable target) {
@@ -56,6 +62,13 @@ public class ChessController {
         }
     }
 
+    private void printGameResult(final ChessGame chessGame) {
+        String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
+        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
+        outputView.printGameResult(gameResultMessage);
+        outputView.printWinner(winningColorMessage);
+    }
+
     private void interact(final ChessGame chessGame) {
         Command command;
         do {
@@ -64,7 +77,6 @@ public class ChessController {
             CommandArguments commandArguments = CommandArguments.of(pureArguments);
             commander.get(command).accept(chessGame, commandArguments);
         } while (command.isNotEnd() && chessGame.isGameNotOver());
-
     }
 
     private void start(final ChessGame chessGame, final CommandArguments ignored) {
@@ -72,10 +84,7 @@ public class ChessController {
     }
 
     private void end(final ChessGame chessGame, final CommandArguments ignored) {
-        String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
-        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
-        outputView.printGameResult(gameResultMessage);
-        outputView.printWinner(winningColorMessage);
+        printGameResult(chessGame);
     }
 
     private void move(final ChessGame chessGame, final CommandArguments arguments) {
