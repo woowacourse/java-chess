@@ -12,8 +12,9 @@ public class BlockedByObstacle implements ObstacleStrategy {
     public List<Position> getObstacleCheckingPositions(Position from, Position to) {
         RelativePosition relativePosition = RelativePosition.of(from, to);
         RelativePosition unitPosition = relativePosition.toUnit();
-        Position currentPosition = from.move(unitPosition);
+
         List<Position> positions = new ArrayList<>();
+        Position currentPosition = from.move(unitPosition);
         while (!currentPosition.equals(to)) {
             positions.add(currentPosition);
             currentPosition = currentPosition.move(unitPosition);
