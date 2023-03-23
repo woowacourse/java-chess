@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.Turn;
 import chess.domain.piece.info.Team;
 import chess.domain.piece.info.Trace;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -32,4 +34,5 @@ public abstract class Piece {
     }
 
     public abstract PieceType findType();
+    public abstract Score calculateScore(Map<PieceType, Long> pieceCountBoard);
 }

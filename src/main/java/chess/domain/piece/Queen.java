@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.position.MoveRange;
 import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
+import java.util.Map;
 
 public class Queen extends Piece {
 
@@ -27,5 +29,10 @@ public class Queen extends Piece {
     @Override
     public PieceType findType() {
         return PieceType.QUEEN;
+    }
+
+    @Override
+    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+        return new Score(9.0);
     }
 }

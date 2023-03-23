@@ -102,18 +102,22 @@ public class ChessBoard {
             .count() < NUMBER_OF_PLAYER;
     }
 
-    public Score calculateScoreByFileAndTeam(File file, Team team) {
-        squares.stream()
-            .filter((square) -> square.isSameFileAndTeam(file, team));
-        Map<PieceType, Long> pieceCountMap = squares.stream()
-            .filter((square) -> square.isSameFileAndTeam(file, team))
-            .collect(Collectors.groupingBy(Square::findPieceType, Collectors.counting()));
-
-        return Arrays.stream(PieceType.values())
-            .map((type) -> type.calculateTotalScore(pieceCountMap.getOrDefault(type,0L)))
+    public Score calculateScoreByTeam(Team team) {
+        return Arrays.stream(File.values())
+            .map((file) -> calculateScoreByFileAndTeam(file, team))
             .reduce(Score.ZERO, Score::add);
     }
 
+    private Score calculateScoreByFileAndTeam(File file, Team team) {
+        Map<PieceType, Long> pieceCountBoard = squares.stream()
+            .filter((square) -> square.isSameFileAndTeam(file, team))
+            .collect(Collectors.groupingBy(Square::findPieceType, Collectors.counting()));
+
+        return squares.stream()
+            .filter((square) -> square.isSameFileAndTeam(file, team))
+            .map((square) -> square.findPieceScore(pieceCountBoard))
+            .reduce(Score.ZERO, Score::add);
+    }
 
     public List<Square> getSquares() {
         return squares;

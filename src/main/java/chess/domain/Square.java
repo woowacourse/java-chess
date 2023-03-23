@@ -1,12 +1,12 @@
 package chess.domain;
 
-import chess.domain.piece.King;
 import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public class Square {
 
@@ -58,6 +58,10 @@ public class Square {
 
     public PieceType findPieceType() {
         return piece.findType();
+    }
+
+    public Score findPieceScore(Map<PieceType, Long> pieceCountBoard) {
+        return piece.calculateScore(pieceCountBoard);
     }
 
     public Piece getPiece() {

@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public class NoPiece extends Piece {
 
@@ -28,5 +30,10 @@ public class NoPiece extends Piece {
     @Override
     public PieceType findType() {
         return PieceType.NOPIECE;
+    }
+
+    @Override
+    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+        return Score.ZERO;
     }
 }

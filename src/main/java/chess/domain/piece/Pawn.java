@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.position.MoveRange;
 import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
+import java.util.Map;
 
 public class Pawn extends Piece {
 
@@ -34,6 +36,14 @@ public class Pawn extends Piece {
     @Override
     public PieceType findType() {
         return PieceType.PAWN;
+    }
+
+    @Override
+    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+        if (pieceCountBoard.getOrDefault(PieceType.PAWN, 0L) > 1L) {
+            return new Score(0.5);
+        }
+        return new Score(1.0);
     }
 }
 
