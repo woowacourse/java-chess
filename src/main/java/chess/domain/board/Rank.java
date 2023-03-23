@@ -28,7 +28,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~" + Rank.values().length + "이여야합니다."));
     }
 
     public static Rank from(final Team team, final boolean isPawn) {
