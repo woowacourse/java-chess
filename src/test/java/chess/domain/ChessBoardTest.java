@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
@@ -178,15 +179,17 @@ class ChessBoardTest {
             assertThat(actual).isTrue();
         }
     }
+
     @ParameterizedTest
-    @CsvSource(value={":"},delimiter = ':')
-    void calculateScoreByFile_메서드를_호출하면_해당_열에_존재하는_특정_팀의_점수를_계산한다() {
+    @CsvSource(value = {"A:6.0", "B:3.5", "C:4.0", "D:10.0", "E:1.0", "F:4.0", "G:3.5",
+        "H:6.0"}, delimiter = ':')
+    void calculateScoreByFile_메서드를_호출하면_해당_열에_존재하는_특정_팀의_점수를_계산한다(File input, Double expected) {
         //given
-        chessBoard.calculateScoreByFile(File.);
 
         //when
+        Score score = chessBoard.calculateScoreByFileAndTeam(input, Team.WHITE);
 
         //then
-        assertThat(chessBoard.getSquares()).hasSize(64);
+        assertThat(score).isEqualTo(new Score(expected));
     }
 }

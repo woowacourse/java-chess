@@ -5,6 +5,7 @@ import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 public class Square {
@@ -49,6 +50,14 @@ public class Square {
 
     private void changePiece(Piece piece) {
         this.piece = piece;
+    }
+
+    public boolean isSameFileAndTeam(File file, Team team) {
+        return position.isSameFile(file) && piece.isSameTeam(team);
+    }
+
+    public PieceType findPieceType() {
+        return piece.findType();
     }
 
     public Piece getPiece() {

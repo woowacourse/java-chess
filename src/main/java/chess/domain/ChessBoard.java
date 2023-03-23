@@ -1,9 +1,14 @@
 package chess.domain;
 
+import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -96,6 +101,19 @@ public class ChessBoard {
             .filter(Square::isKing)
             .count() < NUMBER_OF_PLAYER;
     }
+
+    public Score calculateScoreByFileAndTeam(File file, Team team) {
+        squares.stream()
+            .filter((square) -> square.isSameFileAndTeam(file, team));
+        Map<PieceType, Long> pieceCountMap = squares.stream()
+            .filter((square) -> square.isSameFileAndTeam(file, team))
+            .collect(Collectors.groupingBy(Square::findPieceType, Collectors.counting()));
+
+        return Arrays.stream(PieceType.values())
+            .map((type) -> type.calculateTotalScore(pieceCountMap.getOrDefault(type,0L)))
+            .reduce(Score.ZERO, Score::add);
+    }
+
 
     public List<Square> getSquares() {
         return squares;

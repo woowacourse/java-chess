@@ -49,6 +49,9 @@ public class Position {
     public Position move(final int fileDirection, final int rankDirection) {
         return Position.of(file.plus(fileDirection), rank.plus(rankDirection));
     }
+    public boolean isSameFile(File file){
+        return this.file==file;
+    }
 
     @Override
     public boolean equals(final Object o) {
