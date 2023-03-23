@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Score {
 
-    private final int value;
+    private final Double value;
 
-    Score(int value) {
+    Score(Double value) {
         this.value = value;
     }
 

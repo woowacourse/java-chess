@@ -411,8 +411,8 @@ GameState<|--FinishedState
 
 #### 점수(Score)(값객체)
 
-- [ ] equals 구현
-- [ ] 더하기 구현
+- [x] equals 구현
+- [x] 더하기 구현
 
 #### 심판(ScoreManager)
 
