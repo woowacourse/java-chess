@@ -131,28 +131,37 @@ class BoardTest {
 
     /**
      * RNBQKBNR
-     * PPPPPPPP
+     * .PPPPPPP
      * ........
      * ........
      * ........
      * ........
-     * .ppppppp
+     * pppppppp
      * rnbqkbnr
      */
     @DisplayName("체스 게임판의 말에 따라 white, black각각의 점수를 계산한다.")
     @Test
     void calculateSideScoresTest() {
         //given
-        chessBoard.put(Position.of("a", "2"), new EmptyPiece());
+        chessBoard.put(Position.of("a", "7"), new EmptyPiece());
 
         //when
         Map<Side, Double> scores = board.calculateScore();
 
         //then
         assertAll(
-                () -> assertThat(scores.get(Side.WHITE)).isEqualTo(37),
-                () -> assertThat(scores.get(Side.BLACK)).isEqualTo(38)
+                () -> assertThat(scores.get(Side.WHITE)).isEqualTo(38),
+                () -> assertThat(scores.get(Side.BLACK)).isEqualTo(37)
         );
+    }
+
+    @DisplayName("white진영의 점수가 높을 경우 white진영이 승자가 된다.")
+    @Test
+    void whiteWinTest() {
+        //given
+        chessBoard.put(Position.of("a", "7"), new EmptyPiece());
+        //when
+        assertThat(board.calculateWinner()).isEqualTo(Side.WHITE);
     }
 
     /**
@@ -164,8 +173,6 @@ class BoardTest {
      * ........
      * p.pppppp
      * rnbqkbnr
-     * 흰색은 5(rook) + 2.5(knight) + 9(queen) + 3(pawn, 4개의 pawn이 있지만 세로로 있어 각 0.5이 된다.) + 0(king) = 19.5점
-     * 검은색은 5(rook) + 3(bishop) + 9(queen) + 3(pawn) + 0(king) = 20점
      */
     @DisplayName("동일한 rank에 같은 진영의 폰이 존재하면 0.5점으로 계산한다.")
     @Test
@@ -183,6 +190,18 @@ class BoardTest {
         assertThat(scores.get(Side.WHITE)).isEqualTo(37);
     }
 
+    @DisplayName("black, white진영의 점수가 같으면 중립(NEUTRAL)진영이 반환된다.")
+    @Test
+    void drawWinTest() {
+        //given
+        chessBoard.put(Position.of("c", "5"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("b", "2"), new EmptyPiece());
+        chessBoard.put(Position.of("c", "7"), new EmptyPiece());
+        //when
+        assertThat(board.calculateWinner()).isEqualTo(Side.NEUTRAL);
+    }
+
+
     /**
      * .KR.....
      * P.PB....
@@ -192,6 +211,8 @@ class BoardTest {
      * .....p.p
      * .....pp.
      * ....rk..
+     * 흰색은 5(rook) + 2.5(knight) + 9(queen) + 3(pawn, 4개의 pawn이 있지만 세로로 있어 각 0.5이 된다.) + 0(king) = 19.5점
+     * 검은색은 5(rook) + 3(bishop) + 9(queen) + 3(pawn) + 0(king) = 20점
      */
     @DisplayName("체스보드에 맞는 게임 점수를 계산한다.")
     @Test
@@ -211,6 +232,24 @@ class BoardTest {
         assertThat(scores.get(Side.WHITE)).isEqualTo(19.5);
         assertThat(scores.get(Side.BLACK)).isEqualTo(20);
     }
+
+    @DisplayName("black진영의 점수가 높으면 black진영이 승자가 된다.")
+    @Test
+    void blackWinTest() {
+        //given
+        setRank1();
+        setRank2();
+        setRank3();
+        setRank4();
+        setRank6();
+        setRank7();
+        setRank8();
+
+        //when
+        assertThat(board.calculateWinner()).isEqualTo(Side.BLACK);
+        //then
+    }
+
 
     private void setRank8() {
         chessBoard.put(Position.of("a", "8"), new EmptyPiece());
