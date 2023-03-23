@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.normal.*;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.property.Color;
+import chess.domain.piece.property.Kind;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,5 +121,23 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return new HashMap<>(board);
+    }
+
+    public double computeScore(final Color color) {
+        double sum = board.values().stream()
+                .filter(piece -> piece.equalsColor(color))
+                .mapToDouble(Piece::getScore).sum();
+
+        for (File value : File.values()) {
+            long count = board.keySet().stream()
+                    .filter(position -> board.get(position).equalsColor(color))
+                    .filter(position -> position.isFileEquals(value))
+                    .filter(position -> board.get(position).getKind() == Kind.PAWN)
+                    .count();
+            if (count >= 2) {
+                sum = sum - count * 0.5;
+            }
+        }
+        return sum;
     }
 }

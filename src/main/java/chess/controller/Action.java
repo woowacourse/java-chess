@@ -11,7 +11,7 @@ public final class Action {
         this.consumer = consumer;
     }
 
-    public void excute(final List<String> commands) {
+    public void execute(final List<String> commands) {
         consumer.accept(commands);
     }
 }

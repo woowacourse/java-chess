@@ -39,6 +39,11 @@ public final class Waiting implements GameStatus {
     }
 
     @Override
+    public double computeScore(final Color color) {
+        throw new UnsupportedOperationException("시작하지 않은 게임의 점수를 볼 수 없습니다.");
+    }
+
+    @Override
     public Color getTurn() {
         throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
     }

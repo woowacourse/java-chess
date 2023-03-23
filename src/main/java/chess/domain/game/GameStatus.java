@@ -18,5 +18,7 @@ public interface GameStatus {
 
     Map<Position, Piece> getBoard();
 
+    double computeScore(Color color);
+
     Color getTurn();
 }

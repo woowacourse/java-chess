@@ -50,6 +50,11 @@ public final class Running implements GameStatus {
     }
 
     @Override
+    public double computeScore(final Color color) {
+        return board.computeScore(color);
+    }
+
+    @Override
     public Color getTurn() {
         return turn;
     }

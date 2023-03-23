@@ -43,6 +43,10 @@ public final class ChessGame {
         return gameStatus.getTurn().name();
     }
 
+    public double computeScore(Color color) {
+        return gameStatus.computeScore(color);
+    }
+
     public static ChessGame load(Board board, Color turn) {
         return new ChessGame(board, turn);
     }

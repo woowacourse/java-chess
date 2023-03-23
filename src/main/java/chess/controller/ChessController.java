@@ -4,6 +4,7 @@ import chess.dao.chessGameDao;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -33,6 +34,7 @@ public final class ChessController {
         commandMap.put(Command.START, new Action(ignored -> start()));
         commandMap.put(Command.LOAD, new Action(this::load));
         commandMap.put(Command.MOVE, new Action(this::move));
+        commandMap.put(Command.STATUS, new Action(ignored -> status()));
         commandMap.put(Command.END, new Action(ignored -> end()));
     }
 
@@ -47,7 +49,7 @@ public final class ChessController {
         try {
             List<String> commands = inputView.inputCommand();
             Command command = Command.from(commands.get(COMMAND_INDEX));
-            commandMap.get(command).excute(commands);
+            commandMap.get(command).execute(commands);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);
             outputView.printGuideMessage();
@@ -76,6 +78,13 @@ public final class ChessController {
         Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
         chessGame.playTurn(parsedFile, parsedRank);
         printBoard(chessGame.getBoard());
+    }
+
+    private void status() {
+        double whiteScore = chessGame.computeScore(Color.WHITE);
+        double blackScore = chessGame.computeScore(Color.BLACK);
+        outputView.printScore(whiteScore, Color.WHITE);
+        outputView.printScore(blackScore, Color.BLACK);
     }
 
     private void end() {

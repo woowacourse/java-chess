@@ -27,8 +27,8 @@ public abstract class Piece {
 
     public abstract boolean isEmpty();
 
-    public boolean equalsColor(final Piece targetSquare) {
-        return color == targetSquare.color;
+    public boolean equalsColor(final Piece targetPiece) {
+        return color == targetPiece.color;
     }
 
     public boolean equalsColor(final Color color) {
@@ -41,6 +41,10 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return getKind().getScore();
     }
 
     public String getName() {

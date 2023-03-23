@@ -33,6 +33,11 @@ public final class Finished implements GameStatus {
     }
 
     @Override
+    public double computeScore(final Color color) {
+        throw new UnsupportedOperationException("이미 게임이 종료되었습니다.");
+    }
+
+    @Override
     public Color getTurn() {
         throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
     }
