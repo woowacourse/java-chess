@@ -2,10 +2,8 @@ package chess.model.game;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
-import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.view.ChessBoardResponse;
-import java.util.Map;
 
 public class ChessGame {
 
@@ -37,11 +35,9 @@ public class ChessGame {
 
     public ChessBoardResponse getChessBoard() {
         try {
-            final Map<Position, Piece> square = chessBoard.getBoard();
-
-            return new ChessBoardResponse(square);
+            return new ChessBoardResponse(chessBoard.getBoard());
         } catch (NullPointerException e) {
-            throw new IllegalStateException("게임을 시작하지 않았습니다.");
+            throw new IllegalStateException("게임을 시작하지 않았습니다.", e);
         }
     }
 }

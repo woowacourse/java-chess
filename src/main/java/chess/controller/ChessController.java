@@ -1,13 +1,13 @@
 package chess.controller;
 
 import chess.controller.dto.PlayRequest;
+import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.game.GameCommand;
 import chess.model.game.state.GameState;
 import chess.model.game.state.Ready;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
-import chess.view.ChessBoardResponse;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -34,7 +34,7 @@ public class ChessController {
     private GameState run(final GameState gameState) {
         try {
             final PlayRequest playRequest = inputView.readPlayCommand();
-            final chess.model.dto.PlayDto playDto = convertDtoFromRequest(playRequest);
+            final PlayDto playDto = convertDtoFromRequest(playRequest);
 
             return gameState.execute(playDto);
         } catch (IllegalArgumentException e) {
@@ -43,22 +43,17 @@ public class ChessController {
         }
     }
 
-    private chess.model.dto.PlayDto convertDtoFromRequest(final PlayRequest playRequest) {
-        final String command = playRequest.getCommand();
-        final GameCommand gameCommand = GameCommand.findGameCommand(command);
-        final String source = playRequest.getSource();
-        final String target = playRequest.getTarget();
-        final Position sourcePosition = PositionConverter.convert(source);
-        final Position targetPosition = PositionConverter.convert(target);
+    private PlayDto convertDtoFromRequest(final PlayRequest playRequest) {
+        final GameCommand gameCommand = GameCommand.findGameCommand(playRequest.getCommand());
+        final Position sourcePosition = PositionConverter.convert(playRequest.getSource());
+        final Position targetPosition = PositionConverter.convert(playRequest.getTarget());
 
-        return new chess.model.dto.PlayDto(gameCommand, sourcePosition, targetPosition);
+        return new PlayDto(gameCommand, sourcePosition, targetPosition);
     }
 
     private void printChessBoard(final GameState gameState, final ChessGame chessGame) {
         if (gameState.isPlay()) {
-            final ChessBoardResponse response = chessGame.getChessBoard();
-
-            outputView.printChessBoard(response);
+            outputView.printChessBoard(chessGame.getChessBoard());
         }
     }
 }
