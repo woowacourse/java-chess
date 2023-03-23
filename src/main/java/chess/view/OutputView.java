@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.command.CommandType;
+import chess.dto.ChessBoardDto;
 import java.util.List;
 
 public final class OutputView {
@@ -15,7 +16,8 @@ public final class OutputView {
         System.out.println("게임 이동: move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printChessBoard(List<List<String>> chessBoard) {
+    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
+        final List<List<String>> chessBoard = chessBoardDto.getChessBoard();
         for (int i = 0; i < chessBoard.size(); i++) {
             printEachRank(chessBoard.get(i), chessBoard.size() - i);
         }
