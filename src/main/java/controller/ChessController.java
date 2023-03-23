@@ -1,8 +1,10 @@
 package controller;
 
-import static controller.MoveCommand.END;
-import static controller.MoveCommand.MOVE;
+import static command.MoveCommand.END;
+import static command.MoveCommand.MOVE;
 
+import command.MoveCommand;
+import command.StartCommand;
 import domain.board.Board;
 import domain.position.Position;
 import domain.position.Positions;
@@ -26,7 +28,7 @@ public final class ChessController {
         StartCommand startCommand = inputStartCommand();
         if (StartCommand.START.equals(startCommand)) {
             OutputView.printBoard(board.getPieces());
-            play(board);
+            play();
         }
     }
 
@@ -48,12 +50,22 @@ public final class ChessController {
         }
     }
 
-    private void play(final Board board) {
-        List<String> commands;
-        while (MOVE.equals(MoveCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
-            movePieceWithHandling(board, commands);
-            OutputView.printBoard(board.getPieces());
+    private void play() {
+        boolean nextStep;
+        do {
+            nextStep = executeCommand();
+        } while (nextStep);
+    }
+
+    private boolean executeCommand() {
+        List<String> commands = readProgressCommand();
+        MoveCommand command = MoveCommand.from(commands.get(COMMAND_INDEX));
+        if (END.equals(command)) {
+            return false;
         }
+        movePieceWithHandling(board, commands);
+        OutputView.printBoard(board.getPieces());
+        return true;
     }
 
     private void movePieceWithHandling(final Board board, final List<String> commands) {
