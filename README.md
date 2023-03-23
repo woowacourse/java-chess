@@ -3,7 +3,7 @@
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
 ## 1단계 피드백 사항 및 추가 수정 사항
-- [ ] 출력 시 View 와 Domain 의존성 제거 - DTO 도입
+- [x] 출력 시 View 와 Domain 의존성 제거 - DTO 도입
 - [x] 매직 넘버 상수화
 - [x] 클래스 및 메소드 네이밍 의미있는 표현으로 변경
 - [x] Pawn 의 이동 규칙 관리 ChessGame 에서 적절한 객체로 책임 위임
