@@ -8,6 +8,7 @@ import static chess.ChessGameCommand.FROM_INDEX;
 import static chess.ChessGameCommand.MOVE;
 import static chess.ChessGameCommand.MOVE_COMMAND_SIZE;
 import static chess.ChessGameCommand.START;
+import static chess.ChessGameCommand.STATUS;
 import static chess.ChessGameCommand.TO_INDEX;
 
 import chess.ChessGameCommand;
@@ -28,6 +29,7 @@ public class ChessController {
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::movePiece,
+                STATUS, this::showStatus,
                 END, this::end
         );
     }
@@ -69,8 +71,14 @@ public class ChessController {
         OutputView.printBoard(board.board());
     }
 
-    private void end(final List<String> strings) {
-        validateCommandsSize(strings, DEFAULT_COMMAND_SIZE);
+    private void showStatus(final List<String> commands) {
+        validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
+
+        OutputView.printScore(board.calculateScore());
+    }
+
+    private void end(final List<String> commands) {
+        validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         if (!board.isEnd()) {
             OutputView.printScore(board.calculateScore());
