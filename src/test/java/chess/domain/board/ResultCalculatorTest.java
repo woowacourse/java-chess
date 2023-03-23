@@ -23,7 +23,7 @@ class ResultCalculatorTest {
         resultCalculator.saveTotalScoreBySide(Side.WHITE, whiteTotalScore);
         resultCalculator.saveTotalScoreBySide(Side.BLACK, blackTotalScore);
         resultCalculator.saveGameResultBySide();
-        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide();
+        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide().getGameResultBySide();
 
         // then
         assertThat(gameResultBySide.get(Side.WHITE)).isEqualTo(GameResult.WIN);
@@ -42,7 +42,7 @@ class ResultCalculatorTest {
         resultCalculator.saveTotalScoreBySide(Side.WHITE, whiteTotalScore);
         resultCalculator.saveTotalScoreBySide(Side.BLACK, blackTotalScore);
         resultCalculator.saveGameResultBySide();
-        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide();
+        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide().getGameResultBySide();
 
         // then
         assertThat(gameResultBySide.get(Side.WHITE)).isEqualTo(GameResult.DRAW);
@@ -61,7 +61,7 @@ class ResultCalculatorTest {
         resultCalculator.saveTotalScoreBySide(Side.WHITE, whiteTotalScore);
         resultCalculator.saveTotalScoreBySide(Side.BLACK, blackTotalScore);
         resultCalculator.saveGameResultBySide();
-        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide();
+        Map<Side, GameResult> gameResultBySide = resultCalculator.getGameResultBySide().getGameResultBySide();
 
         // then
         assertThat(gameResultBySide.get(Side.WHITE)).isEqualTo(GameResult.LOSE);

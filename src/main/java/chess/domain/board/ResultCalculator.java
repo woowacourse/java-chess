@@ -51,11 +51,11 @@ public class ResultCalculator {
         gameResultBySide.updateGameResultBySide(Side.BLACK, GameResult.DRAW);
     }
 
-    public Map<Side, Score> getScoreBySide() {
-        return scoreBySide.getScoreBySide();
+    public ScoreBySide getScoreBySide() {
+        return scoreBySide;
     }
 
-    public Map<Side, GameResult> getGameResultBySide() {
-        return gameResultBySide.getGameResultBySide();
+    public GameResultBySide getGameResultBySide() {
+        return gameResultBySide;
     }
 }
