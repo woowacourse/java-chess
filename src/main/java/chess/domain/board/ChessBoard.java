@@ -48,10 +48,10 @@ public final class ChessBoard {
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {
+        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
         if (currentPosition.equals(target)) {
             return false;
         }
-        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
         if (board.containsKey(currentPosition)) {
             return true;
         }

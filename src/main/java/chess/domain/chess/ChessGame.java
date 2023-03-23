@@ -27,7 +27,7 @@ public final class ChessGame {
         }
         validateCamp(piece);
         if (!piece.canMove(source, target, chessBoard.getPiece(target))
-                && !chessBoard.isPossibleRoute(source, target, currentTeamColor)) {
+                || !chessBoard.isPossibleRoute(source, target, currentTeamColor)) {
             throw new IllegalArgumentException("기물 규칙 상 움직일 수 없는 위치입니다.");
         }
         movePiece(source, target, piece);
