@@ -61,7 +61,7 @@ public class Board {
 		final Piece sourcePiece = board.get(source);
 		final Piece targetPiece = board.get(target);
 
-		if (sourcePiece.isSameTeam(targetPiece.team())) {
+		if (sourcePiece.isSameTeam(targetPiece.color())) {
 			throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
 		}
 	}

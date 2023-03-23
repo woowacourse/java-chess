@@ -24,7 +24,7 @@ public abstract class Piece {
 		return this.color.equals(color);
 	}
 
-	public Color team() {
+	public Color color() {
 		return color;
 	}
 }
