@@ -20,10 +20,11 @@ public final class ChessGame {
         this.chessBoard = chessBoard;
     }
 
-    public void move(Position fromPosition, Position toPosition, Path path) {
+    public void move(Position fromPosition, Position toPosition) {
         validateBeforeMoveTo(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
+        Path path = new Path();
         path.judgeBetweenStuck(
                 chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
                 pieceMove);

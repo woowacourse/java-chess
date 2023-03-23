@@ -71,7 +71,7 @@ public final class ChessController {
         ChessCommand.validatePlayingCommand(commands);
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
-        game.move(toPosition(fromInput), toPosition(toInput), new Path());
+        game.move(toPosition(fromInput), toPosition(toInput));
         printBoard(game.getChessBoard());
     }
 
