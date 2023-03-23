@@ -2,7 +2,6 @@ package chess.model.board.state;
 
 import chess.controller.GameCommand;
 import chess.model.ChessGame;
-import chess.model.Scores;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Map;
@@ -16,9 +15,12 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
-    public GameState changeState(final GameCommand gameCommand) {
+    public abstract boolean isStatus();
+
+    @Override
+    public final GameState changeState(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
-            throw new IllegalArgumentException("게임중에 start를 입력할 수 없습니다.");
+            throw new IllegalArgumentException("게임 도중에 start를 입력할 수 없습니다.");
         }
 
         return modifyState(gameCommand);
@@ -37,24 +39,12 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
-    public void execute(final GameCommand gameCommand, final Position source, final Position target) {
-        if (gameCommand.isMove()) {
-            chessGame.move(source, target);
-        }
-    }
-
-    @Override
-    public boolean isNotEnd() {
+    public final boolean isNotEnd() {
         return true;
     }
 
     @Override
-    public boolean isStatus() {
-        return false;
-    }
-
-    @Override
-    public GameState isGameEnd() {
+    public final GameState isGameEnd() {
         if ((chessGame.isGameEnd())) {
             return new End();
         }
@@ -63,12 +53,7 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
-    public Scores calculateScores() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<Position, Piece> getBoard() {
+    public final Map<Position, Piece> getBoard() {
         return chessGame.getBoard();
     }
 }

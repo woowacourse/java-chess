@@ -14,8 +14,8 @@ public class End implements GameState {
     }
 
     @Override
-    public void execute(final GameCommand gameCommand, final Position source, final Position target) {
-        throw new UnsupportedOperationException();
+    public void execute(final Position source, final Position target) {
+        // 게임이 끝난 상태에서는 실행 할 수 없음.
     }
 
     @Override
@@ -35,11 +35,11 @@ public class End implements GameState {
 
     @Override
     public Scores calculateScores() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
     }
 }

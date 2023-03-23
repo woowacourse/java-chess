@@ -10,7 +10,7 @@ public interface GameState {
 
     GameState changeState(final GameCommand gameCommand);
 
-    void execute(final GameCommand gameCommand, final Position source, final Position target);
+    void execute(final Position source, final Position target);
 
     boolean isNotEnd();
 

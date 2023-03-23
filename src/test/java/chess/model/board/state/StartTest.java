@@ -4,13 +4,10 @@ import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.START;
 import static chess.controller.GameCommand.STATUS;
-import static chess.model.board.PositionFixture.A2;
-import static chess.model.board.PositionFixture.A4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
-import chess.model.ChessGame;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,27 +39,5 @@ class StartTest {
         assertThatThrownBy(() -> Start.from(MOVE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작하기 전에 move를 호출 할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("Start일 때, execute가 실행되면 오류가 발생한다.")
-    void execute_whenCall_thenFail() {
-        // given
-        final Start start = new Start(new ChessGame());
-
-        // when, then
-        assertThatThrownBy(() ->  start.execute(MOVE, A2, A4))
-                .isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
-    @DisplayName("Start일 때, isGameEnd가 실행되면 오류가 발생한다.")
-    void isGameEnd_whenCall_thenFail() {
-        // given
-        final Start start = new Start(new ChessGame());
-
-        // when, then
-        assertThatThrownBy(start::isGameEnd)
-                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

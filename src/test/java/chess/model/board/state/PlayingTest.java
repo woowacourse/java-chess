@@ -86,7 +86,7 @@ class PlayingTest {
         final Playing playing = new Playing(new ChessGame());
 
         // when
-        playing.execute(MOVE, A2, A4);
+        playing.execute(A2, A4);
 
         // then
         assertAll(
