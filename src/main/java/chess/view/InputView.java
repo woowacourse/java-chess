@@ -9,18 +9,22 @@ public final class InputView {
 
     public static final String DELIMITER = " ";
     private static final Scanner scanner = new Scanner(System.in);
+    public static final int START_END_COMMAND_NECESSARY_WORD = 1;
+    public static final int MOVE_COMMAND_NECESSARY_WORD = 3;
 
     private InputView() {
     }
 
-    public static GameCommand readInitialCommand() {
+    public static CommandDto readInitialCommand() {
         OutputView.printStartMessage();
-        GameCommand gameCommand = recognizeGameCommand(readUserInput());
+        List<String> input = readUserInput();
+        GameCommand gameCommand = recognizeGameCommand(input);
         while (gameCommand == GameCommand.MOVE) {
             OutputView.printNotStartedGameMessage();
-            gameCommand = recognizeGameCommand(readUserInput());
+            input = readUserInput();
+            gameCommand = recognizeGameCommand(input);
         }
-        return gameCommand;
+        return CommandDto.of(gameCommand, input);
     }
 
     private static List<String> readUserInput() {
@@ -34,13 +38,13 @@ public final class InputView {
 
     public static CommandDto readPlayingCommand() {
         List<String> input = readUserInput();
-        if (input.size() != 1 && input.size() != 3) {
+        if (input.size() != START_END_COMMAND_NECESSARY_WORD && input.size() != MOVE_COMMAND_NECESSARY_WORD)  {
             throw new IllegalArgumentException("[ERROR] 명령어 형식이 올바르지 않습니다.");
         }
         GameCommand gameCommand = recognizeGameCommand(input);
         if (gameCommand == GameCommand.START) {
             throw new IllegalArgumentException("[ERROR] 게임 진행 중에는 move와 end 명령어만 입력 가능합니다.");
         }
-        return CommandDto.of(input);
+        return CommandDto.of(gameCommand, input);
     }
 }

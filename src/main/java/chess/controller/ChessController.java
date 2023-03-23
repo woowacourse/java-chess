@@ -13,8 +13,8 @@ public final class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        GameCommand gameCommand = InputView.readInitialCommand();
-        if (gameCommand == GameCommand.START) {
+        CommandDto commandDto = InputView.readInitialCommand();
+        if (commandDto.getGameCommand() == GameCommand.START) {
             startGame();
         }
     }
@@ -37,10 +37,10 @@ public final class ChessController {
     }
 
     private void executeMoveCommand(ChessBoard chessBoard, CommandDto commandDto) {
-        Position start = commandDto.getStartPosition();
-        Position end = commandDto.getEndPosition();
+        String startInput = commandDto.getStartPosition();
+        String endInput = commandDto.getEndPosition();
 
-        chessBoard.movePiece(start, end);
+        chessBoard.movePiece(Position.of(startInput), Position.of(endInput));
         OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
     }
 }

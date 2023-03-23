@@ -17,10 +17,21 @@ class PositionTest {
 
     @Test
     @DisplayName("캐싱된다.")
-    void getCachedPositionTest() {
+    void getCachedPositionByRowColumnTest() {
         // given
         Position position1 = Position.of(2, 2);
         Position position2 = Position.of(2, 2);
+
+        // expect
+        assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    @DisplayName("문자열에 해당하는 Position을 반환할 수 있다.")
+    void getCachedPositionByStringTest() {
+        // given
+        Position position1 = Position.of(2, 2);
+        Position position2 = Position.of("b2");
 
         // expect
         assertThat(position1).isSameAs(position2);

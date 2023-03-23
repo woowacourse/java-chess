@@ -1,9 +1,9 @@
 package chess.dto.response;
 
 import chess.domain.piece.Piece;
-import chess.controller.ColumnToNumber;
+import chess.domain.position.ColumnToNumber;
 import chess.domain.position.Position;
-import chess.controller.RowToNumber;
+import chess.domain.position.RowToNumber;
 
 import java.util.ArrayList;
 import java.util.List;

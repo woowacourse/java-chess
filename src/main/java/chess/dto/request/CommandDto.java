@@ -1,8 +1,5 @@
 package chess.dto.request;
 
-import chess.controller.ColumnToNumber;
-import chess.controller.RowToNumber;
-import chess.domain.position.Position;
 import chess.view.GameCommand;
 
 import java.util.List;
@@ -10,42 +7,34 @@ import java.util.List;
 public class CommandDto {
 
     private final GameCommand gameCommand;
-    private final Position startPosition;
-    private final Position endPosition;
+    private final String startPosition;
+    private final String endPosition;
 
-    private CommandDto(GameCommand gameCommand, Position startPosition, Position endPosition) {
+    private CommandDto(GameCommand gameCommand, String startPosition, String endPosition) {
         this.gameCommand = gameCommand;
         this.startPosition = startPosition;
         this.endPosition = endPosition;
     }
 
-    public static CommandDto of(List<String> userInput) {
-        GameCommand gameCommand = GameCommand.of(userInput.get(0));
-        Position startPosition = null;
-        Position endPosition = null;
+    public static CommandDto of(GameCommand gameCommand, List<String> userInput) {
+        String startPosition = null;
+        String endPosition = null;
         if (userInput.size() == 3) {
-            startPosition = convertInputToPosition(userInput.get(1));
-            endPosition = convertInputToPosition(userInput.get(2));
+            startPosition = userInput.get(1);
+            endPosition = userInput.get(2);
         }
         return new CommandDto(gameCommand, startPosition, endPosition);
-    }
-
-    private static Position convertInputToPosition(String input) {
-        int row = RowToNumber.of(input.charAt(1));
-        int column = ColumnToNumber.of(input.charAt(0));
-
-        return Position.of(row, column);
     }
 
     public GameCommand getGameCommand() {
         return gameCommand;
     }
 
-    public Position getStartPosition() {
+    public String getStartPosition() {
         return startPosition;
     }
 
-    public Position getEndPosition() {
+    public String getEndPosition() {
         return endPosition;
     }
 }

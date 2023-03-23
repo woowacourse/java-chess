@@ -33,6 +33,12 @@ public final class Position {
         return cache.get(Objects.hash(row, column));
     }
 
+    public static Position of(String input) {
+        int row = RowToNumber.of(input.charAt(1));
+        int column = ColumnToNumber.of(input.charAt(0));
+        return cache.get(Objects.hash(row, column));
+    }
+
     public static List<Position> getAllPosition() {
         List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
         List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
