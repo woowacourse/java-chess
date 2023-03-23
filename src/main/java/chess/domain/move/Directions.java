@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import chess.domain.exception.DirectionalException;
 import chess.domain.position.Position;
 import chess.util.Mathematics;
 
@@ -33,7 +34,7 @@ public class Directions {
     private void validateSingleDirection(List<Direction> directions) {
         Set<Direction> distinctDirections = new HashSet<>(directions);
         if (distinctDirections.containsAll(VERTICALS) || distinctDirections.containsAll(HORIZONTALS)) {
-            throw new IllegalArgumentException("수직이나 수평으로 양방향이면 안됩니다");
+            throw new DirectionalException("수직이나 수평으로 양방향이면 안됩니다");
         }
     }
 

@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.exception.IllegalMoveException;
 import chess.domain.move.Direction;
 
 public enum File {
@@ -32,7 +33,7 @@ public enum File {
     private static File indexOf(int index) {
         File file = FILE_CACHE.get(index);
         if (file == null) {
-            throw new UnsupportedOperationException();
+            throw new IllegalMoveException("체스판을 벗어났습니다");
         }
         return file;
     }

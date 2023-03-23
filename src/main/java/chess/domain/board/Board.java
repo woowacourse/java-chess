@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.exception.IllegalMoveException;
 import chess.domain.game.Team;
 import chess.domain.move.Move;
 import chess.domain.piece.EmptyPiece;
@@ -28,13 +29,13 @@ public class Board {
 
     private void validateNotSameTeam(Position source, Position target) {
         if (getPieceAt(source).isSameTeamWith(getPieceAt(target))) {
-            throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
+            throw new IllegalMoveException("목표 위치에 같은 색 말이 있습니다");
         }
     }
 
     private void validateMove(Position source, Position target) {
         if (!hasMove(source, target)) {
-            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
+            throw new IllegalMoveException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
 
@@ -57,7 +58,7 @@ public class Board {
 
     private void validateNoPieceAt(Position position) {
         if (hasPieceAt(position)) {
-            throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
+            throw new IllegalMoveException("다른 기물을 지나칠 수 없습니다");
         }
     }
 

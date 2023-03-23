@@ -3,6 +3,7 @@ package chess.domain.move;
 import java.util.List;
 import java.util.Objects;
 
+import chess.domain.exception.DirectionalException;
 import chess.domain.position.Position;
 
 public class Move {
@@ -24,7 +25,7 @@ public class Move {
 
     private void validateNotEmpty(Directions directions) {
         if (directions.isEmpty()) {
-            throw new IllegalArgumentException("방향이 존재해야합니다");
+            throw new DirectionalException("방향이 존재해야합니다");
         }
     }
 

@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.view;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ public class IllegalArgumentExceptionHandler {
         try {
             return supplier.get();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            System.out.println("[ERROR] " + exception.getMessage());
             return handleExceptionByRepeating(supplier, loopCount + 1);
         }
     }
@@ -33,7 +33,7 @@ public class IllegalArgumentExceptionHandler {
         try {
             runnable.run();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            System.out.println("[ERROR] " + exception.getMessage());
             handleExceptionByRepeating(runnable, loopCount + 1);
         }
     }

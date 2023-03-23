@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.exception.IllegalMoveException;
 import chess.domain.move.Direction;
 
 public enum Rank {
@@ -33,7 +34,7 @@ public enum Rank {
     private static Rank indexOf(int index) {
         Rank rank = RANK_CACHE.get(index);
         if (rank == null) {
-            throw new UnsupportedOperationException();
+            throw new IllegalMoveException("체스판을 벗어났습니다");
         }
         return rank;
     }

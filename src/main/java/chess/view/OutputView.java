@@ -20,6 +20,10 @@ public class OutputView {
         printBoard(board);
     }
 
+    public void printException(String message) {
+        System.out.println("[ERROR] " + message);
+    }
+
     private char[][] setUpBoard() {
         char[][] board = new char[8][8];
         for (char[] line : board) {

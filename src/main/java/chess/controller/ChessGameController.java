@@ -1,7 +1,5 @@
 package chess.controller;
 
-import static chess.controller.IllegalArgumentExceptionHandler.handleExceptionByRepeating;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +25,12 @@ public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameExceptionHandler exceptionHandler;
 
     public ChessGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.exceptionHandler = new ChessGameExceptionHandler(outputView);
     }
 
     public void start() {
@@ -39,7 +39,7 @@ public class ChessGameController {
     }
 
     private void ready() {
-        handleExceptionByRepeating(() -> {
+        exceptionHandler.handleExceptionByRepeating(() -> {
             Request request = inputView.askCommand();
             Command command = request.getCommand();
             if (command == Command.START) {
@@ -62,7 +62,7 @@ public class ChessGameController {
     }
 
     private Command playOnce(Game game) {
-        return handleExceptionByRepeating(() -> {
+        return exceptionHandler.handleExceptionByRepeating(() -> {
             Request request = inputView.askCommand();
             Command command = request.getCommand();
             if (command == Command.START) {

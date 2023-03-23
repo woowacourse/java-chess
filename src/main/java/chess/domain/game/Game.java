@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.exception.DifferentTeamException;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -25,7 +26,7 @@ public class Game {
 
     private void validateTurn(Team turn, Position position) {
         if (!board.hasPositionTeamOf(position, turn)) {
-            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
+            throw new DifferentTeamException("자신의 기물만 움직일 수 있습니다");
         }
     }
 

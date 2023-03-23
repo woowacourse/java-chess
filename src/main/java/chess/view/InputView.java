@@ -5,7 +5,7 @@ import java.util.Scanner;
 import chess.view.dto.Request;
 
 public class InputView {
-    
+
     private final Scanner scanner;
 
     public InputView(Scanner scanner) {
@@ -13,11 +13,13 @@ public class InputView {
     }
 
     public Request askCommand() {
-        String input = scanner.nextLine().strip().toUpperCase();
-        String[] parameters = input.split(" ");
-        validateHasLength(parameters);
-        Command command = Command.from(parameters[0]);
-        return createRequest(parameters, command);
+        return IllegalArgumentExceptionHandler.handleExceptionByRepeating(() -> {
+            String input = scanner.nextLine().strip().toUpperCase();
+            String[] parameters = input.split(" ");
+            validateHasLength(parameters);
+            Command command = Command.from(parameters[0]);
+            return createRequest(parameters, command);
+        });
     }
 
     private Request createRequest(String[] parameters, Command command) {
