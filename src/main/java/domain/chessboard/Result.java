@@ -13,6 +13,22 @@ public class Result {
         this.value = value;
     }
 
+    public static Result createByCheckMate(boolean blackHasKing, boolean whiteHasKing) {
+        Map<Color, GameResult> value = new LinkedHashMap<>();
+        value.put(Color.BLACK, getGameResultByKing(blackHasKing));
+        value.put(Color.WHITE, getGameResultByKing(whiteHasKing));
+
+        return new Result(value);
+    }
+
+    public static GameResult getGameResultByKing(boolean hasKing) {
+        if (hasKing) {
+            return GameResult.WIN;
+        }
+
+        return GameResult.LOSE;
+    }
+
     public static Result createByScore(Score score) {
         Map<Color, GameResult> value = new LinkedHashMap<>();
         Map<Color, Double> scoreValue = score.getValue();

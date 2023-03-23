@@ -1,13 +1,22 @@
 package domain;
 
 import domain.chessboard.ChessBoard;
+import domain.chessboard.ColorScore;
 import domain.chessboard.EmptyType;
+import domain.chessboard.GameResult;
+import domain.chessboard.Result;
 import domain.chessboard.Square;
+import domain.chessboard.StatusResult;
 import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
 import domain.piece.PieceType;
+
+import javax.print.DocFlavor;
+import java.lang.reflect.GenericArrayType;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -94,6 +103,18 @@ public class ChessGame {
     private static void movePiece(final Square startPoint, final Square endPoint) {
         endPoint.bePiece(startPoint);
         startPoint.beEmpty();
+    }
+
+    public StatusResult getStatusResult() {
+        ColorScore blackScore = new ColorScore(Color.BLACK, chessBoard.calculateColorScore(Color.BLACK));
+        ColorScore whiteScore = new ColorScore(Color.WHITE, chessBoard.calculateColorScore(Color.WHITE));
+        return StatusResult.of(blackScore, whiteScore);
+    }
+
+    public Result getCheckMateResult() {
+        boolean isExistKingOfBlack = chessBoard.isExistKingThisColor(Color.BLACK);
+        boolean isExistKingOfWhite = chessBoard.isExistKingThisColor(Color.WHITE);
+        return Result.createByCheckMate(isExistKingOfBlack, isExistKingOfWhite);
     }
 
     public ChessBoard getChessBoard() {
