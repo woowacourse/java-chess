@@ -1,7 +1,9 @@
+
 package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.domain.position.move.PieceMove;
+
 import java.util.Objects;
 
 public abstract class Piece {
@@ -57,5 +59,9 @@ public abstract class Piece {
 
     public PieceSymbol getPieceSymbol() {
         return pieceSymbol;
+    }
+
+    public Camp getCamp() {
+        return camp;
     }
 }
