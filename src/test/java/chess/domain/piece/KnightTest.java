@@ -39,11 +39,11 @@ class KnightTest {
     @Test
     @DisplayName("잘못된 타겟이면 예외가 발생한다")
     void computePath_illegal_exception() {
-        final var kngiht = new Knight(Color.BLACK);
+        final var knight = new Knight(Color.BLACK);
         final var source = B4;
         final var target = E4;
 
-        assertThatThrownBy(() -> kngiht.computePathWithValidate(source, target))
+        assertThatThrownBy(() -> knight.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

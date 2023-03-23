@@ -64,7 +64,7 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, true, C7, false), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, true, C7, false), source, target);
 
         assertThat(actual).isTrue();
     }
@@ -74,7 +74,7 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, true, C7, false), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, true, C7, false), source, target);
 
         assertThat(actual).isTrue();
     }
@@ -84,7 +84,7 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, false, C7, true), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, false, C7, true), source, target);
 
         assertThat(actual).isFalse();
     }
