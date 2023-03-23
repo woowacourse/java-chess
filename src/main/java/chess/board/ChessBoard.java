@@ -84,12 +84,8 @@ public class ChessBoard {
     }
 
     private Coordinate moveForDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
-//        System.out.println(researchCoordinate);
-//        System.out.println(destinationCoordinate);
         int columnAdd = researchCoordinate.compareByColumn(destinationCoordinate);
         int rowAdd = researchCoordinate.compareByRowNum(destinationCoordinate);
-//        System.out.println("columnAdd : "+ columnAdd );
-//        System.out.println("rowAdd : "+rowAdd);
         return researchCoordinate.move(rowAdd,columnAdd);
     }
 
