@@ -1,40 +1,30 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
-import chess.domain.position.ChessBoard;
-import chess.domain.game.state.GameState;
-import chess.domain.game.state.ReadyState;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
-import chess.domain.position.ChessBoardFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.move.PieceMove;
+import chess.domain.position.ChessBoard;
+import chess.domain.position.Position;
 import java.util.List;
 
-public class ChessGame {
+public class RunGame extends StartedGame {
 
     private static final String UNABLE_TO_MOVE = "이동할 수 없습니다.";
     private static final String TURN_MISMATCHED = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
-    private ChessBoard chessBoard;
-    private GameState gameState = new ReadyState();
-    private Camp turnCamp;
-
-    public void startGame() {
-        this.chessBoard = ChessBoardFactory.getInitialChessBoard();
-        this.gameState = gameState.start();
-        this.turnCamp = Camp.WHITE;
+    public RunGame(ChessBoard chessBoard, Camp turnCamp) {
+        super(chessBoard, turnCamp);
     }
 
-    public void move(Position fromPosition, Position toPosition) {
-        this.gameState = gameState.move();
+    public ChessGame move(Position fromPosition, Position toPosition) {
         validateBeforeMove(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
         validateMovable(chessBoard.isPieceExist(toPosition), pieceMove);
         chessBoard.movePiece(fromPosition, toPosition);
-        this.turnCamp = turnCamp.convert();
+        return new RunGame(chessBoard, turnCamp.convert());
     }
 
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
@@ -101,15 +91,8 @@ public class ChessGame {
         }
     }
 
-    public boolean isRunnableGame() {
-        return gameState.isRunnable();
-    }
-
-    public void endGame() {
-        this.gameState = gameState.end();
-    }
-
-    public ChessBoard getPiecesPosition() {
-        return this.chessBoard;
+    @Override
+    public ChessGame endGame() {
+        return new EndGame(chessBoard, turnCamp);
     }
 }

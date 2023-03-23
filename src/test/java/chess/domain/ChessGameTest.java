@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.game.ChessGame;
+import chess.domain.game.state.ChessGame;
+import chess.domain.game.state.ReadyGame;
 import chess.domain.piece.Camp;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -19,8 +20,8 @@ class ChessGameTest {
 
     @BeforeEach
     void setRunningGame() {
-        chessGame = new ChessGame();
-        chessGame.startGame();
+        chessGame = new ReadyGame();
+        chessGame = chessGame.startGame();
     }
 
     @Test
@@ -80,4 +81,10 @@ class ChessGameTest {
         assertThat(chessGame.isRunnableGame())
                 .isTrue();
     }
+
+//    @Test
+//    @DisplayName("게임 점수 계산.")
+//    void calculateCampScoreTest() {
+//        chessGame.calculateScore()
+//    }
 }

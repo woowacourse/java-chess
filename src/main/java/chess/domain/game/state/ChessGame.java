@@ -1,0 +1,18 @@
+package chess.domain.game.state;
+
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
+
+public interface ChessGame {
+
+    ChessGame startGame();
+
+    ChessGame move(Position fromPosition, Position toPosition);
+
+    boolean isRunnableGame();
+
+    ChessGame endGame();
+
+    Map<Position, Piece> getPiecesPosition();
+}
