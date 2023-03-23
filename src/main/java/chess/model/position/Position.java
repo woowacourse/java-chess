@@ -8,30 +8,25 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-    private static final Map<File, Map<Rank, Position>> CACHE;
+    private static final Map<File, RankPosition> CACHE;
 
     static {
         CACHE = Arrays.stream(File.values())
-                .collect(Collectors.toMap(file -> file, Position::createRankCachePosition));
+                .collect(Collectors.toMap(file -> file, RankPosition::create));
     }
 
-    private Position(final File file, final Rank rank) {
+    Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    private static Map<Rank, Position> createRankCachePosition(final File file) {
-        return Arrays.stream(Rank.values())
-                .collect(Collectors.toMap(rank -> rank, rank -> new Position(file, rank)));
-    }
     private final File file;
-
     private final Rank rank;
 
     public static Position of(final File file, final Rank rank) {
-        final Map<Rank, Position> positionCache = CACHE.get(file);
+        final RankPosition rankPosition = CACHE.get(file);
 
-        return positionCache.get(rank);
+        return rankPosition.findByRank(rank);
     }
 
     public Distance differ(final Position other) {

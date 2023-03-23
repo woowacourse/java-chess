@@ -3,6 +3,8 @@ package chess.model.position;
 import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.B2;
 import static chess.helper.PositionFixture.D4;
+import static chess.model.position.File.*;
+import static chess.model.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -17,9 +19,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PositionTest {
 
     @Test
+    @DisplayName("생성자는 File과 Rank를 주면 Position을 생성한다")
+    void constructor_givenFileAndRank_thenReturnPosition() {
+        // when
+        final Position actual = new Position(A, FIRST);
+
+        // then
+        assertThat(actual).isEqualTo(A1);
+    }
+
+    @Test
     @DisplayName("of()는 체스 판의 위치를 관리하는 객체를 생성한다.")
     void constructor_givenRankAndFile_thenSuccess() {
-        final Position position = assertDoesNotThrow(() -> Position.of(File.A, Rank.FIRST));
+        final Position position = assertDoesNotThrow(() -> Position.of(A, FIRST));
 
         assertThat(position).isExactlyInstanceOf(Position.class);
     }
