@@ -1,10 +1,9 @@
 package chess.domain.pieces;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.pieces.component.Team;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
-import chess.domain.math.Direction;
+import chess.domain.Direction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

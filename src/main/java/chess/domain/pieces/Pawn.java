@@ -1,16 +1,15 @@
 package chess.domain.pieces;
 
-import chess.domain.Position;
-import chess.domain.Team;
-import chess.domain.math.Direction;
+import chess.domain.pieces.component.Team;
+import chess.domain.Direction;
 import chess.domain.pieces.component.Name;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
-import static chess.domain.math.Direction.*;
+import static chess.domain.pieces.component.Team.BLACK;
+import static chess.domain.pieces.component.Team.WHITE;
+import static chess.domain.Direction.*;
 
 public class Pawn extends Piece {
     private static final int TWO_STEP = 2;

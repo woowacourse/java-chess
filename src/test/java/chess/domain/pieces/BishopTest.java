@@ -1,13 +1,13 @@
 package chess.domain.pieces;
 
-import chess.domain.Team;
-import chess.domain.math.Direction;
+import chess.domain.pieces.component.Team;
+import chess.domain.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static chess.domain.math.Direction.UP;
+import static chess.domain.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

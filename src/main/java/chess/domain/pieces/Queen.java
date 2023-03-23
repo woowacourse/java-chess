@@ -1,12 +1,12 @@
 package chess.domain.pieces;
 
-import chess.domain.Team;
-import chess.domain.math.Direction;
+import chess.domain.pieces.component.Team;
+import chess.domain.Direction;
 import chess.domain.pieces.component.Name;
 
 import java.util.List;
 
-import static chess.domain.math.Direction.*;
+import static chess.domain.Direction.*;
 
 public class Queen extends Piece {
 

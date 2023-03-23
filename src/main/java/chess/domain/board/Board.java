@@ -1,12 +1,12 @@
 package chess.domain.board;
 
-import chess.domain.Position;
-import chess.domain.math.Direction;
+import chess.domain.pieces.Position;
+import chess.domain.Direction;
 import chess.domain.pieces.*;
 
 import java.util.Map;
 
-import static chess.domain.Team.NEUTRALITY;
+import static chess.domain.pieces.component.Team.NEUTRALITY;
 
 public class Board {
 

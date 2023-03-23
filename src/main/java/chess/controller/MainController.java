@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.ChessGame;
-import chess.domain.Position;
+import chess.domain.pieces.Position;
 import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Rank;

@@ -2,9 +2,10 @@ package chess.domain;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
+import chess.domain.pieces.Position;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.math.Direction.*;
+import static chess.domain.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
