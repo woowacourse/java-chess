@@ -11,8 +11,8 @@ public enum ErrorMessage {
     FIRST_COMMAND_ERROR_MESSAGE("첫 번째로는 start, end만 입력 가능합니다"),
     NO_PIECE_ERROR_MESSAGE("이동할 수 있는 기물이 없습니다"),
     NO_COLUMN_ERROR_GUIDE_MESSAGE("존재하지 않는 Column입니다"),
-    NO_RANK_ERROR_GUIDE_MESSAGE("존재하지 않는 Rank입니다");
-
+    NO_RANK_ERROR_GUIDE_MESSAGE("존재하지 않는 Rank입니다"),
+    NO_COMMAND_ERROR_GUIDE_MESSAGE("일치하는 명령이 없습니다.");
 
     private final String errorMessage;
 

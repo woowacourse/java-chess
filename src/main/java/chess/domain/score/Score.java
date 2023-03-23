@@ -1,11 +1,5 @@
 package chess.domain.score;
 
-import chess.domain.Position;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-
-import java.util.Map;
-
 public enum Score {
     PAWN_DEFAULT_SCORE(1.0),
     PAWN_SPECIAL_SCORE(0.5),
