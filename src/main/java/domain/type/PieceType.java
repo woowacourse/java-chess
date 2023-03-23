@@ -1,5 +1,7 @@
 package domain.type;
 
+import java.util.Arrays;
+
 public enum PieceType {
     ROOK(5),
     KNIGHT(2.5),
@@ -13,6 +15,13 @@ public enum PieceType {
 
     PieceType(final double score) {
         this.score = score;
+    }
+
+    public static PieceType findByName(final String name) {
+        return Arrays.stream(PieceType.values())
+            .filter(pieceType -> pieceType.name().equalsIgnoreCase(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 기물 타입입니다."));
     }
 
     public double getScore() {

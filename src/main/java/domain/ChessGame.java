@@ -1,27 +1,36 @@
 package domain;
 
+import common.TransactionContext;
+import domain.dao.ChessInformationDao;
 import domain.piece.Piece;
 import domain.type.Color;
 import domain.type.PieceType;
-import domain.type.Turn;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGame {
 
+    private String boardId;
     private Board board;
-    private Turn turn;
+    private Color color;
+    private final ChessInformationDao chessInformationDao;
+    private final TransactionContext transactionContext;
 
-    public ChessGame() {
-        this.turn = Turn.WHITE;
+    public ChessGame(final ChessInformationDao chessInformationDao, final TransactionContext transactionContext) {
+        this.chessInformationDao = chessInformationDao;
+        this.transactionContext = transactionContext;
     }
 
-    public void initialize() {
+    public void initialize(final String boardId) {
+        this.boardId = boardId;
         this.board = new Board(new HashMap<>(), new ScoreCalculator());
         board.initialize();
     }
 
     public Color move(final Location start, final Location end) {
-        if (turn.equals(Turn.WHITE)) {
+        if (color.equals(Color.WHITE)) {
             return convert(board.moveWhite(start, end));
         }
         return convert(board.moveBlack(start, end));
@@ -31,7 +40,7 @@ public class ChessGame {
         if (piece.isSameType(PieceType.KING)) {
             return piece.getColor().reverse();
         }
-        turn = turn.convert();
+        color = color.reverse();
         return Color.NONE;
     }
 
@@ -53,6 +62,27 @@ public class ChessGame {
             return Color.BLACK;
         }
         return Color.NONE;
+    }
+
+    public void findPreviousGame(final String boardId) {
+        final Map<Location, Piece> board = transactionContext.workWithTransaction(
+            connection -> chessInformationDao.find(boardId, connection));
+        this.board = new Board(board, new ScoreCalculator());
+        this.boardId = boardId;
+    }
+
+    public void save() {
+        transactionContext.workWithTransaction(this::save);
+    }
+
+    private Void save(final Connection connection) throws SQLException {
+        final int count = chessInformationDao.count(boardId, connection);
+        if (count == 0) {
+            chessInformationDao.insert(board.getBoard(), boardId, connection);
+            return null;
+        }
+        chessInformationDao.update(board.getBoard(), boardId, connection);
+        return null;
     }
 
     public Board getBoard() {

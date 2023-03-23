@@ -1,22 +1,19 @@
 package domain.dao;
 
+import domain.Location;
+import domain.piece.Piece;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
-public class ChessInformationDao {
+public interface ChessInformationDao {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    Map<Location, Piece> find(final String id, final Connection connection) throws SQLException;
 
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
+    Integer count(final String id, final Connection connection) throws SQLException;
+
+    Void insert(final Map<Location, Piece> board, final String boardId, final Connection connection)
+        throws SQLException;
+
+    Integer update(final Map<Location, Piece> board, final String boardId, final Connection connection) throws SQLException;
 }
