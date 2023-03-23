@@ -67,6 +67,7 @@ public class Pawn implements Piece {
     public boolean isPawn() {
         return true;
     }
+
     @Override
     public boolean isKnight() {
         return false;

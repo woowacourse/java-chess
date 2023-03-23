@@ -17,6 +17,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 점수 확인 : status");
     }
 
     public void printChessBoard(Board board) {
@@ -58,17 +59,16 @@ public class OutputView {
     }
 
     public void printScore(Map<Team, Double> scoreBoard) {
-        for(Team team : scoreBoard.keySet()) {
+        for (Team team : scoreBoard.keySet()) {
             System.out.println(team + "팀 " + scoreBoard.get(team) + "점 입니다");
         }
-
     }
 
     public void printScoreWinner(Map<Team, Double> scoreBoard) {
-        if(scoreBoard.get(Team.BLACK).compareTo(scoreBoard.get(Team.WHITE)) == 0){
+        if (scoreBoard.get(Team.BLACK).compareTo(scoreBoard.get(Team.WHITE)) == 0) {
             System.out.println("비기고 있습니다.");
             return;
         }
-        System.out.println(Collections.max(scoreBoard.keySet())+ "팀이 이기고 있습니다.");
+        System.out.println(Collections.max(scoreBoard.keySet()) + "팀이 이기고 있습니다.");
     }
 }

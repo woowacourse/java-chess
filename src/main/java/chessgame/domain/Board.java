@@ -3,7 +3,6 @@ package chessgame.domain;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
-import chessgame.domain.point.Rank;
 
 import java.util.Collections;
 import java.util.Map;
@@ -93,21 +92,21 @@ public class Board {
         return board.containsKey(point);
     }
 
-    public boolean isExistKing(Team team){
+    public boolean isExistKing(Team team) {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)
-                .anyMatch(s->s.team() == team);
+                .anyMatch(s -> s.team() == team);
     }
 
-    public double calculateScore(Team team){
+    public double calculateScore(Team team) {
         return (board.values()
                 .stream()
-                .filter(s-> s.team().equals(team))
-                .mapToDouble(s->s.getScore()).sum() - calculateSameFilePawn(team));
+                .filter(s -> s.team().equals(team))
+                .mapToDouble(Piece::getScore).sum() - calculateSameFilePawn(team));
     }
 
-    private double calculateSameFilePawn(Team team){
+    private double calculateSameFilePawn(Team team) {
         double sameFilePawn = 0;
         for (File file : File.values()) {
             double countPawn = calculateSameTeamPawn(team).keySet()
@@ -120,17 +119,17 @@ public class Board {
     }
 
     private static double countSameFilePawn(double sameFilePawn, double countPawn) {
-        if(countPawn >= 2){
+        if (countPawn >= 2) {
             sameFilePawn += countPawn;
         }
         return sameFilePawn;
     }
 
-    private Map<Point, Piece> calculateSameTeamPawn(Team team){
+    private Map<Point, Piece> calculateSameTeamPawn(Team team) {
         return board.keySet()
                 .stream()
                 .filter(point -> board.get(point).isPawn() && board.get(point).team() == team)
-                .collect(Collectors.toMap(point-> point, board::get));
+                .collect(Collectors.toMap(point -> point, board::get));
     }
 
     @Override

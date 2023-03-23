@@ -10,7 +10,6 @@ public enum Team {
         this.color = color;
     }
 
-
     public String color() {
         return color;
     }

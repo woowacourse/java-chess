@@ -27,24 +27,21 @@ public class Game {
         return state.isEnd();
     }
 
-    public boolean isEndByKing(){
-        if(board.isExistKing(Team.BLACK) && board.isExistKing(Team.WHITE)){
-            return false;
-        }
-        return true;
+    public boolean isEndByKing() {
+        return !board.isExistKing(Team.BLACK) || !board.isExistKing(Team.WHITE);
     }
 
     public Team winTeam() {
-        if(board.isExistKing(Team.BLACK)){
+        if (board.isExistKing(Team.BLACK)) {
             return Team.BLACK;
         }
         return Team.WHITE;
     }
 
-    public Map<Team, Double> scoreBoard(){
-        Map<Team,Double> score = new HashMap<>();
-        score.put(Team.BLACK,board.calculateScore(Team.BLACK));
-        score.put(Team.WHITE,board.calculateScore(Team.WHITE));
+    public Map<Team, Double> scoreBoard() {
+        Map<Team, Double> score = new HashMap<>();
+        score.put(Team.BLACK, board.calculateScore(Team.BLACK));
+        score.put(Team.WHITE, board.calculateScore(Team.WHITE));
         return score;
     }
 }

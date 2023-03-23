@@ -39,6 +39,7 @@ public class King implements Piece {
     public Team team() {
         return team;
     }
+
     @Override
     public boolean isPawn() {
         return false;

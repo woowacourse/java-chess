@@ -26,7 +26,7 @@ public class White implements State {
     }
 
     private State selectNextState(Board board) {
-        if(!board.isExistKing(Team.BLACK)){
+        if (!board.isExistKing(Team.BLACK)) {
             return new End();
         }
         return new Black();

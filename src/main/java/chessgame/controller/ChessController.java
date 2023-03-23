@@ -25,7 +25,7 @@ public class ChessController {
             eachTurn(game);
             printResult(game);
         } while (!game.isEnd());
-        if(game.isEndByKing()) {
+        if (game.isEndByKing()) {
             outputView.printWinner(game.winTeam());
         }
     }
@@ -60,7 +60,7 @@ public class ChessController {
     }
 
     private void printStatusResult(Game game, Command command) {
-        if(command.isStatus()){
+        if (command.isStatus()) {
             outputView.printScore(game.scoreBoard());
             outputView.printScoreWinner(game.scoreBoard());
         }
