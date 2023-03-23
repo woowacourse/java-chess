@@ -1,6 +1,7 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
+import java.util.List;
 
 public interface MoveState {
 
@@ -9,4 +10,6 @@ public interface MoveState {
     default MoveState getNextState() {
         return this;
     }
+
+    double getScore(List<MoveState> sameFileColorPiecesState);
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.state.RookState;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -36,5 +37,11 @@ class RookStateTest {
     void 룩의_다음_상태는_처음과_같다() {
         //expect
         assertSame(rookState, rookState.getNextState());
+    }
+
+    @Test
+    void 룩의_점수는_5점이다() {
+        //expect
+        assertSame(5, rookState.getScore(List.of()));
     }
 }

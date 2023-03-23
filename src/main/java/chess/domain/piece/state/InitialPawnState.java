@@ -1,9 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
+import chess.domain.piece.PieceType;
+import java.util.List;
 
 public class InitialPawnState implements MoveState {
 
+    private static final PieceType pieceType = PieceType.PAWN;
     private static final InitialPawnState instance = new InitialPawnState();
 
     private InitialPawnState() {
@@ -35,5 +38,10 @@ public class InitialPawnState implements MoveState {
     @Override
     public MoveState getNextState() {
         return MovedPawnState.getInstance();
+    }
+
+    @Override
+    public double getScore(List<MoveState> sameFileColorPiecesState) {
+        return pieceType.getScore();
     }
 }

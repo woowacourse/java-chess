@@ -8,6 +8,7 @@ import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.state.InitialPawnState;
 import chess.domain.piece.state.MoveState;
 import chess.domain.piece.state.MovedPawnState;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -71,5 +72,11 @@ class PawnStateTest {
     void 움직인_폰의_다음_상태는_움직인_폰_상태이다() {
         //expect
         assertSame(movedPawnState, movedPawnState.getNextState());
+    }
+
+    @Test
+    void 폰의_점수는_1점이다() {
+        //expect
+        assertSame(1, initialPawnState.getScore(List.of()));
     }
 }

@@ -1,9 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
+import chess.domain.piece.PieceType;
+import java.util.List;
 
 public class KingState implements MoveState {
 
+    private static final PieceType pieceType = PieceType.KING;
     private static final KingState instance = new KingState();
 
     private KingState() {
@@ -23,5 +26,10 @@ public class KingState implements MoveState {
             return false;
         }
         return Math.abs(x) <= 1 && Math.abs(y) <= 1;
+    }
+
+    @Override
+    public double getScore(List<MoveState> sameFileColorPiecesState) {
+        return pieceType.getScore();
     }
 }

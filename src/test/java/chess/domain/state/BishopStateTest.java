@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.state.BishopState;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -36,5 +37,11 @@ class BishopStateTest {
     void 비숍의_다음_상태는_처음과_같다() {
         //expect
         assertSame(bishopState, bishopState.getNextState());
+    }
+
+    @Test
+    void 비숍의_점수는_3점이다() {
+        //expect
+        assertSame(3, bishopState.getScore(List.of()));
     }
 }

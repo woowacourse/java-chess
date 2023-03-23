@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.state.QueenState;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -36,5 +37,11 @@ class QueenStateTest {
     void 퀸의_다음_상태는_처음과_같다() {
         //expect
         assertSame(queenState, queenState.getNextState());
+    }
+
+    @Test
+    void 퀸의_점수는_9점이다() {
+        //expect
+        assertSame(9, queenState.getScore(List.of()));
     }
 }

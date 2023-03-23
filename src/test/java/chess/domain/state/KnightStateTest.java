@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.state.KnightState;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,11 @@ class KnightStateTest {
     void 나이트의_다음_상태는_처음과_같다() {
         //expect
         assertSame(knightState, knightState.getNextState());
+    }
+
+    @Test
+    void 나이트의_점수는_0점이다() {
+        //expect
+        assertSame(0, knightState.getScore(List.of()));
     }
 }

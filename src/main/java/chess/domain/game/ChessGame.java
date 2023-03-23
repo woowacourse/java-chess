@@ -3,9 +3,11 @@ package chess.domain.game;
 import chess.domain.game.exception.ChessGameException;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartState;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.exception.IllegalPieceMoveException;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -36,5 +38,9 @@ public class ChessGame {
 
     public void end() {
         gameState = gameState.end();
+    }
+
+    public Map<Color, Integer> getStatus() {
+        return null;
     }
 }
