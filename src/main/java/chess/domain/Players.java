@@ -15,7 +15,7 @@ public class Players {
         this.current = Color.WHITE;
     }
 
-    public static Players from(final Player whitePlayer, final Player blackPlayer) {
+    public static Players of(final Player whitePlayer, final Player blackPlayer) {
         return new Players(List.of(whitePlayer, blackPlayer));
     }
 
@@ -97,7 +97,7 @@ public class Players {
         validateMovingRoute(sourcePosition, targetPosition);
 
         Player findPlayer = findPlayerByPosition(sourcePosition);
-        Position changedPosition = findPlayer.movePieceByInput(getAllPosition(), sourcePosition, targetPosition);
+        Position changedPosition = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
 
         Player anotherPlayer = getAnotherPlayer(findPlayer);
         anotherPlayer.removePiece(changedPosition);

@@ -3,7 +3,7 @@ package chess.domain.strategy.pawn;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 
 import java.util.List;
