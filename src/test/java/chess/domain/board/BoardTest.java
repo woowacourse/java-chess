@@ -1,14 +1,20 @@
 package chess.domain.board;
 
+import static chess.fixture.PositionFixtures.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Side;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
+import chess.fixture.PositionFixtures;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -125,8 +131,8 @@ class BoardTest {
         int targetPieceIndex = pieces.indexOf(findTargetPiece);
 
         // then
-        Assertions.assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
-        Assertions.assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
+        assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
+        assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
     }
 
     @Test
@@ -151,8 +157,57 @@ class BoardTest {
         int oppositeTargetPieceIndex = pieces.indexOf(oppositePiece);
 
         // then
-        Assertions.assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
+        assertThat(pieces.get(targetPieceIndex)).isEqualTo(findTargetPiece);
         Assertions.assertThatThrownBy(() -> pieces.get(oppositeTargetPieceIndex));
-        Assertions.assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
+        assertThat(pieces.get(targetPieceIndex)).isNotEqualTo(pieceBeforeMove);
+    }
+
+    /**
+     * RNBQKBNR         RNBQKBNR            RNBQKBNR
+     * PPPPPPPP         PPPPPPPP            .PPPPPPP
+     * ........         ........            ........
+     * ........         ........            P.......
+     * ........ -->     .p......     -->    .p......
+     * ........         ........            ........
+     * pppppppp         p.pppppp            p.pppppp
+     * rnbqkbnr         rnbqkbnr            rnbqkbnr
+     */
+    @Test
+    @DisplayName("같은 세로 줄에 같은 팀인 Pawn이 없을 때 진영별 현재 기물들의 점수를 계산한다.")
+    void calculate() {
+        // when
+        board.movePiece(B2, B4);
+        board.movePiece(A7, A5);
+        Score totalWhiteScore = board.calculateSideScore(Side.WHITE);
+        Score totalBlackScore = board.calculateSideScore(Side.BLACK);
+
+        // then
+        assertThat(totalWhiteScore).isEqualTo(new Score(new BigDecimal("38.0")));
+        assertThat(totalBlackScore).isEqualTo(new Score(new BigDecimal("38.0")));
+    }
+
+    /**
+     * RNBQKBNR         RNBQKBNR            RNBQKBNR            RNBQKBNR
+     * PPPPPPPP         PPPPPPPP            .PPPPPPP            .PPPPPPP
+     * ........         ........            ........            ........
+     * ........         ........            P.......            p.......
+     * ........ -->     .p......     -->    .p......    -->     ........
+     * ........         ........            ........            ........
+     * pppppppp         p.pppppp            p.pppppp            p.pppppp
+     * rnbqkbnr         rnbqkbnr            rnbqkbnr            rnbqkbnr
+     */
+    @Test
+    @DisplayName("같은 세로 줄에 같은 팀인 Pawn이 있을 때 진영별 현재 기물들의 점수를 계산한다.")
+    void calculateSideScore() {
+        // when
+        board.movePiece(B2, B4);
+        board.movePiece(A7, A5);
+        board.movePiece(B4, A5);
+        Score totalWhiteScore = board.calculateSideScore(Side.WHITE);
+        Score totalBlackScore = board.calculateSideScore(Side.BLACK);
+
+        // then
+        assertThat(totalWhiteScore).isEqualTo(new Score(new BigDecimal("37.0")));
+        assertThat(totalBlackScore).isEqualTo(new Score(new BigDecimal("37.0")));
     }
 }
