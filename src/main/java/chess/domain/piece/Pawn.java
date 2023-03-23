@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
+import chess.domain.position.PossibleDestinations;
 
 import java.util.List;
-import java.util.Set;
 
 public class Pawn extends Piece {
     private static final int PAWN_MAX_MOVE_COUNT = 1;
@@ -23,10 +23,12 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(final Position source, final Position target) {
         if (source.getRank() < target.getRank()) {
-            final Set<Position> allPositions = move.getAllPositions(source, List.of(Direction.UP), PAWN_MAX_MOVE_COUNT);
+            final PossibleDestinations allPositions =
+                    PossibleDestinations.of(source, List.of(Direction.UP), PAWN_MAX_MOVE_COUNT);
             return allPositions.contains(target);
         }
-        final Set<Position> allPositions = move.getAllPositions(source, List.of(Direction.DOWN), PAWN_MAX_MOVE_COUNT);
+        final PossibleDestinations allPositions =
+                PossibleDestinations.of(source, List.of(Direction.DOWN), PAWN_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
 }

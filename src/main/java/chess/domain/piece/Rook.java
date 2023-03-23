@@ -2,8 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
-
-import java.util.Set;
+import chess.domain.position.PossibleDestinations;
 
 public class Rook extends Piece {
     private static final int ROOK_MAX_MOVE_COUNT = 8;
@@ -14,7 +13,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(final Position source, final Position target) {
-        final Set<Position> allPositions = move.getAllPositions(source, Direction.getFourDirections(), ROOK_MAX_MOVE_COUNT);
+        final PossibleDestinations allPositions =
+                PossibleDestinations.of(source, Direction.getFourDirections(), ROOK_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
 }
