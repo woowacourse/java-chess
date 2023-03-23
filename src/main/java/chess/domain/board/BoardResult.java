@@ -58,7 +58,11 @@ public class BoardResult {
     }
 
     private boolean isKingDead(final Color color) {
-        return !board.containsValue(King.from(color));
+        return !isKingAlive(color);
+    }
+
+    private boolean isKingAlive(final Color color) {
+        return board.containsValue(King.from(color));
     }
 
     private Color getWinner() {
