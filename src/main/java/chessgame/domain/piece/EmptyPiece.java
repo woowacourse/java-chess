@@ -28,7 +28,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public Optional<PieceType> getPiece() {
+    public Optional<PieceType> piece() {
         return Optional.empty();
     }
 

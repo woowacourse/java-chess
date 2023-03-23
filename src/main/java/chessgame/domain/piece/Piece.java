@@ -13,7 +13,7 @@ public abstract class Piece {
         isFirstMove = true;
     }
 
-    public abstract Optional<PieceType> getPiece();
+    public abstract Optional<PieceType> piece();
 
     public abstract boolean isSameCamp(final Camp camp);
 

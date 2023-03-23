@@ -51,7 +51,7 @@ public class ConcretePiece extends Piece {
     }
 
     @Override
-    public Optional<PieceType> getPiece() {
+    public Optional<PieceType> piece() {
         return Optional.of(pieceType);
     }
 

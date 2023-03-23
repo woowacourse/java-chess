@@ -22,7 +22,7 @@ public class PieceMapper {
     }
 
     public static String getTarget(final Piece square) {
-        Optional<PieceType> piece = square.getPiece();
+        Optional<PieceType> piece = square.piece();
         String message = mapper.keySet()
                                .stream()
                                .filter(pieceType ->
