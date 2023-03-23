@@ -34,7 +34,7 @@ public class InputRenderer {
 
     public static CommandDto toCommandDto(final String string) {
         Command command = toCommand(string);
-        if (command == Command.START || command == Command.END) {
+        if (command != Command.MOVE) {
             return new CommandDto(command);
         }
 
@@ -60,6 +60,10 @@ public class InputRenderer {
     }
 
     private static List<Integer> toColumnAndRow(String rawPosition) {
+        if(rawPosition.length() != 2) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
+        }
+
         String file = String.valueOf(rawPosition.charAt(0));
         String rank = String.valueOf(rawPosition.charAt(1));
         if (!FILE_TO_COLUMN.containsKey(file)) {
