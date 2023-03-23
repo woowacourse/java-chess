@@ -1,6 +1,6 @@
 package chess.domain.dto;
 
-import chess.domain.Color;
+import chess.domain.piece.Color;
 import chess.domain.piece.PawnPiece;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

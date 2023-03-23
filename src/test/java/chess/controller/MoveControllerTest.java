@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.BoardSession;
+import chess.domain.piece.Color;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Assertions;

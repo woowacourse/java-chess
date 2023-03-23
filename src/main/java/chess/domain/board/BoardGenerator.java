@@ -1,10 +1,10 @@
 package chess.domain.board;
 
-import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.piece.BishopPiece;
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;

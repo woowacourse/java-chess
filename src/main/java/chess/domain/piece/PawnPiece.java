@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 
 public class PawnPiece extends Piece {
     private boolean moved = false;
 
     public PawnPiece(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override

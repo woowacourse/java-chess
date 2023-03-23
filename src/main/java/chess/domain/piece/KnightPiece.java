@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 
 public class KnightPiece extends Piece {
     public KnightPiece(Color color) {
-        super(color);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
