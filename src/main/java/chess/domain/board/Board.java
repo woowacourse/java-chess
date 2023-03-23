@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -76,6 +77,13 @@ public class Board {
 
     public boolean isEmptyPiece(Position source) {
         return board.get(source).getClass() == Empty.class;
+    }
+
+    public Score calculateScore(Team team) {
+        return board.keySet().stream()
+                .filter(key -> board.get(key).isSameTeam(team))
+                .map(key -> board.get(key).convertToScore())
+                .reduce(Score.min(), Score::add);
     }
 
     public Map<Position, Piece> getBoard() {
