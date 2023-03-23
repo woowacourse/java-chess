@@ -1,12 +1,16 @@
 package chess.domain.piece;
 
+import static chess.domain.color.Color.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.move.Direction;
 import chess.domain.color.Color;
+import chess.domain.move.Direction;
+import chess.domain.position.Position;
 
 class PieceTest {
 
@@ -14,7 +18,8 @@ class PieceTest {
 	@DisplayName("체스말을 이름을 갖고 있다")
 	void name() {
 		// given
-		final var piece = new TestPiece(Color.BLACK);
+		final var position = Position.of(A, EIGHT);
+		final var piece = new TestPiece(BLACK, position);
 		final var expected = "R";
 
 		// when
@@ -26,8 +31,8 @@ class PieceTest {
 
 	static final class TestPiece extends Piece {
 
-		public TestPiece(final Color color) {
-			super(color);
+		public TestPiece(final Color color, final Position position) {
+			super(color, position);
 		}
 
 		@Override
