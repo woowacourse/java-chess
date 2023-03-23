@@ -1,6 +1,7 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.ChessPiece;
@@ -10,9 +11,10 @@ import chess.piece.Side;
 import chess.position.MovablePosition;
 import chess.position.Position;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessGameTest {
 
@@ -69,8 +71,18 @@ class ChessGameTest {
                 List.of(Position.initPosition(3, 3), Position.initPosition(1, 3),
                         Position.initPosition(2, 2), Position.initPosition(2, 4)));
 
-        Assertions.assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
+        assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치로 움직일 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"e1, true", "e8, true", "d1, false", "d8, false", "a2, false"})
+    @DisplayName("체스판에서 King의 소멸 여부를 체크한다.")
+    void checkKingIsDead(String removePostion, boolean isEnd) {
+        ChessBoard chessBoard = ChessBoard.generateChessBoard();
+        ChessGame chessGame = new ChessGame(chessBoard);
+        chessGame.removeChessPiece(Position.of(removePostion));
+        assertThat(chessGame.isGameEnd(chessBoard)).isEqualTo(isEnd);
     }
 }
