@@ -9,7 +9,7 @@ import java.util.Map;
 public class ChessBoard {
 
     private final Map<Position, Piece> piecePosition;
-    
+
     private ChessBoard(final Map<Position, Piece> piecePosition) {
         this.piecePosition = piecePosition;
     }
@@ -28,7 +28,7 @@ public class ChessBoard {
         Piece toPiece = piecePosition.get(to);
 
         validateMovable(from, to, fromPiece);
-        validateDestination(fromPiece, toPiece);
+        validateAlly(fromPiece, toPiece);
         validateRoute(from, to);
 
         move(from, to);
@@ -40,7 +40,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateDestination(final Piece fromPiece, final Piece toPiece) {
+    private void validateAlly(final Piece fromPiece, final Piece toPiece) {
         if (fromPiece.getTeam() == toPiece.getTeam()) {
             throw new IllegalArgumentException("도착지에 동일한 팀의 말이 존재합니다");
         }
