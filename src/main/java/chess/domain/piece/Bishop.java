@@ -16,6 +16,7 @@ import chess.domain.position.Position;
 public final class Bishop extends Piece {
 
 	private static final Set<Direction> directions = Set.of(LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);
+	private static final String name = "b";
 
 	public Bishop(final Color color, final Position position) {
 		super(color, position);
@@ -37,7 +38,6 @@ public final class Bishop extends Piece {
 
 	@Override
 	public String name() {
-		String name = "b";
 		if (super.color().equals(WHITE)) {
 			return name;
 		}

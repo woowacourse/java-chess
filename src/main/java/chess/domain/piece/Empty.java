@@ -7,6 +7,7 @@ import chess.domain.move.Direction;
 import chess.domain.position.Position;
 
 public final class Empty extends Piece {
+	private static final String name = ".";
 
 	public Empty(final Color color, final Position position) {
 		super(color, position);
@@ -14,7 +15,7 @@ public final class Empty extends Piece {
 
 	@Override
 	public String name() {
-		return ".";
+		return name;
 	}
 
 	@Override

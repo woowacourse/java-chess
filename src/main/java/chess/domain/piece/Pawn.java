@@ -14,6 +14,7 @@ import chess.domain.move.Direction;
 import chess.domain.position.Position;
 
 public final class Pawn extends Piece {
+	private static final String name = "p";
 
 	private boolean isFirst = true;
 
@@ -49,7 +50,6 @@ public final class Pawn extends Piece {
 
 	@Override
 	public String name() {
-		String name = "p";
 		if (super.color().equals(WHITE)) {
 			return name;
 		}
