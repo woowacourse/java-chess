@@ -11,6 +11,7 @@ public final class ChessGame {
     private static final String TURN_MISMATCHED_ERROR_MESSAGE = "다른 진영의 기물을 선택할 수 없습니다.";
     private static final String EMPTY_CHOICE_ERROR_MESSAGE = "빈 칸은 선택할 수 없습니다.";
     public static final String SAME_POSITION_ERROR_MESSAGE = "출발 지점과 도착 지점은 동일할 수 없습니다";
+    public static final int KING_COUNT = 2;
 
     private final ChessBoard chessBoard;
     private Turn turnCamp;
@@ -78,6 +79,10 @@ public final class ChessGame {
         if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
+    }
+
+    public boolean isKingLive() {
+        return chessBoard.inKingLive() == KING_COUNT;
     }
 
     private void changeTurn() {

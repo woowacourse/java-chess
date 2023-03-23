@@ -24,6 +24,12 @@ public class ChessBoard {
         this.board = board;
     }
 
+    public int inKingLive() {
+        return (int) board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
     public void movePieceOn(Position fromPosition, Position toPosition) {
         board.put(toPosition, board.get(fromPosition));
         board.put(fromPosition, new Empty());

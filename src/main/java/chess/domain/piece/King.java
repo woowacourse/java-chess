@@ -12,6 +12,11 @@ public final class King extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public PieceMove getMovement(Position from, Position to) {
         if (isPieceRule(from, to)) {
             return new BlockingMove();

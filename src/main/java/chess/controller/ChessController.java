@@ -5,7 +5,6 @@ import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
 import chess.domain.Turn;
 import chess.domain.piece.Camp;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.view.*;
 
@@ -43,7 +42,7 @@ public final class ChessController {
     public void run() {
         outputView.printStartPrefix();
         ChessCommand gameCommand = ChessCommand.WAIT;
-        while (gameCommand != ChessCommand.END) {
+        while (gameCommand != ChessCommand.END || !game.isKingLive()) {
             gameCommand = play();
         }
     }
@@ -65,7 +64,6 @@ public final class ChessController {
         ChessCommand.validateStartCommand(commands);
         printBoard(game.getChessBoard());
     }
-
 
     private void move(List<String> commands) {
         ChessCommand.validatePlayingCommand(commands);
