@@ -1,6 +1,5 @@
 package chess.domain.move;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,14 +7,11 @@ import chess.domain.position.Position;
 
 public class Move {
 
-    private final List<UnitMove> unitMoves;
-
-    public Move(List<UnitMove> unitMoves) {
-        this.unitMoves = unitMoves;
-    }
+    private final Directions directions;
 
     public Move(Directions directions) {
-        this(UnitMove.of(directions).repeat(directions.countMinimumUnits()));
+        validateNotEmpty(directions);
+        this.directions = directions;
     }
 
     public Move(Direction... directions) {
@@ -23,29 +19,21 @@ public class Move {
     }
 
     public static Move of(Position source, Position target) {
-        Directions verticalDirections = source.getVerticalDirectionsTo(target);
-        Directions horizontalDirections = source.getHorizontalDirectionsTo(target);
-        return new Move(verticalDirections.join(horizontalDirections));
+        return new Move(source.getDirectionsTo(target));
+    }
+
+    private void validateNotEmpty(Directions directions) {
+        if (directions.isEmpty()) {
+            throw new IllegalArgumentException("방향이 존재해야합니다");
+        }
     }
 
     public Position move(Position position) {
-        Position destination = position;
-        for (UnitMove unitMove : unitMoves) {
-            destination = unitMove.move(destination);
-        }
-        return destination;
+        return directions.move(position);
     }
 
     public Move getUnitMove() {
-        return new Move(unitMoves.subList(0, 1));
-    }
-
-    public Move repeat(int times) {
-        List<UnitMove> repeatedUnitMoves = new ArrayList<>();
-        for (int i = 0; i < times; i++) {
-            repeatedUnitMoves.addAll(unitMoves);
-        }
-        return new Move(repeatedUnitMoves);
+        return new Move(directions.splitIntoMinimumUnit());
     }
 
     @Override
@@ -57,16 +45,18 @@ public class Move {
 
         Move move = (Move)o;
 
-        return Objects.equals(unitMoves, move.unitMoves);
+        return Objects.equals(directions, move.directions);
     }
 
     @Override
     public int hashCode() {
-        return unitMoves != null ? unitMoves.hashCode() : 0;
+        return directions != null ? directions.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return unitMoves.toString();
+        return "Move{" +
+                "directions=" + directions +
+                '}';
     }
 }

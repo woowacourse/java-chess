@@ -1,31 +1,26 @@
 package chess.domain.move;
 
-import static chess.domain.move.Axis.HORIZON;
-import static chess.domain.move.Axis.VERTICAL;
-import static chess.domain.move.Direction.DOWN;
-import static chess.domain.move.Direction.LEFT;
-import static chess.domain.move.Direction.RIGHT;
-import static chess.domain.move.Direction.UP;
+import static chess.domain.move.Direction.HORIZONTALS;
+import static chess.domain.move.Direction.VERTICALS;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import chess.domain.position.Position;
 import chess.util.Mathematics;
 
 public class Directions {
 
-    public static final Directions NONE = new Directions(Collections.emptyList());
-
     private final List<Direction> directions;
 
     public Directions(List<Direction> directions) {
-        validateVerticalBidirectional(directions);
-        validateHorizontalBidirectional(directions);
+        validateSingleDirection(directions);
         this.directions = directions.stream()
                 .sorted()
                 .collect(Collectors.toList());
@@ -35,27 +30,29 @@ public class Directions {
         return new Directions(List.of(directions));
     }
 
-    private void validateHorizontalBidirectional(List<Direction> directions) {
-        if (directions.contains(UP) && directions.contains(DOWN)) {
+    private void validateSingleDirection(List<Direction> directions) {
+        Set<Direction> distinctDirections = new HashSet<>(directions);
+        if (distinctDirections.containsAll(VERTICALS) || distinctDirections.containsAll(HORIZONTALS)) {
             throw new IllegalArgumentException("수직이나 수평으로 양방향이면 안됩니다");
         }
     }
 
-    private void validateVerticalBidirectional(List<Direction> directions) {
-        if (directions.contains(LEFT) && directions.contains(RIGHT)) {
-            throw new IllegalArgumentException("수직이나 수평으로 양방향이면 안됩니다");
-        }
+    public Directions splitIntoMinimumUnit() {
+        return new Directions(directions.stream()
+                .distinct()
+                .flatMap(this::getMinimumUnitOf)
+                .collect(Collectors.toList()));
     }
 
-    public long count(Direction direction) {
-        return directions.stream()
-                .filter(it -> it.equals(direction))
-                .count();
+    private Stream<Direction> getMinimumUnitOf(Direction direction) {
+        long gcd = Mathematics.getGCD(count(Direction::isHorizontal), count(Direction::isVertical));
+        long minimumUnitCount = count(it -> it.equals(direction)) / gcd;
+        return direction.repeat(minimumUnitCount).stream();
     }
 
-    public long countDirectionsIn(Axis axis) {
+    private long count(Predicate<Direction> condition) {
         return directions.stream()
-                .filter(it -> it.isIn(axis))
+                .filter(condition)
                 .count();
     }
 
@@ -73,6 +70,10 @@ public class Directions {
         return new Directions(directions);
     }
 
+    public boolean isEmpty() {
+        return directions.isEmpty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -88,20 +89,6 @@ public class Directions {
     @Override
     public int hashCode() {
         return directions != null ? directions.hashCode() : 0;
-    }
-
-    public Optional<Direction> getDirectionOf(Axis axis) {
-        return directions.stream()
-                .filter(direction -> direction.isIn(axis))
-                .findFirst();
-    }
-
-    public boolean isEmpty() {
-        return directions.isEmpty();
-    }
-
-    public long countMinimumUnits() {
-        return Mathematics.getGCD(countDirectionsIn(HORIZON), countDirectionsIn(VERTICAL));
     }
 
     @Override

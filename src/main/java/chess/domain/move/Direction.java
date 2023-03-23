@@ -2,21 +2,23 @@ package chess.domain.move;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public enum Direction {
-    RIGHT(Axis.HORIZON),
-    UP(Axis.VERTICAL),
-    LEFT(Axis.HORIZON),
-    DOWN(Axis.VERTICAL);
+    RIGHT,
+    UP,
+    LEFT,
+    DOWN;
 
-    private final Axis axis;
+    public static final Set<Direction> HORIZONTALS = Set.of(LEFT, RIGHT);
+    public static final Set<Direction> VERTICALS = Set.of(UP, DOWN);
 
-    Direction(Axis axis) {
-        this.axis = axis;
+    public boolean isHorizontal() {
+        return HORIZONTALS.contains(this);
     }
 
-    public boolean isIn(Axis axis) {
-        return this.axis == axis;
+    public boolean isVertical() {
+        return VERTICALS.contains(this);
     }
 
     public List<Direction> repeat(long times) {

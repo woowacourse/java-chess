@@ -64,14 +64,7 @@ public class MoveTest extends AbstractTestFixture {
 
         assertThat(createMove(RIGHT, UP)).isEqualTo(unitMove);
     }
-
-    @DisplayName("n번 반복할 수 있다")
-    @Test
-    void repeat_nTimes() {
-        Move expectedMove = createMove(RIGHT, RIGHT, UP, RIGHT, RIGHT, UP, RIGHT, RIGHT, UP);
-        assertThat(createMove(RIGHT, RIGHT, UP).repeat(3)).isEqualTo(expectedMove);
-    }
-
+    
     @DisplayName("시작위치, 도착위치로 수를 만들 수 있다")
     @Test
     void createMoveFrom_sourceAndTargetPositions() {
