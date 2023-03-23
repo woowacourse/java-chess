@@ -109,6 +109,16 @@ public class Board {
         board.remove(current);
     }
 
+    public boolean hasKing(Team team) {
+        for (Square square : board.keySet()) {
+            Piece piece = board.get(square);
+            if (piece.isAlly(team) && piece.isKing()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Map<Square, Piece> getBoard() {
         return new HashMap<>(board);
     }

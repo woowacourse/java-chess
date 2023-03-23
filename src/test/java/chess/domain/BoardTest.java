@@ -1,5 +1,8 @@
 package chess.domain;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -25,25 +28,43 @@ class BoardTest {
     @Test
     @DisplayName("흰색 기물의 위치와 흰색을 입력받으면 true를 리턴한다.")
     void return_true_when_white_piece_and_white_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Team.WHITE)).isTrue();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), WHITE)).isTrue();
     }
 
     @Test
     @DisplayName("흰색 기물의 위치와 검은색을 입력받으면 false를 리턴한다.")
     void return_false_when_white_piece_and_black_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Team.BLACK)).isFalse();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), BLACK)).isFalse();
     }
 
     @Test
     @DisplayName("검은색 기물의 위치와 검은색을 입력받으면 true를 리턴한다.")
     void return_true_when_black_piece_and_black_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Team.BLACK)).isTrue();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), BLACK)).isTrue();
     }
 
     @Test
     @DisplayName("검은색 기물의 위치와 흰색을 입력받으면 false를 리턴한다.")
     void return_false_when_black_piece_and_white_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Team.WHITE)).isFalse();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), WHITE)).isFalse();
+    }
+
+    @Test
+    @DisplayName("초기 보드에서 각각 팀이 모두 킹을 가지고 있다.")
+    void has_king_true() {
+        assertThat(board.hasKing(WHITE)).isTrue();
+        assertThat(board.hasKing(BLACK)).isTrue();
+    }
+
+    @Test
+    void has_king_false() {
+        board.move(Square.of(File.E, Rank.TWO), Square.of(File.E, Rank.FOUR));
+        board.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.SIX));
+        board.move(Square.of(File.F, Rank.ONE), Square.of(File.B, Rank.FIVE));
+        board.move(Square.of(File.H, Rank.SEVEN), Square.of(File.H, Rank.SIX));
+        board.move(Square.of(File.B, Rank.FIVE), Square.of(File.E, Rank.EIGHT));
+        assertThat(board.hasKing(BLACK)).isFalse();
+        assertThat(board.hasKing(WHITE)).isTrue();
     }
 
     @Test
