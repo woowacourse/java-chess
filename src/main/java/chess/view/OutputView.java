@@ -89,5 +89,6 @@ public class OutputView {
 
     public static void printCheckWarning(Team team) {
         System.out.println(getTeamName(team) + " 팀은 체크 상태입니다.");
+        System.out.println("이번 턴에 체크 상태를 벗어나지 못하면 체크메이트로 패배합니다.");
     }
 }
