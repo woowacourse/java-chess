@@ -31,7 +31,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public double appendScore(double source, boolean ignore) {
-        return BISHOP_SCORE;
+    public double appendPieceScore(double totalScore, boolean ignore) {
+        return totalScore + BISHOP_SCORE;
     }
 }

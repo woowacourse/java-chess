@@ -31,7 +31,7 @@ class KnightTest {
         Piece knight = new Knight(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = knight.appendScore(sourceScore, true);
+        double appendScore = knight.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(2.5d);
     }

@@ -44,7 +44,7 @@ class RookTest {
         Piece rook = new Rook(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = rook.appendScore(sourceScore, true);
+        double appendScore = rook.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(5d);
     }

@@ -77,7 +77,7 @@ class KingTest {
         Piece king = new King(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = king.appendScore(sourceScore, true);
+        double appendScore = king.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(0d);
     }

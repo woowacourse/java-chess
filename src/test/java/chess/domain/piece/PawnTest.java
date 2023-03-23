@@ -91,7 +91,7 @@ class PawnTest {
         Piece pawn = new Pawn(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = pawn.appendScore(sourceScore, true);
+        double appendScore = pawn.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(0.5d);
     }
@@ -102,7 +102,7 @@ class PawnTest {
         Piece pawn = new Pawn(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = pawn.appendScore(sourceScore, false);
+        double appendScore = pawn.appendPieceScore(sourceScore, false);
 
         assertThat(appendScore).isEqualTo(1d);
     }

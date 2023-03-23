@@ -32,7 +32,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public double appendScore(double source, boolean ignore) {
-        return KNIGHT_SCORE;
+    public double appendPieceScore(double source, boolean ignore) {
+        return source + KNIGHT_SCORE;
     }
 }

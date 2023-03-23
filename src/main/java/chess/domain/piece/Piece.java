@@ -24,10 +24,14 @@ public abstract class Piece {
         return this.camp != camp;
     }
 
+    public boolean isSameCamp(Camp camp) {
+        return this.camp == camp;
+    }
+
     public abstract PieceMove getMovement(Position from, Position to);
 
     protected abstract boolean isPieceRule(Position from, Position to);
-    public abstract double appendScore(double source, boolean isSamePieceInSameFile);
+    public abstract double appendPieceScore(double source, boolean isSamePieceInSameFile);
 
     @Override
     public boolean equals(Object o) {

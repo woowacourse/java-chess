@@ -44,7 +44,7 @@ class QueenTest {
         Piece queen = new Queen(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = queen.appendScore(sourceScore, true);
+        double appendScore = queen.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(9d);
     }

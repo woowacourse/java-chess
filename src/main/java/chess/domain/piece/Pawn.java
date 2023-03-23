@@ -57,12 +57,12 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public double appendScore(double source, boolean isSamePieceInSameFile) {
+    public double appendPieceScore(double totalScore, boolean isSamePieceInSameFile) {
         if (isSamePieceInSameFile) {
-            return PAWN_REDUCED_SCORE;
+            return totalScore + PAWN_REDUCED_SCORE;
         }
 
-        return PAWN_DEFAULT_SCORE;
+        return totalScore + PAWN_DEFAULT_SCORE;
     }
 
     private boolean isForwardMove(int rankGap) {

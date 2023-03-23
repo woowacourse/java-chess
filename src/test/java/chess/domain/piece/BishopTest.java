@@ -43,7 +43,7 @@ class BishopTest {
         Piece bishop = new Bishop(Camp.WHITE);
         double sourceScore = 0;
 
-        double appendScore = bishop.appendScore(sourceScore, true);
+        double appendScore = bishop.appendPieceScore(sourceScore, true);
 
         assertThat(appendScore).isEqualTo(3d);
     }

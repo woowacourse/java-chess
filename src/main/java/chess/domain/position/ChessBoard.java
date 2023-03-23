@@ -1,7 +1,11 @@
 package chess.domain.position;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ChessBoard {
 
@@ -22,6 +26,24 @@ public final class ChessBoard {
     public void movePiece(Position fromPosition, Position toPosition) {
         piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
         piecesPosition.remove(fromPosition);
+    }
+
+    public List<Piece> getPiecesOfCamp(Camp camp) {
+        return piecesPosition.values()
+                .stream()
+                .filter(piece -> piece.isSameCamp(camp))
+                .collect(Collectors.toList());
+    }
+
+    public List<Piece> getPiecesInFile(File file) {
+        List<Position> positions = Stream.of(Rank.values())
+                .map(rank -> Position.of(file, rank))
+                .collect(Collectors.toList());
+
+        return positions.stream()
+                .filter(this::isPieceExist)
+                .map(piecesPosition::get)
+                .collect(Collectors.toList());
     }
 
     public Map<Position, Piece> getPiecesPosition() {

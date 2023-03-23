@@ -33,7 +33,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public double appendScore(double source, boolean ignore) {
-        return KING_SCORE;
+    public double appendPieceScore(double source, boolean ignore) {
+        return source + KING_SCORE;
     }
 }

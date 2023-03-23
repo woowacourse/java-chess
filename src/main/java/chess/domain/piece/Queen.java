@@ -32,7 +32,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public double appendScore(double source, boolean isSamePieceInSameFile) {
-        return QUEEN_SCORE;
+    public double appendPieceScore(double totalScore, boolean isSamePieceInSameFile) {
+        return totalScore + QUEEN_SCORE;
     }
 }
