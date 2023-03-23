@@ -15,7 +15,7 @@ public abstract class Piece {
         this.moves = moves;
     }
 
-    public boolean hasSameColor(Piece otherPiece) {
+    public boolean hasSameTeamWith(Piece otherPiece) {
         return team.equals(otherPiece.team);
     }
 

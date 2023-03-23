@@ -18,9 +18,15 @@ public class Game {
     }
 
     public void movePiece(Position source, Position target) {
-        // TODO: 2023/03/22 Team 검증은 게임 추상화 수준에서
-        board.move(source, target, turn);
+        validateTurn(turn, source);
+        board.move(source, target);
         changeTurn();
+    }
+
+    private void validateTurn(Team turn, Position position) {
+        if (!board.hasPositionTeamOf(position, turn)) {
+            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
+        }
     }
 
     private void changeTurn() {

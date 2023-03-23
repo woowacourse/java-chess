@@ -16,12 +16,11 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public void move(Position source, Position target, Team team) {
+    public void move(Position source, Position target) {
         validatePieceExistsAt(source);
-        validateTurn(team, source);
-        validateNotFriendlyFire(source, target);
-        validateMoveExists(source, target);
-        validateNoJumps(source, target);
+        validateNotSameTeam(source, target);
+        validateMove(source, target);
+        validateNoObstacle(source, target);
         makeMove(source, target);
     }
 
@@ -31,22 +30,15 @@ public class Board {
         }
     }
 
-    private void validateTurn(Team team, Position source) {
-        Piece sourcePiece = getPieceAt(source);
-        if (!sourcePiece.hasTeam(team)) {
-            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
-        }
-    }
-
-    private void validateNotFriendlyFire(Position source, Position target) {
+    private void validateNotSameTeam(Position source, Position target) {
         Piece sourcePiece = getPieceAt(source);
         Piece targetPiece = getPieceAt(target);
-        if (targetPiece != null && sourcePiece.hasSameColor(targetPiece)) {
+        if (targetPiece != null && sourcePiece.hasSameTeamWith(targetPiece)) {
             throw new IllegalArgumentException("목표 위치에 같은 색 말이 있습니다");
         }
     }
 
-    private void validateMoveExists(Position source, Position target) {
+    private void validateMove(Position source, Position target) {
         if (!hasMove(source, target)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
@@ -61,7 +53,7 @@ public class Board {
         return sourcePiece.hasMove(move);
     }
 
-    private void validateNoJumps(Position source, Position target) {
+    private void validateNoObstacle(Position source, Position target) {
         Move unitMove = Move.of(source, target).getUnitMove();
         Position current = unitMove.move(source);
         while (!current.equals(target)) {
@@ -95,5 +87,9 @@ public class Board {
 
     public Map<Position, Piece> getPieces() {
         return new HashMap<>(pieces);
+    }
+
+    public boolean hasPositionTeamOf(Position position, Team team) {
+        return getPieceAt(position).hasTeam(team);
     }
 }
