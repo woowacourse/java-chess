@@ -1,7 +1,7 @@
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem
-@rem Licensed under the Apache License, Version 2.0 (the "License");
+@rem Licensed under the Apache License, Version 2.0 (the "License;
 @rem you may not use this file except in compliance with the License.
 @rem You may obtain a copy of the License at
 @rem
@@ -74,7 +74,7 @@ set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
 
 :end
-@rem End local scope for the variables with windows NT shell
+@rem status.End local scope for the variables with windows NT shell
 if "%ERRORLEVEL%"=="0" goto mainEnd
 
 :fail
