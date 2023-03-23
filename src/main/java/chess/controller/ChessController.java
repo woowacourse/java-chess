@@ -21,8 +21,8 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-
     private final ChessGame chessGame;
+
     private final Map<Command, GameAction> commandMapper = Map.of(
             START, this::start,
             MOVE, this::move,

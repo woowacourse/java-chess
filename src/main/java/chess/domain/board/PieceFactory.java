@@ -10,18 +10,16 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PieceFactory {
 
-    private Map<Position, Piece> result;
-
     public static Map<Position, Piece> createPiece() {
-        Map<Position, Piece> result = new HashMap<>();
-        initPosition(result);
-
+        Map<Position, Piece> result = createEmptyPiece();
         List<Team> teams = List.of(Team.BLACK, Team.WHITE);
 
         for (final Team team : teams) {
@@ -36,16 +34,14 @@ public class PieceFactory {
         return result;
     }
 
-    public static void createEmptyPiece(final Map<Position, Piece> piecePosition) {
-        initPosition(piecePosition);
-    }
-
-    private static void initPosition(final Map<Position, Piece> piecePosition) {
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                piecePosition.put(Position.of(file, rank), new EmptyPiece());
-            }
-        }
+    private static Map<Position, Piece> createEmptyPiece() {
+        return Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> Position.of(file, rank))
+                ).collect(Collectors.toMap(
+                        Function.identity(),
+                        piece -> new EmptyPiece()
+                ));
     }
 
     private static void createPawn(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
