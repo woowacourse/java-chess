@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.BoardResponse;
+import chess.controller.ScoreResponses;
 import java.util.List;
 
 public class OutputView {
@@ -30,5 +31,11 @@ public class OutputView {
 
     public void printErrorMessage(final String message) {
         System.out.printf("%n[ERROR] %s%n", message);
+    }
+
+    public void printScores(final ScoreResponses responses) {
+        responses.getResponses()
+                .forEach(System.out::println);
+        System.out.println();
     }
 }

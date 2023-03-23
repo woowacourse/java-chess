@@ -1,6 +1,7 @@
 package chess.model.board.state;
 
 import static chess.controller.GameCommand.END;
+import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.START;
 import static chess.model.board.PositionFixture.A2;
 import static chess.model.board.PositionFixture.A3;
@@ -16,10 +17,46 @@ class EndTest {
     void givenStart_thenFail() {
         // given
         final GameState playing = Start.from(START);
-        final GameState end = playing.execute(END, A2, A3);
+        final GameState end = playing.changeState(END);
 
         // when, then
         assertThatThrownBy(() -> end.execute(START, A2, A3))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("State가 End일 때, execute가 실행되면 오류가 발생한다.")
+    void changeState_whenCall_thenFail() {
+        // given
+        final GameState playing = Start.from(START);
+        final GameState end = playing.changeState(END);
+
+        // when, then
+        assertThatThrownBy(() -> end.changeState(MOVE))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("State가 End일 때, calculateScores가 실행되면 오류가 발생한다.")
+    void calculateScores_whenCall_thenFail() {
+        // given
+        final GameState playing = Start.from(START);
+        final GameState end = playing.changeState(END);
+
+        // when, then
+        assertThatThrownBy(end::calculateScores)
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("State가 End일 때, calculateScores가 실행되면 오류가 발생한다.")
+    void getBoard_whenCall_thenFail() {
+        // given
+        final GameState playing = Start.from(START);
+        final GameState end = playing.changeState(END);
+
+        // when, then
+        assertThatThrownBy(end::getBoard)
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

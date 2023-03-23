@@ -26,4 +26,8 @@ public class Turn {
     public void next() {
         count++;
     }
+
+    public List<PieceColor> allPlayers() {
+        return COLORS;
+    }
 }

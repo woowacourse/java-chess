@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.model.Scores;
 import chess.model.board.state.GameState;
 import chess.model.board.state.Start;
 import chess.view.InputView;
@@ -52,7 +53,15 @@ public class ChessController {
         while (state.isNotEnd()) {
             final MoveRequest moveRequest = readGameCommand();
             state = updateAndCheckEnd(state, moveRequest);
+            printScores(state);
             printBoardStatus(state);
+        }
+    }
+
+    private void printScores(final GameState state) {
+        if (state.isStatus()) {
+            final Scores scores = state.calculateScores();
+            outputView.printScores(ScoreResponses.from(scores));
         }
     }
 
@@ -67,9 +76,8 @@ public class ChessController {
     }
 
     private GameState updateAndCheckEnd(GameState state, final MoveRequest moveRequest) {
-        state = state.execute(
-                moveRequest.getGameCommand(), moveRequest.getSource(), moveRequest.getTarget()
-        );
+        state.execute(moveRequest.getGameCommand(), moveRequest.getSource(), moveRequest.getTarget());
+        state = state.changeState(moveRequest.getGameCommand());
         return state.isGameEnd();
     }
 

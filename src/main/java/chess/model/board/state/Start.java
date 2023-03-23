@@ -2,16 +2,12 @@ package chess.model.board.state;
 
 import chess.controller.GameCommand;
 import chess.model.ChessGame;
-import chess.model.piece.Piece;
 import chess.model.position.Position;
-import java.util.Map;
 
-public class Start implements GameState {
+public class Start extends ProgressState {
 
-    private final ChessGame chessGame;
-
-    private Start() {
-        this.chessGame = new ChessGame();
+    public Start(final ChessGame chessGame) {
+        super(chessGame);
     }
 
     public static GameState from(final GameCommand gameCommand) {
@@ -23,27 +19,20 @@ public class Start implements GameState {
             return new End();
         }
 
+        if (gameCommand.isStatus()) {
+            return new Status(new ChessGame());
+        }
+
         return new Playing(new ChessGame());
     }
 
-
     @Override
-    public GameState execute(final GameCommand gameCommand, final Position source, final Position target) {
+    public void execute(final GameCommand gameCommand, final Position source, final Position target) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isNotEnd() {
-        return true;
     }
 
     @Override
     public GameState isGameEnd() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<Position, Piece> getBoard() {
-        return chessGame.getBoard();
     }
 }
