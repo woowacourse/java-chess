@@ -23,6 +23,10 @@ public class ScoreBySide {
         scoreBySide.replace(side, scoreToUpdate);
     }
 
+    public Score findScoreBySide(Side side) {
+        return scoreBySide.get(side);
+    }
+
     public Map<Side, Score> getScoreBySide() {
         return Map.copyOf(scoreBySide);
     }
