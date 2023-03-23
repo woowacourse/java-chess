@@ -19,10 +19,10 @@ public class WhitePawn extends Pawn {
         final PossibleDestinations possibleDestinations;
         if (source.getRank() == WHITEPAWN_INITIAL_RANK_POSITION) {
             possibleDestinations = PossibleDestinations.of(source, List.of(Direction.UP), PAWN_FIRST_MAX_MOVE_COUNT);
-            return possibleDestinations.contains(target) || canAttack(source, target, targetPiece);
+            return (possibleDestinations.contains(target) && Objects.isNull(targetPiece)) || canAttack(source, target, targetPiece);
         }
         possibleDestinations = PossibleDestinations.of(source, List.of(Direction.UP), PAWN_MAX_MOVE_COUNT);
-        return possibleDestinations.contains(target) || canAttack(source, target, targetPiece);
+        return (possibleDestinations.contains(target) && Objects.isNull(targetPiece)) || canAttack(source, target, targetPiece);
     }
 
     @Override

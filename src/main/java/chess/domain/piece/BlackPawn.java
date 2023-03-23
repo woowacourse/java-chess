@@ -19,10 +19,10 @@ public class BlackPawn extends Pawn {
         final PossibleDestinations possibleDestinations;
         if (source.getRank() == BLACKPAWN_INITIAL_RANK_POSITION) {
             possibleDestinations = PossibleDestinations.of(source, List.of(Direction.DOWN), PAWN_FIRST_MAX_MOVE_COUNT);
-            return possibleDestinations.contains(target) || canAttack(source, target, targetPiece);
+            return (possibleDestinations.contains(target) && Objects.isNull(targetPiece)) || canAttack(source, target, targetPiece);
         }
         possibleDestinations = PossibleDestinations.of(source, List.of(Direction.DOWN), PAWN_MAX_MOVE_COUNT);
-        return possibleDestinations.contains(target) || canAttack(source, target, targetPiece);
+        return (possibleDestinations.contains(target) && Objects.isNull(targetPiece)) || canAttack(source, target, targetPiece);
     }
 
     @Override
