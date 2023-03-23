@@ -1,12 +1,14 @@
 package common;
 
+import java.util.function.Supplier;
+
 public class ExecuteContext {
 
-    public static <T> T repeatableExecute(final ExecuteStrategy<T> executeStrategy) {
+    public static <T> T repeatableExecute(final Supplier<T> executeStrategy) {
         T result = null;
         while (result == null) {
             try {
-                result = executeStrategy.execute();
+                result = executeStrategy.get();
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
             }
@@ -14,14 +16,14 @@ public class ExecuteContext {
         return result;
     }
 
-    public static <T> void repeatableExecute(final ExecuteStrategy<T> defaultStrategy,
-        final ExecuteStrategy<Boolean> repeatableStrategy) {
+    public static <T> void repeatableExecute(final Supplier<T> defaultStrategy,
+        final Supplier<Boolean> repeatableStrategy) {
         while (true) {
             boolean result = repeatableExecute(repeatableStrategy);
             if (!result) {
                 break;
             }
-            defaultStrategy.execute();
+            defaultStrategy.get();
         }
     }
 }
