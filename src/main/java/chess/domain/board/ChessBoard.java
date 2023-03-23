@@ -25,13 +25,20 @@ public class ChessBoard {
 
     public void move(Position start, Position end) {
         checkIfMoveToSamePosition(start, end);
-        Piece pieceToMove = chessBoard.get(start);
+        Piece pieceToMove = findPieceInBoardByPosition(start);
         checkTurn(pieceToMove.getColor());
         checkIfPiecesExistInRoute(start, end);
-        Color colorOfDestination = chessBoard.get(end).getColor();
+        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
         if (pieceToMove.isMovable(start, end, colorOfDestination)) {
             movePieceToDestination(start, end, pieceToMove);
         }
+    }
+
+    private Piece findPieceInBoardByPosition(final Position position) {
+        if(!chessBoard.containsKey(position)) {
+            throw new IllegalArgumentException("해당하는 위치가 체스 보드에 존재하지 않습니다");
+        }
+        return chessBoard.get(position);
     }
 
     private static void checkIfMoveToSamePosition(Position start, Position end) {
@@ -58,7 +65,7 @@ public class ChessBoard {
     }
 
     private void checkOtherPieceInMovedPosition(Position currentPosition, Position end) {
-        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
+        if (!currentPosition.equals(end) && findPieceInBoardByPosition(currentPosition).getColor() != Color.NONE) {
             throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE);
         }
     }
