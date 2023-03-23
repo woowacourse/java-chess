@@ -23,7 +23,6 @@ public class PawnTest {
     private static final Position WHITE_START_POSITION = Position.of(2, 2);
     private static final Position BLACK_START_POSITION = Position.of(2, 7);
 
-    // TODO 0:6 같은 값도 허용하는 문제 해결 (이동 패턴까지 확인)
     @DisplayName("폰은 대각선이 아닌 이동 방향으로만 빈 위치로 이동 가능하다.")
     @ParameterizedTest
     @CsvSource(value = {"0:1", "0:2"}, delimiter = ':')
