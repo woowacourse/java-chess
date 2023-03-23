@@ -54,6 +54,10 @@ public class ChessController {
             final List<String> commandInputs = inputView.readGameCommand();
             final GameState gameState = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
             CONSUMER_BY_GAME_STATE.get(gameState).accept(commandInputs);
+
+            if (chessGame.isGameOver()) {
+                return GameState.END;
+            }
             return gameState;
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
