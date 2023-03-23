@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    public static final int ONE_PAWN = 1;
-    public static final double PAWN_SCORE = 0.5;
+    public static final double DEDUCT_PAWN_SCORE = 0.5;
     public static final int INITIAL_VALUE = 0;
     private final Map<Position, Piece> board;
 
@@ -61,24 +60,12 @@ public class ChessBoard {
         return sum;
     }
 
-    private double calculateOneLine(final Camp camp, final File file) {
-        if (!divideByCamp(getLineByFile(file)).containsKey(camp)) {
-            return 0;
+    private List<Position> getLineByFile(File file) {
+        List<Position> positions = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            positions.add(new Position(file, rank));
         }
-        return calculateByPawnCount(divideByCamp(getLineByFile(file)), camp);
-    }
-
-    private double calculateByPawnCount(Map<Camp, List<Piece>> groupingByCamp, Camp camp) {
-        if (countPawn(groupingByCamp, camp) == ONE_PAWN) {
-            return calculateByCamp(groupingByCamp, camp) + PAWN_SCORE;
-        }
-        return calculateByCamp(groupingByCamp, camp);
-    }
-
-    private static Double calculateByCamp(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
-        return groupingByCamp.get(camp).stream()
-                .map(piece -> piece.getPieceSymbol().getPieceScore())
-                .reduce((double) INITIAL_VALUE, Double::sum);
+        return positions;
     }
 
     private Map<Camp, List<Piece>> divideByCamp(List<Position> positions) {
@@ -89,12 +76,26 @@ public class ChessBoard {
         return pieces.stream().collect(Collectors.groupingBy(Piece::getCamp));
     }
 
-    private List<Position> getLineByFile(File file) {
-        List<Position> positions = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            positions.add(new Position(file, rank));
+    private double calculateOneLine(final Camp camp, final File file) {
+        if (!divideByCamp(getLineByFile(file)).containsKey(camp)) {
+            return 0;
         }
-        return positions;
+        return calculateByPawnCount(divideByCamp(getLineByFile(file)), camp);
+    }
+
+    private double calculateByPawnCount(Map<Camp, List<Piece>> groupingByCamp, Camp camp) {
+        int pawnCount = countPawn(groupingByCamp, camp);
+
+        if (pawnCount != 1) {
+            return calculateByCamp(groupingByCamp, camp) - DEDUCT_PAWN_SCORE * pawnCount;
+        }
+        return calculateByCamp(groupingByCamp, camp);
+    }
+
+    private static Double calculateByCamp(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
+        return groupingByCamp.get(camp).stream()
+                .map(piece -> piece.getPieceSymbol().getPieceScore())
+                .reduce((double) INITIAL_VALUE, Double::sum);
     }
 
     private int countPawn(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {

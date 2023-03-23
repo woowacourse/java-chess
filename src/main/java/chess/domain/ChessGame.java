@@ -50,7 +50,7 @@ public final class ChessGame {
     }
 
     private void validateTurnCamp(Piece fromPiece) {
-        if (turnCamp.isMyTurn(fromPiece)) {
+        if (!turnCamp.isMyTurn(fromPiece)) {
             throw new IllegalArgumentException(TURN_MISMATCHED_ERROR_MESSAGE);
         }
     }

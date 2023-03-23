@@ -37,7 +37,7 @@ public abstract class Piece {
     }
 
     public boolean isMyCamp(Camp other) {
-        return camp != other;
+        return camp == other;
     }
 
     public abstract PieceMove getMovement(Position from, Position to);

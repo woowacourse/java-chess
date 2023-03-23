@@ -1,7 +1,9 @@
 package chess.view;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+
 import java.util.Map;
 
 public final class OutputView {
@@ -37,5 +39,14 @@ public final class OutputView {
 
     public void printErrorMessage(String message) {
         System.out.println(message);
+    }
+
+    public void printStatusScore(final double whiteScore, final double blackScore) {
+        System.out.println("흰색 점수: " + whiteScore);
+        System.out.println("검정색 점수: " + blackScore);
+    }
+
+    public void printWinner(final Camp winnerCamp) {
+        System.out.println("승자 :" + ViewCamp.getCampName(winnerCamp));
     }
 }

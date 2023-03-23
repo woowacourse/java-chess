@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 public enum PieceSymbol {
-    PAWN(0.5),
+    PAWN(1),
     BISHOP(3),
     KING(0),
     KNIGHT(2.5),
