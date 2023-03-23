@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Collections;
 import java.util.Map;
 
 import chess.domain.piece.Empty;
@@ -158,6 +159,6 @@ public class Board {
 	}
 
 	public Map<Position, Piece> getBoard() {
-		return board;
+		return Collections.unmodifiableMap(board);
 	}
 }
