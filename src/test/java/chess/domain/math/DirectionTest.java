@@ -3,6 +3,7 @@ package chess.domain.math;
 import static chess.domain.math.Direction.DOWN;
 import static chess.domain.math.Direction.DOWN_LEFT;
 import static chess.domain.math.Direction.DOWN_RIGHT;
+import static chess.domain.math.Direction.KNIGHT;
 import static chess.domain.math.Direction.LEFT;
 import static chess.domain.math.Direction.RIGHT;
 import static chess.domain.math.Direction.UP;
@@ -78,5 +79,21 @@ class DirectionTest {
         var target = new Position(1, 1);
 
         assertThat(computeDirection(current, target)).isEqualTo(DOWN_RIGHT);
+    }
+
+    @Test
+    void findDirection_knight_case1() {
+        var current = new Position(1, 2);
+        var target = new Position(0, 0);
+
+        assertThat(computeDirection(current, target)).isEqualTo(KNIGHT);
+    }
+
+    @Test
+    void findDirection_knight_case2() {
+        var current = new Position(2, 1);
+        var target = new Position(0, 0);
+
+        assertThat(computeDirection(current, target)).isEqualTo(KNIGHT);
     }
 }
