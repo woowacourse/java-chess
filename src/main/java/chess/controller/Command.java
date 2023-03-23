@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Side;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -13,7 +14,7 @@ public enum Command {
 
     START("start", (chessGame, ignored) -> chessGame.start()),
     END("end", (chessGame, ignored) -> chessGame.end()),
-    STATUS("status", ((chessGame, ignored) -> OutputView.printResult(chessGame.calculateScore()))),
+    STATUS("status", checkStatus()),
     MOVE("move", moveOrNot());
 
     public static final int SOURCE_INDEX = 1;
@@ -27,6 +28,15 @@ public enum Command {
     Command(final String name, final BiConsumer<ChessGame, String[]> consumer) {
         this.name = name;
         this.consumer = consumer;
+    }
+
+    private static BiConsumer<ChessGame, String[]> checkStatus() {
+        return (chessGame, ignored) -> {
+            final Double whiteScore = chessGame.calculateWhiteScore();
+            final Double blackScore = chessGame.calculateBlackScore();
+            OutputView.printScore(whiteScore, blackScore);
+            OutputView.printWinner(Side.calculateWinner(whiteScore, blackScore));
+        };
     }
 
     private static BiConsumer<ChessGame, String[]> moveOrNot() {

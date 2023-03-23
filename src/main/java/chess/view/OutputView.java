@@ -2,17 +2,14 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final int WHITE_SCORE_INDEX = 0;
-    private static final int BLACK_SCORE_INDEX = 1;
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
@@ -39,22 +36,18 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printResult(final List<Double> calculateScore) {
-        final Double whiteScore = calculateScore.get(WHITE_SCORE_INDEX);
-        final Double blackScore = calculateScore.get(BLACK_SCORE_INDEX);
+    public static void printScore(final Double whiteScore, final Double blackScore) {
         System.out.println(String.format("White팀 점수: %.1f점", whiteScore));
         System.out.println(String.format("Black팀 점수: %.1f점", blackScore));
-        printWinner(whiteScore, blackScore);
-
     }
 
-    private static void printWinner(final Double whiteScore, final Double blackScore) {
-        if (whiteScore < blackScore) {
+    public static void printWinner(Side side) {
+        if (side.isWhite()) {
             System.out.println("White팀 승리!!");
             return;
         }
-        if (blackScore < whiteScore) {
-            System.out.println("white팀 승리!!");
+        if (side.isBlack()) {
+            System.out.println("Black팀 승리!!");
             return;
         }
         System.out.println("Draw!!");

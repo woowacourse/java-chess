@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
+
 import java.util.List;
 
 public class ChessGame {
@@ -80,9 +81,17 @@ public class ChessGame {
         return board;
     }
 
-    public List<Double> calculateScore() {
+    public Double calculateWhiteScore() {
         checkCalculable();
-        return List.of(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+        return board.calculateScore(Side.WHITE);
+    }
+
+    public Double calculateBlackScore() {
+        checkCalculable();
+        return board.calculateScore(Side.BLACK);
+    }
+    public Side calculateWinner() {
+        return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
     }
 
     private void checkCalculable() {

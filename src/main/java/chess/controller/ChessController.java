@@ -27,7 +27,8 @@ public class ChessController {
             printChessBoard(chessGame);
             executeCommand(chessGame);
         }
-        OutputView.printResult(chessGame.calculateScore());
+        OutputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
+        OutputView.printWinner(chessGame.calculateWinner());
     }
 
     private void printChessBoard(final ChessGame chessGame) {
