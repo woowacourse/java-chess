@@ -3,22 +3,21 @@ package view;
 import domain.game.Position;
 import domain.game.Rank;
 import domain.game.Side;
-import domain.piece.Piece;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
-    public void printChessBoard(Map<Position, Piece> chessBoard) {
+    public void printChessBoard(Map<Position, String> chessBoardOfForPrint) {
         Rank currentRank = Rank.EIGHT;
-        for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
+        for (Map.Entry<Position, String> positionPieceEntry : chessBoardOfForPrint.entrySet()) {
             currentRank = moveNextRankIfLast(currentRank, positionPieceEntry);
-            System.out.print(PieceMapper.convertPieceCategoryToText(positionPieceEntry.getValue().getCategory()));
+            System.out.print(positionPieceEntry.getValue());
         }
         System.out.println();
         System.out.println();
     }
 
-    private static Rank moveNextRankIfLast(Rank currentRank, Entry<Position, Piece> positionPieceEntry) {
+    private static Rank moveNextRankIfLast(Rank currentRank, Entry<Position, String> positionPieceEntry) {
         if (!currentRank.equals(positionPieceEntry.getKey().getRank())) {
             currentRank = currentRank.getPrevious();
             System.out.println();

@@ -2,8 +2,12 @@ package controller;
 
 import controller.command.Command;
 import controller.command.Move;
+import controller.mapper.PieceMapper;
 import domain.game.Game;
 import domain.game.Position;
+import domain.piece.Piece;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +26,7 @@ public class ChessController {
         Command command = this.inputView.requestUserCommand();
         if (command.isStart()) {
             Game game = Game.create();
-            this.outputView.printChessBoard(game.getChessBoard());
+            printChessBoardOf(game);
             return game;
         }
         throw new IllegalArgumentException("게임 시작하려면 먼저 start를 입력하세요.");
@@ -45,8 +49,19 @@ public class ChessController {
         Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
         Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
         game.move(sourcePosition, targetPosition);
-        this.outputView.printChessBoard(game.getChessBoard());
+        printChessBoardOf(game);
         return command;
+    }
+
+    private void printChessBoardOf(Game game) {
+        Map<Position, Piece> chessBoard = game.getChessBoard();
+        Map<Position, String> chessBoardOfForPrint = new LinkedHashMap<>();
+        for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
+            chessBoardOfForPrint.put(
+                    positionPieceEntry.getKey(),
+                    PieceMapper.convertPieceCategoryToText(positionPieceEntry.getValue().getCategory()));
+        }
+        this.outputView.printChessBoard(chessBoardOfForPrint);
     }
 
     private <T> T repeat(Supplier<T> supplier) {
