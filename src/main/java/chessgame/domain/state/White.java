@@ -13,7 +13,7 @@ public class White implements State {
     @Override
     public State run(Command command, Board board) {
         if (command.isStart()) {
-            throw new IllegalArgumentException("start를 입력할 수 없습니다.");
+            throw new UnsupportedOperationException("start를 입력할 수 없습니다.");
         }
         if (command.isMove()) {
             board.move(command.getSourcePoint(), command.getTargetPoint(), Team.WHITE);

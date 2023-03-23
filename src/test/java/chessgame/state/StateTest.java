@@ -31,7 +31,7 @@ public class StateTest {
         void Should_ThrowException_When_ReadyState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("move a2 a4"), board))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("move를 입력할 수 없습니다.");
         }
 
@@ -55,7 +55,7 @@ public class StateTest {
         void Should_ThrowException_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("start"), board))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("start를 입력할 수 없습니다.");
         }
 
@@ -89,7 +89,7 @@ public class StateTest {
         void Should_ThrowException_When_BlackState() {
             Board board = new Board(ChessBoardFactory.create());
             assertThatThrownBy(() -> state.run(Command.of("start"), board))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("start를 입력할 수 없습니다.");
         }
 
@@ -125,7 +125,7 @@ public class StateTest {
             Board board = new Board(ChessBoardFactory.create());
 
             assertThatThrownBy(() -> state.run(Command.of("start"), board))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("start만 입력 가능 합니다.");
         }
 
@@ -135,7 +135,7 @@ public class StateTest {
             Board board = new Board(ChessBoardFactory.create());
 
             assertThatThrownBy(() -> state.run(Command.of("move b2 b4"), board))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("start만 입력 가능 합니다.");
         }
 

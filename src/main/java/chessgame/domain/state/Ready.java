@@ -15,7 +15,7 @@ public class Ready implements State {
             return new White();
         }
         if (command.isMove()) {
-            throw new IllegalArgumentException("move를 입력할 수 없습니다.");
+            throw new UnsupportedOperationException("move를 입력할 수 없습니다.");
         }
         if (command.isEnd()) {
             return new End();
