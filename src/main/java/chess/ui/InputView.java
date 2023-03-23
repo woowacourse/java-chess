@@ -37,8 +37,22 @@ public final class InputView {
     }
 
     public static List<String> getCommands() {
-        return Arrays.stream(SCANNER.nextLine().split(" "))
+        List<String> commands = Arrays.stream(SCANNER.nextLine().split(" "))
                 .collect(toList());
+        validateCommandSize(commands);
+        return commands;
+    }
+
+    private static void validateCommandSize(List<String> commands) {
+        if (commands.size() == 0) {
+            throw new IllegalArgumentException("커맨드를 입력해야 합니다.");
+        }
+        if (commands.get(0).equals("end") && commands.size() > 1) {
+            throw new IllegalArgumentException("end 뒤에는 명령어를 붙일 수 없습니다.");
+        }
+        if (commands.size() > 3) {
+            throw new IllegalArgumentException("정의되지 않은 명령어를 입력할 수 없습니다.");
+        }
     }
 
 }
