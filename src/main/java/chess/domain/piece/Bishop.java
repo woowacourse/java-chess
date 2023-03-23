@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
-import chess.domain.movement.Movement;
+import chess.domain.piece.movement.Movement;
 import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.position.RelativePosition;

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
+import chess.domain.position.RelativePosition;
 
 public abstract class Piece {
 
@@ -11,6 +12,8 @@ public abstract class Piece {
         this.pieceType = pieceType;
         this.team = team;
     }
+
+    public abstract boolean isMobile(RelativePosition relativePosition, Piece target);
 
     public boolean isEmpty() {
         return this.team == Team.EMPTY;

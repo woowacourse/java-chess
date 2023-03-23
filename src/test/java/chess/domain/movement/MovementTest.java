@@ -1,5 +1,6 @@
 package chess.domain.movement;
 
+import chess.domain.piece.movement.Movement;
 import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

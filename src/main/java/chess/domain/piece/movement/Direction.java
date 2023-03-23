@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.piece.movement;
 
 import chess.domain.position.RelativePosition;
 

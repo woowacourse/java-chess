@@ -1,15 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
-import chess.domain.movement.Movement;
-import chess.domain.piece.movable.Movable;
+import chess.domain.piece.movement.Movement;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 
 import java.util.List;
 
-public abstract class NoneEmptyPiece extends Piece implements Movable {
+public abstract class NoneEmptyPiece extends Piece {
 
     protected final Movement movement;
     protected final ObstacleStrategy obstacleStrategy;
@@ -19,9 +18,6 @@ public abstract class NoneEmptyPiece extends Piece implements Movable {
         this.movement = movement;
         this.obstacleStrategy = obstacleStrategy;
     }
-
-    @Override
-    public abstract boolean isMobile(RelativePosition relativePosition, Piece target);
 
     protected void validateSameTeam(Piece target) {
         if (isSameTeam(target)) {
