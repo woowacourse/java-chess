@@ -72,7 +72,6 @@ public class ChessController {
 
     private void end(final ChessGame chessGame, final CommandArguments ignored) {
         String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
-        outputView.printGameEndMessage();
         outputView.printGameResult(gameResultMessage);
     }
 
@@ -84,7 +83,8 @@ public class ChessController {
     }
 
     private void status(final ChessGame chessGame, final CommandArguments ignored) {
-        outputView.printGameResult(RenderingAdapter.unpackGameResult(chessGame.collectPoint()));
+        outputView.printGameStatus(RenderingAdapter.unpackGameResult(chessGame.collectPoint()));
+        printBoard(chessGame);
     }
 
     private void printBoard(final ChessGame chessGame) {
