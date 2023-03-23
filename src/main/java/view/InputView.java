@@ -47,4 +47,11 @@ public class InputView {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
     }
+
+    public String getBoardId() {
+        System.out.println("체스 방을 입력해주세요.");
+        final String input = scanner.nextLine();
+        checkBlank(input);
+        return input;
+    }
 }

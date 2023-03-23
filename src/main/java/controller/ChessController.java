@@ -26,11 +26,12 @@ public class ChessController {
         if (inputView.getEndIntent()) {
             return;
         }
-        chessGame.initialize();
+        chessGame.initialize(inputView.getBoardId());
         ExecuteContext.repeatableExecute(this::printBoard, () -> command(inputView.getCommand()));
     }
 
     private Void printBoard() {
+
         final Board board = chessGame.getBoard();
         outputView.printBoard(board);
         return null;
@@ -39,14 +40,19 @@ public class ChessController {
     private boolean command(final List<String> commands) {
         final Command command = Command.find(commands.get(0));
         if (command.equals(Command.END)) {
+            chessGame.save();
             return false;
         }
         if (command.equals(Command.START)) {
-            chessGame.initialize();
+            chessGame.initialize(inputView.getBoardId());
             return true;
         }
         if (command.equals(Command.STATUS)) {
             calculateScore();
+            return true;
+        }
+        if (command.equals(Command.ENTER)) {
+            chessGame.findPreviousGame(inputView.getBoardId());
             return true;
         }
         return move(commands);
