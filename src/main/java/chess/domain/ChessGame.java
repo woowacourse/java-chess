@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.EMPTY;
 import static chess.domain.piece.Team.WHITE;
 
 public class ChessGame {
@@ -43,4 +44,23 @@ public class ChessGame {
                 .sum();
     }
 
+
+    public Team getWinTeam() {
+        if (board.isKingDead(WHITE)) {
+            return BLACK;
+        }
+        if (board.isKingDead(BLACK)) {
+            return WHITE;
+        }
+
+        double whiteTeamScore = getTotalScore(WHITE);
+        double blackTeamScore = getTotalScore(BLACK);
+        if (whiteTeamScore > blackTeamScore) {
+            return WHITE;
+        }
+        if (whiteTeamScore < blackTeamScore) {
+            return BLACK;
+        }
+        return EMPTY;
+    }
 }
