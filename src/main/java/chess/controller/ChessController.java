@@ -7,23 +7,27 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
         final ChessGame chessGame = new ChessGame();
-        start(chessGame);
+        play(chessGame, gameStatus -> {
+            if (gameStatus.isRun()) {
+                OutputView.printBoard(chessGame.getChessBoard());
+            }
+        });
     }
 
-    private void start(final ChessGame chessGame) {
+    private void play(final ChessGame chessGame, Consumer<Status> consumer) {
         Status gameStatus = new Start(chessGame);
         while (gameStatus.isRun()) {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
             gameStatus = gameStatus.checkCommand(command);
-            OutputView.printBoard(chessGame.getChessBoard());
+            consumer.accept(gameStatus);
         }
     }
 }
-
