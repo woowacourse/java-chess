@@ -20,16 +20,6 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("좌표를 입력받아 해당 square를 반환한다.")
-    void toSquare() {
-        ChessBoard chessBoard = new ChessBoard();
-
-        Square square = chessBoard.toSquare(1, 1);
-
-        assertThat(square).isEqualTo(new Square(File.B, Rank.TWO));
-    }
-
-    @Test
     @DisplayName("기물을 음직인다.")
     void moveTest() {
         ChessBoard chessBoard = new ChessBoard();

@@ -112,12 +112,6 @@ public class ChessBoard {
         }
     }
 
-    public Square toSquare(int fileCoordinate, int rankCoordinate) {
-        File targetFile = File.find(fileCoordinate);
-        Rank targetRank = Rank.find(rankCoordinate);
-        return new Square(targetFile, targetRank);
-    }
-
     public void move(Square currentSquare, Square targetSquare) {
         Piece currentPiece = board.get(currentSquare);
         List<Square> path = currentPiece.fetchMovableSquares(currentSquare, targetSquare);
