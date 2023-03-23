@@ -11,7 +11,7 @@ public class BlackPawn extends Pawn {
 
     private static final int INITIAL_BLACK_RANK = 7;
 
-    public BlackPawn(final Color color, final MovingStrategy movingStrategy) {
+    private BlackPawn(final Color color, final MovingStrategy movingStrategy) {
         super(color, movingStrategy);
     }
 

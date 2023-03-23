@@ -11,7 +11,7 @@ public class WhitePawn extends Pawn {
 
     private static final int INITIAL_WHITE_RANK = 2;
 
-    public WhitePawn(final Color color, final MovingStrategy movingStrategy) {
+    private WhitePawn(final Color color, final MovingStrategy movingStrategy) {
         super(color, movingStrategy);
     }
 

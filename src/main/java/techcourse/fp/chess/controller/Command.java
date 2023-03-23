@@ -8,10 +8,6 @@ public enum Command {
     MOVE,
     EMPTY;
 
-    public boolean isMove() {
-        return this == MOVE;
-    }
-
     public static Command from(String inputText) {
         return Arrays.stream(values())
                 .filter(command -> command.name().equalsIgnoreCase(inputText))

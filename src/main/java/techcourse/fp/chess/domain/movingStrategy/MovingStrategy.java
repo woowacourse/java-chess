@@ -11,6 +11,5 @@ public abstract class MovingStrategy {
         this.directions = directions;
     }
 
-
     public abstract List<Position> createPath(Position source, Position target);
 }

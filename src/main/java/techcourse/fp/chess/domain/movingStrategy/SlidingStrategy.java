@@ -46,7 +46,6 @@ public class SlidingStrategy extends MovingStrategy {
         return path;
     }
 
-    //TODO: 구조 개선 고민
     private Position move(final Position currentPosition, final Direction direction) {
         return Position.of(File.of(currentPosition.getFileOrder() + direction.getFile()),
                 Rank.of(currentPosition.getRankOrder() + direction.getRank()));
