@@ -40,6 +40,7 @@ public final class InputView {
         List<String> commands = Arrays.stream(SCANNER.nextLine().split(" "))
                 .collect(toList());
         validateCommandSize(commands);
+//        validateCommandCategory(commands);
         return commands;
     }
 
@@ -52,6 +53,12 @@ public final class InputView {
         }
         if (commands.size() > 3) {
             throw new IllegalArgumentException("정의되지 않은 명령어를 입력할 수 없습니다.");
+        }
+    }
+
+    private static void validateCommandCategory(List<String> commands) {
+        if (!commands.get(0).equals("move") && !commands.get(0).equals("end")) {
+            throw new IllegalArgumentException("move 또는 end가 아닌 커맨드는 입력할 수 없습니다.");
         }
     }
 

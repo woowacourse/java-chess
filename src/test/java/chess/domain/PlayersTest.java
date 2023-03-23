@@ -17,7 +17,7 @@ class PlayersTest {
         Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-        players = Players.from(whitePlayer, blackPlayer);
+        players = Players.of(whitePlayer, blackPlayer);
     }
 
     @Test
