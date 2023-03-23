@@ -5,9 +5,12 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.File.A;
@@ -78,5 +81,22 @@ class PieceTest {
         final boolean actual = piece.isWhite();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePathPositions")
+    void 입력된_경로에_존재하는지_확인한다(final List<Position> pathPositions, final boolean expected) {
+        final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
+
+        final boolean actual = piece.existsIn(pathPositions);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> providePathPositions() {
+        return Stream.of(
+                Arguments.of(List.of(new Position(File.C, Rank.EIGHT)), true),
+                Arguments.of(List.of(), false)
+        );
     }
 }

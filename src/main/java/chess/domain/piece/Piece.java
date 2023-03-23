@@ -31,6 +31,10 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public final boolean existsIn(List<Position> pathPosstions) {
+        return pathPosstions.contains(position);
+    }
+
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
