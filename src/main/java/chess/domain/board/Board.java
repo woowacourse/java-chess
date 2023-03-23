@@ -50,6 +50,12 @@ public class Board {
         return side.isAlly(otherSide);
     }
 
+    public boolean isEnemyPosition(final Position position, final Position otherPosition) {
+        final Side side = findSideByPosition(position);
+        final Side otherSide = findSideByPosition(otherPosition);
+        return side.isEnemy(otherSide);
+    }
+
     public Side findSideByPosition(final Position position) {
         final Piece piece = board.get(position);
         return piece.side();

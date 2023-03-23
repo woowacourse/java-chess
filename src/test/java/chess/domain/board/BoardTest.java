@@ -396,4 +396,13 @@ public class BoardTest {
 
         assertThat(board.isAllyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
     }
+
+    @Test
+    void 두_위치를_통해_서로_적군_관계인지_판단할_수_있다() {
+        boardMap.put(Position.of(A, ONE), new Pawn(WHITE));
+        boardMap.put(Position.of(A, TWO), new Pawn(BLACK));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isEnemyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
+    }
 }
