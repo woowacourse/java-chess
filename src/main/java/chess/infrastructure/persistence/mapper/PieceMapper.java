@@ -25,13 +25,34 @@ public class PieceMapper {
 
     static {
         try {
-            contractorMap.put(KingMovementStrategy.class.getSimpleName(), KingMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(QueenMovementStrategy.class.getSimpleName(), QueenMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(BishopMovementStrategy.class.getSimpleName(), BishopMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(KnightMovementStrategy.class.getSimpleName(), KnightMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(RookMovementStrategy.class.getSimpleName(), RookMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(BlackPawnMovementStrategy.class.getSimpleName(), BlackPawnMovementStrategy.class.getDeclaredConstructor(Color.class));
-            contractorMap.put(WhitePawnMovementStrategy.class.getSimpleName(), WhitePawnMovementStrategy.class.getDeclaredConstructor(Color.class));
+            contractorMap.put(
+                    KingMovementStrategy.class.getSimpleName(),
+                    KingMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    QueenMovementStrategy.class.getSimpleName(),
+                    QueenMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    BishopMovementStrategy.class.getSimpleName(),
+                    BishopMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    KnightMovementStrategy.class.getSimpleName(),
+                    KnightMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    RookMovementStrategy.class.getSimpleName(),
+                    RookMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    BlackPawnMovementStrategy.class.getSimpleName(),
+                    BlackPawnMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
+            contractorMap.put(
+                    WhitePawnMovementStrategy.class.getSimpleName(),
+                    WhitePawnMovementStrategy.class.getDeclaredConstructor(Color.class)
+            );
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -49,9 +70,9 @@ public class PieceMapper {
 
     public static Piece toDomain(final PieceEntity pieceEntity) {
         final Color color = Color.valueOf(pieceEntity.color());
-        return new Piece(PiecePosition.of(Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
-                makeStrategy(pieceEntity, color)
-        );
+        return new Piece(PiecePosition.of(
+                Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
+                makeStrategy(pieceEntity, color));
     }
 
     private static PieceMovementStrategy makeStrategy(final PieceEntity pieceEntity, final Color color) {

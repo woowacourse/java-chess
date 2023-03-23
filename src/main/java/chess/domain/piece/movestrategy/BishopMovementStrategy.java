@@ -15,7 +15,7 @@ public class BishopMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
-                                          final Piece nullableEnemy) throws IllegalArgumentException {
+                                          final Piece nullableEnemy) {
         if (!isDiagonal(source, destination)) {
             throw new IllegalArgumentException("비숍은 대각선으로만 이동할 수 있습니다.");
         }

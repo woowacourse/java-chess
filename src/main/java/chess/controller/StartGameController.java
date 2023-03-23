@@ -15,7 +15,9 @@ public class StartGameController {
     private final ChessBoardFactory chessBoardFactory;
     private final RunningGameController controller;
 
-    public StartGameController(final ChessGameService chessGameService, final ChessBoardFactory chessBoardFactory, final RunningGameController controller) {
+    public StartGameController(final ChessGameService chessGameService,
+                               final ChessBoardFactory chessBoardFactory,
+                               final RunningGameController controller) {
         this.chessGameService = chessGameService;
         this.chessBoardFactory = chessBoardFactory;
         this.controller = controller;

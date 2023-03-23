@@ -93,10 +93,14 @@ public class ChessBoard {
 
     public Map<Color, Double> calculateScore() {
         final Map<Color, Double> defaultScores = pieces.stream()
-                .collect(groupingBy(Piece::color, summingDouble(Piece::value)));
+                .collect(
+                        groupingBy(Piece::color, summingDouble(Piece::value))
+                );
         return defaultScores.entrySet()
                 .stream()
-                .collect(toMap(Map.Entry::getKey, entry -> entry.getValue() - minusSameFilePawnValue(entry.getKey())));
+                .collect(toMap(Map.Entry::getKey,
+                        entry -> entry.getValue() - minusSameFilePawnValue(entry.getKey()))
+                );
     }
 
     private double minusSameFilePawnValue(final Color color) {

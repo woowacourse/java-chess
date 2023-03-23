@@ -15,7 +15,7 @@ public class KingMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
-                                          final Piece nullableEnemy) throws IllegalArgumentException {
+                                          final Piece nullableEnemy) {
         if (!isUnitDistance(source, destination)) {
             throw new IllegalArgumentException("왕은 한칸만 이동할 수 있습니다.");
         }

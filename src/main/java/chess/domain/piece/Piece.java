@@ -18,14 +18,14 @@ public class Piece {
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
-    public List<PiecePosition> waypoints(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
+    public List<PiecePosition> waypoints(final PiecePosition destination, final Piece nullablePiece) {
         return pieceMovementStrategy.waypoints(piecePosition, destination, nullablePiece);
     }
 
     /**
      * @throws IllegalArgumentException 이동할 수 없는 경로가 들어온 경우
      */
-    public Piece move(final PiecePosition destination, final Piece nullablePiece) throws IllegalArgumentException {
+    public Piece move(final PiecePosition destination, final Piece nullablePiece) {
         pieceMovementStrategy.validateMove(piecePosition, destination, nullablePiece);
         return new Piece(destination, pieceMovementStrategy);
     }

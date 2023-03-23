@@ -2,10 +2,10 @@ package chess.domain.piece.movestrategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.movestrategy.AbstractPieceMovementStrategy;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.movestrategy.AbstractPieceMovementStrategy;
 
 public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 
@@ -31,7 +31,7 @@ public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
-                                          final Piece nullableEnemy) throws IllegalArgumentException {
+                                          final Piece nullableEnemy) {
         validateDefaultMove(source, destination);
         validateDiagonalKill(source, destination, nullableEnemy);
         validateVerticalMove(source, destination, nullableEnemy);

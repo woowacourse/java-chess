@@ -8,7 +8,11 @@ public class PieceEntity {
     private final String movementType;
     private final Long chessGameId;
 
-    public PieceEntity(final int rank, final char file, final String color, final String movementType, final Long chessGameId) {
+    public PieceEntity(final int rank,
+                       final char file,
+                       final String color,
+                       final String movementType,
+                       final Long chessGameId) {
         this.rank = rank;
         this.file = file;
         this.color = color;

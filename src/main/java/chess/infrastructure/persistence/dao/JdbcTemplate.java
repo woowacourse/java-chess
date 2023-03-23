@@ -13,7 +13,8 @@ import static chess.infrastructure.persistence.JdbcConnectionUtil.connection;
 public class JdbcTemplate {
 
     interface NoResultSql {
-        void noResult(final Connection connection, final PreparedStatement preparedStatement) throws SQLException;
+        void noResult(final Connection connection,
+                      final PreparedStatement preparedStatement) throws SQLException;
     }
 
     public void execute(final String sql, final NoResultSql noResultSql) {
@@ -34,7 +35,9 @@ public class JdbcTemplate {
         });
     }
 
-    public <T> Optional<T> findOne(final String query, final RowMapper<T> rowMapper, final String... params) {
+    public <T> Optional<T> findOne(final String query,
+                                   final RowMapper<T> rowMapper,
+                                   final String... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {
@@ -50,7 +53,9 @@ public class JdbcTemplate {
         }
     }
 
-    public <T> List<T> findAll(final String query, final RowMapper<T> rowMapper, final String... params) {
+    public <T> List<T> findAll(final String query,
+                               final RowMapper<T> rowMapper,
+                               final String... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {

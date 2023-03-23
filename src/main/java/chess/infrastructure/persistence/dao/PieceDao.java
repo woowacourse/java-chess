@@ -9,7 +9,9 @@ public class PieceDao {
     private final JdbcTemplate template = new JdbcTemplate();
 
     public void saveAll(final List<PieceEntity> pieceEntities) {
-        final String sql = "INSERT INTO piece(pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?)";
+        final String sql =
+                "INSERT INTO piece(pos_rank, pos_file, color, type, chess_game_id) VALUES (?, ?, ?, ?, ?)";
+
         template.execute(sql, ((connection, preparedStatement) -> {
             for (final PieceEntity pieceEntity : pieceEntities) {
                 preparedStatement.setString(1, String.valueOf(pieceEntity.rank()));

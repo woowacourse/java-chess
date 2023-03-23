@@ -18,7 +18,7 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     @Override
     public List<PiecePosition> waypoints(final PiecePosition source,
                                          final PiecePosition destination,
-                                         final Piece nullableEnemy) throws IllegalArgumentException {
+                                         final Piece nullableEnemy) {
         validateMove(source, destination, nullableEnemy);
         return waypoint(source, destination);
     }
@@ -37,7 +37,7 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     @Override
     public void validateMove(final PiecePosition source,
                              final PiecePosition destination,
-                             final Piece nullableEnemy) throws IllegalArgumentException {
+                             final Piece nullableEnemy) {
         validateSourceAndDestinationSame(source, destination);
         validateAllyKill(nullableEnemy);
         validateMoveWithNoAlly(source, destination, nullableEnemy);
@@ -52,7 +52,7 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     /**
      * @throws IllegalArgumentException 죽일 수 없는 경우
      */
-    private void validateAllyKill(final Piece enemy) throws IllegalArgumentException {
+    private void validateAllyKill(final Piece enemy) {
         if (enemy == null) {
             return;
         }
@@ -63,7 +63,7 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
 
     protected abstract void validateMoveWithNoAlly(final PiecePosition source,
                                                    final PiecePosition destination,
-                                                   final Piece nullableEnemy) throws IllegalArgumentException;
+                                                   final Piece nullableEnemy);
 
     protected boolean isStraight(final PiecePosition source, final PiecePosition destination) {
         return !(Math.abs(source.rankInterval(destination)) > 0

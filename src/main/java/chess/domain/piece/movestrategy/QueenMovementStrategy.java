@@ -15,7 +15,7 @@ public class QueenMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
-                                          final Piece nullableEnemy) throws IllegalArgumentException {
+                                          final Piece nullableEnemy) {
         if (!isStraight(source, destination) && !isDiagonal(source, destination)) {
             throw new IllegalArgumentException("퀸은 대각선 혹은 직선으로만 이동가능합니다.");
         }

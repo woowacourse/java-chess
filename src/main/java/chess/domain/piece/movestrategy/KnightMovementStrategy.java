@@ -18,7 +18,7 @@ public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     public List<PiecePosition> waypoints(final PiecePosition source,
                                          final PiecePosition destination,
-                                         final Piece nullableEnemy) throws IllegalArgumentException {
+                                         final Piece nullableEnemy) {
         validateMove(source, destination, nullableEnemy);
         return Collections.emptyList();
     }
@@ -31,7 +31,7 @@ public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,
                                           final PiecePosition destination,
-                                          final Piece nullableEnemy) throws IllegalArgumentException {
+                                          final Piece nullableEnemy) {
         if (Math.abs(source.fileInterval(destination)) == 1
                 && Math.abs(source.rankInterval(destination)) == 2) {
             return;
