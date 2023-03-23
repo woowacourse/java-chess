@@ -1,9 +1,10 @@
 package domain;
 
-import domain.piece.PieceLocations;
+import java.util.List;
+
 import domain.piece.Pawn;
 import domain.piece.Piece;
-import java.util.List;
+import domain.piece.PieceLocations;
 
 public class ChessBoard {
 

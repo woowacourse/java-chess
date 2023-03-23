@@ -1,12 +1,15 @@
-import domain.ChessBoard;
-import domain.Square;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import view.*;
+import domain.ChessBoard;
+import domain.Square;
+
+import view.ChessboardExecuter;
+import view.Command;
+import view.InputView;
+import view.OutputView;
 
 public class MainController {
 

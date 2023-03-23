@@ -1,7 +1,8 @@
 package domain.piece;
 
-import domain.Square;
 import java.util.List;
+
+import domain.Square;
 
 public abstract class Piece {
 

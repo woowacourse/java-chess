@@ -1,9 +1,9 @@
 package domain;
 
-import domain.piece.Vector;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import domain.piece.Vector;
 
 public class Square {
 

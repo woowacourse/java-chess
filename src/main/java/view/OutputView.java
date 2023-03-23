@@ -1,11 +1,12 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import domain.ChessBoard;
 import domain.ChessColumn;
 import domain.Rank;
 import domain.Square;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OutputView {
 

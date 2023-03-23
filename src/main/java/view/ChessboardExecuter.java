@@ -1,8 +1,8 @@
 package view;
 
-import domain.ChessBoard;
-
 import java.util.List;
+
+import domain.ChessBoard;
 
 public interface ChessboardExecuter {
 

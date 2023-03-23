@@ -2,15 +2,17 @@ package view;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import domain.piece.King;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.TeamColor;
 import java.util.stream.Stream;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import domain.piece.King;
+import domain.piece.Piece;
+import domain.piece.Queen;
+import domain.piece.TeamColor;
 
 class PieceConverterTest {
 
@@ -24,10 +26,10 @@ class PieceConverterTest {
 
     static Stream<Arguments> parametersProvider() {
         return Stream.of(
-            arguments(new King(TeamColor.BLACK), "K"),
-            arguments(new King(TeamColor.WHITE), "k"),
-            arguments(new Queen(TeamColor.BLACK), "Q"),
-            arguments(new Queen(TeamColor.WHITE), "q")
+                arguments(new King(TeamColor.BLACK), "K"),
+                arguments(new King(TeamColor.WHITE), "k"),
+                arguments(new Queen(TeamColor.BLACK), "Q"),
+                arguments(new Queen(TeamColor.WHITE), "q")
         );
     }
 

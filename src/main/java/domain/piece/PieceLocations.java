@@ -1,15 +1,15 @@
 package domain.piece;
 
-import domain.Square;
+import static domain.ChessColumn.*;
+import static domain.Rank.*;
+import static domain.piece.TeamColor.BLACK;
+import static domain.piece.TeamColor.WHITE;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static domain.ChessColumn.*;
-import static domain.Rank.*;
-import static domain.piece.TeamColor.BLACK;
-import static domain.piece.TeamColor.WHITE;
+import domain.Square;
 
 public class PieceLocations {
     private static final List<Square> BLACK_SQUARES = List.of(

@@ -1,10 +1,10 @@
 package domain.piece;
 
-import domain.Square;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import domain.Square;
 
 public class Pawn extends Piece {
     public static final Vector TOP = Vector.of(0, 1);
