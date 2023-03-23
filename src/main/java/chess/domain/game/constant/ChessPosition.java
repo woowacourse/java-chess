@@ -5,6 +5,7 @@ import chess.domain.game.Position;
 import chess.domain.game.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +58,8 @@ public enum ChessPosition {
     public static Map<Position, Piece> initialPiecePositions() {
         Map<Position, Piece> piecePositions = new HashMap<>();
         for (ChessPosition positionToPiece : ChessPosition.values()) {
-            piecePositions.put(positionToPiece.position, new Piece(positionToPiece.pieceType, positionToPiece.color));
+            piecePositions.put(positionToPiece.position,
+                    PieceFactory.getInstance(positionToPiece.pieceType, positionToPiece.color));
         }
         makeEmptyPiece(piecePositions);
         return piecePositions;

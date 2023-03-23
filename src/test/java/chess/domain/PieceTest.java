@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -19,7 +20,7 @@ class PieceTest {
     @Test
     void 피스_이름_가져오기_테스트() {
         //given
-        Piece piece = new Piece(PieceType.PAWN, Color.WHITE);
+        Piece piece = PieceFactory.getInstance(PieceType.PAWN, Color.WHITE);
 
         //when
         PieceType result = piece.getType();
@@ -33,7 +34,7 @@ class PieceTest {
     @CsvSource(value = {"BLACK, -2", "WHITE, 2"})
     void 폰일_경우_처음에_2칸을_움직일_수_있다(Color color, int yChange) {
         //given
-        Piece piece = new Piece(PieceType.PAWN, color);
+        Piece piece = PieceFactory.getInstance(PieceType.PAWN, color);
         Piece empty = Piece.empty();
 
         //expect

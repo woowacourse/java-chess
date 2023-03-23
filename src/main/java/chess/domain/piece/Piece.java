@@ -5,17 +5,12 @@ import chess.domain.piece.state.MoveState;
 
 public class Piece {
 
-    private static final Piece empty = new Piece(PieceType.EMPTY, Color.NONE);
+    private static final Piece empty = PieceFactory.getInstance(PieceType.EMPTY, Color.NONE);
 
     private final Color color;
     private final MoveState moveState;
 
-    public Piece(PieceType pieceType, Color color) {
-        this.color = color;
-        moveState = pieceType.getState();
-    }
-
-    private Piece(Color color, MoveState moveState) {
+    Piece(Color color, MoveState moveState) {
         this.color = color;
         this.moveState = moveState;
     }
