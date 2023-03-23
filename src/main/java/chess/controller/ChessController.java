@@ -2,12 +2,15 @@ package chess.controller;
 
 import chess.domain.chessGame.ChessBoard;
 import chess.domain.chessGame.ChessBoardGenerator;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.request.CommandDto;
 import chess.dto.response.ChessBoardDto;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.Map;
 
 public final class ChessController {
 
@@ -32,7 +35,7 @@ public final class ChessController {
     private ChessBoard setUpChessBoard() {
         ChessBoardGenerator generator = new ChessBoardGenerator();
         ChessBoard chessBoard = new ChessBoard(generator.generate());
-        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
+        showChessBoardStatus(chessBoard);
         return chessBoard;
     }
 
@@ -41,6 +44,12 @@ public final class ChessController {
         String endInput = commandDto.getEndPosition();
 
         chessBoard.movePiece(Position.of(startInput), Position.of(endInput));
-        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getChessBoard()));
+        showChessBoardStatus(chessBoard);
+    }
+
+    private void showChessBoardStatus(ChessBoard chessBoard) {
+        Map<Position, Piece> chessBoardStatus = chessBoard.getChessBoard();
+        ChessBoardDto chessBoardDto = ChessBoardDto.of(BoardToString.convert(chessBoardStatus));
+        OutputView.printChessBoard(chessBoardDto);
     }
 }
