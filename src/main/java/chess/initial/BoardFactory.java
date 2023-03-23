@@ -47,11 +47,15 @@ public final class BoardFactory {
 		}
 	}
 
-	private static void fillFour(final Map<Position, Piece> board, final String point, final Piece white,
-		final Piece black) {
-		fillTwo(board, point, white, black);
-		board.put(Position.side(point), white);
-		board.put(Position.diagonal(point), black);
+	private static void addKnight(final Map<Position, Piece> board) {
+		List<Position> knightPosition = Knight.getInitialBlackPosition();
+		for (Position position : knightPosition) {
+			board.put(position, new Knight(BLACK, position));
+		}
+		knightPosition = Knight.getInitialWhitePosition();
+		for (Position position : knightPosition) {
+			board.put(position, new Knight(WHITE, position));
+		}
 	}
 
 	private static void fillTwo(final Map<Position, Piece> board, final String point, final Piece white,
