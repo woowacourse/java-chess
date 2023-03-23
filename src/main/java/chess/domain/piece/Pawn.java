@@ -73,7 +73,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move() {
+    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
         return new Pawn(this.getTeam(), moveCount + MOVE_COUNT_STEP);
     }
 }

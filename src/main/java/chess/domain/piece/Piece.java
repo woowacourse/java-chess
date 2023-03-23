@@ -17,19 +17,24 @@ public abstract class Piece {
 
     public abstract boolean isEmpty();
 
-    public abstract Piece move();
+    public abstract Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam);
 
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
 
-    public void validateCanMove(Position sourcePosition, Position targetPosition, Team team) {
+    protected void validate(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validateCanMove(sourcePosition, targetPosition, targetTeam);
+        validateTeam(nowPlayingTeam);
+    }
+
+    private void validateCanMove(Position sourcePosition, Position targetPosition, Team team) {
         if (!canMove(sourcePosition, targetPosition, team)) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
     }
 
-    public void validateTeam(Team team) {
+    private void validateTeam(Team team) {
         if (!isSameTeam(team)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVE_MESSAGE);
         }

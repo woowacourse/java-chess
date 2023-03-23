@@ -22,7 +22,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Piece move() {
+    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
         return new Queen(getTeam());
     }
 }

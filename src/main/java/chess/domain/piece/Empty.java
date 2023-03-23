@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 public class Empty extends Piece {
 
-    private static final String INVALID_PIECE_MESSAGE = "움직일 수 없습니다.";
+    private static final String INVALID_PIECE_MESSAGE = "빈칸은 움직일 수 없습니다.";
 
     private Empty(Team team) {
         super(team);
@@ -25,7 +25,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Piece move() {
+    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
         throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
     }
 }

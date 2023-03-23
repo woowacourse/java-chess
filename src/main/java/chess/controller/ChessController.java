@@ -60,6 +60,9 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return readCommand();
+        } catch (UnsupportedOperationException e) {
+            outputView.printError(e.getMessage());
+            return readCommand();
         }
     }
 
