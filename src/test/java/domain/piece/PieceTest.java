@@ -1,9 +1,7 @@
-package domain.square;
+package domain.piece;
 
-import domain.piece.Color;
-import domain.piece.Piece;
-import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
+import domain.piece.move.Situation;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.sliding.Bishop;
 import org.junit.jupiter.api.DisplayName;

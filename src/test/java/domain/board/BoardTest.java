@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.move.Coordinate;
+import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.WhitePawn;
@@ -12,6 +13,7 @@ import domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
@@ -214,5 +216,37 @@ class BoardTest {
         Board board = new Board(mockSquareLocations);
 
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(pawnCount * 0.5);
+    }
+
+    @Test
+    @DisplayName("킹이 두 개 있는지를 판단할 수 있다")
+    void judgeKingAlive() {
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
+        mockSquareLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
+        mockSquareLocations.put(new Coordinate(1, 1), new King(Color.BLACK));
+
+        Board board = new Board(mockSquareLocations);
+
+        assertThat(board.allKingAlive()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 두개가 아니라면 판단할 수 있다")
+    void judgeKingDead() {
+        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
+        mockSquareLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
+
+        Board board = new Board(mockSquareLocations);
+
+        assertThat(board.allKingAlive()).isFalse();
+    }
+
+    @ParameterizedTest(name = "({0}, {1})에 기물은 존재하지 않는다")
+    @CsvSource(value =  {"2:0", "5:0", "2:7", "5:7"}, delimiter = ':')
+    void isEmptySquare(int row, int col) {
+        Board board = new Board();
+        Coordinate coordinate = new Coordinate(row, col);
+
+        assertThat(board.isSquareEmptyAt(coordinate)).isTrue();
     }
 }
