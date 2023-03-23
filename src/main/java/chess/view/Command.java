@@ -7,7 +7,7 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
-    FORCE_QUIT("exit");
+    EXIT("exit");
 
     private static final String WRONG_COMMAND_ERROR_MESSAGE = "잘못된 커맨드 입니다.";
 
