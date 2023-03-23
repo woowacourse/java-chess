@@ -25,7 +25,7 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(final Camp camp) {
-        return this.camp == camp;
+        return this.camp.isSameCamp(camp);
     }
 
     public boolean isNotPassable() {
