@@ -20,19 +20,18 @@ import chess.domain.position.Rank;
 
 public final class BoardFactory {
 
-	private static final String A1 = "a1";
-	private static final String B1 = "b1";
-	private static final String C1 = "c1";
-	private static final String D1 = "d1";
-	private static final String E1 = "e1";
-
 	private BoardFactory() {
 	}
 
 	public static Map<Position, Piece> create() {
 		Map<Position, Piece> board = new HashMap<>();
-		fillPieces(board);
-		fillEmpty(board);
+		addRook(board);
+		addBishop(board);
+		addKnight(board);
+		addQueen(board);
+		addKing(board);
+		addPawn(board);
+		addEmpty(board);
 		return board;
 	}
 
