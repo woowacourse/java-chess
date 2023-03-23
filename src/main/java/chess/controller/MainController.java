@@ -1,60 +1,55 @@
 package chess.controller;
 
-import static chess.view.Command.END;
-import static chess.view.Command.START;
-
-import chess.domain.ChessGame;
+import chess.ChessGame;
 import chess.domain.Position;
+import chess.domain.board.Board;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.pieces.component.Name;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
 
-    private final ChessGame chessGame;
-
-    public MainController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
+    private final ChessGame chessGame = new ChessGame();
 
     public void run() {
         OutputView.printGameStart();
-
-        Command firstCommand = InputView.readCommand();
-
-        if (firstCommand == START) {
-            OutputView.printBoard(chessGame.getBoard());
-
-            playChess();
-        }
-
-        OutputView.printFinishMessage();
-    }
-
-    private void playChess() {
-        while (true) {
-            List<String> input = InputView.readPositions();
-
-            if (Command.of(input.get(0)) == END) {
-                break;
-            }
-
-            Position current = toPosition(input.get(1));
-            Position target = toPosition(input.get(2));
-
-            chessGame.movePiece(current, target);
-            OutputView.printBoard(chessGame.getBoard());
+        while (!chessGame.isEnd()){
+            changeState();
+            printBoard();
         }
     }
 
-    private Position toPosition(final String input) {
-        char first = input.charAt(0);
-        int col = Math.abs(first - 97);
+    private void changeState() {
+        try {
+            Command command = new Command(InputView.readCommand());
+            chessGame.setState(command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            changeState();
+        }
+    }
 
-        char second = input.charAt(1);
-        int row = Math.abs(Character.getNumericValue(second) - 8);
 
-        return new Position(row, col);
+    private void printBoard() {
+        List<List<Name>> pieceNames = new ArrayList<>();
+        for (int rank = 8; rank > 0; rank--) {
+            pieceNames.add(addName(chessGame.getBoard(), rank));
+        }
+        OutputView.printBoard(pieceNames);
+    }
+
+    private List<Name> addName(Board board, int rank) {
+        List<Name> pieceNames = new ArrayList<>();
+        for (int file = 0; file < 8; file++) {
+            Name name = board.getBoard().get(new Position(Rank.of(rank), File.ofByFile(file))).getName();
+            pieceNames.add(name);
+        }
+        return List.copyOf(pieceNames);
     }
 }
