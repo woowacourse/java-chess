@@ -80,6 +80,17 @@ public final class BoardFactory {
 		}
 	}
 
+	private static void addKing(final Map<Position, Piece> board) {
+		List<Position> kingPosition = King.getInitialBlackPosition();
+		for (Position position : kingPosition) {
+			board.put(position, new King(BLACK, position));
+		}
+		kingPosition = King.getInitialWhitePosition();
+		for (Position position : kingPosition) {
+			board.put(position, new King(WHITE, position));
+		}
+	}
+
 	private static void addEmpty(final Map<Position, Piece> board) {
 		for (Rank rank : Rank.getRanks()) {
 			findEmpty(board, rank);
