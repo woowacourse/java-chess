@@ -204,8 +204,8 @@ class ChessBoardTest {
     void existKingByColor_시_색깔에_해당하는_왕이_살아있는_경우_true() {
         // given
         final ChessBoard chessBoard = ChessBoard.from(List.of(
-                new Piece(of("d1"), new KingMovementStrategy(BLACK)),
-                new Piece(of("d7"), new KingMovementStrategy(WHITE))
+                new Piece(BLACK, PiecePosition.of("d1"), new KingMovementStrategy()),
+                new Piece(WHITE, PiecePosition.of("d7"), new KingMovementStrategy())
         ));
 
         // when & then
@@ -219,7 +219,7 @@ class ChessBoardTest {
     void existKingByColor_시_색깔에_해당하는_왕이_없는_경우_false() {
         // given
         final ChessBoard chessBoard = ChessBoard.from(List.of(
-                new Piece(of("d1"), new KingMovementStrategy(BLACK))
+                new Piece(BLACK, PiecePosition.of("d1"), new KingMovementStrategy())
         ));
 
         // when & then
@@ -258,23 +258,23 @@ class ChessBoardTest {
     void sameFilePawnScore() {
         // given
         ChessBoard chessBoard = ChessBoard.from(List.of(
-                new Piece(PiecePosition.of("b8"), new KingMovementStrategy(BLACK)),
-                new Piece(PiecePosition.of("c8"), new RookMovementStrategy(BLACK)),
-                new Piece(PiecePosition.of("a7"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
-                new Piece(PiecePosition.of("c7"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
-                new Piece(PiecePosition.of("d7"), new BishopMovementStrategy(BLACK)),
-                new Piece(PiecePosition.of("b6"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
-                new Piece(PiecePosition.of("e6"), new QueenMovementStrategy(BLACK)),
-                new Piece(PiecePosition.of("f5"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
-                new Piece(PiecePosition.of("f6"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
-                new Piece(PiecePosition.of("f4"), new KnightMovementStrategy(WHITE)),
-                new Piece(PiecePosition.of("g4"), new QueenMovementStrategy(WHITE)),
-                new Piece(PiecePosition.of("c3"), new BlackPawnMovementStrategy(BLACK, Rank.from(7))),
-                new Piece(PiecePosition.of("f3"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
-                new Piece(PiecePosition.of("f2"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
-                new Piece(PiecePosition.of("g2"), new WhitePawnMovementStrategy(WHITE, Rank.from(2))),
-                new Piece(PiecePosition.of("e1"), new RookMovementStrategy(WHITE)),
-                new Piece(PiecePosition.of("f1"), new KingMovementStrategy(WHITE))
+                new Piece(BLACK, PiecePosition.of("b8"), new KingMovementStrategy()),
+                new Piece(BLACK, PiecePosition.of("c8"), new RookMovementStrategy()),
+                new Piece(BLACK, PiecePosition.of("a7"), new BlackPawnMovementStrategy(Rank.from(7))),
+                new Piece(BLACK, PiecePosition.of("c7"), new BlackPawnMovementStrategy(Rank.from(7))),
+                new Piece(BLACK, PiecePosition.of("d7"), new BishopMovementStrategy()),
+                new Piece(BLACK, PiecePosition.of("b6"), new BlackPawnMovementStrategy(Rank.from(7))),
+                new Piece(BLACK, PiecePosition.of("e6"), new QueenMovementStrategy()),
+                new Piece(WHITE, PiecePosition.of("f5"), new WhitePawnMovementStrategy(Rank.from(2))),
+                new Piece(WHITE, PiecePosition.of("f6"), new WhitePawnMovementStrategy(Rank.from(2))),
+                new Piece(WHITE, PiecePosition.of("f4"), new KnightMovementStrategy()),
+                new Piece(WHITE, PiecePosition.of("g4"), new QueenMovementStrategy()),
+                new Piece(BLACK, PiecePosition.of("c3"), new BlackPawnMovementStrategy(Rank.from(7))),
+                new Piece(WHITE, PiecePosition.of("f3"), new WhitePawnMovementStrategy(Rank.from(2))),
+                new Piece(WHITE, PiecePosition.of("f2"), new WhitePawnMovementStrategy(Rank.from(2))),
+                new Piece(WHITE, PiecePosition.of("g2"), new WhitePawnMovementStrategy(Rank.from(2))),
+                new Piece(WHITE, PiecePosition.of("e1"), new RookMovementStrategy()),
+                new Piece(WHITE, PiecePosition.of("f1"), new KingMovementStrategy())
         ));
 
         // when

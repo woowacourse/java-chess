@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy.pawn;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
 
@@ -8,12 +7,12 @@ public class WhitePawnMovementStrategy extends PawnMovementStrategy {
 
     private static final Rank DEFAULT_PERMIT_TWO_RANK = Rank.from(2);
 
-    public WhitePawnMovementStrategy(final Color color) {
-        super(color, DEFAULT_PERMIT_TWO_RANK);
+    public WhitePawnMovementStrategy() {
+        super(DEFAULT_PERMIT_TWO_RANK);
     }
 
-    public WhitePawnMovementStrategy(final Color color, final Rank permitTwoMoveRank) {
-        super(color, permitTwoMoveRank);
+    public WhitePawnMovementStrategy(final Rank permitTwoMoveRank) {
+        super(permitTwoMoveRank);
     }
 
     @Override

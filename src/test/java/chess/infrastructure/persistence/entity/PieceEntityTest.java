@@ -22,7 +22,7 @@ class PieceEntityTest {
     @Test
     void Piece_로부터_생성될_수_있다() {
         // given
-        final Piece piece = new Piece(PiecePosition.of("d2"), new KingMovementStrategy(Color.WHITE));
+        final Piece piece = new Piece(Color.WHITE, PiecePosition.of("d2"), new KingMovementStrategy());
 
         // when
         final PieceEntity pieceEntity = PieceMapper.fromDomain(piece, 2L);

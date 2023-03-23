@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -21,8 +20,6 @@ public interface PieceMovementStrategy {
     void validateMove(final PiecePosition source,
                       final PiecePosition destination,
                       final Piece nullableEnemy);
-
-    Color color();
 
     double judgeValue();
 

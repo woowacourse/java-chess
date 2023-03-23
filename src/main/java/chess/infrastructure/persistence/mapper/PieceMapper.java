@@ -27,31 +27,31 @@ public class PieceMapper {
         try {
             contractorMap.put(
                     KingMovementStrategy.class.getSimpleName(),
-                    KingMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    KingMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     QueenMovementStrategy.class.getSimpleName(),
-                    QueenMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    QueenMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     BishopMovementStrategy.class.getSimpleName(),
-                    BishopMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    BishopMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     KnightMovementStrategy.class.getSimpleName(),
-                    KnightMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    KnightMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     RookMovementStrategy.class.getSimpleName(),
-                    RookMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    RookMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     BlackPawnMovementStrategy.class.getSimpleName(),
-                    BlackPawnMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    BlackPawnMovementStrategy.class.getDeclaredConstructor()
             );
             contractorMap.put(
                     WhitePawnMovementStrategy.class.getSimpleName(),
-                    WhitePawnMovementStrategy.class.getDeclaredConstructor(Color.class)
+                    WhitePawnMovementStrategy.class.getDeclaredConstructor()
             );
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -70,14 +70,15 @@ public class PieceMapper {
 
     public static Piece toDomain(final PieceEntity pieceEntity) {
         final Color color = Color.valueOf(pieceEntity.color());
-        return new Piece(PiecePosition.of(
-                Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
-                makeStrategy(pieceEntity, color));
+        return new Piece(color,
+                PiecePosition.of(
+                        Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
+                makeStrategy(pieceEntity));
     }
 
-    private static PieceMovementStrategy makeStrategy(final PieceEntity pieceEntity, final Color color) {
+    private static PieceMovementStrategy makeStrategy(final PieceEntity pieceEntity) {
         try {
-            return contractorMap.get(pieceEntity.movementType()).newInstance(color);
+            return contractorMap.get(pieceEntity.movementType()).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("피스 생성 중 문제 발생", e);
         }

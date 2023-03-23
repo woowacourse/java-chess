@@ -1,16 +1,11 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 public class KingMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double KING_VALUE = 0;
-
-    public KingMovementStrategy(final Color color) {
-        super(color);
-    }
 
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,

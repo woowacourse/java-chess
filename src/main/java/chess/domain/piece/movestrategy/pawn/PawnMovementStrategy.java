@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy.pawn;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movestrategy.AbstractPieceMovementStrategy;
 import chess.domain.piece.position.File;
@@ -13,8 +12,7 @@ public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy
 
     private final PiecePosition permitTwoMoveRankPosition;
 
-    protected PawnMovementStrategy(final Color color, final Rank permitTwoMoveRank) {
-        super(color);
+    protected PawnMovementStrategy(final Rank permitTwoMoveRank) {
         this.permitTwoMoveRankPosition = PiecePosition.of(permitTwoMoveRank, File.from(File.MIN));
     }
 

@@ -2,9 +2,9 @@ package chess.domain.piece.movestrategy.pawn;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.movestrategy.RookMovementStrategy;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.movestrategy.RookMovementStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("PawnMovementStrategy 은")
 class PawnMovementStrategyTest {
 
-    private final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(4)) {
+    private final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(4)) {
         @Override
         protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
         }
     };
 
     public Piece piece(final Color color, final PiecePosition piecePosition) {
-        return new Piece(piecePosition, new PawnMovementStrategy(color, Rank.from(4)) {
+        return new Piece(color, piecePosition, new PawnMovementStrategy(Rank.from(4)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
             }
@@ -128,7 +128,7 @@ class PawnMovementStrategyTest {
         @Test
         void 두칸_이동할_수_있는_랭크라면_두_칸_이동_가능() {
             // given
-            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.BLACK, Rank.from(4)) {
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(4)) {
                 @Override
                 protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
                 }
@@ -143,7 +143,7 @@ class PawnMovementStrategyTest {
         @Test
         void 두칸_이동할_수_없는_랭크라면_두_칸_이동_불가() {
             // given
-            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.BLACK, Rank.from(4)) {
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(4)) {
                 @Override
                 protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
                 }
@@ -182,7 +182,7 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지키지_않았다면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(1)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
                 throw new IllegalArgumentException();
@@ -199,7 +199,7 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지켰다면_기본_이동에_대해서는_가능() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(1)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(1)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
             }
@@ -214,7 +214,7 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지켰더라도_기본_이동_수칙을_지키지_않으면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Color.WHITE, Rank.from(2)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(Rank.from(2)) {
             @Override
             protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
             }
@@ -228,23 +228,11 @@ class PawnMovementStrategyTest {
     }
 
     @Test
-    void 아군을_죽일_수_없다() {
-        // given
-        final PiecePosition source = PiecePosition.of("d2");
-        final PiecePosition dest = PiecePosition.of("c3");
-        final Piece ally = new Piece(dest, new RookMovementStrategy(Color.WHITE));
-
-        // when & then
-        assertThatThrownBy(() -> pawnMovement.validateMove(source, dest, ally))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     void 적군을_죽일_수_있다() {
         // given
         final PiecePosition source = PiecePosition.of("d2");
         final PiecePosition dest = PiecePosition.of("c3");
-        final Piece enemy = new Piece(dest, new RookMovementStrategy(Color.BLACK));
+        final Piece enemy = new Piece(Color.WHITE, dest, new RookMovementStrategy());
 
         // when & then
         assertDoesNotThrow(() -> pawnMovement.validateMove(source, dest, enemy));

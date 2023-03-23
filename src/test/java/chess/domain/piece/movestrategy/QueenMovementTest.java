@@ -29,9 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("QueenMovementStrategy 은")
 class QueenMovementTest {
 
-    private final Color myColor = Color.WHITE;
     private final Color enemyColor = Color.BLACK;
-    private final PieceMovementStrategy movement = new QueenMovementStrategy(myColor);
+    private final PieceMovementStrategy movement = new QueenMovementStrategy();
     private final PiecePosition source = PiecePosition.of("e4");
 
     @Nested
@@ -130,21 +129,10 @@ class QueenMovementTest {
     }
 
     @Test
-    void 아군을_죽일_수_없다() {
-        // given
-        final PiecePosition dest = PiecePosition.of("e6");
-        final Piece ally = new Piece(dest, new RookMovementStrategy(myColor));
-
-        // when & then
-        assertThatThrownBy(() -> movement.validateMove(source, dest, ally))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     void 적군을_죽일_수_있다() {
         // given
         final PiecePosition dest = PiecePosition.of("e6");
-        final Piece enemy = new Piece(dest, new RookMovementStrategy(enemyColor));
+        final Piece enemy = new Piece(enemyColor, dest, new RookMovementStrategy());
 
         // when & then
         assertDoesNotThrow(() -> movement.validateMove(source, dest, enemy));

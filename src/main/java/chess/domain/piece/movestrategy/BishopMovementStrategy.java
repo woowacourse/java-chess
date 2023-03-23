@@ -1,16 +1,11 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
 public class BishopMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double BISHOP_VALUE = 3;
-
-    public BishopMovementStrategy(final Color color) {
-        super(color);
-    }
 
     @Override
     protected void validateMoveWithNoAlly(final PiecePosition source,

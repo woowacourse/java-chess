@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -10,10 +9,6 @@ import java.util.List;
 public class KnightMovementStrategy extends AbstractPieceMovementStrategy {
 
     private static final double KNIGHT_VALUE = 2.5;
-
-    public KnightMovementStrategy(final Color color) {
-        super(color);
-    }
 
     @Override
     public List<PiecePosition> waypoints(final PiecePosition source,

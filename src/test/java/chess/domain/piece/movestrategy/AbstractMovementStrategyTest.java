@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +20,7 @@ class AbstractMovementStrategyTest {
     @Test
     void 올바른_경로가_아니면_예외가_발생한다() {
         // given
-        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
+        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy() {
 
             @Override
             public double judgeValue() {
@@ -43,7 +42,7 @@ class AbstractMovementStrategyTest {
     @Test
     void 올바른_경로라면_경유지를_반환한다() {
         // given
-        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(Color.BLACK) {
+        final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy() {
             @Override
             public double judgeValue() {
                 return 0;

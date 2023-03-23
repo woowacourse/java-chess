@@ -1,6 +1,5 @@
 package chess.domain.piece.movestrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.PiecePosition;
 
@@ -8,12 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPieceMovementStrategy implements PieceMovementStrategy {
-
-    protected final Color color;
-
-    protected AbstractPieceMovementStrategy(final Color color) {
-        this.color = color;
-    }
 
     @Override
     public List<PiecePosition> waypoints(final PiecePosition source,
@@ -39,25 +32,12 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
                              final PiecePosition destination,
                              final Piece nullableEnemy) {
         validateSourceAndDestinationSame(source, destination);
-        validateAllyKill(nullableEnemy);
         validateMoveWithNoAlly(source, destination, nullableEnemy);
     }
 
     protected void validateSourceAndDestinationSame(final PiecePosition source, final PiecePosition destination) {
         if (source.equals(destination)) {
             throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
-        }
-    }
-
-    /**
-     * @throws IllegalArgumentException 죽일 수 없는 경우
-     */
-    private void validateAllyKill(final Piece enemy) {
-        if (enemy == null) {
-            return;
-        }
-        if (enemy.color() == color) {
-            throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
     }
 
@@ -82,10 +62,5 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
 
     protected boolean isHorizontal(final PiecePosition source, final PiecePosition destination) {
         return source.rankInterval(destination) == 0;
-    }
-
-    @Override
-    public Color color() {
-        return this.color;
     }
 }

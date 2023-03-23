@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class WhitePawnMovementStrategyTest {
 
     public Piece piece(final Color color, final PiecePosition piecePosition) {
-        return new Piece(piecePosition, new BlackPawnMovementStrategy(color, Rank.from(7)));
+        return new Piece(color, piecePosition, new BlackPawnMovementStrategy(Rank.from(7)));
     }
 
     @Nested
     class 남쪽_이동_불가_테스트 {
 
-        private final PawnMovementStrategy pawnMovement = new WhitePawnMovementStrategy(Color.WHITE, Rank.from(4));
+        private final PawnMovementStrategy pawnMovement = new WhitePawnMovementStrategy(Rank.from(4));
 
         @Test
         void 직선_한_칸_이동_불가() {
