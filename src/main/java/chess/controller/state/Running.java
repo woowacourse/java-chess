@@ -1,9 +1,6 @@
 package chess.controller.state;
 
-import chess.controller.command.Command;
-import chess.controller.command.Commands;
-import chess.controller.command.EndCommand;
-import chess.controller.command.MoveCommand;
+import chess.controller.command.*;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -22,7 +19,7 @@ public abstract class Running implements State {
     protected final State inputCommand(InputView inputView, OutputView outputView) {
         List<String> input = inputView.inputCommand();
 
-        Commands commands = new Commands(List.of(new MoveCommand(), new EndCommand()));
+        Commands commands = new Commands(List.of(new MoveCommand(), new EndCommand(), new StatusCommand()));
 
         try {
             Command command = commands.findCommand(input.get(0));

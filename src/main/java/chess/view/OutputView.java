@@ -39,4 +39,9 @@ public final class OutputView {
     public void printResult(Color turn) {
         System.out.println(turn + "의 패배입니다.");
     }
+
+    public void printStatus(double calculateWhiteScore, double calculateBlackScore) {
+        System.out.println("흰색의 점수 : " + calculateWhiteScore);
+        System.out.println("흑색의 점수 : " + calculateBlackScore);
+    }
 }
