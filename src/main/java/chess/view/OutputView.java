@@ -1,6 +1,11 @@
 package chess.view;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
@@ -25,6 +30,13 @@ public class OutputView {
 
     public static void printCurrentTurn(String turnDisplayName) {
         printMessage("현재 " + turnDisplayName + "턴입니다.");
+    }
+
+    public static void printScoreBySide(ScoreBySideDto scoreBySideDto) {
+        Map<String, BigDecimal> scoreBySideForPrint = scoreBySideDto.getScoreBySideForPrint();
+        for (String sideName : scoreBySideForPrint.keySet()) {
+            printMessage(sideName + "Score : " + scoreBySideForPrint.get(sideName) + "점");
+        }
     }
 
     private static void printMessage(String message) {
