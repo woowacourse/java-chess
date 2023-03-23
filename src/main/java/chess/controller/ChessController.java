@@ -44,7 +44,6 @@ public class ChessController {
             Command command = this.parseCommand();
             Executor executor = this.executorMap.get(command.getType());
             executor.execute(command, chessGame);
-            
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
         }

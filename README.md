@@ -1,5 +1,61 @@
 # java-chess
 
+## 구조
+
+## 명령 인터페이스 구현 방식
+
+![command.png](command.png)
+
+### Command
+
+- getType: 명령의 타입을 반환
+
+### UpdateCommand
+
+- update: 명령을 실행
+
+### QueryCommand
+
+- query: 명령을 실행
+
+## 게임 인터페이스 구현 방식
+
+![game.png](game.png)
+
+### Game
+
+- isNotEnd: 게임이 끝났는지 확인
+
+### ActionHandler
+
+- start: 게임을 시작
+- end: 게임을 종료
+- move: 피스를 이동
+- status: 게임 상태를 출력
+
+### BoardProvider
+
+- getBoard: 보드를 반환
+
+## 보드 인터페이스 구현 방식
+
+![board.png](board.png)
+
+### Board
+
+- isKingDead : 왕이 죽었는지 확인
+
+### MoveHandler
+
+- checkRoute : 피스들의 이동 경로를 검증
+- checkColor: 선택 위치의 피스가 현재턴 색깔인지, 이동하려는 위치에 같은 색깔의 피스가 있는지 검증
+- move : 피스 이동
+
+### PieceProvider
+
+- getRankPieces : 랭크에 해당하는 피스들을 반환
+- getFilePieces : 파일에 해당하는 피스들을 반환
+
 # 미션 3&4 기능 목록
 
 ### 보드
