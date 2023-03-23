@@ -26,6 +26,14 @@ public final class ChessGame {
         return board.isKingDead(turn);
     }
 
+    public double calculateWhiteScore() {
+        return board.calculateWhiteScore();
+    }
+
+    public double calculateBlackScore() {
+        return board.calculateBlackScore();
+    }
+
     private Color changeTurn() {
         if (turn.isBlack()) {
             return Color.WHITE;
