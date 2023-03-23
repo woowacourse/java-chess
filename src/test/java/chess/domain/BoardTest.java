@@ -288,4 +288,39 @@ class BoardTest {
         assertThat(board.isChecked(Team.BLACK))
                 .isTrue();
     }
+
+    @Test
+    @DisplayName("킹이 적의 이동 범위에 있으면 체크여야 한다.")
+    void isCheck_True() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(3, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(3, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 7), Pawn.of(Team.BLACK));
+        squares.put(Position.of(5, 6), Pawn.of(Team.BLACK));
+        squares.put(Position.of(4, 7), King.of(Team.BLACK));
+        squares.put(Position.of(4, 0), Queen.of(Team.WHITE));
+        Board board = new Board(squares);
+
+        // expect
+        assertThat(board.isChecked(Team.BLACK))
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("킹의 위치로 이동하려고 하면 예외가 발생해야 한다.")
+    void move_King_Position() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Position kingPosition = Position.of(4, 7);
+        Position queenPosition = Position.of(4, 0);
+        squares.put(kingPosition, King.of(Team.BLACK));
+        squares.put(queenPosition, Queen.of(Team.WHITE));
+        Board board = new Board(squares);
+
+        // expect
+        assertThatThrownBy(() -> board.move(queenPosition, kingPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 킹을 직접 공격할 수 없습니다.");
+    }
 }
