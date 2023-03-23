@@ -42,7 +42,7 @@ public class ChessGame {
     }
 
     public GameScoreDto getCurrentScore() {
-        GameResult gameResult = new GameResult(chessBoard.getPiecesCollectedByFile());
+        GameResult gameResult = chessBoard.getGameResult();
         return GameScoreDto.of(gameResult.calculateScoreOfTeam(TeamColor.WHITE),
             gameResult.calculateScoreOfTeam(TeamColor.BLACK));
     }

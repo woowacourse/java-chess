@@ -3,13 +3,9 @@ package chess.domain;
 import chess.domain.path.MovablePaths;
 import chess.domain.path.Path;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ChessBoard {
 
@@ -110,19 +106,8 @@ public class ChessBoard {
             .count() != TOTAL_KING_COUNT;
     }
 
-    public Set<Pieces> getPiecesCollectedByFile() {
-        return IntStream.rangeClosed(Position.MINIMUM, Position.MAXIMUM)
-            .mapToObj(number -> Position.of(number, number))
-            .map(this::findPiecesInSameFile)
-            .collect(Collectors.toSet());
-    }
-
-    private Pieces findPiecesInSameFile(final Position target) {
-        return new Pieces(piecesByPosition.keySet()
-            .stream()
-            .filter(position -> position.isInSameFile(target))
-            .map(piecesByPosition::get)
-            .collect(Collectors.toList()));
+    public GameResult getGameResult() {
+        return GameResult.from(piecesByPosition);
     }
 
 }

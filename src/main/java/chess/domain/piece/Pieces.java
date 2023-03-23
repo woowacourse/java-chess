@@ -37,8 +37,4 @@ public class Pieces {
         return 0;
     }
 
-    public int size() {
-        return pieces.size();
-    }
-
 }

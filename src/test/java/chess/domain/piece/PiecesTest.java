@@ -2,28 +2,14 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.ChessBoard;
 import chess.domain.InitialPiece;
 import chess.domain.TeamColor;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class PiecesTest {
-
-    @DisplayName("초기 ChessBoard 에서는 한 file 에 4개의 체스말이 들어있다.")
-    @Test
-    void 초기_체스판_한_열_확인() {
-        ChessBoard chessBoard = new ChessBoard(InitialPiece.getPiecesWithPosition());
-
-        Set<Pieces> piecesCollectedByFile = chessBoard.getPiecesCollectedByFile();
-
-        for (Pieces pieces : piecesCollectedByFile) {
-            assertThat(pieces.size()).isEqualTo(4);
-        }
-    }
 
     @DisplayName("한 줄에 같은 색의 폰이 2개 이상이라면 각각 0.5점으로 계산한다.")
     @Test
