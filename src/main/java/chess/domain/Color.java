@@ -13,12 +13,4 @@ public enum Color {
                 .orElseThrow(() -> new IllegalArgumentException("색상을 확인해 주세요."));
     }
 
-    public boolean isWhite() {
-        return this == WHITE;
-    }
-
-    public boolean isBlack() {
-        return this == BLACK;
-    }
-
 }
