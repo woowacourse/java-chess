@@ -7,7 +7,7 @@ public class Empty extends Piece {
     private static final String INVALID_PIECE_MESSAGE = "움직일 수 없습니다.";
 
     private Empty(Color color) {
-        super(color);
+        super(color, RoleType.EMPTY);
     }
 
     public static Empty create() {

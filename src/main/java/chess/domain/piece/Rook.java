@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 public class Rook extends Piece {
 
     public Rook(Color color) {
-        super(color);
+        super(color, RoleType.ROOK);
     }
 
     @Override

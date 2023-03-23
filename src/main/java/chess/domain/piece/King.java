@@ -7,7 +7,7 @@ public class King extends Piece {
     private static final int MAX_DISTANCE = 1;
 
     public King(Color color) {
-        super(color);
+        super(color, RoleType.KING);
     }
 
     @Override

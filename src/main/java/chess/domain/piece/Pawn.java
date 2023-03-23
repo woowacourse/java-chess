@@ -13,15 +13,9 @@ public class Pawn extends Piece {
     public static final RankCoordinate WHITE_PAWN_INIT_RANK = RankCoordinate.TWO;
     public static final RankCoordinate BLACK_PAWN_INIT_RANK = RankCoordinate.SEVEN;
 
-    private int moveCount;
 
     public Pawn(Color color) {
-        super(color);
-    }
-
-    public Pawn(Color color, int moveCount) {
-        super(color);
-        this.moveCount = moveCount;
+        super(color, RoleType.PAWN);
     }
 
     @Override

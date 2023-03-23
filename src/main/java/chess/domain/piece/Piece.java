@@ -7,9 +7,11 @@ public abstract class Piece {
     private static final int STRAIGHT_GAP = 0;
 
     private final Color color;
+    private final RoleType roleType;
 
-    protected Piece(Color color) {
+    protected Piece(Color color, RoleType roleType) {
         this.color = color;
+        this.roleType = roleType;
     }
 
     protected abstract boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor);
