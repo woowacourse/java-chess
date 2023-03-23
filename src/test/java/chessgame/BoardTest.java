@@ -150,11 +150,11 @@ class BoardTest {
     @Nested
     @DisplayName("score를 계산한다.")
     class calculatePawnTest {
-        Board board = new Board(ChessBoardFactory.create());
 
         @Test
         @DisplayName("처음score를 계산한다.")
         void Should_CalculateScore_When_ConstructBoard() {
+            Board board = new Board(ChessBoardFactory.create());
 
             assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38.0);
             assertThat(board.calculateScore(Team.WHITE)).isEqualTo(38.0);
@@ -162,10 +162,44 @@ class BoardTest {
 
         @Test
         @DisplayName("Black팀의 Pawn 하나가 제거된 후 계산한다.")
-        void Should_CalculateScore_When_RemovePawn() {
+        void Should_CalculateScore_When_RemoveBlackPawn() {
+            Board board = new Board(ChessBoardFactory.create());
+
             board.move(A2, A4, Team.WHITE);
             board.move(B7, B5, Team.BLACK);
             board.move(A4, B5, Team.WHITE);
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
+        }
+
+        @Test
+        @DisplayName("Black팀의 Pawn 두개, 룩이 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemoveBlack2Pawn1Rook() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B5, Team.BLACK);
+            board.move(A4, B5, Team.WHITE);
+            board.move(A7, A5, Team.BLACK);
+            board.move(A1, A5, Team.WHITE);
+            board.move(H7, H6, Team.BLACK);
+            board.move(A5, A8, Team.WHITE);
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(31);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
+        }
+
+        @Test
+        @DisplayName("White팀의 Pawn 하나가 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemoveWhitePawn() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B6, Team.BLACK);
+            board.move(A4, A5, Team.WHITE);
+            board.move(B6, A5, Team.BLACK);
+
 
             assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
             assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);

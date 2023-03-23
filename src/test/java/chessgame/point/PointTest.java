@@ -64,7 +64,6 @@ class PointTest {
 
     @Test
     @DisplayName("처음시작 위치를 비교한다.")
-
     void isInitialPoint() {
         Point source = A1;
 
@@ -73,8 +72,7 @@ class PointTest {
 
     @Test
     @DisplayName("기물이 특정 File 에서 수직인지 확인한다.")
-
-    void isVerticalFile(){
+    void isVerticalFile() {
         Point source = A1;
 
         Assertions.assertThat(source.isVerticalFile(File.A)).isTrue();
