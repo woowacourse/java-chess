@@ -49,7 +49,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isMovableForWhite(Piece targetPiece, Movement movement, Position sourcePosition) {
-        if (targetPiece.side != Side.NEUTRAL) {
+        if (!targetPiece.isEmptyPiece()) {
             return isPossibleToAttackForWhite(targetPiece, movement);
         }
         if (isFirstMovement(sourcePosition)) {
@@ -59,7 +59,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isMovableForBlack(Piece targetPiece, Movement movement, Position sourcePosition) {
-        if (targetPiece.side != Side.NEUTRAL) {
+        if (!targetPiece.isEmptyPiece()) {
             return isPossibleToAttackForBlack(targetPiece, movement);
         }
         if (isFirstMovement(sourcePosition)) {
