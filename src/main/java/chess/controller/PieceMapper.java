@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.EnumMap;
 
-public class PieceMapper {
+public final class PieceMapper {
     
     private static final EnumMap<PieceType, String> pieceMap = new EnumMap<>(PieceType.class);
     
@@ -16,6 +16,9 @@ public class PieceMapper {
         pieceMap.put(PieceType.QUEEN, "q");
         pieceMap.put(PieceType.KING, "k");
         pieceMap.put(PieceType.EMPTY, ".");
+    }
+    
+    private PieceMapper() {
     }
     
     public static String map(Piece piece) {

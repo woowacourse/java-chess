@@ -6,7 +6,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class BoardMapper {
+public final class BoardMapper {
+    
+    private BoardMapper() {
+    }
     
     public static String map(Board board) {
         return Arrays.stream(Rank.values())

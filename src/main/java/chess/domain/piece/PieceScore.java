@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class PieceScore {
+public final class PieceScore {
     
     private static final Map<PieceType, Score> PIECE_SCORE_MAP = new EnumMap<>(PieceType.class);
     
@@ -14,6 +14,9 @@ public class PieceScore {
         PIECE_SCORE_MAP.put(PieceType.ROOK, Score.from(5));
         PIECE_SCORE_MAP.put(PieceType.QUEEN, Score.from(9));
         PIECE_SCORE_MAP.put(PieceType.KING, Score.from(0));
+    }
+    
+    private PieceScore() {
     }
     
     public static Score getScore(PieceType pieceType) {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PositionFactory {
+public final class PositionFactory {
     
     public static final String POSITION_NOT_IN_BOARD_ERROR_MESSAGE = "[POSITION ERROR] 보드에 존재하지 않는 좌표입니다.";
     private static final Map<String, Position> POSITION_MAP = new TreeMap<>();
@@ -16,6 +16,9 @@ public class PositionFactory {
                 POSITION_MAP.put(file.getLabel() + rank.getLabel(), Position.from(file, rank));
             }
         }
+    }
+    
+    private PositionFactory() {
     }
     
     public static Position from(String position) {

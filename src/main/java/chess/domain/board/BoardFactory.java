@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
 
-class BoardFactory {
+final class BoardFactory {
     
     private static final List<Piece> WHITE_GENERALS = PieceFactory.createWhiteGenerals();
     private static final List<Piece> WHITE_PAWNS = PieceFactory.createWhitePawns();
@@ -29,6 +29,9 @@ class BoardFactory {
         INITIAL_BOARD_MAP.put(Rank.SIX, position -> PieceFactory.createEmptyPiece());
         INITIAL_BOARD_MAP.put(Rank.SEVEN, position -> BLACK_PAWNS.get(position.getFileIndex()));
         INITIAL_BOARD_MAP.put(Rank.EIGHT, position -> BLACK_GENERALS.get(position.getFileIndex()));
+    }
+    
+    private BoardFactory() {
     }
     
     public static Map<Position, Piece> create() {
