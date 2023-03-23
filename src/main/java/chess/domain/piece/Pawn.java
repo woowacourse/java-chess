@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.piece.move.InvalidMove;
 import chess.domain.piece.move.PawnCatchMove;
 import chess.domain.piece.move.PawnForwardMove;
 import chess.domain.piece.move.PieceMove;
+import chess.domain.position.Position;
+import java.util.Objects;
 
 public final class Pawn extends Piece {
 
@@ -47,6 +48,11 @@ public final class Pawn extends Piece {
         return isForwardMove(rankGap);
     }
 
+    @Override
+    public double appendScore(double source, boolean isSamePieceInSameFile) {
+        return 0;
+    }
+
     private boolean isDiagonalMove(int rankGap, int fileGap) {
         return (isBlack() && rankGap == -1 && Math.abs(fileGap) == 1)
                 || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
@@ -60,5 +66,25 @@ public final class Pawn extends Piece {
 
         return (isBlack() && rankGap == -2 && !this.isMoved)
                 || (!isBlack() && rankGap == 2 && !this.isMoved);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Pawn pawn = (Pawn) o;
+        return isMoved == pawn.isMoved;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMoved);
     }
 }

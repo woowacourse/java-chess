@@ -24,4 +24,15 @@ class KnightTest {
 
         assertThat(result).isInstanceOf(PassingMove.class);
     }
+
+    @Test
+    @DisplayName("나이트는 기물 위치와 관계없이 2.5점을 추가한다.")
+    void bishopScoreTest() {
+        Piece knight = new Knight(Camp.WHITE);
+        double sourceScore = 0;
+
+        double appendScore = knight.appendScore(sourceScore, true);
+
+        assertThat(appendScore).isEqualTo(2.5d);
+    }
 }

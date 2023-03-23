@@ -37,4 +37,15 @@ class QueenTest {
 
         assertThat(result).isInstanceOf(BlockingMove.class);
     }
+
+    @Test
+    @DisplayName("퀸은 기물 위치와 관계없이 9점을 추가한다.")
+    void bishopScoreTest() {
+        Piece queen = new Queen(Camp.WHITE);
+        double sourceScore = 0;
+
+        double appendScore = queen.appendScore(sourceScore, true);
+
+        assertThat(appendScore).isEqualTo(9d);
+    }
 }

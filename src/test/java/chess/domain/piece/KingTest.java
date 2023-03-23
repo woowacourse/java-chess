@@ -70,4 +70,15 @@ class KingTest {
 
         assertThat(result).isInstanceOf(InvalidMove.class);
     }
+
+    @Test
+    @DisplayName("킹은 기물 위치와 관계없이 0점을 추가한다.")
+    void bishopScoreTest() {
+        Piece king = new King(Camp.WHITE);
+        double sourceScore = 0;
+
+        double appendScore = king.appendScore(sourceScore, true);
+
+        assertThat(appendScore).isEqualTo(0d);
+    }
 }

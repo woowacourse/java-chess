@@ -7,6 +7,8 @@ import chess.domain.piece.move.PieceMove;
 
 public final class Rook extends Piece {
 
+    private static final double ROOK_SCORE = 5;
+
     public Rook(Camp camp) {
         super(camp);
     }
@@ -27,5 +29,10 @@ public final class Rook extends Piece {
 
         return rankGap == 0
                 || fileGap == 0;
+    }
+
+    @Override
+    public double appendScore(double source, boolean isSamePieceInSameFile) {
+        return ROOK_SCORE;
     }
 }
