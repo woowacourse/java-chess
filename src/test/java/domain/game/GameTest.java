@@ -23,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Game은")
 class GameTest {
     private Map<Position, Piece> chessBoard;
     private Game game;
@@ -48,7 +49,7 @@ class GameTest {
         );
     }
 
-    @DisplayName("상대편 말을 잡는 경우, target position이 source piece로 대체된다.")
+    @DisplayName("상대편 말을 잡는 이동을 실행하는 경우, target position이 source piece로 대체된다.")
     @Test
     void shouldKillWhenMoveToOpponentPiece() {
         Piece sourcePiece = chessBoard.get(Position.of(B, TWO));
@@ -109,7 +110,7 @@ class GameTest {
                 .hasMessage("경로에 다른 말이 있습니다.");
     }
 
-    @DisplayName("knight는 이동 경로에 말이 있어도 뛰어넘어서 target position으로 이동할 수 있다.")
+    @DisplayName("knight의 이동 경로에 말이 있어도 뛰어넘어서 target position으로 이동시킨다.")
     @Test
     void shouldMoveWhenExistPieceInPathOfKnightMovement() {
         Piece sourcePieceOfWhiteKnight = chessBoard.get(Position.of(B, ONE));
@@ -125,7 +126,7 @@ class GameTest {
                 .hasMessage("다른 진영의 말은 움직일 수 없습니다.");
     }
 
-    @DisplayName("Source position에 말이 없으면 예외가 발생한다.")
+    @DisplayName("움직일 때 Source position에 말이 없으면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenSourcePositionisEmpty() {
         assertThatThrownBy(() -> game.move(Position.of(C, THREE), Position.of(C, FOUR)))
@@ -133,7 +134,7 @@ class GameTest {
                 .hasMessage("source위치에 말이 없습니다.");
     }
 
-    @DisplayName("Pawn에 알맞은 움직임이 아니면 예외가 발생한다.")
+    @DisplayName("Pawn을 움직일 때, 알맞은 움직임이 아니면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenPawnMoveWrong() {
         assertThatThrownBy(() -> game.move(Position.of(B, TWO), Position.of(B, FIVE)))

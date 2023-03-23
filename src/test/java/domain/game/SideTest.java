@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Side는")
 class SideTest {
 
     @DisplayName("BLACK에게 WHITE와 상대 진영인지 물으면 true를 반환한다.")

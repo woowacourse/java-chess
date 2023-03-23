@@ -10,6 +10,7 @@ import domain.game.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("EmptyPiece는")
 class EmptyPieceTest {
 
     @DisplayName("움직일 수 있는지 확인하면 예외가 발생한다.")

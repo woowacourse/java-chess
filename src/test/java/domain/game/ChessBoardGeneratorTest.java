@@ -22,26 +22,20 @@ import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("ChessBoardGenerator는")
 class ChessBoardGeneratorTest {
-    private static Map<Position, Piece> chessBoard;
+    private static Map<Position, Piece> chessBoard = new ChessBoardGenerator().generate();
 
-    @BeforeAll
-    static void generateChessBoard() {
-        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        chessBoard = chessBoardGenerator.generate();
-    }
-
-    @DisplayName("64개의 칸이 생성되었는지 확인한다.")
+    @DisplayName("체스판 생성 후 64개의 칸을 보유한다.")
     @Test
     void shouldReturnTrueWhenCreateChessBoardOf64Position() {
         assertThat(chessBoard).hasSize(64);
     }
 
-    @DisplayName("White 진영의 폰을 제외한 말들이 알맞은 자리에 생성됐는지 확인한다.")
+    @DisplayName("White 진영의 폰을 제외한 말들을 알맞은 자리에 생성한다.")
     @Test
     void shouldWhitePiecesExcludePawnAreOnCorrectlyPositionWhenGenerateChessBoard() {
         assertThat(chessBoard.get(Position.of(A, ONE))).isInstanceOf(Rook.class);
@@ -54,7 +48,7 @@ class ChessBoardGeneratorTest {
         assertThat(chessBoard.get(Position.of(H, ONE))).isInstanceOf(Rook.class);
     }
 
-    @DisplayName("White 진영의 폰이 알맞은 자리에 생성됐는지 확인한다.")
+    @DisplayName("White 진영의 폰을 알맞은 자리에 생성한다.")
     @Test
     void shouldWhitePawnsAreOnCorrectlyPositionWhenGenerateChessBoard() {
         assertThat(chessBoard.get(Position.of(A, TWO))).isInstanceOf(Pawn.class);
@@ -67,7 +61,7 @@ class ChessBoardGeneratorTest {
         assertThat(chessBoard.get(Position.of(H, TWO))).isInstanceOf(Pawn.class);
     }
 
-    @DisplayName("Black 진영의 폰을 제외한 말들이 알맞은 자리에 생성됐는지 확인한다.")
+    @DisplayName("Black 진영의 폰을 제외한 말들을 알맞은 자리에 생성한다.")
     @Test
     void shouldBlackPiecesExcludePawnAreOnCorrectlyPositionWhenGenerateChessBoard() {
         assertThat(chessBoard.get(Position.of(A, EIGHT))).isInstanceOf(Rook.class);
@@ -80,7 +74,7 @@ class ChessBoardGeneratorTest {
         assertThat(chessBoard.get(Position.of(H, EIGHT))).isInstanceOf(Rook.class);
     }
 
-    @DisplayName("Black 진영의 폰들이 알맞은 자리에 생성됐는지 확인한다.")
+    @DisplayName("Black 진영의 폰들을 알맞은 자리에 생성한다.")
     @Test
     void shouldBlackPawnsAreOnCorrectlyPositionWhenGenerateChessBoard() {
         assertThat(chessBoard.get(Position.of(A, SEVEN))).isInstanceOf(Pawn.class);

@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@DisplayName("Queen은")
 class QueenTest {
 
     @DisplayName("Source position이 Target position까지 수직,수평 방향이면 true를 반환한다.")
@@ -79,7 +80,7 @@ class QueenTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("Queen이 오른쪽 위로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("오른쪽 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveRightUpward() {
         Queen whiteQueen = Queen.createOfWhite();
@@ -87,7 +88,7 @@ class QueenTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(E, FOUR), Position.of(F, FIVE));
     }
 
-    @DisplayName("Queen이 왼쪽 아래로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("왼쪽 아래로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveLeftDownward() {
         Queen whiteQueen = Queen.createOfWhite();
@@ -95,7 +96,7 @@ class QueenTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(F, FIVE), Position.of(E, FOUR), Position.of(D, THREE));
     }
 
-    @DisplayName("Queen이 수직 위로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("수직 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveUpwardPerpendicular() {
         Queen whiteQueen = Queen.createOfWhite();
@@ -103,7 +104,7 @@ class QueenTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(C, FIVE), Position.of(C, SIX), Position.of(C, SEVEN));
     }
 
-    @DisplayName("Queen이 수평 왼쪽으로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("수평 왼쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveLeftPerpendicular() {
         Queen whiteQueen = Queen.createOfWhite();

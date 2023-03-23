@@ -17,6 +17,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Bishop은")
 class BishopTest {
 
     @DisplayName("Source position이 Target position까지 대각선 방향이면 true를 반환한다. ")
@@ -51,7 +52,7 @@ class BishopTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("Bishop이 오른쪽 위로 이동할 때 해당 경로를 반환한다.")
+    @DisplayName("오른쪽 위로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveRightUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();
@@ -59,7 +60,7 @@ class BishopTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(E, FOUR), Position.of(F, FIVE));
     }
 
-    @DisplayName("Bishop이 오른쪽 아래로 이동할 때 해당 경로를 반환한다.")
+    @DisplayName("오른쪽 아래로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveRightDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
@@ -67,7 +68,7 @@ class BishopTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(D, FIVE), Position.of(E, FOUR), Position.of(F, THREE));
     }
 
-    @DisplayName("Bishop이 왼쪽 아래로 이동할 때 해당 경로를 반환한다.")
+    @DisplayName("왼쪽 아래로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveLeftDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
@@ -75,7 +76,7 @@ class BishopTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(F, FIVE), Position.of(E, FOUR), Position.of(D, THREE));
     }
 
-    @DisplayName("Bishop이 왼쪽 위로 이동할 때 해당 경로를 반환한다.")
+    @DisplayName("왼쪽 위로 이동할 때 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBishopMoveLeftUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();

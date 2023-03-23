@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@DisplayName("Knight는")
 class KnightTest {
     @DisplayName("Source position이 수직으로 2칸 이동하고, 수평으로 1칸 이동하면 true를 반환한다.")
     @ParameterizedTest
@@ -64,7 +65,7 @@ class KnightTest {
         Assertions.assertThat(movable).isTrue();
     }
 
-    @DisplayName("Knight는 모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
+    @DisplayName("모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
     @ParameterizedTest
     @CsvSource(value = {"B,TWO", "D,TWO", "B,SIX", "D,SIX", "A,THREE", "A,FIVE", "E,THREE", "E,FIVE"})
     void shouldReturnEmptyPathWhenMovementCorrectly(File targetFile, Rank targetRank) {

@@ -19,9 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@DisplayName("Position은")
 class PositionTest {
 
-    @DisplayName("Source position과 Target position간 거리차이를 반환한다.")
+    @DisplayName("A1, D6의 거리 차이로 (3,5) 를 반환한다.")
     @Test
     void shouldReturnIncrementBetweenSourceAndTargetWhenInputTargetToSource() {
         Position sourcePosition = Position.of(A, ONE);

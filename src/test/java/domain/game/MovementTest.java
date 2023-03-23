@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@DisplayName("Movement는")
 class MovementTest {
 
     @DisplayName("한 칸도 움직이지 않으면 예외가 발생한다.")
@@ -80,7 +81,7 @@ class MovementTest {
         assertThat(movement.isDiagonal()).isEqualTo(result);
     }
 
-    @DisplayName("올바른 Knight의 움직임일 경우 true, 아니면 false를 반환한다.")
+    @DisplayName("'수직 2칸 + 수평 1칸' 또는 '수직 1칸 + 수평 1칸'의 움직임일 경우 true, 아니면 false를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"1,2,true", "2,1,true", "-1,-2,true", "-2,1,true", "1,0,false", "-1,3,false", "2,2,false"})
     void shouldReturnTrueWhenMovementIsCorrectForKnightOrFalse(int fileIncrement, int rankIncrement, boolean result) {

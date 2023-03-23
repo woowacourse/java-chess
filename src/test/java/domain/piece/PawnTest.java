@@ -54,7 +54,7 @@ public class PawnTest {
         }
 
         @DisplayName("위쪽 대각선에 상대편 말이 있는 경우 true를, 아니라면 false를 반환한다.")
-        @
+        @ParameterizedTest
         @CsvSource(value = {"C,TWO,B,THREE,true", "C,TWO,D,THREE,true", "C,TWO,C,THREE,false"})
         void shouldReturnTrueWhenMoveToOpponentPieceWhitePawn(
                 File sourceFile, Rank sourceRank,

@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Rook은")
 class RookTest {
 
     @DisplayName("Source position이 Target position까지 수직 위 방향이면 true를 반환한다. ")
@@ -50,7 +51,7 @@ class RookTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("Rook이 수직 위로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("수직 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveUpward() {
         Rook whiteRook = Rook.createOfWhite();
@@ -58,7 +59,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(C, TWO), Position.of(C, THREE));
     }
 
-    @DisplayName("Rook이 수직 아래로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("수직 아래로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveDownward() {
         Rook whiteRook = Rook.createOfWhite();
@@ -66,7 +67,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(C, THREE), Position.of(C, TWO));
     }
 
-    @DisplayName("Rook이 왼쪽으로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("왼쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveLeft() {
         Rook whiteRook = Rook.createOfWhite();
@@ -74,7 +75,7 @@ class RookTest {
         assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(C, THREE));
     }
 
-    @DisplayName("Rook이 오른쪽으로 이동하면 해당 경로를 반환한다.")
+    @DisplayName("오른쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenRookMoveRight() {
         Rook whiteRook = Rook.createOfWhite();

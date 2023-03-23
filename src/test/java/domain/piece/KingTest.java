@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@DisplayName("King은")
 class KingTest {
 
     @DisplayName("Source position이 Target position까지 1칸 이면 true를 반환한다.")
@@ -52,7 +53,7 @@ class KingTest {
         assertThat(movable).isTrue();
     }
 
-    @DisplayName("King은 모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
+    @DisplayName("모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
     @ParameterizedTest
     @CsvSource(value = {"C,FIVE", "C,THREE", "D,FOUR", "B,FOUR", "B,FIVE", "D,FIVE", "D,THREE", "B,THREE"})
     void shouldReturnEmptyPathWhenMovementIsOneStep(File targetFile, Rank targetRank) {
