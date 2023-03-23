@@ -11,7 +11,7 @@ public final class Bishop extends Normal {
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
+    protected Set<Position> computePath(final Position source, final Position target) {
         if (!canBishopMove(source, target)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }

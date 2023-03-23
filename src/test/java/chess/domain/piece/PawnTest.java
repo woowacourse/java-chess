@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class PawnTest {
 
     public static final Position B5 = new Position(File.B, Rank.FIVE);
     public static final Position A4 = new Position(File.A, Rank.FOUR);
+    public static final Position A5 = new Position(File.A, Rank.FIVE);
     public static final Position B6 = new Position(File.B, Rank.SIX);
     public static final Position B2 = new Position(File.B, Rank.TWO);
     public static final Position B4 = new Position(File.B, Rank.FOUR);
@@ -67,5 +69,20 @@ class PawnTest {
         final var target = C6;
 
         assertThat(pawn.canMove(Map.of(C5, true, C6, false), source, target)).isFalse();
+    }
+
+    @DisplayName("폰은 잘못된 경로를 받으면 움직일 수 없다.")
+    @Test
+    void canMoveWithValidate_illegal_exception() {
+        final var pawn = new WhitePawn();
+
+        final var source = A4;
+        final var target = C6;
+
+        assertThatThrownBy(() -> pawn.canMoveWithValidate(
+                Map.of(A5, false, B5,false, C6, true),
+                source,
+                target)
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 }

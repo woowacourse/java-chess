@@ -49,7 +49,7 @@ public final class Square {
     }
 
     public boolean canMovePiece(Map<Position, Boolean> isEmptyPath, Position source, Position target) {
-        return piece.canMove(isEmptyPath, source, target);
+        return piece.canMoveWithValidate(isEmptyPath, source, target);
     }
 
     public void changePiece(Square other) {

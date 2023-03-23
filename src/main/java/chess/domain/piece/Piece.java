@@ -12,6 +12,7 @@ public abstract class Piece {
     protected static final int ONE_SQUARES = 1;
     protected static final int TWO_SQUARES = 2;
     protected static final int INCLINATION = 1;
+    private static final String ILLEGAL_PATH_EXCEPTION_MESSAGE = "유효한 경로가 아닙니다.";
 
     protected final Color color;
 
@@ -21,9 +22,11 @@ public abstract class Piece {
 
     protected abstract Set<Position> computePath(Position source, Position target);
 
+    protected abstract boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target);
+
     public abstract Kind getKind();
 
-    public Set<Position> computePathWithValidate(Position source, Position target) {
+    public final Set<Position> computePathWithValidate(Position source, Position target) {
         validateSamePosition(source, target);
         return computePath(source, target);
     }
@@ -34,7 +37,16 @@ public abstract class Piece {
         }
     }
 
-    public abstract boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target);
+    public final boolean canMoveWithValidate(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
+        validatePath(isEmptyPosition, computePath(source, target));
+        return canMove(isEmptyPosition, source, target);
+    }
+
+    private void validatePath(final Map<Position, Boolean> isEmptyPosition, final Set<Position> path) {
+        if (!path.containsAll(isEmptyPosition.keySet())) {
+            throw new IllegalArgumentException(ILLEGAL_PATH_EXCEPTION_MESSAGE);
+        }
+    }
 
     public boolean isEmpty() {
         return false;
