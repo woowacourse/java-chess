@@ -17,7 +17,8 @@ public class OutputView {
     public static void printGameCommandInputMessage() {
         printMessage("> 게임 시작 : start" + NEWLINE
                 + "> 게임 종료 : end" + NEWLINE
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEWLINE
+                + "> 게임 점수 및 결과 출력 : status");
     }
 
     public static void printBoard(List<List<String>> nameBoard) {
