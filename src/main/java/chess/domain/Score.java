@@ -20,6 +20,10 @@ public final class Score {
         return new Score(this.score + other.score);
     }
 
+    public int compareTo(Score other) {
+        return Double.compare(this.score, other.score);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
