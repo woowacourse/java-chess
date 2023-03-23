@@ -1,5 +1,6 @@
 package controller;
 
+import domain.board.Board;
 import domain.board.ChessGame;
 import domain.piece.move.Coordinate;
 import view.InputView;
@@ -50,11 +51,16 @@ public final class ChessController {
     private void doOneInteraction(final ChessGame chessGame) {
         Command command;
         do {
-            outputView.printBoard(chessGame);
+            printBoard(chessGame);
             List<String> frontCommand = inputView.readCommand();
             command = Command.of(frontCommand);
             moveByCommand(chessGame, command, frontCommand);
         } while (command.isNotEnd() && chessGame.isGameNotOver());
+    }
+
+    private void printBoard(final ChessGame chessGame) {
+        Board board = chessGame.getBoard();
+        outputView.printBoard(RenderingAdapter.unpackBoard(board));
     }
 
     private void moveByCommand(final ChessGame chessGame, final Command command, final List<String> frontCommand) {
@@ -67,6 +73,6 @@ public final class ChessController {
 
     private void makeGameResult(final ChessGame chessGame) {
         outputView.printGameEndMessage();
-        outputView.printGameResult(chessGame.collectPoint());
+        outputView.printGameResult(RenderingAdapter.unpackGameResult(chessGame.collectPoint()));
     }
 }

@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import domain.piece.Color;
 import domain.piece.Piece;

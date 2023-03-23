@@ -1,50 +1,16 @@
 package view;
 
-import domain.board.Board;
-import domain.board.ChessGame;
-import domain.piece.move.Coordinate;
-import domain.piece.Color;
-import domain.piece.Piece;
-
-import java.util.Map;
-
 public final class OutputView {
 
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다." + System.lineSeparator() +
             "> 게임 시작 : start" + System.lineSeparator() +
             "> 게임 종료 : end" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+
     public static final String GAME_END_MESSAGE = "게임을 종료합니다.";
-    public static final String GAME_SCORE_FORMAT = "%s : %.1f" + System.lineSeparator();
 
-    public void printBoard(final ChessGame chessGame) {
-        Board board = chessGame.getBoard();
-        Map<Coordinate, Piece> squareLocations = board.getSquareLocations();
-
-        printSquares(squareLocations);
-    }
-
-    // TODO: 뷰가 도메인에 직접적으로 의존하지 않도록 변경
-    private void printSquares(final Map<Coordinate, Piece> squareLocations) {
-        StringBuilder allSquares = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
-            StringBuilder oneRank = makeRank(squareLocations, i);
-            allSquares.insert(0, oneRank);
-            allSquares.insert(0, System.lineSeparator());
-        }
-        System.out.println(allSquares);
-    }
-
-    private static StringBuilder makeRank(
-            final Map<Coordinate, Piece> squareLocations,
-            final int rankNumber
-    ) {
-        StringBuilder rank = new StringBuilder();
-        for (int col = 0; col < 8; col++) {
-            Coordinate coordinate = new Coordinate(rankNumber, col);
-            rank.append(PieceTypeMapper.getTarget(squareLocations.get(coordinate)));
-        }
-        return rank;
+    public void printBoard(final String parsedBoard) {
+        System.out.println(parsedBoard);
     }
 
     public void printGameStartMessage() {
@@ -59,7 +25,7 @@ public final class OutputView {
         System.out.println(message);
     }
 
-    public void printGameResult(final Map<Color, Double> collectPoint) {
-        collectPoint.forEach((key, value) -> System.out.printf(GAME_SCORE_FORMAT, key, value));
+    public void printGameResult(final String gameResult) {
+        System.out.println(gameResult);
     }
 }
