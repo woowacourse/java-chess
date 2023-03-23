@@ -6,7 +6,7 @@ public class Rank {
 
     private final int rank;
 
-    public Rank(final int rank) {
+    private Rank(final int rank) {
         validate(rank);
         this.rank = rank;
     }
