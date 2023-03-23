@@ -25,7 +25,7 @@ public final class Position {
         return new Position(rank, file);
     }
 
-    public Position changePosition(int rank) {
+    public Position changePosition(final int rank) {
         return new Position(rank, this.file);
     }
 
@@ -66,7 +66,7 @@ public final class Position {
         return this.rank.calculateDistance(position.rank.getRank());
     }
 
-    public Position move(int fileDirection, int rankDirection) {
+    public Position move(final int fileDirection, final int rankDirection) {
         return new Position(rank.move(rankDirection), file.move(fileDirection));
     }
 

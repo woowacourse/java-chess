@@ -29,27 +29,27 @@ public final class Pieces {
         this.pieces = pieces;
     }
 
-    public static Pieces createBlackPieces(Pieces whitePieces) {
+    public static Pieces createBlackPieces(final Pieces whitePieces) {
         List<Piece> pawns = getBlackPawns(whitePieces);
         List<Piece> piecesWithoutPawns = getPiecesWithoutPawn(whitePieces);
         return getBlackPieces(pawns, piecesWithoutPawns);
     }
 
-    private static List<Piece> getBlackPawns(Pieces whitePieces) {
+    private static List<Piece> getBlackPawns(final Pieces whitePieces) {
         return whitePieces.pieces.stream()
                 .filter(piece -> piece.isSameShape(Shape.PAWN))
                 .map(piece -> piece.getNewPiece(LAST_FILE_OF_BLACK))
                 .collect(Collectors.toList());
     }
 
-    private static List<Piece> getPiecesWithoutPawn(Pieces whitePieces) {
+    private static List<Piece> getPiecesWithoutPawn(final Pieces whitePieces) {
         return whitePieces.pieces.stream()
                 .filter(piece -> !piece.isSameShape(Shape.PAWN))
                 .map(piece -> piece.getNewPiece(FIRST_FILE_OF_BLACK))
                 .collect(Collectors.toList());
     }
 
-    private static Pieces getBlackPieces(List<Piece> pawns, List<Piece> piecesWithoutPawns) {
+    private static Pieces getBlackPieces(final List<Piece> pawns, final List<Piece> piecesWithoutPawns) {
         List<Piece> pieceList = Stream.concat(pawns.stream(), piecesWithoutPawns.stream())
                 .collect(Collectors.toList());
         return new Pieces(pieceList);
@@ -85,8 +85,8 @@ public final class Pieces {
         }
     }
 
-    private static void addPiecePairs(List<Piece> pieceList, int frontPosition, Shape shape) {
-        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) frontPosition,shape));
+    private static void addPiecePairs(final List<Piece> pieceList, final int frontPosition, final Shape shape) {
+        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) frontPosition, shape));
 
         int backPosition = FIRST_RANK + LAST_RANK - frontPosition;
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) backPosition, shape));
@@ -107,19 +107,19 @@ public final class Pieces {
         return pieces;
     }
 
-    public Piece findPiece(Position findPosition) {
+    public Piece findPiece(final Position findPosition) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(findPosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("위치를 확인해주세요."));
     }
 
-    public boolean hasPosition(Position findPosition) {
+    public boolean hasPosition(final Position findPosition) {
         return pieces.stream()
                 .anyMatch(piece -> piece.isSamePosition(findPosition));
     }
 
-    public void remove(Position changedPosition) {
+    public void remove(final Position changedPosition) {
         pieces.removeIf(piece -> piece.isSamePosition(changedPosition));
     }
 

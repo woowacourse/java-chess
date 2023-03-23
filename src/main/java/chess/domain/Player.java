@@ -1,6 +1,10 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class Player {
 
@@ -54,7 +58,7 @@ public class Player {
         return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
     }
 
-    public void removePiece(Position changedPosition) {
+    public void removePiece(final Position changedPosition) {
         pieces.remove(changedPosition);
     }
 
