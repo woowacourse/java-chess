@@ -17,15 +17,24 @@ public final class InputView {
     }
 
     public static Command readCommand() {
-        final List<String> inputs = Arrays.stream(SCANNER.nextLine().split(DELIMITER)).collect(Collectors.toList());
+        final List<String> inputs = parseInput(getInput());
         final Command command = Command.from(inputs.remove(COMMAND_INDEX));
 
         buffer = inputs;
         return command;
     }
 
+    private static List<String> parseInput(final String input) {
+        return Arrays.stream(input.split(DELIMITER))
+                .collect(Collectors.toList());
+    }
+
     public static List<String> getCoordinates() {
         return Collections.unmodifiableList(buffer);
+    }
+
+    private static String getInput() {
+        return SCANNER.nextLine();
     }
 }
 
