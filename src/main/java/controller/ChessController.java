@@ -70,7 +70,7 @@ public class ChessController {
         } catch (UnsupportedOperationException e) {
             System.out.println("Log: " + e.getMessage()); // log 기록
             this.outputView.printServerErrorMessage();
-            return null;
+            return repeat(supplier);
         } catch (RuntimeException e) {
             this.outputView.printErrorMessage(e.getMessage());
             return repeat(supplier);
