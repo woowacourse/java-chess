@@ -7,15 +7,15 @@ import chess.domain.board.Square;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final Camp camp;
-    protected final Square position;
+    private final Camp camp;
+    private final Square position;
 
-    public Piece(final Camp camp, final Square position) {
+    protected Piece(final Camp camp, final Square position) {
         this.camp = camp;
         this.position = position;
     }
 
-    public Piece(final Camp camp) {
+    protected Piece(final Camp camp) {
         this.camp = camp;
         this.position = new Square(File.EMPTY, Rank.EMPTY);
     }
@@ -32,7 +32,7 @@ public abstract class Piece {
         return this.camp == camp;
     }
 
-    public Camp getCamp() {
+    public Camp camp() {
         return camp;
     }
 

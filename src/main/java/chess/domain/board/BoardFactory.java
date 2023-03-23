@@ -20,6 +20,9 @@ import java.util.stream.Stream;
 public final class BoardFactory {
     private static final int BOARD_LINE_SIZE = 8;
 
+    private BoardFactory() {
+    }
+
     public static Map<Square, Piece> createBoard() {
         final Map<Square, Piece> board = new LinkedHashMap<>();
         final List<Square> squares = createSquares();

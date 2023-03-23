@@ -17,7 +17,7 @@ public class Command {
     private static final String END_COMMAND = "end";
     private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
 
-    private String command;
+    private String input;
     private Square source;
     private Square target;
 
@@ -26,7 +26,7 @@ public class Command {
     }
 
     private void extractCommand(final List<String> commands) {
-        command = commands.get(COMMAND_INDEX);
+        input = commands.get(COMMAND_INDEX);
 
         if (isMove() && commands.size() == MOVE_COMMAND_SIZE) {
             source = convertToSquare(commands.get(SOURCE_INDEX));
@@ -53,15 +53,15 @@ public class Command {
     }
 
     public boolean isMove() {
-        return command.equals(MOVE_COMMAND);
+        return input.equals(MOVE_COMMAND);
     }
 
     public boolean isStart() {
-        return command.equals(START_COMMAND);
+        return input.equals(START_COMMAND);
     }
 
     public boolean isEnd() {
-        return command.equals(END_COMMAND);
+        return input.equals(END_COMMAND);
     }
 
     public Square getSource() {

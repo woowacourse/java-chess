@@ -53,12 +53,12 @@ public class OutputView {
     }
 
     private static String upperIfBlack(final Piece piece, String initial) {
-        if (piece.getCamp() == Camp.BLACK) {
+        if (piece.camp() == Camp.BLACK) {
             initial = initial.toUpperCase();
         }
         return initial;
     }
-    
+
     private void printNewLine(final int i) {
         if (i % BOARD_LINE_SIZE == 0) {
             System.out.println();

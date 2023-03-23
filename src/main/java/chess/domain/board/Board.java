@@ -40,14 +40,14 @@ public class Board {
 
     private boolean isSourceAndTargetSameCamp(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
-        final Camp targetCamp = board.get(target).getCamp();
+        final Camp targetCamp = board.get(target).camp();
 
         return sourcePiece.isSameCamp(targetCamp);
     }
 
     private void updateIfPawn(final Square source, final Square target) {
         if (board.get(source).getClass() == Pawn.class) {
-            board.put(source, new Pawn(board.get(source).getCamp(), target, MOVED));
+            board.put(source, new Pawn(board.get(source).camp(), target, MOVED));
         }
     }
 

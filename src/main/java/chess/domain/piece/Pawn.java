@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     }
 
     private List<Move> makePossibleMoves() {
-        if (camp.equals(Camp.WHITE)) {
+        if (camp().equals(Camp.WHITE)) {
             return generateWhitePossibleMoves();
         }
 

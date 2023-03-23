@@ -8,6 +8,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
     private final InputView inputView;
     private final OutputView outputView;
     private Game game;
@@ -33,7 +34,7 @@ public class ChessController {
             final Command command = inputCommand();
             executeCommand(command);
         } catch (final IllegalStateException e) {
-            System.err.println("[ERROR] " + e.getMessage());
+            System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
     }
 
@@ -41,7 +42,7 @@ public class ChessController {
         try {
             return inputView.readCommand();
         } catch (final IllegalArgumentException e) {
-            System.err.println("[ERROR] " + e.getMessage());
+            System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
             return inputCommand();
         }
     }
@@ -66,7 +67,7 @@ public class ChessController {
             game.move(command.getSource(), command.getTarget());
             outputView.printChessBoard(game.getPieces());
         } catch (final IllegalArgumentException e) {
-            System.err.println("[ERROR] " + e.getMessage());
+            System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
     }
 }
