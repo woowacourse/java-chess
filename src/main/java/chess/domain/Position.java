@@ -41,6 +41,10 @@ public class Position {
         return column;
     }
 
+    public int getColumnIndex() {
+        return column.getIndex();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

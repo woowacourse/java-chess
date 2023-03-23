@@ -41,4 +41,8 @@ public abstract class Piece {
     public double getScore() {
         return score;
     }
+
+    public String getName() {
+        return name;
+    }
 }
