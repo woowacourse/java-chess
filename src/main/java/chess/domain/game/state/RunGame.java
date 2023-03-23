@@ -92,6 +92,11 @@ public class RunGame extends StartedGame {
     }
 
     @Override
+    public boolean isRunnableGame() {
+        return true;
+    }
+
+    @Override
     public ChessGame endGame() {
         return new EndGame(chessBoard, turnCamp);
     }

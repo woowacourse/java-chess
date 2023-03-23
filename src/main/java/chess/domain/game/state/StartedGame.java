@@ -24,11 +24,6 @@ public abstract class StartedGame implements ChessGame {
     }
 
     @Override
-    public boolean isRunnableGame() {
-        return true;
-    }
-
-    @Override
     public Map<Position, Piece> getPiecesPosition() {
         return chessBoard.getPiecesPosition();
     }
