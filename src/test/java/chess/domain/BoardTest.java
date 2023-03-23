@@ -29,8 +29,8 @@ class BoardTest {
 	@Test
 	@DisplayName("체스의 시작은 검은 말이다")
 	void throwExcpetionWhenIllegalTurn() {
-		final Position source = Position.from("b2");
-		final Position target = Position.from("b3");
+		final Position source = Position.from("b7");
+		final Position target = Position.from("b6");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -40,8 +40,8 @@ class BoardTest {
 	@Test
 	@DisplayName("출발지와 도착지가 같으면 예외가 발생한다")
 	void throwExcpetionWhenSamePosition() {
-		final Position source = Position.from("a7");
-		final Position target = Position.from("a7");
+		final Position source = Position.from("a2");
+		final Position target = Position.from("a2");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -51,8 +51,8 @@ class BoardTest {
 	@Test
 	@DisplayName("출발점에 체스말이 존재하지 않으면 예외가 발생한다")
 	void throwExceptionWhenSourceNotEmpty() {
-		final Position source = Position.from("b3");
-		final Position target = Position.from("b4");
+		final Position source = Position.from("b6");
+		final Position target = Position.from("b5");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -62,8 +62,8 @@ class BoardTest {
 	@Test
 	@DisplayName("체스말이 같은 팀을 공격할 경우 예외가 발생한다")
 	void throwExceptionWhenAttackSameTeam() {
-		final Position source = Position.from("a8");
-		final Position target = Position.from("a7");
+		final Position source = Position.from("a1");
+		final Position target = Position.from("a2");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -73,8 +73,8 @@ class BoardTest {
 	@Test
 	@DisplayName("체스말이 이동할 수 있는 방향이 아니면 예외가 발생한다")
 	void throwExceptionWhenNotMovable() {
-		final Position source = Position.from("b7");
-		final Position target = Position.from("c6");
+		final Position source = Position.from("b2");
+		final Position target = Position.from("c3");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -84,8 +84,8 @@ class BoardTest {
 	@Test
 	@DisplayName("이동 경로에 체스말이 존재하면 예외가 발생한다")
 	void pieceExistInPath() {
-		final Position source = Position.from("a8");
-		final Position target = Position.from("a6");
+		final Position source = Position.from("a1");
+		final Position target = Position.from("a3");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -95,11 +95,11 @@ class BoardTest {
 	@Test
 	@DisplayName("한 칸만 움직일 수 있는 체스말이 여러 칸을 움직이려고 할 경우, 예외가 발생한다")
 	void throwExceptionWhenNotMovableByCount() {
-		board.move(Position.from("e7"), Position.from("e5"));
-		board.move(Position.from("a2"), Position.from("a4"));
+		board.move(Position.from("e2"), Position.from("e4"));
+		board.move(Position.from("a7"), Position.from("a5"));
 
-		final Position source = Position.from("e5");
-		final Position target = Position.from("e3");
+		final Position source = Position.from("e4");
+		final Position target = Position.from("e6");
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -109,8 +109,8 @@ class BoardTest {
 	@Test
 	@DisplayName("체스말이 성공적으로 이동하는지 확인하는 테스트")
 	void movePiece() {
-		final Position source = Position.from("b8");
-		final Position target = Position.from("c6");
+		final Position source = Position.from("b1");
+		final Position target = Position.from("c3");
 
 		board.move(source, target);
 
