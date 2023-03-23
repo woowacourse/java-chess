@@ -7,7 +7,8 @@ import java.util.List;
 public class StatusCommand implements Command {
     
     public static final int STATUS_ARGUMENTS_SIZE = 0;
-    public static final String name = CommandType.STATUS.name();
+    
+    private final CommandType type = CommandType.STATUS;
     
     public StatusCommand(final List<String> arguments) {
         this.validate(arguments);
@@ -16,14 +17,14 @@ public class StatusCommand implements Command {
     private void validate(final List<String> arguments) {
         if (arguments.size() != STATUS_ARGUMENTS_SIZE) {
             throw new IllegalArgumentException(
-                    COMMAND_ERROR_PREFIX + name + INVALID_ARGUMENT_ERROR_MESSAGE);
+                    COMMAND_ERROR_PREFIX + this.type + INVALID_ARGUMENT_ERROR_MESSAGE);
         }
     }
     
     @Override
-    public void execute(Action action) {
+    public void update(Action action) {
         throw new UnsupportedOperationException(
-                COMMAND_ERROR_PREFIX + name + INVALID_EXECUTE_ERROR_MESSAGE);
+                COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
     }
     
     @Override
@@ -32,13 +33,8 @@ public class StatusCommand implements Command {
     }
     
     @Override
-    public boolean isNotEnd() {
-        return true;
-    }
-    
-    @Override
-    public boolean isStatus() {
-        return true;
+    public CommandType getType() {
+        return this.type;
     }
     
 }

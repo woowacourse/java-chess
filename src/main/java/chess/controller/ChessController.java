@@ -2,17 +2,28 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandFactory;
+import chess.command.CommandType;
+import chess.command.QueryCommand;
+import chess.command.UpdateCommand;
 import chess.domain.board.PieceProvider;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
     
     private final InputView inputView;
     private final OutputView outputView;
+    
+    private final Map<CommandType, Executor> executorMap = Map.of(
+            CommandType.START, this::executeCommand,
+            CommandType.MOVE, this::executeCommand,
+            CommandType.END, this::executeEndCommand,
+            CommandType.STATUS, this::executeQueryCommand
+    );
     
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -30,24 +41,12 @@ public class ChessController {
     private void runGame(final ChessGame chessGame) {
         try {
             Command command = this.parseCommand();
-            if (command.isStatus()) {
-                this.queryCommand(chessGame, command);
-                return;
-            }
-            this.executeCommand(chessGame, command);
+            Executor executor = this.executorMap.get(command.getType());
+            executor.execute(command, chessGame);
+            
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
         }
-    }
-    
-    private void executeCommand(final ChessGame chessGame, final Command command) {
-        command.execute(chessGame);
-        this.printBoard(command, chessGame);
-    }
-    
-    private void queryCommand(final ChessGame chessGame, final Command command) {
-        Status status = command.query(chessGame);
-        this.outputView.printStatus(status);
     }
     
     private Command parseCommand() {
@@ -55,12 +54,25 @@ public class ChessController {
         return CommandFactory.generateCommand(commandLineLiteral);
     }
     
-    private void printBoard(Command command, ChessGame chessGame) {
-        if (command.isNotEnd()) {
-            PieceProvider board = chessGame.getBoard();
-            String boardString = BoardMapper.map(board);
-            this.outputView.printBoard(BoardDTO.create(boardString));
-        }
+    
+    private void executeEndCommand(final UpdateCommand command, final ChessGame chessGame) {
+        command.update(chessGame);
+    }
+    
+    private void executeCommand(final UpdateCommand command, final ChessGame chessGame) {
+        command.update(chessGame);
+        this.printBoard(chessGame);
+    }
+    
+    private void executeQueryCommand(final QueryCommand command, final ChessGame chessGame) {
+        Status status = command.query(chessGame);
+        this.outputView.printStatus(status);
+    }
+    
+    private void printBoard(final ChessGame chessGame) {
+        PieceProvider board = chessGame.getBoard();
+        String boardString = BoardMapper.map(board);
+        this.outputView.printBoard(BoardDTO.create(boardString));
     }
     
 }

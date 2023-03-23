@@ -1,9 +1,9 @@
 package chess.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class EndCommandTest {
     @DisplayName("명령 정상 생성 테스트")
     void create_command_test() {
         EndCommand endCommand = new EndCommand(List.of());
-        assertThat(endCommand.isNotEnd()).isFalse();
+        Assertions.assertThat(endCommand.getType()).isEqualTo(CommandType.END);
     }
     
     @Test
