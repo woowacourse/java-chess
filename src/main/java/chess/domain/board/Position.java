@@ -81,4 +81,8 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, column);
     }
+
+    public Rank getRank() {
+        return rank;
+    }
 }
