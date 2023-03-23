@@ -17,8 +17,8 @@ public final class Board {
         this.board = board;
     }
 
-    public static Board create(ChessAlignment chessStrategy) {
-        return new Board(chessStrategy.init());
+    public static Board create(final Map<Position, Piece> board) {
+        return new Board(board);
     }
 
     public void move(Position source, Position destination) {
