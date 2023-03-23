@@ -22,4 +22,18 @@ class ScoreTest {
         // then
         assertThat(addedScore).isEqualTo(new Score(new BigDecimal("3.0")));
     }
+
+    @Test
+    @DisplayName("스코어를 받아서 뺀 스코어를 반환한다.")
+    void subtract() {
+        // given
+        Score originalScore = new Score(new BigDecimal("10.0"));
+        Score scoreToSubtract = new Score(new BigDecimal("2.0"));
+
+        // when
+        Score subtractScore = originalScore.subtract(scoreToSubtract);
+
+        // then
+        assertThat(subtractScore).isEqualTo(new Score(new BigDecimal("8.0")));
+    }
 }
