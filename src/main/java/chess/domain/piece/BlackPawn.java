@@ -8,6 +8,7 @@ import java.util.Set;
 public final class BlackPawn extends Pawn {
 
     private static final Rank INIT_RANK = Rank.SEVEN;
+    private static final double score = 1;
 
     public BlackPawn() {
         super(Color.BLACK);
@@ -39,5 +40,13 @@ public final class BlackPawn extends Pawn {
         if (Math.abs(source.rankSub(target)) == TWO_SQUARES && !source.isRank(INIT_RANK)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+    }
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return score;
+        }
+
+        return 0;
     }
 }

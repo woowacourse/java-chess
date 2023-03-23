@@ -31,4 +31,9 @@ public final class Empty extends Piece {
     public Kind getKind() {
         return Kind.EMPTY;
     }
+
+    @Override
+    public double getScore(Color color) {
+        return 0;
+    }
 }

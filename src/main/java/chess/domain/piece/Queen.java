@@ -6,6 +6,8 @@ import java.util.Set;
 
 public final class Queen extends Normal {
 
+    private static final double score = 9;
+
     public Queen(final Color color) {
         super(color);
     }
@@ -30,5 +32,14 @@ public final class Queen extends Normal {
         var inclination = source.computeInclination(target);
 
         return fileSub == SAME_SQUARE || rankSub == SAME_SQUARE || Math.abs(inclination) == INCLINATION;
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return score;
+        }
+
+        return 0;
     }
 }

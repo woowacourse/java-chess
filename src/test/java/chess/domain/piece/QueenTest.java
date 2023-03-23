@@ -86,4 +86,28 @@ class QueenTest {
         assertThatThrownBy(() -> queen.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("흑색 퀸은 점수가 9점이다")
+    @Test
+    void getScore_blackThree() {
+        var piece = new Queen(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(9);
+    }
+
+    @DisplayName("백색 퀸은 점수가 9점이다")
+    @Test
+    void getScore_whiteThree() {
+        var piece = new Queen(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(9);
+    }
+
+    @DisplayName("다른 색의 퀸은 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new Queen(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
+    }
 }

@@ -66,4 +66,20 @@ class WhitePawnTest {
 
         assertThatThrownBy(() -> pawn.computePathWithValidate(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("백색 폰은 점수가 1점이다.")
+    @Test
+    void getScore_blackPawnOne() {
+        final var pawn = new WhitePawn();
+
+        assertThat(pawn.getScore(Color.WHITE)).isEqualTo(1);
+    }
+
+    @DisplayName("다른색의 폰은 점수가 0점이다.")
+    @Test
+    void getScore_otherPawnZero() {
+        final var pawn = new WhitePawn();
+
+        assertThat(pawn.getScore(Color.BLACK)).isEqualTo(0);
+    }
 }

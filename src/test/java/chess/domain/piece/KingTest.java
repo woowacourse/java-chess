@@ -49,4 +49,28 @@ class KingTest {
         assertThatThrownBy(() -> king.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("흑색 킹은 점수가 0점이다")
+    @Test
+    void getScore_blackZero() {
+        var piece = new King(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(0);
+    }
+
+    @DisplayName("백색 킹은 점수가 0점이다")
+    @Test
+    void getScore_whiteZero() {
+        var piece = new King(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
+    }
+
+    @DisplayName("다른 색의 킹은 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new King(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
+    }
 }

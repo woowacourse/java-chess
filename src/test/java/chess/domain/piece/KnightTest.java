@@ -46,4 +46,28 @@ class KnightTest {
         assertThatThrownBy(() -> knight.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("흑색 나이트는 점수가 2.5점이다")
+    @Test
+    void getScore_black_twoPointFive() {
+        var piece = new Knight(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(2.5);
+    }
+
+    @DisplayName("백색 나이트는 점수가 2.5점이다")
+    @Test
+    void getScore_white_twoPointFive() {
+        var piece = new Knight(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(2.5);
+    }
+
+    @DisplayName("다른 색의 나이트는 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new Knight(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
+    }
 }

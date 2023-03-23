@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlackPawnTest {
 
-
     @Test
     @DisplayName("흑색 폰의 대각선 경로를 계산한다.")
     void computePath_Black() {
@@ -53,5 +52,21 @@ class BlackPawnTest {
         final var target = C5;
 
         assertThatThrownBy(() -> pawn.computePathWithValidate(source, target)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("흑색 폰은 점수가 1점이다.")
+    @Test
+    void getScore_blackPawnOne() {
+        final var pawn = new BlackPawn();
+
+        assertThat(pawn.getScore(Color.BLACK)).isEqualTo(1);
+    }
+
+    @DisplayName("다른색의 폰은 점수가 0점이다.")
+    @Test
+    void getScore_otherPawnZero() {
+        final var pawn = new BlackPawn();
+
+        assertThat(pawn.getScore(Color.WHITE)).isEqualTo(0);
     }
 }

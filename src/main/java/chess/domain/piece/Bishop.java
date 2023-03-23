@@ -6,6 +6,8 @@ import java.util.Set;
 
 public final class Bishop extends Normal {
 
+    private static final double score = 3;
+
     public Bishop(final Color color) {
         super(color);
     }
@@ -28,5 +30,14 @@ public final class Bishop extends Normal {
         var inclination = source.computeInclination(target);
 
         return Math.abs(inclination) == INCLINATION;
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return score;
+        }
+
+        return 0;
     }
 }
