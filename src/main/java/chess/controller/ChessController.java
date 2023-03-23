@@ -4,7 +4,7 @@ import chess.controller.mapper.request.ChessGameCommandMapper;
 import chess.controller.mapper.response.ChessBoardStateFormatter;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.ChessGameCommand;
-import chess.domain.position.PiecesPosition;
+import chess.domain.position.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -22,31 +22,31 @@ public final class ChessController {
     public void run() {
         outputView.printStartPrefix();
         ChessGame chessGame = new ChessGame();
-        play(chessGame);
-    }
-
-    private void play(ChessGame chessGame) {
         while (chessGame.isRunnableGame()) {
-            playTurn(chessGame);
+            play(chessGame);
             printChessGameBoard(chessGame);
         }
     }
 
-    private void playTurn(ChessGame chessGame) {
+    private void play(ChessGame chessGame) {
         try {
             List<String> commandInputs = inputView.readCommands();
-            ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
-            command.execute(chessGame);
+            playByCommand(chessGame, commandInputs);
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
-            playTurn(chessGame);
+            play(chessGame);
         }
     }
 
+    private void playByCommand(ChessGame chessGame, List<String> commandInputs) {
+        ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
+        command.execute(chessGame);
+    }
+
     private void printChessGameBoard(ChessGame chessGame) {
-        PiecesPosition piecesPosition = chessGame.getPiecesPosition();
+        ChessBoard chessBoard = chessGame.getPiecesPosition();
         List<List<String>> consoleViewBoard =
-                ChessBoardStateFormatter.convertToConsoleViewBoard(piecesPosition.getPiecesPosition());
+                ChessBoardStateFormatter.convertToConsoleViewBoard(chessBoard.getPiecesPosition());
 
         outputView.printChessState(consoleViewBoard);
     }

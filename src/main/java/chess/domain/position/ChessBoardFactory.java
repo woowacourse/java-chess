@@ -11,19 +11,24 @@ import chess.domain.piece.Rook;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class PiecesPosition {
+public class ChessBoardFactory {
 
-    private final Map<Position, Piece> piecesPosition = new LinkedHashMap<>();
-
-    public PiecesPosition() {
-        setUpNobilityPiece(Rank.EIGHT, Camp.BLACK);
-        setUpPawn(Rank.SEVEN, Camp.BLACK);
-
-        setUpPawn(Rank.TWO, Camp.WHITE);
-        setUpNobilityPiece(Rank.ONE, Camp.WHITE);
+    private ChessBoardFactory() {
     }
 
-    private void setUpNobilityPiece(Rank rank, Camp camp) {
+    public static ChessBoard getInitialChessBoard() {
+        Map<Position, Piece> piecesPosition = new LinkedHashMap<>();
+
+        setUpNobilityPiece(piecesPosition, Rank.EIGHT, Camp.BLACK);
+        setUpPawn(piecesPosition, Rank.SEVEN, Camp.BLACK);
+
+        setUpPawn(piecesPosition, Rank.TWO, Camp.WHITE);
+        setUpNobilityPiece(piecesPosition, Rank.ONE, Camp.WHITE);
+
+        return new ChessBoard(piecesPosition);
+    }
+
+    private static void setUpNobilityPiece(Map<Position, Piece> piecesPosition, Rank rank, Camp camp) {
         piecesPosition.put(Position.of(File.A, rank), new Rook(camp));
         piecesPosition.put(Position.of(File.B, rank), new Knight(camp));
         piecesPosition.put(Position.of(File.C, rank), new Bishop(camp));
@@ -34,26 +39,9 @@ public final class PiecesPosition {
         piecesPosition.put(Position.of(File.H, rank), new Rook(camp));
     }
 
-    private void setUpPawn(Rank rank, Camp camp) {
+    private static void setUpPawn(Map<Position, Piece> piecesPosition, Rank rank, Camp camp) {
         for (File file : File.values()) {
             piecesPosition.put(Position.of(file, rank), new Pawn(camp));
         }
-    }
-
-    public Piece peekPiece(Position position) {
-        return piecesPosition.get(position);
-    }
-
-    public boolean isPieceExist(Position position) {
-        return piecesPosition.containsKey(position);
-    }
-
-    public void movePiece(Position fromPosition, Position toPosition) {
-        piecesPosition.put(toPosition, piecesPosition.get(fromPosition));
-        piecesPosition.remove(fromPosition);
-    }
-
-    public Map<Position, Piece> getPiecesPosition() {
-        return piecesPosition;
     }
 }
