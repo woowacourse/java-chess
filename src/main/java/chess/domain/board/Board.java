@@ -22,11 +22,9 @@ public class Board {
     );
 
     private final Pieces pieces;
-    private final ScoreBySide scoreBySide;
 
-    public Board(final Pieces pieces, final ScoreBySide scoreBySide) {
+    public Board(final Pieces pieces) {
         this.pieces = pieces;
-        this.scoreBySide = scoreBySide;
     }
 
     public Piece findPieceByPosition(final Position position) {
@@ -58,6 +56,12 @@ public class Board {
         if (isExistPieceOnPosition(targetPosition)) {
             final Piece targetPiece = pieces.findPieceByPosition(targetPosition);
             checkSameSidePiece(sourcePiece, targetPiece);
+        }
+    }
+
+    private void checkSameSidePiece(final Piece sourcePiece, final Piece targetPiece) {
+        if (targetPiece.isSameSide(sourcePiece.getSide())) {
+            throw new IllegalArgumentException("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
         }
     }
 
@@ -104,15 +108,18 @@ public class Board {
         pieces.changePiece(sourcePiece, movedPiece);
     }
 
+    public boolean isTargetPieceOppositeKing(Position sourcePosition, Position targetPosition) {
+        if (isExistPieceOnPosition(targetPosition)) {
+            final Piece targetPiece = pieces.findPieceByPosition(targetPosition);
+            final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
+            return targetPiece.isKing() && !targetPiece.isSameSide(sourcePiece.getSide());
+        }
+        return false;
+    }
+
     private void move(Position targetPosition, Piece sourcePiece) {
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.changePiece(sourcePiece, movedPiece);
-    }
-
-    private void checkSameSidePiece(final Piece sourcePiece, final Piece targetPiece) {
-        if (targetPiece.isSameSide(sourcePiece.getSide())) {
-            throw new IllegalArgumentException("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
-        }
     }
 
     public Score calculateSideScore(Side side) {
@@ -138,15 +145,7 @@ public class Board {
                 .reduce(new Score(new BigDecimal("0.0")), Score::add);
     }
 
-    public void saveTotalScoreBySide(Side side, Score totalScore) {
-        scoreBySide.updateScore(side, totalScore);
-    }
-
     public List<Piece> getPieces() {
         return pieces.getPieces();
-    }
-
-    public Map<Side, Score> getScoreBySide() {
-        return scoreBySide.getScoreBySide();
     }
 }
