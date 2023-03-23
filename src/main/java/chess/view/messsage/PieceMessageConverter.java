@@ -42,7 +42,7 @@ public enum PieceMessageConverter {
     public static String convert(final Class<? extends Piece> pieceType, final Camp camp) {
         final String message = CACHE.getOrDefault(pieceType, EMPTY_MESSAGE);
 
-        if (camp.isSameCamp(Camp.BLACK)) {
+        if (Camp.BLACK.isSameCamp(camp)) {
             return message.toUpperCase();
         }
         return message;

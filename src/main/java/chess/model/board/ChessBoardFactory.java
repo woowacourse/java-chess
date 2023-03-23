@@ -24,7 +24,6 @@ public final class ChessBoardFactory {
     private static final List<Class<? extends Piece>> backPieces = List.of(
             Rook.class, Knight.class, Bishop.class, Queen.class, King.class, Bishop.class, Knight.class, Rook.class
     );
-
     private static final List<Class<? extends Piece>> frontPieces = List.of(
             Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class
     );

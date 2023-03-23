@@ -15,18 +15,18 @@ public class Position {
                 .collect(Collectors.toMap(file -> file, Position::createRankCachePosition));
     }
 
-    private static Map<Rank, Position> createRankCachePosition(final File file) {
-        return Arrays.stream(Rank.values())
-                .collect(Collectors.toMap(rank -> rank, rank -> new Position(file, rank)));
-    }
-
-    private final File file;
-    private final Rank rank;
-
     private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
+
+    private static Map<Rank, Position> createRankCachePosition(final File file) {
+        return Arrays.stream(Rank.values())
+                .collect(Collectors.toMap(rank -> rank, rank -> new Position(file, rank)));
+    }
+    private final File file;
+
+    private final Rank rank;
 
     public static Position of(final File file, final Rank rank) {
         final Map<Rank, Position> positionCache = CACHE.get(file);

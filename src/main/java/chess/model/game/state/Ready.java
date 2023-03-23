@@ -1,6 +1,5 @@
 package chess.model.game.state;
 
-import chess.controller.dto.PlayRequest;
 import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.game.GameCommand;
