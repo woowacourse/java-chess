@@ -3,9 +3,9 @@ package chess.domain.pieces;
 import static chess.domain.pieces.Piece.INVALID_TEAM;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.File;
+import chess.domain.board.File;
 import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.board.Rank;
 import chess.domain.Team;
 import chess.domain.math.Direction;
 import org.assertj.core.api.Assertions;

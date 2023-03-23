@@ -1,8 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.File;
 import chess.domain.Position;
-import chess.domain.Rank;
 import chess.domain.Team;
 import chess.domain.pieces.*;
 
@@ -29,12 +27,15 @@ public class BoardFactory {
         for (File file : File.values()) {
             init.put(new Position(Rank.TREE, file), new EmptyPiece(Team.NEUTRALITY));
         }
+
         for (File file : File.values()) {
             init.put(new Position(Rank.FOUR, file), new EmptyPiece(Team.NEUTRALITY));
         }
+
         for (File file : File.values()) {
             init.put(new Position(Rank.FIVE, file), new EmptyPiece(Team.NEUTRALITY));
         }
+
         for (File file : File.values()) {
             init.put(new Position(Rank.SIX, file), new EmptyPiece(Team.NEUTRALITY));
         }

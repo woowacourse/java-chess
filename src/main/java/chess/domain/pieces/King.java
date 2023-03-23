@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.math.Direction;
+import chess.domain.pieces.component.Name;
 
 import java.util.List;
 

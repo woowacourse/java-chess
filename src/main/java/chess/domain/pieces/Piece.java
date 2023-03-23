@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.math.Direction;
+import chess.domain.pieces.component.Name;
 
 public abstract class Piece {
 
