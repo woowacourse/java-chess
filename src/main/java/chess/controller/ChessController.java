@@ -27,7 +27,7 @@ public class ChessController {
     public void run() {
         outputView.printStart();
         if (isReadStartCommand()) {
-            play();
+            playChessGame();
         }
     }
 
@@ -40,7 +40,7 @@ public class ChessController {
         }
     }
 
-    private void play() {
+    private void playChessGame() {
         do {
             outputView.printBoard(chessGame.getBoard());
         } while (isPlaying(readCommand()));
