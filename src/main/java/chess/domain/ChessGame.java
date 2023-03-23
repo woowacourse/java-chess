@@ -36,4 +36,11 @@ public class ChessGame {
         return board.getBoard();
     }
 
+    public double getTotalScore(Team team) {
+        return board.getScores(team)
+                .stream()
+                .mapToDouble(score -> score)
+                .sum();
+    }
+
 }
