@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.piece.Color;
@@ -39,5 +40,19 @@ class PieceTest {
 
         //expect
         assertDoesNotThrow(() -> piece.move(0, yChange, empty));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"PAWN, 1", "KING, 0", "QUEEN, 9", "KNIGHT, 2.5", "ROOK, 5", "BISHOP, 3"})
+    void 피스_점수_가져오기_테스트(PieceType pieceType, double score) {
+        //given
+        Piece piece = PieceFactory.getInstance(pieceType, Color.WHITE);
+
+        //when
+        double result = piece.getScore();
+
+        //then
+        assertThat(result)
+                .isEqualTo(score, withPrecision(0.0001));
     }
 }
