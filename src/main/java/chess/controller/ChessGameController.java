@@ -10,6 +10,7 @@ import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
 
 import chess.dto.MoveDto;
+import chess.repository.ChessDaoGenerator;
 import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -18,34 +19,34 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameController {
-    private final ChessGame chessGame;
+
     private final Map<Command, ChessGameAction> commandMapper = new EnumMap<>(Command.class);
 
-    public ChessGameController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
-        commandMapper.put(START, ignore -> start());
+    public ChessGameController() {
+        commandMapper.put(START, (chessGame, commands) -> start(chessGame));
         commandMapper.put(MOVE, this::move);
-        commandMapper.put(STATUS, ignore -> status());
-        commandMapper.put(CLEAR, ignore -> clear());
+        commandMapper.put(STATUS, (chessGame, ignore) -> status(chessGame));
+        commandMapper.put(CLEAR, (chessGame, ignore) -> clear(chessGame));
         commandMapper.put(END, ChessGameAction.EMPTY);
     }
 
     public void run() {
         OutputView.printGameStart();
+        final ChessGame chessGame = new ChessGame(ChessDaoGenerator.getChessDao());
         Command command = EMPTY;
         while (command != END) {
-            command = play();
+            command = play(chessGame);
         }
         OutputView.printGameEnd();
     }
 
-    private Command play() {
+    private Command play(final ChessGame chessGame) {
         try {
             final List<String> commands = InputView.readCommand();
             final Command command = Command.from(commands);
             command.validateCommandsSize(commands);
             final ChessGameAction chessGameAction = commandMapper.get(command);
-            chessGameAction.execute(commands);
+            chessGameAction.execute(chessGame, commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printException(e.getMessage());
@@ -53,7 +54,7 @@ public class ChessGameController {
         }
     }
 
-    private void start() {
+    private void start(final ChessGame chessGame) {
         if (chessGame.isInitialized()) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
@@ -61,7 +62,7 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getResult());
     }
 
-    private void move(final List<String> commands) {
+    private void move(final ChessGame chessGame, final List<String> commands) {
         if (!chessGame.isInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
@@ -70,14 +71,14 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getResult());
     }
 
-    private void status() {
+    private void status(final ChessGame chessGame) {
         if (!chessGame.isInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
         OutputView.printStatus(chessGame.getResult());
     }
 
-    private void clear() {
+    private void clear(final ChessGame chessGame) {
         if (!chessGame.isInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }

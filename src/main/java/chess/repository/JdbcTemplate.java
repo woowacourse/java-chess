@@ -7,15 +7,14 @@ import java.sql.SQLException;
 
 public class JdbcTemplate {
 
-    private final ConnectionGenerator connectionGenerator;
+    private final Connection connection;
 
-    public JdbcTemplate(final ConnectionGenerator connectionGenerator) {
-        this.connectionGenerator = connectionGenerator;
+    public JdbcTemplate(final Connection connection) {
+        this.connection = connection;
     }
 
     public void executeUpdate(final String query, final Object... parameters) {
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 1; i <= parameters.length; i++) {
                 preparedStatement.setObject(i, parameters[i - 1]);
             }
@@ -26,8 +25,7 @@ public class JdbcTemplate {
     }
 
     public <T> T query(final String query, final RowMapper<T> rowMapper) {
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
