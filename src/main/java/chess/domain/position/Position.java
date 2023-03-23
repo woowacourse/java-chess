@@ -82,4 +82,8 @@ public class Position {
     public int hashCode() {
         return Objects.hash(fileCoordinate, rankCoordinate);
     }
+
+    public boolean isSameRank(RankCoordinate other) {
+        return rankCoordinate == other;
+    }
 }

@@ -23,9 +23,4 @@ public class Empty extends Piece {
     public boolean isEmpty() {
         return true;
     }
-
-    @Override
-    public Piece move() {
-        throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
-    }
 }

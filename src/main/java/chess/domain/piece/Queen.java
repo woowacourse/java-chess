@@ -17,9 +17,4 @@ public class Queen extends Piece {
     public boolean isEmpty() {
         return false;
     }
-
-    @Override
-    public Piece move() {
-        return new Queen(getColor());
-    }
 }

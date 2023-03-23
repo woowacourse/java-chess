@@ -17,9 +17,4 @@ public class Rook extends Piece {
     public boolean isEmpty() {
         return false;
     }
-
-    @Override
-    public Piece move() {
-        return new Rook(getColor());
-    }
 }

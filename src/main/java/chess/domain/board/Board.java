@@ -24,7 +24,7 @@ public class Board {
     public void movePiece(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = boards.get(sourcePosition);
         validateMove(sourcePosition, targetPosition, sourcePiece);
-        boards.put(targetPosition, sourcePiece.move());
+        boards.put(targetPosition, sourcePiece);
         boards.put(sourcePosition, Empty.create());
     }
 

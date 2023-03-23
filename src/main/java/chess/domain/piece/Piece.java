@@ -16,8 +16,6 @@ public abstract class Piece {
 
     public abstract boolean isEmpty();
 
-    public abstract Piece move();
-
     public boolean canMove(Position sourcePosition, Position targetPosition, Color targetColor) {
         if (isSameColor(targetColor)) {
             return false;

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static chess.domain.PositionFixture.B_1;
+import static chess.domain.PositionFixture.B_2;
 import static chess.domain.PositionFixture.B_7;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,12 +19,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PawnTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
+    @CsvSource(value = { "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
             "C:TWO:false"}, delimiter = ':')
     void 하얀_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+        assertThat(pawn.canMove(B_2, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @ParameterizedTest
