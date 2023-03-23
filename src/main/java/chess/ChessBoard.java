@@ -13,6 +13,7 @@ import chess.piece.Side;
 import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChessBoard {
 
@@ -88,6 +89,13 @@ public class ChessBoard {
         if (!chessBoard.containsKey(Position.initPosition(i, vertical))) {
             chessBoard.put(Position.initPosition(i, vertical), new Empty(Shape.EMPTY, Side.EMPTY));
         }
+    }
+
+    public boolean checkKingIsDead() {
+        long kingCount = chessBoard.values().stream()
+                .filter(chessPiece -> chessPiece.getShape().equals(Shape.KING))
+                .count();
+        return kingCount != 2;
     }
 
     public ChessPiece getChessPieceByPosition(Position position) {

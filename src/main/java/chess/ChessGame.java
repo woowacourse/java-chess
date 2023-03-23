@@ -42,4 +42,8 @@ public class ChessGame {
         }
         throw new IllegalArgumentException(OUT_OF_CHESS_BOUND_ERROR);
     }
+
+    public boolean isGameEnd(ChessBoard chessBoard) {
+        return chessBoard.checkKingIsDead();
+    }
 }
