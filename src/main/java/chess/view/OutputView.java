@@ -81,10 +81,10 @@ public class OutputView {
 
     private static String createWinnerView(final BoardResult boardResult) {
         final Color winner = boardResult.calculateWinner();
-        if (winner.equals(Color.BLACK)) {
+        if (winner.is(Color.BLACK)) {
             return "흑 승";
         }
-        if (winner.equals(Color.WHITE)) {
+        if (winner.is(Color.WHITE)) {
             return "백 승";
         }
         return "무승부";
