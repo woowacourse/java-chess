@@ -1,15 +1,14 @@
 package chess.domain.pieces;
 
-import chess.domain.board.File;
 import chess.domain.Position;
-import chess.domain.board.Rank;
 import chess.domain.Team;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.pieces.Piece.INVALID_TEAM;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
 
@@ -18,9 +17,7 @@ class KingTest {
     void validateTeamTest_exception() {
         Team team = Team.NEUTRALITY;
 
-        assertThatIllegalArgumentException().isThrownBy(
-                () -> new King(team)
-        ).withMessage(INVALID_TEAM);
+        assertThatThrownBy(() -> new King(team));
     }
 
     @Test

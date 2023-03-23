@@ -16,8 +16,8 @@ class PositionTest {
 
         // when
 
-        Position expected = position.nextPosition(1,0);
+        Position expected = position.nextPosition(1, 0);
         // then
-        Assertions.assertThat(expected).isInstanceOf(new Position(Rank.TWO,File.A).getClass());
+        Assertions.assertThat(expected).isInstanceOf(new Position(Rank.TWO, File.A).getClass());
     }
 }

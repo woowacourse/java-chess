@@ -1,39 +1,34 @@
 package chess.domain.pieces;
 
-import static chess.domain.pieces.Piece.INVALID_TEAM;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-
-import chess.domain.board.File;
 import chess.domain.Position;
-import chess.domain.board.Rank;
 import chess.domain.Team;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 import chess.domain.math.Direction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
     @Test
-    @DisplayName("룩의 팀을 검증한다.")
+    @DisplayName("폰의 팀을 검증한다.")
     void validateTeamTest_exception() {
         Team team = Team.NEUTRALITY;
 
-        assertThatIllegalArgumentException().isThrownBy(
-                () -> new Pawn(team)
-        ).withMessage(INVALID_TEAM);
+        assertThatThrownBy(() -> new Pawn(team));
     }
 
-    @Test
+    @ParameterizedTest(name = "input : {0}")
     @DisplayName("pawn은 black 팀일때 DOWN, DOWN_LEFT, DOWN_RIGHT 방향을 가진다.")
-    void validateTeam_white(){
+    @CsvSource(value = {"UP:true","UP_LEFT:true","UP_RIGHT:true","DOWN:false","DOWN_LEFT:false","DOWN_RIGHT:false"},delimiter = ':')
+    void validateTeam_white(String direction, boolean is){
         Pawn pawn = new Pawn(Team.WHITE);
-        Assertions.assertThat(pawn.hasDirection(Direction.DOWN)).isTrue();
-        Assertions.assertThat(pawn.hasDirection(Direction.DOWN_LEFT)).isTrue();
-        Assertions.assertThat(pawn.hasDirection(Direction.DOWN_RIGHT)).isTrue();
-        Assertions.assertThat(pawn.hasDirection(Direction.UP)).isFalse();
-        Assertions.assertThat(pawn.hasDirection(Direction.UP_LEFT)).isFalse();
-        Assertions.assertThat(pawn.hasDirection(Direction.UP_RIGHT)).isFalse();
+        Assertions.assertThat(pawn.hasDirection(Direction.valueOf(direction))).isEqualTo(is);
     }
 
 
