@@ -3,6 +3,8 @@ package domain.piece;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import domain.Square;
+import domain.piece.sliding.Queen;
+import domain.piece.sliding.Rook;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
