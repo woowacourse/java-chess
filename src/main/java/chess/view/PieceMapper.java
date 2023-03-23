@@ -11,7 +11,7 @@ public enum PieceMapper {
     PAWN(Pawn.class, "p", "P"),
     QUEEN(Queen.class, "q", "Q"),
     ROOK(Rook.class, "r", "R"),
-    EMPTY(null, ".", "."),
+    EMPTY(Empty.class, ".", "."),
     ;
 
     private static final String INVALID_PIECE_MESSAGE = "잘못된 말을 입력했습니다.";
@@ -28,7 +28,7 @@ public enum PieceMapper {
 
     public static PieceMapper of(Class<? extends Piece> piece) {
         return Arrays.stream(values())
-                .filter(it -> it.piece == piece)
+                .filter(it -> it.piece.equals(piece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
     }

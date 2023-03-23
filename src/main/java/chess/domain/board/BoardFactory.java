@@ -28,7 +28,7 @@ public class BoardFactory {
             addPiecesBy(boards, rankCoordinate, new Pawn(team));
         }
         if (rankType == EMPTY_RANK) {
-            addPiecesBy(boards, rankCoordinate, null);
+            addPiecesBy(boards, rankCoordinate, Empty.create());
         }
     }
 

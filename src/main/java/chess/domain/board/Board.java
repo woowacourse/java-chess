@@ -1,11 +1,11 @@
 package chess.domain.board;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Board {
 
@@ -30,7 +30,7 @@ public class Board {
         Piece sourcePiece = boards.get(sourcePosition);
         Piece movedPiece = sourcePiece.move();
         boards.put(targetPosition, movedPiece);
-        boards.put(sourcePosition, null);
+        boards.put(sourcePosition, Empty.create());
     }
 
     private void validate(Position sourcePosition, Position targetPosition, Team nowPlayingTeam) {
@@ -42,22 +42,12 @@ public class Board {
 
     private void validateSourceTeam(Position sourcePosition, Team nowPlayingTeam) {
         Piece sourcePiece = findPiece(sourcePosition);
-        if (sourcePiece == null) {
-            throw new IllegalArgumentException("본인 말만 움직일 수 있습니다.");
-        }
         sourcePiece.validateTeam(nowPlayingTeam);
     }
 
     private void validateCanMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = findPiece(sourcePosition);
         Piece targetPiece = findPiece(targetPosition);
-        if (sourcePiece == null) {
-            throw new IllegalArgumentException("본인 말만 움직일 수 있습니다.");
-        }
-        if (targetPiece == null) {
-            sourcePiece.validateCanMove(sourcePosition, targetPosition, Team.EMPTY);
-            return;
-        }
         sourcePiece.validateCanMove(sourcePosition, targetPosition, targetPiece.getTeam());
     }
 
@@ -70,7 +60,7 @@ public class Board {
     boolean isEmptyPosition(List<Position> paths) {
         return paths.isEmpty() || paths.stream()
                 .map(boards::get)
-                .allMatch(Objects::isNull);
+                .allMatch(Piece::isEmpty);
     }
 
     public Map<Position, Piece> getBoards() {

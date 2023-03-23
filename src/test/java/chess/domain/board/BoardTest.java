@@ -55,7 +55,7 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
         board.movePiece(C_2, C_4, Team.WHITE);
 
-        assertThat(board.findPiece(C_2)).isEqualTo(null);
+        assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
     }
 }

@@ -5,7 +5,6 @@ import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 
 import java.util.Map;
 
@@ -32,11 +31,6 @@ public class OutputView {
         for (FileCoordinate fileCoordinate : FileCoordinate.getSortedFileCoordinates()) {
             Position position = new Position(fileCoordinate, rankCoordinate);
             Piece piece = boards.get(position);
-            if (piece == null) {
-                String message = PieceMapper.of(null).getMessage(Team.EMPTY);
-                System.out.print(message);
-                continue;
-            }
             String message = PieceMapper.of(piece.getClass()).getMessage(piece.getTeam());
             System.out.print(message);
         }
