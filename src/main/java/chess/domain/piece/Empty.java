@@ -14,11 +14,11 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
+    protected Set<Position> computePath(final Position source, final Position target) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_EXCEPTION_MESSAGE);
     }
 
-    public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
+    protected boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_EXCEPTION_MESSAGE);
     }
 

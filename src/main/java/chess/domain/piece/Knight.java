@@ -13,7 +13,7 @@ public final class Knight extends Normal {
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
+    protected Set<Position> computePath(final Position source, final Position target) {
         if (!canKnightJump(source, target)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }

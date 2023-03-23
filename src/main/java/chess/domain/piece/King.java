@@ -12,7 +12,7 @@ public final class King extends Normal {
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
+    protected Set<Position> computePath(final Position source, final Position target) {
         if (!canKingMove(source, target)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
