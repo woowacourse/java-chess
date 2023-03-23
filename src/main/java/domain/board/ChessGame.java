@@ -24,11 +24,7 @@ public final class ChessGame {
     public List<Color> getWinningColor() {
         Map<Color, Double> collectedPoints = collectPoint();
         double maxPoint = calculateMaxPoint(collectPoint());
-
-        return collectedPoints.entrySet().stream()
-                .filter(entry -> Double.compare(entry.getValue(), maxPoint) == 0)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+        return getColorsWithMaxPoint(collectedPoints, maxPoint);
     }
 
     private double calculateMaxPoint(final Map<Color, Double> collectedPoints) {
@@ -36,6 +32,16 @@ public final class ChessGame {
                 .mapToDouble(Double::doubleValue)
                 .max()
                 .orElse(0.0);
+    }
+
+    private static List<Color> getColorsWithMaxPoint(
+            final Map<Color, Double> collectedPoints,
+            final double maxPoint
+    ) {
+        return collectedPoints.entrySet().stream()
+                .filter(entry -> Double.compare(entry.getValue(), maxPoint) == 0)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     public boolean isGameNotOver() {
