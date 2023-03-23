@@ -28,6 +28,7 @@ public abstract class Piece {
     }
 
     public Direction findDirection(Position start, Position end) {
+        System.out.println(Direction.findDirectionByGap(start, end, this).name());
         return Direction.findDirectionByGap(start, end, this);
     }
 

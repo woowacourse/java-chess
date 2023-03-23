@@ -44,10 +44,22 @@ public enum Direction {
                     if (piece instanceof Knight) {
                         return direction.x == gapOfColumn && direction.y == gapOfRank;
                     }
+
+                    if (isDiagonal(direction)) {
+                        return direction.x * absX == gapOfColumn && direction.y * absX == gapOfRank;
+                    }
+
                     return direction.x * absX == gapOfColumn && direction.y * absY == gapOfRank;
                 })
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
+    }
+
+    private static boolean isDiagonal(Direction direction) {
+        return isEqualTo(direction, TOP_LEFT)
+                || isEqualTo(direction, TOP_RIGHT)
+                || isEqualTo(direction, BOTTOM_LEFT)
+                || isEqualTo(direction, BOTTOM_RIGHT);
     }
 
     public int getX() {
@@ -56,5 +68,9 @@ public enum Direction {
 
     public int getY() {
         return y;
+    }
+
+    private static boolean isEqualTo(Direction o1, Direction o2) {
+        return (o1.x == o2.x) && (o1.y == o2.y);
     }
 }
