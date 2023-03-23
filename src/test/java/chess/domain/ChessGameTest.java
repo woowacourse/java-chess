@@ -17,8 +17,8 @@ class ChessGameTest {
         @Test
         @DisplayName("두 팀의 왕이 모두 죽지 않았으면 false 를 반환한다.")
         void isKingDeadTest1() {
-            Board board = BoardGenerator.createBoard();
-            boolean isGameEnd = board.isKingDead(Team.WHITE);
+            ChessGame game = ChessGame.create();
+            boolean isGameEnd = game.isGameEnd();
 
             assertThat(isGameEnd).isFalse();
         }
@@ -53,6 +53,20 @@ class ChessGameTest {
             boolean isGameEnd = game.isGameEnd();
 
             assertThat(isGameEnd).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("한 팀의 점수를 계산하는 getTotalScore 메서드 테스트")
+    class getTotalScoreTest {
+
+        @Test
+        @DisplayName("한 팀의 초기 점수의 합을 구한다.")
+        void getTotalScoreTest1() {
+            ChessGame game = ChessGame.create();
+            double score = game.getTotalScore(Team.WHITE);
+
+            assertThat(score).isEqualTo(38.0);
         }
     }
 }
