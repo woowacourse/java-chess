@@ -2,7 +2,11 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcChessDao implements ChessDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -23,13 +27,32 @@ public class JdbcChessDao implements ChessDao {
     }
 
     @Override
-    public void addGame() {
-
+    public void addGame(String gameName) {
+        final String query = "INSERT INTO game (gameName) VALUES (?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
-    public void findAllGame() {
-
+    public List<String> findAllGame() {
+        final String query = "SELECT gameName FROM game";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<String> gameNames = new ArrayList<>();
+            while(resultSet.next()) {
+                String gameName = resultSet.getString("gameName");
+                gameNames.add(gameName);
+            }
+            return gameNames;
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
@@ -39,7 +62,13 @@ public class JdbcChessDao implements ChessDao {
 
     @Override
     public void deleteAllGame() {
-
+        final String query = "DELETE from game";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override

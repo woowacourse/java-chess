@@ -1,9 +1,11 @@
 package repository;
 
-public interface ChessDao {
-    void addGame();
+import java.util.List;
 
-    void findAllGame();
+public interface ChessDao {
+    void addGame(String gameName);
+
+    List<String> findAllGame();
 
     void findBoardByGameName();
 
