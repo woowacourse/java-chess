@@ -20,7 +20,7 @@ public class PositionTest {
     void move(Direction direction, File file, Rank rank) {
         Position position = new Position(File.B, Rank.TWO);
 
-        assertThat(position.move(direction))
+        assertThat(position.moveTo(direction))
                 .isEqualTo(new Position(file, rank));
     }
 

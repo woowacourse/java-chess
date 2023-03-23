@@ -20,7 +20,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position move(Direction direction) {
+    public Position moveTo(Direction direction) {
         File newFile = file.move(direction);
         Rank newRank = rank.move(direction);
         return new Position(newFile, newRank);

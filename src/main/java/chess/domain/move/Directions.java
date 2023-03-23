@@ -59,7 +59,7 @@ public class Directions {
     public Position move(Position position) {
         Position destination = position;
         for (Direction direction : directions) {
-            destination = destination.move(direction);
+            destination = destination.moveTo(direction);
         }
         return destination;
     }
