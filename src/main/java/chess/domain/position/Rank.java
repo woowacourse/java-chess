@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public enum Rank {
 
@@ -24,6 +26,12 @@ public enum Rank {
 			.filter((rank) -> value == rank.rank)
 			.findFirst()
 			.orElseThrow(IllegalArgumentException::new);
+	}
+
+	public static List<Rank> getRanks() {
+		final List<Rank> ranks = Arrays.asList(Rank.values());
+		ranks.sort(Comparator.naturalOrder());
+		return ranks;
 	}
 
 	public int rankValue() {
