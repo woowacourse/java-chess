@@ -220,17 +220,32 @@
 - king은 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
 - 한 번에 한 쪽의 점수만을 계산해야 한다.
 
-### **추가되는 클래스들**
+### **추가된 기능들**
 
 ### chessBoard 패키지
-- [ ] BoardStatus
-  - ColorBoard 에 Color 별의 Piece 를 넣어주는 역할을 한다.
-  - WhiteBoard, BlackBoard의 점수를 보고 결과를 출력한다.
-  - [ ] ColorBoard
-    - ColorBoard 의 점수를 계산한다.
-- [ ] ColorResult
-  - 해당 Color 의 승패 결과를 나타낸다. 
-- [ ] ColorScore
-  - 해당 Color 의 점수를 나타낸다.
-- [ ] GameResult
-  - 승, 무, 패를 나타내는 Enum Type 객체
+- [x] ChessBoard
+  - 현재 King 이 잡힌 상태인지 반환
+  - Color 별로 점수 계산
+  - Color 별로 King 의 존재 여부 반환
+- [x] ColorScore
+  - Color, Score 를 담은 객체
+- [x] GameResult
+  - Win, Lose, Draw 와 그에 따른 메세지가 담겨있는 객체
+- [x] Result
+  - Color 별 승패 여부가 담긴 객체
+- [x] Score
+  - Color 별 점수가 담긴 객체
+- [x] StatusResult
+  - Status 명령어가 들어왔을 때 반환할 객체
+  - Score 를 가진다.
+  - Result 를 가진다.
+- [x] ChessGame
+  - King 이 잡힌 상태인지 반환한다.
+    - King 이 잡힌 상태이면, Result 를 반환한다.
+  - Status 가 들어오면 StatusResult 를 반환한다.
+- [x] ChessGameController
+  - King 이 잡혔을 때 게임이 종료된다.
+  - Status 명령어가 들어왔을 때 게임이 종료된다.
+- [x] OutputView
+  - 승패 여부를 출력한다.
+  - 점수를 출력한다.
