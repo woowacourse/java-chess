@@ -14,7 +14,7 @@ public class ChessBoard {
     private static final int NUMBER_OF_NONE_LINES = 4;
     private static final int NUMBER_OF_STANDARD_FOR_DECREASING_PAWN_SCORE = 2;
     private static final double PAWN_SCORE_IS_ON_SAME_COLUMN = 0.5;
-    private static final int STANDARD_NUMBER_OF_CHECKMATE = 2; 
+    private static final int STANDARD_NUMBER_OF_CHECKMATE = 2;
     private static final int ADDITIONAL_COUNT_WHEN_FOUND_PAWN = 1;
 
     private final List<Rank> chessBoard;
@@ -61,6 +61,12 @@ public class ChessBoard {
                 .flatMap(rank -> rank.getRank().stream())
                 .filter(square -> square.isSameType(PieceType.KING))
                 .count() != STANDARD_NUMBER_OF_CHECKMATE;
+    }
+
+    public boolean isExistKingThisColor(Color color) {
+        return chessBoard.stream()
+                .flatMap(rank -> rank.getRank().stream())
+                .anyMatch(square -> square.isSameType(PieceType.KING) && square.isSameColor(color));
     }
 
     private double diffScore(Color color) {

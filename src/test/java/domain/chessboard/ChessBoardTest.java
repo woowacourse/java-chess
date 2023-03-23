@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
+import static domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChessBoardTest {
@@ -43,7 +44,7 @@ public class ChessBoardTest {
 
         // When
         double blackScore = chessBoard.calculateColorScore(Color.BLACK);
-        double whiteScore = chessBoard.calculateColorScore(Color.WHITE);
+        double whiteScore = chessBoard.calculateColorScore(WHITE);
 
         // Then
         assertThat(blackScore).isEqualTo(38);
@@ -66,12 +67,12 @@ public class ChessBoardTest {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
         chessBoard.findSquare(PositionFactory.createPosition("a3"))
-                .bePiece(new Square(new Pawn(Color.WHITE)));
+                .bePiece(new Square(new Pawn(WHITE)));
         chessBoard.findSquare(PositionFactory.createPosition("a4"))
-                .bePiece(new Square(new Pawn(Color.WHITE)));
+                .bePiece(new Square(new Pawn(WHITE)));
 
         // When&Then
-        assertThat(chessBoard.calculateColorScore(Color.WHITE)).isEqualTo(38.5);
+        assertThat(chessBoard.calculateColorScore(WHITE)).isEqualTo(38.5);
     }
 
     /*
@@ -113,6 +114,7 @@ public class ChessBoardTest {
 
         // When&Then
         assertThat(chessBoard.isCheckMate()).isTrue();
+        assertThat(chessBoard.isExistKingThisColor(Color.BLACK)).isFalse();
     }
 
     /*
@@ -134,6 +136,7 @@ public class ChessBoardTest {
 
         // When&Then
         assertThat(chessBoard.isCheckMate()).isTrue();
+        assertThat(chessBoard.isExistKingThisColor(Color.WHITE)).isFalse();
     }
 
 }
