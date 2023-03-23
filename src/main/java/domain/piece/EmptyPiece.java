@@ -28,9 +28,4 @@ public class EmptyPiece extends Piece {
     public PieceCategory getCategory() {
         return PieceCategory.EMPTY_PIECE;
     }
-
-    @Override
-    public boolean isOpponentSideWith(Piece targetPiece) {
-        throw new IllegalArgumentException("서버 내부 에러 - EmptyPiece는 상대 진영인지 확인할 수 없습니다.");
-    }
 }

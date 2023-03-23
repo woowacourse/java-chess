@@ -27,10 +27,7 @@ public abstract class Piece {
     }
 
     public boolean isOpponentSideWith(Piece targetPiece) {
-        if (this.side.equals(WHITE)) {
-            return targetPiece.side.equals(Side.BLACK);
-        }
-        return targetPiece.side.equals(WHITE);
+        return this.side.isOpponentWith(targetPiece.side);
     }
 
     public boolean isOpponentOf(Side side) {
