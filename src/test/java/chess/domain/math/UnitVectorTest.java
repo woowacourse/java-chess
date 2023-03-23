@@ -22,7 +22,7 @@ class UnitVectorTest {
         var current = new Position(5, 1);
         var target = new Position(4, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP);
     }
 
     @Test
@@ -31,7 +31,7 @@ class UnitVectorTest {
         var current = new Position(0, 0);
         var target = new Position(1, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN);
     }
 
     @Test
@@ -40,7 +40,7 @@ class UnitVectorTest {
         var current = new Position(0, 1);
         var target = new Position(0, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(LEFT);
     }
 
     @Test
@@ -49,7 +49,7 @@ class UnitVectorTest {
         var current = new Position(0, 0);
         var target = new Position(0, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(RIGHT);
     }
 
     @Test
@@ -58,7 +58,7 @@ class UnitVectorTest {
         var current = new Position(1, 0);
         var target = new Position(0, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP_RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP_RIGHT);
     }
 
     @Test
@@ -67,7 +67,7 @@ class UnitVectorTest {
         var current = new Position(0, 0);
         var target = new Position(1, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN_RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN_RIGHT);
     }
 
     @Test
@@ -76,7 +76,7 @@ class UnitVectorTest {
         var current = new Position(0, 1);
         var target = new Position(1, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN_LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN_LEFT);
     }
 
     @Test
@@ -85,6 +85,6 @@ class UnitVectorTest {
         var current = new Position(1, 1);
         var target = new Position(0, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP_LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP_LEFT);
     }
 }
