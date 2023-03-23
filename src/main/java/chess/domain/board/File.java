@@ -42,6 +42,16 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
+    public static List<File> sliceBetweenExcludeEnd(final File from, final File to) {
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
+
+        return IntStream.range(min, max)
+                .skip(1)
+                .mapToObj(File::from)
+                .collect(Collectors.toList());
+    }
+
     public int getIndex() {
         return index;
     }

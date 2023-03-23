@@ -41,25 +41,15 @@ public class RouteFinder {
     }
 
     private static List<Position> calculateDiagonal(final Position from, final Position to) {
-        List<File> files = File.sliceBetween(from.getFile(), to.getFile());
-        List<Rank> ranks = Rank.sliceBetween(from.getRank(), to.getRank());
+        List<File> files = File.sliceBetweenExcludeEnd(from.getFile(), to.getFile());
+        List<Rank> ranks = Rank.sliceBetweenExcludeEnd(from.getRank(), to.getRank());
 
         if (files.size() != ranks.size()) {
             return Collections.emptyList();
         }
 
-        List<File> cutFiles = files.subList(END_OF_SIZE, files.size() - END_OF_SIZE);
-        List<Rank> cutRanks = ranks.subList(END_OF_SIZE, ranks.size() - END_OF_SIZE);
-
-        if (from.getFile().getIndex() > to.getFile().getIndex()) {
-            Collections.reverse(cutFiles);
-        }
-
-        if (from.getRank().getIndex() > to.getRank().getIndex()) {
-            Collections.reverse(cutRanks);
-        }
-
-        return cutFiles.stream().flatMap(file -> cutRanks.stream()
+        return files.stream()
+                .flatMap(file -> ranks.stream()
                         .map(rank -> Position.of(file, rank)))
                 .collect(Collectors.toList());
     }

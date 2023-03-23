@@ -61,6 +61,16 @@ public enum Rank {
                 .collect(Collectors.toList());
     }
 
+    public static List<Rank> sliceBetweenExcludeEnd(final Rank from, final Rank to) {
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
+
+        return IntStream.range(min, max)
+                .skip(1)
+                .mapToObj(Rank::of)
+                .collect(Collectors.toList());
+    }
+
     public int getIndex() {
         return index;
     }
