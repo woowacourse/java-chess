@@ -1,6 +1,8 @@
 package chess.domain.board.repository;
 
-import chess.dao.BoardDao;
+import chess.dao.BoardModifyDao;
+import chess.dao.BoardRegisterDao;
+import chess.dao.BoardSearchDao;
 import chess.dao.MySqlManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -23,12 +25,13 @@ class BoardRepositoryTest {
 
     @BeforeEach
     void initDatabase() {
-        final String query = "INSERT INTO BOARD(position) VALUES(?)";
+        final String query = "INSERT INTO BOARD(POSITION, TURN) VALUES(?, ?)";
 
         try (final Connection connection = MySqlManager.establishConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
             preparedStatement.setString(1, "mock data");
+            preparedStatement.setString(2, "WHITE");
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {}
@@ -51,9 +54,11 @@ class BoardRepositoryTest {
     void test_save() throws Exception {
         //given
         final String position = "King : 1 1, Queen : 1, 2";
+        final String turn = "WHITE";
+        final BoardRegisterDao boardRegisterDao = new BoardRegisterDao(position, turn);
 
         //when & then
-        Assertions.assertDoesNotThrow(() -> boardRepository.save(position));
+        Assertions.assertDoesNotThrow(() -> boardRepository.save(boardRegisterDao));
     }
 
     @Test
@@ -63,12 +68,13 @@ class BoardRepositoryTest {
         final Long boardId = 1L;
 
         //when
-        Optional<BoardDao> savedBoardDao = boardRepository.findById(boardId);
+        Optional<BoardSearchDao> savedBoardDao = boardRepository.findById(boardId);
 
         //then
         assertAll(
                 () -> assertTrue(savedBoardDao.isPresent()),
-                () -> assertEquals(savedBoardDao.get().chessBoardPosition(), "mock data")
+                () -> assertEquals(savedBoardDao.get().position(), "mock data"),
+                () -> assertEquals(savedBoardDao.get().turn(), "WHITE")
         );
     }
 
@@ -78,15 +84,19 @@ class BoardRepositoryTest {
         //given
         final Long boardId = 1L;
         final String modifyingPosition = "modify data";
+        final String turn = "BLACK";
+
+        final BoardModifyDao boardModifyDao = new BoardModifyDao(boardId, modifyingPosition, turn);
 
         //when
-        boardRepository.modifyById(boardId, modifyingPosition);
-        final Optional<BoardDao> modifiedBoardDao = boardRepository.findById(boardId);
+        boardRepository.modifyById(boardModifyDao);
+        final Optional<BoardSearchDao> modifiedBoardDao = boardRepository.findById(boardId);
 
         //then
         assertAll(
                 () -> assertTrue(modifiedBoardDao.isPresent()),
-                () -> assertEquals(modifiedBoardDao.get().chessBoardPosition(), modifyingPosition)
+                () -> assertEquals(modifiedBoardDao.get().position(), modifyingPosition),
+                () -> assertEquals(modifiedBoardDao.get().turn(), turn)
         );
     }
 
@@ -98,7 +108,7 @@ class BoardRepositoryTest {
 
         //when
         boardRepository.deleteById(boardId);
-        final Optional<BoardDao> savedBoardDao = boardRepository.findById(boardId);
+        final Optional<BoardSearchDao> savedBoardDao = boardRepository.findById(boardId);
 
         //then
         assertTrue(savedBoardDao.isEmpty());

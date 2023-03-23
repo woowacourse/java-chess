@@ -1,6 +1,8 @@
 package chess.domain.board.repository;
 
-import chess.dao.BoardDao;
+import chess.dao.BoardModifyDao;
+import chess.dao.BoardRegisterDao;
+import chess.dao.BoardSearchDao;
 import chess.dao.MySqlManager;
 
 import java.sql.Connection;
@@ -11,14 +13,15 @@ import java.util.Optional;
 
 public class BoardRepository {
 
-    public void save(final String position) {
+    public void save(final BoardRegisterDao boardRegisterDao) {
 
-        final String query = "INSERT INTO BOARD(position) VALUES (?)";
+        final String query = "INSERT INTO BOARD(POSITION, TURN) VALUES (?, ?)";
 
         try (final Connection connection = MySqlManager.establishConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-            preparedStatement.setString(1, position);
+            preparedStatement.setString(1, boardRegisterDao.position());
+            preparedStatement.setString(2, boardRegisterDao.turn());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -26,7 +29,7 @@ public class BoardRepository {
         }
     }
 
-    public Optional<BoardDao> findById(final Long id) {
+    public Optional<BoardSearchDao> findById(final Long id) {
         final String query = "SELECT * FROM BOARD WHERE BOARD_ID = ?";
 
         try (final Connection connection = MySqlManager.establishConnection();
@@ -44,12 +47,13 @@ public class BoardRepository {
         return Optional.empty();
     }
 
-    private Optional<BoardDao> mappingToBoardDaoFrom(final ResultSet resultSet) {
+    private Optional<BoardSearchDao> mappingToBoardDaoFrom(final ResultSet resultSet) {
         try {
             if (resultSet.next()) {
-                return Optional.of(new BoardDao(
+                return Optional.of(new BoardSearchDao(
                         resultSet.getLong("BOARD_ID"),
-                        resultSet.getString("POSITION")
+                        resultSet.getString("POSITION"),
+                        resultSet.getString("TURN")
                 ));
             }
         } catch (SQLException e) {
@@ -59,14 +63,15 @@ public class BoardRepository {
         return Optional.empty();
     }
 
-    public void modifyById(final Long boardId, final String modifyingPosition) {
-        final String query = "UPDATE BOARD SET POSITION = ? WHERE BOARD_ID = ?";
+    public void modifyById(final BoardModifyDao boardModifyDao) {
+        final String query = "UPDATE BOARD SET POSITION = ?, TURN = ? WHERE BOARD_ID = ?";
 
         try (final Connection connection = MySqlManager.establishConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-            preparedStatement.setString(1, modifyingPosition);
-            preparedStatement.setLong(2, boardId);
+            preparedStatement.setString(1, boardModifyDao.position());
+            preparedStatement.setString(2, boardModifyDao.turn());
+            preparedStatement.setLong(3, boardModifyDao.id());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
