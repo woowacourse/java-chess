@@ -45,6 +45,10 @@ public abstract class Piece {
         return this.team == otherPiece.team;
     }
 
+    public boolean isNeutrality() {
+        return team.isNeutrality();
+    }
+
     public final Team getTeam() {
         return team;
     }

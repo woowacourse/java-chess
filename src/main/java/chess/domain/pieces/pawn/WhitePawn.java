@@ -12,15 +12,18 @@ public final class WhitePawn extends Pawn {
     }
 
     @Override
-    protected void validateKill(final Direction movableDirection, final List<Piece> otherPieces) {
-        Piece otherPiece = otherPieces.get(OTHER_PIECE_INDEX);
+    protected void validateKill(final Direction correctDirection, final List<Piece> otherPieces) {
+        if (correctDirection == Direction.UP) {
+            return;
+        }
 
-        if (validateAllyKill(movableDirection, otherPiece)) {
+        Piece otherPiece = otherPieces.get(OTHER_PIECE_INDEX);
+        if (isNotValidKill(otherPiece)) {
             throw new IllegalArgumentException(INVALID_MOVE_DIAGONAL);
         }
     }
 
-    private boolean validateAllyKill(final Direction movableDirection, final Piece otherPiece) {
-        return movableDirection != Direction.DOWN && otherPiece.isAlly(this);
+    private boolean isNotValidKill(final Piece otherPiece) {
+        return otherPiece.isAlly(this) || otherPiece.isNeutrality();
     }
 }

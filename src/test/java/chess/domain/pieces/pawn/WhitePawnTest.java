@@ -4,6 +4,7 @@ import static chess.domain.pieces.Piece.INVALID_DIRECTION;
 import static chess.domain.pieces.Piece.INVALID_MOVE_EXIST_ALLY;
 import static chess.domain.pieces.pawn.Pawn.INVALID_DEFAULT_DISTANCE;
 import static chess.domain.pieces.pawn.Pawn.INVALID_FIRST_DISTANCE;
+import static chess.domain.pieces.pawn.Pawn.INVALID_MOVE_DIAGONAL;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -56,6 +57,14 @@ class WhitePawnTest {
         assertThatNoException().isThrownBy(
                 () -> whitePawn.validateMove(Direction.UP_RIGHT, List.of(new BlackPawn()))
         );
+    }
+
+    @Test
+    @DisplayName("대각선으로 가는 경우 빈칸이면 갈 수 없습니다.")
+    void 대각선으로_가는_경우_빈칸이면_갈_수_없습니다() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> whitePawn.validateMove(Direction.UP_RIGHT, List.of(new EmptyPiece()))
+        ).withMessage(INVALID_MOVE_DIAGONAL);
     }
 
     @Test
