@@ -12,6 +12,7 @@ import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
 import dto.BoardDto;
+import dto.GameInfoDto;
 import dto.ScoreDto;
 
 public class ChessService {
@@ -19,14 +20,15 @@ public class ChessService {
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
-    public void setUp(List<BoardDto> boardInfo) {
+    public void setUp(GameInfoDto gameInfoDto) {
         if (isOngoing) {
             throw new IllegalStateException("이미 게임이 실행중 입니다.");
         }
         chessBoard.initialize();
-        for (BoardDto boardDto : boardInfo) {
+        for (BoardDto boardDto : gameInfoDto.getBoardDtos()) {
             chessBoard.putPiece(boardDto);
         }
+        currentCamp = Camp.find(gameInfoDto.getCurrentTurn());
         isOngoing = true;
     }
 
@@ -42,19 +44,20 @@ public class ChessService {
         isOngoing = !chessBoard.isCapturedKing(currentCamp);
     }
 
-    public List<BoardDto> end() {
+    public GameInfoDto end() {
         if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         isOngoing = false;
-        return getBoardDtos();
+        return generateGameInfoDto();
     }
 
-    private List<BoardDto> getBoardDtos() {
+    private GameInfoDto generateGameInfoDto() {
         Map<Square, Piece> board = chessBoard.getBoard();
-        return board.keySet().stream()
+        List<BoardDto> boardDtos = board.keySet().stream()
                 .map(square -> BoardDto.of(square, board.get(square)))
                 .collect(Collectors.toUnmodifiableList());
+        return new GameInfoDto(currentCamp.name(), boardDtos);
     }
 
     private Square getCurrentSquare(String currentSquareInput) {

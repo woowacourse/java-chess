@@ -19,4 +19,8 @@ public interface ChessDao {
     void saveMoveHistory(long game_id, MoveHistoryDto moveHistoryDto);
 
     long findGameIdByGameName(String gameName);
+
+    String findCurrentTurnByGameName(String gameName);
+
+    void updateCurrentTurn(long gameId, String currentTurn);
 }

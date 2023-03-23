@@ -23,7 +23,8 @@ public class JdbcChessDao implements ChessDao {
     public long addGame(String gameName) {
         final String query = "INSERT INTO game (gameName) VALUES (?)";
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query,
+                     Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -124,8 +125,37 @@ public class JdbcChessDao implements ChessDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("_id");
+            }
+            throw new IllegalArgumentException("존재하지 않는 게임입니다.");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public String findCurrentTurnByGameName(String gameName) {
+        final String query = "SELECT currentTurn FROM game WHERE gameName = ?";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            return resultSet.getInt("_id");
+            return resultSet.getString("currentTurn");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public void updateCurrentTurn(long gameId, String currentTurn) {
+        final String query = "UPDATE game SET currentTurn = ? WHERE _id = ?";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, currentTurn);
+            preparedStatement.setLong(2, gameId);
+            preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }

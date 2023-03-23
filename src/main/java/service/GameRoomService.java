@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import dto.BoardDto;
+import dto.GameInfoDto;
 import repository.ChessDao;
 
 public class GameRoomService {
@@ -22,12 +22,13 @@ public class GameRoomService {
         return chessDao.findAllGame();
     }
 
-    public List<BoardDto> getBoard(String gameName) {
+    public GameInfoDto getGameInfo(String gameName) {
         this.gameId = chessDao.findGameIdByGameName(gameName);
-        return chessDao.findBoardByGameName(gameName);
+        return new GameInfoDto(chessDao.findCurrentTurnByGameName(gameName), chessDao.findBoardByGameName(gameName));
     }
 
-    public void saveBoard(List<BoardDto> boardDtos) {
-        chessDao.saveBoard(gameId, boardDtos);
+    public void saveGameInfo(GameInfoDto gameInfoDto) {
+        chessDao.updateCurrentTurn(gameId, gameInfoDto.getCurrentTurn());
+        chessDao.saveBoard(gameId, gameInfoDto.getBoardDtos());
     }
 }
