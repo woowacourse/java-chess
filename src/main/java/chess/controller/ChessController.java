@@ -10,18 +10,17 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessController {
 
     private final InputExceptionHandler inputExceptionHandler;
-    private final Map<Command, Consumer<CommandRequest>> actionMapper = new EnumMap<>(Command.class);
+    private final Map<Command, CommandAction> actionMapper = new EnumMap<>(Command.class);
+    private AppStatus appStatus;
     private ChessGame chessGame;
-    private boolean toExit;
 
     public ChessController() {
         this.inputExceptionHandler = new InputExceptionHandler(OutputView::printInputErrorMessage);
-        this.toExit = false;
+        this.appStatus = AppStatus.RUNNING;
         actionMapper.put(Command.START, this::start);
         actionMapper.put(Command.MOVE, this::move);
         actionMapper.put(Command.END, this::end);
@@ -30,38 +29,40 @@ public class ChessController {
 
     public void run() {
         OutputView.printGuideMessage();
-        while (!toExit) {
-            inputExceptionHandler.retryExecuteIfInputIllegal(InputView::requestGameCommand, this::execute);
+        while (appStatus == AppStatus.RUNNING) {
+            appStatus = inputExceptionHandler.retryExecuteIfInputIllegal(InputView::requestGameCommand, this::execute);
         }
     }
 
-    private void execute(CommandRequest commandRequest) {
-        Consumer<CommandRequest> action = actionMapper.getOrDefault(commandRequest.getCommand(),
+    private AppStatus execute(CommandRequest commandRequest) {
+        CommandAction action = actionMapper.getOrDefault(commandRequest.getCommand(),
                 request -> {
                     throw new IllegalArgumentException("해당 요청으로 실행할 수 있는 기능이 없습니다.");
                 });
-        action.accept(commandRequest);
+        return action.execute(commandRequest);
     }
 
-    private void start(CommandRequest commandRequest) {
+    private AppStatus start(CommandRequest commandRequest) {
         chessGame = new ChessGame(Camp.WHITE, Camp::transfer);
         chessGame.start(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        return AppStatus.RUNNING;
     }
 
-    // TODO 함수형으로 쓰는데 외부의 값을 변경하는 거 아닌가?
-    private void move(CommandRequest commandRequest) {
+    private AppStatus move(CommandRequest commandRequest) {
         chessGame.move(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        return AppStatus.RUNNING;
     }
 
-    private void end(CommandRequest commandRequest) {
+    private AppStatus end(CommandRequest commandRequest) {
         chessGame.end(commandRequest);
         OutputView.printGuideMessage();
+        return AppStatus.RUNNING;
     }
 
-    private void forceQuit(CommandRequest commandRequest) {
-        toExit = true;
+    private AppStatus forceQuit(CommandRequest commandRequest) {
+        return AppStatus.TO_EXIT;
     }
 
 }

@@ -1,6 +1,7 @@
 package chess.controller.util;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class InputExceptionHandler {
@@ -11,13 +12,13 @@ public class InputExceptionHandler {
         this.exceptionConsumer = exceptionConsumer;
     }
 
-    public <T> void retryExecuteIfInputIllegal(Supplier<T> inputSupplier, Consumer<T> action) {
+    public <T, R> R retryExecuteIfInputIllegal(Supplier<T> inputSupplier, Function<T, R> action) {
         try {
             T input = inputSupplier.get();
-            action.accept(input);
+            return action.apply(input);
         } catch (final IllegalStateException | IllegalArgumentException exception) {
             exceptionConsumer.accept(exception);
-            retryExecuteIfInputIllegal(inputSupplier, action);
+            return retryExecuteIfInputIllegal(inputSupplier, action);
         }
     }
 
