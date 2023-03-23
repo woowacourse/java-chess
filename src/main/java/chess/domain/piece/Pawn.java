@@ -51,6 +51,11 @@ public final class Pawn extends Piece {
         return isForwardMove(rankGap);
     }
 
+    private boolean isDiagonalMove(int rankGap, int fileGap) {
+        return (isBlack() && rankGap == -1 && Math.abs(fileGap) == 1)
+                || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
+    }
+
     @Override
     public double appendScore(double source, boolean isSamePieceInSameFile) {
         if (isSamePieceInSameFile) {
@@ -58,11 +63,6 @@ public final class Pawn extends Piece {
         }
 
         return PAWN_DEFAULT_SCORE;
-    }
-
-    private boolean isDiagonalMove(int rankGap, int fileGap) {
-        return (isBlack() && rankGap == -1 && Math.abs(fileGap) == 1)
-                || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
     }
 
     private boolean isForwardMove(int rankGap) {
