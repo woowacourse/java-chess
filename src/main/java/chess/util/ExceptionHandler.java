@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.util;
 
 import static chess.view.OutputView.printError;
 

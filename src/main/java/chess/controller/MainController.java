@@ -1,6 +1,6 @@
 package chess.controller;
 
-import static chess.controller.ExceptionHandler.repeatUntilValidInput;
+import static chess.util.ExceptionHandler.repeatUntilValidInput;
 import static chess.view.Command.END;
 import static chess.view.Command.MOVE;
 import static chess.view.Command.START;
