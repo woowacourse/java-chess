@@ -16,6 +16,10 @@ public class Board {
         this.chessBoard = boardFactory.createInitialBoard();
     }
 
+    public Board(final Map<Position, Piece> chessBoard) {
+        this.chessBoard = Map.copyOf(chessBoard);
+    }
+
     public void move(Position from, Position to, final Color nextTurn) {
         final Piece currentMovePiece = findPieceFrom(from);
 
