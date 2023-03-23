@@ -32,7 +32,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isNeedToCheckWhenDiagonalMove() {
+    public boolean isPawn() {
         return false;
     }
 

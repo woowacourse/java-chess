@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public abstract class Piece {
 
     public abstract Piece move(final Position positionToMove);
 
-    public abstract boolean isNeedToCheckWhenDiagonalMove();
+    public abstract boolean isPawn();
 
     public abstract List<Position> getPaths(Position targetPosition);
 

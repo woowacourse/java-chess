@@ -35,7 +35,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isNeedToCheckWhenDiagonalMove() {
+    public boolean isPawn() {
         return false;
     }
 
