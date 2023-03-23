@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Team;
 import chess.dto.SquareResponse;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class OutputView {
     public static void printScore(double whiteTeamScore, double blackTeamScore) {
         System.out.println("WHITE: " + whiteTeamScore);
         System.out.println("BLACK: " + blackTeamScore);
+    }
+
+    public static void printEndMessage(Team winningTeam, Team losingTeam) {
+        System.out.println(losingTeam.name() + "팀의 왕이 죽었습니다.");
+        System.out.println(winningTeam.name() + "팀이 게임에서 승리했습니다.");
     }
 
     private static String[][] convertResponseToBoard(List<SquareResponse> responses) {
