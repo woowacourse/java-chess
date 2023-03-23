@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.position.File;
-import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import org.assertj.core.api.InstanceOfAssertFactories;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessBoardTest {
 
@@ -36,8 +37,8 @@ class ChessBoardTest {
     @Test
     void 경로에_장애물이_없는_상황에서_이동_명령을_받았을_때_체스_기물을_이동시킨다() {
         //given
-        Position startPosition = Position.of(Rank.C, File.TWO);
-        Position endPosition = Position.of(Rank.C, File.FOUR);
+        Position startPosition = Position.of(File.C, Rank.TWO);
+        Position endPosition = Position.of(File.C, Rank.FOUR);
 
         //when
         chessBoard.move(startPosition, endPosition);
@@ -65,8 +66,8 @@ class ChessBoardTest {
         @Test
         void 경로에_장애물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(Rank.A, File.ONE);
-            Position endPosition = Position.of(Rank.A, File.FOUR);
+            Position startPosition = Position.of(File.A, Rank.ONE);
+            Position endPosition = Position.of(File.A, Rank.FOUR);
 
             //when
 
@@ -79,8 +80,8 @@ class ChessBoardTest {
         @Test
         void 도착지에_내_기물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(Rank.A, File.ONE);
-            Position endPosition = Position.of(Rank.A, File.TWO);
+            Position startPosition = Position.of(File.A, Rank.ONE);
+            Position endPosition = Position.of(File.A, Rank.TWO);
 
             //when
 
@@ -93,8 +94,8 @@ class ChessBoardTest {
         @Test
         void 상대방의_기물을_이동시키려고_할_때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(Rank.C, File.SEVEN);
-            Position endPosition = Position.of(Rank.C, File.SIX);
+            Position startPosition = Position.of(File.C, Rank.SEVEN);
+            Position endPosition = Position.of(File.C, Rank.SIX);
 
             //when
 
@@ -111,10 +112,10 @@ class ChessBoardTest {
         @Test
         void 폰이_공격가능할때_폰을_이동시킨다() {
             //given
-            Position startPosition = Position.of(Rank.C, File.TWO);
-            Position middlePosition = Position.of(Rank.C, File.FOUR);
-            Position enemyStartPosition = Position.of(Rank.D, File.SEVEN);
-            Position enemyEndPosition = Position.of(Rank.D, File.FIVE);
+            Position startPosition = Position.of(File.C, Rank.TWO);
+            Position middlePosition = Position.of(File.C, Rank.FOUR);
+            Position enemyStartPosition = Position.of(File.D, Rank.SEVEN);
+            Position enemyEndPosition = Position.of(File.D, Rank.FIVE);
 
             chessBoard.move(startPosition, middlePosition);
             chessBoard.move(enemyStartPosition, enemyEndPosition);
@@ -129,14 +130,14 @@ class ChessBoardTest {
         @Test
         void 퀸이_공격가능할때_퀸을_이동시킨다() {
             //given
-            Position pawnStart = Position.of(Rank.D, File.TWO);
-            Position pawnMiddle = Position.of(Rank.D, File.FOUR);
-            Position enemyPawnStart = Position.of(Rank.E, File.SEVEN);
-            Position enemyPawnEnd = Position.of(Rank.E, File.FIVE);
-            Position enemyKnightStart = Position.of(Rank.G, File.EIGHT);
-            Position enemyKnightEnd = Position.of(Rank.F, File.SIX);
-            Position queenStart = Position.of(Rank.D, File.ONE);
-            Position queenEnd = Position.of(Rank.D, File.SEVEN);
+            Position pawnStart = Position.of(File.D, Rank.TWO);
+            Position pawnMiddle = Position.of(File.D, Rank.FOUR);
+            Position enemyPawnStart = Position.of(File.E, Rank.SEVEN);
+            Position enemyPawnEnd = Position.of(File.E, Rank.FIVE);
+            Position enemyKnightStart = Position.of(File.G, Rank.EIGHT);
+            Position enemyKnightEnd = Position.of(File.F, Rank.SIX);
+            Position queenStart = Position.of(File.D, Rank.ONE);
+            Position queenEnd = Position.of(File.D, Rank.SEVEN);
 
             chessBoard.move(pawnStart, pawnMiddle);
             chessBoard.move(enemyPawnStart, enemyPawnEnd);
@@ -153,15 +154,15 @@ class ChessBoardTest {
         @Test
         void 킹이죽었을시_true반환() {
             //given
-            Position pawnStart = Position.of(Rank.D, File.TWO);
-            Position pawnMiddle = Position.of(Rank.D, File.FOUR);
-            Position enemyPawnStart = Position.of(Rank.C, File.SEVEN);
-            Position enemyPawnEnd = Position.of(Rank.C, File.FIVE);
-            Position knightStart = Position.of(Rank.G, File.ONE);
-            Position knightEnd = Position.of(Rank.H, File.THREE);
-            Position enemyQueenStart = Position.of(Rank.D, File.EIGHT);
-            Position enemyQueenMiddle = Position.of(Rank.A, File.FIVE);
-            Position enemyQueenEnd = Position.of(Rank.E, File.ONE);
+            Position pawnStart = Position.of(File.D, Rank.TWO);
+            Position pawnMiddle = Position.of(File.D, Rank.FOUR);
+            Position enemyPawnStart = Position.of(File.C, Rank.SEVEN);
+            Position enemyPawnEnd = Position.of(File.C, Rank.FIVE);
+            Position knightStart = Position.of(File.G, Rank.ONE);
+            Position knightEnd = Position.of(File.H, Rank.THREE);
+            Position enemyQueenStart = Position.of(File.D, Rank.EIGHT);
+            Position enemyQueenMiddle = Position.of(File.A, Rank.FIVE);
+            Position enemyQueenEnd = Position.of(File.E, Rank.ONE);
 
             chessBoard.move(pawnStart, pawnMiddle);
             chessBoard.move(enemyPawnStart, enemyPawnEnd);
@@ -176,6 +177,16 @@ class ChessBoardTest {
             //then
             assertThat(actual).isTrue();
         }
+    }
+    @ParameterizedTest
+    @CsvSource(value={":"},delimiter = ':')
+    void calculateScoreByFile_메서드를_호출하면_해당_열에_존재하는_특정_팀의_점수를_계산한다() {
+        //given
+        chessBoard.calculateScoreByFile(File.);
 
+        //when
+
+        //then
+        assertThat(chessBoard.getSquares()).hasSize(64);
     }
 }

@@ -6,31 +6,31 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
     private static final Map<String, Position> CACHE;
 
     static {
         CACHE = new HashMap<>();
-        for (File file : File.values()) {
-            cacheEachFile(file);
-        }
-    }
-
-    private static void cacheEachFile(final File file) {
         for (Rank rank : Rank.values()) {
-            CACHE.put(rank.toString() + file.toString(), new Position(rank, file));
+            cacheEachFile(rank);
         }
     }
 
-    private Position(Rank rank, File file) {
-        this.rank = rank;
-        this.file = file;
+    private static void cacheEachFile(final Rank rank) {
+        for (File file : File.values()) {
+            CACHE.put(file.toString() + rank.toString(), new Position(file, rank));
+        }
     }
 
-    public static Position of(Rank rank, File file) {
-        return CACHE.get(rank.toString() + file.toString());
+    private Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
+    }
+
+    public static Position of(File file, Rank rank) {
+        return CACHE.get(file.toString() + rank.toString());
     }
 
     public static Position from(String positionCommand) {
@@ -39,15 +39,15 @@ public class Position {
 
 
     public int calculateFileDistance(final Position start) {
-        return file.calculateDistance(start.file);
-    }
-
-    public int calculateRankDistance(final Position start) {
         return rank.calculateDistance(start.rank);
     }
 
+    public int calculateRankDistance(final Position start) {
+        return file.calculateDistance(start.file);
+    }
+
     public Position move(final int rankDirection, final int fileDirection) {
-        return Position.of(rank.plus(rankDirection), file.plus(fileDirection));
+        return Position.of(file.plus(rankDirection), rank.plus(fileDirection));
     }
 
     @Override
@@ -59,11 +59,11 @@ public class Position {
             return false;
         }
         final Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 }

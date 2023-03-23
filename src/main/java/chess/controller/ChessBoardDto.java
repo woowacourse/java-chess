@@ -2,16 +2,9 @@ package chess.controller;
 
 import chess.domain.ChessBoard;
 import chess.domain.Square;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.info.Team;
-import chess.domain.position.Rank;
+import chess.domain.position.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,12 +22,12 @@ public class ChessBoardDto {
         StringBuilder tempChessBoard = new StringBuilder();
         for (int index = 0; index < squares.size(); index++) {
             tempChessBoard.append(generateSquareView(squares.get(index)));
-            final int chessBoardWidth = Rank.values().length;
+            final int chessBoardWidth = File.values().length;
             tempChessBoard = addOneFile(tempChessBoard, chessBoardWidth, index);
         }
         chessBoardView.add("");
-        chessBoardView.add(Arrays.stream(Rank.values())
-            .map(Rank::toString)
+        chessBoardView.add(Arrays.stream(File.values())
+            .map(File::toString)
             .collect(Collectors.joining("")));
     }
 

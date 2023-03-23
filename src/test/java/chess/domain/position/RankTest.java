@@ -3,7 +3,6 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.position.Rank;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,10 +14,9 @@ class RankTest {
     @Nested
     class 생성 {
 
-
         @ParameterizedTest
-        @ValueSource(strings = {"a", "b", "c", "d", "e", "f", "g", "h"})
-        void 문자_a에서_h가_입력되었을때_정상생성(final String input) {
+        @ValueSource(strings = {"1", "2", "3", "4", "5", "6", "7", "8"})
+        void 문자_1에서_8이_입력되었을때_정상생성(final String input) {
             //given
 
             //when
@@ -38,9 +36,10 @@ class RankTest {
             assertThat(Rank.from(input)).isInstanceOf(Rank.class);
         }
 
+
         @ParameterizedTest
-        @ValueSource(strings = {"", " ", "i", "0", "z", "aa", "오"})
-        void 문자_a에서_h외의값이_입력됐을때_예외를던진다(final String input) {
+        @ValueSource(strings = {"", " ", "0", "9", "5.5", "SDdsf", "오"})
+        void 문자_1에서_8외의값이_입력됐을때_예외를던진다(final String input) {
             //given
 
             //when
@@ -49,11 +48,11 @@ class RankTest {
             //then
             assertThatThrownBy(throwingCallable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Rank는 a에서 h사이의 값 이어야 합니다.");
+                .hasMessage("File은 1에서 8사이의 값 이어야 합니다.");
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {-1,0,9,10})
+        @ValueSource(ints = {-1, 0, 9, 10})
         void 인덱스_1에서_8외의값이_입력됐을때_예외를던진다(final int input) {
             //given
 
@@ -63,7 +62,7 @@ class RankTest {
             //then
             assertThatThrownBy(throwingCallable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Rank는 a에서 h사이의 값 이어야 합니다.");
+                .hasMessage("File은 1에서 8사이의 값 이어야 합니다.");
         }
     }
 
@@ -71,10 +70,10 @@ class RankTest {
     class 거리계산 {
 
         @Test
-        void 다른_rank를_받았을_때_거리를_반환한다() {
+        void 다른_file을_입력받았을때_거리를_반환한다() {
             //given
-            Rank criteria = Rank.E;
-            Rank compare = Rank.D;
+            Rank criteria = Rank.FIVE;
+            Rank compare = Rank.FOUR;
             int expected = 1;
 
             //when
@@ -84,6 +83,5 @@ class RankTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
-
-    //TODO rank.plus()
+    //TODO file.plus()
 }

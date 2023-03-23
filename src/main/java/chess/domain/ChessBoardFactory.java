@@ -10,8 +10,8 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.info.Team;
 import chess.domain.position.File;
-import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +22,8 @@ public class ChessBoardFactory {
     public static ChessBoard create() {
         List<Square> squares = new ArrayList<>();
 
-        for (File file : File.values()) {
-            squares.addAll(Arrays.stream(Rank.values())
+        for (Rank file : Rank.values()) {
+            squares.addAll(Arrays.stream(File.values())
                     .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file)))
                     .collect(Collectors.toUnmodifiableList()));
         }
@@ -31,28 +31,28 @@ public class ChessBoardFactory {
         return new ChessBoard(squares);
     }
 
-    private static Piece createPiece(Rank rank, File file) {
-        Team team = Team.initialOf(file);
-        if (file == File.TWO || file == File.SEVEN) {
+    private static Piece createPiece(File file, Rank rank) {
+        Team team = Team.initialOf(rank);
+        if (rank == Rank.TWO || rank == Rank.SEVEN) {
             return new Pawn(team);
         }
-        if (file == File.ONE || file == File.EIGHT) {
-            return createHeavyPiece(rank, team);
+        if (rank == Rank.ONE || rank == Rank.EIGHT) {
+            return createHeavyPiece(file, team);
         }
         return NoPiece.getInstance();
     }
 
-    private static Piece createHeavyPiece(final Rank rank, final Team team) {
-        if (rank == Rank.A || rank == Rank.H) {
+    private static Piece createHeavyPiece(final File file, final Team team) {
+        if (file == File.A || file == File.H) {
             return new Rook(team);
         }
-        if (rank == Rank.B || rank == Rank.G) {
+        if (file == File.B || file == File.G) {
             return new Knight(team);
         }
-        if (rank == Rank.C || rank == Rank.F) {
+        if (file == File.C || file == File.F) {
             return new Bishop(team);
         }
-        if (rank == Rank.D) {
+        if (file == File.D) {
             return new Queen(team);
         }
         return new King(team);

@@ -95,8 +95,8 @@ class ChessBoard{
 }
 class ChessBoardFactory{
   +ChessBoard create()
-  -Piece createPiece(Rank rank, File file)
-  -Piece createHeavyPiece(Rank rank, Team team)
+  -Piece createPiece(File file, Rank rank)
+  -Piece createHeavyPiece(File file, Team team)
 }
 class Square{
   -Piece piece
@@ -134,7 +134,7 @@ class PieceType{
 
 Position
 
-class Rank{
+class File{
 <<enumeration>>
   A
   B
@@ -146,7 +146,7 @@ class Rank{
   H
 }
 
-class File{
+class Rank{
   <<enumeration>>
   ONE
   TWO
@@ -311,7 +311,7 @@ classDiagram
 
 Position
 
-class Rank{
+class File{
     <<enumeration>>
     A
     B
@@ -323,7 +323,7 @@ class Rank{
     H
 }
 
-class File{
+class Rank{
     <<enumeration>>
     ONE
     TWO
