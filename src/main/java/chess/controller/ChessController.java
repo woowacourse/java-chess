@@ -22,8 +22,8 @@ public class ChessController {
     }
 
     public void run() {
-        outputView.printGameGuide();
         ChessGame game = ChessGame.createGame();
+        outputView.printGameGuide();
         Map<Command, ChessAction> actionMap = cretateCommandActionMap(game);
 
         while (!game.isFinished()) {
