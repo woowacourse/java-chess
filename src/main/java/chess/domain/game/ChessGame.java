@@ -18,6 +18,9 @@ public class ChessGame {
     }
 
     public void start() {
+        if (state.isStart()) {
+            throw new IllegalArgumentException("이미 시작했습니다.");
+        }
         this.state = State.START;
     }
 
