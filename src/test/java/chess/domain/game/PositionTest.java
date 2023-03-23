@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import static chess.domain.PositionFixture.A1;
 import static chess.domain.PositionFixture.A3;
@@ -14,9 +14,6 @@ import static chess.domain.PositionFixture.F1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.game.File;
-import chess.domain.game.Position;
-import chess.domain.game.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -105,5 +102,18 @@ class PositionTest {
         //expected
         assertThat(result)
                 .containsExactlyElementsOf(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a2, A, TWO", "f6, F, SIX"})
+    void 포지션을_String_값으로_생성할_수_있다(String position, File file, Rank rank) {
+        //given
+        //when
+        Position result = Position.from(position);
+        Position expected = Position.of(file, rank);
+
+        //then
+        assertThat(result)
+                .isEqualTo(expected);
     }
 }
