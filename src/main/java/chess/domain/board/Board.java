@@ -1,15 +1,28 @@
 package chess.domain.board;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
-import chess.domain.piece.Direction;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
+import chess.domain.piece.*;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 public class Board {
 
+    private static final int MIN_DUPLICATE_COUNT = 2;
+    private static final double SCORE_TO_SUBTRACT = 0.5;
+    private static Map<Class<? extends Piece>, Score> scoreByPiece = Map.of(
+            Queen.class, new Score(new BigDecimal("9.0")),
+            Rook.class, new Score(new BigDecimal("5.0")),
+            Bishop.class, new Score(new BigDecimal("3.0")),
+            Knight.class, new Score(new BigDecimal("2.5")),
+            Pawn.class, new Score(new BigDecimal("1.0")),
+            King.class, new Score(new BigDecimal("0.0"))
+    );
+
     private final Pieces pieces;
+//    private final ScoreBySide scoreBySide;
 
     public Board(final Pieces pieces) {
         this.pieces = pieces;
@@ -53,7 +66,7 @@ public class Board {
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
-        if (sourcePiece.isNeedToCheckWhenDiagonalMove()) {
+        if (sourcePiece.isPawn()) {
             checkPieceDiagonalMove(sourcePosition, targetPosition);
             checkPieceLinearMove(sourcePosition, targetPosition);
         }
@@ -96,9 +109,32 @@ public class Board {
     }
 
     private void checkSameSidePiece(final Piece sourcePiece, final Piece targetPiece) {
-        if (targetPiece.isSameSide(sourcePiece)) {
+        if (targetPiece.isSameSide(sourcePiece.getSide())) {
             throw new IllegalArgumentException("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
         }
+    }
+
+    public Score calculateSideScore(Side side) {
+        List<Piece> PiecesBySide = pieces.getPiecesBySide(side);
+        Score piecesTotalScore = calculatePiecesTotalScore(PiecesBySide);
+        Map<File, Integer> sameFileWhitePawnCount = pieces.getSameFilePawnCount(side);
+        int duplicateWhitePawnCount = getDuplicateWhitePawnCount(sameFileWhitePawnCount);
+        Score scoreToSubtract = new Score(new BigDecimal(duplicateWhitePawnCount * SCORE_TO_SUBTRACT));
+
+        return piecesTotalScore.subtract(scoreToSubtract);
+    }
+
+    private int getDuplicateWhitePawnCount(Map<File, Integer> sameFileWhitePawnCount) {
+        return sameFileWhitePawnCount.values().stream()
+                .filter(count -> count >= MIN_DUPLICATE_COUNT)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    private Score calculatePiecesTotalScore(List<Piece> pieces) {
+        return pieces.stream()
+                .map(piece -> scoreByPiece.get(piece.getClass()))
+                .reduce(new Score(new BigDecimal("0.0")), Score::add);
     }
 
     public List<Piece> getPieces() {
