@@ -28,9 +28,9 @@ public class Board {
     public void movePiece(Position sourcePosition, Position targetPosition, Team nowPlayingTeam) {
         validatePath(sourcePosition.findPath(targetPosition));
         Piece sourcePiece = boards.get(sourcePosition);
-        Piece movedPiece = sourcePiece.move(sourcePosition, targetPosition, nowPlayingTeam, findPiece(targetPosition).getTeam());
+        Piece movedPiece = sourcePiece.move(targetPosition, nowPlayingTeam, findPiece(targetPosition).getTeam());
         boards.put(targetPosition, movedPiece);
-        boards.put(sourcePosition, Empty.create());
+        boards.put(sourcePosition, Empty.create(sourcePosition));
     }
 
     private void validatePath(List<Position> paths) {

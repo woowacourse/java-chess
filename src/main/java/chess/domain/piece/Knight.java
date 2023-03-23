@@ -7,17 +7,17 @@ public class Knight extends Piece {
     private static final int TWO_DIFFERENCE = 2;
     private static final int ONE_DIFFERENCE = 1;
 
-    public Knight(Team team) {
-        super(team);
+    public Knight(Team team, Position position) {
+        super(team, position);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        if (sourcePosition.calculateColumnDifferenceWith(targetPosition) == TWO_DIFFERENCE) {
-            return sourcePosition.calculateRowDifferenceWith(targetPosition) == ONE_DIFFERENCE && isNotSameTeam(team);
+    public boolean canMove(Position targetPosition, Team team) {
+        if (position.calculateColumnDifferenceWith(targetPosition) == TWO_DIFFERENCE) {
+            return position.calculateRowDifferenceWith(targetPosition) == ONE_DIFFERENCE && isNotSameTeam(team);
         }
-        if (sourcePosition.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE) {
-            return sourcePosition.calculateRowDifferenceWith(targetPosition) == TWO_DIFFERENCE && isNotSameTeam(team);
+        if (position.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE) {
+            return position.calculateRowDifferenceWith(targetPosition) == TWO_DIFFERENCE && isNotSameTeam(team);
         }
         return false;
     }
@@ -28,8 +28,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
-        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
-        return new Knight(getTeam());
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new Knight(team, targetPosition);
     }
 }

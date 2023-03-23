@@ -19,14 +19,14 @@ class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"B:SIX:false", "A:FOUR:true", "C:SIX:true", "C:FOUR:false"}, delimiter = ':')
     void 룩은_상하좌우로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Rook rook = new Rook(Team.WHITE);
+        Rook rook = new Rook(Team.WHITE, C_4);
 
-        assertThat(rook.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        assertThat(rook.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new Rook(Team.WHITE);
+        final var piece = new Rook(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
 }

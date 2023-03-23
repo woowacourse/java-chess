@@ -20,13 +20,13 @@ class QueenTest {
     @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false", "B:SIX:false", "A:FOUR:true",
             "C:SIX:true"}, delimiter = ':')
     void 퀸이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Queen queen = new Queen(Team.WHITE);
-        assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        Queen queen = new Queen(Team.WHITE, C_4);
+        assertThat(queen.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new Queen(Team.WHITE);
+        final var piece = new Queen(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
 }

@@ -11,12 +11,12 @@ public class Pawn extends Piece {
 
     private final int moveCount;
 
-    public Pawn(Team team) {
-        this(team, INIT_MOVE_COUNT);
+    public Pawn(Team team, Position position) {
+        this(team, position, INIT_MOVE_COUNT);
     }
 
-    private Pawn(Team team, int moveCount) {
-        super(team);
+    private Pawn(Team team, Position position, int moveCount) {
+        super(team, position);
         this.moveCount = moveCount;
     }
 
@@ -25,23 +25,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        return isStraightPath(sourcePosition, targetPosition, team)
-                || isDiagonalPath(sourcePosition, targetPosition, team);
+    public boolean canMove(Position targetPosition, Team team) {
+        return isStraightPath(targetPosition, team)
+                || isDiagonalPath(targetPosition, team);
     }
 
-    public boolean isStraightPath(Position sourcePosition, Position targetPosition, Team team) {
-        int sourceRankNumber = sourcePosition.getRow();
+    public boolean isStraightPath(Position targetPosition, Team targetTeam) {
+        int sourceRankNumber = position.getRow();
         int targetRankNumber = targetPosition.getRow();
-        int nextRankNumber = getNextRankNumber(sourceRankNumber, getTeam().getDirection());
-        if (getTeam() == Team.BLACK) {
-            return isSameFileCoordinate(sourcePosition, targetPosition)
+        int nextRankNumber = getNextRankNumber(sourceRankNumber, team.getDirection());
+        if (team == Team.BLACK) {
+            return isSameFileCoordinate(targetPosition)
                     && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber
-                    && team == Team.EMPTY;
+                    && targetTeam == Team.EMPTY;
         }
-        return isSameFileCoordinate(sourcePosition, targetPosition)
+        return isSameFileCoordinate(targetPosition)
                 && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber
-                && team == Team.EMPTY;
+                && targetTeam == Team.EMPTY;
     }
 
     private int getNextRankNumber(int sourceRankNumber, int direction) {
@@ -51,20 +51,20 @@ public class Pawn extends Piece {
         return sourceRankNumber + direction;
     }
 
-    private boolean isSameFileCoordinate(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
+    private boolean isSameFileCoordinate(Position targetPosition) {
+        return position.getFileCoordinate() == targetPosition.getFileCoordinate();
     }
 
-    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Team team) {
-        if (!this.getTeam().isOpposite(team)) {
+    private boolean isDiagonalPath(Position targetPosition, Team targetTeam) {
+        if (!team.isOpposite(targetTeam)) {
             return false;
         }
 
-        int diagonalRankNumber = sourcePosition.getRow() + this.getTeam().getDirection();
+        int diagonalRankNumber = position.getRow() + team.getDirection();
 
-        return sourcePosition.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE
+        return position.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE
                 && diagonalRankNumber == targetPosition.getRow()
-                && isNotSameTeam(team);
+                && isNotSameTeam(targetTeam);
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
-        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
-        return new Pawn(this.getTeam(), moveCount + MOVE_COUNT_STEP);
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new Pawn(team, targetPosition, moveCount + MOVE_COUNT_STEP);
     }
 }

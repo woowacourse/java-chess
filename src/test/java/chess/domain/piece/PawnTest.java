@@ -20,41 +20,41 @@ class PawnTest {
     @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
             "C:TWO:false"}, delimiter = ':')
     void 하얀_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Pawn pawn = new Pawn(Team.WHITE);
-        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        Pawn pawn = new Pawn(Team.WHITE, B_1);
+        assertThat(pawn.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"B:FIVE:true", "B:SIX:true", "B:FOUR:false", "C:FIVE:false", "A:SIX:false",
             "C:TWO:false"}, delimiter = ':')
     void 검은_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Pawn pawn = new Pawn(Team.BLACK);
-        assertThat(pawn.canMove(B_7, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        Pawn pawn = new Pawn(Team.BLACK, B_7);
+        assertThat(pawn.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"A:TWO:true", "C:TWO:true"}, delimiter = ':')
     void 폰은_대각선에_적이_있으면_그_방향으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Pawn pawn = new Pawn(Team.WHITE);
-        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Team.BLACK)).isEqualTo(expect);
+        Pawn pawn = new Pawn(Team.WHITE, B_1);
+        assertThat(pawn.canMove(new Position(fileCoordinate, rankCoordinate), Team.BLACK)).isEqualTo(expect);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"A:TWO:false", "C:TWO:false"}, delimiter = ':')
     void 폰은_대각선에_적이_없다면_그_방향으로_이동할_수_없다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Pawn pawn = new Pawn(Team.WHITE);
-        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Team.WHITE)).isEqualTo(expect);
+        Pawn pawn = new Pawn(Team.WHITE, B_1);
+        assertThat(pawn.canMove(new Position(fileCoordinate, rankCoordinate), Team.WHITE)).isEqualTo(expect);
     }
 
     @Test
     void 폰은_직선방향에_적이_있어도_그_방향으로_이동할_수_없다() {
-        Pawn pawn = new Pawn(Team.WHITE);
-        assertThat(pawn.canMove(B_2, B_3, Team.BLACK)).isFalse();
+        Pawn pawn = new Pawn(Team.WHITE, B_2);;
+        assertThat(pawn.canMove(B_3, Team.BLACK)).isFalse();
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new Pawn(Team.WHITE);
+        final var piece = new Pawn(Team.WHITE, B_2);
         assertThat(piece.isEmpty()).isFalse();
     }
 }

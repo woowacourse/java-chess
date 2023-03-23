@@ -4,13 +4,13 @@ import chess.domain.board.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop(Team team) {
-        super(team);
+    public Bishop(Team team, Position position) {
+        super(team, position);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
+    public boolean canMove(Position targetPosition, Team team) {
+        return isDiagonal(targetPosition) && isNotMyPosition(targetPosition)
                 && isNotSameTeam(team);
     }
 
@@ -20,8 +20,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
-        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
-        return new Bishop(getTeam());
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new Bishop(team, targetPosition);
     }
 }

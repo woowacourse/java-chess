@@ -19,14 +19,14 @@ class KingTest {
     @ParameterizedTest
     @CsvSource(value = {"B:FIVE:true", "D:THREE:true", "E:SIX:false", "C:FOUR:false"}, delimiter = ':')
     void 킹은_상하좌우_대각선으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        King king = new King(Team.WHITE);
+        King king = new King(Team.WHITE, C_4);
 
-        assertThat(king.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        assertThat(king.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new King(Team.WHITE);
+        final var piece = new King(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
 }

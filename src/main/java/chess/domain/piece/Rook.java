@@ -4,14 +4,14 @@ import chess.domain.board.Position;
 
 public class Rook extends Piece {
 
-    public Rook(Team team) {
-        super(team);
+    public Rook(Team team, Position position) {
+        super(team, position);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        return isStraight(sourcePosition, targetPosition)
-                && isNotMyPosition(sourcePosition, targetPosition)
+    public boolean canMove(Position targetPosition, Team team) {
+        return isStraight(targetPosition)
+                && isNotMyPosition(targetPosition)
                 && isNotSameTeam(team);
     }
 
@@ -21,8 +21,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
-        validate(sourcePosition, targetPosition, nowPlayingTeam, targetTeam);
-        return new Rook(getTeam());
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new Rook(team, targetPosition);
     }
 }
