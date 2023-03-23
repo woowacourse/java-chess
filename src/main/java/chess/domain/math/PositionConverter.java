@@ -1,6 +1,6 @@
 package chess.domain.math;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public final class PositionConverter {
 

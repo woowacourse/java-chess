@@ -9,7 +9,7 @@ import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.board.Board;
 import chess.domain.board.BoardMaker;
 import chess.domain.math.PositionConverter;

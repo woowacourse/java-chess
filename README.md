@@ -19,6 +19,8 @@ graph TD
     subgraph domain
         GameController --> Board
         Board --> Position
+        Position --> Row
+        Position --> Column
         Board --> Piece
         Piece --> Team
     end

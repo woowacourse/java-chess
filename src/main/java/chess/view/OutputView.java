@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.PieceType.render;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.pieces.Piece;
 import java.util.Map;
 

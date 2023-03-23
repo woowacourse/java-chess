@@ -11,7 +11,7 @@ import static chess.domain.math.Direction.UP_RIGHT;
 import static chess.domain.math.Direction.computeDirection;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 class DirectionTest {

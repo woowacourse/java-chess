@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.Team;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;

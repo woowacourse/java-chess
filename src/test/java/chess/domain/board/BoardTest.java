@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.pawn.BlackPawn;

@@ -1,14 +1,14 @@
-package chess.domain;
+package chess.domain.position;
 
 import chess.domain.math.UnitVector;
 import java.util.Objects;
 
 public final class Position {
 
-    private final int row;
-    private final int column;
+    private final Row row;
+    private final Column column;
 
-    public Position(final int row, final int column) {
+    public Position(final Row row, final Column column) {
         this.row = row;
         this.column = column;
     }
@@ -18,19 +18,24 @@ public final class Position {
         this.column = otherPosition.column;
     }
 
+    public Position(final int row, final int column) {
+        this.row = new Row(row);
+        this.column = new Column(column);
+    }
+
     public Position move(final UnitVector unitVector) {
-        int nextRow = this.row + unitVector.getRow();
-        int nextColumn = this.column + unitVector.getColumn();
+        Row nextRow = row.add(unitVector.getRow());
+        Column nextColumn = column.add(unitVector.getColumn());
 
         return new Position(nextRow, nextColumn);
     }
 
     public int getRow() {
-        return row;
+        return row.getRow();
     }
 
     public int getColumn() {
-        return column;
+        return column.getColumn();
     }
 
     @Override
@@ -38,7 +43,7 @@ public final class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return row == position.row && column == position.column;
+        return Objects.equals(row, position.row) && Objects.equals(column, position.column);
     }
 
     @Override

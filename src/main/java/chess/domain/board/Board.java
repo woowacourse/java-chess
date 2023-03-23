@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
 import chess.domain.pieces.EmptyPiece;

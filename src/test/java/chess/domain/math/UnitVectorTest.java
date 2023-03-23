@@ -10,7 +10,7 @@ import static chess.domain.math.UnitVector.UP_LEFT;
 import static chess.domain.math.UnitVector.UP_RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
