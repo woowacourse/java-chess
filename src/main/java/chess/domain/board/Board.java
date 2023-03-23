@@ -3,7 +3,9 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
 
@@ -62,11 +64,7 @@ public class Board {
     }
 
     public static boolean isInRange(final int fileIndex, final int rankIndex) {
-        return isIndexInRange(fileIndex) && isIndexInRange(rankIndex);
-    }
-
-    private static boolean isIndexInRange(final int index) {
-        return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
+        return File.isIndexValid(fileIndex) && Rank.isIndexValid(rankIndex);
     }
 
     public Map<Position, Piece> getBoard() {
