@@ -36,7 +36,7 @@ public class FileTest {
         assertThat(File.B.getPrevious()).isEqualTo(File.A);
     }
 
-    @DisplayName("File이 H에서 다음 위치를 가져오려고 하면 예외가 발생한다.")
+    @DisplayName("File이 A에서 이전 위치를 가져오려고 하면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenFirstFileRequestGetPrevious() {
         assertThatThrownBy(() -> File.A.getPrevious())
