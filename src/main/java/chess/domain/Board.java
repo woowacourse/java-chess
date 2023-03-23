@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.PAWN;
 
 public class Board {
 
@@ -101,7 +102,29 @@ public class Board {
                 .stream()
                 .filter(piece -> piece.isTeam(team))
                 .map(Piece::getScore)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
+    }
+
+    public double getMinusScore(Team team){
+        long pawnCount = 0;
+        for(int i = 0; i < LINE_SIZE; i++){
+            pawnCount += countPawnsInSameColumn(i, team);
+        }
+        return pawnCount * 0.5;
+    }
+
+    private long countPawnsInSameColumn(int column, Team team) {
+        long pawnCount = board.keySet()
+                .stream()
+                .filter(position -> position.isColumn(column))
+                .map(board::get)
+                .filter(piece -> piece.isPieceType(PAWN) && piece.isTeam(team))
+                .count();
+
+        if(pawnCount > 1){
+            return pawnCount;
+        }
+        return 0;
     }
 
 }
