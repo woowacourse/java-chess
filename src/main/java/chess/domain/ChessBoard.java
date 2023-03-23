@@ -34,9 +34,9 @@ public class ChessBoard {
 
     private Square findSquareByPosition(final Position position) {
         return squares.stream()
-                .filter(square -> square.isSamePosition(position))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
+            .filter(square -> square.isSamePosition(position))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
     }
 
     private void validateNotExistAllyAt(final Position endPosition) {
@@ -53,13 +53,13 @@ public class ChessBoard {
     private void validateNotBlocked(final Position startPosition, final Position endPosition) {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
-        BigInteger gcd = BigInteger.valueOf(diffFile).gcd(BigInteger.valueOf(diffRank));
+        BigInteger gcd = BigInteger.valueOf(diffRank).gcd(BigInteger.valueOf(diffFile));
         int fileDirection = diffFile / gcd.intValue();
         int rankDirection = diffRank / gcd.intValue();
-        Position tempPosition = startPosition.move(rankDirection, fileDirection);
+        Position tempPosition = startPosition.move(fileDirection, rankDirection);
         while (!tempPosition.equals(endPosition)) {
             validateIsEmpty(tempPosition);
-            tempPosition = tempPosition.move(rankDirection, fileDirection);
+            tempPosition = tempPosition.move(fileDirection, rankDirection);
         }
     }
 
@@ -71,19 +71,19 @@ public class ChessBoard {
 
     private boolean isEmptyAt(final Position position) {
         return findSquareByPosition(position)
-                .isEmpty();
+            .isEmpty();
     }
 
     private boolean canAttack(final Position startPosition, final Position endPosition) {
         final Square userSquare = findSquareByPosition(startPosition);
         final Square targetSquare = findSquareByPosition(endPosition);
         return targetSquare.isSameTeam(turn.findCurrentEnemyTeam())
-                && userSquare.canAttack(endPosition);
+            && userSquare.canAttack(endPosition);
     }
 
     private boolean canMove(final Position startPosition, final Position endPosition) {
         return isEmptyAt(endPosition) &&
-                findSquareByPosition(startPosition).canMove(startPosition, endPosition);
+            findSquareByPosition(startPosition).canMove(startPosition, endPosition);
     }
 
     private void executeMove(final Position startPosition, final Position endPosition) {
@@ -93,8 +93,8 @@ public class ChessBoard {
 
     public boolean isKingDead() {
         return squares.stream()
-                .filter(Square::isKing)
-                .count() < NUMBER_OF_PLAYER;
+            .filter(Square::isKing)
+            .count() < NUMBER_OF_PLAYER;
     }
 
     public List<Square> getSquares() {

@@ -23,7 +23,7 @@ public class ChessBoardDto {
         for (int index = 0; index < squares.size(); index++) {
             tempChessBoard.append(generateSquareView(squares.get(index)));
             final int chessBoardWidth = File.values().length;
-            tempChessBoard = addOneFile(tempChessBoard, chessBoardWidth, index);
+            tempChessBoard = addOneRank(tempChessBoard, chessBoardWidth, index);
         }
         chessBoardView.add("");
         chessBoardView.add(Arrays.stream(File.values())
@@ -31,7 +31,7 @@ public class ChessBoardDto {
             .collect(Collectors.joining("")));
     }
 
-    private StringBuilder addOneFile(StringBuilder tempChessBoard, final int chessBoardWidth,
+    private StringBuilder addOneRank(StringBuilder tempChessBoard, final int chessBoardWidth,
         final int index) {
         if (index % chessBoardWidth == chessBoardWidth - 1) {
             tempChessBoard.append(" ").append((index + 1) / chessBoardWidth);

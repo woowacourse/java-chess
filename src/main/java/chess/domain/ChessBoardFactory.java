@@ -22,10 +22,10 @@ public class ChessBoardFactory {
     public static ChessBoard create() {
         List<Square> squares = new ArrayList<>();
 
-        for (Rank file : Rank.values()) {
+        for (Rank rank : Rank.values()) {
             squares.addAll(Arrays.stream(File.values())
-                    .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file)))
-                    .collect(Collectors.toUnmodifiableList()));
+                .map(file -> new Square(Position.of(file, rank), createPiece(file, rank)))
+                .collect(Collectors.toUnmodifiableList()));
         }
 
         return new ChessBoard(squares);

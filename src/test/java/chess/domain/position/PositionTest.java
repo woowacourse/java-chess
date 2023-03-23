@@ -9,13 +9,13 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource(value = {"2:1", "3:0", "4:-1"}, delimiter = ':')
-    void File_2개를_입력받으면_File간_거리를_반환(String file, int expected) {
+    void Rank_2개를_입력받으면_Rank간_거리를_반환(String rank, int expected) {
         //given
-        Position startPosition = Position.of(File.A, Rank.from(file));
+        Position startPosition = Position.of(File.A, Rank.from(rank));
         Position endPosition = Position.of(File.A, Rank.THREE);
 
         //when
-        int actual = endPosition.calculateFileDistance(startPosition);
+        int actual = endPosition.calculateRankDistance(startPosition);
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -23,13 +23,13 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource(value = {"b:1", "c:0", "d:-1"}, delimiter = ':')
-    void Rank_2개를_입력받으면_Rank간_거리를_반환(String rank, int expected) {
+    void File_2개를_입력받으면_File간_거리를_반환(String file, int expected) {
         //given
-        Position startPosition = Position.of(File.from(rank), Rank.THREE);
+        Position startPosition = Position.of(File.from(file), Rank.THREE);
         Position endPosition = Position.of(File.C, Rank.THREE);
 
         //when
-        int actual = endPosition.calculateRankDistance(startPosition);
+        int actual = endPosition.calculateFileDistance(startPosition);
 
         //then
         assertThat(actual).isEqualTo(expected);
