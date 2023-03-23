@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
@@ -81,12 +82,44 @@ public final class ChessGame {
         }
     }
 
-    public boolean isKingLive() {
-        return chessBoard.inKingLive() == KING_COUNT;
+    public boolean isKingsLive() {
+        return chessBoard.countKing() == KING_COUNT;
     }
 
     private void changeTurn() {
         this.turnCamp = turnCamp.convert(turnCamp);
+    }
+
+    public double getWhiteScore() {
+        return chessBoard.calculateTotalScoreByCamp(Camp.WHITE);
+    }
+
+    public double getBlackScore() {
+        return chessBoard.calculateTotalScoreByCamp(Camp.BLACK);
+    }
+
+    public Camp getWinnerCamp() {
+        if (isKingsLive()) {
+            return getWinnerByScore();
+        }
+        return getWinnerByKingLive();
+    }
+
+    private Camp getWinnerByKingLive() {
+        if (chessBoard.isKingLiveByCamp(Camp.WHITE)) {
+            return Camp.WHITE;
+        }
+        return Camp.BLACK;
+    }
+
+    private Camp getWinnerByScore() {
+        if (chessBoard.calculateTotalScoreByCamp(Camp.WHITE) > chessBoard.calculateTotalScoreByCamp(Camp.BLACK)) {
+            return Camp.WHITE;
+        }
+        if (chessBoard.calculateTotalScoreByCamp(Camp.WHITE) < chessBoard.calculateTotalScoreByCamp(Camp.BLACK)) {
+            return Camp.BLACK;
+        }
+        return Camp.NEUTRAL;
     }
 
     public ChessBoard getChessBoard() {
