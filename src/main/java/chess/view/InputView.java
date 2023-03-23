@@ -10,6 +10,7 @@ public class InputView {
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final int CORRECT_START_END_SPLIT_SIZE = 1;
     private static final int CORRECT_MOVE_SPLIT_SIZE = 3;
     private static final int SOURCE_POSITION_INDEX = 1;
@@ -28,30 +29,18 @@ public class InputView {
         final List<String> splitGameCommand = Arrays.asList(input.split(GAME_COMMAND_DELIMITER));
         final String gameCommand = splitGameCommand.get(GAME_COMMAND_INDEX);
 
-        validateGameCommandInput(gameCommand);
         validateGameCommandFormat(splitGameCommand);
         validateMoveGameCommandRank(splitGameCommand, gameCommand);
 
         return splitGameCommand;
     }
 
-    private void validateGameCommandInput(final String gameCommand) {
-        if (isWrongGameCommand(gameCommand)) {
-            throw new IllegalArgumentException("[ERROR] " + START_COMMAND + ", " + END_COMMAND + ", " + MOVE_COMMAND + "만 입력해주세요.");
-        }
-    }
-
-    private boolean isWrongGameCommand(final String gameCommand) {
-        return !gameCommand.equals(START_COMMAND) && !gameCommand.equals(END_COMMAND) && !gameCommand.equals(
-                MOVE_COMMAND);
-    }
-
     private void validateGameCommandFormat(final List<String> splitGameCommand) {
         final String gameCommand = splitGameCommand.get(GAME_COMMAND_INDEX);
         final int splitGameCommandSize = splitGameCommand.size();
         if (isWrongStartOrEndCommandFormat(splitGameCommandSize, gameCommand)) {
-            throw new IllegalArgumentException("[ERROR] " +  START_COMMAND + "또는 " + END_COMMAND + "커맨드는 "
-                    + START_COMMAND + "또는 " + END_COMMAND + "만 입력해야 합니다.");
+            throw new IllegalArgumentException("[ERROR] " +  START_COMMAND + " 또는 " + END_COMMAND + "커맨드는 "
+                    + START_COMMAND + " 또는 " + END_COMMAND + " 또는 " + STATUS_COMMAND + "만 입력해야 합니다.");
         }
 
         if (isWrongMoveCommandFormat(splitGameCommandSize, gameCommand)) {
@@ -60,7 +49,7 @@ public class InputView {
     }
 
     private boolean isWrongStartOrEndCommandFormat(final int splitGameCommandSize, final String gameCommand) {
-        return (gameCommand.equals(START_COMMAND) || gameCommand.equals(END_COMMAND))
+        return (gameCommand.equals(START_COMMAND) || gameCommand.equals(END_COMMAND) || gameCommand.equals(STATUS_COMMAND))
                 && splitGameCommandSize != CORRECT_START_END_SPLIT_SIZE;
     }
 
