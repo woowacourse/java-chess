@@ -3,12 +3,15 @@ package chess.controller;
 import chess.controller.request.Input;
 import chess.controller.resposne.Output;
 import chess.controller.resposne.PieceResponse;
+import chess.controller.resposne.StatusResponse;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.BoardQuery;
 import chess.domain.game.command.Command;
 import chess.domain.game.command.EndCommand;
 import chess.domain.game.command.MoveCommand;
 import chess.domain.game.command.StartCommand;
+import chess.domain.game.command.StatusQuery;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +25,9 @@ public class ChessController {
     private final Map<String, Action> actions = Map.of(
             "start", new Action(ignored -> start()),
             "end", new Action(ignored -> finish()),
-            "move", new Action(this::move)
-    );
+            "move", new Action(this::move),
+            "status", new Action(ignored -> printStatus()));
+
 
     public ChessController(Output output, Input input) {
         this.output = output;
@@ -90,5 +94,16 @@ public class ChessController {
                         .map(PieceResponse::from)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
+    }
+
+    private void printStatus() {
+        Map<Color, Double> result = new StatusQuery().execute(chessGame);
+        output.printStatus(makeStatusResponse(result));
+    }
+
+    private StatusResponse makeStatusResponse(Map<Color, Double> query) {
+        double whiteScore = query.get(Color.WHITE);
+        double blackScore = query.get(Color.BLACK);
+        return new StatusResponse(whiteScore, blackScore);
     }
 }
