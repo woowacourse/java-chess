@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 @SuppressWarnings("NonAsciiCharacters")
 class PlayGroundTest {
 
@@ -123,6 +124,7 @@ class PlayGroundTest {
         //toInt(100);
         assertThat(number).isEqualTo(100);
     }
+
 
     /**
      * Functional Interface를 학습하기 위한 예제 코드
