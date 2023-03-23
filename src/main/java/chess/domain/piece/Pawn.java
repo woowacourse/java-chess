@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.direction.Direction;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ public class Pawn extends Piece {
 
     private final List<Direction> direction;
 
-    private double score = 1.0;
     private int distance = 2;
 
     public Pawn(Color color) {
@@ -35,21 +34,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
+    public boolean isMovable(Position start, Position end, Color destinationColor) {
         Direction direction = findDirection(start, end);
         checkDirection(direction);
         checkDistance(start, end);
-        checkMovableToDestination(colorOfDestination, direction);
+        checkMovableToDestination(destinationColor, direction);
         return true;
     }
 
-    public void checkDirection(Direction direction) {
+    private void checkDirection(Direction direction) {
         if (!this.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
-    public void checkDistance(Position start, Position end) {
+    private void checkDistance(Position start, Position end) {
         int absGapOfColumn = Math.abs(start.findGapOfColum(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
@@ -68,7 +67,7 @@ public class Pawn extends Piece {
         }
     }
 
-    public void checkMoveForward(Color colorOfDestination) {
+    private void checkMoveForward(Color colorOfDestination) {
         if (colorOfDestination != Color.NONE) {
             throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
@@ -78,7 +77,7 @@ public class Pawn extends Piece {
         return direction == Direction.TOP || direction == Direction.BOTTOM;
     }
 
-    public void checkMoveDiagonal(Color colorOfDestination) {
+    private void checkMoveDiagonal(Color colorOfDestination) {
         if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
