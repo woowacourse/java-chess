@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RankTest {
 
     @Nested
-    @DisplayName("ranksBetween 메서드는")
-    class ranksBetween {
+    @DisplayName("findRanksBetween 메서드는")
+    class findRanksBetween {
         @Nested
         @DisplayName("다른 Rank 객체가 주어지면")
         class with_another_ {
@@ -23,15 +23,15 @@ class RankTest {
             @Test
             @DisplayName("두 파일 사이에 있는 파일들을 반환한다")
             void it_returns_ranks() {
-                List<Rank> rankPath = Rank.ranksBetween(from, other);
+                List<Rank> rankPath = Rank.findRanksBetween(from, other);
                 assertThat(rankPath).containsOnly(Rank.FIVE, Rank.SIX, Rank.SEVEN);
             }
         }
     }
 
     @Nested
-    @DisplayName("distanceTo 메서드는")
-    class distanceTo {
+    @DisplayName("calculateDistanceTo 메서드는")
+    class calculateDistanceTo {
         @Nested
         @DisplayName("다른 Rank 객체가 주어지면")
         class with_another_rank {
@@ -41,7 +41,7 @@ class RankTest {
             @Test
             @DisplayName("두 랭크간의 거리를 계산한다")
             void it_returns_distance() {
-                assertThat(from.distanceTo(other)).isEqualTo(4);
+                assertThat(from.calculateDistanceTo(other)).isEqualTo(4);
             }
         }
     }

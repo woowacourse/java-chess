@@ -31,7 +31,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
     }
 
-    public static List<File> filesBetween(final File from, final File to) {
+    public static List<File> findFilesBetween(final File from, final File to) {
         final int min = Math.min(from.position, to.position);
         final int max = Math.max(from.position, to.position);
         List<File> files = Arrays.stream(values())
@@ -43,7 +43,7 @@ public enum File {
         return files;
     }
 
-    public int distanceTo(final File other) {
+    public int calculateDistanceTo(final File other) {
         return Math.abs(position - other.position);
     }
 

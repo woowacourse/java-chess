@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FileTest {
 
     @Nested
-    @DisplayName("filesBetween 메서드는")
-    class filesBetween {
+    @DisplayName("findFilesBetween 메서드는")
+    class findFilesBetween {
         @Nested
         @DisplayName("다른 File 객체가 주어지면")
         class with_another_file {
@@ -23,15 +23,15 @@ class FileTest {
             @Test
             @DisplayName("두 파일 사이에 있는 파일들을 반환한다")
             void it_returns_files() {
-                List<File> filePath = File.filesBetween(from, other);
+                List<File> filePath = File.findFilesBetween(from, other);
                 assertThat(filePath).containsOnly(File.B, File.C);
             }
         }
     }
 
     @Nested
-    @DisplayName("distanceTo 메서드는")
-    class distanceTo {
+    @DisplayName("calculateDistanceTo 메서드는")
+    class calculateDistanceTo {
         @Nested
         @DisplayName("다른 File 객체가 주어지면")
         class with_another_file {
@@ -41,7 +41,7 @@ class FileTest {
             @Test
             @DisplayName("두 파일간의 거리를 계산한다")
             void it_returns_distance() {
-                assertThat(from.distanceTo(other)).isEqualTo(3);
+                assertThat(from.calculateDistanceTo(other)).isEqualTo(3);
             }
         }
     }

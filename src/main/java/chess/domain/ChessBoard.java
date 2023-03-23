@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.chesspiece.EmptyPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.PieceInfo;
 
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class ChessBoard {
     }
 
     public ChessBoard(Map<Square, Piece> pieces) {
-        this(pieces, Turn.WHITE_TURN);
+        this(pieces, Turn.WHITE);
     }
 
     public boolean canMove(Square from, Square to) {
@@ -39,10 +38,10 @@ public class ChessBoard {
     }
 
     private void validateTurn(Piece target) {
-        if (turn == Turn.WHITE_TURN && target.isBlack()) {
+        if (turn == Turn.WHITE && target.isBlack()) {
             throw new IllegalArgumentException("백색 기물의 차례입니다");
         }
-        if (turn == Turn.BLACK_TURN && target.isWhite()) {
+        if (turn == Turn.BLACK && target.isWhite()) {
             throw new IllegalArgumentException("흑색 기물의 차례입니다");
         }
     }

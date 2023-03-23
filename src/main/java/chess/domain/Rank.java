@@ -32,7 +32,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
     }
 
-    public static List<Rank> ranksBetween(final Rank from, final Rank to) {
+    public static List<Rank> findRanksBetween(final Rank from, final Rank to) {
         final int min = Math.min(from.position, to.position);
         final int max = Math.max(from.position, to.position);
         List<Rank> ranks = Arrays.stream(values())
@@ -45,7 +45,7 @@ public enum Rank {
         return ranks;
     }
 
-    public int distanceTo(final Rank other) {
+    public int calculateDistanceTo(final Rank other) {
         return Math.abs(position - other.position);
     }
 

@@ -12,7 +12,7 @@ public class TurnTest {
     @DisplayName("changeTurn 메서드는 호출되면")
     class changeTurn {
         @ParameterizedTest(name = "{0}의 반대 진영인 {1}을 반환한다")
-        @CsvSource({"WHITE_TURN,BLACK_TURN", "BLACK_TURN,WHITE_TURN"})
+        @CsvSource({"WHITE,BLACK", "BLACK,WHITE"})
         void it_returns_opposite_turn(Turn turn1, Turn turn2) {
             assertThat(turn1.changeTurn()).isEqualTo(turn2);
         }

@@ -1,13 +1,13 @@
 package chess.domain;
 
 public enum Turn {
-    WHITE_TURN,
-    BLACK_TURN;
+    WHITE,
+    BLACK;
 
     public Turn changeTurn() {
-        if (this == WHITE_TURN) {
-            return BLACK_TURN;
+        if (this == WHITE) {
+            return BLACK;
         }
-        return WHITE_TURN;
+        return WHITE;
     }
 }

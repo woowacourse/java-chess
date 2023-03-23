@@ -32,11 +32,11 @@ public class Square {
     }
 
     public int rankDistanceTo(final Square to) {
-        return rank.distanceTo(to.rank);
+        return rank.calculateDistanceTo(to.rank);
     }
 
     public int fileDistanceTo(final Square to) {
-        return file.distanceTo(to.file);
+        return file.calculateDistanceTo(to.file);
     }
 
     public boolean hasBiggerRankThan(final Square to) {
@@ -53,30 +53,30 @@ public class Square {
 
     public List<Square> calculatePath(final Square to) {
         if (isStraight(to)) {
-            return squaresOfStraight(to);
+            return findSquaresOfStraight(to);
         }
         if (isDiagonal(to)) {
-            return squaresOfDiagonal(to);
+            return findSquaresOfDiagonal(to);
         }
         return Collections.emptyList();
     }
 
-    private List<Square> squaresOfStraight(final Square to) {
+    private List<Square> findSquaresOfStraight(final Square to) {
         if (hasSameRank(to)) {
-            return File.filesBetween(file, to.file)
+            return File.findFilesBetween(file, to.file)
                     .stream()
                     .map(foundFile -> Square.of(rank, foundFile))
                     .collect(Collectors.toUnmodifiableList());
         }
-        return Rank.ranksBetween(rank, to.rank)
+        return Rank.findRanksBetween(rank, to.rank)
                 .stream()
                 .map(foundRank -> Square.of(foundRank, file))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Square> squaresOfDiagonal(final Square to) {
-        List<Rank> ranks = Rank.ranksBetween(rank, to.rank);
-        List<File> files = File.filesBetween(file, to.file);
+    private List<Square> findSquaresOfDiagonal(final Square to) {
+        List<Rank> ranks = Rank.findRanksBetween(rank, to.rank);
+        List<File> files = File.findFilesBetween(file, to.file);
         List<Square> squares = new ArrayList<>();
         for (int i = 0; i < ranks.size(); i++) {
             squares.add(Square.of(ranks.get(i), files.get(i)));
