@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessGameTest {
 
@@ -28,11 +30,15 @@ class ChessGameTest {
         void isGameEndTest2() {
             ChessGame game = ChessGame.create();
 
+            game.movePiece(new Position(0, 1), new Position(0, 2));
             game.movePiece(new Position(4, 6), new Position(4, 4));
             game.movePiece(new Position(4, 1), new Position(4, 3));
             game.movePiece(new Position(4, 4), new Position(4, 3));
+            game.movePiece(new Position(0, 2), new Position(0, 3));
             game.movePiece(new Position(4, 3), new Position(4, 2));
+            game.movePiece(new Position(0, 3), new Position(0, 4));
             game.movePiece(new Position(4, 2), new Position(4, 1));
+            game.movePiece(new Position(0, 4), new Position(0, 5));
             game.movePiece(new Position(4, 1), new Position(4, 0));
             boolean isGameEnd = game.isGameEnd();
 
@@ -47,8 +53,11 @@ class ChessGameTest {
             game.movePiece(new Position(4, 1), new Position(4, 3));
             game.movePiece(new Position(4, 6), new Position(4, 4));
             game.movePiece(new Position(4, 3), new Position(4, 4));
+            game.movePiece(new Position(1, 6), new Position(1, 5));
             game.movePiece(new Position(4, 4), new Position(4, 5));
+            game.movePiece(new Position(1, 5), new Position(1, 4));
             game.movePiece(new Position(4, 5), new Position(4, 6));
+            game.movePiece(new Position(1, 4), new Position(1, 3));
             game.movePiece(new Position(4, 6), new Position(4, 7));
             boolean isGameEnd = game.isGameEnd();
 
@@ -74,8 +83,8 @@ class ChessGameTest {
         void getTotalScoreTest2() {
             ChessGame game = ChessGame.create();
 
-            game.movePiece(new Position(0, 1), new Position(0,3));
-            game.movePiece(new Position(1,6), new Position(1, 4));
+            game.movePiece(new Position(0, 1), new Position(0, 3));
+            game.movePiece(new Position(1, 6), new Position(1, 4));
             game.movePiece(new Position(0, 3), new Position(1, 4));
 
             double score = game.getTotalScore(Team.WHITE);
@@ -95,8 +104,11 @@ class ChessGameTest {
             game.movePiece(new Position(4, 1), new Position(4, 3));
             game.movePiece(new Position(4, 6), new Position(4, 4));
             game.movePiece(new Position(4, 3), new Position(4, 4));
+            game.movePiece(new Position(1, 6), new Position(1, 5));
             game.movePiece(new Position(4, 4), new Position(4, 5));
+            game.movePiece(new Position(1, 5), new Position(1, 4));
             game.movePiece(new Position(4, 5), new Position(4, 6));
+            game.movePiece(new Position(1, 4), new Position(1, 3));
             game.movePiece(new Position(4, 6), new Position(4, 7));
             Team winTeam = game.getWinTeam();
 
@@ -108,11 +120,15 @@ class ChessGameTest {
         void getWinTeamTest2() {
             ChessGame game = ChessGame.create();
 
+            game.movePiece(new Position(0, 1), new Position(0, 2));
             game.movePiece(new Position(4, 6), new Position(4, 4));
             game.movePiece(new Position(4, 1), new Position(4, 3));
             game.movePiece(new Position(4, 4), new Position(4, 3));
+            game.movePiece(new Position(0, 2), new Position(0, 3));
             game.movePiece(new Position(4, 3), new Position(4, 2));
+            game.movePiece(new Position(0, 3), new Position(0, 4));
             game.movePiece(new Position(4, 2), new Position(4, 1));
+            game.movePiece(new Position(0, 4), new Position(0, 5));
             game.movePiece(new Position(4, 1), new Position(4, 0));
             Team winTeam = game.getWinTeam();
 
@@ -137,6 +153,7 @@ class ChessGameTest {
         void getWinTeamTest5() {
             ChessGame game = ChessGame.create();
 
+            game.movePiece(new Position(0, 1), new Position(0, 2));
             game.movePiece(new Position(4, 6), new Position(4, 4));
             game.movePiece(new Position(4, 1), new Position(4, 3));
             game.movePiece(new Position(4, 4), new Position(4, 3));
@@ -153,6 +170,49 @@ class ChessGameTest {
             Team winTeam = game.getWinTeam();
 
             assertThat(winTeam).isEqualTo(Team.EMPTY);
+        }
+    }
+
+    @Nested
+    @DisplayName("양 팀을 번갈아 말을 이동시키는 movePiece 메서드 테스트")
+    class movePieceTest {
+
+        @Test
+        @DisplayName("게임이 시작하면 백 팀의 차례이다.")
+        void movePieceTest1() {
+            ChessGame game = ChessGame.create();
+
+            assertDoesNotThrow(() -> game.movePiece(new Position(0, 1), new Position(0, 2)));
+        }
+
+        @Test
+        @DisplayName("게임이 시작하면 흑 팀은 말을 움직일 수 없다.")
+        void movePieceTest2() {
+            ChessGame game = ChessGame.create();
+
+            assertThatThrownBy(() -> game.movePiece(new Position(0, 6), new Position(0, 5)))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("백 팀의 말을 움직여 주세요.");
+        }
+
+        @Test
+        @DisplayName("백 팀이 말을 움직이면, 다음 차례는 흑 팀이 말을 움직일 수 있다.")
+        void movePieceTest3() {
+            ChessGame game = ChessGame.create();
+            game.movePiece(new Position(0, 1), new Position(0, 2));
+
+            assertDoesNotThrow(() -> game.movePiece(new Position(0, 6), new Position(0, 5)));
+        }
+
+        @Test
+        @DisplayName("백 팀이 말을 움직이면, 다음 차례는 백 팀이 말을 움직일 수 없다.")
+        void movePieceTest4() {
+            ChessGame game = ChessGame.create();
+            game.movePiece(new Position(0, 1), new Position(0, 2));
+
+            assertThatThrownBy(() -> game.movePiece(new Position(0, 2), new Position(0, 3)))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("흑 팀의 말을 움직여 주세요.");
         }
     }
 }

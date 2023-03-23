@@ -142,8 +142,8 @@ class BoardTest {
         void getScoresTest1() {
             Board board = BoardGenerator.createBoard();
 
-            board.movePiece(new Position(0, 1), new Position(0,3));
-            board.movePiece(new Position(1,6), new Position(1, 4));
+            board.movePiece(new Position(0, 1), new Position(0, 3));
+            board.movePiece(new Position(1, 6), new Position(1, 4));
             board.movePiece(new Position(0, 3), new Position(1, 4));
 
             assertThat(board.getMinusScore(Team.WHITE)).isEqualTo(0.5 * 2);
