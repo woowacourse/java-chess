@@ -6,6 +6,7 @@ public class Name {
 
     private static final int ROW = 0;
     private static final String PLACE = ".";
+
     private final String name;
 
     public Name(final String name) {
@@ -30,6 +31,10 @@ public class Name {
 
     public boolean isPawn() {
         return name.equals("p") || name.equals("P");
+    }
+
+    public boolean isKing() {
+        return name.equals("k") || name.equals("K");
     }
 
     public boolean isKnight() {

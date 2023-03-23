@@ -8,8 +8,11 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final double SCORE_OF_KNIGHT = 2.5;
+
     public Knight(final Name name) {
         super(name);
+        this.score = new Score(SCORE_OF_KNIGHT);
     }
 
     @Override
@@ -23,5 +26,10 @@ public class Knight extends Piece {
         if (!possibleSubPosition.contains(newPosition)) {
             throw new IllegalArgumentException(PieceMessage.KNIGHT_INVALID_MOVE.getMessage());
         }
+    }
+
+    @Override
+    public boolean isKnight() {
+        return this.name.isKnight();
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.direction;
 
 import chess.domain.board.Position;
+import chess.exception.CommandMessage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,6 @@ public enum Direction {
     NORTH_EAST(1, 1),
     SOUTH_WEST(-1, -1),
     SOUTH_EAST(1, -1);
-
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
 
     final int col;
     final int row;
@@ -56,7 +54,7 @@ public enum Direction {
         return Arrays.stream(Direction.values()).
                 filter(direction -> direction.isSameDirection(start, end))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException(CommandMessage.MOVING_COMMAND_INVALID.getMessage()));
     }
 
     private boolean isSameDirection(final Position start, final Position end) {

@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int ONE_OF_KING_IS_DEAD = 1;
+    private static final int PAWNS_ARE_BEING_SAME_COLUMN = 2;
+
     private final Map<Position, Piece> board;
 
     public Board(final Map<Position, Piece> board) {
@@ -125,5 +128,89 @@ public class Board {
         if (!(destination.isPlace())) {
             throw new IllegalArgumentException(PieceMessage.PAWN_INVALID_MOVE.getMessage());
         }
+    }
+
+    public double getScoreOfLowerTeam() {
+        board.keySet().stream()
+                .filter(this::isLowerTeamOfPawn)
+                .map(Position::getCol)
+                .distinct()
+                .forEach(column -> calculatePawnScoreOfLowerTeam(Column.fromByInput(column)));
+
+        return board.values().stream()
+                .filter(Piece::isNameLowerCase)
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private void calculatePawnScoreOfLowerTeam(final Column column) {
+        List<Position> positions = getPositionsByColumn(column);
+
+        int count = (int) positions.stream()
+                .filter(this::isLowerTeamOfPawn)
+                .count();
+
+        if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
+            positions.stream()
+                    .filter(position -> findPieceFromPosition(position).isPawn())
+                    .forEach(position -> findPieceFromPosition(position).updateScoreByOtherPawnsBeingWithSameColumn());
+        }
+    }
+
+    private List<Position> getPositionsByColumn(final Column column) {
+        List<Position> positions = Position.getAllPositionsByColumn(column);
+        return positions;
+    }
+
+    private boolean isLowerTeamOfPawn(final Position position) {
+        return board.get(position).isNameLowerCase() && board.get(position).isPawn();
+    }
+
+    public double getScoreOfUpperTeam() {
+        board.keySet().stream()
+                .filter(this::isUpperTeamOfPawn)
+                .map(Position::getCol)
+                .distinct()
+                .forEach(column -> calculatePawnScoreOfUpperTeam(Column.fromByInput(column)));
+
+        return board.values().stream()
+                .filter(Piece::isNameUpperCase)
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private void calculatePawnScoreOfUpperTeam(final Column column) {
+        List<Position> positions = Position.getAllPositionsByColumn(column);
+
+        int count = (int) positions.stream()
+                .filter(this::isUpperTeamOfPawn)
+                .count();
+
+        if (count >= PAWNS_ARE_BEING_SAME_COLUMN) {
+            positions.stream()
+                    .filter(position -> findPieceFromPosition(position).isPawn())
+                    .forEach(position -> findPieceFromPosition(position).updateScoreByOtherPawnsBeingWithSameColumn());
+        }
+    }
+
+    private boolean isUpperTeamOfPawn(final Position position) {
+        return board.get(position).isNameUpperCase() && board.get(position).isPawn();
+    }
+
+    public boolean isKingDead() {
+        int countOfKing = (int) board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return countOfKing == ONE_OF_KING_IS_DEAD;
+    }
+
+    public boolean isUpperTeamWin() {
+        Piece kingOfWinner = board.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        return kingOfWinner.isNameUpperCase();
     }
 }

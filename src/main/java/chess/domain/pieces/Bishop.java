@@ -7,9 +7,11 @@ import chess.exception.PieceMessage;
 
 public class Bishop extends Piece {
 
+    private static final double SCORE_OF_BISHOP = 3;
 
     public Bishop(final Name name) {
         super(name);
+        this.score = new Score(SCORE_OF_BISHOP);
     }
 
     @Override
@@ -17,7 +19,7 @@ public class Bishop extends Piece {
         int absSubRow = Math.abs(Row.subPositionFromArrivePosition(start.getRow(), end.getRow()));
         int absSubCol = Math.abs(Column.subPositionFromArrivePosition(start.getCol(), end.getCol()));
 
-        if (!(absSubCol == absSubRow)) {
+        if (absSubCol != absSubRow) {
             throw new IllegalArgumentException(PieceMessage.BISHOP_INVALID_MOVE.getMessage());
         }
     }

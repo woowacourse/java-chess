@@ -7,8 +7,11 @@ import chess.exception.PieceMessage;
 
 public class Queen extends Piece {
 
+    private static final double SCORE_OF_QUEEN = 9;
+
     public Queen(final Name name) {
         super(name);
+        this.score = new Score(SCORE_OF_QUEEN);
     }
 
     @Override
