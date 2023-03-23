@@ -1,4 +1,4 @@
-package controller;
+package controller.adapter.inward;
 
 import domain.piece.move.Coordinate;
 

@@ -1,5 +1,6 @@
 package controller;
 
+import controller.adapter.inward.CoordinateAdapter;
 import domain.piece.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

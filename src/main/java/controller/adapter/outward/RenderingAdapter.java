@@ -1,4 +1,4 @@
-package controller;
+package controller.adapter.outward;
 
 import domain.board.Board;
 import domain.piece.Color;
