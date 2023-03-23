@@ -16,15 +16,13 @@ public class GameScore {
     private static final int PAWN_SCORE_DECREASE_COUNT = 2;
     private static final int COUNT_OF_COLUMN = 8;
 
-
     private GameScore() {
-
     }
 
     public static Double calculateScore(Map<Position, Piece> squares, Team team) {
         double score = 0;
-        for (int file = 0; file < COUNT_OF_COLUMN; file++) {
-            score += calculateScoreByColumn(squares, team, file);
+        for (int column = 0; column < COUNT_OF_COLUMN; column++) {
+            score += calculateScoreByColumn(squares, team, column);
         }
         return score;
     }
