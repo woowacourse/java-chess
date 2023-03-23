@@ -33,7 +33,6 @@ public class Controller {
         play(chessGame, command);
     }
 
-    //todo: method extract하자니 덜 직관적이게 된다. 해결방법이 없을까요?
     private void play(ChessGame chessGame, Command command) {
         while (gameCondition(chessGame, command)) {
             if (isEnd(command)) {
@@ -75,7 +74,6 @@ public class Controller {
         }
     }
 
-    //todo: method extract하자니 덜 직관적이게 됩니다. 해결방법이 없을까요?
     private Command inputCommand(ChessGame chessGame) {
         try {
             CommandDto commandDto = readStateCommand();
