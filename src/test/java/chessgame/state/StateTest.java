@@ -43,6 +43,15 @@ public class StateTest {
             State start = state.run(Command.of("end"), board);
             assertThat(start).isInstanceOf(End.class);
         }
+
+        @Test
+        @DisplayName("status 입력시 end상태로 전이된다.")
+        void Should_ChangeEndState_When_ReadyStateInputState() {
+            Board board = new Board(ChessBoardFactory.create());
+            assertThatThrownBy(() -> state.run(Command.of("status"), board))
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage("status를 입력할 수 없습니다.");
+        }
     }
 
     @Nested
@@ -77,6 +86,15 @@ public class StateTest {
             State start = state.run(Command.of("end"), board);
             assertThat(start).isInstanceOf(End.class);
         }
+
+        @Test
+        @DisplayName("status 입력시 상태는 전이되지 않는다.")
+        void Should_NotChangeState_When_WhiteState() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            State start = state.run(Command.of("status"), board);
+            assertThat(start).isInstanceOf(White.class);
+        }
     }
 
     @Nested
@@ -110,6 +128,15 @@ public class StateTest {
 
             State start = state.run(Command.of("end"), board);
             assertThat(start).isInstanceOf(End.class);
+        }
+
+        @Test
+        @DisplayName("status 입력시 상태는 전이되지 않는다.")
+        void Should_NotChangeState_When_BlackState() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            State start = state.run(Command.of("status"), board);
+            assertThat(start).isInstanceOf(Black.class);
         }
     }
 
@@ -146,6 +173,16 @@ public class StateTest {
 
             State start = state.run(Command.of("end"), board);
             assertThat(start).isInstanceOf(End.class);
+        }
+
+        @Test
+        @DisplayName("status 입력시 예외가 발생한다.")
+        void Should_ThrowException3_When_EndState() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            assertThatThrownBy(() -> state.run(Command.of("status"), board))
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage("start만 입력 가능 합니다.");
         }
     }
 }

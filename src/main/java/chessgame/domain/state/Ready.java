@@ -17,6 +17,9 @@ public class Ready implements State {
         if (command.isMove()) {
             throw new UnsupportedOperationException("move를 입력할 수 없습니다.");
         }
+        if (command.isStatus()){
+            throw new UnsupportedOperationException("status를 입력할 수 없습니다.");
+        }
         if (command.isEnd()) {
             return new End();
         }

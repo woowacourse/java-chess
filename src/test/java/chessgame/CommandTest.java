@@ -42,4 +42,10 @@ public class CommandTest {
     void Should_NoThrowException_When_MoveCommandIsWrong(String input) {
         Assertions.assertThatThrownBy(() -> Command.of(input)).isExactlyInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("status입력 시 정상적으로 Command가 입력된다.")
+    void Should_NoThrowException_When_CommandIsStatus() {
+        Assertions.assertThatNoException().isThrownBy(() -> Command.of("status"));
+    }
 }

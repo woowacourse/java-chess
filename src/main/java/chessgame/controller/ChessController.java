@@ -25,7 +25,9 @@ public class ChessController {
             eachTurn(game);
             printResult(game);
         } while (!game.isEnd());
-        outputView.printWinner(game.winTeam());
+        if(game.isEndByKing()) {
+            outputView.printWinner(game.winTeam());
+        }
     }
 
     private void eachTurn(Game game) {
@@ -50,9 +52,17 @@ public class ChessController {
     private void setState(Game game, Command command) {
         try {
             game.setState(command);
+            printStatusResult(game, command);
         } catch (UnsupportedOperationException e) {
             outputView.printErrorMsg(e.getMessage());
             setState(game, readCommand());
+        }
+    }
+
+    private void printStatusResult(Game game, Command command) {
+        if(command.isStatus()){
+            outputView.printScore(game.scoreBoard());
+            outputView.printScoreWinner(game.scoreBoard());
         }
     }
 

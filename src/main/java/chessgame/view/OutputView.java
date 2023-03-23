@@ -7,6 +7,7 @@ import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class OutputView {
@@ -54,5 +55,20 @@ public class OutputView {
 
     public void printWinner(Team team) {
         System.out.println(team.color() + "팀이 이겼습니다.");
+    }
+
+    public void printScore(Map<Team, Double> scoreBoard) {
+        for(Team team : scoreBoard.keySet()) {
+            System.out.println(team + "팀 " + scoreBoard.get(team) + "점 입니다");
+        }
+
+    }
+
+    public void printScoreWinner(Map<Team, Double> scoreBoard) {
+        if(scoreBoard.get(Team.BLACK).compareTo(scoreBoard.get(Team.WHITE)) == 0){
+            System.out.println("비기고 있습니다.");
+            return;
+        }
+        System.out.println(Collections.max(scoreBoard.keySet())+ "팀이 이기고 있습니다.");
     }
 }

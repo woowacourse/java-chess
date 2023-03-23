@@ -11,6 +11,7 @@ public class Command {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
+    private static final String STATUS = "status";
     private static final int SOURCE = 0;
     private static final int TARGET = 1;
 
@@ -29,7 +30,7 @@ public class Command {
         if (command.isBlank()) {
             throw new IllegalArgumentException("빈값을 입력하면 안됩니다.");
         }
-        if (START.equals(command) || END.equals(command)) {
+        if (START.equals(command) || END.equals(command) || STATUS.equals(command)) {
             return new Command(command);
         }
         return validateMove(command);
@@ -60,11 +61,15 @@ public class Command {
     }
 
     public boolean isStart() {
-        return "start".equals(command);
+        return START.equals(command);
+    }
+
+    public boolean isStatus() {
+        return STATUS.equals(command);
     }
 
     public boolean isEnd() {
-        return "end".equals(command);
+        return END.equals(command);
     }
 
     private static List<Point> makePoints(String command) {
