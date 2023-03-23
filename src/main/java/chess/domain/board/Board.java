@@ -22,10 +22,11 @@ public class Board {
     );
 
     private final Pieces pieces;
-//    private final ScoreBySide scoreBySide;
+    private final ScoreBySide scoreBySide;
 
-    public Board(final Pieces pieces) {
+    public Board(final Pieces pieces, final ScoreBySide scoreBySide) {
         this.pieces = pieces;
+        this.scoreBySide = scoreBySide;
     }
 
     public Piece findPieceByPosition(final Position position) {
@@ -137,7 +138,15 @@ public class Board {
                 .reduce(new Score(new BigDecimal("0.0")), Score::add);
     }
 
+    public void saveTotalScoreBySide(Side side, Score totalScore) {
+        scoreBySide.updateScore(side, totalScore);
+    }
+
     public List<Piece> getPieces() {
         return pieces.getPieces();
+    }
+
+    public Map<Side, Score> getScoreBySide() {
+        return scoreBySide.getScoreBySide();
     }
 }

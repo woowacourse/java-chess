@@ -3,6 +3,7 @@ package chess.domain.command;
 import java.util.List;
 
 import chess.domain.board.Board;
+import chess.domain.board.ScoreBySide;
 import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
@@ -19,7 +20,7 @@ public class Play implements CommandStatus {
 
     @Override
     public CommandStatus start() {
-        return new Play(new Board(new Pieces()), Turn.WHITE);
+        return new Play(new Board(new Pieces(), new ScoreBySide()), Turn.WHITE);
     }
 
     @Override
