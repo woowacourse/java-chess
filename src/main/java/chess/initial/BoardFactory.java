@@ -58,10 +58,15 @@ public final class BoardFactory {
 		}
 	}
 
-	private static void fillTwo(final Map<Position, Piece> board, final String point, final Piece white,
-		final Piece black) {
-		board.put(Position.from(point), white);
-		board.put(Position.oppsite(point), black);
+	private static void addBishop(final Map<Position, Piece> board) {
+		List<Position> bishopPosition = Bishop.getInitialBlackPosition();
+		for (Position position : bishopPosition) {
+			board.put(position, new Bishop(BLACK, position));
+		}
+		bishopPosition = Bishop.getInitialWhitePosition();
+		for (Position position : bishopPosition) {
+			board.put(position, new Bishop(WHITE, position));
+		}
 	}
 
 	private static void fillPawn(final Map<Position, Piece> board) {
