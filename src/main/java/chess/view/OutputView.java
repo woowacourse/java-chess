@@ -46,9 +46,9 @@ public class OutputView {
     public void printChessBoard(ChessBoardDto chessBoardDto) {
         List<List<String>> presentChessBoard = makePresentChessBoard(chessBoardDto.getChessBoardDto());
         System.out.println();
-        for (List<String> rank : presentChessBoard) {
-            printRank(rank);
-            System.out.println(String.format("   %s", 8 - presentChessBoard.indexOf(rank)));
+        for (int i = 0; i < CHESSBOARD_SIZE; i++) {
+            printRank(presentChessBoard.get(i));
+            System.out.println(String.format("   %s", 8 - i));
         }
         System.out.println();
         System.out.println(" a  b  c  d  e  f  g  h");
