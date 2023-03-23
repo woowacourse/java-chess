@@ -19,7 +19,7 @@ public class Position {
         this.rankCoordinate = rankCoordinate;
     }
 
-    public List<Position> findStraightPaths(Position targetPosition) {
+    public List<Position> findPath(Position targetPosition) {
         int columnStep = getStep(this.getColumn(), targetPosition.getColumn());
         int rowStep = getStep(this.getRow(), targetPosition.getRow());
         int difference = getDifference(targetPosition);

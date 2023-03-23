@@ -36,8 +36,8 @@ public class Board {
     private void validate(Position sourcePosition, Position targetPosition, Team nowPlayingTeam) {
         validateSourceTeam(sourcePosition, nowPlayingTeam);
         validateCanMove(sourcePosition, targetPosition);
-        List<Position> paths = sourcePosition.findStraightPaths(targetPosition);
-        validatePath(paths);
+        List<Position> path = sourcePosition.findPath(targetPosition);
+        validatePath(path);
     }
 
     private void validateSourceTeam(Position sourcePosition, Team nowPlayingTeam) {
