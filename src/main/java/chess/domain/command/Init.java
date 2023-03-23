@@ -2,17 +2,22 @@ package chess.domain.command;
 
 import java.util.List;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
+import chess.domain.board.GameResultBySide;
+import chess.domain.board.ResultCalculator;
 import chess.domain.board.ScoreBySide;
-import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
+import chess.domain.position.Position;
 
 public class Init implements CommandStatus {
 
     @Override
     public CommandStatus start() {
-        return new Play(new Board(new Pieces(), new ScoreBySide()), Turn.WHITE);
+        Board board = new Board(new Pieces());
+        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        return new Play(new ChessGame(board, resultCalculator), Turn.WHITE);
     }
 
     @Override
