@@ -23,7 +23,9 @@ public abstract class Piece {
     protected boolean isRangeValid(final Position position, final MovePattern movePattern) {
         final int nextRank = position.getRankIndex() + movePattern.rankVector();
         final int nextFile = position.getFileIndex() + movePattern.fileVector();
-        return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
+        return nextRank >= Board.LOWER_BOUNDARY
+                && nextRank <= Board.UPPER_BOUNDARY
+                && nextFile >= Board.LOWER_BOUNDARY && nextFile <= Board.UPPER_BOUNDARY;
     }
 
     public String getName() {
