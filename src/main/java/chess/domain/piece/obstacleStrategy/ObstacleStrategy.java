@@ -5,5 +5,5 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public interface ObstacleStrategy {
-    List<Position> obstacleCheckingPositions(Position from, Position to);
+    List<Position> getObstacleCheckingPositions(Position from, Position to);
 }

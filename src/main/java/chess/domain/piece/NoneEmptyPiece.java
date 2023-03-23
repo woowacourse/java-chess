@@ -32,6 +32,6 @@ public abstract class NoneEmptyPiece extends Piece {
     }
 
     public List<Position> getObstacleCheckingPositions(Position from, Position to) {
-        return obstacleStrategy.obstacleCheckingPositions(from, to);
+        return obstacleStrategy.getObstacleCheckingPositions(from, to);
     }
 }
