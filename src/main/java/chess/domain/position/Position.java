@@ -50,6 +50,10 @@ public class Position {
         return new Position(nextFile, nextRank);
     }
 
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
+
     public int getFile() {
         return file.getValue();
     }

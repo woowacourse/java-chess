@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -30,6 +31,10 @@ public abstract class Piece {
         return this.side == side;
     }
 
+    public boolean isSameFile(File file) {
+        return position.isSameFile(file);
+    }
+
     public int getFile() {
         return position.getFile();
     }
@@ -40,6 +45,19 @@ public abstract class Piece {
 
     public Side getSide() {
         return side;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(position, piece.position) && side == piece.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, side);
     }
 
     @Override
