@@ -35,7 +35,7 @@ public class ChessGame {
         }
     }
 
-    public boolean hasSetBoard() {
+    public boolean isPlaying() {
         return board.hasPieces();
     }
 

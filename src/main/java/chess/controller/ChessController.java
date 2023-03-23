@@ -68,7 +68,7 @@ public class ChessController {
     }
 
     private void validateChessGameSetting() {
-        if (chessGame.hasSetBoard()) {
+        if (chessGame.isPlaying()) {
             throw new IllegalArgumentException("게임이 이미 실행되고 있습니다.");
         }
     }
