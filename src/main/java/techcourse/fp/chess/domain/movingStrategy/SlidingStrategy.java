@@ -26,8 +26,7 @@ public class SlidingStrategy extends MovingStrategy {
         return getPath(source, target, findDirection);
     }
 
-    @Override
-    protected boolean isReachable(final Direction direction, final int gapOfFileOrder, final int gapOfRankOrder) {
+    private boolean isReachable(final Direction direction, final int gapOfFileOrder, final int gapOfRankOrder) {
         final int biggerNumber = Math.max(Math.abs(gapOfFileOrder), Math.abs(gapOfRankOrder));
 
         return direction.getFile() * biggerNumber == gapOfFileOrder &&

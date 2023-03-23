@@ -28,8 +28,7 @@ public class NoneSlidingStrategy extends MovingStrategy {
                 .noneMatch(direction -> isReachable(direction, gapOfFileOrder, gapOfRankOrder));
     }
 
-    @Override
-    protected boolean isReachable(final Direction direction, final int gapOfFileOrder, final int gapOfRankOrder) {
+    private boolean isReachable(final Direction direction, final int gapOfFileOrder, final int gapOfRankOrder) {
         return direction.getFile() == gapOfFileOrder && direction.getRank() == gapOfRankOrder;
     }
 }

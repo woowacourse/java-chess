@@ -6,6 +6,7 @@ import static techcourse.fp.chess.domain.PieceFixtures.WHITE_PAWN;
 import static techcourse.fp.chess.domain.PositionFixtures.A1;
 import static techcourse.fp.chess.domain.PositionFixtures.A2;
 import static techcourse.fp.chess.domain.PositionFixtures.A3;
+import static techcourse.fp.chess.domain.PositionFixtures.B1;
 import static techcourse.fp.chess.domain.PositionFixtures.B2;
 import static techcourse.fp.chess.domain.PositionFixtures.C2;
 
@@ -18,19 +19,68 @@ import techcourse.fp.chess.domain.piece.Color;
 class KingTest {
 
     private final King king = King.create(Color.BLACK);
+    
 
-    @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우상향으로 이동하는 경우")
+    @DisplayName("우로 이동하는 경우")
     @Test
-    void success_rightUp() {
+    void right_move() {
+        final List<Position> path = king.findPath(A1, B1, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("좌로 이동하는 경우")
+    @Test
+    void left_move() {
+        final List<Position> path = king.findPath(B1, A1, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("위로 이동하는 경우")
+    @Test
+    void up_move() {
+        final List<Position> path = king.findPath(A1, A2, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("아래로 이동하는 경우")
+    @Test
+    void down_move() {
+        final List<Position> path = king.findPath(A2, A1, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("우상으로 이동하는 경우")
+    @Test
+    void up_right_move() {
         final List<Position> path = king.findPath(A1, B2, WHITE_PAWN);
 
         assertThat(path).isEmpty();
     }
 
-    @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우로 이동하는 경우")
+    @DisplayName("좌상으로 이동하는 경우")
     @Test
-    void success_right() {
-        final List<Position> path = king.findPath(A1, A2, WHITE_PAWN);
+    void up_left_move() {
+        final List<Position> path = king.findPath(B1, A2, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("우하로 이동하는 경우")
+    @Test
+    void down_right_move() {
+        final List<Position> path = king.findPath(A2, B1, WHITE_PAWN);
+
+        assertThat(path).isEmpty();
+    }
+
+    @DisplayName("좌하로 이동하는 경우")
+    @Test
+    void down_left_move() {
+        final List<Position> path = king.findPath(B2, A1, WHITE_PAWN);
 
         assertThat(path).isEmpty();
     }

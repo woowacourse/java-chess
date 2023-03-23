@@ -11,7 +11,6 @@ public abstract class MovingStrategy {
         this.directions = directions;
     }
 
-    protected abstract boolean isReachable(final Direction direction, final int gapOfFileOrder, final int gapOfRankOrder);
 
     public abstract List<Position> createPath(Position source, Position target);
 }
