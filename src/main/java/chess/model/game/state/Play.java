@@ -21,7 +21,11 @@ public class Play implements GameState {
 
         validateGameCommand(gameCommand);
 
-        return execute(request, gameCommand);
+        try {
+            return execute(request, gameCommand);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("존재하지 않는 체스 칸을 지정했습니다.", e);
+        }
     }
 
     private GameState execute(final PlayRequest request, final GameCommand gameCommand) {
