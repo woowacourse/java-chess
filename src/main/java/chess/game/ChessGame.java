@@ -8,7 +8,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.SquareResponse;
 import chess.game.state.GameState;
-import chess.game.state.checked.CheckedState;
+import chess.game.state.running.CheckedState;
 import chess.game.state.end.EndState;
 import chess.game.state.end.NoneWinState;
 import chess.game.state.waiting.WaitingState;

@@ -1,7 +1,6 @@
-package chess.game.state.checked;
+package chess.game.state.running;
 
 import chess.domain.Team;
-import chess.game.state.running.RunningState;
 
 public abstract class CheckedState extends RunningState {
 

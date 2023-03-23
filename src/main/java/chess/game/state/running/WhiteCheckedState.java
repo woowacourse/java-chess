@@ -1,8 +1,6 @@
-package chess.game.state.checked;
+package chess.game.state.running;
 
 import chess.domain.Team;
-import chess.game.state.running.BlackTurnState;
-import chess.game.state.running.RunningState;
 
 public class WhiteCheckedState extends CheckedState {
     public static final CheckedState STATE = new WhiteCheckedState();
