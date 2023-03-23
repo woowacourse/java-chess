@@ -16,47 +16,21 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
 import chess.infrastructure.persistence.entity.PieceEntity;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PieceMapper {
 
-    private static final Map<MovementType, Constructor<? extends PieceMovementStrategy>> contractorMap = new HashMap<>();
+    private static final Map<MovementType, PieceMovementStrategy> strategyMap = new HashMap<>();
 
     static {
-        try {
-            contractorMap.put(
-                    MovementType.KING,
-                    KingMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.QUEEN,
-                    QueenMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.BISHOP,
-                    BishopMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.KNIGHT,
-                    KnightMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.ROOK,
-                    RookMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.BLACK_PAWN,
-                    BlackPawnMovementStrategy.class.getDeclaredConstructor()
-            );
-            contractorMap.put(
-                    MovementType.WHITE_PAWN,
-                    WhitePawnMovementStrategy.class.getDeclaredConstructor()
-            );
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+        strategyMap.put(MovementType.KING, new KingMovementStrategy());
+        strategyMap.put(MovementType.QUEEN, new QueenMovementStrategy());
+        strategyMap.put(MovementType.BISHOP, new BishopMovementStrategy());
+        strategyMap.put(MovementType.KNIGHT, new KnightMovementStrategy());
+        strategyMap.put(MovementType.ROOK, new RookMovementStrategy());
+        strategyMap.put(MovementType.BLACK_PAWN, new BlackPawnMovementStrategy());
+        strategyMap.put(MovementType.WHITE_PAWN, new WhitePawnMovementStrategy());
     }
 
     public static PieceEntity fromDomain(final Piece piece, final Long chessGameId) {
@@ -72,16 +46,7 @@ public class PieceMapper {
     public static Piece toDomain(final PieceEntity pieceEntity) {
         final Color color = Color.valueOf(pieceEntity.color());
         return new Piece(color,
-                PiecePosition.of(
-                        Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
-                makeStrategy(pieceEntity));
-    }
-
-    private static PieceMovementStrategy makeStrategy(final PieceEntity pieceEntity) {
-        try {
-            return contractorMap.get(MovementType.valueOf(pieceEntity.movementType())).newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("피스 생성 중 문제 발생", e);
-        }
+                PiecePosition.of(Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
+                strategyMap.get(MovementType.valueOf(pieceEntity.movementType())));
     }
 }
