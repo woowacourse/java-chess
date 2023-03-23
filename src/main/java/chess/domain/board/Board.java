@@ -95,8 +95,8 @@ public class Board {
         final Piece piece = board.get(source);
         final Square destination = routes.get(0);
         final int distanceY = Math.abs(destination.calculateDistanceY(source));
-        return (distanceY == 2 && source.isInitPawnPosition(piece.isBlack()))
-                || (distanceY == 1 && !board.containsKey(destination));
+        return !board.containsKey(destination)
+                && (distanceY == 2 && source.isInitPawnPosition(piece.isBlack()) || (distanceY == 1));
     }
 
     public void move(final Square source, final Square destination) {
