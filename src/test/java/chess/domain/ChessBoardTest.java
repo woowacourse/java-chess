@@ -134,4 +134,5 @@ class ChessBoardTest {
         assertThat(piecesByPosition.get(Position.of(1, 4)))
                 .isEqualTo(new Pawn(Camp.WHITE));
     }
+    
 }

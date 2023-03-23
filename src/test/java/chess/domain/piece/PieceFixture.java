@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 
-public class PieceTexture {
+public class PieceFixture {
 
     public static final Piece WHITE_ROOK = new Rook(Camp.WHITE);
     public static final Piece WHITE_KNIGHT = new Knight(Camp.WHITE);
@@ -17,4 +17,5 @@ public class PieceTexture {
     public static final Piece BLACK_QUEEN = new Queen(Camp.BLACK);
     public static final Piece BLACK_KING = new King(Camp.BLACK);
     public static final Piece BLACK_PAWN = new Pawn(Camp.BLACK);
+    
 }

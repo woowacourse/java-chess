@@ -13,9 +13,9 @@ public class PositionTest {
 
     private static final String OUT_OF_BOUNDS_ERROR_MESSAGE = "말의 위치 범위를 벗어났습니다.";
 
+    @DisplayName("Position 은 각각 1 ~ 8을 넘길 수 없다.")
     @ParameterizedTest
     @CsvSource(value = {"0:1", "1:0", "9:1", "1:9"}, delimiter = ':')
-    @DisplayName("Position 은 각각 1 ~ 8을 넘길 수 없다.")
     void 위치_생성_실패(int x, int y) {
         assertThatThrownBy(() -> Position.of(x, y))
                 .isInstanceOf(IllegalArgumentException.class)
