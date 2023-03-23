@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.direction.Direction;
 
 import java.util.List;
 
@@ -16,36 +16,33 @@ public class King extends Piece {
 
     private static final int MOVABLE_DISTANCE = 1;
 
-    private final List<Direction> direction = List.of(
-            Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
-            Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT
-    );
+    private final List<Direction> direction = List.of(Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT, Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
 
     public King(Color color) {
         super(KING_NAME.getName(), color, KING_SCORE.getScore());
     }
 
     @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
+    public boolean isMovable(Position start, Position end, Color destinationColor) {
         Direction direction = findDirection(start, end);
         checkDirection(direction);
         checkDistance(start, end);
-        checkMovableToDestination(colorOfDestination);
+        checkMovableToDestination(destinationColor);
         return true;
     }
 
 
-    public void checkDirection(Direction direction) {
+    private void checkDirection(Direction direction) {
         if (!this.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
-    public void checkDistance(Position start, Position end) {
+    private void checkDistance(Position start, Position end) {
         int absGapOfColumn = Math.abs(start.findGapOfColum(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
-        if (absGapOfColumn <= MOVABLE_DISTANCE || absGapOfRank <= MOVABLE_DISTANCE) {
+        if (absGapOfColumn > MOVABLE_DISTANCE || absGapOfRank > MOVABLE_DISTANCE) {
             throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
