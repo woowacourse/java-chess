@@ -84,4 +84,26 @@ class PawnTest {
             assertThat(result).isInstanceOf(InvalidMove.class);
         }
     }
+
+    @Test
+    @DisplayName("동일한 파일에 같은 진영의 폰이 존재하면 폰은 0.5점을 추가한다.")
+    void pawnScoreSamPieceInSameFileTest() {
+        Piece pawn = new Pawn(Camp.WHITE);
+        double sourceScore = 0;
+
+        double appendScore = pawn.appendScore(sourceScore, true);
+
+        assertThat(appendScore).isEqualTo(0.5d);
+    }
+
+    @Test
+    @DisplayName("동일한 파일에 같은 진영의 폰이 존재하지 않으면 1점을 추가한다.")
+    void pawnDefaultScoreTest() {
+        Piece pawn = new Pawn(Camp.WHITE);
+        double sourceScore = 0;
+
+        double appendScore = pawn.appendScore(sourceScore, false);
+
+        assertThat(appendScore).isEqualTo(1d);
+    }
 }

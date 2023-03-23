@@ -40,7 +40,7 @@ class QueenTest {
 
     @Test
     @DisplayName("퀸은 기물 위치와 관계없이 9점을 추가한다.")
-    void bishopScoreTest() {
+    void queenScoreTest() {
         Piece queen = new Queen(Camp.WHITE);
         double sourceScore = 0;
 

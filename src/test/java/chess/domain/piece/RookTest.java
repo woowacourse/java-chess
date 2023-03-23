@@ -40,7 +40,7 @@ class RookTest {
 
     @Test
     @DisplayName("룩은 기물 위치와 관계없이 5점을 추가한다.")
-    void bishopScoreTest() {
+    void rookScoreTest() {
         Piece rook = new Rook(Camp.WHITE);
         double sourceScore = 0;
 

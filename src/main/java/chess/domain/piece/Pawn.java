@@ -9,6 +9,9 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
+    private static final double PAWN_DEFAULT_SCORE = 1;
+    private static final double PAWN_REDUCED_SCORE = 0.5;
+
     private boolean isMoved = false;
 
     public Pawn(Camp camp) {
@@ -50,7 +53,11 @@ public final class Pawn extends Piece {
 
     @Override
     public double appendScore(double source, boolean isSamePieceInSameFile) {
-        return 0;
+        if (isSamePieceInSameFile) {
+            return PAWN_REDUCED_SCORE;
+        }
+
+        return PAWN_DEFAULT_SCORE;
     }
 
     private boolean isDiagonalMove(int rankGap, int fileGap) {

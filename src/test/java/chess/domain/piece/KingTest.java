@@ -73,7 +73,7 @@ class KingTest {
 
     @Test
     @DisplayName("킹은 기물 위치와 관계없이 0점을 추가한다.")
-    void bishopScoreTest() {
+    void kingScoreTest() {
         Piece king = new King(Camp.WHITE);
         double sourceScore = 0;
 

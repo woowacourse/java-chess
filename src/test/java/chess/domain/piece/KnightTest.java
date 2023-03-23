@@ -27,7 +27,7 @@ class KnightTest {
 
     @Test
     @DisplayName("나이트는 기물 위치와 관계없이 2.5점을 추가한다.")
-    void bishopScoreTest() {
+    void knightScoreTest() {
         Piece knight = new Knight(Camp.WHITE);
         double sourceScore = 0;
 
