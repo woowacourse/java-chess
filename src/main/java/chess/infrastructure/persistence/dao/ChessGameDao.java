@@ -37,18 +37,11 @@ public class ChessGameDao {
 
     public Optional<ChessGameEntity> findById(final Long id) {
         final String query = "SELECT * FROM chess_game where id = ?";
-        return template.findOne(query, (connection, preparedStatement) -> {
-            preparedStatement.setString(1, id.toString());
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return new ChessGameEntity(
-                    resultSet.getObject(1, Long.class),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
-            );
-        });
+        return template.findOne(query, resultSet -> new ChessGameEntity(
+                resultSet.getObject(1, Long.class),
+                resultSet.getString(2),
+                resultSet.getString(3)
+        ), id.toString());
     }
 
     public void update(final ChessGameEntity chessGameEntity) {

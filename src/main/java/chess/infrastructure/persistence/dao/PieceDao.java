@@ -2,8 +2,6 @@ package chess.infrastructure.persistence.dao;
 
 import chess.infrastructure.persistence.entity.PieceEntity;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
@@ -27,21 +25,13 @@ public class PieceDao {
 
     public List<PieceEntity> findByAllChessGameId(final Long chessGameId) {
         final String query = "SELECT * FROM piece where chess_game_id = ?";
-        return template.findAll(query, (connection, preparedStatement) -> {
-            preparedStatement.setString(1, chessGameId.toString());
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            final List<PieceEntity> pieceEntities = new ArrayList<>();
-            while (resultSet.next()) {
-                pieceEntities.add(new PieceEntity(
-                        resultSet.getInt(2),
-                        resultSet.getString(3).charAt(0),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getLong(6)
-                ));
-            }
-            return pieceEntities;
-        });
+        return template.findAll(query, resultSet -> new PieceEntity(
+                resultSet.getInt(2),
+                resultSet.getString(3).charAt(0),
+                resultSet.getString(4),
+                resultSet.getString(5),
+                resultSet.getLong(6)
+        ), chessGameId.toString());
     }
 
     public void deleteAllByChessGameId(final Long chessGameId) {
