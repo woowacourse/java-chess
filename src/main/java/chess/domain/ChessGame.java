@@ -27,6 +27,10 @@ public class ChessGame {
         throw new IllegalArgumentException("상대팀 말을 움직일 수 없습니다.");
     }
 
+    public boolean isKingDead() {
+        return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
+    }
+
     public Team getWinner() {
         if (board.hasKing(Team.WHITE) && board.hasKing(Team.BLACK)) {
             throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");

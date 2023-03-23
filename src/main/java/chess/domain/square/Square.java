@@ -1,15 +1,15 @@
 package chess.domain.square;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class Square {
 
     private static final int TOTAL_SQUARE_COUNT = 8 * 8;
 
-    private static final Map<String, Square> cache = new ConcurrentHashMap<>(TOTAL_SQUARE_COUNT);
+    private static final Map<String, Square> cache = new HashMap<>(TOTAL_SQUARE_COUNT);
     private final File file;
     private final Rank rank;
 

@@ -57,6 +57,9 @@ public class ChessController {
                 SquareDto current = readSquare();
                 SquareDto destination = readSquare();
                 move(current, destination);
+                if (chessGame.isKingDead()) {
+                    break;
+                }
                 continue;
             }
             if (command == Command.STATUS) {

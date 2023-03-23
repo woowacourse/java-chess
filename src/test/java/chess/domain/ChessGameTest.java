@@ -100,4 +100,33 @@ class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("두 킹이 모두 죽어있을 순 없습니다.");
     }
+
+    @Test
+    @DisplayName("두 킹 모두 살아있으면 false를 반환한다.")
+    void is_king_dead_false() {
+        assertThat(chessGame.isKingDead()).isFalse();
+    }
+
+    @Test
+    @DisplayName("백 킹이 죽었으면 true 반환한다.")
+    void is_king_dead_true_when_white_king_dead() {
+        chessGame.move(Square.of(File.D, Rank.TWO), Square.of(File.D, Rank.FOUR));
+        chessGame.move(Square.of(File.E, Rank.SEVEN), Square.of(File.E, Rank.FIVE));
+        chessGame.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR));
+        chessGame.move(Square.of(File.F, Rank.EIGHT), Square.of(File.B, Rank.FOUR));
+        chessGame.move(Square.of(File.H, Rank.TWO), Square.of(File.H, Rank.THREE));
+        chessGame.move(Square.of(File.B, Rank.FOUR), Square.of(File.E, Rank.ONE));
+        assertThat(chessGame.isKingDead()).isTrue();
+    }
+
+    @Test
+    @DisplayName("흑 킹이 죽었으면 true 반환한다.")
+    void is_king_dead_true_when_black_king_dead() {
+        chessGame.move(Square.of(File.E, Rank.TWO), Square.of(File.E, Rank.FOUR));
+        chessGame.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.SIX));
+        chessGame.move(Square.of(File.F, Rank.ONE), Square.of(File.B, Rank.FIVE));
+        chessGame.move(Square.of(File.H, Rank.SEVEN), Square.of(File.H, Rank.SIX));
+        chessGame.move(Square.of(File.B, Rank.FIVE), Square.of(File.E, Rank.EIGHT));
+        assertThat(chessGame.isKingDead()).isTrue();
+    }
 }
