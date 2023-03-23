@@ -18,7 +18,7 @@ public final class ScoreTest {
         final var score = Score.from(10);
         Assertions.assertThat(score)
                 .extracting("value")
-                .isEqualTo(10);
+                .isEqualTo(10.0);
     }
 
     @Test
