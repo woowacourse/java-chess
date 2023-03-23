@@ -66,7 +66,7 @@
         - 어떤 팀도 아니다.
 - 위치
     - 이동할 수 있다
-    - 다른 위치까지의 수직, 수평 방향들을 알 수 있다
+    - 다른 위치까지의 방향들을 알 수 있다
 - 수
     - 시작위치, 도착위치로 수를 만들 수 있다.
     - 다수의 방향을 가진다.
@@ -108,16 +108,14 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
-    QuadrantPiece <-- Knight
-    QuadrantPiece <-- King
+    Piece <-- Knight
+    Piece <-- King
     InfinitePiece <-- Queen
     InfinitePiece <-- Bishop
     InfinitePiece <-- Rook
-    QuadrantPiece <-- InfinitePiece
-    Piece <-- QuadrantPiece
+    Piece <-- InfinitePiece
 
     <<abstract>> Piece
-    <<abstract>> QuadrantPiece
     <<abstract>> InfinitePiece
 ```
 

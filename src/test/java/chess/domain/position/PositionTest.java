@@ -24,21 +24,12 @@ public class PositionTest {
                 .isEqualTo(new Position(file, rank));
     }
 
-    @DisplayName("다른 위치까지의 수평 방향들을 알 수 있다")
+    @DisplayName("다른 위치까지의 방향들을 알 수 있다")
     @Test
-    void getHorizontalDirectionsToOtherPosition() {
+    void getDirectionsToOtherPosition() {
         Position position = new Position(File.G, Rank.ONE);
         Position other = new Position(File.D, Rank.FOUR);
 
-        assertThat(position.getHorizontalDirectionsTo(other)).isEqualTo(Directions.of(LEFT, LEFT, LEFT));
-    }
-
-    @DisplayName("다른 위치까지의 수직 방향들을 알 수 있다")
-    @Test
-    void getVerticalDirectionsToOtherPosition() {
-        Position position = new Position(File.G, Rank.ONE);
-        Position other = new Position(File.D, Rank.FOUR);
-
-        assertThat(position.getVerticalDirectionsTo(other)).isEqualTo(Directions.of(UP, UP, UP));
+        assertThat(position.getDirectionsTo(other)).isEqualTo(Directions.of(LEFT, LEFT, LEFT, UP, UP, UP));
     }
 }

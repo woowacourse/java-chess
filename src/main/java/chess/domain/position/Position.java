@@ -26,7 +26,13 @@ public class Position {
         return new Position(newFile, newRank);
     }
 
-    public Directions getHorizontalDirectionsTo(Position other) {
+    public Directions getDirectionsTo(Position other) {
+        Directions horizontalDirections = getHorizontalDirectionsTo(other);
+        Directions verticalDirections = getVerticalDirectionsTo(other);
+        return horizontalDirections.join(verticalDirections);
+    }
+
+    private Directions getHorizontalDirectionsTo(Position other) {
         int difference = other.file.minus(file);
         if (difference < 0) {
             return new Directions(LEFT.repeat(Math.abs(difference)));
@@ -34,7 +40,7 @@ public class Position {
         return new Directions(RIGHT.repeat(difference));
     }
 
-    public Directions getVerticalDirectionsTo(Position other) {
+    private Directions getVerticalDirectionsTo(Position other) {
         int difference = other.rank.minus(rank);
         if (difference > 0) {
             return new Directions(UP.repeat(difference));
