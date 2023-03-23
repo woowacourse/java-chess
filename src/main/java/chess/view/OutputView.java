@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.controller.state.BoardDTO;
+
 import java.util.List;
 
 public final class OutputView {
@@ -14,8 +16,13 @@ public final class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printRank(List<String> pieceViews) {
-        String format = String.join(DELIMITER, pieceViews);
+    public void printBoard(BoardDTO boardDTO) {
+        List<List<String>> board = boardDTO.getSquares();
+        board.forEach(this::printRank);
+    }
+
+    private void printRank(List<String> rank) {
+        String format = String.join(DELIMITER, rank);
 
         System.out.println(format);
     }
