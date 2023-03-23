@@ -6,6 +6,8 @@ import domain.piece.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class GameTest {
+class BoardTest {
     private Map<Position, Piece> chessBoard;
     private Board board;
 
@@ -118,6 +120,15 @@ class GameTest {
         assertThatThrownBy(() -> board.move(Side.WHITE, sourcePosition, Position.of("d", "5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(sourcePosition + "에 움직일 수 있는 말이 없습니다.");
+    }
+
+
+    @DisplayName("target position에 킹 존재 여부를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1, true", "2, false"})
+    void isKingTest(String rank, boolean result) {
+        //given
+        assertThat(board.isKing(Position.of("e", rank))).isEqualTo(result);
     }
 
 }
