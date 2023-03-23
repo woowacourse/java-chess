@@ -13,7 +13,11 @@ import chess.domain.piece.Piece;
 
 public class End implements CommandStatus {
 
-    public End() {}
+    private final ResultCalculator resultCalculator;
+
+    public End(ResultCalculator resultCalculator) {
+        this.resultCalculator = resultCalculator;
+    }
 
     @Override
     public CommandStatus start() {
@@ -33,7 +37,7 @@ public class End implements CommandStatus {
 
     @Override
     public CommandStatus printGameResult() {
-        throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 게임 결과를 출력할 수 없습니다.");
+        throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 게임 결과 상태로 전이될 수 없습니다.");
     }
 
     @Override
@@ -43,7 +47,7 @@ public class End implements CommandStatus {
 
     @Override
     public boolean canPrintGameResult() {
-        return false;
+        return true;
     }
 
     @Override
@@ -58,11 +62,11 @@ public class End implements CommandStatus {
 
     @Override
     public ScoreBySideDto getScoreBySide() {
-        throw new IllegalStateException("[ERROR] 종료 상태에서는 점수를 가져올 수 없습니다.");
+        return new ScoreBySideDto(resultCalculator.getScoreBySide());
     }
 
     @Override
     public GameResultBySideDto getGameResultBySide() {
-        throw new IllegalStateException("[ERROR] 종료 상태에서는 결과를 가져올 수 없습니다.");
+        return new GameResultBySideDto(resultCalculator.getGameResultBySide());
     }
 }
