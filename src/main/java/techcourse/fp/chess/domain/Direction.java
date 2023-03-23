@@ -55,14 +55,6 @@ public enum Direction {
                 RIGHT_TWO_UP, RIGHT_TWO_DOWN, LEFT_TWO_UP, LEFT_TWO_DOWN);
     }
 
-    public static List<Direction> ofWhitePawn() {
-        return List.of(UP_RIGHT, UP_LEFT, UP, UP_TWO);
-    }
-
-    public static List<Direction> ofBlackPawn() {
-        return List.of(DOWN_LEFT, DOWN_RIGHT, DOWN, DOWN_TWO);
-    }
-
     public int getRank() {
         return rank;
     }

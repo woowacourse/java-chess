@@ -50,7 +50,7 @@ public final class PieceRender {
             return ".";
         }
 
-        throw new AssertionError();
+        throw new IllegalStateException("매핑되지 않는 기물이 존재합니다.");
     }
 
     private static String renderByColor(final Color color, final String name) {

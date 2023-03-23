@@ -15,7 +15,6 @@ public class SlidingStrategy extends MovingStrategy {
 
     @Override
     public List<Position> createPath(final Position source, final Position target) {
-        //TODO: 계산의 중복 제거 메소드 추출 & Position method 추가(?)
         final int gapOfFileOrder = target.getFileOrder() - source.getFileOrder();
         final int gapOfRankOrder = target.getRankOrder() - source.getRankOrder();
 

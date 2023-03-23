@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
-import techcourse.fp.chess.dto.BoardDto;
+import techcourse.fp.chess.dto.BoardResponse;
 import techcourse.fp.chess.dto.CommandRequest;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
@@ -51,7 +51,7 @@ public final class ChessController {
 
     private void start(CommandRequest commandRequest) {
         try {
-            outputView.printBoard(BoardDto.create(board.getBoard()));
+            outputView.printBoard(BoardResponse.create(board.getBoard()));
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception.getMessage());
         }
@@ -60,7 +60,7 @@ public final class ChessController {
     private void move(final CommandRequest commandRequest) {
         try {
             board.move(commandRequest.getSource(), commandRequest.getTarget());
-            outputView.printBoard(BoardDto.create(board.getBoard()));
+            outputView.printBoard(BoardResponse.create(board.getBoard()));
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
         }

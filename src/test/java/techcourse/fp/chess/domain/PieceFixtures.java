@@ -9,5 +9,4 @@ public class PieceFixtures {
     public static final BlackPawn BLACK_PAWN = BlackPawn.create();
     public static final WhitePawn WHITE_PAWN = WhitePawn.create();
     public static final Empty EMPTY = Empty.create();
-
 }
