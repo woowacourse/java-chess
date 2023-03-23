@@ -69,4 +69,14 @@ class PieceTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource({"BLACK, false", "WHITE, true"})
+    void 하얀_색인지_확인한다(final Color color, final boolean expected) {
+        final Piece piece = new TestPiece(File.C, Rank.EIGHT, color);
+
+        final boolean actual = piece.isWhite();
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
