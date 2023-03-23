@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.domain.color.Color.*;
 import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
@@ -48,7 +49,7 @@ public final class Pawn extends Piece {
 	@Override
 	public String name() {
 		String name = "p";
-		if (super.team().equals(Color.WHITE)) {
+		if (super.color().equals(WHITE)) {
 			return name;
 		}
 		return name.toUpperCase();

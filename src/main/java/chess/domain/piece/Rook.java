@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static chess.domain.color.Color.*;
 import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
@@ -36,7 +37,7 @@ public final class Rook extends Piece {
     @Override
     public String name() {
         String name = "r";
-        if (super.team().equals(Color.WHITE)) {
+        if (super.color().equals(WHITE)) {
             return name;
         }
         return name.toUpperCase();
