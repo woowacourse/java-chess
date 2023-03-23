@@ -28,6 +28,11 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public void printGameScores(Map<Side, Double> scores) {
+        System.out.println("white팀: " + scores.get(Side.WHITE) + "점");
+        System.out.println("black팀: " + scores.get(Side.BLACK) + "점");
+    }
+
     public void printErrorMessage(String message) {
         System.out.println(message);
         System.out.println();
@@ -35,5 +40,14 @@ public class OutputView {
 
     public void printSide(Side side) {
         System.out.println("현재 차례: " + side + " 진영");
+    }
+
+    public void printWinner(Side winner) {
+        if (winner == Side.NEUTRAL) {
+            System.out.println("무승부입니다.");
+            return;
+        }
+        System.out.println("승자는 " + SideConverter.valueOf(winner.name()) + "입니다.");
+
     }
 }

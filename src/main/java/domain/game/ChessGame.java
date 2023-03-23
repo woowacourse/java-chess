@@ -32,6 +32,10 @@ public class ChessGame {
         return board.calculateScore();
     }
 
+    public Side calculateWinner() {
+        return board.calculateWinner();
+    }
+
     private GameState calculateNextGameState(Position targetPosition) {
         if (board.isKing(targetPosition)) {
             return GameState.END;
