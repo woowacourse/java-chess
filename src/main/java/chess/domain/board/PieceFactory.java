@@ -10,22 +10,30 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PieceFactory {
 
-    public static void createPiece(final Map<Position, Piece> piecePosition) {
-        initPosition(piecePosition);
+    private Map<Position, Piece> result;
+
+    public static Map<Position, Piece> createPiece() {
+        Map<Position, Piece> result = new HashMap<>();
+        initPosition(result);
+
         List<Team> teams = List.of(Team.BLACK, Team.WHITE);
+
         for (final Team team : teams) {
-            createPawn(piecePosition, Rank.from(team, true), team);
-            createRook(piecePosition, Rank.from(team, false), team);
-            createKnight(piecePosition, Rank.from(team, false), team);
-            createBishop(piecePosition, Rank.from(team, false), team);
-            createQueen(piecePosition, Rank.from(team, false), team);
-            createKing(piecePosition, Rank.from(team, false), team);
+            createPawn(result, Rank.from(team, true), team);
+            createRook(result, Rank.from(team, false), team);
+            createKnight(result, Rank.from(team, false), team);
+            createBishop(result, Rank.from(team, false), team);
+            createQueen(result, Rank.from(team, false), team);
+            createKing(result, Rank.from(team, false), team);
         }
+
+        return result;
     }
 
     public static void createEmptyPiece(final Map<Position, Piece> piecePosition) {

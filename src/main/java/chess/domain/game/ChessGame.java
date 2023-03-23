@@ -10,9 +10,9 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    public ChessGame(final ChessBoard chessBoard) {
+    public ChessGame(final ChessBoard chessBoard, GameStatus status) {
         this.chessBoard = chessBoard;
-        this.gameStatus = IDLE;
+        this.gameStatus = status;
     }
 
     public void receiveCommand(final Command command) {
