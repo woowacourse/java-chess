@@ -1,7 +1,7 @@
 package chess.domain.position;
 
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 import chess.domain.move.Direction;
 
@@ -16,16 +16,26 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final Map<Integer, Rank> RANK_CACHE = new HashMap<>();
+
+    static {
+        for (Rank rank : values()) {
+            RANK_CACHE.put(rank.index, rank);
+        }
+    }
+
     private final int index;
 
     Rank(int index) {
         this.index = index;
     }
 
-    private static Optional<Rank> indexOf(int index) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.index == index)
-                .findFirst();
+    private static Rank indexOf(int index) {
+        Rank rank = RANK_CACHE.get(index);
+        if (rank == null) {
+            throw new UnsupportedOperationException();
+        }
+        return rank;
     }
 
     public Rank move(Direction direction) {
@@ -39,13 +49,11 @@ public enum Rank {
     }
 
     private Rank up() {
-        return indexOf(this.index + 1)
-                .orElseThrow(UnsupportedOperationException::new);
+        return indexOf(this.index + 1);
     }
 
     private Rank down() {
-        return indexOf(this.index - 1)
-                .orElseThrow(UnsupportedOperationException::new);
+        return indexOf(this.index - 1);
     }
 
     public int minus(Rank other) {

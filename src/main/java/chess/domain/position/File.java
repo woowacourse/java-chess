@@ -1,7 +1,7 @@
 package chess.domain.position;
 
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 import chess.domain.move.Direction;
 
@@ -15,16 +15,26 @@ public enum File {
     G(7),
     H(8);
 
+    private static final Map<Integer, File> FILE_CACHE = new HashMap<>();
+
+    static {
+        for (File file : values()) {
+            FILE_CACHE.put(file.index, file);
+        }
+    }
+
     private final int index;
 
     File(int index) {
         this.index = index;
     }
 
-    private static Optional<File> indexOf(int index) {
-        return Arrays.stream(values())
-                .filter(file -> file.index == index)
-                .findFirst();
+    private static File indexOf(int index) {
+        File file = FILE_CACHE.get(index);
+        if (file == null) {
+            throw new UnsupportedOperationException();
+        }
+        return file;
     }
 
     public File move(Direction direction) {
@@ -38,13 +48,11 @@ public enum File {
     }
 
     private File left() {
-        return indexOf(this.index - 1)
-                .orElseThrow(UnsupportedOperationException::new);
+        return indexOf(this.index - 1);
     }
 
     private File right() {
-        return indexOf(this.index + 1)
-                .orElseThrow(UnsupportedOperationException::new);
+        return indexOf(this.index + 1);
     }
 
     public int minus(File file) {
