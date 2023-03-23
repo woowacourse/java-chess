@@ -27,7 +27,7 @@ public class FileTest {
     @Test
     void shouldThrowExceptionWhenLastFileRequestGetNext() {
         assertThatThrownBy(() -> File.H.getNext())
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("서버 내부 에러 - 다음 File은 존재하지 않습니다.");
     }
 
@@ -41,7 +41,7 @@ public class FileTest {
     @Test
     void shouldThrowExceptionWhenFirstFileRequestGetPrevious() {
         assertThatThrownBy(() -> File.A.getPrevious())
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("서버 내부 에러 - 이전 File은 존재하지 않습니다.");
     }
 }

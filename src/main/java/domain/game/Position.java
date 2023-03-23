@@ -28,7 +28,8 @@ public final class Position {
         return cache.stream()
                 .filter(position -> position.file.equals(file) && position.rank.equals(rank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - File, Rank에 해당하는 Position을 찾을 수 없습니다."));
+                .orElseThrow(
+                        () -> new UnsupportedOperationException("서버 내부 에러 - File, Rank에 해당하는 Position을 찾을 수 없습니다."));
     }
 
     public Position(File file, Rank rank) {

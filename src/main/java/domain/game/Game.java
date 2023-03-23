@@ -37,7 +37,7 @@ public class Game {
             this.sideOfTurn = WHITE;
             return;
         }
-        throw new IllegalArgumentException("서버 내부 에러 - Game의 sideOfTurn은 WHITE나 BLACK이어야 합니다.");
+        throw new UnsupportedOperationException("서버 내부 에러 - Game의 sideOfTurn은 WHITE나 BLACK이어야 합니다.");
     }
 
     private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece) {

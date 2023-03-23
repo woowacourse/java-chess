@@ -32,6 +32,7 @@ public enum PieceMapper {
                 .filter(pieceCategory -> pieceCategory.category.equals(category))
                 .findFirst()
                 .map(pieceMapper -> pieceMapper.text)
-                .orElseThrow(() -> new IllegalArgumentException("서버 내부 에러 - 존재하지 않는 PieceCategory를 Mapping 시도했습니다."));
+                .orElseThrow(
+                        () -> new UnsupportedOperationException("서버 내부 에러 - 존재하지 않는 PieceCategory를 Mapping 시도했습니다."));
     }
 }

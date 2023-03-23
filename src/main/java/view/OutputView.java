@@ -40,4 +40,8 @@ public class OutputView {
     public void printSideOfTurn(Side side) {
         System.out.println(side + " 진영의 말을 움직이세요");
     }
+
+    public void printServerErrorMessage() {
+        System.out.println("서버 내부 오류가 발생했습니다. 개발자에게 문의하세요.");
+    }
 }

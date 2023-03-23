@@ -39,6 +39,6 @@ public abstract class Piece {
         if (this.side.equals(BLACK)) {
             return side.equals(WHITE);
         }
-        throw new IllegalArgumentException("서버 내부 에러 - Neutral한 Piece는 상대편을 확인할 수 없습니다.");
+        throw new UnsupportedOperationException("서버 내부 에러 - Neutral한 Piece는 상대편을 확인할 수 없습니다.");
     }
 }

@@ -67,6 +67,10 @@ public class ChessController {
     private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Log: " + e.getMessage()); // log 기록
+            this.outputView.printServerErrorMessage();
+            return null;
         } catch (RuntimeException e) {
             this.outputView.printErrorMessage(e.getMessage());
             return repeat(supplier);
