@@ -53,7 +53,7 @@ class WhitePawnTest {
         final var source = C4;
         final var target = D5;
 
-        assertThat(pawn.canMove(Map.of(target, false), source, target)).isTrue();
+        assertThat(pawn.canMoveWithValidate(Map.of(target, false), source, target)).isTrue();
     }
 
     @Test

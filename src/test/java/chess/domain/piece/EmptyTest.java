@@ -31,7 +31,7 @@ class EmptyTest {
     void emptyCanMoveExceptionTest() {
         Empty empty = new Empty();
 
-        assertThatThrownBy(() -> empty.canMove(Map.of(new Position(A, TWO), true), A5, B5))
+        assertThatThrownBy(() -> empty.canMoveWithValidate(Map.of(new Position(A, TWO), true), A5, B5))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }
