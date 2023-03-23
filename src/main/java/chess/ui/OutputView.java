@@ -1,6 +1,6 @@
 package chess.ui;
 
-import chess.domain.dto.res.PiecesResponse;
+import chess.domain.dto.response.PiecesResponse;
 
 import static chess.domain.Pieces.FIRST_FILE_OF_BLACK;
 import static chess.domain.Pieces.FIRST_FILE_OF_WHITE;

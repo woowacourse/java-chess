@@ -74,12 +74,12 @@ public final class Pieces {
     }
 
     private static void makeRookAndBishopAndKnight(final List<Piece> pieceList) {
-        final Deque<Character> whiteNames = new ArrayDeque<>(
+        final Deque<Character> whitePieceNames = new ArrayDeque<>(
                 List.of(ROOK.getWhiteName(), KNIGHT.getWhiteName(), BISHOP.getWhiteName())
         );
 
         for (int frontPosition = FIRST_RANK; frontPosition < MIDDLE_RANK; frontPosition++) {
-            char shapeValue = whiteNames.pollFirst();
+            char shapeValue = whitePieceNames.pollFirst();
             Shape shape = Shape.findShapeByWhiteName(shapeValue);
             addPiecePairs(pieceList, frontPosition, shape);
         }

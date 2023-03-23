@@ -36,7 +36,7 @@ public class Player {
         return pieces.hasPosition(findPosition);
     }
 
-    public Position movePieceByInput(
+    public Position movePiece(
             final List<Position> allPosition,
             final Position findPosition,
             final Position targetPosition
@@ -58,8 +58,8 @@ public class Player {
         return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
     }
 
-    public void removePiece(final Position changedPosition) {
-        pieces.remove(changedPosition);
+    public void removePiece(final Position removalPosition) {
+        pieces.remove(removalPosition);
     }
 
     public Score getTotalScore() {
