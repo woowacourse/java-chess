@@ -15,6 +15,10 @@ public class Score {
         return new Score(this.score.add(scoreToAdd.score));
     }
 
+    public Score subtract(Score scoreToSubtract) {
+        return new Score(this.score.subtract(scoreToSubtract.score));
+    }
+
     public BigDecimal getScore() {
         return score;
     }
@@ -30,5 +34,12 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                '}';
     }
 }
