@@ -1,8 +1,7 @@
 package chess;
 
 import chess.application.ChessGameService;
-import chess.controller.RunningGameController;
-import chess.controller.StartGameController;
+import chess.controller.ChessGameController;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.ChessGameRepository;
 import chess.infrastructure.persistence.dao.ChessGameDao;
@@ -16,7 +15,6 @@ public class ChessApplication {
         final ChessGameRepository chessGameRepository = new JdbcChessGameRepository(pieceDao, chessGameDao);
         final ChessGameService chessGameService = new ChessGameService(chessGameRepository);
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
-        final RunningGameController runningGameController = new RunningGameController(chessGameService);
-        new StartGameController(chessGameService, chessBoardFactory, runningGameController).start();
+        new ChessGameController(chessGameService, chessBoardFactory).start();
     }
 }
