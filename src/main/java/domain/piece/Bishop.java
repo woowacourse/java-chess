@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.InitialChessAlignment;
 import domain.position.Position;
 
 public final class Bishop extends Piece {
@@ -14,5 +13,10 @@ public final class Bishop extends Piece {
     @Override
     public boolean isMovable(final Position source, final Position destination) {
         return source.isDiagonal(destination);
+    }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        return isMovable(source, destination);
     }
 }

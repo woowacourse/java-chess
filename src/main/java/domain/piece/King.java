@@ -20,4 +20,9 @@ public final class King extends Piece {
 
         return source.isStraight(destination) && source.getDistance(destination) == ONE_STEP;
     }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        return isMovable(source, destination);
+    }
 }

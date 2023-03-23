@@ -14,4 +14,9 @@ public final class Rook extends Piece {
     public boolean isMovable(final Position source, final Position destination) {
         return source.isStraight(destination);
     }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        return isMovable(source, destination);
+    }
 }

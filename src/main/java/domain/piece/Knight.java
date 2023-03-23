@@ -17,4 +17,9 @@ public final class Knight extends Piece {
                 !source.isStraight(destination) &&
                 !source.isDiagonal(destination);
     }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        return isMovable(source, destination);
+    }
 }

@@ -14,4 +14,9 @@ public final class Queen extends Piece {
     public boolean isMovable(final Position source, final Position destination) {
         return source.isStraight(destination) || source.isDiagonal(destination);
     }
+
+    @Override
+    public boolean isEatable(final Position source, final Position destination) {
+        return isMovable(source, destination);
+    }
 }
