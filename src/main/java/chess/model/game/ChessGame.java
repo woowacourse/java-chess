@@ -3,7 +3,7 @@ package chess.model.game;
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
 import chess.model.position.Position;
-import chess.view.ChessBoardResponse;
+import chess.view.dto.ChessBoardResponse;
 
 public class ChessGame {
 

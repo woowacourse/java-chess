@@ -1,7 +1,11 @@
 package chess.view;
 
+import chess.model.piece.Piece;
 import chess.model.position.File;
+import chess.model.position.Position;
 import chess.model.position.Rank;
+import chess.view.dto.ChessBoardResponse;
+import chess.view.messsage.PieceMessageConverter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -20,15 +24,29 @@ public class OutputView {
     }
 
     public void printChessBoard(final ChessBoardResponse chessBoardResponse) {
-        final Map<String, String> squares = chessBoardResponse.getSquares();
+        final Map<Position, Piece> squares = chessBoardResponse.getSquares();
+        final Map<String, String> squaresMessage = convertToChessBoardMessage(squares);
 
-        final List<String> rankMessage = convertToRankMessage(squares);
+        final List<String> rankMessage = convertToRankMessage(squaresMessage);
 
         System.out.println();
         for (int fileIndex = MAX_FILE_INDEX; fileIndex >= 0; fileIndex--) {
             System.out.println(rankMessage.get(fileIndex));
         }
     }
+
+    private Map<String, String> convertToChessBoardMessage(final Map<Position, Piece> board) {
+        return board.keySet().stream()
+                .collect(Collectors.toMap(
+                        Position::getPosition, position -> convertToPieceMessage(board, position)));
+    }
+
+    private String convertToPieceMessage(final Map<Position, Piece> board, final Position position) {
+        final Piece piece = board.get(position);
+
+        return PieceMessageConverter.convert(piece.getClass(), piece.camp());
+    }
+
 
     private List<String> convertToRankMessage(final Map<String, String> squares) {
         return Arrays.stream(Rank.values())
