@@ -44,13 +44,13 @@ public class ChessBoard {
     public double calculateTotalScoreByCamp(Camp camp) {
         double sum = INITIAL_VALUE;
         for (File file : File.values()) {
-            sum += getSum(camp, file);
+            sum += calculateOneLine(camp, file);
         }
 
         return sum;
     }
 
-    private double getSum(final Camp camp, final File file) {
+    private double calculateOneLine(final Camp camp, final File file) {
         if (!divideByCamp(getLineByFile(file)).containsKey(camp)) {
             return 0;
         }
