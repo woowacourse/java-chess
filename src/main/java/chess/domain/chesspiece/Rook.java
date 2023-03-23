@@ -4,8 +4,8 @@ import chess.domain.Side;
 import chess.domain.Square;
 
 public class Rook extends Piece {
-    private static final Rook blackRook = new Rook(Side.BLACK);
-    private static final Rook whiteRook = new Rook(Side.WHITE);
+    private static final Rook BLACK_ROOK = new Rook(Side.BLACK);
+    private static final Rook WHITE_ROOK = new Rook(Side.WHITE);
 
     private Rook(final Side side) {
         super(side, PieceInfo.ROOK);
@@ -13,9 +13,9 @@ public class Rook extends Piece {
 
     public static Rook of(final Side side) {
         if (side == Side.BLACK) {
-            return blackRook;
+            return BLACK_ROOK;
         }
-        return whiteRook;
+        return WHITE_ROOK;
     }
 
     @Override

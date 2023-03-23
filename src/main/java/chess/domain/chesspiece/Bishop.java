@@ -5,8 +5,8 @@ import chess.domain.Square;
 
 public class Bishop extends Piece {
 
-    private static final Bishop blackBishop = new Bishop(Side.BLACK);
-    private static final Bishop whiteBishop = new Bishop(Side.WHITE);
+    private static final Bishop BLACK_BISHOP = new Bishop(Side.BLACK);
+    private static final Bishop WHITE_BISHOP = new Bishop(Side.WHITE);
 
     private Bishop(final Side side) {
         super(side, PieceInfo.BISHOP);
@@ -14,9 +14,9 @@ public class Bishop extends Piece {
 
     public static Bishop of(final Side side) {
         if (side == Side.BLACK) {
-            return blackBishop;
+            return BLACK_BISHOP;
         }
-        return whiteBishop;
+        return WHITE_BISHOP;
     }
 
     @Override

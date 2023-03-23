@@ -4,8 +4,8 @@ import chess.domain.Side;
 import chess.domain.Square;
 
 public class Knight extends Piece {
-    private static final Knight blackKnight = new Knight(Side.BLACK);
-    private static final Knight whiteKnight = new Knight(Side.WHITE);
+    private static final Knight BLACK_KNIGHT = new Knight(Side.BLACK);
+    private static final Knight WHITE_KNIGHT = new Knight(Side.WHITE);
 
     private Knight(final Side side) {
         super(side, PieceInfo.KNIGHT);
@@ -13,9 +13,9 @@ public class Knight extends Piece {
 
     public static Knight of(final Side side) {
         if (side == Side.BLACK) {
-            return blackKnight;
+            return BLACK_KNIGHT;
         }
-        return whiteKnight;
+        return WHITE_KNIGHT;
     }
 
     @Override

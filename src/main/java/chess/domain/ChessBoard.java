@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.chesspiece.EmptyPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.PieceInfo;
 
 import java.util.Map;
 
@@ -49,9 +50,8 @@ public class ChessBoard {
     private void updateChessBoard(Square from, Square to, Piece target) {
         pieces.put(to, target);
         pieces.put(from, EmptyPiece.getInstance());
-        if (target.isPawn()) {
-            ((Pawn) target)
-                    .move();
+        if (target instanceof Pawn) {
+            ((Pawn) target).move();
         }
     }
 

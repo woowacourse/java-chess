@@ -5,8 +5,8 @@ import chess.domain.Square;
 
 public class Queen extends Piece {
 
-    private static final Queen blackQueen = new Queen(Side.BLACK);
-    private static final Queen whiteQueen = new Queen(Side.WHITE);
+    private static final Queen BLACK_QUEEN = new Queen(Side.BLACK);
+    private static final Queen WHITE_QUEEN = new Queen(Side.WHITE);
 
     private Queen(final Side side) {
         super(side, PieceInfo.QUEEN);
@@ -14,9 +14,9 @@ public class Queen extends Piece {
 
     public static Queen of(final Side side) {
         if (side == Side.BLACK) {
-            return blackQueen;
+            return BLACK_QUEEN;
         }
-        return whiteQueen;
+        return WHITE_QUEEN;
     }
 
     @Override

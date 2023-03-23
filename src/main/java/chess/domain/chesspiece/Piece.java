@@ -4,8 +4,6 @@ import chess.domain.Side;
 import chess.domain.Square;
 
 public abstract class Piece {
-    public abstract boolean isMovable(Square from, Square to, Piece piece);
-
     protected final Side side;
 
     protected final PieceInfo pieceInfo;
@@ -14,6 +12,8 @@ public abstract class Piece {
         this.side = side;
         this.pieceInfo = pieceInfo;
     }
+
+    public abstract boolean isMovable(Square from, Square to, Piece piece);
 
     public boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;
@@ -39,7 +39,7 @@ public abstract class Piece {
         return side.toString();
     }
 
-    public boolean isPawn() {
-        return this instanceof Pawn;
+    public String getName() {
+        return pieceInfo.name();
     }
 }
