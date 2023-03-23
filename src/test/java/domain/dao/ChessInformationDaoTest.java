@@ -7,6 +7,7 @@ import common.TransactionStrategy;
 import domain.Location;
 import domain.piece.Pawn;
 import domain.piece.Piece;
+import domain.type.Color;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,7 @@ class ChessInformationDaoTest {
         //then
         assertDoesNotThrow(() ->
             testTransactionContext.workWithTransaction((TransactionStrategy<Void>) connection -> {
-                    chessInformationDao.insert(board, boardId, connection);
+                    chessInformationDao.insert(board, boardId, Color.WHITE, connection);
                     final Integer count = chessInformationDao.count(boardId,
                         connection);
                     assertThat(count).isEqualTo(1);
@@ -58,7 +59,7 @@ class ChessInformationDaoTest {
         //then
         assertDoesNotThrow(() ->
             testTransactionContext.workWithTransaction((TransactionStrategy<Void>) connection -> {
-                    chessInformationDao.insert(board, boardId, connection);
+                    chessInformationDao.insert(board, boardId, Color.WHITE, connection);
                     final Integer count = chessInformationDao.count(boardId,
                         connection);
                     assertThat(count).isEqualTo(1);
@@ -83,7 +84,7 @@ class ChessInformationDaoTest {
         //then
         assertDoesNotThrow(() ->
             testTransactionContext.workWithTransaction((TransactionStrategy<Void>) connection -> {
-                    chessInformationDao.insert(board, boardId, connection);
+                    chessInformationDao.insert(board, boardId, Color.WHITE, connection);
                     final Map<Location, Piece> result = chessInformationDao.find(boardId, connection);
                     assertThat(result.size()).isEqualTo(4);
                     return null;

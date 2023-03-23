@@ -23,6 +23,19 @@ public class ChessInformationDaoImpl implements ChessInformationDao {
         return makeBoard(resultSet);
     }
 
+    @Override
+    public Color findColor(final String id, final Connection connection) throws SQLException {
+        final String query = "select color from board where board_id = ?";
+        final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, id);
+        final ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            final String color = resultSet.getString("color");
+            return Color.findByName(color);
+        }
+        throw new IllegalArgumentException();
+    }
+
     private Map<Location, Piece> makeBoard(final ResultSet resultSet) throws SQLException {
         final Map<Location, Piece> board = new HashMap<>();
         while (resultSet.next()) {
@@ -62,39 +75,27 @@ public class ChessInformationDaoImpl implements ChessInformationDao {
     }
 
     @Override
-    public Void insert(final Map<Location, Piece> board, final String boardId, final Connection connection)
+    public Void insert(final Map<Location, Piece> board, final String boardId, final Color color,
+        final Connection connection)
         throws SQLException {
-        insertBoard(boardId, connection);
+        insertBoard(boardId, color, connection);
         insertBoardInformation(board, boardId, connection);
         return null;
     }
 
-    private void insertBoard(final String boardId, final Connection connection) throws SQLException {
-        final String query = "insert into board values (?)";
+    private void insertBoard(final String boardId, final Color color, final Connection connection) throws SQLException {
+        final String query = "insert into board (board_id, color) values (?, ?)";
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, boardId);
+        preparedStatement.setString(2, color.name());
         preparedStatement.execute();
     }
 
-    private void insertBoardInformation(final Map<Location, Piece> board, final String boardId, final Connection connection) throws SQLException {
+    private void insertBoardInformation(final Map<Location, Piece> board, final String boardId,
+        final Connection connection) throws SQLException {
         final String query = "insert into boardInformation "
             + "(column_, row_, piece_type, piece_color, board_id) "
             + "values(?, ?, ?, ?, ?)";
-        addBoardInformation(board, boardId, query, connection);
-    }
-
-    @Override
-    public Integer update(final Map<Location, Piece> board, final String boardId, final Connection connection)
-        throws SQLException {
-        final String query = "update boardInformation piece_type = ?, piece_color = ? "
-            + "where board_id = ? and column_ = ? and row_ = ?";
-        return addBoardInformation(board, boardId, query, connection);
-    }
-
-    private int addBoardInformation(final Map<Location, Piece> board, final String boardId, final String query,
-        final Connection connection)
-        throws SQLException {
-        int count = 0;
         for (Location location : board.keySet()) {
             final Piece piece = board.get(location);
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -103,8 +104,40 @@ public class ChessInformationDaoImpl implements ChessInformationDao {
             preparedStatement.setString(3, piece.getPieceType().name());
             preparedStatement.setString(4, piece.getColor().name());
             preparedStatement.setString(5, boardId);
-            count += preparedStatement.executeUpdate();
+            preparedStatement.execute();
         }
-        return count;
+    }
+
+    @Override
+    public Void update(final Map<Location, Piece> board, final String boardId, final Color color,
+        final Connection connection)
+        throws SQLException {
+        updateBoard(color, boardId, connection);
+        updateBoardInformation(board, boardId, connection);
+        return null;
+    }
+
+    private void updateBoard(final Color color, final String boardId, final Connection connection) throws SQLException {
+        final String query = "update board set color = ? where board_id = ?";
+        final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, color.name());
+        preparedStatement.setString(2, boardId);
+        preparedStatement.executeUpdate();
+    }
+
+    private static void updateBoardInformation(final Map<Location, Piece> board, final String boardId, final Connection connection)
+        throws SQLException {
+        final String query = "update boardInformation set piece_type = ?, piece_color = ? "
+            + "where board_id = ? and column_ = ? and row_ = ?";
+        for (Location location : board.keySet()) {
+            final Piece piece = board.get(location);
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, piece.getPieceType().name());
+            preparedStatement.setString(2, piece.getColor().name());
+            preparedStatement.setString(3, boardId);
+            preparedStatement.setInt(4, location.getColumn());
+            preparedStatement.setInt(5, location.getRow());
+            preparedStatement.executeUpdate();
+        }
     }
 }

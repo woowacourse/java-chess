@@ -7,12 +7,13 @@ import java.sql.SQLException;
 public class TransactionContext {
 
     private static final String SERVER = "localhost:13306";
+    private static final String DATABASE = "chess";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
     private Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER, USERNAME, PASSWORD);
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();

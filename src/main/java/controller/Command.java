@@ -8,8 +8,7 @@ public enum Command {
     END("end"),
     MOVE("move"),
     STATUS("status"),
-    ENTER("enter")
-    ;
+    ENTER("enter");
 
     private final String input;
 

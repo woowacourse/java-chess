@@ -26,6 +26,7 @@ public class ChessGame {
     public void initialize(final String boardId) {
         this.boardId = boardId;
         this.board = new Board(new HashMap<>(), new ScoreCalculator());
+        this.color = Color.WHITE;
         board.initialize();
     }
 
@@ -67,8 +68,11 @@ public class ChessGame {
     public void findPreviousGame(final String boardId) {
         final Map<Location, Piece> board = transactionContext.workWithTransaction(
             connection -> chessInformationDao.find(boardId, connection));
+        final Color color = transactionContext.workWithTransaction(
+            connection -> chessInformationDao.findColor(boardId, connection));
         this.board = new Board(board, new ScoreCalculator());
         this.boardId = boardId;
+        this.color = color;
     }
 
     public void save() {
@@ -78,10 +82,10 @@ public class ChessGame {
     private Void save(final Connection connection) throws SQLException {
         final int count = chessInformationDao.count(boardId, connection);
         if (count == 0) {
-            chessInformationDao.insert(board.getBoard(), boardId, connection);
+            chessInformationDao.insert(board.getBoard(), boardId, color, connection);
             return null;
         }
-        chessInformationDao.update(board.getBoard(), boardId, connection);
+        chessInformationDao.update(board.getBoard(), boardId, color, connection);
         return null;
     }
 

@@ -3,6 +3,7 @@ package domain;
 import domain.config.BoardSetting;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -101,6 +102,6 @@ public class Board {
     }
 
     public Map<Location, Piece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 }

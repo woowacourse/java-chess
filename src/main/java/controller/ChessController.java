@@ -23,15 +23,11 @@ public class ChessController {
     }
 
     public void play() {
-        if (inputView.getEndIntent()) {
-            return;
-        }
-        chessGame.initialize(inputView.getBoardId());
+        inputView.printStartInformation();
         ExecuteContext.repeatableExecute(this::printBoard, () -> command(inputView.getCommand()));
     }
 
     private Void printBoard() {
-
         final Board board = chessGame.getBoard();
         outputView.printBoard(board);
         return null;

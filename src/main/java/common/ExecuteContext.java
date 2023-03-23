@@ -16,8 +16,12 @@ public class ExecuteContext {
 
     public static <T> void repeatableExecute(final ExecuteStrategy<T> defaultStrategy,
         final ExecuteStrategy<Boolean> repeatableStrategy) {
-        do {
+        while (true) {
+            boolean result = repeatableExecute(repeatableStrategy);
+            if (!result) {
+                break;
+            }
             defaultStrategy.execute();
-        } while (repeatableExecute(repeatableStrategy));
+        }
     }
 }
