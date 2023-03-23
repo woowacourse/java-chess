@@ -1,10 +1,11 @@
 package techcourse.fp.mission;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CalculatorTest {
 
@@ -18,13 +19,13 @@ class CalculatorTest {
 
     @Test
     public void sumAllEven() {
-        int sum = Calculator.sumAllEven(numbers);
+        int sum = Calculator.sumAll(numbers, x -> x % 2 == 0);
         assertThat(sum).isEqualTo(12);
     }
 
     @Test
     public void sumAllOverThree() {
-        int sum = Calculator.sumAllOverThree(numbers);
+        int sum = Calculator.sumAll(numbers, x -> x > 3);
         assertThat(sum).isEqualTo(15);
     }
 }
