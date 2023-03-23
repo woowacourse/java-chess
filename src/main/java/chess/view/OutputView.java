@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.controller.resposne.Output;
 import chess.controller.resposne.PieceResponse;
+import chess.controller.resposne.StatusResponse;
 import java.util.List;
 
 public class OutputView implements Output {
@@ -20,6 +21,13 @@ public class OutputView implements Output {
             printRank(piecePosition.get(i));
         }
         System.out.println();
+    }
+
+    @Override
+    public void printStatus(StatusResponse statusResponse) {
+        System.out.println("현재 점수");
+        System.out.println("흰색 : " + statusResponse.getWhiteScore());
+        System.out.println("검정색 : " + statusResponse.getBlackScore());
     }
 
     private void printRank(List<PieceResponse> pieceResponses) {

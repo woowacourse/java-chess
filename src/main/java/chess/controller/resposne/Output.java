@@ -8,5 +8,7 @@ public interface Output {
 
     void printBoard(List<List<PieceResponse>> piecePosition);
 
+    void printStatus(StatusResponse statusResponse);
+
     void printError(Exception e);
 }
