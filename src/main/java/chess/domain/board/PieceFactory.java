@@ -34,7 +34,7 @@ public class PieceFactory {
         return result;
     }
 
-    private static Map<Position, Piece> createEmptyPiece() {
+    public static Map<Position, Piece> createEmptyPiece() {
         return Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
                         .map(rank -> Position.of(file, rank))

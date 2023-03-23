@@ -64,4 +64,8 @@ public class ChessBoard {
     public Map<Position, Piece> getPiecePosition() {
         return Map.copyOf(piecePosition);
     }
+
+    public Piece get(final Position from) {
+        return piecePosition.get(from);
+    }
 }

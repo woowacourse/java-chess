@@ -51,11 +51,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessBoardTest {
 
-    private final Map<Position, Piece> piecePosition = new HashMap<>();
+    private Map<Position, Piece> piecePosition = new HashMap<>();
 
     @BeforeEach
     void setUp() {
-        PieceFactory.createEmptyPiece(piecePosition);
+        this.piecePosition = PieceFactory.createEmptyPiece();
     }
 
     @Test
