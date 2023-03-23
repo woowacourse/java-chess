@@ -28,8 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -130,20 +128,29 @@ public class ChessGameTest {
         );
     }
 
-    @ParameterizedTest(name = "체스게임이 초기화 되었는지 확인한다. 초기화:{0}, 결과:{0}")
-    @ValueSource(booleans = {true, false})
-    void 체스게임이_초기화_되었는지_확인한다(final boolean initialize) {
+    @Test
+    void 체스게임이_초기화_되었는지_확인한다() {
         // given
         final ChessGame chessGame = new ChessGame(mockChessDao);
-        if (initialize) {
-            chessGame.initialize();
-        }
+        chessGame.initialize();
 
         // when
         final boolean result = chessGame.isInitialized();
 
         // then
-        assertThat(result).isEqualTo(initialize);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void 체스게임이_초기화되지_않은_상태인지_확인한다() {
+        // given
+        final ChessGame chessGame = new ChessGame(mockChessDao);
+
+        // when
+        final boolean result = chessGame.isNotInitialized();
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @Test
