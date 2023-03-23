@@ -69,10 +69,14 @@ public final class BoardFactory {
 		}
 	}
 
-	private static void fillPawn(final Map<Position, Piece> board) {
-		for (final File file : File.values()) {
-			board.put(Position.of(file, Rank.TWO), new Pawn(WHITE));
-			board.put(Position.of(file, Rank.SEVEN), new Pawn(BLACK));
+	private static void addQueen(final Map<Position, Piece> board) {
+		List<Position> queenPosition = Queen.getInitialBlackPosition();
+		for (Position position : queenPosition) {
+			board.put(position, new Queen(BLACK, position));
+		}
+		queenPosition = Queen.getInitialWhitePosition();
+		for (Position position : queenPosition) {
+			board.put(position, new Queen(WHITE, position));
 		}
 	}
 
