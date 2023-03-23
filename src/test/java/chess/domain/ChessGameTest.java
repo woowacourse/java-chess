@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.board.maker.EmptyPiecesFactory;
+import chess.domain.board.maker.StartingPiecesFactory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ class ChessGameTest {
 
     @Test
     void 턴이_바뀌었는지_확인한다() {
-        final ChessGame chessGame = ChessGame.createWithSetBoard();
+        final ChessGame chessGame = ChessGame.from(new StartingPiecesFactory());
 
         final ChessGame changedChessGame = chessGame.move(new Position(A, TWO), new Position(A, FOUR));
 
@@ -26,7 +28,7 @@ class ChessGameTest {
 
     @Test
     void 입력_받은_현재_위치_말_색상이_이동할_차례가_아니면_예외를_던진다() {
-        final ChessGame chessGame = ChessGame.createWithSetBoard();
+        final ChessGame chessGame = ChessGame.from(new StartingPiecesFactory());
 
         assertThatThrownBy(() -> chessGame.move(new Position(A, SEVEN), new Position(A, SIX)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -35,7 +37,7 @@ class ChessGameTest {
 
     @Test
     void 빈_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
-        final ChessGame chessGame = ChessGame.createWithEmptyBoard();
+        final ChessGame chessGame = ChessGame.from(new EmptyPiecesFactory());
 
         final boolean actual = chessGame.hasSetBoard();
 
@@ -44,10 +46,15 @@ class ChessGameTest {
 
     @Test
     void 세팅된_체스판을_갖는_체스게임을_생성하였을_때_체스게임이_진행중인지_확인한다() {
-        final ChessGame chessGame = ChessGame.createWithSetBoard();
+        final ChessGame chessGame = ChessGame.from(new StartingPiecesFactory());
 
         final boolean actual = chessGame.hasSetBoard();
 
         assertThat(actual).isTrue();
     }
+/*
+    @Test
+    void 게임이_끝났는지_확인한다() {
+
+    }*/
 }

@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
+import chess.domain.board.maker.StartingPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -62,7 +63,7 @@ public class ChessController {
 
     private void start(final List<String> commandInputs) {
         validateChessGameSetting();
-        chessGame = ChessGame.createWithSetBoard();
+        chessGame = ChessGame.from(new StartingPiecesFactory());
         outputView.printBoard(chessGame.getExistingPieces());
     }
 

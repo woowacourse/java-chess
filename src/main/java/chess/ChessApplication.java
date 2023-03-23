@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
+import chess.domain.board.maker.EmptyPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -12,7 +13,7 @@ public class ChessApplication {
         final ChessController chessController = new ChessController(
                 new InputView(new Scanner(System.in)),
                 new OutputView(),
-                ChessGame.createWithEmptyBoard());
+                ChessGame.from(new EmptyPiecesFactory()));
         chessController.run();
     }
 }

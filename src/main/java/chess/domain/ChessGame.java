@@ -1,8 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.maker.EmptyPiecesFactory;
-import chess.domain.board.maker.StartingPiecesFactory;
+import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -20,12 +19,8 @@ public class ChessGame {
         this(board, Color.WHITE);
     }
 
-    public static ChessGame createWithSetBoard() {
-        return new ChessGame(Board.createBoardWith(new StartingPiecesFactory()));
-    }
-
-    public static ChessGame createWithEmptyBoard() {
-        return new ChessGame(Board.createBoardWith(new EmptyPiecesFactory()));
+    public static ChessGame from(final PiecesFactory piecesFactory) {
+        return new ChessGame(Board.from(piecesFactory));
     }
 
     public ChessGame move(final Position currentPosition, final Position targetPosition) {
