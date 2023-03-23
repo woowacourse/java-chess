@@ -66,13 +66,15 @@ public class ChessGame {
     }
 
     public void findPreviousGame(final String boardId) {
-        final Map<Location, Piece> board = transactionContext.workWithTransaction(
-            connection -> chessInformationDao.find(boardId, connection));
-        final Color color = transactionContext.workWithTransaction(
-            connection -> chessInformationDao.findColor(boardId, connection));
-        this.board = new Board(board, new ScoreCalculator());
-        this.boardId = boardId;
-        this.color = color;
+        transactionContext.workWithTransaction(
+            connection -> {
+                final Map<Location, Piece> prevBoard = chessInformationDao.find(boardId, connection);
+                final Color prevColor = chessInformationDao.findColor(boardId, connection);
+                this.board = new Board(prevBoard, new ScoreCalculator());
+                this.color = prevColor;
+                this.boardId = boardId;
+                return null;
+            });
     }
 
     public void save() {
