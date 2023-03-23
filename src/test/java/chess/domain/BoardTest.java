@@ -13,6 +13,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class BoardTest {
@@ -99,5 +101,15 @@ public class BoardTest {
     void 해당_위치의_진영을_찾을_수_있다() {
         Assertions.assertThat(board.findSideByPosition(Position.of(File.getFile("a"), Rank.getRank(2))))
                 .isEqualTo(Side.WHITE);
+    }
+
+    @Test
+    void 움직일_수_있는_위치들을_찾을_수_있다() {
+        final Position startPosition = Position.of(File.getFile(2), Rank.getRank(2));
+        final Position upPosition = Position.of(File.getFile(2), Rank.getRank(3));
+        final Position doubleUpPosition = Position.of(File.getFile(2), Rank.getRank(4));
+
+        Assertions.assertThat(board.findMovablePositions(startPosition))
+                .isEqualTo(List.of(upPosition, doubleUpPosition));
     }
 }
