@@ -55,9 +55,10 @@ public enum Direction {
     private static Direction findDirectionHasSameUnitVector(int distanceOfColumns, int distanceOfRanks) {
         int absX = Math.abs(distanceOfColumns);
         int absY = Math.abs(distanceOfRanks);
+        int bigger = Math.max(absX, absY);
 
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.x * absX == distanceOfColumns && direction.y * absY == distanceOfRanks)
+                .filter(direction -> direction.x * bigger == distanceOfColumns && direction.y * bigger == distanceOfRanks)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
     }
