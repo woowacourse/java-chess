@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.direction.Direction;
 
 import java.util.List;
 import java.util.Map;
@@ -40,9 +40,9 @@ public class Knight extends Piece {
         return true;
     }
 
-    public void checkDistance(Position start, Position end) {
-        int absGapOfColumn = start.findGapOfColum(end);
-        int absGapOfRank = start.findGapOfRank(end);
+    private void checkDistance(Position start, Position end) {
+        int absGapOfColumn = Math.abs(start.findGapOfColum(end));
+        int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
         if (!isMovableAtOnce(absGapOfColumn, absGapOfRank)) {
             throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
@@ -50,12 +50,15 @@ public class Knight extends Piece {
     }
 
     private boolean isMovableAtOnce(int absGapOfColumn, int absGapOfRank) {
-        return distance.entrySet()
-                .stream()
-                .anyMatch((entry) -> entry.getKey() == absGapOfColumn && entry.getValue() == absGapOfRank);
+        for (Map.Entry<Integer, Integer> entry : distance.entrySet()) {
+            if (entry.getKey() == absGapOfColumn && entry.getValue() == absGapOfRank) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void checkDirection(Direction direction) {
+    private void checkDirection(Direction direction) {
         if (!Knight.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
