@@ -10,10 +10,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class BoardTest {
     private Board board;
@@ -156,5 +156,32 @@ class BoardTest {
                 Arguments.of(File.A, Rank.TWO, File.A, Rank.FOUR, Role.PAWN),
                 Arguments.of(File.B, Rank.ONE, File.C, Rank.THREE, Role.KNIGHT)
         );
+    }
+
+    @Test
+    @DisplayName("초기 보드의 백팀 점수를 계산한다.")
+    void calculateScore() {
+        // when
+        double score = board.calculateScore(Side.from(Color.WHITE));
+
+        // expected
+        assertThat(score).isCloseTo(38.0, withinPercentage(100));
+    }
+
+    @Test
+    @DisplayName("같은 색깔 폰이 한 줄에 있을 때 각 폰의 점수는 0.5점이다.")
+    void calculateSamePawnScore() {
+        // given
+        Map<Square, Piece> pieces = Map.of(
+                Square.of(File.A, Rank.TWO), Role.PAWN.create(Side.from(Color.WHITE)),
+                Square.of(File.A, Rank.THREE), Role.PAWN.create(Side.from(Color.WHITE))
+        );
+        Board board = BoardFactory.create(pieces);
+
+        // when
+        double score = board.calculateScore(Side.from(Color.WHITE));
+
+        // expected
+        assertThat(score).isCloseTo(1.0, withinPercentage(100));
     }
 }
