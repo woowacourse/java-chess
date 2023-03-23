@@ -63,18 +63,6 @@ public final class LinearPiece implements Piece {
         return lastPosition == null || board.isAllyPosition(source, lastPosition);
     }
 
-    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
-        return currentPosition != nextPosition;
-    }
-
-    private boolean isDifferentSide(final Side sourceSide, final Side nextSide) {
-        return sourceSide != nextSide;
-    }
-
-    private boolean updateCaptured(final Side sourceSide, final Side nextSide) {
-        return isDifferentSide(sourceSide, nextSide) && nextSide != Side.NEUTRALITY;
-    }
-
     @Override
     public String name() {
         return type.getSymbol(side);
