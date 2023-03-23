@@ -2,8 +2,8 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,49 +26,34 @@ public class Board {
     }
 
     public double calculateScoreOfColor(final Color color) {
-        return calculateScoreOfColorExceptPawn(color) + calculateScoreOfColorForPawn(color);
+        return calculatePieceScoreOfColor(color) - calculatePawnDecreaseScore(color);
     }
 
-    private double calculateScoreOfColorExceptPawn(final Color color) {
+    private double calculatePieceScoreOfColor(final Color color) {
         return board.keySet().stream()
                 .filter(key -> board.get(key).isSameColor(color))
-                .filter(key -> !board.get(key).isPawn())
                 .map(board::get)
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
-    private double calculateScoreOfColorForPawn(final Color color) {
-        final Map<File, Integer> pawnCountTable = createPawnCountTableOfColor(color);
+    private double calculatePawnDecreaseScore(final Color color) {
         return board.keySet().stream()
                 .filter(key -> board.get(key).isSameColor(color))
                 .filter(key -> board.get(key).isPawn())
-                .mapToDouble(key -> calculatePawnScore(key, pawnCountTable))
+                .filter(key -> isExistOtherPawnInFile(key, color))
+                .map(board::get)
+                .mapToDouble(piece -> piece.getScore() * PAWN_SCORE_DECREASE_RATE)
                 .sum();
     }
 
-    private Map<File, Integer> createPawnCountTableOfColor(final Color color) {
-        final Map<File, Integer> table = new HashMap<>();
-        for (final Square square : board.keySet()) {
-            updateTableIfPawn(table, square, color);
-        }
-        return table;
-    }
-
-    private void updateTableIfPawn(final Map<File, Integer> table, final Square square, final Color color) {
-        final Piece piece = board.get(square);
-        if (piece.isPawn() && piece.isSameColor(color)) {
-            final File file = square.getFile();
-            table.put(file, table.getOrDefault(file, 0) + 1);
-        }
-    }
-
-    private double calculatePawnScore(final Square square, final Map<File, Integer> table) {
-        final Piece piece = board.get(square);
-        if (piece.isPawn() && table.get(square.getFile()) > 1) {
-            return piece.getScore() * PAWN_SCORE_DECREASE_RATE;
-        }
-        return piece.getScore();
+    private boolean isExistOtherPawnInFile(final Square square, final Color color) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank != square.getRank())
+                .filter(rank -> board.containsKey(new Square(square.getFile(), rank)))
+                .map(rank -> board.get(new Square(square.getFile(), rank)))
+                .filter(piece -> piece.isSameColor(color))
+                .anyMatch(Piece::isPawn);
     }
 
     public BoardSnapShot getBoardSnapShot() {

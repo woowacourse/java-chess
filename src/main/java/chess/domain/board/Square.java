@@ -49,6 +49,10 @@ public class Square {
         return file;
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
