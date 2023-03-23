@@ -35,7 +35,6 @@ public class MainController {
         }
     }
 
-
     private void printBoard() {
         List<List<Name>> pieceNames = new ArrayList<>();
         for (int rank = 8; rank > 0; rank--) {
