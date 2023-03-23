@@ -36,13 +36,15 @@ public final class BoardFactory {
 		return board;
 	}
 
-	private static void fillPieces(final Map<Position, Piece> board) {
-		fillFour(board, A1, new Rook(WHITE), new Rook(BLACK));
-		fillFour(board, B1, new Knight(WHITE), new Knight(BLACK));
-		fillFour(board, C1, new Bishop(WHITE), new Bishop(BLACK));
-		fillTwo(board, D1, new Queen(WHITE), new Queen(BLACK));
-		fillTwo(board, E1, new King(WHITE), new King(BLACK));
-		fillPawn(board);
+	private static void addRook(final Map<Position, Piece> board) {
+		List<Position> rookPosition = Rook.getInitialBlackPosition();
+		for (Position position : rookPosition) {
+			board.put(position, new Rook(BLACK, position));
+		}
+		rookPosition = Rook.getInitialWhitePosition();
+		for (Position position : rookPosition) {
+			board.put(position, new Rook(WHITE, position));
+		}
 	}
 
 	private static void fillFour(final Map<Position, Piece> board, final String point, final Piece white,
