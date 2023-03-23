@@ -1,21 +1,15 @@
 package chess.controller;
 
+import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.controller.status.Controller;
 import chess.controller.status.StartController;
 import chess.domain.chess.ChessGame;
-import chess.service.ChessBoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
 
 public final class ChessHandler {
-
-    private final ChessBoardService chessBoardService;
-
-    public ChessHandler(final ChessBoardService chessBoardService) {
-        this.chessBoardService = chessBoardService;
-    }
 
     public void run() {
         OutputView.printStartMessage();
@@ -36,7 +30,7 @@ public final class ChessHandler {
             final Command command = Command.findCommand(commands);
             controller = controller.checkCommand(command,
                     () -> OutputView.printBoard(
-                            chessBoardService.createChessBoardDto(chessGame.getChessBoard())
+                            ChessBoardDtoMapper.createChessBoardDto(chessGame.getChessBoard())
                     ));
             return controller;
         } catch (IllegalArgumentException e) {
