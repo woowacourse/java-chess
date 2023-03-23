@@ -1,13 +1,26 @@
 package chess.domain.piece;
 
+import chess.domain.board.Score;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Pieces {
+
+    private static Map<Class<? extends Piece>, Score> scoreByPiece = Map.of(
+            Queen.class, new Score(new BigDecimal("9.0")),
+            Rook.class, new Score(new BigDecimal("5.0")),
+            Bishop.class, new Score(new BigDecimal("3.0")),
+            Knight.class, new Score(new BigDecimal("2.5")),
+            Pawn.class, new Score(new BigDecimal("1.0")),
+            King.class, new Score(new BigDecimal("0.0"))
+    );
 
     private static final int FILE_START_INDEX = 1;
     private static final int FILE_END_INDEX = File.length();
@@ -80,6 +93,20 @@ public class Pieces {
         pieces.remove(pieceToRemove);
     }
 
+    public List<Piece> getWhitePieces() {
+        return getPiecesBySide(Side.WHITE);
+    }
+
+    public List<Piece> getBlackPieces() {
+        return getPiecesBySide(Side.BLACK);
+    }
+
+    private List<Piece> getPiecesBySide(Side side) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameSide(side))
+                .collect(Collectors.toUnmodifiableList());
+    }
+    
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }
