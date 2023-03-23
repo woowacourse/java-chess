@@ -2,8 +2,8 @@ CREATE TABLE `game`
 (
     `_id`         int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `gameName`    varchar(10),
-    `currentTurn` tinyint
-);
+    `currentTurn` tinyint default 1
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `moveHistory`
 (
