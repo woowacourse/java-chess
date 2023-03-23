@@ -31,11 +31,12 @@ public class ChessController {
     public void run() {
         OutputView.printGuideMessage();
         while (appStatus == AppStatus.RUNNING) {
-            appStatus = inputExceptionHandler.retryExecuteIfInputIllegal(InputView::requestGameCommand, this::execute);
+            appStatus = inputExceptionHandler.retryExecuteIfInputIllegal(InputView::requestGameCommand,
+                    this::executeAction);
         }
     }
 
-    private AppStatus execute(CommandRequest commandRequest) {
+    private AppStatus executeAction(CommandRequest commandRequest) {
         CommandAction action = actionMapper.getOrDefault(commandRequest.getCommand(),
                 request -> {
                     throw new IllegalArgumentException(COMMAND_ACTION_ABSENCE_ERROR_MESSAGE);
