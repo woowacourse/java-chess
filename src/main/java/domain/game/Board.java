@@ -48,6 +48,14 @@ public class Board {
         return scores;
     }
 
+    public Side calculateWinner() {
+        Map<Side, Double> scores = calculateScore();
+        double whiteScore = scores.get(Side.WHITE);
+        double blackScore = scores.get(Side.BLACK);
+
+        return Side.calculateWinner(whiteScore, blackScore);
+    }
+
     private void validateTurn(Side side, Piece sourcePiece) {
         if (sourcePiece.isIncorrectTurn(side)) {
             throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
