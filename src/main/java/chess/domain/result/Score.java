@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.result;
 
 import java.util.Objects;
 
@@ -28,5 +28,12 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "value=" + value +
+                '}';
     }
 }

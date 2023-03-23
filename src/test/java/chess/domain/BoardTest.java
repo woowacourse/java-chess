@@ -70,7 +70,7 @@ class BoardTest {
 
     @BeforeEach
     void setup() {
-        board = BoardFactory.create();
+        board = BoardFactory.createInitial();
     }
 
     @ParameterizedTest

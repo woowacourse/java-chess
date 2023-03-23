@@ -10,36 +10,46 @@ import java.util.List;
 import java.util.Map;
 
 public enum Role {
-    VACANT_PIECE(VacantPiece::new,
+    VACANT_PIECE(0,
+            VacantPiece::new,
             List.of(File.values()),
             Map.of(Side.from(Color.NOTHING), List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX))),
-    PAWN(Pawn::new,
+    PAWN(1,
+            Pawn::new,
             Collections.EMPTY_LIST,
             Collections.EMPTY_MAP),
-    INITIAL_PAWN(InitialPawn::new,
+    INITIAL_PAWN(1,
+            InitialPawn::new,
             List.of(File.values()),
             Map.of(Side.from(Color.WHITE), List.of(Rank.TWO), Side.from(Color.BLACK), List.of(Rank.SEVEN))),
-    ROOK(Rook::new,
+    ROOK(5,
+            Rook::new,
             List.of(File.A, File.H),
             Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    KNIGHT(Knight::new,
+    KNIGHT(2.5,
+            Knight::new,
             List.of(File.B, File.G),
             Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    BISHOP(Bishop::new,
+    BISHOP(3,
+            Bishop::new,
             List.of(File.C, File.F),
             Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    QUEEN(Queen::new,
+    QUEEN(9,
+            Queen::new,
             List.of(File.D),
             Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    KING(King::new,
+    KING(0,
+            King::new,
             List.of(File.E),
             Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT)));
 
+    private final double score;
     private final Constructor<Side, Role, Piece> createPiece;
     private final List<File> initialFiles;
     private final Map<Side, List<Rank>> initialRanks;
 
-    Role(final Constructor<Side, Role, Piece> createPiece, final List<File> initialFiles, final Map<Side, List<Rank>> initialRanks) {
+    Role(final double score,final Constructor<Side, Role, Piece> createPiece, final List<File> initialFiles, final Map<Side, List<Rank>> initialRanks) {
+        this.score = score;
         this.createPiece = createPiece;
         this.initialFiles = initialFiles;
         this.initialRanks = initialRanks;
@@ -55,6 +65,10 @@ public enum Role {
 
     public List<Rank> getInitialRanksBySide(final Side side) {
         return initialRanks.getOrDefault(side, List.of());
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @FunctionalInterface

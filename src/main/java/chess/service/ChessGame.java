@@ -18,7 +18,7 @@ public class ChessGame {
         if (gameStatus != GameStatus.NOT_START) {
             throw new IllegalStateException("게임이 이미 시작되었습니다.");
         }
-        board = BoardFactory.create();
+        board = BoardFactory.createInitial();
         gameStatus = GameStatus.STARTED;
     }
 
