@@ -6,8 +6,6 @@ import chess.domain.piece.position.PiecePosition;
 
 public class KingMovementStrategy extends AbstractPieceMovementStrategy {
 
-    private static final double KING_VALUE = 0;
-
     public KingMovementStrategy() {
         super(MovementType.KING);
     }
@@ -19,10 +17,5 @@ public class KingMovementStrategy extends AbstractPieceMovementStrategy {
         if (!isUnitDistance(source, destination)) {
             throw new IllegalArgumentException("왕은 한칸만 이동할 수 있습니다.");
         }
-    }
-
-    @Override
-    public double judgeValue() {
-        return KING_VALUE;
     }
 }

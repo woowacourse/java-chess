@@ -6,8 +6,6 @@ import chess.domain.piece.position.PiecePosition;
 
 public class BishopMovementStrategy extends AbstractPieceMovementStrategy {
 
-    private static final double BISHOP_VALUE = 3;
-
     public BishopMovementStrategy() {
         super(MovementType.BISHOP);
     }
@@ -19,10 +17,5 @@ public class BishopMovementStrategy extends AbstractPieceMovementStrategy {
         if (!isDiagonal(source, destination)) {
             throw new IllegalArgumentException("비숍은 대각선으로만 이동할 수 있습니다.");
         }
-    }
-
-    @Override
-    public double judgeValue() {
-        return BISHOP_VALUE;
     }
 }

@@ -9,18 +9,11 @@ import chess.domain.piece.position.Rank;
 
 public abstract class PawnMovementStrategy extends AbstractPieceMovementStrategy {
 
-    private static final double PAWN_VALUE = 1;
-
     private final PiecePosition permitTwoMoveRankPosition;
 
     protected PawnMovementStrategy(final MovementType movementType, final Rank permitTwoMoveRank) {
         super(movementType);
         this.permitTwoMoveRankPosition = PiecePosition.of(permitTwoMoveRank, File.from(File.MIN));
-    }
-
-    @Override
-    public double judgeValue() {
-        return PAWN_VALUE;
     }
 
     @Override

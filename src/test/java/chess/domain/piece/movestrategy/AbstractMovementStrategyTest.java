@@ -24,11 +24,6 @@ class AbstractMovementStrategyTest {
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(MovementType.BLACK_PAWN) {
 
             @Override
-            public double judgeValue() {
-                return 0;
-            }
-
-            @Override
             protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
                 throw new IllegalArgumentException();
             }
@@ -44,10 +39,6 @@ class AbstractMovementStrategyTest {
     void 올바른_경로라면_경유지를_반환한다() {
         // given
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(MovementType.BLACK_PAWN) {
-            @Override
-            public double judgeValue() {
-                return 0;
-            }
 
             @Override
             protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {

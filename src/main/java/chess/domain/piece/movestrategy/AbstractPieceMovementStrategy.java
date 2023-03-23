@@ -31,14 +31,14 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     }
 
     @Override
-    public void validateMove(final PiecePosition source,
-                             final PiecePosition destination,
-                             final Piece nullableEnemy) {
+    public final void validateMove(final PiecePosition source,
+                                   final PiecePosition destination,
+                                   final Piece nullableEnemy) {
         validateSourceAndDestinationSame(source, destination);
         validateMoveWithNoAlly(source, destination, nullableEnemy);
     }
 
-    protected void validateSourceAndDestinationSame(final PiecePosition source, final PiecePosition destination) {
+    private void validateSourceAndDestinationSame(final PiecePosition source, final PiecePosition destination) {
         if (source.equals(destination)) {
             throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
         }
@@ -54,26 +54,31 @@ public abstract class AbstractPieceMovementStrategy implements PieceMovementStra
     }
 
     @Override
-    public boolean isSameType(final MovementType type) {
+    public final boolean isSameType(final MovementType type) {
         return this.type == type;
     }
 
-    protected boolean isStraight(final PiecePosition source, final PiecePosition destination) {
+    @Override
+    public final double judgeValue() {
+        return type.value();
+    }
+
+    protected final boolean isStraight(final PiecePosition source, final PiecePosition destination) {
         return !(Math.abs(source.rankInterval(destination)) > 0
                 && Math.abs(source.fileInterval(destination)) > 0);
     }
 
-    protected boolean isDiagonal(final PiecePosition source, final PiecePosition destination) {
+    protected final boolean isDiagonal(final PiecePosition source, final PiecePosition destination) {
         return Math.abs(source.rankInterval(destination))
                 == Math.abs(source.fileInterval(destination));
     }
 
-    protected boolean isUnitDistance(final PiecePosition source, final PiecePosition destination) {
+    protected final boolean isUnitDistance(final PiecePosition source, final PiecePosition destination) {
         return Math.abs(source.rankInterval(destination)) <= 1
                 && Math.abs(source.fileInterval(destination)) <= 1;
     }
 
-    protected boolean isHorizontal(final PiecePosition source, final PiecePosition destination) {
+    protected final boolean isHorizontal(final PiecePosition source, final PiecePosition destination) {
         return source.rankInterval(destination) == 0;
     }
 }
