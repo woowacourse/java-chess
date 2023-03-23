@@ -1,12 +1,13 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.state.KnightState;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,8 @@ class KnightStateTest {
     }
 
     @Test
-    void 나이트의_점수는_0점이다() {
+    void 나이트의_점수는_2_5_점이다() {
         //expect
-        assertSame(0, knightState.getScore(List.of()));
+        assertThat(knightState.getScore()).isEqualTo(2.5, withPrecision(0.0001));
     }
 }

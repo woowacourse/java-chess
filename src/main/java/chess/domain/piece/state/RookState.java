@@ -2,12 +2,11 @@ package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.PieceType;
-import java.util.List;
 
 public class RookState implements MoveState {
 
-    private static final PieceType pieceType = PieceType.ROOK;
     private static final RookState instance = new RookState();
+    private static final PieceType pieceType = PieceType.ROOK;
 
     private RookState() {
     }
@@ -29,7 +28,7 @@ public class RookState implements MoveState {
     }
 
     @Override
-    public double getScore(List<MoveState> sameFileColorPiecesState) {
-        return pieceType.getScore();
+    public PieceType getType() {
+        return pieceType;
     }
 }

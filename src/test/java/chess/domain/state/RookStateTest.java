@@ -1,12 +1,13 @@
 package chess.domain.state;
 
 import static chess.domain.piece.ColorCompareResult.DIFFERENT_COLOR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.state.RookState;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,6 @@ class RookStateTest {
     @Test
     void 룩의_점수는_5점이다() {
         //expect
-        assertSame(5, rookState.getScore(List.of()));
+        assertThat(rookState.getScore()).isEqualTo(5, withPrecision(0.0001));
     }
 }

@@ -40,7 +40,7 @@ public class Piece {
     }
 
     public PieceType getType() {
-        return PieceType.getName(moveState);
+        return moveState.getType();
     }
 
     public Color getColor() {

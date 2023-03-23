@@ -1,12 +1,13 @@
 package chess.domain.state;
 
 import static chess.domain.piece.ColorCompareResult.DIFFERENT_COLOR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.state.BishopState;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,6 @@ class BishopStateTest {
     @Test
     void 비숍의_점수는_3점이다() {
         //expect
-        assertSame(3, bishopState.getScore(List.of()));
+        assertThat(bishopState.getScore()).isEqualTo(3, withPrecision(0.0001));
     }
 }

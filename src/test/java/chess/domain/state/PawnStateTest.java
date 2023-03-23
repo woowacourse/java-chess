@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +10,6 @@ import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.state.InitialPawnState;
 import chess.domain.piece.state.MoveState;
 import chess.domain.piece.state.MovedPawnState;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -77,6 +78,6 @@ class PawnStateTest {
     @Test
     void 폰의_점수는_1점이다() {
         //expect
-        assertSame(1, initialPawnState.getScore(List.of()));
+        assertThat(initialPawnState.getScore()).isEqualTo(1, withPrecision(0.0001));
     }
 }

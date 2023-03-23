@@ -3,12 +3,11 @@ package chess.domain.piece.state;
 import chess.domain.piece.ColorCompareResult;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.exception.IllegalPieceMoveException;
-import java.util.List;
 
 public class EmptyState implements MoveState {
 
-    private static final PieceType pieceType = PieceType.EMPTY;
     private static final EmptyState instance = new EmptyState();
+    private static final PieceType pieceType = PieceType.EMPTY;
 
     private EmptyState() {
     }
@@ -28,7 +27,7 @@ public class EmptyState implements MoveState {
     }
 
     @Override
-    public double getScore(List<MoveState> sameFileColorPiecesState) {
-        return pieceType.getScore();
+    public PieceType getType() {
+        return pieceType;
     }
 }
