@@ -20,11 +20,11 @@ public class Position {
         }
     }
 
-    private static boolean isInvalidColum(final int column) {
+    private boolean isInvalidColum(final int column) {
         return MIN_COORDINATE > column || MAX_COORDINATE < column;
     }
 
-    private static boolean isInvalidRow(final int row) {
+    private boolean isInvalidRow(final int row) {
         return MIN_COORDINATE > row || MAX_COORDINATE < row;
     }
 
@@ -33,6 +33,10 @@ public class Position {
         int column = this.column + relativePosition.getX();
         int row = this.row + relativePosition.getY();
         return new Position(column, row);
+    }
+
+    public boolean isSameColumn(final Position position){
+        return this.column == position.column;
     }
 
     public int getColumn() {
