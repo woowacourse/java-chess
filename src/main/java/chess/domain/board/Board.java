@@ -4,8 +4,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.RoleType;
+import chess.domain.position.FileCoordinate;
 import chess.domain.position.Position;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -65,6 +67,29 @@ public class Board {
         return !sourcePosition.findPathWithoutSourceAndTarget(targetPosition).stream()
                 .map(boards::get)
                 .allMatch(piece -> piece.isSameRoleType(RoleType.EMPTY));
+    }
+
+    public double calculateScore(Color color) {
+        return calculatePieceScore(color) - calculatePawnScore(color);
+    }
+
+    private double calculatePieceScore(Color color) {
+        return boards.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private double calculatePawnScore(Color color) {
+        Map<FileCoordinate, Long> countByFile = boards.keySet().stream()
+                .filter(position -> boards.get(position).isSameColor(color))
+                .filter(position -> boards.get(position).isSameRoleType(RoleType.PAWN))
+                .collect(Collectors.groupingBy(Position::getFileCoordinate, Collectors.counting()));
+
+        return countByFile.values().stream()
+                .filter(count -> count >= 2)
+                .mapToDouble(count -> count * 0.5)
+                .sum();
     }
 
     public Map<Position, Piece> getBoards() {

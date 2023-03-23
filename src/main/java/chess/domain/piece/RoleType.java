@@ -15,4 +15,8 @@ public enum RoleType {
     RoleType(double score) {
         this.score = score;
     }
+
+    public double getScore() {
+        return score;
+    }
 }

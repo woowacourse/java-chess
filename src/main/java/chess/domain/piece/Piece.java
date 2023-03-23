@@ -45,4 +45,8 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public double getScore() {
+        return roleType.getScore();
+    }
 }

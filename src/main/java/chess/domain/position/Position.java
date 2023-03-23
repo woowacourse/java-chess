@@ -66,6 +66,14 @@ public class Position {
                 .collect(toList());
     }
 
+    public FileCoordinate getFileCoordinate() {
+        return fileCoordinate;
+    }
+
+    public RankCoordinate getRankCoordinate() {
+        return rankCoordinate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

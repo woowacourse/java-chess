@@ -1,17 +1,18 @@
 package chess.domain.board;
 
 import static chess.domain.PositionFixture.A_1;
+import static chess.domain.PositionFixture.A_2;
 import static chess.domain.PositionFixture.A_3;
 import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.C_2;
 import static chess.domain.PositionFixture.C_4;
 import static chess.domain.PositionFixture.C_5;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -36,7 +37,7 @@ class BoardTest {
 
     @Test
     void 잘못된_위치를_입력하면_예외가_발생한다() {
-        Board board = new Board(Map.of(B_1, new Bishop(Color.WHITE)));
+        Board board = new Board(Map.of(B_1, new Bishop(WHITE)));
 
         assertThatThrownBy(() -> board.findPiece(C_4))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -78,5 +79,19 @@ class BoardTest {
                 () -> assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class),
                 () -> assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class)
         );
+    }
+
+    @Test
+    void 초기점수를_계산한다() {
+        Board board = BoardFactory.createBoard();
+
+        assertThat(board.calculateScore(WHITE)).isEqualTo(38.0);
+    }
+
+    @Test
+    void 폰이_같은_File에_있을_때의_점수를_계산한다() {
+        Board board = new Board(Map.of(A_1, new Pawn(WHITE), A_2, new Pawn(WHITE)));
+
+        assertThat(board.calculateScore(WHITE)).isEqualTo(1.0);
     }
 }
