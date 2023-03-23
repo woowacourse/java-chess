@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class BoardTest {
     @Test
     @DisplayName("모든 좌표값을 가진 보드를 생성한다")
-    void Should_NotThrowException_When_ConstructBord() {
+    void Should_NotThrowException_When_ConstructBoard() {
         assertDoesNotThrow(() -> new Board(ChessBoardFactory.create()));
     }
 
@@ -145,5 +145,30 @@ class BoardTest {
         board.move(D6, E8, Team.WHITE);
 
         assertThat(board.isExistKing(Team.BLACK)).isFalse();
+    }
+
+    @Nested
+    @DisplayName("score를 계산한다.")
+    class calculatePawnTest {
+        Board board = new Board(ChessBoardFactory.create());
+
+        @Test
+        @DisplayName("처음score를 계산한다.")
+        void Should_CalculateScore_When_ConstructBoard() {
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38.0);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(38.0);
+        }
+
+        @Test
+        @DisplayName("Black팀의 Pawn 하나가 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemovePawn() {
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B5, Team.BLACK);
+            board.move(A4, B5, Team.WHITE);
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
+        }
     }
 }

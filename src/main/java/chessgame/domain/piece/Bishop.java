@@ -5,7 +5,7 @@ import chessgame.domain.point.Point;
 
 public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
-
+    public static final double BISHOP_SCORE = 3;
     private final Team team;
 
     private Bishop(Team team) {
@@ -27,6 +27,11 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public boolean isKnight() {
         return false;
     }
@@ -34,6 +39,11 @@ public class Bishop implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return BISHOP_SCORE;
     }
 
     @Override

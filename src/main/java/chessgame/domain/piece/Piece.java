@@ -8,7 +8,11 @@ public interface Piece {
 
     Team team();
 
+    boolean isPawn();
+
     boolean isKnight();
 
     boolean isKing();
+
+    double getScore();
 }

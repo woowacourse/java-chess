@@ -6,6 +6,7 @@ import chessgame.domain.point.Rank;
 
 public class Pawn implements Piece {
     private static final String ORIGINAL_NAME = "p";
+    public static final double PAWN_SCORE = 1;
     private static final int BLACK_DISTANCE = 1;
     private static final Rank BLACK_INITIAL_RANK = Rank.SEVEN;
     private static final int WHITE_DISTANCE = -1;
@@ -63,6 +64,10 @@ public class Pawn implements Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+    @Override
     public boolean isKnight() {
         return false;
     }
@@ -70,6 +75,11 @@ public class Pawn implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return PAWN_SCORE;
     }
 
     @Override

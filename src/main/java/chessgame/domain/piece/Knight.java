@@ -5,6 +5,7 @@ import chessgame.domain.point.Point;
 
 public class Knight implements Piece {
     private static final String ORIGINAL_NAME = "n";
+    public static final double KNIGHT_SCORE = 2.5;
     private static final int STRAIGHT = 2;
     private static final int DIAGONAL = 1;
 
@@ -27,6 +28,10 @@ public class Knight implements Piece {
     public Team team() {
         return team;
     }
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 
     @Override
     public boolean isKnight() {
@@ -36,6 +41,11 @@ public class Knight implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return KNIGHT_SCORE;
     }
 
     private boolean isKnightMove(Point source, Point target) {

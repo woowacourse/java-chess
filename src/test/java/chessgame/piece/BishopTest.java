@@ -32,4 +32,5 @@ class BishopTest {
         boolean result = bishop.isMovable(A1, H1, false);
         Assertions.assertThat(result).isFalse();
     }
+
 }

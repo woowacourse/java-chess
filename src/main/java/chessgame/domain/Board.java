@@ -1,10 +1,13 @@
 package chessgame.domain;
 
 import chessgame.domain.piece.Piece;
+import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
+import chessgame.domain.point.Rank;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Point, Piece> board;
@@ -95,6 +98,30 @@ public class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .anyMatch(s->s.team() == team);
+    }
+
+    public double calculateScore(Team team){
+        return (board.values().stream()
+                .filter(s-> s.team().equals(team))
+                .mapToDouble(s->s.getScore()).sum() - calculateSameFilePawn(team));
+    }
+
+    private double calculateSameFilePawn(Team team){
+        double sameFilePawn = 0;
+        for (File file : File.values()) {
+            double tmp = calculateSameTeamPawn(team).keySet().stream().filter(point -> point.isVerticalFile(file)).count();
+            if(tmp >= 2){
+                sameFilePawn += tmp;
+            }
+        }
+        return sameFilePawn * 0.5;
+    }
+
+    private Map<Point, Piece> calculateSameTeamPawn(Team team){
+        return board.keySet()
+                .stream()
+                .filter(point -> board.get(point).isPawn() && board.get(point).team() == team)
+                .collect(Collectors.toMap(point-> point, board::get));
     }
 
     @Override

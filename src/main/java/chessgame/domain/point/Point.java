@@ -35,6 +35,10 @@ public class Point {
         return file.distance(target.file) == 0 && rank.distance(target.rank) != 0;
     }
 
+    public boolean isVerticalFile(File file) {
+        return this.file.distance(file) == 0;
+    }
+
     public boolean isDiagonal(Point target) {
         if (file.distance(target.file) == 0 || rank.distance(target.rank) == 0) {
             return false;

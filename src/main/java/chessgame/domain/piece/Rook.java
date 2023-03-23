@@ -5,6 +5,7 @@ import chessgame.domain.point.Point;
 
 public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
+    public static final double ROOK_SCORE = 5;
 
     private final Team team;
 
@@ -27,6 +28,11 @@ public class Rook implements Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public boolean isKnight() {
         return false;
     }
@@ -34,6 +40,11 @@ public class Rook implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return ROOK_SCORE;
     }
 
     @Override

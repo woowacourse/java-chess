@@ -5,6 +5,8 @@ import chessgame.domain.point.Point;
 
 public class King implements Piece {
     private static final String ORIGINAL_NAME = "k";
+    public static final double KING_SCORE = 0;
+
     private static final int DISTANCE = 1;
 
     private final Team team;
@@ -37,6 +39,10 @@ public class King implements Piece {
     public Team team() {
         return team;
     }
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 
     @Override
     public boolean isKnight() {
@@ -46,6 +52,11 @@ public class King implements Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return KING_SCORE;
     }
 
     @Override
