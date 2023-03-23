@@ -97,14 +97,6 @@ public final class Position {
         return Position.of(row - 1, column);
     }
 
-    public Position moveLeft() {
-        return Position.of(row, column - 1);
-    }
-
-    public Position moveRight() {
-        return Position.of(row, column + 1);
-    }
-
     public Position moveUpLeft() {
         return Position.of(row + 1, column - 1);
     }

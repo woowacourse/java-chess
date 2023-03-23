@@ -85,32 +85,6 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("왼쪽에 있는 Position을 반환할 수 있다.")
-    void moveLeftTest() {
-        // given
-        Position position = Position.of(4, 4);
-
-        // when
-        Position newPosition = position.moveLeft();
-
-        // then
-        assertThat(newPosition).isSameAs(Position.of(4, 3));
-    }
-
-    @Test
-    @DisplayName("오른쪽에 있는 Position을 반환할 수 있다.")
-    void moveRightTest() {
-        // given
-        Position position = Position.of(4, 4);
-
-        // when
-        Position newPosition = position.moveRight();
-
-        // then
-        assertThat(newPosition).isSameAs(Position.of(4, 5));
-    }
-
-    @Test
     @DisplayName("왼쪽위 대각선에 있는 Position을 반환할 수 있다.")
     void moveUpLeftTest() {
         // given
