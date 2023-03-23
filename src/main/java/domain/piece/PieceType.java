@@ -11,14 +11,14 @@ public enum PieceType implements Type {
     QUEEN(9),
     KING(0);
 
-    private final double score;
+    private final double value;
 
-    PieceType(double score) {
-        this.score = score;
+    PieceType(double value) {
+        this.value = value;
     }
 
-    public double getScore() {
-        return score;
+    public double getValue() {
+        return value;
     }
 
 }
