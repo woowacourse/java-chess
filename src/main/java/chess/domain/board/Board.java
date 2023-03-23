@@ -71,6 +71,12 @@ public class Board {
         return !pieces.isEmpty();
     }
 
+    public boolean hasTwoKings() {
+        return 2 == pieces.stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
     public List<Piece> getPieces() {
         return List.copyOf(pieces);
     }

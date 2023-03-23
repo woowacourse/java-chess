@@ -4,10 +4,7 @@ import chess.TestPiecesFactory;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.maker.PiecesFactory;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -163,6 +160,23 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(List.of(), false),
                 Arguments.of(List.of(new Queen(D, EIGHT, BLACK)), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideKings")
+    void 왕이_두_개인지_확인한다(final List<Piece> pieces, final boolean expected) {
+        final Board board = Board.createBoardWith(new TestPiecesFactory(pieces));
+
+        final boolean actual = board.hasTwoKings();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideKings() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), true),
+                Arguments.of(List.of(), false)
         );
     }
 }
