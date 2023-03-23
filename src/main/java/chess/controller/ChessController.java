@@ -2,6 +2,8 @@ package chess.controller;
 
 import java.util.List;
 
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 import chess.domain.command.CommandManager;
 import chess.domain.command.Commands;
 import chess.domain.piece.Piece;
@@ -22,7 +24,7 @@ public class ChessController {
         printInitMessage();
         while (!commandManager.isEnd()) {
             executeCommandStep();
-            printBoardStep();
+            printBoardOrGameResultStep();
         }
     }
 
@@ -37,6 +39,15 @@ public class ChessController {
         } catch (Exception e) {
             OutputView.printErrorMessage(e);
             executeCommandStep();
+        }
+    }
+
+    private void printBoardOrGameResultStep() {
+        if (!commandManager.canPrintGameResult()) {
+            printBoardStep();
+        }
+        if (commandManager.canPrintGameResult()) {
+            printGameResultStep();
         }
     }
 
@@ -56,5 +67,12 @@ public class ChessController {
             OutputView.printErrorMessage(e);
             return inputGameCommand();
         }
+    }
+
+    private void printGameResultStep() {
+        ScoreBySideDto scoreBySideDto = commandManager.getScoreBySide();
+        GameResultBySideDto gameResultBySideDto = commandManager.getGameResultBySide();
+        OutputView.printScoreBySide(scoreBySideDto);
+        OutputView.printGameResultBySide(gameResultBySideDto);
     }
 }
