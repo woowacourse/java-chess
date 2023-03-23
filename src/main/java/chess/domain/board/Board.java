@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.game.Team;
 import chess.domain.move.Move;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -15,9 +16,9 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public void move(Position source, Position target, boolean isWhiteTurn) {
+    public void move(Position source, Position target, Team team) {
         validatePieceExistsAt(source);
-        validateTurn(isWhiteTurn, source);
+        validateTurn(team, source);
         validateNotFriendlyFire(source, target);
         validateMoveExists(source, target);
         validateNoJumps(source, target);
@@ -30,9 +31,9 @@ public class Board {
         }
     }
 
-    private void validateTurn(boolean isWhiteTurn, Position source) {
+    private void validateTurn(Team team, Position source) {
         Piece sourcePiece = getPieceAt(source);
-        if (!sourcePiece.hasColor(isWhiteTurn)) {
+        if (!sourcePiece.hasTeam(team)) {
             throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다");
         }
     }

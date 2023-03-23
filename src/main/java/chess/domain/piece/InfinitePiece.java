@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.game.Team;
 import chess.domain.move.Move;
 
 public abstract class InfinitePiece extends Piece {
 
-    public InfinitePiece(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
+    public InfinitePiece(Team team, Set<Move> moves) {
+        super(team, moves);
     }
 
     @Override

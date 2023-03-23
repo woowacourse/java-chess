@@ -4,18 +4,21 @@ import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.AbstractTestFixture;
-import chess.domain.move.Move;
 import java.util.Set;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.AbstractTestFixture;
+import chess.domain.game.Team;
+import chess.domain.move.Move;
 
 public class InfinitePieceTest extends AbstractTestFixture {
 
     private static class InfinitePieceImplement extends InfinitePiece {
 
-        public InfinitePieceImplement(boolean isWhite, Set<Move> moves) {
-            super(isWhite, moves);
+        public InfinitePieceImplement(Team team, Set<Move> moves) {
+            super(team, moves);
         }
 
         @Override
@@ -34,6 +37,6 @@ public class InfinitePieceTest extends AbstractTestFixture {
     }
 
     private Piece createPiece(Move... moves) {
-        return new InfinitePieceImplement(true, Set.of(moves));
+        return new InfinitePieceImplement(Team.WHITE, Set.of(moves));
     }
 }

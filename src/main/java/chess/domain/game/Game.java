@@ -1,28 +1,30 @@
 package chess.domain.game;
 
+import java.util.Map;
+
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.Map;
 
 public class Game {
 
-    private boolean isWhiteTurn;
+    private Team turn;
     private final Board board;
 
     public Game() {
-        this.isWhiteTurn = true;
+        this.turn = Team.WHITE;
         this.board = BoardFactory.createBoard();
     }
 
     public void movePiece(Position source, Position target) {
-        board.move(source, target, isWhiteTurn);
+        // TODO: 2023/03/22 Team 검증은 게임 추상화 수준에서
+        board.move(source, target, turn);
         changeTurn();
     }
 
     private void changeTurn() {
-        isWhiteTurn = !isWhiteTurn;
+        turn = turn.alter();
     }
 
     public Map<Position, Piece> getPieces() {

@@ -1,5 +1,10 @@
 package chess.domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import chess.domain.game.Team;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -10,38 +15,35 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class BoardFactory {
 
     public static Board createBoard() {
         Map<Position, Piece> initialArrangement = new HashMap<>();
-        initialArrangement.putAll(createLine(Rank.ONE, createFirstLine(true)));
-        initialArrangement.putAll(createLine(Rank.TWO, createSecondLine(true)));
-        initialArrangement.putAll(createLine(Rank.EIGHT, createFirstLine(false)));
-        initialArrangement.putAll(createLine(Rank.SEVEN, createSecondLine(false)));
+        initialArrangement.putAll(createLine(Rank.ONE, createFirstLine(Team.WHITE)));
+        initialArrangement.putAll(createLine(Rank.TWO, createSecondLine(Team.WHITE)));
+        initialArrangement.putAll(createLine(Rank.EIGHT, createFirstLine(Team.BLACK)));
+        initialArrangement.putAll(createLine(Rank.SEVEN, createSecondLine(Team.BLACK)));
         return new Board(initialArrangement);
     }
 
-    private static Map<File, Piece> createFirstLine(boolean isWhite) {
+    private static Map<File, Piece> createFirstLine(Team team) {
         return new HashMap<>() {{
-            put(File.A, new Rook(isWhite));
-            put(File.B, new Knight(isWhite));
-            put(File.C, new Bishop(isWhite));
-            put(File.D, new Queen(isWhite));
-            put(File.E, new King(isWhite));
-            put(File.F, new Bishop(isWhite));
-            put(File.G, new Knight(isWhite));
-            put(File.H, new Rook(isWhite));
+            put(File.A, new Rook(team));
+            put(File.B, new Knight(team));
+            put(File.C, new Bishop(team));
+            put(File.D, new Queen(team));
+            put(File.E, new King(team));
+            put(File.F, new Bishop(team));
+            put(File.G, new Knight(team));
+            put(File.H, new Rook(team));
         }};
     }
 
-    private static Map<File, Piece> createSecondLine(boolean isWhite) {
+    private static Map<File, Piece> createSecondLine(Team team) {
         Map<File, Piece> secondLine = new HashMap<>();
         for (File file : File.values()) {
-            secondLine.put(file, new Pawn(isWhite));
+            secondLine.put(file, new Pawn(team));
         }
         return secondLine;
     }

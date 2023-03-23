@@ -2,13 +2,14 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.game.Team;
 import chess.domain.move.Direction;
 import chess.domain.move.Move;
 
 public class King extends Piece {
 
-    public King(boolean isWhite) {
-        super(isWhite, setUpMoves());
+    public King(Team team) {
+        super(team, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {

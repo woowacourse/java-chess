@@ -5,46 +5,48 @@ import static chess.domain.move.Direction.LEFT;
 import static chess.domain.move.Direction.RIGHT;
 import static chess.domain.move.Direction.UP;
 
+import java.util.Map;
 import java.util.Set;
 
+import chess.domain.game.Team;
 import chess.domain.move.Move;
 
 public class Pawn extends Piece {
 
-    private static final Set<Move> WHITE_UNTOUCHED_MOVES = Set.of(new Move(UP), new Move(UP, UP));
-    private static final Set<Move> BLACK_UNTOUCHED_MOVES = Set.of(new Move(DOWN), new Move(DOWN, DOWN));
-    private static final Set<Move> WHITE_TOUCHED_MOVES = Set.of(new Move(UP));
-    private static final Set<Move> BLACK_TOUCHED_MOVES = Set.of(new Move(DOWN));
-    private static final Set<Move> WHITE_ATTACK_MOVES = Set.of(new Move(UP, LEFT), new Move(UP, RIGHT));
-    private static final Set<Move> BLACK_ATTACK_MOVES = Set.of(new Move(DOWN, RIGHT), new Move(DOWN, LEFT));
+    private static final Map<Team, Set<Move>> UNTOUCHED_MOVES = Map.of(
+            Team.WHITE, Set.of(new Move(UP), new Move(UP, UP)),
+            Team.BLACK, Set.of(new Move(DOWN), new Move(DOWN, DOWN))
+    );
+    private static final Map<Team, Set<Move>> TOUCHED_MOVES = Map.of(
+            Team.WHITE, Set.of(new Move(UP)),
+            Team.BLACK, Set.of(new Move(DOWN))
+    );
+    private static final Map<Team, Set<Move>> ATTACK_MOVES = Map.of(
+            Team.WHITE, Set.of(new Move(UP, LEFT), new Move(UP, RIGHT)),
+            Team.BLACK, Set.of(new Move(DOWN, RIGHT), new Move(DOWN, LEFT))
+    );
     private static final int UNTOUCHED_MOVE_SIZE = 2;
 
-    public Pawn(boolean isWhite) {
-        super(isWhite, setUpUntouchedMoves(isWhite));
+    public Pawn(Team team) {
+        super(team, setUpUntouchedMoves(team));
     }
 
-    private Pawn(boolean isWhite, Set<Move> moves) {
-        super(isWhite, moves);
+    private Pawn(Team team, Set<Move> moves) {
+        super(team, moves);
     }
 
-    private static Set<Move> setUpUntouchedMoves(boolean isWhite) {
-        if (isWhite) {
-            return WHITE_UNTOUCHED_MOVES;
-        }
-        return BLACK_UNTOUCHED_MOVES;
+    private static Set<Move> setUpUntouchedMoves(Team team) {
+        return UNTOUCHED_MOVES.get(team);
     }
 
-    private static Pawn createTouched(boolean isWhite) {
-        if (isWhite) {
-            return new Pawn(isWhite, WHITE_TOUCHED_MOVES);
-        }
-        return new Pawn(isWhite, BLACK_TOUCHED_MOVES);
+    private static Pawn createTouched(Team team) {
+        return new Pawn(team, TOUCHED_MOVES.get(team));
     }
 
     @Override
     public Piece touch() {
         if (isUntouched()) {
-            return createTouched(isWhite);
+            return createTouched(team);
         }
         return this;
     }
@@ -60,10 +62,7 @@ public class Pawn extends Piece {
     }
 
     private Set<Move> getAttackMoves() {
-        if (isWhite) {
-            return WHITE_ATTACK_MOVES;
-        }
-        return BLACK_ATTACK_MOVES;
+        return ATTACK_MOVES.get(team);
     }
 
     @Override

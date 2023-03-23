@@ -2,24 +2,25 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.game.Team;
 import chess.domain.move.Move;
 
 public abstract class Piece {
 
-    protected final boolean isWhite;
+    protected final Team team;
     protected final Set<Move> moves;
 
-    public Piece(boolean isWhite, Set<Move> moves) {
-        this.isWhite = isWhite;
+    public Piece(Team team, Set<Move> moves) {
+        this.team = team;
         this.moves = moves;
     }
 
     public boolean hasSameColor(Piece otherPiece) {
-        return isWhite == otherPiece.isWhite;
+        return team.equals(otherPiece.team);
     }
 
-    public boolean hasColor(boolean isWhite) {
-        return this.isWhite == isWhite;
+    public boolean hasTeam(Team other) {
+        return team.equals(other);
     }
 
     public boolean hasMove(Move move) {

@@ -1,5 +1,6 @@
 package chess.controller.dto;
 
+import chess.domain.game.Team;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -20,7 +21,7 @@ public class PieceResponse {
     public static PieceResponse of(Position position, Piece piece) {
         int fileIndex = position.getFileIndex();
         int rankIndex = position.getRankIndex();
-        boolean isWhite = piece.hasColor(true);
+        boolean isWhite = piece.hasTeam(Team.WHITE);
         String pieceType = piece.getType().name();
         return new PieceResponse(fileIndex, rankIndex, isWhite, pieceType);
     }

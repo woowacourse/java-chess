@@ -2,13 +2,14 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.game.Team;
 import chess.domain.move.Direction;
 import chess.domain.move.Move;
 
 public class Knight extends Piece {
 
-    public Knight(boolean isWhite) {
-        super(isWhite, setUpMoves());
+    public Knight(Team team) {
+        super(team, setUpMoves());
     }
 
     private static Set<Move> setUpMoves() {
