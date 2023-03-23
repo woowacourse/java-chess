@@ -2,6 +2,8 @@ package repository;
 
 import java.util.List;
 
+import dto.MoveHistoryDto;
+
 public interface ChessDao {
     void addGame(String gameName);
 
@@ -13,5 +15,5 @@ public interface ChessDao {
 
     void saveBoard();
 
-    void saveMoveHistory();
+    void saveMoveHistory(long game_id, MoveHistoryDto moveHistoryDto);
 }
