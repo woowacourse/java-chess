@@ -59,10 +59,6 @@ public class Piece {
         return position.getFileValue();
     }
 
-    public char getName(final Color color) {
-        return this.shape.getNameByColor(color);
-    }
-
     public double getScore() {
         return shape.getScore();
     }
