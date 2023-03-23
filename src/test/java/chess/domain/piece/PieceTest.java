@@ -28,7 +28,7 @@ public class PieceTest extends AbstractTestFixture {
         }
     }
 
-    @DisplayName("색을 구별할 수 있다")
+    @DisplayName("팀을 구별할 수 있다")
     @Test
     void isSameColor() {
         Piece piece = createPiece(Team.WHITE);
