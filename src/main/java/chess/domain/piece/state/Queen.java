@@ -31,9 +31,12 @@ public final class Queen extends Piece {
     }
 
     private void validatePossibleDestination(final Coordinate from, final Coordinate to) {
-        if (!(from.isSameFile(to) || from.isSameRank(to) || from.isPositiveDiagonal(to) || from.isNegativeDiagonal(
-                to))) {
+        if (isCanNotMoveDirection(from, to)) {
             throwCanNotMoveException();
         }
+    }
+
+    private boolean isCanNotMoveDirection(final Coordinate from, final Coordinate to) {
+        return (from.isNotOrthogonal(to) && from.isNotDiagonal(to));
     }
 }

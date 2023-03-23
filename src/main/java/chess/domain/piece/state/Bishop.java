@@ -22,7 +22,7 @@ public final class Bishop extends Piece {
     }
 
     private void validatePossibleDestination(final Coordinate from, final Coordinate to) {
-        if (!(from.isPositiveDiagonal(to) || from.isNegativeDiagonal(to))) {
+        if (from.isNotDiagonal(to)) {
             throwCanNotMoveException();
         }
     }

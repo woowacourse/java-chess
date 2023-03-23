@@ -8,6 +8,11 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
+    private static final int SAME_FILE_DISTANCE = 0;
+    private static final int TWO_FRONT_STEP_DISTANCE = 2;
+    private static final int ONE_DIAGONAL_STEP_DISTANCE = 1;
+    private static final int DIAGONAL_PIECE_INDEX = 0;
+
     private boolean isMoved = false;
     private boolean isEnemyOnDiagonal = false;
 
@@ -46,21 +51,22 @@ public final class Pawn extends Piece {
     }
 
     private boolean checkMoveDiagonal(final int fileDistance, final int rankDistance) {
-        return Math.abs(fileDistance) == 1 && rankDistance == this.team.getPawnDirection();
+        return Math.abs(fileDistance) == ONE_DIAGONAL_STEP_DISTANCE && rankDistance == this.team.getDirection();
     }
 
     private boolean checkMoveOneStep(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == this.team.getPawnDirection();
+        return fileDistance == SAME_FILE_DISTANCE && rankDistance == this.team.getDirection();
     }
 
     private boolean checkMoveFirst(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == 2 * this.team.getPawnDirection() && !isMoved;
+        return fileDistance == SAME_FILE_DISTANCE
+                && rankDistance == TWO_FRONT_STEP_DISTANCE * this.team.getDirection() && !isMoved;
     }
 
     @Override
     public void validateRoute(final List<PieceState> pieceRoute) {
         if (isEnemyOnDiagonal) {
-            validateMoveToDiagonal(pieceRoute.get(0));
+            validateMoveToDiagonal(pieceRoute.get(DIAGONAL_PIECE_INDEX));
             isMoved = true;
             return;
         }

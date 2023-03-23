@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class King extends Piece {
 
+    private static final int MIN_MOVE_DISTANCE = 1;
+
     public King(final Team team) {
         super(team);
     }
@@ -33,8 +35,12 @@ public final class King extends Piece {
         final int fileDistance = from.calculateFileDistance(to);
         final int rankDistance = from.calculateRankDistance(to);
 
-        if (fileDistance > 1 || rankDistance > 1) {
+        if (isCanNotMoveDirection(fileDistance, rankDistance)) {
             throwCanNotMoveException();
         }
+    }
+
+    private boolean isCanNotMoveDirection(final int fileDistance, final int rankDistance) {
+        return fileDistance > MIN_MOVE_DISTANCE || rankDistance > MIN_MOVE_DISTANCE;
     }
 }

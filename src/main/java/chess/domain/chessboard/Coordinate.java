@@ -60,6 +60,14 @@ public final class Coordinate {
         return rankDistance == (DIRECTION_CONVERTER * fileDistance);
     }
 
+    public boolean isNotDiagonal(final Coordinate other) {
+        return (!isPositiveDiagonal(other) && !isNegativeDiagonal(other));
+    }
+
+    public boolean isNotOrthogonal(final Coordinate other) {
+        return (!isSameRank(other) && !isSameFile(other));
+    }
+
     private String addIndex(final char index, final int step) {
         return Character.toString(index + step);
     }

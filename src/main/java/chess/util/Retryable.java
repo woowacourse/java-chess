@@ -16,6 +16,7 @@ public interface Retryable {
         return result;
     }
 
+
     private static <T> T checkIllegalArgumentException(Supplier<T> supplier) {
         try {
             return supplier.get();

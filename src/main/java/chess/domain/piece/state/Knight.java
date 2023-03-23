@@ -8,6 +8,9 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
+    private static final int TWO_STEP = 2;
+    private static final int ONE_STEP = 1;
+
     public Knight(final Team team) {
         super(team);
     }
@@ -22,9 +25,22 @@ public final class Knight extends Piece {
         final int fileDistance = Math.abs(from.calculateFileDistance(to));
         final int rankDistance = Math.abs(from.calculateRankDistance(to));
 
-        if (!((fileDistance == 2 && rankDistance == 1) || (fileDistance == 1 && rankDistance == 2))) {
+        if (isCanNotMoveDirection(fileDistance, rankDistance)) {
             throwCanNotMoveException();
         }
+    }
+
+    private boolean isCanNotMoveDirection(final int fileDistance, final int rankDistance) {
+        return (isTwoFileOneRank(fileDistance, rankDistance) && isOneFileTwoRank(fileDistance,
+                rankDistance));
+    }
+
+    private boolean isTwoFileOneRank(final int fileDistance, final int rankDistance) {
+        return !(fileDistance == TWO_STEP && rankDistance == ONE_STEP);
+    }
+
+    private static boolean isOneFileTwoRank(final int fileDistance, final int rankDistance) {
+        return !(fileDistance == ONE_STEP && rankDistance == TWO_STEP);
     }
 
     @Override

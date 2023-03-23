@@ -33,7 +33,7 @@ class KingTest {
             softly.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
             softly.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
             softly.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.of("a2"));
-            softly.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c3"));
+            softly.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c2"));
         });
     }
 

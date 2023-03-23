@@ -7,6 +7,7 @@ import java.util.function.IntFunction;
 
 public abstract class Piece implements PieceState {
 
+    private static final int MIN_EMPTY_COUNT = 0;
     protected final Team team;
 
     protected Piece(final Team team) {
@@ -24,7 +25,7 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public boolean isMyTeam(final Team team){
+    public boolean isMyTeam(final Team team) {
         return this.team.equals(team);
     }
 
@@ -69,9 +70,9 @@ public abstract class Piece implements PieceState {
 
     private int directionByDistance(final int distance) {
         if (distance < 0) {
-            return -1;
+            return Team.BLACK.getDirection();
         }
-        return 1;
+        return Team.WHITE.getDirection();
     }
 
     @Override
@@ -87,10 +88,10 @@ public abstract class Piece implements PieceState {
 
     protected final void checkSquaresEmpty(final List<PieceState> pieceRoute) {
         final int notEmptyCount = (int) pieceRoute.stream()
-                .filter(square -> !square.isEmpty())
+                .filter(piece -> !piece.isEmpty())
                 .count();
 
-        if (notEmptyCount > 0) {
+        if (notEmptyCount > MIN_EMPTY_COUNT) {
             throwCanNotMoveException();
         }
     }

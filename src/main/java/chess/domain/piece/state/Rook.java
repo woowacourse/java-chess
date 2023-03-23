@@ -22,9 +22,8 @@ public final class Rook extends Piece {
         return horizontalRoute(from, to);
     }
 
-
     private void validatePossibleDestination(final Coordinate from, final Coordinate to) {
-        if (!(from.isSameFile(to) || from.isSameRank(to))) {
+        if (from.isNotOrthogonal(to)) {
             throwCanNotMoveException();
         }
     }

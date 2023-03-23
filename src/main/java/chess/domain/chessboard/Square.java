@@ -34,7 +34,7 @@ public final class Square {
         this.pieceState = other.pieceState;
     }
 
-    public boolean isMyTeam(final Team team){
+    public boolean isMyTeam(final Team team) {
         return this.pieceState.isMyTeam(team);
     }
 

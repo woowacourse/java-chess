@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 public final class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    public static final String DELIMITER = " ";
-    public static final int COMMAND_INDEX = 0;
+    private static final String DELIMITER = " ";
+    private static final int COMMAND_INDEX = 0;
     private static List<String> buffer;
 
     private InputView() {

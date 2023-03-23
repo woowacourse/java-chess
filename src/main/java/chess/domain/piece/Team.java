@@ -5,14 +5,14 @@ public enum Team {
     BLACK(-1),
     WHITE(1);
 
-    private final int pawnDirection;
+    private final int direction;
 
     Team(final int pawnDirection) {
-        this.pawnDirection = pawnDirection;
+        this.direction = pawnDirection;
     }
 
-    public int getPawnDirection() {
-        return pawnDirection;
+    public int getDirection() {
+        return direction;
     }
 
     public Team flip() {

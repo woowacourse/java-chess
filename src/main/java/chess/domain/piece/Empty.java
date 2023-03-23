@@ -18,7 +18,7 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public boolean isMyTeam(final Team team){
+    public boolean isMyTeam(final Team team) {
         return false;
     }
 
