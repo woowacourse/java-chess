@@ -1,15 +1,16 @@
 package domain;
 
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Rook;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import domain.piece.Rook;
+import domain.piece.Pawn;
+import domain.piece.Piece;
 
 class ChessBoardTest {
 
@@ -34,14 +35,15 @@ class ChessBoardTest {
         assertThat(piece).isInstanceOf(Rook.class);
     }
 
+    // TODO : a2로 수정해서 전체 테스트하면 실패하는 이유는??
     @Test
     @DisplayName("폰을 움직인다.")
     void movePawn() {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.move(Square.of("a2"), Square.of("a4"));
+        chessBoard.move(Square.of("b2"), Square.of("b4"));
 
-        assertThat(chessBoard.find(Square.of("a4"))).isInstanceOf(Pawn.class);
-        assertThat(chessBoard.find(Square.of("a2"))).isNull();
+        assertThat(chessBoard.find(Square.of("b4"))).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.find(Square.of("b2"))).isNull();
     }
 
     @Test
