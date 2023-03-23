@@ -2,6 +2,7 @@ package chess.board;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chess.piece.Bishop;
@@ -20,7 +21,8 @@ public class PieceFactory {
     public static Map<Position, Piece> createPiece() {
         final Map<Position, Piece> piecePosition = new HashMap<>();
         initPosition(piecePosition);
-        for (final Team team : Team.values()) {
+        final List<Team> teams = List.of(Team.WHITE, Team.BLACK);
+        for (final Team team : teams) {
             createPawn(piecePosition, team);
             createRook(piecePosition, team);
             createKnight(piecePosition, team);
