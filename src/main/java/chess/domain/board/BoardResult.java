@@ -16,8 +16,12 @@ public class BoardResult {
 
     private final Map<Position, Piece> board;
 
-    public BoardResult(final Map<Position, Piece> board) {
+    private BoardResult(final Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    public static BoardResult create(final Map<Position, Piece> board) {
+        return new BoardResult(board);
     }
 
     public double calculatePoints(final Color color) {
@@ -27,7 +31,6 @@ public class BoardResult {
     private double calculateTotalPoints(final Color color) {
         return board.values().stream()
                 .filter(piece -> piece.color() == color)
-                .peek(piece -> System.out.println(piece))
                 .mapToDouble(pieceType -> pieceType.point())
                 .sum();
     }
@@ -51,14 +54,14 @@ public class BoardResult {
         if (isKingDead(Color.BLACK)) {
             return Color.WHITE;
         }
-        return winsByScore();
+        return getWinner();
     }
 
     private boolean isKingDead(final Color color) {
         return !board.containsValue(King.from(color));
     }
 
-    private Color winsByScore() {
+    private Color getWinner() {
         final double whiteScore = calculatePoints(Color.WHITE);
         final double blackScore = calculatePoints(Color.BLACK);
 

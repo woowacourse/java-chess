@@ -2,12 +2,13 @@ package chess.view;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.board.BoardResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +41,7 @@ public class OutputView {
     public static void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
+        System.out.println("> 점수 확인 : status");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
@@ -70,6 +72,22 @@ public class OutputView {
         System.out.println("> 현재 점수");
         System.out.println("> 백 " + whiteScore);
         System.out.println("> 흑 " + blackScore);
+    }
+
+    public static void printResult(final BoardResult boardResult) {
+        System.out.println("> 게임이 종료되었습니다.");
+        System.out.print("> 결과: " + createWinnerView(boardResult));
+    }
+
+    private static String createWinnerView(final BoardResult boardResult) {
+        final Color winner = boardResult.calculateWinner();
+        if (winner.equals(Color.BLACK)) {
+            return "흑 승";
+        }
+        if (winner.equals(Color.WHITE)) {
+            return "백 승";
+        }
+        return "무승부";
     }
 
     public static void printException(final String message) {

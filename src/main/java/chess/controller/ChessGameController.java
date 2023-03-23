@@ -11,6 +11,7 @@ import static chess.controller.Command.validateMoveCommandForm;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.BoardResult;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -20,10 +21,13 @@ public class ChessGameController {
     public void run() {
         final Board board = BoardFactory.create();
         OutputView.printGameStart();
+
         Command command = getInitCommand(board);
         while (command != END) {
             command = start(board);
         }
+
+        OutputView.printResult(BoardResult.create(board.getBoard()));
     }
 
     private Command getInitCommand(final Board board) {
@@ -57,22 +61,27 @@ public class ChessGameController {
     }
 
     private Command play(final Board board, final List<String> commands) {
-        final Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
+        Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
         if (command == STATUS) {
             OutputView.printScore(board.whiteScore(), board.blackScore());
         }
         if (command == MOVE) {
-            move(board, commands);
+            command = move(board, commands);
         }
 
         return command;
     }
 
-    private void move(final Board board, final List<String> commands) {
+    private Command move(final Board board, final List<String> commands) {
         final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
 
         board.move(source, target);
         OutputView.printBoard(board.getBoard());
+
+        if (board.isKingDead()) {
+            return END;
+        }
+        return MOVE;
     }
 }

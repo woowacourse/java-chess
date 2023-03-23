@@ -58,12 +58,12 @@ public class Board {
         turn = turn.nextTurn();
     }
 
-    public boolean isKingAlive() {
-        return isKingAlive(Color.WHITE) || isKingAlive(Color.BLACK);
+    public boolean isKingDead() {
+        return isKingDead(Color.WHITE) || isKingDead(Color.BLACK);
     }
 
-    private boolean isKingAlive(final Color color) {
-        return board.containsValue(King.from(color));
+    private boolean isKingDead(final Color color) {
+        return !board.containsValue(King.from(color));
     }
 
     public double whiteScore() {
@@ -75,7 +75,7 @@ public class Board {
     }
 
     public double calculateScore(final Color color) {
-        final BoardResult boardResult = new BoardResult(getBoard());
+        final BoardResult boardResult = BoardResult.create(getBoard());
         return boardResult.calculatePoints(color);
     }
 

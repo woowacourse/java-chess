@@ -26,7 +26,7 @@ public class BoardResultTest {
     void 기물들의_점수를_계산할_수_있다() {
         // given
         final Board board = BoardFactory.create();
-        final BoardResult boardResult = new BoardResult(board.getBoard());
+        final BoardResult boardResult = BoardResult.create(board.getBoard());
 
         // when
         final double blackScore = boardResult.calculatePoints(Color.BLACK);
@@ -44,7 +44,7 @@ public class BoardResultTest {
         board.put(Position.of(File.A, Rank.THREE), Pawn.from(Color.BLACK));
         board.put(Position.of(File.A, Rank.FOUR), Pawn.from(Color.BLACK));
         board.put(Position.of(File.A, Rank.FIVE), Pawn.from(Color.WHITE));
-        final BoardResult boardResult = new BoardResult(board);
+        final BoardResult boardResult = BoardResult.create(board);
 
         // when
         final double points = boardResult.calculatePoints(Color.BLACK);
@@ -63,7 +63,7 @@ public class BoardResultTest {
         board.put(Position.of(File.E, Rank.FOUR), Knight.from(Color.BLACK));
         board.put(Position.of(File.E, Rank.FIVE), Queen.from(Color.WHITE));
         board.put(Position.of(File.A, Rank.SIX), Bishop.from(Color.WHITE));
-        final BoardResult boardResult = new BoardResult(board);
+        final BoardResult boardResult = BoardResult.create(board);
 
         // when
         final Color winner = boardResult.calculateWinner();
@@ -80,7 +80,7 @@ public class BoardResultTest {
         final Map<Position, Piece> board = new HashMap<>();
         board.put(Position.of(File.A, Rank.ONE), King.from(Color.BLACK));
         board.put(Position.of(File.E, Rank.THREE), Queen.from(Color.BLACK));
-        final BoardResult boardResult = new BoardResult(board);
+        final BoardResult boardResult = BoardResult.create(board);
 
         // when
         final Color winner = boardResult.calculateWinner();
@@ -99,7 +99,7 @@ public class BoardResultTest {
         board.put(Position.of(File.B, Rank.ONE), King.from(Color.BLACK));
         board.put(Position.of(File.C, Rank.ONE), Pawn.from(Color.WHITE));
         board.put(Position.of(File.D, Rank.ONE), Pawn.from(Color.BLACK));
-        final BoardResult boardResult = new BoardResult(board);
+        final BoardResult boardResult = BoardResult.create(board);
 
         // when
         final Color winner = boardResult.calculateWinner();

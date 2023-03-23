@@ -61,7 +61,7 @@ graph TD
     ChessController --> Board
     
     Board --> BoardFactory
-    Board --> Score
+    Board --> BoardResult
 
     Position --> Rank
     Position --> File
