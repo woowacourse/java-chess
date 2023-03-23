@@ -28,18 +28,18 @@ public enum Rank {
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public static List<Rank> getRanks() {
-		final List<Rank> ranks = Arrays.asList(Rank.values());
-		ranks.sort(Comparator.naturalOrder());
-		return ranks;
+	public Rank setNextRank(final int unit) {
+		return from((rank + unit));
+
 	}
 
 	public int rankValue() {
 		return rank;
 	}
 
-	public Rank setNextRank(final int unit) {
-		return from((rank + unit));
-
+	public static List<Rank> ranks() {
+		final List<Rank> ranks = Arrays.asList(Rank.values());
+		ranks.sort(Comparator.naturalOrder());
+		return ranks;
 	}
 }

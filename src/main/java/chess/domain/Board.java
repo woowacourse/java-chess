@@ -123,17 +123,17 @@ public class Board {
 		thisTurn = thisTurn.switchTurn();
 	}
 
-	public Map<Position, Piece> getBoard() {
+	public Map<Position, Piece> board() {
 		return board;
 	}
 
-	public List<File> getFiles() {
+	public List<File> files() {
 		final List<File> files = Arrays.asList(File.values());
 		files.sort(Comparator.naturalOrder());
 		return files;
 	}
 
-	public List<Rank> getRanks() {
+	public List<Rank> ranks() {
 		final List<Rank> ranks = Arrays.asList(Rank.values());
 		ranks.sort(Comparator.naturalOrder());
 		return ranks;

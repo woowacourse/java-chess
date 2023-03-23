@@ -29,8 +29,8 @@ public class ChessApplication {
 		String inputCommand = InputView.askStart();
 		Command.ofStart(inputCommand);
 
-		final Map<Position, Piece> chessBoard = board.getBoard();
-		OutputView.printBoard(chessBoard, getRanks(), getFiles());
+		final Map<Position, Piece> chessBoard = board.board();
+		OutputView.printBoard(chessBoard, ranks(), files());
 	}
 
 	private static void play(final Board board) {
@@ -46,7 +46,7 @@ public class ChessApplication {
 
 	private static void movePiece(Board board, Command command) {
 		board.move(command.getSource(), command.getTarget());
-		OutputView.printBoard(board.getBoard(), board.getRanks(), board.getFiles());
+		OutputView.printBoard(board.board(), board.ranks(), board.files());
 		play(board);
 	}
 }

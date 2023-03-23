@@ -20,14 +20,14 @@ public final class Rook extends Piece {
         super(color, position);
     }
 
-    public static List<Position> getInitialBlackPosition() {
+    public static List<Position> initialBlackPosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(A, EIGHT));
         positions.add(Position.of(H, EIGHT));
         return positions;
     }
 
-    public static List<Position> getInitialWhitePosition() {
+    public static List<Position> initialWhitePosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(A, ONE));
         positions.add(Position.of(H, ONE));

@@ -28,17 +28,17 @@ public enum File {
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public static List<File> getFiles(){
-		final List<File> files = Arrays.asList(File.values());
-		files.sort(Comparator.naturalOrder());
-		return files;
+	public File setNextFile(final int unit) {
+		return from((char)(file + unit));
 	}
 
 	public char fileValue() {
 		return file;
 	}
 
-	public File setNextFile(final int unit) {
-		return from((char)(file + unit));
+	public static List<File> files(){
+		final List<File> files = Arrays.asList(File.values());
+		files.sort(Comparator.naturalOrder());
+		return files;
 	}
 }

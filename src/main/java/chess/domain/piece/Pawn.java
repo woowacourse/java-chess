@@ -21,7 +21,7 @@ public final class Pawn extends Piece {
 		super(color, position);
 	}
 
-	public static List<Position> getInitialBlackPosition() {
+	public static List<Position> initialBlackPosition() {
 		List<Position> positions = new ArrayList<>();
 		positions.add(Position.of(A, SEVEN));
 		positions.add(Position.of(B, SEVEN));
@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
 		return positions;
 	}
 
-	public static List<Position> getInitialWhitePosition() {
+	public static List<Position> initialWhitePosition() {
 		List<Position> positions = new ArrayList<>();
 		positions.add(Position.of(A, TWO));
 		positions.add(Position.of(B, TWO));

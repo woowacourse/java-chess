@@ -36,79 +36,79 @@ public final class BoardFactory {
 	}
 
 	private static void addRook(final Map<Position, Piece> board) {
-		List<Position> rookPosition = Rook.getInitialBlackPosition();
+		List<Position> rookPosition = Rook.initialBlackPosition();
 		for (Position position : rookPosition) {
 			board.put(position, new Rook(BLACK, position));
 		}
-		rookPosition = Rook.getInitialWhitePosition();
+		rookPosition = Rook.initialWhitePosition();
 		for (Position position : rookPosition) {
 			board.put(position, new Rook(WHITE, position));
 		}
 	}
 
 	private static void addKnight(final Map<Position, Piece> board) {
-		List<Position> knightPosition = Knight.getInitialBlackPosition();
+		List<Position> knightPosition = Knight.initialBlackPosition();
 		for (Position position : knightPosition) {
 			board.put(position, new Knight(BLACK, position));
 		}
-		knightPosition = Knight.getInitialWhitePosition();
+		knightPosition = Knight.initialWhitePosition();
 		for (Position position : knightPosition) {
 			board.put(position, new Knight(WHITE, position));
 		}
 	}
 
 	private static void addBishop(final Map<Position, Piece> board) {
-		List<Position> bishopPosition = Bishop.getInitialBlackPosition();
+		List<Position> bishopPosition = Bishop.initialBlackPosition();
 		for (Position position : bishopPosition) {
 			board.put(position, new Bishop(BLACK, position));
 		}
-		bishopPosition = Bishop.getInitialWhitePosition();
+		bishopPosition = Bishop.initialWhitePosition();
 		for (Position position : bishopPosition) {
 			board.put(position, new Bishop(WHITE, position));
 		}
 	}
 
 	private static void addQueen(final Map<Position, Piece> board) {
-		List<Position> queenPosition = Queen.getInitialBlackPosition();
+		List<Position> queenPosition = Queen.initialBlackPosition();
 		for (Position position : queenPosition) {
 			board.put(position, new Queen(BLACK, position));
 		}
-		queenPosition = Queen.getInitialWhitePosition();
+		queenPosition = Queen.initialWhitePosition();
 		for (Position position : queenPosition) {
 			board.put(position, new Queen(WHITE, position));
 		}
 	}
 
 	private static void addKing(final Map<Position, Piece> board) {
-		List<Position> kingPosition = King.getInitialBlackPosition();
+		List<Position> kingPosition = King.initialBlackPosition();
 		for (Position position : kingPosition) {
 			board.put(position, new King(BLACK, position));
 		}
-		kingPosition = King.getInitialWhitePosition();
+		kingPosition = King.initialWhitePosition();
 		for (Position position : kingPosition) {
 			board.put(position, new King(WHITE, position));
 		}
 	}
 
 	private static void addPawn(final Map<Position, Piece> board) {
-		List<Position> pawnPosition = Pawn.getInitialBlackPosition();
+		List<Position> pawnPosition = Pawn.initialBlackPosition();
 		for (Position position : pawnPosition) {
 			board.put(position, new Pawn(BLACK, position));
 		}
-		pawnPosition = Pawn.getInitialWhitePosition();
+		pawnPosition = Pawn.initialWhitePosition();
 		for (Position position : pawnPosition) {
 			board.put(position, new Pawn(WHITE, position));
 		}
 	}
 
 	private static void addEmpty(final Map<Position, Piece> board) {
-		for (Rank rank : Rank.getRanks()) {
+		for (Rank rank : Rank.ranks()) {
 			findEmpty(board, rank);
 		}
 	}
 
 	private static void findEmpty(final Map<Position, Piece> board, final Rank rank) {
-		for (File file : File.getFiles()) {
+		for (File file : File.files()) {
 			addWhenNone(board, rank, file);
 		}
 	}

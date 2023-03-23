@@ -20,13 +20,13 @@ public final class King extends Piece {
         super(color, position);
     }
 
-    public static List<Position> getInitialBlackPosition() {
+    public static List<Position> initialBlackPosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(E, EIGHT));
         return positions;
     }
 
-    public static List<Position> getInitialWhitePosition() {
+    public static List<Position> initialWhitePosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(E, ONE));
         return positions;

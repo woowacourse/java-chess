@@ -117,11 +117,11 @@ public enum Direction {
 		return target.rankValue() - source.rankValue();
 	}
 
-	public int getDx() {
+	public int dx() {
 		return dx;
 	}
 
-	public int getDy() {
+	public int dy() {
 		return dy;
 	}
 }

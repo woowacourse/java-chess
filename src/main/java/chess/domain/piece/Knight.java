@@ -21,14 +21,14 @@ public final class Knight extends Piece {
         super(color, position);
     }
 
-    public static List<Position> getInitialBlackPosition() {
+    public static List<Position> initialBlackPosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(B, EIGHT));
         positions.add(Position.of(G, EIGHT));
         return positions;
     }
 
-    public static List<Position> getInitialWhitePosition() {
+    public static List<Position> initialWhitePosition() {
         List<Position> positions = new ArrayList<>();
         positions.add(Position.of(B, ONE));
         positions.add(Position.of(G, ONE));

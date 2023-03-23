@@ -23,7 +23,7 @@ class BoardTest {
 	@Test
 	@DisplayName("체스판은 64개의 칸으로 이루어져 있다")
 	void board64Size() {
-		assertThat(board.getBoard().size()).isEqualTo(64);
+		assertThat(board.board().size()).isEqualTo(64);
 	}
 
 	@Test
@@ -115,8 +115,8 @@ class BoardTest {
 		board.move(source, target);
 
 		assertSoftly(softly -> {
-			softly.assertThat(board.getBoard().get(source).getClass()).isEqualTo(Empty.class);
-			softly.assertThat(board.getBoard().get(target).getClass()).isEqualTo(Knight.class);
+			softly.assertThat(board.board().get(source).getClass()).isEqualTo(Empty.class);
+			softly.assertThat(board.board().get(target).getClass()).isEqualTo(Knight.class);
 		});
 	}
 }

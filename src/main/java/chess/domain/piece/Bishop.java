@@ -21,14 +21,14 @@ public final class Bishop extends Piece {
 		super(color, position);
 	}
 
-	public static List<Position> getInitialBlackPosition() {
+	public static List<Position> initialBlackPosition() {
 		List<Position> positions = new ArrayList<>();
 		positions.add(Position.of(C, EIGHT));
 		positions.add(Position.of(F, EIGHT));
 		return positions;
 	}
 
-	public static List<Position> getInitialWhitePosition() {
+	public static List<Position> initialWhitePosition() {
 		List<Position> positions = new ArrayList<>();
 		positions.add(Position.of(C, ONE));
 		positions.add(Position.of(F, ONE));
