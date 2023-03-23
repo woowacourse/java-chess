@@ -1,4 +1,6 @@
-public enum Command {
+package status;
+
+enum Command {
     START,
     END,
     MOVE;

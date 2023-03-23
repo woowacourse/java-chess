@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.board.Board;
+import domain.board.InitialChessAlignment;
 import domain.position.Direction;
 import domain.position.File;
 import domain.position.Position;
@@ -8,7 +10,6 @@ import domain.position.Rank;
 import java.util.List;
 
 public final class King extends Piece {
-
     private static final String NAME = "K";
     private static final int DIAGONAL_ONE_STEP = 2;
     private static final int ONE_STEP = 1;

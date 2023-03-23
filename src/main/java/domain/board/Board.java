@@ -22,7 +22,6 @@ public final class Board {
     }
 
     public void move(final Position source, final Position destination) {
-        final Piece piece = getPiece(source);
         validateRoute(source, destination);
 
         if (board.containsKey(destination)) {
@@ -77,6 +76,10 @@ public final class Board {
         }
 
         throw new IllegalArgumentException(INVALID_MOVEMENT);
+    }
+
+    public boolean isBlack(final Position position) {
+        return getPiece(position).isBlack();
     }
 
     public Map<Position, Piece> getPieces() {
