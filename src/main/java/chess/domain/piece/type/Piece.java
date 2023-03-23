@@ -5,6 +5,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
+import java.util.List;
+
 public abstract class Piece {
 
     private final PieceType pieceType;
@@ -19,9 +21,10 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
+    public abstract void checkMovable(Position start, Position end, Color destinationColor);
 
     protected abstract void checkMovableDirection(Direction direction);
+    public abstract List<Position> findRoute(Position start, Position end);
 
     public Color getColor() {
         return color;
@@ -30,4 +33,7 @@ public abstract class Piece {
     public PieceType getPieceType() {
         return pieceType;
     }
+
+    //
+
 }

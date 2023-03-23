@@ -5,6 +5,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -16,7 +17,6 @@ public class Pawn extends Piece {
     private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
     private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
     private final List<Direction> movableDirection;
-    private boolean isFirstMove = true;
 
     public Pawn(Color color) {
         super(PieceType.PAWN, color);
@@ -32,53 +32,9 @@ public class Pawn extends Piece {
                 Direction.TOP_RIGHT);
     }
 
-    @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = Direction.findDirectionByGap(start, end);
-
-        checkMovableDirection(direction);
-        checkMovableDistance(start, end);
-        checkMovableToDestination(colorOfDestination, direction);
-        isFirstMove = false;
-        return true;
-    }
-
     protected void checkMovableDirection(Direction direction) {
         if (!movableDirection.contains(direction)) {
             throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
-        }
-    }
-
-    private void checkMovableDistance(Position start, Position end) {
-        int distanceOfColumns = Math.abs(start.findGapOfColumn(end));
-        int distanceOfRanks = Math.abs(start.findGapOfRank(end));
-        if (isFirstMove) {
-            checkMovableDistanceWhenFirstMove(distanceOfColumns, distanceOfRanks);
-            return;
-        }
-        checkMovableDistanceAfterFirstMove(distanceOfColumns, distanceOfRanks);
-    }
-
-    private void checkMovableDistanceWhenFirstMove(int distanceOfColumns, int distanceOfRanks) {
-        if (distanceOfColumns > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE
-                || distanceOfRanks > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
-            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
-        }
-    }
-
-    private static void checkMovableDistanceAfterFirstMove(int distanceOfColumns, int distanceOfRanks) {
-        if (distanceOfColumns > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE
-                || distanceOfRanks > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE) {
-            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
-        }
-    }
-
-    private void checkMovableToDestination(Color colorOfDestination, Direction direction) {
-        if (isForwardDirection(direction)) {
-            checkMoveForward(colorOfDestination);
-        }
-        if (isDiagonalDirection(direction)) {
-            checkMoveDiagonal(colorOfDestination);
         }
     }
 
@@ -101,5 +57,52 @@ public class Pawn extends Piece {
         if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public void checkMovable(Position start, Position end, Color destinationColor) {
+        Direction direction = Direction.findDirectionByGap(start, end);
+        System.out.println(direction);
+        if (!movableDirection.contains(direction)) {
+            throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
+        }
+
+        List<Position> route = findRoute(start, end);
+        if (isFirstMove(start) && route.size() > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
+            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
+        }
+        if (!isFirstMove(start) && route.size() > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE) {
+            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
+        }
+
+        if (isForwardDirection(direction) && destinationColor != Color.NONE) {
+            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_MESSAGE);
+        }
+        if (isDiagonalDirection(direction) && destinationColor != getColor().getOpponent()) {
+            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    public List<Position> findRoute(Position start, Position end) {
+        List<Position> route = new ArrayList<>();
+        Direction direction = Direction.findDirectionByGap(start, end);
+        Position currentPosition = start;
+
+        do {
+            currentPosition = currentPosition.moveDirection(direction);
+            route.add(currentPosition);
+        } while (!currentPosition.equals(end));
+        return route;
+    }
+
+    private boolean isFirstMove(Position start) {
+        if(getColor()== Color.BLACK && start.getRank().getIndex() == 7) {
+            return true;
+        }
+        if(getColor() == Color.WHITE && start.getRank().getIndex() == 2) {
+            return true;
+        }
+        return false;
     }
 }

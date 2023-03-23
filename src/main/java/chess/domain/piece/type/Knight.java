@@ -5,6 +5,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -25,14 +26,6 @@ public class Knight extends Piece {
         super(PieceType.KNIGHT, color);
     }
 
-    @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = Direction.findDirectionByGap(start, end);
-
-        checkMovableDirection(direction);
-        checkMovableToDestination(colorOfDestination);
-        return true;
-    }
 
     @Override
     public void checkMovableDirection(Direction direction) {
@@ -45,6 +38,20 @@ public class Knight extends Piece {
         if(this.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
         }
+    }
 
+
+
+    @Override
+    public void checkMovable(final Position start, final Position end, final Color colorOfDestination) {
+
+        Direction direction = Direction.findDirectionByGap(start, end);
+        checkMovableDirection(direction);
+        checkMovableToDestination(colorOfDestination);
+    }
+
+    @Override
+    public List<Position> findRoute(final Position start, final Position end) {
+        return Collections.emptyList();
     }
 }

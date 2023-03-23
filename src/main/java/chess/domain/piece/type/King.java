@@ -5,6 +5,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
+import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -22,20 +23,24 @@ public class King extends Piece {
         super(PieceType.KING, color);
     }
 
-    @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = Direction.findDirectionByGap(start, end);
-        checkMovableDirection(direction);
-        checkMovableDistance(start, end);
-        checkMovableToDestination(colorOfDestination);
-        return true;
-    }
-
-
     public void checkMovableDirection(Direction direction) {
         if(!movableDirection.contains(direction)){
             throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public void checkMovable(final Position start, final Position end, final Color destinationColor) {
+        Direction direction = Direction.findDirectionByGap(start, end);
+        checkMovableDirection(direction);
+        checkMovableDistance(start, end);
+        checkMovableToDestination(destinationColor);
+
+    }
+
+    @Override
+    public List<Position> findRoute(final Position start, final Position end) {
+        return Collections.emptyList();
     }
 
     public void checkMovableDistance(Position start, Position end) {
