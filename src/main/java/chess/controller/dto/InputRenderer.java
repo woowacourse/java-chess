@@ -60,7 +60,7 @@ public class InputRenderer {
     }
 
     private static List<Integer> toColumnAndRow(String rawPosition) {
-        if(rawPosition.length() != 2) {
+        if (rawPosition.length() != 2) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
 

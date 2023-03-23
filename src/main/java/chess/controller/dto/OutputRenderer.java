@@ -1,8 +1,8 @@
 package chess.controller.dto;
 
-import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class OutputRenderer {
     private static final Map<PieceType, String> PIECE_TO_STRING = new EnumMap<>(PieceType.class);
+    private static final Map<Team, String> TEAM_TO_STRING = new EnumMap<>(Team.class);
 
     static {
         PIECE_TO_STRING.put(PieceType.EMPTY, ".");
@@ -21,6 +22,10 @@ public class OutputRenderer {
         PIECE_TO_STRING.put(PieceType.KNIGHT, "N");
         PIECE_TO_STRING.put(PieceType.BISHOP, "B");
         PIECE_TO_STRING.put(PieceType.PAWN, "P");
+
+        TEAM_TO_STRING.put(Team.BLACK, "흑 팀");
+        TEAM_TO_STRING.put(Team.WHITE, "백 팀");
+        TEAM_TO_STRING.put(Team.EMPTY, " ");
     }
 
     public static BoardDto toBoardDto(final List<List<Piece>> board) {
@@ -48,5 +53,13 @@ public class OutputRenderer {
             sign = sign.toLowerCase();
         }
         return sign;
+    }
+
+    public static StatusDto toStatusDto(final Team team, final double score) {
+        return new StatusDto(TEAM_TO_STRING.get(team), Double.toString(score));
+    }
+
+    public static ResultDto toResultDto(final Team team) {
+        return new ResultDto((TEAM_TO_STRING.get(team)));
     }
 }

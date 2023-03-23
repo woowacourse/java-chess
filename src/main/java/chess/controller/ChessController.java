@@ -15,6 +15,8 @@ import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 
 public class ChessController {
 
@@ -67,7 +69,7 @@ public class ChessController {
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         });
 
-        if(chessGame.isGameEnd()){
+        if (chessGame.isGameEnd()) {
             OutputView.printFinishMessage();
             return readCommand(List.of(STATUS, END));
         }
@@ -75,7 +77,9 @@ public class ChessController {
     }
 
     public CommandDto inquireStatus(CommandDto commandDto) {
-        // todo: 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
+        OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
+        OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
+        OutputView.printWinTeam(OutputRenderer.toResultDto(chessGame.getWinTeam()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 }

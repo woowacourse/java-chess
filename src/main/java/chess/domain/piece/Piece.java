@@ -24,7 +24,7 @@ public abstract class Piece {
         return this.pieceType == pieceType;
     }
 
-    public boolean isTeam(Team team){
+    public boolean isTeam(Team team) {
         return this.team == team;
     }
 

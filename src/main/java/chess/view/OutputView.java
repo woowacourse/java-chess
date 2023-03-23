@@ -1,6 +1,8 @@
 package chess.view;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.ResultDto;
+import chess.controller.dto.StatusDto;
 
 import java.util.List;
 
@@ -25,6 +27,21 @@ public class OutputView {
 
     public static void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
+    }
+
+    public static void printStatus(StatusDto statusDto) {
+        String team = statusDto.getTeam();
+        String score = statusDto.getScore();
+        System.out.println("> " + team + ": " + score + "점");
+    }
+
+    public static void printWinTeam(ResultDto resultDto) {
+        String winTeam = resultDto.getWinTeam();
+        if (winTeam.isBlank()) {
+            System.out.println("> 무승부 입니다!");
+            return;
+        }
+        System.out.println("> " + winTeam + "이 이겼습니다!");
     }
 
     public static void printFinishMessage() {
