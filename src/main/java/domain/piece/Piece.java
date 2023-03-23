@@ -6,9 +6,11 @@ import java.util.List;
 public abstract class Piece {
 
     private final TeamColor teamColor;
+    private final PieceInfo pieceInfo;
 
-    protected Piece(TeamColor teamColor) {
+    protected Piece(TeamColor teamColor, PieceInfo pieceInfo) {
         this.teamColor = teamColor;
+        this.pieceInfo = pieceInfo;
     }
 
     public boolean isBlack() {
@@ -17,7 +19,9 @@ public abstract class Piece {
 
     public abstract List<Square> findRoutes(Square src, Square dest);
 
-    public abstract PieceInfo getPieceType();
+    public PieceInfo getPieceType() {
+        return pieceInfo;
+    }
 
     public boolean isDifferentTeam(Piece piece) {
         return teamColor.isDifferent(piece.teamColor);

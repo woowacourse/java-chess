@@ -8,7 +8,7 @@ public class Blank extends Piece {
     private static final Blank instance = new Blank();
 
     private Blank() {
-        super(TeamColor.EMPTY);
+        super(TeamColor.EMPTY, PieceInfo.BLANK);
     }
 
     public static Blank getInstance() {
@@ -38,10 +38,5 @@ public class Blank extends Piece {
     @Override
     public boolean isPawn() {
         throw new IllegalStateException("기물이 존재하지 않습니다.");
-    }
-
-    @Override
-    public PieceInfo getPieceType() {
-        return PieceInfo.BLANK;
     }
 }

@@ -14,26 +14,16 @@ class RuleTest {
     @DisplayName("백이 첫수를 두고 흑,백 순서로 진행한다.")
     void validateOrder() {
         Rule rule = new Rule();
-        Piece white = new Piece(TeamColor.WHITE) {
+        Piece white = new Piece(TeamColor.WHITE, null) {
             @Override
             public List<Square> findRoutes(Square src, Square dest) {
-                return null;
-            }
-
-            @Override
-            public PieceInfo getPieceType() {
                 return null;
             }
         };
 
-        Piece black = new Piece(TeamColor.BLACK) {
+        Piece black = new Piece(TeamColor.BLACK, null) {
             @Override
             public List<Square> findRoutes(Square src, Square dest) {
-                return null;
-            }
-
-            @Override
-            public PieceInfo getPieceType() {
                 return null;
             }
         };

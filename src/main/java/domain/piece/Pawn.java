@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     private PawnState state;
 
     public Pawn(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceInfo.PAWN);
         state = PawnState.init(teamColor);
     }
 
@@ -41,10 +41,5 @@ public class Pawn extends Piece {
     public boolean isDiagonal(Square src, Square dest) {
         Direction vector = src.calculateVector(dest);
         return Directions.Diagonal.contains(vector);
-    }
-
-    @Override
-    public PieceInfo getPieceType() {
-        return PieceInfo.PAWN;
     }
 }

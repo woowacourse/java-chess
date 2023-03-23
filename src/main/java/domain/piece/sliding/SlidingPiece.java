@@ -3,6 +3,7 @@ package domain.piece.sliding;
 import domain.Square;
 import domain.piece.Direction;
 import domain.piece.Piece;
+import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public abstract class SlidingPiece extends Piece {
 
-    protected SlidingPiece(TeamColor teamColor) {
-        super(teamColor);
+    protected SlidingPiece(TeamColor teamColor, PieceInfo pieceInfo) {
+        super(teamColor, pieceInfo);
     }
 
     @Override

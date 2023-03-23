@@ -10,16 +10,11 @@ public class Queen extends SlidingPiece {
     private static final Directions DIRECTIONS = Directions.Every;
 
     public Queen(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceInfo.QUEEN);
     }
 
     @Override
     protected Direction findDirection(Direction direction) {
         return DIRECTIONS.findDirection(direction);
-    }
-
-    @Override
-    public PieceInfo getPieceType() {
-        return PieceInfo.QUEEN;
     }
 }

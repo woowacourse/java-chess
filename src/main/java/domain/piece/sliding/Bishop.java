@@ -10,16 +10,11 @@ public class Bishop extends SlidingPiece {
     private static final Directions DIRECTIONS = Directions.Diagonal;
 
     public Bishop(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceInfo.BISHOP);
     }
 
     @Override
     protected Direction findDirection(Direction direction) {
         return DIRECTIONS.findDirection(direction);
-    }
-
-    @Override
-    public PieceInfo getPieceType() {
-        return PieceInfo.BISHOP;
     }
 }

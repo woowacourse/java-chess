@@ -10,16 +10,11 @@ public class Rook extends SlidingPiece {
     private static final Directions DIRECTIONS = Directions.Linear;
 
     public Rook(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceInfo.ROOK);
     }
 
     @Override
     protected Direction findDirection(Direction direction) {
         return DIRECTIONS.findDirection(direction);
-    }
-
-    @Override
-    public PieceInfo getPieceType() {
-        return PieceInfo.ROOK;
     }
 }
