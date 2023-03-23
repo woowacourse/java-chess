@@ -1,22 +1,17 @@
 package domain.piece;
 
 import domain.position.Direction;
+import domain.position.Path;
 import domain.position.Position;
 
-import java.util.List;
 import java.util.Set;
 
-public final class Bishop extends Piece {
+public final class Bishop extends SlidingPiece {
 
     public static final Set<Direction> BISHOP_MOVABLE_DIRECTIONS = Set.of(Direction.DIAGONAL);
 
     public Bishop(Color color) {
         super(PieceName.BISHOP, color);
-    }
-
-    @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0));
     }
 
     @Override

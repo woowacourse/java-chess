@@ -1,22 +1,17 @@
 package domain.piece;
 
 import domain.position.Direction;
+import domain.position.Path;
 import domain.position.Position;
 
-import java.util.List;
 import java.util.Set;
 
-public final class Queen extends Piece {
+public final class Queen extends SlidingPiece {
 
     public static final Set<Direction> QUEEN_MOVABLE_DIRECTIONS = Set.of(Direction.CROSS, Direction.DIAGONAL);
 
     public Queen(Color color) {
         super(PieceName.QUEEN, color);
-    }
-
-    @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0));
     }
 
     @Override

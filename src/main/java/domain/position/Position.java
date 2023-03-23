@@ -49,18 +49,15 @@ public final class Position {
         }
     }
 
+    public Position moveByGap(int rowGap, int columnGap) {
+        return cache.get(Objects.hash(row + rowGap, column + columnGap));
+    }
+
     public static List<Position> getAllPosition() {
         return ORDERED_ROWS.stream()
                 .flatMap(row -> ORDERED_COLUMNS.stream()
                         .map(column -> Position.of(row, column)))
                 .collect(Collectors.toList());
-    }
-
-    public List<Position> getPathTo(Position end) {
-        if (Direction.of(this, end) == Direction.OTHER) {
-            return new ArrayList<>(List.of(end));
-        }
-        return calculatePath(calculateRowGap(end), calculateColumnGap(end));
     }
 
     public int calculateRowGap(Position other) {
@@ -69,17 +66,6 @@ public final class Position {
 
     public int calculateColumnGap(Position other) {
         return other.column - this.column;
-    }
-
-    private List<Position> calculatePath(int rowGap, int columnGap) {
-        List<Position> path = new ArrayList<>();
-        int unit = Math.max(Math.abs(rowGap), Math.abs(columnGap));
-        int rowCoefficient = rowGap / unit;
-        int columnCoefficient = columnGap / unit;
-        for (int i = 1; i <= unit; i++) {
-            path.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
-        }
-        return path;
     }
 
     public boolean isBlackPawnInitialRow() {

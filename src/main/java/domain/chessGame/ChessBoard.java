@@ -2,6 +2,7 @@ package domain.chessGame;
 
 import domain.piece.Piece;
 import domain.position.Direction;
+import domain.position.Path;
 import domain.position.Position;
 
 import java.util.HashMap;
@@ -34,7 +35,8 @@ public final class ChessBoard {
     }
 
     private boolean validatePieceMovable(Position startPosition, Position endPosition) {
-        List<Position> path = startPosition.getPathTo(endPosition);
+        Path path = new Path(startPosition, endPosition);
+
         Piece startPiece = chessBoard.get(startPosition);
         // Todo : 폰에 대한 로직을 폰에 넣을 수 있나? 된다 하더라도 반드시 폰에 넣어야 하나?
         if (startPiece.isPawn()) {
@@ -46,7 +48,7 @@ public final class ChessBoard {
     }
 
     private void considerPawnCase(Position startPosition, Position endPosition) {
-        List<Position> path = startPosition.getPathTo(endPosition);
+        Path path = new Path(startPosition, endPosition);
         Piece startPiece = chessBoard.get(startPosition);
 
         if (startPiece.isMovablePath(startPosition, path)) {
@@ -55,16 +57,20 @@ public final class ChessBoard {
         }
     }
 
-    private void validatePassablePathToForward(Position start, List<Position> path) {
-        Position nextPosition = path.get(0);
+    private void validatePassablePathToForward(Position start, Path path) {
+        Position nextPosition = path.getFirstPosition();
         if (isForwardOneStepOfPawn(start, nextPosition)) {
             //Todo : 폰이 isPassablePath처럼 마지막 도착 위치 전까지 판단하는게 아니라 마지막 위치까지 포함해서 계산하고 있어서 묶기 힘들다.
-            path.forEach(position -> {
-                if(chessBoard.containsKey(position)) {
-                    throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
-                }
-            });
+            checkPieceExistenceIn(path.getPositions());
         }
+    }
+
+    private void checkPieceExistenceIn(List<Position> pathPositions) {
+        pathPositions.forEach(position -> {
+            if(chessBoard.containsKey(position)) {
+                throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+            }
+        });
     }
 
     private boolean isForwardOneStepOfPawn(Position start, Position nextPosition) {
@@ -86,8 +92,8 @@ public final class ChessBoard {
         }
     }
 
-    private boolean validatePassablePath(List<Position> path) {
-        for (Position position : path.subList(0, path.size() - 1)) {
+    private boolean validatePassablePath(Path path) {
+        for (Position position : path.subListFirstTo(path.size() - 1)) {
             if (chessBoard.containsKey(position)) {
                 throw new IllegalArgumentException("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
             }

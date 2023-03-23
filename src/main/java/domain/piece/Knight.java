@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.position.Path;
 import domain.position.Position;
-
-import java.util.List;
 
 public final class Knight extends Piece {
 
@@ -11,8 +10,8 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        Position end = path.get(0);
+    public boolean isMovablePath(Position start, Path path) {
+        Position end = path.getEndPosition();
         return isKnightMovablePosition(start.calculateRowGap(end), start.calculateColumnGap(end));
     }
 

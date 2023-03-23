@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.position.Path;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 @DisplayName("Knight는 ")
@@ -47,7 +47,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("isMovablePathTest_SuccessCase")
     @DisplayName("상하 중 한 방향으로 2칸 이동 후 좌우로 1칸 또는 좌우 중 한 방향으로 2칸 이동 후 상하로 1칸 이동할 수 있다.")
-    void isMovablePathTest_Success(List<Position> path) {
+    void isMovablePathTest_Success(Path path) {
         // given
         Knight knight = new Knight(Color.WHITE);
 
@@ -63,7 +63,7 @@ class KnightTest {
     void isMovablePathTest_Fail() {
         // given
         Knight knight = new Knight(Color.WHITE);
-        List<Position> path = List.of(Position.of(5, 5));
+        Path path = new Path(Position.of(4, 4), Position.of(5, 5));
 
         // when
         boolean result = knight.isMovablePath(Position.of(4, 4), path);
@@ -74,14 +74,14 @@ class KnightTest {
 
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
-                Arguments.of(List.of(Position.of(6, 3))),
-                Arguments.of(List.of(Position.of(6, 5))),
-                Arguments.of(List.of(Position.of(5, 2))),
-                Arguments.of(List.of(Position.of(5, 6))),
-                Arguments.of(List.of(Position.of(3, 2))),
-                Arguments.of(List.of(Position.of(3, 6))),
-                Arguments.of(List.of(Position.of(2, 3))),
-                Arguments.of(List.of(Position.of(2, 5)))
+                Arguments.of(new Path(Position.of(4,4), Position.of(6, 3))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(6, 5))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(5, 2))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(5, 6))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(3, 2))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(3, 6))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(2, 3))),
+                Arguments.of(new Path(Position.of(4,4), Position.of(2, 5)))
         );
     }
 }

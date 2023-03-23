@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.position.Path;
 import domain.position.Position;
-
-import java.util.List;
 
 public final class WhitePawn extends Pawn {
 
@@ -11,7 +10,7 @@ public final class WhitePawn extends Pawn {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
+    public boolean isMovablePath(Position start, Path path) {
         if (start.isWhitePawnInitialRow()) {
             return isMovableInitialRowPawn(start, path);
         }

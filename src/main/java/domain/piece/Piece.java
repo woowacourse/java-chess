@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.position.Path;
 import domain.position.Position;
-
-import java.util.List;
 
 public abstract class Piece {
 
@@ -29,7 +28,9 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public abstract boolean isMovablePath(Position start, List<Position> path);
+//    public abstract boolean isMovablePath(Position start, List<Position> path);
+
+    public abstract boolean isMovablePath(Position start, Path path);
 
     protected abstract boolean isMovableDirection(Position start, Position nextPosition);
 

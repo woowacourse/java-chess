@@ -1,9 +1,9 @@
 package domain.piece;
 
 import domain.position.Direction;
+import domain.position.Path;
 import domain.position.Position;
 
-import java.util.List;
 import java.util.Set;
 
 public final class King extends Piece {
@@ -15,8 +15,8 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovablePath(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0)) &&
+    public boolean isMovablePath(Position start, Path path) {
+        return isMovableDirection(start, path.getFirstPosition()) &&
                 isMovableDistance(path.size());
     }
 

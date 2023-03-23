@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.position.Path;
 import domain.position.Position;
-
-import java.util.List;
 
 public abstract class Pawn extends Piece {
 
@@ -27,13 +26,13 @@ public abstract class Pawn extends Piece {
         return true;
     }
 
-    protected final boolean isMovableInitialRowPawn(Position start, List<Position> path) {
+    protected final boolean isMovableInitialRowPawn(Position start, Path path) {
         return isMovableNonInitialRowPawn(start, path) ||
-                path.size() == 2 && isForwardTwoStep(start, path.get(1));
+                path.size() == 2 && isForwardTwoStep(start, path.getEndPosition());
     }
 
-    protected final boolean isMovableNonInitialRowPawn(Position start, List<Position> path) {
-        return isMovableDirection(start, path.get(0)) && isMovableDistance(path.size());
+    protected final boolean isMovableNonInitialRowPawn(Position start, Path path) {
+        return isMovableDirection(start, path.getFirstPosition()) && isMovableDistance(path.size());
     }
 
     protected abstract boolean isForwardOneStep(Position start, Position nextPosition);
