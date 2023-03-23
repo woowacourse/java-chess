@@ -9,17 +9,23 @@ import java.util.function.Supplier;
 
 public class InputView {
 
+    private static final int COMMAND_INDEX = 0;
+    private static final int ROW_INDEX = 1;
+    private static final int COLUMN_INDEX = 0;
+    private static final int SOURCE_COORDINATE_INDEX = 1;
+    private static final int DESTINATION_COORDINATE_INDEX = 2;
+
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     private InputView() {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
     }
 
-    public static String inputCommand() {
+    public static String[] inputCommand() {
         try {
             String inputCommand = bufferedReader.readLine();
             validateInputCommand(inputCommand);
-            return inputCommand;
+            return inputCommand.split(" ");
         } catch (IOException e) {
             return inputCommand();
         }
@@ -59,5 +65,25 @@ public class InputView {
             System.out.println(illegalArgumentException.getMessage());
             return repeat(inputProcess);
         }
+    }
+
+    public static String extractCommand(String[] input) {
+        return input[COMMAND_INDEX];
+    }
+
+    public static String[] extractSource(String[] coordinates) {
+        return coordinates[SOURCE_COORDINATE_INDEX].split("");
+    }
+
+    public static String[] extractDestination(String[] coordinates) {
+        return coordinates[DESTINATION_COORDINATE_INDEX].split("");
+    }
+
+    public static String extractColumn(String[] coordinate) {
+        return coordinate[COLUMN_INDEX];
+    }
+
+    public static String extractRow(String[] coordinate) {
+        return coordinate[ROW_INDEX];
     }
 }
