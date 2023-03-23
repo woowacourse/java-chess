@@ -1,4 +1,4 @@
-package techcourse.fp.study;
+package study;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
@@ -21,13 +21,37 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.study.PlayGround;
 
+@Disabled
 @SuppressWarnings("NonAsciiCharacters")
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
-
+    static ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
+        return list.stream()
+                .filter(condition)
+                .collect(toList());
+    }
+
+    public static void log(Object... objects) {
+        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
+
+        for (Object object : objects) {
+            now.append(" - ").append(object.toString());
+        }
+
+        System.out.println(now);
+
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void For문을_활용하여_콜론을_추가하는_문자열_작성() {
@@ -91,8 +115,6 @@ class PlayGroundTest {
         executorService.submit(() -> System.out.println("test"));
     }
 
-    static ExecutorService executorService = Executors.newFixedThreadPool(10);
-
     @Test
     public void printAllOld() {
         PlayGround.printAllOld(numbers);
@@ -134,11 +156,6 @@ class PlayGroundTest {
                 (message, length, width) -> message + (length * width));
     }
 
-    @FunctionalInterface
-    interface TriFunction<T1, T2, T3, R> {
-        R apply(T1 t1, T2 t2, T3 t3);
-    }
-
     private <T1, T2, T3> void println(T1 t1, T2 t2, T3 t3, TriFunction<T1, T2, T3, String> function) {
         System.out.println(function.apply(t1, t2, t3));
     }
@@ -154,12 +171,6 @@ class PlayGroundTest {
 
         List<Integer> filteredLessThanThree = filter(numbers, lessThanThree);
         assertThat(filteredLessThanThree.size()).isEqualTo(8);
-    }
-
-    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
-        return list.stream()
-                .filter(condition)
-                .collect(toList());
     }
 
     @Test
@@ -247,22 +258,6 @@ class PlayGroundTest {
         log("The count is", stream.count());
     }
 
-    public static void log(Object... objects) {
-        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
-
-        for (Object object : objects) {
-            now.append(" - ").append(object.toString());
-        }
-
-        System.out.println(now);
-
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void 재사용_스트림_문제() {
         IntStream stream = IntStream.of(1, 2);
@@ -276,5 +271,10 @@ class PlayGroundTest {
     public void 무한_스트림_문제() {
         IntStream.iterate(0, i -> i + 1)
                 .forEach(System.out::println);
+    }
+
+    @FunctionalInterface
+    interface TriFunction<T1, T2, T3, R> {
+        R apply(T1 t1, T2 t2, T3 t3);
     }
 }
