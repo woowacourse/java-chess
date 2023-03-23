@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.position.Position;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -10,11 +11,13 @@ public abstract class Piece {
 
     protected final Type type;
     protected final Side side;
+    protected final List<MovePattern> movePatterns;
 
-    public Piece(final Type type, final Side side) {
+    public Piece(final Type type, final Side side, List<MovePattern> movePatterns) {
         validate(type, side);
         this.type = type;
         this.side = side;
+        this.movePatterns = movePatterns;
     }
 
     protected boolean isRangeValid(final Position position, final MovePattern movePattern) {
@@ -32,8 +35,6 @@ public abstract class Piece {
     }
 
     protected abstract void validate(final Type type, final Side side);
-
-    protected abstract List<MovePattern> getMovePatterns();
 
     public abstract List<Position> findMovablePositions(final Position source, final Board board);
 

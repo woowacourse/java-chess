@@ -3,20 +3,21 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class LinearPiece extends Piece {
 
-    public LinearPiece(final Type type, final Side side) {
-        super(type, side);
+    public LinearPiece(final Type type, final Side side, List<MovePattern> movePatterns) {
+        super(type, side, movePatterns);
     }
 
     @Override
     public List<Position> findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
 
-        for (MovePattern movePattern : getMovePatterns()) {
+        for (MovePattern movePattern : movePatterns) {
             movablePositions.addAll(findMovablePositionsByMovePattern(source, board, movePattern));
         }
         return movablePositions;

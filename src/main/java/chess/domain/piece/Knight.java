@@ -1,28 +1,19 @@
 package chess.domain.piece;
 
 import chess.domain.movepattern.KnightMovePattern;
-import chess.domain.movepattern.MovePattern;
+
 import java.util.Arrays;
-import java.util.List;
 
 public class Knight extends ImmediatePiece {
 
-    private final List<MovePattern> movePatterns;
-
     public Knight(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = Arrays.asList(KnightMovePattern.values());
+        super(type, side,Arrays.asList(KnightMovePattern.values()));
     }
 
     @Override
     protected void validate(final Type type, final Side side) {
         validateType(type);
         validateSide(side);
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
     }
 
     private void validateType(final Type type) {

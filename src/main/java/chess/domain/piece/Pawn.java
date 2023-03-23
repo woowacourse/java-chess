@@ -1,24 +1,22 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.BlackPawnMovePattern;
+import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.WhitePawnMovePattern;
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
 
-    private final List<MovePattern> movePatterns;
-
     public Pawn(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = initMovePatterns(side);
+        super(type, side, initMovePatterns(side));
     }
 
-    private List<MovePattern> initMovePatterns(final Side side) {
+    private static List<MovePattern> initMovePatterns(final Side side) {
         List<MovePattern> movePatterns = new ArrayList<>();
 
         if (side.isWhite()) {
@@ -40,7 +38,7 @@ public class Pawn extends Piece {
     public List<Position> findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
 
-        for (MovePattern movePattern : getMovePatterns()) {
+        for (MovePattern movePattern : movePatterns) {
             movablePositions.addAll(findMovablePositionsByMovePattern(source, movePattern, board));
             movablePositions.addAll(findMovablePositionsByDoubleMove(source, board, movePattern));
         }
@@ -107,11 +105,6 @@ public class Pawn extends Piece {
         if (nextSide != this.side && nextSide != Side.NEUTRALITY) {
             movablePositions.add(nextPosition);
         }
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
     }
 
     private void validateType(final Type type) {
