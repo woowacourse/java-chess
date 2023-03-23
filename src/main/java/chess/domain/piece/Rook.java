@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
 import chess.domain.position.PossibleDestinations;
 

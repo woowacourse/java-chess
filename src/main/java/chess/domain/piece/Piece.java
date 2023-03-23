@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.camp.TeamColor;
-
 import java.util.Objects;
 
 public abstract class Piece implements Movable {

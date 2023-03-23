@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.*;
 import chess.domain.position.Position;

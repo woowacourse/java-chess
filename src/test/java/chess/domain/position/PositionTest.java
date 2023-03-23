@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -62,7 +61,7 @@ class PositionTest {
     }
 
     @ParameterizedTest(name = "목표 위치로 이동하기 위한 단위 벡터를 계산한다.")
-    @CsvSource(value = {"4:7:0:1", "0:4:-1:0", "4:0:0:-1", "7:4:1:0", "7:7:1:1", "0:0:-1:-1","0:7:-1:1"}, delimiter = ':')
+    @CsvSource(value = {"4:7:0:1", "0:4:-1:0", "4:0:0:-1", "7:4:1:0", "7:7:1:1", "0:0:-1:-1", "0:7:-1:1"}, delimiter = ':')
     void computeUnitPosition(final int targetRank, final int targetFile, final int unitRank, final int unitFile) {
         // given
         final Position source = Position.of(4, 4);

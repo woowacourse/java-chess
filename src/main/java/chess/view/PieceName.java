@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.TeamColor;
 
 import java.util.Map;
 import java.util.stream.Collectors;

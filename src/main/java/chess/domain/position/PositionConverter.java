@@ -1,15 +1,13 @@
 package chess.domain.position;
 
-import chess.domain.position.Position;
-
 public final class PositionConverter {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final char FIRST_FILE = 'a';
     private static final char LAST_FILE = 'h';
     private static final char FIRST_RANK = '1';
     private static final char LAST_RANK = '8';
     private static final int POSITION_LENGTH = 2;
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
 
     public static Position convert(final String position) {
         validate(position);

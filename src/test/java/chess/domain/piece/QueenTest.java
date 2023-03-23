@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,7 +24,7 @@ class QueenTest {
     }
 
     @ParameterizedTest(name = "source에서 target으로 퀸이 갈 수 없는 위치면 false를 반환한다.")
-    @CsvSource(value = {"1:2",  "-7:0", "0:-7", "2:1", "-1:2", "1:-2"}, delimiter = ':')
+    @CsvSource(value = {"1:2", "-7:0", "0:-7", "2:1", "-1:2", "1:-2"}, delimiter = ':')
     void canMoveFail(final int targetRank, final int targetFile) {
         // given
         final Piece piece = new Queen(PieceType.QUEEN, TeamColor.WHITE);

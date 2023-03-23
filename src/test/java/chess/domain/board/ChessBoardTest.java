@@ -1,11 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.BlackPawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ChessBoardTest {
 

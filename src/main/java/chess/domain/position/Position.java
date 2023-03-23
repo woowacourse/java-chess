@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class Position {
     private static final int POSITION_COUNT = 64;
     private static final Map<String, Position> cache = new ConcurrentHashMap<>(POSITION_COUNT);
+
     private final int rank;
     private final int file;
 

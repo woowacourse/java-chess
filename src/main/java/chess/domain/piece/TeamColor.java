@@ -1,4 +1,4 @@
-package chess.domain.camp;
+package chess.domain.piece;
 
 public enum TeamColor {
     BLACK,

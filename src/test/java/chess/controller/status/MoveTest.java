@@ -1,8 +1,8 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

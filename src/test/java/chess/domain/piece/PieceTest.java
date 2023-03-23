@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,16 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
+
+    private static Stream<Arguments> makePosition() {
+        return Stream.of(
+                Arguments.of(Position.of(1, 1), Position.of(7, 7))
+                , Arguments.of(Position.of(1, 1), Position.of(7, 1))
+                , Arguments.of(Position.of(1, 1), Position.of(2, 1))
+                , Arguments.of(Position.of(1, 1), Position.of(0, 0))
+                , Arguments.of(Position.of(1, 1), Position.of(1, 0))
+        );
+    }
 
     @Test
     @DisplayName("두 개의 체스말이 동일한 진영에 속하는지 판단한다.")
@@ -29,17 +38,6 @@ class PieceTest {
 
         assertThat(piece.compareCamp(otherCamp))
                 .isFalse();
-    }
-
-    @Test
-    @DisplayName("체스말이 폰이면 true를 반환한다.")
-    void isPawn() {
-        // given
-        final Piece piece = new BlackPawn(PieceType.PAWN);
-
-        // when, then
-        assertThat(piece.isPawn())
-                .isTrue();
     }
 
     @ParameterizedTest(name = "체스말이 입력받은 체스말과 동일한 진영인지 판단한다.")
@@ -62,15 +60,5 @@ class PieceTest {
         // when, then
         assertThat(piece.canMove(source, target, null))
                 .isTrue();
-    }
-
-    private static Stream<Arguments> makePosition() {
-        return Stream.of(
-                Arguments.of(Position.of(1, 1), Position.of(7, 7))
-                , Arguments.of(Position.of(1, 1), Position.of(7, 1))
-                , Arguments.of(Position.of(1, 1), Position.of(2, 1))
-                , Arguments.of(Position.of(1, 1), Position.of(0, 0))
-                , Arguments.of(Position.of(1, 1), Position.of(1, 0))
-        );
     }
 }
