@@ -11,6 +11,8 @@ import chess.ui.OutputView;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class ChessGameController {
 
@@ -29,27 +31,36 @@ public final class ChessGameController {
 
         boolean isNotEnd = true;
         while (isNotEnd && players.everyKingAlive()) {
-            List<String> commands = InputView.getCommands();
-            Command command = Command.getCommand(commands);
-            this.commands.get(command).execute(commands);
-            isNotEnd = command.isNotEnd();
+            Commands commandWithArguments = readCommand(InputView::getCommands);
+            this.commands.get(commandWithArguments.getCommand()).execute(commandWithArguments.getArgs());
+            isNotEnd = commandWithArguments.isNotEnd();
         }
         this.commands.get(Command.END).execute(Collections.emptyList());
     }
 
-    private void start(final List<String> command) {
+    private Commands readCommand(Supplier<List<String>> cccc) {
+        try {
+            List<String> arguments = cccc.get();
+            return new Commands(arguments);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readCommand(cccc);
+        }
+    }
+
+    private void start(final List<String> arguments) {
         initializeChessBoard();
         PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
         OutputView.printInitializedChessBoard(piecesResponse);
     }
 
-    private void status(final List<String> command) {
+    private void status(final List<String> arguments) {
         OutputView.printStatus(players.calculateScore());
     }
 
-    private void move(final List<String> command) {
-        String inputMovablePiece = command.get(1);
-        String inputTargetPosition = command.get(2);
+    private void move(final List<String> arguments) {
+        String inputMovablePiece = arguments.get(0);
+        String inputTargetPosition = arguments.get(1);
 
         try {
             players.movePiece(inputMovablePiece, inputTargetPosition);
@@ -61,7 +72,7 @@ public final class ChessGameController {
     }
 
     private void end(final List<String> command) {
-        if (!players.everyKingAlive()) {
+        if (!players.everyKingAlive()) { // 부정문으로 바꿔주세요!!
             OutputView.printWinner(players.getWinnerColorName());
         }
     }
