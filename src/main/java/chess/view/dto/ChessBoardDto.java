@@ -5,13 +5,8 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,13 +15,14 @@ import java.util.Optional;
 
 public class ChessBoardDto {
 
-    private static final Map<Class<? extends Piece>, String> pieceName = Map.of(
-            Pawn.class, "p",
-            Rook.class, "r",
-            Knight.class, "n",
-            Bishop.class, "b",
-            Queen.class, "q",
-            King.class, "k"
+    private static final Map<PieceType, String> pieceName = Map.of(
+            PieceType.BLACK_PAWN, "P",
+            PieceType.WHITE_PAWN, "p",
+            PieceType.ROOK, "r",
+            PieceType.KNIGHT, "n",
+            PieceType.BISHOP, "b",
+            PieceType.KING, "k",
+            PieceType.QUEEN, "q"
     );
     private static final String EMPTY = ".";
 
@@ -63,9 +59,9 @@ public class ChessBoardDto {
 
     private static String toUpperCaseIfBlack(final Piece piece) {
         if (piece.isBlack()) {
-            return pieceName.get(piece.getClass()).toUpperCase();
+            return pieceName.get(piece.getPieceType()).toUpperCase();
         }
-        return pieceName.get(piece.getClass());
+        return pieceName.get(piece.getPieceType());
     }
 
     public List<String> getLines() {

@@ -2,70 +2,78 @@
 
 ```mermaid
 graph TD
-    ChessController --> InputView
-    ChessController --> OutputView
-    ChessController --> ExecuteState
+  ChessController --> InputView
+  ChessController --> OutputView
+  ChessController --> ExecuteCommand
 
-    ChessController --> ChessGame
-    ChessGame --> Board
+  ChessController --> ChessGame
+  ChessGame --> Board
 
-    Square --> File
-    Square --> Rank
+  Square --> File
+  Square --> Rank
 
-    BoardFactory --> Board
+  BoardFactory --> Board
 
-    Board --> Square
-    Board --> PIECE
+  Board --> Square
+  Board --> piece
 
-    PIECE --> Color
-    PIECE --> Strategy
+  piece --> Color
+  piece --> PIECE_TYPE
 
-    Strategy --> DirectStrategy
-    Strategy --> SlidingStrategy
+  subgraph PIECE_TYPE
+    direction BT
+    Black_Pawn -.-> pieceType
+    White_Pawn -.-> pieceType
+    Rook -.-> pieceType
+    Bishop -.-> pieceType
+    Knight -.-> pieceType
+    Queen -.-> pieceType
+    King -.-> pieceType
+  end
 
-    DirectStrategy --> DirectVector
-    SlidingStrategy --> SlidingVector
+  PIECE_TYPE --> STRATEGY
 
-    subgraph PIECE
-        direction BT
-        Pawn -.-> Piece
-        Rook -.-> Piece
-        Bishop -.-> Piece
-        Knight -.-> Piece
-        Queen -.-> Piece
-        King -.-> Piece
-    end
+  subgraph STRATEGY
+    direction BT
+    DirectStrategy -.-> strategy
+    SlidingStrategy -.-> strategy
+  end
+
+  STRATEGY --> DirectVector
+  STRATEGY --> SlidingVector
 ```
 
 ## 구현 기능 목록
 
 ### 체스 게임
 
+- [x] 게임을 시작한다.
+- [x] 점수를 계산한다.
 - [x] 기물을 이동시킨다.
+- [x] 게임을 종료한다.
+- [x] 게임 진행을 확인한다.
 
 ### 체스 보드
 
-- [x] 체스 기물 위치를 알고 있다.
-- [x] 특정 칸에 존재하는 기물을 확인한다.
-- [x] 이동 경로로 이동할 수 있는지 확인한다.
-- [x] 폰이 이동 경로로 이동할 수 있는지 확인한다.
-- [x] 기물 위치를 업데이트한다.
-- [x] 색에 따른 기물 점수를 계산한다.
+- [x] 특정 칸의 기물을 확인한다.
+- [x] 기물을 이동시킨다.
+- [x] 해당 색의 기물 점수를 계산한다.
 
 ### 체스 칸
 
 - 세로줄 (File)
     - [x] 왼쪽부터 a ~ h이다.
-    - [x] [예외사항] 존재하지 않는 인덱스라면 예외를 던진다.
     - [x] 파일 간 거리를 계산한다.
     - [x] 다음 파일을 반환한다.
     - [x] 이전 파일을 반환한다.
 - 가로줄 (Rank)
     - [x] 아래부터 1 ~ 8이다.
-    - [x] [예외사항] 존재하지 않는 인덱스라면 예외를 던진다.
     - [x] 랭크 간 거리를 계산한다.
     - [x] 다음 랭크를 반환한다.
     - [x] 이전 랭크를 반환한다.
+- [x] 위치에 알맞은 체스 칸을 생성한다.
+- [x] 다음 체스 칸을 반환한다.
+- [x] 해당 색의 폰 초기 위치인지 확인한다.
 
 ### 체스 기물
 
@@ -83,6 +91,10 @@ graph TD
 - [x] 움직일 수 있는지 확인한다.
 - [x] 폰인지 확인한다.
 
+### 전략
+
+- [x] 경로를 찾는다.
+
 ### 벡터
 
 - [x] 움직이려는 방향으로 갈 수 있는지 확인한다.
@@ -98,4 +110,5 @@ graph TD
 - [x] 게임 시작 문구를 출력한다.
 - [x] 체스판을 출력한다.
 - [x] 체스 상태에 따른 결과를 출력한다.
+- [x] 게임 종료 문구를 출력한다.
 - [x] 에러 메시지를 출력한다.
