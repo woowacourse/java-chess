@@ -36,4 +36,12 @@ public abstract class Piece {
     public boolean isIncorrectTurn(Side currentTurn) {
         return this.side != currentTurn;
     }
+
+    public boolean isSameSide(Side side) {
+        return this.side == side;
+    }
+
+    public double addScore(double score) {
+        return score + pieceType.getScore();
+    }
 }
