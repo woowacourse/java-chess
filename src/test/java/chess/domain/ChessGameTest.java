@@ -49,4 +49,19 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         assertThat(chessGame.isKingDead()).isFalse();
     }
+
+
+    @DisplayName("초기 백의 점수를 계산한다")
+    @Test
+    void calculateScore_White() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.calculateWhiteScore()).isEqualTo(38);
+    }
+
+    @DisplayName("초기 흑의 점수를 계산한다")
+    @Test
+    void calculateScore_Black() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.calculateBlackScore()).isEqualTo(38);
+    }
 }

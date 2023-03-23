@@ -67,4 +67,10 @@ public final class Squares {
                 .map(Square::getPiece)
                 .collect(Collectors.toList());
     }
+
+    public double calculateScore(Color color) {
+        return squares.stream()
+                .mapToDouble(square -> square.getScore(color))
+                .sum();
+    }
 }

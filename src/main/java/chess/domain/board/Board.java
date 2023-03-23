@@ -68,4 +68,16 @@ public final class Board {
     public List<Squares> getSquares() {
         return new ArrayList<>(board);
     }
+
+    public double calculateWhiteScore() {
+        return board.stream()
+                .mapToDouble(squares -> squares.calculateScore(Color.WHITE))
+                .sum();
+    }
+
+    public double calculateBlackScore() {
+        return board.stream()
+                .mapToDouble(squares -> squares.calculateScore(Color.BLACK))
+                .sum();
+    }
 }

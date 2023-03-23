@@ -73,4 +73,8 @@ public final class Square {
     public boolean equalsColor(Color color) {
         return piece.equalsColor(color);
     }
+
+    public double getScore(Color color) {
+        return piece.getScore(color);
+    }
 }
