@@ -36,7 +36,7 @@ public abstract class Piece {
         return camp == other.camp;
     }
 
-    public boolean isMyTurn(Camp other) {
+    public boolean isMyCamp(Camp other) {
         return camp != other;
     }
 

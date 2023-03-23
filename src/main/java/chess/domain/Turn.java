@@ -20,6 +20,6 @@ public class Turn {
     }
 
     public boolean isMyTurn(final Piece fromPiece) {
-        return fromPiece.isMyTurn(turnCamp);
+        return fromPiece.isMyCamp(turnCamp);
     }
 }
