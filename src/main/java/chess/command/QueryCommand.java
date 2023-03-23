@@ -1,9 +1,9 @@
 package chess.command;
 
-import chess.domain.game.Action;
+import chess.domain.game.ActionHandler;
 import chess.domain.game.Status;
 
 public interface QueryCommand {
     
-    Status query(Action action);
+    Status query(ActionHandler action);
 }

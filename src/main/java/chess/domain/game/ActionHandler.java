@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.position.Position;
 
-public interface Action {
+public interface ActionHandler {
     
     void start();
     

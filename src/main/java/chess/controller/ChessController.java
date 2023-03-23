@@ -7,6 +7,7 @@ import chess.command.QueryCommand;
 import chess.command.UpdateCommand;
 import chess.domain.board.PieceProvider;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Game;
 import chess.domain.game.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -32,13 +33,13 @@ public class ChessController {
     
     public void run() {
         this.outputView.printGameStartMessage();
-        ChessGame chessGame = new ChessGame();
+        Game chessGame = new ChessGame();
         while (chessGame.isNotEnd()) {
             this.runGame(chessGame);
         }
     }
     
-    private void runGame(final ChessGame chessGame) {
+    private void runGame(final Game chessGame) {
         try {
             Command command = this.parseCommand();
             Executor executor = this.executorMap.get(command.getType());
@@ -55,21 +56,21 @@ public class ChessController {
     }
     
     
-    private void executeEndCommand(final UpdateCommand command, final ChessGame chessGame) {
+    private void executeEndCommand(final UpdateCommand command, final Game chessGame) {
         command.update(chessGame);
     }
     
-    private void executeCommand(final UpdateCommand command, final ChessGame chessGame) {
+    private void executeCommand(final UpdateCommand command, final Game chessGame) {
         command.update(chessGame);
         this.printBoard(chessGame);
     }
     
-    private void executeQueryCommand(final QueryCommand command, final ChessGame chessGame) {
+    private void executeQueryCommand(final QueryCommand command, final Game chessGame) {
         Status status = command.query(chessGame);
         this.outputView.printStatus(status);
     }
     
-    private void printBoard(final ChessGame chessGame) {
+    private void printBoard(final Game chessGame) {
         PieceProvider board = chessGame.getBoard();
         String boardString = BoardMapper.map(board);
         this.outputView.printBoard(BoardDTO.create(boardString));

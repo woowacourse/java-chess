@@ -1,6 +1,6 @@
 package chess.command;
 
-import chess.domain.game.Action;
+import chess.domain.game.ActionHandler;
 import chess.domain.game.Status;
 import java.util.List;
 
@@ -22,13 +22,13 @@ public class StatusCommand implements Command {
     }
     
     @Override
-    public void update(Action action) {
+    public void update(ActionHandler action) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
     }
     
     @Override
-    public Status query(final Action action) {
+    public Status query(final ActionHandler action) {
         return action.status();
     }
     
