@@ -32,8 +32,7 @@ public enum Command {
     }
 
     public boolean isNotEnd() {
-        return this != Command.END &&
-                this != Command.STATUS;
+        return this != Command.END;
     }
 
     public boolean isMove() {
