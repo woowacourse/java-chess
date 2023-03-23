@@ -23,7 +23,7 @@ public class ChessJdbcDao implements ChessDao {
 
     @Override
     public List<MoveDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM move", (resultSet, rowNumber) -> {
+        return jdbcTemplate.query("SELECT * FROM move", (resultSet) -> {
             final List<MoveDto> result = new ArrayList<>();
             while (resultSet.next()) {
                 final String source = resultSet.getString("source");

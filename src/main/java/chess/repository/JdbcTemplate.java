@@ -21,7 +21,7 @@ public class JdbcTemplate {
             }
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new IllegalArgumentException("입력이 올바르지 않습니다.");
         }
     }
 
@@ -29,9 +29,9 @@ public class JdbcTemplate {
         try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
-            return rowMapper.mapRow(resultSet, resultSet.getRow());
+            return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("입력이 올바르지 않습니다.");
         }
     }
 }
