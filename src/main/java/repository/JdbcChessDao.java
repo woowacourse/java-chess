@@ -117,6 +117,20 @@ public class JdbcChessDao implements ChessDao {
         }
     }
 
+    @Override
+    public long findGameIdByGameName(String gameName) {
+        final String query = "SELECT _id FROM game WHERE gameName = ?";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("_id");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
     public List<MoveHistoryDto> findMoveHistoryByGameId(long game_id) {
         final String query = "SELECT source, target, pieceOnTarget FROM moveHistory WHERE g_id = ?";
         try (Connection connection = connector.getConnection();

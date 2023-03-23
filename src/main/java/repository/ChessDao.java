@@ -17,4 +17,6 @@ public interface ChessDao {
     void saveBoard(long game_id, List<BoardDto> boardDtos);
 
     void saveMoveHistory(long game_id, MoveHistoryDto moveHistoryDto);
+
+    long findGameIdByGameName(String gameName);
 }
