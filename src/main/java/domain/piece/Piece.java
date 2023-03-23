@@ -41,7 +41,11 @@ public abstract class Piece {
         return this.side == side;
     }
 
-    public double addScore(double score) {
-        return score + pieceType.getScore();
+    public boolean isSameType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
+    public double score() {
+        return pieceType.getScore();
     }
 }
