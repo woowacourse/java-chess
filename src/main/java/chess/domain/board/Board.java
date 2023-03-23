@@ -12,7 +12,7 @@ import chess.domain.position.Position;
 public class Board {
 
     private static final EmptyPiece EMPTY_PIECE = EmptyPiece.create();
-    
+
     private final Map<Position, Piece> pieces;
 
     protected Board(Map<Position, Piece> pieces) {
@@ -40,7 +40,7 @@ public class Board {
 
     private boolean hasMove(Position source, Position target) {
         Move move = Move.of(source, target);
-        if (isAttack(target)) {
+        if (hasPieceAt(target)) {
             return getPieceAt(source).hasAttackMove(move);
         }
         return getPieceAt(source).hasMove(move);
@@ -56,25 +56,22 @@ public class Board {
     }
 
     private void validateNoPieceAt(Position position) {
-        if (!getPieceAt(position).isEmpty()) {
+        if (hasPieceAt(position)) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
     }
 
     private void makeMove(Position source, Position target) {
-        if (isAttack(target)) {
-            pieces.remove(target);
-        }
         pieces.put(target, getPieceAt(source).touch());
         pieces.remove(source);
     }
 
-    private boolean isAttack(Position target) {
-        return !getPieceAt(target).isEmpty();
-    }
-
     public boolean hasPositionTeamOf(Position position, Team team) {
         return getPieceAt(position).hasTeam(team);
+    }
+
+    private boolean hasPieceAt(Position target) {
+        return !getPieceAt(target).isEmpty();
     }
 
     private Piece getPieceAt(Position position) {
