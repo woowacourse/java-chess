@@ -8,7 +8,6 @@ import chess.domain.Rank;
 import java.util.List;
 
 public abstract class Piece {
-
     protected static final String INVALID_DESTINATION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
     protected static final String INVALID_MOVING_CAUSE_OF_CATCHING = "같은 색 말은 잡을 수 없습니다.";
 
@@ -51,6 +50,8 @@ public abstract class Piece {
     public abstract Piece move(final Piece pieceInTargetPosition);
 
     public abstract List<Position> getPassingPositions(final Position targetPosition);
+
+    public abstract boolean isKing();
 
     public final Color getColor() {
         return color;

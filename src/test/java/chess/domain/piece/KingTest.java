@@ -71,4 +71,13 @@ class KingTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
+
+    @Test
+    void 왕인지_확인한다() {
+        final Piece king = new King(E, EIGHT, BLACK);
+
+        final boolean actual = king.isKing();
+
+        assertThat(actual).isTrue();
+    }
 }

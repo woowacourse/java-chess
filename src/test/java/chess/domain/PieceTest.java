@@ -38,6 +38,11 @@ class PieceTest {
         public List<Position> getPassingPositions(final Position targetPosition) {
             return null;
         }
+
+        @Override
+        public boolean isKing() {
+            return false;
+        }
     }
 
     @Test

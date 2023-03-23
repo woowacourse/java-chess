@@ -29,4 +29,9 @@ public class BlankPiece extends Piece {
     public List<Position> getPassingPositions(final Position targetPosition) {
         throw new IllegalStateException(BLANK_PIECE_EXCEPTION_MESSAGE);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

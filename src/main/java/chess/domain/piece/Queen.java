@@ -32,4 +32,9 @@ public class Queen extends Piece {
         validateDestination(targetPosition);
         return position.findPassingPositions(targetPosition);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -72,4 +72,13 @@ class BishopTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
+
+    @Test
+    void 왕인지_확인한다() {
+        final Piece bishop = new Bishop(F, EIGHT, BLACK);
+
+        final boolean actual = bishop.isKing();
+
+        assertThat(actual).isFalse();
+    }
 }

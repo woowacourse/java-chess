@@ -173,4 +173,13 @@ class PawnTest {
                 Arguments.of(new Pawn(B, FIVE, BLACK))
         );
     }
+
+    @Test
+    void 왕인지_확인한다() {
+        final Piece pawn = new Pawn(A, SIX, BLACK);
+
+        final boolean actual = pawn.isKing();
+
+        assertThat(actual).isFalse();
+    }
 }

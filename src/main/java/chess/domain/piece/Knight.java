@@ -36,4 +36,9 @@ public class Knight extends Piece {
         validateDestination(targetPosition);
         return PASSING_POSITIONS_WITH_LEAPING;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
