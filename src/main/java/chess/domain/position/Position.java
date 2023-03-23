@@ -56,10 +56,17 @@ public final class Position {
         return getGcdGap(fileGap, fileGap % rankGap);
     }
 
-    public boolean isDiagonalPosition(Position target) {
+    public boolean isUpsideDiagonalPosition(Position target) {
         int fileGap = target.file - this.file;
         int rankGap = target.rank - this.rank;
-        return Math.abs(fileGap * rankGap) == 1;
+        return Math.abs(fileGap) == 1 && rankGap == 1;
+    }
+
+    public boolean isDownSideDiagonalPosition(Position target) {
+        int fileGap = target.file - this.file;
+        int rankGap = target.rank - this.rank;
+        return Math.abs(fileGap) == 1 && rankGap == -1;
+
     }
 
     @Override
