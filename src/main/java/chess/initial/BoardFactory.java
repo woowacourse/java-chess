@@ -3,6 +3,7 @@ package chess.initial;
 import static chess.domain.color.Color.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.piece.Bishop;
@@ -64,21 +65,22 @@ public final class BoardFactory {
 		}
 	}
 
-	private static void fillEmpty(final Map<Position, Piece> board) {
-		for (final Rank rank : Rank.values()) {
+	private static void addEmpty(final Map<Position, Piece> board) {
+		for (Rank rank : Rank.getRanks()) {
 			findEmpty(board, rank);
 		}
 	}
 
 	private static void findEmpty(final Map<Position, Piece> board, final Rank rank) {
-		for (final File file : File.values()) {
-			fill(board, rank, file);
+		for (File file : File.getFiles()) {
+			addWhenNone(board, rank, file);
 		}
 	}
 
-	private static void fill(final Map<Position, Piece> board, final Rank rank, final File file) {
-		if (board.get(Position.of(file, rank)) == null) {
-			board.put(Position.of(file, rank), new Empty(NONE));
+	private static void addWhenNone(final Map<Position, Piece> board, final Rank rank, final File file) {
+		final Position position = Position.of(file, rank);
+		if (!board.containsKey(position)) {
+			board.put(position, new Empty(NONE, position));
 		}
 	}
 }
