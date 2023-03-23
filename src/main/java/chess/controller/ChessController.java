@@ -24,10 +24,19 @@ public class ChessController {
     private void play(final ChessGame chessGame, Consumer<Status> consumer) {
         Status gameStatus = new Start(chessGame);
         while (gameStatus.isRun()) {
+            gameStatus = getStatus(gameStatus);
+            consumer.accept(gameStatus);
+        }
+    }
+
+    private Status getStatus(Status gameStatus) {
+        try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
-            gameStatus = gameStatus.checkCommand(command);
-            consumer.accept(gameStatus);
+            return gameStatus.checkCommand(command);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.print(e.getMessage());
+            return getStatus(gameStatus);
         }
     }
 }
