@@ -19,7 +19,7 @@ class PieceTest {
     @DisplayName("두 개의 체스말이 동일한 진영에 속하는지 판단한다.")
     void compareCamp() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, TeamColor.WHITE);
+        final Piece piece = new WhitePawn(PieceType.PAWN);
         final Piece other = new Queen(PieceType.QUEEN, TeamColor.WHITE);
         final Piece otherCamp = new King(PieceType.KING, TeamColor.BLACK);
 
@@ -35,21 +35,10 @@ class PieceTest {
     @DisplayName("체스말이 폰이면 true를 반환한다.")
     void isPawn() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, TeamColor.WHITE);
+        final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when, then
         assertThat(piece.isPawn())
-                .isTrue();
-    }
-
-    @Test
-    @DisplayName("체스말이 나이트면 true를 반환한다.")
-    void isKnight() {
-        // given
-        final Piece piece = new Knight(PieceType.KNIGHT, TeamColor.WHITE);
-
-        // when, then
-        assertThat(piece.isKnight())
                 .isTrue();
     }
 
@@ -60,7 +49,7 @@ class PieceTest {
         final Piece piece = new Knight(PieceType.KNIGHT, TeamColor.WHITE);
 
         // when, then
-        assertThat(piece.isSameCamp(campType))
+        assertThat(piece.isSameTeam(campType))
                 .isSameAs(expected);
     }
 
@@ -70,11 +59,8 @@ class PieceTest {
         // given
         final Piece piece = new Queen(PieceType.QUEEN, TeamColor.WHITE);
 
-        // when
-        piece.canMove(source, target);
-
-        // then
-        assertThat(piece.canMove(source, target))
+        // when, then
+        assertThat(piece.canMove(source, target, null))
                 .isTrue();
     }
 

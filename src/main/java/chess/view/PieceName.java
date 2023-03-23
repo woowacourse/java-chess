@@ -30,7 +30,7 @@ public enum PieceName {
     }
 
     public static Character findMessage(final Piece piece) {
-        if (piece.isSameCamp(TeamColor.BLACK)) {
+        if (piece.isSameTeam(TeamColor.BLACK)) {
             return CACHE.get(piece.getPieceType());
         }
         return Character.toLowerCase(CACHE.get(piece.getPieceType()));

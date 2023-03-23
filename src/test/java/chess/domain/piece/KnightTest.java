@@ -17,7 +17,7 @@ class KnightTest {
 
         // when
         boolean actual = piece.canMove(new Position(5, 5),
-                new Position(targetRank, targetFile));
+                new Position(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
@@ -32,7 +32,7 @@ class KnightTest {
 
         // when
         boolean actual = piece.canMove(new Position(5, 5),
-                new Position(targetRank, targetFile));
+                new Position(targetRank, targetFile), null);
 
         // then
         assertThat(actual)

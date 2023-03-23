@@ -2,11 +2,11 @@ package chess.domain.board;
 
 import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
 import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,15 +56,13 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("없는 위치를 받으면, 예외가 발생한다.")
+    @DisplayName("없는 위치를 받으면, null을 반환한다.")
     void checkPieceFail() {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
 
         // when, then
-        assertThatThrownBy(() -> chessBoard.getPiece(new Position(5, 5)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("체스말이 존재하는 위치를 입력해 주세요.");
+        assertThat(chessBoard.getPiece(new Position(5, 5))).isEqualTo(null);
     }
 
     @Test
@@ -88,7 +86,7 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position putPosition = new Position(2, 0);
-        final Piece piece = new Pawn(PieceType.PAWN, TeamColor.WHITE);
+        final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when
         chessBoard.putPiece(putPosition, piece);
@@ -104,14 +102,13 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position source = new Position(0, 3);
-        final Piece piece = chessBoard.getPiece(source);
         final Position target = new Position(rank, file);
 
         final Position obstacle = new Position(1, 4);
         chessBoard.removePiece(obstacle);
 
         // when
-        boolean actual = chessBoard.isPossibleRoute(source, target, piece);
+        boolean actual = chessBoard.isPossibleRoute(source, target, TeamColor.WHITE);
 
         // then
         assertThat(actual)

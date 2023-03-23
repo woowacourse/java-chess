@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.camp.TeamColor;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -23,10 +24,7 @@ public final class ChessBoard {
     }
 
     public Piece getPiece(final Position source) {
-        if (contains(source)) {
-            return board.get(source);
-        }
-        throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
+        return board.get(source);
     }
 
     public void removePiece(final Position position) {
@@ -37,7 +35,7 @@ public final class ChessBoard {
         board.put(position, piece);
     }
 
-    public boolean isPossibleRoute(final Position source, final Position target, final Piece piece) {
+    public boolean isPossibleRoute(final Position source, final Position target, final TeamColor teamColor) {
         final Position unitPosition = source.computeUnitPosition(target);
         Position currentPosition = Position.copy(source);
 
@@ -46,7 +44,7 @@ public final class ChessBoard {
         }
 
         final Piece targetPiece = board.get(target);
-        return targetPiece == null || !targetPiece.compareCamp(piece);
+        return targetPiece == null || !targetPiece.isSameTeam(teamColor);
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {

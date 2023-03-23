@@ -2,33 +2,18 @@ package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
-import chess.domain.position.PossibleDestinations;
 
-import java.util.List;
+import java.util.Objects;
 
-public class Pawn extends Piece {
-    private static final int PAWN_MAX_MOVE_COUNT = 1;
+public abstract class Pawn extends Piece {
+    protected static final int PAWN_MAX_MOVE_COUNT = 1;
+    protected static final int PAWN_FIRST_MAX_MOVE_COUNT = 2;
 
-    public Pawn(final PieceType pieceType, final TeamColor teamColor) {
+    Pawn(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
     }
 
-    /**
-     * 폰은 출발 위치의 행보다 도착 위치의 행이 더 크면 UP 방향, 아니면 DOWN 방향으로 이동한다.
-     *
-     * @param source 출발 위치
-     * @param target 도착 위치
-     * @return 이동 가능 여부
-     */
-    @Override
-    public boolean canMove(final Position source, final Position target) {
-        if (source.getRank() < target.getRank()) {
-            final PossibleDestinations allPositions =
-                    PossibleDestinations.of(source, List.of(Direction.UP), PAWN_MAX_MOVE_COUNT);
-            return allPositions.contains(target);
-        }
-        final PossibleDestinations allPositions =
-                PossibleDestinations.of(source, List.of(Direction.DOWN), PAWN_MAX_MOVE_COUNT);
-        return allPositions.contains(target);
+    public boolean canAttack(Position source, Position target, Piece piece) {
+        return target.isDiagonalPosition(source) && !Objects.isNull(piece) && !piece.isSameTeam(teamColor);
     }
 }

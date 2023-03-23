@@ -12,7 +12,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position source, final Position target) {
+    public boolean canMove(final Position source, final Position target, final Piece targetPiece) {
         final PossibleDestinations allPositions =
                 PossibleDestinations.of(source, Direction.getAllDirections(), KING_MAX_MOVE_COUNT);
         return allPositions.contains(target);

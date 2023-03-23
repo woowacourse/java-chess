@@ -1,38 +1,67 @@
 package chess.domain.piece;
 
-import chess.domain.camp.TeamColor;
 import chess.domain.position.Position;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
 
-    @ParameterizedTest(name = "폰이 시작 위치에서 타겟 위치로 이동 가능하면 true를 반환한다")
-    @CsvSource(value = {"2:1:WHITE", "0:1:BLACK"}, delimiter = ':')
-    void canMove(final int targetRank, final int targetFile, final TeamColor campType) {
+    @DisplayName("Black 폰이 시작 위치에서 타겟 위치로 이동 가능하면 true를 반환한다")
+    @Test
+    void canMoveBlack() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, campType);
+        final Piece piece = new BlackPawn(PieceType.PAWN);
 
         // when
         boolean actual = piece.canMove(new Position(1, 1),
-                new Position(targetRank, targetFile));
+                new Position(0, 1), null);
 
         // then
         assertThat(actual)
                 .isTrue();
     }
 
-    @ParameterizedTest(name = "폰이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
-    @CsvSource(value = {"2:2", "0:8", "-8:0", "8:0", "0:-8", "1:2", "1:0"}, delimiter = ':')
-    void canMoveFail(final int targetRank, final int targetFile) {
+    @DisplayName("White 폰이 시작 위치에서 타겟 위치로 이동 가능하면 true를 반환한다")
+    @Test
+    void canMoveWhite() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, TeamColor.WHITE);
+        final Piece piece = new WhitePawn(PieceType.PAWN);
 
         // when
         boolean actual = piece.canMove(new Position(1, 1),
-                new Position(targetRank, targetFile));
+                new Position(2, 1), null);
+
+        // then
+        assertThat(actual)
+                .isTrue();
+    }
+
+    @DisplayName("Black 폰이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
+    @Test
+    void canMoveFailBlack() {
+        // given
+        final Piece piece = new BlackPawn(PieceType.PAWN);
+
+        // when
+        boolean actual = piece.canMove(new Position(1, 1),
+                new Position(2, 1), null);
+
+        // then
+        assertThat(actual)
+                .isFalse();
+    }
+
+    @DisplayName("White 폰이 시작 위치에서 타겟 위치로 이동 불가능하면 false를 반환한다")
+    @Test
+    void canMoveFailWhite() {
+        // given
+        final Piece piece = new WhitePawn(PieceType.PAWN);
+
+        // when
+        boolean actual = piece.canMove(new Position(1, 1),
+                new Position(0, 1), null);
 
         // then
         assertThat(actual)

@@ -36,11 +36,11 @@ public final class ChessBoardFactory {
 
     private void createWhiteArea(final Map<Position, Piece> board) {
         createPieces(board, 0, TeamColor.WHITE);
-        createPawnPieces(board, 1, TeamColor.WHITE);
+        createWhitePawnPieces(board);
     }
 
     private void createBlackArea(final Map<Position, Piece> board) {
-        createPawnPieces(board, 6, TeamColor.BLACK);
+        createBlackPawnPieces(board);
         createPieces(board, 7, TeamColor.BLACK);
     }
 
@@ -55,9 +55,16 @@ public final class ChessBoardFactory {
         board.put(new Position(rank, 7), new Rook(ROOK, teamColor));
     }
 
-    private void createPawnPieces(final Map<Position, Piece> board, final int rank, final TeamColor teamColor) {
+    private void createWhitePawnPieces(final Map<Position, Piece> board) {
         for (int file = 0; file < 8; file++) {
-            board.put(new Position(rank, file), new Pawn(PAWN, teamColor));
+            board.put(new Position(1, file), new WhitePawn(PAWN));
+        }
+
+    }
+
+    private void createBlackPawnPieces(final Map<Position, Piece> board) {
+        for (int file = 0; file < 8; file++) {
+            board.put(new Position(6, file), new BlackPawn(PAWN));
         }
     }
 }

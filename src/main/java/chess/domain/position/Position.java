@@ -47,6 +47,12 @@ public final class Position {
         return computeGcd(bigPosition, smallPosition % bigPosition);
     }
 
+    public boolean isDiagonalPosition(Position target) {
+        int fileGap = target.file - this.file;
+        int rankGap = target.rank - this.rank;
+        return Math.abs(fileGap * rankGap) == 1;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

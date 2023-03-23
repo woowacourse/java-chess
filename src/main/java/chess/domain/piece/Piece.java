@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
 import chess.domain.camp.TeamColor;
+import chess.domain.position.Position;
 
 import java.util.Objects;
 
 public abstract class Piece implements Movable {
+    final TeamColor teamColor;
     private final PieceType pieceType;
-    private final TeamColor teamColor;
 
     public Piece(final PieceType pieceType, final TeamColor teamColor) {
         this.pieceType = pieceType;
@@ -21,12 +22,12 @@ public abstract class Piece implements Movable {
         return pieceType == PieceType.PAWN;
     }
 
-    public boolean isKnight() {
-        return pieceType == PieceType.KNIGHT;
+    public boolean isSameTeam(final TeamColor diffType) {
+        return teamColor == diffType;
     }
 
-    public boolean isSameCamp(final TeamColor diffType) {
-        return teamColor == diffType;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     @Override
@@ -48,9 +49,5 @@ public abstract class Piece implements Movable {
                 "pieceType=" + pieceType +
                 ", teamColor=" + teamColor +
                 '}';
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
     }
 }

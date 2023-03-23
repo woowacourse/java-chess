@@ -17,7 +17,7 @@ class QueenTest {
 
         // when
         boolean actual = piece.canMove(new Position(0, 0),
-                new Position(targetRank, targetFile));
+                new Position(targetRank, targetFile), null);
 
         // then
         assertThat(actual)
@@ -32,7 +32,7 @@ class QueenTest {
 
         // when
         boolean actual = piece.canMove(new Position(0, 0),
-                new Position(targetRank, targetFile));
+                new Position(targetRank, targetFile), null);
 
         // then
         assertThat(actual)

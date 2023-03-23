@@ -9,7 +9,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position source, final Position target) {
+    public boolean canMove(final Position source, final Position target, final Piece targetPiece) {
         final int rankGap = target.getRank() - source.getRank();
         final int fileGap = target.getFile() - source.getFile();
         return Math.abs(rankGap * fileGap) == 2;
