@@ -2,6 +2,7 @@ package domain.piece.nonsliding;
 
 import domain.piece.Direction;
 import domain.piece.Directions;
+import domain.piece.PieceType;
 import domain.piece.TeamColor;
 
 public class Knight extends NonSlidingPiece {
@@ -15,5 +16,10 @@ public class Knight extends NonSlidingPiece {
     @Override
     protected void validateDirection(Direction direction) {
         DIRECTIONS.validateContains(direction);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
     }
 }

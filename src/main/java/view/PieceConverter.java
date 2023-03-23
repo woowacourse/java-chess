@@ -1,23 +1,17 @@
 package view;
 
-import domain.piece.sliding.Bishop;
-import domain.piece.Blank;
-import domain.piece.nonsliding.King;
-import domain.piece.nonsliding.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.sliding.Queen;
-import domain.piece.sliding.Rook;
+import domain.piece.PieceType;
 import java.util.Map;
 
 public class PieceConverter {
 
-    private final static Map<Class, String> converter = Map.of(
-        Bishop.class, "b", King.class, "k", Knight.class, "n",
-        Pawn.class, "p", Queen.class, "q", Rook.class, "r", Blank.class, ".");
+    private final static Map<PieceType, String> converter = Map.of(
+        PieceType.BISHOP, "b", PieceType.KING, "k", PieceType.KNIGHT, "n",
+        PieceType.PAWN, "p", PieceType.QUEEN, "q", PieceType.ROOK, "r", PieceType.BLANK, ".");
 
     public static String of(Piece piece) {
-        String result = converter.get(piece.getClass());
+        String result = converter.get(piece.getPieceType());
         if (piece.isNotBlank() && piece.isBlack()) {
             return result.toUpperCase();
         }

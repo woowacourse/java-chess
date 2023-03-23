@@ -1,6 +1,7 @@
 package domain;
 
 import domain.piece.Piece;
+import domain.piece.PieceType;
 import domain.piece.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -18,11 +19,21 @@ class RuleTest {
             public List<Square> findRoutes(Square src, Square dest) {
                 return null;
             }
+
+            @Override
+            public PieceType getPieceType() {
+                return null;
+            }
         };
 
         Piece black = new Piece(TeamColor.BLACK) {
             @Override
             public List<Square> findRoutes(Square src, Square dest) {
+                return null;
+            }
+
+            @Override
+            public PieceType getPieceType() {
                 return null;
             }
         };

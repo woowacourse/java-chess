@@ -16,11 +16,6 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isNotBlank() {
-        return false;
-    }
-
-    @Override
     public List<Square> findRoutes(Square src, Square dest) {
         throw new IllegalStateException("기물이 존재하지 않습니다.");
     }
@@ -43,5 +38,10 @@ public class Blank extends Piece {
     @Override
     public boolean isPawn() {
         throw new IllegalStateException("기물이 존재하지 않습니다.");
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.BLANK;
     }
 }

@@ -17,6 +17,8 @@ public abstract class Piece {
 
     public abstract List<Square> findRoutes(Square src, Square dest);
 
+    public abstract PieceType getPieceType();
+
     public boolean isDifferentTeam(Piece piece) {
         return teamColor.isDifferent(piece.teamColor);
     }
@@ -26,10 +28,10 @@ public abstract class Piece {
     }
 
     public boolean isNotBlank() {
-        return true;
+        return getPieceType().isNotBlank();
     }
 
     public boolean isPawn() {
-        return false;
+        return getPieceType().isPawn();
     }
 }
