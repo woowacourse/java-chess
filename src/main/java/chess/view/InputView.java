@@ -1,5 +1,7 @@
 package chess.view;
 
+import static chess.view.Command.MOVE;
+
 import chess.dto.CommandRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,9 @@ public class InputView {
 
     private static void validateMoveCommandRequest(final String[] request) {
         if (request.length != MOVE_COMMAND_LENGTH) {
+            throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
+        }
+        if (!request[COMMAND_INDEX].equalsIgnoreCase(MOVE.getAnswer())) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
     }
