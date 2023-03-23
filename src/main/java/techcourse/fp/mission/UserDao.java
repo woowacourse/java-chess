@@ -40,7 +40,7 @@ public final class UserDao {
     public void insert(User user) {
         String sql = "INSERT INTO user (user_id, name) VALUES(?, ?)";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)){
+             final var preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, user.userId());
             preparedStatement.setString(2, user.name());
@@ -73,7 +73,7 @@ public final class UserDao {
     public void update(User user) {
         String sql = "UPDATE user SET name = ?  WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)){
+             final var preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, "changedName");
             preparedStatement.setString(2, user.userId());
@@ -87,7 +87,7 @@ public final class UserDao {
     public void delete(User user) {
         String sql = "DELETE FROM user WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)){
+             final var preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, user.userId());
             preparedStatement.executeUpdate();

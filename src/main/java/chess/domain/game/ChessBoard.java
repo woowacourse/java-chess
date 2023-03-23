@@ -1,11 +1,11 @@
 package chess.domain.game;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.direction.Direction;
 
 import java.util.HashMap;
 import java.util.Map;

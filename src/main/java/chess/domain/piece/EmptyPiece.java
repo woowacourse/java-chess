@@ -10,7 +10,7 @@ public final class EmptyPiece extends Piece {
     private static final String name = ".";
 
     public EmptyPiece() {
-        super(name, Color.NONE,EMPTY_SCORE.getScore());
+        super(name, Color.NONE, EMPTY_SCORE.getScore());
     }
 
     @Override

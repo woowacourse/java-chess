@@ -62,15 +62,15 @@ public enum Direction {
                 || isEqualTo(direction, BOTTOM_RIGHT);
     }
 
+    private static boolean isEqualTo(Direction o1, Direction o2) {
+        return (o1.x == o2.x) && (o1.y == o2.y);
+    }
+
     public int getX() {
         return x;
     }
 
     public int getY() {
         return y;
-    }
-
-    private static boolean isEqualTo(Direction o1, Direction o2) {
-        return (o1.x == o2.x) && (o1.y == o2.y);
     }
 }
