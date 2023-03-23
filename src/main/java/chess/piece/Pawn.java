@@ -5,8 +5,6 @@ import chess.piece.coordinate.Coordinate;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private static final int WHITE_PAWN_START_ROW = 7;
-    private static final int BLACK_PAWN_START_ROW = 2;
     
     public Pawn(Team team, Coordinate coordinate) {
         super(team, coordinate);
@@ -46,7 +44,7 @@ public class Pawn extends Piece {
     
     private boolean isWhitePawnImmovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {
         if (isWhitePawnMoveForwardTwoSpace(subtractedRow, subtractedColumn)){
-            return isPawnImmovableForwardTwoSpace(targetPiece, WHITE_PAWN_START_ROW);
+            return isPawnImmovableForwardTwoSpace(targetPiece);
         }
         if (isWhitePawnMoveDiagonalOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableDiagonalOneSpace(targetPiece, Team.BLACK);
@@ -69,8 +67,8 @@ public class Pawn extends Piece {
         return subtractedRow == 1 && subtractedColumn == 0;
     }
     
-    private boolean isPawnImmovableForwardTwoSpace(Piece targetPiece, int startRow) {
-        return !coordinate().isPawnStartRow(startRow) || !targetPiece.isSameTeam(Team.EMPTY);
+    private boolean isPawnImmovableForwardTwoSpace(Piece targetPiece) {
+        return !coordinate().isPawnStartRow() || !targetPiece.isSameTeam(Team.EMPTY);
     }
     
     private boolean isPawnImmovableDiagonalOneSpace(Piece targetPiece, Team team) {
@@ -83,7 +81,7 @@ public class Pawn extends Piece {
     
     private boolean isBlackPawnMovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {
         if (isBlackPawnMoveForwardTwoSpace(subtractedRow, subtractedColumn)) {
-            return isPawnImmovableForwardTwoSpace(targetPiece, BLACK_PAWN_START_ROW);
+            return isPawnImmovableForwardTwoSpace(targetPiece);
         }
         if (isBlackPawnMoveDiagonalOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableDiagonalOneSpace(targetPiece, Team.WHITE);
