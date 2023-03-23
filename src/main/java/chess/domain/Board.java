@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -56,14 +55,17 @@ public class Board {
         }
     }
 
-    public Piece getValidSourcePiece(final Position source, final Color color) {
+    public void validateSourcePiece(final Position source, final Color color) {
         if (isEmpty(source)) {
             throw new IllegalArgumentException("피스가 존재하지 않습니다.");
         }
         if (!isSameColor(source, color)) {
             throw new IllegalArgumentException("상대편 피스입니다.");
         }
-        return board.get(source);
+    }
+
+    public Piece getPieceAtPosition(final Position position) {
+        return board.get(position);
     }
 
     public void checkBetweenRoute(final Position source, final Position destination) {

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -62,7 +61,8 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e1");
             Color white = Color.WHITE;
-            Piece piece = board.getValidSourcePiece(source, white);
+            board.validateSourcePiece(source, white);
+            Piece piece = board.getPieceAtPosition(source);
             assertThat(piece.getType()).isEqualTo(PieceType.KING);
             assertThat(piece.isSameColor(white)).isTrue();
         }
@@ -74,7 +74,7 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e4");
             Color white = Color.WHITE;
-            assertThatThrownBy(() -> board.getValidSourcePiece(source, white)).isInstanceOf(
+            assertThatThrownBy(() -> board.validateSourcePiece(source, white)).isInstanceOf(
                     IllegalArgumentException.class);
         }
 
@@ -85,7 +85,7 @@ class BoardTest {
             board.initialize();
             Position source = Position.from("e1");
             Color black = Color.BLACK;
-            assertThatThrownBy(() -> board.getValidSourcePiece(source, black)).isInstanceOf(
+            assertThatThrownBy(() -> board.validateSourcePiece(source, black)).isInstanceOf(
                     IllegalArgumentException.class);
         }
     }
