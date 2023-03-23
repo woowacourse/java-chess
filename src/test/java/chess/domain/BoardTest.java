@@ -161,4 +161,32 @@ class BoardTest {
                     .hasMessage("목적지에 같은 색깔의 피스가 있습니다.");
         }
     }
+
+    @Nested
+    @DisplayName("진영의 점수를 계산한다")
+    class CalculatePoint {
+        @Test
+        @DisplayName("Black 진영의 점수를 계산한다")
+        void checkWhiteTeamPoint() {
+            Board board = Board.create();
+            board.initialize();
+            board.replace(Position.from("a2"), Position.from("a8"));
+            board.replace(Position.from("a8"), Position.from("b8"));
+            board.replace(Position.from("b8"), Position.from("c8"));
+            board.replace(Position.from("c8"), Position.from("g8"));
+
+            /*
+            ...QKBpR
+            PPPPPPPP
+            ........
+            ........
+            ........
+            ........
+            .ppppppp
+            rnbqkbnr
+             */
+            double point = board.calculatePoint(Color.BLACK);
+            assertThat(point).isEqualTo(25L);
+        }
+    }
 }

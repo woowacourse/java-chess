@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -126,5 +127,18 @@ public class Board {
             result.add(board.get(position));
         }
         return result;
+    }
+
+    public double calculatePoint(Color color) {
+        List<Piece> colorPieces = getColorPieces(color);
+        return colorPieces.stream()
+                .mapToDouble(piece -> piece.getType().getPoint())
+                .sum();
+    }
+
+    private List<Piece> getColorPieces(Color color) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .collect(Collectors.toList());
     }
 }
