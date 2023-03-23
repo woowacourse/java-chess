@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import static chess.view.ErrorMessage.NO_RANK_ERROR_GUIDE_MESSAGE;
 
 public enum Rank {
+
     EIGHT(8, "8"),
     SEVEN(7, "7"),
     SIX(6, "6"),

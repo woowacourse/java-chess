@@ -4,7 +4,6 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ScoreCalculator {
@@ -13,13 +12,13 @@ public class ScoreCalculator {
     private int whiteScore = 0;
 
 
-    public void calculateScores(Map<Position, Piece> chessBoard){
+    public void calculateScores(Map<Position, Piece> chessBoard) {
         for (Piece piece : chessBoard.values()) {
-            if(piece.getColor() == Color.BLACK){
+            if (piece.getColor() == Color.BLACK) {
                 blackScore += piece.getScore();
             }
 
-            if(piece.getColor() == Color.WHITE){
+            if (piece.getColor() == Color.WHITE) {
                 whiteScore += piece.getScore();
             }
         }

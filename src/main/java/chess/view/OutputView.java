@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.Position;
-import chess.domain.game.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.score.ScoreCalculator;
 import chess.dto.BoardDto;
@@ -38,14 +37,14 @@ public class OutputView {
         System.out.println(exception.getMessage());
     }
 
-    public static void printScores(Map<Position, Piece> chessBoard){
+    public static void printScores(Map<Position, Piece> chessBoard) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
         scoreCalculator.calculateScores(chessBoard);
-        System.out.println("black의 점수: "+ scoreCalculator.getBlackScore());
-        System.out.println("white의 점수: "+ scoreCalculator.getWhiteScore());
+        System.out.println("black의 점수: " + scoreCalculator.getBlackScore());
+        System.out.println("white의 점수: " + scoreCalculator.getWhiteScore());
     }
 
-    public static void printCheckmateGuideMessage(){
+    public static void printCheckmateGuideMessage() {
         System.out.println(CHECKMATE_GUIDE_MESSAGE);
     }
 }

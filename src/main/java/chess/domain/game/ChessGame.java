@@ -17,7 +17,7 @@ public class ChessGame {
     }
 
     public void move(Position start, Position end) {
-        if(chessBoard.getChessBoard().get(start) instanceof EmptyPiece){
+        if (chessBoard.getChessBoard().get(start) instanceof EmptyPiece) {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());
         }
         chessBoard.move(start, end);

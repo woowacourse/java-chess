@@ -2,7 +2,6 @@ package techcourse.fp.mission;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 public class Calculator {
 
@@ -17,7 +16,7 @@ public class Calculator {
     }
 
     public static int sumAllOverThree(List<Integer> numbers) {
-        Predicate<Integer> sumCondition = (number) -> number >3;
+        Predicate<Integer> sumCondition = (number) -> number > 3;
         return initSetting(numbers, sumCondition);
     }
 

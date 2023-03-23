@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.direction.Direction;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.direction.Direction;
 
 public abstract class Piece {
 
