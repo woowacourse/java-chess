@@ -12,9 +12,7 @@ import static chess.view.OutputView.printGameStart;
 import chess.domain.position.Position;
 import chess.domain.board.Board;
 import chess.domain.board.BoardMaker;
-import chess.domain.math.PositionConverter;
 import chess.view.Command;
-import chess.view.InputView;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -65,8 +63,8 @@ public final class MainController {
     }
 
     private void movePiece(final Board board, final List<String> inputs) {
-        Position currentPosition = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
-        Position targetPosition = PositionConverter.toPosition(inputs.get(TARGET_POSITION_INDEX));
+        Position currentPosition = Position.toPosition(inputs.get(CURRENT_POSITION_INDEX));
+        Position targetPosition = Position.toPosition(inputs.get(TARGET_POSITION_INDEX));
 
         board.movePiece(currentPosition, targetPosition);
     }
