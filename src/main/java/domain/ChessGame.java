@@ -9,7 +9,7 @@ import java.util.Map;
 
 public final class ChessGame {
     private final Board board;
-    private final Team thisTurn;
+    private Team thisTurn;
 
     private ChessGame(final Board board, final Team thisTurn) {
         this.board = board;
@@ -25,6 +25,7 @@ public final class ChessGame {
     }
 
     public void movePiece(final Position source, final Position destination) {
-        board.move(source, destination);
+        board.move(source, destination, thisTurn);
+        thisTurn = thisTurn.otherTeam();
     }
 }

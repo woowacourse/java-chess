@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.Collections;
@@ -21,8 +22,9 @@ public final class Board {
         return new Board(board);
     }
 
-    public void move(Position source, Position destination) {
+    public void move(Position source, Position destination, Team thisTurn) {
         Piece piece = getPiece(source);
+        validateTeam(piece, thisTurn);
         validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {
@@ -49,6 +51,14 @@ public final class Board {
         if (teamOnDestination(destination, piece)) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
+    }
+
+    private void validateTeam(final Piece piece, final Team team) {
+        if (team.equals(piece.getTeam())) {
+            return;
+        }
+
+        throw new IllegalArgumentException("이번 순서가 아닙니다.");
     }
 
     private boolean pieceInRoute(final Position source, final Position destination) {

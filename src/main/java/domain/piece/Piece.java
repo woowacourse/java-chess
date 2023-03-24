@@ -24,6 +24,10 @@ public abstract class Piece {
         return !isBlack();
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     public String getName() {
         return name;
     }

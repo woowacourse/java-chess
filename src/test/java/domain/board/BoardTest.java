@@ -12,6 +12,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import gameinitializer.InitialChessAlignment;
@@ -54,7 +55,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D3"));
+        board.move(Positions.from("D4"), Positions.from("D3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -71,7 +72,7 @@ class BoardTest {
                 Positions.from("E5"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("E5"));
+        board.move(Positions.from("D4"), Positions.from("E5"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -88,7 +89,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A3")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A3"), Team.BLACK));
     }
 
     @DisplayName("퀸은 움직일 수 있다.")
@@ -99,7 +100,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -116,7 +117,7 @@ class BoardTest {
                 Positions.from("H8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -133,7 +134,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E2"), Team.BLACK));
     }
 
     @DisplayName("퀸은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -148,7 +149,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("나이트는 움직일 수 있다.")
@@ -159,7 +160,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("F3"));
+        board.move(Positions.from("D4"), Positions.from("F3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -176,7 +177,7 @@ class BoardTest {
                 Positions.from("B3"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("B3"));
+        board.move(Positions.from("D4"), Positions.from("B3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -195,7 +196,7 @@ class BoardTest {
                 Positions.from("E3"), another2)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("F3"));
+        board.move(Positions.from("D4"), Positions.from("F3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -212,7 +213,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D2"), Team.BLACK));
     }
 
     @DisplayName("폰은 처음에 두 칸 움직일 수 있다.")
@@ -223,7 +224,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("D5"));
+        board.move(Positions.from("D7"), Positions.from("D5"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -238,7 +239,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("D6"));
+        board.move(Positions.from("D7"), Positions.from("D6"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -255,7 +256,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A2"), Team.BLACK));
     }
 
     @DisplayName("폰은 앞에 적이 있으면 앞으로 갈 수 없다.")
@@ -270,7 +271,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D3")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D3"), Team.BLACK));
     }
 
     @DisplayName("폰은 앞에 적이 있으면 처음에 앞으로 두 칸 갈 수 없다.")
@@ -285,7 +286,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("D5")));
+        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("D5"), Team.BLACK));
     }
 
     @DisplayName("폰은 대각선에 적이 없으면 대각선으로 전진할 수 없다.")
@@ -298,7 +299,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("E8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("E8"), Team.BLACK));
     }
 
     @DisplayName("폰은 대각선에 적이 있으면 대각선으로 적을 먹을 수 있다.")
@@ -311,7 +312,7 @@ class BoardTest {
                 Positions.from("E6"), king)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("E6"));
+        board.move(Positions.from("D7"), Positions.from("E6"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -326,7 +327,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -343,7 +344,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H7")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H7"), Team.BLACK));
     }
 
     @DisplayName("비숍은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -358,7 +359,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("비숍은 적이 있을 때 먹을 수 있다.")
@@ -371,7 +372,7 @@ class BoardTest {
                 Positions.from("H8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -386,7 +387,7 @@ class BoardTest {
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -403,7 +404,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK));
     }
 
     @DisplayName("룩은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -418,7 +419,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("룩은 적이 있을 때 먹을 수 있다.")
@@ -431,7 +432,7 @@ class BoardTest {
                 Positions.from("D8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -450,7 +451,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E5")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E5"), Team.BLACK));
     }
 
     @DisplayName("존재하지 않는 장소에 말을 두려는 경우 예외가 발생한다.")
@@ -475,6 +476,6 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("Z4")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("Z4"), Team.BLACK));
     }
 }
