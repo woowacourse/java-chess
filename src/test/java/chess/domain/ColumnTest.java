@@ -1,10 +1,15 @@
 package chess.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ColumnTest {
 
     @Test
@@ -16,11 +21,11 @@ class ColumnTest {
         List<Column> actual = Column.getOrderedColumns();
 
         //then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
-    void findColumnByValue() {
+    void findColumnByValue_메서드_테스트() {
         //given
         Column expected = Column.G;
 
@@ -28,11 +33,11 @@ class ColumnTest {
         Column actualByValue = Column.findColumnByValue("g");
 
         //then
-        Assertions.assertEquals(expected, actualByValue);
+        assertEquals(expected, actualByValue);
     }
 
     @Test
-    void findColumnByIndex() {
+    void findColumnByIndex_메서드_테스트() {
         //given
         Column expected = Column.G;
 
@@ -40,6 +45,6 @@ class ColumnTest {
         Column actualByIndex = Column.findColumnByIndex(7);
 
         //then
-        Assertions.assertEquals(expected, actualByIndex);
+        assertEquals(expected, actualByIndex);
     }
 }

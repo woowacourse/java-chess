@@ -2,11 +2,14 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PawnTest {
 
     @Test

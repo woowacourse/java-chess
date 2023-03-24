@@ -1,14 +1,17 @@
 package chess.domain;
 
 import chess.direction.Direction;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PositionTest {
 
     @Test
-    void findGapOfRank() {
+    void findGapOfRank_메서드_테스트() {
         //given
         Position start = new Position("a", "3");
         Position destination = new Position("b", "5");
@@ -21,7 +24,7 @@ class PositionTest {
     }
 
     @Test
-    void findGapOfColum() {
+    void findGapOfColum_메서드_테스트() {
         //given
         Position start = new Position("a", "3");
         Position destination = new Position("b", "5");
@@ -34,7 +37,7 @@ class PositionTest {
     }
 
     @Test
-    void moveDirection() {
+    void moveDirection_메서드_테스트() {
         //given
         Position start = new Position("a", "3");
         Direction direction = Direction.BOTTOM;
