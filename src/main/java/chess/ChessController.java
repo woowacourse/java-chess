@@ -76,6 +76,9 @@ public class ChessController {
     }
 
     public void endPhase() {
-        OutputView.printScore(chessGame.takeScore(Side.WHITE), chessGame.takeScore(Side.BLACK));
+        double whiteScore = chessGame.takeScore(Side.WHITE);
+        double blackScore = chessGame.takeScore(Side.BLACK);
+        OutputView.printScore(whiteScore, blackScore);
+        OutputView.printWinner(whiteScore, blackScore);
     }
 }

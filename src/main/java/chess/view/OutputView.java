@@ -27,6 +27,14 @@ public class OutputView {
         System.out.println("Black: " + blackScore);
     }
 
+    public static void printWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            System.out.println("White Win!");
+            return;
+        }
+        System.out.println("Black Win!");
+    }
+
     public static void printMessage(String message) {
         System.out.println(message);
     }
