@@ -19,11 +19,7 @@ public class ChessGame {
         return board;
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public void setState(Command command) {
+    public void changeState(Command command) {
         state = state.progress(command,board);
     }
 
