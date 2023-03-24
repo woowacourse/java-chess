@@ -71,6 +71,17 @@ public class ChessBoard {
         board.put(source, Empty.EMPTY_PIECE);
     }
 
+    public boolean canPlayGame(final Camp camp) {
+        return board.keySet().stream()
+                .anyMatch(position -> isAliveKing(position, camp));
+    }
+
+    private boolean isAliveKing(final Position position, final Camp camp) {
+        final Piece piece = board.get(position);
+
+        return piece.isSameTeam(camp) && piece.isKing();
+    }
+
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }

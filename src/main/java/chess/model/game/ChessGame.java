@@ -33,6 +33,10 @@ public class ChessGame {
         }
     }
 
+    public boolean isGameOnGoing() {
+        return chessBoard.canPlayGame(turn.oppositeCamp());
+    }
+
     public ChessBoardResponse getChessBoard() {
         try {
             return new ChessBoardResponse(chessBoard.getBoard());
