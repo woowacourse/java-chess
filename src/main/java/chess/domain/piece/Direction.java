@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public enum Direction {
     TOP(0, 1),
@@ -58,18 +57,12 @@ public enum Direction {
         int absY = Math.abs(distanceOfRanks);
         int bigger = Math.max(absX, absY);
         return Arrays.stream(Direction.values())
-//                .filter(direction -> direction.x * bigger == distanceOfColumns && direction.y * bigger == distanceOfRanks)
-                .filter(direction -> distanceOfColumns == sdf(direction.x, bigger) && distanceOfRanks == sdf(direction.y,bigger))
+                .filter(direction -> direction.x * bigger == distanceOfColumns && direction.y * bigger == distanceOfRanks)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
     }
     public int getX() {
         return x;
-    }
-
-    private static int sdf(int start, int times) {
-        return IntStream.range(0, times)
-                .reduce(start, Integer::sum);
     }
 
     public int getY() {
