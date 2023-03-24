@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.game.File;
+import chess.domain.game.Position;
+import chess.domain.game.Rank;
 
 import java.util.Arrays;
 import java.util.List;

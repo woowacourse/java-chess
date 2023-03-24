@@ -1,6 +1,6 @@
 package chess.domain.movingStrategy;
 
-import chess.domain.Position;
+import chess.domain.game.Position;
 
 public interface MovingStrategy {
 

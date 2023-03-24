@@ -1,7 +1,7 @@
 package chess.domain.movingStrategy;
 
-import chess.domain.File;
-import chess.domain.Position;
+import chess.domain.game.File;
+import chess.domain.game.Position;
 
 public final class MoveRight implements MovingStrategy{
 

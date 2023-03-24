@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -14,9 +14,9 @@ import chess.domain.piece.pawn.InitialWhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class BoardFactory {
+public final class ChessGameFactory {
 
-    private BoardFactory() {
+    ChessGameFactory() {
         throw new AssertionError("생성할 수 없는 클래스입니다.");
     }
 

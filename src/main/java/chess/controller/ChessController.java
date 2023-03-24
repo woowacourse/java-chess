@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.BoardFactory;
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameFactory;
 import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -63,7 +63,7 @@ public final class ChessController {
         if (chessGame != null) {
             throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
         }
-        chessGame = BoardFactory.generate();
+        chessGame = ChessGameFactory.generate();
         outputView.printBoard(BoardDto.create(chessGame.getBoard()));
         return MOVE;
     }

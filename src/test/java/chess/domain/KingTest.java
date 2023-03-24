@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.game.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import org.junit.jupiter.api.DisplayName;

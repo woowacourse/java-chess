@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.game.ChessGameFactory;
+import chess.domain.game.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,7 @@ class ChessGameFactoryTest {
     @Test
     void boardInitTest() {
         // when && then
-        Assertions.assertThat(BoardFactory.generate()).extracting("board")
+        Assertions.assertThat(ChessGameFactory.generate()).extracting("board")
                 .asInstanceOf(map(Position.class, String.class))
                 .size()
                 .isEqualTo(64);

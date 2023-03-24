@@ -1,8 +1,8 @@
 package chess.dto;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.game.File;
+import chess.domain.game.Position;
+import chess.domain.game.Rank;
 import chess.domain.piece.Piece;
 import chess.view.PieceRender;
 
