@@ -120,12 +120,14 @@ public final class ChessGameDao {
         ) {
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
+            if (!resultSet.next()) {
+                return null;
+            }
             String userId = resultSet.getString("user_id");
             String nickname = resultSet.getString("nickname");
             return new User(userId, nickname);
         } catch (SQLException e) {
-            throw new IllegalArgumentException("등록되지 않은 아이디입니다.");
+            return null;
         }
     }
 

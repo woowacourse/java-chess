@@ -121,15 +121,14 @@ public class ChessController {
     private User register() {
         OutputView.printIdInputMessage();
         String id = InputView.readNext();
-        try {
-            chessGameDao.getUserById(id);
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
-        } catch (IllegalArgumentException e) {
+        User user = chessGameDao.getUserById(id);
+        if (user == null) {
             OutputView.printNicknameInputMessage();
             String nickname = InputView.readNext();
             chessGameDao.addUser(new User(id, nickname));
             return chessGameDao.getUserById(id);
         }
+        throw new IllegalArgumentException("사용중인 아이디입니다.");
     }
 
     private Command readLoginCommand() {

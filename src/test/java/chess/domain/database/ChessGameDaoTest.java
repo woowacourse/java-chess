@@ -50,13 +50,6 @@ class ChessGameDaoTest {
     }
 
     @Test
-    void get_user_by_id_fail() {
-        assertThatThrownBy(() -> chessGameDao.getUserById("abc"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("등록되지 않은 아이디입니다.");
-    }
-
-    @Test
     void get_user_by_id_success() {
         Assertions.assertThatCode(() -> chessGameDao.getUserById("odo27"))
                 .doesNotThrowAnyException();
@@ -86,5 +79,20 @@ class ChessGameDaoTest {
         ChessTest.createMockGame(connection, "101", "odo27");
         ChessTest.createMockGame(connection, "102", "odo27");
         assertThat(chessGameDao.getLastGameId("odo27")).isEqualTo("102");
+    }
+
+    @Test
+    void add_user() {
+        User user = new User("abc", "hello");
+        chessGameDao.addUser(user);
+        User abc = chessGameDao.getUserById("abc");
+        assertThat(abc.getId()).isEqualTo("abc");
+        assertThat(abc.getNickname()).isEqualTo("hello");
+    }
+
+    @Test
+    void get_user_by_id() {
+        User user = chessGameDao.getUserById("abc");
+        assertThat(user).isEqualTo(null);
     }
 }
