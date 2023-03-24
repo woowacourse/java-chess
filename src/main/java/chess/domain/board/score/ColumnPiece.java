@@ -13,19 +13,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static chess.domain.board.score.PieceScore.*;
+
 public class ColumnPiece {
 
     private static final Map<Class<? extends Piece>, Score> scoreMap = Map.of(
-            Rook.class, Score.from(5),
-            Bishop.class, Score.from(3),
-            Knight.class, Score.from(2.5),
-            Pawn.class, Score.from(0.5),
-            Queen.class, Score.from(9),
-            King.class, Score.from(0)
+            Rook.class, Score.from(LOOK.value()),
+            Bishop.class, Score.from(BISHOP.value()),
+            Knight.class, Score.from(KNIGHT.value()),
+            Pawn.class, Score.from(PAWN.value()),
+            Queen.class, Score.from(QUEEN.value()),
+            King.class, Score.from(KING.value())
     );
     private static final Class<Pawn> PAWN_CLASS_TYPE = Pawn.class;
     private static final int COUNT_MAP_DEFAULT_VALUE = 0;
     private static final int SINGLE_PAWN_COUNT = 1;
+    private static final int VALUE_PER_ELEMENT = 1;
 
     private final List<Piece> pieces;
 
@@ -52,7 +55,7 @@ public class ColumnPiece {
                      .filter(it -> it.isSameColor(color))
                      .collect(Collectors.groupingBy(
                              Piece::getClass,
-                             Collectors.summingInt(p -> 1)));
+                             Collectors.summingInt(value -> VALUE_PER_ELEMENT)));
     }
 
     private Score calculateScore(final Map<Class<? extends Piece>, Integer> countingPerClassType) {

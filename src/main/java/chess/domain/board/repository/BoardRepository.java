@@ -37,7 +37,7 @@ public class BoardRepository {
         throw new IllegalStateException("DB 저장 오류입니다.");
     }
 
-    private long generateKey(final PreparedStatement preparedStatement) throws SQLException {
+    private Long generateKey(final PreparedStatement preparedStatement) throws SQLException {
         try (final ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
@@ -51,7 +51,7 @@ public class BoardRepository {
         final String query = "SELECT * FROM BOARD WHERE BOARD_ID = ?";
 
         try (final Connection connection = MySqlManager.establishConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setLong(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -89,9 +89,7 @@ public class BoardRepository {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
 
-            List<BoardSearchDao> boardSearchDaos = mappingToBoardDaosFrom(resultSet);
-            if (boardSearchDaos != null) return boardSearchDaos;
-
+            return mappingToBoardDaosFrom(resultSet);
         } catch (SQLException e) {
             System.err.println("DB 조회 오류: " + e.getMessage());
         }
