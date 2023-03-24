@@ -38,22 +38,20 @@ public class King extends Piece {
 
     }
 
-    @Override
+
     public List<Position> findRoute(final Position start, final Position end) {
         return Collections.emptyList();
     }
 
     public void checkMovableDistance(Position start, Position end) {
-        int absGapOfColumn = Math.abs(start.findGapOfColumn(end));
-        int absGapOfRank = Math.abs(start.findGapOfRank(end));
-
-        if (absGapOfColumn > MOVABLE_DISTANCE || absGapOfRank > MOVABLE_DISTANCE) {
+        List<Position> route = start.findRouteTo(end);
+        if (route.size() > MOVABLE_DISTANCE) {
             throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
-        if(this.isSameColor(colorOfDestination)) {
+        if(color.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
         }
     }

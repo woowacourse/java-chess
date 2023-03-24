@@ -27,19 +27,10 @@ public class ChessBoard {
     }
 
     public void move(Position start, Position end) {
-        checkIfMoveToSamePosition(start, end);
         Piece pieceToMove = findPieceInBoardByPosition(start);
-        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
-        pieceToMove.checkMovable(start, end, colorOfDestination);
-        checkIfPiecesInRoute(start, end, pieceToMove);
+        validateMove(start, end, pieceToMove);
 
         movePieceToDestination(start, end, pieceToMove);
-    }
-
-    private static void checkIfMoveToSamePosition(Position start, Position end) {
-        if (start.equals(end)) {
-            throw new IllegalArgumentException("제자리로는 이동할 수 없습니다");
-        }
     }
 
     private Piece findPieceInBoardByPosition(final Position position) {
@@ -49,10 +40,23 @@ public class ChessBoard {
         return chessBoard.get(position);
     }
 
-    private void checkIfPiecesInRoute(final Position start, final Position end, final Piece pieceToMove) {
-        if(pieceToMove.findRoute(start, end).stream()
-                .anyMatch(position -> !position.equals(end) &&chessBoard.get(position).getColor() != Color.NONE)) {
-            throw new IllegalArgumentException("이동경로에 기물이 있어 이동할 수 없습니다");//엔드가 포함안되게 함~~
+    private void validateMove(final Position start, final Position end, final Piece pieceToMove) {
+        checkIfMoveToSamePosition(start, end);
+        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
+        pieceToMove.checkMovable(start, end, colorOfDestination);
+        checkIfPiecesInRoute(start, end);
+    }
+
+    private static void checkIfMoveToSamePosition(Position start, Position end) {
+        if (start.equals(end)) {
+            throw new IllegalArgumentException("제자리로는 이동할 수 없습니다");
+        }
+    }
+
+    private void checkIfPiecesInRoute(final Position start, final Position end) {
+        if(start.findRouteTo(end).stream()
+                .anyMatch(position -> !position.equals(end) && chessBoard.get(position).getColor() != Color.NONE)) {
+            throw new IllegalArgumentException("이동경로에 기물이 있어 이동할 수 없습니다");
         }
     }
 
