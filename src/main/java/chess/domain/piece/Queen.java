@@ -27,4 +27,9 @@ public final class Queen extends SlidingPiece {
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Queen(color, strategies);
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }

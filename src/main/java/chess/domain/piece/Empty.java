@@ -22,4 +22,9 @@ public final class Empty extends Piece {
     public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
         throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }

@@ -20,4 +20,9 @@ public final class WhitePawn extends Pawn {
                 MoveUp.instance(), MoveLeftUp.instance(), MoveRightUp.instance());
         return new WhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }

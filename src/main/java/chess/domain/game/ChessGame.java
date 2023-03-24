@@ -45,6 +45,11 @@ public final class ChessGame {
         }
     }
 
+    private void switchPiece(final Position source, final Position target, final Piece sourcePiece) {
+        board.put(target, checkInitialPawn(sourcePiece));
+        board.put(source, Empty.create());
+    }
+
     private Piece checkInitialPawn(final Piece piece) {
         if (piece.isInitialPawn() && piece.isWhite()) {
             return WhitePawn.create();
@@ -53,11 +58,6 @@ public final class ChessGame {
             return BlackPawn.create();
         }
         return piece;
-    }
-
-    private void switchPiece(final Position source, final Position target, final Piece sourcePiece) {
-        board.put(target, checkInitialPawn(sourcePiece));
-        board.put(source, Empty.create());
     }
 
     public Map<Position, Piece> getBoard() {

@@ -28,9 +28,8 @@ public abstract class Piece {
         return calculatePath(movingStrategy, source, target, targetColor);
     }
 
-    public boolean isInitialPawn() {
-        return false;
-    }
+    public abstract boolean isInitialPawn();
+
     public final boolean isEmpty() {
         return color.isEmpty();
     }

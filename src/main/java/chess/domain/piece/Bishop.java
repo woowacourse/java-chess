@@ -22,4 +22,9 @@ public final class Bishop extends SlidingPiece {
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Bishop(color, strategies);
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }

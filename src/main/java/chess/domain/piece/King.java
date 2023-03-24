@@ -27,4 +27,9 @@ public final class King extends NonSlidingPiece {
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new King(color, strategies);
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }

@@ -21,4 +21,9 @@ public final class Rook extends SlidingPiece {
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Rook(color, strategies);
     }
+
+    @Override
+    public boolean isInitialPawn() {
+        return false;
+    }
 }
