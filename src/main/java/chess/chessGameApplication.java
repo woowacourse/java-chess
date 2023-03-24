@@ -1,9 +1,5 @@
 package chess;
 
-import chess.ChessBoard;
-import chess.ChessController;
-import chess.ChessGame;
-
 public class chessGameApplication {
 
     public static void main(String[] args) {
@@ -12,5 +8,6 @@ public class chessGameApplication {
         ChessController chessController = new ChessController(chessBoard, chessGame);
         chessController.startPhase();
         chessController.commandPhase();
+        chessController.endPhase();
     }
 }

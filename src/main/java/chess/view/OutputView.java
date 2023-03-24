@@ -1,4 +1,4 @@
-package view;
+package chess.view;
 
 import chess.piece.ChessPiece;
 import chess.position.Position;
@@ -20,6 +20,11 @@ public class OutputView {
         for (int horizontal = MIN_CHESS_BOARD_NUM; horizontal <= MAX_CHESS_BOARD_NUM; horizontal++) {
             System.out.print(chessBoard.get(Position.initPosition(horizontal, vertical)).getName());
         }
+    }
+
+    public static void printScore(double whiteScore, double blackScore) {
+        System.out.println("White: " + whiteScore);
+        System.out.println("Black: " + blackScore);
     }
 
     public static void printMessage(String message) {
