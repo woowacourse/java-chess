@@ -25,7 +25,7 @@ public class Turn {
     }
 
     public Camp oppositeCamp() {
-        final int oppositeCampIndex = count % PLAYER_COUNT;
+        final int oppositeCampIndex = (count + 1) % PLAYER_COUNT;
 
         return PLAYERS_CAMP.get(oppositeCampIndex);
     }

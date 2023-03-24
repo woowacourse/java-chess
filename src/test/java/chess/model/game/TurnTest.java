@@ -37,17 +37,18 @@ class TurnTest {
     void opposite_whenCall_thenReturnEnemyPlayer() {
         final Turn turn = new Turn();
 
-        final Camp camp = turn.findPlayer();
-        assertThat(camp).isSameAs(Camp.WHITE);
+        final Camp firstCamp = turn.findPlayer();
+        assertThat(firstCamp).isSameAs(Camp.WHITE);
+
+        final Camp secondCamp = turn.oppositeCamp();
+        assertThat(secondCamp).isSameAs(Camp.BLACK);
 
         turn.processNextTurn();
 
-        final Camp blackCamp = turn.oppositeCamp();
-        assertThat(blackCamp).isSameAs(Camp.BLACK);
+        final Camp thirdCamp = turn.findPlayer();
+        assertThat(thirdCamp).isSameAs(Camp.BLACK);
 
-        turn.processNextTurn();
-
-        final Camp whiteCamp = turn.oppositeCamp();
-        assertThat(whiteCamp).isSameAs(Camp.WHITE);
+        final Camp fourthCamp = turn.oppositeCamp();
+        assertThat(fourthCamp).isSameAs(Camp.WHITE);
     }
 }
