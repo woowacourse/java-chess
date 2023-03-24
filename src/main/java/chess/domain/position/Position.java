@@ -38,6 +38,17 @@ public class Position {
         return CACHE.get(getCacheKey(file, rank));
     }
 
+    public static Position from(final String position) {
+        validateString(position);
+        return CACHE.get(position);
+    }
+
+    private static void validateString(final String position) {
+        if (!CACHE.containsKey(position)) {
+            throw new IllegalArgumentException("잘못된 위치입니다.");
+        }
+    }
+
     public @Nullable Position move(final MovePattern movePattern) {
         final int nextFileIndex = movePattern.nextFileIndex(fileIndex());
         final int nextRankIndex = movePattern.nextRankIndex(rankIndex());
