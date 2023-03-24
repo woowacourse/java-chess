@@ -11,15 +11,15 @@ import java.util.List;
 
 public final class Rook extends SlidingPiece {
 
-    private Rook(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.ROOK, strategies);
+    private Rook(final Team team, final MovingStrategies strategies) {
+        super(team, PieceType.ROOK, strategies);
     }
 
-    public static Rook create(final Color color) {
+    public static Rook create(final Team team) {
         final List<MovingStrategy> rawStrategies = List.of(MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Rook(color, strategies);
+        return new Rook(team, strategies);
     }
 
     @Override

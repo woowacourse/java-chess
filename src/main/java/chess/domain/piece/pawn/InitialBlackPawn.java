@@ -6,20 +6,20 @@ import chess.domain.movingStrategy.MoveLeftDown;
 import chess.domain.movingStrategy.MoveRightDown;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 
 import java.util.List;
 
 public final class InitialBlackPawn extends Pawn {
 
-    private InitialBlackPawn(final Color color, final MovingStrategies movingStrategies) {
-        super(color, movingStrategies);
+    private InitialBlackPawn(final Team team, final MovingStrategies movingStrategies) {
+        super(team, movingStrategies);
     }
 
     public static InitialBlackPawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
                 MoveDownDown.instance(), MoveDown.instance(), MoveLeftDown.instance(), MoveRightDown.instance());
-        return new InitialBlackPawn(Color.BLACK, new MovingStrategies(movingStrategies));
+        return new InitialBlackPawn(Team.BLACK, new MovingStrategies(movingStrategies));
     }
 
     @Override

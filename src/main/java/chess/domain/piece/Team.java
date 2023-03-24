@@ -1,16 +1,16 @@
 package chess.domain.piece;
 
-public enum Color {
+public enum Team {
     BLACK,
     WHITE,
     EMPTY;
 
-    public boolean isSameColor(final Color color) {
-        return this == color;
+    public boolean isSameColor(final Team team) {
+        return this == team;
     }
 
-    public boolean isOpponent(final Color color) {
-        return this == BLACK && color == WHITE || this == WHITE && color == BLACK;
+    public boolean isOpponent(final Team team) {
+        return this == BLACK && team == WHITE || this == WHITE && team == BLACK;
     }
 
     public boolean isBlack() {

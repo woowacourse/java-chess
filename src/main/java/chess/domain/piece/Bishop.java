@@ -11,16 +11,16 @@ import java.util.List;
 
 public final class Bishop extends SlidingPiece {
 
-    private Bishop(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.BISHOP, strategies);
+    private Bishop(final Team team, final MovingStrategies strategies) {
+        super(team, PieceType.BISHOP, strategies);
     }
 
-    public static Bishop create(final Color color) {
+    public static Bishop create(final Team team) {
         final List<MovingStrategy> rawStrategies = List.of(
                 MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Bishop(color, strategies);
+        return new Bishop(team, strategies);
     }
 
     @Override

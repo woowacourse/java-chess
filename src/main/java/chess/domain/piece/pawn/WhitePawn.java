@@ -5,20 +5,20 @@ import chess.domain.movingStrategy.MoveRightUp;
 import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 
 import java.util.List;
 
 public final class WhitePawn extends Pawn {
 
-    private WhitePawn(final Color color, final MovingStrategies movingStrategies) {
-        super(color, movingStrategies);
+    private WhitePawn(final Team team, final MovingStrategies movingStrategies) {
+        super(team, movingStrategies);
     }
 
     public static WhitePawn create() {
         final List<MovingStrategy> movingStrategies = List.of(
                 MoveUp.instance(), MoveLeftUp.instance(), MoveRightUp.instance());
-        return new WhitePawn(Color.WHITE, new MovingStrategies(movingStrategies));
+        return new WhitePawn(Team.WHITE, new MovingStrategies(movingStrategies));
     }
 
     @Override

@@ -15,17 +15,17 @@ import java.util.List;
 
 public final class Knight extends NonSlidingPiece {
 
-    private Knight(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.KNIGHT, strategies);
+    private Knight(final Team team, final MovingStrategies strategies) {
+        super(team, PieceType.KNIGHT, strategies);
     }
 
-    public static Knight create(final Color color) {
+    public static Knight create(final Team team) {
         final List<MovingStrategy> rawStrategies = List.of(
                 MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
                 MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Knight(color, strategies);
+        return new Knight(team, strategies);
     }
 
     @Override

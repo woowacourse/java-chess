@@ -9,41 +9,41 @@ import java.util.List;
 public abstract class Piece {
 
     protected final PieceType pieceType;
-    protected final Color color;
+    protected final Team team;
     protected final MovingStrategies movingStrategies;
 
-    public Piece(final Color color, final PieceType pieceType, final MovingStrategies movingStrategies) {
-        this.color = color;
+    public Piece(final Team team, final PieceType pieceType, final MovingStrategies movingStrategies) {
+        this.team = team;
         this.movingStrategies = movingStrategies;
         this.pieceType = pieceType;
     }
 
-    public abstract List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor);
+    public abstract List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam);
 
-    public final List<Position> findPath(final Position source, final Position target, final Color targetColor) {
+    public final List<Position> findPath(final Position source, final Position target, final Team targetTeam) {
         final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
-        if (targetColor.isSameColor(this.color)) {
+        if (targetTeam.isSameColor(this.team)) {
             throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
-        return calculatePath(movingStrategy, source, target, targetColor);
+        return calculatePath(movingStrategy, source, target, targetTeam);
     }
 
     public abstract boolean isInitialPawn();
 
     public final boolean isEmpty() {
-        return color.isEmpty();
+        return team.isEmpty();
     }
 
     public boolean isWhite() {
-        return color.isWhite();
+        return team.isWhite();
     }
 
     public boolean isBlack() {
-        return color.isBlack();
+        return team.isBlack();
     }
 
-    public final Color getColor() {
-        return color;
+    public final Team getColor() {
+        return team;
     }
 
     public final PieceType getPieceType() {

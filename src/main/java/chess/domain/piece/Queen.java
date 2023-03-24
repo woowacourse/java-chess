@@ -15,17 +15,17 @@ import java.util.List;
 
 public final class Queen extends SlidingPiece {
 
-    private Queen(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.QUEEN, strategies);
+    private Queen(final Team team, final MovingStrategies strategies) {
+        super(team, PieceType.QUEEN, strategies);
     }
 
-    public static Queen create(final Color color) {
+    public static Queen create(final Team team) {
         final List<MovingStrategy> rawStrategies = List.of(
                 MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance(),
                 MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
 
         MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Queen(color, strategies);
+        return new Queen(team, strategies);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -19,16 +19,16 @@ public final class PieceRender {
     }
 
     public static String renderName(final Piece piece) {
-        final Color color = piece.getColor();
+        final Team team = piece.getColor();
         final PieceType pieceType = piece.getPieceType();
 
-        if (color.isBlack()) {
+        if (team.isBlack()) {
             return CACHE.get(pieceType);
         }
-        if (color.isWhite()) {
+        if (team.isWhite()) {
             return CACHE.get(pieceType).toLowerCase();
         }
-        if (color.isEmpty()) {
+        if (team.isEmpty()) {
             return CACHE.get(pieceType);
         }
         throw new AssertionError();

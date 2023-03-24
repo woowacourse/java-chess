@@ -1,13 +1,13 @@
 package chess.domain.game;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.piece.pawn.InitialBlackPawn;
 import chess.domain.piece.pawn.InitialWhitePawn;
 
@@ -48,33 +48,33 @@ public final class ChessGameFactory {
     }
 
     private static void initRook(final Map<Position, Piece> board) {
-        board.put(Position.of(File.A, Rank.ONE), Rook.create(Color.WHITE));
-        board.put(Position.of(File.H, Rank.ONE), Rook.create(Color.WHITE));
-        board.put(Position.of(File.A, Rank.EIGHT), Rook.create(Color.BLACK));
-        board.put(Position.of(File.H, Rank.EIGHT), Rook.create(Color.BLACK));
+        board.put(Position.of(File.A, Rank.ONE), Rook.create(Team.WHITE));
+        board.put(Position.of(File.H, Rank.ONE), Rook.create(Team.WHITE));
+        board.put(Position.of(File.A, Rank.EIGHT), Rook.create(Team.BLACK));
+        board.put(Position.of(File.H, Rank.EIGHT), Rook.create(Team.BLACK));
     }
 
     private static void initKnight(final Map<Position, Piece> board) {
-        board.put(Position.of(File.B, Rank.ONE), Knight.create(Color.WHITE));
-        board.put(Position.of(File.G, Rank.ONE), Knight.create(Color.WHITE));
-        board.put(Position.of(File.B, Rank.EIGHT), Knight.create(Color.BLACK));
-        board.put(Position.of(File.G, Rank.EIGHT), Knight.create(Color.BLACK));
+        board.put(Position.of(File.B, Rank.ONE), Knight.create(Team.WHITE));
+        board.put(Position.of(File.G, Rank.ONE), Knight.create(Team.WHITE));
+        board.put(Position.of(File.B, Rank.EIGHT), Knight.create(Team.BLACK));
+        board.put(Position.of(File.G, Rank.EIGHT), Knight.create(Team.BLACK));
     }
 
     private static void initBishop(final Map<Position, Piece> board) {
-        board.put(Position.of(File.C, Rank.ONE), Bishop.create(Color.WHITE));
-        board.put(Position.of(File.F, Rank.ONE), Bishop.create(Color.WHITE));
-        board.put(Position.of(File.C, Rank.EIGHT), Bishop.create(Color.BLACK));
-        board.put(Position.of(File.F, Rank.EIGHT), Bishop.create(Color.BLACK));
+        board.put(Position.of(File.C, Rank.ONE), Bishop.create(Team.WHITE));
+        board.put(Position.of(File.F, Rank.ONE), Bishop.create(Team.WHITE));
+        board.put(Position.of(File.C, Rank.EIGHT), Bishop.create(Team.BLACK));
+        board.put(Position.of(File.F, Rank.EIGHT), Bishop.create(Team.BLACK));
     }
 
     private static void initQueen(final Map<Position, Piece> board) {
-        board.put(Position.of(File.D, Rank.ONE), Queen.create(Color.WHITE));
-        board.put(Position.of(File.D, Rank.EIGHT), Queen.create(Color.BLACK));
+        board.put(Position.of(File.D, Rank.ONE), Queen.create(Team.WHITE));
+        board.put(Position.of(File.D, Rank.EIGHT), Queen.create(Team.BLACK));
     }
 
     private static void initKing(final Map<Position, Piece> board) {
-        board.put(Position.of(File.E, Rank.ONE), King.create(Color.WHITE));
-        board.put(Position.of(File.E, Rank.EIGHT), King.create(Color.BLACK));
+        board.put(Position.of(File.E, Rank.ONE), King.create(Team.WHITE));
+        board.put(Position.of(File.E, Rank.EIGHT), King.create(Team.BLACK));
     }
 }

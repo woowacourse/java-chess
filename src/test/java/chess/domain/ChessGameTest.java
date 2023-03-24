@@ -4,10 +4,10 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.File;
 import chess.domain.game.Position;
 import chess.domain.game.Rank;
-import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +52,7 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenPosition = PositionFixtures.A1;
-            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Team.WHITE));
 
             final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
@@ -65,7 +65,7 @@ class ChessGameTest {
             //given
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenPosition = PositionFixtures.A1;
-            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Team.WHITE));
             final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
             assertThatThrownBy(() -> chessGame.move(givenPosition, PositionFixtures.B2))
@@ -79,10 +79,10 @@ class ChessGameTest {
             //given
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenSourcePosition = PositionFixtures.A1;
-            rawBoard.put(givenSourcePosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenSourcePosition, Rook.create(Team.WHITE));
 
             final Position givenTargetPosition = PositionFixtures.A2;
-            rawBoard.put(givenTargetPosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenTargetPosition, Rook.create(Team.WHITE));
 
             final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
@@ -98,10 +98,10 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenPosition = PositionFixtures.A1;
-            rawBoard.put(givenPosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenPosition, Rook.create(Team.WHITE));
 
             final Position givenPathPosition = PositionFixtures.A2;
-            rawBoard.put(givenPathPosition, Rook.create(Color.WHITE));
+            rawBoard.put(givenPathPosition, Rook.create(Team.WHITE));
 
             final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then

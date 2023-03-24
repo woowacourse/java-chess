@@ -9,12 +9,12 @@ import java.util.List;
 
 public abstract class NonSlidingPiece extends Piece {
 
-    public NonSlidingPiece(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
-        super(color, pieceType, strategies);
+    public NonSlidingPiece(final Team team, final PieceType pieceType, final MovingStrategies strategies) {
+        super(team, pieceType, strategies);
     }
 
     @Override
-    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
+    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam) {
         final Position movedPosition = strategy.move(source);
         if (!movedPosition.equals(target)) {
             throw new IllegalArgumentException("한 칸만 이동 가능합니다.");
