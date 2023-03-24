@@ -23,7 +23,7 @@ public class ChessController {
     public void run() {
         User user = getUser();
         OutputView.printStartMessage();
-        OutputView.printCommandMessage();
+        OutputView.printInitialCommandMessage();
         Command initialCommand = readInitialCommand();
         if (initialCommand == Command.END) {
             return;
@@ -72,6 +72,7 @@ public class ChessController {
                 .collect(Collectors.toList());
         String gameId;
         while (true) {
+            OutputView.printSelectGameMessage();
             gameId = InputView.readNext();
             if (gameIds.contains(gameId)) {
                 break;
@@ -170,6 +171,7 @@ public class ChessController {
     }
 
     private void playGame(String gameId, ChessGame chessGame) {
+        OutputView.printGameCommandMessage();
         OutputView.printGameStatus(chessGame.getGameStatus());
         while (true) {
             Command command = readPlayCommand();
