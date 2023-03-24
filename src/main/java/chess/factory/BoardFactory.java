@@ -5,15 +5,14 @@ import chess.domain.board.Col;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.pieces.Bishop;
-import chess.domain.pieces.BlackPawn;
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Knight;
+import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
 import chess.domain.pieces.Team;
-import chess.domain.pieces.WhitePawn;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -50,10 +49,10 @@ public class BoardFactory {
             chessBoard.put(position, new Empty(Team.EMPTY));
         }
         if (position.isLowerPawnPositionAtFirst()) {
-            chessBoard.put(position, new WhitePawn(Team.WHITE));
+            chessBoard.put(position, new Pawn(Team.WHITE));
         }
         if (position.isUpperPawnPositionAtFirst()) {
-            chessBoard.put(position, new BlackPawn(Team.BLACK));
+            chessBoard.put(position, new Pawn(Team.BLACK));
         }
     }
 

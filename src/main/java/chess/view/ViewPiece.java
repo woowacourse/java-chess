@@ -1,16 +1,7 @@
 package chess.view;
 
-import chess.domain.pieces.Bishop;
-import chess.domain.pieces.BlackPawn;
-import chess.domain.pieces.Empty;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.PieceType;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
-import chess.domain.pieces.Team;
-import chess.domain.pieces.WhitePawn;
 import java.util.Arrays;
 
 enum ViewPiece {
