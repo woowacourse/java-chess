@@ -1,14 +1,16 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
+
 import java.util.List;
 import java.util.Optional;
 
 public class ChessGame {
 
-    private final Board board = Board.generate();
+    private final Board board = BoardFactory.generate();
 
     public void move(final Square source, final Square destination) {
         final Optional<Piece> pieceOf = board.findPieceOf(source);
