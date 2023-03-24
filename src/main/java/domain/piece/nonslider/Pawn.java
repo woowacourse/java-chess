@@ -77,19 +77,14 @@ public class Pawn extends Piece {
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE_INDEX);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
 
-        List<Square> movableSquares = targetDirection.stream()
+        return targetDirection.stream()
+            .filter(direction ->
+                currentFileCoordinate + directionUnit * direction.getFile() >= MIN_FILE_INDEX
+            && currentFileCoordinate + directionUnit * direction.getFile() <= MAX_FILE_INDEX
+            && currentRankCoordinate + directionUnit * direction.getRank() >= MIN_RANK_INDEX
+            && currentRankCoordinate + directionUnit * direction.getRank() <= MAX_RANK_INDEX)
             .map(direction -> new Square(currentFileCoordinate + directionUnit * direction.getFile(),
                 currentRankCoordinate + directionUnit * direction.getRank())).collect(Collectors.toList());
-        return removeSquareOutOfBoard(movableSquares);
-    }
-
-    private List<Square> removeSquareOutOfBoard(List<Square> movableSquares) {
-        return movableSquares.stream()
-            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= MIN_FILE_INDEX
-                && square.toCoordinate().get(FILE_INDEX) <= MAX_FILE_INDEX
-                && square.toCoordinate().get(RANK_INDEX) >= MIN_RANK_INDEX
-                && square.toCoordinate().get(RANK_INDEX) <= MAX_RANK_INDEX)
-            .collect(Collectors.toList());
     }
 
     private void addSquareIfMoveTwoSquareForward(Square currentSquare, List<Square> movableCoordinate) {

@@ -102,7 +102,9 @@ public class ChessBoard {
         if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
+            return;
         }
+        throw new IllegalArgumentException("이동할 수 없습니다.");
     }
 
     public Map<Square, Piece> getBoard() {

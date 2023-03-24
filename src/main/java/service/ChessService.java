@@ -27,6 +27,7 @@ public class ChessService {
     public ChessService() {
         this.chessBoard = new ChessBoard();
         this.currentCamp = Camp.WHITE;
+        PieceToStringConverter.init();
     }
 
     public void execute(CommandRequest commandRequest) {
