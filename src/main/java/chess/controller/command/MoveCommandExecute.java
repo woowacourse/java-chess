@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import chess.domain.PieceDto;
 import chess.domain.chessGame.ChessGameState;
