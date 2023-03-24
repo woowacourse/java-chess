@@ -12,7 +12,11 @@ public class ChessController {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGame chessGame;
+
+    public ChessController(ChessGame chessGame) {
+        this.chessGame = chessGame;
+    }
 
     public void run() {
         outputView.printStartMessage();
