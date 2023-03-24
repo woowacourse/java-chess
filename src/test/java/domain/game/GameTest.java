@@ -178,4 +178,36 @@ class GameTest {
         Score score = game.calculateWhiteScore();
         assertThat(score.getNumber()).isEqualTo(33.5);
     }
+
+    @DisplayName("한 진영의 King이 죽었으면 true를 반환한다.")
+    @Test
+    void shouldReturnTrueWhenKingDie() {
+        game.move(Position.of(E, TWO), Position.of(E, FOUR));
+        game.move(Position.of(A, SEVEN), Position.of(A, SIX));
+        game.move(Position.of(E, FOUR), Position.of(E, FIVE));
+        game.move(Position.of(A, SIX), Position.of(A, FIVE));
+        game.move(Position.of(E, FIVE), Position.of(E, SIX));
+        game.move(Position.of(A, FIVE), Position.of(A, FOUR));
+        game.move(Position.of(E, SIX), Position.of(D, SEVEN));
+        game.move(Position.of(A, FOUR), Position.of(A, THREE));
+        game.move(Position.of(D, SEVEN), Position.of(E, EIGHT));
+        /* 이동 후 체스판 상태
+        RNBQpBNR
+        .PP.PPPP
+        ........
+        ........
+        ........
+        P.......
+        pppp.ppp
+        rnbqkbnr
+        */
+        assertThat(game.isEnd()).isTrue();
+    }
+
+    @DisplayName("King이 죽지 않았으면 false를 반환한다.")
+    @Test
+    void shouldReturnFalseWhenAllKingIsAlive() {
+        // 체스판 초기화 직후 상태
+        assertThat(game.isEnd()).isFalse();
+    }
 }

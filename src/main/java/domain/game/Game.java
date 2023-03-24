@@ -101,6 +101,14 @@ public class Game {
         return this.sideOfTurn;
     }
 
+    public boolean isEnd() {
+        boolean isWhiteKingDead = this.chessBoard.values().stream()
+                .noneMatch(piece -> piece.getCategory().equals(PieceCategory.WHITE_KING));
+        boolean isBlackKingDead = this.chessBoard.values().stream()
+                .noneMatch(piece -> piece.getCategory().equals(PieceCategory.BLACK_KING));
+        return isWhiteKingDead || isBlackKingDead;
+    }
+
     public Score calculateWhiteScore() {
         return calculateScoreOf(WHITE);
     }
