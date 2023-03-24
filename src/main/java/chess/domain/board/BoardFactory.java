@@ -1,8 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.pieces.Position;
-import chess.domain.pieces.component.Team;
 import chess.domain.pieces.*;
+import chess.domain.pieces.component.Team;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class BoardFactory {
         init.put(new Position(Rank.ONE, File.H), new Rook(Team.WHITE));
 
         for (File file : File.values()) {
-            init.put(new Position(Rank.TWO, file), new Pawn(Team.WHITE));
+            init.put(new Position(Rank.TWO, file), new WhitePawn());
         }
 
         for (File file : File.values()) {
@@ -41,7 +40,7 @@ public class BoardFactory {
         }
 
         for (File file : File.values()) {
-            init.put(new Position(Rank.SEVEN, file), new Pawn(Team.BLACK));
+            init.put(new Position(Rank.SEVEN, file), new BlackPawn());
         }
 
         init.put(new Position(Rank.EIGHT, File.A), new Rook(Team.BLACK));

@@ -1,8 +1,12 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Position;
 import chess.domain.pieces.component.Team;
 import chess.domain.Direction;
 import chess.domain.pieces.component.Name;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
@@ -11,6 +15,7 @@ public final class EmptyPiece extends Piece {
 
     public EmptyPiece(final Team team) {
         super(team);
+        this.directions = new ArrayList<>();
         validateTeam(team);
         initialName();
     }
@@ -22,12 +27,12 @@ public final class EmptyPiece extends Piece {
     @Override
     public void validateTeam(final Team team) {
         if (team != Team.NEUTRALITY) {
-            throw new IllegalArgumentException(INVALID_TEAM + team);
+            throw new IllegalArgumentException(INVALID_TEAM);
         }
     }
 
     @Override
-    public boolean hasDirection(final Direction direction) {
-        return false;
+    public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces) {
+        throw new IllegalArgumentException("[ERROR] 이동 할 기물이 없습니다.");
     }
 }

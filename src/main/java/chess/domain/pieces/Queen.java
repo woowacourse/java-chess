@@ -1,8 +1,9 @@
 package chess.domain.pieces;
 
-import chess.domain.pieces.component.Team;
 import chess.domain.Direction;
+import chess.domain.board.Position;
 import chess.domain.pieces.component.Name;
+import chess.domain.pieces.component.Team;
 
 import java.util.List;
 
@@ -12,10 +13,9 @@ public class Queen extends Piece {
 
     private static final String QUEEN_NAME = "Q";
 
-    private final List<Direction> directions = List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
-
     public Queen(final Team team) {
         super(team);
+        this.directions = List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
         initialName(team);
     }
@@ -29,14 +29,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean hasDirection(final Direction direction) {
-        return directions.contains(direction);
-    }
-
-    @Override
     public void validateTeam(Team team) {
         if (team == Team.NEUTRALITY) {
             throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
         }
+    }
+
+    @Override
+    public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces) {
     }
 }

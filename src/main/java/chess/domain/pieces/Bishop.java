@@ -1,8 +1,9 @@
 package chess.domain.pieces;
 
-import chess.domain.pieces.component.Team;
 import chess.domain.Direction;
+import chess.domain.board.Position;
 import chess.domain.pieces.component.Name;
+import chess.domain.pieces.component.Team;
 
 import java.util.List;
 
@@ -12,10 +13,9 @@ public class Bishop extends Piece {
 
     private static final String BISHOP_NAME = "B";
 
-    private final List<Direction> directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
-
     public Bishop(final Team team) {
         super(team);
+        this.directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
         initialName(team);
     }
@@ -29,14 +29,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean hasDirection(final Direction direction) {
-        return directions.contains(direction);
+    public void validateTeam(Team team) {
+        if (team == Team.NEUTRALITY) {
+            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
+        }
     }
 
     @Override
-    public void validateTeam(Team team) {
-        if(team == Team.NEUTRALITY){
-            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
-        }
+    public void checkEachPiece(Position currentPiece, Direction direction, List<Piece> pieces) {
     }
 }

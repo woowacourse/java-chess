@@ -16,7 +16,7 @@ class EmptyPieceTest {
 
         assertThatIllegalArgumentException().isThrownBy(
                 () -> new EmptyPiece(team)
-        ).withMessage(EmptyPiece.INVALID_TEAM + team);
+        ).withMessage(EmptyPiece.INVALID_TEAM);
     }
 
     @Test

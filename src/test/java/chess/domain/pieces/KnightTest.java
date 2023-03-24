@@ -13,6 +13,6 @@ class KnightTest {
     void validateTeamTest_exception() {
         Team team = Team.NEUTRALITY;
 
-        assertThatThrownBy(() -> new Pawn(team));
+        assertThatThrownBy(() -> new Knight(team));
     }
 }
