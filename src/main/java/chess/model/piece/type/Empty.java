@@ -31,4 +31,14 @@ public class Empty extends Piece {
     public boolean isNotPassable() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

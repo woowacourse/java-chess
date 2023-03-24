@@ -66,4 +66,14 @@ public class Knight extends Piece {
     public boolean isNotPassable() {
         return true;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

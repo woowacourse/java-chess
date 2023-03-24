@@ -47,6 +47,26 @@ class KnightTest {
         assertThat(actual).isSameAs(expected);
     }
 
+    @Test
+    @DisplayName("isKing()은 호출하면 false를 반환한다")
+    void isKing_whenCall_thenReturnFalse() {
+        // when
+        final boolean actual = blackKnight.isKing();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("isPawn()은 호출하면 false를 반환한다")
+    void ispawn_whenCall_thenReturnFalse() {
+        // when
+        final boolean actual = blackKnight.isPawn();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
     @Nested
     @DisplayName("movable() 테스트")
     class KnightMovableMethodTest {

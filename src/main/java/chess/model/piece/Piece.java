@@ -16,6 +16,10 @@ public abstract class Piece {
 
     public abstract boolean isNotPassable();
 
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
     public boolean isSameTeam(final Camp camp) {
         return this.camp.isSameCamp(camp);
     }

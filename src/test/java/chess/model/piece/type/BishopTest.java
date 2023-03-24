@@ -36,6 +36,26 @@ class BishopTest {
         assertThat(actual).isTrue();
     }
 
+    @Test
+    @DisplayName("isKing()은 호출하면 false를 반환한다")
+    void isKing_whenCall_thenReturnFalse() {
+        // when
+        final boolean actual = blackBishop.isKing();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("isPawn()은 호출하면 false를 반환한다")
+    void ispawn_whenCall_thenReturnFalse() {
+        // when
+        final boolean actual = blackBishop.isPawn();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
     @ParameterizedTest(name = "검은색 진영 비숍은 isSameTeam()을 호출할 때 Camp.{0}을 건네주면 {1}을 반환한다")
     @DisplayName("isSameTeam() 테스트")
     @MethodSource("chess.helper.arguments.CampArguments#provideIsSameTeamByBlack")

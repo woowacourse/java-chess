@@ -58,6 +58,34 @@ class InitialPawnTest {
         assertThat(actual).isSameAs(expected);
     }
 
+    @Test
+    @DisplayName("isKing()은 호출하면 false를 반환한다")
+    void isKing_whenCall_thenReturnFalse() {
+        // given
+        final Piece pawn = new Pawn(Camp.BLACK);
+        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
+
+        // when
+        final boolean actual = blackInitialPawn.isKing();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("isPawn()은 호출하면 true를 반환한다")
+    void ispawn_whenCall_thenReturnFalse() {
+        // given
+        final Piece pawn = new Pawn(Camp.BLACK);
+        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
+
+        // when
+        final boolean actual = blackInitialPawn.isPawn();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
     @Nested
     @DisplayName("movable() 검은색 폰 테스트")
     class BlackInitialPawnMovableMethodTest {
