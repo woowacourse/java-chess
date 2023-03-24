@@ -24,4 +24,14 @@ public enum Team {
     public boolean isEmpty() {
         return this == EMPTY;
     }
+
+    public Team getOpponentTeam() {
+        if (isBlack()) {
+            return WHITE;
+        }
+        if (isWhite()) {
+            return BLACK;
+        }
+        return EMPTY;
+    }
 }
