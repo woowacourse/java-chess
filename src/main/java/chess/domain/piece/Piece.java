@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.path.MovablePaths;
 import chess.domain.position.Position;
 import chess.domain.TeamColor;
@@ -49,8 +50,8 @@ public abstract class Piece {
         return type;
     }
 
-    public double getScore() {
-        return type.getScore();
+    public Score getScore() {
+        return Score.from(type.getScore());
     }
 
     public boolean isSameColorAndType(final TeamColor color, final PieceType type) {

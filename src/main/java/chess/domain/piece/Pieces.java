@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.TeamColor;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pieces {
-
-    private static final double PAWN_REDUCE = 0.5;
 
     private final List<Piece> pieces;
 
@@ -14,11 +13,13 @@ public class Pieces {
         this.pieces = pieces;
     }
 
-    public double calculateScoreOfTeam(final TeamColor color) {
+    public Score calculateScoreOfTeam(final TeamColor color) {
         List<Piece> currentTeamPieces = findCurrentTeamPieces(color);
-        return currentTeamPieces.stream()
-            .mapToDouble(Piece::getScore)
-            .sum() - calculateScoreToReduce(currentTeamPieces);
+        Score sum = Score.INITIAL_SCORE;
+        for (Piece piece : currentTeamPieces) {
+            sum = sum.add(piece.getScore());
+        }
+        return sum.reducePawnScore(calculatePawnCount(currentTeamPieces));
     }
 
     private List<Piece> findCurrentTeamPieces(final TeamColor color) {
@@ -27,14 +28,10 @@ public class Pieces {
             .collect(Collectors.toList());
     }
 
-    private double calculateScoreToReduce(final List<Piece> currentTeamPieces) {
-        long pawnCount = currentTeamPieces.stream()
+    private long calculatePawnCount(final List<Piece> currentTeamPieces) {
+        return currentTeamPieces.stream()
             .filter(Piece::isPawn)
             .count();
-        if (pawnCount > 1) {
-            return pawnCount * PAWN_REDUCE;
-        }
-        return 0;
     }
 
 }

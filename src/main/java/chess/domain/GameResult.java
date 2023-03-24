@@ -37,9 +37,11 @@ public class GameResult {
     }
 
     public double calculateScoreOfTeam(final TeamColor color) {
-        return piecesByFile.stream()
-            .mapToDouble(pieces -> pieces.calculateScoreOfTeam(color))
-            .sum();
+        Score sum = Score.INITIAL_SCORE;
+        for (Pieces pieces : piecesByFile) {
+            sum = sum.add(pieces.calculateScoreOfTeam(color));
+        }
+        return sum.getValue();
     }
 
 }

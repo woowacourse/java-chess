@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.InitialPiece;
+import chess.domain.Score;
 import chess.domain.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ class PiecesTest {
             InitialPiece.BLACK_PAWN.getPiece(),
             InitialPiece.WHITE_PAWN.getPiece()));
 
-        assertThat(pieces.calculateScoreOfTeam(TeamColor.BLACK)).isEqualTo(1);
+        assertThat(pieces.calculateScoreOfTeam(TeamColor.BLACK)).isEqualTo(Score.from(1));
     }
 
     @DisplayName("한 줄에 같은 색의 폰이 1개 이하면 1점으로 계산한다.")
@@ -28,7 +29,7 @@ class PiecesTest {
             InitialPiece.BLACK_PAWN.getPiece(),
             InitialPiece.WHITE_PAWN.getPiece()));
 
-        assertThat(pieces.calculateScoreOfTeam(TeamColor.WHITE)).isEqualTo(1);
+        assertThat(pieces.calculateScoreOfTeam(TeamColor.WHITE)).isEqualTo(Score.from(1));
     }
 
     @DisplayName("한 줄에 있는 현재 팀의 점수를 계산한다.")
@@ -39,7 +40,7 @@ class PiecesTest {
             InitialPiece.BLACK_KNIGHT.getPiece(),
             InitialPiece.WHITE_QUEEN.getPiece()));
 
-        assertThat(pieces.calculateScoreOfTeam(TeamColor.BLACK)).isEqualTo(6.5);
+        assertThat(pieces.calculateScoreOfTeam(TeamColor.BLACK)).isEqualTo(Score.from(6.5));
     }
 
 }
