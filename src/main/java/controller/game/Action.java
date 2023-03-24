@@ -1,8 +1,8 @@
-package controller;
+package controller.game;
 
 import java.util.List;
 
 @FunctionalInterface
-public interface GameRoomAction {
+public interface Action {
     void execute(List<String> inputs);
 }

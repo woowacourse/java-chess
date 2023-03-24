@@ -1,8 +1,7 @@
-import controller.ChessController;
-import service.ChessService;
+import controller.room.RoomController;
 
 public class Application {
     public static void main(String[] args) {
-        new ChessController(new ChessService()).run();
+        new RoomController().run();
     }
 }

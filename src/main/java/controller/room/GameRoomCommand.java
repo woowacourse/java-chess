@@ -1,4 +1,4 @@
-package controller;
+package controller.room;
 
 import java.util.Arrays;
 
