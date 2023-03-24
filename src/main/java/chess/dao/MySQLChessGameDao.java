@@ -13,12 +13,16 @@ import chess.game.state.running.BlackCheckedState;
 import chess.game.state.running.BlackTurnState;
 import chess.game.state.running.WhiteCheckedState;
 import chess.game.state.running.WhiteTurnState;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class MySQLChessGameDao implements ChessGameDao {
+    private static final String EMPTY_PROGRESS_EXCEPTION_MESSAGE = "[ERROR] 저장된 진행 정보가 없습니다.";
+
     private final JdbcContext jdbcContext;
 
     public MySQLChessGameDao(JdbcContext jdbcContext) {
@@ -37,24 +41,45 @@ public class MySQLChessGameDao implements ChessGameDao {
         return jdbcContext.select(query, resultSet -> {
             Map<Position, Piece> squares = new HashMap<>();
             while (resultSet.next()) {
-                int x = resultSet.getInt("x");
-                int y = resultSet.getInt("y");
-                Role role = Role.valueOf(resultSet.getString("role"));
-                Team team = Team.valueOf(resultSet.getString("team"));
-                squares.put(Position.of(x, y), PieceFactory.of(role, team));
+                squares.put(getPosition(resultSet), getPiece(resultSet));
             }
+            validateEmptyProgress(squares);
             return squares;
         });
+    }
+
+    private Position getPosition(ResultSet resultSet) throws SQLException {
+        int x = resultSet.getInt("x");
+        int y = resultSet.getInt("y");
+        return Position.of(x, y);
+    }
+
+    private Piece getPiece(ResultSet resultSet) throws SQLException {
+        Role role = Role.valueOf(resultSet.getString("role"));
+        Team team = Team.valueOf(resultSet.getString("team"));
+        return PieceFactory.of(role, team);
+    }
+
+    private static void validateEmptyProgress(Map<Position, Piece> squares) {
+        if (squares.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_PROGRESS_EXCEPTION_MESSAGE);
+        }
     }
 
     @Override
     public GameState findGameState() {
         final String query = "SELECT * FROM game_state";
         return jdbcContext.select(query, resultSet -> {
-            resultSet.next();
+            validateEmptyResultSet(resultSet);
             RunningStateEnum state = RunningStateEnum.valueOf(resultSet.getString("state"));
             return state.gameState;
         });
+    }
+
+    private void validateEmptyResultSet(ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            throw new IllegalArgumentException(EMPTY_PROGRESS_EXCEPTION_MESSAGE);
+        }
     }
 
     @Override
