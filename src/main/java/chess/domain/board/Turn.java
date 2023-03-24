@@ -21,4 +21,8 @@ public class Turn {
             throw new IllegalArgumentException(IS_NOT_PIECE_TURN_MESSAGE);
         }
     }
+
+    public Color getTurn() {
+        return turn;
+    }
 }

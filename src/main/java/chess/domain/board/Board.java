@@ -82,6 +82,13 @@ public class Board {
         return calculatedScore;
     }
 
+    public boolean isKingDead() {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isSameColor(turn.getTurn()))
+                .noneMatch(piece -> piece.getPieceType() == PieceType.KING);
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }

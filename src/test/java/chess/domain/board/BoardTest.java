@@ -4,13 +4,16 @@ import static chess.PositionFixtures.A2;
 import static chess.PositionFixtures.A3;
 import static chess.PositionFixtures.B2;
 import static chess.PositionFixtures.C2;
+import static chess.PositionFixtures.D3;
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -81,4 +84,30 @@ class BoardTest {
         assertThat(colorScoreMap.get(BLACK).getValue()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("현재턴에 해당하는 킹이 죽었는지 확인하는 기능 추가")
+    void isKingDeadTestTrue() {
+        final Map<Position, Piece> boardMap = Map.of(
+                A2, new Pawn(BLACK),
+                A3, new Pawn(BLACK)
+        );
+
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isKingDead()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("현재턴에 해당하는 킹이 죽었는지 확인하는 기능 추가")
+    void isKingDeadFalse() {
+        final Map<Position, Piece> boardMap = Map.of(
+                A2, new Pawn(BLACK),
+                A3, new Pawn(BLACK),
+                D3, new King(WHITE)
+        );
+
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isKingDead()).isEqualTo(false);
+    }
 }
