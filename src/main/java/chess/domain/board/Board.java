@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class Board {
 
@@ -59,15 +58,11 @@ public final class Board {
         targetSquare.changePiece(sourceSquare);
     }
 
-    private Square getSquare(final Position source) {
+    public Square getSquare(final Position source) {
         int rank = source.getRank();
         int file = source.getFile();
         Squares squares = board.get(rank);
         return squares.get(file);
-    }
-
-    public List<Squares> getSquares() {
-        return new ArrayList<>(board);
     }
 
     private double calculateFileScore(final Color color, final int file) {
@@ -99,5 +94,14 @@ public final class Board {
         return (int) board.stream()
                 .filter(squares -> squares.hasPawnAtFile(color, file))
                 .count();
+    }
+
+    public void set(Position p, Square square) {
+        Squares squares = board.get(p.getRank());
+        squares.set(p.getFile(), square);
+    }
+
+    public List<Squares> getSquares() {
+        return new ArrayList<>(board);
     }
 }
