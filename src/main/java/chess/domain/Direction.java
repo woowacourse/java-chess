@@ -6,25 +6,29 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Direction {
-    UP(Direction::isUp),
-    DOWN(Direction::isDown),
-    LEFT(Direction::isLeft),
-    RIGHT(Direction::isRight),
-    UP_LEFT(Direction::isUpLeft),
-    UP_RIGHT(Direction::isUpRight),
-    DOWN_LEFT(Direction::isDownLeft),
-    DOWN_RIGHT(Direction::isDownRight),
-    KNIGHT(Direction::isKnight);
+    UP(Direction::isUp, 1, 0),
+    DOWN(Direction::isDown, -1, 0),
+    LEFT(Direction::isLeft, 0, -1),
+    RIGHT(Direction::isRight, 0, 1),
+    UP_LEFT(Direction::isUpLeft, 1, -1),
+    UP_RIGHT(Direction::isUpRight, 1, 1),
+    DOWN_LEFT(Direction::isDownLeft, -1, -1),
+    DOWN_RIGHT(Direction::isDownRight, -1, 1),
+    KNIGHT(Direction::isKnight, 0, 0);
 
-    private final BiPredicate<Position, Position> direction;
+    private final BiPredicate<Position, Position> finder;
+    private final int rank;
+    private final int file;
 
-    Direction(BiPredicate<Position, Position> direction) {
-        this.direction = direction;
+    Direction(BiPredicate<Position, Position> finder, int rank, int file) {
+        this.finder = finder;
+        this.rank = rank;
+        this.file = file;
     }
 
     public static Direction findDirection(final Position current, final Position target) {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.direction.test(current, target))
+                .filter(direction -> direction.finder.test(current, target))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 갈 수 없는 방향입니다."));
     }
@@ -81,5 +85,13 @@ public enum Direction {
         int rankDifferent = Math.abs(target.getRank() - current.getRank());
         int fileDifferent = Math.abs(target.getFile() - current.getFile());
         return (rankDifferent == 2 && fileDifferent == 1) || (rankDifferent == 1 && fileDifferent == 2);
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public int getFile() {
+        return file;
     }
 }

@@ -24,21 +24,25 @@ public class Board {
 
     public void movePiece(Position currentPosition, Position targetPosition) {
         Piece currentPiece = board.get(currentPosition);
-        List<Piece> pieces = logicExistPiece(currentPosition, targetPosition);
         Direction movableDirection = Direction.findDirection(currentPosition, targetPosition);
+        List<Piece> pieces = getLogicExistPiece(currentPosition, targetPosition, movableDirection);
 
         currentPiece.checkDirection(movableDirection);
-        currentPiece.checkEachPiece(currentPosition, movableDirection, pieces);
-        currentPiece.checkCanMove(board.get(currentPosition), pieces);
+        currentPiece.checkStep(currentPosition, movableDirection, pieces);
+        currentPiece.checkExistPiece(pieces);
+        currentPiece.checkSameTeam(currentPiece, board.get(targetPosition));
         move(currentPosition, targetPosition);
     }
 
-    private List<Piece> logicExistPiece(final Position current, final Position target) {
+    private List<Piece> getLogicExistPiece(final Position current, final Position target, final Direction movableDirection) {
         List<Piece> pieces = new ArrayList<>();
-        Position nextPosition = current;
+        if (movableDirection == Direction.KNIGHT) {
+            return pieces;
+        }
 
+        Position nextPosition = current;
         do {
-            nextPosition = moveNextPosition(nextPosition, target);
+            nextPosition = moveNextPosition(nextPosition, movableDirection);
             pieces.add(board.get(nextPosition));
         } while (!nextPosition.equals(target));
         return List.copyOf(pieces);
@@ -50,20 +54,12 @@ public class Board {
         board.put(targetPosition, currentPointPiece);
     }
 
-    private Position moveNextPosition(final Position currentPosition, final Position targetPosition) {
-        int rankGap = targetPosition.getRank() - currentPosition.getRank();
-        int fileGap = targetPosition.getFile() - currentPosition.getFile();
-
-        if (rankGap != 0) {
-            rankGap = rankGap / Math.abs(targetPosition.getRank() - currentPosition.getRank());
-        }
-        if (fileGap != 0) {
-            fileGap = fileGap / Math.abs(targetPosition.getFile() - currentPosition.getFile());
-        }
-        return currentPosition.nextPosition(rankGap, fileGap);
+    private Position moveNextPosition(final Position currentPosition, final Direction movableDirection) {
+        return currentPosition.nextPosition(movableDirection.getRank(), movableDirection.getFile());
     }
 
     public Map<Position, Piece> getBoard() {
         return this.board;
     }
+
 }
