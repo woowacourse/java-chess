@@ -44,36 +44,53 @@ public class ChessController {
         gameRoomActions.put(JOIN, this::joinGame);
     }
 
-
     private void exitGame(List<String> inputs) {
+        if (inputs.size() != 1) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
     }
 
     public void run() {
         GameRoomCommand gameRoomCommand = GameRoomCommand.NONE;
         while (gameRoomCommand != EXIT) {
+            gameRoomCommand = runByGameRooAction();
+        }
+    }
+
+    private GameRoomCommand runByGameRooAction() {
+        try {
+            GameRoomCommand gameRoomCommand;
             OutputView.printGameRoomInfo();
             List<String> inputs = InputView.requestCommand();
             gameRoomCommand = GameRoomCommand.find(inputs.get(0));
             GameRoomAction gameRoomAction = gameRoomActions.get(gameRoomCommand);
             gameRoomAction.execute(inputs);
+            return gameRoomCommand;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return GameRoomCommand.NONE;
         }
     }
 
     private void createGameRoom(List<String> inputs) {
-        if(inputs.size() != 2) {
+        if (inputs.size() != 2) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
         gameRoomService.createGameRoom(inputs.get(1));
     }
 
     private void joinGame(List<String> inputs) {
-        if(inputs.size() != 2) {
+        if (inputs.size() != 2) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
-        gameStart(inputs.get(1));
+        String gameName = inputs.get(1);
+        gameStart(gameName);
     }
 
     private void readGameRooms(List<String> inputs) {
+        if (inputs.size() != 1) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
         List<String> gameRooms = gameRoomService.readGameRooms();
         OutputView.printGameRooms(gameRooms);
     }
