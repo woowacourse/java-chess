@@ -22,18 +22,21 @@ public class Ready implements GameState {
         return handleGameCommand(gameCommand);
     }
 
+    private void validateGameCommand(final GameCommand gameCommand) {
+        if (gameCommand.isMove()) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+        }
+        if (gameCommand.isStatus()) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+        }
+    }
+
     private GameState handleGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
             chessGame.initialChessGame();
             return new Play(chessGame);
         }
         return new End();
-    }
-
-    private void validateGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isMove()) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-        }
     }
 
     @Override

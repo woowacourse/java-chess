@@ -30,6 +30,10 @@ public enum GameCommand {
         return this == START;
     }
 
+    public boolean isStatus() {
+        return this == STATUS;
+    }
+
     public boolean isEnd() {
         return this == END;
     }

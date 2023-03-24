@@ -44,6 +44,9 @@ public class Play implements GameState {
         if (gameCommand.isStart()) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
         }
+        if (gameCommand.isStatus()) {
+            throw new IllegalArgumentException("게임이 진행중입니다.");
+        }
     }
 
     @Override

@@ -7,10 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
-import chess.controller.state.End;
-import chess.controller.state.GameState;
-import chess.controller.state.Play;
-import chess.controller.state.Ready;
 import chess.model.game.ChessGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +40,15 @@ class ReadyTest {
     void execute_givenMoveCommand_thenFail() {
         // when, then
         assertThatThrownBy(() -> ready.execute(GameCommand.MOVE, A2, A3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 시작되지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("execute()는 명령어로 status가 주어지면 예외가 발생한다.")
+    void execute_givenStatusCommand_thenFail() {
+        // when, then
+        assertThatThrownBy(() -> ready.execute(GameCommand.STATUS, A1, A1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }

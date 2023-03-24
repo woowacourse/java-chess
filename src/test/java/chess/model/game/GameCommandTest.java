@@ -93,4 +93,22 @@ class GameCommandTest {
                 Arguments.of(GameCommand.END, true), Arguments.of(GameCommand.STATUS, false)
         );
     }
+
+    @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
+    @DisplayName("isStatus() 테스트")
+    @MethodSource("provideIsStatusArguments")
+    void isStatus_whenCall_thenReturnIsStatus(final GameCommand gameCommand, final boolean expected) {
+        // when
+        final boolean actual = gameCommand.isStatus();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
+
+    private static Stream<Arguments> provideIsStatusArguments() {
+        return Stream.of(
+                Arguments.of(GameCommand.START, false), Arguments.of(GameCommand.MOVE, false),
+                Arguments.of(GameCommand.END, false), Arguments.of(GameCommand.STATUS, true)
+        );
+    }
 }
