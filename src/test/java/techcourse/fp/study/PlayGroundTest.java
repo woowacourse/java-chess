@@ -1,10 +1,8 @@
 package techcourse.fp.study;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static java.util.stream.Collectors.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,17 +15,38 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
-
+    static ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
+        return list.stream()
+            .filter(condition)
+            .collect(toList());
+    }
+
+    public static void log(Object... objects) {
+        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
+
+        for (Object object : objects) {
+            now.append(" - ").append(object.toString());
+        }
+
+        System.out.println(now);
+
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void For문을_활용하여_콜론을_추가하는_문자열_작성() {
@@ -63,8 +82,8 @@ class PlayGroundTest {
     @Test
     public void Stream을_활용하여_콜론을_추가하는_문자열_작성() {
         final String result = numbers.stream()
-                .map(String::valueOf)
-                .collect(joining(COLON_DELIMITER));
+            .map(String::valueOf)
+            .collect(joining(COLON_DELIMITER));
 
         System.out.println(result);
     }
@@ -73,25 +92,23 @@ class PlayGroundTest {
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
+            .get("src/main/resources/fp/war-and-peace.txt"));
 
         words.collect(
-                        groupingBy(word -> word.chars().sorted()
-                                .collect(StringBuilder::new,
-                                        (sb, c) -> sb.append((char) c),
-                                        StringBuilder::append).toString()))
-                .values().stream()
-                .filter(group -> group.size() >= minGroupSize)
-                .map(group -> group.size() + ": " + group)
-                .forEach(System.out::println);
+                groupingBy(word -> word.chars().sorted()
+                    .collect(StringBuilder::new,
+                        (sb, c) -> sb.append((char)c),
+                        StringBuilder::append).toString()))
+            .values().stream()
+            .filter(group -> group.size() >= minGroupSize)
+            .map(group -> group.size() + ": " + group)
+            .forEach(System.out::println);
     }
 
     @Test
     public void ThreadPoolExecutor_실행_테스트() {
         executorService.submit(() -> System.out.println("test"));
     }
-
-    static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Test
     public void printAllOld() {
@@ -131,12 +148,7 @@ class PlayGroundTest {
     @Test
     public void Function_예제() {
         println("Area is ", 2, 3,
-                (message, length, width) -> message + (length * width));
-    }
-
-    @FunctionalInterface
-    interface TriFunction<T1, T2, T3, R> {
-        R apply(T1 t1, T2 t2, T3 t3);
+            (message, length, width) -> message + (length * width));
     }
 
     private <T1, T2, T3> void println(T1 t1, T2 t2, T3 t3, TriFunction<T1, T2, T3, String> function) {
@@ -154,12 +166,6 @@ class PlayGroundTest {
 
         List<Integer> filteredLessThanThree = filter(numbers, lessThanThree);
         assertThat(filteredLessThanThree.size()).isEqualTo(8);
-    }
-
-    private static <T> List<T> filter(List<T> list, Predicate<T> condition) {
-        return list.stream()
-                .filter(condition)
-                .collect(toList());
     }
 
     @Test
@@ -186,12 +192,12 @@ class PlayGroundTest {
         int expected = 8;
 
         Integer usingStreamResult = numbers.stream()
-                .filter(number -> number > 2)
-                .filter(number -> number <= 5)
-                .map(number -> number * 2)
-                .filter(number -> number > 7)
-                .findFirst()
-                .get();
+            .filter(number -> number > 2)
+            .filter(number -> number <= 5)
+            .map(number -> number * 2)
+            .filter(number -> number > 7)
+            .findFirst()
+            .get();
 
         assertThat(usingStreamResult).isEqualTo(expected);
     }
@@ -199,11 +205,11 @@ class PlayGroundTest {
     @Test
     public void 타입추론은_언제_이루어질까() {
         Stream.of(1, 2, 3, 4, 5)
-                .filter(number -> number > 3)
-                .map(number -> number * 2)
-                .map(i -> "#" + i)
-                .findFirst()
-                .get();
+            .filter(number -> number > 3)
+            .map(number -> number * 2)
+            .map(i -> "#" + i)
+            .findFirst()
+            .get();
     }
 
     @Test
@@ -233,34 +239,23 @@ class PlayGroundTest {
     @Test
     public void Lazy_Evaluation_테스트() {
         Stream<String> stream = Stream.of(1, 2, 3, 4, 5)
-                .peek(i -> log("starting", i))
-                .filter(i -> {
-                    log("filtering", i);
-                    return i > 3;
-                })
-                .peek(i -> log("post filtering", i))
-                .map(v -> v * 2)
-                .map(i -> "#" + i)
-                .peek(i -> log("post converting", i));
+            .peek(i -> log("starting", i))
+            .filter(i -> {
+                log("filtering", i);
+                return i > 3;
+            })
+            .peek(i -> log("post filtering", i))
+            .map(v -> v * 2)
+            .map(i -> "#" + i)
+            .peek(i -> log("post converting", i));
 
         log("Invoking terminal method count.\n");
         log("The count is", stream.count());
     }
 
-    public static void log(Object... objects) {
-        StringBuilder now = new StringBuilder(LocalDateTime.now().toString());
-
-        for (Object object : objects) {
-            now.append(" - ").append(object.toString());
-        }
-
-        System.out.println(now);
-
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @FunctionalInterface
+    interface TriFunction<T1, T2, T3, R> {
+        R apply(T1 t1, T2 t2, T3 t3);
     }
 
     // @Test

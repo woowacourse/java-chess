@@ -50,8 +50,6 @@ public class ChessBoard {
 
         for (File value : File.values()) {
             initialWhitePawnSquares.add(new Square(value, Rank.TWO));
-        }
-        for (File value : File.values()) {
             initialBlackPawnSquares.add(new Square(value, Rank.SEVEN));
         }
         for (Square initialWhitePawnSquare : initialWhitePawnSquares) {
@@ -75,40 +73,24 @@ public class ChessBoard {
     private void initializeBishops() {
         List<File> initialBishopFiles = List.of(File.C, File.F);
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, Rank.ONE);
-            board.put(square, new Bishop(WHITE));
-        }
-        for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, Rank.EIGHT);
-            board.put(square, new Bishop(BLACK));
+            board.put(new Square(initialBishopFile, Rank.ONE), new Bishop(WHITE));
+            board.put(new Square(initialBishopFile, Rank.EIGHT), new Bishop(BLACK));
         }
     }
 
     private void initializeKnights() {
         List<File> initialKnightFiles = List.of(File.B, File.G);
-
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, Rank.ONE);
-            board.put(square, new Knight(WHITE));
-        }
-
-        for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, Rank.EIGHT);
-            board.put(square, new Knight(BLACK));
+            board.put(new Square(initialKnightFile, Rank.ONE), new Knight(WHITE));
+            board.put(new Square(initialKnightFile, Rank.EIGHT), new Knight(BLACK));
         }
     }
 
     private void initializeRooks() {
         List<File> initialRookFiles = List.of(File.A, File.H);
-
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, Rank.ONE);
-            board.put(square, new Rook(WHITE));
-        }
-
-        for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, Rank.EIGHT);
-            board.put(square, new Rook(BLACK));
+            board.put(new Square(initialRookFile, Rank.ONE), new Rook(WHITE));
+            board.put(new Square(initialRookFile, Rank.EIGHT), new Rook(BLACK));
         }
     }
 
