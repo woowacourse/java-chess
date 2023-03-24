@@ -10,7 +10,6 @@ import java.util.function.BiConsumer;
 public enum Command {
 
     START("start", (chessGame, ignored) -> chessGame.start()),
-
     END("end", (chessGame, ignored) -> chessGame.end()),
     MOVE("move", movePiece());
 
