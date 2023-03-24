@@ -64,9 +64,6 @@ public class Board {
         }
     }
 
-    // TODO [x]현재 위치가 empty인지 검사, [x]루트 검사, [x]도착지에 아군 기물이 있는지 검사
-    //  TODO 폰 : 대각선 이동시 도착지가 비어있으면 예외, 직선 이동시 도착지에 상대 기물이 있으면 예외
-
     public Map<Position, String> move(Position currentPosition, Position nextPosition) {
         validateEmpty(currentPosition);
         Piece pieceOfCurrentPosition = board.get(currentPosition);
@@ -111,7 +108,7 @@ public class Board {
 
     private boolean isExistAnotherPiece(List<Position> route) {
         return route.stream()
-                .map(position -> board.get(position))
+                .map(board::get)
                 .anyMatch(Piece::isPiece);
     }
 }

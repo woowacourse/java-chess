@@ -87,12 +87,4 @@ public abstract class AbstractPiece implements Piece {
     public int hashCode() {
         return Objects.hash(pieceData);
     }
-
-    @Override
-    public String toString() {
-        return "PieceIn{" +
-                "pieceData=" + pieceData +
-                ", moveRule=" + moveRule +
-                '}';
-    }
 }
