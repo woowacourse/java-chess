@@ -14,7 +14,7 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
     private static final Rook BLACK_ROOK = new Rook(BLACK);
     private static final Rook WHITE_ROOK = new Rook(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP, DOWN, RIGHT, LEFT);

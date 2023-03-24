@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Path {
+public final class Path {
 
     private final List<Position> positions;
 

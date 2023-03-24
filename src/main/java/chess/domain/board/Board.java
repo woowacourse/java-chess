@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Board {
+public final class Board {
 
     private final Map<Position, Piece> board;
     private Color turn;

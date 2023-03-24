@@ -9,7 +9,7 @@ import chess.domain.path.Path;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
 
     private static final King WHITE_KING = new King(WHITE);
     private static final King BLACK_KING = new King(BLACK);

@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
     private final static Queen BLACK_QUEEN = new Queen(BLACK);
     private final static Queen WHITE_QUEEN = new Queen(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(

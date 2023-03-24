@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
     private static final Map<String, Position> CACHE = new HashMap<>();
 

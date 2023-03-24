@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
     private static final Bishop BLACK_BISHOP = new Bishop(BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(

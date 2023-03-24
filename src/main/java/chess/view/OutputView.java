@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OutputView {
+public final class OutputView {
 
     private static final Map<Class<?>, String> PIECE_VALUE_MAP = new HashMap<>();
 

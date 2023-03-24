@@ -27,7 +27,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardFactory {
+public final class BoardFactory {
 
     public Board createInitialBoard() {
         Map<Position, Piece> board = new HashMap<>();

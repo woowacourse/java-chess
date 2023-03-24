@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     private static final Pawn WHITE_PAWN = new Pawn(WHITE);
     private static final Pawn BLACK_PAWN = new Pawn(BLACK);
 

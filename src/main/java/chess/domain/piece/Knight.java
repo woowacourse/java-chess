@@ -9,7 +9,7 @@ import chess.domain.path.Path;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
     private static final Knight BLACK_KNIGHT = new Knight(BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION =

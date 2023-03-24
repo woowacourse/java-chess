@@ -1,17 +1,16 @@
 package chess.controller;
 
-import static chess.ChessGameCommand.COMMAND_INDEX;
-import static chess.ChessGameCommand.DEFAULT_COMMAND_SIZE;
-import static chess.ChessGameCommand.EMPTY;
-import static chess.ChessGameCommand.END;
-import static chess.ChessGameCommand.FROM_INDEX;
-import static chess.ChessGameCommand.MOVE;
-import static chess.ChessGameCommand.MOVE_COMMAND_SIZE;
-import static chess.ChessGameCommand.START;
-import static chess.ChessGameCommand.STATUS;
-import static chess.ChessGameCommand.TO_INDEX;
+import static chess.controller.ChessGameCommand.COMMAND_INDEX;
+import static chess.controller.ChessGameCommand.DEFAULT_COMMAND_SIZE;
+import static chess.controller.ChessGameCommand.EMPTY;
+import static chess.controller.ChessGameCommand.END;
+import static chess.controller.ChessGameCommand.FROM_INDEX;
+import static chess.controller.ChessGameCommand.MOVE;
+import static chess.controller.ChessGameCommand.MOVE_COMMAND_SIZE;
+import static chess.controller.ChessGameCommand.START;
+import static chess.controller.ChessGameCommand.STATUS;
+import static chess.controller.ChessGameCommand.TO_INDEX;
 
-import chess.ChessGameCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
@@ -20,7 +19,7 @@ import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-public class ChessController {
+public final class ChessController {
     private final Board board;
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
 
