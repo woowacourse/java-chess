@@ -182,4 +182,13 @@ class PawnTest {
 
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void 폰인지_확인한다() {
+        final Piece pawn = new Pawn(A, SIX, BLACK);
+
+        final boolean actual = pawn.isPawn();
+
+        assertThat(actual).isTrue();
+    }
 }

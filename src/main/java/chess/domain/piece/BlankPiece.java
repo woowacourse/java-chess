@@ -36,6 +36,11 @@ public class BlankPiece extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public double getScore() {
         return 0;
     }

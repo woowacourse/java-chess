@@ -84,4 +84,13 @@ class KnightTest {
 
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void 폰인지_확인한다() {
+        final Piece knight = new Knight(B, EIGHT, BLACK);
+
+        final boolean actual = knight.isPawn();
+
+        assertThat(actual).isFalse();
+    }
 }

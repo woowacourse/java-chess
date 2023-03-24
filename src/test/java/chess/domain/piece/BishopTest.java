@@ -81,4 +81,13 @@ class BishopTest {
 
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void 폰인지_확인한다() {
+        final Piece bishop = new Bishop(F, EIGHT, BLACK);
+
+        final boolean actual = bishop.isPawn();
+
+        assertThat(actual).isFalse();
+    }
 }

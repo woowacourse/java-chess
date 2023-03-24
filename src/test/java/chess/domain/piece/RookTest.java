@@ -81,4 +81,13 @@ class RookTest {
 
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void 폰인지_확인한다() {
+        final Piece rook = new Rook(A, EIGHT, BLACK);
+
+        final boolean actual = rook.isPawn();
+
+        assertThat(actual).isFalse();
+    }
 }

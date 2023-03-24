@@ -80,4 +80,13 @@ class KingTest {
 
         assertThat(actual).isTrue();
     }
+
+    @Test
+    void 폰인지_확인한다() {
+        final Piece king = new King(E, EIGHT, BLACK);
+
+        final boolean actual = king.isPawn();
+
+        assertThat(actual).isFalse();
+    }
 }

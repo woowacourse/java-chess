@@ -35,6 +35,10 @@ public abstract class Piece {
         return pathPosstions.contains(position);
     }
 
+    public final boolean isInSameFile(final File file) {
+        return position.isSameFile(file);
+    }
+
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
@@ -60,6 +64,8 @@ public abstract class Piece {
     public abstract List<Position> getPassingPositions(final Position targetPosition);
 
     public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     public abstract double getScore();
 
