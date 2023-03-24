@@ -24,7 +24,7 @@ public class ChessGameDao {
     public Optional<ChessGameEntity> findById(final Long id) {
         final String query = "SELECT * FROM chess_game where id = ?";
         return template.findOne(query, resultSet -> new ChessGameEntity(
-                resultSet.getObject(1, Long.class),
+                resultSet.getLong(1),
                 resultSet.getString(2),
                 resultSet.getString(3),
                 resultSet.getString(4)
