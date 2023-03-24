@@ -28,10 +28,6 @@ public class Position {
             Rank.findByIndex(String.valueOf(fileRank.charAt(POSITION_RANK_INDEX))));
     }
 
-    public static int max() {
-        return MAXIMUM;
-    }
-
     private void validate(final int x, final int y) {
         if (isNotInRange(x, y)) {
             throw new IllegalArgumentException(OUT_OF_BOUNDS_ERROR_MESSAGE);

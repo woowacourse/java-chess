@@ -18,8 +18,8 @@ class MovablePathsTest {
     @Test
     void 경로에_도착지_없으면_예외() {
         MovablePaths movablePaths = new MovablePaths(
-            List.of(Path.ofMultiPath(Position.of(6, 6), Direction.NORTH_EAST, Position.max()),
-                Path.ofMultiPath(Position.of(6, 6), Direction.SOUTH_WEST, Position.max())));
+            List.of(Path.ofNoLimitPath(Position.of(6, 6), Direction.NORTH_EAST),
+                Path.ofNoLimitPath(Position.of(6, 6), Direction.SOUTH_WEST)));
 
         assertThatThrownBy(() -> movablePaths.findPathContainingPosition(Position.of(1, 5)))
             .isInstanceOf(IllegalArgumentException.class)
@@ -30,8 +30,8 @@ class MovablePathsTest {
     @Test
     void 경로에_도착지_있으면_반환() {
         MovablePaths movablePaths = new MovablePaths(
-            List.of(Path.ofMultiPath(Position.of(6, 6), Direction.NORTH_EAST, Position.max()),
-                Path.ofMultiPath(Position.of(6, 6), Direction.SOUTH_WEST, Position.max())));
+            List.of(Path.ofNoLimitPath(Position.of(6, 6), Direction.NORTH_EAST),
+                Path.ofNoLimitPath(Position.of(6, 6), Direction.SOUTH_WEST)));
 
         Path path = movablePaths.findPathContainingPosition(Position.of(1, 1));
 

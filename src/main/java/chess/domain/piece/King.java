@@ -11,6 +11,7 @@ import java.util.List;
 public class King extends Piece {
 
     private static final List<Direction> DIRECTIONS;
+    private static final int MOVE_LIMIT = 1;
 
     static {
         DIRECTIONS = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
@@ -25,7 +26,7 @@ public class King extends Piece {
     public MovablePaths findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : DIRECTIONS) {
-            paths.add(Path.ofSinglePath(current, direction));
+            paths.add(Path.ofLimitedPath(current, direction, MOVE_LIMIT));
         }
         return new MovablePaths(paths);
     }

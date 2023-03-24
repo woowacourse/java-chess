@@ -13,6 +13,7 @@ public class Pawn extends Piece {
     private static final int WHITE_START_RANK = 2;
     private static final int BLACK_START_RANK = 7;
     private static final int START_PATH_SIZE = 2;
+    private static final int MOVE_LIMIT = 1;
 
     private final List<Direction> directions;
 
@@ -32,11 +33,11 @@ public class Pawn extends Piece {
     public MovablePaths findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : directions) {
-            paths.add(Path.ofSinglePath(current, direction));
+            paths.add(Path.ofLimitedPath(current, direction, MOVE_LIMIT));
         }
 
         if (isStartRank(current)) {
-            paths.add(Path.ofMultiPath(current, getForwardDirectionByColor(), START_PATH_SIZE));
+            paths.add(Path.ofLimitedPath(current, getForwardDirectionByColor(), START_PATH_SIZE));
         }
         return new MovablePaths(paths);
     }

@@ -13,18 +13,17 @@ public class Path {
         this.positions = positions;
     }
 
-    public static Path ofSinglePath(final Position current, final Direction direction) {
+    public static Path ofLimitedPath(Position current, final Direction direction, final int size) {
         List<Position> positions = new ArrayList<>();
-        Position next = current.findNextPosition(direction);
-        if (next != null) {
-            positions.add(next);
+        while (positions.size() < size && (current = current.findNextPosition(direction)) != null) {
+            positions.add(current);
         }
         return new Path(positions);
     }
 
-    public static Path ofMultiPath(Position current, final Direction direction, final int size) {
+    public static Path ofNoLimitPath(Position current, final Direction direction) {
         List<Position> positions = new ArrayList<>();
-        while (positions.size() < size && (current = current.findNextPosition(direction)) != null) {
+        while ((current = current.findNextPosition(direction)) != null) {
             positions.add(current);
         }
         return new Path(positions);
