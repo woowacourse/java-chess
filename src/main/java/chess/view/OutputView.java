@@ -44,4 +44,8 @@ public final class OutputView {
         System.out.println("흰색의 점수 : " + calculateWhiteScore);
         System.out.println("흑색의 점수 : " + calculateBlackScore);
     }
+
+    public void printWinner(String name) {
+        System.out.println("승자는 : " + name);
+    }
 }

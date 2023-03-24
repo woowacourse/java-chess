@@ -14,7 +14,7 @@ public class Status extends Running {
     @Override
     public State execute(InputView inputView, OutputView outputView) {
         outputView.printStatus(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
-
+        outputView.printWinner(chessGame.winner().name());
         return inputCommand(inputView, outputView);
     }
 }
