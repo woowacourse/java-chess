@@ -1,5 +1,6 @@
 package domain.jdbc;
 
+import domain.ChessGame;
 import domain.chessboard.ChessBoard;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -29,10 +30,8 @@ public class ChessGameDaoTest {
 
     @Test
     @DisplayName("새로운 Chess Game 방을 만든다.")
-    void saveChessGame() {
-        chessGameDao.save(ChessBoard.generate());
+    void saveChessGame() { // 추후 테스트를 목 ChessGameDao 로 할 수 있도록하자.
+        chessGameDao.save(new ChessGame(ChessBoard.generate()));
     }
-
-
 
 }

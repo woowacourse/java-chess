@@ -5,7 +5,9 @@ import domain.chessboard.ChessBoard;
 
 public interface JdbcDao {
 
-    void save(ChessBoard chessBoard);
+    int save(ChessGame chessGame);
+
+    ChessGame selectNewGame(ChessGame chessGame);
 
     ChessGame select();
 
