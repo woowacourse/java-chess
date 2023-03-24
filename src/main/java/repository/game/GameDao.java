@@ -19,4 +19,6 @@ public interface GameDao {
     void deleteBoardById(long gameId);
 
     List<MoveHistoryDto> findMoveHistoryByGameId(long game_id);
+
+    List<MoveHistoryDto> findLastTwoMoveHistories(long gameId);
 }

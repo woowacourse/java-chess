@@ -131,4 +131,27 @@ public class JdbcGameDao implements GameDao{
             throw new RuntimeException(exception);
         }
     }
+
+    @Override
+    public List<MoveHistoryDto> findLastTwoMoveHistories(long gameId) {
+        final String query = "SELECT source, target, pieceOnTarget FROM moveHistory "
+                + "WHERE r_id = ? "
+                + "ORDER BY _id DESC "
+                + "LIMIT 2";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, gameId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<MoveHistoryDto> moveHistoryDtos = new ArrayList<>();
+            while (resultSet.next()) {
+                String source = resultSet.getString("source");
+                String target = resultSet.getString("target");
+                String piece = resultSet.getString("pieceOnTarget");
+                moveHistoryDtos.add(new MoveHistoryDto(source, target, piece));
+            }
+            return moveHistoryDtos;
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 }

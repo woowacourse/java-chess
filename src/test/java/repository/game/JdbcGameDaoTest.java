@@ -69,4 +69,23 @@ class JdbcGameDaoTest {
         List<BoardDto> boardDto = jdbcGameDao.findBoardByRoomId(gameId);
         assertThat(boardDto).isEmpty();
     }
+
+    @Test
+    @DisplayName("gameId를 전달 받아 가장 마지막에 해당하는 moveHistory 2개를 가져온다.")
+    void findLastTwoMoveHistories() {
+        long gameId = jdbcChessDao.createRoom("테스트");
+        MoveHistoryDto moveHistoryDto1 = new MoveHistoryDto("a2", "a3", "EMPTY");
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto1);
+        MoveHistoryDto moveHistoryDto2 = new MoveHistoryDto("a1", "a6", "PAWN");
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto2);
+        MoveHistoryDto moveHistoryDto3 = new MoveHistoryDto("b7", "b3", "KNIGHT");
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto3);
+
+        List<MoveHistoryDto> moveHistoryDtos = jdbcGameDao.findLastTwoMoveHistories(gameId);
+
+        for (MoveHistoryDto moveHistoryDto : moveHistoryDtos) {
+            System.out.println(moveHistoryDto.getPiece());
+        }
+        assertThat(moveHistoryDtos).containsExactly(moveHistoryDto3, moveHistoryDto2);
+    }
 }
