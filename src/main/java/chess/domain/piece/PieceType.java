@@ -1,23 +1,24 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import java.util.Arrays;
 
 public enum PieceType {
 
-    PAWN(1),
-    KING(0),
-    QUEEN(9),
-    KNIGHT(2.5),
-    BISHOP(3),
-    ROOK(5);
+    PAWN(Score.from(1)),
+    KING(Score.from(0)),
+    QUEEN(Score.from(9)),
+    KNIGHT(Score.from(2.5)),
+    BISHOP(Score.from(3)),
+    ROOK(Score.from(5));
 
-    private final double score;
+    private final Score score;
 
-    PieceType(double score) {
+    PieceType(final Score score) {
         this.score = score;
     }
 
-    public double getScore() {
+    public Score getScore() {
         return score;
     }
 

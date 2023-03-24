@@ -51,7 +51,7 @@ public abstract class Piece {
     }
 
     public Score getScore() {
-        return Score.from(type.getScore());
+        return type.getScore();
     }
 
     public boolean isSameColorAndType(final TeamColor color, final PieceType type) {
