@@ -74,9 +74,9 @@ public class ChessGame {
         }
         status = GameStatus.END;
     }
-    
-    public boolean isStop() {
-        return status == GameStatus.END || status == GameStatus.CATCH;
+
+    public boolean isEnd() {
+        return status == GameStatus.END;
     }
 
     public boolean isCatch() {

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.controller;
 
 import java.util.List;
 
@@ -41,24 +41,8 @@ public class CommandLine {
 
     public List<String> getArguments() {
         if (this.tokens.size() != TWO_ARGUMENT_SIZE) {
-            throw new IllegalStateException("인자를 반환할 수 없는 명령입니다.");
+            return List.of();
         }
         return this.tokens.subList(SOURCE_INDEX, TARGET_INDEX);
-    }
-    
-    public boolean isStart() {
-        return START.equals(this.getCommand());
-    }
-    
-    public boolean isMove() {
-        return MOVE.equals(this.getCommand());
-    }
-
-    public boolean isStatus() {
-        return STATUS.equals(this.getCommand());
-    }
-    
-    public boolean isEnd() {
-        return END.endsWith(this.getCommand());
     }
 }

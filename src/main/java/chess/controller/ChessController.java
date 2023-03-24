@@ -3,57 +3,65 @@ package chess.controller;
 import chess.controller.dto.BoardDto;
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.domain.CommandLine;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class ChessController {
-    
+    private final ChessGame chessGame;
+    private final Map<String, GameAction> commandMapper = new HashMap<>();
+
     public ChessController() {
+        this.chessGame = new ChessGame();
+        commandMapper.put("start", arguments -> start());
+        commandMapper.put("move", arguments -> move(arguments));
+        commandMapper.put("status", arguments -> status());
+        commandMapper.put("end", arguments -> end());
     }
-    
+
     public void execute() {
         OutputView.printGameStartMessage();
-        ChessGame chessGame = new ChessGame();
-        while (!chessGame.isStop()) {
-            runGame(chessGame);
+
+        while (!chessGame.isEnd() && !chessGame.isCatch()) {
+            runGame();
         }
+
         if (chessGame.isCatch()) {
             OutputView.printResultWhenKingCatch(chessGame.getTurn().reverse());
             return;
         }
         showStatus(chessGame);
     }
-    
-    private void runGame(final ChessGame chessGame) {
+
+    private void runGame() {
         try {
-            CommandLine commandLine = getCommandLine();
-            handleCommandLine(chessGame, commandLine);
-            OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
+            CommandLine commandLine = new CommandLine(InputView.readCommand());
+            commandMapper.get(commandLine.getCommand())
+                    .execute(commandLine.getArguments());
         } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
             OutputView.printError(e.getMessage());
         }
     }
-    
-    private CommandLine getCommandLine() {
-        return new CommandLine(InputView.readCommand());
+
+    private void start() {
+        chessGame.start();
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
     }
-    
-    private void handleCommandLine(final ChessGame chessGame, final CommandLine commandLine) {
-        if (commandLine.isStart()) {
-            chessGame.start();
-        }
-        if (commandLine.isMove()) {
-            chessGame.move(commandLine.getArguments());
-        }
-        if (commandLine.isStatus()) {
-            showStatus(chessGame);
-        }
-        if (commandLine.isEnd()) {
-            chessGame.end();
-        }
+
+    private void move(List<String> arguments) {
+        chessGame.move(arguments);
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
+    }
+
+    private void status() {
+        showStatus(chessGame);
+    }
+
+    private void end() {
+        chessGame.end();
     }
 
     private void showStatus(ChessGame chessGame) {
