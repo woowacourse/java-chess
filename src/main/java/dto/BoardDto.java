@@ -1,7 +1,6 @@
 package dto;
 
 import domain.board.Square;
-import domain.piece.Camp;
 import domain.piece.Piece;
 
 public class BoardDto {

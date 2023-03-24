@@ -107,6 +107,6 @@ class JdbcGameDaoTest {
         jdbcGameDao.deleteLatestTwoHistory(gameId);
         List<MoveHistoryDto> moveHistoryByGameId = jdbcGameDao.findMoveHistoryByGameId(gameId);
 
-        assertThat(moveHistoryByGameId).doesNotContain(moveHistoryDto4,moveHistoryDto5);
+        assertThat(moveHistoryByGameId).doesNotContain(moveHistoryDto4, moveHistoryDto5);
     }
 }

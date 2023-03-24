@@ -31,7 +31,7 @@ class PieceTest {
                 Arguments.of(new Pawn(Camp.WHITE), 1),
                 Arguments.of(new Knight(Camp.WHITE), 2.5),
                 Arguments.of(new Bishop(Camp.WHITE), 3),
-                Arguments.of(new Rook(Camp.WHITE),  5),
+                Arguments.of(new Rook(Camp.WHITE), 5),
                 Arguments.of(new Queen(Camp.WHITE), 9)
         );
     }

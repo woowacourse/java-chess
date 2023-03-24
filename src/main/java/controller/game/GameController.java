@@ -36,7 +36,6 @@ public class GameController {
     }
 
 
-
     public void gameStart(long roomId) {
         GameInfoDto gameInfo = chessService.getGameInfo(roomId);
         OutputView.printIsSavedGame(gameInfo.getBoardDtos().size());
