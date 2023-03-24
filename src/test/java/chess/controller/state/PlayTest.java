@@ -1,8 +1,21 @@
-package chess.model.game.state;
+package chess.controller.state;
 
 import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.A2;
 import static chess.helper.PositionFixture.A3;
+import static chess.helper.PositionFixture.A6;
+import static chess.helper.PositionFixture.B6;
+import static chess.helper.PositionFixture.B7;
+import static chess.helper.PositionFixture.C6;
+import static chess.helper.PositionFixture.C7;
+import static chess.helper.PositionFixture.C8;
+import static chess.helper.PositionFixture.E1;
+import static chess.helper.PositionFixture.E2;
+import static chess.helper.PositionFixture.E3;
+import static chess.helper.PositionFixture.F8;
+import static chess.helper.PositionFixture.G6;
+import static chess.helper.PositionFixture.G7;
+import static chess.helper.PositionFixture.H6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -11,6 +24,7 @@ import chess.controller.state.End;
 import chess.controller.state.GameState;
 import chess.controller.state.Play;
 import chess.controller.state.Ready;
+import chess.controller.state.Result;
 import chess.model.game.ChessGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +71,24 @@ class PlayTest {
     }
 
     @Test
+    @DisplayName("execute()는 move의 결과로 킹이 죽는다면 Result를 반환한다")
+    void execute_givenMoveCommandAndValidPositions_thenMoveAndReturnResult() {
+        // given
+        play = play.execute(GameCommand.MOVE, E2, E3);
+        play = play.execute(GameCommand.MOVE, B7, B6);
+        play = play.execute(GameCommand.MOVE, E1, E2);
+        play = play.execute(GameCommand.MOVE, C8, A6);
+        play = play.execute(GameCommand.MOVE, A2, A3);
+
+        // when
+        final GameState actual = play.execute(GameCommand.MOVE, A6, E2);
+
+        // then
+        assertThat(actual).isExactlyInstanceOf(Result.class);
+        assertThat(actual.isPrintable()).isFalse();
+    }
+
+    @Test
     @DisplayName("execute()는 명령어로 end가 주어지면 End를 반환한다.")
     void execute_givenEndCommand_thenReturnEnd() {
         // when
@@ -84,5 +116,15 @@ class PlayTest {
 
         // then
         assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("isPrintable()은 호출하면 false를 반환한다.")
+    void isPrintable_wheCall_thenReturnFalse() {
+        // when
+        final boolean actual = play.isPrintable();
+
+        // then
+        assertThat(actual).isFalse();
     }
 }

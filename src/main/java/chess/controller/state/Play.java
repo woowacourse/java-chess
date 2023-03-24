@@ -6,6 +6,7 @@ import chess.model.position.Position;
 
 public class Play implements GameState {
 
+    private static final boolean UN_PRINTABLE = false;
     private final ChessGame chessGame;
 
     public Play(final ChessGame chessGame) {
@@ -25,10 +26,18 @@ public class Play implements GameState {
 
     private GameState handleGameCommand(final GameCommand gameCommand, final Position source, final Position target) {
         if (gameCommand.isMove()) {
-            chessGame.move(source, target);
-            return this;
+            return handleMove(source, target);
         }
         return new End();
+    }
+
+    private GameState handleMove(final Position source, final Position target) {
+        chessGame.move(source, target);
+
+        if (chessGame.isGameOnGoing()) {
+            return this;
+        }
+        return new Result(UN_PRINTABLE);
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {
@@ -44,6 +53,11 @@ public class Play implements GameState {
 
     @Override
     public boolean isPlay() {
+        return true;
+    }
+
+    @Override
+    public boolean isPrintable() {
         return true;
     }
 }

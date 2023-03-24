@@ -1,4 +1,4 @@
-package chess.model.game.state;
+package chess.controller.state;
 
 import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.A2;
@@ -77,6 +77,16 @@ class ReadyTest {
     void isPlay_whenCall_thenReturnFalse() {
         // when
         final boolean actual = ready.isPlay();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("isPrintable()은 호출하면 false를 반환한다.")
+    void isPrintable_wheCall_thenReturnFalse() {
+        // when
+        final boolean actual = ready.isPrintable();
 
         // then
         assertThat(actual).isFalse();

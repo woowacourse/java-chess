@@ -23,4 +23,9 @@ public class End implements GameState {
     public boolean isPlay() {
         return false;
     }
+
+    @Override
+    public boolean isPrintable() {
+        return false;
+    }
 }

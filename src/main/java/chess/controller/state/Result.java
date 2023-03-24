@@ -1,19 +1,21 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.model.game.ChessGame;
 import chess.model.position.Position;
 
-public class Ready implements GameState {
+public class Result implements GameState {
 
-    private final ChessGame chessGame;
+    private static final boolean PRINTABLE = true;
 
-    public Ready(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    private final boolean printable;
+
+    Result(final boolean printable) {
+        this.printable = printable;
     }
 
     @Override
-    public GameState execute(final GameCommand gameCommand,
+    public GameState execute(
+            final GameCommand gameCommand,
             final Position ignoredSource,
             final Position ignoredTarget
     ) {
@@ -23,16 +25,18 @@ public class Ready implements GameState {
     }
 
     private GameState handleGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
-            chessGame.initialChessGame();
-            return new Play(chessGame);
+        if (gameCommand.isEnd()) {
+            return new End();
         }
-        return new End();
+        return new Result(PRINTABLE);
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {
+        if (gameCommand.isStart()) {
+            throw new IllegalArgumentException("게임을 시작할 수 없습니다.");
+        }
         if (gameCommand.isMove()) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+            throw new IllegalArgumentException("게임을 플레이할 수 없습니다.");
         }
     }
 
@@ -48,6 +52,6 @@ public class Ready implements GameState {
 
     @Override
     public boolean isPrintable() {
-        return false;
+        return printable;
     }
 }

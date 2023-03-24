@@ -10,4 +10,6 @@ public interface GameState {
     boolean isContinue();
 
     boolean isPlay();
+
+    boolean isPrintable();
 }
