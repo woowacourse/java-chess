@@ -1,17 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.DirectionVector.EAST;
-import static chess.domain.piece.DirectionVector.NORTH;
-import static chess.domain.piece.DirectionVector.NORTHEAST;
-import static chess.domain.piece.DirectionVector.NORTHWEST;
-import static chess.domain.piece.DirectionVector.SOUTH;
-import static chess.domain.piece.DirectionVector.SOUTHEAST;
-import static chess.domain.piece.DirectionVector.SOUTHWEST;
-import static chess.domain.piece.DirectionVector.WEST;
-
 import chess.domain.board.Square;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static chess.domain.piece.DirectionVector.*;
 
 public class Queen extends Piece {
 
@@ -30,10 +24,10 @@ public class Queen extends Piece {
     }
 
     private DirectionVector findDirectionVector(final Square source, final Square destination) {
-        final int distanceX = destination.calculateDistanceX(source);
-        final int distanceY = destination.calculateDistanceY(source);
+        final int distanceFile = destination.calculateDistanceFile(source);
+        final int distanceRank = destination.calculateDistanceRank(source);
         return directions.stream()
-                .filter(directions -> directions.isOnMyWay(distanceX, distanceY))
+                .filter(directions -> directions.isOnMyWay(distanceFile, distanceRank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 움직일 수 있는 경로가 아닙니다."));
     }

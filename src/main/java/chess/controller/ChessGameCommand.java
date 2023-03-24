@@ -1,8 +1,9 @@
 package chess.controller;
 
-import static java.lang.String.format;
-
 import java.util.Arrays;
+import java.util.Objects;
+
+import static java.lang.String.format;
 
 public enum ChessGameCommand {
 
@@ -17,7 +18,7 @@ public enum ChessGameCommand {
     }
 
     public static ChessGameCommand from(final String input) {
-        if (input.contains(MOVE.input)) {
+        if (Objects.nonNull(input) && input.contains(MOVE.input)) {
             return MOVE;
         }
         return Arrays.stream(ChessGameCommand.values())

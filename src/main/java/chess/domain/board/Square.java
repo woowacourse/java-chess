@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.DirectionVector;
+
 import java.util.Objects;
 
 public class Square {
@@ -26,11 +27,11 @@ public class Square {
         }
     }
 
-    public int calculateDistanceX(final Square square) {
+    public int calculateDistanceFile(final Square square) {
         return this.file.calculateDistance(square.file);
     }
 
-    public int calculateDistanceY(final Square square) {
+    public int calculateDistanceRank(final Square square) {
         return this.rank.calculateDistance(square.rank);
     }
 

@@ -13,16 +13,16 @@ public enum KnightVector {
     TWO_WEST_ONE_NORTH(-2, 1),
     TWO_WEST_ONE_SOUTH(-2, -1);
 
-    private final int x;
-    private final int y;
+    private final int unitFile;
+    private final int unitRank;
 
-    KnightVector(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    KnightVector(final int unitFile, final int unitRank) {
+        this.unitFile = unitFile;
+        this.unitRank = unitRank;
     }
 
-    public static boolean isExistMovableVector(final int distanceX, final int distanceY) {
+    public static boolean isExistMovableVector(final int distanceFile, final int distanceRank) {
         return Arrays.stream(KnightVector.values())
-                .anyMatch(knightVector -> knightVector.x == distanceX && knightVector.y == distanceY);
+                .anyMatch(knightVector -> knightVector.unitFile == distanceFile && knightVector.unitRank == distanceRank);
     }
 }

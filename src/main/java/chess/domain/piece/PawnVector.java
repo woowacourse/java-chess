@@ -13,12 +13,12 @@ public enum PawnVector {
     SOUTH_WEST(-1, -1),
     SOUTH_EAST(1, -1);
 
-    private final int x;
-    private final int y;
+    private final int unitFile;
+    private final int unitRank;
 
-    PawnVector(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    PawnVector(final int unitFile, final int unitRank) {
+        this.unitFile = unitFile;
+        this.unitRank = unitRank;
     }
 
     public static List<PawnVector> getVectorsByColor(final Color color) {
@@ -28,7 +28,7 @@ public enum PawnVector {
         return List.of(NORTH, TWO_NORTH, NORTH_WEST, NORTH_EAST);
     }
 
-    public boolean isMovable(final int distanceX, final int distanceY) {
-        return x == distanceX && y == distanceY;
+    public boolean isMovable(final int distanceFile, final int distanceRank) {
+        return unitFile == distanceFile && unitRank == distanceRank;
     }
 }

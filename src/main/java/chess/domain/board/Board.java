@@ -49,17 +49,17 @@ public class Board {
     }
 
     private boolean isDiagonalUnit(final Square source, final Square destination) {
-        final int distanceX = destination.calculateDistanceX(source);
-        final int distanceY = destination.calculateDistanceY(source);
-        return Math.abs(distanceX) == Math.abs(distanceY) && Math.abs(distanceX) == 1;
+        final int distanceFile = destination.calculateDistanceFile(source);
+        final int distanceRank = destination.calculateDistanceRank(source);
+        return Math.abs(distanceFile) == Math.abs(distanceRank) && Math.abs(distanceFile) == 1;
     }
 
     private boolean canMoveStraight(final Square source, final List<Square> routes) {
         final Piece piece = board.get(source);
         final Square destination = routes.get(0);
-        final int distanceY = Math.abs(destination.calculateDistanceY(source));
+        final int distanceRank = Math.abs(destination.calculateDistanceRank(source));
         return !board.containsKey(destination)
-                && (distanceY == 2 && source.isInitPawnPosition(piece.isBlack()) || (distanceY == 1));
+                && (distanceRank == 2 && source.isInitPawnPosition(piece.isBlack()) || (distanceRank == 1));
     }
 
     public void move(final Square source, final Square destination) {
