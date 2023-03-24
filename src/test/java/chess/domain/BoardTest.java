@@ -4,10 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
 
@@ -44,5 +48,23 @@ class BoardTest {
     @DisplayName("해당 팀의 현재 점수를 구한다.")
     void calculateScore() {
         assertThat(board.calculateScore(Team.WHITE)).isEqualTo(new Score(38));
+    }
+
+    @Test
+    @DisplayName("King이 존재하는지 확인한다.")
+    void hasKing() {
+        assertThat(board.hasKing(Team.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("King이 존재하지 않는지 확인한다.")
+    void hasNoKing() {
+        board.move(new Position(1, 7), new Position(3, 8));
+        board.move(new Position(3, 8), new Position(5, 7));
+        board.move(new Position(5, 7), new Position(7, 6));
+        board.move(new Position(7, 6), new Position(6, 4));
+        board.move(new Position(6, 4), new Position(8, 5));
+
+        assertThat(board.hasKing(Team.BLACK)).isFalse();
     }
 }

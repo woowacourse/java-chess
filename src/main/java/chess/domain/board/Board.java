@@ -4,6 +4,7 @@ import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +85,12 @@ public class Board {
                 .filter(key -> board.get(key).isSameTeam(team))
                 .map(key -> board.get(key).convertToScore())
                 .reduce(Score.min(), Score::add);
+    }
+
+    public boolean hasKing(Team team) {
+        return board.keySet().stream()
+                .filter(key -> board.get(key).isSameTeam(team))
+                .anyMatch(key -> board.get(key).getClass() == King.class);
     }
 
     public Map<Position, Piece> getBoard() {
