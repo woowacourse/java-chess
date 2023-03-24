@@ -12,7 +12,7 @@ class ChessGameTest {
     void createChessGame() {
         ChessGame chessGame = new ChessGame();
         Assertions.assertThat(chessGame.isNotRunning()).isTrue();
-        Assertions.assertThat(chessGame.isNotEnd()).isTrue();
+        Assertions.assertThat(chessGame.isContinued()).isTrue();
     }
     
     @Test
@@ -21,7 +21,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
         Assertions.assertThat(chessGame.isNotReady()).isTrue();
-        Assertions.assertThat(chessGame.isNotEnd()).isTrue();
+        Assertions.assertThat(chessGame.isContinued()).isTrue();
     }
     
     @Test

@@ -130,4 +130,8 @@ public final class Position implements Comparable<Position> {
     public Rank getRank() {
         return this.rank;
     }
+    
+    public String getLabel() {
+        return this.file.getLabel() + this.rank.getLabel();
+    }
 }

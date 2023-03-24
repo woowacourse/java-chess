@@ -2,6 +2,10 @@ package chess.domain.game;
 
 public interface Game extends ActionHandler, BoardProvider {
     
-    boolean isNotEnd();
+    boolean isContinued();
+    
+    boolean isEnd();
+    
+    boolean isOver();
     
 }

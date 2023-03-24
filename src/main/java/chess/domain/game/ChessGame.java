@@ -21,12 +21,6 @@ public class ChessGame implements Game {
         this.turn = Color.WHITE;
     }
     
-    private void isKingCaught() {
-        if (this.board.isKingDead()) {
-            this.end();
-        }
-    }
-    
     @Override
     public void start() {
         if (this.isNotReady()) {
@@ -43,7 +37,6 @@ public class ChessGame implements Game {
         this.board.checkColor(from, to, this.turn);
         this.board.checkRoute(from, to);
         this.board.move(from, to);
-        this.isKingCaught();
         this.turn = Color.reverse(this.turn);
     }
     
@@ -69,8 +62,18 @@ public class ChessGame implements Game {
     }
     
     @Override
-    public boolean isNotEnd() {
-        return this.progress != GameProgress.END;
+    public boolean isContinued() {
+        return this.progress != GameProgress.END && !this.board.isKingDead();
+    }
+    
+    @Override
+    public boolean isEnd() {
+        return this.progress == GameProgress.END;
+    }
+    
+    @Override
+    public boolean isOver() {
+        return this.board.isKingDead();
     }
     
     public boolean isNotRunning() {
