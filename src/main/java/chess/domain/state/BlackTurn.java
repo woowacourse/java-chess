@@ -1,11 +1,10 @@
 package chess.domain.state;
 
-import chess.domain.board.Position;
-import chess.domain.pieces.component.Team;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.view.Command;
 
-public class Black implements State {
+public class BlackTurn implements State {
 
     @Override
     public boolean isEnd() {
@@ -20,13 +19,13 @@ public class Black implements State {
         if (command.isMove()) {
             checkIsBlack(board, command.getCurrentPosition());
             board.movePiece(command.getCurrentPosition(), command.getTargetPosition());
-            return new White();
+            return new WhiteTurn();
         }
         return new End();
     }
 
     private void checkIsBlack(Board board, Position position) {
-        if (board.getBoard().get(position).getTeam() == Team.WHITE) {
+        if (!board.getBoard().get(position).isBlackTeam()) {
             throw new IllegalArgumentException("블랙의 차례입니다.");
         }
     }

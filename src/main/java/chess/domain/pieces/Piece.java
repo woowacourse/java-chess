@@ -38,6 +38,14 @@ public abstract class Piece {
         }
     }
 
+    public boolean isBlackTeam(){
+        return this.team == Team.BLACK;
+    }
+
+    public boolean isWhiteTeam(){
+        return this.team == Team.WHITE;
+    }
+
     abstract public void validateTeam(final Team team);
 
     abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
