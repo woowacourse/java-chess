@@ -1,5 +1,7 @@
 package techcourse.fp.chess.controller;
 
+import java.util.List;
+
 public enum Command {
     START,
     END,
@@ -7,32 +9,22 @@ public enum Command {
     STATUS,
     EMPTY;
 
-    public static Command createStartOrEnd(String input) {
-        if (input.equalsIgnoreCase(START.name())) {
-            return START;
-        }
-
-        if (input.equalsIgnoreCase(END.name())) {
-            return END;
-        }
-
-        throw new IllegalArgumentException("start나 end 명령어를 입력해주세요.");
+    public static Command createInitCommand(String input) {
+        final List<Command> rightCommands = List.of(START, END);
+        
+        return createSpecficCommand(input, rightCommands);
     }
 
-    //TODO: 네이밍 수정
-    public static Command createMoveOrEnd(String input) {
-        if (input.equalsIgnoreCase(MOVE.name())) {
-            return MOVE;
-        }
+    private static Command createSpecficCommand(final String input, final List<Command> rightCommands) {
+        return rightCommands.stream()
+                .filter(command -> command.name().equalsIgnoreCase(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하셨습니다."));
+    }
 
-        if (input.equalsIgnoreCase(END.name())) {
-            return END;
-        }
+    public static Command createInPlayCommand(String input) {
+        final List<Command> rightCommands = List.of(MOVE, END, STATUS);
 
-        if (input.equalsIgnoreCase(STATUS.name())) {
-            return STATUS;
-        }
-
-        throw new IllegalArgumentException("move나 end 명령어를 입력해주세요.");
+        return createSpecficCommand(input, rightCommands);
     }
 }

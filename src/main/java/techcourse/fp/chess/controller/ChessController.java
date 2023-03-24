@@ -43,7 +43,7 @@ public final class ChessController {
 
     private Command getInitialCommand() {
         try {
-            return Command.createStartOrEnd(inputView.readStartOrEndCommand());
+            return Command.createInitCommand(inputView.readInitCommand());
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception.getMessage());
             return getInitialCommand();
@@ -77,8 +77,8 @@ public final class ChessController {
     }
 
     private Command excuteCommand(final ChessGame chessGame) {
-        final CommandRequest commandRequest = inputView.readMoveOrEndCommand();
-        Command command = Command.createMoveOrEnd(commandRequest.getMessage());
+        final CommandRequest commandRequest = inputView.readInPlayCommand();
+        Command command = Command.createInPlayCommand(commandRequest.getMessage());
 
         final CommandRunner commandRunner = commandMapper.get(command);
         commandRunner.execute(commandRequest, chessGame);
