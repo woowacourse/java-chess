@@ -61,7 +61,7 @@ public class Pawn extends Piece {
     }
 
     private void checkMovableDestination(final Color destinationColor, final Direction direction) {
-        if (isStraightDirection(direction) && !color.isSameColor(Color.NONE)) {
+        if (isStraightDirection(direction) && !destinationColor.isSameColor(Color.NONE)) {
             throw new IllegalArgumentException(MOVE_FORWARD_ERROR_MESSAGE);
         }
         if (isDiagonalDirection(direction) && !destinationColor.isSameColor(color.getOpponent())) {
@@ -70,7 +70,7 @@ public class Pawn extends Piece {
     }
 
     private static boolean isStraightDirection(final Direction direction) {
-        return Math.abs(direction.getY()) == Direction.TOP.getY();
+        return Math.abs(direction.getX()) == Direction.TOP.getX() && Math.abs(direction.getY()) == Direction.TOP.getY();
     }
 
     private boolean isDiagonalDirection(final Direction direction) {
