@@ -1,12 +1,12 @@
 package techcourse.fp.mission;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 class StreamStudyTest {
 
     private List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
