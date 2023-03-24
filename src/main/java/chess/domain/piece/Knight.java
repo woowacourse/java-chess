@@ -23,8 +23,8 @@ public final class Knight extends NonSlidingPiece {
         final List<MovingStrategy> rawStrategies = List.of(
                 MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
                 MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
 
+        MovingStrategies strategies = new MovingStrategies(rawStrategies);
         return new Knight(color, strategies);
     }
 }
