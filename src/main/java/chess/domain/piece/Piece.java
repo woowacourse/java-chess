@@ -4,7 +4,7 @@ import chess.domain.position.RelativePosition;
 
 import static chess.domain.piece.Team.EMPTY;
 
-public abstract class Piece {
+public abstract class Piece implements PieceProvider {
 
     protected final PieceType pieceType;
     protected final Team team;
@@ -32,13 +32,15 @@ public abstract class Piece {
         return this.team == target.team;
     }
 
+    public abstract double getScore();
+
+    @Override
     public PieceType getPieceType() {
         return pieceType;
     }
 
+    @Override
     public Team getTeam() {
         return team;
     }
-
-    public abstract double getScore();
 }

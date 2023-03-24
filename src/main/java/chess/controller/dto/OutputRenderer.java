@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.PieceProvider;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
@@ -28,26 +28,26 @@ public class OutputRenderer {
         TEAM_TO_STRING.put(Team.EMPTY, " ");
     }
 
-    public static BoardDto toBoardDto(final List<List<Piece>> board) {
+    public static BoardDto toBoardDto(final List<? extends List<? extends PieceProvider>> board) {
         List<List<String>> boardDto = stringifyPieces(board);
         return new BoardDto(boardDto);
     }
 
-    private static List<List<String>> stringifyPieces(final List<List<Piece>> board) {
+    private static List<List<String>> stringifyPieces(final List<? extends List<? extends PieceProvider>> board) {
         List<List<String>> boardDto = new ArrayList<>();
-        for (List<Piece> line : board) {
+        for (List<? extends PieceProvider> line : board) {
             boardDto.add(stringifyLine(line));
         }
         return boardDto;
     }
 
-    private static List<String> stringifyLine(final List<Piece> line) {
+    private static List<String> stringifyLine(final List<? extends PieceProvider> line) {
         return line.stream()
                 .map(OutputRenderer::stringifySign)
                 .collect(Collectors.toList());
     }
 
-    private static String stringifySign(final Piece piece) {
+    private static String stringifySign(final PieceProvider piece) {
         String sign = PIECE_TO_STRING.get(piece.getPieceType());
         if (piece.getTeam() == Team.WHITE) {
             sign = sign.toLowerCase();
