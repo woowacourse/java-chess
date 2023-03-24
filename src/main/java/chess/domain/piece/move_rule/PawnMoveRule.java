@@ -29,16 +29,20 @@ public class PawnMoveRule implements MoveRule {
     public List<Position> move(Position currentPosition, Position nextPosition) {
         Position forwardOnePosition = currentPosition.move(Direction.ZERO, direction);
 
-        if (isInitPawn(currentPosition) && isTwoSquareForwardMove(currentPosition, nextPosition)) {
+        if (isTwoForwardMove(currentPosition, nextPosition)) {
             return List.of(forwardOnePosition);
         }
-        if (currentPosition.isNear(nextPosition) == false) {
+        if (!currentPosition.isNear(nextPosition)) {
             throw new IllegalArgumentException("폰이 갈 수 없는 위치입니다. 거리가 멉니다.");
         }
-        if (forwardOnePosition.isSameRank(nextPosition) == false) {
+        if (!forwardOnePosition.isSameRank(nextPosition)) {
             throw new IllegalArgumentException("해당 진영의 폰이 갈 수 없는 방향입니다.");
         }
         return Collections.emptyList();
+    }
+
+    private boolean isTwoForwardMove(Position currentPosition, Position nextPosition) {
+        return isInitialPosition(currentPosition) && isTwoSquareForwardMove(currentPosition, nextPosition);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class PawnMoveRule implements MoveRule {
         return true;
     }
 
-    private boolean isInitPawn(Position currentPosition) {
+    private boolean isInitialPosition(Position currentPosition) {
         if (direction.equals(Direction.PLUS) && currentPosition.isSameRank(WHITE_PAWN_INIT_RANK)) {
             return true;
         }
