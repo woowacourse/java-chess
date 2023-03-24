@@ -1,5 +1,6 @@
 package chess.domain.pieces;
 
+import static chess.domain.pieces.EmptyPiece.INVALID_EMPTY_PIECE_HAS_TEAM;
 import static chess.domain.pieces.EmptyPiece.INVALID_MOVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -24,6 +25,14 @@ class EmptyPieceTest {
     @DisplayName("EmptyPiece는 중립을 가진다.")
     void EmptyPiece는_중립을_가진다() {
         assertThat(emptyPiece.getTeam()).isEqualTo(Team.NEUTRALITY);
+    }
+
+    @Test
+    @DisplayName("EmptyPiece는 중립이 아니면 예외가 발생한다.")
+    void EmptyPiece는_중립이_아니면_예외가_발생한다() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> emptyPiece.validateTeam(Team.BLACK)
+        ).withMessage(INVALID_EMPTY_PIECE_HAS_TEAM);
     }
 
     @Test

@@ -8,6 +8,7 @@ import java.util.List;
 public final class EmptyPiece extends Piece {
 
     static final String INVALID_MOVE = "EmptyPiece는 이동할 수 없습니다.";
+    static final String INVALID_EMPTY_PIECE_HAS_TEAM = "EmptyPiece는 팀을 가질 수 없습니다.";
 
     public EmptyPiece() {
         super(Team.NEUTRALITY, Collections.emptyList());
@@ -15,6 +16,9 @@ public final class EmptyPiece extends Piece {
 
     @Override
     protected void validateTeam(final Team team) {
+        if (!team.isNeutrality()) {
+            throw new IllegalArgumentException(INVALID_EMPTY_PIECE_HAS_TEAM);
+        }
     }
 
     @Override
