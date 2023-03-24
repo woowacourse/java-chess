@@ -2,10 +2,13 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Score;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
+import java.util.Map;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -40,5 +43,18 @@ class RookTest {
 
         //then
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    void 기물의_점수_계산() {
+        //given
+        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.ROOK, 1L);
+        Rook rook = new Rook(Team.WHITE);
+
+        //when
+        Score actual = rook.calculateScore(pieceCountBoard);
+
+        //then
+        assertThat(actual).isEqualTo(new Score(5.0));
     }
 }

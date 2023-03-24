@@ -2,10 +2,13 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Score;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
 import chess.domain.position.File;
 import chess.domain.piece.info.Team;
+import java.util.Map;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -39,5 +42,18 @@ class KnightTest {
 
         //then
         assertThat(actual).isFalse();
+    }
+
+    @Test
+     void 기물의_점수_계산() {
+        //given
+        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.KNIGHT, 1L);
+        Knight knight = new Knight(Team.WHITE);
+
+        //when
+        Score actual = knight.calculateScore(pieceCountBoard);
+
+        //then
+        assertThat(actual).isEqualTo(new Score(2.5));
     }
 }

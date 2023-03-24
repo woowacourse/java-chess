@@ -2,11 +2,13 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Score;
 import chess.domain.Turn;
 import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -125,6 +127,36 @@ class PawnTest {
 
             //then
             assertThat(actual).isFalse();
+        }
+    }
+
+    @Nested
+    class 기물의_점수_계산 {
+
+        @Test
+        void 한_세로줄에_2개_이상이_있을_때_0_5점을_갖는다() {
+            //given
+            Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.PAWN, 2L);
+            Pawn pawn = new Pawn(Team.WHITE);
+
+            //when
+            Score actual = pawn.calculateScore(pieceCountBoard);
+
+            //then
+            assertThat(actual).isEqualTo(new Score(0.5));
+        }
+
+        @Test
+        void 한_세로줄에_1개만_있을_때_1점을_갖는다() {
+            //given
+            Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.PAWN, 1L);
+            Pawn pawn = new Pawn(Team.WHITE);
+
+            //when
+            Score actual = pawn.calculateScore(pieceCountBoard);
+
+            //then
+            assertThat(actual).isEqualTo(new Score(1.0));
         }
     }
 }

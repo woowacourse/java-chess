@@ -2,6 +2,8 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -35,7 +37,34 @@ class PositionTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Nested
+    class isSameFile {
+
+        @Test
+        void 같은_세로열에_있는_좌표라면_true를_반환() {
+            //given
+            Position criteria = Position.of(File.C, Rank.FIVE);
+
+            //when
+            boolean actual = criteria.isSameFile(File.C);
+
+            //then
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        void 같은_세로열에_있는_좌표가_아니라면_false를_반환() {
+            //given
+            Position criteria = Position.of(File.C, Rank.FIVE);
+
+            //when
+            boolean actual = criteria.isSameFile(File.D);
+
+            //then
+            assertThat(actual).isFalse();
+        }
+    }
+
     //TODO position.move() 테스트
     //TODO position.of, from 테스트
-
 }

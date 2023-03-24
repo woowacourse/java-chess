@@ -70,7 +70,7 @@ class FileTest {
     class 거리계산 {
 
         @Test
-        void 다른_rank를_받았을_때_거리를_반환한다() {
+        void 다른_file을_받았을_때_거리를_반환한다() {
             //given
             File criteria = File.E;
             File compare = File.D;
@@ -84,5 +84,16 @@ class FileTest {
         }
     }
 
-    //TODO rank.plus()
+    @Test
+    void 다른_정수값을_받았을_때_그만큼_이동한_좌표_File을_반환한다(){
+        //given
+        File criteria = File.B;
+        File expected = File.E;
+
+        //when
+        File actual = criteria.plus(3);
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
 }

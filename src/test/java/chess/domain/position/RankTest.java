@@ -83,5 +83,17 @@ class RankTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
-    //TODO file.plus()
+
+    @Test
+    void 다른_정수값을_받았을_때_그만큼_이동한_좌표_Rank을_반환한다(){
+        //given
+        Rank criteria = Rank.TWO;
+        Rank expected = Rank.FIVE;
+
+        //when
+        Rank actual = criteria.plus(3);
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
