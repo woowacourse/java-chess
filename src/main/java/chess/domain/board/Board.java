@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> piecePosition;
-    private final Color tune;
+    private final Color turn;
 
     public Board(Map<Position, Piece> pieces, Color color) {
         piecePosition = new HashMap<>(pieces);
-        tune = color;
+        turn = color;
     }
 
     public Board movePiece(Position origin, Position destination) {
@@ -36,14 +36,14 @@ public class Board {
     }
 
     private Color nextTune() {
-        if (tune == Color.BLACK) {
+        if (turn == Color.BLACK) {
             return Color.WHITE;
         }
         return Color.BLACK;
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
-        if (piecePosition.get(origin).getColor() != tune) {
+        if (piecePosition.get(origin).getColor() != turn) {
             throw new IllegalPieceMoveException();
         }
         if (piecePosition.get(origin) == EmptyPiece.getInstance()) {
@@ -71,4 +71,7 @@ public class Board {
         return new HashMap<>(piecePosition);
     }
 
+    public Color getTurn() {
+        return turn;
+    }
 }

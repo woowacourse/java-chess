@@ -115,3 +115,24 @@
 #### OutputView
 
 - [x] 체스판을 출력한다.
+
+### Database
+
+use chess;
+
+CREATE TABLE piece (
+rank_id VARCHAR(255) NOT NULL,
+file_id VARCHAR(255) NOT NULL,
+pieceType VARCHAR(255) NOT NULL,
+color VARCHAR(255) NOT NULL,
+turn VARCHAR(255) NOT NULL
+);
+
+#### ChessBB
+
+- Create
+    - [x] 데이터 베이스에 해당 보드를 모두 지운 뒤 저장한다.
+- Read
+    - [x] 데이터 베이스에 저장된 보드를 읽어온다.
+- Delete
+    - [x] 데이터 베이스에 있는 모든 보드 정보를 삭제한다.

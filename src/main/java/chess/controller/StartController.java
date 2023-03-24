@@ -1,20 +1,10 @@
 package chess.controller;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.dto.BoardDto;
-import chess.domain.dto.PieceDto;
 import chess.domain.game.Game;
 import chess.domain.game.GameSession;
-import chess.domain.piece.Piece;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class StartController implements Controller {
     private final static StartController INSTANCE = new StartController();
@@ -56,16 +46,7 @@ public class StartController implements Controller {
     }
 
     public BoardDto makeBoardDto(Game game) {
-        Map<Position, Piece> data = game.getBoard().getBoardData();
-        List<List<PieceDto>> response = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            List<PieceDto> pieceRespons = Arrays.stream(File.values())
-                    .map(file -> Position.of(file, rank))
-                    .map(data::get)
-                    .map(PieceDto::from)
-                    .collect(Collectors.toList());
-            response.add(pieceRespons);
-        }
-        return new BoardDto(response);
+        Board board = game.getBoard();
+        return BoardDto.of(board);
     }
 }
