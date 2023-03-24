@@ -32,4 +32,4 @@ out/
 .vscode/
 
 ### chess
-docker/
+db/
