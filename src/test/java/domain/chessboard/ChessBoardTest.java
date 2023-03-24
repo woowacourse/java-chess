@@ -92,7 +92,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = ChessBoard.generate();
 
         // When&Then
-        assertThat(chessBoard.isCheckMate()).isFalse();
+        assertThat(chessBoard.isNotTwoKing()).isFalse();
     }
 
     /*
@@ -113,7 +113,7 @@ public class ChessBoardTest {
         chessBoard.findSquare(PositionFactory.createPosition("e8")).beEmpty();
 
         // When&Then
-        assertThat(chessBoard.isCheckMate()).isTrue();
+        assertThat(chessBoard.isNotTwoKing()).isTrue();
         assertThat(chessBoard.isExistKingThisColor(Color.BLACK)).isFalse();
     }
 
@@ -135,7 +135,7 @@ public class ChessBoardTest {
         chessBoard.findSquare(PositionFactory.createPosition("e1")).beEmpty();
 
         // When&Then
-        assertThat(chessBoard.isCheckMate()).isTrue();
+        assertThat(chessBoard.isNotTwoKing()).isTrue();
         assertThat(chessBoard.isExistKingThisColor(Color.WHITE)).isFalse();
     }
 

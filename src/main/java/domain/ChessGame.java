@@ -111,7 +111,7 @@ public class ChessGame {
     }
 
     public boolean isCheckMate() {
-        return chessBoard.isCheckMate();
+        return chessBoard.isNotTwoKing();
     }
 
     public ChessBoard getChessBoard() {

@@ -56,7 +56,7 @@ public class ChessBoard {
         return sum - diffScore(color);
     }
 
-    public boolean isCheckMate() {
+    public boolean isNotTwoKing() {
         return chessBoard.stream()
                 .flatMap(rank -> rank.getRank().stream())
                 .filter(square -> square.isSameType(PieceType.KING))
