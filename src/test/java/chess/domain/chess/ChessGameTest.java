@@ -1,10 +1,13 @@
 package chess.domain.chess;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -34,5 +37,33 @@ class ChessGameTest {
         // when, then
         assertThat(chessGame.isKingAlive())
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("WHITE 진영의 체스판을 반환한다.")
+    void getWhiteBoard() {
+        // given
+        final ChessGame chessGame = new ChessGame();
+
+        // when
+        final Map<Position, Piece> whiteBoard = chessGame.getWhiteBoard();
+
+        // then
+        assertThat(whiteBoard.size())
+                .isEqualTo(16);
+    }
+
+    @Test
+    @DisplayName("BLACK 진영의 체스판을 반환한다.")
+    void getBlackBoard() {
+        // given
+        final ChessGame chessGame = new ChessGame();
+
+        // when
+        final Map<Position, Piece> blackBoard = chessGame.getBlackBoard();
+
+        // then
+        assertThat(blackBoard.size())
+                .isEqualTo(16);
     }
 }

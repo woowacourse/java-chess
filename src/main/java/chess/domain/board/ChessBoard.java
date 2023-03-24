@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
@@ -49,9 +50,15 @@ public final class ChessBoard {
 
     public List<Piece> getAliveKings() {
         return board.keySet().stream()
-                .filter(position -> board.get(position).isKing())
                 .map(board::get)
+                .filter(Piece::isKing)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Map<Position, Piece> getBoardByCamp(final CampType campType) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameCamp(campType))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, final Position currentPosition) {

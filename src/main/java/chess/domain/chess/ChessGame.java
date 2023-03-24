@@ -27,6 +27,14 @@ public final class ChessGame {
         return aliveKings.size() == ALL_KING_ALIVE_COUNT;
     }
 
+    public Map<Position, Piece> getWhiteBoard() {
+        return chessBoard.getBoardByCamp(CampType.WHITE);
+    }
+
+    public Map<Position, Piece> getBlackBoard() {
+        return chessBoard.getBoardByCamp(CampType.BLACK);
+    }
+
     private void play(final Position source, final Position target) {
         validateCamp(source);
         validateTargetSameCamp(target);

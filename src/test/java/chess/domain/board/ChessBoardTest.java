@@ -124,4 +124,21 @@ class ChessBoardTest {
         assertThat(aliveKings.size())
                 .isSameAs(2);
     }
+
+    @Test
+    @DisplayName("입력받은 진영의 체스판을 반환한다.")
+    void getBoardByCamp() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
+
+        // when
+        final Map<Position, Piece> whiteBoard = chessBoard.getBoardByCamp(CampType.WHITE);
+        final Map<Position, Piece> blackBoard = chessBoard.getBoardByCamp(CampType.BLACK);
+
+        // then
+        assertThat(whiteBoard.size())
+                .isEqualTo(16);
+        assertThat(blackBoard.size())
+                .isEqualTo(16);
+    }
 }
