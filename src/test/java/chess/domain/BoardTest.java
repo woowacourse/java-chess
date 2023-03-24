@@ -166,8 +166,8 @@ class BoardTest {
     @DisplayName("진영의 점수를 계산한다")
     class CalculatePoint {
         @Test
-        @DisplayName("Black 진영의 점수를 계산한다")
-        void checkWhiteTeamPoint() {
+        @DisplayName("점수를 계산한다")
+        void BasicPoint() {
             Board board = Board.create();
             board.initialize();
             board.replace(Position.from("a2"), Position.from("a8"));
@@ -186,7 +186,28 @@ class BoardTest {
             rnbqkbnr
              */
             double point = board.calculatePoint(Color.BLACK);
-            assertThat(point).isEqualTo(25L);
+            assertThat(point).isEqualTo(25);
+        }
+
+        @Test
+        @DisplayName("같은 세로줄에 같은 색의 폰이 있는 경우의 점수를 계산한다")
+        void DoublePawnPoint() {
+            Board board = Board.create();
+            board.initialize();
+            board.replace(Position.from("a2"), Position.from("b3"));
+
+            /*
+            RNBQKBNR
+            PPPPPPPP
+            ........
+            ........
+            ........
+            .p......
+            .ppppppp
+            rnbqkbnr
+            */
+            double point = board.calculatePoint(Color.WHITE);
+            assertThat(point).isEqualTo(37);
         }
     }
 }

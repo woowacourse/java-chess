@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -19,6 +19,7 @@ public class Board {
     public static final int WHITE_PAWNS_RANK = 1;
     public static final int BLACK_PAWNS_RANK = 6;
     public static final int BLACK_GENERALS_RANK = 7;
+    private static final double PIECE_EXCLUSIVE_POINT = 0.5;
 
     private final Map<Position, Piece> board;
 
@@ -130,15 +131,23 @@ public class Board {
     }
 
     public double calculatePoint(Color color) {
-        List<Piece> colorPieces = getColorPieces(color);
-        return colorPieces.stream()
-                .mapToDouble(piece -> piece.getType().getPoint())
-                .sum();
-    }
-
-    private List<Piece> getColorPieces(Color color) {
-        return board.values().stream()
-                .filter(piece -> piece.isSameColor(color))
-                .collect(Collectors.toList());
+        double pointSum = 0;
+        for (File file : File.values()) {
+            int pawnCount = 0;
+            for (Rank rank : Rank.values()) {
+                Position position = Position.from(file, rank);
+                Piece piece = board.get(position);
+                if (piece.isSameColor(color)) {
+                    if (piece.getType() == PieceType.PAWN) {
+                        pawnCount += 1;
+                    }
+                    pointSum += piece.getType().getPoint();
+                }
+            }
+            if (pawnCount > 1) {
+                pointSum -= PIECE_EXCLUSIVE_POINT * pawnCount;
+            }
+        }
+        return pointSum;
     }
 }
