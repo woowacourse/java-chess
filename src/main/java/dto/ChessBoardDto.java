@@ -1,5 +1,6 @@
-package controller;
+package dto;
 
+import controller.ChessBoardElement;
 import domain.chessboard.ChessBoard;
 import domain.position.PositionFactory;
 import domain.piece.Color;
@@ -10,30 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class ChessBoardDTO {
+public final class ChessBoardDto {
 
     private static final int ROW_SIZE = 8;
 
     private final List<List<String>> rowDTOs;
 
-    private ChessBoardDTO(final List<List<String>> rowDTOs) {
+    private ChessBoardDto(final List<List<String>> rowDTOs) {
         this.rowDTOs = rowDTOs;
     }
 
-    public static ChessBoardDTO from(final ChessBoard chessBoard) {
+    public static ChessBoardDto from(final ChessBoard chessBoard) {
         List<List<String>> rowDTOs = new ArrayList<>();
 
         for (int i = 0; i < ROW_SIZE; i++) {
             rowDTOs.add(convertRowToChessBoardElement(chessBoard, i));
         }
 
-        return new ChessBoardDTO(rowDTOs);
+        return new ChessBoardDto(rowDTOs);
     }
 
     private static List<String> convertRowToChessBoardElement(final ChessBoard chessBoard, final int row) {
         return PositionFactory.findRow(row).stream()
                 .map(chessBoard::findPosition)
-                .map(ChessBoardDTO::convertPieceToElement)
+                .map(ChessBoardDto::convertPieceToElement)
                 .collect(Collectors.toList());
     }
 
@@ -49,4 +50,5 @@ public final class ChessBoardDTO {
     public List<List<String>> getRowDTOs() {
         return rowDTOs;
     }
+
 }
