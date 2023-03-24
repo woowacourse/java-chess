@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.info.Team;
 import java.util.Objects;
 
 public class Turn {

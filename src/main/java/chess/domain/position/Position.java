@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
     private static final Map<String, Position> CACHE;
 
@@ -15,34 +15,34 @@ public class Position {
         CACHE = new HashMap<>();
     }
 
-    private Position(Rank rank, File file) {
-        this.rank = rank;
+    private Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(Rank rank, File file) {
-        final String key = rank.name() + file.name();
-        CACHE.putIfAbsent(key, new Position(rank, file));
+    public static Position of(File file, Rank rank) {
+        final String key = file.name() + rank.name();
+        CACHE.putIfAbsent(key, new Position(file, rank));
         return CACHE.get(key);
     }
 
     public static Position from(String rawPosition) {
-        Rank rank = Rank.from(rawPosition.substring(0, 1));
-        File file = File.from(Integer.parseInt(rawPosition.substring(1)));
-        CACHE.putIfAbsent(rawPosition.toUpperCase(), new Position(rank, file));
+        File file = File.valueOf(rawPosition.substring(0, 1).toUpperCase());
+        Rank rank = Rank.from(Integer.parseInt(rawPosition.substring(1)));
+        CACHE.putIfAbsent(rawPosition.toUpperCase(), new Position(file, rank));
         return CACHE.get(rawPosition.toUpperCase());
     }
 
     public int calculateFileDistance(final Position source) {
-        return file.calculateDistance(source.file);
-    }
-
-    public int calculateRankDistance(final Position source) {
         return rank.calculateDistance(source.rank);
     }
 
+    public int calculateRankDistance(final Position source) {
+        return file.calculateDistance(source.file);
+    }
+
     public Position move(final int rankDirection, final int fileDirection) {
-        return Position.of(rank.plus(rankDirection), file.plus(fileDirection));
+        return Position.of(file.plus(rankDirection), rank.plus(fileDirection));
     }
 
     @Override
@@ -54,12 +54,12 @@ public class Position {
             return false;
         }
         final Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 
     public boolean isSameRank(final Rank rank) {

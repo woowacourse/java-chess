@@ -17,7 +17,7 @@ class PawnTest {
     void should_true반환_when_WHITE_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.TWO);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -32,7 +32,7 @@ class PawnTest {
     void should_true반환_when_BLACK_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.SEVEN);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.BLACK);
 
         //when
@@ -47,7 +47,7 @@ class PawnTest {
     void should_false반환_when_움직일_수_없는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.TWO);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -76,7 +76,7 @@ class PawnTest {
     void should_ture반환_when_팀이_WHITE일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.TWO);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -91,7 +91,7 @@ class PawnTest {
     void should_ture반환_when_팀이_BLACK일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.TWO);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.BLACK);
 
         //when
@@ -106,7 +106,7 @@ class PawnTest {
     void should_false반환_when_공격할_수_없는_위치라면(String rank, int file) {
         //given
         Position source = Position.of(File.C, Rank.TWO);
-        Position destination = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.valueOf(rank.toUpperCase()), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when

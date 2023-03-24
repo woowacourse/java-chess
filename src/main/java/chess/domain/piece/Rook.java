@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
 
 public class Rook extends Piece {
 

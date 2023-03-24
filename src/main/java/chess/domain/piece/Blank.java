@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.info.Team;
+import chess.domain.Team;
 import chess.domain.position.Position;
 
 public class Blank extends Piece {
