@@ -4,7 +4,7 @@ import domain.Section;
 import domain.type.Color;
 import domain.type.PieceType;
 
-public class King extends NonSlidingPiece {
+public final class King extends NonSlidingPiece {
 
     private King(final Color color) {
         super(color, PieceType.KING);

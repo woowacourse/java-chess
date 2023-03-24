@@ -3,7 +3,7 @@ package domain;
 import domain.type.Direction;
 import java.util.Objects;
 
-public class Location {
+public final class Location {
 
     private static final int MAX_COL = 8;
     private static final int MIN_COL = 1;

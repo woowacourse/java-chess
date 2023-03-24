@@ -2,7 +2,7 @@ package common;
 
 import java.util.function.Supplier;
 
-public class ExecuteContext {
+public final class ExecuteContext {
 
     public static <T> T repeatableExecute(final Supplier<T> executeStrategy) {
         T result = null;

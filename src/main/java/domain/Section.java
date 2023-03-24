@@ -2,7 +2,7 @@ package domain;
 
 import domain.piece.Piece;
 
-public class Section {
+public final class Section {
 
     private final Location location;
     private final Piece piece;

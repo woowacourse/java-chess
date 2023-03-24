@@ -4,7 +4,7 @@ import domain.Section;
 import domain.type.Color;
 import domain.type.PieceType;
 
-public class Pawn extends SlidingPiece {
+public final class Pawn extends SlidingPiece {
 
     private Pawn(final Color color) {
         super(color, PieceType.PAWN);

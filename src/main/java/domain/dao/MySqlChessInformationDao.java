@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MySqlChessInformationDao implements ChessInformationDao {
+public final class MySqlChessInformationDao implements ChessInformationDao {
 
     private static final String FIND_BOARD_INFORMATION_SQL = "select * from boardInformation where board_id = ?";
     private static final String FIND_COLOR_SQL = "select color from board where board_id = ?";

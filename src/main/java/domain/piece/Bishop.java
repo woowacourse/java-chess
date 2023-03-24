@@ -4,7 +4,7 @@ import domain.Section;
 import domain.type.Color;
 import domain.type.PieceType;
 
-public class Bishop extends SlidingPiece {
+public final class Bishop extends SlidingPiece {
 
     private Bishop(final Color color) {
         super(color, PieceType.BISHOP);

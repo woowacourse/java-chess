@@ -11,7 +11,7 @@ import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
-public class ChessController {
+public final class ChessController {
 
     private final ChessGame chessGame;
     private final InputView inputView;

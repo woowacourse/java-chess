@@ -4,7 +4,7 @@ import domain.Board;
 import domain.Location;
 import domain.type.Color;
 
-public class OutputView {
+public final class OutputView {
 
     public void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();

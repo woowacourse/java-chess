@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Board {
+public final class Board {
 
     private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";

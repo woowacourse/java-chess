@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class ScoreCalculator {
+public final class ScoreCalculator {
 
     private static final double PAWN_SUB_SCORE = 0.5;
 
