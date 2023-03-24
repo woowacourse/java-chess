@@ -6,9 +6,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public List<String> inputCommand() {
+    public static List<String> inputCommand() {
         String command = scanner.nextLine();
         return Arrays.stream(command.split(" ")).collect(Collectors.toList());
     }
