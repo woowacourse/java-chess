@@ -21,21 +21,7 @@ public class ChessController {
     private final ChessGameDao chessGameDao = new ChessGameDao("chess");
 
     public void run() {
-        User user = null;
-        while (user == null) {
-            OutputView.printLoginMessage();
-            Command loginCommand = readLoginCommand();
-            if (loginCommand == Command.LOGIN) {
-                user = login();
-            }
-            if (loginCommand == Command.REGISTER) {
-                try {
-                    user = register();
-                } catch (IllegalArgumentException e) {
-                    OutputView.printErrorMessage(e.getMessage());
-                }
-            }
-        }
+        User user = getUser();
         OutputView.printStartMessage();
         OutputView.printCommandMessage();
         Command initialCommand = readInitialCommand();
@@ -58,6 +44,25 @@ public class ChessController {
                 playerExistGame(games);
             }
         }
+    }
+
+    private User getUser() {
+        User user = null;
+        while (user == null) {
+            OutputView.printLoginMessage();
+            Command loginCommand = readLoginCommand();
+            if (loginCommand == Command.LOGIN) {
+                user = login();
+            }
+            if (loginCommand == Command.REGISTER) {
+                try {
+                    user = register();
+                } catch (IllegalArgumentException e) {
+                    OutputView.printErrorMessage(e.getMessage());
+                }
+            }
+        }
+        return user;
     }
 
     private void playerExistGame(List<Game> games) {
