@@ -13,7 +13,7 @@ public class Bishop extends SlidingPiece {
     }
 
     @Override
-    protected List<Movement> getCanMoveDestination() {
+    protected final List<Movement> getCanMoveDestination() {
         return CAN_MOVE_DESTINATION;
     }
 }
