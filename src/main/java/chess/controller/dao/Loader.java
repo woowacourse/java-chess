@@ -12,7 +12,7 @@ public class Loader {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
