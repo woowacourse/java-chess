@@ -126,7 +126,7 @@ public class Game {
     private Score calculateScoreToSubtractForSameFilePawnsOf(Side side) {
         List<Position> positionsOfPawns = collectPawnsPositionsOf(side);
         int countOfPawnsHaveSameFile = Arrays.stream(File.values())
-                .mapToInt(file -> getCountOfPawnsHaveSameAboutEachFile(positionsOfPawns, file))
+                .mapToInt(file -> getCountOfPawnsOnOneFile(positionsOfPawns, file))
                 .sum();
         return new Score(PAWN_ON_SAME_FILE_PENALTY * countOfPawnsHaveSameFile);
     }
@@ -140,7 +140,7 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
-    private int getCountOfPawnsHaveSameAboutEachFile(List<Position> positionsOfPawns, File file) {
+    private int getCountOfPawnsOnOneFile(List<Position> positionsOfPawns, File file) {
         int countOfPawnsOnThisFile = (int) positionsOfPawns.stream()
                 .filter(position -> position.hasFileOf(file))
                 .count();
