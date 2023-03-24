@@ -7,6 +7,7 @@ public class Queen implements Piece {
     private static final String ORIGINAL_NAME = "q";
 
     private final Team team;
+    private final double score = 9;
 
     private Queen(Team team) {
         this.team = team;
@@ -27,6 +28,14 @@ public class Queen implements Piece {
     @Override
     public Team team() {
         return team;
+    }
+
+    @Override
+    public double score(Team team) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
     }
 
     @Override

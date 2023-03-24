@@ -32,7 +32,7 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
         }
-        printChessBoard(game);
+        printChessBoard(command, game);
     }
 
     private Command readCommand() {
@@ -52,9 +52,12 @@ public class ChessController {
         }
     }
 
-    private void printChessBoard(Game game) {
+    private void printChessBoard(Command command, Game game) {
         if (game.isRunning()) {
             outputView.printChessBoard(game.board());
+        }
+        if (command.isStatus()) {
+            outputView.printScore(game.score());
         }
     }
 }

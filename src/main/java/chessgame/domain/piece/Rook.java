@@ -7,6 +7,7 @@ public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
 
     private final Team team;
+    private final double score = 5;
 
     private Rook(Team team) {
         this.team = team;
@@ -27,6 +28,14 @@ public class Rook implements Piece {
     @Override
     public String failMoveMsg() {
         return "룩은 상하좌우로만 이동 가능합니다.";
+    }
+
+    @Override
+    public double score(Team team) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
     }
 
     @Override

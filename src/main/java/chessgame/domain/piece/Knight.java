@@ -9,6 +9,7 @@ public class Knight implements Piece {
     private static final int DIAGONAL_DISTANCE = 1;
 
     private final Team team;
+    private final double score = 2.5;
 
     private Knight(Team team) {
         this.team = team;
@@ -32,6 +33,14 @@ public class Knight implements Piece {
     @Override
     public Team team() {
         return team;
+    }
+
+    @Override
+    public double score(Team team) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
     }
 
     @Override

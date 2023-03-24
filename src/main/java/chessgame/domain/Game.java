@@ -1,5 +1,7 @@
 package chessgame.domain;
 
+import java.util.Map;
+
 import chessgame.controller.Command;
 import chessgame.domain.point.Points;
 import chessgame.domain.state.Ready;
@@ -37,11 +39,19 @@ public class Game {
         board.move(points, state.team());
     }
 
+    public void calculateScore() {
+        board.calculateScore();
+    }
+
     public boolean isNotEnd() {
         return state.isNotEnd();
     }
 
     public Board board() {
         return board;
+    }
+
+    public Map<Team, Double> score() {
+        return board.score();
     }
 }

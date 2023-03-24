@@ -2,6 +2,7 @@ package chessgame.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,11 @@ import chessgame.domain.point.Points;
 
 public class Board {
     private final Map<Point, Piece> board;
+    private final Map<Team, Double> score;
 
     public Board() {
         this.board = GameBoardFactory.create();
+        this.score = new HashMap<>();
     }
 
     public void move(Points points, Team turn) {
@@ -73,6 +76,16 @@ public class Board {
 
     public Map<Point, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public void calculateScore() {
+        for (Team team : Team.values()) {
+            score.put(team, board.values().stream().mapToDouble(piece -> piece.score(team)).sum());
+        }
+    }
+
+    public Map<Team, Double> score() {
+        return Collections.unmodifiableMap(score);
     }
 
     @Override

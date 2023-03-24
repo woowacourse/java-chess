@@ -10,10 +10,10 @@ import chessgame.domain.point.Points;
 import chessgame.domain.point.Rank;
 
 public class Command {
+    public static final String STATUS = "status";
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
-
     private final String command;
     private final Points points;
 
@@ -30,7 +30,7 @@ public class Command {
         if (command.isBlank()) {
             throw new IllegalArgumentException("빈값을 입력하면 안됩니다.");
         }
-        if (START.equals(command) || END.equals(command)) {
+        if (START.equals(command) || END.equals(command) || STATUS.equals(command)) {
             return new Command(command, new Points(Collections.emptyList()));
         }
         return validateMove(command);
@@ -79,5 +79,9 @@ public class Command {
 
     public boolean isEnd() {
         return END.equals(command);
+    }
+
+    public boolean isStatus() {
+        return STATUS.equals(command);
     }
 }

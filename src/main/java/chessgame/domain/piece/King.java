@@ -41,6 +41,11 @@ public class King implements Piece {
     }
 
     @Override
+    public double score(Team team) {
+        return 0;
+    }
+
+    @Override
     public Team team() {
         return team;
     }

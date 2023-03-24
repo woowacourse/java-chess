@@ -1,6 +1,8 @@
 package chessgame.domain.point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum Rank {
@@ -42,5 +44,16 @@ public enum Rank {
         int result = value + rankMove;
 
         return find(result);
+    }
+
+    public List<Rank> upDown() {
+        List<Rank> ranks = new ArrayList<>();
+        if (this.value < EIGHT.value) {
+            ranks.add(move(1));
+        }
+        if (this.value > ONE.value) {
+            ranks.add(move(-1));
+        }
+        return ranks;
     }
 }

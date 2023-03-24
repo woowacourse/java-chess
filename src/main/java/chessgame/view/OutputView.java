@@ -3,6 +3,7 @@ package chessgame.view;
 import java.util.Map;
 
 import chessgame.domain.Board;
+import chessgame.domain.Team;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
@@ -42,5 +43,9 @@ public class OutputView {
 
     public void printErrorMsg(String msg) {
         System.out.println("[ERROR] " + msg);
+    }
+
+    public void printScore(Map<Team, Double> score) {
+        score.keySet().forEach(key -> System.out.println(key.color() + "팀 : " + score.get(key)));
     }
 }

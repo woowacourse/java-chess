@@ -1,8 +1,10 @@
 package chessgame.domain.point;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Point {
     private static final Map<String, Point> cache = new HashMap<>(64);
@@ -60,5 +62,12 @@ public class Point {
             "rank=" + file +
             ", file=" + rank +
             '}';
+    }
+
+    public List<Point> getUpDownPoints() {
+        return rank.upDown()
+            .stream()
+            .map(rank -> Point.of(file, rank))
+            .collect(Collectors.toList());
     }
 }

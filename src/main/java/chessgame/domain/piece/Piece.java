@@ -10,4 +10,6 @@ public interface Piece {
     Team team();
 
     String failMoveMsg();
+
+    double score(Team team);
 }

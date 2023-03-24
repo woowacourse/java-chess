@@ -9,6 +9,7 @@ public class Pawn implements Piece {
     private static final int DISTANCE = 1;
 
     private final Team team;
+    private final double score = 1;
 
     private Pawn(Team team) {
         this.team = team;
@@ -50,6 +51,14 @@ public class Pawn implements Piece {
             return false;
         }
         return points.rankDistance() == teamDirection(DISTANCE);
+    }
+
+    @Override
+    public double score(Team team) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
     }
 
     @Override

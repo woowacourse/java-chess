@@ -46,7 +46,7 @@ class GameTest {
 
             assertThatThrownBy(() -> game.setFrom(Command.of("start")))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("move와 end명령만 가능 합니다.");
+                .hasMessage("move와 status, end명령만 가능 합니다.");
         }
 
         @Test

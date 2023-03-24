@@ -9,8 +9,11 @@ public class WhiteTurn implements Running {
 
     @Override
     public void changeState(Game game, Command command) {
-        if (!(command.isMove() || command.isEnd())) {
-            throw new IllegalArgumentException("move와 end명령만 가능 합니다.");
+        if (!(command.isMove() || command.isEnd() || command.isStatus())) {
+            throw new IllegalArgumentException("move와 status, end명령만 가능 합니다.");
+        }
+        if (command.isStatus()) {
+            game.calculateScore();
         }
         if (command.isMove()) {
             game.setState(command, new BlackTurn());
