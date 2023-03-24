@@ -42,12 +42,14 @@ public class ChessController {
 
     private void startGame(ChessGame game) {
         game.startGame();
+        // TODO: 2023-03-24 DB game 생성
     }
 
     private void movePiece(ChessGame game, List<String> commands) {
         String source = commands.get(SOURCE_POSITION_INDEX);
         String destination = commands.get(DEST_POSITION_INDEX);
         game.executeMove(source, destination);
+        // TODO: 2023-03-24 DB 접근
         game.checkGameNotFinished();
     }
     private void displayGameStatus(ChessGame game) {
