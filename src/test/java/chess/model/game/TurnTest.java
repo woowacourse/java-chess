@@ -20,15 +20,15 @@ class TurnTest {
     }
 
     @Test
-    @DisplayName("findNextPlayer()는 호출하면 다음 차례를 진행할 플레이어의 진영을 반환한다.")
-    void findNextPlayer_whenCall_thenReturnNextPlayer() {
+    @DisplayName("findPlayer()는 호출하면 다음 차례를 진행할 플레이어의 진영을 반환한다.")
+    void findPlayer_whenCall_thenReturnNextPlayer() {
         final Turn turn = new Turn();
 
-        final Camp whiteCamp = turn.findNextPlayer();
+        final Camp whiteCamp = turn.findPlayer();
         assertThat(whiteCamp).isSameAs(Camp.WHITE);
         turn.processNextTurn();
 
-        final Camp blackCamp = turn.findNextPlayer();
+        final Camp blackCamp = turn.findPlayer();
         assertThat(blackCamp).isSameAs(Camp.BLACK);
     }
 
@@ -37,7 +37,7 @@ class TurnTest {
     void opposite_whenCall_thenReturnEnemyPlayer() {
         final Turn turn = new Turn();
 
-        final Camp camp = turn.findNextPlayer();
+        final Camp camp = turn.findPlayer();
         assertThat(camp).isSameAs(Camp.WHITE);
 
         turn.processNextTurn();

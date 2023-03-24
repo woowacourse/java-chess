@@ -20,7 +20,7 @@ public class ChessGame {
     public void move(final Position source, final Position target) {
         validateInitialChessGame();
         validatePosition(source, target);
-        chessBoard.move(source, target, turn.findNextPlayer());
+        chessBoard.move(source, target, turn.findPlayer());
         turn.processNextTurn();
     }
 
@@ -42,6 +42,10 @@ public class ChessGame {
 
     public PieceScore getScoreByCamp(final Camp camp) {
         return chessBoard.calculateScoreByCamp(camp);
+    }
+
+    public Camp getCurrentCamp() {
+        return turn.findPlayer();
     }
 
     public ChessBoardResponse getChessBoard() {
