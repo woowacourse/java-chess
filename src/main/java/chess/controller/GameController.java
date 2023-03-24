@@ -54,6 +54,9 @@ public class GameController {
 
         chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
         outputView.printChessBoard(chessGame.getBoard());
+        if (chessGame.isGameEnd()) {
+            return END;
+        }
         return command;
     }
 

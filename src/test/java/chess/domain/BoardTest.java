@@ -82,7 +82,6 @@ class BoardTest {
 
             Square src = Square.of(A, TWO);
             Square dst = Square.of(A, FOUR);
-
             board.move(src, dst);
 
             src = Square.of(B, TWO);
@@ -121,5 +120,13 @@ class BoardTest {
         Board board = new Board();
 
         assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(38.0);
+    }
+
+    @Test
+    @DisplayName("특정 팀의 King이 죽었는지 반환한다.")
+    void isKingDead() {
+        Board board = new Board();
+
+        assertThat(board.isKingDead(Team.WHITE)).isFalse();
     }
 }

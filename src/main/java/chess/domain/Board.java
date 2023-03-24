@@ -10,19 +10,13 @@ import chess.domain.square.Square;
 import java.util.Collections;
 import java.util.Map;
 
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.*;
 
 public class Board {
     private final Map<Square, Piece> board;
 
     public Board() {
         this.board = BoardGenerator.init();
-    }
-
-    public boolean isSameTeam(final Square src, final Team team) {
-        Piece piece = findPieceBy(src);
-        return piece.getTeam() == team;
     }
 
     public void move(final Square src, final Square dst) {
@@ -51,13 +45,6 @@ public class Board {
         return canMoveNextSquare(src, fileInterval, rankInterval);
     }
 
-    private Piece findPieceBy(final Square square) {
-        if (!board.containsKey(square)) {
-            throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
-        }
-        return board.get(square);
-    }
-
     private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
         Square square = src;
         int fileMoveDirection = getMoveDirection(fileInterval);
@@ -79,6 +66,25 @@ public class Board {
 
     private int getMoveInterval(final int fileInterval, final int rankInterval) {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
+    }
+
+    public boolean isSameTeam(final Square src, final Team team) {
+        Piece piece = findPieceBy(src);
+        return piece.getTeam() == team;
+    }
+
+    private Piece findPieceBy(final Square square) {
+        if (!board.containsKey(square)) {
+            throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
+        }
+        return board.get(square);
+    }
+
+    public boolean isKingDead(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .noneMatch(piece -> piece.getPieceType() == KING);
     }
 
     public double calculateTeamScore(final Team team) {
