@@ -9,6 +9,13 @@ import static chess.domain.PositionFixture.B2;
 import static chess.domain.PositionFixture.B4;
 import static chess.domain.PositionFixture.C1;
 import static chess.domain.PositionFixture.D1;
+import static chess.domain.PositionFixture.D4;
+import static chess.domain.PositionFixture.D5;
+import static chess.domain.PositionFixture.D7;
+import static chess.domain.PositionFixture.E1;
+import static chess.domain.PositionFixture.E2;
+import static chess.domain.PositionFixture.E3;
+import static chess.domain.PositionFixture.E4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -134,5 +141,35 @@ class BoardTest {
         assertThatThrownBy(() -> board.movePiece(A2, A4))
                 .isInstanceOf(ChessGameException.class)
                 .hasMessage("상대 말을 움직일 수 없습니다.");
+    }
+
+    @Test
+    void 처음에는_킹이_살아있다() {
+        //given
+        Board board = new Board();
+
+        //when
+        boolean isKingDead = board.isKingDead();
+
+        //then
+        assertThat(isKingDead).isFalse();
+    }
+
+    @Test
+    void 킹이_죽었다() {
+        //given
+        Board board = new Board();
+        board.movePiece(E2, E4);
+        board.movePiece(D7, D5);
+        board.movePiece(E1, E2);
+        board.movePiece(D5, D4);
+        board.movePiece(E2, E3);
+        board.movePiece(D4, E3);
+
+        //when
+        boolean isKingDead = board.isKingDead();
+
+        //then
+        assertThat(isKingDead).isTrue();
     }
 }

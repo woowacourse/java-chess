@@ -62,4 +62,11 @@ public class Board {
     public Map<Color, Double> getStatus() {
         return new ScoreCalculator(piecePosition).calculateScore();
     }
+
+    public boolean isKingDead() {
+        return piecePosition.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() != 2;
+    }
 }
