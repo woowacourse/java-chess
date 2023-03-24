@@ -77,4 +77,15 @@ public class Point {
                 ", rank=" + rank +
                 '}';
     }
+
+    public Point move(Direction direction) {
+        if (direction == Direction.UP) return up();
+        if (direction == Direction.DOWN) return down();
+        if (direction == Direction.LEFT) return left();
+        if (direction == Direction.RIGHT) return right();
+        if (direction == Direction.LEFT_UP) return leftUp();
+        if (direction == Direction.LEFT_DOWN) return leftDown();
+        if (direction == Direction.RIGHT_UP) return rightUp();
+        return rightDown();
+    }
 }

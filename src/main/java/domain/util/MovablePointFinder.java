@@ -15,30 +15,24 @@ public class MovablePointFinder {
     }
 
     public static List<Point> findMovablePoints(Point fromPoint, Point toPoint, List<List<Piece>> pieceStatus, Piece piece) {
-        List<Point> movablePoints = new ArrayList<>();
+        final List<Point> movablePoints = new ArrayList<>();
         Map<Direction, Integer> movableRange = piece.getMovableRange();
 
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.UP), Direction.UP);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.DOWN), Direction.DOWN);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT), Direction.LEFT);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT), Direction.RIGHT);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT_UP), Direction.LEFT_UP);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT_DOWN), Direction.LEFT_DOWN);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT_UP), Direction.RIGHT_UP);
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT_DOWN), Direction.RIGHT_DOWN);
-        movablePoints = onCaseOfPointOutOfBoard(pieceStatus, movablePoints);
+        movableRange.forEach((direction, integer) -> onCaseOfDirection(fromPoint, movablePoints, integer, direction));
+        onCaseOfPointOutOfBoard(pieceStatus, movablePoints);
 
         onCaseOfPieceBetWeenPath(pieceStatus, movablePoints, toPoint, piece);
 
         return movablePoints;
     }
 
-    private static List<Point> onCaseOfPointOutOfBoard(List<List<Piece>> pieceStatus, List<Point> movablePoints) {
+    private static void onCaseOfPointOutOfBoard(List<List<Piece>> pieceStatus, List<Point> movablePoints) {
         List<Point> newMovablePoints = new ArrayList<>(movablePoints);
         for (Point movablePoint : movablePoints) {
             checkPointOutOfBoard(pieceStatus, newMovablePoints, movablePoint);
         }
-        return newMovablePoints;
+        movablePoints.clear();
+        movablePoints.addAll(newMovablePoints);
     }
 
     private static void checkPointOutOfBoard(List<List<Piece>> pieceStatus, List<Point> newMovablePoints, Point movablePoint) {
@@ -59,19 +53,17 @@ public class MovablePointFinder {
 
     private static void addMovablePoints(Point point, List<Point> movablePoints, Integer movableCount, Direction direction) {
         Point movablePoint = point;
-        for (int i = 0; i < movableCount; i++) {
-            try {
-                if (direction == Direction.UP) movablePoint = movablePoint.up();
-                if (direction == Direction.DOWN) movablePoint = movablePoint.down();
-                if (direction == Direction.LEFT) movablePoint = movablePoint.left();
-                if (direction == Direction.RIGHT) movablePoint = movablePoint.right();
-                if (direction == Direction.LEFT_UP) movablePoint = movablePoint.leftUp();
-                if (direction == Direction.LEFT_DOWN) movablePoint = movablePoint.leftDown();
-                if (direction == Direction.RIGHT_UP) movablePoint = movablePoint.rightUp();
-                if (direction == Direction.RIGHT_DOWN) movablePoint = movablePoint.rightDown();
-                movablePoints.add(movablePoint);
-            } catch (PointOutOfBoardException ignored) {}
+        for (int count = 0; count < movableCount; count++) {
+            movablePoint = addMovablePoint(movablePoints, direction, movablePoint);
         }
+    }
+
+    private static Point addMovablePoint(List<Point> movablePoints, Direction direction, Point movablePoint) {
+        try {
+            movablePoint = movablePoint.move(direction);
+            movablePoints.add(movablePoint);
+        } catch (PointOutOfBoardException ignored) {}
+        return movablePoint;
     }
 
     private static void onCaseOfPieceBetWeenPath(List<List<Piece>> pieceStatus, List<Point> movablePoints, Point toPoint, Piece piece) {
