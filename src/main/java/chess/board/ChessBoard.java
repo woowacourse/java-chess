@@ -1,23 +1,13 @@
 package chess.board;
 
-import chess.piece.Bishop;
-import chess.piece.BlackPawn;
-import chess.piece.EmptyPiece;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.piece.Team;
-import chess.piece.WhitePawn;
-
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import chess.piece.EmptyPiece;
+import chess.piece.Piece;
 
 public class ChessBoard {
 
@@ -119,8 +109,8 @@ public class ChessBoard {
     }
 
     private void validateFileAndRank(final Position from, final Position to) {
-        validateSameRank(from, to);
         validateSameFile(from, to);
+        validateSameRank(from, to);
     }
 
     private void validateSameFile(final Position from, final Position to) {
@@ -163,6 +153,14 @@ public class ChessBoard {
         if (!validationPiece.isEmpty()) {
             throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
         }
+    }
+
+    public boolean isGameOver() {
+        final long numberOfKing = piecePosition.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count();
+        return numberOfKing != 2;
     }
 
     public Map<Position, Piece> getPiecePosition() {

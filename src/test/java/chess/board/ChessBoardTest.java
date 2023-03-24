@@ -1,28 +1,29 @@
 package chess.board;
 
-import chess.fixture.FixturePosition;
-import chess.piece.Bishop;
-import chess.piece.EmptyPiece;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.WhitePawn;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.piece.Team;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import chess.fixture.FixturePosition;
+import chess.piece.Bishop;
+import chess.piece.EmptyPiece;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.piece.Team;
+import chess.piece.WhitePawn;
 
 class ChessBoardTest {
 
@@ -546,5 +547,24 @@ class ChessBoardTest {
         }
     }
 
+    @Test
+    void isGameOver메서드는_king의_개수가_2가_아니면_true를_반환한다() {
+        // given
+        piecePosition.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
+        // when & then
+        assertThat(chessBoard.isGameOver()).isTrue();
+    }
+
+    @Test
+    void isGameOver메서드는_king의_개수가_2이면_false를_반환한다() {
+        // given
+        piecePosition.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
+        piecePosition.put(new Position(File.C, Rank.FOUR), new King(Team.WHITE));
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+        // when & then
+        assertThat(chessBoard.isGameOver()).isFalse();
+    }
 }
