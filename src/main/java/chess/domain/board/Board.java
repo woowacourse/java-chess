@@ -82,8 +82,8 @@ public class Board {
             return BLACK;
         }
         final List<Color> colorsOfKing = collectColorsOfKing();
-        if (colorsOfKing.size() >= 2) {
-            throw new IllegalStateException("게임이 끝나지 않은 것 같습니다!");
+        if (colorsOfKing.size() != 1) {
+            throw new IllegalStateException("승자를 결정할 수 없습니다!");
         }
         return colorsOfKing.get(0);
     }

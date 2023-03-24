@@ -19,7 +19,7 @@ public abstract class Piece {
 
     public abstract double calculateScore(boolean hasOtherPieceInSameFile);
 
-    protected void validateMovement(final Movement movement, List<Movement> availableMovements) {
+    protected final void validateMovement(final Movement movement, List<Movement> availableMovements) {
         if (!availableMovements.contains(movement)) {
             throw new IllegalStateException("움직일 수 없는 방향임!");
         }
