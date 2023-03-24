@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.pieces.pawn.WhitePawn;
 import chess.domain.position.Position;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.pawn.BlackPawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,8 +32,8 @@ class BoardTest {
     @Test
     @DisplayName("기물을 이동한다.")
     void 기물을_이동한다() {
-        Position currentPosition = new Position(1, 0);
-        Position targetPosition = new Position(3, 0);
+        Position currentPosition = new Position(6, 0);
+        Position targetPosition = new Position(4, 0);
 
         board.movePiece(currentPosition, targetPosition);
 
@@ -41,7 +41,7 @@ class BoardTest {
 
         assertAll(
                 () -> assertThat(values.get(currentPosition)).isInstanceOf(EmptyPiece.class),
-                () -> assertThat(values.get(targetPosition)).isInstanceOf(BlackPawn.class)
+                () -> assertThat(values.get(targetPosition)).isInstanceOf(WhitePawn.class)
         );
     }
 
