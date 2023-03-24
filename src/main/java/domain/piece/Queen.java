@@ -20,8 +20,11 @@ public class Queen extends SlidingPiece {
 
     @Override
     protected boolean isNotMovable(final Section start, final Section end) {
-        return (start.isNotSameLine(end)
-            && start.isNotDiagonal(end))
+        return isInvalidLocation(start, end)
             || start.isSameColor(end);
+    }
+
+    private boolean isInvalidLocation(final Section start, final Section end) {
+        return start.isNotSameLine(end) && start.isNotDiagonal(end);
     }
 }

@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class ChessGame {
 
+    private final ChessInformationDao chessInformationDao;
+    private final TransactionContext transactionContext;
     private String boardId;
     private Board board;
     private Color color;
-    private final ChessInformationDao chessInformationDao;
-    private final TransactionContext transactionContext;
 
     public ChessGame(final ChessInformationDao chessInformationDao, final TransactionContext transactionContext) {
         this.chessInformationDao = chessInformationDao;

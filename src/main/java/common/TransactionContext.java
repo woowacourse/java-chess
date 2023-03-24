@@ -33,7 +33,7 @@ public class TransactionContext {
         }
     }
 
-    private static void rollback(final Connection connection) {
+    private void rollback(final Connection connection) {
         try {
             connection.rollback();
         } catch (SQLException exception) {
@@ -41,7 +41,7 @@ public class TransactionContext {
         }
     }
 
-    private static void close(final Connection connection) {
+    private void close(final Connection connection) {
         try {
             connection.close();
         } catch (SQLException exception) {
@@ -49,7 +49,7 @@ public class TransactionContext {
         }
     }
 
-    private static void commit(final Connection connection) {
+    private void commit(final Connection connection) {
         try {
             connection.commit();
         } catch (SQLException exception) {

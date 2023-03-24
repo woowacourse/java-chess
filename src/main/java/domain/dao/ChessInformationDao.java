@@ -18,5 +18,6 @@ public interface ChessInformationDao {
     Void insert(final Map<Location, Piece> board, final String boardId, final Color color, final Connection connection)
         throws SQLException;
 
-    Void update(final Map<Location, Piece> board, final String boardId, final Color color, final Connection connection) throws SQLException;
+    Void update(final Map<Location, Piece> board, final String boardId, final Color color, final Connection connection)
+        throws SQLException;
 }

@@ -24,16 +24,15 @@ public class Board {
     }
 
     public void initialize() {
-        for (int column = 1; column <= 8; column++) {
-            putToBoard(column);
-        }
+        IntStream.rangeClosed(1, 8)
+            .forEach(this::putToBoard);
     }
 
     private void putToBoard(final int column) {
-        for (int row = 1; row <= 8; row++) {
+        IntStream.rangeClosed(1, 8).forEach(row -> {
             final Piece piece = BoardSetting.findPiece(Location.of(column, row));
             board.put(Location.of(column, row), piece);
-        }
+        });
     }
 
     public Piece moveWhite(final Location start, final Location end) {
