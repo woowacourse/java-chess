@@ -1,10 +1,12 @@
 package domain.game;
 
+import static domain.game.File.A;
 import static domain.game.File.B;
 import static domain.game.File.C;
 import static domain.game.File.D;
 import static domain.game.File.E;
 import static domain.game.File.F;
+import static domain.game.File.H;
 import static domain.game.Rank.FIVE;
 import static domain.game.Rank.FOUR;
 import static domain.game.Rank.ONE;
@@ -140,5 +142,38 @@ class GameTest {
         assertThatThrownBy(() -> game.move(Position.of(B, TWO), Position.of(B, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 움직임이 아닙니다.");
+    }
+
+    @DisplayName("게임 시작 직후 Black 진영의 점수를 요청하면 38점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf38WhenCalculateScoreOfWhiteRightAfterInitializeGame() {
+        Score score = game.calculateBlackScore();
+        assertThat(score.getNumber()).isEqualTo(38);
+    }
+
+    @DisplayName("Pawn 1개, Bishop 1개를 잃고 Pawn 2개가 한 File에 존재하는 White 진영의 점수를 요청하면 33.5점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf33AndHalfWhenCalculateScoreOfWhiteSideWhichLosePawnAndBishopAndTwoPawnIsOnSameFile() {
+        game.move(Position.of(A, TWO), Position.of(A, THREE));
+        game.move(Position.of(E, SEVEN), Position.of(E, FIVE));
+        game.move(Position.of(A, THREE), Position.of(A, FOUR));
+        game.move(Position.of(D, ONE), Position.of(H, FOUR));
+        game.move(Position.of(A, FOUR), Position.of(A, FIVE));
+        game.move(Position.of(H, FOUR), Position.of(F, TWO));
+        game.move(Position.of(A, FIVE), Position.of(A, SIX));
+        game.move(Position.of(F, TWO), Position.of(F, ONE));
+        game.move(Position.of(A, SIX), Position.of(B, SEVEN));
+        /* 이동 후 체스판 상태
+        RNB.KBNR
+        PpPP.PPP
+        ........
+        ....P...
+        ........
+        ........
+        .pppp.pp
+        rnbqkQnr
+        */
+        Score score = game.calculateWhiteScore();
+        assertThat(score.getScoreNumber()).isEqualTo(33.5);
     }
 }
