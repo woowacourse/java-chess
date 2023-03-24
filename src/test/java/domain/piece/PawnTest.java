@@ -19,8 +19,7 @@ class PawnTest {
     @DisplayName("검은색일 때 대문자 이름을 반환한다.")
     void getBlackNameTest() {
         // given
-        // Todo : Pawn 추상 클래스로 묶어주고 타입 값 수정하기!
-        BlackPawn pawn = new BlackPawn();
+        Piece pawn = new BlackPawn();
 
         // when
         String name = pawn.getName();
@@ -33,7 +32,7 @@ class PawnTest {
     @DisplayName("흰색일 때 소문자 이름을 반환한다.")
     void getWhiteNameTest() {
         // given
-        WhitePawn pawn = new WhitePawn();
+        Piece pawn = new WhitePawn();
 
         // when
         String name = pawn.getName();
@@ -47,7 +46,7 @@ class PawnTest {
     @DisplayName("검은색일 때 초기 위치일 경우 아래, 오른쪽 아래 대각선, 왼쪽 아래 대각선으로 한 칸, 아래로 두 칸 이동 할 수 있다.")
     void isMovableInitialRowBlackPawnTest(Path path) {
         // given
-        BlackPawn pawn = new BlackPawn();
+        Piece pawn = new BlackPawn();
         Position start = Position.of(7, 5);
 
         // when
@@ -62,7 +61,7 @@ class PawnTest {
     @DisplayName("흰색일 때 초기 위치일 경우 위, 오른쪽 위 대각선, 왼쪽 위 대각선으로 한 칸, 위로 두 칸 이동 할 수 있다.")
     void isMovableInitialRowWhitePawnTest(Path path) {
         // given
-        WhitePawn pawn = new WhitePawn();
+        Piece pawn = new WhitePawn();
         Position start = Position.of(2, 5);
 
         // when
