@@ -7,6 +7,7 @@ import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.C_2;
 import static chess.domain.PositionFixture.C_4;
 import static chess.domain.PositionFixture.C_5;
+import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -93,5 +95,19 @@ class BoardTest {
         Board board = new Board(Map.of(A_1, new Pawn(WHITE), A_2, new Pawn(WHITE)));
 
         assertThat(board.calculateScore(WHITE)).isEqualTo(1.0);
+    }
+
+    @Test
+    void 킹이_2개가_아니면_true를_반환한다() {
+        Board board = new Board(Map.of(A_1, new King(WHITE), A_2, new Pawn(WHITE)));
+
+        assertThat(board.checkKingDead()).isTrue();
+    }
+
+    @Test
+    void 킹이_2개면_false를_반환한다() {
+        Board board = new Board(Map.of(A_1, new King(WHITE), A_2, new King(BLACK)));
+
+        assertThat(board.checkKingDead()).isFalse();
     }
 }

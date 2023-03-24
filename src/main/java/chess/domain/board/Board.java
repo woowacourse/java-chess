@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    public static final int KIN = 2;
     private final Map<Position, Piece> boards;
 
-    public Board(Map<Position, Piece> boards) {
+    Board(Map<Position, Piece> boards) {
         this.boards = boards;
     }
 
@@ -94,5 +95,11 @@ public class Board {
 
     public Map<Position, Piece> getBoards() {
         return boards;
+    }
+
+    public boolean checkKingDead() {
+        return boards.values().stream()
+                .filter(piece -> piece.isSameRoleType(RoleType.KING))
+                .count() < KIN;
     }
 }
