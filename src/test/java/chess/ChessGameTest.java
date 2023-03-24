@@ -2,10 +2,12 @@ package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.ChessPiece;
 import chess.piece.Knight;
+import chess.piece.Pawn;
 import chess.piece.Shape;
 import chess.piece.Side;
 import chess.position.MovablePosition;
@@ -84,5 +86,47 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         chessGame.removeChessPiece(Position.of(removePostion));
         assertThat(chessGame.isGameEnd(chessBoard)).isEqualTo(isEnd);
+    }
+
+    @Test
+    @DisplayName("해당 사이드의 점수를 계산한다.")
+    void shouldSuccessCalculateScore() {
+        ChessBoard chessBoard = ChessBoard.generateChessBoard();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        assertAll(
+                () -> assertThat(chessGame.takeScore(Side.BLACK)).isEqualTo(38),
+                () -> assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(38),
+                () -> {
+                    chessGame.removeChessPiece(Position.of("a1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(33);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("b1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(30.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("c1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(27.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("d1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(18.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("e1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(18.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("a2"));
+                    chessGame.copyChessPiece(new Pawn(Shape.PAWN, Side.WHITE), Position.of("b3"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("c2"));
+                    chessGame.copyChessPiece(new Pawn(Shape.PAWN, Side.WHITE), Position.of("b4"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17);
+                }
+        );
     }
 }
