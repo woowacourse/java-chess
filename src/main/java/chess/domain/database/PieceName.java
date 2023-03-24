@@ -1,5 +1,6 @@
 package chess.domain.database;
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 import chess.domain.piece.Bishop;
@@ -9,6 +10,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 
 public enum PieceName {
 
@@ -34,5 +36,15 @@ public enum PieceName {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 클래스는 존재하지 않습니다."))
                 .name;
+    }
+
+    public static Piece toPiece(final String name, final Team team) throws ReflectiveOperationException {
+        Class<? extends Piece> pieceClass = Arrays.stream(PieceName.values())
+                .filter(it -> it.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 기물은 존재하지 않습니다."))
+                .pieceClass;
+        Constructor<? extends Piece> constructor = pieceClass.getConstructor(Team.class);
+        return constructor.newInstance(team);
     }
 }

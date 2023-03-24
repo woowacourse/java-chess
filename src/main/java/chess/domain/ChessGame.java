@@ -10,10 +10,16 @@ import chess.domain.square.Square;
 
 public class ChessGame {
 
-    private final Board board = Board.create();
+    private final Board board;
     private Team turn;
 
     public ChessGame() {
+        this.board = Board.create();
+        turn = Team.WHITE;
+    }
+
+    public ChessGame(Board board) {
+        this.board = board;
         turn = Team.WHITE;
     }
 

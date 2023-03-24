@@ -21,4 +21,10 @@ class ChessGameDaoTest {
         Assertions.assertThatCode(() -> chessGameDao.save(chessGame))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    void select() {
+        ChessGame chessGame = chessGameDao.select();
+        assertThat(chessGame.getBoard()).hasSize(32);
+    }
 }

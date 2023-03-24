@@ -13,7 +13,7 @@ public class Board {
 
     private final Map<Square, Piece> board;
 
-    private Board(final Map<Square, Piece> board) {
+    public Board(final Map<Square, Piece> board) {
         this.board = board;
     }
 

@@ -11,6 +11,13 @@ public enum Team {
         this.value = value;
     }
 
+    public static Team from(int value) {
+        if (value == 1) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public Team getEnemy() {
         if (this == WHITE) {
             return BLACK;
