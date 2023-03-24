@@ -8,17 +8,12 @@ public class Running extends State {
     }
 
     @Override
-    public Running start() {
-        throw new IllegalStateException("게임을 시작할 수 없는 상태입니다.");
+    public State status() {
+        return this;
     }
 
     @Override
     public Running next() {
         return new Running(Camp.nextTurn(turn()));
-    }
-
-    @Override
-    public End end() {
-        return new End(turn());
     }
 }

@@ -59,6 +59,7 @@ public class ChessController {
             play(command);
         }
         if (command.isStatus()) {
+            state = state.status();
             final double whiteScore = game.calculateScore(Camp.WHITE);
             final double blackScore = game.calculateScore(Camp.BLACK);
             outputView.printStatus(whiteScore, blackScore);
