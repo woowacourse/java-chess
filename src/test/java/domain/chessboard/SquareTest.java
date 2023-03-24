@@ -30,7 +30,7 @@ class SquareTest {
     @DisplayName("bePiece 메서드를 호출하면, 해당 기물의 상태로 바뀐다.")
     void callBePiece_thenChangeStatus() {
         //given
-        final Square square = new Square(new Empty(EmptyType.EMPTY));
+        final Square square = new Square(new Empty());
 
         //when
         square.bePiece(new Square(new King(Color.WHITE)));

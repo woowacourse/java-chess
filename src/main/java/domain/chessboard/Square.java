@@ -9,7 +9,7 @@ import domain.piece.PieceType;
 
 public class Square {
 
-    private static final Empty EMPTY_STATUS = new Empty(EmptyType.EMPTY);
+    private static final Empty EMPTY_STATUS = new Empty();
 
     private SquareStatus squareStatus;
 

@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 public enum Color {
 
-    BLACK, WHITE;
+    BLACK, WHITE, NONE;
 
     public Color reverse() {
         return Arrays.stream(values())
-                .filter(value -> value != this)
+                .filter(value -> value != this && value != NONE)
                 .findFirst()
                 .orElseThrow(IllegalAccessError::new);
     }
