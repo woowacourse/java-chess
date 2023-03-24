@@ -57,6 +57,14 @@ public final class Square {
         return file.getFileNumber();
     }
 
+    public char getFileValue() {
+        return file.getValue();
+    }
+
+    public char getRankValue() {
+        return rank.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

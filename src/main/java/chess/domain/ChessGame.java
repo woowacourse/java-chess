@@ -1,6 +1,9 @@
 package chess.domain;
 
+import java.util.Map;
+
 import chess.domain.dto.GameStatusDto;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Point;
 import chess.domain.piece.Team;
 import chess.domain.square.Square;
@@ -50,5 +53,9 @@ public class ChessGame {
 
     public GameStatusDto getGameStatus() {
         return GameStatusDto.from(board);
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return board.getBoard();
     }
 }
