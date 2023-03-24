@@ -23,20 +23,10 @@ public class BoardFactory {
             init.put(new Position(Rank.TWO, file), new WhitePawn());
         }
 
-        for (File file : File.values()) {
-            init.put(new Position(Rank.TREE, file), new EmptyPiece(Team.NEUTRALITY));
-        }
-
-        for (File file : File.values()) {
-            init.put(new Position(Rank.FOUR, file), new EmptyPiece(Team.NEUTRALITY));
-        }
-
-        for (File file : File.values()) {
-            init.put(new Position(Rank.FIVE, file), new EmptyPiece(Team.NEUTRALITY));
-        }
-
-        for (File file : File.values()) {
-            init.put(new Position(Rank.SIX, file), new EmptyPiece(Team.NEUTRALITY));
+        for (int i = 3; i < 7; i++) {
+            for (File file : File.values()) {
+                init.put(new Position(Rank.of(i), file), new EmptyPiece(Team.NEUTRALITY));
+            }
         }
 
         for (File file : File.values()) {
