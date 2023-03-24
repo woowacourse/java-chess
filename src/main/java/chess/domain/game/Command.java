@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 public enum Command {
     START(GameStatus.START, 1),
     MOVE(GameStatus.START, 3),
+    STATUS(GameStatus.START, 1),
     END(GameStatus.IDLE, 1),
     ;
 

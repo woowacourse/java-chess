@@ -18,6 +18,12 @@ public class Turn {
         this.order = teams;
     }
 
+    public Turn(Team team) {
+        this.order = List.of(Team.BLACK, Team.WHITE);
+        this.currentIndex = this.order.indexOf(team);
+    }
+
+
     private void validate(final List<Team> teams) {
         if (teams.size() != DEFAULT_TEAM_SIZE) {
             throw new IllegalArgumentException("팀은 2팀만 참가할 수 있습니다.");

@@ -62,3 +62,73 @@
 ## 체스게임
 
 - [x] 게임 시작과 종료를 제어한다.
+
+## 데이터 베이스
+
+- [ ] DB 연결을 한다. - 7분
+    - [ ] 테이블 설계를 한다. - 10분
+    - [ ] 쿼리를 작성한다. - 20분
+    - [ ] CRUD를 수행한다. - 3~40분
+        - [ ] CREATE(새로운 게임을 시작 할 때 데이터를 추가한다.) - 10분
+        - [ ] READ(기존에 게임이 있는 경우 조회한다.) - 8분
+        - [ ] UPDATE(게임을 진행하면서 말이 움직일 때 업데이트 된다.) - 15분
+
+```sql
+CREATE TABLE chess_game {
+    piece_type VARCHAR
+(
+    255
+) NOT NULL,
+    piece_file VARCHAR
+(
+    255
+) NOT NULL,
+    piece_rank VARCHAR
+(
+    255
+) NOT NULL,
+    team VARCHAR
+(
+    255
+) NOT NULL,
+    turn VARCHAR
+(
+    255
+) NOT NULL,
+    game_status VARCHAR
+(
+    255
+) NOT NULL
+    }
+    INSERT INTO chess_game
+(
+    piece_type,
+    piece_file,
+    piece_rank,
+    team,
+    turn,
+    game_status
+) VALUES
+(
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?
+);
+DELETE
+FROM chess_game;
+```
+
+## 시나리오를 작성한다. - 10분
+
+- [ ] 시작을 했을 때 DB에서 저장된 체스 게임의 정보를 읽어온다.
+    - [ ] 새로운 게임
+    - [ ] 기존 게임이 있는 경우
+- [ ] 게임을 진행한다
+    - [ ] 각 팀의 턴이 존재한다.
+    - [ ] 말이 움직인다.
+    - [ ] 점수를 계산한다.
+- [ ] 게임을 종료한다
