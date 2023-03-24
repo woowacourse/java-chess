@@ -32,7 +32,7 @@ public class BoardScore {
                          .stream()
                          .collect(Collectors.groupingBy(
                                  it -> it.getKey().column(),
-                                 Collectors.mapping((Map.Entry::getValue),
+                                 Collectors.mapping(Map.Entry::getValue,
                                                     Collectors.toList())
                          ));
     }
