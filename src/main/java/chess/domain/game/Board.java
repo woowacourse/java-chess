@@ -32,6 +32,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
         validatePathBeforeTarget(sourcePiece.findPath(source, target));
         movePiece(source, target);
+        reverseTurn();
     }
 
     private void validateSource(Position source) {
@@ -42,7 +43,6 @@ public class Board {
 
     private void validateTurn(Position source) {
         if (board.get(source).isSameTeam(turn)) {
-            turn = turn.reverse();
             return;
         }
         throw new IllegalArgumentException("[ERROR] 지금은 " + turn + "차례입니다.");
@@ -100,6 +100,11 @@ public class Board {
                 .filter(piece -> piece.type() == PieceType.KING)
                 .count();
     }
+
+    private void reverseTurn() {
+        turn = turn.reverse();
+    }
+
     public Map<Position, Piece> getBoard() {
         return new HashMap<>(board);
     }
