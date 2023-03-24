@@ -38,7 +38,7 @@ class PawnTest {
                         Color.WHITE,
                         POSITION_1_6,
                         POSITION_1_4,
-                        List.of(POSITION_1_5, POSITION_1_4)
+                        List.of(POSITION_1_4)
                 ),
                 // FRONT 1
                 Arguments.arguments(
@@ -66,7 +66,7 @@ class PawnTest {
                         Color.BLACK,
                         POSITION_1_1,
                         POSITION_1_3,
-                        List.of(POSITION_1_2, POSITION_1_3)
+                        List.of(POSITION_1_3)
                 ),
                 // FRONT 1
                 Arguments.arguments(
