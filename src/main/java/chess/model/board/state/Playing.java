@@ -12,7 +12,7 @@ public class Playing extends ProgressState {
 
     @Override
     public void execute(final Position source, final Position target) {
-        chessGame.move(source, target);
+        chessGame.moveAndSaveRecord(source, target);
     }
 
     @Override

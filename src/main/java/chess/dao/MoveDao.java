@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface MoveDao {
 
-    void saveAll(final QueryStrategy saveStrategy);
+    void save(final QueryStrategy saveStrategy);
 
     List<Move> findAll(final MoveFindAllStrategy moveFindAllStrategy);
 }

@@ -20,11 +20,11 @@ class ChessGameTest {
     void whenError_thenMaintainTurn() {
         // given
         final ChessGame chessGame = new ChessGame();
-        chessGame.move(A2, A3);
+        chessGame.moveAndSaveRecord(A2, A3);
 
         // when, then
         assertAll(
-                () -> assertThatThrownBy(() -> chessGame.move(A1, A2))
+                () -> assertThatThrownBy(() -> chessGame.moveAndSaveRecord(A1, A2))
                         .isInstanceOf(IllegalArgumentException.class),
                 () -> assertThat(chessGame)
                         .extracting("turn", InstanceOfAssertFactories.type(Turn.class))

@@ -22,11 +22,10 @@ class MoveDaoTest extends MoveTruncator {
     @DisplayName("saveAll()을 테스트한다.")
     void saveAll_givenMoveDto_thenSuccess() {
         // given
-        final Move whiteMove = new Move(A2, A3);
-        final MoveSaveStrategy moveSaveStrategy = new MoveSaveStrategy(whiteMove);
+        final MoveSaveStrategy moveSaveStrategy = new MoveSaveStrategy(A2, A3);
 
         // when, then
-        assertThatCode(() -> moveDao.saveAll(moveSaveStrategy)).doesNotThrowAnyException();
+        assertThatCode(() -> moveDao.save(moveSaveStrategy)).doesNotThrowAnyException();
     }
 
     @Test

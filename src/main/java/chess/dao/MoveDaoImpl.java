@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MoveDaoImpl implements MoveDao {
-    public void saveAll(final QueryStrategy saveStrategy) {
+    public void save(final QueryStrategy saveStrategy) {
         final String insertQuery = "INSERT INTO move (source, target) VALUES (?, ?)";
         connectDataBaseAndDoQuery(insertQuery, saveStrategy);
     }
