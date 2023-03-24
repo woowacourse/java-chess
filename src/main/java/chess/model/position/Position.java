@@ -7,9 +7,13 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
+    Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(final File file, final Rank rank) {
+        return Positions.getInstance(file, rank);
     }
 
     public Distance differ(final Position other) {
@@ -22,7 +26,7 @@ public class Position {
     public Position next(final Direction direction) {
         final File nextFile = file.next(direction.file());
         final Rank nextRank = rank.next(direction.rank());
-        return new Position(nextFile, nextRank);
+        return Positions.getInstance(nextFile, nextRank);
     }
 
     @Override

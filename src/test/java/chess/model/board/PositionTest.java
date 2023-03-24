@@ -17,7 +17,7 @@ class PositionTest {
     @Test
     @DisplayName("생성자는 체스 판의 위치를 관리하는 객체를 생성한다.")
     void constructor_givenRankAndFile_thenSuccess() {
-        final Position position = assertDoesNotThrow(() -> new Position(File.A, Rank.FIRST));
+        final Position position = assertDoesNotThrow(() -> Position.of(File.A, Rank.FIRST));
 
         assertThat(position).isExactlyInstanceOf(Position.class);
     }
