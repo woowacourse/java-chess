@@ -23,12 +23,11 @@ public class Board {
     }
 
     public void switchPosition(final Position source, final Position destination) {
-        validateMove(source, destination);
         board.replace(destination, findPiece(source));
         board.replace(source, new Empty(Team.EMPTY));
     }
 
-    private void validateMove(final Position source, final Position destination) {
+    public void isMovable(final Position source, final Position destination) {
         Piece piece = findPiece(source);
         validateMoveSamePosition(source, destination);
         piece.canMove(source, destination, isAttackMove(source, destination));

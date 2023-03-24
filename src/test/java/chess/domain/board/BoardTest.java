@@ -63,7 +63,7 @@ class BoardTest {
         board.switchPosition(Position.from("b7"), Position.from("b5"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition(Position.from("a4"), Position.from("b5")));
+        assertDoesNotThrow(() -> board.isMovable(Position.from("a4"), Position.from("b5")));
     }
 
     @Test
@@ -76,7 +76,7 @@ class BoardTest {
         board.switchPosition(Position.from("a1"), Position.from("a2"));
 
         // when & then
-        assertDoesNotThrow(() -> board.switchPosition(Position.from("b5"), Position.from("a4")));
+        assertDoesNotThrow(() -> board.isMovable(Position.from("b5"), Position.from("a4")));
     }
 
     @Test
@@ -86,7 +86,7 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition(Position.from("a2"), Position.from("b3")))
+        assertThatThrownBy(() -> board.isMovable(Position.from("a2"), Position.from("b3")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -98,7 +98,7 @@ class BoardTest {
         board.switchPosition(Position.from("a2"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition(Position.from("a7"), Position.from("b6")))
+        assertThatThrownBy(() -> board.isMovable(Position.from("a7"), Position.from("b6")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -111,7 +111,7 @@ class BoardTest {
         board.switchPosition(Position.from("a7"), Position.from("a5"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition(Position.from("a4"), Position.from("a5")))
+        assertThatThrownBy(() -> board.isMovable(Position.from("a4"), Position.from("a5")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -125,7 +125,7 @@ class BoardTest {
         board.switchPosition(Position.from("a1"), Position.from("a3"));
 
         // when & then
-        assertThatThrownBy(() -> board.switchPosition(Position.from("a5"), Position.from("a4")))
+        assertThatThrownBy(() -> board.isMovable(Position.from("a5"), Position.from("a4")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }
