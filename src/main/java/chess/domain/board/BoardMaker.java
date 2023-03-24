@@ -28,15 +28,15 @@ public class BoardMaker {
     public Map<Position, Piece> createBoard() {
         Map<Position, Piece> board = new HashMap<>();
 
-        putBlackPiecesExpectPawn(board);
+        putBlackPiecesExceptPawn(board);
         putPawns(board);
-        putWhitePiecesExpectPawn(board);
+        putWhitePiecesExceptPawn(board);
         putEmptyPieces(board);
 
         return board;
     }
 
-    private void putBlackPiecesExpectPawn(final Map<Position, Piece> board) {
+    private void putBlackPiecesExceptPawn(final Map<Position, Piece> board) {
         board.put(new Position(MIN_ROW, 0), new Rook(Team.BLACK));
         board.put(new Position(MIN_ROW, 1), new Knight(Team.BLACK));
         board.put(new Position(MIN_ROW, 2), new Bishop(Team.BLACK));
@@ -54,7 +54,7 @@ public class BoardMaker {
         }
     }
 
-    private void putWhitePiecesExpectPawn(final Map<Position, Piece> board) {
+    private void putWhitePiecesExceptPawn(final Map<Position, Piece> board) {
         board.put(new Position(MAX_ROW, 0), new Rook(Team.WHITE));
         board.put(new Position(MAX_ROW, 1), new Knight(Team.WHITE));
         board.put(new Position(MAX_ROW, 2), new Bishop(Team.WHITE));
