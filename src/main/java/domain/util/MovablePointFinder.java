@@ -22,6 +22,10 @@ public class MovablePointFinder {
         onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.DOWN), Direction.DOWN);
         onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT), Direction.LEFT);
         onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT), Direction.RIGHT);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT_UP), Direction.LEFT_UP);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT_DOWN), Direction.LEFT_DOWN);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT_UP), Direction.RIGHT_UP);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT_DOWN), Direction.RIGHT_DOWN);
         movablePoints = onCaseOfPointOutOfBoard(pieceStatus, movablePoints);
 
         onCaseOfPieceBetWeenPath(pieceStatus, movablePoints, toPoint, piece);
@@ -61,6 +65,10 @@ public class MovablePointFinder {
                 if (direction == Direction.DOWN) movablePoint = movablePoint.down();
                 if (direction == Direction.LEFT) movablePoint = movablePoint.left();
                 if (direction == Direction.RIGHT) movablePoint = movablePoint.right();
+                if (direction == Direction.LEFT_UP) movablePoint = movablePoint.leftUp();
+                if (direction == Direction.LEFT_DOWN) movablePoint = movablePoint.leftDown();
+                if (direction == Direction.RIGHT_UP) movablePoint = movablePoint.rightUp();
+                if (direction == Direction.RIGHT_DOWN) movablePoint = movablePoint.rightDown();
                 movablePoints.add(movablePoint);
             } catch (PointOutOfBoardException ignored) {}
         }

@@ -41,6 +41,22 @@ public class Point {
         return new Point(file.right(), rank);
     }
 
+    public Point leftUp() {
+        return new Point(file.left(), rank.up());
+    }
+
+    public Point leftDown() {
+        return new Point(file.left(), rank.down());
+    }
+
+    public Point rightUp() {
+        return new Point(file.right(), rank.up());
+    }
+
+    public Point rightDown() {
+        return new Point(file.right(), rank.down());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
