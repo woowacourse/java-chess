@@ -73,4 +73,13 @@ class InputValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 아이디는 12자 이하여야 합니다.");
     }
+
+    @Test
+    @DisplayName("대답이 y or n이 아니면 예외가 발생한다.")
+    void validateAnswer() {
+        String yes = "yee";
+        assertThatThrownBy(() -> InputValidator.validateAnswer(yes))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 저장할 건지 y/n 로만 입력해주세요.");
+    }
 }
