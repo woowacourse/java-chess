@@ -27,11 +27,11 @@ public final class ChessGame {
     }
 
     public double calculateWhiteScore() {
-        return board.calculateWhiteScore();
+        return board.calculateTotalScore(Color.WHITE);
     }
 
     public double calculateBlackScore() {
-        return board.calculateBlackScore();
+        return board.calculateTotalScore(Color.BLACK);
     }
 
     private Color changeTurn() {
