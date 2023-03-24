@@ -90,7 +90,8 @@ class BoardTest {
             board.move(src, dst);
         }
 
-        @ParameterizedTest(name = "knight를 제외한 다른 말들은 가는 길목에 말이 없어야 이동할 수 있다.")
+        @DisplayName("knight를 제외한 다른 말들은 가는 길목에 말이 없어야 이동할 수 있다.")
+        @ParameterizedTest(name = "source: ({0}, {1}), destination: ({2}, {3})")
         @CsvSource({"A,ONE,A,THREE", "C,ONE,B,TWO"})
         void pieceCanMove(File srcFile, Rank srcRank, File dstFile, Rank dstRank) {
             Square src = Square.of(srcFile, srcRank);
@@ -101,7 +102,8 @@ class BoardTest {
             assertThat(board.getBoard().keySet()).contains(dst);
         }
 
-        @ParameterizedTest(name = "knight를 제외한 다른 말들은 가는 길목에 말이 있으면 이동할 수 없다.")
+        @DisplayName("knight를 제외한 다른 말들은 가는 길목에 말이 있으면 이동할 수 없다.")
+        @ParameterizedTest(name = "source: ({0}, {1}), destination: ({2}, {3})")
         @CsvSource({"A,ONE,A,FIVE", "D,ONE,B,THREE"})
         void pieceCannotMove(File srcFile, Rank srcRank, File dstFile, Rank dstRank) {
             Square src = Square.of(srcFile, srcRank);

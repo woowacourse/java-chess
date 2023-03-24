@@ -19,7 +19,8 @@ class ChessGameTest {
         assertDoesNotThrow(() -> new ChessGame(board, team));
     }
 
-    @ParameterizedTest(name = "입력받은 칸에 맞춰 Piece를 움직인다.")
+    @DisplayName("입력받은 칸에 맞춰 Piece를 움직인다.")
+    @ParameterizedTest(name = "현재 팀: {2} , source: {0}, destination: {1}")
     @CsvSource({"a2,a3,WHITE", "b7,b5,BLACK"})
     void movePiece_success(String source, String destination, Team team) {
         Board board = new Board();
@@ -28,7 +29,8 @@ class ChessGameTest {
         assertDoesNotThrow(() -> chessGame.movePiece(source, destination));
     }
 
-    @ParameterizedTest(name = "다른 팀 말을 움직일 경우 예외가 발생한다.")
+    @DisplayName("다른 팀 말을 움직일 경우 예외가 발생한다.")
+    @ParameterizedTest(name = "현재 팀: {2} , source: {0}, destination: {1}")
     @CsvSource({"a2,a3,BLACK", "b7,b5,WHITE"})
     void movePiece_fail(String source, String destination, Team team) {
         Board board = new Board();

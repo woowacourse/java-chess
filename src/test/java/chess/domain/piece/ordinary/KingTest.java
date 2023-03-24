@@ -24,7 +24,8 @@ class KingTest {
         assertThat(king.getPieceType()).isEqualTo(PieceType.KING);
     }
 
-    @ParameterizedTest(name="King은 연속되지 않는 모든 방향으로 이동할 수 있다.")
+    @DisplayName("King은 연속되지 않는 모든 방향으로 이동할 수 있다.")
+    @ParameterizedTest(name="square: ({0}, {1})")
     @CsvSource({"1,1", "1,0", "-1,0"})
     void validMove_success(int fileInterval, int rankInterval) {
         Piece whiteKing = new King(WHITE);
@@ -33,7 +34,8 @@ class KingTest {
         assertThat(whiteKing.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
 
-    @ParameterizedTest(name="King은 연속되지 않는 모든 방향으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @DisplayName("King은 연속되지 않는 모든 방향으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @ParameterizedTest(name="square: ({0}, {1})")
     @CsvSource({"1, 2", "2, -2", "3, 0"})
     void validMove_fail(int fileInterval, int rankInterval) {
         Piece whiteKing = new King(WHITE);
@@ -44,7 +46,8 @@ class KingTest {
                 .hasMessage("말이 이동할 수 없는 규칙입니다.");
     }
 
-    @ParameterizedTest(name="King은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @DisplayName("King은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @ParameterizedTest(name="{0}")
     @CsvSource({"WHITE", "BLACK"})
     void isValidTeam(Team team) {
         Piece king = new King(team);

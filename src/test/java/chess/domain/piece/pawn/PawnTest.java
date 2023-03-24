@@ -24,7 +24,8 @@ class PawnTest {
         assertThat(pawn.getPieceType()).isEqualTo(PieceType.PAWN);
     }
 
-    @ParameterizedTest(name="Pawn은 앞으로 1칸만 이동할 수 있다. 상대팀이 위치하는 경우 대각선으로도 이동할 수 있다.")
+    @DisplayName("Pawn은 앞으로 1칸만 이동할 수 있다. 상대팀이 위치하는 경우 대각선으로도 이동할 수 있다.")
+    @ParameterizedTest(name="sqaure: ({0}, {1})")
     @CsvSource({"0,1", "1,1"})
     void validMove_success(int fileInterval, int rankInterval) {
         Piece whitePawn = new Pawn(WHITE);
@@ -33,7 +34,8 @@ class PawnTest {
         assertThat(whitePawn.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
 
-    @ParameterizedTest(name="Pawn은 앞으로 1칸만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @DisplayName("Pawn은 앞으로 1칸만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @ParameterizedTest(name="sqaure: ({0}, {1})")
     @CsvSource({"1, 2", "-3, 3", "1, 0", "0, 2"})
     void validMove_fail(int fileInterval, int rankInterval) {
         Piece whitePawn = new Pawn(WHITE);
@@ -43,7 +45,8 @@ class PawnTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest(name="WhitePawn은 위로만, BlackPawn은 아래로만 이동할 수 있다.")
+    @DisplayName("WhitePawn은 위로만, BlackPawn은 아래로만 이동할 수 있다.")
+    @ParameterizedTest(name="{0}: ({1}, {2})")
     @CsvSource({"WHITE, 0, 1", "BLACK, 0, -1"})
     void validMoveOfWhitePawn_success(Team team, int fileInterval, int rankInterval) {
         Piece whitePawn = new Pawn(team);
@@ -52,7 +55,8 @@ class PawnTest {
         assertThat(whitePawn.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
 
-    @ParameterizedTest(name="Pawn은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @DisplayName("Pawn은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @ParameterizedTest(name = "Team: {0}")
     @CsvSource({"WHITE", "BLACK"})
     void isValidTeam(Team team) {
         Piece pawn = new Pawn(team);

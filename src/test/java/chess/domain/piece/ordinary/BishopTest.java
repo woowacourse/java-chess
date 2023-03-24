@@ -24,7 +24,8 @@ class BishopTest {
         assertThat(bishop.getPieceType()).isEqualTo(PieceType.BISHOP);
     }
 
-    @ParameterizedTest(name="Bishop은 연속된 대각선으로 이동할 수 있다.")
+    @DisplayName("Bishop은 연속된 대각선으로 이동할 수 있다.")
+    @ParameterizedTest(name="sqaure: ({0}, {1})")
     @CsvSource({"2,-2", "1,-1"})
     void validMove_success(int fileInterval, int rankInterval) {
         Piece whiteBishop = new Bishop(WHITE);
@@ -33,7 +34,8 @@ class BishopTest {
         assertThat(whiteBishop.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
 
-    @ParameterizedTest(name="Bishop은 연속된 대각선으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @DisplayName("Bishop은 연속된 대각선으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @ParameterizedTest(name="sqaure: ({0}, {1})")
     @CsvSource({"1, 2", "1, 0"})
     void validMove_fail(int fileInterval, int rankInterval) {
         Piece whiteBishop = new Bishop(WHITE);
@@ -44,7 +46,8 @@ class BishopTest {
                 .hasMessage("말이 이동할 수 없는 규칙입니다.");
     }
 
-    @ParameterizedTest(name="Bishop은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @DisplayName("Bishop은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @ParameterizedTest(name="{0}")
     @CsvSource({"WHITE", "BLACK"})
     void isValidTeam(Team team) {
         Piece bishop = new Bishop(team);
