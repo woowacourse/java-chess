@@ -192,7 +192,7 @@ class ChessGameTest {
 
             assertThatThrownBy(() -> game.movePiece(new Position(0, 6), new Position(0, 5)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("백 팀의 말을 움직여 주세요.");
+                    .hasMessage("하얀색 기물을 움직여 주세요.");
         }
 
         @Test
@@ -205,14 +205,14 @@ class ChessGameTest {
         }
 
         @Test
-        @DisplayName("백 팀이 말을 움직이면, 다음 차례는 백 팀이 말을 움직일 수 없다.")
+        @DisplayName("흑 팀이 말을 움직이면, 다음 차례는 흑 팀이 말을 움직일 수 없다.")
         void movePieceTest4() {
             ChessGame game = ChessGame.create();
             game.movePiece(new Position(0, 1), new Position(0, 2));
 
             assertThatThrownBy(() -> game.movePiece(new Position(0, 2), new Position(0, 3)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("흑 팀의 말을 움직여 주세요.");
+                    .hasMessage("검정색 기물을 움직여 주세요.");
         }
     }
 }
