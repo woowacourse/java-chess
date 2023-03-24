@@ -96,4 +96,14 @@ class PositionTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource({"A, true", "B, false"})
+    void 같은_파일인지_확인한다(final File file, final boolean expected) {
+        final Position position = new Position(A, FIVE);
+
+        final boolean actual = position.isSameFile(file);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
