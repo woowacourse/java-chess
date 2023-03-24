@@ -1,96 +1,45 @@
 package chess.controller;
 
-import chess.dao.chessGameDao;
-import chess.domain.board.Position;
+import chess.controller.command.Command;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
-import chess.domain.piece.property.Color;
-import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PositionParser;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public final class ChessController {
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
-    private ChessGame chessGame;
-    private final chessGameDao chessGameDao;
-    private final Map<Command, Action> commandMap = new HashMap<>();
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame, final chessGameDao chessGameDao) {
+    public ChessController(
+            final InputView inputView,
+            final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGame = chessGame;
-        this.chessGameDao = chessGameDao;
-        commandMap.put(Command.START, new Action(ignored -> start()));
-        commandMap.put(Command.LOAD, new Action(this::load));
-        commandMap.put(Command.MOVE, new Action(this::move));
-        commandMap.put(Command.STATUS, new Action(ignored -> status()));
-        commandMap.put(Command.END, new Action(ignored -> end()));
     }
 
     public void play() {
+        final var chessGame = new ChessGame();
         outputView.startMessage();
         while (chessGame.isOnGoing()) {
-            repeatRead();
+            repeatTurns(chessGame);
         }
     }
 
-    private void repeatRead() {
+    private void repeatTurns(ChessGame chessGame) {
         try {
-            List<String> commands = inputView.inputCommand();
-            Command command = Command.from(commands.get(COMMAND_INDEX));
-            commandMap.get(command).execute(commands);
+            Command command = inputView.inputCommand();
+            command.execute(chessGame);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);
             outputView.printGuideMessage();
-            repeatRead();
+            repeatTurns(chessGame);
         }
     }
 
-    private void start() {
-        chessGame.startGame();
-        printBoard(chessGame.getBoard());
-    }
-
-    private void printBoard(final Map<Position, Piece> board) {
-        outputView.printBoard(board);
-    }
-
-    private void load(List<String> gameId) {
-        int gameNumber = Integer.parseInt(gameId.get(1));
-
-        this.chessGame = chessGameDao.load(gameNumber);
-        printBoard(chessGame.getBoard());
-    }
-
-    private void move(final List<String> commands) {
-        Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
-        Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
-        chessGame.playTurn(parsedFile, parsedRank);
-        printBoard(chessGame.getBoard());
-    }
-
-    private void status() {
-        double whiteScore = chessGame.computeScore(Color.WHITE);
-        double blackScore = chessGame.computeScore(Color.BLACK);
-        outputView.printScore(whiteScore, Color.WHITE);
-        outputView.printScore(blackScore, Color.BLACK);
-    }
-
-    private void end() {
-        chessGameDao.save(chessGame);
-        Integer recentSavedId = chessGameDao.findRecentSavedId();
-        outputView.printGameId(recentSavedId);
-        chessGame.end();
-    }
+//    private void load(List<String> gameId) {
+//        int gameNumber = Integer.parseInt(gameId.get(1));
+//
+//        this.chessGame = ChessGameDao.load(gameNumber);
+//        printBoard(chessGame.getBoard());
+//    }
 }

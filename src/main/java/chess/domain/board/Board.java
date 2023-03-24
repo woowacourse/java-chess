@@ -8,13 +8,17 @@ import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
 public final class Board {
 
+    private static final int STACKED_PAWN = 2;
+    private static final double STACKED_PAWN_SCORE = 0.5;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -134,10 +138,27 @@ public final class Board {
                     .filter(position -> position.isFileEquals(value))
                     .filter(position -> board.get(position).getKind() == Kind.PAWN)
                     .count();
-            if (count >= 2) {
-                sum = sum - count * 0.5;
-            }
+            sum = minusStackPawnPoint(sum, count);
         }
         return sum;
+    }
+
+    private double minusStackPawnPoint(double sum, final long count) {
+        if (count >= STACKED_PAWN) {
+            sum = sum - count * STACKED_PAWN_SCORE;
+        }
+        return sum;
+    }
+
+    public Color computeWinner() {
+        List<Color> kingColors = board.values().stream()
+                .filter(piece -> piece.getKind() == Kind.KING)
+                .map(Piece::getColor)
+                .collect(Collectors.toList());
+
+        if (kingColors.size() == 2) {
+            return Color.NONE;
+        }
+        return kingColors.get(0);
     }
 }

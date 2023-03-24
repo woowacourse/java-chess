@@ -5,7 +5,6 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.property.Color;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,8 +59,10 @@ public final class OutputView {
         System.out.println();
     }
 
-    public void printScore(final double score, final Color color) {
-        System.out.printf("%s의 점수는 %.1f 입니다.", color.name(), score);
+    public void printScore(final double whiteScore, final double blackScore) {
+        System.out.printf("white의 점수는 %.1f 입니다.", whiteScore);
+        System.out.println();
+        System.out.printf("black의 점수는 %.1f 입니다.", blackScore);
         System.out.println();
     }
 

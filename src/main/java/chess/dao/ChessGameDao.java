@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class chessGameDao {
+public final class ChessGameDao {
 
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
@@ -21,7 +21,7 @@ public final class chessGameDao {
 
     private final Connection connection;
 
-    public chessGameDao() {
+    public ChessGameDao() {
         this.connection = getConnection();
     }
 
@@ -52,13 +52,18 @@ public final class chessGameDao {
                             "piece = ?," +
                             "color = ?," +
                             "game_id = ?";
-                    try (var preparedStatement = connection.prepareStatement(sql)) {
+                    try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                         preparedStatement.setString(1, position.toString());
                         preparedStatement.setString(2, piece.getName());
                         preparedStatement.setString(3, piece.getColor().name());
                         preparedStatement.setString(3, piece.getColor().name());
                         preparedStatement.setInt(4, recentSavedId);
                         preparedStatement.executeUpdate();
+                        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                        if (!generatedKeys.next()) {
+                            return;
+                        }
+                        long aLong = generatedKeys.getLong(1);
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
                     }

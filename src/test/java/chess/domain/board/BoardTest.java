@@ -85,4 +85,19 @@ class BoardTest {
         //then
         assertThat(v).isEqualTo(19.5d);
     }
+
+    @Test
+    @DisplayName("폰은 세로로 여러개가 겹쳐있을 때 0.5점이다.")
+    void triplePawnTest() {
+        //given
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(A2, new Pawn(Color.WHITE));
+        pieces.put(A3, new Pawn(Color.WHITE));
+        pieces.put(A4, new Pawn(Color.WHITE));
+        Board board = new Board(pieces);
+        //when
+        double v = board.computeScore(Color.WHITE);
+        //then
+        assertThat(v).isEqualTo(1.5);
+    }
 }
