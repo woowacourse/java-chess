@@ -66,8 +66,9 @@ public class OutputView {
         }
     }
 
-    public void printStatus(final double whiteScore, final double blackScore) {
+    public void printStatus(final double whiteScore, final double blackScore, final Camp winner) {
         System.out.println("White 진영 점수: " + whiteScore);
         System.out.println("Black 진영 점수: " + blackScore);
+        System.out.println("게임 결과: " + winner.getName());
     }
 }

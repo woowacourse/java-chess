@@ -19,16 +19,12 @@ public class Board {
     }
 
     public void move(final Square source, final Square target) {
-        if (!isMovable(source, target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
-
         updateIfPawn(source, target);
         board.put(target, board.get(source));
         board.put(source, Empty.of());
     }
 
-    private boolean isMovable(final Square source, final Square target) {
+    public boolean isMovable(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
         final Move move = Move.calculateMove(source, target);
         final boolean isPathBlocked = isPathBlocked(source, target, move);
@@ -53,7 +49,7 @@ public class Board {
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
-        final Square nextSquare = source.nextSquare(source, move);
+        final Square nextSquare = source.nextSquare(move);
 
         if (nextSquare.equals(target)) {
             return false;
@@ -98,5 +94,11 @@ public class Board {
 
         final Piece movePiece = board.get(new Square(position.file(), position.rank().moveRank(move)));
         return movePiece.isSameCamp(piece.camp()) && movePiece.isSameType(PieceType.PAWN);
+    }
+
+    public boolean isKingExist(final Camp camp) {
+        return board.values()
+                .stream()
+                .anyMatch(piece -> piece.isSameCamp(camp) && piece.isSameType(PieceType.KING));
     }
 }

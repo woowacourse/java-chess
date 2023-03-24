@@ -11,9 +11,16 @@ public class Square {
         this.rank = rank;
     }
 
-    public Square nextSquare(final Square source, final Move move) {
-        final int nextFile = source.getFile() + move.getFile();
-        final int nextRank = source.getRank() + move.getRank();
+    public Square nextSquare(final Move move) {
+        if (move.equals(Move.UP_UP) || move.equals(Move.DOWN_DOWN)) {
+            final int nextFile = this.getFile() + Integer.signum(move.getFile());
+            final int nextRank = this.getRank() + Integer.signum(move.getRank());
+
+            return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
+        }
+
+        final int nextFile = this.getFile() + move.getFile();
+        final int nextRank = this.getRank() + move.getRank();
 
         return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
     }

@@ -48,11 +48,7 @@ class GameTest {
     @DisplayName("White의 폰이 세로로 있는 경우 점수를 계산한다.")
     @Test
     void Should_CalculateScore_When_WhiteVertically() {
-        game.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
-        game.move(new Square(File.A, Rank.SEVEN), new Square(File.A, Rank.FIVE));
-        game.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR));
-        game.move(new Square(File.B, Rank.SEVEN), new Square(File.B, Rank.FIVE));
-        game.move(new Square(File.B, Rank.FOUR), new Square(File.A, Rank.FIVE));
+        game.move(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE));
 
         assertThat(game.calculateScore(Camp.WHITE)).isEqualTo(TWO_VERTICAL_PAWN_SCORE);
     }
@@ -60,12 +56,8 @@ class GameTest {
     @DisplayName("Black의 폰이 세로로 있는 경우 점수를 계산한다.")
     @Test
     void Should_CalculateScore_When_BlackVertically() {
-        game.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR));
-        game.move(new Square(File.A, Rank.SEVEN), new Square(File.A, Rank.FIVE));
-        game.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
-        game.move(new Square(File.B, Rank.SEVEN), new Square(File.B, Rank.FIVE));
-        game.move(new Square(File.C, Rank.TWO), new Square(File.C, Rank.FOUR));
-        game.move(new Square(File.A, Rank.FIVE), new Square(File.B, Rank.FOUR));
+        game.move(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE));
+        game.move(new Square(File.A, Rank.SEVEN), new Square(File.B, Rank.SIX));
 
         assertThat(game.calculateScore(Camp.BLACK)).isEqualTo(TWO_VERTICAL_PAWN_SCORE);
     }

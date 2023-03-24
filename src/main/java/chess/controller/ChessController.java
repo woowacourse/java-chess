@@ -62,7 +62,8 @@ public class ChessController {
             state = state.status();
             final double whiteScore = game.calculateScore(Camp.WHITE);
             final double blackScore = game.calculateScore(Camp.BLACK);
-            outputView.printStatus(whiteScore, blackScore);
+            final Camp winner = game.judgeWinner();
+            outputView.printStatus(whiteScore, blackScore, winner);
         }
         if (command.isEnd()) {
             state = state.end();

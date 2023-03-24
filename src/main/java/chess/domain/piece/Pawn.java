@@ -62,7 +62,12 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && !isPathBlocked;
+        return possibleMoves.contains(move) && isNotSlidingMove(target, move) && !isPathBlocked;
+    }
+
+    private boolean isNotSlidingMove(final Square target, final Move move) {
+        return move.getFile() == target.getFile() - position().getFile()
+                && move.getRank() == target.getRank() - position().getRank();
     }
 
     @Override

@@ -33,7 +33,7 @@ class PawnTest {
             final Square source = new Square(File.A, Rank.TWO);
             final Square target = new Square(File.A, Rank.FOUR);
             final Pawn pawn = new Pawn(Camp.WHITE, source);
-            final Move move = Move.UP;
+            final Move move = Move.UP_UP;
 
             assertThat(pawn.isMovable(target, move, PATH_NOT_BLOCKED)).isTrue();
         }
