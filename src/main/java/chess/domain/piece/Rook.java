@@ -10,7 +10,7 @@ public final class Rook extends Piece {
     private static final List<Direction> ROOK_MOVABLE_DIRECTIONS = List.of(Direction.CROSS);
 
     public Rook(Color color) {
-        super(PieceName.ROOK, color);
+        super(PieceType.ROOK, color);
     }
 
     @Override

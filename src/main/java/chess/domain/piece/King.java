@@ -11,7 +11,7 @@ public final class King extends Piece {
     private static final int KING_ROUTE_SIZE = 2;
 
     public King(Color color) {
-        super(PieceName.KING, color);
+        super(PieceType.KING, color);
     }
 
     @Override

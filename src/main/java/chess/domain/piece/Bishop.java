@@ -10,7 +10,7 @@ public final class Bishop extends Piece {
     private static final List<Direction> BISHOP_MOVABLE_DIRECTIONS = List.of(Direction.DIAGONAL);
 
     public Bishop(Color color) {
-        super(PieceName.BISHOP, color);
+        super(PieceType.BISHOP, color);
     }
 
     @Override

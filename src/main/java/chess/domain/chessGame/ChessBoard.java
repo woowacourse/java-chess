@@ -1,7 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public final class ChessBoard {
 
     public boolean isKingDead() {
         long kingCount = chessBoard.values().stream()
-                .filter(piece -> piece.getPieceType() == PieceName.KING)
+                .filter(piece -> piece.getPieceType() == PieceType.KING)
                 .count();
         return kingCount != KING_NECESSARY_COUNT;
     }
@@ -34,7 +34,7 @@ public final class ChessBoard {
         pieceMoveValidator.checkPieceExistInStartPosition(startPosition);
 
         Piece startPiece = chessBoard.get(startPosition);
-        if (startPiece.getPieceType() == PieceName.PAWN) {
+        if (startPiece.getPieceType() == PieceType.PAWN) {
             PawnMoveValidator pawnMoveValidator = new PawnMoveValidator(chessBoard);
             pawnMoveValidator.checkPawnCanMove(startPosition, endPosition);
         }

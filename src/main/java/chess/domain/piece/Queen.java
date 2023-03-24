@@ -10,7 +10,7 @@ public final class Queen extends Piece {
     private static final List<Direction> QUEEN_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
 
     public Queen(Color color) {
-        super(PieceName.QUEEN, color);
+        super(PieceType.QUEEN, color);
     }
 
     @Override
