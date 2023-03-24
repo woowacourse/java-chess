@@ -11,13 +11,16 @@ public class Score {
         return number;
     }
 
-    public Score add(Score scoreToAdd) {
-        return new Score(this.number + scoreToAdd.number);
+    public static Score add(Score firstScore, Score secondScore) {
+        return new Score(firstScore.number + secondScore.number);
     }
 
     @Override
     public boolean equals(Object scoreToCompare) {
-        return this.number == ((Score) scoreToCompare).number;
+        if (scoreToCompare instanceof Score) {
+            return this.number == ((Score) scoreToCompare).number;
+        }
+        return false;
     }
 
     @Override

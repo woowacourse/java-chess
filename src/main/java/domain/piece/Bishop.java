@@ -2,9 +2,12 @@ package domain.piece;
 
 import domain.game.Movement;
 import domain.game.Position;
+import domain.game.Score;
 import domain.game.Side;
 
 public class Bishop extends Piece {
+    private static final Score SCORE = new Score(3);
+
     private Bishop(Side side) {
         super(side);
     }
@@ -37,5 +40,9 @@ public class Bishop extends Piece {
             return PieceCategory.WHITE_BISHOP;
         }
         return PieceCategory.BLACK_BISHOP;
+    }
+
+    public Score getScore() {
+        return SCORE;
     }
 }

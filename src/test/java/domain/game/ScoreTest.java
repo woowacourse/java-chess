@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 class ScoreTest {
 
-    @DisplayName("Score 3에 Score 4를 더하면 Score 7을 반환한다.")
+    @DisplayName("Score 3과 Score 4를 더하면 Score 7을 반환한다.")
     @Test
     void shouldReturnScoreOf7WhenAdd4To3() {
-        Score score = new Score(3);
-        Score scoreToAdd = new Score(4);
-        assertThat(score.add(scoreToAdd)).isEqualTo(new Score(7));
+        Score firstScore = new Score(3);
+        Score secondScore = new Score(4);
+        assertThat(Score.add(firstScore, secondScore)).isEqualTo(new Score(7));
     }
 }

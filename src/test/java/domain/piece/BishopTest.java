@@ -13,6 +13,7 @@ import static domain.game.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.game.Position;
+import domain.game.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,5 +83,12 @@ class BishopTest {
         Bishop whiteBishop = Bishop.createOfWhite();
         List<Position> path = whiteBishop.collectPath(Position.of(G, TWO), Position.of(C, SIX));
         assertThat(path).containsExactlyInAnyOrder(Position.of(F, THREE), Position.of(E, FOUR), Position.of(D, FIVE));
+    }
+
+    @DisplayName("점수를 요청하면 3점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf3WhenRequestScore() {
+        Bishop whiteBishop = Bishop.createOfWhite();
+        assertThat(whiteBishop.getScore()).isEqualTo(new Score(3));
     }
 }
