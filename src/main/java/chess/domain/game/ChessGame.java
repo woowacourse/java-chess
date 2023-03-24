@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private Long id;
+    private final Long id;
     private final ChessBoard chessBoard;
-    private GameState state;
-    private Turn turn;
-    private Color winner;
+    private final GameState state;
+    private final Turn turn;
+    private final Color winner;
 
     private ChessGame(final Long id,
                       final ChessBoard chessBoard,
@@ -38,7 +38,7 @@ public class ChessGame {
                 null);
     }
 
-    public static ChessGame restart(final Long id, final ChessBoard chessBoard, final Turn turn) {
+    public static ChessGame resume(final Long id, final ChessBoard chessBoard, final Turn turn) {
         return new ChessGame(id, chessBoard, GameState.RUN, turn, null);
     }
 
@@ -46,15 +46,13 @@ public class ChessGame {
         return new ChessGame(id, chessBoard, GameState.END, null, winner);
     }
 
-    public void movePiece(final PiecePosition source, final PiecePosition destination) {
+    public ChessGame movePiece(final PiecePosition source, final PiecePosition destination) {
         validateRunning();
         chessBoard.movePiece(turn, source, destination);
         if (killEnemyKing()) {
-            state = GameState.END;
-            winner = turn.color();
-            return;
+            return ChessGame.end(id, chessBoard, turn.color());
         }
-        turn = turn.change();
+        return ChessGame.resume(id, chessBoard, turn.change());
     }
 
     private void validateRunning() {

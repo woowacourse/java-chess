@@ -40,11 +40,10 @@ class ChessGameTest {
         final Color before = chessGame.turnColor();
 
         // when
-        chessGame.movePiece(PiecePosition.of("e2"),
-                PiecePosition.of("e4"));
+        final ChessGame after = chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e4"));
 
         // then
-        assertThat(chessGame.turnColor()).isNotEqualTo(before);
+        assertThat(after.turnColor()).isNotEqualTo(before);
     }
 
     @Test
@@ -54,28 +53,22 @@ class ChessGameTest {
         final ChessGame chessGame = ChessGame.start(chessBoard);
 
         // when
-        흰색_왕을_죽인다(chessGame);
+        final ChessGame after = 흰색_왕을_죽인다(chessGame);
 
         // then
         assertAll(
-                () -> assertThat(chessGame.state()).isEqualTo(GameState.END),
-                () -> assertThat(chessGame.winColor()).isEqualTo(Color.BLACK)
+                () -> assertThat(after.state()).isEqualTo(GameState.END),
+                () -> assertThat(after.winColor()).isEqualTo(Color.BLACK)
         );
     }
 
-    private void 흰색_왕을_죽인다(final ChessGame chessGame) {
-        chessGame.movePiece(PiecePosition.of("e2"),
-                PiecePosition.of("e4"));
-        chessGame.movePiece(PiecePosition.of("d7"),
-                PiecePosition.of("d5"));
-        chessGame.movePiece(PiecePosition.of("e1"),
-                PiecePosition.of("e2"));
-        chessGame.movePiece(PiecePosition.of("d5"),
-                PiecePosition.of("d4"));
-        chessGame.movePiece(PiecePosition.of("e2"),
-                PiecePosition.of("e3"));
-        chessGame.movePiece(PiecePosition.of("d4"),
-                PiecePosition.of("e3"));
+    private ChessGame 흰색_왕을_죽인다(final ChessGame chessGame) {
+        return chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e4"))
+                .movePiece(PiecePosition.of("d7"), PiecePosition.of("d5"))
+                .movePiece(PiecePosition.of("e1"), PiecePosition.of("e2"))
+                .movePiece(PiecePosition.of("d5"), PiecePosition.of("d4"))
+                .movePiece(PiecePosition.of("e2"), PiecePosition.of("e3"))
+                .movePiece(PiecePosition.of("d4"), PiecePosition.of("e3"));
     }
 
     @Test
@@ -83,11 +76,11 @@ class ChessGameTest {
         // given
         final ChessBoard chessBoard = new ChessBoardFactory().create();
         final ChessGame chessGame = ChessGame.start(chessBoard);
-        흰색_왕을_죽인다(chessGame);
+        final ChessGame after = 흰색_왕을_죽인다(chessGame);
 
         // when & then
         assertThatThrownBy(() ->
-                chessGame.movePiece(PiecePosition.of("e2"),
+                after.movePiece(PiecePosition.of("e2"),
                         PiecePosition.of("e4"))
         ).isInstanceOf(IllegalArgumentException.class);
     }

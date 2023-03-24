@@ -71,13 +71,13 @@ class JdbcChessGameRepositoryTest {
         // given
         final ChessGame chessGame = ChessGame.start(new ChessBoardFactory().create());
         final ChessGame save = repository.save(chessGame);
-        흰색_왕을_죽인다(save);
+        final ChessGame after = 흰색_왕을_죽인다(save);
 
         // when
-        repository.update(save);
+        repository.update(after);
 
         // then
-        final ChessGame result = repository.findById(save.id()).get();
+        final ChessGame result = repository.findById(after.id()).get();
         assertAll(
                 () -> assertThat(result.state()).isEqualTo(GameState.END),
                 () -> assertThat(result.winColor()).isEqualTo(Color.BLACK),
@@ -85,12 +85,12 @@ class JdbcChessGameRepositoryTest {
         );
     }
 
-    private void 흰색_왕을_죽인다(final ChessGame chessGame) {
-        chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e4"));
-        chessGame.movePiece(PiecePosition.of("d7"), PiecePosition.of("d5"));
-        chessGame.movePiece(PiecePosition.of("e1"), PiecePosition.of("e2"));
-        chessGame.movePiece(PiecePosition.of("d5"), PiecePosition.of("d4"));
-        chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e3"));
-        chessGame.movePiece(PiecePosition.of("d4"), PiecePosition.of("e3"));
+    private ChessGame 흰색_왕을_죽인다(final ChessGame chessGame) {
+        return chessGame.movePiece(PiecePosition.of("e2"), PiecePosition.of("e4"))
+                .movePiece(PiecePosition.of("d7"), PiecePosition.of("d5"))
+                .movePiece(PiecePosition.of("e1"), PiecePosition.of("e2"))
+                .movePiece(PiecePosition.of("d5"), PiecePosition.of("d4"))
+                .movePiece(PiecePosition.of("e2"), PiecePosition.of("e3"))
+                .movePiece(PiecePosition.of("d4"), PiecePosition.of("e3"));
     }
 }

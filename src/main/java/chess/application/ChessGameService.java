@@ -20,8 +20,8 @@ public class ChessGameService {
 
     public void movePiece(final Long id, final PiecePosition source, final PiecePosition destination) {
         final ChessGame chessGame = findById(id);
-        chessGame.movePiece(source, destination);
-        chessGameRepository.update(chessGame);
+        final ChessGame runningGame = chessGame.movePiece(source, destination);
+        chessGameRepository.update(runningGame);
     }
 
     public ChessGame findById(final Long id) {

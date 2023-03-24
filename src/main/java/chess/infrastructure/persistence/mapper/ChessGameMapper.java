@@ -36,7 +36,7 @@ public class ChessGameMapper {
                 .map(PieceMapper::toDomain)
                 .collect(toList()));
         if (GameState.valueOf(chessGame.state()) == GameState.RUN) {
-            return ChessGame.restart(
+            return ChessGame.resume(
                     chessGame.id(),
                     board,
                     new Turn(Color.valueOf(chessGame.turn())));
