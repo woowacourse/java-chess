@@ -31,7 +31,7 @@ public class PieceDao {
             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
             preparedStatement.setString(1, piece.getType().name());
             preparedStatement.setString(2, position.toString());
-            preparedStatement.setString(3, convertTeamColorToString(piece.getColor()));
+            preparedStatement.setString(3, piece.getColor().name());
             preparedStatement.setLong(4, gameId);
             preparedStatement.executeUpdate();
 
@@ -41,7 +41,7 @@ public class PieceDao {
         }
     }
 
-    public boolean updatePositionByPositionAndGameId(final Position prev,
+    public boolean updatePositionByPositionAndGameId(final Position prev, // update
         final long gameId,
         final Position current) {
         String queryStatement = "UPDATE piece SET position = ? WHERE game_id = ? AND position = ?";
@@ -63,7 +63,7 @@ public class PieceDao {
         return true;
     }
 
-    public boolean deleteByPositionAndGameId(final Position target, final long gameId) {
+    public boolean deleteByPositionAndGameId(final Position target, final long gameId) { // deleteOne
         String queryStatement = "DELETE FROM piece WHERE game_id = ? AND position = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
@@ -82,7 +82,7 @@ public class PieceDao {
         return false;
     }
 
-    public Map<Position, Piece> findAllByGameId(final long gameId) {
+    public Map<Position, Piece> findAllByGameId(final long gameId) { // queryOne
         String queryStatement = "SELECT * FROM piece WHERE game_id = ?";
         Map<Position, Piece> piecesByPosition = new HashMap<>();
 
@@ -96,21 +96,13 @@ public class PieceDao {
                 piecesByPosition.put(Position.from(resultSet.getString("position")),
                     InitialPiece.findPieceByTypeAndColor(
                         PieceType.findByName(resultSet.getString("type")),
-                        convertStringToTeamColor(resultSet.getString("color"))));
+                        TeamColor.findByName(resultSet.getString("color"))));
             }
         } catch (SQLException e) {
             System.err.println("SELECT 에러: " + e.getMessage());
             e.printStackTrace();
         }
         return piecesByPosition;
-    }
-
-    private TeamColor convertStringToTeamColor(final String color) {
-        return TeamColor.findByName(color);
-    }
-
-    private String convertTeamColorToString(final TeamColor color) {
-        return color.name();
     }
 
 }

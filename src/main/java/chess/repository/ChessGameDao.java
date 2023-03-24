@@ -24,7 +24,7 @@ public class ChessGameDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement,
                 Statement.RETURN_GENERATED_KEYS); // queryAndReturnGeneratedKeys
-            preparedStatement.setString(1, convertTeamColorToString(game.getTeamColor()));
+            preparedStatement.setString(1, game.getTeamColor().name());
             preparedStatement.setBoolean(2, game.isEnd());
             preparedStatement.executeUpdate();
 
@@ -88,7 +88,7 @@ public class ChessGameDao {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(new ChessGameDto(resultSet.getLong("game_id"), convertStringToTeamColor(resultSet.getString("turn"))));
+                return Optional.of(new ChessGameDto(resultSet.getLong("game_id"), TeamColor.findByName(resultSet.getString("turn"))));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -96,15 +96,6 @@ public class ChessGameDao {
             e.printStackTrace();
         }
         return Optional.empty();
-    }
-
-
-    private String convertTeamColorToString(final TeamColor color) {
-        return color.name();
-    }
-
-    private TeamColor convertStringToTeamColor(final String color) {
-        return TeamColor.findByName(color);
     }
 
 }
