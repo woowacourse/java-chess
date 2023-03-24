@@ -1,8 +1,6 @@
 package chess.common;
 
 import chess.application.ChessGameService;
-import chess.controller.ChessGameController;
-import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.ChessGameRepository;
 import chess.infrastructure.persistence.dao.ChessGameDao;
 import chess.infrastructure.persistence.dao.JdbcTemplate;
@@ -29,13 +27,5 @@ public class ChessGameConfig {
 
     public ChessGameService chessGameService() {
         return new ChessGameService(chessGameRepository());
-    }
-
-    public ChessBoardFactory chessBoardFactory() {
-        return new ChessBoardFactory();
-    }
-
-    public ChessGameController chessGameController() {
-        return new ChessGameController(chessGameService(), chessBoardFactory());
     }
 }
