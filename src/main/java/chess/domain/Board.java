@@ -22,7 +22,7 @@ public class Board {
     }
 
     public static Board from(final Map<Position, Piece> board) {
-        return new Board(BoardFactory.from(board));
+        return BoardFactory.from(board);
     }
 
     public void move(final Position source, final Position target, final Team team) {
