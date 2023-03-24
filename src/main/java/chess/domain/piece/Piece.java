@@ -24,7 +24,7 @@ public abstract class Piece {
         throw new UnsupportedOperationException();
     }
 
-    protected Square position() {
+    public Square position() {
         return position;
     }
 
@@ -35,6 +35,8 @@ public abstract class Piece {
     public Camp camp() {
         return camp;
     }
+
+    public abstract PieceType pieceType();
 
     @Override
     public boolean equals(final Object o) {

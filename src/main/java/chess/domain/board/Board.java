@@ -4,6 +4,7 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,18 @@ public class Board {
 
     public List<Piece> getPieces() {
         return new ArrayList<>(board.values());
+    }
+
+    public boolean isVerticalPawn(final Camp camp) {
+        return board.values()
+                .stream()
+                .filter(piece -> isSameCampPawn(camp, piece))
+                .anyMatch(piece -> piece.position().rank().canUp()
+                        && isSameCampPawn(camp, board.get(new Square(piece.position().file(),
+                        piece.position().rank().upRank()))));
+    }
+
+    public boolean isSameCampPawn(final Camp camp, final Piece piece) {
+        return piece.isSameCamp(camp) && piece.pieceType().equals(PieceType.PAWN);
     }
 }

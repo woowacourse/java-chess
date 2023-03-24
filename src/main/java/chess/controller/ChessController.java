@@ -4,6 +4,7 @@ import chess.controller.state.Ready;
 import chess.controller.state.State;
 import chess.domain.game.Command;
 import chess.domain.game.Game;
+import chess.domain.piece.Camp;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -56,6 +57,11 @@ public class ChessController {
         if (command.isMove()) {
             state = state.next();
             play(command);
+        }
+        if (command.isStatus()) {
+            final double whiteScore = game.calculateScore(Camp.WHITE);
+            final double blackScore = game.calculateScore(Camp.BLACK);
+            outputView.printStatus(whiteScore, blackScore);
         }
         if (command.isEnd()) {
             state = state.end();

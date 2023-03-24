@@ -1,7 +1,15 @@
 package chess.domain.piece;
 
 public enum Camp {
-    WHITE, BLACK, EMPTY;
+    WHITE("White"),
+    BLACK("Black"),
+    EMPTY("Empty");
+
+    final String name;
+
+    Camp(final String name) {
+        this.name = name;
+    }
 
     public static Camp nextTurn(final Camp turn) {
         if (turn.equals(WHITE)) {
@@ -11,5 +19,9 @@ public enum Camp {
             return WHITE;
         }
         return EMPTY;
+    }
+
+    public String getName() {
+        return name;
     }
 }

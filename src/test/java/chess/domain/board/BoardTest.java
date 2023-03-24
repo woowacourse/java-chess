@@ -83,4 +83,28 @@ class BoardTest {
 
         Assertions.assertDoesNotThrow(() -> board.move(source, target));
     }
+
+    @DisplayName("White Pawn이 세로로 연속해서 존재한다.")
+    @Test
+    void Should_True_When_WhitePawnExistVertically() {
+        final Board board = new Board();
+        board.move(new Square(File.B, Rank.SEVEN), new Square(File.B, Rank.FIVE));
+        board.move(new Square(File.B, Rank.FIVE), new Square(File.B, Rank.FOUR));
+        board.move(new Square(File.B, Rank.FOUR), new Square(File.B, Rank.THREE));
+        board.move(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE));
+
+        assertThat(board.isVerticalPawn(Camp.WHITE)).isTrue();
+    }
+
+    @DisplayName("Black Pawn이 세로로 연속해서 존재한다.")
+    @Test
+    void Should_True_When_BlackPawnExistVertically() {
+        final Board board = new Board();
+        board.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
+        board.move(new Square(File.B, Rank.FOUR), new Square(File.B, Rank.FIVE));
+        board.move(new Square(File.B, Rank.FIVE), new Square(File.B, Rank.SIX));
+        board.move(new Square(File.A, Rank.SEVEN), new Square(File.B, Rank.SIX));
+
+        assertThat(board.isVerticalPawn(Camp.BLACK)).isTrue();
+    }
 }

@@ -32,6 +32,17 @@ public enum Rank {
                 .orElseThrow();
     }
 
+    public boolean canUp() {
+        return this.y + 1 <= 7;
+    }
+
+    public Rank upRank() {
+        if (!canUp()) {
+            throw new IllegalStateException("랭크가 더 이상 올라갈 수 없습니다.");
+        }
+        return findRank(y + 1);
+    }
+
     public int getRank() {
         return y;
     }

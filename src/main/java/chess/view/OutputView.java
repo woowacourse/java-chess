@@ -64,4 +64,9 @@ public class OutputView {
             System.out.println();
         }
     }
+
+    public void printStatus(final double whiteScore, final double blackScore) {
+        System.out.println("White 진영 점수: " + whiteScore);
+        System.out.println("Black 진영 점수: " + blackScore);
+    }
 }

@@ -28,4 +28,9 @@ public class Knight extends Piece {
     public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
         return possibleMoves.contains(move);
     }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.KNIGHT;
+    }
 }

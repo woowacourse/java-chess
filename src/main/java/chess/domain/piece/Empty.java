@@ -14,4 +14,9 @@ public class Empty extends Piece {
     public static Empty of() {
         return empty;
     }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.EMPTY;
+    }
 }

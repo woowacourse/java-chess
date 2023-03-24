@@ -42,4 +42,12 @@ public class Square {
     public int getRank() {
         return rank.getRank();
     }
+
+    public Rank rank() {
+        return rank;
+    }
+
+    public File file() {
+        return file;
+    }
 }

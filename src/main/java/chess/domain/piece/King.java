@@ -33,4 +33,9 @@ public class King extends Piece {
         return move.getFile() == target.getFile() - position().getFile()
                 && move.getRank() == target.getRank() - position().getRank();
     }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.KING;
+    }
 }

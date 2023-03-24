@@ -12,8 +12,9 @@ public class Command {
     private static final int TARGET_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
     private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
 
@@ -33,7 +34,7 @@ public class Command {
             target = convertToSquare(commands.get(TARGET_INDEX));
             return;
         }
-        if (!isStart() && !isEnd()) {
+        if (!isStart() && !isEnd() && !isStatus()) {
             throw new IllegalArgumentException("게임 명령어가 올바르지 않습니다.");
         }
     }
@@ -52,12 +53,16 @@ public class Command {
         }
     }
 
-    public boolean isMove() {
-        return input.equals(MOVE_COMMAND);
+    public boolean isStatus() {
+        return input.equals(STATUS_COMMAND);
     }
 
     public boolean isStart() {
         return input.equals(START_COMMAND);
+    }
+
+    public boolean isMove() {
+        return input.equals(MOVE_COMMAND);
     }
 
     public boolean isEnd() {

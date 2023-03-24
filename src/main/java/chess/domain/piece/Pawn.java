@@ -64,4 +64,9 @@ public class Pawn extends Piece {
     public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
         return possibleMoves.contains(move) && !isPathBlocked;
     }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.PAWN;
+    }
 }
