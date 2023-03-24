@@ -69,13 +69,22 @@ public final class ChessGame {
     public void findPreviousGame(final String boardId) {
         transactionContext.workWithTransaction(
             connection -> {
-                final Map<Location, Piece> prevBoard = chessInformationDao.find(boardId, connection);
+                final Map<Location, Piece> prevBoard = getPrevBoard(boardId, connection);
                 final Color prevColor = chessInformationDao.findColor(boardId, connection);
                 this.board = new Board(prevBoard, new ScoreCalculator());
                 this.color = prevColor;
                 this.boardId = boardId;
                 return null;
             });
+    }
+
+    private Map<Location, Piece> getPrevBoard(final String boardId, final Connection connection)
+        throws SQLException {
+        final Map<Location, Piece> prevBoard = chessInformationDao.find(boardId, connection);
+        if (prevBoard.isEmpty()) {
+            throw new IllegalArgumentException("존재하지 않는 방 입니다.");
+        }
+        return prevBoard;
     }
 
     public void save() {
