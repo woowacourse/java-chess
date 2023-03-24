@@ -6,23 +6,17 @@ import java.util.List;
 
 public class MoveSaveStrategy implements MoveQueryStrategy {
 
-    private final List<Move> moves;
+    private final Move move;
 
-    public MoveSaveStrategy(final List<Move> moves) {
-        this.moves = moves;
+    public MoveSaveStrategy(final Move move) {
+        this.move = move;
     }
 
     @Override
     public void save(final PreparedStatement preparedStatement) throws SQLException {
-        for (Move move : moves) {
-            preparedStatement.setString(1, move.getSource());
-            preparedStatement.setString(2, move.getTarget());
-            preparedStatement.addBatch();
-            preparedStatement.clearParameters();
-        }
-
-        preparedStatement.executeBatch();
-        preparedStatement.clearBatch();
+        preparedStatement.setString(1, move.getSource());
+        preparedStatement.setString(2, move.getTarget());
+        preparedStatement.executeUpdate();
     }
 
     @Override

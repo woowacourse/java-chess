@@ -16,11 +16,7 @@ public class MoveDaoImpl implements MoveDao {
                 final Connection connection = ConnectionGenerator.getConnection();
                 final PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
-            connection.setAutoCommit(false);
-
             strategy.save(preparedStatement);
-
-            connection.commit();
         } catch (final SQLException e) {
             throw new IllegalStateException("데이터 베이스에 쿼리를 보낼 수 없습니다.");
         }
