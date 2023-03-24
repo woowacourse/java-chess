@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Kind;
 import chess.domain.piece.Piece;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDAO implements ChessDAO{
@@ -75,5 +74,17 @@ public class JdbcDAO implements ChessDAO{
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void delete() {
+        final var query = "DELETE from chessGame";
+
+        try (final var connection = Loader.getConnection();
+        final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -9,4 +9,6 @@ public interface ChessDAO {
     ChessGame select();
 
     void update();
+
+    void delete();
 }
