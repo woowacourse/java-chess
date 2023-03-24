@@ -2,6 +2,12 @@
 
 ## 미션 4 기능
 
+### MoveHistory
+
+- [x] DAO를 통해 Command를 저장한다.
+- [x] DAO를 통해 Command 리스트를 불러온다.
+- [x] DAO를 통해 DB를 초기화한다.
+
 ### DAO
 
 - [x] DB에 접근해 move 명령의 from과 to를 저장한다.
