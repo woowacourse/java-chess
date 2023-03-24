@@ -11,8 +11,9 @@ public final class End implements State {
     }
 
     public End(ChessGame chessGame) {
-        JdbcDAO JdbcDAO = new JdbcDAO();
-        JdbcDAO.insert(chessGame);
+        JdbcDAO jdbcDAO = new JdbcDAO();
+        jdbcDAO.delete();
+        jdbcDAO.insert(chessGame);
     }
 
     @Override
