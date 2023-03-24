@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Route {
 
-    List<Position> route;
+    private final List<Position> route;
 
-    private Route(List<Position> route) {
+    private Route(final List<Position> route) {
         this.route = route;
     }
 
-    public static Route generateRouteFromOtherPiece(Direction direction, Position source, Position destination) {
+    public static Route generateRouteFromOtherPiece(final Direction direction, final Position source, final Position destination) {
         List<Position> route = new ArrayList<>();
 
         Row row = source.nextRow(direction.getRow());
@@ -29,11 +29,11 @@ public class Route {
         return new Route(route);
     }
 
-    public static Route generateRouteFromPawn(PawnDirection direction, Position source, Position destination) {
+    public static Route generateRouteFromPawn(final PawnDirection direction, final Position source, final Position destination) {
         return new Route(Collections.emptyList());
     }
 
-    public static Route generateRouteFromWhitePawnDoubleMove(PawnDirection direction, Position source, Position destination) {
+    public static Route generateRouteFromWhitePawnDoubleMove(final PawnDirection direction, final Position source, final Position destination) {
         List<Position> route = new ArrayList<>();
 
         Row row = source.nextRow(direction.getRow() - 1);
@@ -47,7 +47,7 @@ public class Route {
         return new Route(route);
     }
 
-    public static Route generateRouteFromBlackPawnDoubleMove(PawnDirection direction, Position source, Position destination) {
+    public static Route generateRouteFromBlackPawnDoubleMove(final PawnDirection direction, final Position source, final Position destination) {
         List<Position> route = new ArrayList<>();
 
         Row row = source.nextRow(direction.getRow() + 1);
