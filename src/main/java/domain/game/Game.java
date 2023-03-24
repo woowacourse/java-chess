@@ -92,5 +92,19 @@ public class Game {
     public Side getSideOfTurn() {
         return this.sideOfTurn;
     }
+
+    public Score calculateWhiteScore() {
+        return calculateScoreOf(WHITE);
+    }
+
+    public Score calculateBlackScore() {
+        return calculateScoreOf(BLACK);
+    }
+
+    private Score calculateScoreOf(Side side) {
+        Score scoreExceptPawns = calculateScoreExceptPawnsOf(side);
+        Score scoreOfPawns = calculatePawnsScoreOf(side);
+        return scoreExceptPawns.add(scoreOfPawns);
+    }
 }
 

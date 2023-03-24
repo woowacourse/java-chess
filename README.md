@@ -125,7 +125,9 @@ classDiagram
   - [ ] Black 진영의 점수를 계산한다.
     - [ ] Pawn 점수를 계산한다.
     - [ ] Pawn을 제외한 기물들의 점수를 계산한다.
-- 
+
+### Score
+- [x] 더한 점수를 반환한다.
 
 ### ChessBoardGenerator
 - [x] 체스 판과 규칙에 맞는 초기 말들을 생성한다.
