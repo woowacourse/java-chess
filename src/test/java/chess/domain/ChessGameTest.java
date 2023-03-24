@@ -5,9 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.repository.ChessGameDao;
 import chess.repository.GameService;
-import chess.repository.PieceDao;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +14,22 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class ChessGameTest {
+
+    class TestGameService implements GameService {
+
+        @Override
+        public void updateMovement(Position source, Position dest, long gameId) {
+        }
+
+        @Override
+        public void updateGameStatusEnd(long gameId) {
+        }
+
+        @Override
+        public void updateGameTurn(long gameId, TeamColor teamColor) {
+        }
+
+    }
 
     private ChessGame chessGame;
 
@@ -28,8 +42,8 @@ class ChessGameTest {
             Position.from("B2"), InitialPiece.BLACK_PAWN.getPiece());
 
         ChessBoard chessBoard = new ChessBoard(new HashMap<>(boardForTest));
-        GameService chessGameService = new GameService(new ChessGameDao(), new PieceDao());
-        chessGame = new ChessGame(chessBoard, chessGameService);
+        GameService gameService = new TestGameService();
+        chessGame = new ChessGame(chessBoard, gameService);
     }
 
     @DisplayName("King 이 잡히면 게임이 종료된다.")

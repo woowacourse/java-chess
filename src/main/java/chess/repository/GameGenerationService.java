@@ -26,15 +26,13 @@ public class GameGenerationService {
     }
 
     private ChessGame createGameFromDatabase(final ChessGameDto chessGameDto) {
-        Map<Position, Piece> piecesByPosition = pieceDao.findAllByGameId(
-            chessGameDto.getGameId());
         return ChessGame.fromDatabase(chessGameDto.getGameId(), chessGameDto.getTeamColor(),
-            new GameService(gameDao, pieceDao), new ChessBoard(piecesByPosition));
+            new ChessGameService(gameDao, pieceDao), pieceDao.findAllByGameId(chessGameDto.getGameId()));
     }
 
     private ChessGame createNewGame() {
         ChessGame newGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()),
-            new GameService(gameDao, pieceDao));
+            new ChessGameService(gameDao, pieceDao));
         long gameId = gameDao.save(newGame);
         newGame.updateNewGameId(gameId);
         saveAllPieces(InitialPiece.getPiecesWithPosition(), gameId);

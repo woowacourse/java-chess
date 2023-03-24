@@ -1,23 +1,20 @@
 package chess.repository;
 
+import chess.domain.ChessBoard;
 import chess.domain.InitialPiece;
 import chess.domain.TeamColor;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PieceDao {
 
-    private final Connection connection;
+    private final JdbcTemplate jdbcTemplate;
 
-    public PieceDao() {
-        connection = ConnectionProvider.getConnection();
+    public PieceDao(final JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void save(final Map<Position, Piece> piecesByPosition, final long game_id) {
@@ -27,82 +24,37 @@ public class PieceDao {
     private void saveEachPiece(final Piece piece, final Position position, final long gameId) {
         String queryStatement = "INSERT INTO piece (type, position, color, game_id) VALUES(?, ?, ?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
-            preparedStatement.setString(1, piece.getType().name());
-            preparedStatement.setString(2, position.toString());
-            preparedStatement.setString(3, piece.getColor().name());
-            preparedStatement.setLong(4, gameId);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println("INSERT 오류 " + e.getMessage());
-            e.printStackTrace();
-        }
+        jdbcTemplate.save(queryStatement, piece.getType().name(), position.toString(),
+            piece.getColor().name(), gameId);
     }
 
-    public boolean updatePositionByPositionAndGameId(final Position prev, // update
+    public void updatePositionByPositionAndGameId(final Position prev,
         final long gameId,
         final Position current) {
         String queryStatement = "UPDATE piece SET position = ? WHERE game_id = ? AND position = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
-            preparedStatement.setString(1, current.toString());
-            preparedStatement.setLong(2, gameId);
-            preparedStatement.setString(3, prev.toString());
-            int result = preparedStatement.executeUpdate();
 
-            if (result != 1) {
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.err.println("UPDATE 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return true;
+        jdbcTemplate.updateOne(queryStatement, current.toString(), gameId, prev.toString());
     }
 
-    public boolean deleteByPositionAndGameId(final Position target, final long gameId) { // deleteOne
+    public void deleteByPositionAndGameId(final Position target, final long gameId) {
         String queryStatement = "DELETE FROM piece WHERE game_id = ? AND position = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
-            preparedStatement.setLong(1, gameId);
-            preparedStatement.setString(2, target.toString());
-            int result = preparedStatement.executeUpdate();
 
-            if (result == 1) {
-                return true;
-            }
-
-        } catch (SQLException e) {
-            System.err.println("DELETE 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
+        jdbcTemplate.deleteOne(queryStatement, gameId, target.toString());
     }
 
-    public Map<Position, Piece> findAllByGameId(final long gameId) { // queryOne
+    public ChessBoard findAllByGameId(final long gameId) {
         String queryStatement = "SELECT * FROM piece WHERE game_id = ?";
-        Map<Position, Piece> piecesByPosition = new HashMap<>();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement);
-            preparedStatement.setLong(1, gameId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
+        return jdbcTemplate.query(queryStatement, gameId, (resultSet) -> {
+            Map<Position, Piece> piecesByPosition = new HashMap<>();
             while (resultSet.next()) {
                 piecesByPosition.put(Position.from(resultSet.getString("position")),
                     InitialPiece.findPieceByTypeAndColor(
                         PieceType.findByName(resultSet.getString("type")),
                         TeamColor.findByName(resultSet.getString("color"))));
             }
-        } catch (SQLException e) {
-            System.err.println("SELECT 에러: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return piecesByPosition;
+            return new ChessBoard(piecesByPosition);
+        });
     }
 
 }

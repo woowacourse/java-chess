@@ -14,7 +14,6 @@ public class ChessGame {
     private TeamColor teamColor;
     private final GameService gameService;
 
-
     public ChessGame(final ChessBoard chessBoard, final GameService gameService) {
         this.chessBoard = chessBoard;
         this.teamColor = TeamColor.WHITE;
