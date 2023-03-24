@@ -4,6 +4,9 @@ import static controller.room.GameRoomCommand.CREATE;
 import static controller.room.GameRoomCommand.EXIT;
 import static controller.room.GameRoomCommand.JOIN;
 import static controller.room.GameRoomCommand.LIST;
+import static controller.room.GameRoomCommand.SPECIAL_ROOM_COMMAND_LENGTH;
+import static controller.room.GameRoomCommand.STANDARD_ROOM_COMMAND_LENGTH;
+import static controller.room.GameRoomCommand.validateCommandLength;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -51,32 +54,24 @@ public class RoomController {
     }
 
     private void createGameRoom(List<String> inputs) {
-        if (inputs.size() != 2) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        validateCommandLength(inputs.size(), SPECIAL_ROOM_COMMAND_LENGTH);
         gameRoomService.createGameRoom(inputs.get(1));
     }
 
     private void joinGame(List<String> inputs) {
-        if (inputs.size() != 2) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        validateCommandLength(inputs.size(), SPECIAL_ROOM_COMMAND_LENGTH);
         String gameName = inputs.get(1);
         long roomId = gameRoomService.findRoomIdByRoomName(gameName);
         gameController.gameStart(roomId);
     }
 
     private void readGameRooms(List<String> inputs) {
-        if (inputs.size() != 1) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        validateCommandLength(inputs.size(), STANDARD_ROOM_COMMAND_LENGTH);
         List<String> gameRooms = gameRoomService.readGameRooms();
         OutputView.printGameRooms(gameRooms);
     }
 
     private void exitGame(List<String> inputs) {
-        if (inputs.size() != 1) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        validateCommandLength(inputs.size(), STANDARD_ROOM_COMMAND_LENGTH);
     }
 }
