@@ -12,6 +12,8 @@ public interface Piece {
 
     Side side();
 
+    double price();
+
     boolean isPawn();
 
     void changePawnMoveState();

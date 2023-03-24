@@ -32,6 +32,11 @@ public class Knight implements Piece {
     }
 
     @Override
+    public double price() {
+        return immediatePiece.price();
+    }
+
+    @Override
     public boolean isPawn() {
         return immediatePiece.isPawn();
     }

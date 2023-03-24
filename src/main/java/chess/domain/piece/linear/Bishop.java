@@ -32,6 +32,11 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public double price() {
+        return linearPiece.price();
+    }
+
+    @Override
     public boolean isPawn() {
         return linearPiece.isPawn();
     }

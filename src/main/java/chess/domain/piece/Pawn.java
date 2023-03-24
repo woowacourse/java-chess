@@ -119,6 +119,11 @@ public class Pawn implements Piece {
     }
 
     @Override
+    public double price() {
+        return type.price();
+    }
+
+    @Override
     public boolean isPawn() {
         return true;
     }

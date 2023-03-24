@@ -74,6 +74,11 @@ public final class LinearPiece implements Piece {
     }
 
     @Override
+    public double price() {
+        return type.price();
+    }
+
+    @Override
     public boolean isPawn() {
         return false;
     }
