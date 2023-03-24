@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A3;
 import static chess.fixture.PositionFixture.A4;
 import static chess.fixture.PositionFixture.A7;
 import static chess.fixture.PositionFixture.A8;
@@ -18,6 +19,7 @@ import static chess.fixture.PositionFixture.F1;
 import static chess.fixture.PositionFixture.F2;
 import static chess.fixture.PositionFixture.F3;
 import static chess.fixture.PositionFixture.F4;
+import static chess.fixture.PositionFixture.F7;
 import static chess.fixture.PositionFixture.G2;
 import static chess.fixture.PositionFixture.G4;
 import static chess.fixture.PositionFixture.H3;
@@ -102,6 +104,25 @@ class BoardTest {
 
         assertThat(board.calculateScore().get(BLACK)).isEqualTo(20);
         assertThat(board.calculateScore().get(WHITE)).isEqualTo(19.5);
+    }
+
+    @DisplayName("체스 게임의 점수를 계산할 수 있다.")
+    @Test
+    void test_calculateScore2() {
+        Map<Position, Piece> boardData = new HashMap<>() {
+            {
+                put(A1, Pawn.from(BLACK));
+                put(A2, Pawn.from(WHITE));
+                put(A3, Pawn.from(BLACK));
+                put(F1, King.from(WHITE));
+                put(F7, King.from(BLACK));
+            }
+        };
+
+        Board board = new Board(boardData);
+
+        assertThat(board.calculateScore().get(BLACK)).isEqualTo(1);
+        assertThat(board.calculateScore().get(WHITE)).isEqualTo(1);
     }
 
     @DisplayName("King이 죽으면, 곧바로 게임을 종료할 수 있다.")

@@ -123,6 +123,7 @@ public class Board {
         final boolean hasOtherPieceInSameFile = piecesByFile.get(file)
                 .stream()
                 .filter(it -> board.get(it).isTypeOf(PAWN))
+                .filter(it -> board.get(it).color().isSameColor(piece.color()))
                 .count() >= 2;
         return piece.calculateScore(hasOtherPieceInSameFile);
     }
