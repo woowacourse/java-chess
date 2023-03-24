@@ -29,8 +29,10 @@ public class ChessGameController {
         void execute(final Long chessGameId, final RunningCommand command);
     }
 
-    private final Map<StartCommandType, StartAction> startActionMap = new EnumMap<>(StartCommandType.class);
-    private final Map<RunningCommandType, RunningAction> runningActionMap = new EnumMap<>(RunningCommandType.class);
+    private final Map<StartCommandType, StartAction> startActionMap =
+            new EnumMap<>(StartCommandType.class);
+    private final Map<RunningCommandType, RunningAction> runningActionMap =
+            new EnumMap<>(RunningCommandType.class);
 
     private final ChessGameService chessGameService;
     private final ChessBoardFactory chessBoardFactory;
@@ -40,13 +42,34 @@ public class ChessGameController {
         this.chessGameService = chessGameService;
         this.chessBoardFactory = chessBoardFactory;
 
-        startActionMap.put(StartCommandType.START, ignored -> createGame());
+        startActionMap.put(StartCommandType.START, ignored -> startGame());
         startActionMap.put(StartCommandType.RESTART, this::restartGame);
         runningActionMap.put(RunningCommandType.MOVE, this::move);
-        runningActionMap.put(RunningCommandType.STATUS, (chessGameId, ignored) -> this.status(chessGameId));
+        runningActionMap.put(RunningCommandType.STATUS, (chessGameId, ignored) -> this.checkStatus(chessGameId));
     }
 
-    public void start() {
+    private Long startGame() {
+        return chessGameService.create(chessBoardFactory);
+    }
+
+    private Long restartGame(final StartCommand startCommand) {
+        return startCommand.restartGameId();
+    }
+
+    private void move(final Long chessGameId, final RunningCommand command) {
+        final List<PiecePosition> piecePositions = command.moveParameters();
+        final PiecePosition from = piecePositions.get(FROM_POSITION_INDEX);
+        final PiecePosition to = piecePositions.get(TO_POSITION_INDEX);
+        chessGameService.movePiece(chessGameId, from, to);
+    }
+
+    private void checkStatus(final Long chessGameId) {
+        ChessGame chessGame = chessGameService.findById(chessGameId);
+        final Map<Color, Double> colorDoubleMap = chessGame.calculateScore();
+        OutputView.printScore(colorDoubleMap);
+    }
+
+    public void control() {
         try {
             OutputView.printStartMessage();
             final StartCommand startCommand = readStartCommand();
@@ -55,7 +78,7 @@ public class ChessGameController {
             playGame(gameId);
         } catch (Exception e) {
             OutputView.error(e.getMessage());
-            start();
+            control();
         }
     }
 
@@ -64,19 +87,11 @@ public class ChessGameController {
         return StartCommand.parse(commands);
     }
 
-    private Long createGame() {
-        return chessGameService.create(chessBoardFactory);
-    }
-
-    private Long restartGame(final StartCommand startCommand) {
-        return startCommand.restartParameter();
-    }
-
     private void playGame(final Long chessGameId) {
         ChessGame chessGame = chessGameService.findById(chessGameId);
         validateAlreadyEnd(chessGame);
         OutputView.startGame(chessGameId);
-        runToEnd(chessGame);
+        playGameToEnd(chessGame);
     }
 
     private void validateAlreadyEnd(final ChessGame chessGame) {
@@ -85,7 +100,7 @@ public class ChessGameController {
         }
     }
 
-    private void runToEnd(ChessGame chessGame) {
+    private void playGameToEnd(ChessGame chessGame) {
         do {
             OutputView.showBoard(chessGame.pieces(), chessGame.turnColor());
             final RunningCommand command = readRunningCommand();
@@ -116,18 +131,5 @@ public class ChessGameController {
         } catch (Exception e) {
             OutputView.error(e.getMessage());
         }
-    }
-
-    private void move(final Long chessGameId, final RunningCommand command) {
-        final List<PiecePosition> piecePositions = command.moveParameters();
-        final PiecePosition from = piecePositions.get(FROM_POSITION_INDEX);
-        final PiecePosition to = piecePositions.get(TO_POSITION_INDEX);
-        chessGameService.movePiece(chessGameId, from, to);
-    }
-
-    private void status(final Long chessGameId) {
-        ChessGame chessGame = chessGameService.findById(chessGameId);
-        final Map<Color, Double> colorDoubleMap = chessGame.calculateScore();
-        OutputView.printScore(colorDoubleMap);
     }
 }

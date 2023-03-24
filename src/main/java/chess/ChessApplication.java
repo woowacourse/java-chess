@@ -11,6 +11,6 @@ public class ChessApplication {
         final ChessGameConfig chessGameConfig = new ChessGameConfig();
         final ChessGameService chessGameService = chessGameConfig.chessGameService();
         final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
-        new ChessGameController(chessGameService, chessBoardFactory).start();
+        new ChessGameController(chessGameService, chessBoardFactory).control();
     }
 }

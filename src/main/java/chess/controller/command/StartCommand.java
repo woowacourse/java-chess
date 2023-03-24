@@ -29,7 +29,7 @@ public class StartCommand {
         return new StartCommand(startCommandType, inputs);
     }
 
-    public Long restartParameter() {
+    public Long restartGameId() {
         return Long.parseLong(commands.get(0));
     }
 
