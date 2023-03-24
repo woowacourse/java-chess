@@ -73,8 +73,13 @@ public class ChessController {
     }
 
     private void checkEnd(final List<String> command) {
-        if (!Command.from(command).isEndCommand()) {
-            playUntilEnd();
+        if (canNotPlay(Command.from(command))) {
+            return;
         }
+        playUntilEnd();
+    }
+
+    private boolean canNotPlay(final Command command) {
+        return command.isEndCommand() || chessGame.isEnd();
     }
 }

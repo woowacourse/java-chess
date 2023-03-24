@@ -125,7 +125,7 @@ public class Board {
     public boolean isKingCaught() {
         return board.values().stream()
                 .filter(Piece::isKing)
-                .count() < 2;
+                .count() < KING_NUMBER;
     }
 
     public Map<Square, Piece> getBoard() {

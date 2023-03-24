@@ -34,6 +34,10 @@ public class ChessGame {
         turn = Turn.getFirstTurn();
     }
 
+    public boolean isEnd() {
+        return board.isKingCaught();
+    }
+
     public GameStatusDto getGameStatus() {
         return GameStatusDto.from(board);
     }
