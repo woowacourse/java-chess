@@ -3,16 +3,19 @@ package database;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.SQLException;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
-@Disabled
+@TestMethodOrder(OrderAnnotation.class)
 class UserDaoTest {
 
     private final UserDao userDao = new UserDao();
 
     @Test
-    public void connection() {
+    @Order(1)
+    void connection() {
         try (var connection = userDao.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
@@ -21,21 +24,30 @@ class UserDaoTest {
     }
 
     @Test
-    public void addUser() {
-        var user = new User("test3", "test3");
+    @Order(2)
+    void addUser() {
+        var user = new User("test1", "name1");
         userDao.addUser(user);
     }
 
     @Test
-    public void findByUserId() {
+    @Order(3)
+    void update() {
         var user = userDao.findByUserId("test1");
-
-        assertThat(user).isEqualTo(new User("test1", "test2"));
+        userDao.update(user, "name2");
     }
 
     @Test
-    public void update() {
+    @Order(4)
+    void findByUserId() {
         var user = userDao.findByUserId("test1");
-        userDao.update(user);
+
+        assertThat(user).isEqualTo(new User("test1", "name2"));
+    }
+
+    @Test
+    @Order(5)
+    void delete() {
+        userDao.delete("test1");
     }
 }
