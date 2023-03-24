@@ -14,6 +14,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardMaker;
 import chess.domain.math.PositionConverter;
 import chess.view.Command;
+import chess.view.InputView;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -22,13 +23,11 @@ public final class MainController {
     private static final int COMMAND_INDEX = 0;
     private static final int CURRENT_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
-    private static final int ONLY_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
     public void run() {
         printGameStart();
-        List<String> inputs = repeatUntilValidAction(this::readValidCommand);
-        Command command = Command.of(inputs.get(COMMAND_INDEX));
+        Command command = repeatUntilValidAction(this::getValidCommand);
 
         if (command == START) {
             final Board board = new Board(new BoardMaker());
@@ -38,25 +37,13 @@ public final class MainController {
         printFinishMessage();
     }
 
-    private <T> T repeatUntilValidAction(final Supplier<T> reader) {
-        try {
-            return reader.get();
-        } catch (IllegalArgumentException e) {
-            printError(e.getMessage());
-            return repeatUntilValidAction(reader);
-        }
-    }
-
-    private List<String> readValidCommand() {
+    private Command getValidCommand() {
         List<String> inputs = readCommand();
-        validateCommand(inputs.get(COMMAND_INDEX));
-        validateInputSize(inputs);
-
-        return inputs;
+        return Command.of(inputs.get(COMMAND_INDEX));
     }
 
     private boolean playChess(final Board board) {
-        List<String> inputs = repeatUntilValidAction(this::readValidCommand);
+        List<String> inputs = readCommand();
         Command command = Command.of(inputs.get(COMMAND_INDEX));
 
         return executeCommand(board, inputs, command);
@@ -70,6 +57,7 @@ public final class MainController {
             throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
         }
         if (command == MOVE) {
+            validateInputSize(inputs);
             movePiece(board, inputs);
             printBoard(board.getBoard());
         }
@@ -83,24 +71,19 @@ public final class MainController {
         board.movePiece(currentPosition, targetPosition);
     }
 
-    private void validateCommand(final String commandValue) {
-        try {
-            Command.of(commandValue);
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
-    }
-
     private void validateInputSize(final List<String> inputs) {
-        int size = inputs.size();
-
-        if (isValidInputSize(size)) {
+        if (inputs.size() == MOVE_COMMAND_SIZE) {
             return;
         }
         throw new IllegalArgumentException("입력이 잘못되었습니다. 다시 입력해주세요.");
     }
 
-    private boolean isValidInputSize(final int size) {
-        return size == ONLY_COMMAND_SIZE || size == MOVE_COMMAND_SIZE;
+    private <T> T repeatUntilValidAction(final Supplier<T> reader) {
+        try {
+            return reader.get();
+        } catch (IllegalArgumentException e) {
+            printError(e.getMessage());
+            return repeatUntilValidAction(reader);
+        }
     }
 }
