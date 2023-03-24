@@ -9,7 +9,7 @@ public class BlankPiece extends Piece {
     private static BlankPiece instance;
 
     private BlankPiece() {
-        super(new BlankMoveRule(), Color.EMPTY);
+        super(new BlankMoveRule(), null);
     }
 
     public static BlankPiece getInstance() {

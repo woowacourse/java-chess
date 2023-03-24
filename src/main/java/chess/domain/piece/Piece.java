@@ -20,7 +20,7 @@ public class Piece {
     }
 
     public boolean isOpponent(Piece other) {
-        return this.color != other.color && other.color != Color.EMPTY;
+        return this.color != other.color;
     }
 
     public boolean isFriendly(Piece other) {
