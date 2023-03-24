@@ -19,13 +19,13 @@ public class JdbcGameDao implements GameDao{
     }
 
     @Override
-    public List<BoardDto> findBoardByGameName(String gameName) {
+    public List<BoardDto> findBoardByRoomId(long roomId) {
         final String query = "SELECT square, piece, camp FROM game "
                 + "JOIN board ON game._id = board.g_id "
-                + "WHERE game.gameName = ?";
+                + "WHERE game._id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, gameName);
+            preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<BoardDto> boardDtos = new ArrayList<>();
             while (resultSet.next()) {
@@ -87,11 +87,11 @@ public class JdbcGameDao implements GameDao{
     }
 
     @Override
-    public String findCurrentTurnByGameName(String gameName) {
-        final String query = "SELECT currentTurn FROM game WHERE gameName = ?";
+    public String findCurrentTurnByGameName(long roomId) {
+        final String query = "SELECT currentTurn FROM game WHERE _id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, gameName);
+            preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getString("currentTurn");

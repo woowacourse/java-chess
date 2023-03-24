@@ -31,9 +31,10 @@ public class GameController {
         actions.put(END, this::end);
     }
 
-    public GameInfoDto gameStart(String gameName, GameInfoDto gameInfoDto) {
-        OutputView.printIsSavedGame(gameInfoDto.getBoardDtos().size());
-        chessService.setUp(gameInfoDto);
+    public void gameStart(long roomId) {
+        GameInfoDto gameInfo = chessService.getGameInfo(roomId);
+        OutputView.printIsSavedGame(gameInfo.getBoardDtos().size());
+        chessService.setUp(gameInfo);
         OutputView.printChessBoard(chessService.getChessBoard());
         OutputView.printChessInfo();
         Command command = START;
@@ -42,7 +43,7 @@ public class GameController {
         }
         List<ScoreDto> scoreDto = chessService.calculateFinalScore();
         OutputView.printScores(scoreDto);
-        return chessService.end();
+        chessService.end(roomId);
     }
 
     private Command play() {

@@ -9,9 +9,8 @@ import java.util.EnumMap;
 import java.util.List;
 
 import controller.game.GameController;
-import dto.GameInfoDto;
-import repository.room.JdbcRoomDao;
 import repository.connector.ProdConnector;
+import repository.room.JdbcRoomDao;
 import service.ChessService;
 import service.GameRoomService;
 import view.InputView;
@@ -63,9 +62,8 @@ public class RoomController {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
         String gameName = inputs.get(1);
-        GameInfoDto startGameInfo = gameRoomService.getGameInfo(gameName);
-        GameInfoDto endGameInfo = gameController.gameStart(gameName, startGameInfo);
-        gameRoomService.saveGameInfo(endGameInfo);
+        long roomId = gameRoomService.findRoomIdByRoomName(gameName);
+        gameController.gameStart(roomId);
     }
 
     private void readGameRooms(List<String> inputs) {

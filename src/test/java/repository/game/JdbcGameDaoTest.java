@@ -45,7 +45,7 @@ class JdbcGameDaoTest {
         );
 
         jdbcGameDao.saveBoard(gameId, boardDtos);
-        List<BoardDto> boardDto = jdbcGameDao.findBoardByGameName("테스트");
+        List<BoardDto> boardDto = jdbcGameDao.findBoardByRoomId(gameId);
 
         assertThat(boardDto).containsExactlyInAnyOrderElementsOf(boardDto);
     }
@@ -66,7 +66,7 @@ class JdbcGameDaoTest {
 
         jdbcGameDao.deleteBoardById(gameId);
 
-        List<BoardDto> boardDto = jdbcGameDao.findBoardByGameName("테스트");
+        List<BoardDto> boardDto = jdbcGameDao.findBoardByRoomId(gameId);
         assertThat(boardDto).isEmpty();
     }
 }

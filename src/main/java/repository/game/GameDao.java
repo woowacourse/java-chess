@@ -6,7 +6,7 @@ import dto.BoardDto;
 import dto.MoveHistoryDto;
 
 public interface GameDao {
-    List<BoardDto> findBoardByGameName(String gameName);
+    List<BoardDto> findBoardByRoomId(long gameId);
 
     void saveBoard(long game_id, List<BoardDto> boardDtos);
 
@@ -14,7 +14,7 @@ public interface GameDao {
 
     void updateCurrentTurn(long gameId, String currentTurn);
 
-    String findCurrentTurnByGameName(String gameName);
+    String findCurrentTurnByGameName(long roomId);
 
     void deleteBoardById(long gameId);
 

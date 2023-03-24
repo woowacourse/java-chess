@@ -14,9 +14,13 @@ import domain.piece.Piece;
 import dto.BoardDto;
 import dto.GameInfoDto;
 import dto.ScoreDto;
+import repository.connector.ProdConnector;
+import repository.game.GameDao;
+import repository.game.JdbcGameDao;
 
 public class ChessService {
     private final ChessBoard chessBoard = new ChessBoard(new HashMap<>());
+    private final GameDao gameDao = new JdbcGameDao(new ProdConnector());
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
@@ -44,12 +48,19 @@ public class ChessService {
         isOngoing = !chessBoard.isCapturedKing(currentCamp);
     }
 
-    public GameInfoDto end() {
+    public void end(long roomId) {
         if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         isOngoing = false;
-        return generateGameInfoDto();
+        GameInfoDto gameInfoDto = generateGameInfoDto();
+        saveGameInfo(roomId, gameInfoDto);
+    }
+
+    private void saveGameInfo(long roomId, GameInfoDto gameInfoDto) {
+        gameDao.deleteBoardById(roomId);
+        gameDao.updateCurrentTurn(roomId, gameInfoDto.getCurrentTurn());
+        gameDao.saveBoard(roomId, gameInfoDto.getBoardDtos());
     }
 
     private GameInfoDto generateGameInfoDto() {
@@ -88,5 +99,9 @@ public class ChessService {
         return Camp.PLAYING_CAMPS.stream()
                 .map(camp -> ScoreDto.from(camp, chessBoard.calculateFinalScore(camp)))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public GameInfoDto getGameInfo(long roomId) {
+        return new GameInfoDto(gameDao.findCurrentTurnByGameName(roomId), gameDao.findBoardByRoomId(roomId));
     }
 }
