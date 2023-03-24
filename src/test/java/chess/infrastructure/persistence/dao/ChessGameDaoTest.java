@@ -18,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("ChessGameDao 은")
 class ChessGameDaoTest {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final JdbcTemplate template = new JdbcTemplate();
+    private final ChessGameDao chessGameDao = new ChessGameDao(template);
 
     @BeforeEach
     void setUp() {

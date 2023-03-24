@@ -32,8 +32,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class PieceDaoTest {
 
     private Long chessGameId;
+    private final JdbcTemplate template = new JdbcTemplate();
     private final PieceDao pieceDao = new PieceDao(template);
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao(template);
 
     @BeforeEach
     void setUp() {

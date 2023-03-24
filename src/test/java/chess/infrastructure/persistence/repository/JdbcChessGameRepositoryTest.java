@@ -7,6 +7,7 @@ import chess.domain.game.GameState;
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 import chess.infrastructure.persistence.dao.ChessGameDao;
+import chess.infrastructure.persistence.dao.JdbcTemplate;
 import chess.infrastructure.persistence.dao.PieceDao;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("JdbcChessGameRepository 은")
 class JdbcChessGameRepositoryTest {
 
+    private final JdbcTemplate template = new JdbcTemplate();
+    private final ChessGameDao chessGameDao = new ChessGameDao(template);
     private final PieceDao pieceDao = new PieceDao(template);
-    private final ChessGameDao chessGameDao = new ChessGameDao();
-
     private final ChessGameRepository repository = new JdbcChessGameRepository(pieceDao, chessGameDao);
 
     @BeforeEach
