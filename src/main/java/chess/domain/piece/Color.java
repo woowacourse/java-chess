@@ -7,9 +7,6 @@ public enum Color {
     ;
 
     public boolean is(final Color color) {
-        if (color == EMPTY) {
-            return false;
-        }
         return this == color;
     }
 
