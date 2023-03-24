@@ -50,6 +50,10 @@ public final class Position {
         return this.getRankOrder() - other.getRankOrder();
     }
 
+    public File getFile() {
+        return file;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {

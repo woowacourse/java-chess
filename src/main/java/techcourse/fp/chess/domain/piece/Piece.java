@@ -16,11 +16,27 @@ public abstract class Piece {
     public abstract List<Position> findPath(final Position source, final Position target,
                                             final Piece targetPiece);
 
+    public boolean isSameColor(Color other) {
+        return color == other;
+    }
+
     public boolean isEmpty() {
         return color.isEmpty();
     }
 
+    public boolean isSamePieceType(PieceType other) {
+        return pieceType == other;
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }
