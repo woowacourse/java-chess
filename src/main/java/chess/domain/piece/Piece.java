@@ -30,14 +30,16 @@ public class Piece {
 
     public boolean canMove(final Position source, final Position target, final boolean isTargetExist) {
         if (pieceType == PieceType.PAWN && movable.canMove(source, target)) {
+            validatePawnDirection(source, target);
             return validatePawnMove(source, target, isTargetExist);
         }
         return movable.canMove(source, target);
     }
 
     public boolean canAttack(final Position source, final Position target, final boolean isTargetExist) {
-        if (pieceType == PieceType.PAWN && movable.canAttack(source, target) && !isTargetExist) {
-            throw new IllegalArgumentException("폰이 공격할 수 있는 위치가 아닙니다.");
+        if (pieceType == PieceType.PAWN) {
+            validatePawnDirection(source, target);
+            validatePawnCanAttack(source, target, isTargetExist);
         }
         return movable.canAttack(source, target);
     }
@@ -71,6 +73,19 @@ public class Piece {
             throw new IllegalArgumentException("폰은 처음 이후 1칸만 전진할 수 있습니다.");
         }
         return !isTargetExist;
+    }
+
+    private void validatePawnDirection(final Position source, final Position target) {
+        if ((campType == CampType.WHITE && source.isRankGreaterThan(target)) ||
+                (campType == CampType.BLACK && target.isRankGreaterThan(source))) {
+            throw new IllegalArgumentException("폰은 앞으로만 이동할 수 있습니다.");
+        }
+    }
+
+    private void validatePawnCanAttack(final Position source, final Position target, final boolean isTargetExist) {
+        if (movable.canAttack(source, target) && !isTargetExist) {
+            throw new IllegalArgumentException("폰이 공격할 수 있는 위치가 아닙니다.");
+        }
     }
 
     @Override
