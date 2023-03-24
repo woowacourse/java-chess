@@ -15,8 +15,14 @@ public class Turn {
     }
 
     public Camp findNextPlayer() {
-        final int colorIndex = count++ % PLAYER_COUNT;
+        final int campIndex = count++ % PLAYER_COUNT;
 
-        return PLAYERS_CAMP.get(colorIndex);
+        return PLAYERS_CAMP.get(campIndex);
+    }
+
+    public Camp oppositeCamp() {
+        final int oppositeCampIndex = count % PLAYER_COUNT;
+
+        return PLAYERS_CAMP.get(oppositeCampIndex);
     }
 }

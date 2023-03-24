@@ -19,4 +19,21 @@ class TurnTest {
         final Camp blackCamp = turn.findNextPlayer();
         assertThat(blackCamp).isSameAs(Camp.BLACK);
     }
+
+    @Test
+    @DisplayName("opposite()는 현재 게임을 진행하고 있는 플레이어의 상대의 진영을 반환한다.")
+    void opposite_whenCall_thenReturnEnemyPlayer() {
+        final Turn turn = new Turn();
+
+        final Camp camp = turn.findNextPlayer();
+        assertThat(camp).isSameAs(Camp.WHITE);
+
+        final Camp blackCamp = turn.oppositeCamp();
+        assertThat(blackCamp).isSameAs(Camp.BLACK);
+
+        turn.findNextPlayer();
+
+        final Camp whiteCamp = turn.oppositeCamp();
+        assertThat(whiteCamp).isSameAs(Camp.WHITE);
+    }
 }
