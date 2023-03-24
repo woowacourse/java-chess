@@ -83,6 +83,7 @@ public class ChessController {
         while ((request = repeatProgressRequest()).getCommand() != Command.END) {
             progressMoveCommand(request);
             progressStatusCommand(request);
+            endGame();
         }
     }
 
@@ -140,6 +141,12 @@ public class ChessController {
             outputView.printWinner(chessGame.findWinningTeam().name());
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
+        }
+    }
+
+    private void endGame() {
+        if (!chessGame.isPlaying()) {
+            chessGameDao.updateStatus(chessGame.getGameId(), true);
         }
     }
 
