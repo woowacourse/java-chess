@@ -102,7 +102,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public void deleteBoardById(long gameId) {
-        final String query = "DELETE from board`` WHERE r_id = ?";
+        final String query = "DELETE from board WHERE r_id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, gameId);

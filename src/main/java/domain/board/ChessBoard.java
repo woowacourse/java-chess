@@ -127,14 +127,15 @@ public class ChessBoard {
         return Square.of(targetFile, targetRank);
     }
 
-    public void move(Square currentSquare, Square targetSquare) {
+    public Piece move(Square currentSquare, Square targetSquare) {
         Piece currentPiece = board.get(currentSquare);
         List<Square> path = currentPiece.fetchMovePath(currentSquare, targetSquare);
         Map<Square, Camp> pathInfo = calculatePathInfo(path);
         if (currentPiece.canMove(pathInfo, targetSquare)) {
+            Piece pieceOnTarget = board.get(targetSquare);
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
-            return;
+            return pieceOnTarget;
         }
         throw new IllegalStateException("움직일 수 없는 경로입니다.");
     }

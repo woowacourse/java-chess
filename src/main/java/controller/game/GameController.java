@@ -39,19 +39,19 @@ public class GameController {
         OutputView.printChessInfo();
         Command command = START;
         while (command != END) {
-            command = play();
+            command = play(roomId);
         }
         List<ScoreDto> scoreDto = chessService.calculateFinalScore();
         OutputView.printScores(scoreDto);
         chessService.end(roomId);
     }
 
-    private Command play() {
+    private Command play(long roomId) {
         try {
             List<String> inputs = InputView.requestCommand();
             Command command = Command.find(inputs.get(COMMAND_INDEX));
             Action action = actions.get(command);
-            action.execute(inputs);
+            action.execute(roomId, inputs);
             return refreshCommandByResult(command);
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e);
@@ -66,20 +66,20 @@ public class GameController {
         return command;
     }
 
-    private void start(List<String> inputs) {
+    private void start(long ignored, List<String> inputs) {
         Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
         OutputView.printChessBoard(chessService.getChessBoard());
     }
 
-    private void move(List<String> inputs) {
+    private void move(long roomId, List<String> inputs) {
         Command.validateCommandLength(inputs.size(), MOVE_COMMAND_LENGTH);
         String currentSquareInput = inputs.get(CURRENT_SQUARE_INDEX);
         String targetSquareInput = inputs.get(TARGET_SQUARE_INDEX);
-        chessService.move(currentSquareInput, targetSquareInput);
+        chessService.move(roomId, currentSquareInput, targetSquareInput);
         OutputView.printChessBoard(chessService.getChessBoard());
     }
 
-    private void end(List<String> inputs) {
+    private void end(long ignored, List<String> inputs) {
         Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
     }
 }

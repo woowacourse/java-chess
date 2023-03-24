@@ -13,6 +13,7 @@ import domain.piece.Camp;
 import domain.piece.Piece;
 import dto.BoardDto;
 import dto.GameInfoDto;
+import dto.MoveHistoryDto;
 import dto.ScoreDto;
 import repository.connector.ProdConnector;
 import repository.game.GameDao;
@@ -36,16 +37,19 @@ public class ChessService {
         isOngoing = true;
     }
 
-    public void move(String currentSquareInput, String targetSquareInput) {
+    public void move(long roomId, String currentSquareInput, String targetSquareInput) {
         if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         Square currentSquare = getCurrentSquare(currentSquareInput);
         Square targetSquare = getTargetSquare(targetSquareInput);
         validateCurrentCamp(currentSquare);
-        chessBoard.move(currentSquare, targetSquare);
+        Piece pieceOnTarget = chessBoard.move(currentSquare, targetSquare);
         currentCamp = currentCamp.fetchOppositeCamp();
         isOngoing = !chessBoard.isCapturedKing(currentCamp);
+        saveGameInfo(roomId, generateGameInfoDto());
+        MoveHistoryDto moveHistoryDto = MoveHistoryDto.of(currentSquare, targetSquare, pieceOnTarget);
+        gameDao.saveMoveHistory(roomId, moveHistoryDto);
     }
 
     public void end(long roomId) {

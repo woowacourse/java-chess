@@ -4,5 +4,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface Action {
-    void execute(List<String> inputs);
+    void execute(long gameId, List<String> inputs);
 }
