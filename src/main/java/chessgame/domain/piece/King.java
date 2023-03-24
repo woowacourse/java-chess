@@ -41,8 +41,13 @@ public class King implements Piece {
     }
 
     @Override
-    public double score(Team team) {
+    public double score(Team team, boolean hasPawn) {
         return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
     @Override

@@ -45,7 +45,15 @@ public class OutputView {
         System.out.println("[ERROR] " + msg);
     }
 
-    public void printScore(Map<Team, Double> score) {
-        score.keySet().forEach(key -> System.out.println(key.color() + "팀 : " + score.get(key)));
+    public void printScore(Map<Team, Double> scores) {
+        //scores.keySet().forEach(key -> System.out.println(key.color() + "팀 : " + scores.get(key)));
+        for (Team team : scores.keySet()) {
+            double score = scores.get(team);
+            if ((int)score == scores.get(team)) {
+                System.out.println(team.color() + "팀 : " + (int)score);
+            } else {
+                System.out.println(team.color() + "팀 : " + score);
+            }
+        }
     }
 }

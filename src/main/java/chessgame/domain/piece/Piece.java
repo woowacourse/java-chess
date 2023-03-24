@@ -11,5 +11,7 @@ public interface Piece {
 
     String failMoveMsg();
 
-    double score(Team team);
+    double score(Team team, boolean hasPawn);
+
+    boolean isPawn();
 }

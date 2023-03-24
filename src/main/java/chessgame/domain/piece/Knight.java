@@ -36,11 +36,16 @@ public class Knight implements Piece {
     }
 
     @Override
-    public double score(Team team) {
+    public double score(Team team, boolean hasPawn) {
         if (this.team == team) {
             return score;
         }
         return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
     @Override

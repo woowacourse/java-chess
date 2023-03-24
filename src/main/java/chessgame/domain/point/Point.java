@@ -64,10 +64,10 @@ public class Point {
             '}';
     }
 
-    public List<Point> getUpDownPoints() {
-        return rank.upDown()
+    public List<Point> getSameFilePoints() {
+        return rank.findSameFile()
             .stream()
-            .map(rank -> Point.of(file, rank))
+            .map(rank -> Point.of(this.file, rank))
             .collect(Collectors.toList());
     }
 }

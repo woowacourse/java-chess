@@ -1,9 +1,10 @@
 package chessgame.domain.point;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public enum Rank {
     EIGHT(8),
@@ -42,18 +43,12 @@ public enum Rank {
 
     public Rank move(int rankMove) {
         int result = value + rankMove;
-
         return find(result);
     }
 
-    public List<Rank> upDown() {
-        List<Rank> ranks = new ArrayList<>();
-        if (this.value < EIGHT.value) {
-            ranks.add(move(1));
-        }
-        if (this.value > ONE.value) {
-            ranks.add(move(-1));
-        }
-        return ranks;
+    public List<Rank> findSameFile() {
+        return Arrays.stream(Rank.values())
+            .filter(rank -> this != rank)
+            .collect(Collectors.toList());
     }
 }

@@ -80,8 +80,22 @@ public class Board {
 
     public void calculateScore() {
         for (Team team : Team.values()) {
-            score.put(team, board.values().stream().mapToDouble(piece -> piece.score(team)).sum());
+            for (Point point : board.keySet()) {
+                boolean hasPawn = hasPawnExistInSameFile(point, team);
+                score.put(team, board.values().stream().mapToDouble(piece -> piece.score(team, hasPawn)).sum());
+            }
         }
+    }
+
+    private boolean hasPawnExistInSameFile(Point point, Team team) {
+        return point.getSameFilePoints()
+            .stream()
+            .anyMatch(sameFilePoint -> isSameTeamPawn(
+                sameFilePoint, team));
+    }
+
+    private boolean isSameTeamPawn(Point point, Team team) {
+        return board.containsKey(point) && board.get(point).isPawn() && board.get(point).team() == team;
     }
 
     public Map<Team, Double> score() {
