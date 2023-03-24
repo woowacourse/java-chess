@@ -18,11 +18,11 @@ class ScoreTest {
     void test_pieceMapScore() {
 
         assertAll(
-                () -> assertThat(Score.pieceMapScore(Pawn.class)).isEqualTo(new Score(1)),
-                () -> assertThat(Score.pieceMapScore(Knight.class)).isEqualTo(new Score(2.5)),
-                () -> assertThat(Score.pieceMapScore(Bishop.class)).isEqualTo(new Score(3)),
-                () -> assertThat(Score.pieceMapScore(Rook.class)).isEqualTo(new Score(5)),
-                () -> assertThat(Score.pieceMapScore(Queen.class)).isEqualTo(new Score(9))
+                () -> assertThat(Score.mapPieceScore(Pawn.class)).isEqualTo(new Score(1)),
+                () -> assertThat(Score.mapPieceScore(Knight.class)).isEqualTo(new Score(2.5)),
+                () -> assertThat(Score.mapPieceScore(Bishop.class)).isEqualTo(new Score(3)),
+                () -> assertThat(Score.mapPieceScore(Rook.class)).isEqualTo(new Score(5)),
+                () -> assertThat(Score.mapPieceScore(Queen.class)).isEqualTo(new Score(9))
         );
     }
 
@@ -35,5 +35,14 @@ class ScoreTest {
         final Score sum = score.sum(addition);
 
         assertThat(sum.getValue()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("Score에 숫자를 곱하는 기능 추가")
+    void test_multiply() {
+        final Score score = new Score(10);
+        final Score multiply = score.multiply(0.5);
+
+        assertThat(multiply.getValue()).isEqualTo(5);
     }
 }

@@ -27,12 +27,16 @@ public final class Score {
         this.value = value;
     }
 
-    public static Score pieceMapScore(final Class<? extends Piece> pieceClass) {
+    public static Score mapPieceScore(final Class<? extends Piece> pieceClass) {
         return pieceScoreMapper.get(pieceClass);
     }
 
     public Score sum(final Score score) {
         return new Score(score.value + this.value);
+    }
+
+    public Score multiply(final double value) {
+        return new Score(this.value * value);
     }
 
     @Override
