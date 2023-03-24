@@ -3,9 +3,12 @@ package chess.domain.board.service;
 import chess.dao.BoardSearchDao;
 import chess.domain.board.Board;
 import chess.domain.board.repository.BoardRepository;
+import chess.domain.board.service.dto.AllBoardSearchResponse;
 import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class BoardQueryService {
@@ -28,4 +31,17 @@ public class BoardQueryService {
 
         return new BoardSearchResponse(board.chessBoard(), boardSearchDao.turn());
     }
+
+    public AllBoardSearchResponse searchAllBoards() {
+
+        final List<BoardSearchDao> boardSearchDaos = boardRepository.findAll();
+        final List<Long> ids = new ArrayList<>();
+
+        for (final BoardSearchDao boardSearchDao : boardSearchDaos) {
+            ids.add(boardSearchDao.id());
+        }
+
+        return new AllBoardSearchResponse(ids);
+    }
+
 }

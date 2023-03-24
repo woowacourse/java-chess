@@ -4,6 +4,7 @@ import chess.dao.BoardRegisterDao;
 import chess.dao.MySqlManager;
 import chess.domain.board.position.Position;
 import chess.domain.board.repository.BoardRepository;
+import chess.domain.board.service.dto.AllBoardSearchResponse;
 import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.piece.Piece;
@@ -18,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardQueryServiceTest {
@@ -34,6 +35,11 @@ class BoardQueryServiceTest {
         boardRepository.save(
                 new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
                                      "WHITE")
+        );
+
+        boardRepository.save(
+                new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
+                                     "BLACK")
         );
     }
 
@@ -66,5 +72,15 @@ class BoardQueryServiceTest {
                 () -> assertEquals(turn, "WHITE"),
                 () -> assertThat(chessBoard).hasSize(4)
         );
+    }
+
+    @Test
+    @DisplayName("searchAllBoards() : 사용자가 참여하고 있는 모든 Board를 조회할 수 있다.")
+    void test_searchAllBoards() throws Exception {
+        //when
+        final AllBoardSearchResponse allBoardSearchResponse = boardQueryService.searchAllBoards();
+
+        //then
+        assertThat(allBoardSearchResponse.ids()).hasSize(2);
     }
 }

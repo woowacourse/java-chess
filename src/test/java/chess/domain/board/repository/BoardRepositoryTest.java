@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -85,6 +86,16 @@ class BoardRepositoryTest {
                 () -> assertEquals(savedBoardDao.get().position(), "mock data2"),
                 () -> assertEquals(savedBoardDao.get().turn(), "BLACK")
         );
+    }
+
+    @Test
+    @DisplayName("findAll() : 사용자가 참여한 board 를 모두 조회할 수 있다.")
+    void test_findAll() throws Exception {
+        //when
+        List<BoardSearchDao> savedBoardDaos = boardRepository.findAll();
+
+        //then
+        assertEquals(2, savedBoardDaos.size());
     }
 
     @Test

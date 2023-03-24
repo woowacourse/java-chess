@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class BoardRepository {
@@ -76,6 +79,45 @@ public class BoardRepository {
         }
 
         return Optional.empty();
+    }
+
+    public List<BoardSearchDao> findAll() {
+        final String query = "SELECT * FROM BOARD";
+
+        try (final Connection connection = MySqlManager.establishConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<BoardSearchDao> boardSearchDaos = mappingToBoardDaosFrom(resultSet);
+            if (boardSearchDaos != null) return boardSearchDaos;
+
+        } catch (SQLException e) {
+            System.err.println("DB 조회 오류: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    private List<BoardSearchDao> mappingToBoardDaosFrom(final ResultSet resultSet) {
+        try {
+            List<BoardSearchDao> boardSearchDaos = new ArrayList<>();
+
+            while (resultSet.next()) {
+                final BoardSearchDao boardSearchDao = new BoardSearchDao(
+                        resultSet.getLong("BOARD_ID"),
+                        resultSet.getString("POSITION"),
+                        resultSet.getString("TURN")
+                );
+
+                boardSearchDaos.add(boardSearchDao);
+            }
+
+            return boardSearchDaos;
+        } catch (SQLException e) {
+            System.err.println("DB 조회 오류: " + e.getMessage());
+        }
+        return null;
     }
 
     public void modifyById(final BoardModifyDao boardModifyDao) {
