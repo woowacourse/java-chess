@@ -27,7 +27,7 @@ class GameCommandTest {
     private static Stream<Arguments> provideFindGameCommandArguments() {
         return Stream.of(
                 Arguments.of("start", GameCommand.START), Arguments.of("end", GameCommand.END),
-                Arguments.of("move", GameCommand.MOVE)
+                Arguments.of("move", GameCommand.MOVE), Arguments.of("status", GameCommand.STATUS)
         );
     }
 
@@ -54,7 +54,7 @@ class GameCommandTest {
     private static Stream<Arguments> provideIsStartArguments() {
         return Stream.of(
                 Arguments.of(GameCommand.START, true), Arguments.of(GameCommand.MOVE, false),
-                Arguments.of(GameCommand.END, false)
+                Arguments.of(GameCommand.END, false), Arguments.of(GameCommand.STATUS, false)
         );
     }
 
@@ -72,7 +72,25 @@ class GameCommandTest {
     private static Stream<Arguments> provideIsMoveArguments() {
         return Stream.of(
                 Arguments.of(GameCommand.START, false), Arguments.of(GameCommand.MOVE, true),
-                Arguments.of(GameCommand.END, false)
+                Arguments.of(GameCommand.END, false), Arguments.of(GameCommand.STATUS, false)
+        );
+    }
+
+    @ParameterizedTest(name = "GameCommand.{0}은 {1}을 반환한다.")
+    @DisplayName("isEnd() 테스트")
+    @MethodSource("provideIsEndArguments")
+    void isEnd_whenCall_thenReturnIsEnd(final GameCommand gameCommand, final boolean expected) {
+        // when
+        final boolean actual = gameCommand.isEnd();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
+
+    private static Stream<Arguments> provideIsEndArguments() {
+        return Stream.of(
+                Arguments.of(GameCommand.START, false), Arguments.of(GameCommand.MOVE, false),
+                Arguments.of(GameCommand.END, true), Arguments.of(GameCommand.STATUS, false)
         );
     }
 }

@@ -6,6 +6,7 @@ public enum GameCommand {
 
     START("start"),
     END("end"),
+    STATUS("status"),
     MOVE("move");
 
     private final String command;
@@ -27,5 +28,9 @@ public enum GameCommand {
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
