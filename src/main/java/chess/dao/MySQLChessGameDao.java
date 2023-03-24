@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.template.JdbcContext;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
@@ -12,38 +13,29 @@ import chess.game.state.running.BlackCheckedState;
 import chess.game.state.running.BlackTurnState;
 import chess.game.state.running.WhiteCheckedState;
 import chess.game.state.running.WhiteTurnState;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class MySQLChessGameDao implements ChessGameDao {
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DATABASE_CONNECTION_EXCEPTION_MESSAGE = "[ERROR] 데이터베이스의 연결에 문제가 발생했습니다.";
+    private final JdbcContext jdbcContext;
 
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
+    public MySQLChessGameDao(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
     }
 
     @Override
     public Board findBoard() {
-        Map<Position, Piece> squares = BoardFactory.createEmptyBoard();
+        Map<Position, Piece> board = BoardFactory.createEmptyBoard();
+        board.putAll(findSquares());
+        return new Board(board);
+    }
+
+    private Map<Position, Piece> findSquares() {
         final String query = "SELECT * FROM board";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            ResultSet resultSet = psmt.executeQuery();
+        return jdbcContext.select(query, resultSet -> {
+            Map<Position, Piece> squares = new HashMap<>();
             while (resultSet.next()) {
                 int x = resultSet.getInt("x");
                 int y = resultSet.getInt("y");
@@ -51,24 +43,18 @@ public class MySQLChessGameDao implements ChessGameDao {
                 Team team = Team.valueOf(resultSet.getString("team"));
                 squares.put(Position.of(x, y), PieceFactory.of(role, team));
             }
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
-        return new Board(squares);
+            return squares;
+        });
     }
 
     @Override
     public GameState findGameState() {
         final String query = "SELECT * FROM game_state";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            ResultSet resultSet = psmt.executeQuery();
+        return jdbcContext.select(query, resultSet -> {
             resultSet.next();
             RunningStateEnum state = RunningStateEnum.valueOf(resultSet.getString("state"));
             return state.gameState;
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
+        });
     }
 
     @Override
@@ -78,54 +64,38 @@ public class MySQLChessGameDao implements ChessGameDao {
     }
 
     private void saveBoard(Map<Position, Piece> board) {
+        for (Entry<Position, Piece> entry : board.entrySet()) {
+            savePiece(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private void savePiece(Position position, Piece piece) {
         final String query = "INSERT INTO board VALUES(?,?,?,?)";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            for (Entry<Position, Piece> entry : board.entrySet()) {
-                if (!entry.getValue().isRoleOf(Role.EMPTY)) {
-                    psmt.setInt(1, entry.getKey().getX());
-                    psmt.setInt(2, entry.getKey().getY());
-                    psmt.setString(3, entry.getValue().getRole().name());
-                    psmt.setString(4, entry.getValue().getTeam().name());
-                    psmt.execute();
-                }
-            }
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
+        if (!piece.isRoleOf(Role.EMPTY)) {
+            jdbcContext.insert(query,
+                    position.getX(),
+                    position.getY(),
+                    piece.getRole().name(),
+                    piece.getTeam().name()
+            );
         }
     }
 
     private void saveGameState(GameState gameState) {
-        final String query = "INSERT INTO game_state VALUES(?)";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            psmt.setString(1, RunningStateEnum.ofState(gameState).name());
-            psmt.execute();
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
+        String query = "INSERT INTO game_state VALUES(?)";
+        jdbcContext.insert(query, RunningStateEnum.ofState(gameState).name());
     }
 
     @Override
     public void deleteAllBoard() {
-        final String query = "DELETE FROM board";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            psmt.executeUpdate();
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
+        String query = "DELETE FROM board";
+        jdbcContext.update(query);
     }
 
     @Override
     public void deleteGameState() {
-        final String query = "DELETE FROM game_state";
-        try (final Connection con = getConnection();
-             PreparedStatement psmt = con.prepareStatement(query)) {
-            psmt.executeUpdate();
-        } catch (final SQLException e) {
-            throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
-        }
+        String query = "DELETE FROM game_state";
+        jdbcContext.update(query);
     }
 
     private enum RunningStateEnum {
