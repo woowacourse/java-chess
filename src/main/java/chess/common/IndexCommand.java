@@ -6,7 +6,9 @@ public enum IndexCommand {
     SOURCE_POSITION(1),
     TARGET_POSITION(2),
     POSITION_COLUMN(0),
-    POSITION_ROW(1)
+    POSITION_ROW(1),
+    POSITION_INDEX(1),
+    PIECE_INDEX(0)
     ;
 
     private final int value;
