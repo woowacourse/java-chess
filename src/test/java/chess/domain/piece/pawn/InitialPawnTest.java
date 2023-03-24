@@ -24,12 +24,12 @@ class InitialPawnTest {
         assertThat(initialPawn.getPieceType()).isEqualTo(PieceType.PAWN);
     }
 
-    @DisplayName("InitialPawn은 앞으로 2칸까지 이동할 수 있다. 상대팀이 위치하는 경우 대각선으로도 이동할 수 있다.")
+    @DisplayName("InitialPawn은 앞으로 2칸까지 이동할 수 있다. pawn의 공격은 대각선으로만 가능하다.")
     @ParameterizedTest(name="sqaure: ({0}, {1})")
-    @CsvSource({"0,1", "0,2", "1,1"})
-    void validMove_success(int fileInterval, int rankInterval) {
+    @CsvSource({"0,1,EMPTY", "0,2,EMPTY", "1,1,BLACK"})
+    void validMove_success(int fileInterval, int rankInterval, Team targetTeam) {
         Piece whiteInitialPawn = new InitialPawn(WHITE);
-        Piece target = new InitialPawn(BLACK);
+        Piece target = new InitialPawn(targetTeam);
 
         assertThat(whiteInitialPawn.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
