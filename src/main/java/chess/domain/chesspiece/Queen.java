@@ -1,0 +1,26 @@
+package chess.domain.chesspiece;
+
+import chess.domain.Side;
+import chess.domain.Square;
+
+public class Queen extends Piece {
+
+    private static final Queen BLACK_QUEEN = new Queen(Side.BLACK);
+    private static final Queen WHITE_QUEEN = new Queen(Side.WHITE);
+
+    private Queen(final Side side) {
+        super(side, PieceInfo.QUEEN);
+    }
+
+    public static Queen of(final Side side) {
+        if (side == Side.BLACK) {
+            return BLACK_QUEEN;
+        }
+        return WHITE_QUEEN;
+    }
+
+    @Override
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return isNotSameSide(piece) && (from.isStraight(to) || from.isDiagonal(to));
+    }
+}
