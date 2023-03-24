@@ -27,7 +27,7 @@ public class JdbcTemplate {
         }
     }
 
-    public Long saveAndGetId(final String sql, final Object... params) {
+    public Long executeUpdate(final String sql, final Object... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < params.length; i++) {
@@ -38,19 +38,10 @@ public class JdbcTemplate {
             if (generatedKeys.next()) {
                 return generatedKeys.getLong(1);
             }
-            throw new IllegalArgumentException("생성된 Key 가 없음 가져올 수 없음");
+            return null;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void executeUpdate(final String sql, final Object... params) {
-        execute(sql, (connection, preparedStatement) -> {
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
-            }
-            preparedStatement.executeUpdate();
-        });
     }
 
     public <T> Optional<T> findOne(final String query,

@@ -14,7 +14,7 @@ public class ChessGameDao {
 
     public void save(final ChessGameEntity chessGameEntity) {
         final String sql = "INSERT INTO chess_game(state, turn, winner) VALUES (?, ?, ?)";
-        final Long id = template.saveAndGetId(sql,
+        final Long id = template.executeUpdate(sql,
                 chessGameEntity.state(),
                 chessGameEntity.turn(),
                 chessGameEntity.winner());
