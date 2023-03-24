@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Board {
+public final class Board {
 
     static final String INVALID_TARGET_POSITION = "위치가 중복되었습니다.";
-    private static final Team DEFAULT_TEAM = Team.WHITE;
+    private static final Team DEFAULT_START_TEAM = Team.WHITE;
 
     private final Map<Position, Piece> board;
     private Turn turn;
 
     public Board(final BoardMaker boardMaker) {
         this.board = boardMaker.createBoard();
-        this.turn = new Turn(DEFAULT_TEAM);
+        this.turn = new Turn(DEFAULT_START_TEAM);
     }
 
     public void movePiece(final Position currentPosition, final Position targetPosition) {
@@ -29,17 +29,9 @@ public class Board {
         Piece currentPositionPiece = findPieceAt(currentPosition);
         checkAndChangeTurn(currentPositionPiece, turn);
 
-        Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
-        UnitVector unitVector = UnitVector.computeUnitVector(currentPosition, targetPosition);
-        List<Piece> onRoutePieces = getOnRoutePieces(currentPosition, targetPosition, unitVector);
-        currentPositionPiece.validateMove(correctDirection, onRoutePieces);
+        validateMove(currentPosition, targetPosition, currentPositionPiece);
 
         move(currentPosition, targetPosition);
-    }
-
-    private void checkAndChangeTurn(final Piece currentPositionPiece, final Turn turn) {
-        turn.validateTurn(currentPositionPiece);
-        this.turn = turn.change();
     }
 
     private void validateNotEquals(final Position currentPosition, final Position targetPosition) {
@@ -50,6 +42,19 @@ public class Board {
 
     private Piece findPieceAt(final Position position) {
         return board.get(position);
+    }
+
+    private void checkAndChangeTurn(final Piece currentPositionPiece, final Turn turn) {
+        turn.validateTurn(currentPositionPiece);
+        this.turn = turn.change();
+    }
+
+    private void validateMove(final Position currentPosition, final Position targetPosition, final Piece currentPositionPiece) {
+        Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
+        UnitVector unitVector = UnitVector.computeUnitVector(currentPosition, targetPosition);
+        List<Piece> onRoutePieces = getOnRoutePieces(currentPosition, targetPosition, unitVector);
+
+        currentPositionPiece.validateMove(correctDirection, onRoutePieces);
     }
 
     private List<Piece> getOnRoutePieces(final Position currentPosition, final Position targetPosition, final UnitVector unitVector) {
