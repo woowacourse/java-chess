@@ -10,8 +10,8 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private GameStatus gameStatus = GameStatus.READY;
 
-    public ChessGame(Camp firstCamp, CampSwitcher campSwitcher) {
-        this.chessBoard = new ChessBoard(firstCamp, campSwitcher);
+    public ChessGame() {
+        this.chessBoard = new ChessBoard();
     }
 
     public void start(CommandRequest commandRequest) {

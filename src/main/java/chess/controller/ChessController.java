@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.controller.converter.BoardConverter;
-import chess.domain.Camp;
 import chess.domain.ChessGame;
 import chess.dto.CommandRequest;
 import chess.view.OutputView;
@@ -11,7 +10,7 @@ public class ChessController {
     private ChessGame chessGame;
 
     public AppStatus start(CommandRequest commandRequest) {
-        chessGame = new ChessGame(Camp.WHITE, Camp::transfer);
+        chessGame = new ChessGame();
         chessGame.start(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;

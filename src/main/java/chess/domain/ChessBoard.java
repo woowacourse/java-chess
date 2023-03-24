@@ -14,12 +14,10 @@ public class ChessBoard {
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
 
     private final Map<Position, Piece> piecesByPosition = PieceInitializer.createPiecesWithPosition();
-    private final CampSwitcher campSwitcher;
     private Camp currentTurnCamp;
 
-    public ChessBoard(final Camp currentTurnCamp, final CampSwitcher campSwitcher) {
-        this.currentTurnCamp = currentTurnCamp;
-        this.campSwitcher = campSwitcher;
+    public ChessBoard() {
+        this.currentTurnCamp = Camp.WHITE;
     }
 
     public void move(Position source, Position destination) {
@@ -89,7 +87,7 @@ public class ChessBoard {
     }
 
     private void switchCampTurn() {
-        currentTurnCamp = campSwitcher.switchTurn(currentTurnCamp);
+        currentTurnCamp = currentTurnCamp.transfer();
     }
 
     public Map<Position, Piece> piecesByPosition() {

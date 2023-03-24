@@ -169,8 +169,9 @@ sequenceDiagram
     - [x] ChessController 의 진영 전환 책임을 ChessBoard 로 위임하여 이동 로직과 결합
     - [x] 체스판 뷰 변환을 위한 클래스 util 패키지에서 controller 패키지로 이동
     - [x] ChessBoard 의 빈 위치 이동 가능 여부, 공격 가능 여부 확인 Piece 로 책임 이동
-    - [ ] CampSwitcher 전략 패턴 삭제
-    - [ ] 변경이 없는 도메인 규칙에 대해서는 생성자 내부에서 설정해주기(Camp)
+    - [x] 변경 없는 도메인 규칙에 대한 외부 주입, 전략패턴 삭제
+        - [x] CampSwitcher 불필요한 전략 패턴 삭제
+        - [x] 변경이 없는 도메인 규칙에 대해서는 생성자 내부에서 설정해주기(Camp)
     - [ ] view 의 Command 삭제, ActionMapper 에서 명령어 직접 정의하기
     - [ ] Piece.canMove~() 에서 이동방향 검증까지 직접 할 수 있도록 개선
 - 코드 관련
