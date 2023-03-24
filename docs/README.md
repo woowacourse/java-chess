@@ -20,9 +20,33 @@
 | 게임 상태 | GameState | 체스 게임의 상태                        | interface             |
 | 체스 게임 | ChessGame | 체스 게임 진행을 관리                     | class            |
 | 점수 | Score | 팀의 점수                                      | class            |
-| 심판 | ScoreManager | 팀별 점수를 계산하고 저장                   | class            |
 
-# 게임 용어 사전
+# 🔖DB 테이블 설계
+
+DB 이름 : chess
+
+- game 테이블
+
+> 각 게임에 대한 정보를 저장한다.
+
+| gameId | winner | state | turn |
+| ------ | ------ | ----- | ---- |
+| 233    | Black  | finished | 3 |
+| 234    | Empty  | running | 5 |
+
+- gameData 테이블
+
+> 게임 각각의 모든 칸(Square) 정보들을 저장한다.
+
+| gameDataId | gameId | 좌표 | team | pieceType |
+| --- | --- | --- | --- | --- |
+| 444 | 234 | a1 | WHITE | Queen |
+| 445 | 234 | a2 | WHITE | Pawn |
+| … | … | … | … | … |
+| 462 | 234 | c8 | BLACK | Rook |
+| 463 | 234 | d1 | EMPTY | NoPiece |
+
+# 📔게임 용어 사전
 
 - 체크(Check) : 킹이 다른 기물에게 공격을 받는 것
 - 승진(Promotion) : 폰은 체스판 반대편에 도달하면 다른 기물로 변할 수 있다.(모든 기물로 승진 가능)
@@ -43,7 +67,7 @@
 
 <br>
 
-# 프로그램 흐름도
+# 🖌️프로그램 흐름도
 
 - 1,2단계 흐름도
 
@@ -80,7 +104,50 @@ I--> |킹 사망| Z
 G--> |end 명령|Z
 ```
 
-# 클래스 다이어그램
+- 4단계 흐름도
+
+```mermaid
+flowchart
+
+subgraph ReadyState
+  D(체스판 초기화)-->A[명령어 소개 출력]
+  A--> B[유저의 명령 입력]
+  B-->C{명령어 유효성 검사}
+  C-->|그 외 잘못된 명령|EX[예외 처리]-->B
+end
+
+subgraph LoadingState
+  DB(데이터베이스 조회)-->|미완료 상태의 게임이 존재할 경우|BB[유저의 명령 입력]
+  BB-->CC{명령어 유효성 검사}
+  CC-->|continue 명령|LOAD(체스판 로드)
+end
+
+subgraph RunningState
+  E[체스판 출력]-->F[유저의 명령 입력]
+  F-->G{명령어 유효성 검사}
+  G-->|Move 명령|H(말 이동 로직 수행)
+  H-->I{King 사망여부 확인}
+  I-->|King이 죽지 않은 경우|E
+  I-->|King이 죽은 경우|RESULT[최종 결과 출력]
+  G--> |status 명령| J(팀별 점수 환산 로직)-->K[점수 출력]-->F
+  G-->|잘못된 명령|EXX[예외 처리]-->F
+  RESULT-->Y[DB에 진행 상황 저장]
+  G--> |end 명령|Y
+end
+
+subgraph FinishedState
+  ZZ[게임종료]
+end
+
+C-->|load 명령|DB
+CC-->|cancel 명령|B
+DB-->|미완료 상태의 게임이 존재하지 않을 경우|B
+LOAD-->E
+C-->|start 명령|E
+Y-->ZZ
+```
+
+# 💠클래스 다이어그램
 
 ```mermaid
 classDiagram
@@ -390,8 +457,11 @@ GameState<|--FinishedState
 ## 입력(InputView)
 
 - [ ] 게임 시작 전 명령을 입력 받는다.
-    - [ ] 새 게임 명령 : new로 새 게임을 실행한다.
-    - [ ] 이어하기 명령 : continue로 이전에 중단된 게임을 이어한다.
+    - [x] 새 게임 명령 : start로 새 게임을 실행한다.
+    - [ ] 불러오기 명령 : load로 로딩 상태로 넘어간다.
+- [ ] 로딩 상태에서 명령을 입력받는다.
+    - [ ] 이어하기 명령 : continue 이전에 중단된 게임을 이어한다.
+    - [ ] 취소 명령 : cancel로 이전 상태로 돌아간다.
 - [x] 게임 중 명령을 입력 받는다.
     - [x] 이동 명령 : move source위치 target위치을 실행해 이동한다.
     - [x] 종료 명령 : end로 프로그램을 종료한다.
@@ -414,6 +484,13 @@ GameState<|--FinishedState
 - [x] equals 구현
 - [x] 더하기 구현
 
+#### 게임의 상태(GameState)
+
+- [x] ReadyState 준비 상태
+- [ ] LoadingState DB로부터 데이터를 불러오는 상태
+- [x] RunningState 게임이 진행되고 있는 상태
+- [x] FinishedState 게임이 중단/종료된 상태
+
 #### 체스판공장(ChessBoardFactory)
 
 - [x] 새 게임 시작 시 체스판의 초기 상태를 초기화한다.
@@ -430,8 +507,8 @@ GameState<|--FinishedState
         - [x] 입력받은 두 칸의 기물을 변경한다.
         - [x] 이동 기록(Log)을 기물에 추가한다.
 - [x] 팀을 입력으로 받아 해당 팀의 점수를 계산한다.
-  - [x] 특정 팀의 열 별 점수를 구한다.
-  - [x] 폰의 경우, 같은 열에 같은 팀의 폰이 존재하면 0.5점으로 계산한다.
+    - [x] 특정 팀의 열 별 점수를 구한다.
+    - [x] 폰의 경우, 같은 열에 같은 팀의 폰이 존재하면 0.5점으로 계산한다.
 - [x] 점수 상으로 이긴 팀을 구한다.
 
 #### 기물(Piece)
@@ -460,6 +537,7 @@ GameState<|--FinishedState
 
 ## DB
 
+- [ ] 미완료 상태의 체스 게임 데이터를 불러오는 기능
 - [ ] 체스게임 정보를 DB에 저장하는 기능
 - [ ] 체스 게임 정보를 불러와 DTO에 매핑하는 기능
 - [ ] 체스 게임 정보를 업데이트하는 기능
