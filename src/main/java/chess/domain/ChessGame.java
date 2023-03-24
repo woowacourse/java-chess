@@ -76,6 +76,10 @@ public class ChessGame {
             return WHITE;
         }
 
+        return decideWinTeamByScore();
+    }
+
+    private Team decideWinTeamByScore() {
         double whiteTeamScore = getTotalScore(WHITE);
         double blackTeamScore = getTotalScore(BLACK);
         if (whiteTeamScore > blackTeamScore) {
