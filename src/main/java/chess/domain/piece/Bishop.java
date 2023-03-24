@@ -30,24 +30,4 @@ public class Bishop extends Piece {
         return new MovablePaths(paths);
     }
 
-    @Override
-    public boolean canMoveToEmptySquare(final Position source, final Position dest) {
-        return true;
-    }
-
-    @Override
-    public boolean canAttack(final Piece target, final Position source, final Position dest) {
-        return target.isDifferentColor(color);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
 }
