@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoveFindAllStrategy implements MoveQueryStrategy {
+public class MoveFindAllStrategy implements QueryStrategy {
 
     @Override
     public void save(final PreparedStatement preparedStatement) throws SQLException {
@@ -14,20 +14,14 @@ public class MoveFindAllStrategy implements MoveQueryStrategy {
     }
 
     @Override
-    public List<Move> findAll(final PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.execute();
+    public <T> List<T> findAll(final ResultSet resultSet, final RowMapper<T> mapper) throws SQLException {
 
-        final ResultSet resultSet = preparedStatement.getResultSet();
-
-        final List<Move> moves = new ArrayList<>();
+        final List<T> results = new ArrayList<>();
         while (resultSet.next()) {
-            final Move move = new Move(
-                    resultSet.getString("source"),
-                    resultSet.getString("target")
-            );
-            moves.add(move);
+            final T t = mapper.create(resultSet);
+            results.add(t);
         }
 
-        return moves;
+        return results;
     }
 }
