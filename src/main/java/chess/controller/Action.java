@@ -5,5 +5,5 @@ import chess.controller.dto.CommandDto;
 @FunctionalInterface
 public interface Action {
 
-    CommandDto act(CommandDto commandDto);
+    CommandDto act(final CommandDto commandDto);
 }
