@@ -17,12 +17,12 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class BoardTest {
+class ChessGameTest {
 
     @DisplayName("보드의 사이즈가 8 x 8이 아니라면 생성시 예외를 반환한다.")
     @Test
     void create_fail() {
-        assertThatThrownBy(() -> Board.from(Collections.emptyMap()))
+        assertThatThrownBy(() -> ChessGame.from(Collections.emptyMap()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스판의 사이즈는 8 x 8 여야합니다.");
     }
@@ -50,9 +50,9 @@ class BoardTest {
             final Position givenPosition = PositionFixtures.A1;
             rawBoard.put(givenPosition, Rook.create(Color.WHITE));
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
-            assertThatNoException().isThrownBy(() -> board.move(givenPosition, PositionFixtures.A3));
+            assertThatNoException().isThrownBy(() -> chessGame.move(givenPosition, PositionFixtures.A3));
         }
 
         @DisplayName("행마법상 이동 불가능하다면 예외가 발생한다.")
@@ -62,9 +62,9 @@ class BoardTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenPosition = PositionFixtures.A1;
             rawBoard.put(givenPosition, Rook.create(Color.WHITE));
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
-            assertThatThrownBy(() -> board.move(givenPosition, PositionFixtures.B2))
+            assertThatThrownBy(() -> chessGame.move(givenPosition, PositionFixtures.B2))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("행마법상 이동 불가능한 지역입니다.");
         }
@@ -80,9 +80,9 @@ class BoardTest {
             final Position givenTargetPosition = PositionFixtures.A2;
             rawBoard.put(givenTargetPosition, Rook.create(Color.WHITE));
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
-            assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
+            assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessage("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
@@ -99,9 +99,9 @@ class BoardTest {
             final Position givenPathPosition = PositionFixtures.A2;
             rawBoard.put(givenPathPosition, Rook.create(Color.WHITE));
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when && then
-            assertThatThrownBy(() -> board.move(givenPosition, PositionFixtures.A3))
+            assertThatThrownBy(() -> chessGame.move(givenPosition, PositionFixtures.A3))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이동하려는 경로에 기물이 존재합니다.");
         }
@@ -122,9 +122,9 @@ class BoardTest {
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when  && then
-            assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
+            assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
@@ -141,9 +141,9 @@ class BoardTest {
             final Position givenTargetPosition = PositionFixtures.A4;
             rawBoard.put(givenTargetPosition, BlackPawn.create());
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when  && then
-            assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
+            assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
@@ -159,9 +159,9 @@ class BoardTest {
 
             final Position givenTargetPosition = PositionFixtures.B4;
 
-            final Board board = Board.from(rawBoard);
+            final ChessGame chessGame = ChessGame.from(rawBoard);
             //when  && then
-            assertThatThrownBy(() -> board.move(givenSourcePosition, givenTargetPosition))
+            assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }

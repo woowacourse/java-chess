@@ -1,13 +1,12 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.map;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardFactoryTest {
+import static org.assertj.core.api.InstanceOfAssertFactories.map;
+
+class ChessGameFactoryTest {
 
     @DisplayName("64칸이 초기화된 보드를 생성한다.")
     @Test

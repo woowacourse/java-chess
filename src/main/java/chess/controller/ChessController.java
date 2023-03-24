@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.Board;
 import chess.domain.BoardFactory;
+import chess.domain.ChessGame;
 import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -25,7 +25,7 @@ public final class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final Map<GameCommand, Function<List<String>, GameCommand>> gameStatusMap;
-    private Board board;
+    private ChessGame chessGame;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -60,20 +60,20 @@ public final class ChessController {
     }
 
     private GameCommand start(final List<String> input) {
-        if (board != null) {
+        if (chessGame != null) {
             throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
         }
-        board = BoardFactory.generate();
-        outputView.printBoard(BoardDto.create(board.getBoard()));
+        chessGame = BoardFactory.generate();
+        outputView.printBoard(BoardDto.create(chessGame.getBoard()));
         return MOVE;
     }
 
     private GameCommand move(final List<String> input) {
-        if (board == null) {
+        if (chessGame == null) {
             throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
         }
-        board.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
-        outputView.printBoard(BoardDto.create(board.getBoard()));
+        chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
+        outputView.printBoard(BoardDto.create(chessGame.getBoard()));
         return MOVE;
     }
 

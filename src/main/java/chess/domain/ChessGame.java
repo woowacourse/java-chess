@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Map;
 
 
-public final class Board {
+public final class ChessGame {
 
     private static final int BOARD_LENGTH = 8;
     public static final double BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
     private final Map<Position, Piece> board;
 
-    private Board(final Map<Position, Piece> board) {
+    private ChessGame(final Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public static Board from(final Map<Position, Piece> board) {
+    public static ChessGame from(final Map<Position, Piece> board) {
         if (board.size() != BOARD_SIZE) {
             throw new IllegalArgumentException(
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
         }
-        return new Board(board);
+        return new ChessGame(board);
     }
 
     public void move(final Position source, final Position target) {

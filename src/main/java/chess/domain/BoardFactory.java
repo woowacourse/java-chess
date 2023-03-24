@@ -20,7 +20,7 @@ public final class BoardFactory {
         throw new AssertionError("생성할 수 없는 클래스입니다.");
     }
 
-    public static Board generate() {
+    public static ChessGame generate() {
         Map<Position, Piece> board = new HashMap<>();
         initializeBoard(board);
         initPawn(board);
@@ -29,7 +29,7 @@ public final class BoardFactory {
         initBishop(board);
         initQueen(board);
         initKing(board);
-        return Board.from(board);
+        return ChessGame.from(board);
     }
 
     private static void initializeBoard(final Map<Position, Piece> board) {
