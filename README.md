@@ -88,3 +88,6 @@
   - [x] 말이 없는 위치는 `.`으로 출력한다.
 
 ## Todo
+- view에서 domain 의존하는 부분 수정하기
+- command 입력 관련 controller 처리부분 리팩터링 (후순위)
+- validateNoPieceAt 메서드에 position 좌표값을 예외처리 메세지에 넣어주기 (후순위)
