@@ -1,19 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 
 public class BlankPiece extends Piece {
-    public BlankPiece(final Side side, final Role role) {
-        super(side, role);
+    public BlankPiece(final Team team, final Role role) {
+        super(team, role);
     }
 
     @Override
-    public boolean isSameSide(final Side side) {
+    public boolean isSameSide(final Team team) {
         throw new UnsupportedOperationException("빈 칸은 같은 팀이 없습니다.");
     }
 
     @Override
-    public boolean isOpposite(final Side side) {
+    public boolean isOpposite(final Team team) {
         throw new UnsupportedOperationException("빈 칸은 상대 팀이 없습니다.");
     }
 

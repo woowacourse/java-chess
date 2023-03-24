@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 
 public class King extends Piece {
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public King(final Side side, final Role role) {
-        super(side, role);
+    public King(final Team team, final Role role) {
+        super(team, role);
     }
 
     @Override
@@ -16,6 +16,6 @@ public class King extends Piece {
 
     @Override
     public boolean canAttack(final Direction direction, final int distance, final Piece targetPiece) {
-        return canMove(direction, distance) && isOpposite(targetPiece.side);
+        return canMove(direction, distance) && isOpposite(targetPiece.team);
     }
 }

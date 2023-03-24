@@ -1,23 +1,23 @@
 package chess.domain.piece;
 
 import chess.domain.square.Color;
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 
 public abstract class Piece {
-    protected final Side side;
+    protected final Team team;
     protected final Role role;
 
-    public Piece(final Side side, final Role role) {
-        this.side = side;
+    public Piece(final Team team, final Role role) {
+        this.team = team;
         this.role = role;
     }
 
-    public boolean isSameSide(final Side side) {
-        return this.side == side;
+    public boolean isSameSide(final Team team) {
+        return this.team == team;
     }
 
-    public boolean isOpposite(final Side side) {
-        return this.side != side;
+    public boolean isOpposite(final Team team) {
+        return this.team != team;
     }
 
     public boolean hasSameRole(final Role role) {
@@ -28,8 +28,8 @@ public abstract class Piece {
         return this;
     }
 
-    public Side getSide() {
-        return side;
+    public Team getSide() {
+        return team;
     }
 
     public Role getRole() {
@@ -37,7 +37,7 @@ public abstract class Piece {
     }
 
     public Color getColor() {
-        return side.getColor();
+        return team.getColor();
     }
 
     public abstract boolean canAttack(final Direction direction, final int distance, final Piece targetPiece);

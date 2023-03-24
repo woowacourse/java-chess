@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 
 public enum Role {
     PAWN(Pawn::new, 1),
@@ -13,16 +13,16 @@ public enum Role {
     BLANK(BlankPiece::new, 0),
     ;
 
-    private final Constructor<Side, Role, Piece> createPiece;
+    private final Constructor<Team, Role, Piece> createPiece;
     private final double score;
 
-    Role(final Constructor<Side, Role, Piece> createPiece, final double score) {
+    Role(final Constructor<Team, Role, Piece> createPiece, final double score) {
         this.createPiece = createPiece;
         this.score = score;
     }
 
-    public Piece create(final Side side) {
-        return createPiece.construct(side, this);
+    public Piece create(final Team team) {
+        return createPiece.construct(team, this);
     }
 
     public double getScore() {

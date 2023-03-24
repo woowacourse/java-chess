@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.square.Color;
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,9 +30,9 @@ class PieceTest {
     @DisplayName("역할에 따른 기물이 생성된다.")
     void create(Role role, Class<Piece> expectedPieceType) {
         //given
-        Side side = Side.from(Color.BLACK);
+        Team team = Team.from(Color.BLACK);
         //when
-        Piece piece = role.create(side);
+        Piece piece = role.create(team);
         //expected
         assertThat(piece).isInstanceOf(expectedPieceType);
     }
@@ -40,14 +40,14 @@ class PieceTest {
     @Test
     @DisplayName("타겟 기물이 같은 편인지 확인한다.")
     void isSameSide() {
-        Side sourceSide = Side.from(Color.WHITE);
-        Side sameSide = Side.from(Color.WHITE);
-        Side opponenetSide = Side.from(Color.BLACK);
-        Piece sourcePiece = new Pawn(sourceSide, Role.PAWN);
-        Piece targetPiece = new King(sameSide, Role.KING);
-        Piece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
+        Team sourceTeam = Team.from(Color.WHITE);
+        Team sameTeam = Team.from(Color.WHITE);
+        Team opponenetTeam = Team.from(Color.BLACK);
+        Piece sourcePiece = new Pawn(sourceTeam, Role.PAWN);
+        Piece targetPiece = new King(sameTeam, Role.KING);
+        Piece opponentPiece = new Queen(opponenetTeam, Role.QUEEN);
 
-        assertThat(sourcePiece.isOpposite(targetPiece.side)).isFalse();
-        assertThat(sourcePiece.isOpposite(opponentPiece.side)).isTrue();
+        assertThat(sourcePiece.isOpposite(targetPiece.team)).isFalse();
+        assertThat(sourcePiece.isOpposite(opponentPiece.team)).isTrue();
     }
 }

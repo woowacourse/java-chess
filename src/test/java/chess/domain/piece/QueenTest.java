@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.square.Color;
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -42,7 +42,7 @@ class QueenTest {
     @DisplayName("퀸이 이동할 수 있는 위치인지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
+        Queen queen = new Queen(Team.from(Color.BLACK), Role.QUEEN);
 
         // expected
         assertThat(queen.canMove(direction, distance)).isTrue();
@@ -53,7 +53,7 @@ class QueenTest {
     @DisplayName("퀸이 이동할 수 없는 위치인지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
+        Queen queen = new Queen(Team.from(Color.BLACK), Role.QUEEN);
 
         // expected
         assertThat(queen.canMove(direction, distance)).isFalse();
@@ -64,8 +64,8 @@ class QueenTest {
     @DisplayName("다른 팀은 공격할 수 있다.")
     void canAttack(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
-        Pawn opponentPiece = new Pawn(Side.from(WHITE), Role.PAWN);
+        Queen queen = new Queen(Team.from(Color.BLACK), Role.QUEEN);
+        Pawn opponentPiece = new Pawn(Team.from(WHITE), Role.PAWN);
 
         // expected
         assertThat(queen.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -76,8 +76,8 @@ class QueenTest {
     @DisplayName("같은 팀은 공격할 수 없다.")
     void canNotAttack(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
-        Pawn opponentPiece = new Pawn(Side.from(BLACK), Role.PAWN);
+        Queen queen = new Queen(Team.from(Color.BLACK), Role.QUEEN);
+        Pawn opponentPiece = new Pawn(Team.from(BLACK), Role.PAWN);
 
         // expected
         assertThat(queen.canAttack(direction, distance, opponentPiece)).isFalse();
