@@ -9,10 +9,19 @@ import java.util.Map;
 
 public final class ChessBoard {
 
+    public static final int KING_NECESSARY_COUNT = 2;
+
     private final Map<Position, Piece> chessBoard;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
         this.chessBoard = new HashMap<>(chessBoard);
+    }
+
+    public boolean isKingDead() {
+        long kingCount = chessBoard.values().stream()
+                .filter(piece -> piece.getPieceType() == PieceName.KING)
+                .count();
+        return kingCount != KING_NECESSARY_COUNT;
     }
 
     public void movePiece(Position startPosition, Position endPosition) {

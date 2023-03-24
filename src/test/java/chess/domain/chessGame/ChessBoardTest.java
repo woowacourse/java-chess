@@ -1,9 +1,6 @@
 package chess.domain.chessGame;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,6 +25,43 @@ class ChessBoardTest {
 
         // then
         assertThat(setResult).hasSize(32);
+    }
+
+    @Nested
+    @DisplayName("King이 죽었는지 확인할 수 있다.")
+    class isKingDeadTest {
+
+        @Test
+        @DisplayName("King이 1개라도 죽어있으면 true를 반환한다.")
+        void isKingDead_True() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(Map.of(
+                    Position.of(1, 4), new Queen(Color.WHITE),
+                    Position.of(8, 4), new Queen(Color.BLACK)
+            ));
+
+            // when
+            boolean result = chessBoard.isKingDead();
+
+            // then
+            assertThat(result).isTrue();
+        }
+
+        @Test
+        @DisplayName("King이 2개 다 살아있으면 false를 반환한다.")
+        void isKingDead_False() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(Map.of(
+                    Position.of(1, 5), new King(Color.WHITE),
+                    Position.of(8, 5), new King(Color.BLACK)
+            ));
+
+            // when
+            boolean result = chessBoard.isKingDead();
+
+            // then
+            assertThat(result).isFalse();
+        }
     }
 
     @Nested

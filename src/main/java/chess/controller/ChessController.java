@@ -26,7 +26,7 @@ public final class ChessController {
     private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return repeat(supplier);
         }
@@ -34,23 +34,22 @@ public final class ChessController {
 
     private void startGame() {
         ChessBoard chessBoard = setUpChessBoard();
+        checkKingAlive(chessBoard);
         repeat(() -> playGame(chessBoard));
+    }
+
+    private void checkKingAlive(ChessBoard chessBoard) {
+        if (chessBoard.isKingDead()) {
+            throw new IllegalStateException("[ERROR] King이 죽었기 때문에 끝난 게임입니다.");
+        }
     }
 
     private void repeat(Runnable runnable) {
         try {
             runnable.run();
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             repeat(runnable);
-        }
-    }
-
-    private void playGame(ChessBoard chessBoard) {
-        CommandDto commandDto = InputView.readPlayingCommand();
-        while (commandDto.getGameCommand() != GameCommand.END) {
-            executeMoveCommand(chessBoard, commandDto);
-            commandDto = InputView.readPlayingCommand();
         }
     }
 
@@ -59,6 +58,15 @@ public final class ChessController {
         ChessBoard chessBoard = new ChessBoard(generator.generate());
         showChessBoardStatus(chessBoard);
         return chessBoard;
+    }
+
+    private void playGame(ChessBoard chessBoard) {
+        CommandDto commandDto = InputView.readPlayingCommand();
+        while (commandDto.getGameCommand() != GameCommand.END) {
+            executeMoveCommand(chessBoard, commandDto);
+            checkKingAlive(chessBoard);
+            commandDto = InputView.readPlayingCommand();
+        }
     }
 
     private void executeMoveCommand(ChessBoard chessBoard, CommandDto commandDto) {
