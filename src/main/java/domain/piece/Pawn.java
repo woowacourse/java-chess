@@ -1,11 +1,16 @@
 package domain.piece;
 
 import domain.position.Position;
+import java.util.Objects;
 
 public final class Pawn extends Piece {
 
     private static final String NAME = "P";
     private static final int ONE_STEP = 1;
+    private static final int LEFT = -1;
+    private static final int RIGHT = 1;
+    private static final int UP = 1;
+    private static final int DOWN = -1;
     private static final int TWO_STEP_AT_FIRST = 2;
     private static final char INITIAL_RANK_BLACK = '7';
     private static final char INITIAL_RANK_WHITE = '2';
@@ -42,13 +47,22 @@ public final class Pawn extends Piece {
     @Override
     public boolean isEatable(final Position source, final Position destination) {
         if (isBlack() &&
-                source.moveDownLeft(ONE_STEP).equals(destination) ||
-                source.moveDownRight(ONE_STEP).equals(destination)) {
+                Objects.equals(destination, validateEdgeDestination(source, DOWN, LEFT)) ||
+                Objects.equals(destination, validateEdgeDestination(source, DOWN, RIGHT))) {
             return true;
         }
 
         return !isBlack() &&
-                source.moveUpLeft(ONE_STEP).equals(destination) ||
-                source.moveUpRight(ONE_STEP).equals(destination);
+                Objects.equals(destination, validateEdgeDestination(source, UP, LEFT)) ||
+                Objects.equals(destination, validateEdgeDestination(source, UP, RIGHT));
+    }
+
+
+    private Position validateEdgeDestination(final Position source, final int rank, final int file) {
+        try {
+            return source.move(rank, file);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }
