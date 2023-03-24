@@ -20,7 +20,7 @@ public final class Empty extends Piece {
 
     @Override
     public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam) {
-        throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
+        throw new UnsupportedOperationException();
     }
 
     @Override

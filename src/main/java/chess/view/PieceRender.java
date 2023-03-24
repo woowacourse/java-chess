@@ -19,7 +19,7 @@ public final class PieceRender {
     }
 
     public static String renderName(final Piece piece) {
-        final Team team = piece.getColor();
+        final Team team = piece.getTeam();
         final PieceType pieceType = piece.getPieceType();
 
         if (team.isBlack()) {

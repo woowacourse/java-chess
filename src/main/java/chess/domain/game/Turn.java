@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public final class Turn {
@@ -24,5 +25,9 @@ public final class Turn {
 
     public Team getTeam() {
         return team;
+    }
+
+    public boolean isValidTurn(final Piece piece) {
+        return getTeam() == piece.getTeam();
     }
 }

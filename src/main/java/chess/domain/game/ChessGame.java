@@ -14,10 +14,13 @@ public final class ChessGame {
     private static final int BOARD_LENGTH = 8;
     public static final double BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
+    // TODO: Piece를 싱글턴으로
     private final Map<Position, Piece> board;
+    private Turn turn;
 
     private ChessGame(final Map<Position, Piece> board) {
         this.board = board;
+        this.turn = Turn.create();
     }
 
     public static ChessGame from(final Map<Position, Piece> board) {
@@ -32,9 +35,23 @@ public final class ChessGame {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
-        final List<Position> path = sourcePiece.findPath(source, target, targetPiece.getColor());
-        validatePath(path);
+        validateEmptyPiece(sourcePiece);
+        validateTurn(sourcePiece);
+        validatePath(sourcePiece.findPath(source, target, targetPiece.getTeam()));
         switchPiece(source, target, sourcePiece);
+        turn = turn.next();
+    }
+
+    private void validateEmptyPiece(final Piece sourcePiece) {
+        if (sourcePiece.isEmpty()) {
+            throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
+        }
+    }
+
+    private void validateTurn(final Piece piece) {
+        if (!turn.isValidTurn(piece)) {
+            throw new IllegalStateException("턴이 올바르지 않습니다. 현재 턴 : " + turn.getTeam());
+        }
     }
 
     private void validatePath(final List<Position> path) {

@@ -42,7 +42,7 @@ public abstract class Piece {
         return team.isBlack();
     }
 
-    public final Team getColor() {
+    public final Team getTeam() {
         return team;
     }
 
