@@ -14,11 +14,12 @@ public class Path {
     }
 
     public static Path ofLimitedPath(Position current, final Direction direction, final int size) {
-        List<Position> positions = new ArrayList<>();
-        while (positions.size() < size && (current = current.findNextPosition(direction)) != null) {
-            positions.add(current);
+        List<Position> resizedPositions = new ArrayList<>();
+        Path path = ofNoLimitPath(current, direction);
+        for (int i = 0; i < size && i < path.size(); i++) {
+            resizedPositions.add(path.findPositionByIndex(i));
         }
-        return new Path(positions);
+        return new Path(resizedPositions);
     }
 
     public static Path ofNoLimitPath(Position current, final Direction direction) {
@@ -28,7 +29,6 @@ public class Path {
         }
         return new Path(positions);
     }
-
     public boolean hasPosition(final Position position) {
         return positions.contains(position);
     }
