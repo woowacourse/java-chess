@@ -7,6 +7,7 @@ public class Turn {
 
     private static final List<Camp> PLAYERS_CAMP = List.of(Camp.WHITE, Camp.BLACK);
     private static final int PLAYER_COUNT = PLAYERS_CAMP.size();
+    private static final int START_TURN = 0;
 
     private int count;
 
@@ -14,8 +15,12 @@ public class Turn {
         this.count = 0;
     }
 
+    public void processNextTurn() {
+        this.count++;
+    }
+
     public Camp findNextPlayer() {
-        final int campIndex = count++ % PLAYER_COUNT;
+        final int campIndex = count % PLAYER_COUNT;
 
         return PLAYERS_CAMP.get(campIndex);
     }

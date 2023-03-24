@@ -19,6 +19,7 @@ public class ChessGame {
         validateInitialChessGame();
         validatePosition(source, target);
         chessBoard.move(source, target, turn.findNextPlayer());
+        turn.processNextTurn();
     }
 
     private void validateInitialChessGame() {
