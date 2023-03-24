@@ -1,4 +1,4 @@
-package domain.piece.jumper;
+package domain.piece.nonslider;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
 
-public class Knight extends Jumper {
+public class Knight extends Piece {
     private static final List<List<Integer>> POSSIBLE_MOVES = List.of(
         List.of(1, 2),
         List.of(1, -2),

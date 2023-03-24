@@ -1,4 +1,4 @@
-package domain.piece.empty;
+package domain.piece.nonslider;
 
 import java.util.List;
 import java.util.Map;

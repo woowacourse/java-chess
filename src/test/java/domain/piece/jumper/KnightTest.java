@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Knight;
+import domain.piece.nonslider.Pawn;
 
 class KnightTest {
 

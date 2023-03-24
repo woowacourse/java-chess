@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.empty.Empty;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Empty;
+import domain.piece.nonslider.Pawn;
 
 class BishopTest {
 

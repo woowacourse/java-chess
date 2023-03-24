@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.empty.Empty;
-import domain.piece.jumper.Knight;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Empty;
+import domain.piece.nonslider.Knight;
+import domain.piece.nonslider.Pawn;
 import domain.piece.slider.Bishop;
 import domain.piece.slider.King;
 import domain.piece.slider.Queen;

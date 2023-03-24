@@ -1,4 +1,4 @@
-package domain.piece.pawn;
+package domain.piece.nonslider;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,6 @@ import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Direction;
 import domain.piece.Piece;
-import domain.piece.jumper.Jumper;
 
 public class Pawn extends Piece {
     private static final List<Direction> MOVABLE_DIRECTION_FORWARD = List.of(
@@ -86,8 +85,10 @@ public class Pawn extends Piece {
 
     private List<Square> removeSquareOutOfBoard(List<Square> movableSquares) {
         return movableSquares.stream()
-            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= MIN_FILE_INDEX && square.toCoordinate().get(FILE_INDEX) <= MAX_FILE_INDEX
-                && square.toCoordinate().get(RANK_INDEX) >= MIN_RANK_INDEX && square.toCoordinate().get(RANK_INDEX) <= MAX_RANK_INDEX)
+            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= MIN_FILE_INDEX
+                && square.toCoordinate().get(FILE_INDEX) <= MAX_FILE_INDEX
+                && square.toCoordinate().get(RANK_INDEX) >= MIN_RANK_INDEX
+                && square.toCoordinate().get(RANK_INDEX) <= MAX_RANK_INDEX)
             .collect(Collectors.toList());
     }
 

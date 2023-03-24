@@ -2,7 +2,6 @@ package domain.piece.slider;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,6 @@ import domain.board.ChessBoard;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.pawn.Pawn;
 
 class RookTest {
     @Test
