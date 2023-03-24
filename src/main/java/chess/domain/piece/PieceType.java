@@ -8,19 +8,25 @@ import java.util.List;
 import static chess.domain.movement.Movement.*;
 
 public enum PieceType {
-    KING(List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL)),
-    QUEEN(List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL,
+    KING(0, List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL)),
+    QUEEN(9, List.of(DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL,
             CONTINUOUS_STRAIGHT, CONTINUOUS_DIAGONAL)),
-    ROOK(List.of(CONTINUOUS_STRAIGHT, DISCONTINUOUS_STRAIGHT)),
-    KNIGHT(List.of(CONTINUOUS_L_SHAPE)),
-    BISHOP(List.of(CONTINUOUS_DIAGONAL, DISCONTINUOUS_DIAGONAL)),
-    PAWN(List.of(CONTINUOUS_STRAIGHT, DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL)),
-    EMPTY(Collections.emptyList());
+    ROOK(5, List.of(CONTINUOUS_STRAIGHT, DISCONTINUOUS_STRAIGHT)),
+    KNIGHT(2.5, List.of(CONTINUOUS_L_SHAPE)),
+    BISHOP(3, List.of(CONTINUOUS_DIAGONAL, DISCONTINUOUS_DIAGONAL)),
+    PAWN(1, List.of(CONTINUOUS_STRAIGHT, DISCONTINUOUS_STRAIGHT, DISCONTINUOUS_DIAGONAL)),
+    EMPTY(0, Collections.emptyList());
 
+    private final double score;
     private final List<Movement> movements;
 
-    PieceType(final List<Movement> movements) {
+    PieceType(final double score, final List<Movement> movements) {
+        this.score = score;
         this.movements = movements;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     public List<Movement> getMovements() {

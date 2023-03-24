@@ -114,4 +114,12 @@ class BoardTest {
                     .hasMessage("이동 경로에 말이 존재합니다.");
         }
     }
+
+    @Test
+    @DisplayName("특정 팀에 해당하는 점수만 계산한다.")
+    void calculateTeamScore() {
+        Board board = new Board();
+
+        assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(38.0);
+    }
 }

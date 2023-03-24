@@ -81,6 +81,14 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
+    public double calculateTeamScore(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .map(piece -> piece.getPieceType().getScore())
+                .reduce(0.0, Double::sum);
+    }
+
     public Map<Square, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
