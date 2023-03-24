@@ -41,6 +41,7 @@ public class ChessController {
             command = play();
             if (board.isEnd()) {
                 command = END;
+                OutputView.printWinner(board.winner());
             }
         }
     }
