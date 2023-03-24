@@ -21,7 +21,7 @@ public enum PieceScore {
         this.type = type;
     }
 
-    public static double from(final PieceType pieceType) {
+    public static double findScore(final PieceType pieceType) {
         return Arrays.stream(values())
                 .filter(pieceScore -> pieceScore.type == pieceType)
                 .mapToDouble(pieceScore -> pieceScore.score)

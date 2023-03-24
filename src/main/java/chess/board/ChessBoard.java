@@ -166,19 +166,20 @@ public class ChessBoard {
         return numberOfKing != 2;
     }
 
-    public List<Integer> calculateScore() {
-        final List<Integer> scores = new ArrayList<>();
-        int score = 0;
+    public List<Double> calculateScore() {
+        final List<Double> scores = new ArrayList<>();
         for (final Team team : Team.values()) {
-            for (final Piece piece : piecePosition.values()) {
-                if (team == piece.getTeam()) {
-                    score += PieceScore.from(piece.getType());
-                }
-            }
-            scores.add(score);
-            score = 0;
+            scores.add(calculateSum(team));
         }
         return scores;
+    }
+
+    private double calculateSum(final Team team) {
+        return piecePosition.values()
+                .stream()
+                .filter(piece -> team == piece.getTeam())
+                .mapToDouble(piece -> PieceScore.findScore(piece.getType()))
+                .sum();
     }
 
     public Map<Position, Piece> getPiecePosition() {

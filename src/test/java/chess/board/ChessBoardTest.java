@@ -583,7 +583,7 @@ class ChessBoardTest {
 
         ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
         // when
-        List<Integer> scores = chessBoard.calculateScore();
+        List<Double> scores = chessBoard.calculateScore();
 
         // then
         assertThat(scores.get(0)).isEqualTo(18);
@@ -602,7 +602,7 @@ class ChessBoardTest {
 
         ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
         // when
-        List<Integer> scores = chessBoard.calculateScore();
+        List<Double> scores = chessBoard.calculateScore();
 
         // then
         assertThat(scores.get(1)).isEqualTo(17);

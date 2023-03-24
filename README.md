@@ -70,7 +70,8 @@
     - Knight - 2.5점
     - Pawn - 1점 --> 같은 세로줄(File)의 같은 색(Team)의 Pawn은 0.5점
 - 팀 별로 각각 점수를 계산해야한다.
-- King이 잡히면 게임이 종료되어야 한다(체크메이트). -> 매번 양팀의 King이 살아있는지 확인할 것인가? -> map의 value로 저장되어있는 piece중에서 contains로 King을 확인하기 위해서는
+- [x] King이 잡히면 게임이 종료되어야 한다(체크메이트). -> 매번 양팀의 King이 살아있는지 확인할 것인가? -> map의 value로 저장되어있는 piece중에서 contains로 King을 확인하기
+  위해서는
   PieceType이 필요한 것 같다고 생각이 든다.
     - [x] King의 개수를 세서 게임이 종료되었는지 판단한다.
 - PieceType이란걸 만들면 Piece가 PieceType을 가질 수 있고, 각 스코어는 Enum으로 타입에 매핑시켜서 계산할 수 있지 않을까?

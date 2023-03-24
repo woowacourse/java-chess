@@ -59,7 +59,6 @@ public class PieceFactory {
             piecePosition.put(new Position(File.A, Rank.EIGHT), new Rook(team));
             piecePosition.put(new Position(File.H, Rank.EIGHT), new Rook(team));
         }
-
     }
 
     private static void createKnight(final Map<Position, Piece> piecePosition, final Team team) {

@@ -27,11 +27,13 @@ public class ChessGame {
     }
 
     public boolean isProcessing() {
+        if (chessBoard.isGameOver()) {
+            isProcessing = false;
+        }
         return isProcessing;
     }
 
     public ChessBoard getChessBoard() {
         return chessBoard;
     }
-
 }
