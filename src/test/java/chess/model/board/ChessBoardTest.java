@@ -1,7 +1,11 @@
 package chess.model.board;
 
+import static chess.helper.PositionFixture.A2;
 import static chess.helper.PositionFixture.A6;
 import static chess.helper.PositionFixture.A7;
+import static chess.helper.PositionFixture.B3;
+import static chess.helper.PositionFixture.B4;
+import static chess.helper.PositionFixture.C2;
 import static chess.helper.PositionFixture.E1;
 import static chess.helper.PositionFixture.E7;
 import static chess.helper.PositionFixture.E8;
@@ -10,15 +14,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.helper.ChessBoardPieceMovingHelper;
 import chess.model.piece.Camp;
-import chess.model.position.File;
+import chess.model.piece.PieceScore;
 import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessBoardTest {
@@ -52,5 +54,20 @@ class ChessBoardTest {
         return Stream.of(
                 Arguments.of(E8, true), Arguments.of(E1, false)
         );
+    }
+
+    @Test
+    @DisplayName("calculateScoreByCamp()는 진영을 건네주면 해당 진영의 기물 점수를 계산해 반환한다")
+    void calculateScoreByCamp_givenCamp_thenReturnTotalPieceScore() {
+        final PieceScore initialPieceScore = chessBoard.calculateScoreByCamp(Camp.WHITE);
+        assertThat(initialPieceScore.getValue()).isEqualTo(38.0d);
+
+        ChessBoardPieceMovingHelper.move(chessBoard, A2, B3);
+        final PieceScore doublePawnPieceScore = chessBoard.calculateScoreByCamp(Camp.WHITE);
+        assertThat(doublePawnPieceScore.getValue()).isEqualTo(37.0d);
+
+        ChessBoardPieceMovingHelper.move(chessBoard, C2, B4);
+        final PieceScore triplePawnPieceScore = chessBoard.calculateScoreByCamp(Camp.WHITE);
+        assertThat(triplePawnPieceScore.getValue()).isEqualTo(36.5d);
     }
 }

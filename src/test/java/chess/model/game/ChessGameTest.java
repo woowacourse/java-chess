@@ -19,10 +19,14 @@ import static chess.helper.PositionFixture.E8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.piece.Camp;
+import chess.model.piece.PieceScore;
 import chess.view.dto.ChessBoardResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class ChessGameTest {
 
@@ -128,5 +132,20 @@ class ChessGameTest {
 
         // then
         assertThat(actual).isTrue();
+    }
+
+    @ParameterizedTest(name = "Camp.{0}일 때 기본 점수 38점을 반환한다.")
+    @DisplayName("getScoreByCamp() 테스트")
+    @EnumSource(Camp.class)
+    void getScoreByCamp_givenCamp_thenReturnPieceScoreByCamp(final Camp camp) {
+        // given
+        chessGame.initialChessGame();
+
+        // when
+        final PieceScore actual = chessGame.getScoreByCamp(camp);
+
+        // then
+
+        assertThat(actual.getValue()).isEqualTo(38.0d);
     }
 }

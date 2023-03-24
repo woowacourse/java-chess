@@ -2,6 +2,8 @@ package chess.model.game;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
+import chess.model.piece.Camp;
+import chess.model.piece.PieceScore;
 import chess.model.position.Position;
 import chess.view.dto.ChessBoardResponse;
 
@@ -36,6 +38,10 @@ public class ChessGame {
 
     public boolean isGameOnGoing() {
         return chessBoard.canPlayGame(turn.oppositeCamp());
+    }
+
+    public PieceScore getScoreByCamp(final Camp camp) {
+        return chessBoard.calculateScoreByCamp(camp);
     }
 
     public ChessBoardResponse getChessBoard() {
