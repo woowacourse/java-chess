@@ -1,8 +1,8 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
+import chess.model.position.Position;
 
 public class Ready implements GameState {
 
@@ -13,14 +13,16 @@ public class Ready implements GameState {
     }
 
     @Override
-    public GameState execute(final PlayDto request) {
-        final GameCommand gameCommand = request.getGameCommand();
-
+    public GameState execute(final GameCommand gameCommand,
+            final Position ignoredSource,
+            final Position ignoredTarget
+    ) {
         validateGameCommand(gameCommand);
-        return execute(gameCommand);
+
+        return handleGameCommand(gameCommand);
     }
 
-    private GameState execute(final GameCommand gameCommand) {
+    private GameState handleGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
             chessGame.initialChessGame();
             return new Play(chessGame);

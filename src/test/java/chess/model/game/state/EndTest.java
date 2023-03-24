@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.controller.GameCommand;
 import chess.controller.state.End;
 import chess.controller.state.GameState;
-import chess.model.dto.PlayDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,8 @@ class EndTest {
     @Test
     @DisplayName("execute()는 호출하면 예외가 발생한다.")
     void execute_whenCall_thenFail() {
-        // given
-        final PlayDto request = new PlayDto(GameCommand.END, A1, A1);
-
         // when, then
-        assertThatThrownBy(() -> end.execute(request))
+        assertThatThrownBy(() -> end.execute(GameCommand.END, A1, A1))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }

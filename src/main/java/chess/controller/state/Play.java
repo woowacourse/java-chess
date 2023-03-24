@@ -1,8 +1,8 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
+import chess.model.position.Position;
 
 public class Play implements GameState {
 
@@ -13,29 +13,22 @@ public class Play implements GameState {
     }
 
     @Override
-    public GameState execute(final PlayDto request) {
-        final GameCommand gameCommand = request.getGameCommand();
-
+    public GameState execute(final GameCommand gameCommand, final Position source, final Position target) {
         validateGameCommand(gameCommand);
 
         try {
-            return execute(request, gameCommand);
+            return handleGameCommand(gameCommand, source, target);
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("존재하지 않는 체스 칸을 지정했습니다.", e);
         }
     }
 
-    private GameState execute(final PlayDto request, final GameCommand gameCommand) {
+    private GameState handleGameCommand(final GameCommand gameCommand, final Position source, final Position target) {
         if (gameCommand.isMove()) {
-            move(request);
-
+            chessGame.move(source, target);
             return this;
         }
         return new End();
-    }
-
-    private void move(final PlayDto request) {
-        chessGame.move(request.getSource(), request.getTarget());
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {

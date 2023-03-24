@@ -11,7 +11,6 @@ import chess.controller.state.End;
 import chess.controller.state.GameState;
 import chess.controller.state.Play;
 import chess.controller.state.Ready;
-import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,11 +30,8 @@ class ReadyTest {
     @Test
     @DisplayName("execute()는 명령어로 start가 주어지면 ChessGame의 필드를 초기화하고 Play를 반환한다.")
     void execute_givenStartCommand_thenInitialChessGameAndReturnPlay() {
-        // given
-        final PlayDto request = new PlayDto(GameCommand.START, A1, A1);
-
         // when
-        final GameState actual = ready.execute(request);
+        final GameState actual = ready.execute(GameCommand.START, A1, A1);
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
@@ -46,11 +42,8 @@ class ReadyTest {
     @Test
     @DisplayName("execute()는 명령어로 move가 주어지면 예외가 발생한다.")
     void execute_givenMoveCommand_thenFail() {
-        // given
-        final PlayDto request = new PlayDto(GameCommand.MOVE, A2, A3);
-
         // when, then
-        assertThatThrownBy(() -> ready.execute(request))
+        assertThatThrownBy(() -> ready.execute(GameCommand.MOVE, A2, A3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -58,11 +51,8 @@ class ReadyTest {
     @Test
     @DisplayName("execute()는 명령어로 end가 주어지면 ChessGame을 초기화하지 않고 End를 반환한다.")
     void execute_givenEndCommand_thenNotInitialChessGameAndReturnEnd() {
-        // given
-        final PlayDto request = new PlayDto(GameCommand.END, A1, A1);
-
         // when
-        final GameState actual = ready.execute(request);
+        final GameState actual = ready.execute(GameCommand.END, A1, A1);
 
         // then
         assertThat(actual).isExactlyInstanceOf(End.class);

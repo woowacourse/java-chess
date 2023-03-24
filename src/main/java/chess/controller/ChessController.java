@@ -3,7 +3,6 @@ package chess.controller;
 import chess.controller.dto.PlayRequest;
 import chess.controller.state.GameState;
 import chess.controller.state.Ready;
-import chess.model.dto.PlayDto;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
@@ -32,22 +31,20 @@ public class ChessController {
 
     private GameState run(final GameState gameState) {
         try {
-            final PlayRequest playRequest = inputView.readPlayCommand();
-            final PlayDto playDto = convertDtoFromRequest(playRequest);
-
-            return gameState.execute(playDto);
+            return playGame(gameState);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
             return gameState;
         }
     }
 
-    private PlayDto convertDtoFromRequest(final PlayRequest playRequest) {
+    private GameState playGame(final GameState gameState) {
+        final PlayRequest playRequest = inputView.readPlayCommand();
         final GameCommand gameCommand = GameCommand.findGameCommand(playRequest.getCommand());
-        final Position sourcePosition = PositionConverter.convert(playRequest.getSource());
-        final Position targetPosition = PositionConverter.convert(playRequest.getTarget());
+        final Position source = PositionConverter.convert(playRequest.getSource());
+        final Position target = PositionConverter.convert(playRequest.getTarget());
 
-        return new PlayDto(gameCommand, sourcePosition, targetPosition);
+        return gameState.execute(gameCommand, source, target);
     }
 
     private void printChessBoard(final GameState gameState, final ChessGame chessGame) {
