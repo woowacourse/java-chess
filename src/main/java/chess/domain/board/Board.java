@@ -24,7 +24,7 @@ public class Board {
     }
 
     public void movePiece(final Position currentPosition, final Position targetPosition) {
-        validateDuplicatePositions(currentPosition, targetPosition);
+        validateNotEquals(currentPosition, targetPosition);
 
         Piece currentPositionPiece = findPieceAt(currentPosition);
         checkAndChangeTurn(currentPositionPiece, turn);
@@ -42,7 +42,7 @@ public class Board {
         this.turn = turn.change();
     }
 
-    private void validateDuplicatePositions(final Position currentPosition, final Position targetPosition) {
+    private void validateNotEquals(final Position currentPosition, final Position targetPosition) {
         if (currentPosition.equals(targetPosition)) {
             throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
