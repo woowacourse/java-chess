@@ -14,6 +14,22 @@ public abstract class ProgressState implements GameState {
         this.chessGame = chessGame;
     }
 
+    public static GameState from(final GameCommand gameCommand) {
+        if (gameCommand.isMove()) {
+            throw new IllegalArgumentException("시작하기 전에 move를 호출 할 수 없습니다.");
+        }
+
+        if (gameCommand.isEnd()) {
+            return new End();
+        }
+
+        if (gameCommand.isStatus()) {
+            return new Status(new ChessGame());
+        }
+
+        return new Playing(new ChessGame());
+    }
+
     @Override
     public abstract boolean isStatus();
 

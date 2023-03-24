@@ -21,7 +21,7 @@ class StartTest {
     @MethodSource("startParameters")
     void givenGameCommand_thenReturnGameState(final GameCommand command, final Class state) {
         // when, then
-        assertThat(Start.from(command).getClass()).isEqualTo(state);
+        assertThat(ProgressState.from(command).getClass()).isEqualTo(state);
     }
 
     private static Stream<Arguments> startParameters() {
@@ -36,7 +36,7 @@ class StartTest {
     @DisplayName("시작하기전에는 move를 호출 할 수 없는지 테스트한다.")
     void cannotCallMove_WhenBeforeStart() {
         // when, then
-        assertThatThrownBy(() -> Start.from(MOVE))
+        assertThatThrownBy(() -> ProgressState.from(MOVE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작하기 전에 move를 호출 할 수 없습니다.");
     }

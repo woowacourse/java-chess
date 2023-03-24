@@ -28,7 +28,7 @@ class PlayingTest {
     @DisplayName("GameCommand가 Start이면 End가 반환된다.")
     void givenEnd_thenReturnEnd() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
 
         // when
         final GameState end = playing.changeState(END);
@@ -41,7 +41,7 @@ class PlayingTest {
     @DisplayName("GameCommand가 Start이면 예외가 발생한다.")
     void givenStart_thenFail() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
 
         // when, then
         assertThatThrownBy(() -> playing.changeState(START))
@@ -52,7 +52,7 @@ class PlayingTest {
     @DisplayName("GameCommand가 Status이면 예외가 발생한다.")
     void givenStatus_thenFail() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
 
         // when
         final GameState status = playing.changeState(STATUS);

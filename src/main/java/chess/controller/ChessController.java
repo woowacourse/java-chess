@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.model.Scores;
 import chess.model.board.state.GameState;
-import chess.model.board.state.Start;
+import chess.model.board.state.ProgressState;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.function.Consumer;
@@ -34,7 +34,7 @@ public class ChessController {
     }
 
     private GameState getGameState(final GameCommand gameCommand) {
-        GameState state = Start.from(gameCommand);
+        GameState state = ProgressState.from(gameCommand);
         printBoardStatus(state);
         return state;
     }

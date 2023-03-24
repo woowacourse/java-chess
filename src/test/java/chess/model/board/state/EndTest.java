@@ -14,7 +14,7 @@ class EndTest {
     @DisplayName("State가 End일 때, execute가 실행되면 오류가 발생한다.")
     void changeState_whenCall_thenFail() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
         final GameState end = playing.changeState(END);
 
         // when, then
@@ -26,7 +26,7 @@ class EndTest {
     @DisplayName("State가 End일 때, calculateScores가 실행되면 오류가 발생한다.")
     void calculateScores_whenCall_thenFail() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
         final GameState end = playing.changeState(END);
 
         // when, then
@@ -38,7 +38,7 @@ class EndTest {
     @DisplayName("State가 End일 때, calculateScores가 실행되면 오류가 발생한다.")
     void getBoard_whenCall_thenFail() {
         // given
-        final GameState playing = Start.from(START);
+        final GameState playing = ProgressState.from(START);
         final GameState end = playing.changeState(END);
 
         // when, then
