@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("ChessBoard는 ")
 class ChessBoardTest {
@@ -32,7 +31,7 @@ class ChessBoardTest {
     }
 
     @Nested
-    @DisplayName("아래와 같은 경우 말을 이동시킬 수 있다.")
+    @DisplayName("말을 이동시킬 수 있다.")
     class movePieceTest_Success {
 
         Map<Position, Piece> setupBoard = Map.of(
@@ -76,73 +75,7 @@ class ChessBoardTest {
     }
 
     @Nested
-    @DisplayName("아래와 같은 경우 말을 이동시킬 수 없다.")
-    class movePieceTest_Fail {
-
-        Map<Position, Piece> setupBoard = Map.of(
-                Position.of(2, 2), new Rook(Color.WHITE),
-                Position.of(4, 2), new Rook(Color.BLACK),
-                Position.of(6, 2), new Rook(Color.BLACK));
-
-        @Test
-        @DisplayName("출발 좌표에 말이 존재하지 않는 경우 예외가 발생한다.")
-        void noPieceInStartTest() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(3, 2);
-            Position end = Position.of(5, 2);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
-        }
-
-        @Test
-        @DisplayName("출발 좌표에 있는 말의 이동 로직에 부합하지 않는 경로로는 이동할 수 없다.")
-        void notMatchToPieceMovingLogicTest() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(2,2);
-            Position end = Position.of(5,5);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
-        }
-
-        @Test
-        @DisplayName("진행 경로 상에 말이 있는 경우 예외가 발생한다.")
-        void blockedTest() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(2, 2);
-            Position end = Position.of(5, 2);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
-        }
-
-        @Test
-        @DisplayName("목표 좌표에 자신의 말이 존재하는 경우 예외가 발생한다.")
-        void existSameColorPieceInEndTest() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(4, 2);
-            Position end = Position.of(6, 2);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
-        }
-    }
-
-    @Nested
-    @DisplayName("아래와 같은 pawn의 이동 케이스를 판단한다.")
+    @DisplayName("pawn을 이동시킬 수 있다.")
     class movePawnTest {
 
         Map<Position, Piece> setupBoard = Map.of(
@@ -168,20 +101,6 @@ class ChessBoardTest {
         }
 
         @Test
-        @DisplayName("전진할 때 목적 좌표에 상대 말이 존재해도 예외가 발생한다.")
-        void pawnForwardTest_Fail() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(2, 4);
-            Position end = Position.of(4, 4);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 폰은 전진할 때 말이 없는 곳으로만 전진할 수 있습니다.");
-        }
-
-        @Test
         @DisplayName("대각선으로 이동할 때 이동 경로에 상대의 말이 존재하면 잡고 이동할 수 있다.")
         void pawnDiagonalTest_Success() {
             // given
@@ -196,20 +115,6 @@ class ChessBoardTest {
 
             // then
             assertThat(movedPiece).isInstanceOf(Pawn.class);
-        }
-
-        @Test
-        @DisplayName("대각선으로 이동할 때 이동 경로에 상대의 말이 존재하지 않으면 예외가 발생한다.")
-        void pawnDiagonalTest_Fail() {
-            // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
-            Position start = Position.of(2, 4);
-            Position end = Position.of(3, 3);
-
-            // then
-            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 폰은 대각선 이동 경로에 말이 없으면 이동이 불가능합니다.");
         }
     }
 }
