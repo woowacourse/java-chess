@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.FileCoordinate;
 import chess.domain.position.Position;
@@ -31,5 +32,9 @@ public class OutputView {
 
     public void printError(String message) {
         System.out.println("[ERROR]: " + message);
+    }
+
+    public void printStatus(Map<Color, Double> currentScore) {
+        currentScore.forEach((color, score) -> System.out.println(color + " : " + score));
     }
 }

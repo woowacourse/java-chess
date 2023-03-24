@@ -8,8 +8,9 @@ import java.util.stream.Collectors;
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readGameCommand() {
-        return Arrays.stream(scanner.nextLine().split(" "))
+    public ChessRequest readGameCommand() {
+        List<String> list = Arrays.stream(scanner.nextLine().split(" "))
                 .collect(Collectors.toList());
+        return new ChessRequest(list.get(0), list.subList(1, list.size()));
     }
 }

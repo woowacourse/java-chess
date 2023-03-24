@@ -12,7 +12,11 @@ public enum GameCommand {
     MOVE,
     END,
     EMPTY,
+    STATUS,
     ;
+
+    private static final int SOURCE_POSITION = 0;
+    private static final int TARGET_POSITION = 1;
 
     public static GameCommand of(String input) {
         if ("start".equalsIgnoreCase(input)) {
@@ -24,13 +28,10 @@ public enum GameCommand {
         if ("end".equalsIgnoreCase(input)) {
             return END;
         }
-        throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
-    }
-
-    public static void validateCommandSize(int inputSize, int expect) {
-        if (inputSize != expect) {
-            throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
+        if ("status".equalsIgnoreCase(input)) {
+            return STATUS;
         }
+        throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
     }
 
     public static Position createPosition(String input) {
@@ -40,7 +41,7 @@ public enum GameCommand {
     }
 
     private static Position parseToPosition(List<String> position) {
-        return new Position(FileCoordinateView.findBy(position.get(0)),
-                RankCoordinateView.findBy(position.get(1)));
+        return new Position(FileCoordinateView.findBy(position.get(SOURCE_POSITION)),
+                RankCoordinateView.findBy(position.get(TARGET_POSITION)));
     }
 }
