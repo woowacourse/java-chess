@@ -35,6 +35,10 @@ public class ChessGame {
         }
     }
 
+    public boolean isOver() {
+        return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
+    }
+
     public Board getBoard() {
         return board;
     }
