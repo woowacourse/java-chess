@@ -1,10 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.BlankPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -140,6 +138,28 @@ class PiecesTest {
         return Stream.of(
                 Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), true),
                 Arguments.of(List.of(), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndScore")
+    void 점수를_계산한다(final List<Piece> allPieces, final Color color, final double expectedScore) {
+        final Pieces pieces = new Pieces(allPieces);
+
+        final double actualScore = pieces.calculateScore(color);
+
+        assertThat(actualScore).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> providePiecesAndScore() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK)), BLACK, 0),
+                Arguments.of(List.of(new Queen(E, EIGHT, BLACK)), BLACK, 9),
+                Arguments.of(List.of(new Rook(E, ONE, WHITE)), WHITE, 5),
+                Arguments.of(List.of(new Bishop(E, ONE, WHITE)), WHITE, 3),
+                Arguments.of(List.of(new Knight(E, EIGHT, BLACK)), BLACK, 2.5),
+                Arguments.of(List.of(new Pawn(D, SIX, BLACK), new Pawn(D, SEVEN, BLACK)), BLACK, 1),
+                Arguments.of(List.of(new Pawn(E, SEVEN, BLACK)), BLACK, 1)
         );
     }
 }
