@@ -25,7 +25,7 @@ public final class OutputView {
         int lineBreak = 0;
         for (Position position : allPosition) {
             lineBreak++;
-            printFigureOrDot(chessBoard, position);
+            printPieceOrDot(chessBoard, position);
             lineBreakByRow(lineBreak);
         }
         System.out.println();
@@ -36,7 +36,7 @@ public final class OutputView {
             System.out.println();
     }
 
-    private static void printFigureOrDot(Map<Position, Piece> chessBoard, Position position) {
+    private static void printPieceOrDot(Map<Position, Piece> chessBoard, Position position) {
         if (chessBoard.containsKey(position)) {
             System.out.print(chessBoard.get(position).getName());
             return;
