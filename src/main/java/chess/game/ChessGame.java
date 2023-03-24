@@ -13,6 +13,7 @@ import chess.game.state.end.EndState;
 import chess.game.state.end.NoneWinState;
 import chess.game.state.waiting.WaitingState;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class ChessGame {
     private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
@@ -103,5 +104,16 @@ public class ChessGame {
 
     public boolean isChecked() {
         return gameState.isChecked();
+    }
+
+    public void save(BiConsumer<Board, GameState> saveLogic) {
+        gameState.saveGame(() -> saveLogic.accept(board, gameState));
+    }
+
+    public void load(Board board, GameState gameState) {
+        this.gameState.loadGame(() -> {
+            this.board = board;
+            this.gameState = gameState;
+        });
     }
 }

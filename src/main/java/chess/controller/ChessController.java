@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessGameDao;
 import chess.domain.Team;
 import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
@@ -18,15 +19,21 @@ public class ChessController {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
+    private static final String SAVE_COMMAND = "save";
+    private static final String LOAD_COMMAND = "load";
     private static final String END_COMMAND = "end";
     private final Map<String, Action> actionMap = new HashMap<>();
     private final ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
 
-    public ChessController(ChessGame chessGame) {
+    public ChessController(ChessGame chessGame, ChessGameDao chessGameDao) {
         this.chessGame = chessGame;
+        this.chessGameDao = chessGameDao;
         actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
         actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
         actionMap.put(STATUS_COMMAND, new Action(ignore -> getGameStatus()));
+        actionMap.put(SAVE_COMMAND, new Action(ignore -> saveGame()));
+        actionMap.put(LOAD_COMMAND, new Action(ignore -> loadGame()));
         actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
     }
 
@@ -59,6 +66,20 @@ public class ChessController {
         double blackTeamScore = chessGame.getTeamScore(Team.BLACK);
         double whiteTeamScore = chessGame.getTeamScore(Team.WHITE);
         OutputView.printGameStatus(blackTeamScore, whiteTeamScore);
+    }
+
+    private void saveGame() {
+        chessGameDao.deleteAllBoard();
+        chessGameDao.deleteGameState();
+        chessGame.save(chessGameDao::saveChessGame);
+        OutputView.printSaveMessage();
+    }
+
+    private void loadGame() {
+        chessGame.load(chessGameDao.findBoard(), chessGameDao.findGameState());
+        OutputView.printLoadMessage();
+        OutputView.printTurn(chessGame.getTurn());
+        OutputView.printBoard(chessGame.getBoard());
     }
 
     private void endGame() {
