@@ -19,4 +19,9 @@ public class Empty extends Piece {
     public PieceType pieceType() {
         return PieceType.EMPTY;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.EMPTY.equals(pieceType);
+    }
 }

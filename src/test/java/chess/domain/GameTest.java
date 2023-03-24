@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class GameTest {
     private static final int INITIAL_GAME_SCORE = 38;
-    private static final int INITIAL_VERTICAL_PAWN_SCORE = 34;
+    private static final int TWO_VERTICAL_PAWN_SCORE = 37;
     private Game game;
 
     @BeforeEach
@@ -54,7 +54,7 @@ class GameTest {
         game.move(new Square(File.B, Rank.SEVEN), new Square(File.B, Rank.FIVE));
         game.move(new Square(File.B, Rank.FOUR), new Square(File.A, Rank.FIVE));
 
-        assertThat(game.calculateScore(Camp.WHITE)).isEqualTo(INITIAL_VERTICAL_PAWN_SCORE);
+        assertThat(game.calculateScore(Camp.WHITE)).isEqualTo(TWO_VERTICAL_PAWN_SCORE);
     }
 
     @DisplayName("Black의 폰이 세로로 있는 경우 점수를 계산한다.")
@@ -67,6 +67,6 @@ class GameTest {
         game.move(new Square(File.C, Rank.TWO), new Square(File.C, Rank.FOUR));
         game.move(new Square(File.A, Rank.FIVE), new Square(File.B, Rank.FOUR));
 
-        assertThat(game.calculateScore(Camp.BLACK)).isEqualTo(INITIAL_VERTICAL_PAWN_SCORE);
+        assertThat(game.calculateScore(Camp.BLACK)).isEqualTo(TWO_VERTICAL_PAWN_SCORE);
     }
 }

@@ -38,6 +38,8 @@ public abstract class Piece {
 
     public abstract PieceType pieceType();
 
+    public abstract boolean isSameType(PieceType pieceType);
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

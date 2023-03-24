@@ -93,7 +93,7 @@ class BoardTest {
         board.move(new Square(File.B, Rank.FOUR), new Square(File.B, Rank.THREE));
         board.move(new Square(File.A, Rank.TWO), new Square(File.B, Rank.THREE));
 
-        assertThat(board.isVerticalPawn(Camp.WHITE)).isTrue();
+        assertThat(board.countVerticalPawn(Camp.WHITE)).isEqualTo(2);
     }
 
     @DisplayName("Black Pawn이 세로로 연속해서 존재한다.")
@@ -105,6 +105,6 @@ class BoardTest {
         board.move(new Square(File.B, Rank.FIVE), new Square(File.B, Rank.SIX));
         board.move(new Square(File.A, Rank.SEVEN), new Square(File.B, Rank.SIX));
 
-        assertThat(board.isVerticalPawn(Camp.BLACK)).isTrue();
+        assertThat(board.countVerticalPawn(Camp.BLACK)).isEqualTo(2);
     }
 }

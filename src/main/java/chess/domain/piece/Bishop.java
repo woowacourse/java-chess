@@ -29,4 +29,9 @@ public class Bishop extends Piece {
     public PieceType pieceType() {
         return PieceType.BISHOP;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.BISHOP.equals(pieceType);
+    }
 }

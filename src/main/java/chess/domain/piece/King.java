@@ -38,4 +38,9 @@ public class King extends Piece {
     public PieceType pieceType() {
         return PieceType.KING;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.KING.equals(pieceType);
+    }
 }

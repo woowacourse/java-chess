@@ -30,24 +30,18 @@ public class Game {
 
     public double calculateScore(final Camp camp) {
         final List<Piece> pieces = getPieces();
-        final double score = pieces.stream()
+        final double score = sumPiecesScore(camp, pieces);
+        final int verticalPawnCount = board.countVerticalPawn(camp);
+
+        return score
+                - PieceType.PAWN.value() * verticalPawnCount
+                + PieceType.VERTICAL_PAWN.value() * verticalPawnCount;
+    }
+
+    private double sumPiecesScore(final Camp camp, final List<Piece> pieces) {
+        return pieces.stream()
                 .filter(piece -> piece.isSameCamp(camp))
                 .mapToDouble(piece -> piece.pieceType().value())
                 .sum();
-
-        if (board.isVerticalPawn(camp)) {
-            return calculateVerticalPawnScore(score, pieces, camp);
-        }
-
-        return score;
-    }
-
-    private double calculateVerticalPawnScore(final double score, final List<Piece> pieces, final Camp camp) {
-        final int pawnCount = (int) pieces.stream()
-                .filter(piece -> board.isSameCampPawn(camp, piece))
-                .count();
-        return score
-                - pawnCount * PieceType.PAWN.value()
-                + pawnCount * PieceType.VERTICAL_PAWN.value();
     }
 }

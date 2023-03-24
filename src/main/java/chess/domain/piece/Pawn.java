@@ -69,4 +69,9 @@ public class Pawn extends Piece {
     public PieceType pieceType() {
         return PieceType.PAWN;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.PAWN.equals(pieceType);
+    }
 }

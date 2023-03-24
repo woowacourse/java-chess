@@ -29,4 +29,9 @@ public class Rook extends Piece {
     public PieceType pieceType() {
         return PieceType.ROOK;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.ROOK.equals(pieceType);
+    }
 }

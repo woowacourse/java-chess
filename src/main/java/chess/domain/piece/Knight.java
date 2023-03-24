@@ -33,4 +33,9 @@ public class Knight extends Piece {
     public PieceType pieceType() {
         return PieceType.KNIGHT;
     }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.KNIGHT.equals(pieceType);
+    }
 }

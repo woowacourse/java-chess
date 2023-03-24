@@ -76,16 +76,27 @@ public class Board {
         return new ArrayList<>(board.values());
     }
 
-    public boolean isVerticalPawn(final Camp camp) {
-        return board.values()
+    public int countVerticalPawn(final Camp camp) {
+        return (int) board.values()
                 .stream()
-                .filter(piece -> isSameCampPawn(camp, piece))
-                .anyMatch(piece -> piece.position().rank().canUp()
-                        && isSameCampPawn(camp, board.get(new Square(piece.position().file(),
-                        piece.position().rank().upRank()))));
+                .filter(piece -> isSameCampVerticalPawn(piece, camp))
+                .count();
     }
 
-    public boolean isSameCampPawn(final Camp camp, final Piece piece) {
-        return piece.isSameCamp(camp) && piece.pieceType().equals(PieceType.PAWN);
+    private boolean isSameCampVerticalPawn(final Piece piece, final Camp camp) {
+        if (!piece.isSameCamp(camp) || !piece.isSameType(PieceType.PAWN)) {
+            return false;
+        }
+        return isSameCampPawnOnMove(piece, Move.UP) || isSameCampPawnOnMove(piece, Move.DOWN);
+    }
+
+    private boolean isSameCampPawnOnMove(final Piece piece, final Move move) {
+        final Square position = piece.position();
+        if (!position.rank().canMove(move)) {
+            return false;
+        }
+
+        final Piece movePiece = board.get(new Square(position.file(), position.rank().moveRank(move)));
+        return movePiece.isSameCamp(piece.camp()) && movePiece.isSameType(PieceType.PAWN);
     }
 }
