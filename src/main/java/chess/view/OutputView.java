@@ -11,11 +11,15 @@ public class OutputView {
         "%s source위치 target위치 - 예. %s b2 b3", Command.MOVE.getAnswer(), Command.MOVE.getAnswer());
     private static final String GAME_COMMAND_REQUEST = String.format(
         "> 게임 시작 : %s\n> 게임 종료 : %s\n> 게임 이동 : %s\n> 점수 및 결과 조회 : %s\n",
-        Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION, Command.STATUS.getAnswer());
+        Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION,
+        Command.STATUS.getAnswer());
     private static final String WHITE_TEAM = "흰색 말";
     private static final String BLACK_TEAM = "검정색 말";
-    private static final String SCORE_FORMAT = "%s 점수: %f\n%s 점수: %.1f\n";
+    private static final String SCORE_FORMAT = "%s 점수: %.1f\n%s 점수: %.1f\n";
     private static final String WINNER_FORMAT = "우승팀은 %s 입니다.";
+    private static final String GAME_END_ALERT = String.format(
+        "게임이 종료되었습니다. 결과를 확인하려면 %s, 종료하려면 %s 를 입력해주세요.",
+        Command.STATUS.getAnswer(), Command.END.getAnswer());
 
     public void printStartMessage() {
         System.out.println(GAME_START);
@@ -36,6 +40,10 @@ public class OutputView {
             System.out.print(value);
         }
         System.out.println();
+    }
+
+    public void alertGameEnd() {
+        System.out.println(GAME_END_ALERT);
     }
 
     public void printCurrentScore(final GameScoreDto score) {

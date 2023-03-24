@@ -69,6 +69,9 @@ public class ChessController {
     }
 
     private CommandRequest repeatProgressRequest() {
+        if (chessGame.isEnd()) {
+            outputView.alertGameEnd();
+        }
         CommandRequest request = null;
         while (request == null) {
             request = readProgressCommand();
