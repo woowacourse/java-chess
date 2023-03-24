@@ -1,4 +1,4 @@
-package chess.initial;
+package chess.domain.board.initial;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

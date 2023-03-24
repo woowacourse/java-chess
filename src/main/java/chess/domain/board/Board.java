@@ -1,11 +1,10 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.team.Team;
-import chess.initial.BoardFactory;
 
 import java.util.Collections;
 import java.util.Map;
@@ -17,12 +16,8 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    private Board(final Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
-    }
-
-    public static Board from(final Map<Position, Piece> board) {
-        return BoardFactory.from(board);
     }
 
     public void move(final Position source, final Position target, final Team team) {

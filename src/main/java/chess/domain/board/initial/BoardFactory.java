@@ -1,6 +1,6 @@
-package chess.initial;
+package chess.domain.board.initial;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -19,7 +19,7 @@ public final class BoardFactory {
     public static Board from(final Map<Position, Piece> board) {
         fillEmpty(board);
         fillPieces(board);
-        return Board.from(board);
+        return new Board(board);
     }
 
     private static void fillPieces(final Map<Position, Piece> board) {

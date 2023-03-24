@@ -1,8 +1,9 @@
 package chess.domain.game;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.team.Team;
+import chess.domain.board.initial.BoardFactory;
 
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ public class ChessGame {
     private Team turn;
 
     public ChessGame() {
-        this.board = Board.from(new HashMap<>());
+        this.board = BoardFactory.from(new HashMap<>());
         this.turn = Team.WHITE;
     }
 
