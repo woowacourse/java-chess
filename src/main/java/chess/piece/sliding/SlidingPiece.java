@@ -14,15 +14,6 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position targetPosition) {
-        return false;
-    }
-
-    @Override
-    public Piece move(final Position positionToMove) {
-        return null;
-    }
-
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);

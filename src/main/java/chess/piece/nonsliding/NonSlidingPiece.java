@@ -12,6 +12,7 @@ public abstract class NonSlidingPiece extends Piece {
         super(position, side);
     }
 
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         return Collections.emptyList();
     }
