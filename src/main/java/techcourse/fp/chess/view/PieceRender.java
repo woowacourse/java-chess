@@ -62,6 +62,6 @@ public final class PieceRender {
             return name;
         }
 
-        throw new AssertionError();
+        throw new IllegalStateException("매핑되는 색이 존재하지 않습니다.");
     }
 }

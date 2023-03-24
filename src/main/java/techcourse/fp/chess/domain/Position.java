@@ -34,20 +34,20 @@ public final class Position {
                 Math.abs(getRankOrder() - target.getRankOrder()) == TWO_SPACES;
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
     public int getFileOrder() {
         return file.getOrder();
     }
 
     public int getRankOrder() {
         return rank.getOrder();
+    }
+
+    public int getGapOfFileOrder(Position other) {
+        return this.getFileOrder() - other.getFileOrder();
+    }
+
+    public int getGapOfRankOrder(Position other) {
+        return this.getRankOrder() - other.getRankOrder();
     }
 
     @Override

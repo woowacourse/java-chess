@@ -13,8 +13,8 @@ public class NoneSlidingStrategy extends MovingStrategy {
 
     @Override
     public List<Position> createPath(final Position source, final Position target) {
-        final int gapOfFileOrder = target.getFileOrder() - source.getFileOrder();
-        final int gapOfRankOrder = target.getRankOrder() - source.getRankOrder();
+        final int gapOfFileOrder = target.getGapOfFileOrder(source);
+        final int gapOfRankOrder = target.getGapOfRankOrder(source);
 
         if (isNotMovable(gapOfFileOrder, gapOfRankOrder)) {
             throw new IllegalArgumentException("행마법 상 이동할 수 없는 위치입니다.");

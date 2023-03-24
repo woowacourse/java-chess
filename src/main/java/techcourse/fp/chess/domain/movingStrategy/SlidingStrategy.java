@@ -15,8 +15,8 @@ public class SlidingStrategy extends MovingStrategy {
 
     @Override
     public List<Position> createPath(final Position source, final Position target) {
-        final int gapOfFileOrder = target.getFileOrder() - source.getFileOrder();
-        final int gapOfRankOrder = target.getRankOrder() - source.getRankOrder();
+        final int gapOfFileOrder = target.getGapOfFileOrder(source);
+        final int gapOfRankOrder = target.getGapOfRankOrder(source);
 
         final Direction findDirection = directions.stream()
                 .filter(direction -> isReachable(direction, gapOfFileOrder, gapOfRankOrder))
