@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import common.TransactionContext;
-import domain.dao.ChessInformationDaoImpl;
+import domain.dao.MySqlChessInformationDao;
 import domain.piece.Pawn;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class ChessGameTest {
     @DisplayName("순서에 따라서 올바른 진영의 체스말을 움직인다.")
     @TestFactory
     public Stream<DynamicTest> testMoveSuccess() {
-        final ChessGame chessGame = new ChessGame(new ChessInformationDaoImpl(), new TransactionContext());
+        final ChessGame chessGame = new ChessGame(new MySqlChessInformationDao(), new TransactionContext());
         chessGame.initialize("test");
         return Stream.of(
             DynamicTest.dynamicTest("첫 순서에 흰색 진영의 폰을 한칸 전진한다.", () -> {
@@ -55,7 +55,7 @@ class ChessGameTest {
         @DisplayName("흰색 진영의 순서일 때 검은 진영의 체스말을 움직이면 오류를 던진다.")
         @Test
         public void testMoveFailBlack() {
-            final ChessGame chessGame = new ChessGame(new ChessInformationDaoImpl(), new TransactionContext());
+            final ChessGame chessGame = new ChessGame(new MySqlChessInformationDao(), new TransactionContext());
             chessGame.initialize("test");
 
             assertThatThrownBy(
@@ -66,7 +66,7 @@ class ChessGameTest {
         @DisplayName("검은색 진영의 순서일 때 흰색 진영의 체스말을 움직이면 오류를 던진다.")
         @Test
         public void testMoveFailWhite() {
-            final ChessGame chessGame = new ChessGame(new ChessInformationDaoImpl(), new TransactionContext());
+            final ChessGame chessGame = new ChessGame(new MySqlChessInformationDao(), new TransactionContext());
             chessGame.initialize("test");
             chessGame.move(WHITE_PAWN_START, WHITE_PAWN_END);
 

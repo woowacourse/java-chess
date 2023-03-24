@@ -1,7 +1,7 @@
 import common.TransactionContext;
 import controller.ChessController;
 import domain.ChessGame;
-import domain.dao.ChessInformationDaoImpl;
+import domain.dao.MySqlChessInformationDao;
 import view.InputView;
 import view.OutputView;
 
@@ -17,6 +17,6 @@ public class Application {
     }
 
     private static ChessGame makeChessGame() {
-        return new ChessGame(new ChessInformationDaoImpl(), new TransactionContext());
+        return new ChessGame(new MySqlChessInformationDao(), new TransactionContext());
     }
 }

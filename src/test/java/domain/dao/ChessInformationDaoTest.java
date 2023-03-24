@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 class ChessInformationDaoTest {
 
-    private final ChessInformationDao chessInformationDao = new ChessInformationDaoImpl();
+    private final ChessInformationDao chessInformationDao = new MySqlChessInformationDao();
     private final TestTransactionContext testTransactionContext = new TestTransactionContext();
 
     @Test
