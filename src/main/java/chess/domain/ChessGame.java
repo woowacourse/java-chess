@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -37,6 +39,15 @@ public class ChessGame {
 
     public boolean isOver() {
         return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
+    }
+
+    public Map<Team, Score> getScoreAllTeam() {
+        Map<Team, Score> scores = new HashMap<>();
+
+        scores.put(Team.WHITE, board.calculateScore(Team.WHITE));
+        scores.put(Team.BLACK, board.calculateScore(Team.BLACK));
+
+        return scores;
     }
 
     public Board getBoard() {
