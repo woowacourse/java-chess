@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
-import chess.domain.pieces.Position;
+import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.Direction.*;
