@@ -1,5 +1,10 @@
 package chess.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import chess.board.ChessBoard;
 import chess.board.Position;
 import chess.dto.ChessBoardDto;
@@ -8,11 +13,6 @@ import chess.game.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionConvertor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class ChessController {
 
@@ -31,6 +31,7 @@ public class ChessController {
         processGame();
     }
 
+    // TODO: move에 대한 재입력 로직 추가
     private void processGame() {
         final Command firstCommand = repeat(this::readCommand);
         chessGame.receiveCommand(firstCommand);

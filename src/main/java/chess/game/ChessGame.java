@@ -8,8 +8,8 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private boolean isProcessing;
 
-    public ChessGame() {
-        this.chessBoard = new ChessBoard();
+    public ChessGame(final ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
         this.isProcessing = false;
     }
 

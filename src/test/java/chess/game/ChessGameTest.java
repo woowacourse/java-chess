@@ -4,12 +4,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import chess.board.ChessBoard;
+
 class ChessGameTest {
 
     @Test
     void START_커맨드를_입력받으면_현재_진행상태는_true를_반환한다() {
         // given
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new ChessGame(new ChessBoard());
 
         // when
         chessGame.receiveCommand(Command.START);
@@ -21,7 +23,7 @@ class ChessGameTest {
     @Test
     void END_커맨드를_입력받으면_현재_진행상태는_false를_반환한다() {
         // given
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new ChessGame(new ChessBoard());
 
         // when
         chessGame.receiveCommand(Command.END);
