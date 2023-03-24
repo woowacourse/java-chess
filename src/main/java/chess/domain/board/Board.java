@@ -8,11 +8,15 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
     public static final int LOWER_BOUNDARY = 1;
     public static final int UPPER_BOUNDARY = 8;
+
+    private static final int PAWN_SPECIAL_COUNT = 2;
+    private static final double PAWN_SPECIAL_PRICE = 0.5;
 
     private final Map<Position, Piece> board;
 
@@ -44,6 +48,33 @@ public class Board {
         } catch (UnsupportedOperationException e) {
             throw new IllegalArgumentException("기물이 있는 위치를 선택해주세요.", e);
         }
+    }
+
+    public double calculatePriceBySide(final Side side) {
+        return calculateTotalPriceBySide(side) - calculatePawnSpecialPriceBySide(side);
+    }
+
+    private double calculateTotalPriceBySide(final Side side) {
+        return board.values().stream()
+                .filter(piece -> piece.side() == side)
+                .mapToDouble(Piece::price)
+                .sum();
+    }
+
+    private double calculatePawnSpecialPriceBySide(final Side side) {
+        final Map<Integer, Long> fileIndexByPawnCount = getFileIndexByPawnCount(side);
+
+        return fileIndexByPawnCount.values().stream()
+                .filter(pawnCount -> pawnCount >= PAWN_SPECIAL_COUNT)
+                .mapToDouble(pawnCount -> pawnCount * PAWN_SPECIAL_PRICE)
+                .sum();
+    }
+
+    private Map<Integer, Long> getFileIndexByPawnCount(final Side side) {
+        return board.keySet().stream()
+                .filter(position -> board.get(position).isPawn())
+                .filter(position -> board.get(position).side() == side)
+                .collect(Collectors.groupingBy(Position::fileIndex, Collectors.counting()));
     }
 
     public boolean isAllyPosition(final Position position, final Position otherPosition) {

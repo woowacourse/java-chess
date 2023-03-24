@@ -6,12 +6,15 @@ import static chess.domain.position.File.A;
 import static chess.domain.position.File.B;
 import static chess.domain.position.File.C;
 import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
 import static chess.domain.position.File.G;
 import static chess.domain.position.File.H;
 import static chess.domain.position.Rank.EIGHT;
 import static chess.domain.position.Rank.FOUR;
 import static chess.domain.position.Rank.ONE;
 import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
 import static chess.domain.position.Rank.THREE;
 import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -404,5 +407,52 @@ public class BoardTest {
         final Board board = new Board(boardMap);
 
         assertThat(board.isEnemyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
+    }
+
+    @Test
+    void 같은_진영의_기물_가치_합을_구할_수_있다() {
+        /*
+
+        .KR.....
+        P.PB....
+        .P..Q...
+        ........
+        .....nq.
+        .....p.p
+        .....pp.
+        ....rk..
+
+         */
+
+        // given
+        boardMap.put(Position.of(E, ONE), new Rook(WHITE));
+        boardMap.put(Position.of(F, ONE), new King(WHITE));
+        boardMap.put(Position.of(F, TWO), new Pawn(WHITE));
+        boardMap.put(Position.of(G, TWO), new Pawn(WHITE));
+        boardMap.put(Position.of(F, THREE), new Pawn(WHITE));
+        boardMap.put(Position.of(H, THREE), new Pawn(WHITE));
+        boardMap.put(Position.of(F, FOUR), new Knight(WHITE));
+        boardMap.put(Position.of(G, FOUR), new Queen(WHITE));
+
+        boardMap.put(Position.of(A, SEVEN), new Pawn(BLACK));
+        boardMap.put(Position.of(B, SIX), new Pawn(BLACK));
+        boardMap.put(Position.of(B, EIGHT), new King(BLACK));
+        boardMap.put(Position.of(C, SEVEN), new Pawn(BLACK));
+        boardMap.put(Position.of(C, EIGHT), new Rook(BLACK));
+        boardMap.put(Position.of(D, SEVEN), new Bishop(BLACK));
+        boardMap.put(Position.of(E, SIX), new Queen(BLACK));
+
+        final Board board = new Board(boardMap);
+
+        // when
+        final double priceByWhite = board.calculatePriceBySide(WHITE);
+        final double priceByBlack = board.calculatePriceBySide(BLACK);
+
+        // then
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(priceByWhite).isEqualTo(19.5);
+        softAssertions.assertThat(priceByBlack).isEqualTo(20.0);
+
+        softAssertions.assertAll();
     }
 }
