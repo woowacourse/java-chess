@@ -30,6 +30,8 @@ public abstract class Piece {
 
     public abstract boolean isInitialPawn();
 
+    public abstract boolean isPawn();
+
     public final boolean isEmpty() {
         return team.isEmpty();
     }
@@ -48,5 +50,13 @@ public abstract class Piece {
 
     public final PieceType getPieceType() {
         return pieceType;
+    }
+
+    public boolean isSameTeamWith(final Team team) {
+        return this.team == team;
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
     }
 }

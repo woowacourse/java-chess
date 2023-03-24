@@ -16,12 +16,12 @@ import java.util.Map;
 
 public final class ChessGameFactory {
 
-    ChessGameFactory() {
+    private ChessGameFactory() {
         throw new AssertionError("생성할 수 없는 클래스입니다.");
     }
 
     public static ChessGame generate() {
-        Map<Position, Piece> board = new HashMap<>();
+        final Map<Position, Piece> board = new HashMap<>();
         initializeBoard(board);
         initPawn(board);
         initRook(board);

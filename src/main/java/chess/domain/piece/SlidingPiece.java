@@ -26,4 +26,14 @@ public abstract class SlidingPiece extends Piece {
         }
         return path;
     }
+
+    @Override
+    public final boolean isInitialPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

@@ -21,4 +21,14 @@ public abstract class NonSlidingPiece extends Piece {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public final boolean isInitialPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

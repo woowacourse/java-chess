@@ -30,9 +30,4 @@ public final class Rook extends SlidingPiece {
         }
         throw new AssertionError();
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }

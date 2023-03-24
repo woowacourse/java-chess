@@ -34,9 +34,4 @@ public final class Knight extends NonSlidingPiece {
         }
         throw new AssertionError();
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }

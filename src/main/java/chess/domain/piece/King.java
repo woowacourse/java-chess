@@ -33,9 +33,4 @@ public final class King extends NonSlidingPiece {
         }
         throw new AssertionError();
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }

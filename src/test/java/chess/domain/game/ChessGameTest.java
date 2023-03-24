@@ -166,6 +166,5 @@ class ChessGameTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }
-
     }
 }

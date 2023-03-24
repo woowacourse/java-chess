@@ -29,9 +29,4 @@ public final class Bishop extends SlidingPiece {
         }
         throw new AssertionError();
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }
