@@ -16,22 +16,19 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
 import chess.infrastructure.persistence.entity.PieceEntity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PieceMapper {
 
-    private static final Map<MovementType, PieceMovementStrategy> strategyMap = new HashMap<>();
-
-    static {
-        strategyMap.put(MovementType.KING, new KingMovementStrategy());
-        strategyMap.put(MovementType.QUEEN, new QueenMovementStrategy());
-        strategyMap.put(MovementType.BISHOP, new BishopMovementStrategy());
-        strategyMap.put(MovementType.KNIGHT, new KnightMovementStrategy());
-        strategyMap.put(MovementType.ROOK, new RookMovementStrategy());
-        strategyMap.put(MovementType.BLACK_PAWN, new BlackPawnMovementStrategy());
-        strategyMap.put(MovementType.WHITE_PAWN, new WhitePawnMovementStrategy());
-    }
+    private static final Map<MovementType, PieceMovementStrategy> strategyMap = Map.of(
+            MovementType.KING, new KingMovementStrategy(),
+            MovementType.QUEEN, new QueenMovementStrategy(),
+            MovementType.BISHOP, new BishopMovementStrategy(),
+            MovementType.KNIGHT, new KnightMovementStrategy(),
+            MovementType.ROOK, new RookMovementStrategy(),
+            MovementType.BLACK_PAWN, new BlackPawnMovementStrategy(),
+            MovementType.WHITE_PAWN, new WhitePawnMovementStrategy()
+    );
 
     public static PieceEntity fromDomain(final Piece piece, final Long chessGameId) {
         return new PieceEntity(
