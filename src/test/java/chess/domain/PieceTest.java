@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -8,6 +9,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.exception.IllegalPieceMoveException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -54,5 +56,16 @@ class PieceTest {
         //then
         assertThat(result)
                 .isEqualTo(score, withPrecision(0.0001));
+    }
+
+    @Test
+    void 움직일_수_없는_장소로_움직이면_예외가_발생한다() {
+        //given
+        Piece piece = PieceFactory.getInstance(PieceType.PAWN, Color.WHITE);
+        Piece empty = Piece.empty();
+
+        //expect
+        assertThatThrownBy(() -> piece.move(0, 3, empty))
+                .isInstanceOf(IllegalPieceMoveException.class);
     }
 }
