@@ -18,7 +18,7 @@ import static chess.controller.Command.STATUS;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
-public class ChessController {
+public final class ChessController {
 
     private final ErrorController errorController;
     private final ChessGame chessGame;

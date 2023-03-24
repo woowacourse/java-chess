@@ -10,7 +10,7 @@ import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.EMPTY;
 import static chess.domain.piece.Team.WHITE;
 
-public class ChessGame {
+public final class ChessGame {
 
     private final Board board;
     private Team turn;

@@ -3,7 +3,7 @@ package chess.domain.position;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class RelativePosition {
+public final class RelativePosition {
 
     private final int x;
     private final int y;

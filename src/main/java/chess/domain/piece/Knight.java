@@ -5,7 +5,7 @@ import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.piece.obstacleStrategy.SkipObstacle;
 import chess.domain.position.RelativePosition;
 
-public class Knight extends NoneEmptyPiece {
+public final class Knight extends NoneEmptyPiece {
 
     private Knight(final PieceType pieceType, final Team team, final Movement movement, final ObstacleStrategy obstacleStrategy) {
         super(pieceType, team, movement, obstacleStrategy);

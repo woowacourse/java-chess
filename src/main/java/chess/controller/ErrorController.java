@@ -4,7 +4,7 @@ import chess.view.OutputView;
 
 import java.util.function.Supplier;
 
-public class ErrorController {
+public final class ErrorController {
 
     public <T> T RetryIfThrowsException(final Supplier<T> strategy) {
         T result = tryCatchStrategy(strategy);

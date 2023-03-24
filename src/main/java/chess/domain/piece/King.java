@@ -5,7 +5,7 @@ import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.position.RelativePosition;
 
-public class King extends NoneEmptyPiece {
+public final class King extends NoneEmptyPiece {
 
     private King(final PieceType pieceType, final Team team, final Movement movement, final ObstacleStrategy obstacleStrategy) {
         super(pieceType, team, movement, obstacleStrategy);

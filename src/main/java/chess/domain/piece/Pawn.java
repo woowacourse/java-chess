@@ -5,7 +5,7 @@ import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
 import chess.domain.position.RelativePosition;
 
-public class Pawn extends NoneEmptyPiece {
+public final class Pawn extends NoneEmptyPiece {
 
     private boolean hasMoved;
 

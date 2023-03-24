@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
 
-public class Board {
+public final class Board {
 
     private static final int LINE_SIZE = 8;
 

@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-public class Position {
+public final class Position {
 
     private static final int MIN_COORDINATE = 0;
     private static final int MAX_COORDINATE = 7;

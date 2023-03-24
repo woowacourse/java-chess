@@ -6,7 +6,7 @@ import chess.controller.dto.StatusDto;
 
 import java.util.List;
 
-public class OutputView {
+public final class OutputView {
 
     public static void printInitialMessage() {
         System.out.println(

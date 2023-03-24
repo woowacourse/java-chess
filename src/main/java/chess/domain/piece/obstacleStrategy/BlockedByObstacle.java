@@ -6,7 +6,7 @@ import chess.domain.position.RelativePosition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockedByObstacle implements ObstacleStrategy {
+public final class BlockedByObstacle implements ObstacleStrategy {
 
     @Override
     public List<Position> getObstacleCheckingPositions(final Position from, final Position to) {

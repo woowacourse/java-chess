@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardGenerator {
+public final class BoardGenerator {
 
     private static final int BLACK_PAWN_INITIAL_ROW = 6;
     private static final int WHITE_PAWN_INITIAL_ROW = 1;

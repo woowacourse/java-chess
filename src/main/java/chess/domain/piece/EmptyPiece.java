@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.RelativePosition;
 
-public class EmptyPiece extends Piece {
+public final class EmptyPiece extends Piece {
 
     public EmptyPiece() {
         super(PieceType.EMPTY, Team.EMPTY);
