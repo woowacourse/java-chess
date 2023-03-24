@@ -35,6 +35,7 @@ public class ChessController {
     }
 
     public void run() {
+        OutputView.printStartMessage();
         ChessGameCommand command = EMPTY;
 
         while (command.isPlayable()) {
