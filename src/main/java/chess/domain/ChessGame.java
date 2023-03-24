@@ -5,6 +5,7 @@ import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
     private final Board board;
@@ -34,6 +35,10 @@ public class ChessGame {
 
     public boolean isGameOver() {
         return !board.hasTwoKings();
+    }
+
+    public Map<Color, Double> calculateScoreByColor() {
+        return board.calculateScoreByColor();
     }
 
     public List<Piece> getExistingPieces() {

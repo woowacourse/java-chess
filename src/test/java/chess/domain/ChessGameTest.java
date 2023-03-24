@@ -3,8 +3,7 @@ package chess.domain;
 import chess.TestPiecesFactory;
 import chess.domain.board.maker.EmptyPiecesFactory;
 import chess.domain.board.maker.StartingPiecesFactory;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
@@ -22,6 +22,7 @@ import static chess.domain.File.E;
 import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -78,6 +79,29 @@ class ChessGameTest {
         return Stream.of(
                 Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), false),
                 Arguments.of(List.of(new King(E, EIGHT, BLACK)), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndScore")
+    void 두_진영의_점수를_계산한다(final List<Piece> pieces, final double blackScore, final double whiteScore) {
+        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(pieces));
+
+        Map<Color, Double> scoreByColor = chessGame.calculateScoreByColor();
+
+        assertSoftly(softly -> {
+            softly.assertThat(scoreByColor.get(BLACK)).isEqualTo(blackScore);
+            softly.assertThat(scoreByColor.get(WHITE)).isEqualTo(whiteScore);
+        });
+    }
+
+    private static Stream<Arguments> providePiecesAndScore() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), 0, 0),
+                Arguments.of(List.of(new Queen(E, EIGHT, BLACK), new Rook(E, ONE, WHITE)), 9, 5),
+                Arguments.of(List.of(new Knight(E, EIGHT, BLACK), new Bishop(E, ONE, WHITE)), 2.5, 3),
+                Arguments.of(List.of(new Pawn(E, SEVEN, BLACK), new Pawn(E, SIX, BLACK),
+                        new Pawn(E, TWO, WHITE)), 1, 1)
         );
     }
 }
