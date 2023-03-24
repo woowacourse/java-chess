@@ -13,7 +13,7 @@ public class EndCommand implements Command {
 
     @Override
     public State execute(Optional<ChessGame> chessGame, List<String> input) {
-        return new End();
+        return new End(chessGame.orElseThrow(() -> new IllegalArgumentException("체스 게임이 없습니다.")));
     }
 
     @Override

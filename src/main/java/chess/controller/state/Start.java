@@ -10,6 +10,10 @@ public class Start extends Running {
         super(new ChessGame());
     }
 
+    public Start(ChessGame chessGame) {
+        super(chessGame);
+    }
+
     @Override
     public State execute(InputView inputView, OutputView outputView) {
         outputView.printBoard(new BoardDTO(chessGame.getBoard()));

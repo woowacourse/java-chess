@@ -16,7 +16,6 @@ public final class ChessController {
     }
 
     public void play() {
-
         State state = new Ready().execute(inputView, outputView);
         while (state.isRunning()) {
             state = state.execute(inputView, outputView);

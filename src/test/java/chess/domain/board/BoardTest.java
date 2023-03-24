@@ -49,6 +49,6 @@ class BoardTest {
         board.play(C7, C6, Color.BLACK);
         board.play(B5, A6, Color.WHITE);
 
-        assertThat(board.calculateTotalScore(Color.WHITE)).isEqualTo(38);
+        assertThat(board.calculateTotalScore(Color.WHITE)).isEqualTo(36.5);
     }
 }

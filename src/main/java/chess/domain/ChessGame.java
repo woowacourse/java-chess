@@ -17,6 +17,11 @@ public final class ChessGame {
         this.turn = Color.WHITE;
     }
 
+    public ChessGame(Board board, Color turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void playTurn(Position source, Position target) {
         board.play(source, target, turn);
         this.turn = changeTurn();
@@ -59,5 +64,9 @@ public final class ChessGame {
 
     public List<Squares> getBoard() {
         return board.getSquares();
+    }
+
+    public Board board() {
+        return board;
     }
 }

@@ -68,12 +68,6 @@ public final class Squares {
                 .collect(Collectors.toList());
     }
 
-    public double calculateScore(Color color) {
-        return squares.stream()
-                .mapToDouble(square -> square.getScore(color))
-                .sum();
-    }
-
     public double getScoreFromFile(Color color, int file) {
         return squares.get(file).getScore(color);
     }
@@ -83,5 +77,9 @@ public final class Squares {
 
         return square.equalsColor(color) &&
                 square.pieceKind() == Kind.PAWN;
+    }
+
+    public void set(int file, Square square) {
+        squares.set(file, square);
     }
 }

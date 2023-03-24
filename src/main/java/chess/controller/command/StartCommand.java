@@ -1,5 +1,6 @@
 package chess.controller.command;
 
+import chess.controller.dao.JdbcDAO;
 import chess.controller.state.Start;
 import chess.controller.state.State;
 import chess.domain.ChessGame;
@@ -13,7 +14,12 @@ public class StartCommand implements Command {
 
     @Override
     public State execute(Optional<ChessGame> chessGame, List<String> input) {
-        return new Start();
+        JdbcDAO jdbcDAO = new JdbcDAO();
+        ChessGame previousChessGame = jdbcDAO.select();
+        if (previousChessGame == null) {
+            return new Start();
+        }
+        return new Start(previousChessGame);
     }
 
     @Override
