@@ -11,7 +11,7 @@ import dto.BoardDto;
 import dto.MoveHistoryDto;
 import repository.connector.JdbcConnector;
 
-public class JdbcGameDao implements GameDao{
+public class JdbcGameDao implements GameDao {
     private final JdbcConnector connector;
 
     public JdbcGameDao(JdbcConnector connector) {
@@ -150,6 +150,21 @@ public class JdbcGameDao implements GameDao{
                 moveHistoryDtos.add(new MoveHistoryDto(source, target, piece));
             }
             return moveHistoryDtos;
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public void deleteLatestTwoHistory(long gameId) {
+        final String query = "DELETE FROM moveHistory "
+                + "WHERE r_id = ? "
+                + "ORDER BY _id DESC "
+                + "LIMIT 2";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }

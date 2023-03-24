@@ -88,4 +88,25 @@ class JdbcGameDaoTest {
         }
         assertThat(moveHistoryDtos).containsExactly(moveHistoryDto3, moveHistoryDto2);
     }
+
+    @Test
+    @DisplayName("gameId를 전달 받아 해당 게임에서 가장 최근 2개의 moveHistory를 삭제한다.")
+    void deleteLatestTwoMoveHistory() {
+        long gameId = jdbcChessDao.createRoom("테스트");
+        MoveHistoryDto moveHistoryDto1 = new MoveHistoryDto("a2", "a3", "EMPTY");
+        MoveHistoryDto moveHistoryDto2 = new MoveHistoryDto("a1", "a6", "PAWN");
+        MoveHistoryDto moveHistoryDto3 = new MoveHistoryDto("b7", "b3", "KNIGHT");
+        MoveHistoryDto moveHistoryDto4 = new MoveHistoryDto("c7", "d3", "KING");
+        MoveHistoryDto moveHistoryDto5 = new MoveHistoryDto("g7", "h7", "QUEEN");
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto1);
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto2);
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto3);
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto4);
+        jdbcGameDao.saveMoveHistory(gameId, moveHistoryDto5);
+
+        jdbcGameDao.deleteLatestTwoHistory(gameId);
+        List<MoveHistoryDto> moveHistoryByGameId = jdbcGameDao.findMoveHistoryByGameId(gameId);
+
+        assertThat(moveHistoryByGameId).doesNotContain(moveHistoryDto4,moveHistoryDto5);
+    }
 }

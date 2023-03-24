@@ -21,4 +21,6 @@ public interface GameDao {
     List<MoveHistoryDto> findMoveHistoryByGameId(long game_id);
 
     List<MoveHistoryDto> findLastTwoMoveHistories(long gameId);
+
+    void deleteLatestTwoHistory(long gameId);
 }
