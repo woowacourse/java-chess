@@ -16,7 +16,7 @@ class RookTest {
     void 이동_범위_확인() {
         Rook rook = new Rook(TeamColor.WHITE);
 
-        MovablePaths paths = rook.findMovablePaths(Position.of(1, 1));
+        MovablePaths paths = rook.findMovablePaths(Position.from("A1"));
 
         assertThat(paths.getTotalPositionCount()).isEqualTo(14);
     }

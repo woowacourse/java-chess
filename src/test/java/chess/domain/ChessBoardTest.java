@@ -42,7 +42,7 @@ class ChessBoardTest {
     @Test
     void 시작위치_말없음_예외() {
         assertThatThrownBy(
-            () -> chessBoard.move(Position.of(1, 3), Position.of(1, 4), currentTeamColor))
+            () -> chessBoard.move(Position.from("A3"), Position.from("A4"), currentTeamColor))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining(WRONG_START_ERROR_MESSAGE);
     }
@@ -51,7 +51,7 @@ class ChessBoardTest {
     @Test
     void 경로_장애물_예외() {
         assertThatThrownBy(
-            () -> chessBoard.move(Position.of(1, 1), Position.of(3, 1), currentTeamColor))
+            () -> chessBoard.move(Position.from("A1"), Position.from("C1"), currentTeamColor))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining(OBSTACLE_IN_PATH_ERROR_MESSAGE);
     }
@@ -60,7 +60,7 @@ class ChessBoardTest {
     @Test
     void 갈수없는_위치_예외() {
         assertThatThrownBy(
-            () -> chessBoard.move(Position.of(1, 1), Position.of(2, 3), currentTeamColor))
+            () -> chessBoard.move(Position.from("A1"), Position.from("B3"), currentTeamColor))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining(WRONG_DESTINATION_ERROR_MESSAGE);
     }
@@ -69,7 +69,7 @@ class ChessBoardTest {
     @Test
     void 상대_말_이동_예외() {
         assertThatThrownBy(
-            () -> chessBoard.move(Position.of(1, 7), Position.of(1, 6), currentTeamColor))
+            () -> chessBoard.move(Position.from("A7"), Position.from("A6"), currentTeamColor))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining(WRONG_PIECE_COLOR_ERROR_MESSAGE);
     }
@@ -77,27 +77,27 @@ class ChessBoardTest {
     @DisplayName("말은 도착지가 이동할 수 있는 위치이면, 이동하고 이전의 위치는 비워준다.")
     @Test
     void 말_이동_위치_반영() {
-        chessBoard.move(Position.of(1, 2), Position.of(1, 4), currentTeamColor);
+        chessBoard.move(Position.from("A2"), Position.from("A4"), currentTeamColor);
 
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
 
-        assertThat(piecesByPosition.containsKey(Position.of(1, 2))).isFalse();
-        assertThat(piecesByPosition.get(Position.of(1, 4)))
+        assertThat(piecesByPosition.containsKey(Position.from("A2"))).isFalse();
+        assertThat(piecesByPosition.get(Position.from("A4")))
             .isEqualTo(new Pawn(TeamColor.WHITE));
     }
 
     @DisplayName("말이 공격에 성공하면, 해당 위치를 차지한다.")
     @Test
     void 말_공격_이동_반영() {
-        chessBoard.move(Position.of(1, 2), Position.of(1, 4), currentTeamColor);
-        chessBoard.move(Position.of(1, 4), Position.of(1, 5), currentTeamColor);
-        chessBoard.move(Position.of(1, 5), Position.of(1, 6), currentTeamColor);
-        chessBoard.move(Position.of(2, 7), Position.of(1, 6), otherTeamColor);
+        chessBoard.move(Position.from("A2"), Position.from("A4"), currentTeamColor);
+        chessBoard.move(Position.from("A4"), Position.from("A5"), currentTeamColor);
+        chessBoard.move(Position.from("A5"), Position.from("A6"), currentTeamColor);
+        chessBoard.move(Position.from("B7"), Position.from("A6"), otherTeamColor);
 
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
 
-        assertThat(piecesByPosition.containsKey(Position.of(2, 7))).isFalse();
-        assertThat(piecesByPosition.get(Position.of(1, 6)))
+        assertThat(piecesByPosition.containsKey(Position.from("B7"))).isFalse();
+        assertThat(piecesByPosition.get(Position.from("A6")))
             .isEqualTo(new Pawn(otherTeamColor));
     }
 

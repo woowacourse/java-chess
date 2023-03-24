@@ -18,10 +18,10 @@ class MovablePathsTest {
     @Test
     void 경로에_도착지_없으면_예외() {
         MovablePaths movablePaths = new MovablePaths(
-            List.of(Path.ofNoLimitPath(Position.of(6, 6), Direction.NORTH_EAST),
-                Path.ofNoLimitPath(Position.of(6, 6), Direction.SOUTH_WEST)));
+            List.of(Path.ofNoLimitPath(Position.from("F6"), Direction.NORTH_EAST),
+                Path.ofNoLimitPath(Position.from("F6"), Direction.SOUTH_WEST)));
 
-        assertThatThrownBy(() -> movablePaths.findPathContainingPosition(Position.of(1, 5)))
+        assertThatThrownBy(() -> movablePaths.findPathContainingPosition(Position.from("A5")))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("해당 말이 갈 수 없는 위치입니다.");
     }
@@ -30,12 +30,12 @@ class MovablePathsTest {
     @Test
     void 경로에_도착지_있으면_반환() {
         MovablePaths movablePaths = new MovablePaths(
-            List.of(Path.ofNoLimitPath(Position.of(6, 6), Direction.NORTH_EAST),
-                Path.ofNoLimitPath(Position.of(6, 6), Direction.SOUTH_WEST)));
+            List.of(Path.ofNoLimitPath(Position.from("F6"), Direction.NORTH_EAST),
+                Path.ofNoLimitPath(Position.from("F6"), Direction.SOUTH_WEST)));
 
-        Path path = movablePaths.findPathContainingPosition(Position.of(1, 1));
+        Path path = movablePaths.findPathContainingPosition(Position.from("A1"));
 
-        assertThat(path.findIndexByPosition(Position.of(1, 1))).isEqualTo(4);
+        assertThat(path.findIndexByPosition(Position.from("A1"))).isEqualTo(4);
     }
 
 }

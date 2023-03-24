@@ -23,7 +23,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 2));
+            MovablePaths paths = pawn.findMovablePaths(Position.from("B2"));
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(5);
         }
@@ -33,29 +33,29 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 3));
+            MovablePaths paths = pawn.findMovablePaths(Position.from("B3"));
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(3);
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"1:3:true", "2:3:false"}, delimiter = ':')
+        @CsvSource(value = {"A3:true", "B3:false"}, delimiter = ':')
         @DisplayName("Pawn 은 앞으로 직진할 때만 이동 가능하다.")
-        void 앞으로_직진이면_이동_가능(int file, int rank, boolean isAble) {
+        void 앞으로_직진이면_이동_가능(String dest, boolean isAble) {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            assertThat(pawn.canMoveToEmptySquare(Position.of(1, 2), Position.of(file, rank)))
+            assertThat(pawn.canMoveToEmptySquare(Position.from("A2"), Position.from(dest)))
                 .isEqualTo(isAble);
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"1:3:false", "2:3:true"}, delimiter = ':')
+        @CsvSource(value = {"A3:false", "B3:true"}, delimiter = ':')
         @DisplayName("Pawn 은 대각선 한 칸 이동일 때만 공격 가능하다.")
-        void 대각선_공격_가능(int file, int rank, boolean isAble) {
+        void 대각선_공격_가능(String dest, boolean isAble) {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.of(1, 2),
-                Position.of(file, rank))).isEqualTo(isAble);
+            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.from("A2"),
+                Position.from(dest))).isEqualTo(isAble);
         }
 
         @Test
@@ -63,8 +63,8 @@ public class PawnTest {
         void 상대말_공격_가능() {
             Pawn pawn = new Pawn(TeamColor.WHITE);
 
-            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.of(1, 2),
-                Position.of(2, 3))).isFalse();
+            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.from("A2"),
+                Position.from("B3"))).isFalse();
         }
 
     }
@@ -78,7 +78,7 @@ public class PawnTest {
         void 초기_이동() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 7));
+            MovablePaths paths = pawn.findMovablePaths(Position.from("B7"));
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(5);
         }
@@ -88,29 +88,29 @@ public class PawnTest {
         void 이동_또는_공격() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            MovablePaths paths = pawn.findMovablePaths(Position.of(2, 6));
+            MovablePaths paths = pawn.findMovablePaths(Position.from("B6"));
 
             assertThat(paths.getTotalPositionCount()).isEqualTo(3);
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"2:6:true", "3:6:false"}, delimiter = ':')
+        @CsvSource(value = {"B6:true", "C6:false"}, delimiter = ':')
         @DisplayName("Pawn 은 앞으로 직진할 때만 이동 가능하다.")
-        void 앞으로_직진이면_이동_가능(int file, int rank, boolean isAble) {
+        void 앞으로_직진이면_이동_가능(String dest, boolean isAble) {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            assertThat(pawn.canMoveToEmptySquare(Position.of(2, 7), Position.of(file, rank)))
+            assertThat(pawn.canMoveToEmptySquare(Position.from("B7"), Position.from(dest)))
                 .isEqualTo(isAble);
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"2:6:false", "1:4:true"}, delimiter = ':')
+        @CsvSource(value = {"B6:false", "A4:true"}, delimiter = ':')
         @DisplayName("Pawn 은 대각선 한 칸 이동일 때만 공격 가능하다.")
-        void 대각선_공격_가능(int file, int rank, boolean isAble) {
+        void 대각선_공격_가능(String dest, boolean isAble) {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.of(2, 5),
-                Position.of(file, rank))).isEqualTo(isAble);
+            assertThat(pawn.canAttack(new Bishop(TeamColor.WHITE), Position.from("B5"),
+                Position.from(dest))).isEqualTo(isAble);
         }
 
         @Test
@@ -118,8 +118,8 @@ public class PawnTest {
         void 상대말_공격_가능() {
             Pawn pawn = new Pawn(TeamColor.BLACK);
 
-            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.of(2, 7),
-                Position.of(3, 6))).isFalse();
+            assertThat(pawn.canAttack(new Bishop(TeamColor.BLACK), Position.from("B7"),
+                Position.from("C6"))).isFalse();
         }
 
     }
