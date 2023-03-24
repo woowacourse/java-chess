@@ -18,10 +18,10 @@ public class ChessController {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
     private static final String DELIMITER = "";
-    private final int COMMAND_INDEX = 0;
-    private final int MOVE_CURRENT_POSITION_INDEX = 1;
-    private final int MOVE_TARGET_POSITION_INDEX = 2;
-    private final int VALID_COMMON_SIZE = 3;
+    private static final int COMMAND_INDEX = 0;
+    private static final int MOVE_CURRENT_POSITION_INDEX = 1;
+    private static final int MOVE_TARGET_POSITION_INDEX = 2;
+    private static final int VALID_COMMON_SIZE = 3;
     private final Map<GameState, Consumer<List<String>>> CONSUMER_BY_GAME_STATE = Map.of(
             GameState.READY, this::start,
             GameState.RUNNING, this::move,
