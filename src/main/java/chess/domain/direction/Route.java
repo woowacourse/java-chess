@@ -29,10 +29,6 @@ public class Route {
         return new Route(route);
     }
 
-    public static Route generateRouteFromKnight(KnightDirection direction, Position source, Position destination) {
-        return new Route(Collections.emptyList());
-    }
-
     public static Route generateRouteFromPawn(PawnDirection direction, Position source, Position destination) {
         return new Route(Collections.emptyList());
     }

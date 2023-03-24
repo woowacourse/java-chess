@@ -1,21 +1,21 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Position;
-import chess.domain.direction.KnightDirection;
+import chess.domain.direction.Direction;
 import chess.domain.direction.Route;
 import java.util.List;
 
 public class Knight extends Piece {
 
-    private static final List<KnightDirection> KNIGHT_DIRECTIONS = List.of(
-        KnightDirection.KNIGHT_UP_RIGHT,
-        KnightDirection.KNIGHT_UP_LEFT,
-        KnightDirection.KNIGHT_RIGHT_UP,
-        KnightDirection.KNIGHT_RIGHT_DOWN,
-        KnightDirection.KNIGHT_DOWN_RIGHT,
-        KnightDirection.KNIGHT_DOWN_LEFT,
-        KnightDirection.KNIGHT_LEFT_UP,
-        KnightDirection.KNIGHT_LEFT_DOWN
+    private static final List<Direction> KNIGHT_DIRECTIONS = List.of(
+        Direction.NORTH_NORTH_EAST,
+        Direction.NORTH_NORTH_WEST,
+        Direction.EAST_EAST_NORTH,
+        Direction.EAST_EAST_SOUTH,
+        Direction.SOUTH_SOUTH_EAST,
+        Direction.SOUTH_SOUTH_WEST,
+        Direction.WEST_WEST_NORTH,
+        Direction.WEST_WEST_SOUTH
     );
 
     public Knight(final Team team) {
@@ -30,8 +30,8 @@ public class Knight extends Piece {
 
     @Override
     public Route generateRoute(final Position source, final Position destination) {
-        KnightDirection direction = findDirection(source, destination);
-        return Route.generateRouteFromKnight(direction, source, destination);
+        Direction direction = findDirection(source, destination);
+        return Route.generateRouteFromOtherPiece(direction, source, destination);
     }
 
     private void validateMoveDirection(final Position source, final Position destination) {
@@ -49,7 +49,7 @@ public class Knight extends Piece {
         }
     }
 
-    private KnightDirection findDirection(final Position source, final Position destination) {
+    private Direction findDirection(final Position source, final Position destination) {
         return KNIGHT_DIRECTIONS.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
