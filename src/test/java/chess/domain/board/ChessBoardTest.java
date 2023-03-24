@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -102,5 +104,24 @@ class ChessBoardTest {
         // then
         assertThat(actual)
                 .isSameAs(expected);
+    }
+
+    @Test
+    @DisplayName("현재 체스판에서 살아있는 킹들을 조회한다.")
+    void getAliveKings() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
+
+        // when
+        List<Piece> aliveKings = chessBoard.getAliveKings();
+        List<Piece> expected = List.of(new Piece(PieceType.KING, CampType.WHITE, new King()),
+                new Piece(PieceType.KING, CampType.BLACK, new King()));
+
+        // then
+        assertThat(aliveKings)
+                .isEqualTo(expected);
+
+        assertThat(aliveKings.size())
+                .isSameAs(2);
     }
 }

@@ -4,7 +4,9 @@ import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class ChessBoard {
     private final Map<Position, Piece> board;
@@ -43,6 +45,13 @@ public final class ChessBoard {
         }
         final Piece targetPiece = board.get(target);
         return targetPiece == null || !targetPiece.isSameCamp(board.get(source));
+    }
+
+    public List<Piece> getAliveKings() {
+        return board.keySet().stream()
+                .filter(position -> board.get(position).isKing())
+                .map(board::get)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private boolean isObstructed(final Position target, final Position unitPosition, final Position currentPosition) {
