@@ -11,10 +11,7 @@ import java.sql.SQLException;
 
 public class JdbcDAO implements ChessDAO{
 
-    private final Connection connection;
-
     public JdbcDAO() {
-        this.connection = new Loader().getConnection();
     }
 
     @Override
@@ -32,7 +29,8 @@ public class JdbcDAO implements ChessDAO{
                 Piece piece = square.getPiece();
                 Color color = piece.getColor();
                 Kind kind = piece.getKind();
-                try (final var preparedStatement = connection.prepareStatement(query)) {
+                try (final var connection = Loader.getConnection();
+                        final var preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, file.name());
                     preparedStatement.setString(2, rank.name());
                     preparedStatement.setString(3, color.name());
@@ -52,7 +50,8 @@ public class JdbcDAO implements ChessDAO{
 
         final var query = "SELECT * FROM chessGame";
 
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        try (final var connection = Loader.getConnection();
+                final var preparedStatement = connection.prepareStatement(query)) {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
