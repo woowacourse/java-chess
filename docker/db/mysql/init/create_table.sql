@@ -1,4 +1,4 @@
-CREATE TABLE `game`
+CREATE TABLE `room`
 (
     `_id`         int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `gameName`    varchar(10),
@@ -11,7 +11,7 @@ CREATE TABLE `moveHistory`
     `source`        varchar(2),
     `target`        varchar(2),
     `pieceOnTarget` varchar(6),
-    `g_id`          int
+    `r_id`          int
 );
 
 CREATE TABLE `board`
@@ -20,11 +20,11 @@ CREATE TABLE `board`
     `square` varchar(2),
     `piece`  varchar(6),
     `camp`   varchar(5),
-    `g_id`   int
+    `r_id`   int
 );
 
 ALTER TABLE `board`
-    ADD FOREIGN KEY (`g_id`) REFERENCES `game` (`_id`);
+    ADD FOREIGN KEY (`r_id`) REFERENCES `game` (`_id`);
 
 ALTER TABLE `moveHistory`
-    ADD FOREIGN KEY (`g_id`) REFERENCES `game` (`_id`);
+    ADD FOREIGN KEY (`r_id`) REFERENCES `game` (`_id`);
