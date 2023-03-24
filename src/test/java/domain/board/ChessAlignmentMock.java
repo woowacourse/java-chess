@@ -1,43 +1,26 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.piece.Team;
 import domain.position.Position;
+import gameinitializer.ChessGameInitializer;
+import java.util.HashMap;
 import java.util.Map;
 
 final class ChessAlignmentMock {
-    private static class Base implements ChessAlignment {
-        @Override
-        public void addInitialPawns(final Map<Position, Piece> board) {
-        }
+    private static abstract class Base implements ChessGameInitializer {
 
         @Override
-        public void addInitialKings(final Map<Position, Piece> board) {
-        }
-
-        @Override
-        public void addInitialQueens(final Map<Position, Piece> board) {
-        }
-
-        @Override
-        public void addInitialBishops(final Map<Position, Piece> board) {
-        }
-
-        @Override
-        public void addInitialKnights(final Map<Position, Piece> board) {
-        }
-
-        @Override
-        public void addInitialRooks(final Map<Position, Piece> board) {
+        public Team initTeam() {
+            return null;
         }
     }
 
-    ;
-
-    static ChessAlignment testStrategy(Map<Position, Piece> map) {
+    static ChessGameInitializer testStrategy(Map<Position, Piece> map) {
         return new Base() {
             @Override
-            public void addInitialPawns(final Map<Position, Piece> board) {
-                board.putAll(map);
+            public Map<Position, Piece> initPiecePosition() {
+                return new HashMap<>(map);
             }
         };
     }

@@ -14,6 +14,7 @@ import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.Position;
 import domain.position.Positions;
+import gameinitializer.InitialChessAlignment;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ class BoardTest {
     @Test
     void createTest() {
         //given
-        Board board = Board.create(new InitialChessAlignment().init());
+        Board board = Board.create(new InitialChessAlignment().initPiecePosition());
         final List<Position> rooksPosition = Positions.of("A1", "A8", "H1", "H8");
         final List<Position> knightsPosition = Positions.of("B1", "B8", "G1", "G8");
         final List<Position> bishopsPosition = Positions.of("C1", "C8", "F1", "F8");
@@ -50,7 +51,7 @@ class BoardTest {
     void kingMove() {
         //given
         final King king = TestFixture.BLACK_KING;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("D3"));
@@ -67,7 +68,7 @@ class BoardTest {
         final King king = TestFixture.BLACK_KING;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
-                Positions.from("E5"), feed)).init());
+                Positions.from("E5"), feed)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("E5"));
@@ -82,7 +83,7 @@ class BoardTest {
     void kingNotMove() {
         //given
         final King king = TestFixture.BLACK_KING;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).initPiecePosition());
 
         //when
 
@@ -95,7 +96,7 @@ class BoardTest {
     void queenMove() {
         //given
         final Queen queen = TestFixture.BLACK_QUEEN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("D8"));
@@ -112,7 +113,7 @@ class BoardTest {
         final Queen queen = TestFixture.BLACK_QUEEN;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
-                Positions.from("H8"), feed)).init());
+                Positions.from("H8"), feed)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("H8"));
@@ -127,7 +128,7 @@ class BoardTest {
     void queenNotMove() {
         //given
         final Queen queen = TestFixture.BLACK_QUEEN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
 
@@ -142,7 +143,7 @@ class BoardTest {
         final Queen queen = TestFixture.BLACK_QUEEN;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
-                Positions.from("D6"), another)).init());
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
@@ -155,7 +156,7 @@ class BoardTest {
     void knightMove() {
         //given
         final Knight knight = TestFixture.BLACK_KNIGHT;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("F3"));
@@ -172,7 +173,7 @@ class BoardTest {
         final Knight knight = TestFixture.BLACK_KNIGHT;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
-                Positions.from("B3"), feed)).init());
+                Positions.from("B3"), feed)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("B3"));
@@ -191,7 +192,7 @@ class BoardTest {
         final King another2 = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
                 Positions.from("D3"), another1,
-                Positions.from("E3"), another2)).init());
+                Positions.from("E3"), another2)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("F3"));
@@ -206,7 +207,7 @@ class BoardTest {
     void knightNotMove() {
         //given
         final Knight knight = TestFixture.BLACK_KNIGHT;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).initPiecePosition());
 
         //when
 
@@ -219,7 +220,7 @@ class BoardTest {
     void pawnTwoStepMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
         board.move(Positions.from("D7"), Positions.from("D5"));
@@ -234,7 +235,7 @@ class BoardTest {
     void pawnOneStepMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
         board.move(Positions.from("D7"), Positions.from("D6"));
@@ -249,7 +250,7 @@ class BoardTest {
     void pawnNotMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn)).initPiecePosition());
 
         //when
 
@@ -264,7 +265,7 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn,
-                Positions.from("D3"), king)).init());
+                Positions.from("D3"), king)).initPiecePosition());
 
         //when
 
@@ -279,7 +280,7 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
-                Positions.from("D6"), king)).init());
+                Positions.from("D6"), king)).initPiecePosition());
 
         //when
 
@@ -292,7 +293,7 @@ class BoardTest {
     void pawnNotMove4() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
 
@@ -307,7 +308,7 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
-                Positions.from("E6"), king)).init());
+                Positions.from("E6"), king)).initPiecePosition());
 
         //when
         board.move(Positions.from("D7"), Positions.from("E6"));
@@ -322,7 +323,7 @@ class BoardTest {
     void bishopMove() {
         //given
         final Bishop bishop = TestFixture.BLACK_BISHOP;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("H8"));
@@ -337,7 +338,7 @@ class BoardTest {
     void bishopNotMove() {
         //given
         final Bishop bishop = TestFixture.BLACK_BISHOP;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).initPiecePosition());
 
         //when
 
@@ -352,7 +353,7 @@ class BoardTest {
         final Bishop bishop = TestFixture.BLACK_BISHOP;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
-                Positions.from("D6"), another)).init());
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
@@ -367,7 +368,7 @@ class BoardTest {
         final Bishop bishop = TestFixture.BLACK_BISHOP;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
-                Positions.from("H8"), feed)).init());
+                Positions.from("H8"), feed)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("H8"));
@@ -382,7 +383,7 @@ class BoardTest {
     void rookMove() {
         //given
         final Rook rook = TestFixture.BLACK_ROOK;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("D8"));
@@ -397,7 +398,7 @@ class BoardTest {
     void rookNotMove() {
         //given
         final Rook rook = TestFixture.BLACK_ROOK;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).initPiecePosition());
 
         //when
 
@@ -412,7 +413,7 @@ class BoardTest {
         final Rook rook = TestFixture.BLACK_ROOK;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
-                Positions.from("D6"), another)).init());
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
@@ -427,7 +428,7 @@ class BoardTest {
         final Rook rook = TestFixture.BLACK_ROOK;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
-                Positions.from("D8"), feed)).init());
+                Positions.from("D8"), feed)).initPiecePosition());
 
         //when
         board.move(Positions.from("D4"), Positions.from("D8"));
@@ -444,7 +445,7 @@ class BoardTest {
         final King king = TestFixture.BLACK_KING;
         final Bishop team = TestFixture.BLACK_BISHOP;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
-                Positions.from("E5"), team)).init());
+                Positions.from("E5"), team)).initPiecePosition());
 
         //when
 
@@ -461,7 +462,7 @@ class BoardTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Board.create(testStrategy(Map.of(Positions.from("D0"), queen)).init()));
+        assertThatThrownBy(() -> Board.create(testStrategy(Map.of(Positions.from("D0"), queen)).initPiecePosition()));
     }
 
     @DisplayName("존재하는 장소에서 존재하지 않는 장소로 가는 경우 예외가 발생한다.")
@@ -469,7 +470,7 @@ class BoardTest {
     void existToNotExistMove() {
         //given
         final Queen queen = TestFixture.BLACK_QUEEN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).init());
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
 
