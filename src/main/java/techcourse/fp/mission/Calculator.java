@@ -26,6 +26,22 @@ public class Calculator {
         int total = 0;
 
         //TODO: List에 담긴 값 중 3보다 큰 수만을 더해야 한다.
+        for (int number : numbers) {
+            if(number > 3) {
+                total += number;
+            }
+        }
+        return total;
+    }
+
+    public static int sumAll(List<Integer> numbers, SumStrategy sumStrategy) {
+        int total = 0;
+
+        for (int number : numbers) {
+            if(sumStrategy.checkNumber(number)) {
+                total += number;
+            }
+        }
 
         return total;
     }
