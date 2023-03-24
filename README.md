@@ -181,6 +181,6 @@ sequenceDiagram
     - [x] 조건문 가독성 개선
         - [x] CheckablePaths 의 특정 위치 포함한 경로 탐색 메서드 stream 으로 변경
         - [x] ChessBoard 의 조건 관련 연산 메서드 분리
-    - [ ] 개행, 단락 정리
-        - [ ] Piece 별 Directions 개행 수정
+    - [x] 개행, 단락 정리
+        - [x] Piece 별 Directions 개행 수정
     - [ ] Enum 탐색 로직 map 사용 대신 바로 stream 쓰기 (확인 필요)
