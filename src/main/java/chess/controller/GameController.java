@@ -1,22 +1,15 @@
 package chess.controller;
 
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.START;
-import static chess.domain.Team.WHITE;
-
-import chess.domain.ChessGame;
 import chess.domain.Board;
-import chess.domain.piece.Piece;
-import chess.domain.square.Square;
-import chess.domain.square.Squares;
+import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
+
+import static chess.controller.Command.*;
+import static chess.domain.Team.WHITE;
 
 public class GameController {
 
@@ -37,7 +30,7 @@ public class GameController {
             return;
         }
         ChessGame chessGame = new ChessGame(new Board(), WHITE);
-        outputView.printChessBoard(getChessBoard(chessGame.getBoard()));
+        outputView.printChessBoard(chessGame.getBoard());
         do {
             command = repeatUntilValidate(() -> progressGame(chessGame));
         } while (command != END);
@@ -60,17 +53,8 @@ public class GameController {
         validateMoveCommandFormat(gameCommand);
 
         chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
-        outputView.printChessBoard(getChessBoard(chessGame.getBoard()));
+        outputView.printChessBoard(chessGame.getBoard());
         return command;
-    }
-
-    public Map<Integer, String> getChessBoard(final Board board) {
-        Map<Integer, String> boardResult = new LinkedHashMap<>();
-        Map<Square, Piece> pieces = board.getBoard();
-        for (Square square : pieces.keySet()) {
-            boardResult.put(Squares.getIndex(square), pieces.get(square).getPieceTypeName());
-        }
-        return boardResult;
     }
 
     private void validateWrongCommand(final Command userCommand, final Command notExpected) {

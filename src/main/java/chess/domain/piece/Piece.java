@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.Team.BLACK;
-
 import chess.domain.Team;
 
 public abstract class Piece {
@@ -31,13 +29,5 @@ public abstract class Piece {
 
     public PieceType getPieceType() {
         return pieceType;
-    }
-
-    public String getPieceTypeName() {
-        String name = pieceType.getName();
-        if (team == BLACK) {
-            return name.toUpperCase();
-        }
-        return name;
     }
 }
