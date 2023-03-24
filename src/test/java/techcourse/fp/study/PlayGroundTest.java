@@ -1,10 +1,7 @@
 package techcourse.fp.study;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,10 +16,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import static java.util.stream.Collectors.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
+@Disabled
 class PlayGroundTest {
 
     public static final String COLON_DELIMITER = " : ";
@@ -73,7 +73,7 @@ class PlayGroundTest {
     public void 이렇게까지_Stream을_써야할까() throws IOException {
         int minGroupSize = 0;
         Stream<String> words = Files.lines(Paths
-                .get("src/main/resources/fp/war-and-peace.txt"));
+                .get("src/main/resources/techcourse/fp/war-and-peace.txt"));
 
         words.collect(
                         groupingBy(word -> word.chars().sorted()
