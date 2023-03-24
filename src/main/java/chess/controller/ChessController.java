@@ -1,11 +1,11 @@
 package chess.controller;
 
-import static chess.controller.ChessStartCommand.START;
-
 import chess.controller.dto.ChessBoardDto;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import static chess.controller.ChessGameCommand.START;
 
 public class ChessController {
 
@@ -26,10 +26,10 @@ public class ChessController {
         }
     }
 
-    private ChessStartCommand readChessStartCommand() {
+    private ChessGameCommand readChessStartCommand() {
         while (true) {
             try {
-                return ChessStartCommand.from(inputView.readChessExecuteCommand());
+                return ChessGameCommand.from(inputView.readChessExecuteCommand());
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
@@ -48,11 +48,12 @@ public class ChessController {
     }
 
     private void repeatMove() {
-        ChessGameCommand chessGameCommand = ChessGameCommand.from(inputView.readChessGameCommand());
-        while (chessGameCommand.getChessExecuteCommand() == ChessExecuteCommand.MOVE) {
-            chessGame.move(chessGameCommand.getSource(), chessGameCommand.getDestination());
+        String gameCommandInput = inputView.readChessGameCommand();
+        while (ChessGameCommand.from(gameCommandInput) != ChessGameCommand.END) {
+            MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
+            chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
             outputView.printChessBoard(ChessBoardDto.from(chessGame));
-            chessGameCommand = ChessGameCommand.from(inputView.readChessGameCommand());
+            gameCommandInput = inputView.readChessGameCommand();
         }
     }
 }
