@@ -21,4 +21,11 @@ public enum Color {
         }
         throw new IllegalArgumentException("NONE은 반대되는 팀이 없습니다");
     }
+
+    public boolean isSameColor(Color color) {
+        if(this == color) {
+            return true;
+        }
+        return false;
+    }
 }
