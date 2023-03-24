@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class PawnTest {
 
@@ -163,5 +164,22 @@ class PawnTest {
 
         assertThatCode(() -> mockedChessGame.move(startCoordinate, endCoordinate))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("화이트 폰이 화이트 폰을 공격할 수 없다")
+    void isReachableByRuleWhenAttackCaseNWSameTeam() {
+        Coordinate startCoordinate = new Coordinate(0, 1);
+        Coordinate endCoordinate = new Coordinate(1, 0);
+
+        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
+        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedSquareLocations.put(endCoordinate, new WhitePawn(Color.WHITE));
+
+        Board mockedBoard = new Board(mockedSquareLocations);
+        ChessGame mockedChessGame = new ChessGame(mockedBoard);
+
+        assertThatThrownBy(() -> mockedChessGame.move(startCoordinate, endCoordinate))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

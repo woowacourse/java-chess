@@ -21,7 +21,7 @@ public abstract class Pawn extends Piece {
             final Coordinate end,
             final Situation situation
     ) {
-        if (situation.meetNeutral()) {
+        if (situation.meetNeutral() || situation.meetColleague()) {
             return isMovableWhenMovingNotVariates(start, end);
         }
         return isMovableWhenMovingVariates(start, end);
