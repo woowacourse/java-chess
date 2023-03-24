@@ -5,12 +5,12 @@ import techcourse.fp.chess.domain.Position;
 
 public final class Empty extends Piece {
 
-    public Empty(final Color color) {
-        super(color);
+    public Empty(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 
     public static Empty create() {
-        return new Empty(Color.EMPTY);
+        return new Empty(Color.EMPTY, PieceType.EMPTY);
     }
 
     @Override

@@ -6,13 +6,15 @@ import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.PieceType;
 
 public abstract class Pawn extends Piece {
 
     private final MovingStrategy movingStrategy;
 
-    public Pawn(final Color color, final MovingStrategy movingStrategy) {
-        super(color);
+    public Pawn(final Color color, final PieceType pieceType,
+                final MovingStrategy movingStrategy) {
+        super(color, pieceType);
         this.movingStrategy = movingStrategy;
     }
 
