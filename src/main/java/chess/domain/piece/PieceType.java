@@ -1,16 +1,20 @@
 package chess.domain.piece;
 
 public enum PieceType {
-    QUEEN(new Score(9)),
-    ROOK(new Score(5)),
-    KNIGHT(new Score(2.5)),
-    PAWN(new Score(1)),
-    BISHOP(new Score(3)),
-    KING(new Score(0));
+    QUEEN(Score.create(9)),
+    ROOK(Score.create(5)),
+    KNIGHT(Score.create(2.5)),
+    PAWN(Score.create(1)),
+    BISHOP(Score.create(3)),
+    KING(Score.create(0));
 
     private final Score score;
 
     PieceType(final Score score) {
         this.score = score;
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
