@@ -46,6 +46,14 @@ public class Piece {
         return pieceType == PieceType.KING;
     }
 
+    public boolean isPawn() {
+        return pieceType == PieceType.PAWN;
+    }
+    
+    public Score getScore() {
+        return pieceType.getScore();
+    }
+
     private boolean validatePawnMove(final Position source, final Position target, final boolean isTargetExist) {
         if (isPawnFirstMove(source)) {
             return !isTargetExist;

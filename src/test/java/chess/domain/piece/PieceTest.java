@@ -125,4 +125,19 @@ class PieceTest {
         assertThat(pawn.isKing())
                 .isFalse();
     }
+
+    @Test
+    @DisplayName("체스말이 폰인지 판단한다.")
+    void isPawn() {
+        // given
+        final Piece king = new Piece(PieceType.KING, CampType.WHITE, new King());
+        final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new Pawn());
+
+        // when, then
+        assertThat(pawn.isPawn())
+                .isTrue();
+
+        assertThat(king.isPawn())
+                .isFalse();
+    }
 }
