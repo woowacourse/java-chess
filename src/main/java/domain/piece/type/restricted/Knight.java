@@ -9,8 +9,8 @@ public class Knight extends RestrictedPiece {
     public static final int KNIGHT_GAP_SUM = 3;
     public static final int KNIGHT_GAP_SUBTRACTION = 1;
 
-    public Knight(Camp camp, Type type) {
-        super(camp, type);
+    public Knight(Camp camp) {
+        super(camp, Type.KNIGHT);
     }
 
     @Override

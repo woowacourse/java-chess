@@ -1,43 +1,49 @@
-package controller;
+package controller.game;
 
 
-import static controller.Command.COMMAND_INDEX;
-import static controller.Command.CURRENT_SQUARE_INDEX;
-import static controller.Command.EMPTY;
-import static controller.Command.END;
-import static controller.Command.MOVE;
-import static controller.Command.MOVE_COMMAND_LENGTH;
-import static controller.Command.STANDARD_COMMAND_LENGTH;
-import static controller.Command.START;
-import static controller.Command.TARGET_SQUARE_INDEX;
+import static controller.game.Command.COMMAND_INDEX;
+import static controller.game.Command.CURRENT_SQUARE_INDEX;
+import static controller.game.Command.EMPTY;
+import static controller.game.Command.END;
+import static controller.game.Command.MOVE;
+import static controller.game.Command.MOVE_COMMAND_LENGTH;
+import static controller.game.Command.STANDARD_COMMAND_LENGTH;
+import static controller.game.Command.START;
+import static controller.game.Command.TARGET_SQUARE_INDEX;
 
 import java.util.EnumMap;
 import java.util.List;
 
+import dto.GameInfoDto;
 import dto.ScoreDto;
 import service.ChessService;
 import view.InputView;
 import view.OutputView;
 
-public class ChessController {
+public class GameController {
     private final ChessService chessService;
     private final EnumMap<Command, Action> actions = new EnumMap<>(Command.class);
 
-    public ChessController(ChessService chessService) {
+    public GameController(ChessService chessService) {
         this.chessService = chessService;
         actions.put(START, this::start);
         actions.put(MOVE, this::move);
         actions.put(END, this::end);
     }
 
-    public void run() {
+    public void gameStart(long roomId) {
+        GameInfoDto gameInfo = chessService.getGameInfo(roomId);
+        OutputView.printIsSavedGame(gameInfo.getBoardDtos().size());
+        chessService.setUp(gameInfo);
+        OutputView.printChessBoard(chessService.getChessBoard());
         OutputView.printChessInfo();
-        Command command = EMPTY;
+        Command command = START;
         while (command != END) {
             command = play();
         }
         List<ScoreDto> scoreDto = chessService.calculateFinalScore();
         OutputView.printScores(scoreDto);
+        chessService.end(roomId);
     }
 
     private Command play() {
@@ -62,7 +68,6 @@ public class ChessController {
 
     private void start(List<String> inputs) {
         Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
-        chessService.setUp();
         OutputView.printChessBoard(chessService.getChessBoard());
     }
 
@@ -76,6 +81,5 @@ public class ChessController {
 
     private void end(List<String> inputs) {
         Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
-        chessService.end();
     }
 }

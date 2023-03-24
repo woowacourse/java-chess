@@ -6,8 +6,8 @@ import domain.piece.Camp;
 import domain.piece.type.Type;
 
 public class Bishop extends UnrestrictedPiece {
-    public Bishop(Camp camp, Type type) {
-        super(camp, type);
+    public Bishop(Camp camp) {
+        super(camp, Type.BISHOP);
     }
 
     @Override

@@ -11,18 +11,28 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import dto.BoardDto;
+import dto.GameInfoDto;
 import dto.ScoreDto;
+import repository.connector.ProdConnector;
+import repository.game.GameDao;
+import repository.game.JdbcGameDao;
 
 public class ChessService {
     private final ChessBoard chessBoard = new ChessBoard(new HashMap<>());
+    private final GameDao gameDao = new JdbcGameDao(new ProdConnector());
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
-    public void setUp() {
+    public void setUp(GameInfoDto gameInfoDto) {
         if (isOngoing) {
             throw new IllegalStateException("이미 게임이 실행중 입니다.");
         }
         chessBoard.initialize();
+        for (BoardDto boardDto : gameInfoDto.getBoardDtos()) {
+            chessBoard.putPiece(boardDto);
+        }
+        currentCamp = Camp.find(gameInfoDto.getCurrentTurn());
         isOngoing = true;
     }
 
@@ -38,11 +48,27 @@ public class ChessService {
         isOngoing = !chessBoard.isCapturedKing(currentCamp);
     }
 
-    public void end() {
+    public void end(long roomId) {
         if (!isOngoing) {
             throw new IllegalStateException("start를 먼저 입력해주세요.");
         }
         isOngoing = false;
+        GameInfoDto gameInfoDto = generateGameInfoDto();
+        saveGameInfo(roomId, gameInfoDto);
+    }
+
+    private void saveGameInfo(long roomId, GameInfoDto gameInfoDto) {
+        gameDao.deleteBoardById(roomId);
+        gameDao.updateCurrentTurn(roomId, gameInfoDto.getCurrentTurn());
+        gameDao.saveBoard(roomId, gameInfoDto.getBoardDtos());
+    }
+
+    private GameInfoDto generateGameInfoDto() {
+        Map<Square, Piece> board = chessBoard.getBoard();
+        List<BoardDto> boardDtos = board.keySet().stream()
+                .map(square -> BoardDto.of(square, board.get(square)))
+                .collect(Collectors.toUnmodifiableList());
+        return new GameInfoDto(currentCamp.name(), boardDtos);
     }
 
     private Square getCurrentSquare(String currentSquareInput) {
@@ -73,5 +99,9 @@ public class ChessService {
         return Camp.PLAYING_CAMPS.stream()
                 .map(camp -> ScoreDto.from(camp, chessBoard.calculateFinalScore(camp)))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public GameInfoDto getGameInfo(long roomId) {
+        return new GameInfoDto(gameDao.findCurrentTurnByGameName(roomId), gameDao.findBoardByRoomId(roomId));
     }
 }
