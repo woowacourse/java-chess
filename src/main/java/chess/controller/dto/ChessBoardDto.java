@@ -1,23 +1,12 @@
 package chess.controller.dto;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import chess.domain.piece.*;
+
+import java.util.*;
 
 public class ChessBoardDto {
 
@@ -37,10 +26,10 @@ public class ChessBoardDto {
         this.lines = lines;
     }
 
-    public static ChessBoardDto from(final ChessGame chessGame) {
+    public static ChessBoardDto from(final Board board) {
         final List<String> lines = new ArrayList<>();
         for (final Rank rank : Rank.values()) {
-            lines.add(generateLine(chessGame.getBoard(), rank));
+            lines.add(generateLine(board, rank));
         }
         Collections.reverse(lines);
         return new ChessBoardDto(lines);

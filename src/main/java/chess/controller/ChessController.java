@@ -21,7 +21,7 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         if (readChessStartCommand() == START) {
-            outputView.printChessBoard(ChessBoardDto.from(chessGame));
+            outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
             playChessGame();
         }
     }
@@ -52,7 +52,7 @@ public class ChessController {
         while (ChessGameCommand.from(gameCommandInput) != ChessGameCommand.END) {
             MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
             chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
-            outputView.printChessBoard(ChessBoardDto.from(chessGame));
+            outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
             gameCommandInput = inputView.readChessGameCommand();
         }
     }
