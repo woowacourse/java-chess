@@ -1,10 +1,14 @@
 package chess.view;
 
+import chess.model.piece.Camp;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceScore;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
 import chess.view.dto.ChessBoardResponse;
+import chess.view.dto.ChessGameResultResponse;
+import chess.view.messsage.CampMessageConverter;
 import chess.view.messsage.PieceMessageConverter;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +17,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String ERROR_PREFIX = "[ERROR]";
+    private static final String PLAY_CAMP_FORMAT = "%s 진영의 차례입니다.";
+    private static final String SCORE_FORMAT = "%s 진영의 점수는 %s 입니다.";
+    private static final String WINNER_FORMAT = "승리한 진영은 %s 입니다.";
+    private static final String ERROR_PREFIX = "[ERROR] ";
     private static final int MAX_FILE_INDEX = 7;
 
     public void guideGameStart() {
@@ -21,6 +28,12 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+    }
+
+    public void printCurrentCamp(final Camp camp) {
+        final String currentCampMessage = String.format(PLAY_CAMP_FORMAT, CampMessageConverter.convert(camp));
+
+        System.out.println(currentCampMessage);
     }
 
     public void printChessBoard(final ChessBoardResponse chessBoardResponse) {
@@ -64,6 +77,23 @@ public class OutputView {
         final String key = file.name() + rank.value();
 
         return squareResponses.get(key);
+    }
+
+    public void printChessGameResult(final ChessGameResultResponse resultResponse) {
+        final String blackCampScoreMessage =
+                mapToPieceScoreMessageByCamp(resultResponse.getBlackCampScore(), Camp.BLACK);
+        final String whiteCampScoreMessage =
+                mapToPieceScoreMessageByCamp(resultResponse.getBlackCampScore(), Camp.WHITE);
+        final String winnerMessage =
+                String.format(WINNER_FORMAT, CampMessageConverter.convert(resultResponse.getWinner()));
+
+        System.out.println(blackCampScoreMessage);
+        System.out.println(whiteCampScoreMessage);
+        System.out.println(winnerMessage);
+    }
+
+    private String mapToPieceScoreMessageByCamp(final PieceScore pieceScore, final Camp camp) {
+        return String.format(SCORE_FORMAT, CampMessageConverter.convert(camp), pieceScore.getValue());
     }
 
     public void printExceptionMessage(final String exceptionMessage) {

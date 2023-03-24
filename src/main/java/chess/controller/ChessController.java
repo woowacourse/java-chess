@@ -4,10 +4,13 @@ import chess.controller.dto.PlayRequest;
 import chess.controller.state.GameState;
 import chess.controller.state.Ready;
 import chess.model.game.ChessGame;
+import chess.model.piece.Camp;
+import chess.model.piece.PieceScore;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.ChessGameResultResponse;
 
 public class ChessController {
 
@@ -48,8 +51,30 @@ public class ChessController {
     }
 
     private void printChessBoard(final GameState gameState, final ChessGame chessGame) {
-        if (gameState.isPlay()) {
+        if (isPrintChessBoard(gameState)) {
+            outputView.printCurrentCamp(chessGame.getCurrentCamp());
             outputView.printChessBoard(chessGame.getChessBoard());
         }
+        if (isPrintScoreAndGameResult(gameState)) {
+            final ChessGameResultResponse chessGameResultResponse = makeChessGameResultResponse(chessGame);
+
+            outputView.printChessGameResult(chessGameResultResponse);
+        }
+    }
+
+    private ChessGameResultResponse makeChessGameResultResponse(final ChessGame chessGame) {
+        final PieceScore blackPieceScore = chessGame.getScoreByCamp(Camp.BLACK);
+        final PieceScore whitePieceScore = chessGame.getScoreByCamp(Camp.WHITE);
+        final Camp winner = chessGame.getCurrentCamp();
+
+        return new ChessGameResultResponse(blackPieceScore, whitePieceScore, winner);
+    }
+
+    private boolean isPrintChessBoard(final GameState gameState) {
+        return gameState.isPlay() && gameState.isPrintable();
+    }
+
+    private boolean isPrintScoreAndGameResult(final GameState gameState) {
+        return !gameState.isPlay() && gameState.isPrintable();
     }
 }
