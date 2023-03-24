@@ -13,6 +13,18 @@ public enum Color {
         return this == BLACK && color == WHITE || this == WHITE && color == BLACK;
     }
 
+    public Color getOtherSide() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+
+        if (this == WHITE) {
+            return BLACK;
+        }
+
+        throw new IllegalStateException("백이나 흑이 아닙니다.");
+    }
+
     public boolean isBlack() {
         return this == BLACK;
     }

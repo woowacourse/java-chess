@@ -5,6 +5,7 @@ import techcourse.fp.chess.controller.ChessController;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
+//TODO: 3단계 README.md 추가
 public final class MainApp {
 
     public static void main(String[] args) {

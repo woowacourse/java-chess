@@ -1,19 +1,23 @@
 package techcourse.fp.chess.domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Turn;
 
 public final class Board {
 
     private static final int BOARD_SIZE = 8;
 
     private final Map<Position, Piece> board;
+    private final Turn turn;
 
-    public Board(Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board, final Turn turn) {
         validate(board);
-        this.board = board;
+        this.board = new HashMap<>(board);
+        this.turn = turn;
     }
 
     private void validate(final Map<Position, Piece> board) {
@@ -26,14 +30,26 @@ public final class Board {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
+        validateTurn(sourcePiece);
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece);
-
-        if (hasObstacle(path)) {
-            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
-        }
+        validateObstacle(path);
 
         board.put(target, sourcePiece);
         board.put(source, Empty.create());
+
+        turn.nextTurn();
+    }
+
+    private void validateTurn(final Piece sourcePiece) {
+        if (turn.isNotSameTurn(sourcePiece.getColor())) {
+            throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateObstacle(final List<Position> path) {
+        if (hasObstacle(path)) {
+            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
+        }
     }
 
     private boolean hasObstacle(final List<Position> path) {

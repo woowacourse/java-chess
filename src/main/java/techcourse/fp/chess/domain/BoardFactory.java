@@ -5,6 +5,7 @@ import java.util.Map;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.domain.piece.ordinary.Bishop;
 import techcourse.fp.chess.domain.piece.ordinary.King;
 import techcourse.fp.chess.domain.piece.ordinary.Knight;
@@ -30,7 +31,7 @@ public final class BoardFactory {
         initQueen(board);
         initKing(board);
 
-        return new Board(board);
+        return new Board(board, Turn.createByStartTurn(Color.WHITE));
     }
 
     private static void initializeBoard(final Map<Position, Piece> board) {
