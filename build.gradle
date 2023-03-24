@@ -9,9 +9,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'com.sparkjava:spark-template-handlebars:2.7.1'
-    implementation 'ch.qos.logback:logback-classic:1.2.10'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
