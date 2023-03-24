@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.command.*;
 import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -26,6 +27,7 @@ public class ChessController {
         commands.put("start", new StartCommand(outputView, chessGame));
         commands.put("move", new MoveCommand(outputView, chessGame));
         commands.put("end", new EndCommand(outputView, chessGame));
+        commands.put("status", new StatusCommand(outputView, chessGame));
     }
 
     public void run() {

@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.domain.command;
 
 public class ExceptionCommand implements Command {
     @Override

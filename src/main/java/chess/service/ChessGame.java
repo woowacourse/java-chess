@@ -3,11 +3,13 @@ package chess.service;
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.result.Judge;
+import chess.domain.result.Score;
 import chess.domain.side.Color;
 import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
     private Board board;
@@ -37,6 +39,10 @@ public class ChessGame {
         if (sideKingDied != Side.from(Color.NOTHING)) {
             gameStatus = GameStatus.STOP;
         }
+    }
+
+    public Map<Side, Score> stauts() {
+        return Judge.calculateScore(board);
     }
 
     public void forceClose() {

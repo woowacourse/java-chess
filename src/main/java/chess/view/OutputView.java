@@ -1,9 +1,12 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
+import chess.domain.result.Score;
+import chess.domain.side.Side;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public void printStartMessage() {
@@ -33,5 +36,11 @@ public class OutputView {
 
     public void printEndMessage() {
         System.out.println("게임 종료");
+    }
+
+    public void printStatus(Map<Side, Score> stauts) {
+        for (Side side : stauts.keySet()) {
+            System.out.printf("%s : %f 점\n", side.getColor().name(), stauts.get(side).getValue());
+        }
     }
 }
