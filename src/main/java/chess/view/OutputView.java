@@ -41,19 +41,19 @@ public class OutputView {
             Rank.EIGHT, 0
     );
 
-    public void printGameStartGuideMessage() {
+    public static void printGameStartGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(final List<Piece> pieces) {
+    public static void printBoard(final List<Piece> pieces) {
         final String boardMessage = generateBoardMessage(pieces);
         System.out.println(boardMessage);
     }
 
-    private String generateBoardMessage(final List<Piece> pieces) {
+    private static String generateBoardMessage(final List<Piece> pieces) {
         final StringBuilder mapBuilder = generateEmptyBoardBuilder();
 
         for (Piece piece : pieces) {
@@ -72,12 +72,12 @@ public class OutputView {
         return mapBuilder;
     }
 
-    private void setUpPieceInBoard(final StringBuilder mapBuilder, final Piece piece) {
+    private static void setUpPieceInBoard(final StringBuilder mapBuilder, final Piece piece) {
         final int positionIndex = calculateIndex(piece.getPosition());
         mapBuilder.replace(positionIndex, positionIndex + 1, getPieceAccordingToSign(piece));
     }
 
-    private int calculateIndex(final Position position) {
+    private static int calculateIndex(final Position position) {
         final int oneLineLength = COLUMN_BY_FILE.size() + NEW_LINE.length();
         return oneLineLength * ROW_BY_RANK.get(position.getRank()) + COLUMN_BY_FILE.get(position.getFile());
     }
