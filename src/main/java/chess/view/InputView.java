@@ -9,8 +9,8 @@ public class InputView {
 
     private static final String COMMAND_MOVE = "move";
     private static final String REQUEST_DELIMITER = " ";
-    private static final int SINGLE_COMMAND_LENGTH = 1;
-    private static final int MOVE_COMMAND_LENGTH = 3;
+    private static final int SINGLE_COMMAND_SIZE = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
@@ -23,28 +23,32 @@ public class InputView {
     }
 
     public static CommandRequest requestGameCommand() {
-        String[] request = readRequest();
-        if (request.length == SINGLE_COMMAND_LENGTH) {
-            return CommandRequest.fromControlCommand(request[COMMAND_INDEX]);
+        List<String> request = readRequest();
+        if (isSingleCommand(request) && !request.contains(COMMAND_MOVE)) {
+            return CommandRequest.fromControlCommand(request.get(COMMAND_INDEX));
         }
         validateMoveCommandRequest(request);
         return CommandRequest.fromMoveCommand(
                 COMMAND_MOVE,
-                parsePosition(request[SOURCE_POSITION_INDEX]),
-                parsePosition(request[DESTINATION_POSITION_INDEX])
+                parsePosition(request.get(SOURCE_POSITION_INDEX)),
+                parsePosition(request.get(DESTINATION_POSITION_INDEX))
         );
     }
 
-    private static String[] readRequest() {
+    private static List<String> readRequest() {
         String line = scanner.nextLine();
-        return line.split(REQUEST_DELIMITER);
+        return new ArrayList<>(List.of(line.split(REQUEST_DELIMITER)));
     }
 
-    private static void validateMoveCommandRequest(final String[] request) {
-        if (request.length != MOVE_COMMAND_LENGTH) {
+    private static boolean isSingleCommand(List<String> request) {
+        return request.size() == SINGLE_COMMAND_SIZE;
+    }
+
+    private static void validateMoveCommandRequest(final List<String> request) {
+        if (request.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
-        if (!request[COMMAND_INDEX].equalsIgnoreCase(COMMAND_MOVE)) {
+        if (!request.get(COMMAND_INDEX).equalsIgnoreCase(COMMAND_MOVE)) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
     }
