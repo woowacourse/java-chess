@@ -17,7 +17,6 @@ public class PieceToStringConverter {
     private static final Map<Piece, String> piecesAndStrings = new HashMap<>();
 
     private PieceToStringConverter() {
-        init();
     }
 
     public static String convert(Piece piece) {
