@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Command {
 
-    START, END, MOVE, STATUS;
+    NEW, END, MOVE, STATUS, LOAD;
 
     public static Command from(final String input) {
         return Arrays.stream(values())

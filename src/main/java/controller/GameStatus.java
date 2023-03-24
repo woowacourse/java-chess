@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ChessDao;
 import domain.chessboard.ChessBoardFactory;
 import domain.chessgame.ChessGame;
 
@@ -21,12 +22,16 @@ public abstract class GameStatus {
 
     public final GameStatus transition(final List<String> inputs) {
         final Command command = Command.from(inputs.get(COMMAND_INDEX));
+        final ChessDao chessDao = new ChessDao();
 
-        if (command == Command.START) {
-            return new Start(new ChessGame(ChessBoardFactory.generate()));
+        if (command == Command.NEW) {
+            return new NewGame(new ChessGame(ChessBoardFactory.generate()), chessDao);
+        }
+        if (command == Command.LOAD) {
+            return new LoadGame(new ChessGame(ChessBoardFactory.generate()), chessDao);
         }
         if (command == Command.MOVE) {
-            return new Move(chessGame);
+            return new Move(chessGame, chessDao);
         }
         if (command == Command.STATUS) {
             return new Status(chessGame);

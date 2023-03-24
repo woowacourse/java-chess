@@ -1,34 +1,33 @@
 package controller;
 
-import dto.ChessBoardDto;
+import dao.ChessDao;
 import domain.chessgame.ChessGame;
-import domain.piece.Color;
+import dto.ChessBoardDto;
 import view.OutputView;
 
 import java.util.List;
 
-public final class End extends GameStatus {
+public final class NewGame extends GameStatus {
 
-    End(final ChessGame chessGame) {
+    private final ChessDao chessDao;
+
+    NewGame(ChessGame chessGame, final ChessDao chessDao) {
         super(chessGame);
+        this.chessDao = chessDao;
     }
 
     @Override
     public void playTurn(final List<String> inputs) {
-        OutputView.printNotice("> 최종 결과");
-
+        chessDao.deleteAll();
         final ChessBoardDto chessBoardDTO = ChessBoardDto.from(chessGame.getChessBoard());
 
-        final double whiteScore = chessGame.calculateScore(Color.WHITE);
-        final double blackScore = chessGame.calculateScore(Color.BLACK);
-
+        OutputView.printNotice("새로운 게임을 시작합니다.");
         OutputView.printChessBoard(chessBoardDTO);
-        OutputView.printScore(whiteScore, blackScore);
     }
 
     @Override
     public boolean isKeepGaming() {
-        return false;
+        return true;
     }
 
 }

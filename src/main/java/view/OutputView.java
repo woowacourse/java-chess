@@ -1,6 +1,6 @@
 package view;
 
-import controller.ChessBoardDTO;
+import dto.ChessBoardDto;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public final class OutputView {
         System.out.printf("[ERROR] : %s%n", message);
     }
 
-    public static void printChessBoard(final ChessBoardDTO chessBoard) {
+    public static void printChessBoard(final ChessBoardDto chessBoard) {
         final List<List<String>> rowDTOs = chessBoard.getRowDTOs();
 
         System.out.print(System.lineSeparator());
@@ -31,7 +31,7 @@ public final class OutputView {
         for (int i = 0; i < size; i++) {
             final List<String> row = rowDTOs.get(i);
             printRow(row);
-            System.out.printf("  %d%n", 8-i);
+            System.out.printf("  %d%n", 8 - i);
         }
         System.out.println(System.lineSeparator() + "abcdefgh" + System.lineSeparator());
     }
@@ -43,8 +43,22 @@ public final class OutputView {
     }
 
     public static void printScore(final double whiteScore, final double blackScore) {
+        final String result = findWinner(whiteScore, blackScore);
+
         System.out.printf("White : %.1f%n", whiteScore);
         System.out.printf("Black : %.1f%n", blackScore);
-        System.out.println();
+        System.out.println(result);
     }
+
+    private static String findWinner(final double whiteScore, final double blackScore) {
+        if (whiteScore > blackScore) {
+            return "White Win";
+        }
+        if (whiteScore == blackScore) {
+            return "Draw";
+        }
+        return "Black Win";
+    }
+
+
 }
