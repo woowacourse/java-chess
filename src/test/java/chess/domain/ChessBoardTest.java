@@ -16,6 +16,8 @@ import chess.domain.position.File;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -134,5 +136,44 @@ class ChessBoardTest {
         chessBoard.movePiece(whitePawnPosition, Position.of(File.A, Rank.FOUR));
 
         assertThat(chessBoard.isPieceExist(whitePawnPosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 캠프의 기물만 조회할 수 있다.")
+    void getPiecesOfCampTest() {
+        Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
+        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.B, Rank.TWO), new Pawn(Camp.WHITE));
+
+        pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.D, Rank.TWO), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.BLACK));
+        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        assertThat(chessBoard.getPiecesOfCamp(Camp.WHITE))
+                .hasSize(2);
+        assertThat(chessBoard.getPiecesOfCamp(Camp.BLACK))
+                .hasSize(4);
+    }
+
+    @Test
+    @DisplayName("해당 파일내의 기물만 조회할 수 있다.")
+    void getPiecesInFileTest() {
+        Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
+        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.A, Rank.THREE), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.A, Rank.FOUR), new Knight(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.FIVE), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.SIX), new Rook(Camp.BLACK));
+
+        pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        assertThat(chessBoard.getPiecesInFile(File.A))
+                .hasSize(5);
+        assertThat(chessBoard.getPiecesInFile(File.C))
+                .hasSize(1);
     }
 }

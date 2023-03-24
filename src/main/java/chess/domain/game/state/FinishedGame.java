@@ -1,6 +1,5 @@
-package chess.domain.game.state.finished;
+package chess.domain.game.state;
 
-import chess.domain.game.state.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.Position;

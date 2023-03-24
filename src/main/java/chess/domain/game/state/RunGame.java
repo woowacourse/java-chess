@@ -1,9 +1,5 @@
-package chess.domain.game.state.started;
+package chess.domain.game.state;
 
-import chess.domain.game.state.ChessGame;
-import chess.domain.game.state.finished.EndGame;
-import chess.domain.game.state.finished.EndScoreGame;
-import chess.domain.game.state.finished.PauseGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.PieceMove;
@@ -18,7 +14,7 @@ public class RunGame extends StartedGame {
     private static final String EMPTY_CHOICE = "빈 칸은 선택할 수 없습니다.";
     private static final String UNABLE_TO_EQUAL_POSITION = "출발 지점과 도착 지점은 동일할 수 없습니다";
 
-    public RunGame(ChessBoard chessBoard, Camp turnCamp) {
+    protected RunGame(ChessBoard chessBoard, Camp turnCamp) {
         super(chessBoard, turnCamp);
     }
 

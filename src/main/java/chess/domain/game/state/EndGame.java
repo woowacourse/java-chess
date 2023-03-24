@@ -1,17 +1,17 @@
-package chess.domain.game.state.finished;
+package chess.domain.game.state;
 
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
 import chess.domain.position.ChessBoard;
 
-public class PauseGame extends FinishedGame {
+public class EndGame extends FinishedGame {
 
-    public PauseGame(ChessBoard chessBoard) {
+    protected EndGame(ChessBoard chessBoard) {
         super(chessBoard);
     }
 
     @Override
     public GameResult calculateResult() {
-        return new GameResult(MatchResult.PAUSE);
+        return new GameResult(MatchResult.DRAW);
     }
 }

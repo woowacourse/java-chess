@@ -1,4 +1,4 @@
-package chess.domain.game.state.finished;
+package chess.domain.game.state;
 
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
@@ -18,7 +18,7 @@ public class EndScoreGame extends FinishedGame {
     private final double whiteCampScore;
     private final double blackCampScore;
 
-    public EndScoreGame(ChessBoard chessBoard) {
+    protected EndScoreGame(ChessBoard chessBoard) {
         super(chessBoard);
         this.whiteCampScore = calculateChessScore(chessBoard, Camp.WHITE);
         this.blackCampScore = calculateChessScore(chessBoard, Camp.BLACK);

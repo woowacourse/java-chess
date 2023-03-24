@@ -1,11 +1,9 @@
-package chess.domain;
+package chess.domain.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.game.state.ChessGame;
-import chess.domain.game.state.ReadyGame;
 import chess.domain.piece.Camp;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -16,12 +14,12 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameTest {
 
-    private ChessGame chessGame;
+    private ChessGame runningGame;
 
     @BeforeEach
     void setRunningGame() {
-        chessGame = new ReadyGame();
-        chessGame = chessGame.startGame();
+        runningGame = new ReadyGame();
+        runningGame = runningGame.startGame();
     }
 
     @Test
@@ -30,7 +28,7 @@ class ChessGameTest {
         Position whiteRookPosition = Position.of(File.A, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        assertThatThrownBy(() -> chessGame.move(whiteRookPosition, toPosition))
+        assertThatThrownBy(() -> runningGame.move(whiteRookPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,7 +38,7 @@ class ChessGameTest {
         Position whiteKnightPosition = Position.of(File.B, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition));
+        assertDoesNotThrow(() -> runningGame.move(whiteKnightPosition, toPosition));
     }
 
     @Test
@@ -49,7 +47,7 @@ class ChessGameTest {
         Position emptyPosition = Position.of(File.A, Rank.THREE);
         Position toPosition = Position.of(File.A, Rank.FOUR);
 
-        assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
+        assertThatThrownBy(() -> runningGame.move(emptyPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -58,33 +56,27 @@ class ChessGameTest {
     void moveEqualPositionTest() {
         Position toPosition = Position.of(File.A, Rank.FOUR);
 
-        assertThatThrownBy(() -> chessGame.move(toPosition, toPosition))
+        assertThatThrownBy(() -> runningGame.move(toPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("게임의 현재 턴과 다른 진영의 기물을 선택할 수 없다.")
     void moveDifferentCampPieceAndTurnTest() {
-        assertThat(chessGame).extracting("turnCamp")
+        assertThat(runningGame).extracting("turnCamp")
                 .isEqualTo(Camp.WHITE);
 
         Position blackPawnPosition = Position.of(File.A, Rank.SEVEN);
         Position toPosition = Position.of(File.A, Rank.SIX);
 
-        assertThatThrownBy(() -> chessGame.move(blackPawnPosition, toPosition))
+        assertThatThrownBy(() -> runningGame.move(blackPawnPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("게임 실행 여부 확인.")
     void isRunnableGameTest() {
-        assertThat(chessGame.isRunnableGame())
+        assertThat(runningGame.isRunnableGame())
                 .isTrue();
     }
-
-//    @Test
-//    @DisplayName("게임 점수 계산.")
-//    void calculateCampScoreTest() {
-//        chessGame.calculateScore()
-//    }
 }
