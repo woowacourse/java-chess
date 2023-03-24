@@ -27,7 +27,7 @@ public class Application {
     private static void changeState() {
         try {
             Command command = new Command(InputView.readCommand());
-            chessGame.setState(command);
+            chessGame.changeState(command);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             changeState();
