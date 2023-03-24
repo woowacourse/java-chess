@@ -1,4 +1,4 @@
-package repository;
+package repository.connector;
 
 import java.sql.Connection;
 

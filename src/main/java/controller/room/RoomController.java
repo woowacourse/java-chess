@@ -10,8 +10,8 @@ import java.util.List;
 
 import controller.game.GameController;
 import dto.GameInfoDto;
-import repository.JdbcChessDao;
-import repository.ProdConnector;
+import repository.room.JdbcRoomDao;
+import repository.connector.ProdConnector;
 import service.ChessService;
 import service.GameRoomService;
 import view.InputView;
@@ -19,7 +19,7 @@ import view.OutputView;
 
 public class RoomController {
     private final GameController gameController = new GameController(new ChessService());
-    private final GameRoomService gameRoomService = new GameRoomService(new JdbcChessDao(new ProdConnector()));
+    private final GameRoomService gameRoomService = new GameRoomService(new JdbcRoomDao(new ProdConnector()));
     private final EnumMap<GameRoomCommand, GameRoomAction> gameRoomActions = new EnumMap<>(GameRoomCommand.class);
 
     public RoomController() {

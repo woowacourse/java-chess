@@ -3,33 +3,36 @@ package service;
 import java.util.List;
 
 import dto.GameInfoDto;
-import repository.ChessDao;
+import repository.connector.ProdConnector;
+import repository.game.GameDao;
+import repository.game.JdbcGameDao;
+import repository.room.RoomDao;
 
 public class GameRoomService {
 
-    private final ChessDao chessDao;
-    private long gameId = 0L;
+    private final RoomDao roomDao;
+    private final GameDao gameDao = new JdbcGameDao(new ProdConnector());
 
-    public GameRoomService(ChessDao chessDao) {
-        this.chessDao = chessDao;
+    public GameRoomService(RoomDao roomDao) {
+        this.roomDao = roomDao;
     }
 
     public void createGameRoom(String gameName) {
-        gameId = chessDao.addGame(gameName);
+        roomDao.createRoom(gameName);
     }
 
     public List<String> readGameRooms() {
-        return chessDao.findAllGame();
+        return roomDao.findAllRooms();
     }
 
     public GameInfoDto getGameInfo(String gameName) {
-        this.gameId = chessDao.findGameIdByGameName(gameName);
-        return new GameInfoDto(chessDao.findCurrentTurnByGameName(gameName), chessDao.findBoardByGameName(gameName));
+        roomDao.findGameIdByGameName(gameName);
+        return new GameInfoDto(gameDao.findCurrentTurnByGameName(gameName), gameDao.findBoardByGameName(gameName));
     }
 
     public void saveGameInfo(GameInfoDto gameInfoDto) {
-        chessDao.deleteBoardById(gameId);
-        chessDao.updateCurrentTurn(gameId, gameInfoDto.getCurrentTurn());
-        chessDao.saveBoard(gameId, gameInfoDto.getBoardDtos());
+        gameDao.deleteBoardById(1);
+        gameDao.updateCurrentTurn(1, gameInfoDto.getCurrentTurn());
+        gameDao.saveBoard(1, gameInfoDto.getBoardDtos());
     }
 }

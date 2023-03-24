@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class TestConnector implements JdbcConnector{
+import repository.connector.JdbcConnector;
+
+public class TestConnector implements JdbcConnector {
     private static final String SERVER = "localhost:3306";
     private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";

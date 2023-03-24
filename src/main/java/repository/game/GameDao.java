@@ -1,28 +1,22 @@
-package repository;
+package repository.game;
 
 import java.util.List;
 
 import dto.BoardDto;
 import dto.MoveHistoryDto;
 
-public interface ChessDao {
-    long addGame(String gameName);
-
-    List<String> findAllGame();
-
+public interface GameDao {
     List<BoardDto> findBoardByGameName(String gameName);
-
-    void deleteAllGame();
 
     void saveBoard(long game_id, List<BoardDto> boardDtos);
 
     void saveMoveHistory(long game_id, MoveHistoryDto moveHistoryDto);
 
-    long findGameIdByGameName(String gameName);
+    void updateCurrentTurn(long gameId, String currentTurn);
 
     String findCurrentTurnByGameName(String gameName);
 
-    void updateCurrentTurn(long gameId, String currentTurn);
-
     void deleteBoardById(long gameId);
+
+    List<MoveHistoryDto> findMoveHistoryByGameId(long game_id);
 }
