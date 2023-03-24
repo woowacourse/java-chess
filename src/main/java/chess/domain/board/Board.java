@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.ArrayList;
@@ -10,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static final boolean MOVED = true;
-
     private final Map<Square, Piece> board;
 
     public Board() {
@@ -19,9 +16,8 @@ public class Board {
     }
 
     public void move(final Square source, final Square target) {
-        updateIfPawn(source, target);
-        board.put(target, board.get(source));
-        board.put(source, Empty.of());
+        board.put(target, board.get(source).move(target));
+        board.put(source, new Empty(source));
     }
 
     public boolean isMovable(final Square source, final Square target) {
@@ -32,7 +28,7 @@ public class Board {
         if (isSourceAndTargetSameCamp(source, target)) {
             return false;
         }
-        return sourcePiece.isMovable(target, move, isPathBlocked);
+        return sourcePiece.isMovable(board.get(target), isPathBlocked);
     }
 
     private boolean isSourceAndTargetSameCamp(final Square source, final Square target) {
@@ -40,12 +36,6 @@ public class Board {
         final Camp targetCamp = board.get(target).camp();
 
         return sourcePiece.isSameCamp(targetCamp);
-    }
-
-    private void updateIfPawn(final Square source, final Square target) {
-        if (board.get(source).getClass() == Pawn.class) {
-            board.put(source, new Pawn(board.get(source).camp(), target, MOVED));
-        }
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
@@ -61,7 +51,7 @@ public class Board {
     }
 
     private boolean isEmptyPiece(final Square source) {
-        return board.get(source).equals(Empty.of());
+        return board.get(source).equals(new Empty(source));
     }
 
     public boolean isSameCamp(final Square square, final Camp camp) {

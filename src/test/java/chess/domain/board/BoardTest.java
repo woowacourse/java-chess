@@ -3,7 +3,6 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.piece.Camp;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
@@ -32,11 +31,6 @@ class BoardTest {
                 Arguments.of(
                         1,
                         new Knight(Camp.BLACK, new Square(File.EMPTY, Rank.EMPTY))
-                ),
-                Arguments.of(
-                        30,
-                        Empty.of()
-
                 ),
                 Arguments.of(
                         63,
@@ -136,5 +130,15 @@ class BoardTest {
         board.move(new Square(File.E, Rank.ONE), new Square(File.E, Rank.EIGHT));
 
         assertThat(board.isKingExist(Camp.BLACK)).isFalse();
+    }
+
+    @DisplayName("Pawn은 대각선에 상대가 없을 경우 이동할 수 없다.")
+    @Test
+    void PawnTest() {
+        final Board board = new Board();
+        final Square source = new Square(File.B, Rank.TWO);
+        final Square target = new Square(File.A, Rank.THREE);
+
+        assertThat(board.isMovable(source, target)).isFalse();
     }
 }

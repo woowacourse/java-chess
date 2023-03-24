@@ -44,6 +44,6 @@ class BishopTest {
     void Should_Success_When_BishopMove(final Square source, final Square target, final Move move) {
         final Bishop bishop = new Bishop(Camp.WHITE, source);
 
-        assertThat(bishop.isMovable(target, move, false)).isTrue();
+        assertThat(bishop.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 }

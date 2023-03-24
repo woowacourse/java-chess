@@ -31,15 +31,11 @@ public class Pawn extends Piece {
     private List<Move> generateWhitePossibleMoves() {
         if (isMoved) {
             return List.of(
-                    Move.UP,
-                    Move.UP_RIGHT,
-                    Move.UP_LEFT
+                    Move.UP
             );
         }
         return List.of(
                 Move.UP,
-                Move.UP_RIGHT,
-                Move.UP_LEFT,
                 Move.UP_UP
         );
     }
@@ -47,27 +43,57 @@ public class Pawn extends Piece {
     private List<Move> generateBlackPossibleMoves() {
         if (isMoved) {
             return List.of(
-                    Move.DOWN,
-                    Move.DOWN_RIGHT,
-                    Move.DOWN_LEFT
+                    Move.DOWN
             );
         }
         return List.of(
                 Move.DOWN,
-                Move.DOWN_RIGHT,
-                Move.DOWN_LEFT,
                 Move.DOWN_DOWN
         );
     }
 
-    @Override
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && isNotSlidingMove(target, move) && !isPathBlocked;
+    private List<Move> possibleMovesIfTargetExist() {
+        if (camp().equals(Camp.WHITE)) {
+            return whitePossibleMovesIfTargetExist();
+        }
+
+        return blackPossibleMovesIfTargetExist();
     }
 
-    private boolean isNotSlidingMove(final Square target, final Move move) {
-        return move.getFile() == target.getFile() - position().getFile()
-                && move.getRank() == target.getRank() - position().getRank();
+    private List<Move> whitePossibleMovesIfTargetExist() {
+        return List.of(
+                Move.UP_RIGHT,
+                Move.UP_LEFT
+        );
+    }
+
+    private List<Move> blackPossibleMovesIfTargetExist() {
+        return List.of(
+                Move.DOWN_RIGHT,
+                Move.DOWN_LEFT
+        );
+    }
+
+    @Override
+    public boolean isMovable(final Piece targetPiece,
+                             final boolean isPathBlocked) {
+        final Move move = calculateMove(targetPiece);
+        if (targetPiece.isSameType(PieceType.EMPTY)) {
+            //    적이 없을 경우
+            return possibleMoves.contains(move) && isNotSlidingMove(targetPiece.position(), move) && !isPathBlocked;
+        } else {
+            return possibleMovesIfTargetExist().contains(move) && isNotSlidingMove(targetPiece.position(), move);
+        }
+    }
+
+    private boolean isNotSlidingMove(final Square targetSquare, final Move move) {
+        return (targetSquare.getFile() == position().getFile() + move.getFile())
+                && (targetSquare.getRank() == position().getRank() + move.getRank());
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        return new Pawn(camp(), target, true);
     }
 
     @Override

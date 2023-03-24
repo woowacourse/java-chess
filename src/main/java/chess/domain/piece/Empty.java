@@ -11,8 +11,13 @@ public class Empty extends Piece {
         super(Camp.EMPTY, new Square(File.EMPTY, Rank.EMPTY));
     }
 
-    public static Empty of() {
-        return empty;
+    public Empty(final Square square) {
+        super(Camp.EMPTY, new Square(square.file(), square.rank()));
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        throw new IllegalArgumentException("빈 Square는 움직일 수 없습니다.");
     }
 
     @Override

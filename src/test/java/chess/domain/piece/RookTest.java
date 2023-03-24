@@ -44,6 +44,6 @@ class RookTest {
     void Should_Success_When_RookMove(final Square source, final Square target, final Move move) {
         final Rook rook = new Rook(Camp.WHITE, source);
 
-        assertThat(rook.isMovable(target, move, false)).isTrue();
+        assertThat(rook.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 }

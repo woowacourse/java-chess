@@ -25,13 +25,20 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && isNotSlidingMove(target, move);
+    public boolean isMovable(final Piece targetPiece,
+                             final boolean isPathBlocked) {
+        return possibleMoves.contains(calculateMove(targetPiece)) && isNotSlidingMove(targetPiece);
     }
 
-    private boolean isNotSlidingMove(final Square target, final Move move) {
-        return move.getFile() == target.getFile() - position().getFile()
-                && move.getRank() == target.getRank() - position().getRank();
+    private boolean isNotSlidingMove(final Piece target) {
+        final Move move = calculateMove(target);
+        return position().getFile() == target.position().getFile() - move.getFile()
+                && position().getRank() == target.position().getRank() - move.getRank();
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        return new King(camp(), target);
     }
 
     @Override

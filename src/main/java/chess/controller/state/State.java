@@ -17,8 +17,12 @@ public abstract class State {
         throw new IllegalStateException("다음 턴으로 넘길 수 없는 상태입니다.");
     }
 
+    public KingDead kingDead() {
+        throw new IllegalStateException("게임을 끝낼 수 없는 상태입니다.");
+    }
+
     public State status() {
-        throw new IllegalStateException("상태를 볼 수 없는 상태입니다.");
+        return this;
     }
 
     public End end() {

@@ -56,7 +56,7 @@ public class ChessController {
         }
         if (command.isMove()) {
             state = state.next();
-            play(command);
+            playTurn(command);
         }
         if (command.isStatus()) {
             state = state.status();
@@ -70,12 +70,16 @@ public class ChessController {
         }
     }
 
-    private void play(final Command command) {
+    private void playTurn(final Command command) {
         try {
             game.move(command.getSource(), command.getTarget());
             outputView.printChessBoard(game.getPieces());
         } catch (final IllegalArgumentException e) {
             System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
+        }
+
+        if (game.judgeWinner() != Camp.EMPTY) {
+            state = state.kingDead();
         }
     }
 }

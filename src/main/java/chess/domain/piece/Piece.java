@@ -20,8 +20,14 @@ public abstract class Piece {
         this.position = new Square(File.EMPTY, Rank.EMPTY);
     }
 
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
+    public boolean isMovable(final Piece targetPiece, final boolean isPathBlocked) {
         throw new UnsupportedOperationException();
+    }
+
+    public abstract Piece move(Square target);
+
+    protected Move calculateMove(final Piece target) {
+        return Move.calculateMove(position, target.position);
     }
 
     public Square position() {

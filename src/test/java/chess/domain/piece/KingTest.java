@@ -64,7 +64,7 @@ class KingTest {
     void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
         final King king = new King(Camp.WHITE, source);
 
-        assertThat(king.isMovable(target, move, false)).isTrue();
+        assertThat(king.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 
     private static Stream<Arguments> failKingTestProvider() {
@@ -118,6 +118,6 @@ class KingTest {
     void Should_Fail_When_KingMove(final Square source, final Square target, final Move move) {
         final King king = new King(Camp.WHITE, source);
 
-        assertThat(king.isMovable(target, move, false)).isFalse();
+        assertThat(king.isMovable(new Pawn(Camp.BLACK, target), false)).isFalse();
     }
 }

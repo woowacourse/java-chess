@@ -64,6 +64,6 @@ class QueenTest {
     void Should_Success_When_QueenMove(final Square source, final Square target, final Move move) {
         final Queen queen = new Queen(Camp.WHITE, source);
 
-        assertThat(queen.isMovable(target, move, false)).isTrue();
+        assertThat(queen.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 }

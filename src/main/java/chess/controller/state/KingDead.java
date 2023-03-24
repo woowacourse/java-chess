@@ -2,18 +2,18 @@ package chess.controller.state;
 
 import chess.domain.piece.Camp;
 
-public class Running extends State {
-    Running(final Camp turn) {
+public class KingDead extends State {
+    KingDead(final Camp turn) {
         super(turn);
     }
 
     @Override
     public Running next() {
-        return new Running(Camp.nextTurn(turn()));
+        throw new IllegalStateException("다음 차례를 진행할 수 없는 상태입니다.");
     }
 
     @Override
     public KingDead kingDead() {
-        return new KingDead(turn());
+        return this;
     }
 }

@@ -16,10 +16,6 @@ public class Game {
         turn = Camp.WHITE;
     }
 
-    public List<Piece> getPieces() {
-        return board.getPieces();
-    }
-
     public void move(final Square source, final Square target) {
         if (!board.isSameCamp(source, turn)) {
             throw new IllegalArgumentException("자신의 말만 이동할 수 있습니다.");
@@ -57,5 +53,13 @@ public class Game {
             return Camp.WHITE;
         }
         return Camp.EMPTY;
+    }
+
+    public List<Piece> getPieces() {
+        return board.getPieces();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

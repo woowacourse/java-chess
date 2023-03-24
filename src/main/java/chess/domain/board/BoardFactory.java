@@ -55,10 +55,10 @@ public final class BoardFactory {
 
         pieces.addAll(createFirstLine(Camp.BLACK, squares.subList(0, 8)));
         pieces.addAll(createSecondLine(Camp.BLACK, squares.subList(8, 16)));
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
+        pieces.addAll(createEmptyLine(squares.subList(16, 24)));
+        pieces.addAll(createEmptyLine(squares.subList(24, 32)));
+        pieces.addAll(createEmptyLine(squares.subList(32, 40)));
+        pieces.addAll(createEmptyLine(squares.subList(40, 48)));
         pieces.addAll(createSecondLine(Camp.WHITE, squares.subList(48, 56)));
         pieces.addAll(createFirstLine(Camp.WHITE, squares.subList(56, 64)));
 
@@ -88,11 +88,11 @@ public final class BoardFactory {
         return pieces;
     }
 
-    private static List<Piece> createEmptyLine() {
+    private static List<Piece> createEmptyLine(final List<Square> squares) {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(Empty.of());
+            pieces.add(new Empty(squares.get(i)));
         }
 
         return pieces;
