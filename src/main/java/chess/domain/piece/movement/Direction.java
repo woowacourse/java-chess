@@ -50,7 +50,7 @@ public enum Direction {
         return List.of(NORTH, NORTH_EAST, NORTH_WEST);
     }
 
-    public boolean matches(RelativePosition relativePosition) {
+    public boolean matches(final RelativePosition relativePosition) {
         return unitRelativePosition.equals(relativePosition);
     }
 }

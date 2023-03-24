@@ -7,11 +7,11 @@ import chess.domain.position.RelativePosition;
 
 public class Bishop extends NoneEmptyPiece {
 
-    private Bishop(PieceType pieceType, Team team, Movement movement, ObstacleStrategy obstacleStrategy) {
+    private Bishop(final PieceType pieceType, final Team team, final Movement movement, final ObstacleStrategy obstacleStrategy) {
         super(pieceType, team, movement, obstacleStrategy);
     }
 
-    public static Bishop from(Team team) {
+    public static Bishop from(final Team team) {
         return new Bishop(PieceType.BISHOP, team, Movement.BISHOP, new BlockedByObstacle());
     }
 

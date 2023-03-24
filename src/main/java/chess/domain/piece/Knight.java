@@ -7,16 +7,16 @@ import chess.domain.position.RelativePosition;
 
 public class Knight extends NoneEmptyPiece {
 
-    private Knight(PieceType pieceType, Team team, Movement movement, ObstacleStrategy obstacleStrategy) {
+    private Knight(final PieceType pieceType, final Team team, final Movement movement, final ObstacleStrategy obstacleStrategy) {
         super(pieceType, team, movement, obstacleStrategy);
     }
 
-    public static Knight from(Team team) {
+    public static Knight from(final Team team) {
         return new Knight(PieceType.KNIGHT, team, Movement.KNIGHT, new SkipObstacle());
     }
 
     @Override
-    public boolean isMobile(RelativePosition relativePosition, Piece target) {
+    public boolean isMobile(final RelativePosition relativePosition, final Piece target) {
         validateSameTeam(target);
         validateIllegalDirection(relativePosition);
         return true;

@@ -55,11 +55,11 @@ public class InputRenderer {
         }
     }
 
-    private static String getUpperCasedFirstWord(String string) {
+    private static String getUpperCasedFirstWord(final String string) {
         return string.split(" ")[0].toUpperCase();
     }
 
-    private static List<Integer> toColumnAndRow(String rawPosition) {
+    private static List<Integer> toColumnAndRow(final String rawPosition) {
         if (rawPosition.length() != 2) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }

@@ -24,7 +24,7 @@ public class ChessController {
     private final ChessGame chessGame;
     private final Map<Command, Action> commandMapper;
 
-    public ChessController(ErrorController errorController) {
+    public ChessController(final ErrorController errorController) {
         this.errorController = errorController;
         this.chessGame = ChessGame.create();
         this.commandMapper = Map.of(
@@ -39,13 +39,13 @@ public class ChessController {
         CommandDto commandDto = readCommand(List.of(START, END));
         Command command = commandDto.getCommand();
 
-        while (command.isPlayable()) {
+        while (command.isEnd()) {
             commandDto = commandMapper.get(command).act(commandDto);
             command = commandDto.getCommand();
         }
     }
 
-    private CommandDto readCommand(List<Command> possibleCommands) {
+    private CommandDto readCommand(final List<Command> possibleCommands) {
         CommandDto commandDto;
         do {
             commandDto = errorController.RetryIfThrowsException(() ->
@@ -54,12 +54,12 @@ public class ChessController {
         return commandDto;
     }
 
-    public CommandDto start(CommandDto commandDto) {
+    public CommandDto start(final CommandDto commandDto) {
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    public CommandDto move(CommandDto commandDto) {
+    public CommandDto move(final CommandDto commandDto) {
         List<Integer> source = commandDto.getSource();
         List<Integer> target = commandDto.getTarget();
         Position sourcePosition = new Position(source.get(0), source.get(1));
@@ -77,7 +77,7 @@ public class ChessController {
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    public CommandDto inquireStatus(CommandDto commandDto) {
+    public CommandDto inquireStatus(final CommandDto commandDto) {
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
         OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));

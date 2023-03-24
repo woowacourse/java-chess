@@ -4,7 +4,7 @@ public class TeamDto {
 
     private final String team;
 
-    public TeamDto(String team) {
+    public TeamDto(final String team) {
         this.team = team;
     }
 

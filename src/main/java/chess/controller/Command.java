@@ -4,7 +4,7 @@ public enum Command {
 
     START, END, MOVE, STATUS;
 
-    public boolean isPlayable() {
+    public boolean isEnd() {
         return this != END;
     }
 }

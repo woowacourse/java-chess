@@ -16,12 +16,12 @@ public enum Movement {
     private final Mobility mobility;
     private final List<Direction> directions;
 
-    Movement(Mobility mobility, List<Direction> directions) {
+    Movement(final Mobility mobility, final List<Direction> directions) {
         this.mobility = mobility;
         this.directions = directions;
     }
 
-    public boolean isMobile(RelativePosition relativePosition) {
+    public boolean isMobile(final RelativePosition relativePosition) {
         RelativePosition unitPosition = relativePosition.toUnit();
         if (isMovedTooFar(relativePosition, unitPosition)) {
             return false;
@@ -33,7 +33,7 @@ public enum Movement {
         return mobility == Mobility.ONCE && !unitPosition.equals(relativePosition);
     }
 
-    private boolean containsUnitPosition(RelativePosition unitPosition) {
+    private boolean containsUnitPosition(final RelativePosition unitPosition) {
         return directions.stream()
                 .anyMatch(direction -> direction.matches(unitPosition));
     }

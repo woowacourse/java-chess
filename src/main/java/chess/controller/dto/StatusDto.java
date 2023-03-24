@@ -5,7 +5,7 @@ public class StatusDto {
     private final String team;
     private final String score;
 
-    public StatusDto(String team, String score) {
+    public StatusDto(final String team, final String score) {
         this.team = team;
         this.score = score;
     }

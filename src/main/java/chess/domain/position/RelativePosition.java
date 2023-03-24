@@ -37,7 +37,7 @@ public class RelativePosition {
         return new RelativePosition(x / gcd, y / gcd);
     }
 
-    private int getGreatestCommonDivisor(int x, int y) {
+    private int getGreatestCommonDivisor(final int x, final int y) {
         BigInteger bigX = BigInteger.valueOf(x);
         BigInteger bigY = BigInteger.valueOf(y);
         return bigX.gcd(bigY).intValue();

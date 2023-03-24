@@ -21,11 +21,11 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public void movePiece(Position from, Position to) {
+    public void movePiece(final Position from, final Position to) {
         validateSourceEmpty(from);
         validateObstacleInPath(from, to);
 
@@ -37,13 +37,13 @@ public class Board {
         }
     }
 
-    private void validateSourceEmpty(Position from) {
+    private void validateSourceEmpty(final Position from) {
         if (board.get(from).isEmpty()) {
             throw new IllegalArgumentException("조작할 수 있는 말이 없습니다.");
         }
     }
 
-    private void validateObstacleInPath(Position from, Position to) {
+    private void validateObstacleInPath(final Position from, final Position to) {
         NoneEmptyPiece source = (NoneEmptyPiece) board.get(from);
         List<Position> obstaclePositionsInPath = source.getObstacleCheckingPositions(from, to);
 
@@ -52,18 +52,18 @@ public class Board {
         }
     }
 
-    private boolean hasObstacle(List<Position> obstaclePositionsInPath) {
+    private boolean hasObstacle(final List<Position> obstaclePositionsInPath) {
         return obstaclePositionsInPath.stream()
                 .anyMatch(position -> !board.get(position).isEmpty());
     }
 
-    public boolean isKingDead(Team team) {
+    public boolean isKingDead(final Team team) {
         return board.values()
                 .stream()
                 .noneMatch(piece -> piece.isPieceType(KING) && piece.isTeam(team));
     }
 
-    public boolean isTeamInPositionMatched(Position position, Team expected) {
+    public boolean isTeamInPositionMatched(final Position position, final Team expected) {
         return board.get(position).isTeam(expected);
     }
 
@@ -77,7 +77,7 @@ public class Board {
         return sortedBoard;
     }
 
-    private List<Piece> sortLine(List<Position> positions, int i) {
+    private List<Piece> sortLine(final List<Position> positions, final int i) {
         List<Piece> line = new ArrayList<>();
         for (int j = 0; j < LINE_SIZE; j++) {
             Piece piece = board.get(positions.get(j + LINE_SIZE * i));
@@ -97,27 +97,8 @@ public class Board {
         return positions;
     }
 
-    public List<List<Piece>> getBoard() {
-        return sortBoard();
-    }
 
-    public List<Double> getScores(Team team) {
-        return board.values()
-                .stream()
-                .filter(piece -> piece.isTeam(team))
-                .map(Piece::getScore)
-                .collect(Collectors.toList());
-    }
-
-    public double getMinusScore(Team team) {
-        long pawnCount = 0;
-        for (int i = 0; i < LINE_SIZE; i++) {
-            pawnCount += countPawnsInSameColumn(i, team);
-        }
-        return pawnCount * 0.5;
-    }
-
-    private long countPawnsInSameColumn(int column, Team team) {
+    private long countPawnsInSameColumn(final int column, final Team team) {
         long pawnCount = board.keySet()
                 .stream()
                 .filter(position -> position.isColumn(column))
@@ -131,4 +112,23 @@ public class Board {
         return 0;
     }
 
+    public List<List<Piece>> getBoard() {
+        return sortBoard();
+    }
+
+    public List<Double> getScores(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isTeam(team))
+                .map(Piece::getScore)
+                .collect(Collectors.toList());
+    }
+
+    public double getMinusScore(final Team team) {
+        long pawnCount = 0;
+        for (int i = 0; i < LINE_SIZE; i++) {
+            pawnCount += countPawnsInSameColumn(i, team);
+        }
+        return pawnCount * 0.5;
+    }
 }

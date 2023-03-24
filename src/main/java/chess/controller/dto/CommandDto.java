@@ -12,7 +12,7 @@ public class CommandDto {
     private final List<Integer> target;
 
 
-    public CommandDto(Command command, List<Integer> source, List<Integer> target) {
+    public CommandDto(final Command command, final List<Integer> source, final List<Integer> target) {
         this.command = command;
         this.source = source;
         this.target = target;

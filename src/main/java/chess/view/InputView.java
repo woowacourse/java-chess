@@ -13,7 +13,7 @@ public class InputView {
     }
 
 
-    private static void checkBlank(String input) {
+    private static void checkBlank(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("공백을 입력할 수 없습니다.");
         }

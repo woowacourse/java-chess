@@ -9,7 +9,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMobile(RelativePosition relativePosition, Piece target) {
+    public boolean isMobile(final RelativePosition relativePosition, final Piece target) {
         return false;
     }
 

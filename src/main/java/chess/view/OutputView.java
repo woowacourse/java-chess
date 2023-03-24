@@ -16,26 +16,26 @@ public class OutputView {
                         + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(BoardDto boardDto) {
+    public static void printBoard(final BoardDto boardDto) {
         boardDto.getBoard().forEach(line -> System.out.println(printLine(line)));
         System.out.println();
     }
 
-    private static String printLine(List<String> line) {
+    private static String printLine(final List<String> line) {
         return String.join("", line);
     }
 
-    public static void printErrorMessage(String errorMessage) {
+    public static void printErrorMessage(final String errorMessage) {
         System.out.println(errorMessage);
     }
 
-    public static void printStatus(StatusDto statusDto) {
+    public static void printStatus(final StatusDto statusDto) {
         String team = statusDto.getTeam();
         String score = statusDto.getScore();
         System.out.println("> " + team + ": " + score + "점");
     }
 
-    public static void printTurn(TeamDto teamDto) {
+    public static void printTurn(final TeamDto teamDto) {
         String turn = teamDto.getTeam();
         if(turn.isBlank()){
             return;
@@ -44,7 +44,7 @@ public class OutputView {
     }
 
 
-    public static void printWinTeam(TeamDto teamDto) {
+    public static void printWinTeam(final TeamDto teamDto) {
         String winTeam = teamDto.getTeam();
         if (winTeam.isBlank()) {
             System.out.println("> 무승부 입니다!");

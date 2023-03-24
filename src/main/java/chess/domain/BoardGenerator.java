@@ -38,7 +38,7 @@ public class BoardGenerator {
         return new Board(board);
     }
 
-    private static void initializeEmptyPieces(HashMap<Position, Piece> board) {
+    private static void initializeEmptyPieces(final HashMap<Position, Piece> board) {
         for (int i = 0; i < LINE_SIZE; i++) {
             for (int j = EMPTY_START_ROW; j <= EMPTY_END_ROW; j++) {
                 board.put(new Position(i, j), new EmptyPiece());
@@ -46,7 +46,7 @@ public class BoardGenerator {
         }
     }
 
-    private static void initializePiecesOfEdgeLine(HashMap<Position, Piece> board, Team team, int row) {
+    private static void initializePiecesOfEdgeLine(final HashMap<Position, Piece> board, final Team team, final int row) {
         List<Piece> pieces = new ArrayList<>(
                 List.of(Rook.from(team), Knight.from(team), Bishop.from(team), Queen.from(team),
                         King.from(team), Bishop.from(team), Knight.from(team), Rook.from(team))
@@ -56,7 +56,7 @@ public class BoardGenerator {
         }
     }
 
-    private static void initializePawns(HashMap<Position, Piece> board, Team team, int row) {
+    private static void initializePawns(final HashMap<Position, Piece> board, final Team team, final int row) {
         for (int i = 0; i < LINE_SIZE; i++) {
             board.put(new Position(i, row), Pawn.from(team));
         }

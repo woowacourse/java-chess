@@ -9,26 +9,26 @@ public abstract class Piece {
     protected final PieceType pieceType;
     protected final Team team;
 
-    protected Piece(PieceType pieceType, Team team) {
+    protected Piece(final PieceType pieceType, final Team team) {
         this.pieceType = pieceType;
         this.team = team;
     }
 
-    public abstract boolean isMobile(RelativePosition relativePosition, Piece target);
+    public abstract boolean isMobile(final RelativePosition relativePosition, final Piece target);
 
     public boolean isEmpty() {
         return this.team == EMPTY;
     }
 
-    public boolean isPieceType(PieceType pieceType) {
+    public boolean isPieceType(final PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 
-    public boolean isTeam(Team team) {
+    public boolean isTeam(final Team team) {
         return this.team == team;
     }
 
-    public boolean isSameTeam(Piece target) {
+    public boolean isSameTeam(final Piece target) {
         return this.team == target.team;
     }
 

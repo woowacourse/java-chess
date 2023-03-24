@@ -15,7 +15,7 @@ public class ChessGame {
     private final Board board;
     private Team turn;
 
-    private ChessGame(Board board, Team turn) {
+    private ChessGame(final Board board, final Team turn) {
         this.board = board;
         this.turn = turn;
     }
@@ -24,13 +24,13 @@ public class ChessGame {
         return new ChessGame(BoardGenerator.createBoard(), WHITE);
     }
 
-    public void movePiece(Position from, Position to) {
+    public void movePiece(final Position from, final Position to) {
         validateTurn(from);
         board.movePiece(from, to);
         changeTurn();
     }
 
-    private void validateTurn(Position from) {
+    private void validateTurn(final Position from) {
         if (board.isTeamInPositionMatched(from, turn)) {
             return;
         }
@@ -56,11 +56,23 @@ public class ChessGame {
         return board.isKingDead(WHITE) || board.isKingDead(BLACK);
     }
 
+    private Team decideWinTeamByScore() {
+        double whiteTeamScore = getTotalScore(WHITE);
+        double blackTeamScore = getTotalScore(BLACK);
+        if (whiteTeamScore > blackTeamScore) {
+            return WHITE;
+        }
+        if (whiteTeamScore < blackTeamScore) {
+            return BLACK;
+        }
+        return EMPTY;
+    }
+
     public List<List<Piece>> getBoard() {
         return board.getBoard();
     }
 
-    public double getTotalScore(Team team) {
+    public double getTotalScore(final Team team) {
         double basicScore = board.getScores(team)
                 .stream()
                 .mapToDouble(score -> score)
@@ -77,18 +89,6 @@ public class ChessGame {
         }
 
         return decideWinTeamByScore();
-    }
-
-    private Team decideWinTeamByScore() {
-        double whiteTeamScore = getTotalScore(WHITE);
-        double blackTeamScore = getTotalScore(BLACK);
-        if (whiteTeamScore > blackTeamScore) {
-            return WHITE;
-        }
-        if (whiteTeamScore < blackTeamScore) {
-            return BLACK;
-        }
-        return EMPTY;
     }
 
     public Team getTurn() {
