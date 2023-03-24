@@ -28,7 +28,7 @@ class SideTest {
     void shouldThrowExceptionWhenRequestToNeutralIfOpponentSideWithWhite() {
         Side side = Side.NEUTRAL;
         assertThatThrownBy(() -> side.isOpponentWith(Side.WHITE))
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - Neutral side는 상대편을 확인할 수 없습니다.");
     }
 }

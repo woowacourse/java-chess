@@ -67,7 +67,7 @@ public class ChessController {
     private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (UnsupportedOperationException e) {
+        } catch (IllegalStateException e) {
             System.out.println("Log: " + e.getMessage()); // log 기록
             this.outputView.printServerErrorMessage();
             return repeat(supplier);

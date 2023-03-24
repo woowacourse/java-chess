@@ -18,7 +18,7 @@ class EmptyPieceTest {
     void shouldThrowExceptionWhenCallIsMovable() {
         assertThatThrownBy(() ->
                 new EmptyPiece().isMovable(Pawn.createOfBlack(), Position.of(A, FIVE), Position.of(C, SEVEN)))
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - EmptyPiece는 움직임을 확인할 수 없습니다.");
     }
 
@@ -27,7 +27,7 @@ class EmptyPieceTest {
     void shouldThrowExceptionWhenCallGetPath() {
         assertThatThrownBy(() ->
                 new EmptyPiece().collectPath(Position.of(A, FIVE), Position.of(C, SEVEN)))
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - EmptyPiece는 움직임의 경로를 계산할 수 없습니다.");
     }
 
@@ -35,7 +35,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCheckEmptyPieceIsOpponentSide() {
         assertThatThrownBy(() -> new EmptyPiece().isOpponentSideWith(Pawn.createOfBlack()))
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - Neutral side는 상대편을 확인할 수 없습니다.");
     }
 }
