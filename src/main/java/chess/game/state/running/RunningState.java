@@ -52,4 +52,14 @@ public abstract class RunningState implements GameState {
     public boolean isChecked() {
         return false;
     }
+
+    @Override
+    public void saveGame(Runnable runnable) {
+        runnable.run();
+    }
+
+    @Override
+    public void loadGame(Runnable runnable) {
+        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
+    }
 }

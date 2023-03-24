@@ -28,4 +28,8 @@ public interface GameState {
     boolean hasWinner();
 
     boolean isChecked();
+
+    void saveGame(Runnable runnable);
+
+    void loadGame(Runnable runnable);
 }

@@ -64,4 +64,14 @@ public class WaitingState implements GameState {
     public boolean isChecked() {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
+
+    @Override
+    public void saveGame(Runnable runnable) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public void loadGame(Runnable runnable) {
+        runnable.run();
+    }
 }

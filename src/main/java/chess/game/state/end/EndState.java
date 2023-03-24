@@ -56,4 +56,14 @@ public abstract class EndState implements GameState {
     public boolean isChecked() {
         return false;
     }
+
+    @Override
+    public void saveGame(Runnable runnable) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public void loadGame(Runnable runnable) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
 }
