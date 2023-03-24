@@ -20,7 +20,7 @@ public class JdbcRoomDao implements RoomDao {
 
     @Override
     public long createRoom(String gameName) {
-        final String query = "INSERT INTO game (gameName) VALUES (?)";
+        final String query = "INSERT INTO room (gameName) VALUES (?)";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query,
                      Statement.RETURN_GENERATED_KEYS)) {
@@ -36,7 +36,7 @@ public class JdbcRoomDao implements RoomDao {
 
     @Override
     public List<String> findAllRooms() {
-        final String query = "SELECT gameName FROM game";
+        final String query = "SELECT gameName FROM room";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -53,7 +53,7 @@ public class JdbcRoomDao implements RoomDao {
 
     @Override
     public void deleteAllGame() {
-        final String query = "DELETE from game";
+        final String query = "DELETE from room";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
@@ -64,7 +64,7 @@ public class JdbcRoomDao implements RoomDao {
 
     @Override
     public long findGameIdByGameName(String gameName) {
-        final String query = "SELECT _id FROM game WHERE gameName = ?";
+        final String query = "SELECT _id FROM room WHERE gameName = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);

@@ -20,9 +20,9 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public List<BoardDto> findBoardByRoomId(long roomId) {
-        final String query = "SELECT square, piece, camp FROM game "
-                + "JOIN board ON game._id = board.g_id "
-                + "WHERE game._id = ?";
+        final String query = "SELECT square, piece, camp FROM room "
+                + "JOIN board ON room._id = board.r_id "
+                + "WHERE room._id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
@@ -42,7 +42,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public void saveBoard(long game_id, List<BoardDto> boardDtos) {
-        final String query = "INSERT INTO board (square, piece, camp, g_id) VALUES (?,?,?,?)";
+        final String query = "INSERT INTO board (square, piece, camp, r_id) VALUES (?,?,?,?)";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (BoardDto boardDto : boardDtos) {
@@ -60,7 +60,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public void saveMoveHistory(long game_id, MoveHistoryDto moveHistoryDto) {
-        final String query = "INSERT INTO moveHistory (source, target, pieceOnTarget, g_id) VALUES (?,?,?,?)";
+        final String query = "INSERT INTO moveHistory (source, target, pieceOnTarget, r_id) VALUES (?,?,?,?)";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, moveHistoryDto.getSource());
@@ -75,7 +75,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public void updateCurrentTurn(long gameId, String currentTurn) {
-        final String query = "UPDATE game SET currentTurn = ? WHERE _id = ?";
+        final String query = "UPDATE room SET currentTurn = ? WHERE _id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, currentTurn);
@@ -88,7 +88,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public String findCurrentTurnByGameName(long roomId) {
-        final String query = "SELECT currentTurn FROM game WHERE _id = ?";
+        final String query = "SELECT currentTurn FROM room WHERE _id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
@@ -102,7 +102,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public void deleteBoardById(long gameId) {
-        final String query = "DELETE from board`` WHERE g_id = ?";
+        final String query = "DELETE from board`` WHERE r_id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, gameId);
@@ -114,7 +114,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public List<MoveHistoryDto> findMoveHistoryByGameId(long game_id) {
-        final String query = "SELECT source, target, pieceOnTarget FROM moveHistory WHERE g_id = ?";
+        final String query = "SELECT source, target, pieceOnTarget FROM moveHistory WHERE r_id = ?";
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, game_id);
