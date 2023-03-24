@@ -2,6 +2,9 @@ package chess.service;
 
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
+import chess.domain.result.Judge;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,10 @@ public class ChessGame {
         Square targetSquare = Square.from(targetSquareInput);
         board.makeMove(sourceSquare, targetSquare);
         board.turnSwitch();
+        Side sideKingDied = Judge.findSideKingDied(board);
+        if (sideKingDied != Side.from(Color.NOTHING)) {
+            gameStatus = GameStatus.STOP;
+        }
     }
 
     public void forceClose() {
@@ -37,9 +44,9 @@ public class ChessGame {
     }
 
     public List<List<Piece>> findChessBoard() {
-        if (gameStatus != GameStatus.STARTED) {
+        /*if (gameStatus != GameStatus.STARTED) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
-        }
+        }*/
         List<List<Piece>> pieces = new ArrayList<>();
         List<File> files = List.of(File.values());
         List<Rank> ranks = List.of(Rank.values());

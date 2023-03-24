@@ -16,7 +16,7 @@ public class Judge {
     public static final Side BLACK_SIDE = Side.from(Color.BLACK);
     public static final Side WHITE_SIDE = Side.from(Color.WHITE);
 
-    public static Map<Side, Score> calculateScore(Board board, Side side) {
+    public static Map<Side, Score> calculateScore(Board board) {
         Map<Side, Score> scoreBySide = new HashMap<>();
         scoreBySide.put(BLACK_SIDE, new Score(0));
         scoreBySide.put(WHITE_SIDE, new Score(0));
@@ -27,13 +27,13 @@ public class Judge {
             for (Rank rank : Rank.values()) {
                 Piece piece = board.findPiece(file, rank);
                 Score pieceScore = new Score(piece.getRole().getScore());
-
+                Side side = piece.getSide();
                 scoreBySide.put(side, scoreBySide.getOrDefault(side, new Score(0)).sum(pieceScore));
                 if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
-                    if (piece.getSide().equals(BLACK_SIDE)) {
+                    if (side.equals(BLACK_SIDE)) {
                         blackPawnCount++;
                     }
-                    if (piece.getSide().equals(WHITE_SIDE)) {
+                    if (side.equals(WHITE_SIDE)) {
                         whitePawnCount++;
                     }
                 }
