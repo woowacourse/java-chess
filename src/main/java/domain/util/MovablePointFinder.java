@@ -16,7 +16,8 @@ public class MovablePointFinder {
         List<Point> movablePoints = new ArrayList<>();
         Map<Direction, Integer> movableRange = piece.getMovableRange();
 
-        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.UP));
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.UP), Direction.UP);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.DOWN), Direction.DOWN);
         movablePoints = onCaseOfPointOutOfBoard(pieceStatus, movablePoints);
 
         onCaseOfPieceBetWeenPath(pieceStatus, movablePoints, toPoint, piece);
@@ -42,16 +43,17 @@ public class MovablePointFinder {
         }
     }
 
-    private static void onCaseOfDirection(Point point, List<Point> movablePoints, Integer movableCount) {
+    private static void onCaseOfDirection(Point point, List<Point> movablePoints, Integer movableCount, Direction down) {
         if (movableCount != null) {
-            addMovablePoints(point, movablePoints, movableCount);
+            addMovablePoints(point, movablePoints, movableCount, down);
         }
     }
 
-    private static void addMovablePoints(Point point, List<Point> movablePoints, Integer movableCount) {
+    private static void addMovablePoints(Point point, List<Point> movablePoints, Integer movableCount, Direction direction) {
         Point movablePoint = point;
         for (int i = 0; i < movableCount; i++) {
-            movablePoint = movablePoint.up();
+            if (direction == Direction.UP) movablePoint = movablePoint.up();
+            if (direction == Direction.DOWN) movablePoint = movablePoint.down();
             movablePoints.add(movablePoint);
         }
     }

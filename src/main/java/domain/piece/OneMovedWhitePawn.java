@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.point.Direction;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class OneMovedWhitePawn extends Piece {
@@ -12,7 +13,9 @@ public class OneMovedWhitePawn extends Piece {
 
     @Override
     public Map<Direction, Integer> getMovableRange() {
-        return null;
+        Map<Direction, Integer> movableRange = new HashMap<>();
+        movableRange.put(Direction.DOWN, 1);
+        return movableRange;
     }
 
     @Override

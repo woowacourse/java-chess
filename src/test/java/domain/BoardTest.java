@@ -1,7 +1,6 @@
 package domain;
 
 import domain.piece.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -94,7 +93,7 @@ class BoardTest {
             List<List<Piece>> boardStatus = Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, a2, a3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b2, c3
             );
             Board board = new Board(boardStatus);
 
@@ -110,7 +109,7 @@ class BoardTest {
             List<List<Piece>> boardStatus = Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, a2, a3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b2, c3
             );
 
             Board board = new Board(boardStatus);
@@ -121,12 +120,12 @@ class BoardTest {
 
         @Nested
         @DisplayName("검정색 폰을 움직이는 경우")
-        class PawnCase {
+        class BlackPawnCase {
             @Test
             @DisplayName("폰을 처음 움직이는 경우, 한 번에 두 칸씩 이동할 수 있다.")
             void pawnFirstMove() {
                 List<List<Piece>> boardStatus = Arrays.asList(
-                        Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a1, a1, a1
+                        Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a1, b1, c1
                         Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                         Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
                 );
@@ -200,20 +199,6 @@ class BoardTest {
             }
 
             @Test
-            @DisplayName("이동하려는 위치에 상대편의 기물이 있다면 이동이 가능하다.")
-            void givenEnemyOnPoint_whenPawnMoveToPoint() {
-                List<List<Piece>> boardStatus = Arrays.asList(
-                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                        Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
-                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a4, b4, c4
-                );
-                Board board = new Board(boardStatus);
-
-                assertDoesNotThrow(() -> board.move("b2", "b4"));
-            }
-
-            @Test
             @DisplayName("이동하려는 위치에 우리 편의 기물이 있다면 이동이 불가능하다.")
             void givenTeamOnPoint_whenPawnMoveToPoint() {
                 List<List<Piece>> boardStatus = Arrays.asList(
@@ -225,6 +210,102 @@ class BoardTest {
                 Board board = new Board(boardStatus);
 
                 assertThatThrownBy(() -> board.move("b2", "b4"))
+                        .isInstanceOf(IllegalArgumentException.class);
+            }
+        }
+
+        @Nested
+        @DisplayName("하얀색 폰을 움직이는 경우")
+        class WhitePawnCase {
+            @Test
+            @DisplayName("폰을 처음 움직이는 경우, 한 번에 두 칸씩 이동할 수 있다.")
+            void pawnFirstMove() {
+                List<List<Piece>> boardStatus = Arrays.asList(
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a3, b3, c3
+                );
+                Board board = new Board(boardStatus);
+
+                board.move("b3", "b1");
+
+                assertThat(boardStatus.get(0).get(1)).isEqualTo(new OneMovedWhitePawn());
+            }
+
+            @Test
+            @DisplayName("폰을 처음 움직인 이후에는, 한 번에 한 칸씩 전진할 수 있다.")
+            void pawnMoveAfterFirst() {
+                List<List<Piece>> boardStatus = Arrays.asList(
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, a2, a3
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a4, b4, c4
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a5, b5, c5
+                );
+                Board board = new Board(boardStatus);
+                board.move("b5", "b3");
+
+                assertThatThrownBy(() -> board.move("b3", "b1"))
+                        .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
+                        .isInstanceOf(IllegalArgumentException.class);
+                assertDoesNotThrow(() -> board.move("b3", "b2"));
+            }
+
+            @Test
+            @DisplayName("주위에 장기말이 없을 때, 폰을 위쪽 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
+            void pawnMoveToInvalidDirection() {
+                List<List<Piece>> boardStatus = Arrays.asList(
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
+                        Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
+                );
+                Board board = new Board(boardStatus);
+
+                assertAll(
+                        () -> assertThatThrownBy(() -> board.move("b2", "b3"))
+                                .as("위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "a1"))
+                                .as("왼쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "c1"))
+                                .as("오른쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "c2"))
+                                .as("오른쪽 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "c3"))
+                                .as("오른쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "a3"))
+                                .as("왼쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                        () -> assertThatThrownBy(() -> board.move("b2", "a2"))
+                                .as("왼쪽 이동 불가").isInstanceOf(IllegalArgumentException.class)
+                );
+            }
+
+            @Test
+            @DisplayName("이동하려는 경로 사이에 다른 기물이 막고있을 경우, 전진하지 못하고 예외가 발생한다.")
+            void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
+                List<List<Piece>> boardStatus = Arrays.asList(
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a3, b3, c3
+                        Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+                );
+                Board board = new Board(boardStatus);
+
+                assertThatThrownBy(() -> board.move("b3", "b1"))
+                        .isInstanceOf(IllegalArgumentException.class);
+            }
+
+            @Test
+            @DisplayName("이동하려는 위치에 우리 편의 기물이 있다면 이동이 불가능하다.")
+            void givenTeamOnPoint_whenPawnMoveToPoint() {
+                List<List<Piece>> boardStatus = Arrays.asList(
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
+                        Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                        Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a4, b4, c4
+                );
+                Board board = new Board(boardStatus);
+
+                assertThatThrownBy(() -> board.move("b4", "b2"))
                         .isInstanceOf(IllegalArgumentException.class);
             }
         }

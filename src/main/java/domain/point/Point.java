@@ -29,6 +29,10 @@ public class Point {
         return new Point(file, rank.up());
     }
 
+    public Point down() {
+        return new Point(file, rank.down());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

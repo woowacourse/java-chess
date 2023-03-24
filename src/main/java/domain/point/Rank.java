@@ -43,6 +43,15 @@ public enum Rank {
         return findByIndexFromBottom(indexFromBottomOfNewRank);
     }
 
+    public Rank down() {
+        if (this == ONE) {
+            throw new IllegalArgumentException("더이상 내려갈 수 없습니다.");
+        }
+
+        int indexFromBottomOfNewRank = Integer.parseInt(symbol);
+        return findByIndexFromBottom(indexFromBottomOfNewRank - 2);
+    }
+
     public String getSymbol() {
         return symbol;
     }
