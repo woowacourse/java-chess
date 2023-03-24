@@ -9,8 +9,11 @@ public class ChessController {
 
     private ChessGame chessGame;
 
+    public ChessController() {
+        this.chessGame = new ChessGame();
+    }
+
     public AppStatus start(CommandRequest commandRequest) {
-        chessGame = new ChessGame();
         chessGame.start(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;
@@ -24,6 +27,7 @@ public class ChessController {
 
     public AppStatus end(CommandRequest commandRequest) {
         chessGame.end(commandRequest);
+        chessGame = new ChessGame();
         OutputView.printGuideMessage();
         return AppStatus.RUNNING;
     }

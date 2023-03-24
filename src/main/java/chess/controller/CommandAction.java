@@ -4,6 +4,6 @@ import chess.dto.CommandRequest;
 
 public interface CommandAction {
 
-    AppStatus execute(CommandRequest commandRequest);
-    
+    AppStatus execute(ChessController chessController, CommandRequest commandRequest);
+
 }

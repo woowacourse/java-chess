@@ -1,7 +1,5 @@
 package chess.view;
 
-import static chess.view.Command.MOVE;
-
 import chess.dto.CommandRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +7,7 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String COMMAND_MOVE = "move";
     private static final String REQUEST_DELIMITER = " ";
     private static final int SINGLE_COMMAND_LENGTH = 1;
     private static final int MOVE_COMMAND_LENGTH = 3;
@@ -26,11 +25,14 @@ public class InputView {
     public static CommandRequest requestGameCommand() {
         String[] request = readRequest();
         if (request.length == SINGLE_COMMAND_LENGTH) {
-            return CommandRequest.fromControlCommand(Command.findSingleCommand(request[COMMAND_INDEX]));
+            return CommandRequest.fromControlCommand(request[COMMAND_INDEX]);
         }
         validateMoveCommandRequest(request);
-        return CommandRequest.fromMoveCommand(parsePosition(request[SOURCE_POSITION_INDEX]),
-                parsePosition(request[DESTINATION_POSITION_INDEX]));
+        return CommandRequest.fromMoveCommand(
+                COMMAND_MOVE,
+                parsePosition(request[SOURCE_POSITION_INDEX]),
+                parsePosition(request[DESTINATION_POSITION_INDEX])
+        );
     }
 
     private static String[] readRequest() {
@@ -42,7 +44,7 @@ public class InputView {
         if (request.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
-        if (!request[COMMAND_INDEX].equalsIgnoreCase(MOVE.getAnswer())) {
+        if (!request[COMMAND_INDEX].equalsIgnoreCase(COMMAND_MOVE)) {
             throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
         }
     }
