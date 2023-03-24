@@ -4,6 +4,7 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -63,5 +64,35 @@ class ChessGameTest {
     void calculateScore_Black() {
         ChessGame chessGame = new ChessGame();
         assertThat(chessGame.calculateBlackScore()).isEqualTo(38);
+    }
+
+    @DisplayName("file1에 whitePawn이 2개이면 전체는 37점")
+    @Test
+    void calculateFileScore() {
+        var chessGame = new ChessGame();
+
+        chessGame.playTurn(B2, B4);
+        chessGame.playTurn(A7, A5);
+        chessGame.playTurn(B4, A5);
+
+        assertThat(chessGame.calculateWhiteScore()).isEqualTo(37);
+    }
+
+    @DisplayName("file1에 whitePawn이 3개이면 전체는 36.5점")
+    @Test
+    void calculateWhiteScore_asdf() {
+        var chessGame = new ChessGame();
+
+        chessGame.playTurn(B2, B4);
+        chessGame.playTurn(A7, A5);
+        chessGame.playTurn(B4, A5);
+        chessGame.playTurn(B7, B5);
+        chessGame.playTurn(C2, C4);
+        chessGame.playTurn(A8, A6);
+        chessGame.playTurn(C4, B5);
+        chessGame.playTurn(C7, C6);
+        chessGame.playTurn(B5, A6);
+
+        AssertionsForClassTypes.assertThat(chessGame.calculateWhiteScore()).isEqualTo(36.5);
     }
 }
