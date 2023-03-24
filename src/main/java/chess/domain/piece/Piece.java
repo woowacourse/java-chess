@@ -34,7 +34,7 @@ public abstract class Piece {
         return this.color.equals(color);
     }
 
-    public Path searchPathTo(final Position from, final Position to, final Piece destination) {
+    public final Path searchPathTo(final Position from, final Position to, final Piece destination) {
         if (!destination.isEmpty()) {
             validateSameColor(destination);
         }
@@ -59,8 +59,12 @@ public abstract class Piece {
         return new Path(positions);
     }
 
-    public PieceType getPieceType() {
+    public final PieceType getPieceType() {
         return pieceType;
+    }
+
+    public final Color getColor() {
+        return color;
     }
 
     public abstract boolean isEmpty();

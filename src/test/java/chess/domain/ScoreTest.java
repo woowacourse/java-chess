@@ -3,11 +3,8 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.board.Score;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +15,11 @@ class ScoreTest {
     void test_pieceMapScore() {
 
         assertAll(
-                () -> assertThat(Score.mapPieceScore(Pawn.class)).isEqualTo(new Score(1)),
-                () -> assertThat(Score.mapPieceScore(Knight.class)).isEqualTo(new Score(2.5)),
-                () -> assertThat(Score.mapPieceScore(Bishop.class)).isEqualTo(new Score(3)),
-                () -> assertThat(Score.mapPieceScore(Rook.class)).isEqualTo(new Score(5)),
-                () -> assertThat(Score.mapPieceScore(Queen.class)).isEqualTo(new Score(9))
+                () -> assertThat(Score.mapPieceScore(PieceType.PAWN)).isEqualTo(new Score(1)),
+                () -> assertThat(Score.mapPieceScore(PieceType.KNIGHT)).isEqualTo(new Score(2.5)),
+                () -> assertThat(Score.mapPieceScore(PieceType.BISHOP)).isEqualTo(new Score(3)),
+                () -> assertThat(Score.mapPieceScore(PieceType.ROOK)).isEqualTo(new Score(5)),
+                () -> assertThat(Score.mapPieceScore(PieceType.QUEEN)).isEqualTo(new Score(9))
         );
     }
 

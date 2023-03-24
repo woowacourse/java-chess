@@ -1,25 +1,24 @@
-package chess.domain;
+package chess.domain.board;
 
 import static java.util.Map.entry;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.PieceType;
 import java.util.Map;
 import java.util.Objects;
 
 public final class Score {
 
-    private static final Map<Class<? extends Piece>, Score> pieceScoreMapper = Map.ofEntries(
-            entry(Pawn.class, new Score(1)),
-            entry(Knight.class, new Score(2.5)),
-            entry(Bishop.class, new Score(3)),
-            entry(Rook.class, new Score(5)),
-            entry(Queen.class, new Score(9))
+    private static final Map<PieceType, Score> pieceScoreMapper = Map.ofEntries(
+            entry(PieceType.PAWN, new Score(1)),
+            entry(PieceType.KNIGHT, new Score(2.5)),
+            entry(PieceType.BISHOP, new Score(3)),
+            entry(PieceType.ROOK, new Score(5)),
+            entry(PieceType.QUEEN, new Score(9)),
+            entry(PieceType.KING, new Score(0))
     );
+    static final int DUPLICATE_SAME_FILE_PAWN_LIMIT = 2;
+    static final Score ZERO = new Score(0);
+    static final double PAWN_WEIGHT = 0.5;
 
     private final double value;
 
@@ -27,8 +26,8 @@ public final class Score {
         this.value = value;
     }
 
-    public static Score mapPieceScore(final Class<? extends Piece> pieceClass) {
-        return pieceScoreMapper.get(pieceClass);
+    public static Score mapPieceScore(final PieceType pieceType) {
+        return pieceScoreMapper.get(pieceType);
     }
 
     public Score sum(final Score score) {

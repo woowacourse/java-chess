@@ -26,7 +26,7 @@ class PieceTest {
     static class TestPiece extends Piece {
 
         public TestPiece(final Color color) {
-            super(color);
+            super(color, PieceType.EMPTY);
         }
 
         @Override
