@@ -31,7 +31,7 @@ public class WhitePawn extends Piece {
     }
 
     @Override
-    public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces) {
+    public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
         if (pieces.size() <= TWO_STEP) {
             if (pieces.size() == TWO_STEP) {
                 checkFirstMove(currentPosition);
@@ -56,5 +56,9 @@ public class WhitePawn extends Piece {
         if (targetPiece.getTeam() == Team.WHITE) {
             throw new IllegalArgumentException("[ERROR] 도착지점이 상대편 기물이 아니므로 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public void checkExistPiece(List<Piece> pieces) {
     }
 }

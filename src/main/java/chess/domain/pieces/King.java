@@ -31,25 +31,23 @@ public class King extends Piece {
 
     @Override
     public void validateTeam(Team team) {
-        if(team == Team.NEUTRALITY){
+        if (team == Team.NEUTRALITY) {
             throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
         }
     }
 
     @Override
-    public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces) {
+    public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
         checkStep(pieces.size());
     }
 
-    private void checkStep(int size){
-        if(size>STEP){
+    @Override
+    public void checkExistPiece(List<Piece> pieces) {
+    }
+
+    private void checkStep(int size) {
+        if (size > STEP) {
             throw new IllegalArgumentException("[ERROR] 킹은 한 칸만 움직일 수 있습니다.");
         }
     }
-
-//    private int calculateStep(Position current, Position target) {
-//        int rankGap = Math.abs(target.getRank() - current.getRank());
-//        int fileGap = Math.abs(target.getFile() - current.getFile());
-//        return Math.max(rankGap, fileGap);
-//    }
 }

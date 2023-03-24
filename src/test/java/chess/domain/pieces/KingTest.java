@@ -30,7 +30,7 @@ class KingTest {
         List<Piece> pieces = List.of(new King(Team.WHITE));
         King king = new King(Team.BLACK);
 
-        king.checkEachPiece(position, direction, pieces);
+        king.checkStep(position, direction, pieces);
     }
 
     @Test
@@ -41,6 +41,6 @@ class KingTest {
         List<Piece> pieces = List.of(new King(Team.WHITE),new King(Team.WHITE));
         King king = new King(Team.BLACK);
 
-        assertThatThrownBy(() -> king.checkEachPiece(position, direction, pieces));
+        assertThatThrownBy(() -> king.checkStep(position, direction, pieces));
     }
 }

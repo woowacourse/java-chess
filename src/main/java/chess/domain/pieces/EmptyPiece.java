@@ -1,9 +1,9 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Position;
-import chess.domain.pieces.component.Team;
 import chess.domain.Direction;
+import chess.domain.board.Position;
 import chess.domain.pieces.component.Name;
+import chess.domain.pieces.component.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,11 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces) {
+    public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
         throw new IllegalArgumentException("[ERROR] 이동 할 기물이 없습니다.");
+    }
+
+    @Override
+    public void checkExistPiece(List<Piece> pieces) {
     }
 }

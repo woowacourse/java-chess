@@ -25,9 +25,6 @@ public abstract class Piece {
         return this.team;
     }
 
-    abstract public void validateTeam(final Team team);
-
-    abstract public void checkEachPiece(Position currentPosition, Direction direction, List<Piece> pieces);
 
     public void checkDirection(Direction direction) {
         if (!this.directions.contains(direction)) {
@@ -35,24 +32,15 @@ public abstract class Piece {
         }
     }
 
-    public void checkCanMove(Piece currentPiece, List<Piece> pieces) {
-        checkExistPiece(pieces);
-        checkSameTeam(currentPiece, pieces);
-    }
-
-    private void checkExistPiece(List<Piece> pieces) {
-        for(int i=0;i<pieces.size()-1;i++){
-            if (pieces.get(i).getTeam() != Team.NEUTRALITY) {
-                throw new IllegalArgumentException("[ERROR] 경로에 기물이 존재합니다.");
-            }
-        }
-    }
-
-    private void checkSameTeam(Piece currentPiece, List<Piece> pieces) {
-        Team LastPieceTeam = pieces.get(pieces.size() - 1).team;
-
-        if (currentPiece.team == LastPieceTeam) {
+    public void checkSameTeam(Piece currentPiece, Piece targetPiece) {
+        if (currentPiece.getTeam() == targetPiece.getTeam()) {
             throw new IllegalArgumentException("[ERROR] 도착지에 같은 팀이 존재합니다.");
         }
     }
+
+    abstract public void validateTeam(final Team team);
+
+    abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
+
+    abstract public void checkExistPiece(List<Piece> pieces);
 }
