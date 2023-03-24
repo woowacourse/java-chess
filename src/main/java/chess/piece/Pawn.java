@@ -5,7 +5,7 @@ import chess.board.Position;
 public abstract class Pawn extends Piece {
 
     public Pawn(final Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override

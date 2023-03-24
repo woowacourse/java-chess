@@ -5,14 +5,14 @@ import chess.board.Position;
 public class Rook extends Piece {
 
     public Rook(final Team team) {
-        super(team);
+        super(team, PieceType.ROOK);
     }
 
     @Override
     public boolean isMovable(final Position from, final Position to, final Piece toPiece) {
         validateStay(from, to);
         validateDestination(toPiece);
-        
+
         if (from.getRank() == to.getRank()) {
             return true;
         }

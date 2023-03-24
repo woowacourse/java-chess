@@ -7,7 +7,7 @@ import chess.board.Rank;
 public class Knight extends Piece {
 
     public Knight(final Team team) {
-        super(team);
+        super(team, PieceType.KNIGHT);
     }
 
     @Override

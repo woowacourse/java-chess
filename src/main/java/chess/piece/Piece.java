@@ -5,9 +5,11 @@ import chess.board.Position;
 public abstract class Piece {
 
     protected final Team team;
+    private final PieceType type;
 
-    protected Piece(final Team team) {
+    protected Piece(final Team team, final PieceType type) {
         this.team = team;
+        this.type = type;
     }
 
     public boolean isPawn() {
@@ -47,4 +49,12 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(final Position from, final Position to, final Piece piece);
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
 }

@@ -5,7 +5,7 @@ import chess.board.Position;
 public class EmptyPiece extends Piece {
 
     public EmptyPiece() {
-        super(null);
+        super(null, PieceType.EMPTY);
     }
 
     @Override
