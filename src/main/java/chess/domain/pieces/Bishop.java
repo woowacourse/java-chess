@@ -16,7 +16,7 @@ public class Bishop extends Piece {
     private static final int MOVE_MAX_RANGE = 8;
 
     public Bishop(final Team team) {
-        super(team);
+        super(team, PieceType.Bishop);
     }
 
     @Override

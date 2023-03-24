@@ -6,7 +6,7 @@ import chess.domain.direction.Route;
 public class Empty extends Piece {
 
     public Empty(Team team) {
-        super(team);
+        super(team, PieceType.EMPTY);
     }
 
     @Override

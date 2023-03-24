@@ -7,9 +7,11 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Team team;
+    private final PieceType pieceType;
 
-    public Piece(final Team team) {
+    public Piece(final Team team, final PieceType pieceType) {
         this.team = team;
+        this.pieceType = pieceType;
     }
 
     public abstract void canMove(final Position start, final Position end, final boolean isAttack);
@@ -18,6 +20,10 @@ public abstract class Piece {
 
     public Team getTeam() {
         return team;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     public boolean isEmpty() {

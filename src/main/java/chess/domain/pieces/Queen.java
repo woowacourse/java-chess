@@ -20,7 +20,7 @@ public class Queen extends Piece {
     );
 
     public Queen(final Team team) {
-        super(team);
+        super(team, PieceType.QUEEN);
     }
 
     @Override

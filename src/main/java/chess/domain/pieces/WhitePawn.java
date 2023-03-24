@@ -24,7 +24,7 @@ public class WhitePawn extends Piece {
     private static final Row INIT_ROW_POSITION = Row.TWO;
 
     public WhitePawn(final Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override

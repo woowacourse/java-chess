@@ -24,7 +24,7 @@ public class BlackPawn extends Piece {
     private static final Row INIT_ROW_POSITION = Row.SEVEN;
 
     public BlackPawn(Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override

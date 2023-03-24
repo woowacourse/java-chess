@@ -19,7 +19,7 @@ public class Knight extends Piece {
     );
 
     public Knight(final Team team) {
-        super(team);
+        super(team, PieceType.Knight);
     }
 
     @Override
