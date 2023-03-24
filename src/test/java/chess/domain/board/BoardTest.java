@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.exception.IllegalMoveException;
 import chess.domain.game.Team;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -26,7 +27,7 @@ public class BoardTest extends AbstractTestFixture {
         var target = createPosition("D,TWO");
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("움직일 기물이 없습니다");
     }
 
@@ -38,7 +39,7 @@ public class BoardTest extends AbstractTestFixture {
         var target = createPosition("D,TWO");
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("목표 위치에 같은 색 말이 있습니다");
     }
 
@@ -50,7 +51,7 @@ public class BoardTest extends AbstractTestFixture {
         var target = createPosition("B,THREE");
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("해당 기물이 이동할 수 없는 수입니다");
     }
 
@@ -65,7 +66,7 @@ public class BoardTest extends AbstractTestFixture {
         board.move(createPosition("B,TWO"), createPosition("B,THREE"));
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("다른 기물을 지나칠 수 없습니다");
     }
 

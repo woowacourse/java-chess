@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.exception.ChessGameException;
+import chess.domain.exception.DirectionalException;
 import chess.domain.position.Position;
 
 public class MoveTest extends AbstractTestFixture {
@@ -19,14 +21,15 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void emptyMove_throws() {
         assertThatThrownBy(() -> createMove())
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(ChessGameException.class);
     }
 
     @DisplayName("양방향이 존재하면 예외를 던진다")
     @Test
     void bidirectional_throws() {
         assertThatThrownBy(() -> createMove(RIGHT, LEFT))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DirectionalException.class)
+                .hasMessage("수직이나 수평으로 양방향이면 안됩니다");
     }
 
     @DisplayName("같은 수인지 확인한다")
@@ -64,7 +67,7 @@ public class MoveTest extends AbstractTestFixture {
 
         assertThat(createMove(RIGHT, UP)).isEqualTo(unitMove);
     }
-    
+
     @DisplayName("시작위치, 도착위치로 수를 만들 수 있다")
     @Test
     void createMoveFrom_sourceAndTargetPositions() {

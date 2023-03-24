@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.exception.DifferentTeamException;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -34,7 +35,7 @@ public class GameTest extends AbstractTestFixture {
         Game game = new Game();
 
         assertThatThrownBy(() -> game.movePiece(createPosition("B,SEVEN"), createPosition("B,SIX")))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DifferentTeamException.class)
                 .hasMessage("자신의 기물만 움직일 수 있습니다");
     }
 

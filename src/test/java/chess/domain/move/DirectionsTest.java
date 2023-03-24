@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.exception.DirectionalException;
 
 public class DirectionsTest extends AbstractTestFixture {
 
@@ -21,7 +22,7 @@ public class DirectionsTest extends AbstractTestFixture {
     @CsvSource({"UP,DOWN", "LEFT,RIGHT"})
     void horizontalOrVertical_bidirectional_throws(Direction direction, Direction direction2) {
         assertThatThrownBy(() -> new Directions(List.of(direction, direction2)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DirectionalException.class)
                 .hasMessage("수직이나 수평으로 양방향이면 안됩니다");
     }
 

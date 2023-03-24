@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.exception.IllegalMoveException;
 import chess.domain.game.Team;
 import chess.domain.move.Direction;
 import chess.domain.move.Move;
@@ -26,10 +27,10 @@ class EmptyPieceTest {
         Piece emptyPiece = EmptyPiece.create();
 
         assertThatThrownBy(() -> emptyPiece.hasMove(new Move(Direction.UP)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("움직일 기물이 없습니다");
         assertThatThrownBy(() -> emptyPiece.hasAttackMove(new Move(Direction.UP)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("움직일 기물이 없습니다");
     }
 
