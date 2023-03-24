@@ -18,7 +18,7 @@ public class ChessService {
 
     private final ChessBoard chessBoard;
     private Camp currentCamp;
-    private boolean isOngoing;
+    private boolean ongoing;
     private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(
         Command.START, ignored -> start(),
         Command.END, ignored -> end(),
@@ -35,20 +35,20 @@ public class ChessService {
     }
 
     private void start() {
-        if (!isOngoing) {
+        if (!ongoing) {
             chessBoard.initialize();
-            isOngoing = true;
+            ongoing = true;
             return;
         }
         throw new IllegalStateException("이미 게임이 실행중입니다.");
     }
 
     private void end() {
-        isOngoing = false;
+        ongoing = false;
     }
 
     private void move(CommandRequest commandRequest) {
-        if (isOngoing) {
+        if (ongoing) {
             Square currentSquare = convertToSquare(commandRequest.getCurrentSquareName());
             Square targetSquare = convertToSquare(commandRequest.getTargetSquareName());
 
@@ -80,6 +80,6 @@ public class ChessService {
     }
 
     public boolean isOngoing() {
-        return isOngoing;
+        return ongoing;
     }
 }
