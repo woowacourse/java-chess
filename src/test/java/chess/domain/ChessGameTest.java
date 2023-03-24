@@ -35,7 +35,7 @@ class ChessGameTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), Empty.create());
+                board.put(Position.of(file, rank), Empty.instance());
             }
         }
         return board;
@@ -122,7 +122,7 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, WhitePawn.create());
+            rawBoard.put(givenSourcePosition, WhitePawn.instance());
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
@@ -140,10 +140,10 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, WhitePawn.create());
+            rawBoard.put(givenSourcePosition, WhitePawn.instance());
 
             final Position givenTargetPosition = PositionFixtures.A4;
-            rawBoard.put(givenTargetPosition, BlackPawn.create());
+            rawBoard.put(givenTargetPosition, BlackPawn.instance());
 
             final ChessGame chessGame = ChessGame.from(rawBoard);
             //when  && then
@@ -159,7 +159,7 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
 
             final Position givenSourcePosition = PositionFixtures.A3;
-            rawBoard.put(givenSourcePosition, WhitePawn.create());
+            rawBoard.put(givenSourcePosition, WhitePawn.instance());
 
             final Position givenTargetPosition = PositionFixtures.B4;
 

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class KnightTest {
 
-    private final Knight knight = Knight.create(BLACK);
+    private final Knight knight = Knight.instance(BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다.")
     @Test

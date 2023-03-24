@@ -14,18 +14,24 @@ import chess.domain.movingStrategy.MovingStrategy;
 import java.util.List;
 
 public final class King extends NonSlidingPiece {
+    private static final List<MovingStrategy> strategies = List.of(
+            MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance(),
+            MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
+    private static final King BLACK = new King(Team.BLACK, new MovingStrategies(strategies));
+    private static final King WHITE = new King(Team.WHITE, new MovingStrategies(strategies));
 
     private King(final Team team, final MovingStrategies strategies) {
         super(team, PieceType.KING, strategies);
     }
 
-    public static King create(final Team team) {
-        final List<MovingStrategy> rawStrategies = List.of(
-                MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance(),
-                MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
-
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new King(team, strategies);
+    public static King instance(final Team team) {
+        if (team.isBlack()) {
+            return BLACK;
+        }
+        if (team.isWhite()) {
+            return WHITE;
+        }
+        throw new AssertionError();
     }
 
     @Override

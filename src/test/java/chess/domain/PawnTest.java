@@ -17,7 +17,7 @@ class PawnTest {
 
     @Nested
     public class WhitePawnTest {
-        private final Pawn whitePawn = WhitePawn.create();
+        private final Pawn whitePawn = WhitePawn.instance();
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
@@ -78,7 +78,7 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(InitialWhitePawn.create().findPath(PositionFixtures.A2, PositionFixtures.A4, Team.EMPTY)).isEmpty();
+                assertThat(InitialWhitePawn.instance().findPath(PositionFixtures.A2, PositionFixtures.A4, Team.EMPTY)).isEmpty();
             }
 
             @DisplayName("실패 한다. - 도착지에 아군 기물 존재")
@@ -109,7 +109,7 @@ class PawnTest {
 
     @Nested
     public class BlackPawnTest {
-        private final Pawn blackPawn = BlackPawn.create();
+        private final Pawn blackPawn = BlackPawn.instance();
 
         @DisplayName("file이 다르면 예외가 발생한다.")
         @Test
@@ -169,7 +169,7 @@ class PawnTest {
             @DisplayName("성공한다.")
             @Test
             void fail_test7() {
-                assertThat(InitialBlackPawn.create().findPath(PositionFixtures.A7, PositionFixtures.A5, Team.EMPTY)).containsExactly();
+                assertThat(InitialBlackPawn.instance().findPath(PositionFixtures.A7, PositionFixtures.A5, Team.EMPTY)).containsExactly();
             }
 
             @DisplayName("실패한다. - 도착지에 아군 기물 존재")

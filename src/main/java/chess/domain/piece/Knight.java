@@ -15,17 +15,24 @@ import java.util.List;
 
 public final class Knight extends NonSlidingPiece {
 
+    private static final List<MovingStrategy> strategies = List.of(
+            MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
+            MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
+    private static final Knight BLACK = new Knight(Team.BLACK, new MovingStrategies(strategies));
+    private static final Knight WHITE = new Knight(Team.WHITE, new MovingStrategies(strategies));
+
     private Knight(final Team team, final MovingStrategies strategies) {
         super(team, PieceType.KNIGHT, strategies);
     }
 
-    public static Knight create(final Team team) {
-        final List<MovingStrategy> rawStrategies = List.of(
-                MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
-                MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
-
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Knight(team, strategies);
+    public static Knight instance(final Team team) {
+        if (team.isBlack()) {
+            return BLACK;
+        }
+        if (team.isWhite()) {
+            return WHITE;
+        }
+        throw new AssertionError();
     }
 
     @Override

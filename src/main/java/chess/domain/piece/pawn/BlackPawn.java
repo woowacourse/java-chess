@@ -10,16 +10,17 @@ import chess.domain.piece.Team;
 import java.util.List;
 
 public final class BlackPawn extends Pawn {
+    private static final List<MovingStrategy> movingStrategies = List.of(MoveDown.instance(), MoveLeftDown.instance(), MoveRightDown.instance());
+    private static final List<MovingStrategy> attackStrategies = List.of(MoveLeftDown.instance(), MoveRightDown.instance());
+    private static final BlackPawn INSTANCE = new BlackPawn(new MovingStrategies(movingStrategies), new AttackStrategies(attackStrategies));
 
-    private BlackPawn(final Team team, final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
-        super(team, movingStrategies, attackStrategies);
+
+    private BlackPawn(final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
+        super(Team.BLACK, movingStrategies, attackStrategies);
     }
 
-    public static BlackPawn create() {
-        final List<MovingStrategy> movingStrategies = List.of(MoveDown.instance(), MoveLeftDown.instance(), MoveRightDown.instance());
-        final List<MovingStrategy> attackStrategies = List.of(MoveLeftDown.instance(), MoveRightDown.instance());
-
-        return new BlackPawn(Team.BLACK, new MovingStrategies(movingStrategies), new AttackStrategies(attackStrategies));
+    public static BlackPawn instance() {
+        return INSTANCE;
     }
 
     @Override

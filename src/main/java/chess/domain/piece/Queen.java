@@ -15,17 +15,24 @@ import java.util.List;
 
 public final class Queen extends SlidingPiece {
 
+    private static final List<MovingStrategy> strategies = List.of(
+            MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance(),
+            MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
+    private static final Queen BLACK = new Queen(Team.BLACK, new MovingStrategies(strategies));
+    private static final Queen WHITE = new Queen(Team.WHITE, new MovingStrategies(strategies));
+
     private Queen(final Team team, final MovingStrategies strategies) {
         super(team, PieceType.QUEEN, strategies);
     }
 
-    public static Queen create(final Team team) {
-        final List<MovingStrategy> rawStrategies = List.of(
-                MoveRightUp.instance(), MoveRightDown.instance(), MoveLeftDown.instance(), MoveLeftUp.instance(),
-                MoveUp.instance(), MoveDown.instance(), MoveLeft.instance(), MoveRight.instance());
-
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
-        return new Queen(team, strategies);
+    public static Queen instance(final Team team) {
+        if (team.isBlack()) {
+            return BLACK;
+        }
+        if (team.isWhite()) {
+            return WHITE;
+        }
+        throw new AssertionError();
     }
 
     @Override

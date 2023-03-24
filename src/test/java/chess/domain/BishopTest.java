@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BishopTest {
 
-    private final Bishop bishop = Bishop.create(Team.BLACK);
+    private final Bishop bishop = Bishop.instance(Team.BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다.")
     @Test

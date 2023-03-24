@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
 
-    private final Queen queen = Queen.create(Team.BLACK);
+    private final Queen queen = Queen.instance(Team.BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우상향으로 이동하는 경우")
     @Test

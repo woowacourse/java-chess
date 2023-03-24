@@ -9,13 +9,14 @@ import java.util.List;
 
 public final class Empty extends Piece {
 
-    private Empty(final Team team, final PieceType pieceType, final MovingStrategies strategies) {
-        super(team, pieceType, strategies);
+    private static final Empty INSTANCE = new Empty(new MovingStrategies(Collections.emptyList()));
+
+    private Empty(final MovingStrategies strategies) {
+        super(Team.EMPTY, PieceType.EMPTY, strategies);
     }
 
-    public static Empty create() {
-        final MovingStrategies emptyStrategies = new MovingStrategies(Collections.emptyList());
-        return new Empty(Team.EMPTY, PieceType.EMPTY, emptyStrategies);
+    public static Empty instance() {
+        return INSTANCE;
     }
 
     @Override

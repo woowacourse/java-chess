@@ -14,7 +14,6 @@ public final class ChessGame {
     private static final int BOARD_LENGTH = 8;
     public static final double BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
-    // TODO: Piece를 싱글턴으로
     private final Map<Position, Piece> board;
     private Turn turn;
 
@@ -64,15 +63,15 @@ public final class ChessGame {
 
     private void switchPiece(final Position source, final Position target, final Piece sourcePiece) {
         board.put(target, checkInitialPawn(sourcePiece));
-        board.put(source, Empty.create());
+        board.put(source, Empty.instance());
     }
 
     private Piece checkInitialPawn(final Piece piece) {
         if (piece.isInitialPawn() && piece.isWhite()) {
-            return WhitePawn.create();
+            return WhitePawn.instance();
         }
         if (piece.isInitialPawn() && piece.isBlack()) {
-            return BlackPawn.create();
+            return BlackPawn.instance();
         }
         return piece;
     }
