@@ -1,5 +1,8 @@
 package domain;
 
+import domain.exception.BlockedPathException;
+import domain.exception.InvalidDestinationPointException;
+import domain.exception.TargetPieceNotFoundException;
 import domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -115,7 +118,7 @@ class BoardTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("a1", "a3"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(TargetPieceNotFoundException.class);
         }
 
         @Nested
@@ -151,7 +154,7 @@ class BoardTest {
 
                 assertThatThrownBy(() -> board.move("a3", "a5"))
                         .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(InvalidDestinationPointException.class);
                 assertDoesNotThrow(() -> board.move("a3", "a4"));
             }
 
@@ -167,19 +170,19 @@ class BoardTest {
 
                 assertAll(
                         () -> assertThatThrownBy(() -> board.move("b2", "a1"))
-                                .as("왼쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("왼쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c1"))
-                                .as("오른쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c2"))
-                                .as("오른쪽 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c3"))
-                                .as("오른쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "b1"))
-                                .as("아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "a3"))
-                                .as("왼쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("왼쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "a2"))
-                                .as("왼쪽 이동 불가").isInstanceOf(IllegalArgumentException.class)
+                                .as("왼쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
                 );
             }
 
@@ -195,7 +198,7 @@ class BoardTest {
                 Board board = new Board(boardStatus);
 
                 assertThatThrownBy(() -> board.move("b2", "b4"))
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(BlockedPathException.class);
             }
 
             @Test
@@ -210,7 +213,7 @@ class BoardTest {
                 Board board = new Board(boardStatus);
 
                 assertThatThrownBy(() -> board.move("b2", "b4"))
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(BlockedPathException.class);
             }
         }
 
@@ -247,7 +250,7 @@ class BoardTest {
 
                 assertThatThrownBy(() -> board.move("b3", "b1"))
                         .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(InvalidDestinationPointException.class);
                 assertDoesNotThrow(() -> board.move("b3", "b2"));
             }
 
@@ -263,19 +266,19 @@ class BoardTest {
 
                 assertAll(
                         () -> assertThatThrownBy(() -> board.move("b2", "b3"))
-                                .as("위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "a1"))
-                                .as("왼쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("왼쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c1"))
-                                .as("오른쪽 아래 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c2"))
-                                .as("오른쪽 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "c3"))
-                                .as("오른쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("오른쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "a3"))
-                                .as("왼쪽 위 이동 불가").isInstanceOf(IllegalArgumentException.class),
+                                .as("왼쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
                         () -> assertThatThrownBy(() -> board.move("b2", "a2"))
-                                .as("왼쪽 이동 불가").isInstanceOf(IllegalArgumentException.class)
+                                .as("왼쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
                 );
             }
 
@@ -291,7 +294,7 @@ class BoardTest {
                 Board board = new Board(boardStatus);
 
                 assertThatThrownBy(() -> board.move("b3", "b1"))
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(BlockedPathException.class);
             }
 
             @Test
@@ -306,7 +309,7 @@ class BoardTest {
                 Board board = new Board(boardStatus);
 
                 assertThatThrownBy(() -> board.move("b4", "b2"))
-                        .isInstanceOf(IllegalArgumentException.class);
+                        .isInstanceOf(BlockedPathException.class);
             }
         }
     }

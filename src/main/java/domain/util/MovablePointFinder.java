@@ -1,5 +1,7 @@
 package domain.util;
 
+import domain.exception.BlockedPathException;
+import domain.exception.PointOutOfBoardException;
 import domain.piece.Piece;
 import domain.point.Direction;
 import domain.point.Point;
@@ -43,18 +45,20 @@ public class MovablePointFinder {
         }
     }
 
-    private static void onCaseOfDirection(Point point, List<Point> movablePoints, Integer movableCount, Direction down) {
+    private static void onCaseOfDirection(Point point, List<Point> movablePoints, Integer movableCount, Direction direction) {
         if (movableCount != null) {
-            addMovablePoints(point, movablePoints, movableCount, down);
+            addMovablePoints(point, movablePoints, movableCount, direction);
         }
     }
 
     private static void addMovablePoints(Point point, List<Point> movablePoints, Integer movableCount, Direction direction) {
         Point movablePoint = point;
         for (int i = 0; i < movableCount; i++) {
-            if (direction == Direction.UP) movablePoint = movablePoint.up();
-            if (direction == Direction.DOWN) movablePoint = movablePoint.down();
-            movablePoints.add(movablePoint);
+            try {
+                if (direction == Direction.UP) movablePoint = movablePoint.up();
+                if (direction == Direction.DOWN) movablePoint = movablePoint.down();
+                movablePoints.add(movablePoint);
+            } catch (PointOutOfBoardException ignored) {}
         }
     }
 
@@ -69,7 +73,7 @@ public class MovablePointFinder {
             }
 
             if (!pieceOnMovablePoint.isEmpty()) {
-                throw new IllegalArgumentException("이동하려는 길 사이에 다른 장기말이 위치하고 있습니다.");
+                throw new BlockedPathException();
             }
         }
     }

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.exception.InvalidDestinationPointException;
+import domain.exception.TargetPieceNotFoundException;
 import domain.piece.*;
 import domain.point.Point;
 import domain.util.BoardInitializer;
@@ -36,7 +38,7 @@ public class Board {
 
         List<Point> movablePoints = MovablePointFinder.findMovablePoints(fromPoint, toPoint, pieceStatus, piece);
         if (!movablePoints.contains(toPoint)) {
-            throw new IllegalArgumentException("장기말이 이동할 수 있는 경로가 아닙니다.");
+            throw new InvalidDestinationPointException();
         }
 
         if (piece.isWhitePawn() || piece.isBlackPawn()) {
@@ -70,7 +72,7 @@ public class Board {
 
     private static void onCaseOfEmptyPoint(Piece piece) {
         if (piece.isEmpty()) {
-            throw new IllegalArgumentException("입력한 위치에는 이동 가능한 기물이 존재하지 않습니다.");
+            throw new TargetPieceNotFoundException();
         }
     }
 }
