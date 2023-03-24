@@ -1,5 +1,6 @@
-package chess.controller.mapper.response;
+package chess.view.output;
 
+import chess.controller.mapper.response.result.MatchResultMapper;
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
 import chess.domain.piece.Camp;
@@ -8,6 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameResultFormatter {
+
+    private static final String WHITE_CAMP_PREFIX = "백 : ";
+    private static final String BLACK_CAMP_PREFIX = "흑 : ";
 
     private GameResultFormatter() {
     }
@@ -46,10 +50,10 @@ public class GameResultFormatter {
 
     private static void appendCampPrefix(Camp camp, StringBuilder formatBuilder) {
         if (camp == Camp.WHITE) {
-            formatBuilder.append("백 : ");
+            formatBuilder.append(WHITE_CAMP_PREFIX);
             return;
         }
 
-        formatBuilder.append("흑 : ");
+        formatBuilder.append(BLACK_CAMP_PREFIX);
     }
 }

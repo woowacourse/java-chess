@@ -1,4 +1,4 @@
-package chess.controller.mapper.response;
+package chess.controller.mapper.response.result;
 
 import chess.domain.game.result.MatchResult;
 import java.util.NoSuchElementException;

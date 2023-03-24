@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.controller.mapper.request.ChessGameCommandMapper;
-import chess.controller.mapper.response.GameResultFormatter;
-import chess.controller.mapper.response.ChessBoardStateFormatter;
+import chess.view.output.GameResultFormatter;
+import chess.view.output.ChessBoardStateFormatter;
 import chess.domain.game.command.ChessGameCommand;
 import chess.domain.game.result.GameResult;
 import chess.domain.game.state.ChessGame;
