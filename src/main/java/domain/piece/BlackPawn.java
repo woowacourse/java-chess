@@ -18,7 +18,7 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    protected boolean isForwardOneStep(Position start, Position nextPosition) {
+    public boolean isForwardOneStep(Position start, Position nextPosition) {
         return start.calculateRowGap(nextPosition) == -1 && start.calculateColumnGap(nextPosition) == 0;
     }
 
@@ -33,7 +33,7 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    protected boolean isForwardTwoStep(Position start, Position nextPosition) {
-        return start.calculateRowGap(nextPosition) == -2 && start.calculateColumnGap(nextPosition) == 0;
+    protected boolean isForwardTwoStep(Position start, Position endPosition) {
+        return start.calculateRowGap(endPosition) == -2 && start.calculateColumnGap(endPosition) == 0;
     }
 }

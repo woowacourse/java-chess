@@ -1,7 +1,7 @@
 package domain.chessGame;
 
+import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.position.Direction;
 import domain.position.Path;
 import domain.position.Position;
 
@@ -36,81 +36,56 @@ public final class ChessBoard {
 
     private boolean validatePieceMovable(Position startPosition, Position endPosition) {
         Path path = new Path(startPosition, endPosition);
-
         Piece startPiece = chessBoard.get(startPosition);
-        // Todo : 폰에 대한 로직을 폰에 넣을 수 있나? 된다 하더라도 반드시 폰에 넣어야 하나?
-        if (startPiece.isPawn()) {
-            considerPawnCase(startPosition, endPosition);
+
+        if (startPiece.isPawn() && startPiece.isMovablePath(startPosition, path)) {
+            validatePawnMovable(startPosition, endPosition);
         }
         return startPiece.isMovablePath(startPosition, path) &&
                 validatePassablePath(path) &&
                 validateMovableEndPosition(endPosition, startPiece);
     }
 
-    private void considerPawnCase(Position startPosition, Position endPosition) {
-        Path path = new Path(startPosition, endPosition);
-        Piece startPiece = chessBoard.get(startPosition);
-
-        if (startPiece.isMovablePath(startPosition, path)) {
-            validatePassablePathToForward(startPosition, path);
-            validateMovableToDiagonal(startPosition, endPosition);
-        }
-    }
-
-    private void validatePassablePathToForward(Position start, Path path) {
-        Position nextPosition = path.getFirstPosition();
-        if (isForwardOneStepOfPawn(start, nextPosition)) {
-            //Todo : 폰이 isPassablePath처럼 마지막 도착 위치 전까지 판단하는게 아니라 마지막 위치까지 포함해서 계산하고 있어서 묶기 힘들다.
-            checkPieceExistenceIn(path.getPositions());
-        }
-    }
-
-    private void checkPieceExistenceIn(List<Position> pathPositions) {
-        pathPositions.forEach(position -> {
-            if(chessBoard.containsKey(position)) {
-                throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
-            }
-        });
-    }
-
-    private boolean isForwardOneStepOfPawn(Position start, Position nextPosition) {
-        return isForwardOneStepOfWhitePawn(start, nextPosition) ||
-                isForwardOneStepOfBlackPawn(start, nextPosition);
-    }
-
-    private boolean isForwardOneStepOfWhitePawn(Position start, Position nextPosition) {
-        return start.calculateRowGap(nextPosition) == 1 && start.calculateColumnGap(nextPosition) == 0;
-    }
-
-    private boolean isForwardOneStepOfBlackPawn(Position start, Position nextPosition) {
-        return start.calculateRowGap(nextPosition) == -1 && start.calculateColumnGap(nextPosition) == 0;
-    }
-
-    private void validateMovableToDiagonal(Position startPosition, Position endPosition) {
-        if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL && !chessBoard.containsKey(endPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없으면 이동이 불가능합니다.");
-        }
-    }
-
     private boolean validatePassablePath(Path path) {
-        for (Position position : path.subListFirstTo(path.size() - 1)) {
-            if (chessBoard.containsKey(position)) {
-                throw new IllegalArgumentException("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
-            }
-        }
+        List<Position> pathPositionsExcludedEnd = path.subListFirstTo(path.size() - 1);
+        pathPositionsExcludedEnd.forEach(this::validateNoPieceAt);
         return true;
     }
 
     private boolean validateMovableEndPosition(Position endPosition, Piece startPiece) {
-        if (chessBoard.containsKey(endPosition) && isSameColorPiece(startPiece, chessBoard.get(endPosition))) {
+        Piece endPiece = chessBoard.get(endPosition);
+        if (chessBoard.containsKey(endPosition) && (startPiece.isBlack() == endPiece.isBlack())) {
             throw new IllegalArgumentException("[ERROR] 같은 색의 말이 있는 칸으로 이동이 불가능합니다.");
         }
         return true;
     }
 
-    //Todo: 체스판에서 considerPawnCase를 분리하면 1곳에서만 쓰이는데 분리하지 않아도 될 것 같다고 하심
-    private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
-        return startPiece.isBlack() == endPiece.isBlack();
+    private void validatePawnMovable(Position startPosition, Position endPosition) {
+        Path path = new Path(startPosition, endPosition);
+        Pawn selectedPawn = (Pawn) chessBoard.get(startPosition);
+
+        if (selectedPawn.isForwardOneStep(startPosition, path.getFirstPosition())) {
+            validatePassablePathToForward(path.getPositions());
+            return;
+        }
+        validateMovableToDiagonal(selectedPawn, endPosition);
+    }
+
+    private void validatePassablePathToForward(List<Position> pathPositions) {
+        pathPositions.forEach(this::validateNoPieceAt);
+    }
+
+    private void validateMovableToDiagonal(Pawn selectedPawn, Position endPosition) {
+        if (!chessBoard.containsKey(endPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 상대 말이 없으면 이동이 불가능합니다.");
+        }
+        validateMovableEndPosition(endPosition, selectedPawn);
+    }
+
+    private void validateNoPieceAt(Position position) {
+        if (chessBoard.containsKey(position)) {
+            throw new IllegalArgumentException("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
+        }
     }
 
     public Map<Position, Piece> getChessBoard() {

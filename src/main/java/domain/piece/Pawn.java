@@ -35,11 +35,11 @@ public abstract class Pawn extends Piece {
         return isMovableDirection(start, path.getFirstPosition()) && isMovableDistance(path.size());
     }
 
-    protected abstract boolean isForwardOneStep(Position start, Position nextPosition);
+    public abstract boolean isForwardOneStep(Position start, Position nextPosition);
 
     protected abstract boolean isRightDiagonalOneStep(Position start, Position nextPosition);
 
     protected abstract boolean isLeftDiagonalOneStep(Position start, Position nextPosition);
 
-    protected abstract boolean isForwardTwoStep(Position start, Position nextPosition);
+    protected abstract boolean isForwardTwoStep(Position start, Position endPosition);
 }
