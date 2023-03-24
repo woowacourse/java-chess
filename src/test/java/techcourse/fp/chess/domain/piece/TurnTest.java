@@ -13,7 +13,7 @@ class TurnTest {
         // given
         final Turn turn = Turn.createByStartTurn(Color.WHITE);
         // when
-        final boolean actual = turn.isNotSameTurn(Color.BLACK);
+        final boolean actual = turn.isOtherSide(Color.BLACK);
         // then
         assertThat(actual).isTrue();
     }
@@ -24,7 +24,7 @@ class TurnTest {
         // given
         final Turn turn = Turn.createByStartTurn(Color.WHITE);
         // when
-        final boolean actual = turn.isNotSameTurn(Color.WHITE);
+        final boolean actual = turn.isOtherSide(Color.WHITE);
         // then
         assertThat(actual).isFalse();
     }
@@ -36,7 +36,7 @@ class TurnTest {
         final Turn turn = Turn.createByStartTurn(Color.WHITE);
         // when
         turn.nextTurn();
-        final boolean actual = turn.isNotSameTurn(Color.WHITE);
+        final boolean actual = turn.isOtherSide(Color.WHITE);
         // then
         assertThat(actual).isTrue();
     }

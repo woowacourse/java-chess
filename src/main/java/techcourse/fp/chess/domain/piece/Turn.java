@@ -18,8 +18,8 @@ public class Turn {
         return new Turn(List.of(color, color.getOtherSide()));
     }
 
-    public boolean isNotSameTurn(Color color) {
-        return values.get(order) != color;
+    public boolean isOtherSide(Color color) {
+        return values.get(order).isOpponent(color);
     }
 
     public void nextTurn() {
@@ -27,5 +27,9 @@ public class Turn {
         if (order > LAST_TURN_IDX) {
             order = START_TURN_IDX;
         }
+    }
+
+    public Color getPreviousTurn() {
+        return values.get(order).getOtherSide();
     }
 }

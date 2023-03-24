@@ -3,13 +3,16 @@ package techcourse.fp.chess.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Empty;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.PieceType;
 import techcourse.fp.chess.domain.piece.Turn;
 
 public final class Board {
 
     private static final int BOARD_SIZE = 8;
+    private static final int NUMBER_OF_KING = 2;
 
     private final Map<Position, Piece> board;
     private final Turn turn;
@@ -40,8 +43,22 @@ public final class Board {
         turn.nextTurn();
     }
 
+    public boolean isGameEnd() {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isSamePieceType(PieceType.KING))
+                .count() < NUMBER_OF_KING;
+    }
+
+    public Color findWinner() {
+        if (!isGameEnd()) {
+            throw new IllegalArgumentException("아직 게임이 끝나지 않았습니다.");
+        }
+        return turn.getPreviousTurn();
+    }
+
     private void validateTurn(final Piece sourcePiece) {
-        if (turn.isNotSameTurn(sourcePiece.getColor())) {
+        if (turn.isOtherSide(sourcePiece.getColor())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
     }

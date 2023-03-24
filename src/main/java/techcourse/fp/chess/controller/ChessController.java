@@ -26,11 +26,22 @@ public final class ChessController {
     public void run() {
         outputView.printInitialMessage();
 
-        if (Command.createStartOrEnd(inputView.readStartOrEndCommand()) == Command.START) {
+        final Command command = getInitialCommand();
+
+        if (command == Command.START) {
             startGame();
         }
 
         outputView.printEndMessage();
+    }
+
+    private Command getInitialCommand() {
+        try {
+            return Command.createStartOrEnd(inputView.readStartOrEndCommand());
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return getInitialCommand();
+        }
     }
 
     private void startGame() {
@@ -50,13 +61,17 @@ public final class ChessController {
             final CommandRunner commandRunner = commandMapper.get(command);
             commandRunner.execute(commandRequest, board);
 
+            if (board.isGameEnd()) {
+                outputView.printWinningMessage(board.findWinner());
+                return Command.END;
+            }
+
             return command;
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
             return Command.EMPTY;
         }
     }
-
 
     private void move(final CommandRequest commandRequest, Board board) {
         try {
