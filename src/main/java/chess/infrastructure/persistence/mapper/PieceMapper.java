@@ -43,7 +43,10 @@ public class PieceMapper {
     public static Piece toDomain(final PieceEntity pieceEntity) {
         final Color color = Color.valueOf(pieceEntity.color());
         return new Piece(color,
-                PiecePosition.of(Rank.from(pieceEntity.rank()), File.from(pieceEntity.file())),
+                PiecePosition.of(
+                        Rank.from(pieceEntity.rank()),
+                        File.from(pieceEntity.file())
+                ),
                 strategyMap.get(MovementType.valueOf(pieceEntity.movementType())));
     }
 }

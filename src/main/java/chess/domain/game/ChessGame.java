@@ -17,7 +17,11 @@ public class ChessGame {
     private Turn turn;
     private Color winner;
 
-    private ChessGame(final Long id, final ChessBoard chessBoard, final GameState state, final Turn turn, final Color winner) {
+    private ChessGame(final Long id,
+                      final ChessBoard chessBoard,
+                      final GameState state,
+                      final Turn turn,
+                      final Color winner) {
         this.id = id;
         this.chessBoard = chessBoard;
         this.state = state;
@@ -26,7 +30,12 @@ public class ChessGame {
     }
 
     public static ChessGame start(final ChessBoard chessBoard) {
-        return new ChessGame(null, chessBoard, GameState.RUN, new Turn(Color.WHITE), null);
+        return new ChessGame(
+                null,
+                chessBoard,
+                GameState.RUN,
+                new Turn(Color.WHITE),
+                null);
     }
 
     public static ChessGame restart(final Long id, final ChessBoard chessBoard, final Turn turn) {

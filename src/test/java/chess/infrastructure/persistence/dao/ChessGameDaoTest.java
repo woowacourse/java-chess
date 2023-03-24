@@ -76,7 +76,8 @@ class ChessGameDaoTest {
         chessGameDao.save(chessGameEntity2);
 
         // when
-        final ChessGameEntity update = new ChessGameEntity(chessGameEntity1.id(), "MovePiece", Color.BLACK.name(), null);
+        final ChessGameEntity update =
+                new ChessGameEntity(chessGameEntity1.id(), "MovePiece", Color.BLACK.name(), null);
         chessGameDao.update(update);
 
         // then

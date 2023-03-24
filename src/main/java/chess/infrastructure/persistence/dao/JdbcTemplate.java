@@ -29,7 +29,8 @@ public class JdbcTemplate {
 
     public Long executeUpdate(final String sql, final Object... params) {
         try (final Connection connection = connection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
             }

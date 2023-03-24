@@ -24,7 +24,9 @@ class AbstractMovementStrategyTest {
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(MovementType.BLACK_PAWN) {
 
             @Override
-            protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
+            protected void validateMoveWithNoAlly(final PiecePosition source,
+                                                  final PiecePosition destination,
+                                                  final Piece nullableEnemy) {
                 throw new IllegalArgumentException();
             }
         };
@@ -41,7 +43,9 @@ class AbstractMovementStrategyTest {
         final PieceMovementStrategy strategy = new AbstractPieceMovementStrategy(MovementType.BLACK_PAWN) {
 
             @Override
-            protected void validateMoveWithNoAlly(final PiecePosition source, final PiecePosition destination, final Piece nullableEnemy) throws IllegalArgumentException {
+            protected void validateMoveWithNoAlly(final PiecePosition source,
+                                                  final PiecePosition destination,
+                                                  final Piece nullableEnemy) {
             }
         };
 

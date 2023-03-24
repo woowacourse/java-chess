@@ -1,7 +1,6 @@
 package chess.domain.piece.movestrategy.pawn;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.MovementType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movestrategy.RookMovementStrategy;
 import chess.domain.piece.position.PiecePosition;
@@ -14,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static chess.domain.piece.MovementType.BLACK_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -23,27 +23,34 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("PawnMovementStrategy 은")
 class PawnMovementStrategyTest {
 
-    private final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(4)) {
-        @Override
-        protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
-        }
-    };
+    private final PawnMovementStrategy pawnMovement =
+            new PawnMovementStrategy(BLACK_PAWN, Rank.from(4)) {
+                @Override
+                protected void validateAdditionalConstraint(final PiecePosition source,
+                                                            final PiecePosition destination) {
+                }
+            };
 
     public Piece piece(final Color color, final PiecePosition piecePosition) {
-        return new Piece(color, piecePosition, new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(4)) {
-            @Override
-            protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
-            }
-        });
+        return new Piece(color,
+                piecePosition,
+                new PawnMovementStrategy(BLACK_PAWN, Rank.from(4)) {
+                    @Override
+                    protected void validateAdditionalConstraint(final PiecePosition source,
+                                                                final PiecePosition destination) {
+                    }
+                });
     }
 
     @Test
     void 이동할_수_있으면_경유지_조회_가능() {
         // given
-        assertDoesNotThrow(() -> pawnMovement.validateMove(PiecePosition.of("d4"), PiecePosition.of("d6"), null));
+        assertDoesNotThrow(() ->
+                pawnMovement.validateMove(PiecePosition.of("d4"), PiecePosition.of("d6"), null));
 
         // when
-        final List<PiecePosition> waypoints = pawnMovement.waypoints(PiecePosition.of("d4"), PiecePosition.of("d6"), null);
+        final List<PiecePosition> waypoints =
+                pawnMovement.waypoints(PiecePosition.of("d4"), PiecePosition.of("d6"), null);
 
         // then
         assertThat(waypoints).isNotEmpty();
@@ -129,9 +136,10 @@ class PawnMovementStrategyTest {
         @Test
         void 두칸_이동할_수_있는_랭크라면_두_칸_이동_가능() {
             // given
-            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(4)) {
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(BLACK_PAWN, Rank.from(4)) {
                 @Override
-                protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
+                protected void validateAdditionalConstraint(final PiecePosition source,
+                                                            final PiecePosition destination) {
                 }
             };
             final PiecePosition source = PiecePosition.of("d4");
@@ -144,9 +152,10 @@ class PawnMovementStrategyTest {
         @Test
         void 두칸_이동할_수_없는_랭크라면_두_칸_이동_불가() {
             // given
-            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(4)) {
+            final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(BLACK_PAWN, Rank.from(4)) {
                 @Override
-                protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
+                protected void validateAdditionalConstraint(final PiecePosition source,
+                                                            final PiecePosition destination) {
                 }
             };
             final PiecePosition source = PiecePosition.of("d2");
@@ -183,9 +192,10 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지키지_않았다면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(1)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(BLACK_PAWN, Rank.from(1)) {
             @Override
-            protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
+            protected void validateAdditionalConstraint(final PiecePosition source,
+                                                        final PiecePosition destination) {
                 throw new IllegalArgumentException();
             }
         };
@@ -200,9 +210,10 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지켰다면_기본_이동에_대해서는_가능() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(1)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(BLACK_PAWN, Rank.from(1)) {
             @Override
-            protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
+            protected void validateAdditionalConstraint(final PiecePosition source,
+                                                        final PiecePosition destination) {
             }
         };
         final PiecePosition source = PiecePosition.of("d2");
@@ -215,9 +226,10 @@ class PawnMovementStrategyTest {
     @Test
     void 추가_제약조건을_지켰더라도_기본_이동_수칙을_지키지_않으면_예외() {
         // given
-        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(MovementType.BLACK_PAWN, Rank.from(2)) {
+        final PawnMovementStrategy pawnMovement = new PawnMovementStrategy(BLACK_PAWN, Rank.from(2)) {
             @Override
-            protected void validateAdditionalConstraint(final PiecePosition source, final PiecePosition destination) {
+            protected void validateAdditionalConstraint(final PiecePosition source,
+                                                        final PiecePosition destination) {
             }
         };
         final PiecePosition source = PiecePosition.of("d2");

@@ -71,12 +71,36 @@ class ChessGameServiceTest {
     }
 
     private void 흰색_왕을_죽인다(final ChessGame chessGame) {
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("e2"), PiecePosition.of("e4"));
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("d7"), PiecePosition.of("d5"));
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("e1"), PiecePosition.of("e2"));
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("d5"), PiecePosition.of("d4"));
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("e2"), PiecePosition.of("e3"));
-        chessGameService.movePiece(chessGame.id(), PiecePosition.of("d4"), PiecePosition.of("e3"));
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("e2"),
+                PiecePosition.of("e4")
+        );
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("d7"),
+                PiecePosition.of("d5")
+        );
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("e1"),
+                PiecePosition.of("e2")
+        );
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("d5"),
+                PiecePosition.of("d4")
+        );
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("e2"),
+                PiecePosition.of("e3")
+        );
+        chessGameService.movePiece(
+                chessGame.id(),
+                PiecePosition.of("d4"),
+                PiecePosition.of("e3")
+        );
     }
 
     @Test

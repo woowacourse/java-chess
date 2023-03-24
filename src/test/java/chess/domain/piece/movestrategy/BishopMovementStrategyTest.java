@@ -57,7 +57,8 @@ class BishopMovementStrategyTest {
         @MethodSource("bishopDestinations")
         void 경유지를_반환한다(final PiecePosition destination, final List<PiecePosition> waypoints) {
             // when & then
-            assertThat(movement.waypoints(source, destination, null)).containsExactlyInAnyOrderElementsOf(waypoints);
+            assertThat(movement.waypoints(source, destination, null))
+                    .containsExactlyInAnyOrderElementsOf(waypoints);
         }
 
         Stream<Arguments> bishopDestinations() {
