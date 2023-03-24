@@ -36,10 +36,14 @@ public abstract class Piece {
     }
 
     public String getSide() {
-        return side.toString();
+        return side.name();
     }
 
     public String getName() {
         return pieceInfo.name();
+    }
+
+    public double addPieceScore(final double score) {
+        return score + pieceInfo.addScore(score);
     }
 }
