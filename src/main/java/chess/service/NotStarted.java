@@ -1,6 +1,8 @@
 package chess.service;
 
+import chess.domain.board.Score;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -25,6 +27,11 @@ public class NotStarted implements State {
 
     @Override
     public State move(final Position from, final Position to) {
+        throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
+    }
+
+    @Override
+    public Map<Color, Score> status() {
         throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
     }
 

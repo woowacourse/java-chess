@@ -2,6 +2,8 @@ package chess.service;
 
 import chess.controller.CommandRequest;
 import chess.controller.GameCommand;
+import chess.domain.board.Score;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -11,6 +13,7 @@ public class ChessService {
     private final Map<GameCommand, CommandAction> commandMapper = Map.of(
             GameCommand.START, ignored -> start(),
             GameCommand.MOVE, this::move,
+            GameCommand.STATUS, ignored -> status(),
             GameCommand.END, ignored -> end()
     );
 
@@ -31,6 +34,10 @@ public class ChessService {
 
     private void move(final CommandRequest request) {
         state = state.move(request.getFrom(), request.getTo());
+    }
+
+    private Map<Color, Score> status() {
+        return state.status();
     }
 
     private void end() {

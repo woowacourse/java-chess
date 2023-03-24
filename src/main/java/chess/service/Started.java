@@ -1,6 +1,8 @@
 package chess.service;
 
+import chess.domain.board.Score;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -24,6 +26,11 @@ public class Started implements State {
     public State move(final Position from, final Position to) {
         board.move(from, to);
         return this;
+    }
+
+    @Override
+    public Map<Color, Score> status() {
+        return board.calculateScore();
     }
 
     @Override

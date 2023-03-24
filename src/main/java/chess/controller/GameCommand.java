@@ -5,8 +5,9 @@ import java.util.Arrays;
 public enum GameCommand {
 
     START("start"),
-    END("end"),
-    MOVE("move");
+    STATUS("status"),
+    MOVE("move"),
+    END("end");
 
     public static final int MOVE_COMMAND_SIZE = 3;
     public static final int DEFAULT_COMMAND_SIZE = 1;
