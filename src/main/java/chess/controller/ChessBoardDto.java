@@ -6,13 +6,13 @@ import chess.view.PieceName;
 
 import java.util.Map;
 
-public class ChessBoardDTO {
+public class ChessBoardDto {
     private static final int BOARD_SIZE = 8;
     private static final char BLANK = '.';
 
     private final StringBuilder boardMessage = new StringBuilder();
 
-    public ChessBoardDTO(Map<Position, Piece> board) {
+    public ChessBoardDto(Map<Position, Piece> board) {
         for (int rank = BOARD_SIZE - 1; rank >= 0; rank--) {
             boardMessage.append(makeFileMessage(board, rank))
                     .append(System.lineSeparator());

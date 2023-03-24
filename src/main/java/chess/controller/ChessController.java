@@ -44,7 +44,7 @@ public class ChessController {
     }
 
     private void printChessBoard(Map<Position, Piece> board) {
-        ChessBoardDTO chessBoardDTO = new ChessBoardDTO(board);
+        ChessBoardDto chessBoardDTO = new ChessBoardDto(board);
         OutputView.print(chessBoardDTO.getBoardMessage().toString());
     }
 }
