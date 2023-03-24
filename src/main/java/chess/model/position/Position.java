@@ -46,4 +46,8 @@ public class Position {
     public String toString() {
         return file.name() + rank.value();
     }
+
+    public String getPosition() {
+        return file.name() + rank.value();
+    }
 }
