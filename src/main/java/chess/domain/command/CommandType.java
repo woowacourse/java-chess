@@ -7,7 +7,8 @@ import java.util.function.Function;
 public enum CommandType {
     START("start", StartCommand::new),
     MOVE("move", MoveCommand::new),
-    END("end", EndCommand::new);
+    END("end", EndCommand::new),
+    STATUS("status", StatusCommand::new);
 
     private static final int COMMAND_HEAD_INDEX = 0;
     private final String command;
