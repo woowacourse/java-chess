@@ -53,7 +53,6 @@ public class Position {
                 .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 Position입니다"));
     }
 
-
     public int findGapOfRank(Position destination) {
         return destination.rank.getIndex() - rank.getIndex();
     }
@@ -67,6 +66,17 @@ public class Position {
         Rank newRank = Rank.findRankByIndex(rank.getIndex() + direction.getY());
 
         return new Position(newColumn, newRank);
+    }
+
+    public List<Position> findRouteTo(Position end) {
+        List<Position> route = new ArrayList<>();
+        Direction direction = Direction.findDirectionByGap(this, end);
+        Position currentPosition = this;
+        do {
+            currentPosition = currentPosition.moveDirection(direction);
+            route.add(currentPosition);
+        } while (!currentPosition.equals(end));
+        return route;
     }
 
     @Override
