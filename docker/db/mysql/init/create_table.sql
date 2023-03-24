@@ -24,7 +24,7 @@ CREATE TABLE `board`
 );
 
 ALTER TABLE `board`
-    ADD FOREIGN KEY (`r_id`) REFERENCES `game` (`_id`);
+    ADD FOREIGN KEY (`r_id`) REFERENCES `room` (`_id`);
 
 ALTER TABLE `moveHistory`
-    ADD FOREIGN KEY (`r_id`) REFERENCES `game` (`_id`);
+    ADD FOREIGN KEY (`r_id`) REFERENCES `room` (`_id`);
