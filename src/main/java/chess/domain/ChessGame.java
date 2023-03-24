@@ -11,26 +11,26 @@ import chess.domain.square.Square;
 public class ChessGame {
 
     private final Board board;
-    private Team turn;
+    private final Turn turn;
 
     public ChessGame() {
         this.board = Board.create();
-        turn = Team.WHITE;
+        this.turn = new Turn();
     }
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, int turn) {
         this.board = board;
-        turn = Team.WHITE;
+        this.turn = new Turn(turn);
     }
 
     public void move(final Square current, final Square destination) {
         checkTurn(current);
         board.move(current, destination);
-        turn = turn.getEnemy();
+        turn.next();
     }
 
     private void checkTurn(final Square square) {
-        if (board.isPieceTurn(square, turn)) {
+        if (board.isPieceTurn(square, turn.getCurrentTeam())) {
             return;
         }
         throw new IllegalArgumentException("상대팀 말을 움직일 수 없습니다.");
@@ -63,5 +63,9 @@ public class ChessGame {
 
     public Map<Square, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    public int getTurn() {
+        return turn.getTurn();
     }
 }

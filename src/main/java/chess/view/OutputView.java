@@ -2,6 +2,7 @@ package chess.view;
 
 import java.util.List;
 
+import chess.domain.Game;
 import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Team;
 
@@ -27,6 +28,23 @@ public class OutputView {
 
     public static void printNicknameInputMessage() {
         System.out.print("사용하고 싶은 닉네임을 입력하세요 : ");
+    }
+
+    public static void printPlayNewGameMessage() {
+        printMessage("새로운 게임 : new");
+        printMessage("이어하기 : exist");
+    }
+
+    public static void printNoGameExistMessage() {
+        System.out.println("진행 중이던 게임이 없습니다. 게임을 새로 시작합니다.");
+    }
+
+    public static void printGames(List<Game> games) {
+        games.forEach(OutputView::printGame);
+    }
+
+    private static void printGame(Game game) {
+        System.out.printf("Game ID : %s, Created At : %s%n", game.getGameId(), game.getCreatedAt());
     }
 
     public static void printStartMessage() {

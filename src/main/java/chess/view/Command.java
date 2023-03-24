@@ -7,6 +7,8 @@ public enum Command {
     LOGIN("login"),
     REGISTER("register"),
     START("start"),
+    NEW("new"),
+    EXIST("exist"),
     END("end"),
     MOVE("move"),
     STATUS("status");

@@ -5,11 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.Game;
 import chess.domain.User;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -35,22 +38,20 @@ public final class ChessGameDao {
         }
     }
 
-    public void save(ChessGame chessGame) {
+    public void save(String gameId, ChessGame chessGame) {
         String query = "INSERT INTO Board (game_id, turn, piece_file, piece_rank, piece_type, piece_team) VALUES (?, ?, ?, ?, ?, ?)";
         Map<Square, Piece> board = chessGame.getBoard();
         for (Square square : board.keySet()) {
             try (Connection connection = getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(query)
             ) {
-                int gameId = 101;
-                int turn = 1;
                 char fileValue = square.getFileValue();
                 char rankValue = square.getRankValue();
                 Piece piece = board.get(square);
                 String pieceType = PieceName.from(piece);
                 int pieceTeam = piece.getColor().getValue();
-                preparedStatement.setLong(1, gameId);
-                preparedStatement.setInt(2, turn);
+                preparedStatement.setLong(1, Integer.parseInt(gameId));
+                preparedStatement.setInt(2, chessGame.getTurn());
                 preparedStatement.setString(3, String.valueOf(fileValue));
                 preparedStatement.setString(4, String.valueOf(rankValue));
                 preparedStatement.setString(5, pieceType);
@@ -62,14 +63,14 @@ public final class ChessGameDao {
         }
     }
 
-    public ChessGame select() {
+    public ChessGame getGameById(String gameId, int turn) {
         final String query = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)
         ) {
             Map<Square, Piece> board = new HashMap<>();
-            preparedStatement.setInt(1, 101);
-            preparedStatement.setInt(2, 1);
+            preparedStatement.setInt(1, Integer.parseInt(gameId));
+            preparedStatement.setInt(2, turn);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 char file = resultSet.getString("piece_file").charAt(0);
@@ -84,9 +85,24 @@ public final class ChessGameDao {
                     throw new IllegalStateException("기물을 불러오지 못했습니다.");
                 }
             }
-            return new ChessGame(new Board(board));
+            return new ChessGame(new Board(board), turn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public int getLastTurnById(String gameId) {
+        final String query = "SELECT MAX(turn) AS result FROM Board WHERE game_id = ?";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setInt(1, Integer.parseInt(gameId));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("result");
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("등록되지 않은 아이디입니다.");
         }
     }
 
@@ -118,6 +134,55 @@ public final class ChessGameDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException("아이디 등록에 실패했습니다.");
+        }
+    }
+
+    public List<Game> getGamesById(String id) {
+        final String query = "SELECT * FROM Game WHERE user_id = ? ORDER BY created_at DESC";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Game> games = new ArrayList<>();
+            while (resultSet.next()) {
+                String gameId = String.valueOf(resultSet.getLong("game_id"));
+                String createdAt = resultSet.getTimestamp("created_at").toString();
+                Game game = new Game(gameId, createdAt);
+                games.add(game);
+            }
+            return games;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("게임을 불러오는데 실패했습니다.");
+        }
+    }
+
+    public void createGame(String userId) {
+        final String query = "INSERT INTO Game (user_id) VALUES (?)";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("게임 생성에 실패했습니다.");
+        }
+    }
+
+    public String getLastGameId(String userId) {
+        final String query = "SELECT MAX(game_id) AS result FROM Game WHERE user_id = ?";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("result");
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("가장 최근에 생성된 게임을 불러오는데 실패했습니다.");
         }
     }
 }

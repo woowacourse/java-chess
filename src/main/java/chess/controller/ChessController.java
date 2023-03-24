@@ -1,6 +1,10 @@
 package chess.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import chess.domain.ChessGame;
+import chess.domain.Game;
 import chess.domain.User;
 import chess.domain.database.ChessGameDao;
 import chess.domain.piece.Team;
@@ -39,9 +43,63 @@ public class ChessController {
             return;
         }
         if (initialCommand == Command.START) {
-            ChessGame chessGame = chessGameDao.select();
-            playGame(chessGame);
+            OutputView.printPlayNewGameMessage();
+            Command playNewGameCommand = readPlayNewGameCommand();
+            if (playNewGameCommand == Command.NEW) {
+                playNewGame(user.getId());
+                return;
+            }
+            if (playNewGameCommand == Command.EXIST) {
+                List<Game> games = chessGameDao.getGamesById(user.getId());
+                if (games.isEmpty()) {
+                    playNewGame(user.getId());
+                    return;
+                }
+                playerExistGame(games);
+            }
         }
+    }
+
+    private void playerExistGame(List<Game> games) {
+        OutputView.printGames(games);
+        List<String> gameIds = games.stream()
+                .map(Game::getGameId)
+                .collect(Collectors.toList());
+        String gameId;
+        while (true) {
+            gameId = InputView.readNext();
+            if (gameIds.contains(gameId)) {
+                break;
+            }
+        }
+        int lastTurn = chessGameDao.getLastTurnById(gameId);
+        ChessGame chessGame = chessGameDao.getGameById(gameId, lastTurn);
+        playGame(gameId, chessGame);
+    }
+
+    private Command readPlayNewGameCommand() {
+        Command command = InputView.readCommand();
+        try {
+            validatePlayNewGameCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readPlayNewGameCommand();
+        }
+    }
+
+    private void validatePlayNewGameCommand(Command command) {
+        if (command == Command.NEW || command == Command.EXIST) {
+            return;
+        }
+        throw new IllegalArgumentException("새로운 게임을 시작하려면 new, 이미 존재하는 게임을 확인하려면 exist를 입력해주세요.");
+    }
+
+    private void playNewGame(String userId) {
+        ChessGame chessGame = new ChessGame();
+        chessGameDao.createGame(userId);
+        String lastGameId = chessGameDao.getLastGameId(userId);
+        playGame(lastGameId, chessGame);
     }
 
     private User login() {
@@ -107,19 +165,17 @@ public class ChessController {
         }
     }
 
-    private void playGame(ChessGame chessGame) {
+    private void playGame(String gameId, ChessGame chessGame) {
         OutputView.printGameStatus(chessGame.getGameStatus());
         while (true) {
             Command command = readPlayCommand();
             if (command == Command.END) {
-                chessGameDao.save(chessGame);
                 break;
             }
             if (command == Command.MOVE) {
                 SquareDto current = readSquare();
                 SquareDto destination = readSquare();
-                move(chessGame, current, destination);
-                chessGameDao.save(chessGame);
+                move(gameId, chessGame, current, destination);
                 if (chessGame.isKingDead()) {
                     break;
                 }
@@ -163,7 +219,7 @@ public class ChessController {
         }
     }
 
-    private void move(final ChessGame chessGame, final SquareDto currentDto, final SquareDto destinationDto) {
+    private void move(final String gameId, final ChessGame chessGame, final SquareDto currentDto, final SquareDto destinationDto) {
         if (currentDto == null || destinationDto == null) {
             return;
         }
@@ -172,6 +228,7 @@ public class ChessController {
             Square destination = Square.of(File.from(destinationDto.getFile()), Rank.from(destinationDto.getRank()));
             chessGame.move(current, destination);
             OutputView.printGameStatus(chessGame.getGameStatus());
+            chessGameDao.save(gameId, chessGame);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
