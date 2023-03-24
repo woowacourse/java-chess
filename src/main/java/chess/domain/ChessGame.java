@@ -27,7 +27,7 @@ public class ChessGame {
     public void movePiece(Position from, Position to) {
         validateTurn(from);
         board.movePiece(from, to);
-        turn = changeTurn(turn);
+        changeTurn();
     }
 
     private void validateTurn(Position from) {
@@ -35,16 +35,21 @@ public class ChessGame {
             return;
         }
         if (turn.isBlack()) {
-            throw new IllegalArgumentException("흑 팀의 말을 움직여 주세요.");
+            throw new IllegalArgumentException("검정색 기물을 움직여 주세요.");
         }
-        throw new IllegalArgumentException("백 팀의 말을 움직여 주세요.");
+        throw new IllegalArgumentException("하얀색 기물을 움직여 주세요.");
     }
 
-    private Team changeTurn(Team currentTurn) {
-        if (currentTurn.isBlack()) {
-            return WHITE;
+    private void changeTurn() {
+        if (isGameEnd()) {
+            turn = EMPTY;
+            return;
         }
-        return BLACK;
+        if (turn.isBlack()) {
+            turn = WHITE;
+            return;
+        }
+        turn = BLACK;
     }
 
     public boolean isGameEnd() {
@@ -80,5 +85,9 @@ public class ChessGame {
             return BLACK;
         }
         return EMPTY;
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 }

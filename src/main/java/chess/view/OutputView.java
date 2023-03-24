@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.dto.ResultDto;
+import chess.controller.dto.TeamDto;
 import chess.controller.dto.StatusDto;
 
 import java.util.List;
@@ -35,8 +35,17 @@ public class OutputView {
         System.out.println("> " + team + ": " + score + "점");
     }
 
-    public static void printWinTeam(ResultDto resultDto) {
-        String winTeam = resultDto.getWinTeam();
+    public static void printTurn(TeamDto teamDto) {
+        String turn = teamDto.getTeam();
+        if(turn.isBlank()){
+            return;
+        }
+        System.out.println("> " + turn + " 기물을 움직일 차례입니다.");
+    }
+
+
+    public static void printWinTeam(TeamDto teamDto) {
+        String winTeam = teamDto.getTeam();
         if (winTeam.isBlank()) {
             System.out.println("> 무승부 입니다!");
             return;

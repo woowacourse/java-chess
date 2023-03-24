@@ -23,8 +23,8 @@ public class OutputRenderer {
         PIECE_TO_STRING.put(PieceType.BISHOP, "B");
         PIECE_TO_STRING.put(PieceType.PAWN, "P");
 
-        TEAM_TO_STRING.put(Team.BLACK, "흑 팀");
-        TEAM_TO_STRING.put(Team.WHITE, "백 팀");
+        TEAM_TO_STRING.put(Team.BLACK, "검정색");
+        TEAM_TO_STRING.put(Team.WHITE, "하얀색");
         TEAM_TO_STRING.put(Team.EMPTY, " ");
     }
 
@@ -59,7 +59,7 @@ public class OutputRenderer {
         return new StatusDto(TEAM_TO_STRING.get(team), Double.toString(score));
     }
 
-    public static ResultDto toResultDto(final Team team) {
-        return new ResultDto((TEAM_TO_STRING.get(team)));
+    public static TeamDto toTeamDto(final Team team) {
+        return new TeamDto((TEAM_TO_STRING.get(team)));
     }
 }

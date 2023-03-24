@@ -67,6 +67,7 @@ public class ChessController {
         errorController.tryCatchStrategy(() -> {
             chessGame.movePiece(sourcePosition, targetPosition);
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
+            OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         });
 
         if (chessGame.isGameEnd()) {
@@ -79,7 +80,7 @@ public class ChessController {
     public CommandDto inquireStatus(CommandDto commandDto) {
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
-        OutputView.printWinTeam(OutputRenderer.toResultDto(chessGame.getWinTeam()));
+        OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 }
