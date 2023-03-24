@@ -17,7 +17,7 @@ public class Queen extends SlidingPiece {
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L, UR, UL, DR, DL);
 
     public Queen(final Color color) {
-        super(color);
+        super(color, PieceType.QUEEN);
     }
 
     @Override

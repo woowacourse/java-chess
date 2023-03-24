@@ -9,7 +9,7 @@ public class Empty extends Piece {
     private static final String EMPTY_PIECE_CANT_SEARCH_MOVEMENT = "이 Piece는 움직일 수 있는 기능이 없습니다.";
 
     private Empty(final Color color) {
-        super(color);
+        super(color, PieceType.EMPTY);
     }
 
     @Override

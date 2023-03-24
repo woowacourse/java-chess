@@ -13,7 +13,7 @@ public class Rook extends SlidingPiece {
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L);
 
     public Rook(final Color color) {
-        super(color);
+        super(color, PieceType.ROOK);
     }
 
     @Override

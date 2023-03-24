@@ -13,9 +13,11 @@ public abstract class Piece {
     private static final String CANT_MOVE_TO_IS_SAME_TEAM_MESSAGE = "같은 색 말의 위치로 이동할 수 없습니다.";
 
     protected final Color color;
+    private final PieceType pieceType;
 
-    public Piece(final Color color) {
+    public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     protected final void validateMovable(final Movement movement, final List<Movement> canMovements) {
@@ -55,6 +57,10 @@ public abstract class Piece {
         }
         positions.removeLast();
         return new Path(positions);
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     public abstract boolean isEmpty();

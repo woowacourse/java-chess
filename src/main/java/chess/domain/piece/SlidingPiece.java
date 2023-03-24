@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class SlidingPiece extends Piece {
 
-    public SlidingPiece(final Color color) {
-        super(color);
+    public SlidingPiece(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 
     @Override

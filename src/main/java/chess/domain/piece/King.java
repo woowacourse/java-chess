@@ -19,7 +19,7 @@ public class King extends Piece {
     private static final String KING_MOVE_OVER_ONE_MESSAGE = "왕은 한 칸만 움직일 수 있습니다.";
 
     public King(final Color color) {
-        super(color);
+        super(color, PieceType.KING);
     }
 
     @Override

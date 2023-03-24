@@ -9,7 +9,7 @@ public class Bishop extends SlidingPiece {
             Movement.UR, Movement.UL, Movement.DR, Movement.DL);
 
     public Bishop(final Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override

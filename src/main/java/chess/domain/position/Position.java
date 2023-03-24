@@ -49,6 +49,10 @@ public class Position {
         return rank == this.rank;
     }
 
+    public boolean isEqualFile(final File file) {
+        return file == this.file;
+    }
+
     public File file() {
         return file;
     }
