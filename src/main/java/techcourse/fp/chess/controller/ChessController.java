@@ -1,11 +1,16 @@
 package techcourse.fp.chess.controller;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
-import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
-import techcourse.fp.chess.dto.BoardResponse;
-import techcourse.fp.chess.dto.CommandRequest;
+import techcourse.fp.chess.domain.ChessGame;
+import techcourse.fp.chess.domain.ScoreCalculator;
+import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.dto.request.CommandRequest;
+import techcourse.fp.chess.dto.response.BoardResponse;
+import techcourse.fp.chess.dto.response.ScoreResponse;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
@@ -20,6 +25,7 @@ public final class ChessController {
         this.outputView = outputView;
 
         commandMapper.put(Command.MOVE, this::move);
+        commandMapper.put(Command.STATUS, this::checkStatus);
         commandMapper.put(Command.END, CommandRunner.end);
     }
 
@@ -45,24 +51,21 @@ public final class ChessController {
     }
 
     private void startGame() {
-        final Board board = BoardFactory.generate();
-        outputView.printBoard(BoardResponse.create(board.getBoard()));
+        final ChessGame chessGame = new ChessGame(BoardFactory.generate(), new ScoreCalculator());
+        outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
         Command command = Command.EMPTY;
+
         while (command != Command.END) {
-            command = play(board);
+            command = play(chessGame);
         }
     }
 
-    private Command play(final Board board) {
+    private Command play(final ChessGame chessGame) {
         try {
-            final CommandRequest commandRequest = inputView.readMoveOrEndCommand();
-            Command command = Command.createMoveOrEnd(commandRequest.getMessage());
+            Command command = excuteCommand(chessGame);
 
-            final CommandRunner commandRunner = commandMapper.get(command);
-            commandRunner.execute(commandRequest, board);
-
-            if (board.isGameEnd()) {
-                outputView.printWinningMessage(board.findWinner());
+            if (chessGame.isGameEnd()) {
+                outputView.printWinningMessage(chessGame.findWinner());
                 return Command.END;
             }
 
@@ -73,12 +76,35 @@ public final class ChessController {
         }
     }
 
-    private void move(final CommandRequest commandRequest, Board board) {
+    private Command excuteCommand(final ChessGame chessGame) {
+        final CommandRequest commandRequest = inputView.readMoveOrEndCommand();
+        Command command = Command.createMoveOrEnd(commandRequest.getMessage());
+
+        final CommandRunner commandRunner = commandMapper.get(command);
+        commandRunner.execute(commandRequest, chessGame);
+
+        return command;
+    }
+
+    private void move(final CommandRequest commandRequest, ChessGame chessGame) {
         try {
-            board.move(commandRequest.getSource(), commandRequest.getTarget());
-            outputView.printBoard(BoardResponse.create(board.getBoard()));
+            chessGame.move(commandRequest.getSource(), commandRequest.getTarget());
+            outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
         }
+    }
+
+    private void checkStatus(final CommandRequest commandRequest, final ChessGame chessGame) {
+        List<ScoreResponse> scores = new ArrayList<>();
+        addScoreByColor(Color.WHITE, scores, chessGame);
+        addScoreByColor(Color.BLACK, scores, chessGame);
+
+        outputView.printStatus(scores);
+    }
+
+    private void addScoreByColor(final Color color, final List<ScoreResponse> result, ChessGame chessGame) {
+        final double score = chessGame.findScoreByColor(color);
+        result.add(ScoreResponse.of(color, score));
     }
 }

@@ -1,4 +1,4 @@
-package techcourse.fp.chess.dto;
+package techcourse.fp.chess.dto.request;
 
 import java.util.List;
 import techcourse.fp.chess.domain.File;

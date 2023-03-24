@@ -1,7 +1,9 @@
 package techcourse.fp.chess.view;
 
+import java.util.List;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.dto.BoardResponse;
+import techcourse.fp.chess.dto.response.BoardResponse;
+import techcourse.fp.chess.dto.response.ScoreResponse;
 
 public final class OutputView {
 
@@ -36,5 +38,11 @@ public final class OutputView {
 
     public void printWinningMessage(final Color winner) {
         System.out.println(winner +" 이(가) 승리하였습니다!");
+    }
+
+    public void printStatus(final List<ScoreResponse> scores) {
+        for (ScoreResponse response : scores) {
+            System.out.println(response.getColor() +" " + response.getScore() + "점");
+        }
     }
 }

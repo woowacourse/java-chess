@@ -2,7 +2,7 @@ package techcourse.fp.chess.view;
 
 import java.util.List;
 import java.util.Scanner;
-import techcourse.fp.chess.dto.CommandRequest;
+import techcourse.fp.chess.dto.request.CommandRequest;
 
 public final class InputView {
 
