@@ -24,18 +24,16 @@ public class ChessGame {
     }
 
     private void checkPlayable() {
-        if (state.isStart()) {
-            return;
+        if (!state.isStart()) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-        throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
     }
 
     private void checkTurn(final Position position) {
         final Side side = board.findSideByPosition(position);
-        if (turn.isTurnValid(side)) {
-            return;
+        if (!turn.isTurnValid(side)) {
+            throw new IllegalArgumentException("다음 턴에 움직일 수 있습니다.");
         }
-        throw new IllegalArgumentException("다음 턴에 움직일 수 있습니다.");
     }
 
     private void changeTurn() {
